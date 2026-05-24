@@ -35,7 +35,7 @@ export default function HomePage() {
         activeFilter === "Skye Collection"
       ) {
         return (
-          fragrance.collection ===
+          fragrance.collection ===s
           "Skye"
         );
       }
