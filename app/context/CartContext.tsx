@@ -7,7 +7,7 @@ import {
   useState,
 } from "react";
 
-type CartProduct = {
+export type CartProduct = {
   title: string;
   price: number;
   image: string;
@@ -33,7 +33,11 @@ type CartContextType = {
     title: string
   ) => void;
 
+  clearCart: () => void;
+
   cartTotal: number;
+
+  cartCount: number;
 };
 
 const CartContext =
@@ -48,7 +52,11 @@ const CartContext =
 
     decreaseQuantity: () => {},
 
+    clearCart: () => {},
+
     cartTotal: 0,
+
+    cartCount: 0,
   });
 
 export function CartProvider({
@@ -60,35 +68,46 @@ export function CartProvider({
   const [cart, setCart] =
     useState<CartProduct[]>([]);
 
-  // LOAD
+  // LOAD CART
   useEffect(() => {
 
-    const storedCart =
-      localStorage.getItem(
-        "cart"
-      );
+    try {
 
-    if (storedCart) {
+      const storedCart =
+        localStorage.getItem(
+          "maison-skye-rose-cart"
+        );
 
-      setCart(
-        JSON.parse(storedCart)
+      if (storedCart) {
+
+        setCart(
+          JSON.parse(storedCart)
+        );
+
+      }
+
+    } catch (error) {
+
+      console.error(
+        "Failed to load cart",
+        error
       );
 
     }
 
   }, []);
 
-  // SAVE
+  // SAVE CART
   useEffect(() => {
 
     localStorage.setItem(
-      "cart",
+      "maison-skye-rose-cart",
       JSON.stringify(cart)
     );
 
   }, [cart]);
 
-  // ADD
+  // ADD TO CART
   const addToCart = (
     product: CartProduct
   ) => {
@@ -125,7 +144,12 @@ export function CartProvider({
       return [
         ...prev,
 
-        product,
+        {
+          ...product,
+
+          quantity:
+            product.quantity || 1,
+        },
       ];
 
     });
@@ -181,28 +205,38 @@ export function CartProvider({
 
     setCart((prev) =>
 
-      prev.map((item) =>
+      prev
+        .map((item) =>
 
-        item.title === title
+          item.title === title
 
-          ? {
-              ...item,
+            ? {
+                ...item,
 
-              quantity:
-                item.quantity - 1,
-            }
+                quantity:
+                  item.quantity - 1,
+              }
 
-          : item
+            : item
 
-      ).filter(
-        (item) =>
-          item.quantity > 0
-      )
+        )
+        .filter(
+          (item) =>
+            item.quantity > 0
+        )
 
     );
 
   };
 
+  // CLEAR
+  const clearCart = () => {
+
+    setCart([]);
+
+  };
+
+  // TOTAL
   const cartTotal =
     cart.reduce(
 
@@ -211,6 +245,19 @@ export function CartProvider({
         total +
         item.price *
           item.quantity,
+
+      0
+
+    );
+
+  // COUNT
+  const cartCount =
+    cart.reduce(
+
+      (total, item) =>
+
+        total +
+        item.quantity,
 
       0
 
@@ -229,7 +276,11 @@ export function CartProvider({
 
         decreaseQuantity,
 
+        clearCart,
+
         cartTotal,
+
+        cartCount,
       }}
     >
 

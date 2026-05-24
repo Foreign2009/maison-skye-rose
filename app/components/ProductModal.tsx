@@ -5,6 +5,9 @@ import {
   useState,
 } from "react";
 
+import { useCart } from "../context/CartContext";
+import { useFavorites } from "../context/FavoritesContext";
+
 type ProductModalProps = {
   title: string;
   subtitle: string;
@@ -37,12 +40,28 @@ export default function ProductModal({
   onClose,
 }: ProductModalProps) {
 
+  const {
+    addToCart,
+  } = useCart();
+
+  const {
+    favorites,
+    addToFavorites,
+    removeFromFavorites,
+  } = useFavorites();
+
   const [selectedSize, setSelectedSize] =
     useState<
       "5ml" |
       "10ml" |
       "30ml"
     >("10ml");
+
+  const isFavorite =
+    favorites.some(
+      (item) =>
+        item.title === title
+    );
 
   // LOCK PAGE SCROLL
   useEffect(() => {
@@ -91,6 +110,37 @@ export default function ProductModal({
 
   }, []);
 
+  const handleFavorite = () => {
+
+    if (isFavorite) {
+
+      removeFromFavorites(title);
+
+    } else {
+
+      addToFavorites({
+        title,
+        image:
+          images[selectedSize],
+      });
+
+    }
+
+  };
+
+  const handleAddToCart = () => {
+
+    addToCart({
+      title,
+      image:
+        images[selectedSize],
+      price:
+        prices[selectedSize],
+      quantity: 1,
+    });
+
+  };
+
   return (
     <div className="fixed inset-0 z-[999] overflow-y-auto bg-black/60 backdrop-blur-md">
 
@@ -112,6 +162,18 @@ export default function ProductModal({
             className="absolute right-6 top-6 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-black text-white transition duration-300 hover:scale-105"
           >
             ✕
+          </button>
+
+          {/* FAVORITE */}
+          <button
+            onClick={handleFavorite}
+            className={`absolute left-6 top-6 z-50 flex h-12 w-12 items-center justify-center rounded-full transition duration-300 ${
+              isFavorite
+                ? "bg-[#b67d73] text-white"
+                : "bg-white text-black"
+            }`}
+          >
+            ♥
           </button>
 
           <div className="grid md:grid-cols-2">
@@ -272,6 +334,7 @@ export default function ProductModal({
 
               {/* BUTTON */}
               <button
+                onClick={handleAddToCart}
                 className="mt-12 w-full rounded-full bg-black py-5 text-sm uppercase tracking-[0.25em] text-white shadow-[0_20px_50px_rgba(0,0,0,0.3)] transition duration-300 hover:scale-[1.02]"
               >
                 Add To Bag

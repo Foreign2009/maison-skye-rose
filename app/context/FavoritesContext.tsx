@@ -7,23 +7,24 @@ import {
   useState,
 } from "react";
 
-type FavoriteProduct = {
+export type FavoriteProduct = {
   title: string;
-  subtitle: string;
-  mood: string;
-  profile: string;
-  season: string[];
-  notes: string[];
-  prices: {
+  subtitle?: string;
+  mood?: string;
+  profile?: string;
+  season?: string[];
+  notes?: string[];
+  prices?: {
     "5ml": number;
     "10ml": number;
     "30ml": number;
   };
-  images: {
+  images?: {
     "5ml": string;
     "10ml": string;
     "30ml": string;
   };
+  image?: string;
   bestSeller?: boolean;
   newArrival?: boolean;
 };
@@ -38,6 +39,12 @@ type FavoritesContextType = {
   removeFromFavorites: (
     title: string
   ) => void;
+
+  clearFavorites: () => void;
+
+  isFavorite: (
+    title: string
+  ) => boolean;
 };
 
 const FavoritesContext =
@@ -47,6 +54,10 @@ const FavoritesContext =
     addToFavorites: () => {},
 
     removeFromFavorites: () => {},
+
+    clearFavorites: () => {},
+
+    isFavorite: () => false,
   });
 
 export function FavoritesProvider({
@@ -60,48 +71,85 @@ export function FavoritesProvider({
       []
     );
 
-  // LOAD LOCAL STORAGE
+  // LOAD
   useEffect(() => {
 
-    const storedFavorites =
-      localStorage.getItem(
-        "favorites"
-      );
+    try {
 
-    if (storedFavorites) {
+      const storedFavorites =
+        localStorage.getItem(
+          "maison-skye-rose-favorites"
+        );
 
-      setFavorites(
-        JSON.parse(
-          storedFavorites
-        )
+      if (storedFavorites) {
+
+        setFavorites(
+          JSON.parse(
+            storedFavorites
+          )
+        );
+
+      }
+
+    } catch (error) {
+
+      console.error(
+        "Failed to load favorites",
+        error
       );
 
     }
 
   }, []);
 
-  // SAVE LOCAL STORAGE
+  // SAVE
   useEffect(() => {
 
     localStorage.setItem(
-      "favorites",
-      JSON.stringify(favorites)
+      "maison-skye-rose-favorites",
+      JSON.stringify(
+        favorites
+      )
     );
 
   }, [favorites]);
+
+  // CHECK FAVORITE
+  const isFavorite = (
+    title: string
+  ) => {
+
+    return favorites.some(
+      (item) =>
+        item.title === title
+    );
+
+  };
 
   // ADD
   const addToFavorites = (
     product: FavoriteProduct
   ) => {
 
-    setFavorites((prev) => [
+    setFavorites((prev) => {
 
-      ...prev,
+      const exists =
+        prev.some(
+          (item) =>
+            item.title ===
+            product.title
+        );
 
-      product,
+      if (exists) {
+        return prev;
+      }
 
-    ]);
+      return [
+        ...prev,
+        product,
+      ];
+
+    });
 
   };
 
@@ -121,6 +169,13 @@ export function FavoritesProvider({
 
   };
 
+  // CLEAR
+  const clearFavorites = () => {
+
+    setFavorites([]);
+
+  };
+
   return (
     <FavoritesContext.Provider
       value={{
@@ -129,6 +184,10 @@ export function FavoritesProvider({
         addToFavorites,
 
         removeFromFavorites,
+
+        clearFavorites,
+
+        isFavorite,
       }}
     >
 
