@@ -19,18 +19,13 @@ export default function MiniCart() {
       0
     );
 
-  const vat =
-    subtotal * 0.15;
+  const vat = subtotal * 0.15;
 
   const delivery =
-    cart.length > 0
-      ? 100
-      : 0;
+    cart.length > 0 ? 100 : 0;
 
   const total =
-    subtotal +
-    vat +
-    delivery;
+    subtotal + vat + delivery;
 
   return (
     <div className="fixed bottom-6 right-6 z-50 w-[360px] rounded-[32px] bg-white p-6 shadow-[0_25px_80px_rgba(0,0,0,0.18)]">
@@ -164,9 +159,7 @@ export default function MiniCart() {
 
         </div>
 
-        <button
-          className="mt-6 w-full rounded-full bg-black px-6 py-5 text-xs uppercase tracking-[0.35em] text-white transition duration-300 hover:scale-[1.02]"
-        >
+        <button className="mt-6 w-full rounded-full bg-black px-6 py-5 text-xs uppercase tracking-[0.35em] text-white transition duration-300 hover:scale-[1.02]">
           Checkout on WhatsApp
         </button>
 
