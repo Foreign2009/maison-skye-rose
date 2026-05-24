@@ -91,7 +91,7 @@ export default function MiniCart() {
 
                 <button
                   onClick={() =>
-                    decreaseQuantity(index)
+                    decreaseQuantity(item.title)
                   }
                   className="flex h-8 w-8 items-center justify-center rounded-full bg-black text-white"
                 >
@@ -104,7 +104,7 @@ export default function MiniCart() {
 
                 <button
                   onClick={() =>
-                    increaseQuantity(index)
+                    increaseQuantity(item.title)
                   }
                   className="flex h-8 w-8 items-center justify-center rounded-full bg-black text-white"
                 >
@@ -113,7 +113,7 @@ export default function MiniCart() {
 
                 <button
                   onClick={() =>
-                    removeFromCart(index)
+                    removeFromCart(item.title)
                   }
                   className="ml-auto text-xs uppercase tracking-[0.2em] text-red-500"
                 >
