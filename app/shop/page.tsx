@@ -13,60 +13,92 @@ import { fragrances } from "../data/fragrances";
 
 export default function ShopPage() {
 
-  const [activeFilter, setActiveFilter] = useState("All");
-  const [searchTerm, setSearchTerm] = useState("");
+  const [activeFilter, setActiveFilter] =
+    useState("All");
 
-  const filteredFragrances = fragrances.filter((fragrance) => {
+  const [searchTerm, setSearchTerm] =
+    useState("");
 
-    const matchesSearch =
-      fragrance.title
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase()) ||
+  const filteredFragrances =
+    fragrances.filter((fragrance) => {
 
-      fragrance.mood
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase()) ||
+      const matchesSearch =
 
-      fragrance.profile
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase()) ||
+        fragrance.title
+          .toLowerCase()
+          .includes(
+            searchTerm.toLowerCase()
+          ) ||
 
-      fragrance.category
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase()) ||
+        fragrance.mood
+          .toLowerCase()
+          .includes(
+            searchTerm.toLowerCase()
+          ) ||
 
-      fragrance.notes.some((note) =>
-        note.toLowerCase().includes(searchTerm.toLowerCase())
+        fragrance.profile
+          .toLowerCase()
+          .includes(
+            searchTerm.toLowerCase()
+          ) ||
+
+        fragrance.collection
+          .toLowerCase()
+          .includes(
+            searchTerm.toLowerCase()
+          ) ||
+
+        fragrance.notes.some((note) =>
+          note
+            .toLowerCase()
+            .includes(
+              searchTerm.toLowerCase()
+            )
+        );
+
+      let matchesFilter = true;
+
+      if (activeFilter === "Best Sellers") {
+        matchesFilter =
+          fragrance.bestSeller;
+      }
+
+      if (activeFilter === "New Arrivals") {
+        matchesFilter =
+          fragrance.newArrival;
+      }
+
+      if (activeFilter === "Skye Collection") {
+        matchesFilter =
+          fragrance.collection ===
+          "Skye";
+      }
+
+      if (activeFilter === "Rose Collection") {
+        matchesFilter =
+          fragrance.collection ===
+          "Rose";
+      }
+
+      if (activeFilter === "Summer") {
+        matchesFilter =
+          fragrance.season.includes(
+            "Summer"
+          );
+      }
+
+      if (activeFilter === "Winter") {
+        matchesFilter =
+          fragrance.season.includes(
+            "Winter"
+          );
+      }
+
+      return (
+        matchesSearch &&
+        matchesFilter
       );
-
-    let matchesFilter = true;
-
-    if (activeFilter === "For Him")
-      matchesFilter = fragrance.gender === "For Him";
-
-    if (activeFilter === "For Her")
-      matchesFilter = fragrance.gender === "For Her";
-
-    if (activeFilter === "Fresh")
-      matchesFilter = fragrance.category.includes("Fresh");
-
-    if (activeFilter === "Sweet")
-      matchesFilter = fragrance.category.includes("Sweet");
-
-    if (activeFilter === "Luxury")
-      matchesFilter = fragrance.category.includes("Luxury");
-
-    if (activeFilter === "Date Night")
-      matchesFilter = fragrance.collection === "Date Night";
-
-    if (activeFilter === "Summer")
-      matchesFilter = fragrance.season.includes("Summer");
-
-    if (activeFilter === "Winter")
-      matchesFilter = fragrance.season.includes("Winter");
-
-    return matchesSearch && matchesFilter;
-  });
+    });
 
   return (
     <main className="min-h-screen bg-[#f5f1eb] text-[#1a1a1a]">
@@ -148,6 +180,8 @@ export default function ShopPage() {
                 notes={fragrance.notes}
                 prices={fragrance.prices}
                 images={fragrance.images}
+                bestSeller={fragrance.bestSeller}
+                newArrival={fragrance.newArrival}
               />
 
             ))}
