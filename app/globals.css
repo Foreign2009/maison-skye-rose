@@ -1,0 +1,69 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #f5f1eb;
+  color: black;
+}
+
+/* FADE UP */
+@keyframes fadeUp {
+
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+}
+
+/* FLOAT */
+@keyframes float {
+
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+
+}
+
+/* GLOW ROTATE */
+@keyframes glowRotate {
+
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+
+}
+
+.fade-up {
+  animation: fadeUp 0.8s ease forwards;
+}
+
+.float-animation {
+  animation: float 4s ease-in-out infinite;
+}
+
+.glow-rotate {
+  animation: glowRotate 14s linear infinite;
+}
