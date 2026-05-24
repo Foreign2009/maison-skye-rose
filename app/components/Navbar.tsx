@@ -77,7 +77,7 @@ export default function NewArrivalsPage() {
 
         <CartDrawer
           onClose={() =>
-            setCartOpen(false)
+            (false)
           }
         />
 

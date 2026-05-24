@@ -8,13 +8,11 @@ import ProductCard from "./components/ProductCard";
 import { fragrances } from "./data/fragrances";
 
 export default function HomePage() {
-
   const [activeFilter, setActiveFilter] =
     useState("All");
 
   const filteredFragrances =
     fragrances.filter((fragrance) => {
-
       if (activeFilter === "All") {
         return true;
       }
