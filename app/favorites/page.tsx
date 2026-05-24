@@ -16,8 +16,10 @@ export default function FavoritesPage() {
 
   const favoriteProducts =
     fragrances.filter((fragrance) =>
-      favorites.includes(
-        fragrance.title
+      favorites.some(
+        (item) =>
+          item.title ===
+          fragrance.title
       )
     );
 
