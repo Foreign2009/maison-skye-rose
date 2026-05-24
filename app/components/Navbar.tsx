@@ -24,7 +24,7 @@ export default function NewArrivalsPage() {
 
       {/* NAVBAR */}
       <Navbar
-        onBagClick={() =>
+        <Navbar />={() =>
           setCartOpen(true)
         }
       />
