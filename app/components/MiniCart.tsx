@@ -68,7 +68,7 @@ export default function MiniCart() {
         {cart.map((item) => (
 
           <div
-            key={item.id + item.size}
+            key={item.title + item.size}
             className="flex items-center gap-4 rounded-3xl border border-black/5 p-4"
           >
 
