@@ -4,7 +4,6 @@ import { useState } from "react";
 
 import Navbar from "./components/Navbar";
 import ProductCard from "./components/ProductCard";
-import CartDrawer from "./components/CartDrawer";
 
 import { fragrances } from "./data/fragrances";
 
@@ -12,9 +11,6 @@ export default function HomePage() {
 
   const [activeFilter, setActiveFilter] =
     useState("All");
-
-  const [cartOpen, setCartOpen] =
-    useState(false);
 
   const filteredFragrances =
     fragrances.filter((fragrance) => {
@@ -68,14 +64,7 @@ export default function HomePage() {
     <main className="min-h-screen bg-[#f5f1eb] text-black">
 
       {/* NAVBAR */}
-      <Navbar
-        onFilterChange={
-          setActiveFilter
-        }
-        onBagClick={() =>
-          setCartOpen(true)
-        }
-      />
+      <Navbar />
 
       {/* HERO */}
       <section className="mx-auto max-w-7xl px-6 pb-10 pt-20">
@@ -152,17 +141,6 @@ export default function HomePage() {
         )}
 
       </section>
-
-      {/* CART DRAWER */}
-      {cartOpen && (
-
-        <CartDrawer
-          onClose={() =>
-            setCartOpen(false)
-          }
-        />
-
-      )}
 
     </main>
   );
