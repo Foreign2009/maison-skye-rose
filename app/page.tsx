@@ -19,34 +19,20 @@ export default function HomePage() {
         return true;
       }
 
-      if (
-        activeFilter === "Best Sellers"
-      ) {
+      if (activeFilter === "Best Sellers") {
         return fragrance.bestSeller;
       }
 
-      if (
-        activeFilter === "New Arrivals"
-      ) {
+      if (activeFilter === "New Arrivals") {
         return fragrance.newArrival;
       }
 
-      if (
-        activeFilter === "Skye Collection"
-      ) {
-        return (
-          fragrance.collection ===s
-          "Skye"
-        );
+      if (activeFilter === "Skye Collection") {
+        return fragrance.collection === "Skye";
       }
 
-      if (
-        activeFilter === "Rose Collection"
-      ) {
-        return (
-          fragrance.collection ===
-          "Rose"
-        );
+      if (activeFilter === "Rose Collection") {
+        return fragrance.collection === "Rose";
       }
 
       return true;
@@ -63,10 +49,8 @@ export default function HomePage() {
   return (
     <main className="min-h-screen bg-[#f5f1eb] text-black">
 
-      {/* NAVBAR */}
       <Navbar />
 
-      {/* HERO */}
       <section className="mx-auto max-w-7xl px-6 pb-10 pt-20">
 
         <div className="max-w-4xl">
@@ -90,7 +74,6 @@ export default function HomePage() {
 
       </section>
 
-      {/* FILTERS */}
       <section className="mx-auto mt-10 max-w-7xl px-6">
 
         <div className="flex flex-wrap gap-4">
@@ -117,28 +100,25 @@ export default function HomePage() {
 
       </section>
 
-      {/* PRODUCTS */}
       <section className="mx-auto mt-16 grid max-w-7xl gap-8 px-6 pb-24 md:grid-cols-2 xl:grid-cols-3">
 
-        {filteredFragrances.map(
-          (fragrance) => (
+        {filteredFragrances.map((fragrance) => (
 
-            <ProductCard
-              key={fragrance.id}
-              title={fragrance.title}
-              subtitle={fragrance.description}
-              mood={fragrance.mood}
-              profile={fragrance.profile}
-              season={fragrance.season}
-              notes={fragrance.notes}
-              prices={fragrance.prices}
-              images={fragrance.images}
-              bestSeller={fragrance.bestSeller}
-              newArrival={fragrance.newArrival}
-            />
+          <ProductCard
+            key={fragrance.id}
+            title={fragrance.title}
+            subtitle={fragrance.description}
+            mood={fragrance.mood}
+            profile={fragrance.profile}
+            season={fragrance.season}
+            notes={fragrance.notes}
+            prices={fragrance.prices}
+            images={fragrance.images}
+            bestSeller={fragrance.bestSeller}
+            newArrival={fragrance.newArrival}
+          />
 
-          )
-        )}
+        ))}
 
       </section>
 
