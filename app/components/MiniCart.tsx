@@ -65,10 +65,10 @@ export default function MiniCart() {
 
         )}
 
-        {cart.map((item) => (
+        {cart.map((item, index) => (
 
           <div
-            key={item.title + item.size}
+            key={index}
             className="flex items-center gap-4 rounded-3xl border border-black/5 p-4"
           >
 
@@ -88,10 +88,6 @@ export default function MiniCart() {
                 {item.title}
               </h3>
 
-              <p className="mt-1 text-xs uppercase tracking-[0.2em] text-zinc-500">
-                {item.size}
-              </p>
-
               <p className="mt-2 font-black text-[#b67d73]">
                 R{item.price}
               </p>
@@ -100,10 +96,7 @@ export default function MiniCart() {
 
                 <button
                   onClick={() =>
-                    decreaseQuantity(
-                      item.id,
-                      item.size
-                    )
+                    decreaseQuantity(index)
                   }
                   className="flex h-8 w-8 items-center justify-center rounded-full bg-black text-white"
                 >
@@ -116,10 +109,7 @@ export default function MiniCart() {
 
                 <button
                   onClick={() =>
-                    increaseQuantity(
-                      item.id,
-                      item.size
-                    )
+                    increaseQuantity(index)
                   }
                   className="flex h-8 w-8 items-center justify-center rounded-full bg-black text-white"
                 >
@@ -128,10 +118,7 @@ export default function MiniCart() {
 
                 <button
                   onClick={() =>
-                    removeFromCart(
-                      item.id,
-                      item.size
-                    )
+                    removeFromCart(index)
                   }
                   className="ml-auto text-xs uppercase tracking-[0.2em] text-red-500"
                 >
