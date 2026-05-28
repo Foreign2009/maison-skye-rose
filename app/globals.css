@@ -2,16 +2,46 @@
 @tailwind components;
 @tailwind utilities;
 
+/* GLOBAL */
+
 html {
   scroll-behavior: smooth;
 }
 
+html,
+body {
+  overflow-x: hidden;
+}
+
 body {
   background: #f5f1eb;
-  color: black;
+  color: #4f4a52;
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* SELECTION */
+
+::selection {
+  background: #d89ca4;
+  color: white;
+}
+
+/* SCROLLBAR */
+
+::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
 }
 
 /* FADE UP */
+
 @keyframes fadeUp {
 
   0% {
@@ -27,6 +57,7 @@ body {
 }
 
 /* FLOAT */
+
 @keyframes float {
 
   0% {
@@ -44,6 +75,7 @@ body {
 }
 
 /* GLOW ROTATE */
+
 @keyframes glowRotate {
 
   0% {
@@ -56,14 +88,115 @@ body {
 
 }
 
+/* GLOW PULSE */
+
+@keyframes glowPulse {
+
+  0% {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+
+  100% {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+
+}
+
+/* ANIMATION CLASSES */
+
 .fade-up {
-  animation: fadeUp 0.8s ease forwards;
+  animation:
+    fadeUp 0.8s ease forwards;
 }
 
 .float-animation {
-  animation: float 4s ease-in-out infinite;
+  animation:
+    float 4s ease-in-out infinite;
 }
 
 .glow-rotate {
-  animation: glowRotate 14s linear infinite;
+  animation:
+    glowRotate 14s linear infinite;
+}
+
+.glow-pulse {
+  animation:
+    glowPulse 5s ease-in-out infinite;
+}
+
+/* GLASSMORPHISM */
+
+.glass-card {
+
+  background:
+    rgba(255, 255, 255, 0.5);
+
+  backdrop-filter:
+    blur(18px);
+
+  -webkit-backdrop-filter:
+    blur(18px);
+
+  border:
+    1px solid rgba(
+      255,
+      255,
+      255,
+      0.4
+    );
+
+}
+
+/* MOBILE TYPOGRAPHY */
+
+@media (max-width: 640px) {
+
+  h1 {
+    line-height: 0.95 !important;
+  }
+
+  p {
+    line-height: 1.7;
+  }
+
+}
+
+/* BUTTON TRANSITIONS */
+
+button,
+a {
+  transition:
+    all 0.3s ease;
+}
+
+/* IMAGE QUALITY */
+
+img {
+  image-rendering: auto;
+}
+
+/* INPUTS */
+
+input,
+textarea,
+select {
+
+  outline: none;
+
+  background: white;
+
+}
+
+/* MOBILE SAFE PADDING */
+
+.safe-padding {
+  padding-left: max(1rem, env(safe-area-inset-left));
+  padding-right: max(1rem, env(safe-area-inset-right));
 }

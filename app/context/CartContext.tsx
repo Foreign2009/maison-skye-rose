@@ -8,10 +8,17 @@ import {
 } from "react";
 
 export type CartProduct = {
+  id: string;
+
   title: string;
+
   price: number;
+
   image: string;
+
   quantity: number;
+
+  size: string;
 };
 
 type CartContextType = {
@@ -22,15 +29,15 @@ type CartContextType = {
   ) => void;
 
   removeFromCart: (
-    title: string
+    id: string
   ) => void;
 
   increaseQuantity: (
-    title: string
+    id: string
   ) => void;
 
   decreaseQuantity: (
-    title: string
+    id: string
   ) => void;
 
   clearCart: () => void;
@@ -68,7 +75,7 @@ export function CartProvider({
   const [cart, setCart] =
     useState<CartProduct[]>([]);
 
-  // LOAD CART
+  /* LOAD CART */
   useEffect(() => {
 
     try {
@@ -97,7 +104,7 @@ export function CartProvider({
 
   }, []);
 
-  // SAVE CART
+  /* SAVE CART */
   useEffect(() => {
 
     localStorage.setItem(
@@ -107,7 +114,7 @@ export function CartProvider({
 
   }, [cart]);
 
-  // ADD TO CART
+  /* ADD TO CART */
   const addToCart = (
     product: CartProduct
   ) => {
@@ -117,22 +124,23 @@ export function CartProvider({
       const existing =
         prev.find(
           (item) =>
-            item.title ===
-            product.title
+            item.id ===
+            product.id
         );
 
+      /* IF EXISTS */
       if (existing) {
 
         return prev.map((item) =>
 
-          item.title ===
-          product.title
+          item.id === product.id
 
             ? {
                 ...item,
 
                 quantity:
-                  item.quantity + 1,
+                  item.quantity +
+                  product.quantity,
               }
 
             : item
@@ -141,14 +149,12 @@ export function CartProvider({
 
       }
 
+      /* NEW ITEM */
       return [
         ...prev,
 
         {
           ...product,
-
-          quantity:
-            product.quantity || 1,
         },
       ];
 
@@ -156,32 +162,32 @@ export function CartProvider({
 
   };
 
-  // REMOVE
+  /* REMOVE */
   const removeFromCart = (
-    title: string
+    id: string
   ) => {
 
     setCart((prev) =>
 
       prev.filter(
         (item) =>
-          item.title !== title
+          item.id !== id
       )
 
     );
 
   };
 
-  // INCREASE
+  /* INCREASE */
   const increaseQuantity = (
-    title: string
+    id: string
   ) => {
 
     setCart((prev) =>
 
       prev.map((item) =>
 
-        item.title === title
+        item.id === id
 
           ? {
               ...item,
@@ -198,9 +204,9 @@ export function CartProvider({
 
   };
 
-  // DECREASE
+  /* DECREASE */
   const decreaseQuantity = (
-    title: string
+    id: string
   ) => {
 
     setCart((prev) =>
@@ -208,7 +214,7 @@ export function CartProvider({
       prev
         .map((item) =>
 
-          item.title === title
+          item.id === id
 
             ? {
                 ...item,
@@ -229,14 +235,14 @@ export function CartProvider({
 
   };
 
-  // CLEAR
+  /* CLEAR */
   const clearCart = () => {
 
     setCart([]);
 
   };
 
-  // TOTAL
+  /* TOTAL */
   const cartTotal =
     cart.reduce(
 
@@ -250,7 +256,7 @@ export function CartProvider({
 
     );
 
-  // COUNT
+  /* COUNT */
   const cartCount =
     cart.reduce(
 

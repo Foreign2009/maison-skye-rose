@@ -1,9 +1,18 @@
 "use client";
 
+import Image from "next/image";
+import Link from "next/link";
+
+import {
+  motion,
+  AnimatePresence,
+} from "framer-motion";
+
 import { useCart } from "../context/CartContext";
 
 interface CartDrawerProps {
   open: boolean;
+
   onClose: () => void;
 }
 
@@ -14,291 +23,480 @@ export default function CartDrawer({
 
   const {
     cart,
+    cartTotal,
     increaseQuantity,
     decreaseQuantity,
     removeFromCart,
   } = useCart();
 
-  if (!open) {
-    return null;
-  }
-
-  const subtotal =
-    cart.reduce(
-      (total, item) =>
-        total +
-        item.price * item.quantity,
-      0
-    );
-
   const vat =
-    subtotal * 0.15;
+    cartTotal * 0.15;
 
   const delivery =
-    cart.length > 0
+    cartTotal > 0
       ? 100
       : 0;
 
-  const total =
-    subtotal +
-    vat +
-    delivery;
-
-  const whatsappMessage =
-    encodeURIComponent(
-      `
-Maison Skye & Rose Order
-
-${cart
-  .map(
-    (item) =>
-      `${item.title}
-Qty: ${item.quantity}
-Price: R${item.price}`
-  )
-  .join("\n\n")}
-
-Subtotal: R${subtotal.toFixed(2)}
-VAT: R${vat.toFixed(2)}
-Delivery: R${delivery.toFixed(2)}
-
-Total: R${total.toFixed(2)}
-`
-    );
+  const finalTotal =
+    cartTotal + vat + delivery;
 
   return (
-    <>
 
-      {/* BACKDROP */}
-      <div
-        onClick={onClose}
-        className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm"
-      />
+    <AnimatePresence>
 
-      {/* DRAWER */}
-      <div className="fixed right-0 top-0 z-50 flex h-full w-full max-w-md flex-col bg-[#f5f1eb] shadow-[0_0_80px_rgba(0,0,0,0.35)] animate-[slideIn_0.35s_ease]">
+      {open && (
 
-        {/* HEADER */}
-        <div className="border-b border-black/10 p-6">
+        <>
 
-          <div className="flex items-center justify-between">
+          {/* OVERLAY */}
+          <motion.div
+            initial={{
+              opacity: 0,
+            }}
+            animate={{
+              opacity: 1,
+            }}
+            exit={{
+              opacity: 0,
+            }}
+            onClick={onClose}
+            className="
+              fixed
+              inset-0
+              z-[99998]
+              bg-black/30
+              backdrop-blur-sm
+            "
+          />
 
-            <div>
+          {/* DRAWER */}
+          <motion.div
+            initial={{
+              x: "100%",
+            }}
+            animate={{
+              x: 0,
+            }}
+            exit={{
+              x: "100%",
+            }}
+            transition={{
+              type: "spring",
+              damping: 26,
+              stiffness: 240,
+            }}
+            className="
+              fixed
+              right-0
+              top-0
+              z-[99999]
+              flex
+              h-screen
+              w-full
+              max-w-md
+              flex-col
+              overflow-hidden
+              border-l
+              border-white/30
+              bg-white/80
+              shadow-[0_0_80px_rgba(0,0,0,0.12)]
+              backdrop-blur-[30px]
+            "
+          >
 
-              <p className="text-xs uppercase tracking-[0.35em] text-zinc-500">
-                Maison Skye & Rose
-              </p>
+            {/* GLOW */}
+            <div className="absolute inset-0 overflow-hidden">
 
-              <h2 className="mt-2 text-3xl font-black uppercase">
-                Your Bag
-              </h2>
+              <div className="absolute -left-10 top-0 h-52 w-52 rounded-full bg-pink-300/20 blur-3xl" />
+
+              <div className="absolute -right-10 bottom-0 h-52 w-52 rounded-full bg-blue-300/20 blur-3xl" />
 
             </div>
 
-            <button
-              onClick={onClose}
-              className="flex h-12 w-12 items-center justify-center rounded-full bg-black text-white transition duration-300 hover:scale-105"
+            {/* HEADER */}
+            <div
+              className="
+                relative
+                z-10
+                flex
+                items-center
+                justify-between
+                border-b
+                border-white/40
+                px-6
+                py-6
+              "
             >
-              ✕
-            </button>
 
-          </div>
+              <div>
 
-        </div>
+                <p
+                  className="
+                    text-[10px]
+                    uppercase
+                    tracking-[0.3em]
+                    text-[#8a8490]
+                  "
+                >
+                  Maison Skye & Rose
+                </p>
 
-        {/* CART ITEMS */}
-        <div className="flex-1 overflow-y-auto p-6">
+                <h2 className="mt-2 text-3xl font-black tracking-[-0.06em] text-[#4f4a52]">
 
-          {cart.length === 0 ? (
+                  Your Bag
 
-            <div className="flex h-full flex-col items-center justify-center text-center">
-
-              <div className="rounded-full bg-white p-8 shadow-lg">
-
-                <span className="text-5xl">
-                  🛍️
-                </span>
+                </h2>
 
               </div>
 
-              <h3 className="mt-8 text-2xl font-black uppercase">
-                Your Bag Is Empty
-              </h3>
-
-              <p className="mt-4 max-w-sm leading-7 text-zinc-600">
-                Discover luxury-inspired fragrances crafted for confidence,
-                travel, nightlife, and everyday elegance.
-              </p>
+              <button
+                onClick={onClose}
+                className="
+                  flex
+                  h-12
+                  w-12
+                  items-center
+                  justify-center
+                  rounded-full
+                  bg-white
+                  text-xl
+                  shadow-md
+                "
+              >
+                ✕
+              </button>
 
             </div>
 
-          ) : (
+            {/* ITEMS */}
+            <div className="relative z-10 flex-1 overflow-y-auto px-6 py-5">
 
-            <div className="space-y-5">
+              {cart.length === 0 ? (
 
-              {cart.map((item, index) => (
+                <div className="flex h-full flex-col items-center justify-center text-center">
 
-                <div
-                  key={index}
-                  className="rounded-[30px] bg-white p-4 shadow-sm"
-                >
+                  <div
+                    className="
+                      flex
+                      h-24
+                      w-24
+                      items-center
+                      justify-center
+                      rounded-full
+                      bg-gradient-to-r
+                      from-pink-100
+                      to-blue-100
+                      text-4xl
+                    "
+                  >
+                    🛍
+                  </div>
 
-                  <div className="flex gap-4">
+                  <h3 className="mt-6 text-2xl font-black text-[#4f4a52]">
 
-                    {/* IMAGE */}
-                    <div className="flex h-24 w-24 items-center justify-center rounded-[24px] bg-[#ece7df]">
+                    Your bag is empty
 
-                      <img
-                        src={item.image}
-                        alt={item.title}
-                        className="h-20 object-contain"
-                      />
+                  </h3>
 
-                    </div>
+                  <p className="mt-3 max-w-xs text-[#7b7480]">
 
-                    {/* INFO */}
-                    <div className="flex flex-1 flex-col">
+                    Discover your next signature fragrance.
 
-                      <div className="flex items-start justify-between gap-3">
+                  </p>
 
-                        <div>
+                </div>
 
-                          <h3 className="text-sm font-black uppercase leading-5">
-                            {item.title}
-                          </h3>
+              ) : (
 
-                          <p className="mt-2 text-sm text-[#b67d73]">
-                            R{item.price}
-                          </p>
+                <div className="space-y-5">
+
+                  {cart.map((item) => (
+
+                    <motion.div
+                      key={item.id}
+                      layout
+                      className="
+                        rounded-[30px]
+                        border
+                        border-white/40
+                        bg-white/70
+                        p-4
+                        shadow-[0_10px_40px_rgba(0,0,0,0.06)]
+                        backdrop-blur-[20px]
+                      "
+                    >
+
+                      <div className="flex gap-4">
+
+                        {/* IMAGE */}
+                        <div
+                          className="
+                            flex
+                            h-28
+                            w-28
+                            items-center
+                            justify-center
+                            rounded-[24px]
+                            bg-gradient-to-br
+                            from-pink-50
+                            to-blue-50
+                          "
+                        >
+
+                          <Image
+                            src={
+                              item.image ||
+                              "/images/pink-10ml.png"
+                            }
+                            alt={
+                              item.title ||
+                              "Fragrance"
+                            }
+                            width={100}
+                            height={100}
+                            className="object-contain"
+                            style={{
+                              width: "auto",
+                              height: "100px",
+                            }}
+                          />
 
                         </div>
 
-                        <button
-                          onClick={() =>
-                            removeFromCart(item.title)
-                          }
-                          className="text-sm text-red-500 transition hover:opacity-70"
-                        >
-                          ✕
-                        </button>
+                        {/* INFO */}
+                        <div className="flex flex-1 flex-col justify-between">
+
+                          <div>
+
+                            <p className="text-[10px] uppercase tracking-[0.25em] text-[#b67d86]">
+
+                              {item.size}
+
+                            </p>
+
+                            <h3 className="mt-1 text-lg font-black leading-tight text-[#4f4a52]">
+
+                              {item.title}
+
+                            </h3>
+
+                            <p className="mt-2 text-sm text-[#7b7480]">
+
+                              R
+                              {item.price.toFixed(2)}
+
+                            </p>
+
+                          </div>
+
+                          {/* CONTROLS */}
+                          <div className="mt-4 flex items-center justify-between">
+
+                            <div className="flex items-center gap-3">
+
+                              <button
+                                onClick={() =>
+                                  decreaseQuantity(
+                                    item.id
+                                  )
+                                }
+                                className="
+                                  flex
+                                  h-9
+                                  w-9
+                                  items-center
+                                  justify-center
+                                  rounded-full
+                                  bg-[#f6f6f7]
+                                  font-bold
+                                "
+                              >
+                                -
+                              </button>
+
+                              <span className="font-bold text-[#4f4a52]">
+
+                                {item.quantity}
+
+                              </span>
+
+                              <button
+                                onClick={() =>
+                                  increaseQuantity(
+                                    item.id
+                                  )
+                                }
+                                className="
+                                  flex
+                                  h-9
+                                  w-9
+                                  items-center
+                                  justify-center
+                                  rounded-full
+                                  bg-[#f6f6f7]
+                                  font-bold
+                                "
+                              >
+                                +
+                              </button>
+
+                            </div>
+
+                            <button
+                              onClick={() =>
+                                removeFromCart(
+                                  item.id
+                                )
+                              }
+                              className="
+                                text-sm
+                                font-semibold
+                                text-[#ff7b9d]
+                              "
+                            >
+                              Remove
+                            </button>
+
+                          </div>
+
+                        </div>
 
                       </div>
 
-                      {/* QUANTITY */}
-                      <div className="mt-auto flex items-center gap-3 pt-5">
+                    </motion.div>
 
-                        <button
-                          onClick={() =>
-                            decreaseQuantity(item.title)
-                          }
-                          className="flex h-9 w-9 items-center justify-center rounded-full bg-black text-white"
-                        >
-                          -
-                        </button>
+                  ))}
 
-                        <span className="w-6 text-center font-bold">
-                          {item.quantity}
-                        </span>
+                </div>
 
-                        <button
-                          onClick={() =>
-                            increaseQuantity(item.title)
-                          }
-                          className="flex h-9 w-9 items-center justify-center rounded-full bg-black text-white"
-                        >
-                          +
-                        </button>
+              )}
 
-                      </div>
+            </div>
 
-                    </div>
+            {/* FOOTER */}
+            {cart.length > 0 && (
+
+              <div
+                className="
+                  relative
+                  z-10
+                  border-t
+                  border-white/40
+                  bg-white/70
+                  p-6
+                  backdrop-blur-[20px]
+                "
+              >
+
+                {/* TOTALS */}
+                <div className="space-y-3">
+
+                  <div className="flex items-center justify-between text-sm text-[#7b7480]">
+
+                    <span>Subtotal</span>
+
+                    <span>
+                      R
+                      {cartTotal.toFixed(2)}
+                    </span>
+
+                  </div>
+
+                  <div className="flex items-center justify-between text-sm text-[#7b7480]">
+
+                    <span>VAT (15%)</span>
+
+                    <span>
+                      R
+                      {vat.toFixed(2)}
+                    </span>
+
+                  </div>
+
+                  <div className="flex items-center justify-between text-sm text-[#7b7480]">
+
+                    <span>Delivery</span>
+
+                    <span>
+                      R
+                      {delivery.toFixed(2)}
+                    </span>
 
                   </div>
 
                 </div>
 
-              ))}
+                {/* FINAL */}
+                <div
+                  className="
+                    mt-5
+                    rounded-[28px]
+                    bg-gradient-to-r
+                    from-pink-50
+                    to-blue-50
+                    p-5
+                  "
+                >
 
-            </div>
+                  <div className="flex items-center justify-between">
 
-          )}
+                    <span
+                      className="
+                        text-sm
+                        uppercase
+                        tracking-[0.2em]
+                        text-[#7b7480]
+                      "
+                    >
+                      Total
+                    </span>
 
-        </div>
+                    <span className="text-3xl font-black text-[#4f4a52]">
 
-        {/* FOOTER */}
-        {cart.length > 0 && (
+                      R
+                      {finalTotal.toFixed(2)}
 
-          <div className="border-t border-black/10 bg-white p-6">
+                    </span>
 
-            {/* TOTALS */}
-            <div className="space-y-3">
+                  </div>
 
-              <div className="flex justify-between text-sm">
+                </div>
 
-                <span className="text-zinc-500">
-                  Subtotal
-                </span>
-
-                <span>
-                  R{subtotal.toFixed(2)}
-                </span>
+                {/* CHECKOUT */}
+                <Link
+                  href="/checkout"
+                  onClick={onClose}
+                  className="
+                    mt-5
+                    flex
+                    items-center
+                    justify-center
+                    rounded-full
+                    bg-gradient-to-r
+                    from-pink-400
+                    to-blue-400
+                    py-5
+                    text-lg
+                    font-bold
+                    text-white
+                    shadow-[0_15px_40px_rgba(0,0,0,0.15)]
+                  "
+                >
+                  Secure Checkout
+                </Link>
 
               </div>
 
-              <div className="flex justify-between text-sm">
+            )}
 
-                <span className="text-zinc-500">
-                  VAT (15%)
-                </span>
+          </motion.div>
 
-                <span>
-                  R{vat.toFixed(2)}
-                </span>
+        </>
 
-              </div>
+      )}
 
-              <div className="flex justify-between text-sm">
+    </AnimatePresence>
 
-                <span className="text-zinc-500">
-                  Delivery
-                </span>
-
-                <span>
-                  R{delivery.toFixed(2)}
-                </span>
-
-              </div>
-
-            </div>
-
-            {/* TOTAL */}
-            <div className="mt-6 flex items-center justify-between border-t border-black/10 pt-6">
-
-              <h3 className="text-2xl font-black uppercase">
-                Total
-              </h3>
-
-              <p className="text-2xl font-black">
-                R{total.toFixed(2)}
-              </p>
-
-            </div>
-
-            {/* WHATSAPP */}
-            <a
-              href={`https://wa.me/27841234567?text=${whatsappMessage}`}
-              target="_blank"
-              className="mt-6 flex w-full items-center justify-center rounded-full bg-black py-5 text-xs uppercase tracking-[0.3em] text-white shadow-[0_15px_40px_rgba(0,0,0,0.25)] transition duration-300 hover:scale-[1.02]"
-            >
-              Checkout On WhatsApp
-            </a>
-
-          </div>
-
-        )}
-
-      </div>
-
-    </>
   );
+
 }

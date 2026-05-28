@@ -1,31 +1,31 @@
 "use client";
 
-import { useState } from "react";
-
-import ProductModal from "./ProductModal";
-
+import { motion } from "framer-motion";
+import Image from "next/image";
 import { useFavorites } from "../context/FavoritesContext";
 
-type ProductCardProps = {
+interface ProductCardProps {
   title: string;
   subtitle: string;
   mood: string;
   profile: string;
-  season: string[];
+  season: string;
+
   notes: string[];
+
   prices: {
-    "5ml": number;
-    "10ml": number;
-    "30ml": number;
+    [key: string]: number;
   };
+
   images: {
-    "5ml": string;
-    "10ml": string;
-    "30ml": string;
+    [key: string]: string;
   };
+
   bestSeller?: boolean;
   newArrival?: boolean;
-};
+
+  onQuickAdd?: () => void;
+}
 
 export default function ProductCard({
   title,
@@ -38,183 +38,351 @@ export default function ProductCard({
   images,
   bestSeller,
   newArrival,
+  onQuickAdd,
 }: ProductCardProps) {
-
-  const [open, setOpen] =
-    useState(false);
-
   const {
-    favorites,
     addToFavorites,
-    removeFromFavorites,
+    favorites,
   } = useFavorites();
 
+  /* FAVORITES */
   const isFavorite =
     favorites.some(
       (item) =>
         item.title === title
     );
 
-  const toggleFavorite = () => {
+  /* DEFAULT IMAGE */
+  const displayImage =
+    images?.["10ml"] ||
+    Object.values(images)[0];
 
-    const product = {
-      title,
-      subtitle,
-      mood,
-      profile,
-      season,
-      notes,
-      prices,
-      images,
-      bestSeller,
-      newArrival,
-    };
+  /* DEFAULT PRICE */
+  const displayPrice =
+    prices?.["10ml"] ||
+    Object.values(prices)[0];
 
-    if (isFavorite) {
+  /* DETECT BLUE/PINK STYLE */
+  const isMale =
+    displayImage?.includes(
+      "blue"
+    );
 
-      removeFromFavorites(
-        title
-      );
+  /* DYNAMIC THEME */
+  const cardTheme = {
+    glow:
+      isMale
+        ? "bg-[#b9dcff]/60"
+        : "bg-[#ffd3df]/60",
 
-    } else {
+    badge:
+      isMale
+        ? "bg-[#78b8ff]"
+        : "bg-[#ff9fbc]",
 
-      addToFavorites(product);
+    accent:
+      isMale
+        ? "text-[#5f9fe3]"
+        : "text-[#e17f9f]",
 
-    }
+    button:
+      isMale
+        ? "bg-gradient-to-r from-[#79b9ff] to-[#a8d6ff]"
+        : "bg-gradient-to-r from-[#ff9fbc] to-[#ffc3d5]",
 
+    cardBg:
+      isMale
+        ? "from-[#eef8ff] via-[#ffffff] to-[#dff1ff]"
+        : "from-[#fff1f6] via-[#ffffff] to-[#ffe0ea]",
+
+    shadow:
+      isMale
+        ? "shadow-[0_30px_80px_rgba(121,185,255,0.18)]"
+        : "shadow-[0_30px_80px_rgba(255,159,188,0.18)]",
   };
 
   return (
-    <>
-      {/* CARD */}
-      <div className="fade-up group relative overflow-hidden rounded-[36px] bg-white p-5 shadow-[0_10px_40px_rgba(0,0,0,0.04)] transition-all duration-700 hover:-translate-y-3 hover:shadow-[0_30px_90px_rgba(0,0,0,0.14)]">
+    <motion.div
+      initial={{
+        opacity: 0,
+        y: 30,
+      }}
+      whileInView={{
+        opacity: 1,
+        y: 0,
+      }}
+      viewport={{
+        once: true,
+      }}
+      transition={{
+        duration: 0.6,
+      }}
+      whileHover={{
+        y: -6,
+      }}
+      className={`
+        group
+        relative
+        overflow-hidden
+        rounded-[32px]
+        border
+        border-white/40
+        bg-white/75
+        p-4
+        backdrop-blur-[24px]
+        transition
+        duration-500
+        ${cardTheme.shadow}
+      `}
+    >
+      {/* GLOW */}
+      <div className="absolute inset-0 opacity-0 transition duration-500 group-hover:opacity-100">
 
-        {/* SHADOW GLOW */}
-        <div className="pointer-events-none absolute inset-0 rounded-[36px] border border-white/20 opacity-0 transition duration-700 group-hover:opacity-100" />
+        <div
+          className={`
+            absolute
+            left-[-20%]
+            top-[-20%]
+            h-[200px]
+            w-[200px]
+            rounded-full
+            blur-[90px]
+            ${cardTheme.glow}
+          `}
+        />
 
-        {/* IMAGE AREA */}
-        <div className="relative flex h-[320px] items-center justify-center overflow-hidden rounded-[28px] bg-[#f3efe8]">
+        <div
+          className={`
+            absolute
+            bottom-[-20%]
+            right-[-20%]
+            h-[200px]
+            w-[200px]
+            rounded-full
+            blur-[90px]
+            ${cardTheme.glow}
+          `}
+        />
 
-          {/* BACKGROUND GLOW */}
-          <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-[#dfe7ef]/40 opacity-0 transition duration-700 group-hover:opacity-100" />
+      </div>
 
-          {/* FAVORITE */}
-          <button
-            onClick={toggleFavorite}
-            className="absolute right-5 top-5 z-20 flex h-11 w-11 items-center justify-center rounded-full bg-white/90 text-lg shadow-xl backdrop-blur-md transition duration-300 hover:scale-110"
+      {/* BADGES */}
+      <div className="absolute left-4 top-4 z-20 flex flex-col gap-2">
+
+        {bestSeller && (
+          <div
+            className={`
+              rounded-full
+              px-3
+              py-2
+              text-[8px]
+              uppercase
+              tracking-[0.18em]
+              text-white
+              shadow-lg
+              ${cardTheme.badge}
+            `}
           >
-            {isFavorite
-              ? "❤️"
-              : "🤍"}
-          </button>
+            Best Seller
+          </div>
+        )}
 
-          {/* PRODUCT IMAGE */}
-          <img
-            src={images["10ml"]}
+        {newArrival && (
+          <div
+            className={`
+              rounded-full
+              px-3
+              py-2
+              text-[8px]
+              uppercase
+              tracking-[0.18em]
+              text-white
+              shadow-lg
+              ${cardTheme.badge}
+            `}
+          >
+            New
+          </div>
+        )}
+
+      </div>
+
+      {/* FAVORITE */}
+      <button
+        onClick={() =>
+          addToFavorites({
+            title,
+            image: displayImage,
+            price: Number(displayPrice),
+          })
+        }
+        className="
+          absolute
+          right-4
+          top-4
+          z-20
+          flex
+          h-11
+          w-11
+          items-center
+          justify-center
+          rounded-full
+          bg-white/75
+          backdrop-blur-[20px]
+          transition
+          duration-300
+          hover:scale-110
+        "
+      >
+        <span className="text-base">
+          {isFavorite
+            ? "♥"
+            : "♡"}
+        </span>
+      </button>
+
+      {/* IMAGE */}
+      <div
+        onClick={() =>
+          onQuickAdd?.()
+        }
+        className={`
+          relative
+          z-10
+          flex
+          cursor-pointer
+          items-center
+          justify-center
+          overflow-hidden
+          rounded-[28px]
+          bg-gradient-to-br
+          ${cardTheme.cardBg}
+          p-6
+        `}
+      >
+        <motion.div
+          whileHover={{
+            scale: 1.05,
+          }}
+          transition={{
+            type: "spring",
+            stiffness: 220,
+          }}
+        >
+          <Image
+            src={displayImage}
             alt={title}
-            className="object-contain transition duration-700 group-hover:scale-110 group-hover:-translate-y-2"
+            width={240}
+            height={240}
+            className="object-contain"
             style={{
-              height: "220px",
               width: "auto",
+              height: "240px",
             }}
+            priority
           />
+        </motion.div>
+      </div>
 
-          {/* QUICK VIEW */}
-          <button
-            onClick={() =>
-              setOpen(true)
-            }
-            className="absolute bottom-6 translate-y-8 rounded-full bg-white px-6 py-4 text-xs uppercase tracking-[0.25em] text-black opacity-0 shadow-2xl transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100 hover:scale-105"
-          >
-            Quick View
-          </button>
+      {/* CONTENT */}
+      <div className="relative z-10 mt-5">
 
-        </div>
-
-        {/* BADGES */}
-        <div className="mt-4 flex gap-2">
-
-          {bestSeller && (
-
-            <span className="rounded-full bg-black px-3 py-2 text-[10px] uppercase tracking-[0.2em] text-white shadow-lg">
-              Best Seller
-            </span>
-
-          )}
-
-          {newArrival && (
-
-            <span className="rounded-full bg-[#b67d73] px-3 py-2 text-[10px] uppercase tracking-[0.2em] text-white shadow-lg">
-              New
-            </span>
-
-          )}
-
-        </div>
-
-        {/* TITLE */}
-        <h3 className="mt-5 text-4xl font-black uppercase leading-[0.95] tracking-[-0.04em] transition duration-500 group-hover:text-[#7a8fa3]">
-          {title}
-        </h3>
-
-        {/* DESCRIPTION */}
-        <p className="mt-5 text-sm leading-8 text-zinc-600">
+        <p
+          className={`
+            text-[10px]
+            uppercase
+            tracking-[0.25em]
+            ${cardTheme.accent}
+          `}
+        >
           {subtitle}
         </p>
 
-        {/* MOOD */}
-        <p className="mt-4 text-xs uppercase tracking-[0.25em] text-zinc-500">
+        <h3 className="mt-2 text-2xl font-black uppercase tracking-[-0.05em] text-[#4f4a52]">
+          {title}
+        </h3>
+
+        <p className="mt-3 text-sm leading-relaxed text-[#7b7480]">
           {mood}
         </p>
 
-        {/* PRICE */}
-        <div className="mt-8 flex items-end justify-between">
+        {/* NOTES */}
+        <div className="mt-4 flex flex-wrap gap-2">
+
+          {notes.map((note) => (
+            <span
+              key={note}
+              className="
+                rounded-full
+                bg-white/80
+                px-3
+                py-2
+                text-[10px]
+                uppercase
+                tracking-[0.15em]
+                text-[#6d6670]
+                shadow-sm
+              "
+            >
+              {note}
+            </span>
+          ))}
+
+        </div>
+
+        {/* PROFILE */}
+        <div className="mt-5 flex items-center justify-between text-[10px] uppercase tracking-[0.15em] text-[#8f8792]">
+
+          <span>{profile}</span>
+
+          <span>{season}</span>
+
+        </div>
+
+        {/* PRICE + BUTTON */}
+        <div className="mt-6 flex items-center justify-between">
 
           <div>
 
-            <p className="text-xs uppercase tracking-[0.25em] text-zinc-500">
+            <p className="text-[10px] uppercase tracking-[0.15em] text-[#9d97a2]">
               Starting From
             </p>
 
-            <h4 className="mt-2 text-4xl font-black text-[#b67d73] transition duration-300 group-hover:scale-105">
-              R{prices["5ml"]}
-            </h4>
+            <p className="text-2xl font-black text-[#4f4a52]">
+              R{Number(displayPrice).toFixed(2)}
+            </p>
 
           </div>
 
-          {/* BUTTON */}
-          <button
+          <motion.button
+            whileTap={{
+              scale: 0.96,
+            }}
             onClick={() =>
-              setOpen(true)
+              onQuickAdd?.()
             }
-            className="rounded-full bg-black px-6 py-4 text-xs uppercase tracking-[0.25em] text-white shadow-xl transition duration-300 hover:scale-105 hover:bg-[#1a1a1a]"
+            className={`
+              rounded-full
+              px-6
+              py-4
+              text-sm
+              font-bold
+              text-white
+              shadow-xl
+              transition
+              duration-300
+              hover:scale-[1.02]
+              hover:brightness-105
+              ${cardTheme.button}
+            `}
           >
-            View Product
-          </button>
+            Quick Add
+          </motion.button>
 
         </div>
 
       </div>
 
-      {/* MODAL */}
-      {open && (
-
-        <ProductModal
-          title={title}
-          subtitle={subtitle}
-          mood={mood}
-          profile={profile}
-          season={season}
-          notes={notes}
-          prices={prices}
-          images={images}
-          onClose={() =>
-            setOpen(false)
-          }
-        />
-
-      )}
-
-    </>
+    </motion.div>
   );
 }

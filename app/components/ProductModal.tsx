@@ -1,14 +1,16 @@
 "use client";
 
+import { useState } from "react";
+
 import {
-  useEffect,
-  useState,
-} from "react";
+  motion,
+  AnimatePresence,
+} from "framer-motion";
 
 import { useCart } from "../context/CartContext";
 import { useFavorites } from "../context/FavoritesContext";
 
-type ProductModalProps = {
+interface ProductModalProps {
   title: string;
   subtitle: string;
   mood: string;
@@ -26,7 +28,7 @@ type ProductModalProps = {
     "30ml": string;
   };
   onClose: () => void;
-};
+}
 
 export default function ProductModal({
   title,
@@ -40,16 +42,6 @@ export default function ProductModal({
   onClose,
 }: ProductModalProps) {
 
-  const {
-    addToCart,
-  } = useCart();
-
-  const {
-    favorites,
-    addToFavorites,
-    removeFromFavorites,
-  } = useFavorites();
-
   const [selectedSize, setSelectedSize] =
     useState<
       "5ml" |
@@ -57,71 +49,43 @@ export default function ProductModal({
       "30ml"
     >("10ml");
 
+  const [quantity, setQuantity] =
+    useState(1);
+
+  const { addToCart } =
+    useCart();
+
+  const {
+    favorites,
+    addToFavorites,
+    removeFromFavorites,
+  } = useFavorites();
+
   const isFavorite =
     favorites.some(
       (item) =>
         item.title === title
     );
 
-  // LOCK PAGE SCROLL
-  useEffect(() => {
-
-    const scrollY =
-      window.scrollY;
-
-    document.body.style.position =
-      "fixed";
-
-    document.body.style.top =
-      `-${scrollY}px`;
-
-    document.body.style.left =
-      "0";
-
-    document.body.style.right =
-      "0";
-
-    document.body.style.width =
-      "100%";
-
-    return () => {
-
-      document.body.style.position =
-        "";
-
-      document.body.style.top =
-        "";
-
-      document.body.style.left =
-        "";
-
-      document.body.style.right =
-        "";
-
-      document.body.style.width =
-        "";
-
-      window.scrollTo(
-        0,
-        scrollY
-      );
-
-    };
-
-  }, []);
-
   const handleFavorite = () => {
 
     if (isFavorite) {
 
-      removeFromFavorites(title);
+      removeFromFavorites(
+        title
+      );
 
     } else {
 
       addToFavorites({
         title,
-        image:
-          images[selectedSize],
+        subtitle,
+        mood,
+        profile,
+        season,
+        notes,
+        prices,
+        images,
       });
 
     }
@@ -136,218 +100,436 @@ export default function ProductModal({
         images[selectedSize],
       price:
         prices[selectedSize],
-      quantity: 1,
+      quantity,
     });
 
   };
 
   return (
-    <div className="fixed inset-0 z-[999] overflow-y-auto bg-black/60 backdrop-blur-md">
 
-      {/* CLICK OUTSIDE */}
-      <div
+    <AnimatePresence>
+
+      {/* BACKDROP */}
+      <motion.div
+        initial={{
+          opacity: 0,
+        }}
+        animate={{
+          opacity: 1,
+        }}
+        exit={{
+          opacity: 0,
+        }}
         onClick={onClose}
-        className="absolute inset-0"
-      />
-
-      {/* MODAL WRAPPER */}
-      <div className="flex min-h-screen items-start justify-center p-6">
+        className="fixed inset-0 z-50 bg-black/40 backdrop-blur-md"
+      >
 
         {/* MODAL */}
-        <div className="relative my-10 w-full max-w-5xl overflow-hidden rounded-[40px] bg-[#f5f1eb] shadow-[0_30px_120px_rgba(0,0,0,0.35)] animate-[fadeUp_0.4s_ease]">
+        <motion.div
+          initial={{
+            opacity: 0,
+            scale: 0.92,
+            y: 40,
+          }}
+          animate={{
+            opacity: 1,
+            scale: 1,
+            y: 0,
+          }}
+          exit={{
+            opacity: 0,
+            scale: 0.92,
+            y: 30,
+          }}
+          transition={{
+            duration: 0.45,
+            ease: "easeOut",
+          }}
+          onClick={(e) =>
+            e.stopPropagation()
+          }
+          className="absolute left-1/2 top-1/2 flex max-h-[94vh] w-[95%] max-w-7xl -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-[42px] border border-white/40 bg-white/80 shadow-[0_40px_120px_rgba(216,156,164,0.25)] backdrop-blur-2xl"
+        >
+
+          {/* GLOWS */}
+          <motion.div
+            animate={{
+              x: [0, 30, 0],
+              y: [0, 20, 0],
+            }}
+            transition={{
+              duration: 8,
+              repeat: Infinity,
+            }}
+            className="absolute left-[-120px] top-[-120px] h-[320px] w-[320px] rounded-full bg-[#f7d7dc]/60 blur-[120px]"
+          />
+
+          <motion.div
+            animate={{
+              x: [0, -30, 0],
+              y: [0, 30, 0],
+            }}
+            transition={{
+              duration: 10,
+              repeat: Infinity,
+            }}
+            className="absolute bottom-[-120px] right-[-120px] h-[320px] w-[320px] rounded-full bg-[#dce8f8]/70 blur-[120px]"
+          />
 
           {/* CLOSE */}
           <button
             onClick={onClose}
-            className="absolute right-6 top-6 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-black text-white transition duration-300 hover:scale-105"
+            className="absolute right-6 top-6 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-[#eef3f8] text-[#7a92af] transition duration-300 hover:scale-105"
           >
             ✕
           </button>
 
-          {/* FAVORITE */}
-          <button
-            onClick={handleFavorite}
-            className={`absolute left-6 top-6 z-50 flex h-12 w-12 items-center justify-center rounded-full transition duration-300 ${
-              isFavorite
-                ? "bg-[#b67d73] text-white"
-                : "bg-white text-black"
-            }`}
-          >
-            ♥
-          </button>
+          <div className="grid w-full overflow-y-auto lg:grid-cols-2">
 
-          <div className="grid md:grid-cols-2">
+            {/* LEFT */}
+            <div className="relative flex min-h-[720px] items-center justify-center overflow-hidden bg-gradient-to-br from-[#f8f3f5] via-[#f5f1eb] to-[#eef3f8] p-10">
 
-            {/* LEFT SIDE */}
-            <div className="relative flex items-center justify-center bg-[#ece7df] p-10">
+              {/* FLOATING GLOW */}
+              <motion.div
+                animate={{
+                  scale: [1, 1.06, 1],
+                }}
+                transition={{
+                  duration: 5,
+                  repeat: Infinity,
+                }}
+                className="absolute h-[360px] w-[360px] rounded-full bg-[#f4d8de]/70 blur-[120px]"
+              />
 
-              {/* GLOW */}
-              <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-[#dfe7ef]/40" />
-
-              <img
-                src={images[selectedSize]}
+              {/* IMAGE */}
+              <motion.img
+                key={selectedSize}
+                initial={{
+                  opacity: 0,
+                  scale: 0.85,
+                  rotate: -8,
+                }}
+                animate={{
+                  opacity: 1,
+                  scale: 1,
+                  rotate: 0,
+                }}
+                transition={{
+                  duration: 0.5,
+                }}
+                whileHover={{
+                  scale: 1.05,
+                  rotate: -2,
+                }}
+                src={
+                  images[selectedSize]
+                }
                 alt={title}
-                className="relative z-10 max-h-[520px] object-contain transition duration-700 hover:scale-105"
+                className="relative z-10 max-h-[560px] object-contain"
               />
 
             </div>
 
-            {/* RIGHT SIDE */}
-            <div className="p-10">
+            {/* RIGHT */}
+            <div className="relative flex flex-col justify-center p-8 lg:p-12">
 
-              {/* BRAND */}
-              <p className="text-xs uppercase tracking-[0.35em] text-zinc-500">
-                Maison Skye & Rose
-              </p>
+              {/* TOP BADGES */}
+              <motion.div
+                initial={{
+                  opacity: 0,
+                  y: 20,
+                }}
+                animate={{
+                  opacity: 1,
+                  y: 0,
+                }}
+                transition={{
+                  delay: 0.2,
+                }}
+                className="flex flex-wrap items-center gap-3"
+              >
+
+                <motion.button
+                  whileTap={{
+                    scale: 0.95,
+                  }}
+                  whileHover={{
+                    scale: 1.05,
+                  }}
+                  onClick={
+                    handleFavorite
+                  }
+                  className="rounded-full bg-[#f8f3f5] px-5 py-3 text-xs uppercase tracking-[0.25em] text-[#b67d86]"
+                >
+
+                  {isFavorite
+                    ? "Saved ❤️"
+                    : "Save ♡"}
+
+                </motion.button>
+
+                <div className="rounded-full bg-[#eef3f8] px-5 py-3 text-xs uppercase tracking-[0.25em] text-[#7a92af]">
+
+                  Luxury Inspired
+
+                </div>
+
+              </motion.div>
 
               {/* TITLE */}
-              <h2 className="mt-4 text-5xl font-black uppercase leading-none tracking-[-0.05em]">
+              <motion.h2
+                initial={{
+                  opacity: 0,
+                  y: 20,
+                }}
+                animate={{
+                  opacity: 1,
+                  y: 0,
+                }}
+                transition={{
+                  delay: 0.3,
+                }}
+                className="mt-8 text-5xl font-black uppercase leading-[0.88] tracking-[-0.06em] text-[#4f4a52] md:text-7xl"
+              >
+
                 {title}
-              </h2>
+
+              </motion.h2>
 
               {/* DESCRIPTION */}
-              <p className="mt-6 leading-8 text-zinc-600">
+              <motion.p
+                initial={{
+                  opacity: 0,
+                  y: 20,
+                }}
+                animate={{
+                  opacity: 1,
+                  y: 0,
+                }}
+                transition={{
+                  delay: 0.4,
+                }}
+                className="mt-7 max-w-2xl text-lg leading-9 text-[#7b7480]"
+              >
+
                 {subtitle}
-              </p>
 
-              {/* MOOD */}
-              <div className="mt-10">
+              </motion.p>
 
-                <p className="text-xs uppercase tracking-[0.25em] text-zinc-500">
-                  Mood
-                </p>
+              {/* INFO */}
+              <motion.div
+                initial={{
+                  opacity: 0,
+                  y: 20,
+                }}
+                animate={{
+                  opacity: 1,
+                  y: 0,
+                }}
+                transition={{
+                  delay: 0.5,
+                }}
+                className="mt-10 grid gap-5 md:grid-cols-2"
+              >
 
-                <h3 className="mt-3 text-2xl font-bold">
-                  {mood}
-                </h3>
+                <div className="rounded-[28px] bg-[#f8f3f5] p-6">
 
-              </div>
+                  <p className="text-[10px] uppercase tracking-[0.3em] text-[#b67d86]">
+                    Mood
+                  </p>
 
-              {/* PROFILE */}
-              <div className="mt-10">
-
-                <p className="text-xs uppercase tracking-[0.25em] text-zinc-500">
-                  Fragrance Profile
-                </p>
-
-                <p className="mt-4 leading-8 text-zinc-700">
-                  {profile}
-                </p>
-
-              </div>
-
-              {/* NOTES */}
-              <div className="mt-10">
-
-                <p className="mb-4 text-xs uppercase tracking-[0.25em] text-zinc-500">
-                  Notes
-                </p>
-
-                <div className="flex flex-wrap gap-2">
-
-                  {notes.map((note) => (
-
-                    <span
-                      key={note}
-                      className="rounded-full bg-white px-4 py-2 text-xs uppercase tracking-[0.15em] shadow-sm"
-                    >
-                      {note}
-                    </span>
-
-                  ))}
+                  <h3 className="mt-3 text-xl font-black text-[#4f4a52]">
+                    {mood}
+                  </h3>
 
                 </div>
 
-              </div>
+                <div className="rounded-[28px] bg-[#eef3f8] p-6">
 
-              {/* SEASONS */}
-              <div className="mt-10">
+                  <p className="text-[10px] uppercase tracking-[0.3em] text-[#7a92af]">
+                    Profile
+                  </p>
 
-                <p className="mb-4 text-xs uppercase tracking-[0.25em] text-zinc-500">
-                  Best Seasons
-                </p>
-
-                <div className="flex flex-wrap gap-2">
-
-                  {season.map((item) => (
-
-                    <span
-                      key={item}
-                      className="rounded-full bg-[#dfe7ef] px-4 py-2 text-xs uppercase tracking-[0.15em] text-[#5f7386]"
-                    >
-                      {item}
-                    </span>
-
-                  ))}
+                  <h3 className="mt-3 text-xl font-black text-[#4f4a52]">
+                    {profile}
+                  </h3>
 
                 </div>
 
-              </div>
+              </motion.div>
 
-              {/* SIZE */}
-              <div className="mt-12">
+              {/* SIZE SELECTOR */}
+              <motion.div
+                initial={{
+                  opacity: 0,
+                  y: 20,
+                }}
+                animate={{
+                  opacity: 1,
+                  y: 0,
+                }}
+                transition={{
+                  delay: 0.6,
+                }}
+                className="mt-12"
+              >
 
-                <p className="mb-5 text-xs uppercase tracking-[0.25em] text-zinc-500">
+                <p className="text-[10px] uppercase tracking-[0.35em] text-[#7b7480]">
                   Select Size
                 </p>
 
-                <div className="grid grid-cols-3 gap-4">
+                <div className="mt-5 grid grid-cols-3 gap-3">
 
-                  {Object.keys(prices).map((size) => (
+                  {(
+                    [
+                      "5ml",
+                      "10ml",
+                      "30ml",
+                    ] as const
+                  ).map((size) => (
 
-                    <button
+                    <motion.button
+                      whileHover={{
+                        y: -4,
+                      }}
+                      whileTap={{
+                        scale: 0.97,
+                      }}
                       key={size}
                       onClick={() =>
                         setSelectedSize(
-                          size as
-                            | "5ml"
-                            | "10ml"
-                            | "30ml"
+                          size
                         )
                       }
-                      className={`rounded-[24px] p-5 text-center shadow-sm transition duration-300 ${
+                      className={`rounded-[24px] border p-5 transition duration-300 ${
                         selectedSize === size
-                          ? "bg-black text-white shadow-2xl"
-                          : "bg-white hover:bg-black hover:text-white"
+                          ? "border-[#d89ca4] bg-[#d89ca4] text-white shadow-[0_15px_40px_rgba(216,156,164,0.22)]"
+                          : "border-[#efe4e7] bg-white text-[#7b7480] hover:bg-[#8fa8c7] hover:text-white"
                       }`}
                     >
 
-                      <p className="text-xs uppercase tracking-[0.2em]">
+                      <p className="text-[10px] uppercase tracking-[0.2em]">
                         {size}
                       </p>
 
-                      <h4 className="mt-2 text-3xl font-black">
-                        R{
-                          prices[
-                            size as keyof typeof prices
-                          ]
-                        }
-                      </h4>
+                      <h3 className="mt-2 text-2xl font-black">
+                        R{prices[size]}
+                      </h3>
 
-                    </button>
+                    </motion.button>
 
                   ))}
 
                 </div>
 
-              </div>
+              </motion.div>
 
-              {/* BUTTON */}
-              <button
-                onClick={handleAddToCart}
-                className="mt-12 w-full rounded-full bg-black py-5 text-sm uppercase tracking-[0.25em] text-white shadow-[0_20px_50px_rgba(0,0,0,0.3)] transition duration-300 hover:scale-[1.02]"
+              {/* QUANTITY */}
+              <motion.div
+                initial={{
+                  opacity: 0,
+                  y: 20,
+                }}
+                animate={{
+                  opacity: 1,
+                  y: 0,
+                }}
+                transition={{
+                  delay: 0.7,
+                }}
+                className="mt-10 flex items-center justify-between rounded-full bg-[#f8f3f5] px-5 py-4"
               >
-                Add To Bag
-              </button>
+
+                <p className="text-[10px] uppercase tracking-[0.25em] text-[#7b7480]">
+                  Quantity
+                </p>
+
+                <div className="flex items-center gap-4">
+
+                  <motion.button
+                    whileTap={{
+                      scale: 0.9,
+                    }}
+                    onClick={() =>
+                      setQuantity(
+                        (prev) =>
+                          prev > 1
+                            ? prev - 1
+                            : 1
+                      )
+                    }
+                    className="flex h-10 w-10 items-center justify-center rounded-full bg-[#8fa8c7] text-lg text-white"
+                  >
+                    -
+                  </motion.button>
+
+                  <span className="w-6 text-center text-lg font-black text-[#4f4a52]">
+                    {quantity}
+                  </span>
+
+                  <motion.button
+                    whileTap={{
+                      scale: 0.9,
+                    }}
+                    onClick={() =>
+                      setQuantity(
+                        (prev) =>
+                          prev + 1
+                      )
+                    }
+                    className="flex h-10 w-10 items-center justify-center rounded-full bg-[#8fa8c7] text-lg text-white"
+                  >
+                    +
+                  </motion.button>
+
+                </div>
+
+              </motion.div>
+
+              {/* CTA */}
+              <motion.button
+                initial={{
+                  opacity: 0,
+                  y: 20,
+                }}
+                animate={{
+                  opacity: 1,
+                  y: 0,
+                }}
+                transition={{
+                  delay: 0.8,
+                }}
+                whileHover={{
+                  scale: 1.02,
+                  y: -2,
+                }}
+                whileTap={{
+                  scale: 0.98,
+                }}
+                onClick={
+                  handleAddToCart
+                }
+                className="mt-10 rounded-full bg-[#d89ca4] py-6 text-xs uppercase tracking-[0.35em] text-white shadow-[0_20px_60px_rgba(216,156,164,0.24)]"
+              >
+
+                Add To Bag · R
+                {
+                  prices[
+                    selectedSize
+                  ] * quantity
+                }
+
+              </motion.button>
 
             </div>
 
           </div>
 
-        </div>
+        </motion.div>
 
-      </div>
+      </motion.div>
 
-    </div>
+    </AnimatePresence>
+
   );
 }
