@@ -1,26 +1,26 @@
 "use client";
 
+import { useState } from "react";
+
 import Navbar from "../../components/Navbar";
 import ProductCard from "../../components/ProductCard";
+import QuickAddModal from "../../components/QuickAddModal";
 
 import { fragrances } from "../../data/fragrances";
 
 export default function SkyeCollectionPage() {
+  const [selectedFragrance, setSelectedFragrance] =
+    useState<any>(null);
 
-  const products =
-    fragrances.filter(
-      (item) =>
-        item.collection ===
-        "Skye"
-    );
+  const products = fragrances.filter(
+    (item) => item.collection === "Skye"
+  );
 
   return (
     <main className="fade-up min-h-screen bg-[#f5f1eb]">
-
       <Navbar />
 
       <section className="mx-auto max-w-7xl px-6 py-20">
-
         <p className="text-xs uppercase tracking-[0.45em] text-[#7a8fa3]">
           For Him
         </p>
@@ -37,13 +37,11 @@ export default function SkyeCollectionPage() {
         </p>
 
         <div className="mt-20 grid gap-8 md:grid-cols-2 xl:grid-cols-3">
-
           {products.map((fragrance) => (
-
             <ProductCard
-              key={fragrance.id}
+              key={fragrance.title}
               title={fragrance.title}
-              subtitle={fragrance.description}
+              subtitle={fragrance.subtitle}
               mood={fragrance.mood}
               profile={fragrance.profile}
               season={fragrance.season}
@@ -52,14 +50,25 @@ export default function SkyeCollectionPage() {
               images={fragrance.images}
               bestSeller={fragrance.bestSeller}
               newArrival={fragrance.newArrival}
+              onQuickAdd={() =>
+                setSelectedFragrance(fragrance)
+              }
             />
-
           ))}
-
         </div>
-
       </section>
 
+      {selectedFragrance && (
+        <QuickAddModal
+          open={true}
+          onClose={() =>
+            setSelectedFragrance(null)
+          }
+          title={selectedFragrance.title}
+          images={selectedFragrance.images}
+          prices={selectedFragrance.prices}
+        />
+      )}
     </main>
   );
 }

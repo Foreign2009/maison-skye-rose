@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
+import { useState } from "react";
 
 import {
   motion,
@@ -32,9 +32,23 @@ export default function CartDrawer({
   const vat =
     cartTotal * 0.15;
 
+  const [deliveryArea, setDeliveryArea] =
+    useState("Cape Town Metro");
+
+  const deliveryRates = {
+    "Cape Town Metro": 100,
+    "Western Cape Regional": 150,
+    Johannesburg: 180,
+    Durban: 180,
+    "Other Major Cities": 200,
+    "Outlying Area": 300,
+  };
+
   const delivery =
     cartTotal > 0
-      ? 100
+      ? deliveryRates[
+          deliveryArea as keyof typeof deliveryRates
+        ]
       : 0;
 
   const finalTotal =
@@ -388,6 +402,35 @@ export default function CartDrawer({
                 "
               >
 
+                <div className="mb-5">
+                  <label className="mb-2 block text-sm font-semibold text-[#4f4a52]">
+                    Delivery Area
+                  </label>
+
+                  <select
+                    value={deliveryArea}
+                    onChange={(e) =>
+                      setDeliveryArea(e.target.value)
+                    }
+                    className="
+                      w-full
+                      rounded-2xl
+                      border
+                      border-gray-200
+                      bg-white
+                      p-4
+                      text-sm
+                    "
+                  >
+                    <option>Cape Town Metro</option>
+                    <option>Western Cape Regional</option>
+                    <option>Johannesburg</option>
+                    <option>Durban</option>
+                    <option>Other Major Cities</option>
+                    <option>Outlying Area</option>
+                  </select>
+                </div>
+
                 {/* TOTALS */}
                 <div className="space-y-3">
 
@@ -463,9 +506,44 @@ export default function CartDrawer({
                 </div>
 
                 {/* CHECKOUT */}
-                <Link
-                  href="/checkout"
-                  onClick={onClose}
+                <button
+                  onClick={() => {
+                    const orderLines = cart
+                      .map(
+                        (item) =>
+                          `• ${item.title} (${item.size}) x${item.quantity} - R${(
+                            item.price * item.quantity
+                          ).toFixed(2)}`
+                      )
+                      .join("\n");
+
+                    const message = `🌹 Maison Skye & Rose Order
+
+${orderLines}
+
+Delivery Area:
+${deliveryArea}
+
+Subtotal: R${cartTotal.toFixed(2)}
+VAT (15%): R${vat.toFixed(2)}
+Delivery: R${delivery.toFixed(2)}
+
+Total: R${finalTotal.toFixed(2)}
+
+Name:
+Delivery Address:
+Contact Number:
+`;
+
+                    window.open(
+                      `https://wa.me/27696863952?text=${encodeURIComponent(
+                        message
+                      )}`,
+                      "_blank"
+                    );
+
+                    onClose();
+                  }}
                   className="
                     mt-5
                     flex
@@ -480,10 +558,11 @@ export default function CartDrawer({
                     font-bold
                     text-white
                     shadow-[0_15px_40px_rgba(0,0,0,0.15)]
+                    w-full
                   "
                 >
-                  Secure Checkout
-                </Link>
+                  Checkout on WhatsApp
+                </button>
 
               </div>
 

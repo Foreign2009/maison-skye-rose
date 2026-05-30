@@ -1,31 +1,31 @@
 "use client";
 
-import { motion } from "framer-motion";
 import Image from "next/image";
+import { Heart } from "lucide-react";
+
 import { useFavorites } from "../context/FavoritesContext";
 
-interface ProductCardProps {
+type ProductCardProps = {
   title: string;
   subtitle: string;
   mood: string;
   profile: string;
   season: string;
-
   notes: string[];
-
   prices: {
-    [key: string]: number;
+    "5ml": number;
+    "10ml": number;
+    "30ml": number;
   };
-
   images: {
-    [key: string]: string;
+    "5ml": string;
+    "10ml": string;
+    "30ml": string;
   };
-
   bestSeller?: boolean;
   newArrival?: boolean;
-
   onQuickAdd?: () => void;
-}
+};
 
 export default function ProductCard({
   title,
@@ -42,347 +42,200 @@ export default function ProductCard({
 }: ProductCardProps) {
   const {
     addToFavorites,
-    favorites,
+    removeFromFavorites,
+    isFavorite,
   } = useFavorites();
 
-  /* FAVORITES */
-  const isFavorite =
-    favorites.some(
-      (item) =>
-        item.title === title
-    );
+  const favorite = isFavorite(title);
 
-  /* DEFAULT IMAGE */
-  const displayImage =
-    images?.["10ml"] ||
-    Object.values(images)[0];
+  const handleFavorite = () => {
+    if (favorite) {
+      removeFromFavorites(title);
+      return;
+    }
 
-  /* DEFAULT PRICE */
-  const displayPrice =
-    prices?.["10ml"] ||
-    Object.values(prices)[0];
-
-  /* DETECT BLUE/PINK STYLE */
-  const isMale =
-    displayImage?.includes(
-      "blue"
-    );
-
-  /* DYNAMIC THEME */
-  const cardTheme = {
-    glow:
-      isMale
-        ? "bg-[#b9dcff]/60"
-        : "bg-[#ffd3df]/60",
-
-    badge:
-      isMale
-        ? "bg-[#78b8ff]"
-        : "bg-[#ff9fbc]",
-
-    accent:
-      isMale
-        ? "text-[#5f9fe3]"
-        : "text-[#e17f9f]",
-
-    button:
-      isMale
-        ? "bg-gradient-to-r from-[#79b9ff] to-[#a8d6ff]"
-        : "bg-gradient-to-r from-[#ff9fbc] to-[#ffc3d5]",
-
-    cardBg:
-      isMale
-        ? "from-[#eef8ff] via-[#ffffff] to-[#dff1ff]"
-        : "from-[#fff1f6] via-[#ffffff] to-[#ffe0ea]",
-
-    shadow:
-      isMale
-        ? "shadow-[0_30px_80px_rgba(121,185,255,0.18)]"
-        : "shadow-[0_30px_80px_rgba(255,159,188,0.18)]",
+    addToFavorites({
+      title,
+      subtitle,
+      mood,
+      profile,
+      season: [season],
+      notes,
+      prices,
+      images,
+      image: images["10ml"],
+      bestSeller,
+      newArrival,
+    });
   };
 
   return (
-    <motion.div
-      initial={{
-        opacity: 0,
-        y: 30,
-      }}
-      whileInView={{
-        opacity: 1,
-        y: 0,
-      }}
-      viewport={{
-        once: true,
-      }}
-      transition={{
-        duration: 0.6,
-      }}
-      whileHover={{
-        y: -6,
-      }}
-      className={`
-        group
+    <div
+      className="
         relative
         overflow-hidden
         rounded-[32px]
-        border
-        border-white/40
-        bg-white/75
-        p-4
-        backdrop-blur-[24px]
-        transition
-        duration-500
-        ${cardTheme.shadow}
-      `}
+        bg-white
+        p-6
+        shadow-[0_20px_60px_rgba(0,0,0,0.08)]
+        transition-all
+        duration-300
+        hover:-translate-y-2
+      "
     >
-      {/* GLOW */}
-      <div className="absolute inset-0 opacity-0 transition duration-500 group-hover:opacity-100">
+      {(bestSeller || newArrival) && (
+        <div className="absolute right-4 top-4 z-20">
+          {bestSeller && (
+            <span
+              className="
+                rounded-full
+                bg-black
+                px-3
+                py-1
+                text-xs
+                font-bold
+                text-white
+              "
+            >
+              Best Seller
+            </span>
+          )}
 
-        <div
-          className={`
-            absolute
-            left-[-20%]
-            top-[-20%]
-            h-[200px]
-            w-[200px]
-            rounded-full
-            blur-[90px]
-            ${cardTheme.glow}
-          `}
-        />
+          {!bestSeller && newArrival && (
+            <span
+              className="
+                rounded-full
+                bg-pink-500
+                px-3
+                py-1
+                text-xs
+                font-bold
+                text-white
+              "
+            >
+              New
+            </span>
+          )}
+        </div>
+      )}
 
-        <div
-          className={`
-            absolute
-            bottom-[-20%]
-            right-[-20%]
-            h-[200px]
-            w-[200px]
-            rounded-full
-            blur-[90px]
-            ${cardTheme.glow}
-          `}
-        />
-
-      </div>
-
-      {/* BADGES */}
-      <div className="absolute left-4 top-4 z-20 flex flex-col gap-2">
-
-        {bestSeller && (
-          <div
-            className={`
-              rounded-full
-              px-3
-              py-2
-              text-[8px]
-              uppercase
-              tracking-[0.18em]
-              text-white
-              shadow-lg
-              ${cardTheme.badge}
-            `}
-          >
-            Best Seller
-          </div>
-        )}
-
-        {newArrival && (
-          <div
-            className={`
-              rounded-full
-              px-3
-              py-2
-              text-[8px]
-              uppercase
-              tracking-[0.18em]
-              text-white
-              shadow-lg
-              ${cardTheme.badge}
-            `}
-          >
-            New
-          </div>
-        )}
-
-      </div>
-
-      {/* FAVORITE */}
       <button
-        onClick={() =>
-          addToFavorites({
-            title,
-            image: displayImage,
-            price: Number(displayPrice),
-          })
-        }
+        onClick={handleFavorite}
         className="
           absolute
-          right-4
+          left-4
           top-4
           z-20
           flex
-          h-11
-          w-11
+          h-10
+          w-10
           items-center
           justify-center
           rounded-full
-          bg-white/75
-          backdrop-blur-[20px]
-          transition
-          duration-300
-          hover:scale-110
+          bg-white
+          shadow-md
         "
       >
-        <span className="text-base">
-          {isFavorite
-            ? "♥"
-            : "♡"}
-        </span>
+        <Heart
+          size={18}
+          fill={favorite ? "currentColor" : "none"}
+        />
       </button>
 
-      {/* IMAGE */}
       <div
-        onClick={() =>
-          onQuickAdd?.()
-        }
-        className={`
-          relative
-          z-10
+        onClick={() => onQuickAdd?.()}
+        className="
           flex
           cursor-pointer
           items-center
           justify-center
-          overflow-hidden
-          rounded-[28px]
+          rounded-[24px]
           bg-gradient-to-br
-          ${cardTheme.cardBg}
+          from-pink-50
+          to-blue-50
           p-6
-        `}
+        "
       >
-        <motion.div
-          whileHover={{
-            scale: 1.05,
+        <Image
+          src={images["10ml"]}
+          alt={title}
+          width={240}
+          height={240}
+          className="object-contain"
+          style={{
+            width: "auto",
+            height: "240px",
           }}
-          transition={{
-            type: "spring",
-            stiffness: 220,
-          }}
-        >
-          <Image
-            src={displayImage}
-            alt={title}
-            width={240}
-            height={240}
-            className="object-contain"
-            style={{
-              width: "auto",
-              height: "240px",
-            }}
-            priority
-          />
-        </motion.div>
+          priority
+        />
       </div>
 
-      {/* CONTENT */}
-      <div className="relative z-10 mt-5">
-
-        <p
-          className={`
-            text-[10px]
-            uppercase
-            tracking-[0.25em]
-            ${cardTheme.accent}
-          `}
-        >
-          {subtitle}
-        </p>
-
-        <h3 className="mt-2 text-2xl font-black uppercase tracking-[-0.05em] text-[#4f4a52]">
+      <div className="mt-6">
+        <h3 className="text-2xl font-black text-[#4f4a52]">
           {title}
         </h3>
 
-        <p className="mt-3 text-sm leading-relaxed text-[#7b7480]">
+        <p className="mt-2 text-sm font-semibold text-[#d89ca4]">
+          {subtitle}
+        </p>
+
+        <p className="mt-4 text-sm leading-7 text-[#7b7480]">
           {mood}
         </p>
 
-        {/* NOTES */}
-        <div className="mt-4 flex flex-wrap gap-2">
-
+        <div className="mt-6 flex flex-wrap gap-2">
           {notes.map((note) => (
             <span
               key={note}
               className="
                 rounded-full
-                bg-white/80
+                bg-pink-50
                 px-3
-                py-2
-                text-[10px]
-                uppercase
-                tracking-[0.15em]
-                text-[#6d6670]
-                shadow-sm
+                py-1
+                text-xs
+                font-semibold
+                text-[#d89ca4]
               "
             >
               {note}
             </span>
           ))}
-
         </div>
 
-        {/* PROFILE */}
-        <div className="mt-5 flex items-center justify-between text-[10px] uppercase tracking-[0.15em] text-[#8f8792]">
-
-          <span>{profile}</span>
-
-          <span>{season}</span>
-
+        <div className="mt-6">
+          <p className="text-sm text-[#7b7480]">
+            {profile} • {season}
+          </p>
         </div>
 
-        {/* PRICE + BUTTON */}
-        <div className="mt-6 flex items-center justify-between">
-
+        <div className="mt-8 flex items-center justify-between">
           <div>
-
-            <p className="text-[10px] uppercase tracking-[0.15em] text-[#9d97a2]">
-              Starting From
+            <p className="text-xs uppercase text-[#7b7480]">
+              From
             </p>
 
             <p className="text-2xl font-black text-[#4f4a52]">
-              R{Number(displayPrice).toFixed(2)}
+              R{prices["5ml"]}
             </p>
-
           </div>
 
-          <motion.button
-            whileTap={{
-              scale: 0.96,
-            }}
-            onClick={() =>
-              onQuickAdd?.()
-            }
-            className={`
+          <button
+            onClick={() => onQuickAdd?.()}
+            className="
               rounded-full
+              bg-gradient-to-r
+              from-pink-400
+              to-blue-400
               px-6
-              py-4
-              text-sm
+              py-3
               font-bold
               text-white
-              shadow-xl
-              transition
-              duration-300
-              hover:scale-[1.02]
-              hover:brightness-105
-              ${cardTheme.button}
-            `}
+            "
           >
             Quick Add
-          </motion.button>
-
+          </button>
         </div>
-
       </div>
-
-    </motion.div>
+    </div>
   );
 }

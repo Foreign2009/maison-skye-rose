@@ -11,38 +11,62 @@ import { fragrances } from "../data/fragrances";
 
 const questions = [
   {
-    id: "mood",
-    title: "What mood fits you best?",
+    id: "gender",
+    title: "Who are you shopping for?",
+    options: [
+      "Male",
+      "Female",
+      "Unisex",
+    ],
+  },
+
+  {
+    id: "occasion",
+    title: "Where will you wear it most?",
+    options: [
+      "Daily Wear",
+      "Office",
+      "Date Night",
+      "Wedding",
+      "Luxury Events",
+    ],
+  },
+
+  {
+    id: "vibe",
+    title: "How do you want to be perceived?",
+    options: [
+      "Luxury",
+      "Sexy",
+      "Professional",
+      "Confident",
+      "Elegant",
+      "Playful",
+      "Mysterious",
+    ],
+  },
+
+  {
+    id: "family",
+    title: "Which scent profile attracts you most?",
     options: [
       "Fresh",
-      "Sweet",
-      "Bold",
-      "Elegant",
-      "Sexy",
-      "Clean",
-    ],
-  },
-
-  {
-    id: "season",
-    title: "Favorite season?",
-    options: [
-      "Summer",
-      "Winter",
-      "Spring",
-      "Autumn",
-      "All Season",
-    ],
-  },
-
-  {
-    id: "profile",
-    title: "Choose your fragrance profile",
-    options: [
-      "Fresh Woody",
-      "Sweet Amber",
+      "Citrus",
       "Floral",
-      "Citrus Woody",
+      "Woody",
+      "Sweet",
+      "Amber",
+    ],
+  },
+
+  {
+    id: "character",
+    title: "Which scent character sounds most like you?",
+    options: [
+      "Fresh & Light",
+      "Balanced Signature",
+      "Rich & Long Wearing",
+      "Deep & Intense",
     ],
   },
 ];
@@ -72,35 +96,43 @@ export default function QuizPage() {
 
   };
 
-  /* RECOMMENDED PRODUCTS */
-  const recommended = useMemo(() => {
+  const completed =
+    Object.keys(answers).length;
 
-    return fragrances.filter(
-      (fragrance) => {
+  const progress =
+    (completed /
+      questions.length) *
+    100;
 
-        const searchable =
-          `
-            ${fragrance.title}
-            ${fragrance.subtitle}
-            ${fragrance.mood}
-            ${fragrance.profile}
-            ${fragrance.notes.join(" ")}
-            ${fragrance.season}
-          `
-            .toLowerCase();
+  const recommended =
+    useMemo(() => {
 
-        return Object.values(
-          answers
-        ).every((answer) =>
-          searchable.includes(
-            answer.toLowerCase()
-          )
-        );
+      return fragrances.filter(
+        (fragrance) => {
 
-      }
-    );
+          const searchable =
+            `
+              ${fragrance.title}
+              ${fragrance.subtitle}
+              ${fragrance.mood}
+              ${fragrance.profile}
+              ${fragrance.notes.join(" ")}
+              ${fragrance.season}
+            `
+              .toLowerCase();
 
-  }, [answers]);
+          return Object.values(
+            answers
+          ).some((answer) =>
+            searchable.includes(
+              answer.toLowerCase()
+            )
+          );
+
+        }
+      );
+
+    }, [answers]);
 
   return (
 
@@ -121,17 +153,59 @@ export default function QuizPage() {
 
           <h1 className="mt-5 text-5xl font-black tracking-[-0.08em] text-[#4f4a52] sm:text-6xl">
 
-            Fragrance Discovery
+            Maison AI Scent Finder
 
           </h1>
 
           <p className="mx-auto mt-6 max-w-2xl text-base leading-8 text-[#7b7480] sm:text-lg">
 
-            Find your perfect fragrance
-            personality through our luxury
-            scent discovery experience.
+            Answer a few questions and
+            discover fragrances that match
+            your style, personality and
+            scent preferences.
 
           </p>
+
+          {/* PROGRESS */}
+          <div className="mx-auto mt-10 max-w-xl">
+
+            <div className="mb-3 flex items-center justify-between">
+
+              <span className="text-sm font-semibold text-[#7b7480]">
+
+                Progress
+
+              </span>
+
+              <span className="text-sm font-bold text-[#d89ca4]">
+
+                {completed}/
+                {questions.length}
+
+              </span>
+
+            </div>
+
+            <div className="h-3 overflow-hidden rounded-full bg-white">
+
+              <div
+                className="
+                  h-full
+                  rounded-full
+                  bg-gradient-to-r
+                  from-pink-400
+                  to-blue-400
+                  transition-all
+                  duration-500
+                "
+                style={{
+                  width: `${progress}%`,
+                }}
+              />
+
+            </div>
+
+          </div>
 
         </div>
 
@@ -227,13 +301,13 @@ export default function QuizPage() {
 
               <p className="text-[11px] uppercase tracking-[0.35em] text-[#d89ca4]">
 
-                Recommended For You
+                Maison AI Results
 
               </p>
 
               <h2 className="mt-2 text-4xl font-black tracking-[-0.06em] text-[#4f4a52]">
 
-                Your Matches
+                Your Fragrance Matches
 
               </h2>
 
@@ -250,8 +324,6 @@ export default function QuizPage() {
                 text-sm
                 font-semibold
                 text-[#4f4a52]
-                transition
-                hover:bg-white
               "
             >
               Back Home
@@ -275,15 +347,17 @@ export default function QuizPage() {
 
               <h3 className="text-2xl font-black text-[#4f4a52]">
 
-                No Matches Yet
+                Build Your Scent Profile
 
               </h3>
 
               <p className="mt-4 text-[#7b7480]">
 
-                Select preferences above
-                to discover your fragrance
-                personality.
+                Answer the questions above
+                and our Maison AI Scent
+                Finder will recommend
+                fragrances that suit your
+                preferences.
 
               </p>
 
@@ -291,29 +365,57 @@ export default function QuizPage() {
 
           ) : (
 
-            <div className="grid gap-7 sm:grid-cols-2 lg:grid-cols-3">
+            <>
 
-              {recommended.map(
-                (fragrance) => (
+              <div className="mb-8 rounded-[32px] bg-gradient-to-r from-pink-50 to-blue-50 p-6">
 
-                  <ProductCard
-                    key={fragrance.title}
-                    {...fragrance}
-                    onQuickAdd={() => {
+                <h3 className="text-2xl font-black text-[#4f4a52]">
 
-                      setSelectedProduct(
-                        fragrance
-                      );
+                  Perfect Match Results
 
-                      setQuickOpen(true);
+                </h3>
 
-                    }}
-                  />
+                <p className="mt-3 text-[#7b7480]">
 
-                )
-              )}
+                  These recommendations are
+                  educational scent guides
+                  inspired by the fragrance
+                  profiles available through
+                  Maison Skye & Rose.
 
-            </div>
+                </p>
+
+              </div>
+
+              <div className="grid gap-7 sm:grid-cols-2 lg:grid-cols-3">
+
+                {recommended.map(
+                  (fragrance) => (
+
+                    <ProductCard
+                      key={
+                        fragrance.title
+                      }
+                      {...fragrance}
+                      onQuickAdd={() => {
+
+                        setSelectedProduct(
+                          fragrance
+                        );
+
+                        setQuickOpen(
+                          true
+                        );
+
+                      }}
+                    />
+
+                  )
+                )}
+
+              </div>
+
+            </>
 
           )}
 
@@ -321,7 +423,6 @@ export default function QuizPage() {
 
       </section>
 
-      {/* QUICK ADD MODAL */}
       {selectedProduct && (
 
         <QuickAddModal

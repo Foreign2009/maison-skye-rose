@@ -1,11 +1,8 @@
 export const fragrances = [
-
-  /* =========================
-     MALE FRAGRANCES
-  ========================= */
-
   {
     title: "Sauvage Inspired",
+
+    collection: "Skye",
 
     subtitle: "Masculine Energy",
 
@@ -25,9 +22,9 @@ export const fragrances = [
     bestSeller: true,
 
     prices: {
-      "5ml": 149,
-      "10ml": 249,
-      "30ml": 599,
+      "5ml": 60,
+      "10ml": 100,
+      "30ml": 250,
     },
 
     images: {
@@ -43,6 +40,8 @@ export const fragrances = [
 
   {
     title: "Bleu Inspired",
+
+    collection: "Skye",
 
     subtitle: "Clean Luxury",
 
@@ -62,9 +61,9 @@ export const fragrances = [
     newArrival: true,
 
     prices: {
-      "5ml": 149,
-      "10ml": 249,
-      "30ml": 599,
+      "5ml": 60,
+      "10ml": 100,
+      "30ml": 250,
     },
 
     images: {
@@ -78,12 +77,10 @@ export const fragrances = [
     },
   },
 
-  /* =========================
-     FEMALE FRAGRANCES
-  ========================= */
-
   {
     title: "Miss Dior Inspired",
+
+    collection: "Rose",
 
     subtitle: "Soft Luxury",
 
@@ -103,9 +100,9 @@ export const fragrances = [
     bestSeller: true,
 
     prices: {
-      "5ml": 149,
-      "10ml": 249,
-      "30ml": 599,
+      "5ml": 60,
+      "10ml": 100,
+      "30ml": 250,
     },
 
     images: {
@@ -121,6 +118,8 @@ export const fragrances = [
 
   {
     title: "Good Girl Inspired",
+
+    collection: "Rose",
 
     subtitle: "Night Energy",
 
@@ -140,9 +139,9 @@ export const fragrances = [
     newArrival: true,
 
     prices: {
-      "5ml": 149,
-      "10ml": 249,
-      "30ml": 599,
+      "5ml": 60,
+      "10ml": 100,
+      "30ml": 250,
     },
 
     images: {
@@ -155,5 +154,4 @@ export const fragrances = [
         "/images/glass-pink-30ml.png",
     },
   },
-
 ];

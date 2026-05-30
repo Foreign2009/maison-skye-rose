@@ -10,7 +10,6 @@ import { fragrances } from "../data/fragrances";
 import ProductCard from "../components/ProductCard";
 
 export default function FavoritesPage() {
-
   const { favorites } =
     useFavorites();
 
@@ -25,15 +24,12 @@ export default function FavoritesPage() {
 
   return (
     <main className="min-h-screen bg-[#f5f1eb] text-[#1a1a1a]">
-
       {/* NAVBAR */}
       <Navbar />
 
       {/* HERO */}
       <section className="px-6 pb-14 pt-24">
-
         <div className="mx-auto max-w-7xl">
-
           <p className="mb-5 text-sm uppercase tracking-[0.35em] text-zinc-500">
             Your Collection
           </p>
@@ -49,14 +45,11 @@ export default function FavoritesPage() {
             Your saved Maison Skye & Rose fragrances,
             ready whenever inspiration strikes.
           </p>
-
         </div>
-
       </section>
 
       {/* FAVORITES GRID */}
       <section className="px-6 pb-28">
-
         <div className="mx-auto max-w-7xl">
 
           {favoriteProducts.length === 0 ? (
@@ -82,10 +75,10 @@ export default function FavoritesPage() {
                 (fragrance) => (
 
                   <ProductCard
-                    key={fragrance.id}
+                    key={fragrance.title}
                     title={fragrance.title}
                     subtitle={
-                      fragrance.description
+                      fragrance.subtitle
                     }
                     mood={fragrance.mood}
                     profile={
@@ -117,12 +110,10 @@ export default function FavoritesPage() {
           )}
 
         </div>
-
       </section>
 
       {/* FOOTER */}
       <Footer />
-
     </main>
   );
 }

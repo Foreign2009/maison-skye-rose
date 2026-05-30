@@ -1,119 +1,117 @@
+"use client";
+
 const sets = [
-
   {
-    title: "Men’s Starter Set",
-    mood: "Fresh • Bold • Everyday",
-    description:
-      "A curated introduction to modern masculine fragrance energy.",
-    includes: [
-      "Inspired by Sauvage",
-      "Inspired by Aventus",
-      "Inspired by Erba Pura",
+    title:
+      "Modern Gentleman Set",
+
+    fragrances: [
+      "Sauvage Inspired",
+      "Bleu Inspired",
+      "Aventus Inspired",
+      "Imagination Inspired",
     ],
-    price: "R349",
+
+    price: "R499",
   },
 
   {
-    title: "Date Night Set",
-    mood: "Sweet • Seductive • Luxury",
-    description:
-      "Warm addictive fragrances crafted for nightlife and confidence.",
-    includes: [
-      "Inspired by Baccarat Rouge 540",
-      "Inspired by Black Opium",
-      "Inspired by Good Girl",
+    title:
+      "Date Night Set",
+
+    fragrances: [
+      "Ultra Male Inspired",
+      "Eros Inspired",
+      "Stronger With You Inspired",
+      "Most Wanted Inspired",
     ],
-    price: "R399",
+
+    price: "R499",
   },
 
   {
-    title: "Summer Rotation",
-    mood: "Fresh • Tropical • Bright",
-    description:
-      "Fresh lifestyle fragrances ideal for warm weather and travel.",
-    includes: [
-      "Inspired by God of Fire",
-      "Inspired by Libre",
-      "Inspired by Erba Pura",
-    ],
-    price: "R379",
-  },
+    title:
+      "Luxury Women's Set",
 
+    fragrances: [
+      "Delina Inspired",
+      "Libre Inspired",
+      "Good Girl Inspired",
+      "Baccarat Rouge Inspired",
+    ],
+
+    price: "R499",
+  },
 ];
 
 export default function DiscoverySets() {
-
   return (
-    <section className="px-6 pb-28">
+    <section className="px-5 py-24">
 
       <div className="mx-auto max-w-7xl">
 
-        <div className="mb-14">
+        <div className="mb-12 text-center">
 
-          <p className="mb-3 text-sm uppercase tracking-[0.3em] text-zinc-500">
-            Curated Fragrance Bundles
+          <p className="text-[11px] uppercase tracking-[0.45em] text-[#d89ca4]">
+            Discovery Sets
           </p>
 
-          <h2 className="text-4xl font-black uppercase tracking-[-0.03em] md:text-6xl">
-            Discovery
-            <span className="block text-[#7a8fa3]">
-              Sets
-            </span>
+          <h2 className="mt-4 text-5xl font-black tracking-[-0.06em] text-[#4f4a52]">
+            Explore More Fragrances
           </h2>
 
         </div>
 
-        <div className="grid gap-6 md:grid-cols-3">
+        <div className="grid gap-6 lg:grid-cols-3">
 
-          {sets.map((set, index) => (
+          {sets.map((set) => (
 
             <div
-              key={index}
-              className="rounded-[40px] bg-white p-8 shadow-sm"
+              key={set.title}
+              className="
+                rounded-[32px]
+                bg-white
+                p-8
+                shadow-[0_20px_60px_rgba(0,0,0,0.08)]
+              "
             >
 
-              <p className="mb-3 text-xs uppercase tracking-[0.3em] text-zinc-500">
-                {set.mood}
-              </p>
-
-              <h3 className="text-3xl font-black uppercase leading-[1] tracking-[-0.04em]">
+              <h3 className="text-2xl font-black text-[#4f4a52]">
                 {set.title}
               </h3>
 
-              <p className="mt-5 text-sm leading-7 text-zinc-600">
-                {set.description}
-              </p>
+              <ul className="mt-6 space-y-2 text-[#7b7480]">
 
-              <div className="mt-8 space-y-3">
+                {set.fragrances.map(
+                  (item) => (
 
-                {set.includes.map((item, itemIndex) => (
+                    <li key={item}>
+                      • {item}
+                    </li>
 
-                  <div
-                    key={itemIndex}
-                    className="rounded-[18px] bg-[#f5f1eb] px-4 py-3 text-sm"
-                  >
-                    {item}
-                  </div>
+                  )
+                )}
 
-                ))}
+              </ul>
 
-              </div>
+              <div className="mt-8 flex items-center justify-between">
 
-              <div className="mt-8 flex items-end justify-between border-t border-black/5 pt-6">
+                <span className="text-2xl font-black text-[#4f4a52]">
+                  {set.price}
+                </span>
 
-                <div>
-
-                  <p className="text-xs uppercase tracking-[0.25em] text-zinc-500">
-                    Bundle Price
-                  </p>
-
-                  <h4 className="mt-2 text-4xl font-black text-[#b67d73]">
-                    {set.price}
-                  </h4>
-
-                </div>
-
-                <button className="rounded-full bg-black px-6 py-4 text-xs uppercase tracking-[0.25em] text-white">
+                <button
+                  className="
+                    rounded-full
+                    bg-gradient-to-r
+                    from-pink-400
+                    to-blue-400
+                    px-6
+                    py-3
+                    text-white
+                    font-bold
+                  "
+                >
                   View Set
                 </button>
 
