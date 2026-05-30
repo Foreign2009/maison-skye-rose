@@ -5,10 +5,12 @@ import { useState } from "react";
 import Navbar from "./components/Navbar";
 import ProductCard from "./components/ProductCard";
 import AIHeroSection from "./components/AIHeroSection";
+import LatestAdditions from "./components/LatestAdditions";
+import ComingSoon from "./components/ComingSoon";
+import RequestFragrance from "./components/RequestFragrance";
 import ShopByPersonality from "./components/ShopByPersonality";
 import DiscoverySets from "./components/DiscoverySets";
 import QuickAddModal from "./components/QuickAddModal";
-import RequestFragrance from "./components/RequestFragrance";
 
 import { fragrances } from "./data/fragrances";
 
@@ -82,11 +84,15 @@ export default function HomePage() {
         </div>
       </section>
 
+      <LatestAdditions />
+
+      <ComingSoon />
+
+      <RequestFragrance />
+
       <ShopByPersonality />
 
       <DiscoverySets />
-
-      <RequestFragrance />
 
       {selectedFragrance && (
         <QuickAddModal

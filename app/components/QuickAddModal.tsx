@@ -3,21 +3,18 @@
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 
 import { useCart } from "../context/CartContext";
 import { useCartFeedback } from "../context/CartFeedbackContext";
 
 interface QuickAddModalProps {
   open: boolean;
-
   onClose: () => void;
-
   title: string;
-
   images?: {
     [key: string]: string;
   };
-
   prices?: {
     [key: string]: number;
   };
@@ -30,48 +27,39 @@ export default function QuickAddModal({
   images = {},
   prices = {},
 }: QuickAddModalProps) {
+  const { addToCart } = useCart();
+  const { showFeedback } = useCartFeedback();
 
-  const { addToCart } =
-    useCart();
-
-  const { showFeedback } =
-    useCartFeedback();
+  /* MOUNT STATE FOR NEXT.JS PORTALS */
+  const [mounted, setMounted] = useState(false);
 
   /* SIZE OPTIONS */
-  const sizeOptions =
-    Object.entries(prices);
+  const sizeOptions = Object.entries(prices);
 
   /* DEFAULT SIZE */
-  const [selectedSize, setSelectedSize] =
-    useState(
-      sizeOptions?.[0]?.[0] || "10ml"
-    );
+  const [selectedSize, setSelectedSize] = useState(
+    sizeOptions?.[0]?.[0] || "10ml"
+  );
 
-  const [quantity, setQuantity] =
-    useState(1);
+  const [quantity, setQuantity] = useState(1);
 
-  /* RESET WHEN OPENING */
+  /* HANDLE PORTAL MOUNTING & RESET WHEN OPENING */
   useEffect(() => {
+    setMounted(true);
 
-    if (sizeOptions.length > 0) {
-
-      setSelectedSize(
-        sizeOptions[0][0]
-      );
-
+    if (open && sizeOptions.length > 0) {
+      setSelectedSize(sizeOptions[0][0]);
+      setQuantity(1);
     }
-
-    setQuantity(1);
-
   }, [open]);
 
+  if (!mounted) return null;
+
   /* CURRENT PRICE */
-  const selectedPrice =
-    prices?.[selectedSize] || 0;
+  const selectedPrice = prices?.[selectedSize] || 0;
 
   /* TOTAL */
-  const total =
-    selectedPrice * quantity;
+  const total = selectedPrice * quantity;
 
   /* CURRENT IMAGE */
   const selectedImage =
@@ -79,22 +67,13 @@ export default function QuickAddModal({
     Object.values(images)[0] ||
     "/images/pink-10ml.png";
 
-  return (
-
+  return createPortal(
     <AnimatePresence>
-
       {open && (
-
         <motion.div
-          initial={{
-            opacity: 0,
-          }}
-          animate={{
-            opacity: 1,
-          }}
-          exit={{
-            opacity: 0,
-          }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
           className="
             fixed
             inset-0
@@ -107,24 +86,12 @@ export default function QuickAddModal({
             sm:items-center
           "
         >
-
           {/* MODAL */}
           <motion.div
-            initial={{
-              y: 100,
-              opacity: 0,
-            }}
-            animate={{
-              y: 0,
-              opacity: 1,
-            }}
-            exit={{
-              y: 100,
-              opacity: 0,
-            }}
-            transition={{
-              duration: 0.35,
-            }}
+            initial={{ y: 100, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: 100, opacity: 0 }}
+            transition={{ duration: 0.35 }}
             className="
               relative
               w-full
@@ -137,35 +104,21 @@ export default function QuickAddModal({
               sm:rounded-[38px]
             "
           >
-
             {/* GLOW BACKGROUND */}
             <div className="absolute inset-0 overflow-hidden">
-
               <div className="absolute -left-10 top-0 h-40 w-40 rounded-full bg-pink-200/30 blur-3xl" />
-
               <div className="absolute -right-10 bottom-0 h-40 w-40 rounded-full bg-blue-200/30 blur-3xl" />
-
             </div>
 
             {/* CONTENT */}
             <div className="relative z-10">
-
               {/* IMAGE */}
               <div className="flex justify-center">
-
                 <motion.div
                   key={selectedImage}
-                  initial={{
-                    opacity: 0,
-                    scale: 0.92,
-                  }}
-                  animate={{
-                    opacity: 1,
-                    scale: 1,
-                  }}
-                  transition={{
-                    duration: 0.25,
-                  }}
+                  initial={{ opacity: 0, scale: 0.92 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.25 }}
                   className="
                     rounded-[28px]
                     bg-gradient-to-br
@@ -174,7 +127,6 @@ export default function QuickAddModal({
                     p-6
                   "
                 >
-
                   <Image
                     src={selectedImage}
                     alt={title}
@@ -187,9 +139,7 @@ export default function QuickAddModal({
                     }}
                     priority
                   />
-
                 </motion.div>
-
               </div>
 
               {/* TITLE */}
@@ -209,7 +159,6 @@ export default function QuickAddModal({
 
               {/* SIZE SELECTOR */}
               <div className="mt-6">
-
                 <p
                   className="
                     mb-3
@@ -223,58 +172,38 @@ export default function QuickAddModal({
                 </p>
 
                 <div className="flex gap-3">
-
-                  {sizeOptions.map(
-                    ([size, price]) => (
-
-                      <button
-                        key={size}
-                        onClick={() =>
-                          setSelectedSize(size)
+                  {sizeOptions.map(([size, price]) => (
+                    <button
+                      key={size}
+                      onClick={() => setSelectedSize(size)}
+                      className={`
+                        flex-1
+                        rounded-2xl
+                        border
+                        px-4
+                        py-4
+                        transition-all
+                        duration-300
+                        ${
+                          selectedSize === size
+                            ? "border-[#ff9fbc] bg-gradient-to-br from-pink-50 to-blue-50 shadow-lg scale-[1.02]"
+                            : "border-gray-200 bg-white"
                         }
-                        className={`
-                          flex-1
-                          rounded-2xl
-                          border
-                          px-4
-                          py-4
-                          transition-all
-                          duration-300
-                          ${
-                            selectedSize === size
-                              ? "border-[#ff9fbc] bg-gradient-to-br from-pink-50 to-blue-50 shadow-lg scale-[1.02]"
-                              : "border-gray-200 bg-white"
-                          }
-                        `}
-                      >
-
-                        <p className="text-sm font-bold text-[#4f4a52]">
-
-                          {size}
-
-                        </p>
-
-                        <p className="mt-1 text-xs text-[#7b7480]">
-
-                          R
-                          {Number(price).toFixed(
-                            2
-                          )}
-
-                        </p>
-
-                      </button>
-
-                    )
-                  )}
-
+                      `}
+                    >
+                      <p className="text-sm font-bold text-[#4f4a52]">
+                        {size}
+                      </p>
+                      <p className="mt-1 text-xs text-[#7b7480]">
+                        R {Number(price).toFixed(2)}
+                      </p>
+                    </button>
+                  ))}
                 </div>
-
               </div>
 
               {/* QUANTITY */}
               <div className="mt-6">
-
                 <p
                   className="
                     mb-3
@@ -288,17 +217,10 @@ export default function QuickAddModal({
                 </p>
 
                 <div className="flex items-center justify-center gap-4">
-
                   <motion.button
-                    whileTap={{
-                      scale: 0.92,
-                    }}
+                    whileTap={{ scale: 0.92 }}
                     onClick={() =>
-                      setQuantity((prev) =>
-                        prev > 1
-                          ? prev - 1
-                          : 1
-                      )
+                      setQuantity((prev) => (prev > 1 ? prev - 1 : 1))
                     }
                     className="
                       flex
@@ -317,20 +239,12 @@ export default function QuickAddModal({
                   </motion.button>
 
                   <span className="text-xl font-bold text-[#4f4a52]">
-
                     {quantity}
-
                   </span>
 
                   <motion.button
-                    whileTap={{
-                      scale: 0.92,
-                    }}
-                    onClick={() =>
-                      setQuantity(
-                        (prev) => prev + 1
-                      )
-                    }
+                    whileTap={{ scale: 0.92 }}
+                    onClick={() => setQuantity((prev) => prev + 1)}
                     className="
                       flex
                       h-12
@@ -346,9 +260,7 @@ export default function QuickAddModal({
                   >
                     +
                   </motion.button>
-
                 </div>
-
               </div>
 
               {/* TOTAL */}
@@ -362,9 +274,7 @@ export default function QuickAddModal({
                   p-5
                 "
               >
-
                 <div className="flex items-center justify-between">
-
                   <span
                     className="
                       text-sm
@@ -375,21 +285,14 @@ export default function QuickAddModal({
                   >
                     Total
                   </span>
-
                   <span className="text-3xl font-black text-[#4f4a52]">
-
-                    R
-                    {total.toFixed(2)}
-
+                    R {total.toFixed(2)}
                   </span>
-
                 </div>
-
               </div>
 
               {/* BUTTONS */}
               <div className="mt-6 flex gap-3">
-
                 <button
                   onClick={onClose}
                   className="
@@ -408,35 +311,24 @@ export default function QuickAddModal({
                 </button>
 
                 <motion.button
-                  whileTap={{
-                    scale: 0.97,
-                  }}
+                  whileTap={{ scale: 0.97 }}
                   onClick={() => {
-
                     addToCart({
                       id: `${title}-${selectedSize}`,
-
                       title,
-
                       price: selectedPrice,
-
                       quantity,
-
                       image: selectedImage,
-
                       size: selectedSize,
                     });
 
                     showFeedback({
                       title,
-
                       image: selectedImage,
-
                       size: selectedSize,
                     });
 
                     onClose();
-
                   }}
                   className="
                     flex-1
@@ -454,19 +346,12 @@ export default function QuickAddModal({
                 >
                   Add To Cart
                 </motion.button>
-
               </div>
-
             </div>
-
           </motion.div>
-
         </motion.div>
-
       )}
-
-    </AnimatePresence>
-
+    </AnimatePresence>,
+    document.body
   );
-
 }

@@ -1,0 +1,84 @@
+export const eliteFragrances = [
+  {
+    title: "Hibiscus Mahajad Inspired",
+    collection: "Elite",
+    subtitle: "Niche Luxury",
+    mood: "Bold artistic elegance.",
+    profile: "Floral Leather",
+    season: "All Season",
+    notes: ["Hibiscus", "Rose", "Leather"],
+    newArrival: true,
+    prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
+    images: {
+      "5ml": "/images/pink-5ml.png",
+      "10ml": "/images/pink-10ml.png",
+      "30ml": "/images/glass-pink-30ml.png",
+    },
+  },
+
+  {
+    title: "Oud Mood Inspired",
+    collection: "Elite",
+    subtitle: "Arabian Luxury",
+    mood: "Deep sweet oud.",
+    profile: "Amber Oud",
+    season: "Winter",
+    notes: ["Oud", "Amber", "Caramel"],
+    prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
+    images: {
+      "5ml": "/images/blue-5ml.png",
+      "10ml": "/images/blue-10ml.png",
+      "30ml": "/images/glass-blue-30ml.png",
+    },
+  },
+
+  {
+    title: "Gris Charnel Inspired",
+    collection: "Elite",
+    subtitle: "Parisian Luxury",
+    mood: "Creamy and sophisticated.",
+    profile: "Tea Woody",
+    season: "Autumn",
+    notes: ["Tea", "Fig", "Sandalwood"],
+    prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
+    images: {
+      "5ml": "/images/blue-5ml.png",
+      "10ml": "/images/blue-10ml.png",
+      "30ml": "/images/glass-blue-30ml.png",
+    },
+  },
+
+  {
+    title: "Kirke Overdose Inspired",
+    collection: "Elite",
+    subtitle: "Beast Mode",
+    mood: "Explosive fruity luxury.",
+    profile: "Fruity Musk",
+    season: "Summer",
+    notes: ["Passionfruit", "Peach", "Musk"],
+    newArrival: true,
+    prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
+    images: {
+      "5ml": "/images/blue-5ml.png",
+      "10ml": "/images/blue-10ml.png",
+      "30ml": "/images/glass-blue-30ml.png",
+    },
+  },
+
+  {
+    title: "Haltane Inspired",
+    collection: "Elite",
+    subtitle: "Royal Luxury",
+    mood: "Sweet woody sophistication.",
+    profile: "Woody Oud",
+    season: "Winter",
+    notes: ["Saffron", "Praline", "Oud"],
+    newArrival: true,
+    prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
+    images: {
+      "5ml": "/images/blue-5ml.png",
+      "10ml": "/images/blue-10ml.png",
+      "30ml": "/images/glass-blue-30ml.png",
+    },
+  },
+];
