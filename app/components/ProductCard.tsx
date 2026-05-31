@@ -48,6 +48,39 @@ export default function ProductCard({
 
   const favorite = isFavorite(title);
 
+  const saveRecentlyViewed = () => {
+    const existing = JSON.parse(
+      localStorage.getItem("recentlyViewed") || "[]"
+    );
+
+    const filtered = existing.filter(
+      (item: any) => item.title !== title
+    );
+
+    localStorage.setItem(
+      "recentlyViewed",
+      JSON.stringify([
+        {
+          title,
+          subtitle,
+          mood,
+          profile,
+          season,
+          notes,
+          prices,
+          images,
+        },
+        ...filtered,
+      ])
+    );
+  };
+
+  // Triggers history sync before firing parent display modal logic
+  const handleCardClick = () => {
+    saveRecentlyViewed();
+    onQuickAdd?.();
+  };
+
   const handleFavorite = () => {
     if (favorite) {
       removeFromFavorites(title);
@@ -143,7 +176,7 @@ export default function ProductCard({
       </button>
 
       <div
-        onClick={() => onQuickAdd?.()}
+        onClick={handleCardClick}
         className="
           flex
           cursor-pointer
@@ -220,7 +253,7 @@ export default function ProductCard({
           </div>
 
           <button
-            onClick={() => onQuickAdd?.()}
+            onClick={handleCardClick}
             className="
               rounded-full
               bg-gradient-to-r

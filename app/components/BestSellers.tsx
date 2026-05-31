@@ -1,66 +1,38 @@
-import { fragrances } from "../data/fragrances";
+"use client";
+
 import ProductCard from "./ProductCard";
+import { fragrances } from "../data/fragrances";
 
-export default function BestSellers() {
+interface BestSellersProps {
+  onQuickAdd: (fragrance: any) => void;
+}
 
-  const bestSellers = fragrances.filter(
-    (fragrance) => fragrance.bestSeller
-  );
+export default function BestSellers({ onQuickAdd }: BestSellersProps) {
+  const bestSellers = fragrances
+    .filter((item) => item.bestSeller)
+    .slice(0, 8);
 
   return (
-    <section className="px-6 pb-28">
+    <section className="mx-auto max-w-7xl px-6 py-20">
+      <div className="mb-10 text-center">
+        <p className="text-xs uppercase tracking-[0.45em] text-[#d89ca4]">
+          Most Loved
+        </p>
 
-      <div className="mx-auto max-w-7xl">
-
-        {/* HEADER */}
-        <div className="mb-14 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-
-          <div>
-
-            <p className="mb-3 text-sm uppercase tracking-[0.3em] text-zinc-500">
-              Trending Right Now
-            </p>
-
-            <h2 className="text-4xl font-black uppercase tracking-[-0.03em] md:text-6xl">
-              Most
-              <span className="block text-[#b67d73]">
-                Wanted
-              </span>
-            </h2>
-
-          </div>
-
-          <p className="max-w-lg text-sm leading-7 text-zinc-600">
-            Discover the fragrances customers are reaching for most —
-            bold signatures, fresh essentials, sweet icons, and
-            modern everyday luxury favorites.
-          </p>
-
-        </div>
-
-        {/* GRID */}
-        <div className="grid gap-6 md:grid-cols-3">
-
-          {bestSellers.map((fragrance) => (
-
-            <ProductCard
-              key={fragrance.id}
-              title={fragrance.title}
-              subtitle={fragrance.description}
-              mood={fragrance.mood}
-              profile={fragrance.profile}
-              season={fragrance.season}
-              notes={fragrance.notes}
-              prices={fragrance.prices}
-              images={fragrance.images}
-            />
-
-          ))}
-
-        </div>
-
+        <h2 className="mt-4 text-5xl font-black tracking-[-0.05em]">
+          Best Sellers
+        </h2>
       </div>
 
+      <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+        {bestSellers.map((fragrance) => (
+          <ProductCard
+            key={fragrance.title}
+            {...fragrance}
+            onQuickAdd={() => onQuickAdd(fragrance)}
+          />
+        ))}
+      </div>
     </section>
   );
 }

@@ -1,32 +1,25 @@
+"use client";
+
 type SearchBarProps = {
-  searchTerm: string;
-  setSearchTerm: (
-    value: string
-  ) => void;
+  value: string;
+  onChange: (value: string) => void;
+  placeholder?: string;
 };
 
 export default function SearchBar({
-  searchTerm,
-  setSearchTerm,
+  value,
+  onChange,
+  placeholder = "Search fragrances...",
 }: SearchBarProps) {
-
   return (
-    <div className="mb-10">
-
-      <div className="relative overflow-hidden rounded-full border border-black/10 bg-white shadow-sm">
-
-        <input
-          type="text"
-          placeholder="Search fragrances..."
-          value={searchTerm}
-          onChange={(e) =>
-            setSearchTerm(e.target.value)
-          }
-          className="w-full bg-transparent px-7 py-5 text-sm outline-none placeholder:text-zinc-400"
-        />
-
-      </div>
-
-    </div>
+    <input
+      type="text"
+      value={value}
+      onChange={(e) =>
+        onChange(e.target.value)
+      }
+      placeholder={placeholder}
+      className="w-full rounded-2xl border border-zinc-200 bg-white px-5 py-4 text-sm outline-none transition focus:border-[#d89ca4]"
+    />
   );
 }

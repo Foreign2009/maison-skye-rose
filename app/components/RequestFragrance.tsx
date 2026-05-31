@@ -2,38 +2,33 @@
 
 export default function RequestFragrance() {
   return (
-    <section className="bg-[#f5f1eb] px-6 py-24">
+    <section className="bg-black py-24 text-white">
+      <div className="mx-auto max-w-5xl px-6 text-center">
 
-      <div className="mx-auto max-w-4xl rounded-[40px] bg-white p-12 text-center shadow-sm">
-
-        <p className="text-xs uppercase tracking-[0.4em] text-[#b67d73]">
+        <p className="text-[11px] uppercase tracking-[0.45em] text-[#d89ca4]">
           Extended Catalogue
         </p>
 
-        <h2 className="mt-5 text-5xl font-black uppercase">
+        <h2 className="mt-4 text-5xl font-black tracking-[-0.05em]">
           Can't Find Your Fragrance?
         </h2>
 
-        <p className="mx-auto mt-6 max-w-2xl text-zinc-600 leading-8">
-          We have access to over 465 luxury inspired fragrances.
-          If you don't see your fragrance listed,
-          we'll source it for you.
+        <p className="mx-auto mt-8 max-w-2xl text-lg leading-8 text-zinc-300">
+          We currently showcase our most popular fragrances online.
+          Looking for something specific? We source from a catalogue of
+          over 465 luxury-inspired fragrances.
         </p>
 
-        <button
-          onClick={() =>
-            window.open(
-              "https://wa.me/27696863952?text=Hi%20Maison%20Skye%20%26%20Rose,%20I%20am%20looking%20for%20a%20specific%20fragrance.",
-              "_blank"
-            )
-          }
-          className="mt-8 rounded-full bg-black px-10 py-5 text-white"
+        <a
+          href="https://wa.me/27696863952?text=Hi%20Maison%20Skye%20%26%20Rose,%20I%20am%20looking%20for%20a%20specific%20fragrance."
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-10 inline-flex rounded-full bg-white px-8 py-4 font-bold text-black transition hover:scale-105"
         >
           Request A Fragrance
-        </button>
+        </a>
 
       </div>
-
     </section>
   );
 }

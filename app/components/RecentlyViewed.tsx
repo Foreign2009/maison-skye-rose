@@ -1,49 +1,41 @@
 "use client";
 
-type RecentlyViewedProps = {
-  viewed: string[];
-};
+import { useEffect, useState } from "react";
+import ProductCard from "./ProductCard";
 
-export default function RecentlyViewed({
-  viewed,
-}: RecentlyViewedProps) {
+export default function RecentlyViewed() {
+  const [items, setItems] = useState<any[]>([]);
 
-  if (viewed.length === 0) return null;
+  useEffect(() => {
+    const stored = localStorage.getItem("recentlyViewed");
+
+    if (stored) {
+      setItems(JSON.parse(stored));
+    }
+  }, []);
+
+  if (items.length === 0) return null;
 
   return (
-    <section className="px-6 pb-20">
+    <section className="mx-auto max-w-7xl px-6 py-20">
+      <div className="mb-10">
+        <p className="text-[11px] uppercase tracking-[0.45em] text-[#d89ca4]">
+          Recently Viewed
+        </p>
 
-      <div className="mx-auto max-w-7xl">
-
-        <div className="mb-10">
-
-          <p className="mb-3 text-sm uppercase tracking-[0.3em] text-zinc-500">
-            Your Journey
-          </p>
-
-          <h2 className="text-4xl font-black uppercase tracking-[-0.03em] md:text-5xl">
-            Recently Viewed
-          </h2>
-
-        </div>
-
-        <div className="flex flex-wrap gap-4">
-
-          {viewed.map((item) => (
-
-            <div
-              key={item}
-              className="rounded-full bg-white px-6 py-4 text-sm uppercase tracking-[0.2em] shadow-sm"
-            >
-              {item}
-            </div>
-
-          ))}
-
-        </div>
-
+        <h2 className="mt-4 text-5xl font-black tracking-[-0.05em]">
+          Continue Exploring
+        </h2>
       </div>
 
+      <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+        {items.slice(0, 4).map((item) => (
+          <ProductCard
+            key={item.title}
+            {...item}
+          />
+        ))}
+      </div>
     </section>
   );
 }

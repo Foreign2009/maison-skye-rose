@@ -1,125 +1,107 @@
 import Navbar from "../components/Navbar";
-import MiniCart from "../components/MiniCart";
 import Footer from "../components/Footer";
 
 const faqs = [
   {
-    question: "Are these original fragrances?",
-    answer:
-      "Maison Skye & Rose offers luxury-inspired fragrances crafted to capture the experience and character of globally loved scent profiles.",
-  },
-
-  {
     question: "How long do the fragrances last?",
     answer:
-      "Fragrance longevity can vary depending on skin type, weather, fragrance composition, and application. Notes such as oud, vanilla, amber, musk, woods, and spices generally last longer than lighter citrus or aquatic notes.",
+      "Longevity varies by fragrance and skin type, but most fragrances last between 6 to 12 hours with proper application.",
   },
-
   {
     question: "What sizes are available?",
     answer:
-      "Most fragrances are available in 5ml, 10ml, and 30ml sizes. Our smaller atomizers are ideal for travel, pockets, handbags, and testing new fragrances.",
+      "We currently offer 5ml, 10ml and 30ml fragrance bottles.",
   },
-
   {
-    question: "Do you deliver across South Africa?",
+    question: "How do I place an order?",
     answer:
-      "Yes. Maison Skye & Rose delivers nationwide across South Africa.",
+      "Simply add products to your cart and complete checkout through WhatsApp. We'll confirm your order and arrange delivery.",
   },
-
   {
-    question: "How does WhatsApp ordering work?",
+    question: "Can I request a fragrance that is not on the website?",
     answer:
-      "Simply add products to your cart and checkout through WhatsApp. Your order summary will automatically be generated for quick and easy ordering.",
+      "Yes. We have access to over 465 luxury-inspired fragrances. Contact us via WhatsApp and we'll source it for you.",
   },
-
   {
-    question: "What makes Maison Skye & Rose different?",
+    question: "Do you deliver nationwide?",
     answer:
-      "Maison Skye & Rose combines accessible luxury with modern fragrance lifestyle culture — blending confidence, fashion, nightlife, travel, and self-expression into everyday fragrance experiences.",
+      "Yes. We deliver throughout South Africa with delivery costs based on your location.",
   },
-
   {
-    question: "Which fragrance notes last longer?",
+    question: "How much is delivery?",
     answer:
-      "Typically, oud, amber, vanilla, musk, sandalwood, patchouli, leather, and spicy notes remain noticeable longer than fresh citrus or aquatic notes.",
+      "Cape Town Metro: R100, Western Cape Regional: R150, Johannesburg: R180, Durban: R180, Other Major Cities: R200 and Outlying Areas: R300.",
   },
-
   {
-    question: "Are your fragrances suitable for daily wear?",
+    question: "How long does delivery take?",
     answer:
-      "Yes. Our collections are curated for everyday confidence, lifestyle versatility, nightlife, seasonal moods, and signature daily scent rotations.",
+      "Delivery times vary by location, but most orders are delivered within a few business days after confirmation.",
+  },
+  {
+    question: "Are your fragrances original designer perfumes?",
+    answer:
+      "No. Maison Skye & Rose offers luxury-inspired fragrances crafted to capture the character of popular designer and niche scents.",
   },
 ];
 
 export default function FAQPage() {
-
   return (
-    <main className="min-h-screen bg-[#f5f1eb] text-[#1a1a1a]">
-
+    <main className="min-h-screen bg-[#faf7f5]">
       <Navbar />
-      <MiniCart />
 
-      {/* HERO */}
-      <section className="relative overflow-hidden px-6 pb-20 pt-24">
+      <section className="mx-auto max-w-5xl px-6 py-24">
+        <p className="text-xs uppercase tracking-[0.45em] text-[#d89ca4]">
+          Frequently Asked Questions
+        </p>
 
-        {/* BLOBS */}
-        <div className="absolute left-[-100px] top-[100px] h-[240px] w-[240px] rounded-full bg-[#dfe7ef]/60 blur-[120px]" />
+        <h1 className="mt-4 text-6xl font-black tracking-[-0.05em] text-[#4f4a52]">
+          FAQ
+        </h1>
 
-        <div className="absolute right-[-100px] top-[180px] h-[240px] w-[240px] rounded-full bg-[#f2deda]/70 blur-[120px]" />
+        <p className="mt-8 max-w-2xl text-lg leading-8 text-zinc-600">
+          Everything you need to know about ordering,
+          delivery and our fragrances.
+        </p>
 
-        <div className="relative mx-auto max-w-5xl text-center">
-
-          <p className="mb-5 text-sm uppercase tracking-[0.35em] text-zinc-500">
-            Maison Skye & Rose
-          </p>
-
-          <h1 className="text-5xl font-black uppercase leading-[0.95] tracking-[-0.05em] md:text-7xl">
-            Frequently Asked
-            <span className="block text-[#7a8fa3]">
-              Questions
-            </span>
-          </h1>
-
-          <p className="mx-auto mt-8 max-w-3xl text-lg leading-8 text-zinc-600">
-            Everything you need to know about Maison Skye & Rose,
-            fragrance sizing, delivery, ordering, and fragrance experience.
-          </p>
-
-        </div>
-
-      </section>
-
-      {/* FAQS */}
-      <section className="px-6 pb-32">
-
-        <div className="mx-auto max-w-5xl space-y-6">
-
-          {faqs.map((faq, index) => (
-
+        <div className="mt-16 space-y-6">
+          {faqs.map((faq) => (
             <div
-              key={index}
+              key={faq.question}
               className="rounded-[32px] bg-white p-8 shadow-sm"
             >
-
-              <h2 className="text-2xl font-black tracking-[-0.03em]">
+              <h2 className="text-xl font-black text-[#4f4a52]">
                 {faq.question}
               </h2>
 
-              <p className="mt-5 text-base leading-8 text-zinc-600">
+              <p className="mt-4 leading-8 text-zinc-600">
                 {faq.answer}
               </p>
-
             </div>
-
           ))}
-
         </div>
 
+        <div className="mt-16 rounded-[40px] bg-black p-10 text-center text-white">
+          <h2 className="text-4xl font-black">
+            Still Have Questions?
+          </h2>
+
+          <p className="mx-auto mt-6 max-w-2xl leading-8 text-zinc-300">
+            Our team is ready to help you choose the perfect
+            fragrance or answer any questions about your order.
+          </p>
+
+          <a
+            href="https://wa.me/27696863952"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-8 inline-flex rounded-full bg-white px-8 py-4 font-bold text-black"
+          >
+            Chat On WhatsApp
+          </a>
+        </div>
       </section>
 
       <Footer />
-
     </main>
   );
 }

@@ -1,125 +1,144 @@
+"use client";
+
+import Link from "next/link";
+
 export default function Footer() {
-
   return (
-    <footer className="border-t border-black/5 bg-white px-6 py-20">
+    <footer className="bg-[#111] py-16 text-white">
+      <div className="mx-auto max-w-7xl px-6">
+        
+        {/* BRAND IDENTITY */}
+        <h3 className="text-3xl font-black">
+          Maison Skye & Rose
+        </h3>
 
-      <div className="mx-auto grid max-w-7xl gap-14 md:grid-cols-4">
+        <p className="mt-4 max-w-md text-zinc-400">
+          Luxury-inspired fragrances crafted for everyday confidence.
+        </p>
 
-        {/* BRAND */}
-        <div>
+        {/* 4-COLUMN LINK SECTION */}
+        <div className="mt-16 grid gap-10 sm:grid-cols-2 md:grid-cols-4">
+          
+          {/* COLUMN 1: SHOP */}
+          <div>
+            <h4 className="font-bold">
+              Shop
+            </h4>
+            <ul className="mt-4 space-y-2 text-zinc-400">
+              <li>
+                <Link href="/shop" className="transition duration-200 hover:text-white">
+                  Shop All
+                </Link>
+              </li>
+              <li>
+                <Link href="/collections/skye" className="transition duration-200 hover:text-white">
+                  Skye Collection
+                </Link>
+              </li>
+              <li>
+                <Link href="/collections/rose" className="transition duration-200 hover:text-white">
+                  Rose Collection
+                </Link>
+              </li>
+            </ul>
+          </div>
 
-          <p className="mb-3 text-sm uppercase tracking-[0.35em] text-zinc-500">
-            Maison
-          </p>
+          {/* COLUMN 2: EXPLORE */}
+          <div>
+            <h4 className="font-bold">
+              Explore
+            </h4>
+            <ul className="mt-4 space-y-2 text-zinc-400">
+              <li>
+                <Link href="/quiz" className="transition duration-200 hover:text-white">
+                  Fragrance Quiz
+                </Link>
+              </li>
+              <li>
+                <Link href="/about" className="transition duration-200 hover:text-white">
+                  About Us
+                </Link>
+              </li>
+              <li>
+                <Link href="/contact" className="transition duration-200 hover:text-white">
+                  Contact
+                </Link>
+              </li>
+            </ul>
+          </div>
 
-          <h2 className="text-4xl font-black uppercase tracking-[-0.04em]">
-            Skye & Rose
-          </h2>
+          {/* COLUMN 3: CUSTOMER CARE */}
+          <div>
+            <h4 className="font-bold">
+              Customer Care
+            </h4>
+            <ul className="mt-4 space-y-2 text-zinc-400">
+              <li>
+                <Link href="/faq" className="transition duration-200 hover:text-white">
+                  FAQ
+                </Link>
+              </li>
+              <li>
+                <Link href="/delivery" className="transition duration-200 hover:text-white">
+                  Delivery
+                </Link>
+              </li>
+              <li>
+                <Link href="/privacy" className="transition duration-200 hover:text-white">
+                  Privacy Policy
+                </Link>
+              </li>
+              <li>
+                <Link href="/terms" className="transition duration-200 hover:text-white">
+                  Terms & Conditions
+                </Link>
+              </li>
+            </ul>
+          </div>
 
-          <p className="mt-6 max-w-sm text-sm leading-7 text-zinc-600">
-            Luxury-inspired fragrances designed for confidence,
-            lifestyle, travel, nightlife, and everyday elegance.
-          </p>
-
-        </div>
-
-        {/* SHOP */}
-        <div>
-
-          <p className="mb-5 text-sm uppercase tracking-[0.25em] text-zinc-500">
-            Shop
-          </p>
-
-          <div className="flex flex-col gap-4 text-sm text-zinc-700">
-
-            <a href="/shop" className="transition hover:text-black">
-              All Fragrances
-            </a>
-
-            <a href="/#new-arrivals" className="transition hover:text-black">
-              New Arrivals
-            </a>
-
-            <a href="/#collections" className="transition hover:text-black">
-              Collections
-            </a>
-
-            <a href="/faq" className="transition hover:text-black">
-              FAQ
-            </a>
-
+          {/* COLUMN 4: CONTACT */}
+          <div>
+            <h4 className="font-bold">
+              Contact
+            </h4>
+            <ul className="mt-4 space-y-2 text-zinc-400">
+              <li>
+                <a 
+                  href="https://wa.me/27696863952" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="transition duration-200 hover:text-white"
+                >
+                  WhatsApp
+                </a>
+              </li>
+              <li>
+                <a 
+                  href="https://wa.me/27696863952" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="transition duration-200 hover:text-white"
+                >
+                  +27 69 686 3952
+                </a>
+              </li>
+              <li>
+                Cape Town
+              </li>
+              <li>
+                South Africa
+              </li>
+            </ul>
           </div>
 
         </div>
 
-        {/* CONTACT */}
-        <div>
-
-          <p className="mb-5 text-sm uppercase tracking-[0.25em] text-zinc-500">
-            Contact
-          </p>
-
-          <div className="flex flex-col gap-4 text-sm text-zinc-700">
-
-            <a
-              href="https://wa.me/27700000000"
-              target="_blank"
-              className="transition hover:text-black"
-            >
-              WhatsApp Orders
-            </a>
-
-            <a
-              href="mailto:orders@maisonskyerose.com"
-              className="transition hover:text-black"
-            >
-              Email Support
-            </a>
-
-          </div>
-
-        </div>
-
-        {/* INFO */}
-        <div>
-
-          <p className="mb-5 text-sm uppercase tracking-[0.25em] text-zinc-500">
-            Information
-          </p>
-
-          <div className="flex flex-col gap-4 text-sm text-zinc-700">
-
-            <a href="/about" className="transition hover:text-black">
-              About Us
-            </a>
-
-            <a href="/shipping" className="transition hover:text-black">
-              Shipping Policy
-            </a>
-
-            <a href="/returns" className="transition hover:text-black">
-              Returns Policy
-            </a>
-
-          </div>
-
+        {/* BOTTOM METADATA BAR */}
+        <div className="mt-16 border-t border-zinc-800 pt-8 text-center text-sm text-zinc-500">
+          © {new Date().getFullYear()} Maison Skye & Rose. All Rights Reserved.
         </div>
 
       </div>
-
-      {/* BOTTOM */}
-      <div className="mx-auto mt-16 flex max-w-7xl flex-col gap-4 border-t border-black/5 pt-8 text-sm text-zinc-500 md:flex-row md:items-center md:justify-between">
-
-        <p>
-          © 2026 Maison Skye & Rose. All rights reserved.
-        </p>
-
-        <p>
-          Luxury Fragrance Lifestyle.
-        </p>
-
-      </div>
-
     </footer>
   );
 }
