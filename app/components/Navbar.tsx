@@ -35,61 +35,29 @@ export default function Navbar() {
           </Link>
 
           {/* DESKTOP NAV */}
-          <nav className="hidden items-center gap-6 xl:gap-8 lg:flex">
-            <Link
-              href="/"
-              className="text-xs uppercase tracking-[0.28em] text-[#7b7480] transition duration-300 hover:text-[#d89ca4]"
-            >
-              Home
-            </Link>
-
-            <Link
-              href="/shop"
-              className="text-xs uppercase tracking-[0.28em] text-[#7b7480] transition duration-300 hover:text-[#d89ca4]"
-            >
-              Shop
-            </Link>
-
-            <Link
-              href="/collections/skye"
-              className="text-xs uppercase tracking-[0.28em] text-[#7b7480] transition duration-300 hover:text-[#8fa8c7]"
-            >
-              Skye
-            </Link>
-
-            <Link
-              href="/collections/rose"
-              className="text-xs uppercase tracking-[0.28em] text-[#7b7480] transition duration-300 hover:text-[#d89ca4]"
-            >
-              Rose
-            </Link>
-
-            <Link
-              href="/quiz"
-              className="text-xs uppercase tracking-[0.28em] text-[#7b7480] transition duration-300 hover:text-[#d89ca4]"
-            >
-              Quiz
-            </Link>
-
-            <Link
-              href="/about"
-              className="text-xs uppercase tracking-[0.28em] text-[#7b7480] transition duration-300 hover:text-[#d89ca4]"
-            >
-              About
-            </Link>
-
-            <Link
-              href="/contact"
-              className="text-xs uppercase tracking-[0.28em] text-[#7b7480] transition duration-300 hover:text-[#d89ca4]"
-            >
-              Contact
-            </Link>
+          <nav className="hidden items-center gap-6 lg:flex xl:gap-8">
+            <Link href="/" className="text-xs uppercase tracking-[0.28em] text-[#7b7480] transition duration-300 hover:text-[#d89ca4]">Home</Link>
+            <Link href="/shop" className="text-xs uppercase tracking-[0.28em] text-[#7b7480] transition duration-300 hover:text-[#d89ca4]">Shop</Link>
+            <Link href="/collections/skye" className="text-xs uppercase tracking-[0.28em] text-[#7b7480] transition duration-300 hover:text-[#8fa8c7]">Skye</Link>
+            <Link href="/collections/rose" className="text-xs uppercase tracking-[0.28em] text-[#7b7480] transition duration-300 hover:text-[#d89ca4]">Rose</Link>
+            <Link href="/quiz" className="text-xs uppercase tracking-[0.28em] text-[#7b7480] transition duration-300 hover:text-[#d89ca4]">Quiz</Link>
+            <Link href="/about" className="text-xs uppercase tracking-[0.28em] text-[#7b7480] transition duration-300 hover:text-[#d89ca4]">About</Link>
+            <Link href="/favorites" className="text-xs uppercase tracking-[0.28em] text-[#7b7480] transition duration-300 hover:text-[#d89ca4]">Favorites</Link>
+            <Link href="/contact" className="text-xs uppercase tracking-[0.28em] text-[#7b7480] transition duration-300 hover:text-[#d89ca4]">Contact</Link>
           </nav>
 
           {/* RIGHT SIDE */}
-          <div className="flex items-center gap-2 sm:gap-3">
+          <div className="flex items-center gap-2 sm:gap-4">
             
-            {/* CART */}
+            <Link href="/favorites" className="relative text-xl">
+              ❤️
+              {favorites.length > 0 && (
+                <span className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-[#d89ca4] text-[10px] font-bold text-white">
+                  {favorites.length}
+                </span>
+              )}
+            </Link>
+
             <button
               onClick={openCart}
               className="flex items-center gap-2 rounded-full bg-[#d89ca4] px-4 py-3 text-[10px] uppercase tracking-[0.2em] text-white shadow-[0_12px_35px_rgba(216,156,164,0.22)] transition duration-300 hover:bg-[#c98992] sm:px-6 sm:py-4 sm:text-xs sm:tracking-[0.25em]"
@@ -100,7 +68,6 @@ export default function Navbar() {
               </span>
             </button>
 
-            {/* MOBILE MENU BUTTON */}
             <button
               onClick={() => setMobileMenu(!mobileMenu)}
               className="flex h-11 w-11 items-center justify-center rounded-full bg-[#eef3f8] lg:hidden"
@@ -111,7 +78,6 @@ export default function Navbar() {
                 <div className="h-[2px] w-5 rounded bg-[#4f4a52]" />
               </div>
             </button>
-
           </div>
         </div>
 
@@ -119,67 +85,37 @@ export default function Navbar() {
         {mobileMenu && (
           <div className="mt-3 rounded-[28px] border border-white/40 bg-white/80 p-6 shadow-[0_15px_50px_rgba(216,156,164,0.12)] backdrop-blur-2xl lg:hidden">
             <nav className="flex flex-col gap-5">
-              <Link
-                href="/"
-                onClick={closeMobileMenu}
-                className="text-sm uppercase tracking-[0.25em] text-[#4f4a52]"
-              >
-                Home
-              </Link>
+              <Link href="/" onClick={closeMobileMenu} className="text-sm uppercase tracking-[0.25em] text-[#4f4a52]">Home</Link>
+              <Link href="/shop" onClick={closeMobileMenu} className="text-sm uppercase tracking-[0.25em] text-[#4f4a52]">Shop</Link>
+              <Link href="/collections/skye" onClick={closeMobileMenu} className="text-sm uppercase tracking-[0.25em] text-[#4f4a52]">Skye</Link>
+              <Link href="/collections/rose" onClick={closeMobileMenu} className="text-sm uppercase tracking-[0.25em] text-[#4f4a52]">Rose</Link>
+              <Link href="/quiz" onClick={closeMobileMenu} className="text-sm uppercase tracking-[0.25em] text-[#4f4a52]">Quiz</Link>
+              <Link href="/about" onClick={closeMobileMenu} className="text-sm uppercase tracking-[0.25em] text-[#4f4a52]">About</Link>
+              <Link href="/favorites" onClick={closeMobileMenu} className="text-sm uppercase tracking-[0.25em] text-[#4f4a52]">Favorites</Link>
+              <Link href="/contact" onClick={closeMobileMenu} className="text-sm uppercase tracking-[0.25em] text-[#4f4a52]">Contact</Link>
+            </nav>
 
+            <div className="mt-6 space-y-3">
+              <a
+                href="https://wa.me/27696863952"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block rounded-2xl bg-green-500 px-5 py-4 text-center font-bold text-white"
+              >
+                WhatsApp Us
+              </a>
               <Link
                 href="/shop"
                 onClick={closeMobileMenu}
-                className="text-sm uppercase tracking-[0.25em] text-[#4f4a52]"
+                className="block rounded-2xl bg-black px-5 py-4 text-center font-bold text-white"
               >
-                Shop
+                Shop Collection
               </Link>
-
-              <Link
-                href="/collections/skye"
-                onClick={closeMobileMenu}
-                className="text-sm uppercase tracking-[0.25em] text-[#4f4a52]"
-              >
-                Skye
-              </Link>
-
-              <Link
-                href="/collections/rose"
-                onClick={closeMobileMenu}
-                className="text-sm uppercase tracking-[0.25em] text-[#4f4a52]"
-              >
-                Rose
-              </Link>
-
-              <Link
-                href="/quiz"
-                onClick={closeMobileMenu}
-                className="text-sm uppercase tracking-[0.25em] text-[#4f4a52]"
-              >
-                Quiz
-              </Link>
-
-              <Link
-                href="/about"
-                onClick={closeMobileMenu}
-                className="text-sm uppercase tracking-[0.25em] text-[#4f4a52]"
-              >
-                About
-              </Link>
-
-              <Link
-                href="/contact"
-                onClick={closeMobileMenu}
-                className="text-sm uppercase tracking-[0.25em] text-[#4f4a52]"
-              >
-                Contact
-              </Link>
-            </nav>
+            </div>
           </div>
         )}
       </header>
 
-      {/* CART DRAWER */}
       <CartDrawer open={cartOpen} onClose={closeCart} />
     </>
   );

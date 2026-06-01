@@ -26,7 +26,7 @@ export default function RoseCollectionPage() {
         <Navbar />
 
         <section className="mx-auto max-w-7xl px-6 py-20">
-          <p className="text-xs uppercase tracking-[0.45em] text-[#b67d73]">
+          <p className="text-xs uppercase tracking-[0.45em] text-[#d89ca4]">
             For Her
           </p>
 
@@ -37,8 +37,8 @@ export default function RoseCollectionPage() {
           </h1>
 
           <p className="mt-8 max-w-2xl text-lg leading-9 text-zinc-600">
-            Elegant feminine fragrances inspired by beauty,
-            softness, luxury and unforgettable moments.
+            Timeless feminine luxury fragrances inspired by grace, 
+            romance, beauty and soft sophistication.
           </p>
 
           <div className="mt-12">
@@ -61,8 +61,8 @@ export default function RoseCollectionPage() {
                 notes={fragrance.notes}
                 prices={fragrance.prices}
                 images={fragrance.images}
-                bestSeller={fragrance.bestSeller}
-                newArrival={fragrance.newArrival}
+                bestSeller={fragrance.bestSeller ?? false}
+                newArrival={fragrance.newArrival ?? false}
                 onQuickAdd={() => setSelectedFragrance(fragrance)}
               />
             ))}
@@ -80,7 +80,6 @@ export default function RoseCollectionPage() {
         )}
       </main>
 
-      {/* Placed outside the animated <main> container to float perfectly */}
       <FloatingWhatsApp />
     </>
   );

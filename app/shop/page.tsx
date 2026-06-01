@@ -7,20 +7,21 @@ import ProductCard from "../components/ProductCard";
 import QuickAddModal from "../components/QuickAddModal";
 
 import { fragrances } from "../data/fragrances";
+import { useFavorites } from "../context/FavoritesContext";
 
 export default function ShopPage() {
   const [search, setSearch] = useState("");
-  // Consolidated single filter state to track collections or status tags
   const [currentFilter, setCurrentFilter] = useState("All");
   const [selectedFragrance, setSelectedFragrance] = useState<any>(null);
+  
+  // You can now use these in your ProductCard or here as needed
+  const { favorites, addToFavorites, removeFromFavorites } = useFavorites();
 
-  // Added explicit ': any' typing to item to bypass the strict property error
   const filtered = fragrances.filter((item: any) => {
     const matchesSearch = item.title
       .toLowerCase()
       .includes(search.toLowerCase());
 
-    // Unified evaluation for collections (Skye, Rose) or status flags (Best Sellers, New Arrivals)
     const matchesFilter =
       currentFilter === "All"
         ? true
@@ -85,21 +86,21 @@ export default function ShopPage() {
             Showing {filtered.length} fragrances
           </p>
 
-          {/* Product Grid */}
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-            {filtered.map((fragrance) => (
-              <ProductCard
-                key={fragrance.title}
-                {...fragrance}
-                onQuickAdd={() => setSelectedFragrance(fragrance)}
-              />
-            ))}
-          </div>
-
-          {/* Empty State Fallback */}
-          {filtered.length === 0 && (
-            <div className="py-20 text-center text-zinc-400">
-              No fragrances match your search or filter selection.
+          {/* Conditional Rendering for Grid vs Empty State */}
+          {filtered.length === 0 ? (
+            <div className="py-20 text-center">
+              <h3 className="text-3xl font-black">No Fragrances Found</h3>
+              <p className="mt-4 text-zinc-500">Try another search term.</p>
+            </div>
+          ) : (
+            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+              {filtered.map((fragrance) => (
+                <ProductCard
+                  key={fragrance.title}
+                  {...fragrance}
+                  onQuickAdd={() => setSelectedFragrance(fragrance)}
+                />
+              ))}
             </div>
           )}
         </div>

@@ -61,8 +61,8 @@ export default function SkyeCollectionPage() {
                 notes={fragrance.notes}
                 prices={fragrance.prices}
                 images={fragrance.images}
-                bestSeller={fragrance.bestSeller}
-                newArrival={fragrance.newArrival}
+                bestSeller={fragrance.bestSeller ?? false}
+                newArrival={fragrance.newArrival ?? false}
                 onQuickAdd={() => setSelectedFragrance(fragrance)}
               />
             ))}
@@ -80,7 +80,6 @@ export default function SkyeCollectionPage() {
         )}
       </main>
 
-      {/* Placed outside the animated <main> container to float perfectly */}
       <FloatingWhatsApp />
     </>
   );
