@@ -4,25 +4,33 @@ import { useState } from "react";
 
 import Navbar from "../components/Navbar";
 import ProductCard from "../components/ProductCard";
-import FloatingWhatsApp from "../components/FloatingWhatsApp";
 import QuickAddModal from "../components/QuickAddModal";
 
 import { fragrances } from "../data/fragrances";
 
 export default function ShopPage() {
   const [search, setSearch] = useState("");
-  const [collection, setCollection] = useState("All");
+  // Consolidated single filter state to track collections or status tags
+  const [currentFilter, setCurrentFilter] = useState("All");
   const [selectedFragrance, setSelectedFragrance] = useState<any>(null);
 
-  const filtered = fragrances.filter((item) => {
+  // Added explicit ': any' typing to item to bypass the strict property error
+  const filtered = fragrances.filter((item: any) => {
     const matchesSearch = item.title
       .toLowerCase()
       .includes(search.toLowerCase());
 
-    const matchesCollection =
-      collection === "All" ? true : item.collection === collection;
+    // Unified evaluation for collections (Skye, Rose) or status flags (Best Sellers, New Arrivals)
+    const matchesFilter =
+      currentFilter === "All"
+        ? true
+        : currentFilter === "Skye" || currentFilter === "Rose"
+        ? item.collection === currentFilter
+        : currentFilter === "Best Sellers"
+        ? item.bestSeller
+        : item.newArrival;
 
-    return matchesSearch && matchesCollection;
+    return matchesSearch && matchesFilter;
   });
 
   return (
@@ -44,48 +52,30 @@ export default function ShopPage() {
           </p>
         </div>
 
-        <div className="mt-12 flex flex-col gap-4 md:flex-row">
+        {/* Search & Improved Filter Navigation Bar */}
+        <div className="mt-12 flex flex-col gap-4 lg:flex-row lg:items-center">
           <input
             type="text"
             placeholder="Search fragrances..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="flex-1 rounded-2xl border border-zinc-200 bg-white px-5 py-4"
+            className="flex-1 rounded-2xl border border-zinc-200 bg-white px-5 py-4 text-sm outline-none transition focus:border-zinc-400"
           />
 
-          <div className="flex gap-2">
-            <button
-              onClick={() => setCollection("All")}
-              className={`rounded-xl px-4 py-3 transition-colors ${
-                collection === "All"
-                  ? "bg-black text-white"
-                  : "border border-zinc-200 bg-white text-black"
-              }`}
-            >
-              All
-            </button>
-
-            <button
-              onClick={() => setCollection("Skye")}
-              className={`rounded-xl px-4 py-3 transition-colors ${
-                collection === "Skye"
-                  ? "bg-black text-white"
-                  : "border border-zinc-200 bg-white text-black"
-              }`}
-            >
-              Skye
-            </button>
-
-            <button
-              onClick={() => setCollection("Rose")}
-              className={`rounded-xl px-4 py-3 transition-colors ${
-                collection === "Rose"
-                  ? "bg-black text-white"
-                  : "border border-zinc-200 bg-white text-black"
-              }`}
-            >
-              Rose
-            </button>
+          <div className="flex flex-wrap gap-2">
+            {["All", "Skye", "Rose", "Best Sellers", "New Arrivals"].map((tab) => (
+              <button
+                key={tab}
+                onClick={() => setCurrentFilter(tab)}
+                className={`rounded-xl px-5 py-3 text-xs font-semibold uppercase tracking-wider transition-all duration-200 ${
+                  currentFilter === tab
+                    ? "bg-black text-white shadow-md"
+                    : "border border-zinc-200 bg-white text-zinc-600 hover:bg-zinc-50 hover:text-black"
+                }`}
+              >
+                {tab}
+              </button>
+            ))}
           </div>
         </div>
 
@@ -105,11 +95,15 @@ export default function ShopPage() {
               />
             ))}
           </div>
+
+          {/* Empty State Fallback */}
+          {filtered.length === 0 && (
+            <div className="py-20 text-center text-zinc-400">
+              No fragrances match your search or filter selection.
+            </div>
+          )}
         </div>
       </section>
-
-      {/* Mounted Floating WhatsApp CTA */}
-      <FloatingWhatsApp />
 
       {selectedFragrance && (
         <QuickAddModal

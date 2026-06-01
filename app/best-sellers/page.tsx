@@ -1,64 +1,73 @@
+// app/best-sellers/page.tsx
 "use client";
 
+import { useState } from "react";
 import Navbar from "../components/Navbar";
 import ProductCard from "../components/ProductCard";
-
+import QuickAddModal from "../components/QuickAddModal";
 import { fragrances } from "../data/fragrances";
 
 export default function BestSellersPage() {
+  const [selectedFragrance, setSelectedFragrance] = useState<any>(null);
 
-  const products =
-    fragrances.filter(
-      (item) =>
-        item.bestSeller === true
-    );
+  // Filters the master dataset down to only the top-voted best sellers
+  const bestSellers = fragrances.filter((item: any) => item.bestSeller);
 
   return (
-    <main className="fade-up min-h-screen bg-[#f5f1eb]">
-
+    <main className="min-h-screen bg-[#f5f1eb]">
       <Navbar />
 
       <section className="mx-auto max-w-7xl px-6 py-20">
+        <div className="text-center">
+          <p className="text-xs uppercase tracking-[0.45em] text-[#d89ca4]">
+            Most Loved
+          </p>
 
-        <p className="text-xs uppercase tracking-[0.45em] text-zinc-500">
-          Most Wanted
-        </p>
+          <h1 className="mt-4 text-6xl font-black tracking-[-0.05em]">
+            Best Sellers
+          </h1>
 
-        <h1 className="mt-6 text-7xl font-black uppercase leading-[0.9] tracking-[-0.05em]">
-          Best
-          <br />
-          Sellers
-        </h1>
-
-        <p className="mt-8 max-w-2xl text-lg leading-9 text-zinc-600">
-          Discover the fragrances customers love most —
-          signature scents built for confidence, luxury and unforgettable energy.
-        </p>
-
-        <div className="mt-20 grid gap-8 md:grid-cols-2 xl:grid-cols-3">
-
-          {products.map((fragrance) => (
-
-            <ProductCard
-              key={fragrance.id}
-              title={fragrance.title}
-              subtitle={fragrance.description}
-              mood={fragrance.mood}
-              profile={fragrance.profile}
-              season={fragrance.season}
-              notes={fragrance.notes}
-              prices={fragrance.prices}
-              images={fragrance.images}
-              bestSeller={fragrance.bestSeller}
-              newArrival={fragrance.newArrival}
-            />
-
-          ))}
-
+          <p className="mt-6 text-zinc-600 max-w-xl mx-auto">
+            Our community's absolute favorites. Explore the luxury-inspired fragrances that everyone is talking about.
+          </p>
         </div>
 
+        {/* Product Count Display */}
+        <div className="mt-16">
+          <p className="mb-8 text-sm text-zinc-500">
+            Showing {bestSellers.length} top trending fragrances
+          </p>
+
+          {/* Grid Layout matching your Shop page */}
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+            {bestSellers.map((fragrance) => (
+              <ProductCard
+                key={fragrance.title}
+                {...fragrance}
+                onQuickAdd={() => setSelectedFragrance(fragrance)}
+              />
+            ))}
+          </div>
+
+          {/* Empty State Safeguard */}
+          {bestSellers.length === 0 && (
+            <div className="py-20 text-center text-zinc-400">
+              No best sellers marked in your fragrance data file yet.
+            </div>
+          )}
+        </div>
       </section>
 
+      {/* Quick Add Modal Sync */}
+      {selectedFragrance && (
+        <QuickAddModal
+          open={true}
+          onClose={() => setSelectedFragrance(null)}
+          title={selectedFragrance.title}
+          images={selectedFragrance.images}
+          prices={selectedFragrance.prices}
+        />
+      )}
     </main>
   );
 }

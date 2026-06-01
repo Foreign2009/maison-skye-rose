@@ -1,3 +1,4 @@
+// app/page.tsx
 "use client";
 
 import { useState } from "react";
@@ -12,13 +13,25 @@ import RequestFragrance from "./components/RequestFragrance";
 import ShopByPersonality from "./components/ShopByPersonality";
 import DiscoverySets from "./components/DiscoverySets";
 import RecentlyViewed from "./components/RecentlyViewed";
-import FloatingWhatsApp from "./components/FloatingWhatsApp";
 import QuickAddModal from "./components/QuickAddModal";
 
 import { fragrances } from "./data/fragrances";
 
 export default function HomePage() {
   const [selectedFragrance, setSelectedFragrance] = useState<any>(null);
+  // Added combined filter state (All, Skye, Rose, Best Sellers, New Arrivals)
+  const [currentFilter, setCurrentFilter] = useState("All");
+
+  // Advanced filtration logic for handling the collection and flag attributes
+  const filteredFragrances = fragrances.filter((item) => {
+    if (currentFilter === "All") return true;
+    if (currentFilter === "Skye" || currentFilter === "Rose") {
+      return item.collection === currentFilter;
+    }
+    if (currentFilter === "Best Sellers") return item.bestSeller;
+    if (currentFilter === "New Arrivals") return item.newArrival;
+    return true;
+  });
 
   return (
     <main className="min-h-screen bg-[#faf7f5]">
@@ -62,9 +75,9 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Main Fragrances List Section */}
+      {/* Main Fragrances List Section with Filter Bars */}
       <section className="mx-auto max-w-7xl px-5 py-24">
-        <div className="mb-12 text-center">
+        <div className="mb-8 text-center">
           <p className="text-[11px] uppercase tracking-[0.45em] text-[#d89ca4]">
             Signature Collection
           </p>
@@ -79,9 +92,26 @@ export default function HomePage() {
           </p>
         </div>
 
-        {/* Limited down to 12 items and assigned title as the key */}
+        {/* Improved Dynamic Filter Tabs Navigation Bar */}
+        <div className="mb-12 flex flex-wrap items-center justify-center gap-2.5">
+          {["All", "Skye", "Rose", "Best Sellers", "New Arrivals"].map((tab) => (
+            <button
+              key={tab}
+              onClick={() => setCurrentFilter(tab)}
+              className={`rounded-full px-6 py-2.5 text-xs font-semibold uppercase tracking-wider transition-all duration-200 ${
+                currentFilter === tab
+                  ? "bg-[#d89ca4] text-white shadow-md shadow-[#d89ca4]/20"
+                  : "bg-white text-[#7b7480] border border-gray-200/60 hover:bg-gray-50 hover:text-black"
+              }`}
+            >
+              {tab}
+            </button>
+          ))}
+        </div>
+
+        {/* Limited down to 12 items dynamically post filtering */}
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-          {fragrances.slice(0, 12).map((fragrance) => (
+          {filteredFragrances.slice(0, 12).map((fragrance) => (
             <ProductCard
               key={fragrance.title}
               {...fragrance}
@@ -90,10 +120,17 @@ export default function HomePage() {
           ))}
         </div>
 
+        {/* Empty state safeguard if a filter combination yields no results */}
+        {filteredFragrances.length === 0 && (
+          <div className="py-12 text-center text-sm text-gray-400">
+            No fragrances matching this category found.
+          </div>
+        )}
+
         {/* Explore All Button */}
         <a
           href="/shop"
-          className="mx-auto mt-12 flex w-fit rounded-full bg-black px-8 py-4 text-white"
+          className="mx-auto mt-12 flex w-fit rounded-full bg-black px-8 py-4 text-white text-sm font-semibold transition hover:bg-neutral-800"
         >
           Explore All Fragrances
         </a>
@@ -112,9 +149,6 @@ export default function HomePage() {
 
       {/* Mounted RecentlyViewed directly below DiscoverySets */}
       <RecentlyViewed />
-
-      {/* Mounted Floating WhatsApp CTA */}
-      <FloatingWhatsApp />
 
       {selectedFragrance && (
         <QuickAddModal

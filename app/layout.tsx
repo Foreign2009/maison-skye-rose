@@ -1,3 +1,4 @@
+// app/layout.tsx
 import "./globals.css";
 
 import type { Metadata } from "next";
@@ -9,12 +10,13 @@ import { CartFeedbackProvider } from "./context/CartFeedbackContext";
 
 import FloatingCart from "./components/FloatingCart";
 import CartSuccessToast from "./components/CartSuccessToast";
+import FloatingWhatsApp from "./components/FloatingWhatsApp";
 
+// Updated with high-priority SEO Metadata
 export const metadata: Metadata = {
-  title: "Maison Skye & Rose",
-
+  title: "Maison Skye & Rose | Luxury Inspired Fragrances",
   description:
-    "Luxury-inspired fragrance lifestyle store.",
+    "Explore luxury-inspired fragrances from Maison Skye & Rose. Premium 5ml, 10ml and 30ml options available.",
 };
 
 export default function RootLayout({
@@ -22,42 +24,23 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-
   return (
-
-    <html
-      lang="en"
-      data-scroll-behavior="smooth"
-    >
-
+    <html lang="en" data-scroll-behavior="smooth">
       <body>
-
         <FavoritesProvider>
-
           <CartProvider>
-
             <CartUIProvider>
-
               <CartFeedbackProvider>
-
                 {children}
 
                 <FloatingCart />
-
                 <CartSuccessToast />
-
+                <FloatingWhatsApp />
               </CartFeedbackProvider>
-
             </CartUIProvider>
-
           </CartProvider>
-
         </FavoritesProvider>
-
       </body>
-
     </html>
-
   );
-
 }
