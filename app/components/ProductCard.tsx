@@ -54,7 +54,7 @@ export default function ProductCard({ title, subtitle, mood, profile, season, no
   };
 
   return (
-    <div className="relative overflow-hidden rounded-[32px] bg-white p-6 shadow-[0_20px_60px_rgba(0,0,0,0.08)] transition-all duration-300 hover:-translate-y-2">
+    <div className="relative flex h-full flex-col overflow-hidden rounded-[32px] bg-white p-6 shadow-[0_20px_60px_rgba(0,0,0,0.08)] transition-all duration-300 hover:-translate-y-2">
       {(bestSeller || newArrival) && (
         <div className="absolute right-4 top-4 z-20">
           {bestSeller && <span className="rounded-full bg-black px-3 py-1 text-xs font-bold text-white">Best Seller</span>}
@@ -71,14 +71,13 @@ export default function ProductCard({ title, subtitle, mood, profile, season, no
           src={images["10ml"]}
           alt={title}
           width={240}
-          height={240}
-          className="object-contain"
-          style={{ width: "auto", height: "240px" }}
+          height={260}
+          className="h-[260px] w-auto object-contain"
           priority
         />
       </div>
 
-      <div className="mt-6">
+      <div className="mt-6 flex flex-1 flex-col">
         <h3 className="text-2xl font-black text-[#4f4a52]">{title}</h3>
         <p className="mt-2 text-sm font-semibold text-[#d89ca4]">{subtitle}</p>
         <p className="mt-4 text-sm leading-7 text-[#7b7480]">{mood}</p>
@@ -90,12 +89,15 @@ export default function ProductCard({ title, subtitle, mood, profile, season, no
         <div className="mt-6">
           <p className="text-sm text-[#7b7480]">{profile} • {season}</p>
         </div>
-        <div className="mt-8 flex items-center justify-between">
-          <div>
-            <p className="text-xs uppercase text-[#7b7480]">From</p>
-            <p className="text-2xl font-black text-[#4f4a52]">R{prices["5ml"]}</p>
-          </div>
-          <button onClick={handleCardClick} className="rounded-full bg-gradient-to-r from-pink-400 to-blue-400 px-6 py-3 font-bold text-white">Quick Add</button>
+        
+        <div className="mt-auto pt-8">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-xs uppercase text-[#7b7480]">From</p>
+                <p className="text-2xl font-black text-[#4f4a52]">R{prices["5ml"]}</p>
+              </div>
+              <button onClick={handleCardClick} className="rounded-full bg-gradient-to-r from-pink-400 to-blue-400 px-6 py-3 font-bold text-white">Quick Add</button>
+            </div>
         </div>
       </div>
     </div>

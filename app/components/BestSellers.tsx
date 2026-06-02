@@ -8,9 +8,22 @@ interface BestSellersProps {
 }
 
 export default function BestSellers({ onQuickAdd }: BestSellersProps) {
-  const bestSellers = fragrances
-    .filter((item) => item.bestSeller)
-    .slice(0, 8);
+  // Filter for each collection
+  const skyeBest = fragrances.filter((f) => f.collection === "Skye" && f.bestSeller);
+  const roseBest = fragrances.filter((f) => f.collection === "Rose" && f.bestSeller);
+  const eliteBest = fragrances.filter((f) => f.collection === "Elite" && f.bestSeller);
+
+  // Interleave logic
+  const bestSellers: any[] = [];
+  const maxLength = Math.max(skyeBest.length, roseBest.length, eliteBest.length);
+
+  for (let i = 0; i < maxLength; i++) {
+    if (skyeBest[i]) bestSellers.push(skyeBest[i]);
+    if (roseBest[i]) bestSellers.push(roseBest[i]);
+    if (eliteBest[i]) bestSellers.push(eliteBest[i]);
+  }
+
+  const displayedBestSellers = bestSellers.slice(0, 8);
 
   return (
     <section className="mx-auto max-w-7xl px-6 py-20">
@@ -25,7 +38,7 @@ export default function BestSellers({ onQuickAdd }: BestSellersProps) {
       </div>
 
       <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-        {bestSellers.map((fragrance) => (
+        {displayedBestSellers.map((fragrance) => (
           <ProductCard
             key={fragrance.title}
             {...fragrance}

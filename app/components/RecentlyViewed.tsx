@@ -2,9 +2,11 @@
 
 import { useEffect, useState } from "react";
 import ProductCard from "./ProductCard";
+import QuickAddModal from "./QuickAddModal";
 
 export default function RecentlyViewed() {
   const [items, setItems] = useState<any[]>([]);
+  const [selectedFragrance, setSelectedFragrance] = useState<any>(null);
 
   useEffect(() => {
     const stored = localStorage.getItem("recentlyViewed");
@@ -33,9 +35,20 @@ export default function RecentlyViewed() {
           <ProductCard
             key={item.title}
             {...item}
+            onQuickAdd={() => setSelectedFragrance(item)}
           />
         ))}
       </div>
+
+      {selectedFragrance && (
+        <QuickAddModal
+          open={true}
+          onClose={() => setSelectedFragrance(null)}
+          title={selectedFragrance.title}
+          images={selectedFragrance.images}
+          prices={selectedFragrance.prices}
+        />
+      )}
     </section>
   );
 }
