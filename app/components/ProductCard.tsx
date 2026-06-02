@@ -70,9 +70,10 @@ export default function ProductCard({ title, subtitle, mood, profile, season, no
         <Image
           src={images["10ml"]}
           alt={title}
-          width={240}
+          width={260}
           height={260}
           className="h-[260px] w-auto object-contain"
+          sizes="(max-width: 768px) 100vw, 260px"
           priority
         />
       </div>
