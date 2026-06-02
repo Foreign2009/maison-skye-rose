@@ -1,8 +1,6 @@
-// app/page.tsx
 "use client";
 
 import { useState } from "react";
-
 import Navbar from "./components/Navbar";
 import ProductCard from "./components/ProductCard";
 import AIHeroSection from "./components/AIHeroSection";
@@ -14,15 +12,14 @@ import ShopByPersonality from "./components/ShopByPersonality";
 import DiscoverySets from "./components/DiscoverySets";
 import RecentlyViewed from "./components/RecentlyViewed";
 import QuickAddModal from "./components/QuickAddModal";
+import Link from "next/link";
 
 import { fragrances } from "./data/fragrances";
 
 export default function HomePage() {
   const [selectedFragrance, setSelectedFragrance] = useState<any>(null);
-  // Added combined filter state (All, Skye, Rose, Best Sellers, New Arrivals)
   const [currentFilter, setCurrentFilter] = useState("All");
 
-  // Advanced filtration logic for handling the collection and flag attributes
   const filteredFragrances = fragrances.filter((item) => {
     if (currentFilter === "All") return true;
     if (currentFilter === "Skye" || currentFilter === "Rose") {
@@ -35,64 +32,35 @@ export default function HomePage() {
 
   return (
     <main className="min-h-screen bg-[#faf7f5]">
-      <Navbar />
+      {/* ANNOUNCEMENT BANNER */}
+      <div className="bg-black text-white text-[10px] text-center py-2 uppercase tracking-[0.3em] sticky top-0 z-[60]">
+        Free Nationwide Delivery on Orders Over R800
+      </div>
 
+      <Navbar />
       <AIHeroSection />
 
-      {/* Added Best Sellers directly under Hero */}
-      <BestSellers onQuickAdd={(fragrance) => setSelectedFragrance(fragrance)} />
-
-      {/* Updated Stats Section */}
-      <section className="bg-black py-6 text-white">
-        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-10 px-6 text-center lg:justify-between">
-          <div>
-            <h3 className="text-4xl font-black">465+</h3>
-            <p className="text-xs uppercase tracking-[0.3em]">
-              Available On Request
-            </p>
-          </div>
-
-          <div>
-            <h3 className="text-4xl font-black">90+</h3>
-            <p className="text-xs uppercase tracking-[0.3em]">
-              Featured Fragrances
-            </p>
-          </div>
-
-          <div>
-            <h3 className="text-4xl font-black">R60</h3>
-            <p className="text-xs uppercase tracking-[0.3em]">
-              Starting Price
-            </p>
-          </div>
-
-          <div>
-            <h3 className="text-4xl font-black">SA</h3>
-            <p className="text-xs uppercase tracking-[0.3em]">
-              Nationwide Delivery
-            </p>
-          </div>
-        </div>
+      {/* BEST SELLERS SECTION */}
+      <section className="py-20 px-6 max-w-7xl mx-auto">
+        <h2 className="text-4xl font-black mb-12 text-center text-[#4f4a52]">Best Sellers</h2>
+        <BestSellers onQuickAdd={(fragrance) => setSelectedFragrance(fragrance)} />
       </section>
 
-      {/* Main Fragrances List Section with Filter Bars */}
+      {/* HOMEPAGE CTA SECTION */}
+      <section className="bg-[#f5f1eb] py-20 text-center px-6">
+        <h3 className="text-3xl font-black mb-6 text-[#4f4a52]">Find Your Signature</h3>
+        <Link href="/shop" className="inline-block bg-black text-white px-8 py-4 rounded-full text-sm font-bold uppercase tracking-widest hover:bg-neutral-800 transition">
+          Explore Collection
+        </Link>
+      </section>
+
+      {/* MAIN FRAGRANCES LIST */}
       <section className="mx-auto max-w-7xl px-5 py-24">
-        <div className="mb-8 text-center">
-          <p className="text-[11px] uppercase tracking-[0.45em] text-[#d89ca4]">
-            Signature Collection
-          </p>
-
-          <h2 className="mt-4 text-5xl font-black tracking-[-0.06em] text-[#4f4a52]">
-            Inspired Scent Journeys
-          </h2>
-
-          <p className="mx-auto mt-6 max-w-2xl text-[#7b7480] leading-8">
-            Discover luxury-inspired fragrances crafted to complement your
-            lifestyle, personality and signature presence.
-          </p>
+        <div className="mb-12 text-center">
+          <p className="text-[11px] uppercase tracking-[0.45em] text-[#d89ca4]">Signature Collection</p>
+          <h2 className="mt-4 text-5xl font-black tracking-[-0.06em] text-[#4f4a52]">Inspired Scent Journeys</h2>
         </div>
 
-        {/* Improved Dynamic Filter Tabs Navigation Bar */}
         <div className="mb-12 flex flex-wrap items-center justify-center gap-2.5">
           {["All", "Skye", "Rose", "Best Sellers", "New Arrivals"].map((tab) => (
             <button
@@ -100,8 +68,8 @@ export default function HomePage() {
               onClick={() => setCurrentFilter(tab)}
               className={`rounded-full px-6 py-2.5 text-xs font-semibold uppercase tracking-wider transition-all duration-200 ${
                 currentFilter === tab
-                  ? "bg-[#d89ca4] text-white shadow-md shadow-[#d89ca4]/20"
-                  : "bg-white text-[#7b7480] border border-gray-200/60 hover:bg-gray-50 hover:text-black"
+                  ? "bg-[#d89ca4] text-white shadow-md"
+                  : "bg-white text-[#7b7480] border border-gray-200/60 hover:bg-gray-50"
               }`}
             >
               {tab}
@@ -109,9 +77,8 @@ export default function HomePage() {
           ))}
         </div>
 
-        {/* Limited down to 12 items dynamically post filtering */}
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-          {filteredFragrances.slice(0, 12).map((fragrance) => (
+          {filteredFragrances.slice(0, 8).map((fragrance) => (
             <ProductCard
               key={fragrance.title}
               {...fragrance}
@@ -119,44 +86,21 @@ export default function HomePage() {
             />
           ))}
         </div>
-
-        {/* Empty state safeguard if a filter combination yields no results */}
-        {filteredFragrances.length === 0 && (
-          <div className="py-12 text-center text-sm text-gray-400">
-            No fragrances matching this category found.
-          </div>
-        )}
-
-        {/* Explore All Button */}
-        <a
-          href="/shop"
-          className="mx-auto mt-12 flex w-fit rounded-full bg-black px-8 py-4 text-white text-sm font-semibold transition hover:bg-neutral-800"
-        >
-          Explore All Fragrances
-        </a>
       </section>
 
-      <LatestAdditions />
-
-      {/* Relocated Request Fragrance higher up */}
-      <RequestFragrance />
-
-      <ComingSoon />
-
-      <ShopByPersonality />
-
+      {/* ADDITIONAL SECTIONS ORDER */}
       <DiscoverySets />
-
-      {/* Mounted RecentlyViewed directly below DiscoverySets */}
+      <ShopByPersonality />
+      <RequestFragrance />
+      <LatestAdditions />
       <RecentlyViewed />
+      <ComingSoon />
 
       {selectedFragrance && (
         <QuickAddModal
           open={true}
           onClose={() => setSelectedFragrance(null)}
-          title={selectedFragrance.title}
-          images={selectedFragrance.images}
-          prices={selectedFragrance.prices}
+          {...selectedFragrance}
         />
       )}
     </main>

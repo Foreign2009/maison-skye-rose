@@ -2,12 +2,7 @@
 
 import Image from "next/image";
 import { useState } from "react";
-
-import {
-  motion,
-  AnimatePresence,
-} from "framer-motion";
-
+import { motion, AnimatePresence } from "framer-motion";
 import { useCart } from "../context/CartContext";
 
 interface CartDrawerProps {
@@ -15,11 +10,7 @@ interface CartDrawerProps {
   onClose: () => void;
 }
 
-export default function CartDrawer({
-  open,
-  onClose,
-}: CartDrawerProps) {
-
+export default function CartDrawer({ open, onClose }: CartDrawerProps) {
   const {
     cart,
     cartTotal,
@@ -39,8 +30,8 @@ export default function CartDrawer({
     "Collection / Pickup": 0,
     "Cape Town Metro": 100,
     "Western Cape Regional": 150,
-    Johannesburg: 180,
-    Durban: 180,
+    "Johannesburg": 180,
+    "Durban": 180,
     "Other Major Cities": 200,
     "Outlying Areas": 300,
   };
@@ -56,7 +47,6 @@ export default function CartDrawer({
     <AnimatePresence>
       {open && (
         <>
-          {/* OVERLAY */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -65,7 +55,6 @@ export default function CartDrawer({
             className="fixed inset-0 z-[99998] bg-black/30 backdrop-blur-sm"
           />
 
-          {/* DRAWER */}
           <motion.div
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
@@ -77,13 +66,11 @@ export default function CartDrawer({
             }}
             className="fixed right-0 top-0 z-[99999] flex h-screen w-full max-w-md flex-col overflow-hidden border-l border-white/30 bg-white/80 shadow-[0_0_80px_rgba(0,0,0,0.12)] backdrop-blur-[30px]"
           >
-            {/* GLOW */}
             <div className="absolute inset-0 overflow-hidden">
               <div className="absolute -left-10 top-0 h-52 w-52 rounded-full bg-pink-300/20 blur-3xl" />
               <div className="absolute -right-10 bottom-0 h-52 w-52 rounded-full bg-blue-300/20 blur-3xl" />
             </div>
 
-            {/* HEADER */}
             <div className="relative z-10 flex items-center justify-between border-b border-white/40 px-6 py-6">
               <div>
                 <p className="text-[10px] uppercase tracking-[0.3em] text-[#8a8490]">
@@ -101,7 +88,6 @@ export default function CartDrawer({
               </button>
             </div>
 
-            {/* ITEMS */}
             <div className="relative z-10 flex-1 overflow-y-auto px-6 py-5">
               {cart.length === 0 ? (
                 <div className="flex h-full flex-col items-center justify-center text-center">
@@ -167,17 +153,19 @@ export default function CartDrawer({
               )}
             </div>
 
-            {/* FOOTER */}
             {cart.length > 0 && (
               <div className="relative z-10 border-t border-white/40 bg-white/70 p-6 backdrop-blur-[20px]">
                 <div className="mb-5">
-                  <label className="mb-2 block text-sm font-semibold text-[#4f4a52]">
+                  <p className="mb-3 text-xs uppercase tracking-[0.25em] text-[#b67d86]">
+                    Checkout Details
+                  </p>
+                  <label className="mb-1 block text-xs font-semibold uppercase tracking-[0.15em] text-[#7b7480]">
                     Delivery Method
                   </label>
                   <select
                     value={deliveryArea}
                     onChange={(e) => setDeliveryArea(e.target.value)}
-                    className="w-full rounded-2xl border border-gray-200 bg-white p-4 text-sm"
+                    className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm"
                   >
                     <option>Collection / Pickup</option>
                     <option>Cape Town Metro</option>
@@ -187,35 +175,39 @@ export default function CartDrawer({
                     <option>Other Major Cities</option>
                     <option>Outlying Areas</option>
                   </select>
+                  <p className="mt-2 text-xs text-[#7b7480]">
+                    {deliveryArea === "Collection / Pickup"
+                      ? "Collection available by arrangement."
+                      : `Delivery fee: R${delivery}`}
+                  </p>
 
-                  <div className="mt-4 space-y-3">
+                  <div className="mt-3 space-y-2">
                     <input
                       type="text"
                       placeholder="Full Name"
                       value={customerName}
                       onChange={(e) => setCustomerName(e.target.value)}
-                      className="w-full rounded-2xl border border-gray-200 p-4"
+                      className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm"
                     />
                     <input
                       type="text"
                       placeholder="Contact Number"
                       value={contactNumber}
                       onChange={(e) => setContactNumber(e.target.value)}
-                      className="w-full rounded-2xl border border-gray-200 p-4"
+                      className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm"
                     />
                     {deliveryArea !== "Collection / Pickup" && (
                       <textarea
                         placeholder="Delivery Address"
                         value={deliveryAddress}
                         onChange={(e) => setDeliveryAddress(e.target.value)}
-                        rows={3}
-                        className="w-full rounded-2xl border border-gray-200 p-4"
+                        rows={2}
+                        className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm"
                       />
                     )}
                   </div>
                 </div>
 
-                {/* TOTALS */}
                 <div className="space-y-3">
                   <div className="flex items-center justify-between text-sm text-[#7b7480]">
                     <span>Subtotal</span>
@@ -248,32 +240,7 @@ export default function CartDrawer({
                       .map((item) => `• ${item.title} (${item.size}) x${item.quantity} - R${(item.price * item.quantity).toFixed(2)}`)
                       .join("\n");
 
-                    const message = `🌹 Maison Skye & Rose Order
-
-Customer:
-${customerName}
-
-Contact Number:
-${contactNumber}
-
-Delivery Method:
-${deliveryArea}
-
-${deliveryArea !== "Collection / Pickup" ? `Delivery Address:
-${deliveryAddress}
-
-` : ""}
-
-Items:
-
-${orderLines}
-
-Subtotal: R${cartTotal.toFixed(2)}
-VAT (15%): R${vat.toFixed(2)}
-Delivery: R${delivery.toFixed(2)}
-
-Total: R${finalTotal.toFixed(2)}
-`;
+                    const message = `🌹 Maison Skye & Rose Order\n\nCustomer:\n${customerName}\n\nContact Number:\n${contactNumber}\n\nDelivery Method:\n${deliveryArea}\n\n${deliveryArea !== "Collection / Pickup" ? `Delivery Address:\n${deliveryAddress}\n\n` : ""}Items:\n\n${orderLines}\n\nSubtotal: R${cartTotal.toFixed(2)}\nVAT (15%): R${vat.toFixed(2)}\nDelivery: R${delivery.toFixed(2)}\n\nTotal: R${finalTotal.toFixed(2)}`;
                     window.open(`https://wa.me/27696863952?text=${encodeURIComponent(message)}`, "_blank");
                     onClose();
                   }}

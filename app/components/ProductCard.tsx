@@ -38,7 +38,19 @@ export default function ProductCard({ title, subtitle, mood, profile, season, no
       removeFromFavorites(title);
       return;
     }
-    addToFavorites({ title, subtitle, mood, profile, season: [season], notes, prices, images, image: images["10ml"], bestSeller, newArrival });
+    addToFavorites({ 
+      title, 
+      subtitle, 
+      mood, 
+      profile, 
+      season: [season], 
+      notes, 
+      prices, 
+      images, 
+      image: images["10ml"], 
+      bestSeller: bestSeller ?? false, 
+      newArrival: newArrival ?? false 
+    });
   };
 
   return (

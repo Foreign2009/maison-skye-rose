@@ -8,6 +8,7 @@ export const roseFragrances = [
     season: "Spring",
     notes: ["Rose", "Peony", "Vanilla"],
     bestSeller: true,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/pink-5ml.png",
@@ -24,6 +25,7 @@ export const roseFragrances = [
     profile: "Sweet Amber",
     season: "Winter",
     notes: ["Tonka", "Cocoa", "Jasmine"],
+    bestSeller: false,
     newArrival: true,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
@@ -42,6 +44,7 @@ export const roseFragrances = [
     season: "Spring",
     notes: ["Rose", "Lychee", "Vanilla"],
     bestSeller: true,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/pink-5ml.png",
@@ -58,6 +61,8 @@ export const roseFragrances = [
     profile: "Floral Amber",
     season: "All Season",
     notes: ["Lavender", "Orange Blossom", "Vanilla"],
+    bestSeller: false,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/pink-5ml.png",
@@ -74,6 +79,8 @@ export const roseFragrances = [
     profile: "Vanilla Coffee",
     season: "Winter",
     notes: ["Coffee", "Vanilla", "Pear"],
+    bestSeller: false,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/pink-5ml.png",
@@ -90,6 +97,8 @@ export const roseFragrances = [
     profile: "Fresh Floral",
     season: "All Season",
     notes: ["Orange", "Rose", "Patchouli"],
+    bestSeller: false,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/pink-5ml.png",
@@ -106,6 +115,8 @@ export const roseFragrances = [
     profile: "White Floral",
     season: "Spring",
     notes: ["Tuberose", "Jasmine", "Vanilla"],
+    bestSeller: false,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/pink-5ml.png",
@@ -122,6 +133,8 @@ export const roseFragrances = [
     profile: "Fruity Gourmand",
     season: "Summer",
     notes: ["Strawberry", "Raspberry", "Vanilla"],
+    bestSeller: false,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/pink-5ml.png",
@@ -138,6 +151,8 @@ export const roseFragrances = [
     profile: "Floral Sweet",
     season: "Spring",
     notes: ["Jasmine", "Rose", "Patchouli"],
+    bestSeller: false,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/pink-5ml.png",
@@ -155,6 +170,7 @@ export const roseFragrances = [
     season: "All Season",
     notes: ["Saffron", "Amberwood", "Jasmine"],
     bestSeller: true,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/pink-5ml.png",
@@ -171,6 +187,8 @@ export const roseFragrances = [
     profile: "Sweet Floral",
     season: "Winter",
     notes: ["Pear", "Iris", "Vanilla"],
+    bestSeller: false,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/pink-5ml.png",
@@ -187,6 +205,8 @@ export const roseFragrances = [
     profile: "Floral Amber",
     season: "All Season",
     notes: ["Pear", "Orange Blossom", "Amber"],
+    bestSeller: false,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/pink-5ml.png",
@@ -203,6 +223,8 @@ export const roseFragrances = [
     profile: "Fruity Floral",
     season: "Spring",
     notes: ["Litchi", "Rose", "Vanilla"],
+    bestSeller: false,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/pink-5ml.png",
@@ -219,6 +241,8 @@ export const roseFragrances = [
     profile: "Vanilla Gourmand",
     season: "Winter",
     notes: ["Vanilla", "Tonka", "Amber"],
+    bestSeller: false,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/pink-5ml.png",
@@ -235,6 +259,8 @@ export const roseFragrances = [
     profile: "Vanilla Floral",
     season: "All Season",
     notes: ["Vanilla", "Lavender", "Cacao"],
+    bestSeller: false,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/pink-5ml.png",
@@ -251,6 +277,8 @@ export const roseFragrances = [
     profile: "Floral Vanilla",
     season: "Spring",
     notes: ["Peony", "Rose", "Vanilla"],
+    bestSeller: false,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/pink-5ml.png",
@@ -268,6 +296,7 @@ export const roseFragrances = [
     season: "Winter",
     notes: ["Rose", "Vanilla", "Incense"],
     bestSeller: true,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/pink-5ml.png",
@@ -284,6 +313,8 @@ export const roseFragrances = [
     profile: "Amber Floral",
     season: "Winter",
     notes: ["Lavender", "Orange Blossom", "Vanilla"],
+    bestSeller: false,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/pink-5ml.png",
@@ -300,6 +331,8 @@ export const roseFragrances = [
     profile: "Amber Woody",
     season: "Winter",
     notes: ["Almond", "Saffron", "Ambergris"],
+    bestSeller: false,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/pink-5ml.png",
@@ -316,6 +349,8 @@ export const roseFragrances = [
     profile: "White Floral",
     season: "Winter",
     notes: ["Jasmine", "Amber", "Cashmere Wood"],
+    bestSeller: false,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/pink-5ml.png",
@@ -332,6 +367,8 @@ export const roseFragrances = [
     profile: "Vanilla Floral",
     season: "Summer",
     notes: ["Coconut", "Jasmine", "Vanilla"],
+    bestSeller: false,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/pink-5ml.png",
@@ -348,6 +385,8 @@ export const roseFragrances = [
     profile: "Amber Floral",
     season: "Winter",
     notes: ["Lavender", "Honey", "Vanilla"],
+    bestSeller: false,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/pink-5ml.png",
@@ -364,6 +403,8 @@ export const roseFragrances = [
     profile: "Fruity Floral",
     season: "Spring",
     notes: ["Grapefruit", "Quince", "Jasmine"],
+    bestSeller: false,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/pink-5ml.png",
@@ -380,6 +421,8 @@ export const roseFragrances = [
     profile: "Fresh Floral",
     season: "Summer",
     notes: ["Citrus", "Jasmine", "Teakwood"],
+    bestSeller: false,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/pink-5ml.png",
@@ -396,6 +439,8 @@ export const roseFragrances = [
     profile: "Amber Floral",
     season: "All Season",
     notes: ["Blackcurrant", "Jasmine", "Vanilla"],
+    bestSeller: false,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/pink-5ml.png",
@@ -412,6 +457,8 @@ export const roseFragrances = [
     profile: "Chypre Fruity",
     season: "All Season",
     notes: ["Blackcurrant", "Rose", "Vanilla"],
+    bestSeller: false,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/pink-5ml.png",
@@ -428,6 +475,8 @@ export const roseFragrances = [
     profile: "Fruity Floral",
     season: "All Season",
     notes: ["Strawberry", "Jasmine", "Patchouli"],
+    bestSeller: false,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/pink-5ml.png",
@@ -444,6 +493,8 @@ export const roseFragrances = [
     profile: "Sweet Amber",
     season: "Winter",
     notes: ["Vanilla", "Orange", "Tonka"],
+    bestSeller: false,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/pink-5ml.png",
@@ -460,6 +511,8 @@ export const roseFragrances = [
     profile: "Floral",
     season: "All Season",
     notes: ["Ylang Ylang", "Jasmine", "Rose"],
+    bestSeller: false,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/pink-5ml.png",
@@ -477,6 +530,7 @@ export const roseFragrances = [
     season: "Winter",
     notes: ["Vanilla", "Almond", "Jasmine"],
     bestSeller: true,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/pink-5ml.png",
@@ -493,6 +547,8 @@ export const roseFragrances = [
     profile: "Amber Floral",
     season: "Winter",
     notes: ["Gardenia", "Amber", "Coconut"],
+    bestSeller: false,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/pink-5ml.png",
@@ -510,6 +566,7 @@ export const roseFragrances = [
     season: "Winter",
     notes: ["Marshmallow", "Orange Blossom", "Vanilla"],
     bestSeller: true,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/pink-5ml.png",
@@ -526,6 +583,8 @@ export const roseFragrances = [
     profile: "Almond Floral",
     season: "All Season",
     notes: ["Almond", "Iris", "Vanilla"],
+    bestSeller: false,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/pink-5ml.png",
@@ -542,6 +601,7 @@ export const roseFragrances = [
     profile: "Amber Floral",
     season: "Winter",
     notes: ["Pear", "Rose", "Sandalwood"],
+    bestSeller: false,
     newArrival: true,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
@@ -559,6 +619,8 @@ export const roseFragrances = [
     profile: "Vanilla Musk",
     season: "All Season",
     notes: ["Vanilla", "Amber", "Musk"],
+    bestSeller: false,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/pink-5ml.png",
@@ -575,6 +637,8 @@ export const roseFragrances = [
     profile: "Milky Floral",
     season: "Winter",
     notes: ["Milk", "Vanilla", "White Flowers"],
+    bestSeller: false,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/pink-5ml.png",
@@ -592,6 +656,7 @@ export const roseFragrances = [
     season: "Winter",
     notes: ["Milk", "Vanilla", "Caramel"],
     bestSeller: true,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/pink-5ml.png",
@@ -608,6 +673,8 @@ export const roseFragrances = [
     profile: "Vanilla Citrus",
     season: "Winter",
     notes: ["Lemon", "Vanilla", "Rum"],
+    bestSeller: false,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/pink-5ml.png",
@@ -625,6 +692,7 @@ export const roseFragrances = [
     season: "Winter",
     notes: ["Vanilla", "Brown Sugar", "Amber"],
     bestSeller: true,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/pink-5ml.png",
@@ -641,6 +709,7 @@ export const roseFragrances = [
     profile: "Floral Vanilla",
     season: "All Season",
     notes: ["Champagne", "Vanilla", "White Flowers"],
+    bestSeller: false,
     newArrival: true,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {

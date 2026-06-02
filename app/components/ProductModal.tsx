@@ -95,11 +95,11 @@ export default function ProductModal({
   const handleAddToCart = () => {
 
     addToCart({
+      id: `${title}-${selectedSize}`,
       title,
-      image:
-        images[selectedSize],
-      price:
-        prices[selectedSize],
+      image: images[selectedSize],
+      size: selectedSize,
+      price: prices[selectedSize],
       quantity,
     });
 

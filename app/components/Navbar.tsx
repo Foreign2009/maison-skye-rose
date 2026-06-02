@@ -37,13 +37,13 @@ export default function Navbar() {
           {/* DESKTOP NAV */}
           <nav className="hidden items-center gap-6 lg:flex xl:gap-8">
             <Link href="/" className="text-xs uppercase tracking-[0.28em] text-[#7b7480] transition duration-300 hover:text-[#d89ca4]">Home</Link>
+            <Link href="/best-sellers" className="text-xs uppercase tracking-[0.28em] text-[#7b7480] transition duration-300 hover:text-[#d89ca4]">Best Sellers</Link>
+            <Link href="/new-arrivals" className="text-xs uppercase tracking-[0.28em] text-[#7b7480] transition duration-300 hover:text-[#d89ca4]">New Arrivals</Link>
             <Link href="/shop" className="text-xs uppercase tracking-[0.28em] text-[#7b7480] transition duration-300 hover:text-[#d89ca4]">Shop</Link>
             <Link href="/collections/skye" className="text-xs uppercase tracking-[0.28em] text-[#7b7480] transition duration-300 hover:text-[#8fa8c7]">Skye</Link>
             <Link href="/collections/rose" className="text-xs uppercase tracking-[0.28em] text-[#7b7480] transition duration-300 hover:text-[#d89ca4]">Rose</Link>
-            <Link href="/quiz" className="text-xs uppercase tracking-[0.28em] text-[#7b7480] transition duration-300 hover:text-[#d89ca4]">Quiz</Link>
             <Link href="/about" className="text-xs uppercase tracking-[0.28em] text-[#7b7480] transition duration-300 hover:text-[#d89ca4]">About</Link>
             <Link href="/favorites" className="text-xs uppercase tracking-[0.28em] text-[#7b7480] transition duration-300 hover:text-[#d89ca4]">Favorites</Link>
-            <Link href="/contact" className="text-xs uppercase tracking-[0.28em] text-[#7b7480] transition duration-300 hover:text-[#d89ca4]">Contact</Link>
           </nav>
 
           {/* RIGHT SIDE */}
@@ -86,10 +86,11 @@ export default function Navbar() {
           <div className="mt-3 rounded-[28px] border border-white/40 bg-white/80 p-6 shadow-[0_15px_50px_rgba(216,156,164,0.12)] backdrop-blur-2xl lg:hidden">
             <nav className="flex flex-col gap-5">
               <Link href="/" onClick={closeMobileMenu} className="text-sm uppercase tracking-[0.25em] text-[#4f4a52]">Home</Link>
+              <Link href="/best-sellers" onClick={closeMobileMenu} className="text-sm uppercase tracking-[0.25em] text-[#4f4a52]">Best Sellers</Link>
+              <Link href="/new-arrivals" onClick={closeMobileMenu} className="text-sm uppercase tracking-[0.25em] text-[#4f4a52]">New Arrivals</Link>
               <Link href="/shop" onClick={closeMobileMenu} className="text-sm uppercase tracking-[0.25em] text-[#4f4a52]">Shop</Link>
               <Link href="/collections/skye" onClick={closeMobileMenu} className="text-sm uppercase tracking-[0.25em] text-[#4f4a52]">Skye</Link>
               <Link href="/collections/rose" onClick={closeMobileMenu} className="text-sm uppercase tracking-[0.25em] text-[#4f4a52]">Rose</Link>
-              <Link href="/quiz" onClick={closeMobileMenu} className="text-sm uppercase tracking-[0.25em] text-[#4f4a52]">Quiz</Link>
               <Link href="/about" onClick={closeMobileMenu} className="text-sm uppercase tracking-[0.25em] text-[#4f4a52]">About</Link>
               <Link href="/favorites" onClick={closeMobileMenu} className="text-sm uppercase tracking-[0.25em] text-[#4f4a52]">Favorites</Link>
               <Link href="/contact" onClick={closeMobileMenu} className="text-sm uppercase tracking-[0.25em] text-[#4f4a52]">Contact</Link>

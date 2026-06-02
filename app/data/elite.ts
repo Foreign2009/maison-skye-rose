@@ -7,6 +7,7 @@ export const eliteFragrances = [
     profile: "Floral Leather",
     season: "All Season",
     notes: ["Hibiscus", "Rose", "Leather"],
+    bestSeller: false,
     newArrival: true,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
@@ -24,6 +25,8 @@ export const eliteFragrances = [
     profile: "Amber Oud",
     season: "Winter",
     notes: ["Oud", "Amber", "Caramel"],
+    bestSeller: false,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/blue-5ml.png",
@@ -40,6 +43,8 @@ export const eliteFragrances = [
     profile: "Tea Woody",
     season: "Autumn",
     notes: ["Tea", "Fig", "Sandalwood"],
+    bestSeller: false,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/blue-5ml.png",
@@ -56,6 +61,7 @@ export const eliteFragrances = [
     profile: "Fruity Musk",
     season: "Summer",
     notes: ["Passionfruit", "Peach", "Musk"],
+    bestSeller: false,
     newArrival: true,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
@@ -73,6 +79,7 @@ export const eliteFragrances = [
     profile: "Woody Oud",
     season: "Winter",
     notes: ["Saffron", "Praline", "Oud"],
+    bestSeller: false,
     newArrival: true,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {

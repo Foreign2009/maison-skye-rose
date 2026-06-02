@@ -8,6 +8,7 @@ export const skyeFragrances = [
     season: "All Season",
     notes: ["Bergamot", "Pepper", "Ambroxan"],
     bestSeller: true,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/blue-5ml.png",
@@ -24,6 +25,7 @@ export const skyeFragrances = [
     profile: "Citrus Woody",
     season: "Summer",
     notes: ["Citrus", "Incense", "Cedar"],
+    bestSeller: false,
     newArrival: true,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
@@ -42,6 +44,7 @@ export const skyeFragrances = [
     season: "All Season",
     notes: ["Pineapple", "Birch", "Musk"],
     bestSeller: true,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/blue-5ml.png",
@@ -58,6 +61,8 @@ export const skyeFragrances = [
     profile: "Citrus Tea",
     season: "Summer",
     notes: ["Citron", "Black Tea", "Amber"],
+    bestSeller: false,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/blue-5ml.png",
@@ -75,6 +80,7 @@ export const skyeFragrances = [
     season: "Winter",
     notes: ["Pear", "Lavender", "Vanilla"],
     bestSeller: true,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/blue-5ml.png",
@@ -91,6 +97,8 @@ export const skyeFragrances = [
     profile: "Amber Vanilla",
     season: "Winter",
     notes: ["Honey", "Tonka", "Vanilla"],
+    bestSeller: false,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/blue-5ml.png",
@@ -107,6 +115,8 @@ export const skyeFragrances = [
     profile: "Fresh Sweet",
     season: "Summer",
     notes: ["Mint", "Apple", "Vanilla"],
+    bestSeller: false,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/blue-5ml.png",
@@ -123,6 +133,8 @@ export const skyeFragrances = [
     profile: "Sweet Spicy",
     season: "Winter",
     notes: ["Chestnut", "Vanilla", "Amber"],
+    bestSeller: false,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/blue-5ml.png",
@@ -139,6 +151,8 @@ export const skyeFragrances = [
     profile: "Woody Oud",
     season: "Winter",
     notes: ["Oud", "Sandalwood", "Cardamom"],
+    bestSeller: false,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/blue-5ml.png",
@@ -155,6 +169,8 @@ export const skyeFragrances = [
     profile: "Fresh Aromatic",
     season: "All Season",
     notes: ["Apple", "Sage", "Amberwood"],
+    bestSeller: false,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/blue-5ml.png",
@@ -171,6 +187,8 @@ export const skyeFragrances = [
     profile: "Fresh Marine",
     season: "Summer",
     notes: ["Grapefruit", "Marine Notes", "Ambergris"],
+    bestSeller: false,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/blue-5ml.png",
@@ -187,6 +205,8 @@ export const skyeFragrances = [
     profile: "Spicy Amber",
     season: "Winter",
     notes: ["Blood Mandarin", "Cinnamon", "Leather"],
+    bestSeller: false,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/blue-5ml.png",
@@ -203,6 +223,8 @@ export const skyeFragrances = [
     profile: "Aquatic Citrus",
     season: "Summer",
     notes: ["Bergamot", "Marine", "Patchouli"],
+    bestSeller: false,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/blue-5ml.png",
@@ -219,6 +241,8 @@ export const skyeFragrances = [
     profile: "Aquatic Fruity",
     season: "Summer",
     notes: ["Apple", "Bergamot", "Ambergris"],
+    bestSeller: false,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/blue-5ml.png",
@@ -235,6 +259,8 @@ export const skyeFragrances = [
     profile: "Vanilla Amber",
     season: "Winter",
     notes: ["Apple", "Tonka", "Vanilla"],
+    bestSeller: false,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/blue-5ml.png",
@@ -252,6 +278,7 @@ export const skyeFragrances = [
     season: "Winter",
     notes: ["Nutmeg", "Lavender", "Licorice"],
     bestSeller: true,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/blue-5ml.png",
@@ -268,6 +295,8 @@ export const skyeFragrances = [
     profile: "Sweet Amber",
     season: "Winter",
     notes: ["Vanilla", "Amber", "Tonka Bean"],
+    bestSeller: false,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/blue-5ml.png",
@@ -284,6 +313,7 @@ export const skyeFragrances = [
     profile: "Fresh Sweet",
     season: "Summer",
     notes: ["Coconut", "Fig", "Tonka"],
+    bestSeller: false,
     newArrival: true,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
@@ -301,6 +331,8 @@ export const skyeFragrances = [
     profile: "Amber Spicy",
     season: "Winter",
     notes: ["Cardamom", "Toffee", "Amberwood"],
+    bestSeller: false,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/blue-5ml.png",
@@ -317,6 +349,8 @@ export const skyeFragrances = [
     profile: "Woody Aromatic",
     season: "All Season",
     notes: ["Violet Leaf", "Sage", "Vetiver"],
+    bestSeller: false,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/blue-5ml.png",
@@ -334,6 +368,7 @@ export const skyeFragrances = [
     season: "All Season",
     notes: ["Apple", "Sage", "Tonka Bean"],
     bestSeller: true,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/blue-5ml.png",
@@ -350,6 +385,8 @@ export const skyeFragrances = [
     profile: "Fresh Floral",
     season: "All Season",
     notes: ["Bergamot", "Orange Blossom", "Patchouli"],
+    bestSeller: false,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/blue-5ml.png",
@@ -366,6 +403,8 @@ export const skyeFragrances = [
     profile: "Marine Aromatic",
     season: "Summer",
     notes: ["Sea Notes", "Bergamot", "Patchouli"],
+    bestSeller: false,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/blue-5ml.png",
@@ -382,6 +421,8 @@ export const skyeFragrances = [
     profile: "Fresh Woody",
     season: "Summer",
     notes: ["Marine Notes", "Incense", "Patchouli"],
+    bestSeller: false,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/blue-5ml.png",
@@ -398,6 +439,8 @@ export const skyeFragrances = [
     profile: "Fresh Spicy",
     season: "All Season",
     notes: ["Lavender", "Pepper", "Ambroxan"],
+    bestSeller: false,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/blue-5ml.png",
@@ -414,6 +457,8 @@ export const skyeFragrances = [
     profile: "Powdery Woody",
     season: "All Season",
     notes: ["Iris", "Amber", "Sandalwood"],
+    bestSeller: false,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/blue-5ml.png",
@@ -431,6 +476,7 @@ export const skyeFragrances = [
     season: "Winter",
     notes: ["Tobacco", "Vanilla", "Cinnamon"],
     bestSeller: true,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/blue-5ml.png",
@@ -447,6 +493,8 @@ export const skyeFragrances = [
     profile: "Amber Vanilla",
     season: "Winter",
     notes: ["Pink Pepper", "Vanilla", "Tonka"],
+    bestSeller: false,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/blue-5ml.png",
@@ -463,6 +511,8 @@ export const skyeFragrances = [
     profile: "Woody Aromatic",
     season: "Winter",
     notes: ["Bergamot", "Iris", "Tonka Bean"],
+    bestSeller: false,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/blue-5ml.png",
@@ -479,6 +529,8 @@ export const skyeFragrances = [
     profile: "Citrus Woody",
     season: "All Season",
     notes: ["Orange", "Vetiver", "Cedar"],
+    bestSeller: false,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/blue-5ml.png",
@@ -495,6 +547,8 @@ export const skyeFragrances = [
     profile: "Green Woody",
     season: "Spring",
     notes: ["Lemon", "Violet Leaf", "Sandalwood"],
+    bestSeller: false,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/blue-5ml.png",
@@ -511,6 +565,8 @@ export const skyeFragrances = [
     profile: "Fresh Citrus",
     season: "Summer",
     notes: ["Bergamot", "Green Tea", "Musk"],
+    bestSeller: false,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/blue-5ml.png",
@@ -528,6 +584,7 @@ export const skyeFragrances = [
     season: "All Season",
     notes: ["Pineapple", "Oakmoss", "Bergamot"],
     bestSeller: true,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/blue-5ml.png",
@@ -545,6 +602,7 @@ export const skyeFragrances = [
     season: "Winter",
     notes: ["Apple", "Vanilla", "Cardamom"],
     bestSeller: true,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/blue-5ml.png",
@@ -561,6 +619,8 @@ export const skyeFragrances = [
     profile: "Amber Spicy",
     season: "Winter",
     notes: ["Nutmeg", "Vanilla", "Patchouli"],
+    bestSeller: false,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/blue-5ml.png",
@@ -577,6 +637,7 @@ export const skyeFragrances = [
     profile: "Amber Vanilla",
     season: "Winter",
     notes: ["Vanilla", "Cinnamon", "Amber"],
+    bestSeller: false,
     newArrival: true,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
@@ -594,6 +655,8 @@ export const skyeFragrances = [
     profile: "Oud Woody",
     season: "Winter",
     notes: ["Oud", "Rose", "Amber"],
+    bestSeller: false,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/blue-5ml.png",
@@ -610,6 +673,8 @@ export const skyeFragrances = [
     profile: "Fresh Citrus",
     season: "Summer",
     notes: ["Orange", "Bergamot", "Mandarin"],
+    bestSeller: false,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/blue-5ml.png",
@@ -626,6 +691,8 @@ export const skyeFragrances = [
     profile: "Fresh Fruity",
     season: "Summer",
     notes: ["Mint", "Fig", "Lemon"],
+    bestSeller: false,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/blue-5ml.png",
@@ -642,6 +709,8 @@ export const skyeFragrances = [
     profile: "Green Aromatic",
     season: "Summer",
     notes: ["Mint", "Lemon", "Musk"],
+    bestSeller: false,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/blue-5ml.png",
@@ -659,6 +728,7 @@ export const skyeFragrances = [
     season: "Winter",
     notes: ["Honey", "Tobacco", "Vanilla"],
     bestSeller: true,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/blue-5ml.png",
@@ -675,6 +745,8 @@ export const skyeFragrances = [
     profile: "Fruity Musk",
     season: "Summer",
     notes: ["Orange", "Lemon", "White Musk"],
+    bestSeller: false,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/blue-5ml.png",
@@ -692,6 +764,7 @@ export const skyeFragrances = [
     season: "Winter",
     notes: ["Rum", "Vanilla", "Tobacco"],
     bestSeller: true,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/blue-5ml.png",
@@ -708,6 +781,8 @@ export const skyeFragrances = [
     profile: "Oud Spicy",
     season: "Winter",
     notes: ["Oud", "Saffron", "Musk"],
+    bestSeller: false,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/blue-5ml.png",
@@ -724,6 +799,8 @@ export const skyeFragrances = [
     profile: "Vanilla Woody",
     season: "Winter",
     notes: ["Vanilla", "Ginger", "Sandalwood"],
+    bestSeller: false,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/blue-5ml.png",
@@ -740,6 +817,8 @@ export const skyeFragrances = [
     profile: "Amber Citrus",
     season: "Summer",
     notes: ["Grapefruit", "Ginger", "Amber"],
+    bestSeller: false,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/blue-5ml.png",
@@ -757,6 +836,7 @@ export const skyeFragrances = [
     season: "Summer",
     notes: ["Mango", "Lemon", "Amber"],
     bestSeller: true,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/blue-5ml.png",
@@ -773,6 +853,8 @@ export const skyeFragrances = [
     profile: "Oud Amber",
     season: "Winter",
     notes: ["Tonka Bean", "Oud", "Rose"],
+    bestSeller: false,
+    newArrival: false,
     prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
     images: {
       "5ml": "/images/blue-5ml.png",

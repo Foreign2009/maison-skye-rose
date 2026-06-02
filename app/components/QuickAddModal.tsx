@@ -37,6 +37,23 @@ export default function QuickAddModal({ open, onClose, title, images = {}, price
   const total = selectedPrice * quantity;
   const selectedImage = images?.[selectedSize] || Object.values(images)[0] || "/images/pink-10ml.png";
 
+  const handleAddToCart = () => {
+    addToCart({ 
+      id: `${title}-${selectedSize}`, 
+      title, 
+      price: selectedPrice, 
+      quantity, 
+      image: selectedImage, 
+      size: selectedSize 
+    });
+    showFeedback({ 
+      title, 
+      image: selectedImage, 
+      size: selectedSize 
+    });
+    onClose();
+  };
+
   return createPortal(
     <AnimatePresence>
       {open && (
@@ -85,7 +102,7 @@ export default function QuickAddModal({ open, onClose, title, images = {}, price
               </div>
               <div className="mt-6 flex gap-3">
                 <button onClick={onClose} className="flex-1 rounded-full border border-gray-200 py-4 font-semibold text-[#4f4a52] transition hover:bg-gray-50">Cancel</button>
-                <motion.button whileTap={{ scale: 0.97 }} onClick={() => { addToCart({ id: `${title}-${selectedSize}`, title, price: selectedPrice, quantity, image: selectedImage, size: selectedSize }); showFeedback({ title, image: selectedImage, size: selectedSize }); onClose(); }} className="flex-1 rounded-full bg-gradient-to-r from-pink-400 to-blue-400 py-4 font-semibold text-white shadow-lg transition hover:brightness-105">Add To Cart</motion.button>
+                <motion.button whileTap={{ scale: 0.97 }} onClick={handleAddToCart} className="flex-1 rounded-full bg-gradient-to-r from-pink-400 to-blue-400 py-4 font-semibold text-white shadow-lg transition hover:brightness-105">Add To Cart</motion.button>
               </div>
             </div>
           </motion.div>

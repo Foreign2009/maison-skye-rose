@@ -47,15 +47,17 @@ export default function NewArrivals() {
           {newArrivals.map((fragrance) => (
 
             <ProductCard
-              key={fragrance.id}
+              key={fragrance.title}
               title={fragrance.title}
-              subtitle={fragrance.description}
+              subtitle={fragrance.subtitle}
               mood={fragrance.mood}
               profile={fragrance.profile}
               season={fragrance.season}
               notes={fragrance.notes}
               prices={fragrance.prices}
               images={fragrance.images}
+              bestSeller={fragrance.bestSeller ?? false}
+              newArrival={fragrance.newArrival ?? false}
             />
 
           ))}
