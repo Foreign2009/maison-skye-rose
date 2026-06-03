@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import ProductCard from "./ProductCard";
 import QuickAddModal from "./QuickAddModal";
 
-export default function RecentlyViewed() {
+export default function YourFragranceJourney() {
   const [items, setItems] = useState<any[]>([]);
   const [selectedFragrance, setSelectedFragrance] = useState<any>(null);
 
@@ -22,7 +22,7 @@ export default function RecentlyViewed() {
     <section className="mx-auto max-w-7xl px-6 py-20">
       <div className="mb-10">
         <p className="text-[11px] uppercase tracking-[0.45em] text-[#d89ca4]">
-          Recently Viewed
+          Your Fragrance Journey
         </p>
 
         <h2 className="mt-4 text-5xl font-black tracking-[-0.05em]">

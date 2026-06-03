@@ -7,13 +7,14 @@ import ProductCard from "./components/ProductCard";
 import AIHeroSection from "./components/AIHeroSection";
 import BestSellers from "./components/BestSellers";
 import LatestAdditions from "./components/LatestAdditions";
+import EliteShowcase from "./components/EliteShowcase";
 import ComingSoon from "./components/ComingSoon";
 import RequestFragrance from "./components/RequestFragrance";
 import ShopByPersonality from "./components/ShopByPersonality";
 import DiscoverySets from "./components/DiscoverySets";
-import RecentlyViewed from "./components/RecentlyViewed";
+import YourFragranceJourney from "./components/YourFragranceJourney";
 import QuickAddModal from "./components/QuickAddModal";
-import WhyMaison from "./components/WhyMaison"; // Imported your new component
+import WhyMaison from "./components/WhyMaison"; 
 import Link from "next/link";
 
 import { fragrances } from "./data/fragrances";
@@ -59,11 +60,37 @@ export default function HomePage() {
         <BestSellers onQuickAdd={(fragrance) => setSelectedFragrance(fragrance)} />
       </section>
 
-      <section className="bg-[#f5f1eb] py-20 text-center px-6">
-        <h3 className="text-3xl font-black mb-6 text-[#4f4a52]">Find Your Signature</h3>
-        <Link href="/shop" className="inline-block bg-black text-white px-8 py-4 rounded-full text-sm font-bold uppercase tracking-widest hover:bg-neutral-800 transition">
-          Explore Collection
-        </Link>
+      <LatestAdditions />
+      
+      <EliteShowcase onQuickAdd={(fragrance) => setSelectedFragrance(fragrance)} />
+
+      <section className="bg-black py-12 text-white">
+        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-12 px-6 text-center">
+          <div>
+            <h3 className="text-4xl font-black">465+</h3>
+            <p className="text-xs uppercase tracking-[0.3em]">
+              Fragrances Available
+            </p>
+          </div>
+          <div>
+            <h3 className="text-4xl font-black">15%</h3>
+            <p className="text-xs uppercase tracking-[0.3em]">
+              VAT Included
+            </p>
+          </div>
+          <div>
+            <h3 className="text-4xl font-black">R60</h3>
+            <p className="text-xs uppercase tracking-[0.3em]">
+              Starting Price
+            </p>
+          </div>
+          <div>
+            <h3 className="text-4xl font-black">24h</h3>
+            <p className="text-xs uppercase tracking-[0.3em]">
+              Dispatch Target
+            </p>
+          </div>
+        </div>
       </section>
 
       <section className="mx-auto max-w-7xl px-5 py-24">
@@ -86,8 +113,8 @@ export default function HomePage() {
           ))}
         </div>
 
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-          {displayProducts.slice(0, 8).map((fragrance) => (
+        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {displayProducts.slice(0, 12).map((fragrance) => (
             <ProductCard key={fragrance.title} {...fragrance} onQuickAdd={() => setSelectedFragrance(fragrance)} />
           ))}
         </div>
@@ -95,11 +122,10 @@ export default function HomePage() {
 
       <DiscoverySets />
       <ShopByPersonality />
+      <YourFragranceJourney />
       <RequestFragrance />
-      <LatestAdditions />
-      <RecentlyViewed />
-      <ComingSoon />
       <WhyMaison />
+      <ComingSoon />
 
       {selectedFragrance && (
         <QuickAddModal open={true} onClose={() => setSelectedFragrance(null)} {...selectedFragrance} />

@@ -11,14 +11,26 @@ type ProductCardProps = {
   profile: string;
   season: string;
   notes: string[];
-  prices: { "5ml": number; "10ml": number; "30ml": number; };
-  images: { "5ml": string; "10ml": string; "30ml": string; };
+  prices: { "5ml": number; "10ml": number; "30ml": number };
+  images: { "5ml": string; "10ml": string; "30ml": string };
   bestSeller?: boolean;
   newArrival?: boolean;
   onQuickAdd?: () => void;
 };
 
-export default function ProductCard({ title, subtitle, mood, profile, season, notes, prices, images, bestSeller, newArrival, onQuickAdd }: ProductCardProps) {
+export default function ProductCard({
+  title,
+  subtitle,
+  mood,
+  profile,
+  season,
+  notes,
+  prices,
+  images,
+  bestSeller,
+  newArrival,
+  onQuickAdd,
+}: ProductCardProps) {
   const { addToFavorites, removeFromFavorites, isFavorite } = useFavorites();
   const favorite = isFavorite(title);
 
@@ -38,18 +50,18 @@ export default function ProductCard({ title, subtitle, mood, profile, season, no
       removeFromFavorites(title);
       return;
     }
-    addToFavorites({ 
-      title, 
-      subtitle, 
-      mood, 
-      profile, 
-      season: [season], 
-      notes, 
-      prices, 
-      images, 
-      image: images["10ml"], 
-      bestSeller: bestSeller ?? false, 
-      newArrival: newArrival ?? false 
+    addToFavorites({
+      title,
+      subtitle,
+      mood,
+      profile,
+      season: [season],
+      notes,
+      prices,
+      images,
+      image: images["10ml"],
+      bestSeller: bestSeller ?? false,
+      newArrival: newArrival ?? false,
     });
   };
 
@@ -73,32 +85,43 @@ export default function ProductCard({ title, subtitle, mood, profile, season, no
           width={260}
           height={260}
           className="h-[260px] w-auto object-contain"
+          style={{ width: "auto", height: "auto" }}
           sizes="(max-width: 768px) 100vw, 260px"
           priority
         />
       </div>
 
       <div className="mt-6 flex flex-1 flex-col">
-        <h3 className="text-2xl font-black text-[#4f4a52]">{title}</h3>
-        <p className="mt-2 text-sm font-semibold text-[#d89ca4]">{subtitle}</p>
+        <h3 className="min-h-[64px] text-2xl font-black text-[#4f4a52]">{title}</h3>
+        <p className="mt-2 min-h-[40px] text-sm font-semibold text-[#d89ca4]">{subtitle}</p>
         <p className="mt-4 text-sm leading-7 text-[#7b7480]">{mood}</p>
         <div className="mt-6 flex flex-wrap gap-2">
-          {notes.map((note) => (
-            <span key={note} className="rounded-full bg-pink-50 px-3 py-1 text-xs font-semibold text-[#d89ca4]">{note}</span>
+          {notes.slice(0, 3).map((note) => (
+            <span
+              key={note}
+              className="rounded-full bg-pink-50 px-3 py-1 text-xs font-semibold text-[#d89ca4]"
+            >
+              {note}
+            </span>
           ))}
         </div>
         <div className="mt-6">
           <p className="text-sm text-[#7b7480]">{profile} • {season}</p>
         </div>
-        
+
         <div className="mt-auto pt-8">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-xs uppercase text-[#7b7480]">From</p>
-                <p className="text-2xl font-black text-[#4f4a52]">R{prices["5ml"]}</p>
-              </div>
-              <button onClick={handleCardClick} className="rounded-full bg-gradient-to-r from-pink-400 to-blue-400 px-6 py-3 font-bold text-white">Quick Add</button>
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-xs uppercase text-[#7b7480]">From</p>
+              <p className="text-2xl font-black text-[#4f4a52]">R{prices["5ml"]}</p>
             </div>
+            <button
+              onClick={handleCardClick}
+              className="rounded-full bg-gradient-to-r from-pink-400 to-blue-400 px-6 py-3 text-sm font-bold text-white transition hover:scale-105"
+            >
+              Quick Add
+            </button>
+          </div>
         </div>
       </div>
     </div>

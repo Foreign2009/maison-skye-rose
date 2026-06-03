@@ -11,8 +11,8 @@ interface QuickAddModalProps {
   open: boolean;
   onClose: () => void;
   title: string;
-  images?: { [key: string]: string; };
-  prices?: { [key: string]: number; };
+  images?: { [key: string]: string };
+  prices?: { [key: string]: number };
 }
 
 export default function QuickAddModal({ open, onClose, title, images = {}, prices = {} }: QuickAddModalProps) {
@@ -38,18 +38,18 @@ export default function QuickAddModal({ open, onClose, title, images = {}, price
   const selectedImage = images?.[selectedSize] || Object.values(images)[0] || "/images/pink-10ml.png";
 
   const handleAddToCart = () => {
-    addToCart({ 
-      id: `${title}-${selectedSize}`, 
-      title, 
-      price: selectedPrice, 
-      quantity, 
-      image: selectedImage, 
-      size: selectedSize 
+    addToCart({
+      id: `${title}-${selectedSize}`,
+      title,
+      price: selectedPrice,
+      quantity,
+      image: selectedImage,
+      size: selectedSize,
     });
-    showFeedback({ 
-      title, 
-      image: selectedImage, 
-      size: selectedSize 
+    showFeedback({
+      title,
+      image: selectedImage,
+      size: selectedSize,
     });
     onClose();
   };
@@ -68,7 +68,9 @@ export default function QuickAddModal({ open, onClose, title, images = {}, price
                     alt={title}
                     width={180}
                     height={180}
-                    className="w-full h-auto object-contain"
+                    // Fixed: Set both to auto to prevent Next.js layout warnings
+                    style={{ width: "auto", height: "auto" }}
+                    className="object-contain"
                     priority
                   />
                 </motion.div>

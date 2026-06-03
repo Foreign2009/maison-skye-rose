@@ -9,7 +9,7 @@ const sets = [
       "Aventus Inspired",
       "Imagination Inspired",
     ],
-    price: "R499",
+    price: "From R499",
   },
   {
     title: "Date Night Set",
@@ -19,7 +19,7 @@ const sets = [
       "Stronger With You Inspired",
       "Most Wanted Inspired",
     ],
-    price: "R499",
+    price: "From R499",
   },
   {
     title: "Luxury Women's Set",
@@ -29,7 +29,7 @@ const sets = [
       "Good Girl Inspired",
       "Baccarat Rouge Inspired",
     ],
-    price: "R499",
+    price: "From R499",
   },
 ];
 
@@ -62,7 +62,7 @@ export default function DiscoverySets() {
               </ul>
 
               <div className="mt-8 flex items-center justify-between">
-                <span className="text-2xl font-black text-[#4f4a52]">
+                <span className="text-xl font-black text-[#4f4a52]">
                   {set.price}
                 </span>
 
