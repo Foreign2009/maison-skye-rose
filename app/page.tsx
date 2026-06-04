@@ -5,6 +5,7 @@ import Navbar from "./components/Navbar";
 import AnnouncementBar from "./components/AnnouncementBar";
 import ProductCard from "./components/ProductCard";
 import AIHeroSection from "./components/AIHeroSection";
+import TrustBar from "./components/TrustBar";
 import BestSellers from "./components/BestSellers";
 import LatestAdditions from "./components/LatestAdditions";
 import EliteShowcase from "./components/EliteShowcase";
@@ -13,10 +14,9 @@ import RequestFragrance from "./components/RequestFragrance";
 import ShopByPersonality from "./components/ShopByPersonality";
 import DiscoverySets from "./components/DiscoverySets";
 import YourFragranceJourney from "./components/YourFragranceJourney";
+import InstagramCTA from "./components/InstagramCTA";
 import QuickAddModal from "./components/QuickAddModal";
 import WhyMaison from "./components/WhyMaison"; 
-import Link from "next/link";
-
 import { fragrances } from "./data/fragrances";
 
 export default function HomePage() {
@@ -54,45 +54,23 @@ export default function HomePage() {
       <Navbar />
       <AnnouncementBar />
       <AIHeroSection />
+      
+      {/* 1. Added Trust Bar */}
+      <TrustBar />
 
+      {/* 2. Best Sellers */}
       <section className="py-20 px-6 max-w-7xl mx-auto">
         <h2 className="text-4xl font-black mb-12 text-center text-[#4f4a52]">Best Sellers</h2>
         <BestSellers onQuickAdd={(fragrance) => setSelectedFragrance(fragrance)} />
       </section>
 
+      {/* 3. Latest Additions */}
       <LatestAdditions />
       
+      {/* 4. Elite Showcase */}
       <EliteShowcase onQuickAdd={(fragrance) => setSelectedFragrance(fragrance)} />
-
-      <section className="bg-black py-12 text-white">
-        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-12 px-6 text-center">
-          <div>
-            <h3 className="text-4xl font-black">465+</h3>
-            <p className="text-xs uppercase tracking-[0.3em]">
-              Fragrances Available
-            </p>
-          </div>
-          <div>
-            <h3 className="text-4xl font-black">15%</h3>
-            <p className="text-xs uppercase tracking-[0.3em]">
-              VAT Included
-            </p>
-          </div>
-          <div>
-            <h3 className="text-4xl font-black">R60</h3>
-            <p className="text-xs uppercase tracking-[0.3em]">
-              Starting Price
-            </p>
-          </div>
-          <div>
-            <h3 className="text-4xl font-black">24h</h3>
-            <p className="text-xs uppercase tracking-[0.3em]">
-              Dispatch Target
-            </p>
-          </div>
-        </div>
-      </section>
-
+      
+      {/* 5. Signature Collection (Tabbed Grid) */}
       <section className="mx-auto max-w-7xl px-5 py-24">
         <div className="mb-12 text-center">
           <p className="text-[11px] uppercase tracking-[0.45em] text-[#d89ca4]">Signature Collection</p>
@@ -120,11 +98,25 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* 6. Discovery Sets */}
       <DiscoverySets />
+      
+      {/* 7. Shop By Personality */}
       <ShopByPersonality />
+      
+      {/* 8. Your Fragrance Journey */}
       <YourFragranceJourney />
+      
+      {/* 9. Instagram CTA */}
+      <InstagramCTA />
+      
+      {/* 10. Request Fragrance */}
       <RequestFragrance />
+      
+      {/* 11. Why Maison */}
       <WhyMaison />
+      
+      {/* 12. Coming Soon */}
       <ComingSoon />
 
       {selectedFragrance && (
