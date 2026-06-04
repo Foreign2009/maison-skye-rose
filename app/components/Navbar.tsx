@@ -2,9 +2,8 @@
 
 import { useState } from "react";
 import Link from "next/link";
-
 import CartDrawer from "./CartDrawer";
-
+import { brand } from "../data/brand";
 import { useCart } from "../context/CartContext";
 import { useFavorites } from "../context/FavoritesContext";
 import { useCartUI } from "../context/CartUIContext";
@@ -29,7 +28,7 @@ export default function Navbar() {
                 Maison
               </p>
               <h1 className="text-lg font-black uppercase tracking-[-0.05em] text-[#4f4a52] sm:text-2xl md:text-3xl">
-                Skye & Rose
+                {brand.name.replace("Maison ", "")}
               </h1>
             </div>
           </Link>
@@ -48,7 +47,6 @@ export default function Navbar() {
 
           {/* RIGHT SIDE */}
           <div className="flex items-center gap-2 sm:gap-4">
-            
             <Link href="/favorites" className="relative text-xl">
               ❤️
               {favorites.length > 0 && (
@@ -98,7 +96,7 @@ export default function Navbar() {
 
             <div className="mt-6 space-y-3">
               <a
-                href="https://wa.me/27696863952"
+                href={brand.social.whatsappLink}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block rounded-2xl bg-green-500 px-5 py-4 text-center font-bold text-white"

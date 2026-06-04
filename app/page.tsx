@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import Navbar from "./components/Navbar";
 import AnnouncementBar from "./components/AnnouncementBar";
 import ProductCard from "./components/ProductCard";
@@ -17,13 +18,13 @@ import YourFragranceJourney from "./components/YourFragranceJourney";
 import InstagramCTA from "./components/InstagramCTA";
 import QuickAddModal from "./components/QuickAddModal";
 import WhyMaison from "./components/WhyMaison"; 
+import Footer from "./components/Footer";
 import { fragrances } from "./data/fragrances";
 
 export default function HomePage() {
   const [selectedFragrance, setSelectedFragrance] = useState<any>(null);
   const [currentFilter, setCurrentFilter] = useState("All");
 
-  // Logic to mix Skye, Rose, and Elite collections
   const skye = fragrances.filter((f) => f.collection === "Skye");
   const rose = fragrances.filter((f) => f.collection === "Rose");
   const elite = fragrances.filter((f) => f.collection === "Elite");
@@ -54,23 +55,13 @@ export default function HomePage() {
       <Navbar />
       <AnnouncementBar />
       <AIHeroSection />
-      
-      {/* 1. Added Trust Bar */}
       <TrustBar />
 
-      {/* 2. Best Sellers */}
-      <section className="py-20 px-6 max-w-7xl mx-auto">
-        <h2 className="text-4xl font-black mb-12 text-center text-[#4f4a52]">Best Sellers</h2>
-        <BestSellers onQuickAdd={(fragrance) => setSelectedFragrance(fragrance)} />
-      </section>
+      <BestSellers onQuickAdd={(fragrance) => setSelectedFragrance(fragrance)} />
 
-      {/* 3. Latest Additions */}
       <LatestAdditions />
-      
-      {/* 4. Elite Showcase */}
       <EliteShowcase onQuickAdd={(fragrance) => setSelectedFragrance(fragrance)} />
       
-      {/* 5. Signature Collection (Tabbed Grid) */}
       <section className="mx-auto max-w-7xl px-5 py-24">
         <div className="mb-12 text-center">
           <p className="text-[11px] uppercase tracking-[0.45em] text-[#d89ca4]">Signature Collection</p>
@@ -92,32 +83,29 @@ export default function HomePage() {
         </div>
 
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {displayProducts.slice(0, 12).map((fragrance) => (
+          {displayProducts.slice(0, 16).map((fragrance) => (
             <ProductCard key={fragrance.title} {...fragrance} onQuickAdd={() => setSelectedFragrance(fragrance)} />
           ))}
         </div>
+
+        <div className="mt-12 text-center">
+          <Link
+            href="/shop"
+            className="rounded-full bg-black px-8 py-4 text-sm font-bold uppercase tracking-widest text-white transition hover:bg-zinc-800"
+          >
+            View Full Collection
+          </Link>
+        </div>
       </section>
 
-      {/* 6. Discovery Sets */}
       <DiscoverySets />
-      
-      {/* 7. Shop By Personality */}
       <ShopByPersonality />
-      
-      {/* 8. Your Fragrance Journey */}
       <YourFragranceJourney />
-      
-      {/* 9. Instagram CTA */}
       <InstagramCTA />
-      
-      {/* 10. Request Fragrance */}
       <RequestFragrance />
-      
-      {/* 11. Why Maison */}
       <WhyMaison />
-      
-      {/* 12. Coming Soon */}
       <ComingSoon />
+      <Footer />
 
       {selectedFragrance && (
         <QuickAddModal open={true} onClose={() => setSelectedFragrance(null)} {...selectedFragrance} />

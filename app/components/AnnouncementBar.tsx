@@ -1,12 +1,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { brand } from "../data/brand";
 
 export default function AnnouncementBar() {
   const messages = [
     "Free Collection Available",
     "Nationwide Delivery",
-    "VAT Included",
     "WhatsApp Orders Welcome",
   ];
 
@@ -27,7 +27,7 @@ export default function AnnouncementBar() {
         </p>
 
         <a
-          href="https://wa.me/27696863952?text=Hi%20Maison%20Skye%20%26%20Rose,%20I%20am%20looking%20for%20a%20specific%20fragrance."
+          href={brand.social.whatsappLink}
           target="_blank"
           rel="noopener noreferrer"
           className="rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-[10px] font-bold uppercase tracking-[0.15em] text-white hover:bg-white hover:text-black transition-colors"

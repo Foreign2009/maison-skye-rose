@@ -1,11 +1,12 @@
 "use client";
 
 import { MessageCircle } from "lucide-react";
+import { brand } from "../data/brand";
 
 export default function FloatingWhatsApp() {
   return (
     <a
-      href="https://wa.me/27696863952"
+      href={brand.social.whatsappLink}
       target="_blank"
       rel="noopener noreferrer"
       className="fixed bottom-5 right-5 z-[9999] flex items-center gap-3 rounded-full bg-green-500 px-5 py-4 text-white shadow-2xl transition hover:scale-105 hover:bg-green-600"

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { brand } from "../data/brand";
 
 export default function Footer() {
   return (
@@ -9,11 +10,11 @@ export default function Footer() {
         
         {/* BRAND IDENTITY */}
         <h3 className="text-3xl font-black">
-          Maison Skye & Rose
+          {brand.name}
         </h3>
 
         <p className="mt-4 max-w-md text-zinc-400">
-          Luxury-inspired fragrances crafted for everyday confidence.
+          {brand.metadata.description}
         </p>
 
         {/* 4-COLUMN LINK SECTION */}
@@ -104,7 +105,7 @@ export default function Footer() {
             <ul className="mt-4 space-y-2 text-zinc-400">
               <li>
                 <a 
-                  href="https://wa.me/27696863952" 
+                  href={brand.social.whatsappLink} 
                   target="_blank" 
                   rel="noopener noreferrer" 
                   className="transition duration-200 hover:text-white"
@@ -114,12 +115,12 @@ export default function Footer() {
               </li>
               <li>
                 <a 
-                  href="https://wa.me/27696863952" 
+                  href={brand.social.whatsappLink} 
                   target="_blank" 
                   rel="noopener noreferrer" 
                   className="transition duration-200 hover:text-white"
                 >
-                  +27 69 686 3952
+                  +{brand.social.whatsappNumber.replace(/(\d{2})(\d{2})(\d{3})(\d{4})/, '$1 $2 $3 $4')}
                 </a>
               </li>
               <li>
@@ -135,7 +136,7 @@ export default function Footer() {
 
         {/* BOTTOM METADATA BAR */}
         <div className="mt-16 border-t border-zinc-800 pt-8 text-center text-sm text-zinc-500">
-          © {new Date().getFullYear()} Maison Skye & Rose. All Rights Reserved.
+          © {new Date().getFullYear()} {brand.name}. All Rights Reserved.
         </div>
 
       </div>
