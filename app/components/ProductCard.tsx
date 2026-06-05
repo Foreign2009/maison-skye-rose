@@ -84,8 +84,12 @@ export default function ProductCard({
           alt={title}
           width={260}
           height={260}
-          className="h-[260px] w-auto object-contain"
-          style={{ width: "auto", height: "auto" }}
+          className="object-contain"
+          style={{
+            width: "100%",
+            height: "auto",
+            maxWidth: "260px",
+          }}
           sizes="(max-width: 768px) 100vw, 260px"
           priority
         />

@@ -62,14 +62,16 @@ export default function QuickAddModal({ open, onClose, title, images = {}, price
             <div className="absolute inset-0 overflow-hidden"><div className="absolute -left-10 top-0 h-40 w-40 rounded-full bg-pink-200/30 blur-3xl" /><div className="absolute -right-10 bottom-0 h-40 w-40 rounded-full bg-blue-200/30 blur-3xl" /></div>
             <div className="relative z-10">
               <div className="flex justify-center">
-                <motion.div key={selectedImage} initial={{ opacity: 0, scale: 0.92 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.25 }} className="rounded-[28px] bg-gradient-to-br from-[#fff3f7] to-[#eef7ff] p-6">
+                <motion.div key={selectedImage} initial={{ opacity: 0, scale: 0.92 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.25 }} className="w-full max-w-[180px] rounded-[28px] bg-gradient-to-br from-[#fff3f7] to-[#eef7ff] p-6">
                   <Image
                     src={selectedImage}
                     alt={title}
                     width={180}
                     height={180}
-                    // Fixed: Set both to auto to prevent Next.js layout warnings
-                    style={{ width: "auto", height: "auto" }}
+                    style={{
+                      width: "100%",
+                      height: "auto",
+                    }}
                     className="object-contain"
                     priority
                   />

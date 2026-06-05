@@ -17,7 +17,8 @@ import DiscoverySets from "./components/DiscoverySets";
 import YourFragranceJourney from "./components/YourFragranceJourney";
 import InstagramCTA from "./components/InstagramCTA";
 import QuickAddModal from "./components/QuickAddModal";
-import WhyMaison from "./components/WhyMaison"; 
+import WhyMaison from "./components/WhyMaison";
+import Testimonials from "./components/Testimonials";
 import Footer from "./components/Footer";
 import { fragrances } from "./data/fragrances";
 
@@ -104,6 +105,7 @@ export default function HomePage() {
       <InstagramCTA />
       <RequestFragrance />
       <WhyMaison />
+      <Testimonials />
       <ComingSoon />
       <Footer />
 
