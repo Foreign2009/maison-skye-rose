@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useCart } from "../context/CartContext";
 
 export default function MiniCart() {
@@ -91,11 +92,13 @@ Contact Number:
             key={index}
             className="flex items-center gap-4 rounded-3xl border border-black/5 p-4"
           >
-            <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-[#f5f1eb]">
-              <img
+            <div className="relative h-20 w-20 rounded-2xl bg-[#f5f1eb]">
+              <Image
                 src={item.image}
                 alt={item.title}
-                className="h-14 object-contain"
+                fill
+                className="object-contain p-3"
+                unoptimized
               />
             </div>
 

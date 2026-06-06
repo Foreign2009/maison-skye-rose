@@ -87,12 +87,12 @@ Delivery: R${delivery.toFixed(2)}
 
 Total: R${finalTotal.toFixed(2)}
 ${
-  deliveryArea !== "Collection / Pickup"
-    ? `
+      deliveryArea !== "Collection / Pickup"
+        ? `
 
 Delivery Address:
 ${deliveryAddress}`
-    : ""
+        : ""
 }`;
 
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
@@ -178,11 +178,6 @@ ${deliveryAddress}`
                             alt={item.title || "Fragrance"}
                             width={80}
                             height={80}
-                            style={{
-                              width: "100%",
-                              height: "auto",
-                              maxWidth: "80px",
-                            }}
                             className="object-contain"
                           />
                         </div>

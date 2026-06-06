@@ -78,27 +78,25 @@ export default function ProductCard({
         <Heart size={18} fill={favorite ? "currentColor" : "none"} />
       </button>
 
-      <div onClick={handleCardClick} className="flex cursor-pointer items-center justify-center rounded-[24px] bg-gradient-to-br from-pink-50 to-blue-50 p-6">
+      <div 
+        onClick={handleCardClick} 
+        className="relative flex h-[280px] cursor-pointer items-center justify-center rounded-[24px] bg-gradient-to-br from-pink-50 to-blue-50 p-4"
+      >
         <Image
           src={images["10ml"]}
           alt={title}
-          width={260}
-          height={260}
-          className="object-contain"
-          style={{
-            width: "100%",
-            height: "auto",
-            maxWidth: "260px",
-          }}
-          sizes="(max-width: 768px) 100vw, 260px"
+          fill
+          className="object-contain p-4"
+          sizes="(max-width: 768px) 100vw, 240px"
           priority
+          unoptimized
         />
       </div>
 
       <div className="mt-6 flex flex-1 flex-col">
         <h3 className="min-h-[64px] text-2xl font-black text-[#4f4a52]">{title}</h3>
         <p className="mt-2 min-h-[40px] text-sm font-semibold text-[#d89ca4]">{subtitle}</p>
-        <p className="mt-4 text-sm leading-7 text-[#7b7480]">{mood}</p>
+        <p className="mt-4 line-clamp-2 text-sm leading-6 text-[#7b7480]">{mood}</p>
         <div className="mt-6 flex flex-wrap gap-2">
           {notes.slice(0, 3).map((note) => (
             <span

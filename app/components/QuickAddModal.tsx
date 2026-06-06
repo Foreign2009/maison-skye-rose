@@ -68,10 +68,6 @@ export default function QuickAddModal({ open, onClose, title, images = {}, price
                     alt={title}
                     width={180}
                     height={180}
-                    style={{
-                      width: "100%",
-                      height: "auto",
-                    }}
                     className="object-contain"
                     priority
                   />

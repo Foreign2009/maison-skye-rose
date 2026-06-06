@@ -34,10 +34,6 @@ export default function CartSuccessToast() {
                   height={70}
                   priority
                   className="object-contain"
-                  style={{
-                    width: "100%",
-                    height: "auto",
-                  }}
                 />
               </div>
 
