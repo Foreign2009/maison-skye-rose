@@ -178,7 +178,8 @@ ${deliveryAddress}`
                             alt={item.title || "Fragrance"}
                             width={80}
                             height={80}
-                            className="object-contain"
+                              style={{ width: "auto", height: "auto" }}
+                              className="object-contain"
                           />
                         </div>
 

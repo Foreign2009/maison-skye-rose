@@ -93,7 +93,8 @@ export default function AIHeroSection() {
                 width={500}
                 height={500}
                 priority
-                className="object-contain w-full h-full transition-transform duration-700 hover:scale-[1.03]"
+                style={{ width: "auto", height: "auto" }}
+              className="object-contain transition-transform duration-700 hover:scale-[1.03]"
               />
             </div>
           </div>
