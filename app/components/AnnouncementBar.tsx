@@ -20,7 +20,7 @@ export default function AnnouncementBar() {
   }, []);
 
   return (
-    <div className="bg-black py-3 text-white">
+    <div className="bg-[#564d54] py-3 text-white">
       <div className="mx-auto flex max-w-7xl items-center justify-center gap-6 px-6 text-center">
         <p className="text-xs uppercase tracking-[0.25em] transition-opacity duration-500 ease-in-out">
           {messages[currentIndex]}

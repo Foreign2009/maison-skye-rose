@@ -1,150 +1,220 @@
 "use client";
 
 import Image from "next/image";
+import { X } from "lucide-react";
 import { useCart } from "../context/CartContext";
 
-export default function MiniCart() {
+interface MiniCartProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
   const {
     cart,
     increaseQuantity,
     decreaseQuantity,
     removeFromCart,
+    cartTotal,
+    cartCount,
+    wholesaleActive,
+    getWholesalePrice,
   } = useCart();
 
-  const subtotal = cart.reduce(
-    (total, item) =>
-      total + item.price * item.quantity,
+  if (!isOpen) return null;
+
+  const subtotal = cartTotal;
+
+  const delivery =
+    !cart || cart.length === 0
+      ? 0
+      : wholesaleActive
+      ? 0
+      : 100;
+
+  const total = subtotal + delivery;
+
+  const originalTotal = cart.reduce(
+    (total, item) => total + item.price * item.quantity,
     0
   );
 
-  const vat = subtotal * 0.15;
+  const savings = originalTotal - subtotal;
 
-  const delivery =
-    cart.length > 0 ? 100 : 0;
+  const handleWhatsAppCheckout = () => {
+    const orderLines = cart
+      .map((item) => {
+        const itemPrice = getWholesalePrice(item);
+        return `• ${item.title} (${item.size}) x${item.quantity} - R${
+          (itemPrice * item.quantity).toFixed(2)
+        }${wholesaleActive ? " (Wholesale)" : ""}`;
+      })
+      .join("\n");
 
-  const total =
-    subtotal + vat + delivery;
+    const message = `🌹 MAISON SKYE & ROSE
+Thank you for choosing Maison Skye & Rose.
 
-  const handleWhatsAppCheckout =
-    () => {
-      const orderLines = cart
-        .map(
-          (item) =>
-            `• ${item.title} x${item.quantity} - R${
-              item.price *
-              item.quantity
-            }`
-        )
-        .join("\n");
-
-      const message = `🌹 Maison Skye & Rose Order
-
+${wholesaleActive ? "WHOLESALE ORDER\n\n" : ""}ORDER SUMMARY
 ${orderLines}
 
-Subtotal: R${subtotal.toFixed(
-        2
-      )}
-VAT (15%): R${vat.toFixed(2)}
-Delivery: R${delivery.toFixed(
-        2
-      )}
+Subtotal: R${subtotal.toFixed(2)}
+Delivery: ${delivery === 0 ? "FREE" : `R${delivery.toFixed(2)}`}
+TOTAL: R${total.toFixed(2)}
 
-Total: R${total.toFixed(2)}
-
+CUSTOMER DETAILS
 Name:
-Delivery Area:
 Contact Number:
-`;
+Delivery Area:
 
-      window.open(
-        `https://wa.me/27696863952?text=${encodeURIComponent(
-          message
-        )}`,
-        "_blank"
-      );
-    };
+A member of our team will confirm your order and delivery details shortly.`;
+
+    window.open(
+      `https://wa.me/27696863952?text=${encodeURIComponent(message)}`,
+      `_blank`
+    );
+  };
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 w-[360px] rounded-[32px] bg-white p-6 shadow-[0_25px_80px_rgba(0,0,0,0.18)]">
-      <div className="flex items-center justify-between">
+    <div className="fixed z-50 bg-[#fffdfb]/95 backdrop-blur-md bottom-0 left-0 right-0 md:bottom-6 md:right-6 md:left-auto w-full md:w-[340px] md:rounded-[32px] border border-black/5 shadow-[0_-10px_40px_rgba(0,0,0,0.08)] md:shadow-[0_25px_80px_rgba(0,0,0,0.12)] flex flex-col max-h-[85vh] md:max-h-[none]">
+      {/* Mobile Drag/Close Handle Area */}
+      <div
+        className="flex justify-center pt-3 md:hidden cursor-pointer"
+        onClick={onClose}
+      >
+        <div className="h-1.5 w-12 rounded-full bg-zinc-300" />
+      </div>
+
+      {/* Header Section */}
+      <div className="p-6 pb-4 flex items-center justify-between">
         <div>
           <p className="text-xs uppercase tracking-[0.35em] text-zinc-500">
             Maison Skye & Rose
           </p>
-
-          <h2 className="mt-2 text-3xl font-black uppercase">
+          <h2 className="mt-1 text-xl md:text-2xl font-black uppercase tracking-tight">
             Your Bag
           </h2>
+
+          {wholesaleActive ? (
+            <div className="mt-3 rounded-xl border border-green-200 bg-green-50 px-3 py-2">
+              <p className="text-xs font-bold uppercase tracking-widest text-green-700">
+                Wholesale Pricing Active
+              </p>
+              <p className="mt-1 text-xs text-green-600">
+                Mix & Match pricing applied
+              </p>
+              <p className="mt-1 text-xs font-semibold text-green-700">
+                ✓ Free Delivery Included
+              </p>
+            </div>
+          ) : (
+            <div className="mt-3 rounded-xl bg-[#f5f1eb] px-3 py-2">
+              <p className="text-xs font-bold uppercase tracking-widest text-[#b67d73]">
+                Wholesale Available
+              </p>
+              <p className="mt-1 text-xs text-zinc-500">
+                {Math.max(0, 10 - cartCount)} more bottle
+                {Math.max(0, 10 - cartCount) !== 1 ? "s" : ""} until wholesale pricing
+              </p>
+              <div className="mt-2 h-2 overflow-hidden rounded-full bg-white">
+                <div
+                  className="h-full bg-[#b67d73]"
+                  style={{
+                    width: `${Math.min((cartCount / 10) * 100, 100)}%`,
+                  }}
+                />
+              </div>
+              <p className="mt-2 text-xs font-semibold">
+                5ml R48 • 10ml R77 • 30ml R180
+              </p>
+            </div>
+          )}
         </div>
+
+        {/* Desktop Close Button */}
+        <button
+          onClick={onClose}
+          className="p-1 text-zinc-400 hover:text-black transition-colors rounded-full hover:bg-zinc-100"
+          aria-label="Close Cart"
+        >
+          <X className="h-5 w-5" />
+        </button>
       </div>
 
-      <div className="mt-6 max-h-[320px] space-y-4 overflow-y-auto pr-2">
-        {cart.length === 0 && (
-          <div className="rounded-3xl bg-[#f5f1eb] p-8 text-center">
+      {/* Scrollable Products Area */}
+      <div className="px-6 flex-1 max-h-[50vh] md:max-h-[45vh] space-y-4 overflow-y-auto pr-4 scrollbar-thin">
+        {(!cart || cart.length === 0) && (
+          <div className="rounded-3xl bg-[#f5f1eb] p-8 text-center my-4">
             <p className="text-sm text-zinc-500">
-              Your bag is empty.
+              Your fragrance selection awaits.
             </p>
           </div>
         )}
 
-        {cart.map((item, index) => (
+        {cart.map((item) => (
           <div
-            key={index}
-            className="flex items-center gap-4 rounded-3xl border border-black/5 p-4"
+            key={`${item.id}-${item.size}`}
+            className="flex items-center gap-3 rounded-2xl border border-black/5 p-3"
           >
-            <div className="relative h-20 w-20 rounded-2xl bg-[#f5f1eb]">
+            {/* Product image */}
+            <div className="relative h-16 w-16 md:h-20 md:w-20 flex-shrink-0 rounded-2xl bg-[#f5f1eb]">
               <Image
                 src={item.image}
                 alt={item.title}
                 fill
                 className="object-contain p-3"
                 unoptimized
-              />
+                />
             </div>
 
-            <div className="flex-1">
-              <h3 className="text-sm font-black uppercase">
+            {/* Product details */}
+            <div className="flex-1 min-w-0">
+              <h3 className="text-sm font-black uppercase truncate">
                 {item.title}
               </h3>
+              <p className="text-xs text-zinc-400 mt-1">{item.size}</p>
 
-              <p className="mt-2 font-black text-[#b67d73]">
-                R{item.price}
-              </p>
+              {/* Wholesale price display */}
+              {wholesaleActive && getWholesalePrice(item) !== item.price ? (
+                <div className="mt-1">
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs text-zinc-400 line-through">
+                      R{item.price}
+                    </span>
+                    <span className="font-black text-green-600">
+                      R{getWholesalePrice(item)}
+                    </span>
+                  </div>
+                  <p className="text-[10px] text-green-600">
+                    Save R{(item.price - getWholesalePrice(item)).toFixed(2)}
+                  </p>
+                </div>
+              ) : (
+                <p className="mt-1 font-black text-[#b67d73]">
+                  R{item.price}
+                </p>
+              )}
 
-              <div className="mt-3 flex items-center gap-3">
+              {/* Quantity controls */}
+              <div className="mt-2 flex items-center gap-3">
                 <button
-                  onClick={() =>
-                    decreaseQuantity(
-                      item.title
-                    )
-                  }
-                  className="flex h-8 w-8 items-center justify-center rounded-full bg-black text-white"
+                  onClick={() => decreaseQuantity(item.id, item.size)}
+                  className="flex h-7 w-7 items-center justify-center rounded-full bg-[#b67d73] text-white hover:bg-[#a96e65] transition-colors text-sm font-bold"
                 >
                   -
                 </button>
 
-                <span className="text-sm font-bold">
-                  {item.quantity}
-                </span>
+                <span className="text-sm font-bold">{item.quantity}</span>
 
                 <button
-                  onClick={() =>
-                    increaseQuantity(
-                      item.title
-                    )
-                  }
-                  className="flex h-8 w-8 items-center justify-center rounded-full bg-black text-white"
+                  onClick={() => increaseQuantity(item.id, item.size)}
+                  className="flex h-7 w-7 items-center justify-center rounded-full bg-[#b67d73] text-white hover:bg-[#a96e65] transition-colors text-sm font-bold"
                 >
                   +
                 </button>
 
                 <button
-                  onClick={() =>
-                    removeFromCart(
-                      item.title
-                    )
-                  }
-                  className="ml-auto text-xs uppercase tracking-[0.2em] text-red-500"
+                  onClick={() => removeFromCart(item.id, item.size)}
+                  className="ml-auto text-xs uppercase tracking-[0.2em] text-red-500 font-bold"
                 >
                   Remove
                 </button>
@@ -154,27 +224,28 @@ Contact Number:
         ))}
       </div>
 
-      <div className="mt-6 border-t border-black/10 pt-6">
+      {/* Sticky Conversion Footer */}
+      <div className="p-4 md:p-6 border-t border-black/10 bg-white md:rounded-b-[32px]">
         <div className="flex justify-between text-sm">
           <span>Subtotal</span>
-          <span>
-            R{subtotal.toFixed(2)}
-          </span>
-        </div>
-
-        <div className="mt-3 flex justify-between text-sm">
-          <span>VAT (15%)</span>
-          <span>
-            R{vat.toFixed(2)}
-          </span>
+          <span className="font-bold">R{subtotal.toFixed(2)}</span>
         </div>
 
         <div className="mt-3 flex justify-between text-sm">
           <span>Delivery</span>
-          <span>
-            R{delivery.toFixed(2)}
+          <span className="font-bold">
+            {delivery === 0 ? "FREE" : `R${delivery.toFixed(2)}`}
           </span>
         </div>
+
+        {savings > 0 && (
+          <div className="mt-3 flex justify-between rounded-xl bg-[#f5f1eb] px-3 py-2 text-sm text-[#b67d73]">
+            <span>You Saved</span>
+            <span className="font-bold">
+              R{savings.toFixed(2)}
+            </span>
+          </div>
+        )}
 
         <div className="mt-5 flex justify-between border-t border-black/10 pt-5">
           <span className="text-2xl font-black uppercase">
@@ -187,15 +258,11 @@ Contact Number:
         </div>
 
         <button
-          onClick={
-            handleWhatsAppCheckout
-          }
-          disabled={
-            cart.length === 0
-          }
-          className="mt-6 w-full rounded-full bg-black px-6 py-5 text-xs uppercase tracking-[0.35em] text-white transition duration-300 hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-50"
+          onClick={handleWhatsAppCheckout}
+          disabled={!cart || cart.length === 0}
+          className="mt-6 w-full rounded-full bg-[#b67d73] px-6 py-4 text-[11px] font-bold uppercase tracking-[0.25em] text-white transition-all duration-300 hover:bg-[#a96e65] hover:shadow-lg disabled:opacity-50"
         >
-          Checkout on WhatsApp
+          Checkout via WhatsApp
         </button>
       </div>
     </div>

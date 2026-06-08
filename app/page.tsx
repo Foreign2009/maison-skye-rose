@@ -26,9 +26,8 @@ export default function HomePage() {
   // Single-pass signature lookup tailored for the editorial block
   const featuredFragrance = fragrances.find((f) => f.collection === "Skye" && f.bestSeller) || fragrances[0];
 
-  // Safeguard content boundaries by formatting descriptions cleanly
-  const rawMood = featuredFragrance?.mood || "A captivating blend crafted for those who leave an impression. Experience a masterfully balanced trail of rare modern accords designed to linger gracefully.";
-  const featuredDescription = rawMood.length > 120 ? `${rawMood.slice(0, 120)}...` : rawMood;
+  // Confident luxury fallback text if the fragrance object lacks a mood string
+  const featuredMood = featuredFragrance?.mood || "A captivating blend crafted for those who leave an impression. Experience a masterfully balanced trail of rare modern accords designed to linger gracefully.";
 
   return (
     <main className="min-h-screen bg-[#faf7f5] overflow-x-hidden">
@@ -37,75 +36,151 @@ export default function HomePage() {
       <AIHeroSection />
       <TrustBar />
 
-      {/* 1. Featured Fragrance Block (Refined Luxury Editorial Layout) */}
-      <section className="mx-auto max-w-7xl px-4 md:px-5 py-10 md:py-24">
-        <div className="bg-white rounded-[40px] p-6 md:p-16 shadow-[0_20px_60px_rgba(0,0,0,0.04)] grid md:grid-cols-2 gap-8 md:gap-16 items-center">
-          <div className="relative h-[220px] md:h-[480px] w-full flex items-center justify-center rounded-[32px] bg-gradient-to-br from-pink-50 to-blue-50 p-6">
-            <Image
-              src={featuredFragrance?.images?.["10ml"] || "/placeholder-perfume.png"}
-              alt={featuredFragrance?.title || "Signature Scent"}
-              fill
-              className="object-contain p-6 transform transition-transform duration-700 hover:scale-105"
-              sizes="(max-width: 768px) 100vw, 480px"
-              priority
-              unoptimized
-            />
-          </div>
-          <div className="flex flex-col items-start text-left">
-            <span className="text-xs font-bold tracking-[0.45em] text-[#d89ca4] uppercase mb-3">
-              Signature Scent
-            </span>
-            <h2 className="text-2xl md:text-5xl font-black tracking-[-0.05em] text-[#4f4a52] leading-tight">
-              {featuredFragrance?.title || "Maison Skye & Rose"}
-            </h2>
-            <p className="mt-2 text-sm font-semibold text-[#d89ca4]">
-              {featuredFragrance?.subtitle || "Extrait de Parfum"}
-            </p>
-            {/* Elegant character-limited description keeping vertical blocks balanced across devices */}
-            <p className="mt-4 text-sm md:text-base leading-relaxed text-[#7b7480]">
-              {featuredDescription}
-            </p>
-            
-            {/* Note chips hidden on mobile to align with strict editorial luxury constraints */}
-            {featuredFragrance?.notes && (
-              <div className="hidden md:flex mt-6 flex-wrap gap-2">
-                {featuredFragrance.notes.slice(0, 3).map((note: string) => (
-                  <span key={note} className="rounded-full bg-pink-50 px-3 py-1 text-xs font-semibold text-[#d89ca4]">
-                    {note}
-                  </span>
-                ))}
-              </div>
-            )}
-            
-            <button
-              onClick={() => setSelectedFragrance(featuredFragrance)}
-              className="mt-8 rounded-full bg-black px-8 py-4 text-sm font-bold uppercase tracking-widest text-white transition hover:bg-zinc-800 hover:scale-105 w-full sm:w-auto text-center"
-            >
-              Discover
-            </button>
+      {/* 1. Featured Fragrance Block (Refined Luxury Editorial Layout) - bg-white */}
+      <section className="bg-white py-8 md:py-24">
+        <div className="mx-auto max-w-7xl px-4 md:px-5">
+          <div className="bg-[#faf7f5] rounded-[32px] md:rounded-[40px] p-5 md:p-16 shadow-[0_20px_60px_rgba(0,0,0,0.02)] grid md:grid-cols-2 gap-8 md:gap-16 items-center">
+            {/* Added a subtle gradient to replace the flat white background */}
+            <div className="relative h-[240px] md:h-[480px] w-full flex items-center justify-center rounded-[32px] bg-gradient-to-br from-[#faf7f5] via-white to-[#fdf8f6] p-6">
+              <Image
+                src={featuredFragrance?.images?.["10ml"] || "/placeholder-perfume.png"}
+                alt={featuredFragrance?.title || "Signature Scent"}
+                fill
+                className="object-contain p-6 transform transition-transform duration-700 hover:scale-105"
+                sizes="(max-width: 768px) 100vw, 480px"
+                priority
+                unoptimized
+              />
+            </div>
+            <div className="flex flex-col items-start text-left">
+              <span className="text-[10px] font-bold uppercase tracking-[0.6em] text-[#d89ca4] mb-3">
+                Featured Creation
+              </span>
+              <h2 className="text-3xl md:text-5xl font-black tracking-[-0.06em] text-[#4f4a52] leading-tight">
+                {featuredFragrance?.title || "Maison Skye & Rose"}
+              </h2>
+              <p className="mt-2 text-sm font-semibold text-[#d89ca4]">
+                {featuredFragrance?.subtitle || "Extrait de Parfum"}
+              </p>
+              
+              {/* Subtle collection tag added below subtitle for strict editorial structure */}
+              {featuredFragrance?.collection && (
+                <p className="mt-3 text-[11px] uppercase tracking-[0.3em] text-[#7b7480]">
+                  {featuredFragrance.collection} Collection
+                </p>
+              )}
+              
+              <p className="mt-5 text-sm md:text-base leading-7 text-[#7b7480] max-w-[520px]">
+                {featuredMood}
+              </p>
+              
+              {/* Note chips hidden on mobile to align with strict editorial luxury constraints */}
+              {featuredFragrance?.notes && (
+                <div className="hidden md:flex mt-6 flex-wrap gap-2">
+                  {featuredFragrance.notes.slice(0, 3).map((note: string) => (
+                    <span key={note} className="rounded-full bg-white px-3 py-1 text-xs font-semibold text-[#d89ca4] border border-pink-50">
+                      {note}
+                    </span>
+                  ))}
+                </div>
+              )}
+              
+              <button
+                onClick={() => setSelectedFragrance(featuredFragrance)}
+                className="mt-6 rounded-full bg-black px-8 py-4 text-sm font-bold uppercase tracking-widest text-white transition hover:bg-zinc-800 hover:scale-105 w-full sm:w-auto text-center"
+              >
+                Discover
+              </button>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* 2. Best Sellers */}
-      <BestSellers onQuickAdd={(fragrance) => setSelectedFragrance(fragrance)} />
+      {/* Luxury Statement Divider (Repositioned away from price conversation) */}
+      <section className="bg-white py-12 md:py-20 px-4">
+        <div className="mx-auto max-w-3xl text-center">
+          <p className="text-[11px] uppercase tracking-[0.5em] text-[#d89ca4]">
+            The Maison Standard
+          </p>
+          <h3 className="mt-4 text-2xl md:text-4xl font-black text-[#4f4a52]">
+            Craft Crafted For Every Occasion
+          </h3>
+          <p className="mt-5 text-[#7b7480] leading-7 text-sm md:text-base">
+            Modern fragrances inspired by the world's most iconic scent journeys,
+            thoughtfully curated for everyday luxury.
+          </p>
+        </div>
+      </section>
 
-      {/* 3. Latest Additions */}
-      <LatestAdditions />
+      {/* 2. Best Sellers - bg-[#faf7f5] */}
+      <section className="bg-[#faf7f5]">
+        <BestSellers onQuickAdd={(fragrance) => setSelectedFragrance(fragrance)} />
+      </section>
+
+      {/* 3. Discovery Sets - bg-white */}
+      <section className="bg-white">
+        <DiscoverySets />
+      </section>
+
+      {/* 4. Wholesale Opportunities - bg-[#faf7f5] */}
+      <section className="bg-[#faf7f5] py-20">
+        <div className="mx-auto max-w-6xl px-5">
+          <div className="rounded-[40px] bg-white p-8 md:p-16 text-center shadow-[0_20px_60px_rgba(0,0,0,0.04)]">
+            <p className="text-xs uppercase tracking-[0.45em] text-[#d89ca4]">
+              Wholesale Opportunities
+            </p>
+
+            <h2 className="mt-4 text-3xl md:text-5xl font-black text-[#4f4a52]">
+              Become A Maison Stockist
+            </h2>
+
+            <p className="mx-auto mt-6 max-w-3xl text-[#7b7480]">
+              Mix and match any fragrances and bottle sizes.
+              Wholesale pricing starts from only 10 units.
+            </p>
+
+            <div className="mt-10 flex flex-wrap justify-center gap-4">
+              <span className="rounded-full bg-[#faf7f5] px-6 py-3 font-medium text-sm text-[#4f4a52]">
+                5ml • R48
+              </span>
+
+              <span className="rounded-full bg-[#faf7f5] px-6 py-3 font-medium text-sm text-[#4f4a52]">
+                10ml • R77
+              </span>
+
+              <span className="rounded-full bg-[#faf7f5] px-6 py-3 font-medium text-sm text-[#4f4a52]">
+                30ml • R180
+              </span>
+            </div>
+
+            <Link
+              href="/wholesale"
+              className="mt-10 inline-flex rounded-full bg-black px-8 py-4 text-sm font-bold uppercase tracking-widest text-white transition hover:bg-zinc-800 hover:scale-105"
+            >
+              Learn More
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* 5. Latest Additions - bg-[#faf7f5] */}
+      <section className="bg-[#faf7f5]">
+        <LatestAdditions />
+      </section>
       
-      {/* 4. Signature Collection */}
-      <section className="mx-auto max-w-7xl px-4 md:px-5 py-10 md:py-24">
+      {/* 6. Signature Collection - bg-white */}
+      <section className="bg-white mx-auto max-w-7xl px-4 md:px-5 py-8 md:py-24">
         <div className="mb-12 text-center">
           <p className="text-[11px] uppercase tracking-[0.45em] text-[#d89ca4]">Explore Signature Collection</p>
-          <h2 className="mt-2 text-2xl md:text-5xl font-black tracking-[-0.06em] text-[#4f4a52]">Inspired Scent Journeys</h2>
+          <h2 className="mt-2 text-xl md:text-5xl font-black tracking-[-0.06em] text-[#4f4a52]">Signature Fragrances</h2>
         </div>
 
-        {/* Locked sweet spot mobile width implementation to keep layout structure premium without card crunching */}
+        {/* Premium swipe implementation using 195px to keep fragrance bottles looking expensive */}
         <div className="flex gap-4 overflow-x-auto pb-4 md:hidden snap-x snap-mandatory scrollbar-hide">
-          {displayProducts.slice(0, 16).map((fragrance) => (
+          {displayProducts.slice(0, 8).map((fragrance) => (
             <div
               key={fragrance.title}
-              className="w-[180px] flex-shrink-0 snap-start"
+              className="w-[195px] flex-shrink-0 snap-start"
             >
               <ProductCard
                 {...fragrance}
@@ -117,7 +192,7 @@ export default function HomePage() {
 
         {/* Balanced Desktop Grid Variant */}
         <div className="hidden gap-8 md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {displayProducts.slice(0, 16).map((fragrance) => (
+          {displayProducts.slice(0, 8).map((fragrance) => (
             <ProductCard 
               key={fragrance.title} 
               {...fragrance} 
@@ -136,16 +211,17 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 5. Discovery Sets */}
-      <DiscoverySets />
+      {/* 7. Quiz / Personality Alignment - bg-[#faf7f5] */}
+      <section className="bg-[#faf7f5]">
+        <ShopByPersonality />
+      </section>
 
-      {/* 6. Quiz / Personality Alignment */}
-      <ShopByPersonality />
-
-      {/* 7. Testimonials */}
-      <Testimonials />
+      {/* 8. Testimonials - bg-white */}
+      <section className="bg-white">
+        <Testimonials />
+      </section>
       
-      {/* 8. Luxury Target Footer */}
+      {/* 9. Luxury Target Footer */}
       <Footer />
 
       {selectedFragrance && (

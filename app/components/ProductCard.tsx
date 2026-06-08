@@ -66,21 +66,25 @@ export default function ProductCard({
   };
 
   return (
-    <div className="relative flex h-full flex-col overflow-hidden rounded-[32px] bg-white p-6 shadow-[0_20px_60px_rgba(0,0,0,0.08)] transition-all duration-300 hover:-translate-y-2">
+    <div className="relative flex h-full flex-col overflow-hidden rounded-[32px] bg-white p-4 md:p-6 border border-[#e8ddd6] shadow-[0_20px_60px_rgba(0,0,0,0.08)] transition-all duration-300 hover:-translate-y-2">
       {(bestSeller || newArrival) && (
-        <div className="absolute right-4 top-4 z-20">
-          {bestSeller && <span className="rounded-full bg-black px-3 py-1 text-xs font-bold text-white">Best Seller</span>}
-          {!bestSeller && newArrival && <span className="rounded-full bg-pink-500 px-3 py-1 text-xs font-bold text-white">New</span>}
+        <div className="absolute right-2 md:right-4 top-2 md:top-4 z-20">
+          {bestSeller && <span className="rounded-full bg-black px-2 md:px-3 py-0.5 md:py-1 text-[10px] md:text-xs font-bold text-white">Best Seller</span>}
+          {!bestSeller && newArrival && <span className="rounded-full bg-pink-500 px-2 md:px-3 py-0.5 md:py-1 text-[10px] md:text-xs font-bold text-white">New</span>}
         </div>
       )}
 
-      <button onClick={handleFavorite} className="absolute left-4 top-4 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-white shadow-md">
-        <Heart size={18} fill={favorite ? "currentColor" : "none"} />
+      <button 
+        onClick={handleFavorite} 
+        className="absolute left-2 md:left-4 top-2 md:top-4 z-20 flex h-8 w-8 md:h-10 md:w-10 items-center justify-center rounded-full bg-white shadow-md transition-all"
+      >
+        <Heart className="h-4 w-4 md:h-[18px] md:w-[18px]" fill={favorite ? "currentColor" : "none"} />
       </button>
 
+      {/* Premium Upgrade: Compressed height on mobile to bring focus up */}
       <div 
         onClick={handleCardClick} 
-        className="relative flex h-[280px] cursor-pointer items-center justify-center rounded-[24px] bg-gradient-to-br from-pink-50 to-blue-50 p-4"
+        className="relative flex h-[140px] md:h-[280px] cursor-pointer items-center justify-center rounded-[24px] bg-gradient-to-br from-pink-50 to-blue-50 p-3 md:p-4"
       >
         <Image
           src={images["10ml"]}
@@ -93,33 +97,38 @@ export default function ProductCard({
         />
       </div>
 
-      <div className="mt-6 flex flex-1 flex-col">
-        <h3 className="min-h-[64px] text-2xl font-black text-[#4f4a52]">{title}</h3>
-        <p className="mt-2 min-h-[40px] text-sm font-semibold text-[#d89ca4]">{subtitle}</p>
-        <p className="mt-4 line-clamp-2 text-sm leading-6 text-[#7b7480]">{mood}</p>
-        <div className="mt-6 flex flex-wrap gap-2">
-          {notes.slice(0, 3).map((note) => (
+      <div className="mt-4 md:mt-6 flex flex-1 flex-col">
+        <h3 className="min-h-[40px] md:min-h-[64px] text-base md:text-2xl font-black text-[#4f4a52] leading-tight">{title}</h3>
+        
+        {/* Luxury mobile rule: Kept subtitle on desktop, hidden on mobile */}
+        <p className="hidden md:block mt-2 min-h-[40px] text-sm font-semibold text-[#d89ca4]">{subtitle}</p>
+        
+        <p className="hidden md:block mt-4 line-clamp-2 text-sm leading-6 text-[#7b7480]">{mood}</p>
+        
+        <div className="hidden md:flex mt-6 flex-wrap gap-2">
+          {notes.slice(0, 2).map((note) => (
             <span
               key={note}
-              className="rounded-full bg-pink-50 px-3 py-1 text-xs font-semibold text-[#d89ca4]"
+              className="rounded-full bg-pink-50 px-2.5 md:px-3 py-1 text-[10px] md:text-xs font-semibold text-[#d89ca4]"
             >
               {note}
             </span>
           ))}
         </div>
-        <div className="mt-6">
+        
+        <div className="hidden md:block mt-6">
           <p className="text-sm text-[#7b7480]">{profile} • {season}</p>
         </div>
 
-        <div className="mt-auto pt-8">
-          <div className="flex items-center justify-between">
+        <div className="mt-auto pt-4 md:pt-8">
+          <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
             <div>
-              <p className="text-xs uppercase text-[#7b7480]">From</p>
-              <p className="text-2xl font-black text-[#4f4a52]">R{prices["5ml"]}</p>
+              <p className="text-[10px] md:text-xs uppercase text-[#7b7480]">From</p>
+              <p className="text-base md:text-2xl font-black text-[#4f4a52]">R{prices["5ml"]}</p>
             </div>
             <button
               onClick={handleCardClick}
-              className="rounded-full bg-gradient-to-r from-pink-400 to-blue-400 px-6 py-3 text-sm font-bold text-white transition hover:scale-105"
+              className="w-full md:w-auto rounded-full bg-gradient-to-r from-pink-400 to-blue-400 px-3 md:px-6 py-2 md:py-3 text-xs md:text-sm font-bold text-white transition hover:scale-105"
             >
               Quick Add
             </button>

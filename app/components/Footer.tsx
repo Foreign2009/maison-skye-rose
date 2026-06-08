@@ -17,15 +17,15 @@ export default function Footer() {
           {brand.metadata.description}
         </p>
 
-        {/* 4-COLUMN LINK SECTION */}
-        <div className="mt-16 grid gap-10 sm:grid-cols-2 md:grid-cols-4">
+        {/* 5-COLUMN LINK SECTION */}
+        <div className="mt-16 grid gap-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
           
           {/* COLUMN 1: SHOP */}
           <div>
-            <h4 className="font-bold">
+            <h4 className="font-bold text-sm tracking-wider uppercase text-zinc-200">
               Shop
             </h4>
-            <ul className="mt-4 space-y-2 text-zinc-400">
+            <ul className="mt-4 space-y-2 text-zinc-400 text-sm">
               <li>
                 <Link href="/shop" className="transition duration-200 hover:text-white">
                   Shop All
@@ -46,10 +46,10 @@ export default function Footer() {
 
           {/* COLUMN 2: EXPLORE */}
           <div>
-            <h4 className="font-bold">
+            <h4 className="font-bold text-sm tracking-wider uppercase text-zinc-200">
               Explore
             </h4>
-            <ul className="mt-4 space-y-2 text-zinc-400">
+            <ul className="mt-4 space-y-2 text-zinc-400 text-sm">
               <li>
                 <Link href="/quiz" className="transition duration-200 hover:text-white">
                   Fragrance Quiz
@@ -70,10 +70,10 @@ export default function Footer() {
 
           {/* COLUMN 3: CUSTOMER CARE */}
           <div>
-            <h4 className="font-bold">
+            <h4 className="font-bold text-sm tracking-wider uppercase text-zinc-200">
               Customer Care
             </h4>
-            <ul className="mt-4 space-y-2 text-zinc-400">
+            <ul className="mt-4 space-y-2 text-zinc-400 text-sm">
               <li>
                 <Link href="/faq" className="transition duration-200 hover:text-white">
                   FAQ
@@ -97,37 +97,61 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* COLUMN 4: CONTACT */}
+          {/* COLUMN 4: DEPARTMENTS (STRATEGIC EMAILS) */}
           <div>
-            <h4 className="font-bold">
-              Contact
+            <h4 className="font-bold text-sm tracking-wider uppercase text-zinc-200">
+              Departments
             </h4>
-            <ul className="mt-4 space-y-2 text-zinc-400">
-              <li>
+            <ul className="mt-4 space-y-3 text-sm">
+              <li className="flex flex-col">
+                <span className="text-[11px] text-zinc-500 uppercase tracking-wider">General Enquiries</span>
+                <a href="mailto:info@maisonskyeandrose.com" className="text-zinc-400 transition duration-200 hover:text-white break-all">
+                  info@maisonskyeandrose.com
+                </a>
+              </li>
+              <li className="flex flex-col">
+                <span className="text-[11px] text-zinc-500 uppercase tracking-wider">Existing Orders</span>
+                <a href="mailto:orders@maisonskyeandrose.com" className="text-zinc-400 transition duration-200 hover:text-white break-all">
+                  orders@maisonskyeandrose.com
+                </a>
+              </li>
+              <li className="flex flex-col">
+                <span className="text-[11px] text-zinc-500 uppercase tracking-wider">Stockists & Wholesale</span>
+                <a href="mailto:wholesale@maisonskyeandrose.com" className="text-zinc-400 transition duration-200 hover:text-white break-all">
+                  wholesale@maisonskyeandrose.com
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          {/* COLUMN 5: CONNECTIONS & LOCATION */}
+          <div>
+            <h4 className="font-bold text-sm tracking-wider uppercase text-zinc-200">
+              Get In Touch
+            </h4>
+            <ul className="mt-4 space-y-3 text-sm">
+              <li className="flex flex-col">
+                <span className="text-[11px] text-zinc-500 uppercase tracking-wider">Collaborations & Media</span>
+                <a href="mailto:hello@maisonskyeandrose.com" className="text-zinc-400 transition duration-200 hover:text-white break-all">
+                  hello@maisonskyeandrose.com
+                </a>
+              </li>
+              <li className="flex flex-col">
+                <span className="text-[11px] text-zinc-500 uppercase tracking-wider">Customer Support</span>
+                <a href="mailto:support@maisonskyeandrose.com" className="text-zinc-400 transition duration-200 hover:text-white break-all">
+                  support@maisonskyeandrose.com
+                </a>
+              </li>
+              <li className="pt-2 border-t border-zinc-800/50 flex flex-col gap-1 text-zinc-400">
                 <a 
                   href={brand.social.whatsappLink} 
                   target="_blank" 
                   rel="noopener noreferrer" 
                   className="transition duration-200 hover:text-white"
                 >
-                  WhatsApp
+                  WhatsApp: +{brand.social.whatsappNumber.replace(/(\d{2})(\d{2})(\d{3})(\d{4})/, '$1 $2 $3 $4')}
                 </a>
-              </li>
-              <li>
-                <a 
-                  href={brand.social.whatsappLink} 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="transition duration-200 hover:text-white"
-                >
-                  +{brand.social.whatsappNumber.replace(/(\d{2})(\d{2})(\d{3})(\d{4})/, '$1 $2 $3 $4')}
-                </a>
-              </li>
-              <li>
-                Cape Town
-              </li>
-              <li>
-                South Africa
+                <span className="text-zinc-500 text-xs">Cape Town, South Africa</span>
               </li>
             </ul>
           </div>

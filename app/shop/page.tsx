@@ -15,7 +15,7 @@ export default function ShopPage() {
   const [selectedFragrance, setSelectedFragrance] = useState<any>(null);
 
   // 1. Filtering Logic
-  let filtered = fragrances.filter((item: any) => {
+  const filtered = fragrances.filter((item: any) => {
     const searchTerm = search.toLowerCase();
     
     // Improved search: checks title, subtitle, and notes
@@ -34,15 +34,21 @@ export default function ShopPage() {
     return matchesSearch && matchesFilter;
   });
 
-  // 2. Sorting Logic
+  // 2. Sorting & Extra Filtering Logic (Shallow copied to prevent mutation)
+  let displayItems = [...filtered];
+
   if (sortBy === "Price Low → High") {
-    filtered.sort((a, b) => a.prices["5ml"] - b.prices["5ml"]);
+    displayItems.sort((a, b) => a.prices["5ml"] - b.prices["5ml"]);
   }
   if (sortBy === "Price High → Low") {
-    filtered.sort((a, b) => b.prices["5ml"] - a.prices["5ml"]);
+    displayItems.sort((a, b) => b.prices["5ml"] - a.prices["5ml"]);
   }
-  if (sortBy === "Best Sellers") filtered = filtered.filter((f) => f.bestSeller);
-  if (sortBy === "New Arrivals") filtered = filtered.filter((f) => f.newArrival);
+  if (sortBy === "Best Sellers") {
+    displayItems = displayItems.filter((f) => f.bestSeller);
+  }
+  if (sortBy === "New Arrivals") {
+    displayItems = displayItems.filter((f) => f.newArrival);
+  }
 
   return (
     <main className="min-h-screen bg-[#f5f1eb]">
@@ -82,6 +88,7 @@ export default function ShopPage() {
             ))}
             
             <select 
+              value={sortBy}
               className="ml-auto rounded-xl border border-zinc-200 bg-white px-4 py-3 text-xs font-semibold uppercase tracking-wider outline-none"
               onChange={(e) => setSortBy(e.target.value)}
             >
@@ -97,20 +104,27 @@ export default function ShopPage() {
         {/* Results & Empty State */}
         <div className="mt-12">
           <p className="mb-8 text-sm text-zinc-500 uppercase tracking-widest">
-            Showing {filtered.length} fragrances
+            Showing {displayItems.length} fragrances
           </p>
 
-          {filtered.length === 0 ? (
+          {displayItems.length === 0 ? (
             <div className="py-20 text-center border-t border-zinc-200">
               <h3 className="text-3xl font-black text-[#4f4a52]">Your fragrance journey starts here.</h3>
               <p className="mt-4 text-zinc-500">No matches found for "{search}".</p>
-              <button onClick={() => {setSearch(""); setCurrentFilter("All")}} className="mt-8 text-[#d89ca4] underline font-bold uppercase tracking-widest">
+              <button 
+                onClick={() => {
+                  setSearch(""); 
+                  setCurrentFilter("All");
+                  setSortBy("Featured");
+                }} 
+                className="mt-8 text-[#d89ca4] underline font-bold uppercase tracking-widest"
+              >
                 Explore our collection →
               </button>
             </div>
           ) : (
-            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-              {filtered.map((fragrance) => (
+            <div className="grid grid-cols-2 gap-4 md:grid-cols-2 lg:grid-cols-4">
+              {displayItems.map((fragrance) => (
                 <ProductCard key={fragrance.title} {...fragrance} onQuickAdd={() => setSelectedFragrance(fragrance)} />
               ))}
             </div>

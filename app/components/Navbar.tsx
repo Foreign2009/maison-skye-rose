@@ -1,103 +1,204 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
-import CartDrawer from "./CartDrawer";
-import { brand } from "../data/brand";
+import { usePathname } from "next/navigation";
+import { ShoppingBag, Menu, X, User, Sparkles } from "lucide-react";
 import { useCart } from "../context/CartContext";
-import { useFavorites } from "../context/FavoritesContext";
-import { useCartUI } from "../context/CartUIContext";
+import MiniCart from "./MiniCart";
+
+// Optimized: Static array defined outside the component scope to preserve performance memory allocations
+const ANNOUNCEMENTS = [
+  "Nationwide South African Delivery",
+  "Mix & Match Wholesale From 10 Bottles",
+  "5ml R48 • 10ml R77 • 30ml R180",
+  "WhatsApp Orders Welcome",
+  "465+ Signature Fragrances Available"
+];
 
 export default function Navbar() {
-  const { cartCount } = useCart();
-  const { favorites } = useFavorites();
-  const { cartOpen, openCart, closeCart } = useCartUI();
-  const [mobileMenu, setMobileMenu] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const pathname = usePathname();
+  
+  const { cart } = useCart();
+  const totalItems = (cart || []).reduce((acc, item) => acc + item.quantity, 0);
 
-  const closeMobileMenu = () => setMobileMenu(false);
+  const [currentAnnouncement, setCurrentAnnouncement] = useState(0);
 
-  // Reusable link style for desktop
-  const desktopLinkClass = "text-xs uppercase tracking-[0.28em] text-[#7b7480] transition duration-300 hover:text-[#d89ca4]";
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentAnnouncement((prev) => (prev + 1) % ANNOUNCEMENTS.length);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Close mobile menu when route changes
+  useEffect(() => {
+    setIsOpen(false);
+  }, [pathname]);
+
+  // Change 5 — Removed manual "HOME" link; Logo serves as Home button
+  const navLinks = [
+    { href: "/shop", label: "Shop" },
+    { href: "/new-arrivals", label: "New Arrivals" },
+    { href: "/quiz", label: "Scent Finder", icon: true },
+    { href: "/wholesale", label: "Wholesale" },
+  ];
+
+  // Destructured link allocations to accurately split evenly across the logo
+  const leftLinks = navLinks.slice(0, 2);
+  const rightLinks = navLinks.slice(2);
 
   return (
     <>
-      <header className="sticky top-0 z-50 px-3 pt-3 sm:px-4 sm:pt-4">
-        <div className="mx-auto flex max-w-7xl items-center justify-between rounded-full border border-white/40 bg-white/70 px-4 py-3 shadow-[0_15px_50px_rgba(216,156,164,0.12)] backdrop-blur-2xl sm:px-6 sm:py-4">
+      {/* Change 7 — Taller Announcement Bar */}
+      <div className="fixed top-0 left-0 right-0 z-50 bg-[#4f4a52] text-white text-[11px] uppercase tracking-[0.2em] font-semibold h-10 flex items-center justify-center select-none">
+        <span key={currentAnnouncement} className="animate-fade-in">
+          {ANNOUNCEMENTS[currentAnnouncement]}
+        </span>
+      </div>
+
+      {/* Main Top Navigation Frame — Shifted top-10 to account for taller announcement bar */}
+      <nav className="fixed top-10 left-0 right-0 z-40 bg-white border-b border-black/5 py-1 transition-all duration-300">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           
-          <Link href="/">
-            <div>
-              <p className="text-[8px] uppercase tracking-[0.35em] text-[#b67d86] sm:text-[9px] sm:tracking-[0.45em]">
-                Maison
-              </p>
-              <h1 className="text-lg font-black uppercase tracking-[-0.05em] text-[#4f4a52] sm:text-2xl md:text-3xl">
-                {brand.name.replace("Maison ", "")}
-              </h1>
-            </div>
-          </Link>
-
-          {/* DESKTOP NAV */}
-          <nav className="hidden items-center gap-6 lg:flex xl:gap-8">
-            <Link href="/" className={desktopLinkClass}>Home</Link>
-            <Link href="/shop" className={desktopLinkClass}>Shop</Link>
-            <Link href="/collections/skye" className={desktopLinkClass}>Skye</Link>
-            <Link href="/collections/rose" className={desktopLinkClass}>Rose</Link>
-            <Link href="/collections/elite" className={desktopLinkClass}>Elite</Link>
-            <Link href="/best-sellers" className={desktopLinkClass}>Best Sellers</Link>
-            <Link href="/new-arrivals" className={desktopLinkClass}>New Arrivals</Link>
-            <Link href="/quiz" className={desktopLinkClass}>Quiz</Link>
-            <Link href="/contact" className={desktopLinkClass}>Contact</Link>
-            <Link href="/favorites" className={desktopLinkClass}>Favorites ({favorites.length})</Link>
-          </nav>
-
-          {/* RIGHT SIDE */}
-          <div className="flex items-center gap-2 sm:gap-4">
-            <Link href="/favorites" className="relative text-xl hidden lg:block">
-              ❤️
-            </Link>
-
-            <button
-              onClick={openCart}
-              className="flex items-center gap-2 rounded-full bg-[#d89ca4] px-4 py-3 text-[10px] uppercase tracking-[0.2em] text-white shadow-[0_12px_35px_rgba(216,156,164,0.22)] transition duration-300 hover:bg-[#c98992] sm:px-6 sm:py-4 sm:text-xs sm:tracking-[0.25em]"
-            >
-              Cart
-              <span className="flex h-5 min-w-[20px] items-center justify-center rounded-full bg-white/20 px-1 text-[9px] font-bold sm:h-6 sm:min-w-[24px] sm:px-2 sm:text-[10px]">
-                {cartCount}
-              </span>
-            </button>
-
-            <button
-              onClick={() => setMobileMenu(!mobileMenu)}
-              className="flex h-11 w-11 items-center justify-center rounded-full bg-[#eef3f8] lg:hidden"
-            >
-              <div className="space-y-1">
-                <div className="h-[2px] w-5 rounded bg-[#4f4a52]" />
-                <div className="h-[2px] w-5 rounded bg-[#4f4a52]" />
-                <div className="h-[2px] w-5 rounded bg-[#4f4a52]" />
+          {/* Change 2 & 8 — Increased Height and Tightened Brand Framing Gap */}
+          <div className="grid h-16 md:h-[86px] grid-cols-[1fr_auto_1fr] items-center gap-4 lg:gap-5">
+            
+            {/* Left Column: Mobile Hamburger Toggle OR Desktop Links (Left-Wing) */}
+            <div className="flex items-center">
+              {/* Mobile Menu Toggle */}
+              <div className="flex md:hidden">
+                <button
+                  onClick={() => setIsOpen(!isOpen)}
+                  className="text-[#4f4a52] hover:text-[#d89ca4] transition-colors"
+                  aria-label="Toggle Menu"
+                >
+                  {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+                </button>
               </div>
-            </button>
+
+              {/* Desktop Left-Wing Navigation Items — Change 1 & 6 */}
+              <div className="hidden md:flex items-center gap-4 lg:gap-6 justify-start">
+                {leftLinks.map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className={`inline-flex text-[13px] uppercase tracking-[0.20em] font-semibold transition-all duration-200 items-center gap-1.5 whitespace-nowrap group relative py-1 ${
+                      pathname === link.href ? "text-[#d89ca4]" : "text-[#4f4a52]"
+                    }`}
+                  >
+                    {link.label}
+                    <span className="absolute -bottom-2 left-0 h-[1px] w-0 bg-[#d89ca4] transition-all duration-300 group-hover:w-full" />
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            {/* Center Column: Change 3 & 4 — Scaled Dominant Luxury Center Brand Frame */}
+            <div className="flex justify-center text-center px-4 md:px-8">
+              <Link href="/" className="group block select-none max-w-full overflow-hidden cursor-pointer">
+                <h1 className="text-base md:text-[2rem] font-extrabold tracking-[0.30em] uppercase text-[#4f4a52] transition-colors group-hover:text-black whitespace-nowrap leading-none">
+                  SKYE & ROSE
+                </h1>
+                <p className="text-[9px] md:text-[11px] uppercase tracking-[0.60em] text-[#d89ca4] font-semibold mt-1.5 mr-[-0.60em] whitespace-nowrap">
+                  Maison de Parfum
+                </p>
+              </Link>
+            </div>
+
+            {/* Right Column: Desktop Links (Right-Wing) paired with Utility Icons */}
+            <div className="flex items-center justify-end gap-4 lg:gap-6">
+              
+              {/* Desktop Right-Wing Navigation Items — Change 1 & 6 */}
+              <div className="hidden md:flex items-center gap-4 lg:gap-6">
+                {rightLinks.map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className={`inline-flex text-[13px] uppercase tracking-[0.20em] font-semibold transition-all duration-200 items-center gap-1.5 whitespace-nowrap group relative py-1 ${
+                      pathname === link.href ? "text-[#d89ca4]" : "text-[#4f4a52]"
+                    }`}
+                  >
+                    {link.icon && <Sparkles className="h-3 w-3 text-[#d89ca4] animate-pulse" />}
+                    {link.label}
+                    <span className="absolute -bottom-2 left-0 h-[1px] w-0 bg-[#d89ca4] transition-all duration-300 group-hover:w-full" />
+                  </Link>
+                ))}
+              </div>
+
+              {/* Functional Icon Group */}
+              <div className="flex items-center gap-4 ml-2">
+                <Link
+                  href="/account"
+                  className={`text-[#4f4a52] hover:text-[#d89ca4] transition-colors ${
+                    pathname === "/account" ? "text-[#d89ca4]" : ""
+                  }`}
+                  aria-label="Account"
+                >
+                  <User className="h-5 w-5 stroke-[1.75]" />
+                </Link>
+
+                <button
+                  onClick={() => setIsCartOpen(true)}
+                  className="group relative flex items-center p-1 text-[#4f4a52] hover:text-[#d89ca4] transition-colors"
+                  aria-label="Open Cart"
+                >
+                  <ShoppingBag className="h-5 w-5 stroke-[1.75]" />
+                  {totalItems > 0 && (
+                    <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-[#d89ca4] text-[9px] font-black text-white ring-2 ring-white">
+                      {totalItems}
+                    </span>
+                  )}
+                </button>
+              </div>
+
+            </div>
+
           </div>
         </div>
 
-        {/* MOBILE MENU */}
-        {mobileMenu && (
-          <div className="mt-3 rounded-[28px] border border-white/40 bg-white/80 p-6 shadow-[0_15px_50px_rgba(216,156,164,0.12)] backdrop-blur-2xl lg:hidden">
-            <nav className="flex flex-col gap-5">
-              <Link href="/" onClick={closeMobileMenu} className="text-sm uppercase tracking-[0.25em] text-[#4f4a52]">Home</Link>
-              <Link href="/shop" onClick={closeMobileMenu} className="text-sm uppercase tracking-[0.25em] text-[#4f4a52]">Shop</Link>
-              <Link href="/collections/skye" onClick={closeMobileMenu} className="text-sm uppercase tracking-[0.25em] text-[#4f4a52]">Skye</Link>
-              <Link href="/collections/rose" onClick={closeMobileMenu} className="text-sm uppercase tracking-[0.25em] text-[#4f4a52]">Rose</Link>
-              <Link href="/collections/elite" onClick={closeMobileMenu} className="text-sm uppercase tracking-[0.25em] text-[#4f4a52]">Elite</Link>
-              <Link href="/best-sellers" onClick={closeMobileMenu} className="text-sm uppercase tracking-[0.25em] text-[#4f4a52]">Best Sellers</Link>
-              <Link href="/new-arrivals" onClick={closeMobileMenu} className="text-sm uppercase tracking-[0.25em] text-[#4f4a52]">New Arrivals</Link>
-              <Link href="/quiz" onClick={closeMobileMenu} className="text-sm uppercase tracking-[0.25em] text-[#4f4a52]">Quiz</Link>
-              <Link href="/contact" onClick={closeMobileMenu} className="text-sm uppercase tracking-[0.25em] text-[#4f4a52]">Contact</Link>
-              <Link href="/favorites" onClick={closeMobileMenu} className="text-sm uppercase tracking-[0.25em] text-[#4f4a52]">Favorites ({favorites.length})</Link>
-            </nav>
-            {/* ... Mobile buttons remain the same ... */}
+        {/* Mobile Fullscreen Overlay Navigation — Top offset adjusted to 126px (Announcement h-10 + Nav h-[86px]) */}
+        <div
+          className={`fixed inset-x-0 top-[126px] bottom-0 bg-white z-30 transform transition-transform duration-300 ease-in-out md:hidden flex flex-col justify-between px-6 py-12 ${
+            isOpen ? "translate-x-0" : "-translate-x-full"
+          }`}
+        >
+          <div className="flex flex-col space-y-6">
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`text-lg font-black tracking-wide flex items-center gap-2 border-b border-zinc-100 pb-4 ${
+                  pathname === link.href ? "text-[#d89ca4]" : "text-[#4f4a52]"
+                }`}
+              >
+                {link.icon && <Sparkles className="h-4 w-4 text-[#d89ca4]" />}
+                {link.label}
+              </Link>
+            ))}
           </div>
-        )}
-      </header>
-      <CartDrawer open={cartOpen} onClose={closeCart} />
+
+          {/* South African Logistics & Corporate Email Footer Stack */}
+          <div className="border-t border-zinc-100 pt-6 flex flex-col items-center gap-4">
+            <p className="text-xs text-zinc-400 tracking-wider uppercase font-bold text-center">
+              Complimentary Delivery Over R750
+            </p>
+            <div className="space-y-1 text-center font-medium tracking-tight">
+              <p className="text-[10px] text-zinc-400">
+                hello@maisonskyeandrose.com
+              </p>
+              <p className="text-[10px] text-zinc-400">
+                wholesale@maisonskyeandrose.com
+              </p>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      {/* MiniCart Sidebar */}
+      <MiniCart isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
     </>
   );
 }
