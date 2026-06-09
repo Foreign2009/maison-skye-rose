@@ -90,10 +90,9 @@ export default function AIHeroSection() {
               <Image
                 src="/images/glass-pink-30ml.png"
                 alt="Maison Skye & Rose Pink 30ml Luxury Bottle"
-                width={500}
-                height={500}
-                priority
-                style={{ width: "auto", height: "auto" }}
+                fill
+                  priority
+                  sizes="(max-width: 1024px) 100vw, 500px"
               className="object-contain transition-transform duration-700 hover:scale-[1.03]"
               />
             </div>
@@ -104,3 +103,5 @@ export default function AIHeroSection() {
     </section>
   );
 }
+
+

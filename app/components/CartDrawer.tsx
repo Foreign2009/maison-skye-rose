@@ -201,7 +201,7 @@ ${deliveryAddress}`
                           <div className="mt-4 flex items-center justify-between">
                             <div className="flex items-center gap-3">
                               <button
-                                onClick={() => decreaseQuantity(item.id)}
+                                onClick={() => decreaseQuantity(item.id, item.size)}
                                 className="flex h-9 w-9 items-center justify-center rounded-full bg-[#f6f6f7] font-bold"
                               >
                                 -
@@ -212,7 +212,7 @@ ${deliveryAddress}`
                               </span>
 
                               <button
-                                onClick={() => increaseQuantity(item.id)}
+                                onClick={() => increaseQuantity(item.id, item.size)}
                                 className="flex h-9 w-9 items-center justify-center rounded-full bg-[#f6f6f7] font-bold"
                               >
                                 +
@@ -220,7 +220,7 @@ ${deliveryAddress}`
                             </div>
 
                             <button
-                              onClick={() => removeFromCart(item.id)}
+                              onClick={() => removeFromCart(item.id, item.size)}
                               className="text-sm font-semibold text-[#ff7b9d]"
                             >
                               Remove
@@ -325,3 +325,6 @@ ${deliveryAddress}`
     </AnimatePresence>
   );
 }
+
+
+

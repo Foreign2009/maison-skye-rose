@@ -75,7 +75,7 @@ A member of our team will confirm your order and delivery details shortly.`;
   };
 
   return (
-    <div className="fixed z-50 bg-[#fffdfb]/95 backdrop-blur-md bottom-0 left-0 right-0 md:bottom-6 md:right-6 md:left-auto w-full md:w-[340px] md:rounded-[32px] border border-black/5 shadow-[0_-10px_40px_rgba(0,0,0,0.08)] md:shadow-[0_25px_80px_rgba(0,0,0,0.12)] flex flex-col max-h-[85vh] md:max-h-[none]">
+    <div className="fixed z-50 bg-[#fffdfb]/95 backdrop-blur-md bottom-0 left-0 right-0 md:bottom-6 md:right-6 md:left-auto w-full md:w-[420px] md:rounded-[32px] border border-black/5 shadow-[0_-10px_40px_rgba(0,0,0,0.08)] md:shadow-[0_25px_80px_rgba(0,0,0,0.12)] flex flex-col max-h-[85vh] md:max-h-[none]">
       {/* Mobile Drag/Close Handle Area */}
       <div
         className="flex justify-center pt-3 md:hidden cursor-pointer"
@@ -153,10 +153,10 @@ A member of our team will confirm your order and delivery details shortly.`;
         {cart.map((item) => (
           <div
             key={`${item.id}-${item.size}`}
-            className="flex items-center gap-3 rounded-2xl border border-black/5 p-3"
+            className="flex items-center gap-4 rounded-[28px] border border-white/40 bg-white/80 p-4 shadow-[0_12px_40px_rgba(0,0,0,0.06)] backdrop-blur-xl"
           >
             {/* Product image */}
-            <div className="relative h-16 w-16 md:h-20 md:w-20 flex-shrink-0 rounded-2xl bg-[#f5f1eb]">
+            <div className="relative h-20 w-20 md:h-24 md:w-24 flex-shrink-0 rounded-[24px] bg-gradient-to-br from-pink-50 to-blue-50">
               <Image
                 src={item.image}
                 alt={item.title}
@@ -268,3 +268,5 @@ A member of our team will confirm your order and delivery details shortly.`;
     </div>
   );
 }
+
+
