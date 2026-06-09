@@ -167,15 +167,15 @@ A member of our team will confirm your order and delivery details shortly.`;
             </div>
 
             {/* Product details */}
-            <div className="flex-1 min-w-0">
-              <h3 className="text-sm font-black uppercase truncate">
+            <div className="flex-1 min-w-0 pr-2">
+              <h3 className="text-[15px] font-black uppercase leading-tight text-[#4f4a52]">
                 {item.title}
               </h3>
               <p className="text-xs text-zinc-400 mt-1">{item.size}</p>
 
               {/* Wholesale price display */}
               {wholesaleActive && getWholesalePrice(item) !== item.price ? (
-                <div className="mt-1">
+                <div className="mt-2">
                   <div className="flex items-center gap-2">
                     <span className="text-xs text-zinc-400 line-through">
                       R{item.price}
@@ -195,26 +195,26 @@ A member of our team will confirm your order and delivery details shortly.`;
               )}
 
               {/* Quantity controls */}
-              <div className="mt-2 flex items-center gap-3">
+              <div className="mt-3 flex items-center gap-3">
                 <button
                   onClick={() => decreaseQuantity(item.id, item.size)}
-                  className="flex h-7 w-7 items-center justify-center rounded-full bg-[#b67d73] text-white hover:bg-[#a96e65] transition-colors text-sm font-bold"
+                  className="flex h-9 w-9 items-center justify-center rounded-full bg-[#f5f1eb] text-[#4f4a52] hover:bg-[#ece6de] transition-colors text-base font-bold"
                 >
                   -
                 </button>
 
-                <span className="text-sm font-bold">{item.quantity}</span>
+                <span className="min-w-[24px] text-center text-base font-black text-[#4f4a52]">{item.quantity}</span>
 
                 <button
                   onClick={() => increaseQuantity(item.id, item.size)}
-                  className="flex h-7 w-7 items-center justify-center rounded-full bg-[#b67d73] text-white hover:bg-[#a96e65] transition-colors text-sm font-bold"
+                  className="flex h-9 w-9 items-center justify-center rounded-full bg-[#f5f1eb] text-[#4f4a52] hover:bg-[#ece6de] transition-colors text-base font-bold"
                 >
                   +
                 </button>
 
                 <button
                   onClick={() => removeFromCart(item.id, item.size)}
-                  className="ml-auto text-xs uppercase tracking-[0.2em] text-red-500 font-bold"
+                  className="ml-auto text-xs uppercase tracking-[0.15em] text-[#b67d73] font-semibold hover:text-[#a96e65] transition-colors"
                 >
                   Remove
                 </button>
@@ -225,7 +225,7 @@ A member of our team will confirm your order and delivery details shortly.`;
       </div>
 
       {/* Sticky Conversion Footer */}
-      <div className="p-4 md:p-6 border-t border-black/10 bg-white md:rounded-b-[32px]">
+      <div className="border-t border-black/10 bg-gradient-to-b from-white to-[#fcfaf8] p-5 md:p-6 md:rounded-b-[32px]">
         <div className="flex justify-between text-sm">
           <span>Subtotal</span>
           <span className="font-bold">R{subtotal.toFixed(2)}</span>
@@ -239,7 +239,7 @@ A member of our team will confirm your order and delivery details shortly.`;
         </div>
 
         {savings > 0 && (
-          <div className="mt-3 flex justify-between rounded-xl bg-[#f5f1eb] px-3 py-2 text-sm text-[#b67d73]">
+          <div className="mt-4 flex justify-between rounded-2xl border border-[#eadfd6] bg-[#faf7f3] px-4 py-3 text-sm text-[#b67d73]">
             <span>You Saved</span>
             <span className="font-bold">
               R{savings.toFixed(2)}
@@ -247,7 +247,7 @@ A member of our team will confirm your order and delivery details shortly.`;
           </div>
         )}
 
-        <div className="mt-5 flex justify-between border-t border-black/10 pt-5">
+        <div className="mt-6 flex justify-between border-t border-[#e9e3dc] pt-6">
           <span className="text-2xl font-black uppercase">
             Total
           </span>
@@ -260,7 +260,7 @@ A member of our team will confirm your order and delivery details shortly.`;
         <button
           onClick={handleWhatsAppCheckout}
           disabled={!cart || cart.length === 0}
-          className="mt-6 w-full rounded-full bg-[#b67d73] px-6 py-4 text-[11px] font-bold uppercase tracking-[0.25em] text-white transition-all duration-300 hover:bg-[#a96e65] hover:shadow-lg disabled:opacity-50"
+          className="mt-6 w-full rounded-full bg-gradient-to-r from-[#c8948a] to-[#b67d73] px-6 py-4 text-[11px] font-bold uppercase tracking-[0.25em] text-white shadow-[0_12px_30px_rgba(182,125,115,0.25)] transition-all duration-300 hover:scale-[1.01] hover:shadow-[0_16px_40px_rgba(182,125,115,0.35)] disabled:opacity-50"
         >
           Checkout via WhatsApp
         </button>
@@ -268,5 +268,16 @@ A member of our team will confirm your order and delivery details shortly.`;
     </div>
   );
 }
+
+
+
+
+
+
+
+
+
+
+
 
 
