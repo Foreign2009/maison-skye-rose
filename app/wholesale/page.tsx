@@ -68,6 +68,50 @@ export default function WholesalePage() {
             </ul>
           </div>
 
+          <div className="mt-12 rounded-3xl bg-[#faf7f5] p-8">
+            <h3 className="text-2xl font-black text-[#4f4a52]">
+              Why Partner With Maison Skye & Rose
+            </h3>
+
+            <div className="mt-6 grid gap-4 md:grid-cols-2">
+              <div className="rounded-2xl bg-white p-4">
+                <h4 className="font-black text-[#4f4a52]">
+                  Low Risk Entry
+                </h4>
+                <p className="mt-2 text-sm text-[#7b7480]">
+                  Start with only 10 units and scale as demand grows.
+                </p>
+              </div>
+
+              <div className="rounded-2xl bg-white p-4">
+                <h4 className="font-black text-[#4f4a52]">
+                  Flexible Ordering
+                </h4>
+                <p className="mt-2 text-sm text-[#7b7480]">
+                  Mix fragrances, collections and bottle sizes in one order.
+                </p>
+              </div>
+
+              <div className="rounded-2xl bg-white p-4">
+                <h4 className="font-black text-[#4f4a52]">
+                  Premium Product Range
+                </h4>
+                <p className="mt-2 text-sm text-[#7b7480]">
+                  Offer a luxury-inspired fragrance collection without large inventory commitments.
+                </p>
+              </div>
+
+              <div className="rounded-2xl bg-white p-4">
+                <h4 className="font-black text-[#4f4a52]">
+                  Nationwide Support
+                </h4>
+                <p className="mt-2 text-sm text-[#7b7480]">
+                  Fast South African delivery and direct wholesale support.
+                </p>
+              </div>
+            </div>
+          </div>
+
           <div className="mt-12 rounded-3xl border border-black/5 p-8">
             <h3 className="text-2xl font-black text-[#4f4a52]">
               Wholesale Enquiries
