@@ -46,9 +46,9 @@ export default function RecentlyViewedPage() {
         <div className="mx-auto max-w-7xl">
           {recentProducts.length === 0 ? (
             <div className="rounded-[40px] bg-white p-14 text-center shadow-sm">
-              <h2 className="text-3xl font-black uppercase">No Viewed Yet</h2>
+              <h2 className="text-3xl font-black uppercase">No Recently Viewed Products</h2>
               <p className="mx-auto mt-6 max-w-xl text-base leading-8 text-zinc-600">
-                Start saving fragrances you love by tapping the heart icon on products.
+                Browse fragrances and open product cards to build your recently viewed collection.
               </p>
             </div>
           ) : (
@@ -90,6 +90,7 @@ export default function RecentlyViewedPage() {
     </main>
   );
 }
+
 
 
 
