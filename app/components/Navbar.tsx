@@ -139,6 +139,14 @@ export default function Navbar() {
                 </Link>
 
                 <Link
+                  href="/recently-viewed"
+                  className="text-[#4f4a52] hover:text-[#d89ca4] transition-colors"
+                  aria-label="Recently Viewed"
+                >
+                  <span className="text-xs font-bold">RV</span>
+                </Link>
+
+                <Link
                   href="/account"
                   className={`text-[#4f4a52] hover:text-[#d89ca4] transition-colors ${
                     pathname === "/account" ? "text-[#d89ca4]" : ""
