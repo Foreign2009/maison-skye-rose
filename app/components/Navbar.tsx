@@ -131,6 +131,14 @@ export default function Navbar() {
               {/* Functional Icon Group */}
               <div className="flex items-center gap-4 ml-2">
                 <Link
+                  href="/favorites"
+                  className="text-[#4f4a52] hover:text-[#d89ca4] transition-colors"
+                  aria-label="Favorites"
+                >
+                  <Heart className="h-5 w-5 stroke-[1.75]" />
+                </Link>
+
+                <Link
                   href="/account"
                   className={`text-[#4f4a52] hover:text-[#d89ca4] transition-colors ${
                     pathname === "/account" ? "text-[#d89ca4]" : ""
@@ -202,4 +210,5 @@ export default function Navbar() {
     </>
   );
 }
+
 
