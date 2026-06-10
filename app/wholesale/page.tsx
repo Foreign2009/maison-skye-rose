@@ -1,8 +1,35 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 
 export default function WholesalePage() {
+
+  const [businessName, setBusinessName] = useState("");
+  const [contactPerson, setContactPerson] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [emailAddress, setEmailAddress] = useState("");
+  const [cityProvince, setCityProvince] = useState("");
+  const [businessType, setBusinessType] = useState("");
+  const [monthlyVolume, setMonthlyVolume] = useState("");
+
+  const handleWholesaleApplication = () => {
+    const message = `MAISON SKYE & ROSE WHOLESALE APPLICATION
+
+Business Name: ${businessName}
+Contact Person: ${contactPerson}
+Phone Number: ${phoneNumber}
+Email Address: ${emailAddress}
+City / Province: ${cityProvince}
+Business Type: ${businessType}
+Estimated Monthly Volume: ${monthlyVolume}`;
+
+    window.open(
+      `https://wa.me/27696863952?text=${encodeURIComponent(message)}`,
+      "_blank"
+    );
+  };
+
   return (
     <main className="min-h-screen bg-[#faf7f5]">
       <section className="mx-auto max-w-6xl px-5 py-20">
@@ -110,6 +137,82 @@ export default function WholesalePage() {
                 </p>
               </div>
             </div>
+          </div>
+
+          <div className="mt-12 rounded-3xl border border-black/5 p-8">
+            <h3 className="text-2xl font-black text-[#4f4a52]">
+              Wholesale Application
+            </h3>
+
+            <p className="mt-3 text-[#7b7480]">
+              Tell us about your business and we'll help you build your first wholesale order.
+            </p>
+
+            <div className="mt-6 grid gap-4 md:grid-cols-2">
+              <input
+                type="text"
+                placeholder="Business Name"
+                value={businessName}
+                onChange={(e) => setBusinessName(e.target.value)}
+                className="rounded-2xl border border-black/10 p-4"
+              />
+
+              <input
+                type="text"
+                placeholder="Contact Person"
+                value={contactPerson}
+                onChange={(e) => setContactPerson(e.target.value)}
+                className="rounded-2xl border border-black/10 p-4"
+              />
+
+              <input
+                type="tel"
+                placeholder="Phone Number"
+                value={phoneNumber}
+                onChange={(e) => setPhoneNumber(e.target.value)}
+                className="rounded-2xl border border-black/10 p-4"
+              />
+
+              <input
+                type="email"
+                placeholder="Email Address"
+                value={emailAddress}
+                onChange={(e) => setEmailAddress(e.target.value)}
+                className="rounded-2xl border border-black/10 p-4"
+              />
+
+              <input
+                type="text"
+                placeholder="City / Province"
+                value={cityProvince}
+                onChange={(e) => setCityProvince(e.target.value)}
+                className="rounded-2xl border border-black/10 p-4"
+              />
+
+              <input
+                type="text"
+                placeholder="Business Type"
+                value={businessType}
+                onChange={(e) => setBusinessType(e.target.value)}
+                className="rounded-2xl border border-black/10 p-4"
+              />
+            </div>
+
+            <input
+              type="text"
+              placeholder="Estimated Monthly Volume"
+              value={monthlyVolume}
+              onChange={(e) => setMonthlyVolume(e.target.value)}
+              className="mt-4 w-full rounded-2xl border border-black/10 p-4"
+            />
+
+            <button
+              type="button"
+              onClick={handleWholesaleApplication}
+              className="mt-6 rounded-full bg-[#4f4a52] px-8 py-4 text-sm font-bold uppercase tracking-widest text-white"
+            >
+              Submit Application
+            </button>
           </div>
 
           <div className="mt-12 rounded-3xl border border-black/5 p-8">
