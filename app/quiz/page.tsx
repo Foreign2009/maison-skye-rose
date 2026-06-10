@@ -375,6 +375,16 @@ export default function QuizPage() {
               >
                 Need Help Choosing?
               </a>
+              <a
+                href={`https://wa.me/27696863952?text=${encodeURIComponent(
+                  `My Maison AI Results:%0A%0ATop Match: ${recommended[0]?.title}%0AAlternative Match: ${recommended[1]?.title}%0ATrending Choice: ${recommended[2]?.title}`
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mx-auto mt-4 flex w-fit rounded-full bg-[#d89ca4] px-8 py-4 text-white font-bold transition-transform duration-300 hover:scale-105"
+              >
+                Send My Results To WhatsApp
+              </a>
             </>
           )}
         </div>
