@@ -89,22 +89,60 @@ export default function QuizPage() {
 
   // Upgraded Fast Search Recommendation Filter Logic
   const recommended = useMemo(() => {
-    const results = fragrances.filter((fragrance) => {
-      const searchable = `
-        ${fragrance.title}
-        ${fragrance.subtitle}
-        ${fragrance.mood}
-        ${fragrance.profile}
-        ${fragrance.notes.join(" ")}
-        ${fragrance.season}
-      `.toLowerCase();
+    const scored = fragrances.map((fragrance) => {
+      let score = 0;
 
-      return Object.values(answers).some((answer) =>
-        searchable.includes(answer.toLowerCase())
-      );
+      const profile = fragrance.profile.toLowerCase();
+      const mood = fragrance.mood.toLowerCase();
+      const season = fragrance.season.toLowerCase();
+      const notes = fragrance.notes.join(" ").toLowerCase();
+
+      if (answers.gender === "Male" && fragrance.collection === "Skye") score += 3;
+      if (answers.gender === "Female" && fragrance.collection === "Rose") score += 3;
+
+      if (
+        answers.family &&
+        (profile.includes(answers.family.toLowerCase()) ||
+          notes.includes(answers.family.toLowerCase()))
+      ) {
+        score += 3;
+      }
+
+      if (
+        answers.vibe &&
+        mood.includes(answers.vibe.toLowerCase())
+      ) {
+        score += 2;
+      }
+
+      if (
+        answers.character === "Fresh & Light" &&
+        (profile.includes("fresh") || season.includes("summer"))
+      ) {
+        score += 2;
+      }
+
+      if (
+        answers.character === "Deep & Intense" &&
+        (profile.includes("amber") || season.includes("winter"))
+      ) {
+        score += 2;
+      }
+
+      if (fragrance.bestSeller) {
+        score += 1;
+      }
+
+      return {
+        fragrance,
+        score,
+      };
     });
 
-    return results.slice(0, 6);
+    return scored
+      .sort((a, b) => b.score - a.score)
+      .slice(0, 6)
+      .map((item) => item.fragrance);
   }, [answers]);
 
   return (
@@ -286,7 +324,36 @@ export default function QuizPage() {
                 </p>
               </div>
 
-              <div className="grid gap-7 sm:grid-cols-2 lg:grid-cols-3">
+              <div className="mb-10 grid gap-4 md:grid-cols-3">
+                <div className="rounded-3xl bg-gradient-to-r from-pink-100 to-pink-50 p-5">
+                  <p className="text-xs uppercase tracking-widest text-[#d89ca4]">
+                    Top Match
+                  </p>
+                  <h3 className="mt-2 text-xl font-black text-[#4f4a52]">
+                    {recommended[0]?.title}
+                  </h3>
+                </div>
+
+                <div className="rounded-3xl bg-gradient-to-r from-blue-100 to-blue-50 p-5">
+                  <p className="text-xs uppercase tracking-widest text-[#6b8cff]">
+                    Alternative Match
+                  </p>
+                  <h3 className="mt-2 text-xl font-black text-[#4f4a52]">
+                    {recommended[1]?.title}
+                  </h3>
+                </div>
+
+                <div className="rounded-3xl bg-gradient-to-r from-[#f5e7d8] to-[#faf7f5] p-5">
+                  <p className="text-xs uppercase tracking-widest text-[#b67d73]">
+                    Trending Choice
+                  </p>
+                  <h3 className="mt-2 text-xl font-black text-[#4f4a52]">
+                    {recommended[2]?.title}
+                  </h3>
+                </div>
+              </div>
+
+              <div className="mb-8 grid gap-6 lg:grid-cols-3">
                 {recommended.map((fragrance) => (
                   <ProductCard
                     key={fragrance.title}
