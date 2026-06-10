@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ShoppingBag, Menu, X, User, Sparkles } from "lucide-react";
+import { ShoppingBag, Menu, X, User, Sparkles, Heart } from "lucide-react";
 import { useCart } from "../context/CartContext";
 import MiniCart from "./MiniCart";
 
@@ -202,3 +202,4 @@ export default function Navbar() {
     </>
   );
 }
+
