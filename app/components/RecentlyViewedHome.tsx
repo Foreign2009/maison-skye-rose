@@ -13,10 +13,12 @@ export default function RecentlyViewedHome() {
       localStorage.getItem("recentlyViewed") || "[]"
     );
 
-    const matches = fragrances
-      .filter((fragrance) =>
-        viewed.some((item: any) => item.title === fragrance.title)
+    // v3.5 Step 1 — Preserve true viewing order
+    const matches = viewed
+      .map((item: any) =>
+        fragrances.find((fragrance) => fragrance.title === item.title)
       )
+      .filter(Boolean)
       .slice(0, 4);
 
     setRecentProducts(matches);
@@ -30,8 +32,9 @@ export default function RecentlyViewedHome() {
     <section className="bg-white py-20">
       <div className="mx-auto max-w-7xl px-5">
         <div className="text-center">
+          {/* v3.5 Step 2 — Add count badge */}
           <p className="text-xs uppercase tracking-[0.45em] text-[#d89ca4]">
-            Recently Viewed
+            Recently Viewed ({recentProducts.length})
           </p>
 
           <h2 className="mt-4 text-3xl md:text-5xl font-black text-[#4f4a52]">
