@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ShoppingBag, Menu, X, User, Sparkles, Heart } from "lucide-react";
 import { useCart } from "../context/CartContext";
+import { useFavorites } from "../context/FavoritesContext";
 import MiniCart from "./MiniCart";
 
 // Optimized: Static array defined outside the component scope to preserve performance memory allocations
@@ -23,6 +24,9 @@ export default function Navbar() {
   
   const { cart } = useCart();
   const totalItems = (cart || []).reduce((acc, item) => acc + item.quantity, 0);
+
+  const { favorites } = useFavorites();
+  const favoriteCount = favorites.length;
 
   const [currentAnnouncement, setCurrentAnnouncement] = useState(0);
 
@@ -132,10 +136,16 @@ export default function Navbar() {
               <div className="flex items-center gap-4 ml-2">
                 <Link
                   href="/favorites"
-                  className="text-[#4f4a52] hover:text-[#d89ca4] transition-colors"
+                  className="relative text-[#4f4a52] hover:text-[#d89ca4] transition-colors"
                   aria-label="Favorites"
                 >
                   <Heart className="h-5 w-5 stroke-[1.75]" />
+
+                  {favoriteCount > 0 && (
+                    <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-[#d89ca4] text-[9px] font-black text-white ring-2 ring-white">
+                      {favoriteCount}
+                    </span>
+                  )}
                 </Link>
 
                 <Link
@@ -218,5 +228,3 @@ export default function Navbar() {
     </>
   );
 }
-
-
