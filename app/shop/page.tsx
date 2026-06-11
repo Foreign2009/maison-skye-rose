@@ -5,6 +5,7 @@ import Navbar from "../components/Navbar";
 import ProductCard from "../components/ProductCard";
 import QuickAddModal from "../components/QuickAddModal";
 import Footer from "../components/Footer";
+import SearchBar from "../components/SearchBar";
 import { fragrances } from "../data/fragrances";
 import { brand } from "../data/brand";
 
@@ -68,12 +69,10 @@ export default function ShopPage() {
 
         {/* Search, Filter & Sort Bar */}
         <div className="mt-12 flex flex-col gap-4">
-          <input
-            type="text"
-            placeholder="Search by name, note, mood or profile (e.g. oud, vanilla, confident, luxurious)..."
+          <SearchBar
             value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="w-full rounded-2xl border border-zinc-200 bg-white px-5 py-4 text-sm outline-none transition focus:border-[#d89ca4]"
+            onChange={setSearch}
+            placeholder="Search by name, note, mood or profile (e.g. oud, vanilla, confident, luxurious)..."
           />
 
           <div className="flex flex-wrap gap-2 items-center">
