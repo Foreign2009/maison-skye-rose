@@ -15,6 +15,7 @@ import ShopByPersonality from "./components/ShopByPersonality";
 import QuickAddModal from "./components/QuickAddModal";
 import Testimonials from "./components/Testimonials";
 import RecentlyViewedHome from "./components/RecentlyViewedHome";
+import FavoritesHome from "./components/FavoritesHome";
 import Footer from "./components/Footer";
 import { fragrances } from "./data/fragrances";
 
@@ -220,6 +221,10 @@ export default function HomePage() {
       {/* 8. Testimonials - bg-white */}
       <section className="bg-white">
         <Testimonials />
+      </section>
+
+      <section className="bg-white">
+        <FavoritesHome />
       </section>
 
       <section className="bg-white">
