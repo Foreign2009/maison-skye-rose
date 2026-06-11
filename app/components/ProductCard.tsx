@@ -37,7 +37,7 @@ export default function ProductCard({
   const saveRecentlyViewed = () => {
     const existing = JSON.parse(localStorage.getItem("recentlyViewed") || "[]");
     const filtered = existing.filter((item: any) => item.title !== title);
-    localStorage.setItem("recentlyViewed", JSON.stringify([{ title, subtitle, mood, profile, season, notes, prices, images }, ...filtered]));
+    localStorage.setItem("recentlyViewed", JSON.stringify([{ title, subtitle, mood, profile, season, notes, prices, images }, ...filtered].slice(0,12)));
   };
 
   const handleCardClick = () => {
