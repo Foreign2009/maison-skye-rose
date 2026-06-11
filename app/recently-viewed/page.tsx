@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -11,8 +11,21 @@ import QuickAddModal from "../components/QuickAddModal";
 import { fragrances } from "../data/fragrances";
 
 export default function RecentlyViewedPage() {
-  const recentlyViewed = typeof window !== "undefined" ? JSON.parse(localStorage.getItem("recentlyViewed") || "[]") : [];
+  const [recentlyViewed, setRecentlyViewed] = useState<any[]>([]);
   const [selectedFragrance, setSelectedFragrance] = useState<any>(null);
+
+  useEffect(() => {
+    const viewed = JSON.parse(
+      localStorage.getItem("recentlyViewed") || "[]"
+    );
+
+    setRecentlyViewed(viewed);
+  }, []);
+
+  const clearHistory = () => {
+    localStorage.removeItem("recentlyViewed");
+    setRecentlyViewed([]);
+  };
 
   const recentProducts = fragrances.filter((fragrance) =>
     recentlyViewed.some((item: any) => item.title === fragrance.title)
@@ -52,24 +65,34 @@ export default function RecentlyViewedPage() {
               </p>
             </div>
           ) : (
-            <div className="grid gap-6 md:grid-cols-3">
-              {recentProducts.map((fragrance) => (
-                <ProductCard
-                  key={fragrance.title}
-                  title={fragrance.title}
-                  subtitle={fragrance.subtitle}
-                  mood={fragrance.mood}
-                  profile={fragrance.profile}
-                  season={fragrance.season}
-                  notes={fragrance.notes}
-                  prices={fragrance.prices}
-                  images={fragrance.images}
-                  bestSeller={fragrance.bestSeller}
-                  newArrival={fragrance.newArrival}
-                  onQuickAdd={() => setSelectedFragrance(fragrance)}
-                />
-              ))}
-            </div>
+            <>
+              <div className="mb-8 text-right">
+                <button
+                  onClick={clearHistory}
+                  className="rounded-full border border-zinc-300 px-5 py-3 text-sm font-bold transition hover:bg-zinc-100"
+                >
+                  Clear History
+                </button>
+              </div>
+              <div className="grid gap-6 md:grid-cols-3">
+                {recentProducts.map((fragrance) => (
+                  <ProductCard
+                    key={fragrance.title}
+                    title={fragrance.title}
+                    subtitle={fragrance.subtitle}
+                    mood={fragrance.mood}
+                    profile={fragrance.profile}
+                    season={fragrance.season}
+                    notes={fragrance.notes}
+                    prices={fragrance.prices}
+                    images={fragrance.images}
+                    bestSeller={fragrance.bestSeller}
+                    newArrival={fragrance.newArrival}
+                    onQuickAdd={() => setSelectedFragrance(fragrance)}
+                  />
+                ))}
+              </div>
+            </>
           )}
         </div>
       </section>
