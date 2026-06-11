@@ -90,11 +90,3 @@ export default function RecentlyViewedPage() {
     </main>
   );
 }
-
-
-
-
-
-
-
-
