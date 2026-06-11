@@ -18,10 +18,12 @@ export default function ShopPage() {
   const filtered = fragrances.filter((item: any) => {
     const searchTerm = search.toLowerCase();
     
-    // Improved search: checks title, subtitle, and notes
+    // Improved search: checks title, subtitle, mood, profile, and notes
     const matchesSearch =
       item.title.toLowerCase().includes(searchTerm) ||
       item.subtitle?.toLowerCase().includes(searchTerm) ||
+      item.mood?.toLowerCase().includes(searchTerm) ||
+      item.profile?.toLowerCase().includes(searchTerm) ||
       item.notes?.some((note: string) => note.toLowerCase().includes(searchTerm));
 
     const matchesFilter =
@@ -68,7 +70,7 @@ export default function ShopPage() {
         <div className="mt-12 flex flex-col gap-4">
           <input
             type="text"
-            placeholder="Search by name, note (e.g. oud, vanilla, rose)..."
+            placeholder="Search by name, note, mood or profile (e.g. oud, vanilla, confident, luxurious)..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className="w-full rounded-2xl border border-zinc-200 bg-white px-5 py-4 text-sm outline-none transition focus:border-[#d89ca4]"
