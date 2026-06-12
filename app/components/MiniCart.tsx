@@ -177,20 +177,56 @@ A member of our team will confirm your order and delivery details shortly.`;
               <p className="text-xs font-bold uppercase tracking-widest text-[#b67d73]">
                 Wholesale Available
               </p>
-              <p className="mt-1 text-xs text-zinc-500">
-                {Math.max(0, 10 - cartCount)} more bottle
-                {Math.max(0, 10 - cartCount) !== 1 ? "s" : ""} until wholesale pricing
-              </p>
+              
+              <div className="mt-2 space-y-1">
+                <p
+                  className={`text-xs ${
+                    cartCount >= 5
+                      ? "text-green-600 font-semibold"
+                      : "text-zinc-500"
+                  }`}
+                >
+                  {cartCount >= 5
+                    ? "✓ Free Sample Reward Unlocked"
+                    : `${5 - cartCount} bottles until Free Sample`}
+                </p>
+
+                <p
+                  className={`text-xs ${
+                    cartCount >= 10
+                      ? "text-green-600 font-semibold"
+                      : "text-zinc-500"
+                  }`}
+                >
+                  {cartCount >= 10
+                    ? "✓ Wholesale Pricing Unlocked"
+                    : `${10 - cartCount} bottles until Wholesale`}
+                </p>
+
+                <p
+                  className={`text-xs ${
+                    cartCount >= 15
+                      ? "text-green-600 font-semibold"
+                      : "text-zinc-500"
+                  }`}
+                >
+                  {cartCount >= 15
+                    ? "✓ VIP Priority Delivery"
+                    : `${15 - cartCount} bottles until VIP Delivery`}
+                </p>
+              </div>
+
               <div className="mt-2 h-2 overflow-hidden rounded-full bg-white">
                 <div
                   className="h-full bg-[#b67d73]"
                   style={{
-                    width: `${Math.min((cartCount / 10) * 100, 100)}%`,
+                    width: `${Math.min((cartCount / 15) * 100, 100)}%`,
                   }}
                 />
               </div>
-              <p className="mt-2 text-xs font-semibold">
-                5ml R48 • 10ml R77 • 30ml R180
+              
+              <p className="mt-2 text-xs font-semibold text-[#4f4a52]">
+                {cartCount}/15 Bottles Progress
               </p>
             </div>
           )}
