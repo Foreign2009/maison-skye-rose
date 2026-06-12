@@ -3,6 +3,9 @@
 import Image from "next/image";
 import { X } from "lucide-react";
 import { useCart } from "../context/CartContext";
+import Link from "next/link";
+import { useFavorites } from "../context/FavoritesContext";
+import { fragrances } from "../data/fragrances";
 
 interface MiniCartProps {
   isOpen: boolean;
@@ -20,6 +23,16 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
     wholesaleActive,
     getWholesalePrice,
   } = useCart();
+
+  const { favorites } = useFavorites();
+
+  const favoriteRecommendations = fragrances
+    .filter(
+      (fragrance) =>
+        favorites.some((fav) => fav.title === fragrance.title) &&
+        !cart.some((item) => item.title === fragrance.title)
+    )
+    .slice(0, 3);
 
   if (!isOpen) return null;
 
@@ -224,6 +237,50 @@ A member of our team will confirm your order and delivery details shortly.`;
         ))}
       </div>
 
+      {/* Favorites Recommendations Subsection (v4.0.2 UI) */}
+      {favoriteRecommendations.length > 0 && (
+        <div className="px-6 py-4 border-t border-black/5 bg-[#fbf9f6]">
+          <p className="text-[10px] uppercase tracking-[0.2em] font-bold text-zinc-400 mb-3">
+            From Your Favorites
+          </p>
+          <div className="space-y-2">
+            {favoriteRecommendations.map((fragrance) => (
+              <div 
+                key={fragrance.title} 
+                className="flex items-center justify-between gap-3 bg-white border border-black/5 rounded-2xl p-2.5 shadow-sm"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="relative h-10 w-10 flex-shrink-0 rounded-xl bg-zinc-50 border border-black/5 overflow-hidden">
+                    <Image
+                      src={fragrance.images?.["10ml"] || fragrance.images?.["5ml"]}
+                      alt={fragrance.title}
+                      fill
+                      className="object-contain p-1"
+                      unoptimized
+                    />
+                  </div>
+                  <div>
+                    <h4 className="text-xs font-black uppercase text-[#4f4a52] truncate max-w-[160px]">
+                      {fragrance.title}
+                    </h4>
+                    <p className="text-[10px] text-zinc-400 mt-0.5">
+                      From R{fragrance.prices?.["5ml"]}
+                    </p>
+                  </div>
+                </div>
+                <Link
+                  href="/favorites"
+                  onClick={onClose}
+                  className="text-[10px] font-bold uppercase tracking-wider text-[#b67d73] hover:text-[#a96e65] border border-[#eadfd6] hover:border-[#b67d73] px-3 py-1.5 rounded-full bg-white transition-all duration-200"
+                >
+                  View Options
+                </Link>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* Sticky Conversion Footer */}
       <div className="border-t border-black/10 bg-gradient-to-b from-white to-[#fcfaf8] p-5 md:p-6 md:rounded-b-[32px]">
         <div className="flex justify-between text-sm">
@@ -268,16 +325,3 @@ A member of our team will confirm your order and delivery details shortly.`;
     </div>
   );
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
