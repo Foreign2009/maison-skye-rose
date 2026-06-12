@@ -5,6 +5,7 @@ import { X } from "lucide-react";
 import { useCart } from "../context/CartContext";
 import Link from "next/link";
 import { useFavorites } from "../context/FavoritesContext";
+import { useEffect, useState } from "react";
 import { fragrances } from "../data/fragrances";
 
 interface MiniCartProps {
@@ -26,6 +27,7 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
   } = useCart();
 
   const { favorites } = useFavorites();
+  const [recentRecommendations, setRecentRecommendations] = useState<any[]>([]);
 
   const favoriteRecommendations = fragrances
     .filter(
@@ -47,6 +49,43 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
       size: "5ml",
     });
   };
+
+  const quickAddRecent = (fragrance: any) => {
+    addToCart({
+      id: fragrance.title,
+      title: fragrance.title,
+      image:
+        fragrance.images?.["10ml"] ||
+        fragrance.images?.["5ml"],
+      price: fragrance.prices?.["5ml"],
+      quantity: 1,
+      size: "5ml",
+    });
+  };
+
+  useEffect(() => {
+    const viewed = JSON.parse(
+      localStorage.getItem("recentlyViewed") || "[]"
+    );
+
+    const matches = viewed
+      .map((item: any) =>
+        fragrances.find(
+          (fragrance) => fragrance.title === item.title
+        )
+      )
+      .filter(Boolean)
+      .filter(
+        (fragrance: any) =>
+          !cart.some(
+            (cartItem) =>
+              cartItem.title === fragrance.title
+          )
+      )
+      .slice(0, 3);
+
+    setRecentRecommendations(matches);
+  }, [cart]);
 
   if (!isOpen) return null;
 
@@ -285,6 +324,56 @@ A member of our team will confirm your order and delivery details shortly.`;
                 <button
                   onClick={() => quickAddFavorite(fragrance)}
                   className="text-[10px] font-bold uppercase tracking-wider text-white bg-[#b67d73] hover:bg-[#a96e65] px-3 py-1.5 rounded-full transition-all duration-200"
+                >
+                  + Add 5ml
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Recently Viewed Section */}
+      {recentRecommendations.length > 0 && (
+        <div className="px-6 py-4 border-t border-black/5 bg-white">
+          <p className="text-[10px] uppercase tracking-[0.2em] font-bold text-zinc-400 mb-3">
+            Recently Viewed
+          </p>
+
+          <div className="space-y-2">
+            {recentRecommendations.map((fragrance) => (
+              <div
+                key={fragrance.title}
+                className="flex items-center justify-between gap-3 bg-[#fbf9f6] border border-black/5 rounded-2xl p-2.5 shadow-sm"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="relative h-10 w-10 flex-shrink-0 rounded-xl bg-zinc-50 border border-black/5 overflow-hidden">
+                    <Image
+                      src={
+                        fragrance.images?.["10ml"] ||
+                        fragrance.images?.["5ml"]
+                      }
+                      alt={fragrance.title}
+                      fill
+                      className="object-contain p-1"
+                      unoptimized
+                    />
+                  </div>
+
+                  <div>
+                    <h4 className="text-xs font-black uppercase text-[#4f4a52] truncate max-w-[160px]">
+                      {fragrance.title}
+                    </h4>
+
+                    <p className="text-[10px] text-zinc-400 mt-0.5">
+                      From R{fragrance.prices?.["5ml"]}
+                    </p>
+                  </div>
+                </div>
+
+                <button
+                  onClick={() => quickAddRecent(fragrance)}
+                  className="text-[10px] font-bold uppercase tracking-wider text-white bg-[#4f4a52] hover:bg-[#3f3b42] px-3 py-1.5 rounded-full transition-all duration-200"
                 >
                   + Add 5ml
                 </button>
