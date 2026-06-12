@@ -15,6 +15,7 @@ interface MiniCartProps {
 export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
   const {
     cart,
+    addToCart,
     increaseQuantity,
     decreaseQuantity,
     removeFromCart,
@@ -33,6 +34,19 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
         !cart.some((item) => item.title === fragrance.title)
     )
     .slice(0, 3);
+
+  const quickAddFavorite = (fragrance: any) => {
+    addToCart({
+      id: fragrance.title,
+      title: fragrance.title,
+      image:
+        fragrance.images?.["10ml"] ||
+        fragrance.images?.["5ml"],
+      price: fragrance.prices?.["5ml"],
+      quantity: 1,
+      size: "5ml",
+    });
+  };
 
   if (!isOpen) return null;
 
@@ -176,7 +190,7 @@ A member of our team will confirm your order and delivery details shortly.`;
                 fill
                 className="object-contain p-3"
                 unoptimized
-                />
+              />
             </div>
 
             {/* Product details */}
@@ -268,13 +282,12 @@ A member of our team will confirm your order and delivery details shortly.`;
                     </p>
                   </div>
                 </div>
-                <Link
-                  href="/favorites"
-                  onClick={onClose}
-                  className="text-[10px] font-bold uppercase tracking-wider text-[#b67d73] hover:text-[#a96e65] border border-[#eadfd6] hover:border-[#b67d73] px-3 py-1.5 rounded-full bg-white transition-all duration-200"
+                <button
+                  onClick={() => quickAddFavorite(fragrance)}
+                  className="text-[10px] font-bold uppercase tracking-wider text-white bg-[#b67d73] hover:bg-[#a96e65] px-3 py-1.5 rounded-full transition-all duration-200"
                 >
-                  View Options
-                </Link>
+                  + Add 5ml
+                </button>
               </div>
             ))}
           </div>
