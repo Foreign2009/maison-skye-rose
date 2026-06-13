@@ -29,6 +29,7 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
   const { favorites } = useFavorites();
   const [recentRecommendations, setRecentRecommendations] = useState<any[]>([]);
   const [collectionRecommendations, setCollectionRecommendations] = useState<any[]>([]);
+  const [showRecommendations, setShowRecommendations] = useState(false);
 
   const favoriteRecommendations = fragrances
     .filter(
@@ -169,6 +170,8 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
       ? 0
       : wholesaleActive
       ? 0
+      : subtotal >= 2000
+      ? 0
       : 100;
 
   const total = subtotal + delivery;
@@ -295,7 +298,9 @@ A member of our team will confirm your order and delivery details shortly.`;
                       : "text-zinc-500"
                   }`}
                 >
-                  {subtotal >= 1500
+                  {subtotal >= 2000
+                    ? "✓ Discovery Set + Free Delivery"
+                    : subtotal >= 1500
                     ? "✓ Discovery Set Unlocked"
                     : `Spend R${Math.max(0, 1500 - subtotal).toFixed(0)} more for Discovery Set`}
                 </p>
@@ -411,133 +416,6 @@ A member of our team will confirm your order and delivery details shortly.`;
         ))}
       </div>
 
-      {/* Favorites Recommendations Subsection (v4.0.2 UI) */}
-      {favoriteRecommendations.length > 0 && (
-        <div className="px-6 py-4 border-t border-black/5 bg-[#fbf9f6]">
-          <p className="text-[10px] uppercase tracking-[0.2em] font-bold text-zinc-400 mb-3">
-            From Your Favorites
-          </p>
-          <div className="space-y-2">
-            {favoriteRecommendations.map((fragrance) => (
-              <div 
-                key={fragrance.title} 
-                className="flex items-center justify-between gap-3 bg-white border border-black/5 rounded-2xl p-2.5 shadow-sm"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="relative h-10 w-10 flex-shrink-0 rounded-xl bg-zinc-50 border border-black/5 overflow-hidden">
-                    <Image
-                      src={fragrance.images?.["10ml"] || fragrance.images?.["5ml"]}
-                      alt={fragrance.title}
-                      fill
-                      className="object-contain p-1"
-                      unoptimized
-                    />
-                  </div>
-                  <div>
-                    <h4 className="text-xs font-black uppercase text-[#4f4a52] truncate max-w-[160px]">
-                      {fragrance.title}
-                    </h4>
-                    <p className="text-[10px] text-zinc-400 mt-0.5">
-                      From R{fragrance.prices?.["5ml"]}
-                    </p>
-                  </div>
-                </div>
-                <button
-                  onClick={() => quickAddFavorite(fragrance)}
-                  className="text-[10px] font-bold uppercase tracking-wider text-white bg-[#b67d73] hover:bg-[#a96e65] px-3 py-1.5 rounded-full transition-all duration-200"
-                >
-                  + Add 5ml
-                </button>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* Recently Viewed Section */}
-      {recentRecommendations.length > 0 && (
-        <div className="px-6 py-4 border-t border-black/5 bg-white">
-          <p className="text-[10px] uppercase tracking-[0.2em] font-bold text-zinc-400 mb-3">
-            Recently Viewed
-          </p>
-
-          <div className="space-y-2">
-            {recentRecommendations.map((fragrance) => (
-              <div
-                key={fragrance.title}
-                className="flex items-center justify-between gap-3 bg-[#fbf9f6] border border-black/5 rounded-2xl p-2.5 shadow-sm"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="relative h-10 w-10 flex-shrink-0 rounded-xl bg-zinc-50 border border-black/5 overflow-hidden">
-                    <Image
-                      src={
-                        fragrance.images?.["10ml"] ||
-                        fragrance.images?.["5ml"]
-                      }
-                      alt={fragrance.title}
-                      fill
-                      className="object-contain p-1"
-                      unoptimized
-                    />
-                  </div>
-
-                  <div>
-                    <h4 className="text-xs font-black uppercase text-[#4f4a52] truncate max-w-[160px]">
-                      {fragrance.title}
-                    </h4>
-
-                    <p className="text-[10px] text-zinc-400 mt-0.5">
-                      From R{fragrance.prices?.["5ml"]}
-                    </p>
-                  </div>
-                </div>
-
-                <button
-                  onClick={() => quickAddRecent(fragrance)}
-                  className="text-[10px] font-bold uppercase tracking-wider text-white bg-[#4f4a52] hover:bg-[#3f3b42] px-3 py-1.5 rounded-full transition-all duration-200"
-                >
-                  + Add 5ml
-                </button>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {collectionRecommendations.length > 0 && (
-        <div className="px-6 py-4 border-t border-black/5 bg-[#fbf9f6]">
-          <p className="text-[10px] uppercase tracking-[0.2em] font-bold text-zinc-400 mb-3">
-            Complete Your Collection
-          </p>
-
-          <div className="space-y-2">
-            {collectionRecommendations.map((fragrance) => (
-              <div
-                key={fragrance.title}
-                className="flex items-center justify-between gap-3 bg-white border border-black/5 rounded-2xl p-2.5 shadow-sm"
-              >
-                <div>
-                  <h4 className="text-xs font-black uppercase text-[#4f4a52]">
-                    {fragrance.title}
-                  </h4>
-
-                  <p className="text-[10px] text-zinc-400">
-                    {fragrance.profile}
-                  </p>
-                </div>
-
-                <button
-                  onClick={() => quickAddRecent(fragrance)}
-                  className="text-[10px] font-bold uppercase tracking-wider text-white bg-[#b67d73] px-3 py-1.5 rounded-full"
-                >
-                  + Add 5ml
-                </button>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-
       {/* Sticky Conversion Footer */}
       <div className="border-t border-black/10 bg-gradient-to-b from-white to-[#fcfaf8] p-5 md:p-6 md:rounded-b-[32px]">
         <div className="flex justify-between text-sm">
@@ -571,15 +449,27 @@ A member of our team will confirm your order and delivery details shortly.`;
           </span>
         </div>
 
-        <div className="mt-5 rounded-2xl border border-[#eadfd6] bg-[#faf7f3] p-4">
-          <p className="text-[10px] uppercase tracking-[0.2em] font-bold text-[#b67d73]">
-            Current Reward
+        <div
+          className={`mt-5 rounded-2xl p-4 ${
+            subtotal >= 1500
+              ? "border border-green-200 bg-green-50"
+              : "border border-[#eadfd6] bg-[#faf7f3]"
+          }`}
+        >
+          <p
+            className={`text-[10px] uppercase tracking-[0.2em] font-bold ${
+              subtotal >= 1500 ? "text-green-700" : "text-[#b67d73]"
+            }`}
+          >
+            {subtotal >= 1500
+              ? "🎉 Highest Reward Tier Unlocked"
+              : "Current Reward"}
           </p>
 
           <div className="mt-2 text-sm">
             <p className="text-green-600 font-semibold">
               {subtotal >= 1500
-                ? "✓ Discovery Set (5 × 5ml)"
+                ? "Discovery Set (5 × 5ml)"
                 : subtotal >= 1000
                 ? "✓ 3 Free 5ml Samples"
                 : subtotal >= 700
@@ -614,6 +504,152 @@ A member of our team will confirm your order and delivery details shortly.`;
         >
           Checkout via WhatsApp
         </button>
+
+        <div className="border-t border-black/5 mt-6">
+          <button
+            onClick={() => setShowRecommendations(!showRecommendations)}
+            className="w-full py-4 text-left flex items-center justify-between"
+          >
+            <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-zinc-500">
+              You May Also Like
+            </span>
+
+            <span className="text-xs font-bold text-[#b67d73]">
+              {showRecommendations ? "−" : "+"}
+            </span>
+          </button>
+
+          {showRecommendations && (
+            <>
+              {/* Favorites Recommendations Subsection (v4.0.2 UI) */}
+              {favoriteRecommendations.length > 0 && (
+                <div className="py-4 border-t border-black/5 bg-[#fbf9f6] -mx-5 md:-mx-6 px-5 md:px-6">
+                  <p className="text-[10px] uppercase tracking-[0.2em] font-bold text-zinc-400 mb-3">
+                    From Your Favorites
+                  </p>
+                  <div className="space-y-2">
+                    {favoriteRecommendations.map((fragrance) => (
+                      <div 
+                        key={fragrance.title} 
+                        className="flex items-center justify-between gap-3 bg-white border border-black/5 rounded-2xl p-2.5 shadow-sm"
+                      >
+                        <div className="flex items-center gap-3">
+                          <div className="relative h-10 w-10 flex-shrink-0 rounded-xl bg-zinc-50 border border-black/5 overflow-hidden">
+                            <Image
+                              src={fragrance.images?.["10ml"] || fragrance.images?.["5ml"]}
+                              alt={fragrance.title}
+                              fill
+                              className="object-contain p-1"
+                              unoptimized
+                            />
+                          </div>
+                          <div>
+                            <h4 className="text-xs font-black uppercase text-[#4f4a52] truncate max-w-[140px]">
+                              {fragrance.title}
+                            </h4>
+                            <p className="text-[10px] text-zinc-400 mt-0.5">
+                              From R{fragrance.prices?.["5ml"]}
+                            </p>
+                          </div>
+                        </div>
+                        <button
+                          onClick={() => quickAddFavorite(fragrance)}
+                          className="text-[10px] font-bold uppercase tracking-wider text-white bg-[#b67d73] hover:bg-[#a96e65] px-3 py-1.5 rounded-full transition-all duration-200"
+                        >
+                          + Add 5ml
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Recently Viewed Section */}
+              {recentRecommendations.length > 0 && (
+                <div className="py-4 border-t border-black/5 bg-white -mx-5 md:-mx-6 px-5 md:px-6">
+                  <p className="text-[10px] uppercase tracking-[0.2em] font-bold text-zinc-400 mb-3">
+                    Recently Viewed
+                  </p>
+
+                  <div className="space-y-2">
+                    {recentRecommendations.map((fragrance) => (
+                      <div
+                        key={fragrance.title}
+                        className="flex items-center justify-between gap-3 bg-[#fbf9f6] border border-black/5 rounded-2xl p-2.5 shadow-sm"
+                      >
+                        <div className="flex items-center gap-3">
+                          <div className="relative h-10 w-10 flex-shrink-0 rounded-xl bg-zinc-50 border border-black/5 overflow-hidden">
+                            <Image
+                              src={
+                                fragrance.images?.["10ml"] ||
+                                fragrance.images?.["5ml"]
+                              }
+                              alt={fragrance.title}
+                              fill
+                              className="object-contain p-1"
+                              unoptimized
+                            />
+                          </div>
+
+                          <div>
+                            <h4 className="text-xs font-black uppercase text-[#4f4a52] truncate max-w-[140px]">
+                              {fragrance.title}
+                            </h4>
+
+                            <p className="text-[10px] text-zinc-400 mt-0.5">
+                              From R{fragrance.prices?.["5ml"]}
+                            </p>
+                          </div>
+                        </div>
+
+                        <button
+                          onClick={() => quickAddRecent(fragrance)}
+                          className="text-[10px] font-bold uppercase tracking-wider text-white bg-[#4f4a52] hover:bg-[#3f3b42] px-3 py-1.5 rounded-full transition-all duration-200"
+                        >
+                          + Add 5ml
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {collectionRecommendations.length > 0 && (
+                <div className="py-4 border-t border-black/5 bg-[#fbf9f6] -mx-5 md:-mx-6 px-5 md:px-6">
+                  <p className="text-[10px] uppercase tracking-[0.2em] font-bold text-zinc-400 mb-3">
+                    Complete Your Collection
+                  </p>
+
+                  <div className="space-y-2">
+                    {collectionRecommendations.map((fragrance) => (
+                      <div
+                        key={fragrance.title}
+                        className="flex items-center justify-between gap-3 bg-white border border-black/5 rounded-2xl p-2.5 shadow-sm"
+                      >
+                        <div>
+                          <h4 className="text-xs font-black uppercase text-[#4f4a52]">
+                            {fragrance.title}
+                          </h4>
+
+                          <p className="text-[10px] text-zinc-400">
+                            {fragrance.profile}
+                          </p>
+                        </div>
+
+                        <button
+                          onClick={() => quickAddRecent(fragrance)}
+                          className="text-[10px] font-bold uppercase tracking-wider text-white bg-[#b67d73] px-3 py-1.5 rounded-full"
+                        >
+                          + Add 5ml
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </>
+          )}
+        </div>
       </div>
     </div>
   );
