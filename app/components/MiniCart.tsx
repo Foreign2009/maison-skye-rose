@@ -28,6 +28,7 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
 
   const { favorites } = useFavorites();
   const [recentRecommendations, setRecentRecommendations] = useState<any[]>([]);
+  const [collectionRecommendations, setCollectionRecommendations] = useState<any[]>([]);
 
   const favoriteRecommendations = fragrances
     .filter(
@@ -85,6 +86,33 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
       .slice(0, 3);
 
     setRecentRecommendations(matches);
+  }, [cart]);
+
+  useEffect(() => {
+    if (cart.length === 0) {
+      setCollectionRecommendations([]);
+      return;
+    }
+
+    const cartTitles = cart.map((item) => item.title);
+
+    const recommendations = fragrances
+      .filter(
+        (fragrance) =>
+          !cartTitles.includes(fragrance.title)
+      )
+      .sort((a, b) => {
+        const aScore =
+          (a.bestSeller ? 2 : 0);
+
+        const bScore =
+          (b.bestSeller ? 2 : 0);
+
+        return bScore - aScore;
+      })
+      .slice(0, 3);
+
+    setCollectionRecommendations(recommendations);
   }, [cart]);
 
   if (!isOpen) return null;
@@ -438,6 +466,40 @@ A member of our team will confirm your order and delivery details shortly.`;
                 <button
                   onClick={() => quickAddRecent(fragrance)}
                   className="text-[10px] font-bold uppercase tracking-wider text-white bg-[#4f4a52] hover:bg-[#3f3b42] px-3 py-1.5 rounded-full transition-all duration-200"
+                >
+                  + Add 5ml
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {collectionRecommendations.length > 0 && (
+        <div className="px-6 py-4 border-t border-black/5 bg-[#fbf9f6]">
+          <p className="text-[10px] uppercase tracking-[0.2em] font-bold text-zinc-400 mb-3">
+            Complete Your Collection
+          </p>
+
+          <div className="space-y-2">
+            {collectionRecommendations.map((fragrance) => (
+              <div
+                key={fragrance.title}
+                className="flex items-center justify-between gap-3 bg-white border border-black/5 rounded-2xl p-2.5 shadow-sm"
+              >
+                <div>
+                  <h4 className="text-xs font-black uppercase text-[#4f4a52]">
+                    {fragrance.title}
+                  </h4>
+
+                  <p className="text-[10px] text-zinc-400">
+                    {fragrance.profile}
+                  </p>
+                </div>
+
+                <button
+                  onClick={() => quickAddRecent(fragrance)}
+                  className="text-[10px] font-bold uppercase tracking-wider text-white bg-[#b67d73] px-3 py-1.5 rounded-full"
                 >
                   + Add 5ml
                 </button>
