@@ -91,6 +91,11 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
 
   const subtotal = cartTotal;
 
+  const progressPercent = Math.min(
+    (subtotal / 1500) * 100,
+    100
+  );
+
   const delivery =
     !cart || cart.length === 0
       ? 0
@@ -181,38 +186,50 @@ A member of our team will confirm your order and delivery details shortly.`;
               <div className="mt-2 space-y-1">
                 <p
                   className={`text-xs ${
-                    cartCount >= 5
+                    subtotal >= 400
                       ? "text-green-600 font-semibold"
                       : "text-zinc-500"
                   }`}
                 >
-                  {cartCount >= 5
-                    ? "✓ Free Sample Reward Unlocked"
-                    : `${5 - cartCount} bottles until Free Sample`}
+                  {subtotal >= 400
+                    ? "✓ 1 Free 5ml Sample Unlocked"
+                    : `Spend R${(400 - subtotal).toFixed(0)} more for 1 Free 5ml Sample`}
                 </p>
 
                 <p
                   className={`text-xs ${
-                    cartCount >= 10
+                    subtotal >= 700
                       ? "text-green-600 font-semibold"
                       : "text-zinc-500"
                   }`}
                 >
-                  {cartCount >= 10
-                    ? "✓ Wholesale Pricing Unlocked"
-                    : `${10 - cartCount} bottles until Wholesale`}
+                  {subtotal >= 700
+                    ? "✓ 2 Free 5ml Samples Unlocked"
+                    : `Spend R${Math.max(0, 700 - subtotal).toFixed(0)} more for 2 Free Samples`}
                 </p>
 
                 <p
                   className={`text-xs ${
-                    cartCount >= 15
+                    subtotal >= 1000
                       ? "text-green-600 font-semibold"
                       : "text-zinc-500"
                   }`}
                 >
-                  {cartCount >= 15
-                    ? "✓ VIP Priority Delivery"
-                    : `${15 - cartCount} bottles until VIP Delivery`}
+                  {subtotal >= 1000
+                    ? "✓ 3 Free 5ml Samples Unlocked"
+                    : `Spend R${Math.max(0, 1000 - subtotal).toFixed(0)} more for 3 Free Samples`}
+                </p>
+
+                <p
+                  className={`text-xs ${
+                    subtotal >= 1500
+                      ? "text-green-600 font-semibold"
+                      : "text-zinc-500"
+                  }`}
+                >
+                  {subtotal >= 1500
+                    ? "✓ Discovery Set Unlocked"
+                    : `Spend R${Math.max(0, 1500 - subtotal).toFixed(0)} more for Discovery Set`}
                 </p>
               </div>
 
@@ -220,13 +237,13 @@ A member of our team will confirm your order and delivery details shortly.`;
                 <div
                   className="h-full bg-[#b67d73]"
                   style={{
-                    width: `${Math.min((cartCount / 15) * 100, 100)}%`,
+                    width: `${progressPercent}%`,
                   }}
                 />
               </div>
-              
+
               <p className="mt-2 text-xs font-semibold text-[#4f4a52]">
-                {cartCount}/15 Bottles Progress
+                R{subtotal.toFixed(0)} / R1500 Rewards Progress
               </p>
             </div>
           )}
