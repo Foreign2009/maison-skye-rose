@@ -110,14 +110,25 @@ export default function HomePage() {
               />
             </div>
             <div className="flex flex-col items-start text-left">
-              <span className="text-[10px] font-bold uppercase tracking-[0.6em] text-[#d89ca4] mb-3">
-                Featured Creation
-              </span>
+              <div className="flex flex-wrap items-center gap-2 mb-3">
+                <span className="text-[10px] font-bold uppercase tracking-[0.6em] text-[#d89ca4]">
+                  Featured Creation
+                </span>
+
+                {featuredFragrance?.bestSeller && (
+                  <span className="rounded-full bg-black px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-white">
+                    Best Seller
+                  </span>
+                )}
+              </div>
               <h2 className="text-3xl md:text-5xl font-black tracking-[-0.06em] text-[#4f4a52] leading-tight">
                 {featuredFragrance?.title || "Maison Skye & Rose"}
               </h2>
               <p className="mt-2 text-sm font-semibold text-[#d89ca4]">
                 {featuredFragrance?.subtitle || "Extrait de Parfum"}
+              </p>
+              <p className="mt-2 text-xs uppercase tracking-[0.2em] text-[#7b7480]">
+                One of our most requested fragrances
               </p>
               
               {/* Subtle collection tag added below subtitle for strict editorial structure */}
