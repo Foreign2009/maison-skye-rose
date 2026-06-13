@@ -96,6 +96,17 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
     100
   );
 
+  const nextReward =
+    subtotal < 400
+      ? { amount: 400, reward: "1 Free 5ml Sample" }
+      : subtotal < 700
+      ? { amount: 700, reward: "2 Free 5ml Samples" }
+      : subtotal < 1000
+      ? { amount: 1000, reward: "3 Free 5ml Samples" }
+      : subtotal < 1500
+      ? { amount: 1500, reward: "Discovery Set (5 × 5ml)" }
+      : null;
+
   const delivery =
     !cart || cart.length === 0
       ? 0
@@ -488,10 +499,16 @@ A member of our team will confirm your order and delivery details shortly.`;
             </p>
           </div>
 
-          {subtotal < 1500 && (
-            <p className="mt-3 text-xs text-zinc-500">
-              Next reward unlocks as your order grows.
-            </p>
+          {nextReward && (
+            <div className="mt-3">
+              <p className="text-xs text-zinc-500">
+                Only R{(nextReward.amount - subtotal).toFixed(0)} more until:
+              </p>
+
+              <p className="mt-1 text-sm font-semibold text-[#b67d73]">
+                {nextReward.reward}
+              </p>
+            </div>
           )}
         </div>
 
