@@ -482,7 +482,7 @@ A member of our team will confirm your order and delivery details shortly.`;
 
         <div className="mt-5 rounded-2xl border border-[#eadfd6] bg-[#faf7f3] p-4">
           <p className="text-[10px] uppercase tracking-[0.2em] font-bold text-[#b67d73]">
-            Rewards Earned
+            Current Reward
           </p>
 
           <div className="mt-2 text-sm">
@@ -500,12 +500,16 @@ A member of our team will confirm your order and delivery details shortly.`;
           </div>
 
           {nextReward && (
-            <div className="mt-3">
-              <p className="text-xs text-zinc-500">
-                Only R{(nextReward.amount - subtotal).toFixed(0)} more until:
+            <div className="mt-3 rounded-xl bg-white px-3 py-3 border border-[#eadfd6]">
+              <p className="text-[10px] uppercase tracking-widest text-[#b67d73] font-bold">
+                Next Reward
               </p>
 
-              <p className="mt-1 text-sm font-semibold text-[#b67d73]">
+              <p className="mt-2 text-sm font-semibold text-[#4f4a52]">
+                🎁 Only R{(nextReward.amount - subtotal).toFixed(0)} more
+              </p>
+
+              <p className="mt-1 text-sm text-[#b67d73] font-bold">
                 {nextReward.reward}
               </p>
             </div>
