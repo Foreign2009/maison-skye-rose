@@ -35,6 +35,19 @@ export default function HomePage() {
     <main className="min-h-screen bg-[#faf7f5] overflow-x-hidden">
       <Navbar />
       <AnnouncementBar />
+
+      <section className="bg-[#b67d73] py-3">
+        <div className="mx-auto max-w-7xl px-4 text-center">
+          <p className="text-xs md:text-sm font-bold uppercase tracking-[0.25em] text-white">
+            🎁 Free 5ml Sample On Orders Over R400
+          </p>
+
+          <p className="mt-1 text-[11px] md:text-xs text-white/90">
+            Unlock up to 3 free samples and a Discovery Set as your order grows
+          </p>
+        </div>
+      </section>
+
       <AIHeroSection />
       <TrustBar />
 
