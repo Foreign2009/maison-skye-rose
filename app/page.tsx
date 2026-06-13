@@ -132,6 +132,24 @@ export default function HomePage() {
         <BestSellers onQuickAdd={(fragrance) => setSelectedFragrance(fragrance)} />
       </section>
 
+      {/* New "Most Loved Fragrances" Section Added Directly Here */}
+      <section className="bg-white py-10">
+        <div className="mx-auto max-w-5xl px-5 text-center">
+          <p className="text-[11px] uppercase tracking-[0.4em] text-[#d89ca4]">
+            Most Loved Fragrances
+          </p>
+
+          <h3 className="mt-4 text-2xl md:text-4xl font-black text-[#4f4a52]">
+            Trusted By Fragrance Lovers Across South Africa
+          </h3>
+
+          <p className="mt-5 text-sm md:text-base text-[#7b7480] max-w-2xl mx-auto">
+            Discover the fragrances our customers return for again and again.
+            Carefully selected inspirations designed for everyday luxury.
+          </p>
+        </div>
+      </section>
+
       {/* 3. Discovery Sets - bg-white */}
       <section className="bg-white">
         <DiscoverySets />
