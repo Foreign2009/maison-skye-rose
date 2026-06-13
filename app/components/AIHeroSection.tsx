@@ -24,24 +24,24 @@ export default function AIHeroSection() {
           {/* Left Column: Core Brand Messaging & Premium CTAs */}
           <div className="max-w-xl">
             <p className="text-[11px] uppercase tracking-[0.45em] text-[#d89ca4] font-semibold">
-              Maison Method™
+              South African Luxury Fragrance House
             </p>
 
             <h2 className="mt-4 text-4xl font-extrabold tracking-tight text-[#4f4a52] md:text-6xl leading-[1.1]">
-              Discover Your
+              Luxury Fragrances
               <br />
-              Signature Fragrance
+              Inspired By Icons
             </h2>
 
             <p className="mt-6 text-base md:text-lg leading-relaxed text-[#7b7480]">
-              Not sure where to start? Take our Maison AI Scent Finder
-              and discover fragrances matched to your unique personality, 
-              lifestyle, and notes preferences.
+              Discover over 50 inspired fragrances crafted for everyday luxury.
+              Start with 5ml discovery sizes, unlock free samples from R400,
+              and find the scent that becomes your signature.
             </p>
 
             <div className="mt-10 flex flex-wrap gap-4">
               <Link
-                href="/quiz"
+                href="/shop"
                 className="
                   rounded-full
                   bg-[#d89ca4]
@@ -58,7 +58,7 @@ export default function AIHeroSection() {
                   shadow-sm
                 "
               >
-                Start My Scent Journey
+                Shop Best Sellers
               </Link>
 
               <Link
@@ -90,10 +90,10 @@ export default function AIHeroSection() {
               <Image
                 src="/images/glass-pink-30ml.png"
                 alt="Maison Skye & Rose Pink 30ml Luxury Bottle"
-                fill
-                  priority
-                  sizes="(max-width: 1024px) 100vw, 500px"
-              className="object-contain transition-transform duration-700 hover:scale-[1.03]"
+                width={500}
+                height={500}
+                priority
+                className="object-contain w-full h-full transition-transform duration-700 hover:scale-[1.03]"
               />
             </div>
           </div>
@@ -103,5 +103,3 @@ export default function AIHeroSection() {
     </section>
   );
 }
-
-
