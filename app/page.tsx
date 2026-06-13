@@ -132,7 +132,6 @@ export default function HomePage() {
         <BestSellers onQuickAdd={(fragrance) => setSelectedFragrance(fragrance)} />
       </section>
 
-      {/* New "Most Loved Fragrances" Section Added Directly Here */}
       <section className="bg-white py-10">
         <div className="mx-auto max-w-5xl px-5 text-center">
           <p className="text-[11px] uppercase tracking-[0.4em] text-[#d89ca4]">
@@ -152,6 +151,25 @@ export default function HomePage() {
 
       {/* 3. Discovery Sets - bg-white */}
       <section className="bg-white">
+        <div className="mx-auto max-w-5xl px-5 pt-10 text-center">
+          <p className="text-[11px] uppercase tracking-[0.4em] text-[#d89ca4]">
+            Discovery Journey
+          </p>
+
+          <h3 className="mt-4 text-2xl md:text-4xl font-black text-[#4f4a52]">
+            Build Your Collection
+          </h3>
+
+          <p className="mt-5 text-sm md:text-base text-[#7b7480] max-w-2xl mx-auto">
+            Most customers begin with 5ml fragrances to discover their favourites
+            before building a full collection.
+          </p>
+
+          <div className="mt-6 inline-flex rounded-full bg-[#faf7f5] px-5 py-3 text-sm font-semibold text-[#b67d73]">
+            🎁 Orders over R400 receive a FREE 5ml sample
+          </div>
+        </div>
+
         <DiscoverySets />
       </section>
 
