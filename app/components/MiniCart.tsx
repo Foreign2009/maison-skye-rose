@@ -96,20 +96,49 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
 
     const cartTitles = cart.map((item) => item.title);
 
+    const cartFragrance = fragrances.find(
+      (f) => f.title === cart[0]?.title
+    );
+
     const recommendations = fragrances
       .filter(
         (fragrance) =>
           !cartTitles.includes(fragrance.title)
       )
-      .sort((a, b) => {
-        const aScore =
-          (a.bestSeller ? 2 : 0);
+      .map((fragrance) => {
+        let score = 0;
 
-        const bScore =
-          (b.bestSeller ? 2 : 0);
+        if (
+          fragrance.collection ===
+          cartFragrance?.collection
+        ) {
+          score += 3;
+        }
 
-        return bScore - aScore;
+        if (
+          fragrance.profile ===
+          cartFragrance?.profile
+        ) {
+          score += 2;
+        }
+
+        if (
+          fragrance.season ===
+          cartFragrance?.season
+        ) {
+          score += 1;
+        }
+
+        if (fragrance.bestSeller) {
+          score += 1;
+        }
+
+        return {
+          ...fragrance,
+          score,
+        };
       })
+      .sort((a, b) => b.score - a.score)
       .slice(0, 3);
 
     setCollectionRecommendations(recommendations);
