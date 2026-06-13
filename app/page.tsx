@@ -48,6 +48,48 @@ export default function HomePage() {
         </div>
       </section>
 
+      <section className="bg-white border-b border-[#efe8e1]">
+        <div className="mx-auto max-w-7xl px-4">
+          <div className="grid grid-cols-2 md:grid-cols-4">
+            <div className="py-4 text-center">
+              <p className="text-lg font-black text-[#4f4a52]">
+                50+
+              </p>
+              <p className="text-[10px] uppercase tracking-[0.2em] text-[#7b7480]">
+                Fragrances
+              </p>
+            </div>
+
+            <div className="py-4 text-center">
+              <p className="text-lg font-black text-[#4f4a52]">
+                R400+
+              </p>
+              <p className="text-[10px] uppercase tracking-[0.2em] text-[#7b7480]">
+                Free Sample
+              </p>
+            </div>
+
+            <div className="py-4 text-center">
+              <p className="text-lg font-black text-[#4f4a52]">
+                Fast
+              </p>
+              <p className="text-[10px] uppercase tracking-[0.2em] text-[#7b7480]">
+                WhatsApp Orders
+              </p>
+            </div>
+
+            <div className="py-4 text-center">
+              <p className="text-lg font-black text-[#4f4a52]">
+                SA
+              </p>
+              <p className="text-[10px] uppercase tracking-[0.2em] text-[#7b7480]">
+                Nationwide Delivery
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <AIHeroSection />
       <TrustBar />
 
