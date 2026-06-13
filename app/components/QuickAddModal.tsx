@@ -16,7 +16,7 @@ interface QuickAddModalProps {
 }
 
 export default function QuickAddModal({ open, onClose, title, images = {}, prices = {} }: QuickAddModalProps) {
-  const { addToCart } = useCart();
+  const { addToCart, cart } = useCart();
   const { showFeedback } = useCartFeedback();
   const [mounted, setMounted] = useState(false);
   const sizeOptions = Object.entries(prices);
@@ -35,6 +35,12 @@ export default function QuickAddModal({ open, onClose, title, images = {}, price
 
   const selectedPrice = prices?.[selectedSize] || 0;
   const total = selectedPrice * quantity;
+  
+  // Real-time optimization: Calculate current cart value + current modal total
+  const cartTotal = cart?.reduce((sum, item) => sum + item.price * item.quantity, 0) || 0;
+  const combinedTotal = cartTotal + total;
+  const amountToSample = Math.max(0, 400 - combinedTotal);
+
   const selectedImage = images?.[selectedSize] || Object.values(images)[0] || "/images/pink-10ml.png";
 
   const handleAddToCart = () => {
@@ -68,8 +74,8 @@ export default function QuickAddModal({ open, onClose, title, images = {}, price
                     alt={title}
                     width={180}
                     height={180}
-                      style={{ width: "auto", height: "auto" }}
-                      className="object-contain"
+                    style={{ width: "auto", height: "auto" }}
+                    className="object-contain"
                     priority
                   />
                 </motion.div>
@@ -81,6 +87,11 @@ export default function QuickAddModal({ open, onClose, title, images = {}, price
                   {sizeOptions.map(([size, price]) => (
                     <button key={size} onClick={() => setSelectedSize(size)} className={`flex-1 rounded-2xl border px-4 py-4 transition-all duration-300 ${selectedSize === size ? "border-[#ff9fbc] bg-gradient-to-br from-pink-50 to-blue-50 shadow-lg scale-[1.02]" : "border-gray-200 bg-white"}`}>
                       <p className="text-sm font-bold text-[#4f4a52]">{size}</p>
+                      {size === "30ml" && (
+                        <p className="mt-1 text-[10px] font-bold uppercase text-green-600">
+                          Best Value
+                        </p>
+                      )}
                       <p className="mt-1 text-xs text-[#7b7480]">R {Number(price).toFixed(2)}</p>
                     </button>
                   ))}
@@ -100,6 +111,19 @@ export default function QuickAddModal({ open, onClose, title, images = {}, price
                   <span className="text-3xl font-black text-[#4f4a52]">R {total.toFixed(2)}</span>
                 </div>
               </div>
+              
+              <div className="mt-4 rounded-2xl border border-[#eadfd6] bg-[#faf7f3] p-4">
+                {combinedTotal >= 400 ? (
+                  <p className="text-sm font-semibold text-green-600">
+                    🎁 Free 5ml Sample Unlocked
+                  </p>
+                ) : (
+                  <p className="text-sm font-semibold text-[#b67d73]">
+                    Spend only R{amountToSample.toFixed(0)} more to unlock a FREE 5ml sample
+                  </p>
+                )}
+              </div>
+
               <div className="mt-6 flex gap-3">
                 <button onClick={onClose} className="flex-1 rounded-full border border-gray-200 py-4 font-semibold text-[#4f4a52] transition hover:bg-gray-50">Cancel</button>
                 <motion.button whileTap={{ scale: 0.97 }} onClick={handleAddToCart} className="flex-1 rounded-full bg-gradient-to-r from-pink-400 to-blue-400 py-4 font-semibold text-white shadow-lg transition hover:brightness-105">Add To Cart</motion.button>

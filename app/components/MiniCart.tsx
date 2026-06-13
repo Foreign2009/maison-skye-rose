@@ -183,6 +183,19 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
 
   const savings = originalTotal - subtotal;
 
+  const rewardMessage =
+    subtotal >= 2000
+      ? "✓ Discovery Set (5 × 5ml) + Free Delivery"
+      : subtotal >= 1500
+      ? "✓ Discovery Set (5 × 5ml)"
+      : subtotal >= 1000
+      ? "✓ 3 Free 5ml Samples"
+      : subtotal >= 700
+      ? "✓ 2 Free 5ml Samples"
+      : subtotal >= 400
+      ? "✓ 1 Free 5ml Sample"
+      : "";
+
   const handleWhatsAppCheckout = () => {
     const orderLines = cart
       .map((item) => {
@@ -199,7 +212,11 @@ Thank you for choosing Maison Skye & Rose.
 ${wholesaleActive ? "WHOLESALE ORDER\n\n" : ""}ORDER SUMMARY
 ${orderLines}
 
-Subtotal: R${subtotal.toFixed(2)}
+${rewardMessage ? `🎁 REWARDS UNLOCKED
+
+${rewardMessage}
+
+` : ""}Subtotal: R${subtotal.toFixed(2)}
 Delivery: ${delivery === 0 ? "FREE" : `R${delivery.toFixed(2)}`}
 TOTAL: R${total.toFixed(2)}
 

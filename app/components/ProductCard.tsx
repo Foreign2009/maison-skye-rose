@@ -124,11 +124,22 @@ export default function ProductCard({
           <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
             <div>
               <p className="text-[10px] md:text-xs uppercase text-[#7b7480]">From</p>
-              <p className="text-base md:text-2xl font-black text-[#4f4a52]">R{prices["5ml"]}</p>
+
+              <p className="text-base md:text-2xl font-black text-[#4f4a52]">
+                R{prices["5ml"]}
+              </p>
+
+              <p className="mt-1 text-[10px] md:text-xs font-medium text-[#d89ca4]">
+                🎁 Free 5ml Sample over R400
+              </p>
+
+              <p className="text-[10px] md:text-xs text-[#7b7480]">
+                30ml offers the best value
+              </p>
             </div>
             <button
               onClick={handleCardClick}
-              className="w-full md:w-auto rounded-full bg-gradient-to-r from-pink-400 to-blue-400 px-3 md:px-6 py-2 md:py-3 text-xs md:text-sm font-bold text-white transition hover:scale-105"
+              className="w-full md:w-auto rounded-full bg-gradient-to-r from-pink-400 to-blue-400 px-3 md:px-6 py-2 md:py-3 text-xs md:text-sm font-bold text-white shadow-lg transition-all hover:scale-105 hover:shadow-xl"
             >
               Quick Add
             </button>
