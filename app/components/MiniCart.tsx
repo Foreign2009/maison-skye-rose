@@ -281,7 +281,7 @@ A member of our team will confirm your order and delivery details shortly.`;
                 >
                   {subtotal >= 400
                     ? "✓ 1 Free 5ml Sample Unlocked"
-                    : `Spend R${(400 - subtotal).toFixed(0)} more for 1 Free 5ml Sample`}
+                    : `Only R${(400 - subtotal).toFixed(0)} away from a FREE 5ml Sample`}
                 </p>
 
                 <p
@@ -293,7 +293,7 @@ A member of our team will confirm your order and delivery details shortly.`;
                 >
                   {subtotal >= 700
                     ? "✓ 2 Free 5ml Samples Unlocked"
-                    : `Spend R${Math.max(0, 700 - subtotal).toFixed(0)} more for 2 Free Samples`}
+                    : `Only R${Math.max(0, 700 - subtotal).toFixed(0)} away from 2 FREE Samples`}
                 </p>
 
                 <p
@@ -305,7 +305,7 @@ A member of our team will confirm your order and delivery details shortly.`;
                 >
                   {subtotal >= 1000
                     ? "✓ 3 Free 5ml Samples Unlocked"
-                    : `Spend R${Math.max(0, 1000 - subtotal).toFixed(0)} more for 3 Free Samples`}
+                    : `Only R${Math.max(0, 1000 - subtotal).toFixed(0)} away from 3 FREE Samples`}
                 </p>
 
                 <p
@@ -319,7 +319,7 @@ A member of our team will confirm your order and delivery details shortly.`;
                     ? "✓ Discovery Set + Free Delivery"
                     : subtotal >= 1500
                     ? "✓ Discovery Set Unlocked"
-                    : `Spend R${Math.max(0, 1500 - subtotal).toFixed(0)} more for Discovery Set`}
+                    : `Only R${Math.max(0, 1500 - subtotal).toFixed(0)} away from a Discovery Set`}
                 </p>
               </div>
 
@@ -509,6 +509,10 @@ A member of our team will confirm your order and delivery details shortly.`;
 
               <p className="mt-1 text-sm text-[#b67d73] font-bold">
                 {nextReward.reward}
+              </p>
+
+              <p className="mt-2 text-xs text-zinc-500">
+                Add a 5ml fragrance from R89
               </p>
             </div>
           )}
