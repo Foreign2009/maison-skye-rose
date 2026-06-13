@@ -469,6 +469,32 @@ A member of our team will confirm your order and delivery details shortly.`;
           </span>
         </div>
 
+        <div className="mt-5 rounded-2xl border border-[#eadfd6] bg-[#faf7f3] p-4">
+          <p className="text-[10px] uppercase tracking-[0.2em] font-bold text-[#b67d73]">
+            Rewards Earned
+          </p>
+
+          <div className="mt-2 text-sm">
+            <p className="text-green-600 font-semibold">
+              {subtotal >= 1500
+                ? "✓ Discovery Set (5 × 5ml)"
+                : subtotal >= 1000
+                ? "✓ 3 Free 5ml Samples"
+                : subtotal >= 700
+                ? "✓ 2 Free 5ml Samples"
+                : subtotal >= 400
+                ? "✓ 1 Free 5ml Sample"
+                : "No rewards unlocked yet"}
+            </p>
+          </div>
+
+          {subtotal < 1500 && (
+            <p className="mt-3 text-xs text-zinc-500">
+              Next reward unlocks as your order grows.
+            </p>
+          )}
+        </div>
+
         <button
           onClick={handleWhatsAppCheckout}
           disabled={!cart || cart.length === 0}
