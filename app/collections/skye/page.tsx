@@ -4,14 +4,14 @@ import { useState } from "react";
 import Navbar from "../../components/Navbar";
 import ProductCard from "../../components/ProductCard";
 import FloatingWhatsApp from "../../components/FloatingWhatsApp";
-import QuickAddModal from "../../components/QuickAddModal";
+
 import SearchBar from "../../components/SearchBar";
 import Footer from "../../components/Footer";
 import { fragrances } from "../../data/fragrances";
 
 export default function SkyeCollectionPage() {
   const [search, setSearch] = useState("");
-  const [selectedFragrance, setSelectedFragrance] = useState<any>(null);
+  
 
   // Advanced search logic consistent with your Shop page
   const products = fragrances.filter((item) => {
@@ -31,37 +31,46 @@ export default function SkyeCollectionPage() {
       <main className="fade-up min-h-screen bg-[#f5f1eb]">
         <Navbar />
 
-        <section className="mx-auto max-w-7xl px-6 py-20">
+        {/* Change Hero Padding */}
+        <section className="mx-auto max-w-7xl px-6 py-10 md:py-20">
           <p className="text-xs uppercase tracking-[0.45em] text-[#7a8fa3]">
             For Him
           </p>
 
-          <h1 className="mt-6 text-7xl font-black uppercase leading-[0.9] tracking-[-0.05em]">
+          {/* Change Heading Size */}
+          <h1 className="mt-4 text-5xl md:text-7xl font-black uppercase leading-[0.9] tracking-[-0.05em]">
             Skye
             <br />
             Collection
           </h1>
 
-          <p className="mt-8 max-w-2xl text-lg leading-9 text-zinc-600">
+          {/* Change Description Spacing */}
+          <p className="mt-4 md:mt-8 max-w-2xl text-base md:text-lg leading-7 md:leading-9 text-zinc-600">
             Bold masculine luxury fragrances inspired by confidence,
             nightlife, movement and modern elegance.
           </p>
 
-          <div className="mt-12">
+          {/* Tighten Search Spacing */}
+          <div className="mt-8">
             <SearchBar
               value={search}
               onChange={setSearch}
               placeholder="Search by name, note (e.g. oud, wood, citrus)..."
             />
+            {/* Add Product Count immediately below SearchBar */}
+            <p className="mt-4 text-sm text-zinc-500">
+              {products.length} fragrances available
+            </p>
           </div>
 
-          <div className="mt-20 grid gap-8 md:grid-cols-2 xl:grid-cols-3">
+          {/* Change Product Grid */}
+          <div className="mt-8 md:mt-20 grid grid-cols-2 gap-4 md:gap-8 md:grid-cols-2 xl:grid-cols-3">
             {products.length > 0 ? (
               products.map((fragrance) => (
                 <ProductCard
                   key={fragrance.title}
                   {...fragrance}
-                  onQuickAdd={() => setSelectedFragrance(fragrance)}
+                  onQuickAdd={() => window.location.href = `/product/${fragrance.title.toLowerCase().replace(/\s+/g,"-")}`}
                 />
               ))
             ) : (
@@ -79,14 +88,6 @@ export default function SkyeCollectionPage() {
         </section>
 
         <Footer />
-
-        {selectedFragrance && (
-          <QuickAddModal
-            open={true}
-            onClose={() => setSelectedFragrance(null)}
-            {...selectedFragrance}
-          />
-        )}
       </main>
 
       <FloatingWhatsApp />

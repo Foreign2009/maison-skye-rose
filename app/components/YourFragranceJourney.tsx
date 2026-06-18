@@ -35,12 +35,12 @@ export default function YourFragranceJourney() {
           <ProductCard
             key={item.title}
             {...item}
-            onQuickAdd={() => setSelectedFragrance(item)}
+            onQuickAdd={() => window.location.href = `/product/${item.title.toLowerCase().replace(/\s+/g,"-")}`}
           />
         ))}
       </div>
 
-      {selectedFragrance && (
+      {false && (
         <QuickAddModal
           open={true}
           onClose={() => setSelectedFragrance(null)}
@@ -52,3 +52,4 @@ export default function YourFragranceJourney() {
     </section>
   );
 }
+

@@ -1,18 +1,17 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import Navbar from "./components/Navbar";
 import AnnouncementBar from "./components/AnnouncementBar";
 import ProductCard from "./components/ProductCard";
 import AIHeroSection from "./components/AIHeroSection";
+import LuxuryConfidenceBar from "./components/LuxuryConfidenceBar";
 import TrustBar from "./components/TrustBar";
 import BestSellers from "./components/BestSellers";
 import LatestAdditions from "./components/LatestAdditions";
 import DiscoverySets from "./components/DiscoverySets";
 import ShopByPersonality from "./components/ShopByPersonality";
-import QuickAddModal from "./components/QuickAddModal";
 import Testimonials from "./components/Testimonials";
 import RecentlyViewedHome from "./components/RecentlyViewedHome";
 import FavoritesHome from "./components/FavoritesHome";
@@ -20,8 +19,6 @@ import Footer from "./components/Footer";
 import { fragrances } from "./data/fragrances";
 
 export default function HomePage() {
-  const [selectedFragrance, setSelectedFragrance] = useState<any>(null);
-
   // Core fragrance array pass-through to ensure fast initial page loads
   const displayProducts = fragrances;
 
@@ -91,6 +88,7 @@ export default function HomePage() {
       </section>
 
       <AIHeroSection />
+      <LuxuryConfidenceBar />
       <TrustBar />
 
       {/* 1. Featured Fragrance Block (Refined Luxury Editorial Layout) - bg-white */}
@@ -154,7 +152,11 @@ export default function HomePage() {
               )}
               
               <button
-                onClick={() => setSelectedFragrance(featuredFragrance)}
+                onClick={() =>
+                  (window.location.href = `/product/${featuredFragrance.title
+                    .toLowerCase()
+                    .replace(/\s+/g, "-")}`)
+                }
                 className="mt-6 rounded-full bg-black px-8 py-4 text-sm font-bold uppercase tracking-widest text-white transition hover:bg-zinc-800 hover:scale-105 w-full sm:w-auto text-center"
               >
                 Discover
@@ -182,7 +184,13 @@ export default function HomePage() {
 
       {/* 2. Best Sellers - bg-[#faf7f5] */}
       <section className="bg-[#faf7f5]">
-        <BestSellers onQuickAdd={(fragrance) => setSelectedFragrance(fragrance)} />
+        <BestSellers
+          onQuickAdd={(fragrance) =>
+            (window.location.href = `/product/${fragrance.title
+              .toLowerCase()
+              .replace(/\s+/g, "-")}`)
+          }
+        />
       </section>
 
       <section className="bg-white py-10">
@@ -288,7 +296,11 @@ export default function HomePage() {
             >
               <ProductCard
                 {...fragrance}
-                onQuickAdd={() => setSelectedFragrance(fragrance)}
+                onQuickAdd={() =>
+                  (window.location.href = `/product/${fragrance.title
+                    .toLowerCase()
+                    .replace(/\s+/g, "-")}`)
+                }
               />
             </div>
           ))}
@@ -300,7 +312,11 @@ export default function HomePage() {
             <ProductCard 
               key={fragrance.title} 
               {...fragrance} 
-              onQuickAdd={() => setSelectedFragrance(fragrance)} 
+              onQuickAdd={() =>
+                (window.location.href = `/product/${fragrance.title
+                  .toLowerCase()
+                  .replace(/\s+/g, "-")}`)
+              } 
             />
           ))}
         </div>
@@ -335,10 +351,6 @@ export default function HomePage() {
       
       {/* 9. Luxury Target Footer */}
       <Footer />
-
-      {selectedFragrance && (
-        <QuickAddModal open={true} onClose={() => setSelectedFragrance(null)} {...selectedFragrance} />
-      )}
     </main>
   );
 }

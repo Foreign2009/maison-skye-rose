@@ -4,14 +4,14 @@ import { useState } from "react";
 import Navbar from "../../components/Navbar";
 import ProductCard from "../../components/ProductCard";
 import FloatingWhatsApp from "../../components/FloatingWhatsApp";
-import QuickAddModal from "../../components/QuickAddModal";
+
 import SearchBar from "../../components/SearchBar";
 import Footer from "../../components/Footer";
 import { fragrances } from "../../data/fragrances";
 
 export default function RoseCollectionPage() {
   const [search, setSearch] = useState("");
-  const [selectedFragrance, setSelectedFragrance] = useState<any>(null);
+  
 
   // Advanced search logic consistent with the main Shop page
   const products = fragrances.filter((item) => {
@@ -61,7 +61,7 @@ export default function RoseCollectionPage() {
                 <ProductCard
                   key={fragrance.title}
                   {...fragrance}
-                  onQuickAdd={() => setSelectedFragrance(fragrance)}
+                  onQuickAdd={() => window.location.href = `/product/${fragrance.title.toLowerCase().replace(/\s+/g,"-")}`}
                 />
               ))
             ) : (
@@ -76,17 +76,10 @@ export default function RoseCollectionPage() {
         </section>
 
         <Footer />
-
-        {selectedFragrance && (
-          <QuickAddModal
-            open={true}
-            onClose={() => setSelectedFragrance(null)}
-            {...selectedFragrance}
-          />
-        )}
       </main>
 
       <FloatingWhatsApp />
     </>
   );
 }
+

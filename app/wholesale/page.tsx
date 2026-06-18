@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Navbar from "../components/Navbar";
 
 export default function WholesalePage() {
 
@@ -32,209 +33,213 @@ Estimated Monthly Volume: ${monthlyVolume}`;
 
   return (
     <main className="min-h-screen bg-[#faf7f5]">
-      <section className="mx-auto max-w-6xl px-5 py-20">
-        <div className="text-center">
-          <p className="text-xs uppercase tracking-[0.45em] text-[#d89ca4]">
-            Maison Skye & Rose
-          </p>
-
-          <h1 className="mt-4 text-4xl md:text-6xl font-black tracking-[-0.06em] text-[#4f4a52]">
-            Become A Stockist
-          </h1>
-
-          <p className="mx-auto mt-6 max-w-3xl text-[#7b7480] leading-8">
-            Bring Maison Skye & Rose to your boutique, salon,
-            gift store, online shop, or customer base.
-          </p>
-        </div>
-
-        <div className="mt-16 rounded-[40px] bg-white p-8 md:p-14 shadow-[0_20px_60px_rgba(0,0,0,0.06)]">
-          <h2 className="text-3xl font-black text-[#4f4a52]">
-            Wholesale Pricing
-          </h2>
-
-          <p className="mt-3 text-[#7b7480]">
-            Minimum order: 10 units
-          </p>
-
-          <div className="mt-10 grid gap-6 md:grid-cols-3">
-            <div className="rounded-3xl border border-black/5 p-8 text-center">
-              <h3 className="text-xl font-black">5ml</h3>
-              <p className="mt-4 text-4xl font-black text-[#d89ca4]">
-                R48
-              </p>
-            </div>
-
-            <div className="rounded-3xl border border-black/5 p-8 text-center">
-              <h3 className="text-xl font-black">10ml</h3>
-              <p className="mt-4 text-4xl font-black text-[#d89ca4]">
-                R77
-              </p>
-            </div>
-
-            <div className="rounded-3xl border border-black/5 p-8 text-center">
-              <h3 className="text-xl font-black">30ml</h3>
-              <p className="mt-4 text-4xl font-black text-[#d89ca4]">
-                R180
-              </p>
-            </div>
-          </div>
-
-          <div className="mt-12 rounded-3xl bg-[#faf7f5] p-8">
-            <h3 className="text-2xl font-black text-[#4f4a52]">
-              Mix & Match Program
-            </h3>
-
-            <ul className="mt-6 space-y-3 text-[#7b7480]">
-              <li>✓ Minimum order of only 10 units</li>
-              <li>✓ Mix any fragrances</li>
-              <li>✓ Mix any collections</li>
-              <li>✓ Mix any bottle sizes</li>
-              <li>✓ No joining fees</li>
-              <li>✓ Nationwide delivery available</li>
-            </ul>
-          </div>
-
-          <div className="mt-12 rounded-3xl bg-[#faf7f5] p-8">
-            <h3 className="text-2xl font-black text-[#4f4a52]">
-              Why Partner With Maison Skye & Rose
-            </h3>
-
-            <div className="mt-6 grid gap-4 md:grid-cols-2">
-              <div className="rounded-2xl bg-white p-4">
-                <h4 className="font-black text-[#4f4a52]">
-                  Low Risk Entry
-                </h4>
-                <p className="mt-2 text-sm text-[#7b7480]">
-                  Start with only 10 units and scale as demand grows.
-                </p>
-              </div>
-
-              <div className="rounded-2xl bg-white p-4">
-                <h4 className="font-black text-[#4f4a52]">
-                  Flexible Ordering
-                </h4>
-                <p className="mt-2 text-sm text-[#7b7480]">
-                  Mix fragrances, collections and bottle sizes in one order.
-                </p>
-              </div>
-
-              <div className="rounded-2xl bg-white p-4">
-                <h4 className="font-black text-[#4f4a52]">
-                  Premium Product Range
-                </h4>
-                <p className="mt-2 text-sm text-[#7b7480]">
-                  Offer a luxury-inspired fragrance collection without large inventory commitments.
-                </p>
-              </div>
-
-              <div className="rounded-2xl bg-white p-4">
-                <h4 className="font-black text-[#4f4a52]">
-                  Nationwide Support
-                </h4>
-                <p className="mt-2 text-sm text-[#7b7480]">
-                  Fast South African delivery and direct wholesale support.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="mt-12 rounded-3xl border border-black/5 p-8">
-            <h3 className="text-2xl font-black text-[#4f4a52]">
-              Wholesale Application
-            </h3>
-
-            <p className="mt-3 text-[#7b7480]">
-              Tell us about your business and we'll help you build your first wholesale order.
+      <Navbar />
+      
+      <section className="px-6 pb-14 pt-40">
+        <div className="mx-auto max-w-6xl">
+          <div className="mx-auto max-w-3xl text-center">
+            <p className="text-xs uppercase tracking-[0.45em] text-[#d89ca4]">
+              Maison Skye & Rose
             </p>
 
-            <div className="mt-6 grid gap-4 md:grid-cols-2">
-              <input
-                type="text"
-                placeholder="Business Name"
-                value={businessName}
-                onChange={(e) => setBusinessName(e.target.value)}
-                className="rounded-2xl border border-black/10 p-4"
-              />
+            <h1 className="mt-4 text-5xl md:text-6xl font-black tracking-[-0.06em] text-[#4f4a52]">
+              Become A Stockist
+            </h1>
 
-              <input
-                type="text"
-                placeholder="Contact Person"
-                value={contactPerson}
-                onChange={(e) => setContactPerson(e.target.value)}
-                className="rounded-2xl border border-black/10 p-4"
-              />
-
-              <input
-                type="tel"
-                placeholder="Phone Number"
-                value={phoneNumber}
-                onChange={(e) => setPhoneNumber(e.target.value)}
-                className="rounded-2xl border border-black/10 p-4"
-              />
-
-              <input
-                type="email"
-                placeholder="Email Address"
-                value={emailAddress}
-                onChange={(e) => setEmailAddress(e.target.value)}
-                className="rounded-2xl border border-black/10 p-4"
-              />
-
-              <input
-                type="text"
-                placeholder="City / Province"
-                value={cityProvince}
-                onChange={(e) => setCityProvince(e.target.value)}
-                className="rounded-2xl border border-black/10 p-4"
-              />
-
-              <input
-                type="text"
-                placeholder="Business Type"
-                value={businessType}
-                onChange={(e) => setBusinessType(e.target.value)}
-                className="rounded-2xl border border-black/10 p-4"
-              />
-            </div>
-
-            <input
-              type="text"
-              placeholder="Estimated Monthly Volume"
-              value={monthlyVolume}
-              onChange={(e) => setMonthlyVolume(e.target.value)}
-              className="mt-4 w-full rounded-2xl border border-black/10 p-4"
-            />
-
-            <button
-              type="button"
-              onClick={handleWholesaleApplication}
-              className="mt-6 rounded-full bg-[#4f4a52] px-8 py-4 text-sm font-bold uppercase tracking-widest text-white"
-            >
-              Submit Application
-            </button>
+            <p className="mx-auto mt-6 max-w-2xl text-[#7b7480] leading-8">
+              Bring Maison Skye & Rose to your boutique, salon,
+              gift store, online shop, or customer base.
+            </p>
           </div>
 
-          <div className="mt-12 rounded-3xl border border-black/5 p-8">
-            <h3 className="text-2xl font-black text-[#4f4a52]">
-              Wholesale Enquiries
-            </h3>
+          <div className="mt-16 rounded-[40px] bg-white p-8 md:p-14 shadow-[0_20px_60px_rgba(0,0,0,0.06)]">
+            <h2 className="text-3xl font-black text-[#4f4a52]">
+              Wholesale Pricing
+            </h2>
 
-            <div className="mt-6 space-y-3 text-[#7b7480]">
-              <p>wholesale@maisonskyeandrose.com</p>
-              <p>orders@maisonskyeandrose.com</p>
-              <p>info@maisonskyeandrose.com</p>
-              <p>hello@maisonskyeandrose.com</p>
-              <p>support@maisonskyeandrose.com</p>
-              <p>WhatsApp: +27 69 686 3952</p>
+            <p className="mt-3 text-[#7b7480]">
+              Minimum order: 10 units
+            </p>
+
+            <div className="mt-10 grid gap-6 md:grid-cols-3">
+              <div className="rounded-3xl border border-black/5 p-8 text-center">
+                <h3 className="text-xl font-black">5ml</h3>
+                <p className="mt-4 text-4xl font-black text-[#d89ca4]">
+                  R48
+                </p>
+              </div>
+
+              <div className="rounded-3xl border border-black/5 p-8 text-center">
+                <h3 className="text-xl font-black">10ml</h3>
+                <p className="mt-4 text-4xl font-black text-[#d89ca4]">
+                  R77
+                </p>
+              </div>
+
+              <div className="rounded-3xl border border-black/5 p-8 text-center">
+                <h3 className="text-xl font-black">30ml</h3>
+                <p className="mt-4 text-4xl font-black text-[#d89ca4]">
+                  R180
+                </p>
+              </div>
             </div>
 
-            <Link
-              href="mailto:wholesale@maisonskyeandrose.com"
-              className="mt-8 inline-flex rounded-full bg-black px-8 py-4 text-sm font-bold uppercase tracking-widest text-white"
-            >
-              Become A Stockist
-            </Link>
+            <div className="mt-12 rounded-3xl bg-[#faf7f5] p-8">
+              <h3 className="text-2xl font-black text-[#4f4a52]">
+                Mix & Match Program
+              </h3>
+
+              <ul className="mt-6 space-y-3 text-[#7b7480]">
+                <li>✓ Minimum order of only 10 units</li>
+                <li>✓ Mix any fragrances</li>
+                <li>✓ Mix any collections</li>
+                <li>✓ Mix any bottle sizes</li>
+                <li>✓ No joining fees</li>
+                <li>✓ Nationwide delivery available</li>
+              </ul>
+            </div>
+
+            <div className="mt-12 rounded-3xl bg-[#faf7f5] p-8">
+              <h3 className="text-2xl font-black text-[#4f4a52]">
+                Why Partner With Maison Skye & Rose
+              </h3>
+
+              <div className="mt-6 grid gap-4 md:grid-cols-2">
+                <div className="rounded-2xl bg-white p-4">
+                  <h4 className="font-black text-[#4f4a52]">
+                    Low Risk Entry
+                  </h4>
+                  <p className="mt-2 text-sm text-[#7b7480]">
+                    Start with only 10 units and scale as demand grows.
+                  </p>
+                </div>
+
+                <div className="rounded-2xl bg-white p-4">
+                  <h4 className="font-black text-[#4f4a52]">
+                    Flexible Ordering
+                  </h4>
+                  <p className="mt-2 text-sm text-[#7b7480]">
+                    Mix fragrances, collections and bottle sizes in one order.
+                  </p>
+                </div>
+
+                <div className="rounded-2xl bg-white p-4">
+                  <h4 className="font-black text-[#4f4a52]">
+                    Premium Product Range
+                  </h4>
+                  <p className="mt-2 text-sm text-[#7b7480]">
+                    Offer a luxury-inspired fragrance collection without large inventory commitments.
+                  </p>
+                </div>
+
+                <div className="rounded-2xl bg-white p-4">
+                  <h4 className="font-black text-[#4f4a52]">
+                    Nationwide Support
+                  </h4>
+                  <p className="mt-2 text-sm text-[#7b7480]">
+                    Fast South African delivery and direct wholesale support.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-12 rounded-3xl border border-black/5 p-8">
+              <h3 className="text-2xl font-black text-[#4f4a52]">
+                Wholesale Application
+              </h3>
+
+              <p className="mt-3 text-[#7b7480]">
+                Tell us about your business and we'll help you build your first wholesale order.
+              </p>
+
+              <div className="mt-6 grid gap-4 md:grid-cols-2">
+                <input
+                  type="text"
+                  placeholder="Business Name"
+                  value={businessName}
+                  onChange={(e) => setBusinessName(e.target.value)}
+                  className="rounded-2xl border border-black/10 p-4"
+                />
+
+                <input
+                  type="text"
+                  placeholder="Contact Person"
+                  value={contactPerson}
+                  onChange={(e) => setContactPerson(e.target.value)}
+                  className="rounded-2xl border border-black/10 p-4"
+                />
+
+                <input
+                  type="tel"
+                  placeholder="Phone Number"
+                  value={phoneNumber}
+                  onChange={(e) => setPhoneNumber(e.target.value)}
+                  className="rounded-2xl border border-black/10 p-4"
+                />
+
+                <input
+                  type="email"
+                  placeholder="Email Address"
+                  value={emailAddress}
+                  onChange={(e) => setEmailAddress(e.target.value)}
+                  className="rounded-2xl border border-black/10 p-4"
+                />
+
+                <input
+                  type="text"
+                  placeholder="City / Province"
+                  value={cityProvince}
+                  onChange={(e) => setCityProvince(e.target.value)}
+                  className="rounded-2xl border border-black/10 p-4"
+                />
+
+                <input
+                  type="text"
+                  placeholder="Business Type"
+                  value={businessType}
+                  onChange={(e) => setBusinessType(e.target.value)}
+                  className="rounded-2xl border border-black/10 p-4"
+                />
+              </div>
+
+              <input
+                type="text"
+                placeholder="Estimated Monthly Volume"
+                value={monthlyVolume}
+                onChange={(e) => setMonthlyVolume(e.target.value)}
+                className="mt-4 w-full rounded-2xl border border-black/10 p-4"
+              />
+
+              <button
+                type="button"
+                onClick={handleWholesaleApplication}
+                className="mt-6 rounded-full bg-[#4f4a52] px-8 py-4 text-sm font-bold uppercase tracking-widest text-white"
+              >
+                Submit Application
+              </button>
+            </div>
+
+            <div className="mt-12 rounded-3xl border border-black/5 p-8">
+              <h3 className="text-2xl font-black text-[#4f4a52]">
+                Wholesale Enquiries
+              </h3>
+
+              <div className="mt-6 space-y-3 text-[#7b7480]">
+                <p>wholesale@maisonskyeandrose.com</p>
+                <p>orders@maisonskyeandrose.com</p>
+                <p>info@maisonskyeandrose.com</p>
+                <p>hello@maisonskyeandrose.com</p>
+                <p>support@maisonskyeandrose.com</p>
+                <p>WhatsApp: +27 69 686 3952</p>
+              </div>
+
+              <Link
+                href="mailto:wholesale@maisonskyeandrose.com"
+                className="mt-8 inline-flex rounded-full bg-black px-8 py-4 text-sm font-bold uppercase tracking-widest text-white"
+              >
+                Become A Stockist
+              </Link>
+            </div>
           </div>
         </div>
       </section>

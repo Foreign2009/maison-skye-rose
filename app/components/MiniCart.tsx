@@ -1,5 +1,4 @@
 "use client";
-
 import Image from "next/image";
 import { X } from "lucide-react";
 import { useCart } from "../context/CartContext";
@@ -43,9 +42,7 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
     addToCart({
       id: fragrance.title,
       title: fragrance.title,
-      image:
-        fragrance.images?.["10ml"] ||
-        fragrance.images?.["5ml"],
+      image: fragrance.images?.["10ml"] || fragrance.images?.["5ml"],
       price: fragrance.prices?.["5ml"],
       quantity: 1,
       size: "5ml",
@@ -56,9 +53,7 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
     addToCart({
       id: fragrance.title,
       title: fragrance.title,
-      image:
-        fragrance.images?.["10ml"] ||
-        fragrance.images?.["5ml"],
+      image: fragrance.images?.["10ml"] || fragrance.images?.["5ml"],
       price: fragrance.prices?.["5ml"],
       quantity: 1,
       size: "5ml",
@@ -66,24 +61,11 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
   };
 
   useEffect(() => {
-    const viewed = JSON.parse(
-      localStorage.getItem("recentlyViewed") || "[]"
-    );
-
+    const viewed = JSON.parse(localStorage.getItem("recentlyViewed") || "[]");
     const matches = viewed
-      .map((item: any) =>
-        fragrances.find(
-          (fragrance) => fragrance.title === item.title
-        )
-      )
+      .map((item: any) => fragrances.find((fragrance) => fragrance.title === item.title))
       .filter(Boolean)
-      .filter(
-        (fragrance: any) =>
-          !cart.some(
-            (cartItem) =>
-              cartItem.title === fragrance.title
-          )
-      )
+      .filter((fragrance: any) => !cart.some((cartItem) => cartItem.title === fragrance.title))
       .slice(0, 3);
 
     setRecentRecommendations(matches);
@@ -94,39 +76,24 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
       setCollectionRecommendations([]);
       return;
     }
-
     const cartTitles = cart.map((item) => item.title);
 
-    const cartFragrance = fragrances.find(
-      (f) => f.title === cart[0]?.title
-    );
+    const cartFragrance = fragrances.find((f) => f.title === cart[0]?.title);
 
     const recommendations = fragrances
-      .filter(
-        (fragrance) =>
-          !cartTitles.includes(fragrance.title)
-      )
+      .filter((fragrance) => !cartTitles.includes(fragrance.title))
       .map((fragrance) => {
         let score = 0;
 
-        if (
-          fragrance.collection ===
-          cartFragrance?.collection
-        ) {
+        if (fragrance.collection === cartFragrance?.collection) {
           score += 3;
         }
 
-        if (
-          fragrance.profile ===
-          cartFragrance?.profile
-        ) {
+        if (fragrance.profile === cartFragrance?.profile) {
           score += 2;
         }
 
-        if (
-          fragrance.season ===
-          cartFragrance?.season
-        ) {
+        if (fragrance.season === cartFragrance?.season) {
           score += 1;
         }
 
@@ -148,11 +115,7 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
   if (!isOpen) return null;
 
   const subtotal = cartTotal;
-
-  const progressPercent = Math.min(
-    (subtotal / 1500) * 100,
-    100
-  );
+  const progressPercent = Math.min((subtotal / 1500) * 100, 100);
 
   const nextReward =
     subtotal < 400
@@ -175,12 +138,7 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
       : 100;
 
   const total = subtotal + delivery;
-
-  const originalTotal = cart.reduce(
-    (total, item) => total + item.price * item.quantity,
-    0
-  );
-
+  const originalTotal = cart.reduce((total, item) => total + item.price * item.quantity, 0);
   const savings = originalTotal - subtotal;
 
   const rewardMessage =
@@ -200,23 +158,18 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
     const orderLines = cart
       .map((item) => {
         const itemPrice = getWholesalePrice(item);
-        return `• ${item.title} (${item.size}) x${item.quantity} - R${
-          (itemPrice * item.quantity).toFixed(2)
-        }${wholesaleActive ? " (Wholesale)" : ""}`;
+        return `• ${item.title} (${item.size}) x${item.quantity} - R${(
+          itemPrice * item.quantity
+        ).toFixed(2)}${wholesaleActive ? " (Wholesale)" : ""}`;
       })
       .join("\n");
 
     const message = `🌹 MAISON SKYE & ROSE
 Thank you for choosing Maison Skye & Rose.
-
 ${wholesaleActive ? "WHOLESALE ORDER\n\n" : ""}ORDER SUMMARY
 ${orderLines}
-
-${rewardMessage ? `🎁 REWARDS UNLOCKED
-
-${rewardMessage}
-
-` : ""}Subtotal: R${subtotal.toFixed(2)}
+${rewardMessage ? `🎁 REWARDS UNLOCKED\n${rewardMessage}\n` : ""}
+Subtotal: R${subtotal.toFixed(2)}
 Delivery: ${delivery === 0 ? "FREE" : `R${delivery.toFixed(2)}`}
 TOTAL: R${total.toFixed(2)}
 
@@ -227,21 +180,14 @@ Delivery Area:
 
 A member of our team will confirm your order and delivery details shortly.`;
 
-    window.open(
-      `https://wa.me/27696863952?text=${encodeURIComponent(message)}`,
-      `_blank`
-    );
+    window.open(`https://wa.me/27696863952?text=${encodeURIComponent(message)}`, `_blank`);
   };
 
   return (
-    <div className="fixed z-50 bg-[#fffdfb]/95 backdrop-blur-md bottom-0 left-0 right-0 md:bottom-6 md:right-6 md:left-auto w-full md:w-[420px] md:rounded-[32px] border border-black/5 shadow-[0_-10px_40px_rgba(0,0,0,0.08)] md:shadow-[0_25px_80px_rgba(0,0,0,0.12)] flex flex-col max-h-[85vh] md:max-h-[none]">
+    <div className="fixed z-50 bg-[#fffdfb]/95 backdrop-blur-md bottom-0 left-0 right-0 md:bottom-6 md:right-6 md:left-auto w-full md:w-[420px] md:rounded-[32px] border border-black/5 shadow-[0_-10px_40px_rgba(0,0,0,0.08)] md:shadow-[0_25px_80px_rgba(0,0,0,0.12)] flex flex-col h-screen md:h-[85vh] overflow-hidden">
+      
       {/* Mobile Drag/Close Handle Area */}
-      <div
-        className="flex justify-center pt-3 md:hidden cursor-pointer"
-        onClick={onClose}
-      >
-        <div className="h-1.5 w-12 rounded-full bg-zinc-300" />
-      </div>
+      <div className="w-12 h-1.5 bg-zinc-300/60 rounded-full mx-auto mt-3 shrink-0 md:hidden" />
 
       {/* Header Section */}
       <div className="p-6 pb-4 flex items-center justify-between">
@@ -258,9 +204,7 @@ A member of our team will confirm your order and delivery details shortly.`;
               <p className="text-xs font-bold uppercase tracking-widest text-green-700">
                 Wholesale Pricing Active
               </p>
-              <p className="mt-1 text-xs text-green-600">
-                Mix & Match pricing applied
-              </p>
+              <p className="mt-1 text-xs text-green-600">Mix & Match pricing applied</p>
               <p className="mt-1 text-xs font-semibold text-green-700">
                 ✓ Free Delivery Included
               </p>
@@ -270,58 +214,6 @@ A member of our team will confirm your order and delivery details shortly.`;
               <p className="text-xs font-bold uppercase tracking-widest text-[#b67d73]">
                 Wholesale Available
               </p>
-              
-              <div className="mt-2 space-y-1">
-                <p
-                  className={`text-xs ${
-                    subtotal >= 400
-                      ? "text-green-600 font-semibold"
-                      : "text-zinc-500"
-                  }`}
-                >
-                  {subtotal >= 400
-                    ? "✓ 1 Free 5ml Sample Unlocked"
-                    : `Only R${(400 - subtotal).toFixed(0)} away from a FREE 5ml Sample`}
-                </p>
-
-                <p
-                  className={`text-xs ${
-                    subtotal >= 700
-                      ? "text-green-600 font-semibold"
-                      : "text-zinc-500"
-                  }`}
-                >
-                  {subtotal >= 700
-                    ? "✓ 2 Free 5ml Samples Unlocked"
-                    : `Only R${Math.max(0, 700 - subtotal).toFixed(0)} away from 2 FREE Samples`}
-                </p>
-
-                <p
-                  className={`text-xs ${
-                    subtotal >= 1000
-                      ? "text-green-600 font-semibold"
-                      : "text-zinc-500"
-                  }`}
-                >
-                  {subtotal >= 1000
-                    ? "✓ 3 Free 5ml Samples Unlocked"
-                    : `Only R${Math.max(0, 1000 - subtotal).toFixed(0)} away from 3 FREE Samples`}
-                </p>
-
-                <p
-                  className={`text-xs ${
-                    subtotal >= 1500
-                      ? "text-green-600 font-semibold"
-                      : "text-zinc-500"
-                  }`}
-                >
-                  {subtotal >= 2000
-                    ? "✓ Discovery Set + Free Delivery"
-                    : subtotal >= 1500
-                    ? "✓ Discovery Set Unlocked"
-                    : `Only R${Math.max(0, 1500 - subtotal).toFixed(0)} away from a Discovery Set`}
-                </p>
-              </div>
 
               <div className="mt-2 h-2 overflow-hidden rounded-full bg-white">
                 <div
@@ -350,7 +242,7 @@ A member of our team will confirm your order and delivery details shortly.`;
       </div>
 
       {/* Scrollable Products Area */}
-      <div className="px-6 flex-1 max-h-[50vh] md:max-h-[45vh] space-y-4 overflow-y-auto pr-4 scrollbar-thin">
+      <div className="px-6 flex-1 min-h-0 overflow-y-auto space-y-4 pr-4">
         {(!cart || cart.length === 0) && (
           <div className="rounded-3xl bg-[#f5f1eb] p-8 text-center my-4">
             <p className="text-sm text-zinc-500">
@@ -434,7 +326,8 @@ A member of our team will confirm your order and delivery details shortly.`;
       </div>
 
       {/* Sticky Conversion Footer */}
-      <div className="border-t border-black/10 bg-gradient-to-b from-white to-[#fcfaf8] p-5 md:p-6 md:rounded-b-[32px]">
+      {/* Final Polish Fix: Adjusted max-h configuration constraint down to 35vh */}
+      <div className="shrink-0 border-t border-black/10 bg-gradient-to-b from-white to-[#fcfaf8] p-5 md:p-6 md:rounded-b-[32px] max-h-[35vh] overflow-y-auto">
         <div className="flex justify-between text-sm">
           <span>Subtotal</span>
           <span className="font-bold">R{subtotal.toFixed(2)}</span>
@@ -542,7 +435,7 @@ A member of our team will confirm your order and delivery details shortly.`;
 
           {showRecommendations && (
             <>
-              {/* Favorites Recommendations Subsection (v4.0.2 UI) */}
+              {/* Favorites Recommendations Subsection */}
               {favoriteRecommendations.length > 0 && (
                 <div className="py-4 border-t border-black/5 bg-[#fbf9f6] -mx-5 md:-mx-6 px-5 md:px-6">
                   <p className="text-[10px] uppercase tracking-[0.2em] font-bold text-zinc-400 mb-3">

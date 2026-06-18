@@ -3,12 +3,12 @@
 import { useState } from "react";
 import Navbar from "../components/Navbar";
 import ProductCard from "../components/ProductCard";
-import QuickAddModal from "../components/QuickAddModal";
+
 import { fragrances } from "../data/fragrances";
 import { useFavorites } from "../context/FavoritesContext";
 
 export default function BestSellersPage() {
-  const [selectedFragrance, setSelectedFragrance] = useState<any>(null);
+  
   const { favorites, addToFavorites, removeFromFavorites } = useFavorites();
 
   const products = fragrances.filter((item) => item.bestSeller);
@@ -45,23 +45,14 @@ export default function BestSellersPage() {
                 <ProductCard
                   key={fragrance.title}
                   {...fragrance}
-                  onQuickAdd={() => setSelectedFragrance(fragrance)}
+                  onQuickAdd={() => window.location.href = `/product/${fragrance.title.toLowerCase().replace(/\s+/g,"-")}`}
                 />
               ))}
             </div>
           )}
         </div>
       </section>
-
-      {selectedFragrance && (
-        <QuickAddModal
-          open={true}
-          onClose={() => setSelectedFragrance(null)}
-          title={selectedFragrance.title}
-          images={selectedFragrance.images}
-          prices={selectedFragrance.prices}
-        />
-      )}
     </main>
   );
 }
+

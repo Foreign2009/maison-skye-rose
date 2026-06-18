@@ -4,12 +4,12 @@ import { useState } from "react";
 
 import Navbar from "../../components/Navbar";
 import ProductCard from "../../components/ProductCard";
-import QuickAddModal from "../../components/QuickAddModal";
+
 
 import { fragrances } from "../../data/fragrances";
 
 export default function EliteCollectionPage() {
-  const [selectedFragrance, setSelectedFragrance] = useState<any>(null);
+  
 
   const products = fragrances.filter(
     (item) => item.collection === "Elite"
@@ -40,22 +40,14 @@ export default function EliteCollectionPage() {
             <ProductCard
               key={fragrance.title}
               {...fragrance}
-              onQuickAdd={() => setSelectedFragrance(fragrance)}
+              onQuickAdd={() => window.location.href = `/product/${fragrance.title.toLowerCase().replace(/\s+/g,"-")}`}
             />
           ))}
         </div>
       </section>
 
       {/* QUICK ADD MODAL PORTAL */}
-      {selectedFragrance && (
-        <QuickAddModal
-          open={true}
-          onClose={() => setSelectedFragrance(null)}
-          title={selectedFragrance.title}
-          images={selectedFragrance.images}
-          prices={selectedFragrance.prices}
-        />
-      )}
     </main>
   );
 }
+

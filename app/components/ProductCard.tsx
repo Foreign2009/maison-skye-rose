@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { Heart } from "lucide-react";
 import { useFavorites } from "../context/FavoritesContext";
 
@@ -33,6 +34,10 @@ export default function ProductCard({
 }: ProductCardProps) {
   const { addToFavorites, removeFromFavorites, isFavorite } = useFavorites();
   const favorite = isFavorite(title);
+
+  const productSlug = title
+    .toLowerCase()
+    .replace(/\s+/g, "-");
 
   const saveRecentlyViewed = () => {
     const existing = JSON.parse(localStorage.getItem("recentlyViewed") || "[]");
@@ -82,9 +87,10 @@ export default function ProductCard({
       </button>
 
       {/* Premium Upgrade: Compressed height on mobile to bring focus up */}
-      <div 
-        onClick={handleCardClick} 
-        className="relative flex h-[140px] md:h-[280px] cursor-pointer items-center justify-center rounded-[24px] bg-gradient-to-br from-pink-50 to-blue-50 p-3 md:p-4"
+      <Link
+        href={`/product/${productSlug}`}
+        onClick={saveRecentlyViewed}
+        className="relative flex h-[110px] md:h-[280px] cursor-pointer items-center justify-center rounded-[24px] bg-gradient-to-br from-pink-50 to-blue-50 p-3 md:p-4"
       >
         <Image
           src={images["10ml"]}
@@ -95,10 +101,17 @@ export default function ProductCard({
           priority
           unoptimized
         />
-      </div>
+      </Link>
 
-      <div className="mt-4 md:mt-6 flex flex-1 flex-col">
-        <h3 className="min-h-[40px] md:min-h-[64px] text-base md:text-2xl font-black text-[#4f4a52] leading-tight">{title}</h3>
+      <div className="mt-2 md:mt-6 flex flex-1 flex-col">
+        <Link
+          href={`/product/${productSlug}`}
+          onClick={saveRecentlyViewed}
+        >
+          <h3 className="min-h-[32px] md:min-h-[64px] text-sm md:text-2xl font-black text-[#4f4a52] leading-tight hover:text-[#d89ca4] transition-colors">
+            {title}
+          </h3>
+        </Link>
         
         {/* Luxury mobile rule: Kept subtitle on desktop, hidden on mobile */}
         <p className="hidden md:block mt-2 min-h-[40px] text-sm font-semibold text-[#d89ca4]">{subtitle}</p>
@@ -120,7 +133,7 @@ export default function ProductCard({
           <p className="text-sm text-[#7b7480]">{profile} • {season}</p>
         </div>
 
-        <div className="mt-auto pt-4 md:pt-8">
+        <div className="mt-auto pt-2 md:pt-8">
           <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
             <div>
               <p className="text-[10px] md:text-xs uppercase text-[#7b7480]">From</p>
@@ -129,17 +142,17 @@ export default function ProductCard({
                 R{prices["5ml"]}
               </p>
 
-              <p className="mt-1 text-[10px] md:text-xs font-medium text-[#d89ca4]">
+              <p className="hidden md:block mt-1 text-[10px] md:text-xs font-medium text-[#d89ca4]">
                 🎁 Free 5ml Sample over R400
               </p>
 
-              <p className="text-[10px] md:text-xs text-[#7b7480]">
+              <p className="hidden md:block text-[10px] md:text-xs text-[#7b7480]">
                 30ml offers the best value
               </p>
             </div>
             <button
               onClick={handleCardClick}
-              className="w-full md:w-auto rounded-full bg-gradient-to-r from-pink-400 to-blue-400 px-3 md:px-6 py-2 md:py-3 text-xs md:text-sm font-bold text-white shadow-lg transition-all hover:scale-105 hover:shadow-xl"
+              className="w-full rounded-full bg-gradient-to-r from-pink-400 to-blue-400 px-3 md:px-6 py-1.5 md:py-3 text-xs md:text-sm font-bold text-white shadow-lg transition-all hover:scale-105 hover:shadow-xl"
             >
               Quick Add
             </button>

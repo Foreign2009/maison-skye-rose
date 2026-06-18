@@ -3,9 +3,10 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ShoppingBag, Menu, X, User, Sparkles, Heart } from "lucide-react";
+import { ShoppingBag, Menu, X, User, Heart } from "lucide-react";
 import { useCart } from "../context/CartContext";
 import { useFavorites } from "../context/FavoritesContext";
+import { useCartUI } from "../context/CartUIContext";
 import MiniCart from "./MiniCart";
 
 // Optimized: Static array defined outside the component scope to preserve performance memory allocations
@@ -19,8 +20,8 @@ const ANNOUNCEMENTS = [
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const [isCartOpen, setIsCartOpen] = useState(false);
   const pathname = usePathname();
+  const { cartOpen, openCart, closeCart } = useCartUI();
   
   const { cart } = useCart();
   const totalItems = (cart || []).reduce((acc, item) => acc + item.quantity, 0);
@@ -57,21 +58,21 @@ export default function Navbar() {
   return (
     <>
       {/* Change 7 — Taller Announcement Bar */}
-      <div className="fixed top-0 left-0 right-0 z-50 bg-[#4f4a52] text-white text-[11px] uppercase tracking-[0.2em] font-semibold h-10 flex items-center justify-center select-none">
+      <div className="fixed top-0 left-0 right-0 z-50 bg-[#4f4a52] text-white text-[10px] uppercase tracking-[0.2em] font-semibold h-8 flex items-center justify-center select-none">
         <span key={currentAnnouncement} className="animate-fade-in">
           {ANNOUNCEMENTS[currentAnnouncement]}
         </span>
       </div>
 
-      {/* Main Top Navigation Frame — Shifted top-10 to account for taller announcement bar */}
-      <nav className="fixed top-10 left-0 right-0 z-40 bg-white border-b border-black/5 py-1 transition-all duration-300">
+      {/* Main Top Navigation Frame — Shifted top-8 to account for taller announcement bar */}
+      <nav className="fixed top-8 left-0 right-0 z-40 bg-white border-b border-black/5 py-1 transition-all duration-300">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           
-          {/* Change 2 & 8 — Increased Height and Tightened Brand Framing Gap */}
-          <div className="grid h-16 md:h-[86px] grid-cols-[1fr_auto_1fr] items-center gap-4 lg:gap-5">
+          {/* Updated Structure: Grid container for clean luxury proportion calculations */}
+          <div className="relative h-14 md:h-[86px] grid grid-cols-[1fr_auto_1fr] items-center">
             
             {/* Left Column: Mobile Hamburger Toggle OR Desktop Links (Left-Wing) */}
-            <div className="flex items-center">
+            <div className="hidden md:flex items-center justify-end gap-8 pr-12">
               {/* Mobile Menu Toggle */}
               <div className="flex md:hidden">
                 <button
@@ -100,20 +101,20 @@ export default function Navbar() {
               </div>
             </div>
 
-            {/* Center Column: Change 3 & 4 — Scaled Dominant Luxury Center Brand Frame */}
-            <div className="flex justify-center text-center px-4 md:px-8">
-              <Link href="/" className="group block select-none max-w-full overflow-hidden cursor-pointer">
-                <h1 className="text-base md:text-[2rem] font-extrabold tracking-[0.30em] uppercase text-[#4f4a52] transition-colors group-hover:text-black whitespace-nowrap leading-none">
+            {/* Center Column: Flex Layout Luxury Center Brand Frame */}
+            <div className="flex justify-center">
+              <Link
+                href="/"
+                className="group block select-none max-w-full overflow-hidden cursor-pointer pointer-events-auto"
+              >
+                <h1 className="text-[10px] md:text-[1.85rem] font-extrabold tracking-[0.14em] uppercase text-[#4f4a52] transition-colors group-hover:text-black whitespace-nowrap leading-none">
                   SKYE & ROSE
                 </h1>
-                <p className="text-[9px] md:text-[11px] uppercase tracking-[0.60em] text-[#d89ca4] font-semibold mt-1.5 mr-[-0.60em] whitespace-nowrap">
-                  Maison de Parfum
-                </p>
               </Link>
             </div>
 
             {/* Right Column: Desktop Links (Right-Wing) paired with Utility Icons */}
-            <div className="flex items-center justify-end gap-4 lg:gap-6">
+            <div className="flex items-center justify-start gap-8 pl-12">
               
               {/* Desktop Right-Wing Navigation Items — Change 1 & 6 */}
               <div className="hidden md:flex items-center gap-4 lg:gap-6">
@@ -125,7 +126,6 @@ export default function Navbar() {
                       pathname === link.href ? "text-[#d89ca4]" : "text-[#4f4a52]"
                     }`}
                   >
-                    {link.icon && <Sparkles className="h-3 w-3 text-[#d89ca4] animate-pulse" />}
                     {link.label}
                     <span className="absolute -bottom-2 left-0 h-[1px] w-0 bg-[#d89ca4] transition-all duration-300 group-hover:w-full" />
                   </Link>
@@ -167,7 +167,7 @@ export default function Navbar() {
                 </Link>
 
                 <button
-                  onClick={() => setIsCartOpen(true)}
+                  onClick={openCart}
                   className="group relative flex items-center p-1 text-[#4f4a52] hover:text-[#d89ca4] transition-colors"
                   aria-label="Open Cart"
                 >
@@ -200,7 +200,6 @@ export default function Navbar() {
                   pathname === link.href ? "text-[#d89ca4]" : "text-[#4f4a52]"
                 }`}
               >
-                {link.icon && <Sparkles className="h-4 w-4 text-[#d89ca4]" />}
                 {link.label}
               </Link>
             ))}
@@ -224,7 +223,9 @@ export default function Navbar() {
       </nav>
 
       {/* MiniCart Sidebar */}
-      <MiniCart isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
+      <MiniCart isOpen={cartOpen} onClose={closeCart} />
     </>
   );
 }
+
+

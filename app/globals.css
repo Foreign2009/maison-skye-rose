@@ -36,8 +36,21 @@ body {
 /* SCROLLBAR */
 
 ::-webkit-scrollbar {
-  width: 0px;
-  height: 0px;
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f5f1eb;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d89ca4;
+  border-radius: 999px;
+  border: 2px solid #f5f1eb;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #c88a93;
 }
 
 /* FADE UP */

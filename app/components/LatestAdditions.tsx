@@ -42,13 +42,13 @@ export default function LatestAdditions() {
             <ProductCard
               key={fragrance.title}
               {...fragrance}
-              onQuickAdd={() => setSelectedFragrance(fragrance)}
+              onQuickAdd={() => window.location.href = `/product/${fragrance.title.toLowerCase().replace(/\s+/g,"-")}`}
             />
           ))}
         </div>
       </div>
 
-      {selectedFragrance && (
+      {false && (
         <QuickAddModal
           open={true}
           onClose={() => setSelectedFragrance(null)}
@@ -58,3 +58,4 @@ export default function LatestAdditions() {
     </section>
   );
 }
+

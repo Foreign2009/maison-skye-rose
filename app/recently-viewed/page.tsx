@@ -1,114 +1,77 @@
 "use client";
 
 import { useEffect, useState } from "react";
-
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import ProductCard from "../components/ProductCard";
-import QuickAddModal from "../components/QuickAddModal";
-
-
-import { fragrances } from "../data/fragrances";
 
 export default function RecentlyViewedPage() {
-  const [recentlyViewed, setRecentlyViewed] = useState<any[]>([]);
-  const [selectedFragrance, setSelectedFragrance] = useState<any>(null);
+  const [items, setItems] = useState<any[]>([]);
 
   useEffect(() => {
-    const viewed = JSON.parse(
-      localStorage.getItem("recentlyViewed") || "[]"
-    );
+    const stored = localStorage.getItem("recentlyViewed");
 
-    setRecentlyViewed(viewed);
+    if (stored) {
+      setItems(JSON.parse(stored));
+    }
   }, []);
-
-  const clearHistory = () => {
-    localStorage.removeItem("recentlyViewed");
-    setRecentlyViewed([]);
-  };
-
-  const recentProducts = fragrances.filter((fragrance) =>
-    recentlyViewed.some((item: any) => item.title === fragrance.title)
-  );
 
   return (
     <main className="min-h-screen bg-[#f5f1eb] text-[#1a1a1a]">
-      {/* NAVBAR */}
       <Navbar />
 
-      {/* HERO */}
-      <section className="px-6 pb-14 pt-24">
-        <div className="mx-auto max-w-7xl">
+      <section className="px-6 pt-40 pb-14">
+        <div className="mx-auto max-w-7xl text-center">
           <p className="mb-5 text-sm uppercase tracking-[0.35em] text-zinc-500">
-            Your Collection
+            Your Journey
           </p>
 
-          <h1 className="text-5xl font-black uppercase leading-[0.95] tracking-[-0.05em] md:text-7xl">
+          <h1 className="text-5xl md:text-6xl font-black uppercase tracking-[-0.05em]">
             Recently
-            <span className="block text-[#b67d73]">Viewed</span>
+            <span className="block text-[#b67d73]">
+              Viewed
+            </span>
           </h1>
 
-          <p className="mt-8 max-w-2xl text-lg leading-8 text-zinc-600">
-            Fragrances you recently viewed will appear here for quick access.
+          <p className="mx-auto mt-8 max-w-2xl text-lg leading-8 text-zinc-600">
+            Continue exploring fragrances you've recently discovered.
           </p>
         </div>
       </section>
 
-      {/* RECENTLY VIEWED GRID */}
       <section className="px-6 pb-28">
         <div className="mx-auto max-w-7xl">
-          {recentProducts.length === 0 ? (
+
+          {items.length === 0 ? (
             <div className="rounded-[40px] bg-white p-14 text-center shadow-sm">
-              <h2 className="text-3xl font-black uppercase">No Recently Viewed Products</h2>
+              <h2 className="text-3xl font-black uppercase">
+                No Recently Viewed Fragrances
+              </h2>
+
               <p className="mx-auto mt-6 max-w-xl text-base leading-8 text-zinc-600">
-                Browse fragrances and open product cards to build your recently viewed collection.
+                Start exploring fragrances and they'll appear here automatically.
               </p>
             </div>
           ) : (
-            <>
-              <div className="mb-8 text-right">
-                <button
-                  onClick={clearHistory}
-                  className="rounded-full border border-zinc-300 px-5 py-3 text-sm font-bold transition hover:bg-zinc-100"
-                >
-                  Clear History
-                </button>
-              </div>
-              <div className="grid gap-6 md:grid-cols-3">
-                {recentProducts.map((fragrance) => (
-                  <ProductCard
-                    key={fragrance.title}
-                    title={fragrance.title}
-                    subtitle={fragrance.subtitle}
-                    mood={fragrance.mood}
-                    profile={fragrance.profile}
-                    season={fragrance.season}
-                    notes={fragrance.notes}
-                    prices={fragrance.prices}
-                    images={fragrance.images}
-                    bestSeller={fragrance.bestSeller}
-                    newArrival={fragrance.newArrival}
-                    onQuickAdd={() => setSelectedFragrance(fragrance)}
-                  />
-                ))}
-              </div>
-            </>
+            <div className="grid gap-6 md:grid-cols-3">
+              {items.map((item) => (
+                <ProductCard
+                  key={item.title}
+                  {...item}
+                  onQuickAdd={() =>
+                    (window.location.href =
+                      `/product/${item.title
+                        .toLowerCase()
+                        .replace(/\s+/g, "-")}`)
+                  }
+                />
+              ))}
+            </div>
           )}
+
         </div>
       </section>
 
-      {/* QUICK ADD MODAL PORTAL */}
-      {selectedFragrance && (
-        <QuickAddModal
-          open={true}
-          onClose={() => setSelectedFragrance(null)}
-          title={selectedFragrance.title}
-          images={selectedFragrance.images}
-          prices={selectedFragrance.prices}
-        />
-      )}
-
-      {/* FOOTER */}
       <Footer />
     </main>
   );

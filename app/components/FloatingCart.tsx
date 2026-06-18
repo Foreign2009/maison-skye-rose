@@ -24,7 +24,7 @@ export default function FloatingCart() {
 
     <AnimatePresence>
 
-      {cartCount > 0 && (
+      {false && (
 
         <motion.div
           initial={{
@@ -171,3 +171,4 @@ export default function FloatingCart() {
   );
 
 }
+

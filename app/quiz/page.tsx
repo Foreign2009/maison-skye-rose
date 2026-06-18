@@ -150,13 +150,9 @@ export default function QuizPage() {
       <Navbar />
 
       {/* HERO */}
-      <section className="px-5 pb-12 pt-32">
-        <div className="mx-auto max-w-4xl text-center">
-          <p className="text-[11px] uppercase tracking-[0.45em] text-[#d89ca4]">
-            Maison Skye & Rose
-          </p>
-
-          <h1 className="mt-5 text-5xl font-black tracking-[-0.08em] text-[#4f4a52] sm:text-6xl">
+      <section className="px-6 pb-14 pt-40">
+        <div className="mx-auto max-w-3xl text-center">
+          <h1 className="mt-5 text-5xl md:text-6xl font-black tracking-[-0.08em] text-[#4f4a52]">
             Maison AI Scent Finder
           </h1>
 
