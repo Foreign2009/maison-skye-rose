@@ -69,10 +69,10 @@ export default function Navbar() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           
           {/* Updated Structure: Grid container for clean luxury proportion calculations */}
-          <div className="relative h-14 md:h-[86px] grid grid-cols-[1fr_auto_1fr] items-center">
+          <div className="relative h-12 md:h-[86px] grid grid-cols-[1fr_auto_1fr] items-center">
             
             {/* Left Column: Mobile Hamburger Toggle OR Desktop Links (Left-Wing) */}
-            <div className="hidden md:flex items-center justify-end gap-8 pr-12">
+            <div className="flex items-center justify-start md:justify-end gap-8 md:pr-12">
               {/* Mobile Menu Toggle */}
               <div className="flex md:hidden">
                 <button
@@ -102,19 +102,20 @@ export default function Navbar() {
             </div>
 
             {/* Center Column: Flex Layout Luxury Center Brand Frame */}
-            <div className="flex justify-center">
+            <div className="flex justify-center md:justify-center">
               <Link
                 href="/"
                 className="group block select-none max-w-full overflow-hidden cursor-pointer pointer-events-auto"
               >
-                <h1 className="text-[10px] md:text-[1.85rem] font-extrabold tracking-[0.14em] uppercase text-[#4f4a52] transition-colors group-hover:text-black whitespace-nowrap leading-none">
+                {/* Updated to text-[15px] on mobile */}
+                <h1 className="text-[15px] md:text-[1.85rem] font-extrabold tracking-[0.14em] uppercase text-[#4f4a52] transition-colors group-hover:text-black whitespace-nowrap leading-none">
                   SKYE & ROSE
                 </h1>
               </Link>
             </div>
 
             {/* Right Column: Desktop Links (Right-Wing) paired with Utility Icons */}
-            <div className="flex items-center justify-start gap-8 pl-12">
+            <div className="flex items-center justify-end md:justify-start gap-2 md:gap-8 pl-0 md:pl-12">
               
               {/* Desktop Right-Wing Navigation Items — Change 1 & 6 */}
               <div className="hidden md:flex items-center gap-4 lg:gap-6">
@@ -133,7 +134,7 @@ export default function Navbar() {
               </div>
 
               {/* Functional Icon Group */}
-              <div className="flex items-center gap-4 ml-2">
+              <div className="flex items-center gap-3 md:gap-4 ml-0 md:ml-2">
                 <Link
                   href="/favorites"
                   className="relative text-[#4f4a52] hover:text-[#d89ca4] transition-colors"
@@ -227,5 +228,3 @@ export default function Navbar() {
     </>
   );
 }
-
-

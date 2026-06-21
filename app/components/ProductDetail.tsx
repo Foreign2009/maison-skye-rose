@@ -12,7 +12,7 @@ export default function ProductDetail({
   fragrance: any;
 }) {
   const [selectedSize, setSelectedSize] =
-    useState<"5ml" | "10ml" | "30ml">("5ml");
+    useState<"5ml" | "10ml" | "30ml">("10ml");
     
   const [showStickyBar, setShowStickyBar] = useState(false);
 
@@ -21,7 +21,7 @@ export default function ProductDetail({
 
   useEffect(() => {
     const handleScroll = () => {
-      setShowStickyBar(window.scrollY > 250);
+      setShowStickyBar(window.scrollY > 500);
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -46,21 +46,42 @@ export default function ProductDetail({
   return (
     <>
       {/* Breadcrumb section */}
-      <section className="px-4 md:px-6 pt-24 md:pt-28 pb-12">
+      <section className="px-4 md:px-6 pt-16 md:pt-28 pb-6">
         <div className="hidden md:block mx-auto mb-8 max-w-7xl">
           <p className="text-sm text-zinc-500">
             Shop / {fragrance.collection} / {fragrance.title}
           </p>
         </div>
 
-        <div className="mx-auto max-w-7xl grid gap-5 md:p-8 lg:grid-cols-2">
+        <div className="mx-auto max-w-7xl grid gap-3 md:p-8 lg:grid-cols-2">
 
-          <div>
+          {/* Product Gallery */}
+          <div className="flex flex-col items-center">
             <img
               src={fragrance.images[selectedSize]}
               alt={fragrance.title}
-              className="mx-auto max-w-[220px] md:max-w-none rounded-2xl bg-white p-2 md:p-12 shadow-lg object-contain"
+              className="mx-auto max-w-[160px] rounded-3xl bg-white p-6 shadow-lg object-contain"
             />
+
+            <div className="mt-4 flex gap-3">
+              {(["5ml", "10ml", "30ml"] as const).map((size) => (
+                <button
+                  key={size}
+                  onClick={() => setSelectedSize(size)}
+                  className={`rounded-xl border p-2 transition ${
+                    selectedSize === size
+                      ? "border-[#d89ca4] bg-[#fff7f8]"
+                      : "border-[#efe8e1]"
+                  }`}
+                >
+                  <img
+                    src={fragrance.images[size]}
+                    alt={size}
+                    className="h-16 w-16 object-contain"
+                  />
+                </button>
+              ))}
+            </div>
           </div>
 
           <div>
@@ -68,7 +89,7 @@ export default function ProductDetail({
               {fragrance.collection}
             </p>
 
-            <h1 className="mt-1 text-[2rem] md:text-5xl font-black tracking-[-0.05em] text-[#4f4a52]">
+            <h1 className="mt-1 text-[1.8rem] leading-none md:text-5xl font-black tracking-[-0.05em] text-[#4f4a52]">
               {fragrance.title}
             </h1>
 
@@ -76,17 +97,17 @@ export default function ProductDetail({
               {fragrance.subtitle}
             </p>
 
-            <div className="mt-3 flex flex-wrap gap-2">
-              <span className="rounded-full bg-white px-3 py-1.5 text-xs font-medium shadow-sm">
+            <div className="mt-2 flex flex-wrap gap-1.5">
+              <span className="rounded-full bg-white px-2.5 py-1 text-[11px] font-medium shadow-sm">
                 {fragrance.profile}
               </span>
 
-              <span className="rounded-full bg-white px-3 py-1.5 text-xs font-medium shadow-sm">
+              <span className="rounded-full bg-white px-2.5 py-1 text-[11px] font-medium shadow-sm">
                 {fragrance.season}
               </span>
 
               {fragrance.bestSeller && (
-                <span className="rounded-full bg-[#d89ca4] px-4 py-2 text-sm font-medium text-white">
+                <span className="rounded-full bg-[#d89ca4] px-3 py-1.5 text-xs font-medium text-white">
                   Best Seller
                 </span>
               )}
@@ -102,30 +123,46 @@ export default function ProductDetail({
               {fragrance.mood}
             </p>
 
-            <div className="mt-4">
-              <p className="text-4xl font-black text-[#4f4a52]">
+            <div className="mt-2">
+              <p className="text-2xl font-black text-[#4f4a52]">
                 R{fragrance.prices[selectedSize]}
               </p>
             </div>
 
-            <div className="mt-4">
+            <div className="mt-3">
               <p className="mb-3 text-sm font-semibold uppercase tracking-wider text-zinc-500">
                 Select Size
               </p>
 
+              {/* Premium Size Selector */}
               <div className="grid grid-cols-3 gap-3">
                 {(["5ml", "10ml", "30ml"] as const).map((size) => (
                   <button
                     key={size}
                     onClick={() => setSelectedSize(size)}
-                    className={`w-full rounded-2xl px-4 py-3 border transition-all font-semibold ${
+                    className={`w-full rounded-xl px-3 py-2 border transition-all font-semibold ${
                       selectedSize === size
-                        ? "bg-[#d89ca4] text-white border-[#d89ca4]"
+                        ? "bg-[#d89ca4] text-white border-[#d89ca4] shadow-lg scale-[1.02]"
                         : "bg-white border-[#efe8e1] hover:border-[#d89ca4]"
                     }`}
                   >
-                    <div>{size}</div>
-                    <div className="text-sm opacity-90">
+                    <div className="font-bold">{size}</div>
+
+                    <div className="text-[10px] opacity-90 mt-1">
+                      {size === "5ml" && "Perfect for Trying"}
+                      {size === "10ml" && (
+                        <span className="inline-block rounded-full bg-white/20 px-2 py-0.5">
+                          Most Popular
+                        </span>
+                      )}
+                      {size === "30ml" && (
+                        <span className="inline-block rounded-full bg-white/20 px-2 py-0.5">
+                          Best Value
+                        </span>
+                      )}
+                    </div>
+
+                    <div className="text-xs font-semibold mt-2">
                       R{fragrance.prices[size]}
                     </div>
                   </button>
@@ -133,33 +170,33 @@ export default function ProductDetail({
               </div>
             </div>
 
-            <div className="mt-6 rounded-2xl border border-[#efe8e1] bg-white p-4">
+            <div className="mt-4 rounded-2xl border border-[#efe8e1] bg-white p-4">
               🎁 Orders over R400 receive a FREE 5ml Sample
+            </div>
+
+            {/* Main Trust Signals Block */}
+            <div className="mt-4 space-y-2 text-sm text-zinc-600">
+              <p>✓ Nationwide South African Delivery</p>
+              <p>✓ 465+ Signature Fragrances Available</p>
+              <p>✓ Secure Checkout</p>
+              <p>✓ Luxury Inspired Fragrance Collection</p>
             </div>
 
             <button
               onClick={handleAddToCart}
-              className="mt-4 w-full rounded-2xl bg-[#d89ca4] py-4 font-bold text-white transition hover:opacity-90"
+              className="mt-3 w-full rounded-2xl bg-[#d89ca4] py-3 font-bold text-white transition hover:opacity-90"
             >
               Add To Cart
             </button>
 
-            {/* Note: Intentional placeholder hook shared with AddToCart for conversion sequence update later */}
             <button
               onClick={handleAddToCart}
-              className="mt-4 w-full rounded-2xl border-2 border-[#d89ca4] bg-transparent py-4 font-bold text-[#d89ca4] transition hover:bg-[#d89ca4] hover:text-white"
+              className="mt-3 w-full rounded-2xl border-2 border-[#d89ca4] bg-transparent py-3 font-bold text-[#d89ca4]"
             >
               Buy Now
             </button>
 
-            <div className="mt-4 space-y-3 text-sm text-zinc-600">
-              <p>✓ Nationwide South African Delivery</p>
-              <p>✓ Secure Checkout</p>
-              <p>✓ Luxury Inspired Fragrances</p>
-              <p>✓ FREE 5ml Sample Over R400</p>
-            </div>
-
-            <div className="mt-12 rounded-3xl border border-[#efe8e1] bg-white p-5 md:p-8">
+            <div className="mt-6 rounded-3xl border border-[#efe8e1] bg-white p-5 md:p-8">
               <h3 className="text-xl font-black text-[#4f4a52]">
                 Fragrance Profile
               </h3>
@@ -208,11 +245,11 @@ export default function ProductDetail({
 
       <section className="px-6 pb-24">
         <div className="mx-auto max-w-7xl">
-          <div className="rounded-3xl bg-white p-10 mb-12">
-            <h2 className="text-3xl font-black text-[#4f4a52]">
+          <div className="rounded-3xl bg-white p-6 md:p-10 mb-8 md:mb-12">
+            <h2 className="text-2xl md:text-3xl font-black text-[#4f4a52]">
               The Experience
             </h2>
-            <p className="mt-6 max-w-3xl leading-8 text-zinc-600">
+            <p className="mt-6 max-w-3xl leading-7 text-zinc-600">
               {fragrance.title} is designed for those who appreciate
               luxury, confidence and timeless style.
 
@@ -223,7 +260,7 @@ export default function ProductDetail({
             </p>
           </div>
 
-          <h2 className="mb-8 text-3xl font-black text-[#4f4a52]">
+          <h2 className="mb-8 text-2xl md:text-3xl font-black text-[#4f4a52]">
             Fragrance Notes
           </h2>
 
@@ -258,13 +295,12 @@ export default function ProductDetail({
         </div>
       </section>
 
-      <section className="px-6 pb-44 md:pb-32">
+      <section className="px-6 pb-52 md:pb-32">
         <div className="mx-auto max-w-7xl">
-          <h2 className="mb-8 text-3xl font-black text-[#4f4a52]">
+          <h2 className="mb-8 text-2xl md:text-3xl font-black text-[#4f4a52]">
             You May Also Like
           </h2>
 
-          {/* Fixed mobile stack footprint into clean double-column row matrix */}
           <div className="grid grid-cols-2 gap-3 md:gap-6 md:grid-cols-4">
             {fragrances
               .filter(
@@ -284,7 +320,7 @@ export default function ProductDetail({
                   <img
                     src={item.images["5ml"]}
                     alt={item.title}
-                    className="mx-auto h-32 md:h-40 object-contain"
+                    className="mx-auto h-24 md:h-40 object-contain"
                   />
                   <h3 className="mt-4 font-bold text-sm md:text-base">
                     {item.title}
@@ -299,14 +335,20 @@ export default function ProductDetail({
       </section>
 
       {showStickyBar && (
-        <div className="fixed bottom-0 left-0 right-0 z-50 border-t border-[#efe8e1] bg-white/95 backdrop-blur md:hidden">
+        <div className="fixed bottom-0 left-0 right-0 z-50 border-t border-[#efe8e1] bg-white/90 backdrop-blur-xl shadow-2xl md:hidden">
           <div className="flex items-center justify-between gap-3 px-4 py-3">
             <div>
+              {/* Dynamic conversion context added here */}
               <p className="text-xs uppercase tracking-wider text-zinc-400">
-                {selectedSize}
+                {selectedSize} • {
+                  selectedSize === "10ml"
+                    ? "Most Popular"
+                    : selectedSize === "30ml"
+                    ? "Best Value"
+                    : "Starter Size"
+                }
               </p>
-              {/* Added bounding width and text truncation safety rule */}
-              <h3 className="max-w-[140px] truncate font-bold text-[#4f4a52] leading-tight">
+              <h3 className="max-w-[120px] truncate font-bold text-[#4f4a52] leading-tight">
                 {fragrance.title}
               </h3>
               <p className="font-black text-[#d89ca4]">
