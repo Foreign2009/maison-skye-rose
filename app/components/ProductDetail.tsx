@@ -5,6 +5,7 @@ import { useCart } from "../context/CartContext";
 import { useCartUI } from "../context/CartUIContext";
 import Link from "next/link";
 import { fragrances } from "../data/fragrances";
+import { brand } from "../data/brand";
 
 export default function ProductDetail({
   fragrance,
@@ -60,6 +61,25 @@ export default function ProductDetail({
     });
 
     openCart();
+  };
+
+  const handleBuyNow = () => {
+    addToCart({
+      id: fragrance.title.toLowerCase().replace(/\s+/g, "-"),
+      title: fragrance.title,
+      price: fragrance.prices[selectedSize],
+      image: fragrance.images[selectedSize],
+      quantity: 1,
+      size: selectedSize,
+    });
+
+    const message = encodeURIComponent(
+      `Hi Maison Skye & Rose! 👋\n\nI'd like to order the following:\n\n🧴 Fragrance: ${fragrance.title}\n📦 Size: ${selectedSize}\n🔢 Quantity: 1\n💰 Price: R${fragrance.prices[selectedSize]}\n\nPlease let me know the total including delivery and send me the payment details.\n\nThank you!`
+    );
+
+    const whatsappUrl = `https://wa.me/${brand.social.whatsappNumber}?text=${message}`;
+
+    window.open(whatsappUrl, "_blank");
   };
 
   return (
@@ -209,7 +229,7 @@ export default function ProductDetail({
             </button>
 
             <button
-              onClick={handleAddToCart}
+              onClick={handleBuyNow}
               className="mt-3 w-full rounded-2xl border-2 border-[#d89ca4] bg-transparent py-3 font-bold text-[#d89ca4]"
             >
               Buy Now
