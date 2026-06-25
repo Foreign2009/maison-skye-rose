@@ -30,6 +30,25 @@ export default function ProductDetail({
       window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    const existing = JSON.parse(localStorage.getItem("recentlyViewed") || "[]");
+    const filtered = existing.filter((item: any) => item.title !== fragrance.title);
+    const entry = {
+      title: fragrance.title,
+      subtitle: fragrance.subtitle,
+      mood: fragrance.mood,
+      profile: fragrance.profile,
+      season: fragrance.season,
+      notes: fragrance.notes,
+      prices: fragrance.prices,
+      images: fragrance.images,
+    };
+    localStorage.setItem(
+      "recentlyViewed",
+      JSON.stringify([entry, ...filtered].slice(0, 12))
+    );
+  }, [fragrance.title]);
+
   const handleAddToCart = () => {
     addToCart({
       id: fragrance.title.toLowerCase().replace(/\s+/g, "-"),
