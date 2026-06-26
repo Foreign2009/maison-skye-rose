@@ -1,14 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import ProductCard from "./ProductCard";
 import QuickAddModal from "./QuickAddModal";
 import { fragrances } from "../data/fragrances";
 
 export default function LatestAdditions() {
-  const router = useRouter();
   const [selectedFragrance, setSelectedFragrance] = useState<any>(null);
+  const [quickOpen, setQuickOpen] = useState(false);
 
   // Logic to mix collections: Skye, Rose, Elite
   const skye = fragrances.filter((f) => f.collection === "Skye");
@@ -44,17 +43,19 @@ export default function LatestAdditions() {
             <ProductCard
               key={fragrance.title}
               {...fragrance}
-              onQuickAdd={() => router.push(`/product/${fragrance.title.toLowerCase().replace(/\s+/g,"-")}`)}
+              onQuickAdd={() => { setSelectedFragrance(fragrance); setQuickOpen(true); }}
             />
           ))}
         </div>
       </div>
 
-      {false && (
+      {selectedFragrance && (
         <QuickAddModal
-          open={true}
-          onClose={() => setSelectedFragrance(null)}
-          {...selectedFragrance}
+          open={quickOpen}
+          onClose={() => setQuickOpen(false)}
+          title={selectedFragrance.title}
+          images={selectedFragrance.images}
+          prices={selectedFragrance.prices}
         />
       )}
     </section>

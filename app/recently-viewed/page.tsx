@@ -1,14 +1,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import ProductCard from "../components/ProductCard";
+import QuickAddModal from "../components/QuickAddModal";
 
 export default function RecentlyViewedPage() {
-  const router = useRouter();
   const [items, setItems] = useState<any[]>([]);
+  const [selectedFragrance, setSelectedFragrance] = useState<any>(null);
+  const [quickOpen, setQuickOpen] = useState(false);
 
   useEffect(() => {
     const stored = localStorage.getItem("recentlyViewed");
@@ -79,12 +80,7 @@ export default function RecentlyViewedPage() {
                 <ProductCard
                   key={item.title}
                   {...item}
-                  onQuickAdd={() =>
-                    router.push(
-                      `/product/${item.title
-                        .toLowerCase()
-                        .replace(/\s+/g, "-")}`)
-                  }
+                  onQuickAdd={() => { setSelectedFragrance(item); setQuickOpen(true); }}
                 />
               ))}
             </div>
@@ -92,6 +88,16 @@ export default function RecentlyViewedPage() {
 
         </div>
       </section>
+
+      {selectedFragrance && (
+        <QuickAddModal
+          open={quickOpen}
+          onClose={() => setQuickOpen(false)}
+          title={selectedFragrance.title}
+          images={selectedFragrance.images}
+          prices={selectedFragrance.prices}
+        />
+      )}
 
       <Footer />
     </main>

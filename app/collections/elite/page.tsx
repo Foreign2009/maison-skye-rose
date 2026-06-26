@@ -1,16 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
-
 import Navbar from "../../components/Navbar";
 import ProductCard from "../../components/ProductCard";
-
+import QuickAddModal from "../../components/QuickAddModal";
 
 import { fragrances } from "../../data/fragrances";
 
 export default function EliteCollectionPage() {
-  const router = useRouter();
+  const [selectedFragrance, setSelectedFragrance] = useState<any>(null);
+  const [quickOpen, setQuickOpen] = useState(false);
 
   const products = fragrances.filter(
     (item) => item.collection === "Elite"
@@ -41,13 +40,21 @@ export default function EliteCollectionPage() {
             <ProductCard
               key={fragrance.title}
               {...fragrance}
-              onQuickAdd={() => router.push(`/product/${fragrance.title.toLowerCase().replace(/\s+/g,"-")}`)}
+              onQuickAdd={() => { setSelectedFragrance(fragrance); setQuickOpen(true); }}
             />
           ))}
         </div>
       </section>
 
-      {/* QUICK ADD MODAL PORTAL */}
+      {selectedFragrance && (
+        <QuickAddModal
+          open={quickOpen}
+          onClose={() => setQuickOpen(false)}
+          title={selectedFragrance.title}
+          images={selectedFragrance.images}
+          prices={selectedFragrance.prices}
+        />
+      )}
     </main>
   );
 }

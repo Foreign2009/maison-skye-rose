@@ -1,7 +1,8 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useState } from "react";
 import Navbar from "../components/Navbar";
+import QuickAddModal from "../components/QuickAddModal";
 import Footer from "../components/Footer";
 import ProductCard from "../components/ProductCard";
 
@@ -9,8 +10,9 @@ import { useFavorites } from "../context/FavoritesContext";
 import { fragrances } from "../data/fragrances";
 
 export default function FavoritesPage() {
-  const router = useRouter();
   const { favorites } = useFavorites();
+  const [selectedFragrance, setSelectedFragrance] = useState<any>(null);
+  const [quickOpen, setQuickOpen] = useState(false);
   
   const favoriteProducts = fragrances.filter((fragrance) =>
     favorites.some((item) => item.title === fragrance.title)
@@ -90,7 +92,7 @@ export default function FavoritesPage() {
                   images={fragrance.images}
                   bestSeller={fragrance.bestSeller}
                   newArrival={fragrance.newArrival}
-                  onQuickAdd={() => router.push(`/product/${fragrance.title.toLowerCase().replace(/\s+/g,"-")}`)}
+                  onQuickAdd={() => { setSelectedFragrance(fragrance); setQuickOpen(true); }}
                 />
               ))}
             </div>
@@ -98,7 +100,15 @@ export default function FavoritesPage() {
         </div>
       </section>
 
-      {/* QUICK ADD MODAL PORTAL */}
+      {selectedFragrance && (
+        <QuickAddModal
+          open={quickOpen}
+          onClose={() => setQuickOpen(false)}
+          title={selectedFragrance.title}
+          images={selectedFragrance.images}
+          prices={selectedFragrance.prices}
+        />
+      )}
 
       {/* FOOTER */}
       <Footer />

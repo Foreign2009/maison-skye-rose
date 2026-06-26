@@ -1,16 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import Navbar from "../components/Navbar";
 import ProductCard from "../components/ProductCard";
+import QuickAddModal from "../components/QuickAddModal";
 
 import { fragrances } from "../data/fragrances";
 import { useFavorites } from "../context/FavoritesContext";
 
 export default function BestSellersPage() {
-  const router = useRouter();
   const { favorites, addToFavorites, removeFromFavorites } = useFavorites();
+  const [selectedFragrance, setSelectedFragrance] = useState<any>(null);
+  const [quickOpen, setQuickOpen] = useState(false);
 
   const products = fragrances.filter((item) => item.bestSeller);
 
@@ -46,13 +47,23 @@ export default function BestSellersPage() {
                 <ProductCard
                   key={fragrance.title}
                   {...fragrance}
-                  onQuickAdd={() => router.push(`/product/${fragrance.title.toLowerCase().replace(/\s+/g,"-")}`)}
+                  onQuickAdd={() => { setSelectedFragrance(fragrance); setQuickOpen(true); }}
                 />
               ))}
             </div>
           )}
         </div>
       </section>
+
+      {selectedFragrance && (
+        <QuickAddModal
+          open={quickOpen}
+          onClose={() => setQuickOpen(false)}
+          title={selectedFragrance.title}
+          images={selectedFragrance.images}
+          prices={selectedFragrance.prices}
+        />
+      )}
     </main>
   );
 }
