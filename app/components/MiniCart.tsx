@@ -115,7 +115,12 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
   if (!isOpen) return null;
 
   const subtotal = cartTotal;
-  const progressPercent = Math.min((subtotal / 1500) * 100, 100);
+  const progressPercent =
+    subtotal >= 1500 ? 100
+    : subtotal >= 1000 ? 75 + ((subtotal - 1000) / 500) * 25
+    : subtotal >= 700  ? 50 + ((subtotal - 700)  / 300) * 25
+    : subtotal >= 400  ? 25 + ((subtotal - 400)  / 300) * 25
+    : (subtotal / 400) * 25;
 
   const nextReward =
     subtotal < 400
@@ -327,7 +332,8 @@ A member of our team will confirm your order and delivery details shortly.`;
 
       {/* Sticky Conversion Footer */}
       {/* Final Polish Fix: Adjusted max-h configuration constraint down to 35vh */}
-      <div className="shrink-0 border-t border-black/10 bg-gradient-to-b from-white to-[#fcfaf8] p-5 md:p-6 md:rounded-b-[32px] max-h-[35vh] overflow-y-auto">
+      <div className="shrink-0 border-t border-black/10 bg-gradient-to-b from-white to-[#fcfaf8] md:rounded-b-[32px] flex flex-col max-h-[35vh]">
+        <div className="flex-1 min-h-0 overflow-y-auto px-5 pt-5 md:px-6 md:pt-6">
         <div className="flex justify-between text-sm">
           <span>Subtotal</span>
           <span className="font-bold">R{subtotal.toFixed(2)}</span>
@@ -377,7 +383,7 @@ A member of our team will confirm your order and delivery details shortly.`;
           </p>
 
           <div className="mt-2 text-sm">
-            <p className="text-green-600 font-semibold">
+            <p className={`font-semibold ${subtotal >= 400 ? "text-green-600" : "text-zinc-400"}`}>
               {subtotal >= 1500
                 ? "Discovery Set (5 × 5ml)"
                 : subtotal >= 1000
@@ -410,14 +416,6 @@ A member of our team will confirm your order and delivery details shortly.`;
             </div>
           )}
         </div>
-
-        <button
-          onClick={handleWhatsAppCheckout}
-          disabled={!cart || cart.length === 0}
-          className="mt-6 w-full rounded-full bg-gradient-to-r from-[#c8948a] to-[#b67d73] px-6 py-4 text-[11px] font-bold uppercase tracking-[0.25em] text-white shadow-[0_12px_30px_rgba(182,125,115,0.25)] transition-all duration-300 hover:scale-[1.01] hover:shadow-[0_16px_40px_rgba(182,125,115,0.35)] disabled:opacity-50"
-        >
-          Checkout via WhatsApp
-        </button>
 
         <div className="border-t border-black/5 mt-6">
           <button
@@ -563,6 +561,16 @@ A member of our team will confirm your order and delivery details shortly.`;
               )}
             </>
           )}
+        </div>
+        </div>
+        <div className="shrink-0 border-t border-black/10 px-5 pt-4 pb-5 md:px-6 md:pb-6">
+          <button
+            onClick={handleWhatsAppCheckout}
+            disabled={!cart || cart.length === 0}
+            className="w-full rounded-full bg-gradient-to-r from-[#c8948a] to-[#b67d73] px-6 py-4 text-[11px] font-bold uppercase tracking-[0.25em] text-white shadow-[0_12px_30px_rgba(182,125,115,0.25)] transition-all duration-300 hover:scale-[1.01] hover:shadow-[0_16px_40px_rgba(182,125,115,0.35)] disabled:opacity-50"
+          >
+            Checkout via WhatsApp
+          </button>
         </div>
       </div>
     </div>
