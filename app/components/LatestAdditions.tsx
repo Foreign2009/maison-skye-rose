@@ -1,11 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import ProductCard from "./ProductCard";
 import QuickAddModal from "./QuickAddModal";
 import { fragrances } from "../data/fragrances";
 
 export default function LatestAdditions() {
+  const router = useRouter();
   const [selectedFragrance, setSelectedFragrance] = useState<any>(null);
 
   // Logic to mix collections: Skye, Rose, Elite
@@ -42,7 +44,7 @@ export default function LatestAdditions() {
             <ProductCard
               key={fragrance.title}
               {...fragrance}
-              onQuickAdd={() => window.location.href = `/product/${fragrance.title.toLowerCase().replace(/\s+/g,"-")}`}
+              onQuickAdd={() => router.push(`/product/${fragrance.title.toLowerCase().replace(/\s+/g,"-")}`)}
             />
           ))}
         </div>

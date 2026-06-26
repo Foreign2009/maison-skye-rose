@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 import Navbar from "../../components/Navbar";
 import ProductCard from "../../components/ProductCard";
@@ -9,7 +10,7 @@ import ProductCard from "../../components/ProductCard";
 import { fragrances } from "../../data/fragrances";
 
 export default function EliteCollectionPage() {
-  
+  const router = useRouter();
 
   const products = fragrances.filter(
     (item) => item.collection === "Elite"
@@ -40,7 +41,7 @@ export default function EliteCollectionPage() {
             <ProductCard
               key={fragrance.title}
               {...fragrance}
-              onQuickAdd={() => window.location.href = `/product/${fragrance.title.toLowerCase().replace(/\s+/g,"-")}`}
+              onQuickAdd={() => router.push(`/product/${fragrance.title.toLowerCase().replace(/\s+/g,"-")}`)}
             />
           ))}
         </div>

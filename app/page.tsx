@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Navbar from "./components/Navbar";
 import AnnouncementBar from "./components/AnnouncementBar";
@@ -19,6 +20,7 @@ import Footer from "./components/Footer";
 import { fragrances } from "./data/fragrances";
 
 export default function HomePage() {
+  const router = useRouter();
   // Core fragrance array pass-through to ensure fast initial page loads
   const displayProducts = fragrances;
 
@@ -153,7 +155,7 @@ export default function HomePage() {
               
               <button
                 onClick={() =>
-                  (window.location.href = `/product/${featuredFragrance.title
+                  router.push(`/product/${featuredFragrance.title
                     .toLowerCase()
                     .replace(/\s+/g, "-")}`)
                 }
@@ -186,7 +188,7 @@ export default function HomePage() {
       <section className="bg-[#faf7f5]">
         <BestSellers
           onQuickAdd={(fragrance) =>
-            (window.location.href = `/product/${fragrance.title
+            router.push(`/product/${fragrance.title
               .toLowerCase()
               .replace(/\s+/g, "-")}`)
           }
@@ -297,7 +299,7 @@ export default function HomePage() {
               <ProductCard
                 {...fragrance}
                 onQuickAdd={() =>
-                  (window.location.href = `/product/${fragrance.title
+                  router.push(`/product/${fragrance.title
                     .toLowerCase()
                     .replace(/\s+/g, "-")}`)
                 }
@@ -309,14 +311,14 @@ export default function HomePage() {
         {/* Balanced Desktop Grid Variant */}
         <div className="hidden gap-8 md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {displayProducts.slice(0, 8).map((fragrance) => (
-            <ProductCard 
-              key={fragrance.title} 
-              {...fragrance} 
+            <ProductCard
+              key={fragrance.title}
+              {...fragrance}
               onQuickAdd={() =>
-                (window.location.href = `/product/${fragrance.title
+                router.push(`/product/${fragrance.title
                   .toLowerCase()
                   .replace(/\s+/g, "-")}`)
-              } 
+              }
             />
           ))}
         </div>

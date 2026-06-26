@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Navbar from "../components/Navbar";
 import ProductCard from "../components/ProductCard";
 
@@ -8,7 +9,7 @@ import { fragrances } from "../data/fragrances";
 import { useFavorites } from "../context/FavoritesContext";
 
 export default function NewArrivalsPage() {
-  
+  const router = useRouter();
   const { favorites, addToFavorites, removeFromFavorites } = useFavorites();
 
   const products = fragrances.filter((item) => item.newArrival);
@@ -43,7 +44,7 @@ export default function NewArrivalsPage() {
                   <ProductCard
                     key={fragrance.title}
                     {...fragrance}
-                    onQuickAdd={() => window.location.href = `/product/${fragrance.title.toLowerCase().replace(/\s+/g,"-")}`}
+                    onQuickAdd={() => router.push(`/product/${fragrance.title.toLowerCase().replace(/\s+/g,"-")}`)}
                   />
                 ))}
               </div>

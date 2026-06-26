@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Navbar from "../../components/Navbar";
 import ProductCard from "../../components/ProductCard";
 import FloatingWhatsApp from "../../components/FloatingWhatsApp";
@@ -10,6 +11,7 @@ import Footer from "../../components/Footer";
 import { fragrances } from "../../data/fragrances";
 
 export default function SkyeCollectionPage() {
+  const router = useRouter();
   const [search, setSearch] = useState("");
   
 
@@ -70,7 +72,7 @@ export default function SkyeCollectionPage() {
                 <ProductCard
                   key={fragrance.title}
                   {...fragrance}
-                  onQuickAdd={() => window.location.href = `/product/${fragrance.title.toLowerCase().replace(/\s+/g,"-")}`}
+                  onQuickAdd={() => router.push(`/product/${fragrance.title.toLowerCase().replace(/\s+/g,"-")}`)}
                 />
               ))
             ) : (

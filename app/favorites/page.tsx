@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import ProductCard from "../components/ProductCard";
@@ -8,6 +9,7 @@ import { useFavorites } from "../context/FavoritesContext";
 import { fragrances } from "../data/fragrances";
 
 export default function FavoritesPage() {
+  const router = useRouter();
   const { favorites } = useFavorites();
   
   const favoriteProducts = fragrances.filter((fragrance) =>
@@ -88,7 +90,7 @@ export default function FavoritesPage() {
                   images={fragrance.images}
                   bestSeller={fragrance.bestSeller}
                   newArrival={fragrance.newArrival}
-                  onQuickAdd={() => window.location.href = `/product/${fragrance.title.toLowerCase().replace(/\s+/g,"-")}`}
+                  onQuickAdd={() => router.push(`/product/${fragrance.title.toLowerCase().replace(/\s+/g,"-")}`)}
                 />
               ))}
             </div>

@@ -17,6 +17,7 @@ type ProductCardProps = {
   bestSeller?: boolean;
   newArrival?: boolean;
   onQuickAdd?: () => void;
+  priority?: boolean;
 };
 
 export default function ProductCard({
@@ -31,6 +32,7 @@ export default function ProductCard({
   bestSeller,
   newArrival,
   onQuickAdd,
+  priority = false,
 }: ProductCardProps) {
   const { addToFavorites, removeFromFavorites, isFavorite } = useFavorites();
   const favorite = isFavorite(title);
@@ -98,7 +100,7 @@ export default function ProductCard({
           fill
           className="object-contain p-4"
           sizes="(max-width: 768px) 100vw, 240px"
-          priority
+          priority={priority}
           unoptimized
         />
       </Link>

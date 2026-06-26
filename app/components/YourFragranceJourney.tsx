@@ -1,10 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import ProductCard from "./ProductCard";
 import QuickAddModal from "./QuickAddModal";
 
 export default function YourFragranceJourney() {
+  const router = useRouter();
   const [items, setItems] = useState<any[]>([]);
   const [selectedFragrance, setSelectedFragrance] = useState<any>(null);
 
@@ -35,7 +37,7 @@ export default function YourFragranceJourney() {
           <ProductCard
             key={item.title}
             {...item}
-            onQuickAdd={() => window.location.href = `/product/${item.title.toLowerCase().replace(/\s+/g,"-")}`}
+            onQuickAdd={() => router.push(`/product/${item.title.toLowerCase().replace(/\s+/g,"-")}`)}
           />
         ))}
       </div>

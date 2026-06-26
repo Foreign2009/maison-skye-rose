@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 import Navbar from "../components/Navbar";
 import ProductCard from "../components/ProductCard";
@@ -9,6 +10,7 @@ import SearchBar from "../components/SearchBar";
 import { fragrances } from "../data/fragrances";
 
 export default function ShopPage() {
+  const router = useRouter();
   const [search, setSearch] = useState("");
   const [currentFilter, setCurrentFilter] = useState("All");
   const [sortBy, setSortBy] = useState("Featured");
@@ -153,7 +155,7 @@ export default function ShopPage() {
           ) : (
             <div className="grid grid-cols-2 gap-3 md:gap-6 lg:grid-cols-4">
               {displayItems.map((fragrance) => (
-                <ProductCard key={fragrance.title} {...fragrance} onQuickAdd={() => window.location.href = `/product/${fragrance.title.toLowerCase().replace(/\s+/g,"-")}`} />
+                <ProductCard key={fragrance.title} {...fragrance} onQuickAdd={() => router.push(`/product/${fragrance.title.toLowerCase().replace(/\s+/g,"-")}`)} />
               ))}
             </div>
           )}

@@ -1,11 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import ProductCard from "../components/ProductCard";
 
 export default function RecentlyViewedPage() {
+  const router = useRouter();
   const [items, setItems] = useState<any[]>([]);
 
   useEffect(() => {
@@ -78,7 +80,7 @@ export default function RecentlyViewedPage() {
                   key={item.title}
                   {...item}
                   onQuickAdd={() =>
-                    (window.location.href =
+                    router.push(
                       `/product/${item.title
                         .toLowerCase()
                         .replace(/\s+/g, "-")}`)
