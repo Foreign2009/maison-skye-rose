@@ -91,7 +91,7 @@ export default function ShopPage() {
       </section>
 
       {/* ISOLATED STICKY BAR: Completely untrapped from section layout bounds */}
-      <div className="fixed top-[88px] left-0 right-0 z-[45] bg-[#f5f1eb]/95 backdrop-blur-sm px-4 md:px-6 py-3 border-b border-zinc-200/20 md:relative md:top-0 md:left-auto md:right-auto md:bg-transparent md:backdrop-blur-none md:border-b-0 md:mt-6">
+      <div className="fixed top-[80px] left-0 right-0 z-[45] bg-[#f5f1eb]/95 backdrop-blur-sm px-4 md:px-6 py-3 border-b border-zinc-200/20 md:relative md:top-0 md:left-auto md:right-auto md:bg-transparent md:backdrop-blur-none md:border-b-0 md:mt-6">
         <div className="mx-auto max-w-7xl flex items-center justify-between gap-2">
           <div className="flex flex-wrap gap-1.5 md:gap-2 items-center overflow-x-auto no-scrollbar">
             {["All", "Skye", "Rose", "Elite", "Best Sellers", "New Arrivals"].map((tab) => (
@@ -128,7 +128,7 @@ export default function ShopPage() {
         </div>
       </div>
 
-      <div className="h-[72px] md:hidden" />
+      <div className="h-[56px] md:hidden" />
 
       {/* SECTION 2: Main Product Output Grid */}
       <section className="px-4 md:px-6 pb-14 mt-4 md:mt-6">

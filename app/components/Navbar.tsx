@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ShoppingBag, Menu, X, User, Heart } from "lucide-react";
+import { ShoppingBag, Menu, X, User, Heart, Clock } from "lucide-react";
 import { useCart } from "../context/CartContext";
 import { useFavorites } from "../context/FavoritesContext";
 import { useCartUI } from "../context/CartUIContext";
@@ -58,7 +58,7 @@ export default function Navbar() {
   return (
     <>
       {/* Change 7 — Taller Announcement Bar */}
-      <div className="fixed top-0 left-0 right-0 z-50 bg-[#4f4a52] text-white text-[10px] uppercase tracking-[0.2em] font-semibold h-8 flex items-center justify-center select-none">
+      <div className="fixed top-0 left-0 right-0 z-50 bg-[#4f4a52] text-white text-[11px] uppercase tracking-[0.2em] font-semibold h-8 flex items-center justify-center select-none">
         <span key={currentAnnouncement} className="animate-fade-in">
           {ANNOUNCEMENTS[currentAnnouncement]}
         </span>
@@ -151,10 +151,10 @@ export default function Navbar() {
 
                 <Link
                   href="/recently-viewed"
-                  className="text-[#4f4a52] hover:text-[#d89ca4] transition-colors"
+                  className="relative text-[#4f4a52] hover:text-[#d89ca4] transition-colors"
                   aria-label="Recently Viewed"
                 >
-                  <span className="text-xs font-bold">RV</span>
+                  <Clock className="h-5 w-5 stroke-[1.75]" />
                 </Link>
 
                 <Link
@@ -188,7 +188,7 @@ export default function Navbar() {
 
         {/* Mobile Fullscreen Overlay Navigation — Top offset adjusted to 126px (Announcement h-10 + Nav h-[86px]) */}
         <div
-          className={`fixed inset-x-0 top-[126px] bottom-0 bg-white z-30 transform transition-transform duration-300 ease-in-out md:hidden flex flex-col justify-between px-6 py-12 ${
+          className={`fixed inset-x-0 top-[80px] bottom-0 bg-white z-30 transform transition-transform duration-300 ease-in-out md:hidden flex flex-col justify-between px-6 py-12 ${
             isOpen ? "translate-x-0" : "-translate-x-full"
           }`}
         >
