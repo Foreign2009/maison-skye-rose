@@ -62,7 +62,7 @@ export default function AIHeroSection() {
               </Link>
 
               <Link
-                href="/collections/skye"
+                href="/shop"
                 className="
                   rounded-full
                   border

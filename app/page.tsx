@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
@@ -17,10 +18,13 @@ import Testimonials from "./components/Testimonials";
 import RecentlyViewedHome from "./components/RecentlyViewedHome";
 import FavoritesHome from "./components/FavoritesHome";
 import Footer from "./components/Footer";
+import QuickAddModal from "./components/QuickAddModal";
 import { fragrances } from "./data/fragrances";
 
 export default function HomePage() {
   const router = useRouter();
+  const [selectedFragrance, setSelectedFragrance] = useState<any>(null);
+  const [quickOpen, setQuickOpen] = useState(false);
   // Core fragrance array pass-through to ensure fast initial page loads
   const displayProducts = fragrances;
 
@@ -52,7 +56,7 @@ export default function HomePage() {
           <div className="grid grid-cols-2 md:grid-cols-4">
             <div className="py-4 text-center">
               <p className="text-lg font-black text-[#4f4a52]">
-                50+
+                465+
               </p>
               <p className="text-[10px] uppercase tracking-[0.2em] text-[#7b7480]">
                 Fragrances
@@ -144,7 +148,7 @@ export default function HomePage() {
               
               {/* Note chips hidden on mobile to align with strict editorial luxury constraints */}
               {featuredFragrance?.notes && (
-                <div className="hidden md:flex mt-6 flex-wrap gap-2">
+                <div className="flex mt-6 flex-wrap gap-2">
                   {featuredFragrance.notes.slice(0, 3).map((note: string) => (
                     <span key={note} className="rounded-full bg-white px-3 py-1 text-xs font-semibold text-[#d89ca4] border border-pink-50">
                       {note}
@@ -153,15 +157,19 @@ export default function HomePage() {
                 </div>
               )}
               
+              <p className="mt-5 text-2xl font-black text-[#4f4a52]">
+                From R{featuredFragrance.prices["5ml"]}
+              </p>
+
               <button
                 onClick={() =>
                   router.push(`/product/${featuredFragrance.title
                     .toLowerCase()
                     .replace(/\s+/g, "-")}`)
                 }
-                className="mt-6 rounded-full bg-black px-8 py-4 text-sm font-bold uppercase tracking-widest text-white transition hover:bg-zinc-800 hover:scale-105 w-full sm:w-auto text-center"
+                className="mt-4 rounded-full bg-black px-8 py-4 text-sm font-bold uppercase tracking-widest text-white transition hover:bg-zinc-800 hover:scale-105 w-full sm:w-auto text-center"
               >
-                Discover
+                Shop Now
               </button>
             </div>
           </div>
@@ -175,7 +183,7 @@ export default function HomePage() {
             The Maison Standard
           </p>
           <h3 className="mt-4 text-2xl md:text-4xl font-black text-[#4f4a52]">
-            Craft Crafted For Every Occasion
+            Crafted For Every Occasion
           </h3>
           <p className="mt-5 text-[#7b7480] leading-7 text-sm md:text-base">
             Modern fragrances inspired by the world's most iconic scent journeys,
@@ -187,11 +195,10 @@ export default function HomePage() {
       {/* 2. Best Sellers - bg-[#faf7f5] */}
       <section className="bg-[#faf7f5]">
         <BestSellers
-          onQuickAdd={(fragrance) =>
-            router.push(`/product/${fragrance.title
-              .toLowerCase()
-              .replace(/\s+/g, "-")}`)
-          }
+          onQuickAdd={(fragrance) => {
+            setSelectedFragrance(fragrance);
+            setQuickOpen(true);
+          }}
         />
       </section>
 
@@ -298,11 +305,10 @@ export default function HomePage() {
             >
               <ProductCard
                 {...fragrance}
-                onQuickAdd={() =>
-                  router.push(`/product/${fragrance.title
-                    .toLowerCase()
-                    .replace(/\s+/g, "-")}`)
-                }
+                onQuickAdd={() => {
+                  setSelectedFragrance(fragrance);
+                  setQuickOpen(true);
+                }}
               />
             </div>
           ))}
@@ -314,11 +320,10 @@ export default function HomePage() {
             <ProductCard
               key={fragrance.title}
               {...fragrance}
-              onQuickAdd={() =>
-                router.push(`/product/${fragrance.title
-                  .toLowerCase()
-                  .replace(/\s+/g, "-")}`)
-              }
+              onQuickAdd={() => {
+                setSelectedFragrance(fragrance);
+                setQuickOpen(true);
+              }}
             />
           ))}
         </div>
@@ -351,6 +356,16 @@ export default function HomePage() {
         <RecentlyViewedHome />
       </section>
       
+      {selectedFragrance && (
+        <QuickAddModal
+          open={quickOpen}
+          onClose={() => setQuickOpen(false)}
+          title={selectedFragrance.title}
+          images={selectedFragrance.images}
+          prices={selectedFragrance.prices}
+        />
+      )}
+
       {/* 9. Luxury Target Footer */}
       <Footer />
     </main>
