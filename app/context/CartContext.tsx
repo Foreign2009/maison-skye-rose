@@ -2,8 +2,10 @@
 
 import {
   createContext,
+  useCallback,
   useContext,
   useEffect,
+  useMemo,
   useState,
 } from "react";
 
@@ -71,7 +73,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   }, [cart, isInitialized]);
 
   /* ADD TO CART - Evaluates item using ID and Bottle Size */
-  const addToCart = (product: CartProduct) => {
+  const addToCart = useCallback((product: CartProduct) => {
     setCart((prev) => {
       const existing = prev.find(
         (item) => item.id === product.id && item.size === product.size
@@ -87,83 +89,108 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
       return [...prev, { ...product }];
     });
-  };
+  }, []);
 
   /* REMOVE VIA COMPOSITE KEY */
-  const removeFromCart = (id: string, size: string) => {
-    setCart((prev) => 
+  const removeFromCart = useCallback((id: string, size: string) => {
+    setCart((prev) =>
       prev.filter((item) => !(item.id === id && item.size === size))
     );
-  };
+  }, []);
 
   /* INCREASE VIA COMPOSITE KEY */
-  const increaseQuantity = (id: string, size: string) => {
+  const increaseQuantity = useCallback((id: string, size: string) => {
     setCart((prev) =>
       prev.map((item) =>
-        item.id === id && item.size === size 
-          ? { ...item, quantity: item.quantity + 1 } 
+        item.id === id && item.size === size
+          ? { ...item, quantity: item.quantity + 1 }
           : item
       )
     );
-  };
+  }, []);
 
   /* DECREASE VIA COMPOSITE KEY */
-  const decreaseQuantity = (id: string, size: string) => {
+  const decreaseQuantity = useCallback((id: string, size: string) => {
     setCart((prev) =>
       prev
         .map((item) =>
-          item.id === id && item.size === size 
-            ? { ...item, quantity: item.quantity - 1 } 
+          item.id === id && item.size === size
+            ? { ...item, quantity: item.quantity - 1 }
             : item
         )
         .filter((item) => item.quantity > 0)
     );
-  };
+  }, []);
 
   /* CLEAR */
-  const clearCart = () => {
+  const clearCart = useCallback(() => {
     setCart([]);
-  };
+  }, []);
 
   /* DERIVED DATA COMPUTATIONS */
-  const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
+  const cartCount = useMemo(
+    () => cart.reduce((total, item) => total + item.quantity, 0),
+    [cart]
+  );
+
   const wholesaleActive = cartCount >= 10;
 
-  const getWholesalePrice = (item: CartProduct) => {
-    if (!wholesaleActive) return item.price;
+  const getWholesalePrice = useCallback(
+    (item: CartProduct) => {
+      if (!wholesaleActive) return item.price;
 
-    switch (item.size) {
-      case "5ml":
-        return 48;
-      case "10ml":
-        return 77;
-      case "30ml":
-        return 180;
-      default:
-        return item.price;
-    }
-  };
+      switch (item.size) {
+        case "5ml":
+          return 48;
+        case "10ml":
+          return 77;
+        case "30ml":
+          return 180;
+        default:
+          return item.price;
+      }
+    },
+    [wholesaleActive]
+  );
 
-  const cartTotal = cart.reduce(
-    (total, item) => total + getWholesalePrice(item) * item.quantity,
-    0
+  const cartTotal = useMemo(
+    () =>
+      cart.reduce(
+        (total, item) => total + getWholesalePrice(item) * item.quantity,
+        0
+      ),
+    [cart, getWholesalePrice]
+  );
+
+  const value = useMemo(
+    () => ({
+      cart,
+      addToCart,
+      removeFromCart,
+      increaseQuantity,
+      decreaseQuantity,
+      clearCart,
+      cartTotal,
+      cartCount,
+      wholesaleActive,
+      getWholesalePrice,
+    }),
+    [
+      cart,
+      addToCart,
+      removeFromCart,
+      increaseQuantity,
+      decreaseQuantity,
+      clearCart,
+      cartTotal,
+      cartCount,
+      wholesaleActive,
+      getWholesalePrice,
+    ]
   );
 
   return (
-    <CartContext.Provider
-      value={{
-        cart,
-        addToCart,
-        removeFromCart,
-        increaseQuantity,
-        decreaseQuantity,
-        clearCart,
-        cartTotal,
-        cartCount,
-        wholesaleActive,
-        getWholesalePrice,
-      }}
-    >
+    <CartContext.Provider value={value}>
       {children}
     </CartContext.Provider>
   );

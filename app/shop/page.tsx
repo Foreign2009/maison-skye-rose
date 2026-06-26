@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo, useEffect } from "react";
 
 import Navbar from "../components/Navbar";
 import QuickAddModal from "../components/QuickAddModal";
@@ -11,48 +11,68 @@ import { fragrances } from "../data/fragrances";
 
 export default function ShopPage() {
   const [search, setSearch] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
   const [selectedFragrance, setSelectedFragrance] = useState<any>(null);
   const [quickOpen, setQuickOpen] = useState(false);
   const [currentFilter, setCurrentFilter] = useState("All");
   const [sortBy, setSortBy] = useState("Featured");
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
-  // 1. Filtering Logic
-  const filtered = fragrances.filter((item: any) => {
-    const searchTerm = search.toLowerCase();
-    
-    const matchesSearch =
-      item.title.toLowerCase().includes(searchTerm) ||
-      item.subtitle?.toLowerCase().includes(searchTerm) ||
-      item.mood?.toLowerCase().includes(searchTerm) ||
-      item.profile?.toLowerCase().includes(searchTerm) ||
-      item.notes?.some((note: string) => note.toLowerCase().includes(searchTerm));
+  // Debounce search input — clears immediately, delays non-empty terms by 300ms
+  useEffect(() => {
+    if (!search) {
+      setDebouncedSearch("");
+      return;
+    }
+    const timer = setTimeout(() => {
+      setDebouncedSearch(search);
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [search]);
 
-    const matchesFilter =
-      currentFilter === "All" ? true :
-      currentFilter === "Skye" || currentFilter === "Rose" || currentFilter === "Elite" ? item.collection === currentFilter :
-      currentFilter === "Best Sellers" ? item.bestSeller :
-      currentFilter === "New Arrivals" ? item.newArrival :
-      true;
+  // 1. Filtering Logic — memoized; only recomputes when search term or filter changes
+  const filtered = useMemo(() => {
+    const searchTerm = debouncedSearch.toLowerCase();
 
-    return matchesSearch && matchesFilter;
-  });
+    return fragrances.filter((item: any) => {
+      const matchesSearch =
+        !searchTerm ||
+        item.title.toLowerCase().includes(searchTerm) ||
+        item.subtitle?.toLowerCase().includes(searchTerm) ||
+        item.mood?.toLowerCase().includes(searchTerm) ||
+        item.profile?.toLowerCase().includes(searchTerm) ||
+        item.notes?.some((note: string) => note.toLowerCase().includes(searchTerm));
 
-  // 2. Sorting & Extra Filtering Logic
-  let displayItems = [...filtered];
+      const matchesFilter =
+        currentFilter === "All" ? true :
+        currentFilter === "Skye" || currentFilter === "Rose" || currentFilter === "Elite" ? item.collection === currentFilter :
+        currentFilter === "Best Sellers" ? item.bestSeller :
+        currentFilter === "New Arrivals" ? item.newArrival :
+        true;
 
-  if (sortBy === "Price Low → High") {
-    displayItems.sort((a, b) => a.prices["5ml"] - b.prices["5ml"]);
-  }
-  if (sortBy === "Price High → Low") {
-    displayItems.sort((a, b) => b.prices["5ml"] - a.prices["5ml"]);
-  }
-  if (sortBy === "Best Sellers") {
-    displayItems = displayItems.filter((f) => f.bestSeller);
-  }
-  if (sortBy === "New Arrivals") {
-    displayItems = displayItems.filter((f) => f.newArrival);
-  }
+      return matchesSearch && matchesFilter;
+    });
+  }, [debouncedSearch, currentFilter]);
+
+  // 2. Sorting & Extra Filtering Logic — memoized; only recomputes when filtered list or sort changes
+  const displayItems = useMemo(() => {
+    let items = [...filtered];
+
+    if (sortBy === "Price Low → High") {
+      items.sort((a, b) => a.prices["5ml"] - b.prices["5ml"]);
+    }
+    if (sortBy === "Price High → Low") {
+      items.sort((a, b) => b.prices["5ml"] - a.prices["5ml"]);
+    }
+    if (sortBy === "Best Sellers") {
+      items = items.filter((f) => f.bestSeller);
+    }
+    if (sortBy === "New Arrivals") {
+      items = items.filter((f) => f.newArrival);
+    }
+
+    return items;
+  }, [filtered, sortBy]);
 
   const isMainMobileTab = (tab: string) => ["All", "Skye", "Rose", "Elite"].includes(tab);
 

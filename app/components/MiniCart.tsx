@@ -4,7 +4,7 @@ import { X } from "lucide-react";
 import { useCart } from "../context/CartContext";
 import Link from "next/link";
 import { useFavorites } from "../context/FavoritesContext";
-import { useEffect, useState } from "react";
+import { useMemo, useState } from "react";
 import { fragrances } from "../data/fragrances";
 
 interface MiniCartProps {
@@ -26,17 +26,19 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
   } = useCart();
 
   const { favorites } = useFavorites();
-  const [recentRecommendations, setRecentRecommendations] = useState<any[]>([]);
-  const [collectionRecommendations, setCollectionRecommendations] = useState<any[]>([]);
   const [showRecommendations, setShowRecommendations] = useState(false);
 
-  const favoriteRecommendations = fragrances
-    .filter(
-      (fragrance) =>
-        favorites.some((fav) => fav.title === fragrance.title) &&
-        !cart.some((item) => item.title === fragrance.title)
-    )
-    .slice(0, 3);
+  const favoriteRecommendations = useMemo(
+    () =>
+      fragrances
+        .filter(
+          (fragrance) =>
+            favorites.some((fav) => fav.title === fragrance.title) &&
+            !cart.some((item) => item.title === fragrance.title)
+        )
+        .slice(0, 3),
+    [favorites, cart]
+  );
 
   const quickAddFavorite = (fragrance: any) => {
     addToCart({
@@ -60,56 +62,36 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
     });
   };
 
-  useEffect(() => {
+  const recentRecommendations = useMemo((): any[] => {
+    if (typeof window === "undefined") return [];
     const viewed = JSON.parse(localStorage.getItem("recentlyViewed") || "[]");
-    const matches = viewed
+    return viewed
       .map((item: any) => fragrances.find((fragrance) => fragrance.title === item.title))
       .filter(Boolean)
       .filter((fragrance: any) => !cart.some((cartItem) => cartItem.title === fragrance.title))
       .slice(0, 3);
-
-    setRecentRecommendations(matches);
   }, [cart]);
 
-  useEffect(() => {
-    if (cart.length === 0) {
-      setCollectionRecommendations([]);
-      return;
-    }
-    const cartTitles = cart.map((item) => item.title);
+  const collectionRecommendations = useMemo(() => {
+    if (cart.length === 0) return [];
 
+    const cartTitles = cart.map((item) => item.title);
     const cartFragrance = fragrances.find((f) => f.title === cart[0]?.title);
 
-    const recommendations = fragrances
+    return fragrances
       .filter((fragrance) => !cartTitles.includes(fragrance.title))
       .map((fragrance) => {
         let score = 0;
 
-        if (fragrance.collection === cartFragrance?.collection) {
-          score += 3;
-        }
+        if (fragrance.collection === cartFragrance?.collection) score += 3;
+        if (fragrance.profile === cartFragrance?.profile) score += 2;
+        if (fragrance.season === cartFragrance?.season) score += 1;
+        if (fragrance.bestSeller) score += 1;
 
-        if (fragrance.profile === cartFragrance?.profile) {
-          score += 2;
-        }
-
-        if (fragrance.season === cartFragrance?.season) {
-          score += 1;
-        }
-
-        if (fragrance.bestSeller) {
-          score += 1;
-        }
-
-        return {
-          ...fragrance,
-          score,
-        };
+        return { ...fragrance, score };
       })
       .sort((a, b) => b.score - a.score)
       .slice(0, 3);
-
-    setCollectionRecommendations(recommendations);
   }, [cart]);
 
   if (!isOpen) return null;
