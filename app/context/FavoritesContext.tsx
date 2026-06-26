@@ -71,6 +71,9 @@ export function FavoritesProvider({
       []
     );
 
+  const [isInitialized, setIsInitialized] =
+    useState(false);
+
   // LOAD
   useEffect(() => {
 
@@ -98,12 +101,18 @@ export function FavoritesProvider({
         error
       );
 
+    } finally {
+
+      setIsInitialized(true);
+
     }
 
   }, []);
 
   // SAVE
   useEffect(() => {
+
+    if (!isInitialized) return;
 
     localStorage.setItem(
       "maison-skye-rose-favorites",
@@ -112,7 +121,7 @@ export function FavoritesProvider({
       )
     );
 
-  }, [favorites]);
+  }, [favorites, isInitialized]);
 
   // CHECK FAVORITE
   const isFavorite = (
