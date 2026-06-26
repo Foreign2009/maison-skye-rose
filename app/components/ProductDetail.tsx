@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import { useCart } from "../context/CartContext";
 import { useCartUI } from "../context/CartUIContext";
 import Link from "next/link";
@@ -96,9 +97,12 @@ export default function ProductDetail({
 
           {/* Product Gallery */}
           <div className="flex flex-col items-center">
-            <img
+            <Image
               src={fragrance.images[selectedSize]}
               alt={fragrance.title}
+              width={240}
+              height={240}
+              priority
               className="mx-auto max-w-[240px] rounded-3xl bg-white p-6 shadow-lg object-contain"
             />
 
@@ -113,9 +117,11 @@ export default function ProductDetail({
                       : "border-[#efe8e1]"
                   }`}
                 >
-                  <img
+                  <Image
                     src={fragrance.images[size]}
                     alt={size}
+                    width={64}
+                    height={64}
                     className="h-16 w-16 object-contain"
                   />
                 </button>
@@ -356,11 +362,14 @@ export default function ProductDetail({
                     .replace(/\s+/g, "-")}`}
                   className="rounded-3xl bg-white p-4 md:p-6 transition hover:shadow-lg"
                 >
-                  <img
-                    src={item.images["5ml"]}
-                    alt={item.title}
-                    className="mx-auto h-24 md:h-40 object-contain"
-                  />
+                  <div className="relative h-24 md:h-40">
+                    <Image
+                      src={item.images["5ml"]}
+                      alt={item.title}
+                      fill
+                      className="object-contain"
+                    />
+                  </div>
                   <h3 className="mt-4 font-bold text-sm md:text-base">
                     {item.title}
                   </h3>
