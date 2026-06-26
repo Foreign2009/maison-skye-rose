@@ -22,7 +22,7 @@ export default function ProductDetail({
 
   useEffect(() => {
     const handleScroll = () => {
-      setShowStickyBar(window.scrollY > 500);
+      setShowStickyBar(window.scrollY > 300);
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -99,7 +99,7 @@ export default function ProductDetail({
             <img
               src={fragrance.images[selectedSize]}
               alt={fragrance.title}
-              className="mx-auto max-w-[160px] rounded-3xl bg-white p-6 shadow-lg object-contain"
+              className="mx-auto max-w-[240px] rounded-3xl bg-white p-6 shadow-lg object-contain"
             />
 
             <div className="mt-4 flex gap-3">
@@ -124,11 +124,11 @@ export default function ProductDetail({
           </div>
 
           <div>
-            <p className="hidden md:block text-xs uppercase tracking-[0.2em] text-[#d89ca4]">
+            <p className="text-xs uppercase tracking-[0.2em] text-[#d89ca4]">
               {fragrance.collection}
             </p>
 
-            <h1 className="mt-1 text-[1.8rem] leading-none md:text-5xl font-black tracking-[-0.05em] text-[#4f4a52]">
+            <h1 className="mt-1 text-[1.8rem] leading-tight md:text-5xl font-black tracking-[-0.05em] text-[#4f4a52]">
               {fragrance.title}
             </h1>
 
@@ -158,7 +158,7 @@ export default function ProductDetail({
               )}
             </div>
 
-            <p className="hidden md:block mt-6 text-zinc-600 leading-8">
+            <p className="mt-4 text-sm text-zinc-600 leading-7 md:mt-6 md:text-base md:leading-8">
               {fragrance.mood}
             </p>
 
@@ -166,6 +166,10 @@ export default function ProductDetail({
               <p className="text-2xl font-black text-[#4f4a52]">
                 R{fragrance.prices[selectedSize]}
               </p>
+            </div>
+
+            <div className="mt-3 rounded-2xl border border-[#efe8e1] bg-white p-4">
+              🎁 Orders over R400 receive a FREE 5ml Sample
             </div>
 
             <div className="mt-3">
@@ -187,7 +191,7 @@ export default function ProductDetail({
                   >
                     <div className="font-bold">{size}</div>
 
-                    <div className="text-[10px] opacity-90 mt-1">
+                    <div className="text-xs opacity-90 mt-1">
                       {size === "5ml" && "Perfect for Trying"}
                       {size === "10ml" && (
                         <span className="inline-block rounded-full bg-white/20 px-2 py-0.5">
@@ -207,10 +211,6 @@ export default function ProductDetail({
                   </button>
                 ))}
               </div>
-            </div>
-
-            <div className="mt-4 rounded-2xl border border-[#efe8e1] bg-white p-4">
-              🎁 Orders over R400 receive a FREE 5ml Sample
             </div>
 
             {/* Main Trust Signals Block */}
