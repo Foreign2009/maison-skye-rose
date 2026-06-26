@@ -1,17 +1,18 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 
 import Navbar from "../components/Navbar";
+import QuickAddModal from "../components/QuickAddModal";
 import ProductCard from "../components/ProductCard";
 import Footer from "../components/Footer";
 import SearchBar from "../components/SearchBar";
 import { fragrances } from "../data/fragrances";
 
 export default function ShopPage() {
-  const router = useRouter();
   const [search, setSearch] = useState("");
+  const [selectedFragrance, setSelectedFragrance] = useState<any>(null);
+  const [quickOpen, setQuickOpen] = useState(false);
   const [currentFilter, setCurrentFilter] = useState("All");
   const [sortBy, setSortBy] = useState("Featured");
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -155,7 +156,7 @@ export default function ShopPage() {
           ) : (
             <div className="grid grid-cols-2 gap-3 md:gap-6 lg:grid-cols-4">
               {displayItems.map((fragrance) => (
-                <ProductCard key={fragrance.title} {...fragrance} onQuickAdd={() => router.push(`/product/${fragrance.title.toLowerCase().replace(/\s+/g,"-")}`)} />
+                <ProductCard key={fragrance.title} {...fragrance} onQuickAdd={() => { setSelectedFragrance(fragrance); setQuickOpen(true); }} />
               ))}
             </div>
           )}
@@ -212,6 +213,16 @@ export default function ShopPage() {
             </div>
           </div>
         </div>
+      )}
+
+      {selectedFragrance && (
+        <QuickAddModal
+          open={quickOpen}
+          onClose={() => setQuickOpen(false)}
+          title={selectedFragrance.title}
+          images={selectedFragrance.images}
+          prices={selectedFragrance.prices}
+        />
       )}
 
       <Footer />

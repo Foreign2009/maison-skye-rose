@@ -16,7 +16,7 @@ interface QuickAddModalProps {
 }
 
 export default function QuickAddModal({ open, onClose, title, images = {}, prices = {} }: QuickAddModalProps) {
-  const { addToCart, cart } = useCart();
+  const { addToCart, cartTotal: contextCartTotal, getWholesalePrice } = useCart();
   const { showFeedback } = useCartFeedback();
   const [mounted, setMounted] = useState(false);
   const sizeOptions = Object.entries(prices);
@@ -33,12 +33,10 @@ export default function QuickAddModal({ open, onClose, title, images = {}, price
 
   if (!mounted) return null;
 
-  const selectedPrice = prices?.[selectedSize] || 0;
-  const total = selectedPrice * quantity;
-  
-  // Real-time optimization: Calculate current cart value + current modal total
-  const cartTotal = cart?.reduce((sum, item) => sum + item.price * item.quantity, 0) || 0;
-  const combinedTotal = cartTotal + total;
+  const retailPrice = prices?.[selectedSize] || 0;
+  const effectivePrice = getWholesalePrice({ id: `${title}-${selectedSize}`, title, price: retailPrice, image: "", quantity: 1, size: selectedSize });
+  const total = effectivePrice * quantity;
+  const combinedTotal = contextCartTotal + total;
   const amountToSample = Math.max(0, 400 - combinedTotal);
 
   const selectedImage = images?.[selectedSize] || Object.values(images)[0] || "/images/pink-10ml.png";
@@ -47,7 +45,7 @@ export default function QuickAddModal({ open, onClose, title, images = {}, price
     addToCart({
       id: `${title}-${selectedSize}`,
       title,
-      price: selectedPrice,
+      price: retailPrice,
       quantity,
       image: selectedImage,
       size: selectedSize,
