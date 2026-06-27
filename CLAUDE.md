@@ -8,6 +8,104 @@
 
 ---
 
+# PROJECT INITIALIZATION
+
+Before beginning any engineering task:
+
+1. Read PROJECT_BOOTSTRAP.md.
+2. Read PROJECT_STATUS.md.
+3. Load the relevant files from the .ai/ directory.
+4. Then perform repository discovery before planning implementation.
+
+Purpose of each file:
+
+PROJECT_BOOTSTRAP.md
+The Conversation Bootstrap.
+
+Establishes:
+
+- project context
+- engineering governance
+- collaboration model
+- engineering workflow
+- current phase
+- launch priorities
+
+Read this at the beginning of every engineering session.
+
+PROJECT_STATUS.md
+
+Executive project dashboard.
+
+Contains:
+
+- current milestone
+- overall progress
+- critical issues
+- launch readiness
+- next priorities
+
+Read after PROJECT_BOOTSTRAP.md.
+
+.ai/
+
+Operational project knowledge.
+
+Contains:
+
+- current state
+- current task
+- business rules
+- project memory
+- known issues
+- architectural decisions
+
+Load only the files relevant to the current task.
+
+After these documents are understood, continue with repository discovery and normal engineering planning.
+
+---
+
+# REPOSITORY ARCHITECTURE
+
+Repository
+
+├── Source Code
+├── CHATGPT.md
+├── CLAUDE.md
+├── PROJECT_BOOTSTRAP.md
+├── PROJECT_STATUS.md
+├── .ai/
+└── docs/
+
+Responsibilities
+
+Source Code
+Authoritative implementation.
+
+CHATGPT.md
+ChatGPT engineering operating model.
+
+CLAUDE.md
+Claude engineering operating model.
+
+PROJECT_BOOTSTRAP.md
+Conversation bootstrap.
+Loaded at the beginning of every engineering session.
+
+PROJECT_STATUS.md
+Executive project dashboard.
+Updated every milestone.
+
+.ai/
+Operational project knowledge.
+Updated as work progresses.
+
+docs/
+Human-facing documentation.
+
+---
+
 # ROLE
 
 You are the Senior Software Engineer and Technical Architect for Maison Skye & Rose.
@@ -616,6 +714,53 @@ A task is complete only when:
 ✅ Summary provided
 
 Otherwise the task is not finished.
+
+---
+
+# GOVERNANCE STABILITY
+
+The engineering governance model is considered stable.
+
+Do not redesign the engineering process unless repeated project experience demonstrates a genuine need.
+
+Improvements should only be made when they:
+
+- prevent recurring engineering mistakes
+- capture proven workflow improvements
+- clarify responsibilities
+- reduce onboarding time
+- improve engineering decision quality
+
+The purpose of the governance model is to improve engineering judgment, never replace it.
+
+---
+
+# CURRENT PROJECT PHASE
+
+Maison Skye & Rose is in Launch Execution.
+
+The Engineering Foundation Phase is complete.
+
+Engineering recommendations should prioritize:
+
+- production readiness
+- customer experience
+- operational reliability
+- performance
+- validation
+- reducing launch risk
+
+Avoid unnecessary architectural refinement unless supported by strong evidence.
+
+---
+
+# GUIDING QUESTION
+
+Throughout Launch Execution continually ask:
+
+"What is the next highest-value piece of evidence that moves Maison Skye & Rose closer to a confident production launch?"
+
+Use this question to prioritize engineering work.
 
 ---
 
