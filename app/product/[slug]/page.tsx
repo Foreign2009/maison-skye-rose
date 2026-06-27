@@ -11,14 +11,16 @@ interface ProductPageProps {
   }>;
 }
 
-function findFragrance(slug: string) {
-  return fragrances.find((item) => {
-    const generatedSlug = item.title
-      .toLowerCase()
-      .replace(/\s+/g, "-");
+function toSlug(title: string): string {
+  return title.toLowerCase().replace(/\s+/g, "-");
+}
 
-    return generatedSlug === slug;
-  });
+function findFragrance(slug: string) {
+  return fragrances.find((item) => toSlug(item.title) === slug);
+}
+
+export function generateStaticParams() {
+  return fragrances.map((f) => ({ slug: toSlug(f.title) }));
 }
 
 function normalizeImagePath(path: string): string {
