@@ -2,8 +2,10 @@
 
 import {
   createContext,
+  useCallback,
   useContext,
   useEffect,
+  useMemo,
   useState,
 } from "react";
 
@@ -124,84 +126,44 @@ export function FavoritesProvider({
   }, [favorites, isInitialized]);
 
   // CHECK FAVORITE
-  const isFavorite = (
-    title: string
-  ) => {
-
-    return favorites.some(
-      (item) =>
-        item.title === title
-    );
-
-  };
+  const isFavorite = useCallback(
+    (title: string) => favorites.some((item) => item.title === title),
+    [favorites]
+  );
 
   // ADD
-  const addToFavorites = (
-    product: FavoriteProduct
-  ) => {
-
-    setFavorites((prev) => {
-
-      const exists =
-        prev.some(
-          (item) =>
-            item.title ===
-            product.title
-        );
-
-      if (exists) {
-        return prev;
-      }
-
-      return [
-        ...prev,
-        product,
-      ];
-
-    });
-
-  };
+  const addToFavorites = useCallback(
+    (product: FavoriteProduct) => {
+      setFavorites((prev) => {
+        const exists = prev.some((item) => item.title === product.title);
+        if (exists) return prev;
+        return [...prev, product];
+      });
+    },
+    []
+  );
 
   // REMOVE
-  const removeFromFavorites = (
-    title: string
-  ) => {
-
-    setFavorites((prev) =>
-
-      prev.filter(
-        (item) =>
-          item.title !== title
-      )
-
-    );
-
-  };
+  const removeFromFavorites = useCallback(
+    (title: string) => {
+      setFavorites((prev) => prev.filter((item) => item.title !== title));
+    },
+    []
+  );
 
   // CLEAR
-  const clearFavorites = () => {
-
+  const clearFavorites = useCallback(() => {
     setFavorites([]);
+  }, []);
 
-  };
+  const value = useMemo(
+    () => ({ favorites, addToFavorites, removeFromFavorites, clearFavorites, isFavorite }),
+    [favorites, addToFavorites, removeFromFavorites, clearFavorites, isFavorite]
+  );
 
   return (
-    <FavoritesContext.Provider
-      value={{
-        favorites,
-
-        addToFavorites,
-
-        removeFromFavorites,
-
-        clearFavorites,
-
-        isFavorite,
-      }}
-    >
-
+    <FavoritesContext.Provider value={value}>
       {children}
-
     </FavoritesContext.Provider>
   );
 }

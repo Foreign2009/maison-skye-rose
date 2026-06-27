@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo } from "react";
 import Link from "next/link";
 import ProductCard from "./ProductCard";
 import { useFavorites } from "../context/FavoritesContext";
@@ -8,11 +9,15 @@ import { fragrances } from "../data/fragrances";
 export default function FavoritesHome() {
   const { favorites } = useFavorites();
 
-  const favoriteProducts = fragrances
-    .filter((fragrance) =>
-      favorites.some((item) => item.title === fragrance.title)
-    )
-    .slice(0, 4);
+  const favoriteProducts = useMemo(
+    () =>
+      fragrances
+        .filter((fragrance) =>
+          favorites.some((item) => item.title === fragrance.title)
+        )
+        .slice(0, 4),
+    [favorites]
+  );
 
   if (favoriteProducts.length === 0) {
     return null;

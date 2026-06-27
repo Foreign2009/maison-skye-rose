@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo } from "react";
 import ProductCard from "./ProductCard";
 import { fragrances } from "../data/fragrances";
 
@@ -8,22 +9,20 @@ interface BestSellersProps {
 }
 
 export default function BestSellers({ onQuickAdd }: BestSellersProps) {
-  // Filter for each collection
-  const skyeBest = fragrances.filter((f) => f.collection === "Skye" && f.bestSeller);
-  const roseBest = fragrances.filter((f) => f.collection === "Rose" && f.bestSeller);
-  const eliteBest = fragrances.filter((f) => f.collection === "Elite" && f.bestSeller);
+  const displayedBestSellers = useMemo(() => {
+    const skyeBest = fragrances.filter((f) => f.collection === "Skye" && f.bestSeller);
+    const roseBest = fragrances.filter((f) => f.collection === "Rose" && f.bestSeller);
+    const eliteBest = fragrances.filter((f) => f.collection === "Elite" && f.bestSeller);
 
-  // Interleave logic
-  const bestSellers: any[] = [];
-  const maxLength = Math.max(skyeBest.length, roseBest.length, eliteBest.length);
-
-  for (let i = 0; i < maxLength; i++) {
-    if (skyeBest[i]) bestSellers.push(skyeBest[i]);
-    if (roseBest[i]) bestSellers.push(roseBest[i]);
-    if (eliteBest[i]) bestSellers.push(eliteBest[i]);
-  }
-
-  const displayedBestSellers = bestSellers.slice(0, 8);
+    const result: any[] = [];
+    const maxLength = Math.max(skyeBest.length, roseBest.length, eliteBest.length);
+    for (let i = 0; i < maxLength; i++) {
+      if (skyeBest[i]) result.push(skyeBest[i]);
+      if (roseBest[i]) result.push(roseBest[i]);
+      if (eliteBest[i]) result.push(eliteBest[i]);
+    }
+    return result.slice(0, 8);
+  }, []);
 
   return (
     <section className="mx-auto max-w-7xl px-4 md:px-6 py-10 md:py-20">

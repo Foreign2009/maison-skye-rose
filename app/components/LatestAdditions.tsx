@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import ProductCard from "./ProductCard";
 import QuickAddModal from "./QuickAddModal";
 import { fragrances } from "../data/fragrances";
@@ -9,19 +9,20 @@ export default function LatestAdditions() {
   const [selectedFragrance, setSelectedFragrance] = useState<any>(null);
   const [quickOpen, setQuickOpen] = useState(false);
 
-  // Logic to mix collections: Skye, Rose, Elite
-  const skye = fragrances.filter((f) => f.collection === "Skye");
-  const rose = fragrances.filter((f) => f.collection === "Rose");
-  const elite = fragrances.filter((f) => f.collection === "Elite");
+  const latestAdditions = useMemo(() => {
+    const skye = fragrances.filter((f) => f.collection === "Skye");
+    const rose = fragrances.filter((f) => f.collection === "Rose");
+    const elite = fragrances.filter((f) => f.collection === "Elite");
 
-  const latestAdditions: any[] = [];
-  const maxLength = Math.max(skye.length, rose.length, elite.length);
-
-  for (let i = 0; i < maxLength; i++) {
-    if (skye[i]) latestAdditions.push(skye[i]);
-    if (rose[i]) latestAdditions.push(rose[i]);
-    if (elite[i]) latestAdditions.push(elite[i]);
-  }
+    const result: any[] = [];
+    const maxLength = Math.max(skye.length, rose.length, elite.length);
+    for (let i = 0; i < maxLength; i++) {
+      if (skye[i]) result.push(skye[i]);
+      if (rose[i]) result.push(rose[i]);
+      if (elite[i]) result.push(elite[i]);
+    }
+    return result;
+  }, []);
 
   return (
     <section className="bg-white py-24">

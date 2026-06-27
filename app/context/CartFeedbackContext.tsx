@@ -2,7 +2,9 @@
 
 import {
   createContext,
+  useCallback,
   useContext,
+  useMemo,
   useState,
 } from "react";
 
@@ -40,33 +42,20 @@ export function CartFeedbackProvider({
       null
     );
 
-  const showFeedback = (
-    item: FeedbackItem
-  ) => {
-
+  const showFeedback = useCallback((item: FeedbackItem) => {
     setFeedback(item);
+    setTimeout(() => setFeedback(null), 2600);
+  }, []);
 
-    setTimeout(() => {
-
-      setFeedback(null);
-
-    }, 2600);
-
-  };
+  const value = useMemo(
+    () => ({ feedback, showFeedback }),
+    [feedback, showFeedback]
+  );
 
   return (
-
-    <CartFeedbackContext.Provider
-      value={{
-        feedback,
-        showFeedback,
-      }}
-    >
-
+    <CartFeedbackContext.Provider value={value}>
       {children}
-
     </CartFeedbackContext.Provider>
-
   );
 
 }

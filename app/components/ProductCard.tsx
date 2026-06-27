@@ -1,5 +1,6 @@
 "use client";
 
+import { memo, useCallback, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Heart } from "lucide-react";
@@ -20,7 +21,7 @@ type ProductCardProps = {
   priority?: boolean;
 };
 
-export default function ProductCard({
+function ProductCard({
   title,
   subtitle,
   mood,
@@ -37,22 +38,23 @@ export default function ProductCard({
   const { addToFavorites, removeFromFavorites, isFavorite } = useFavorites();
   const favorite = isFavorite(title);
 
-  const productSlug = title
-    .toLowerCase()
-    .replace(/\s+/g, "-");
+  const productSlug = useMemo(
+    () => title.toLowerCase().replace(/\s+/g, "-"),
+    [title]
+  );
 
-  const saveRecentlyViewed = () => {
+  const saveRecentlyViewed = useCallback(() => {
     const existing = JSON.parse(localStorage.getItem("recentlyViewed") || "[]");
     const filtered = existing.filter((item: any) => item.title !== title);
-    localStorage.setItem("recentlyViewed", JSON.stringify([{ title, subtitle, mood, profile, season, notes, prices, images }, ...filtered].slice(0,12)));
-  };
+    localStorage.setItem("recentlyViewed", JSON.stringify([{ title, subtitle, mood, profile, season, notes, prices, images }, ...filtered].slice(0, 12)));
+  }, [title, subtitle, mood, profile, season, notes, prices, images]);
 
-  const handleCardClick = () => {
+  const handleCardClick = useCallback(() => {
     saveRecentlyViewed();
     onQuickAdd?.();
-  };
+  }, [saveRecentlyViewed, onQuickAdd]);
 
-  const handleFavorite = () => {
+  const handleFavorite = useCallback(() => {
     if (favorite) {
       removeFromFavorites(title);
       return;
@@ -70,7 +72,7 @@ export default function ProductCard({
       bestSeller: bestSeller ?? false,
       newArrival: newArrival ?? false,
     });
-  };
+  }, [favorite, removeFromFavorites, addToFavorites, title, subtitle, mood, profile, season, notes, prices, images, bestSeller, newArrival]);
 
   return (
     <div className="relative flex h-full flex-col overflow-hidden rounded-[32px] bg-white p-4 md:p-6 border border-[#e8ddd6] shadow-[0_20px_60px_rgba(0,0,0,0.08)] transition-all duration-300 hover:-translate-y-2">
@@ -163,3 +165,5 @@ export default function ProductCard({
     </div>
   );
 }
+
+export default memo(ProductCard);

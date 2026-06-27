@@ -2,7 +2,9 @@
 
 import {
   createContext,
+  useCallback,
   useContext,
+  useMemo,
   useState,
 } from "react";
 
@@ -32,26 +34,19 @@ export function CartUIProvider({
   const [cartOpen, setCartOpen] =
     useState(false);
 
-  const openCart = () =>
-    setCartOpen(true);
+  const openCart = useCallback(() => setCartOpen(true), []);
 
-  const closeCart = () =>
-    setCartOpen(false);
+  const closeCart = useCallback(() => setCartOpen(false), []);
+
+  const value = useMemo(
+    () => ({ cartOpen, openCart, closeCart }),
+    [cartOpen, openCart, closeCart]
+  );
 
   return (
-
-    <CartUIContext.Provider
-      value={{
-        cartOpen,
-        openCart,
-        closeCart,
-      }}
-    >
-
+    <CartUIContext.Provider value={value}>
       {children}
-
     </CartUIContext.Provider>
-
   );
 
 }
