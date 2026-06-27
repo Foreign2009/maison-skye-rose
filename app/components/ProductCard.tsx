@@ -99,9 +99,8 @@ export default function ProductCard({
           alt={title}
           fill
           className="object-contain p-4"
-          sizes="(max-width: 768px) 100vw, 240px"
+          sizes="(max-width: 768px) 50vw, 240px"
           priority={priority}
-          unoptimized
         />
       </Link>
 

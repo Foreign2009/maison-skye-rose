@@ -368,6 +368,7 @@ export default function ProductDetail({
                       alt={item.title}
                       fill
                       className="object-contain"
+                      sizes="(max-width: 768px) 50vw, 25vw"
                     />
                   </div>
                   <h3 className="mt-4 font-bold text-sm md:text-base">

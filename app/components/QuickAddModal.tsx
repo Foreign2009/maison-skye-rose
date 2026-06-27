@@ -74,7 +74,6 @@ export default function QuickAddModal({ open, onClose, title, images = {}, price
                     height={180}
                     style={{ width: "auto", height: "auto" }}
                     className="object-contain"
-                    priority
                   />
                 </motion.div>
               </div>

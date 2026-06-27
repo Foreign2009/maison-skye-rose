@@ -110,7 +110,6 @@ export default function HomePage() {
                 className="object-contain p-6 transform transition-transform duration-700 hover:scale-105"
                 sizes="(max-width: 768px) 100vw, 480px"
                 priority
-                unoptimized
               />
             </div>
             <div className="flex flex-col items-start text-left">

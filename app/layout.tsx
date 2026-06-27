@@ -8,7 +8,6 @@ import { FavoritesProvider } from "./context/FavoritesContext";
 import { CartUIProvider } from "./context/CartUIContext";
 import { CartFeedbackProvider } from "./context/CartFeedbackContext";
 
-import FloatingCart from "./components/FloatingCart";
 import CartSuccessToast from "./components/CartSuccessToast";
 import FloatingWhatsApp from "./components/FloatingWhatsApp";
 
@@ -33,7 +32,6 @@ export default function RootLayout({
               <CartFeedbackProvider>
                 {children}
 
-                <FloatingCart />
                 <CartSuccessToast />
                 <FloatingWhatsApp />
               </CartFeedbackProvider>

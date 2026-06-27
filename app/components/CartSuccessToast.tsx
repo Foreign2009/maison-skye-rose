@@ -32,9 +32,8 @@ export default function CartSuccessToast() {
                   alt={feedback.title}
                   width={70}
                   height={70}
-                    priority
-                    style={{ width: "auto", height: "auto" }}
-                    className="object-contain"
+                  style={{ width: "auto", height: "auto" }}
+                  className="object-contain"
                 />
               </div>
 

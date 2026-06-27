@@ -250,7 +250,7 @@ A member of our team will confirm your order and delivery details shortly.`;
                 alt={item.title}
                 fill
                 className="object-contain p-3"
-                unoptimized
+                sizes="96px"
               />
             </div>
 
@@ -434,7 +434,7 @@ A member of our team will confirm your order and delivery details shortly.`;
                               alt={fragrance.title}
                               fill
                               className="object-contain p-1"
-                              unoptimized
+                              sizes="40px"
                             />
                           </div>
                           <div>
@@ -481,7 +481,7 @@ A member of our team will confirm your order and delivery details shortly.`;
                               alt={fragrance.title}
                               fill
                               className="object-contain p-1"
-                              unoptimized
+                              sizes="40px"
                             />
                           </div>
 
