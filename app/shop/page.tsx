@@ -8,6 +8,14 @@ import ProductCard from "../components/ProductCard";
 import Footer from "../components/Footer";
 import SearchBar from "../components/SearchBar";
 import { fragrances } from "../data/fragrances";
+import { parseIntent } from "../lib/intentParser";
+import { adaptCatalogue, DisplayFragrance } from "../lib/knowledgeAdapter";
+import { recommendFragrances } from "../lib/recommendFragrances";
+
+const adaptedCatalogue = adaptCatalogue(fragrances as DisplayFragrance[]);
+const displayByTitle = new Map<string, DisplayFragrance>(
+  (fragrances as DisplayFragrance[]).map((f) => [f.title, f])
+);
 
 export default function ShopPage() {
   const [search, setSearch] = useState("");
@@ -30,27 +38,54 @@ export default function ShopPage() {
     return () => clearTimeout(timer);
   }, [search]);
 
-  // 1. Filtering Logic — memoized; only recomputes when search term or filter changes
+  // 1. Filtering Logic — three-mode orchestration (Mode 0: empty, Mode 1: intent, Mode 2: keyword)
   const filtered = useMemo(() => {
     const searchTerm = debouncedSearch.toLowerCase();
 
+    // Shared tab predicate — applied identically in all three branches
+    const matchesTab = (item: DisplayFragrance): boolean => {
+      if (currentFilter === "All") return true;
+      if (currentFilter === "Skye" || currentFilter === "Rose" || currentFilter === "Elite")
+        return item.collection === currentFilter;
+      if (currentFilter === "Best Sellers") return item.bestSeller;
+      if (currentFilter === "New Arrivals") return item.newArrival;
+      return true;
+    };
+
+    // Mode 0 — Empty query: full catalogue in catalogue order, filtered by active tab
+    if (!searchTerm) {
+      return fragrances.filter((item: any) => matchesTab(item as DisplayFragrance));
+    }
+
+    // Evaluate intent signals from the search term
+    const signals = parseIntent(searchTerm);
+    const hasSignals = Object.keys(signals).length > 0;
+
+    // Mode 1 — Intent mode: recommendation-ranked results, intersected with active tab
+    if (hasSignals) {
+      const results = recommendFragrances(adaptedCatalogue, signals);
+      const seen = new Set<string>();
+      const ranked: DisplayFragrance[] = [];
+      for (const f of [results.bestMatch, ...results.similarMatches, results.luxuryUpgrade, results.hiddenGem]) {
+        if (!f || seen.has(f.name)) continue;
+        const display = displayByTitle.get(f.name);
+        if (!display) continue;
+        if (!matchesTab(display)) continue;
+        seen.add(f.name);
+        ranked.push(display);
+      }
+      return ranked;
+    }
+
+    // Mode 2 — Keyword fallback: existing substring search, filtered by active tab
     return fragrances.filter((item: any) => {
       const matchesSearch =
-        !searchTerm ||
         item.title.toLowerCase().includes(searchTerm) ||
         item.subtitle?.toLowerCase().includes(searchTerm) ||
         item.mood?.toLowerCase().includes(searchTerm) ||
         item.profile?.toLowerCase().includes(searchTerm) ||
         item.notes?.some((note: string) => note.toLowerCase().includes(searchTerm));
-
-      const matchesFilter =
-        currentFilter === "All" ? true :
-        currentFilter === "Skye" || currentFilter === "Rose" || currentFilter === "Elite" ? item.collection === currentFilter :
-        currentFilter === "Best Sellers" ? item.bestSeller :
-        currentFilter === "New Arrivals" ? item.newArrival :
-        true;
-
-      return matchesSearch && matchesFilter;
+      return matchesSearch && matchesTab(item as DisplayFragrance);
     });
   }, [debouncedSearch, currentFilter]);
 
