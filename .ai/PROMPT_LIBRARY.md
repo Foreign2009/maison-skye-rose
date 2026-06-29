@@ -251,3 +251,78 @@ Key constraints:
 
 Please analyse: trade-offs, risks, and your recommendation.
 ```
+
+---
+
+## 13. Open Engineering Program
+
+Use at the start of a new Engineering Program sprint.
+
+```
+I want to open a new Engineering Program.
+
+Program name: [NAME — e.g. PAYFAST-001]
+Objective: [One sentence — what does this program achieve?]
+
+Before opening, confirm:
+1. .ai/SPRINT.md shows no active program (or explicitly close the current one first)
+2. Define the ordered task list
+3. Define the close condition — what does "done" mean for the whole program?
+4. Define what is explicitly out of scope for this program
+
+Then:
+- Update .ai/SPRINT.md with the new active program block
+- Update .ai/CURRENT_TASK.md with Program: [NAME] and the first task
+- Add an opening session entry to .ai/ENGINEERING_LOG.md
+
+Do not begin implementation until the scope and task list are confirmed by the Project Owner.
+```
+
+---
+
+## 14. Close Engineering Program
+
+Use when all tasks in the active program are complete.
+
+```
+Close the active Engineering Program.
+
+Before closing, verify:
+1. All tasks in .ai/SPRINT.md are marked Complete
+2. .ai/ENGINEERING_LOG.md has a session entry for today
+3. .ai/CURRENT_TASK.md reflects the final task as complete
+
+Then perform these steps:
+1. Move the Active Program block in .ai/SPRINT.md to Completed Programs — add the closed date and outcome
+2. Clear the Active Program section (set to "None")
+3. Reset .ai/CURRENT_TASK.md to "No active task" and Program: "None"
+4. Add a close entry to .ai/ENGINEERING_LOG.md
+
+Report:
+- What was completed in this program
+- What was explicitly deferred or descoped
+- Any open questions carried forward
+- Recommendation for the next program (if applicable)
+```
+
+---
+
+## 15. Program Review
+
+Use mid-program to assess progress, or before handing off between sessions.
+
+```
+Review the current Engineering Program without making any changes.
+
+Read .ai/SPRINT.md and .ai/ENGINEERING_LOG.md.
+
+Report:
+1. Active program name and objective
+2. Tasks complete vs. tasks remaining
+3. Whether the program is on track to meet its close condition
+4. Key decisions made during this program (summary from the log)
+5. Any risks or open questions that remain unresolved
+6. Recommended focus for the next session
+
+Do not modify any files. Report only.
+```

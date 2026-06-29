@@ -19,6 +19,7 @@ At the start of a new Claude Code session:
 ## Current Task
 
 **Status:** No active task
+**Program:** _e.g. AIOS-001 — or "None" if no active program_
 
 **Goal:**
 _What are we trying to achieve? One sentence._
@@ -79,6 +80,7 @@ _Record the commit message before committing._
 
 ```
 Status: In Progress
+Program: SEO-001
 
 Goal: Add sitemap.ts to enumerate all product and collection pages for Google indexing.
 
