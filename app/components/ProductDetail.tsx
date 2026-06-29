@@ -1,12 +1,23 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Image from "next/image";
 import { useCart } from "../context/CartContext";
 import { useCartUI } from "../context/CartUIContext";
 import Link from "next/link";
 import { fragrances } from "../data/fragrances";
 import { brand } from "../data/brand";
+import RecommendationCard from "./RecommendationCard";
+import { adaptCatalogue, DisplayFragrance } from "../lib/knowledgeAdapter";
+import { recommendFragrances } from "../lib/recommendFragrances";
+import { generateReasons } from "../lib/explainability";
+import type { Fragrance } from "../data/types";
+
+const adaptedCatalogue = adaptCatalogue(fragrances as DisplayFragrance[]);
+const adaptedByTitle = new Map<string, Fragrance>(adaptedCatalogue.map((f) => [f.name, f]));
+const displayByTitle = new Map<string, DisplayFragrance>(
+  (fragrances as DisplayFragrance[]).map((f) => [f.title, f])
+);
 
 export default function ProductDetail({
   fragrance,
@@ -49,6 +60,40 @@ export default function ProductDetail({
       "recentlyViewed",
       JSON.stringify([entry, ...filtered].slice(0, 12))
     );
+  }, [fragrance.title]);
+
+  const recommendations = useMemo(() => {
+    const adaptedCurrent = adaptedByTitle.get(fragrance.title);
+    if (!adaptedCurrent || adaptedCurrent.family.length === 0) return [];
+
+    const implicitIntent = {
+      gender: adaptedCurrent.gender,
+      family: adaptedCurrent.family[0] ?? "",
+    };
+
+    const results = recommendFragrances(adaptedCatalogue, implicitIntent);
+    const seen = new Set<string>();
+    const candidates: Array<{ display: DisplayFragrance; adapted: Fragrance; reasons: string[] }> = [];
+
+    for (const f of [
+      results.bestMatch,
+      ...results.similarMatches,
+      results.luxuryUpgrade,
+      results.hiddenGem,
+    ]) {
+      if (!f || f.name === fragrance.title || seen.has(f.name)) continue;
+      const display = displayByTitle.get(f.name);
+      if (!display) continue;
+      seen.add(f.name);
+      candidates.push({
+        display,
+        adapted: f,
+        reasons: generateReasons(implicitIntent, f).reasons,
+      });
+      if (candidates.length === 3) break;
+    }
+
+    return candidates;
   }, [fragrance.title]);
 
   const handleAddToCart = () => {
@@ -339,6 +384,33 @@ export default function ProductDetail({
           </div>
         </div>
       </section>
+
+      {recommendations.length > 0 && (
+        <section className="px-6 pb-8">
+          <div className="mx-auto max-w-7xl">
+            <h2 className="mb-8 text-2xl md:text-3xl font-black text-[#4f4a52]">
+              Recommended For You
+            </h2>
+            <div className="grid gap-6 lg:grid-cols-2">
+              {recommendations.map(({ display, adapted, reasons }) => (
+                <RecommendationCard
+                  key={display.title}
+                  title={display.title}
+                  profile={display.profile}
+                  mood={display.mood}
+                  notes={display.notes}
+                  freshness={adapted.freshness}
+                  warmth={adapted.warmth}
+                  sweetness={adapted.sweetness}
+                  intensity={adapted.intensity}
+                  versatility={adapted.versatility}
+                  reasons={reasons}
+                />
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       <section className="px-6 pb-52 md:pb-32">
         <div className="mx-auto max-w-7xl">

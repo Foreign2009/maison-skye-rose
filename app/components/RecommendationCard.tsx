@@ -18,6 +18,8 @@ type RecommendationCardProps = {
   intensity?: number;
 
   versatility?: number;
+
+  reasons?: string[];
 };
 
 export default function RecommendationCard({
@@ -30,6 +32,7 @@ export default function RecommendationCard({
   sweetness = 2,
   intensity = 4,
   versatility = 5,
+  reasons,
 }: RecommendationCardProps) {
 
   return (
@@ -86,13 +89,21 @@ export default function RecommendationCard({
 
         <ul className="mt-3 space-y-2 text-sm text-[#7b7480]">
 
-          <li>✓ Popular signature scent</li>
+          {reasons && reasons.length > 0 ? (
+            reasons.map((reason) => (
+              <li key={reason}>✓ {reason}</li>
+            ))
+          ) : (
+            <>
+              <li>✓ Popular signature scent</li>
 
-          <li>✓ Matches your fragrance profile</li>
+              <li>✓ Matches your fragrance profile</li>
 
-          <li>✓ Complements your lifestyle</li>
+              <li>✓ Complements your lifestyle</li>
 
-          <li>✓ Recommended by Maison AI</li>
+              <li>✓ Recommended by Maison AI</li>
+            </>
+          )}
 
         </ul>
 
