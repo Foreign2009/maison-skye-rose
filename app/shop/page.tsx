@@ -8,7 +8,7 @@ import ProductCard from "../components/ProductCard";
 import Footer from "../components/Footer";
 import SearchBar from "../components/SearchBar";
 import { fragrances } from "../data/fragrances";
-import { parseIntent } from "../lib/intentParser";
+import { parseIntent, type IntentSignals } from "../lib/intentParser";
 import { adaptCatalogue, DisplayFragrance } from "../lib/knowledgeAdapter";
 import { recommendFragrances } from "../lib/recommendFragrances";
 
@@ -16,6 +16,12 @@ const adaptedCatalogue = adaptCatalogue(fragrances as DisplayFragrance[]);
 const displayByTitle = new Map<string, DisplayFragrance>(
   (fragrances as DisplayFragrance[]).map((f) => [f.title, f])
 );
+
+const GENDER_LABELS: Record<NonNullable<IntentSignals["gender"]>, string> = {
+  male: "For Him",
+  female: "For Her",
+  unisex: "Unisex",
+};
 
 export default function ShopPage() {
   const [search, setSearch] = useState("");
@@ -38,6 +44,17 @@ export default function ShopPage() {
     return () => clearTimeout(timer);
   }, [search]);
 
+  // Detect intent signals from the debounced search term.
+  // Returns null in Mode 0 (empty query) and Mode 2 (no signals found).
+  // Non-null value is the reliable Mode 1 indicator for the UI.
+  const detectedSignals = useMemo((): IntentSignals | null => {
+    if (!debouncedSearch.trim()) return null;
+    const signals = parseIntent(debouncedSearch.toLowerCase());
+    // parseIntent always assigns family/vibe/occasion (even as undefined), so
+    // Object.keys is never empty for a non-empty query. Check for defined values instead.
+    return Object.values(signals).some((v) => v !== undefined) ? signals : null;
+  }, [debouncedSearch]);
+
   // 1. Filtering Logic — three-mode orchestration (Mode 0: empty, Mode 1: intent, Mode 2: keyword)
   const filtered = useMemo(() => {
     const searchTerm = debouncedSearch.toLowerCase();
@@ -57,13 +74,9 @@ export default function ShopPage() {
       return fragrances.filter((item: any) => matchesTab(item as DisplayFragrance));
     }
 
-    // Evaluate intent signals from the search term
-    const signals = parseIntent(searchTerm);
-    const hasSignals = Object.keys(signals).length > 0;
-
     // Mode 1 — Intent mode: recommendation-ranked results, intersected with active tab
-    if (hasSignals) {
-      const results = recommendFragrances(adaptedCatalogue, signals);
+    if (detectedSignals) {
+      const results = recommendFragrances(adaptedCatalogue, detectedSignals);
       const seen = new Set<string>();
       const ranked: DisplayFragrance[] = [];
       for (const f of [results.bestMatch, ...results.similarMatches, results.luxuryUpgrade, results.hiddenGem]) {
@@ -87,7 +100,7 @@ export default function ShopPage() {
         item.notes?.some((note: string) => note.toLowerCase().includes(searchTerm));
       return matchesSearch && matchesTab(item as DisplayFragrance);
     });
-  }, [debouncedSearch, currentFilter]);
+  }, [debouncedSearch, currentFilter, detectedSignals]);
 
   // 2. Sorting & Extra Filtering Logic — memoized; only recomputes when filtered list or sort changes
   const displayItems = useMemo(() => {
@@ -192,6 +205,39 @@ export default function ShopPage() {
           <p className="mb-3 text-xs text-zinc-500 uppercase tracking-wider">
             {displayItems.length} fragrances
           </p>
+
+          {detectedSignals && displayItems.length > 0 && (
+            <div className="mb-4 flex flex-wrap items-center gap-2">
+              <span className="text-xs uppercase tracking-wider text-zinc-400">
+                Curated for you:
+              </span>
+              {detectedSignals.gender && (
+                <span className="rounded-full bg-pink-50 px-3 py-1 text-xs font-semibold text-[#d89ca4]">
+                  {GENDER_LABELS[detectedSignals.gender]}
+                </span>
+              )}
+              {detectedSignals.occasion && (
+                <span className="rounded-full bg-pink-50 px-3 py-1 text-xs font-semibold text-[#d89ca4]">
+                  {detectedSignals.occasion}
+                </span>
+              )}
+              {detectedSignals.family && (
+                <span className="rounded-full bg-pink-50 px-3 py-1 text-xs font-semibold text-[#d89ca4]">
+                  {detectedSignals.family}
+                </span>
+              )}
+              {detectedSignals.vibe && (
+                <span className="rounded-full bg-pink-50 px-3 py-1 text-xs font-semibold text-[#d89ca4]">
+                  {detectedSignals.vibe}
+                </span>
+              )}
+              {detectedSignals.character && (
+                <span className="rounded-full bg-pink-50 px-3 py-1 text-xs font-semibold text-[#d89ca4]">
+                  {detectedSignals.character}
+                </span>
+              )}
+            </div>
+          )}
 
           {displayItems.length === 0 ? (
             <div className="py-20 text-center border-t border-zinc-200">
