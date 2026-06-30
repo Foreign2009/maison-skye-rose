@@ -37,7 +37,6 @@ const questions = [
       "Office",
       "Date Night",
       "Wedding",
-      "Luxury Events",
     ],
   },
 
