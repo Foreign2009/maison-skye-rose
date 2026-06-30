@@ -31,11 +31,42 @@ Each program has a defined scope, ordered task list, and a clear close condition
 
 ## Active Program
 
-None.
+None — EP3-P1 closed 2026-06-30. Awaiting Engineering Lead definition of EP3-P2.
 
 ---
 
 ## Completed Programs
+
+### EP3-P1 — Knowledge Engineering / Intelligence Layer
+
+**Objective:** Implement AI-OS Recommendation Evaluation Baseline and validate the Intelligence Layer integration across quiz and shop pages.
+**Scope:** `.ai/evaluation/` (new directory, 4 documents); `app/quiz/page.tsx` (Intelligence Layer integration — the shop page integration was delivered in EP3-P1 precursor commit cb5abbc).
+**Lead:** ChatGPT (Engineering Lead) + Claude (Implementation Engineer)
+**Opened:** 2026-06-30
+**Closed:** 2026-06-30
+
+**Out of Scope:**
+- Repository cleanup
+- Knowledge improvements (vocabulary, adapter)
+- Application code beyond quiz page integration
+- Changes to `.ai/` governance documents
+
+**Task List:**
+
+| # | Gate | Task | Status |
+|---|---|---|---|
+| 1 | G4 | Create `.ai/evaluation/` framework — 4 documents | Complete |
+| 2 | — | Repository Evidence Report — quiz page uncommitted change | Complete |
+| 3 | G5 | Build verification — zero TypeScript errors | Complete |
+| 4 | G5 | Browser validation — 46/46 checklist items | Complete |
+| 5 | — | Commit `app/quiz/page.tsx` — Intelligence Layer integration | Complete |
+| 6 | — | Update AI-OS records | Complete |
+
+**Close Condition:** All gates passed, quiz integration committed, AI-OS records updated.
+
+**Outcome:** Intelligence Layer fully integrated (quiz + shop). Evaluation framework operational. Baseline captured (20/20 pure-function pass; 46/46 browser checks pass). No regressions. Commit 225770f.
+
+---
 
 ### AIOS-001 — AI Engineering Operating System v1.0
 
