@@ -11,11 +11,13 @@ import { fragrances } from "../data/fragrances";
 import { parseIntent, type IntentSignals } from "../lib/intentParser";
 import { adaptCatalogue, DisplayFragrance } from "../lib/knowledgeAdapter";
 import { recommendFragrances } from "../lib/recommendFragrances";
+import { generateReasons } from "../lib/explainability";
 
 const adaptedCatalogue = adaptCatalogue(fragrances as DisplayFragrance[]);
 const displayByTitle = new Map<string, DisplayFragrance>(
   (fragrances as DisplayFragrance[]).map((f) => [f.title, f])
 );
+const adaptedByTitle = new Map(adaptedCatalogue.map((f) => [f.name, f]));
 
 const GENDER_LABELS: Record<NonNullable<IntentSignals["gender"]>, string> = {
   male: "For Him",
@@ -121,6 +123,19 @@ export default function ShopPage() {
 
     return items;
   }, [filtered, sortBy]);
+
+  // Confidence label for the first recommendation card in Mode 1 with default sort.
+  // Suppressed for Mode 0, Mode 2, non-default sort orders, and "partial" matchStrength.
+  const firstCardStrength = useMemo((): "Perfect Match" | "Great Match" | null => {
+    if (!detectedSignals || sortBy !== "Featured" || displayItems.length === 0) return null;
+    const first = displayItems[0];
+    const adapted = adaptedByTitle.get(first.title);
+    if (!adapted) return null;
+    const { matchStrength } = generateReasons(detectedSignals, adapted);
+    if (matchStrength === "strong") return "Perfect Match";
+    if (matchStrength === "moderate") return "Great Match";
+    return null;
+  }, [detectedSignals, sortBy, displayItems]);
 
   const isMainMobileTab = (tab: string) => ["All", "Skye", "Rose", "Elite"].includes(tab);
 
@@ -256,9 +271,21 @@ export default function ShopPage() {
             </div>
           ) : (
             <div className="grid grid-cols-2 gap-3 md:gap-6 lg:grid-cols-4">
-              {displayItems.map((fragrance) => (
-                <ProductCard key={fragrance.title} {...fragrance} onQuickAdd={() => { setSelectedFragrance(fragrance); setQuickOpen(true); }} />
-              ))}
+              {displayItems.map((fragrance, index) => {
+                if (index === 0 && firstCardStrength) {
+                  return (
+                    <div key={fragrance.title}>
+                      <p className="mb-1.5 text-[10px] md:text-xs font-semibold uppercase tracking-wider text-[#d89ca4]">
+                        {firstCardStrength}
+                      </p>
+                      <ProductCard {...fragrance} onQuickAdd={() => { setSelectedFragrance(fragrance); setQuickOpen(true); }} />
+                    </div>
+                  );
+                }
+                return (
+                  <ProductCard key={fragrance.title} {...fragrance} onQuickAdd={() => { setSelectedFragrance(fragrance); setQuickOpen(true); }} />
+                );
+              })}
             </div>
           )}
         </div>
