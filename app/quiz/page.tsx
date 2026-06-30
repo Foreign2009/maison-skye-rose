@@ -9,6 +9,14 @@ import FloatingWhatsApp from "../components/FloatingWhatsApp";
 import QuickAddModal from "../components/QuickAddModal";
 
 import { fragrances } from "../data/fragrances";
+import { adaptCatalogue, DisplayFragrance } from "../lib/knowledgeAdapter";
+import { recommendFragrances } from "../lib/recommendFragrances";
+import type { RecommendationResults } from "../lib/recommendFragrances";
+
+const adaptedCatalogue = adaptCatalogue(fragrances as DisplayFragrance[]);
+const displayByTitle = new Map<string, DisplayFragrance>(
+  (fragrances as DisplayFragrance[]).map((f) => [f.title, f])
+);
 
 const questions = [
   {
@@ -87,63 +95,34 @@ export default function QuizPage() {
   const completed = Object.keys(answers).length;
   const progress = (completed / questions.length) * 100;
 
-  // Upgraded Fast Search Recommendation Filter Logic
-  const recommended = useMemo(() => {
-    const scored = fragrances.map((fragrance) => {
-      let score = 0;
-
-      const profile = fragrance.profile.toLowerCase();
-      const mood = fragrance.mood.toLowerCase();
-      const season = fragrance.season.toLowerCase();
-      const notes = fragrance.notes.join(" ").toLowerCase();
-
-      if (answers.gender === "Male" && fragrance.collection === "Skye") score += 3;
-      if (answers.gender === "Female" && fragrance.collection === "Rose") score += 3;
-
-      if (
-        answers.family &&
-        (profile.includes(answers.family.toLowerCase()) ||
-          notes.includes(answers.family.toLowerCase()))
-      ) {
-        score += 3;
-      }
-
-      if (
-        answers.vibe &&
-        mood.includes(answers.vibe.toLowerCase())
-      ) {
-        score += 2;
-      }
-
-      if (
-        answers.character === "Fresh & Light" &&
-        (profile.includes("fresh") || season.includes("summer"))
-      ) {
-        score += 2;
-      }
-
-      if (
-        answers.character === "Deep & Intense" &&
-        (profile.includes("amber") || season.includes("winter"))
-      ) {
-        score += 2;
-      }
-
-      if (fragrance.bestSeller) {
-        score += 1;
-      }
-
-      return {
-        fragrance,
-        score,
-      };
+  // Authoritative recommendation engine output — preserves RecommendationResults slot structure internally
+  const recommendationResults = useMemo((): RecommendationResults | null => {
+    if (Object.keys(answers).length === 0) return null;
+    return recommendFragrances(adaptedCatalogue, {
+      gender: answers.gender?.toLowerCase(),
+      occasion: answers.occasion,
+      vibe: answers.vibe,
+      family: answers.family,
+      character: answers.character,
     });
-
-    return scored
-      .sort((a, b) => b.score - a.score)
-      .slice(0, 6)
-      .map((item) => item.fragrance);
   }, [answers]);
+
+  // Rendering adapter — flattens RecommendationResults to display-shape array for the existing ProductCard grid
+  const recommended = useMemo(() => {
+    if (!recommendationResults) return [];
+    const { bestMatch, similarMatches, luxuryUpgrade, hiddenGem } = recommendationResults;
+    const seen = new Set<string>();
+    const flat: DisplayFragrance[] = [];
+    for (const f of [bestMatch, ...similarMatches, luxuryUpgrade, hiddenGem]) {
+      if (!f || seen.has(f.name)) continue;
+      const display = displayByTitle.get(f.name);
+      if (!display) continue;
+      seen.add(f.name);
+      flat.push(display);
+      if (flat.length === 6) break;
+    }
+    return flat;
+  }, [recommendationResults]);
 
   return (
     <main className="min-h-screen bg-[#f9f6f2]">
