@@ -10,6 +10,7 @@ import { CartFeedbackProvider } from "./context/CartFeedbackContext";
 
 import CartSuccessToast from "./components/CartSuccessToast";
 import FloatingWhatsApp from "./components/FloatingWhatsApp";
+import { AnalyticsInit } from "./components/AnalyticsInit";
 
 // Updated with high-priority SEO Metadata
 export const metadata: Metadata = {
@@ -38,6 +39,7 @@ export default function RootLayout({
             </CartUIProvider>
           </CartProvider>
         </FavoritesProvider>
+        <AnalyticsInit />
       </body>
     </html>
   );
