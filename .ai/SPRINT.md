@@ -31,11 +31,37 @@ Each program has a defined scope, ordered task list, and a clear close condition
 
 ## Active Program
 
-None — EP6-P1 closed 2026-06-30 (analytics infrastructure complete). Awaiting Engineering Lead direction for EP6-P1 Stage 2 (instrumentation) or next sprint.
+None — EP6-P2 closed 2026-06-30 (discovery instrumentation complete). Awaiting Engineering Lead direction for EP6-P3 or next sprint.
 
 ---
 
 ## Completed Programs
+
+### EP6-P2 — Intelligence Analytics / Discovery Instrumentation
+
+**Objective:** Instrument the Discovery experience with analytics events — discovery mode transitions, confidence label impressions, filter and sort interactions, and product card clicks — using the EP6-P1 analytics infrastructure.
+**Scope:** `app/lib/analytics.ts` (modified — AnalyticsSource type), `app/components/ProductCard.tsx` (modified — source/rank props), `app/shop/page.tsx` (modified — full instrumentation). Intelligence Layer untouched.
+**Lead:** ChatGPT (Engineering Lead) + Claude (Implementation Engineer)
+**Opened:** 2026-06-30
+**Closed:** 2026-06-30
+
+**Task List:**
+
+| # | Gate | Task | Status |
+|---|---|---|---|
+| 1 | G1 | Repository Evidence Report — 10 areas: Discovery pipeline, all three modes, search lifecycle, shop rendering pipeline, ProductCard context, analytics integration points, event opportunities, risks, dependencies | Complete |
+| 2 | G2 | Engineering Assessment — 3 ProductCard context approaches evaluated; 10 topics assessed; Approach A (individual props) recommended and approved | Complete |
+| 3 | G3 | Implementation Plan — 3-file plan; AnalyticsSource shared type refinement added by Engineering Lead | Complete |
+| 4 | G4 | Implementation — AnalyticsSource type, ProductCard source/rank props, handleProductNavigation, currentMode, 2 useEffects, filter/sort instrumentation, analyticsSource const; build pass; 31/31 browser validation | Complete |
+| 5 | G5 | Sprint Closure — AI-OS records updated; committed bfbce8d | Complete |
+
+**Close Condition:** Discovery mode, confidence, filter, sort, and product click events instrumented. Build passes. Intelligence Layer analytics-free. 31/31 browser validation pass.
+
+**Outcome:** Discovery experience is fully instrumented. Five event types operational: `discovery_mode`, `confidence_label_shown`, `filter_applied`, `sort_applied`, `product_clicked`. `AnalyticsSource` type is the single source of truth for source string identity. `ProductCard` accepts analytics context without breaking `memo()` memoization. Intelligence Layer confirmed analytics-free. Commit bfbce8d.
+
+**Future Engineering Note:** When additional discovery surfaces are instrumented, consider introducing a shared helper for analytics source construction to avoid duplicated source selection logic. Do not implement now.
+
+---
 
 ### EP6-P1 — Intelligence Analytics / Analytics Architecture
 

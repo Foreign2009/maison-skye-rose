@@ -19,10 +19,10 @@ At the start of a new Claude Code session:
 ## Current Task
 
 **Status:** No active task
-**Program:** None — EP6-P1 closed 2026-06-30 (analytics infrastructure complete)
+**Program:** None — EP6-P2 closed 2026-06-30 (discovery instrumentation complete)
 
 **Goal:**
-_No active task. Awaiting Engineering Lead direction for EP6-P1 Stage 2 (instrumentation) or next sprint._
+_No active task. Awaiting Engineering Lead direction for EP6-P3 or next sprint._
 
 **Acceptance Criteria:**
 - [ ] _To be defined when next task is opened_
@@ -50,12 +50,14 @@ _None active._
 
 ## Context Notes
 
-**Last completed:** EP6-P1 Analytics Infrastructure (2026-06-30)
-- Commit: abf512e
-- Changes: `app/lib/analytics.ts` (created), `app/components/AnalyticsInit.tsx` (created), `app/layout.tsx` (modified)
-- Decision: Analytics service module with provider-neutral stub. Session identity via localStorage UUID. Intelligence Layer isolation confirmed. No application instrumentation.
+**Last completed:** EP6-P2 Discovery Instrumentation (2026-06-30)
+- Commit: bfbce8d
+- Changes: `app/lib/analytics.ts` (AnalyticsSource type extracted), `app/components/ProductCard.tsx` (source/rank props, handleProductNavigation), `app/shop/page.tsx` (currentMode, 2 useEffects, filter/sort/click instrumentation)
+- Decision: Approach A (individual props) for ProductCard analytics context. AnalyticsSource as shared type. Two separate useEffects for mode events and confidence events. Explicit ternary for analyticsSource (no template literal). State updates before analytics calls in all handlers.
 - Build: Pass — zero TypeScript errors, zero warnings, 118 pages
-- Follow-up: Stage 2 instrumentation requires provider selection. 16 insertion points enumerated in G3 plan.
+- Validation: 31/31 browser scenarios pass
+- Intelligence Layer: confirmed analytics-free
+- Future note: When additional discovery surfaces are instrumented, consider a shared helper for analytics source construction. Do not implement now.
 
 ---
 
@@ -67,7 +69,7 @@ _N/A_
 
 ## Build Result
 
-**Last build:** 2026-06-30 — Pass. Zero TypeScript errors. Zero warnings. (EP6-P1 G5)
+**Last build:** 2026-06-30 — Pass. Zero TypeScript errors. Zero warnings. (EP6-P2 G5)
 
 ---
 

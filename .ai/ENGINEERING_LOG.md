@@ -357,3 +357,47 @@ Never edit or delete past entries.
 - ShopByPersonality routing: all personality cards link to /quiz rather than /shop?q= with pre-seeded intent
 - Deferred: QuickAddModal Escape key (pre-existing UX issue)
 - Deferred: Mobile WhatsApp button overlay (pre-existing cosmetic issue)
+
+---
+
+### 2026-06-30 — EP6-P2 — Intelligence Analytics / Discovery Instrumentation
+
+**Participants:** Project Owner / Claude (Implementation Engineer) / ChatGPT (Engineering Lead)
+**Program:** EP6 — Intelligence Analytics (EP6-P2: Discovery Instrumentation)
+
+**Decisions Made:**
+- `AnalyticsSource` extracted as a shared exported type from `analytics.ts` — single source of truth for source string union; no duplication in `ProductCard` or application components
+- Approach A (individual optional props) selected for `ProductCard` analytics context — `source?` and `rank?` as scalar optionals; avoids object creation that would break `memo(ProductCard)` referential stability
+- `handleProductNavigation` useCallback replaces both `Link onClick={saveRecentlyViewed}` assignments — combines `saveRecentlyViewed` + conditional `trackProductClick`; analytics call guarded by `source !== undefined` so non-shop usages of `ProductCard` are unaffected
+- Mode is derived as `currentMode` useMemo (0 | 1 | 2) — DRY derivation shared by filter/sort handlers, useEffects, and `analyticsSource` const; avoids repeating `debouncedSearch`/`detectedSignals` logic
+- Two separate useEffects: discovery mode events on `[debouncedSearch, detectedSignals]`; confidence events on `[firstCardStrength]` — separation keeps each effect's responsibility clear
+- `analyticsSource` computed as explicit ternary const (no template literal) per Engineering Lead refinement #1
+- State updates always precede analytics calls in all inline handlers per Engineering Lead refinement #2
+- `react-hooks/exhaustive-deps` — not suppressed proactively; build confirmed zero warnings; no suppression required
+- Intelligence Layer remains analytics-free — `recommendFragrances`, `intentParser`, `knowledgeAdapter`, `explainability` carry no analytics imports
+
+**Tasks Completed:**
+- G1 Repository Evidence Report: 10 areas surveyed — Discovery pipeline, all three modes, search lifecycle, shop rendering pipeline, ProductCard context, existing analytics integration points, event opportunities, architectural risks, dependencies
+- G2 Engineering Assessment: 3 ProductCard context approaches evaluated (A: individual props, B: analyticsContext object, C: parent owns click); Approach A recommended and approved; 10 topics assessed including useEffect strategy, memo safety, ESLint exhaustive-deps
+- G3 Implementation Plan: 3-file plan approved; `AnalyticsSource` shared type refinement added by Engineering Lead
+- G4 Implementation: 3 files modified — `analytics.ts` (AnalyticsSource type), `ProductCard.tsx` (source/rank props, handleProductNavigation), `shop/page.tsx` (currentMode, 2 useEffects, filter/sort instrumentation, analyticsSource const, ProductCard source/rank props); build pass; 31/31 browser validation; Intelligence Layer isolation confirmed; committed bfbce8d
+
+**Build Result:** Pass — zero TypeScript errors, zero warnings, 118 pages (unchanged)
+
+**Files Changed:**
+- `app/lib/analytics.ts` (modified — AnalyticsSource type extracted from ProductPayload)
+- `app/components/ProductCard.tsx` (modified — source/rank props, handleProductNavigation)
+- `app/shop/page.tsx` (modified — currentMode, discovery/confidence useEffects, filter/sort instrumentation, analyticsSource const, ProductCard source/rank)
+- `.ai/ENGINEERING_LOG.md` (this entry)
+- `.ai/CURRENT_TASK.md` (updated)
+- `.ai/SPRINT.md` (EP6-P2 added to Completed Programs)
+
+**Handoff:** EP6-P2 closed. Discovery instrumentation complete. All five event types (discovery mode, confidence, filter, sort, product click) are instrumented and analytics-safe. ProductCard accepts analytics context without breaking memoization. Intelligence Layer remains isolated. Awaiting Engineering Lead direction for EP6-P3 or next sprint.
+
+**Open Questions Carried Forward:**
+- Provider selection: PostHog JS recommended in EP6-P1 G2; still pending Engineering Lead confirmation
+- Future engineering note: when additional discovery surfaces are instrumented, consider introducing a shared helper for analytics source construction to avoid duplicated source selection logic. Do not implement now.
+- ShopByVibe functional wiring: vibe tiles have no onClick/search injection (decorative only)
+- ShopByPersonality routing: all personality cards link to /quiz rather than /shop?q= with pre-seeded intent
+- Deferred: QuickAddModal Escape key (pre-existing UX issue)
+- Deferred: Mobile WhatsApp button overlay (pre-existing cosmetic issue)
