@@ -58,4 +58,6 @@ export type Fragrance = {
   bestSeller?: boolean;
 
   newArrival?: boolean;
+
+  collection?: "Skye" | "Rose" | "Elite";
 };

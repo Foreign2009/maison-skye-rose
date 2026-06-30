@@ -104,21 +104,17 @@ export function recommendFragrances(
     scored.slice(1, 4);
 
   const luxuryUpgrade =
-    scored.find(
+    scored.slice(1).find(
       (item) =>
-        item.popularity >= 9
+        item.collection === "Elite"
     ) ||
-    scored[1] ||
     null;
 
   const hiddenGem =
-    [...scored]
-      .reverse()
-      .find(
-        (item) =>
-          item.popularity <= 6
-      ) ||
-    scored[2] ||
+    scored.slice(1).find(
+      (item) =>
+        item.popularity <= 6 && item.gender !== "unisex"
+    ) ||
     null;
 
   return {

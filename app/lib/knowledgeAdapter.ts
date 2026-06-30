@@ -235,12 +235,13 @@ export function adaptFragrance(f: DisplayFragrance): Fragrance {
 
     ...deriveMetrics(normalised, f.season),
 
-    // 1–10 scale to match scorer thresholds (>= 9 for luxuryUpgrade, <= 6 for hiddenGem).
+    // 1–10 scale; bestSellers score +10, non-bestSellers +5. hiddenGem selects popularity <= 6.
     popularity: f.bestSeller ? 10 : 5,
 
-    image:      f.images["10ml"],
-    bestSeller: f.bestSeller,
-    newArrival: f.newArrival,
+    image:       f.images["10ml"],
+    bestSeller:  f.bestSeller,
+    newArrival:  f.newArrival,
+    collection:  f.collection,
   };
 }
 
