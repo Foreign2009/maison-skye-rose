@@ -119,16 +119,18 @@ export type QuizWhatsAppPayload = {
   productTitles?: string[];
 };
 
+export type AnalyticsSource =
+  | "shop-mode-0"
+  | "shop-mode-1"
+  | "shop-mode-2"
+  | "quiz"
+  | "pdp-recommendation"
+  | "recently-viewed";
+
 export type ProductPayload = {
   title: string;
   collection?: "Skye" | "Rose" | "Elite";
-  source?:
-    | "shop-mode-0"
-    | "shop-mode-1"
-    | "shop-mode-2"
-    | "quiz"
-    | "pdp-recommendation"
-    | "recently-viewed";
+  source?: AnalyticsSource;
   rank?: number;
 };
 

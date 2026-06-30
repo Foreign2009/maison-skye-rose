@@ -5,6 +5,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { Heart } from "lucide-react";
 import { useFavorites } from "../context/FavoritesContext";
+import type { AnalyticsSource } from "../lib/analytics";
+import { trackProductClick } from "../lib/analytics";
 
 type ProductCardProps = {
   title: string;
@@ -19,6 +21,8 @@ type ProductCardProps = {
   newArrival?: boolean;
   onQuickAdd?: () => void;
   priority?: boolean;
+  source?: AnalyticsSource;
+  rank?: number;
 };
 
 function ProductCard({
@@ -34,6 +38,8 @@ function ProductCard({
   newArrival,
   onQuickAdd,
   priority = false,
+  source,
+  rank,
 }: ProductCardProps) {
   const { addToFavorites, removeFromFavorites, isFavorite } = useFavorites();
   const favorite = isFavorite(title);
@@ -53,6 +59,13 @@ function ProductCard({
     saveRecentlyViewed();
     onQuickAdd?.();
   }, [saveRecentlyViewed, onQuickAdd]);
+
+  const handleProductNavigation = useCallback(() => {
+    saveRecentlyViewed();
+    if (source !== undefined) {
+      trackProductClick({ title, source, rank });
+    }
+  }, [saveRecentlyViewed, source, rank, title]);
 
   const handleFavorite = useCallback(() => {
     if (favorite) {
@@ -93,7 +106,7 @@ function ProductCard({
       {/* Premium Upgrade: Compressed height on mobile to bring focus up */}
       <Link
         href={`/product/${productSlug}`}
-        onClick={saveRecentlyViewed}
+        onClick={handleProductNavigation}
         className="relative flex h-[110px] md:h-[280px] cursor-pointer items-center justify-center rounded-[24px] bg-gradient-to-br from-pink-50 to-blue-50 p-3 md:p-4"
       >
         <Image
@@ -109,7 +122,7 @@ function ProductCard({
       <div className="mt-2 md:mt-6 flex flex-1 flex-col">
         <Link
           href={`/product/${productSlug}`}
-          onClick={saveRecentlyViewed}
+          onClick={handleProductNavigation}
         >
           <h3 className="min-h-[32px] md:min-h-[64px] text-sm md:text-2xl font-black text-[#4f4a52] leading-tight hover:text-[#d89ca4] transition-colors">
             {title}

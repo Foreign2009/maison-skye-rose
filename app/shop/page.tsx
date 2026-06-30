@@ -12,6 +12,8 @@ import { parseIntent, type IntentSignals } from "../lib/intentParser";
 import { adaptCatalogue, DisplayFragrance } from "../lib/knowledgeAdapter";
 import { recommendFragrances } from "../lib/recommendFragrances";
 import { generateReasons } from "../lib/explainability";
+import { trackDiscovery, trackFilter, trackSort, trackConfidence } from "../lib/analytics";
+import type { AnalyticsSource } from "../lib/analytics";
 
 const adaptedCatalogue = adaptCatalogue(fragrances as DisplayFragrance[]);
 const displayByTitle = new Map<string, DisplayFragrance>(
@@ -56,6 +58,11 @@ export default function ShopPage() {
     // Object.keys is never empty for a non-empty query. Check for defined values instead.
     return Object.values(signals).some((v) => v !== undefined) ? signals : null;
   }, [debouncedSearch]);
+
+  const currentMode = useMemo((): 0 | 1 | 2 => {
+    if (!debouncedSearch.trim()) return 0;
+    return detectedSignals !== null ? 1 : 2;
+  }, [debouncedSearch, detectedSignals]);
 
   // 1. Filtering Logic — three-mode orchestration (Mode 0: empty, Mode 1: intent, Mode 2: keyword)
   const filtered = useMemo(() => {
@@ -137,7 +144,35 @@ export default function ShopPage() {
     return null;
   }, [detectedSignals, sortBy, displayItems]);
 
+  useEffect(() => {
+    trackDiscovery({
+      mode: currentMode,
+      query: currentMode !== 0 ? debouncedSearch : undefined,
+      gender: detectedSignals?.gender,
+      occasion: detectedSignals?.occasion,
+      vibe: detectedSignals?.vibe,
+      family: detectedSignals?.family,
+      character: detectedSignals?.character,
+      resultCount: displayItems.length,
+    });
+  }, [debouncedSearch, detectedSignals]);
+
+  useEffect(() => {
+    if (!firstCardStrength || displayItems.length === 0) return;
+    trackConfidence({
+      strength: firstCardStrength,
+      productTitle: displayItems[0].title,
+    });
+  }, [firstCardStrength]);
+
   const isMainMobileTab = (tab: string) => ["All", "Skye", "Rose", "Elite"].includes(tab);
+
+  const analyticsSource: AnalyticsSource =
+    currentMode === 0
+      ? "shop-mode-0"
+      : currentMode === 1
+        ? "shop-mode-1"
+        : "shop-mode-2";
 
   return (
     <main className="min-h-screen bg-[#f5f1eb]">
@@ -181,7 +216,10 @@ export default function ShopPage() {
             {["All", "Skye", "Rose", "Elite", "Best Sellers", "New Arrivals"].map((tab) => (
               <button
                 key={tab}
-                onClick={() => setCurrentFilter(tab)}
+                onClick={() => {
+                  setCurrentFilter(tab);
+                  trackFilter({ filter: tab, mode: currentMode, resultCount: displayItems.length });
+                }}
                 className={`${!isMainMobileTab(tab) ? "hidden md:inline-flex" : "inline-flex"} rounded-xl px-3 py-2 md:px-4 md:py-2.5 text-xs font-semibold uppercase tracking-wider transition-all ${
                   currentFilter === tab ? "bg-[#d89ca4] text-white shadow-md" : "border border-zinc-200 bg-white text-zinc-600 hover:bg-zinc-50"
                 }`}
@@ -201,7 +239,10 @@ export default function ShopPage() {
           <select 
             value={sortBy}
             className="hidden md:block rounded-xl border border-zinc-200 bg-white px-4 py-2.5 text-xs font-semibold uppercase tracking-wider outline-none"
-            onChange={(e) => setSortBy(e.target.value)}
+            onChange={(e) => {
+              setSortBy(e.target.value);
+              trackSort({ sortBy: e.target.value, mode: currentMode });
+            }}
           >
             <option>Featured</option>
             <option>Price Low → High</option>
@@ -278,12 +319,12 @@ export default function ShopPage() {
                       <p className="mb-1.5 text-[10px] md:text-xs font-semibold uppercase tracking-wider text-[#d89ca4]">
                         {firstCardStrength}
                       </p>
-                      <ProductCard {...fragrance} onQuickAdd={() => { setSelectedFragrance(fragrance); setQuickOpen(true); }} />
+                      <ProductCard {...fragrance} onQuickAdd={() => { setSelectedFragrance(fragrance); setQuickOpen(true); }} source={analyticsSource} rank={index} />
                     </div>
                   );
                 }
                 return (
-                  <ProductCard key={fragrance.title} {...fragrance} onQuickAdd={() => { setSelectedFragrance(fragrance); setQuickOpen(true); }} />
+                  <ProductCard key={fragrance.title} {...fragrance} onQuickAdd={() => { setSelectedFragrance(fragrance); setQuickOpen(true); }} source={analyticsSource} rank={index} />
                 );
               })}
             </div>
@@ -307,7 +348,9 @@ export default function ShopPage() {
                   <button
                     key={segment}
                     onClick={() => {
-                      setCurrentFilter(currentFilter === segment ? "All" : segment);
+                      const nextFilter = currentFilter === segment ? "All" : segment;
+                      setCurrentFilter(nextFilter);
+                      trackFilter({ filter: nextFilter, mode: currentMode, resultCount: displayItems.length });
                       setIsDrawerOpen(false);
                     }}
                     className={`rounded-xl px-4 py-2 text-xs font-semibold transition-all ${
@@ -328,6 +371,7 @@ export default function ShopPage() {
                     key={option}
                     onClick={() => {
                       setSortBy(option);
+                      trackSort({ sortBy: option, mode: currentMode });
                       setIsDrawerOpen(false);
                     }}
                     className={`text-left rounded-xl px-4 py-3 text-xs font-semibold ${
