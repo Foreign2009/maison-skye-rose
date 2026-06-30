@@ -31,11 +31,44 @@ Each program has a defined scope, ordered task list, and a clear close condition
 
 ## Active Program
 
-None — EP3-P1 closed 2026-06-30. Awaiting Engineering Lead definition of EP3-P2.
+None — EP3-P2 closed 2026-06-30. Awaiting Engineering Lead direction for next program.
 
 ---
 
 ## Completed Programs
+
+### EP3-P2 — Knowledge Engineering / Dead Occasion Signal
+
+**Objective:** Investigate and resolve the Dead Occasion Signal issue — 4 of 11 occasion vocabulary tokens were recognizable by the system but unresolvable by the recommendation engine.
+**Scope:** Investigation only + minimal quiz UI fix (`app/quiz/page.tsx`). No adapter, parser, engine, or catalogue changes.
+**Lead:** ChatGPT (Engineering Lead) + Claude (Implementation Engineer)
+**Opened:** 2026-06-30
+**Closed:** 2026-06-30
+
+**Out of Scope:**
+- Modifying IntentParser
+- Modifying Knowledge Adapter
+- Modifying Recommendation Engine
+- Removing vocabulary from `fragranceOccasions.ts`
+- Catalogue data changes
+
+**Task List:**
+
+| # | Gate | Task | Status |
+|---|---|---|---|
+| 1 | G1 | Repository Evidence Report — Dead Occasion Signal data flow | Complete |
+| 2 | G2 | Engineering Assessment — 4 resolution options evaluated | Complete |
+| 3 | G2A | Option 4 Feasibility Assessment — profile/vibe inference analysis | Complete |
+| 4 | G3 | Implementation Plan — minimal quiz UI fix approved | Complete |
+| 5 | G4 | Implementation — remove "Luxury Events" from quiz options | Complete |
+| 6 | — | Build + browser validation (9/9 pass) | Complete |
+| 7 | — | Commit, AI-OS update, push | Complete |
+
+**Close Condition:** Dead signal removed from quiz UI. Vocabulary preserved. Build + browser validation pass.
+
+**Outcome:** "Luxury Events" removed from quiz occasion options (commit 65b243d). Internal vocabulary retained in `fragranceOccasions.ts`. Scorer, adapter, and parser unchanged. Future Option 3 path (authoritative occasion metadata) remains fully open. Follow-up recorded for Gym, Signature Scent, Clubbing dead signals.
+
+---
 
 ### EP3-P1 — Knowledge Engineering / Intelligence Layer
 

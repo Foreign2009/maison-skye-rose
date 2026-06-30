@@ -19,10 +19,10 @@ At the start of a new Claude Code session:
 ## Current Task
 
 **Status:** No active task
-**Program:** None — EP3-P1 closed 2026-06-30
+**Program:** None — EP3-P2 closed 2026-06-30
 
 **Goal:**
-_No active task. Awaiting Engineering Lead direction for EP3-P2._
+_No active task. Awaiting Engineering Lead direction for next program._
 
 **Acceptance Criteria:**
 - [ ] _To be defined when next task is opened_
@@ -50,11 +50,13 @@ _None active._
 
 ## Context Notes
 
-**Last completed:** EP3-P1 Intelligence Layer migration (2026-06-30)
-- Commit: 225770f — `feat(quiz): integrate authoritative recommendation engine`
-- Browser validation: 46/46 pass, zero regressions
-- Evaluation framework: `.ai/evaluation/` (4 documents) in place
-- Deferred: QuickAddModal Escape key (pre-existing), M3 Adapter Coverage metric
+**Last completed:** EP3-P2 Dead Occasion Signal fix (2026-06-30)
+- Commit: 65b243d — `feat(discovery): align quiz occasion options with supported catalogue knowledge`
+- Change: removed "Luxury Events" from quiz occasion options (1 line)
+- Build: pass, zero TypeScript errors, zero warnings
+- Browser validation: 9/9 pass
+- Vocabulary preserved in `fragranceOccasions.ts`
+- Follow-up required: Gym, Signature Scent, Clubbing dead signals (deferred to Option 3 / EP3-P3)
 
 ---
 
@@ -66,7 +68,7 @@ _N/A_
 
 ## Build Result
 
-**Last build:** 2026-06-30 — Pass. Zero TypeScript errors. Zero warnings.
+**Last build:** 2026-06-30 — Pass. Zero TypeScript errors. Zero warnings. (EP3-P2 G4)
 
 ---
 
