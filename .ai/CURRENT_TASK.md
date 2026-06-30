@@ -19,10 +19,10 @@ At the start of a new Claude Code session:
 ## Current Task
 
 **Status:** No active task
-**Program:** None — EP4-P1C closed 2026-06-30 (investigation, no production changes)
+**Program:** None — EP5-P1 closed 2026-06-30 (production implementation complete)
 
 **Goal:**
-_No active task. Awaiting Engineering Lead direction for next sprint._
+_No active task. Awaiting Engineering Lead direction for EP5-P2 or next sprint._
 
 **Acceptance Criteria:**
 - [ ] _To be defined when next task is opened_
@@ -50,11 +50,12 @@ _None active._
 
 ## Context Notes
 
-**Last completed:** EP4-P1C Explainability Investigation (2026-06-30)
-- Commit: (AI-OS records only — no production code change)
-- Decision: No implementation. Per-card reasons ruled out (FALLBACK_REASONS unsuitability). Single explanation block assessed as low-value increment over EP4-P1A. EP4-P1A + EP4-P1B declared complete discovery narrative.
-- Build: N/A
-- Follow-up: Awaiting Engineering Lead direction for next sprint
+**Last completed:** EP5-P1 Recommendation Slot Semantics (2026-06-30)
+- Commit: d830e6f
+- Changes: `app/data/types.ts`, `app/lib/knowledgeAdapter.ts`, `app/lib/recommendFragrances.ts`
+- Decision: Hidden Gem corrected (highest-scoring standard non-bestseller). Luxury Upgrade now uses `collection === "Elite"` via direct pass-through. No regressions.
+- Build: Pass — zero TypeScript errors, zero warnings, 118 pages
+- Follow-up: Awaiting Engineering Lead direction for EP5-P2 or next sprint
 
 ---
 

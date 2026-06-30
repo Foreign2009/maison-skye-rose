@@ -266,3 +266,48 @@ Never edit or delete past entries.
 - If `generateReasons` is extended in a future sprint to distinguish genuine from fallback reasons (e.g. a `hasGenuineReasons` flag), per-card reasons in the shop could be revisited
 - Deferred: QuickAddModal Escape key (pre-existing UX issue)
 - Deferred: Mobile WhatsApp button overlay (pre-existing cosmetic issue)
+
+---
+
+### 2026-06-30 — EP5-P1 — Curated Discovery / Recommendation Slot Semantics
+
+**Participants:** Project Owner / Claude (Implementation Engineer) / ChatGPT (Engineering Lead)
+**Program:** EP5 — Curated Discovery (EP5-P1: Slot Semantics Correction)
+
+**Decisions Made:**
+- `luxuryUpgrade` criterion changed from popularity-based bestseller filter (`popularity >= 9`) to Elite collection selection (`collection === "Elite"`): Elite is the authoritative luxury tier; bestseller status is not a luxury signal; all 5 Elite products were previously excluded from the slot named for them
+- `hiddenGem` corrected from lowest-scoring non-bestseller (`[...scored].reverse().find(...)`) to highest-scoring standard non-bestseller (`scored.slice(1).find(...)`): the original `.reverse()` inverted the intent — a hidden gem should align with preferences, not contradict them
+- Both slots use `.slice(1)` to exclude `bestMatch` from consideration — prevents same product appearing in multiple slots
+- Fallbacks changed from `|| scored[1]` / `|| scored[2]` (could return semantically wrong products) to `|| null` (slot renders absent rather than misleading)
+- Engineering Lead refinement at G4→Engineering Refinement gate: `gender === "unisex"` rejected as Elite proxy; `collection` propagated directly through adapter as pass-through field (not a derived `tier` abstraction)
+- `collection?: "Skye" | "Rose" | "Elite"` added to `Fragrance` type — follows existing pattern of `bestSeller?` and `newArrival?` optional pass-through fields
+- `QuizResults.tsx` noted as defined but not currently imported anywhere in the live app — slot labels are not yet customer-visible; this component is the candidate surface for future slot-based discovery UI
+
+**Tasks Completed:**
+- G1 Repository Evidence Report: slot definitions, knowledgeAdapter popularity model, all four consumers assessed
+- G2 Engineering Assessment: all four slots evaluated (engineering meaning, customer meaning, accuracy, risks); binary popularity model deficiencies confirmed; four presentation approaches evaluated; Approach C (refine slot logic) recommended and approved
+- G3 Implementation Plan: Work Item A (hiddenGem) and Work Item B (luxuryUpgrade) planned; luxury signal audit confirmed price is uniform (no price differentiation), collection is the only authoritative premium signal
+- G4 Implementation: single-file change to `app/lib/recommendFragrances.ts`; build pass; 10-scenario browser validation; 4-trace slot correctness verification; EP4 regression confirmed absent
+- Engineering Refinement: `gender === "unisex"` replaced with `collection === "Elite"` using direct collection pass-through; three-file change (`types.ts`, `knowledgeAdapter.ts`, `recommendFragrances.ts`)
+- Build verification: Pass — zero TypeScript errors, zero warnings, 118 pages
+- Commit d830e6f, pushed to origin/main
+
+**Build Result:** Pass — zero TypeScript errors, zero warnings, 118 static/dynamic pages unchanged
+
+**Files Changed:**
+- `app/data/types.ts` (modified — `collection?` field added)
+- `app/lib/knowledgeAdapter.ts` (modified — `collection` pass-through added; stale comment updated)
+- `app/lib/recommendFragrances.ts` (modified — `luxuryUpgrade` and `hiddenGem` slot expressions corrected)
+- `.ai/ENGINEERING_LOG.md` (this entry)
+- `.ai/CURRENT_TASK.md` (updated)
+- `.ai/SPRINT.md` (EP5-P1 added to Completed Programs)
+
+**Handoff:** EP5-P1 closed. Recommendation slot semantics are now aligned with their business meaning. Hidden Gem selects the best-matching underrated standard fragrance. Luxury Upgrade selects the best-matching Elite collection product. No regressions. Awaiting Engineering Lead direction for EP5-P2 or next sprint.
+
+**Open Questions Carried Forward:**
+- Technical consistency opportunity: `hiddenGem` currently excludes Elite via `item.gender !== "unisex"` — could be updated to `item.collection !== "Elite"` for architectural consistency with `luxuryUpgrade`. No functional change required. Low priority.
+- `QuizResults.tsx` exists with correct slot label sections but is not imported in any page — candidate for future slot-based discovery UI when Engineering Lead determines the right moment
+- ShopByVibe functional wiring: vibe tiles have no onClick/search injection (decorative only)
+- ShopByPersonality routing: all personality cards link to /quiz rather than /shop?q= with pre-seeded intent
+- Deferred: QuickAddModal Escape key (pre-existing UX issue)
+- Deferred: Mobile WhatsApp button overlay (pre-existing cosmetic issue)

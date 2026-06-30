@@ -31,11 +31,38 @@ Each program has a defined scope, ordered task list, and a clear close condition
 
 ## Active Program
 
-None — EP4-P1C closed 2026-06-30 (investigation, no production changes). Awaiting Engineering Lead direction for next sprint.
+None — EP5-P1 closed 2026-06-30 (production implementation complete). Awaiting Engineering Lead direction for EP5-P2 or next sprint.
 
 ---
 
 ## Completed Programs
+
+### EP5-P1 — Curated Discovery / Recommendation Slot Semantics
+
+**Objective:** Correct the `luxuryUpgrade` and `hiddenGem` recommendation slot selection logic so that slot semantics align with their customer-facing names. Propagate `collection` metadata through the adaptation layer as the authoritative luxury signal.
+**Scope:** `app/data/types.ts`, `app/lib/knowledgeAdapter.ts`, `app/lib/recommendFragrances.ts`. No UI changes, no catalogue changes, no consumer changes.
+**Lead:** ChatGPT (Engineering Lead) + Claude (Implementation Engineer)
+**Opened:** 2026-06-30
+**Closed:** 2026-06-30
+
+**Task List:**
+
+| # | Gate | Task | Status |
+|---|---|---|---|
+| 1 | G1 | Repository Evidence Report — slot definitions, knowledgeAdapter popularity model, all consumers | Complete |
+| 2 | G2 | Engineering Assessment — all four slots evaluated; binary popularity model deficiencies confirmed; four presentation approaches evaluated | Complete |
+| 3 | G3 | Implementation Plan — Work Item A (hiddenGem) and Work Item B (luxuryUpgrade); luxury signal audit | Complete |
+| 4 | G4 | Implementation — `recommendFragrances.ts` slot expressions corrected; build and 10-scenario browser validation | Complete |
+| 5 | Engineering Refinement | `gender === "unisex"` proxy replaced with `collection === "Elite"` via direct pass-through; three-file change | Complete |
+| 6 | Sprint Closure | AI-OS records updated; commit d830e6f; pushed | Complete |
+
+**Close Condition:** Hidden Gem selects the highest-scoring standard non-bestseller (not the worst-matching). Luxury Upgrade selects the highest-scoring Elite collection product (not the highest-scoring bestseller). Build and browser validation pass. No regressions.
+
+**Outcome:** Recommendation slot semantics now match their business meaning. `hiddenGem` corrected by removing `.reverse()` and adding `.slice(1)` exclusion. `luxuryUpgrade` corrected from `popularity >= 9` (bestseller filter) to `collection === "Elite"` (authoritative luxury tier). `collection` added to `Fragrance` type as direct pass-through from `DisplayFragrance`. Commit d830e6f.
+
+**Future Engineering Note:** `hiddenGem` currently excludes Elite via `item.gender !== "unisex"`. This could later be aligned to `item.collection !== "Elite"` for architectural consistency with `luxuryUpgrade`. No functional change required.
+
+---
 
 ### EP4-P1C — Discovery Experience / Explainability (Investigation)
 
