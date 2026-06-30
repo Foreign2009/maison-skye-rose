@@ -31,11 +31,45 @@ Each program has a defined scope, ordered task list, and a clear close condition
 
 ## Active Program
 
-None — EP3-P2 closed 2026-06-30. Awaiting Engineering Lead direction for next program.
+None — EP4-P1A closed 2026-06-30. Awaiting Engineering Lead direction for EP4-P1B or next sprint.
 
 ---
 
 ## Completed Programs
+
+### EP4-P1A — Discovery Experience / Signal Awareness
+
+**Objective:** Expose the intent signals detected by the Intelligence Layer as visible labelled pills above Mode 1 search results in the Shop page.
+**Scope:** `app/shop/page.tsx` only. Signal summary UI only — no ProductCard changes, no explainability, no matchStrength.
+**Lead:** ChatGPT (Engineering Lead) + Claude (Implementation Engineer)
+**Opened:** 2026-06-30
+**Closed:** 2026-06-30
+
+**Out of Scope:**
+- Modifying ProductCard
+- Per-card explainability reasons
+- matchStrength badges
+- Recommendation logic changes
+- RecommendationCard integration
+
+**Task List:**
+
+| # | Gate | Task | Status |
+|---|---|---|---|
+| 1 | G1 | Repository Evidence Report — shop discovery pipeline, 8 components assessed | Complete |
+| 2 | G2 | Engineering Assessment — 4 options evaluated; Option 4 (Hybrid) recommended | Complete |
+| 3 | G3 | Implementation Plan — Signal Awareness increment; 2 Engineering Lead refinements | Complete |
+| 4 | G4 | Implementation — detectedSignals memo, GENDER_LABELS, filtered refactor, JSX block | Complete |
+| 5 | G4 | Mode 2 bug fix — Object.values hasSignals check (approved in-scope defect) | Complete |
+| 6 | — | Build verification — zero TypeScript errors, zero warnings | Complete |
+| 7 | — | Browser validation — 16/16 PASS | Complete |
+| 8 | — | Commit 93c60af, AI-OS update, push | Complete |
+
+**Close Condition:** Signal summary renders for Mode 1 searches. Absent for Mode 0 and Mode 2. Build and browser validation pass.
+
+**Outcome:** Intelligence Layer signals (gender, occasion, family, vibe, character) now visible to customers in shop search via "Curated for you:" pill summary above the product grid. Pre-existing Mode 2 bug (keyword fallback never fired) identified and fixed. Commit 93c60af.
+
+---
 
 ### EP3-P2 — Knowledge Engineering / Dead Occasion Signal
 

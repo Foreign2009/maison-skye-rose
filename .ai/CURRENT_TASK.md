@@ -19,10 +19,10 @@ At the start of a new Claude Code session:
 ## Current Task
 
 **Status:** No active task
-**Program:** None — EP3-P2 closed 2026-06-30
+**Program:** None — EP4-P1A closed 2026-06-30
 
 **Goal:**
-_No active task. Awaiting Engineering Lead direction for next program._
+_No active task. Awaiting Engineering Lead direction for EP4-P1B or next sprint._
 
 **Acceptance Criteria:**
 - [ ] _To be defined when next task is opened_
@@ -50,13 +50,12 @@ _None active._
 
 ## Context Notes
 
-**Last completed:** EP3-P2 Dead Occasion Signal fix (2026-06-30)
-- Commit: 65b243d — `feat(discovery): align quiz occasion options with supported catalogue knowledge`
-- Change: removed "Luxury Events" from quiz occasion options (1 line)
+**Last completed:** EP4-P1A Signal Awareness (2026-06-30)
+- Commit: 93c60af — `feat(discovery): surface intelligence signals in shop search`
+- Change: signal summary pills above Mode 1 product grid; Mode 2 bug fix (Object.values hasSignals check)
 - Build: pass, zero TypeScript errors, zero warnings
-- Browser validation: 9/9 pass
-- Vocabulary preserved in `fragranceOccasions.ts`
-- Follow-up required: Gym, Signature Scent, Clubbing dead signals (deferred to Option 3 / EP3-P3)
+- Browser validation: 16/16 pass
+- Follow-up: EP4-P1B (per-card matchStrength / reasons) — not yet planned
 
 ---
 
@@ -68,7 +67,7 @@ _N/A_
 
 ## Build Result
 
-**Last build:** 2026-06-30 — Pass. Zero TypeScript errors. Zero warnings. (EP3-P2 G4)
+**Last build:** 2026-06-30 — Pass. Zero TypeScript errors. Zero warnings. (EP4-P1A G4)
 
 ---
 

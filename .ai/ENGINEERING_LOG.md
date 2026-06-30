@@ -151,3 +151,44 @@ Never edit or delete past entries.
 - Gym, Clubbing, Signature Scent: dead signals still exist in adapter layer. Not exposed via quiz (no action required now). Require authoritative occasion data (Option 3) for full resolution.
 - Option 3 follow-up: add `occasions?: string[]` to `DisplayFragrance`, populate across 93 catalogue products, update `adaptFragrance` to prefer catalogue data over SEASON_OCCASIONS derivation. When complete, re-add "Luxury Events" (and others) to quiz options.
 - Evaluation framework: no new baseline entry created for EP3-P2 (single-line UI change; engine behaviour unchanged; existing baseline remains valid).
+
+---
+
+### 2026-06-30 — EP4-P1A — Discovery Experience / Signal Awareness
+
+**Participants:** Project Owner / Claude (Implementation Engineer) / ChatGPT (Engineering Lead)
+**Program:** EP4 — Discovery Experience (EP4-P1A: Signal Awareness — first increment)
+
+**Decisions Made:**
+- Option 4 (Hybrid Experience) selected from G2 Engineering Assessment: signal summary above ProductCard grid preserves purchase flow while adding intelligence feedback
+- First increment scope: signal pills only — no per-card explainability, no matchStrength badges, no ProductCard changes
+- Label text "Curated for you:" approved as customer-facing brand-appropriate copy
+- Pill render order: Gender → Occasion → Family → Vibe → Character
+- Pre-existing Mode 2 bug discovered during implementation: approved as in-scope defect fix
+- Mode 2 bug root cause: `parseIntent` assigns `signals.family/vibe/occasion` explicitly as `undefined`, making `Object.keys(signals).length` always > 0 for non-empty queries. Mode 2 (keyword fallback) never fired in original code. Fixed by checking `Object.values(signals).some((v) => v !== undefined)` instead.
+
+**Tasks Completed:**
+- G1 Repository Evidence Report: complete discovery pipeline mapped, 8 existing components assessed, explainability gap identified
+- G2 Engineering Assessment: 4 options evaluated; Option 4 (Hybrid) recommended and approved
+- G3 Implementation Plan: Signal Awareness increment planned and approved with 2 Engineering Lead refinements
+- G4 Implementation: `app/shop/page.tsx` — `detectedSignals` useMemo, `GENDER_LABELS`, `filtered` memo refactored, signal summary JSX block inserted
+- Mode 2 bug fix: `Object.keys` → `Object.values(...).some` for hasSignals check
+- Build verification: Pass — zero TypeScript errors, zero warnings
+- Browser validation: 16/16 PASS — all signal dimensions, pill order, count accuracy, mobile layout, ProductCard regression
+- Commit 93c60af, pushed to origin/main
+
+**Build Result:** Pass — zero TypeScript errors, zero warnings, `/shop` Static
+
+**Files Changed:**
+- `app/shop/page.tsx` (modified — Signal Awareness implementation + Mode 2 bug fix, committed 93c60af)
+- `.ai/ENGINEERING_LOG.md` (this entry)
+- `.ai/CURRENT_TASK.md` (updated)
+- `.ai/SPRINT.md` (EP4-P1A added to Completed Programs)
+
+**Handoff:** EP4-P1A closed. Signal Awareness live in production. Intelligence Layer signals now visible to customers in shop search. Awaiting Engineering Lead direction for EP4-P1B or next sprint.
+
+**Open Questions Carried Forward:**
+- EP4 next increment: per-card `matchStrength` badge or full reasons (requires ProductCard API change — separate engineering gate)
+- EP4 slot grouping (Option 2 from G2): "Best Match" / "Similar Matches" section headers — complementary to Signal Awareness, not yet planned
+- ShopByVibe functional wiring: vibe tiles have no onClick/search injection (decorative only)
+- ShopByPersonality routing: all personality cards link to /quiz rather than /shop?q= with pre-seeded intent
