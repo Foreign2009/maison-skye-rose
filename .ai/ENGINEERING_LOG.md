@@ -228,8 +228,41 @@ Never edit or delete past entries.
 **Handoff:** EP4-P1B closed. Confidence label live in production. Intelligence Layer matchStrength now customer-visible as "Perfect Match" / "Great Match" above the top recommendation card in Mode 1 with Featured ordering. Awaiting Engineering Lead direction for EP4-P1C or next sprint.
 
 **Open Questions Carried Forward:**
-- EP4 next increment (EP4-P1C): per-card explainability reasons, slot grouping (Best Match / Similar Matches headers), or other discovery enhancement — not yet planned
+- EP4 next direction: slot grouping (Best Match / Similar Matches section headers), ShopByVibe functional wiring, ShopByPersonality pre-seeded intent — not yet planned
 - ShopByVibe functional wiring: vibe tiles have no onClick/search injection (decorative only)
 - ShopByPersonality routing: all personality cards link to /quiz rather than /shop?q= with pre-seeded intent
+- Deferred: QuickAddModal Escape key (pre-existing UX issue)
+- Deferred: Mobile WhatsApp button overlay (pre-existing cosmetic issue)
+
+---
+
+### 2026-06-30 — EP4-P1C — Discovery Experience / Explainability (Investigation)
+
+**Participants:** Project Owner / Claude (Implementation Engineer) / ChatGPT (Engineering Lead)
+**Program:** EP4 — Discovery Experience (EP4-P1C: Explainability — engineering investigation, no production changes)
+
+**Decisions Made:**
+- EP4-P1C concluded as an engineering investigation with no implementation approved
+- Per-card reasons: ruled out — `FALLBACK_REASONS` unconditional guarantee produces generic strings ("Recommended by Maison AI", "Carefully curated for your style") for partial-match cards; displaying these as product-specific explanations undermines intelligence credibility; suppressing partials creates visual inconsistency across the grid
+- Single above-grid explanation: assessed as architecturally sound but providing limited additional value over the EP4-P1A signal pills already in place; risks redundancy and templated feel from `generateReasons` string templates
+- No implementation: EP4-P1A (signal pills) and EP4-P1B (confidence label) together provide a complete discovery narrative; reasons belong at the product detail level (RecommendationCard on PDP), not the discovery level (shop grid)
+- FALLBACK_REASONS design validated as appropriate for ProductDetail context (full expanded RecommendationCard); unsuitable for shop grid context where reasons would be the primary differentiating text
+
+**Tasks Completed:**
+- G1 Repository Evidence Report: 10 areas assessed — generateReasons implementation, ExplanationResult generation, reasons consumption, ProductCard extension points, RecommendationCard, shop pipeline, UI patterns, mobile layout, risks, reuse opportunities
+- G2 Engineering Assessment: 3 approaches evaluated (per-card reasons, single explanation block, no change); FALLBACK_REASONS unsuitability confirmed; Approach 3 (no additional explainability) recommended and approved
+
+**Build Result:** N/A — no production code changed
+
+**Files Changed:**
+- `.ai/ENGINEERING_LOG.md` (this entry)
+- `.ai/CURRENT_TASK.md` (updated)
+- `.ai/SPRINT.md` (EP4-P1C added to Completed Programs)
+
+**Handoff:** EP4-P1C closed. No production changes. Intelligence Layer explainability system fully assessed. Reasons remain active on Product Detail pages via RecommendationCard. Shop discovery explainability complete at EP4-P1A + EP4-P1B level. Awaiting Engineering Lead direction for next sprint.
+
+**Open Questions Carried Forward:**
+- EP4 next direction: slot grouping, ShopByVibe wiring, ShopByPersonality pre-seeded intent — not yet planned
+- If `generateReasons` is extended in a future sprint to distinguish genuine from fallback reasons (e.g. a `hasGenuineReasons` flag), per-card reasons in the shop could be revisited
 - Deferred: QuickAddModal Escape key (pre-existing UX issue)
 - Deferred: Mobile WhatsApp button overlay (pre-existing cosmetic issue)

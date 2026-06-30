@@ -31,11 +31,42 @@ Each program has a defined scope, ordered task list, and a clear close condition
 
 ## Active Program
 
-None — EP4-P1B closed 2026-06-30. Awaiting Engineering Lead direction for EP4-P1C or next sprint.
+None — EP4-P1C closed 2026-06-30 (investigation, no production changes). Awaiting Engineering Lead direction for next sprint.
 
 ---
 
 ## Completed Programs
+
+### EP4-P1C — Discovery Experience / Explainability (Investigation)
+
+**Objective:** Assess how the existing explainability system (`generateReasons`, `ExplanationResult`) can be surfaced in the Shop experience while preserving luxury design and keeping ProductCard lightweight.
+**Scope:** Engineering investigation only. No production code changes.
+**Lead:** ChatGPT (Engineering Lead) + Claude (Implementation Engineer)
+**Opened:** 2026-06-30
+**Closed:** 2026-06-30
+
+**Decision: No Implementation Approved**
+
+**Rationale:**
+- Per-card reasons are architecturally unsuitable: `FALLBACK_REASONS` guarantee unconditional minimum 2 reasons, producing "Recommended by Maison AI" / "Carefully curated for your style" for partial-match cards — strings that do not explain why a fragrance appears in a specific search. Displaying these as product-specific explanations undermines intelligence credibility.
+- Suppressing partial reasons creates visual inconsistency across the grid (some cards with reasons, others without).
+- Single above-grid explanation is architecturally sound but adds limited value over EP4-P1A signal pills; risks redundancy and templated feel.
+- EP4-P1A (signal pills) + EP4-P1B (confidence label) together provide a complete discovery narrative appropriate for the browse context.
+- Full explainability (reasons) is already deployed at the correct architectural layer: `RecommendationCard` on Product Detail pages.
+
+**Task List:**
+
+| # | Gate | Task | Status |
+|---|---|---|---|
+| 1 | G1 | Repository Evidence Report — 10 areas: generateReasons, ExplanationResult, reasons consumption, ProductCard, RecommendationCard, shop pipeline, UI patterns, mobile layout, risks, reuse opportunities | Complete |
+| 2 | G2 | Engineering Assessment — 3 approaches evaluated; FALLBACK_REASONS unsuitability confirmed; Approach 3 (no change) recommended and approved | Complete |
+| 3 | Sprint Closure | AI-OS records updated; commit and push | Complete |
+
+**Close Condition:** Engineering assessment complete. No implementation required. AI-OS records updated.
+
+**Outcome:** Investigation confirmed that reasons are unsuitable for the shop grid in the current `generateReasons` implementation. Shop discovery explainability is complete at EP4-P1A + EP4-P1B. Future path: if `generateReasons` is extended to distinguish genuine from fallback reasons, per-card display could be revisited.
+
+---
 
 ### EP4-P1B — Discovery Experience / Match Strength
 
