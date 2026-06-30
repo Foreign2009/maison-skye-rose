@@ -31,11 +31,37 @@ Each program has a defined scope, ordered task list, and a clear close condition
 
 ## Active Program
 
-None — EP6-P2 closed 2026-06-30 (discovery instrumentation complete). Awaiting Engineering Lead direction for EP6-P3 or next sprint.
+None — EP6-P3 closed 2026-06-30 (quiz instrumentation complete). Awaiting Engineering Lead direction for EP6-P4 or next sprint.
 
 ---
 
 ## Completed Programs
+
+### EP6-P3 — Intelligence Analytics / Quiz Instrumentation
+
+**Objective:** Instrument the Quiz journey with analytics events — answer selection, quiz completion, first recommendation set display, WhatsApp CTA interactions, and product card clicks — using the EP6-P1 analytics infrastructure and the EP6-P2 ProductCard mechanism.
+**Scope:** `app/quiz/page.tsx` only. No changes to `analytics.ts`, `ProductCard.tsx`, or any Intelligence Layer file.
+**Lead:** ChatGPT (Engineering Lead) + Claude (Implementation Engineer)
+**Opened:** 2026-06-30
+**Closed:** 2026-06-30
+
+**Task List:**
+
+| # | Gate | Task | Status |
+|---|---|---|---|
+| 1 | G1 | Repository Evidence Report — 10 areas: quiz lifecycle, question model, recommendation flow, existing UI, ProductCard usage, analytics opportunities, event timing, architectural boundaries, dependencies, risks | Complete |
+| 2 | G2 | Engineering Assessment — 10 topics assessed; re-answer behaviour, one-shot completion guards, result deduplication strategy; decisions on `quiz_started` suppression and `quiz_results_shown` scope | Complete |
+| 3 | G3 | Implementation Plan — single-file plan; 9 work items; hook strategy; ESLint dep analysis; validation plan; Definition of Done | Complete |
+| 4 | G4 | Implementation — React import, analytics import, useRef guard, handleAnswer augmentation, two useEffects, ProductCard source/rank, two WhatsApp onClick; build pass; 28/28 browser validation | Complete |
+| 5 | G5 | Sprint Closure — AI-OS records updated; committed 53c4c63 | Complete |
+
+**Close Condition:** Five quiz event types instrumented. Build passes. Intelligence Layer analytics-free. 28/28 browser validation pass.
+
+**Outcome:** Quiz journey is fully instrumented. `quiz_answer_selected` fires on every answer (new and re-answer) with correct `completionCount`. `quiz_completed` fires exactly once per session via `useEffect([completed])`. `quiz_results_shown` fires once at first full completion via `useRef<boolean>` guard. Both WhatsApp CTAs fire `quiz_whatsapp_clicked` with correct `ctaType`. ProductCard `source="quiz"` activates the EP6-P2 click tracking mechanism without any changes to `ProductCard.tsx`. Intelligence Layer confirmed analytics-free. Commit 53c4c63.
+
+**Future Engineering Note:** As additional customer journeys are instrumented, consider introducing a shared helper or constants for analytics source construction to avoid duplicated source-selection logic. Do not implement now.
+
+---
 
 ### EP6-P2 — Intelligence Analytics / Discovery Instrumentation
 

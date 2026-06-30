@@ -401,3 +401,47 @@ Never edit or delete past entries.
 - ShopByPersonality routing: all personality cards link to /quiz rather than /shop?q= with pre-seeded intent
 - Deferred: QuickAddModal Escape key (pre-existing UX issue)
 - Deferred: Mobile WhatsApp button overlay (pre-existing cosmetic issue)
+
+---
+
+### 2026-06-30 — EP6-P3 — Intelligence Analytics / Quiz Instrumentation
+
+**Participants:** Project Owner / Claude (Implementation Engineer) / ChatGPT (Engineering Lead)
+**Program:** EP6 — Intelligence Analytics (EP6-P3: Quiz Instrumentation)
+
+**Decisions Made:**
+- No `quiz_started` event — repository has no authoritative started state; first `quiz_answer_selected` is the funnel entry point
+- `trackQuizAnswer` placed inline in `handleAnswer` (not in a useEffect) — direct user-action observation; `questionId` and `answer` naturally available at call site
+- `isNew` check (`answers[questionId] === undefined`) distinguishes first-time answers from re-answers for correct `completionCount` derivation; both fire the event
+- State update (`setAnswers`) precedes analytics call (`trackQuizAnswer`) — consistent with EP6-P2 handler pattern
+- `useEffect([completed])` for `quiz_completed` — `completed` is monotonically increasing (0→5), reaches 5 exactly once per session; natural one-shot pattern requiring no `useRef` deduplication
+- `useEffect([recommended])` with `useRef<boolean>(false)` guard for `quiz_results_shown` — "first completed recommendation set shown"; subsequent re-answer updates intentionally not tracked; Engineering Lead refinement: document guard intent with comment
+- `source="quiz"` passed to ProductCard — activates existing EP6-P2 `handleProductNavigation` mechanism; no changes to `ProductCard.tsx`
+- Both inline WhatsApp CTAs instrumented — "Need Help Choosing?" (`ctaType: "help"`) and "Send My Results To WhatsApp" (`ctaType: "results"` with top-3 titles); `FloatingWhatsApp` not instrumented (shared component, no quiz context)
+- `react-hooks/exhaustive-deps` — neither effect triggered warnings at build time; no suppressions required
+- Intelligence Layer remains analytics-free
+
+**Tasks Completed:**
+- G1 Repository Evidence Report: 10 areas surveyed — quiz lifecycle, question model, recommendation flow, existing UI, ProductCard usage vs shop, analytics opportunities, event timing, architectural boundaries, dependencies, risks
+- G2 Engineering Assessment: 10 topics assessed — answer instrumentation, completion detection, result observation, ProductCard, WhatsApp CTAs, re-answer behaviour, one-shot guards, result deduplication, React effect strategy, testing strategy; decisions deferred to Engineering Lead on result deduplication scope
+- G3 Implementation Plan: single-file plan (`app/quiz/page.tsx`); 9 work items; hook strategy, ESLint dep analysis, validation plan, regression risks, Definition of Done
+- G4 Implementation: `app/quiz/page.tsx` modified — useEffect/useRef added to React import, analytics imports, hasTrackedResults ref, handleAnswer augmentation, completion effect, results effect with documentation comment, ProductCard source/rank, two WhatsApp onClick handlers; build pass; 28/28 browser validation; Intelligence Layer isolation confirmed; committed 53c4c63
+
+**Build Result:** Pass — zero TypeScript errors, zero warnings, 118 pages (unchanged)
+
+**Files Changed:**
+- `app/quiz/page.tsx` (modified — quiz analytics instrumentation, committed 53c4c63)
+- `.ai/ENGINEERING_LOG.md` (this entry)
+- `.ai/CURRENT_TASK.md` (updated)
+- `.ai/SPRINT.md` (EP6-P3 added to Completed Programs)
+
+**Handoff:** EP6-P3 closed. Quiz instrumentation complete. Five event types operational in the quiz journey: `quiz_answer_selected`, `quiz_completed`, `quiz_results_shown`, `quiz_whatsapp_clicked`, `product_clicked` (via ProductCard reuse). Intelligence Layer remains isolated. EP6 analytics instrumentation now covers Shop (EP6-P2) and Quiz (EP6-P3). Awaiting Engineering Lead direction for EP6-P4 or next sprint.
+
+**Open Questions Carried Forward:**
+- Provider selection: PostHog JS recommended in EP6-P1 G2; still pending Engineering Lead confirmation
+- Future engineering note: as additional customer journeys are instrumented, consider introducing a shared helper or constants for analytics source construction to avoid duplicated source-selection logic. Do not implement now.
+- `QuickAddModal.handleAddToCart` is an uninstrumented add-to-cart path — `trackAddToCart` exists in `analytics.ts` but is not called from anywhere; cross-surface scope (shop, quiz, PDP); candidate for a future EP6 sprint
+- ShopByVibe functional wiring: vibe tiles have no onClick/search injection (decorative only)
+- ShopByPersonality routing: all personality cards link to /quiz rather than /shop?q= with pre-seeded intent
+- Deferred: QuickAddModal Escape key (pre-existing UX issue)
+- Deferred: Mobile WhatsApp button overlay (pre-existing cosmetic issue)

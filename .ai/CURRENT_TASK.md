@@ -19,10 +19,10 @@ At the start of a new Claude Code session:
 ## Current Task
 
 **Status:** No active task
-**Program:** None — EP6-P2 closed 2026-06-30 (discovery instrumentation complete)
+**Program:** None — EP6-P3 closed 2026-06-30 (quiz instrumentation complete)
 
 **Goal:**
-_No active task. Awaiting Engineering Lead direction for EP6-P3 or next sprint._
+_No active task. Awaiting Engineering Lead direction for EP6-P4 or next sprint._
 
 **Acceptance Criteria:**
 - [ ] _To be defined when next task is opened_
@@ -50,14 +50,14 @@ _None active._
 
 ## Context Notes
 
-**Last completed:** EP6-P2 Discovery Instrumentation (2026-06-30)
-- Commit: bfbce8d
-- Changes: `app/lib/analytics.ts` (AnalyticsSource type extracted), `app/components/ProductCard.tsx` (source/rank props, handleProductNavigation), `app/shop/page.tsx` (currentMode, 2 useEffects, filter/sort/click instrumentation)
-- Decision: Approach A (individual props) for ProductCard analytics context. AnalyticsSource as shared type. Two separate useEffects for mode events and confidence events. Explicit ternary for analyticsSource (no template literal). State updates before analytics calls in all handlers.
+**Last completed:** EP6-P3 Quiz Instrumentation (2026-06-30)
+- Commit: 53c4c63
+- Changes: `app/quiz/page.tsx` — useEffect/useRef added to React import; analytics imports; `hasTrackedResults` ref; `handleAnswer` augmented; completion effect; results effect with guard comment; ProductCard `source="quiz"` / `rank={index}`; two WhatsApp `onClick` handlers
+- Decision: No `quiz_started` event. Inline `handleAnswer` for `quiz_answer_selected`. `useEffect([completed])` for one-shot `quiz_completed`. `useRef<boolean>` guard for one-shot `quiz_results_shown`. `source="quiz"` activates EP6-P2 ProductCard mechanism — no ProductCard changes needed.
 - Build: Pass — zero TypeScript errors, zero warnings, 118 pages
-- Validation: 31/31 browser scenarios pass
+- Validation: 28/28 browser scenarios pass
 - Intelligence Layer: confirmed analytics-free
-- Future note: When additional discovery surfaces are instrumented, consider a shared helper for analytics source construction. Do not implement now.
+- Future note: As additional customer journeys are instrumented, consider a shared helper or constants for analytics source construction. Do not implement now.
 
 ---
 
@@ -69,7 +69,7 @@ _N/A_
 
 ## Build Result
 
-**Last build:** 2026-06-30 — Pass. Zero TypeScript errors. Zero warnings. (EP6-P2 G5)
+**Last build:** 2026-06-30 — Pass. Zero TypeScript errors. Zero warnings. (EP6-P3 G5)
 
 ---
 
