@@ -31,11 +31,44 @@ Each program has a defined scope, ordered task list, and a clear close condition
 
 ## Active Program
 
-None — EP4-P1A closed 2026-06-30. Awaiting Engineering Lead direction for EP4-P1B or next sprint.
+None — EP4-P1B closed 2026-06-30. Awaiting Engineering Lead direction for EP4-P1C or next sprint.
 
 ---
 
 ## Completed Programs
+
+### EP4-P1B — Discovery Experience / Match Strength
+
+**Objective:** Surface the Intelligence Layer's `matchStrength` signal as a customer-facing confidence label above the first recommendation card in Mode 1 search results.
+**Scope:** `app/shop/page.tsx` only. Positional label only — no ProductCard changes, no badge, no signal summary extension.
+**Lead:** ChatGPT (Engineering Lead) + Claude (Implementation Engineer)
+**Opened:** 2026-06-30
+**Closed:** 2026-06-30
+
+**Out of Scope:**
+- Modifying ProductCard
+- Per-card badges or explainability reasons
+- Extending the EP4-P1A signal summary row
+- RecommendationCard changes
+- Recommendation logic changes
+
+**Task List:**
+
+| # | Gate | Task | Status |
+|---|---|---|---|
+| 1 | G1 | Repository Evidence Report — 10 areas: matchStrength generation, consumption gap, ProductCard extension points, RecommendationCard, shop pipeline, styling patterns, reusable components, risks, mobile layout, architectural constraints | Complete |
+| 2 | G2 | Engineering Assessment — 4 options evaluated; Option 4 (Hybrid) recommended; customer-facing terminology proposed | Complete |
+| 3 | G3 | Implementation Plan — positional label; sort suppression guard; 8-point Definition of Done | Complete |
+| 4 | G4 | Implementation — import, `adaptedByTitle` Map, `firstCardStrength` useMemo, grid render update | Complete |
+| 5 | — | Build verification — zero TypeScript errors, zero warnings | Complete |
+| 6 | — | Browser validation — 16/16 PASS | Complete |
+| 7 | — | Commit bdabd75, AI-OS update, push | Complete |
+
+**Close Condition:** "Perfect Match" or "Great Match" label renders above the first recommendation card in Mode 1 with Featured sort. Suppressed in Mode 0, Mode 2, and non-default sort. 16/16 browser validation pass.
+
+**Outcome:** Intelligence Layer `matchStrength` now customer-visible as "Perfect Match" / "Great Match" above the top recommendation in shop search. Label is semantically scoped to Featured ordering only. No ProductCard changes. No regressions. Commit bdabd75.
+
+---
 
 ### EP4-P1A — Discovery Experience / Signal Awareness
 

@@ -19,10 +19,10 @@ At the start of a new Claude Code session:
 ## Current Task
 
 **Status:** No active task
-**Program:** None — EP4-P1A closed 2026-06-30
+**Program:** None — EP4-P1B closed 2026-06-30
 
 **Goal:**
-_No active task. Awaiting Engineering Lead direction for EP4-P1B or next sprint._
+_No active task. Awaiting Engineering Lead direction for EP4-P1C or next sprint._
 
 **Acceptance Criteria:**
 - [ ] _To be defined when next task is opened_
@@ -50,12 +50,12 @@ _None active._
 
 ## Context Notes
 
-**Last completed:** EP4-P1A Signal Awareness (2026-06-30)
-- Commit: 93c60af — `feat(discovery): surface intelligence signals in shop search`
-- Change: signal summary pills above Mode 1 product grid; Mode 2 bug fix (Object.values hasSignals check)
+**Last completed:** EP4-P1B Match Strength (2026-06-30)
+- Commit: bdabd75 — `feat(discovery): surface confidence label on top recommendation card`
+- Change: "Perfect Match" / "Great Match" label above first recommendation card in Mode 1 Featured ordering; suppressed for Mode 0, Mode 2, non-default sort, and "partial" matchStrength
 - Build: pass, zero TypeScript errors, zero warnings
 - Browser validation: 16/16 pass
-- Follow-up: EP4-P1B (per-card matchStrength / reasons) — not yet planned
+- Follow-up: EP4-P1C — not yet planned; awaiting Engineering Lead direction
 
 ---
 

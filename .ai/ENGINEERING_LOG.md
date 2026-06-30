@@ -192,3 +192,44 @@ Never edit or delete past entries.
 - EP4 slot grouping (Option 2 from G2): "Best Match" / "Similar Matches" section headers — complementary to Signal Awareness, not yet planned
 - ShopByVibe functional wiring: vibe tiles have no onClick/search injection (decorative only)
 - ShopByPersonality routing: all personality cards link to /quiz rather than /shop?q= with pre-seeded intent
+
+---
+
+### 2026-06-30 — EP4-P1B — Discovery Experience / Match Strength
+
+**Participants:** Project Owner / Claude (Implementation Engineer) / ChatGPT (Engineering Lead)
+**Program:** EP4 — Discovery Experience (EP4-P1B: Match Strength — second increment)
+
+**Decisions Made:**
+- Scope restricted to positional confidence label above first recommendation card only — no ProductCard changes, no badge, no signal summary extension
+- Customer-facing terminology: "strong" → "Perfect Match"; "moderate" → "Great Match"; "partial" → suppressed
+- Label restricted to default ("Featured") sort order only — non-default sort suppresses the label to preserve semantic meaning of "Perfect Match" / "Great Match"
+- `adaptedByTitle` Map added at module scope (mirrors existing `displayByTitle` pattern) to bridge DisplayFragrance → Fragrance for `generateReasons` lookup
+- `firstCardStrength` useMemo placed after `displayItems` memo — depends on `[detectedSignals, sortBy, displayItems]`
+- First card wrapped in `<div>` grid cell with label `<p>` above it; all other cards remain direct grid children
+
+**Tasks Completed:**
+- G1 Repository Evidence Report: 10 areas assessed — matchStrength generation, consumption gap, ProductCard extension points, RecommendationCard, shop pipeline, styling patterns, reusable components, risks, mobile layout, architectural constraints
+- G2 Engineering Assessment: 4 options evaluated (badge in card, grid-level indicator, inline text, hybrid); Option 4 (Hybrid) recommended and approved; customer-facing terminology proposed
+- G3 Implementation Plan: positional label only; sort suppression guard; 8-point Definition of Done
+- G4 Implementation: `app/shop/page.tsx` — import, `adaptedByTitle` Map, `firstCardStrength` useMemo, grid render update
+- Build verification: Pass — zero TypeScript errors, zero warnings, `/shop` Static
+- Browser validation: 16/16 PASS — Mode 0/2 suppression, Perfect Match, Great Match, position accuracy, sort suppression and restore, EP4-P1A regression, mobile layout, zero-results guard
+- Commit bdabd75, pushed to origin/main
+
+**Build Result:** Pass — zero TypeScript errors, zero warnings, `/shop` Static
+
+**Files Changed:**
+- `app/shop/page.tsx` (modified — confidence label implementation, committed bdabd75)
+- `.ai/ENGINEERING_LOG.md` (this entry)
+- `.ai/CURRENT_TASK.md` (updated)
+- `.ai/SPRINT.md` (EP4-P1B added to Completed Programs)
+
+**Handoff:** EP4-P1B closed. Confidence label live in production. Intelligence Layer matchStrength now customer-visible as "Perfect Match" / "Great Match" above the top recommendation card in Mode 1 with Featured ordering. Awaiting Engineering Lead direction for EP4-P1C or next sprint.
+
+**Open Questions Carried Forward:**
+- EP4 next increment (EP4-P1C): per-card explainability reasons, slot grouping (Best Match / Similar Matches headers), or other discovery enhancement — not yet planned
+- ShopByVibe functional wiring: vibe tiles have no onClick/search injection (decorative only)
+- ShopByPersonality routing: all personality cards link to /quiz rather than /shop?q= with pre-seeded intent
+- Deferred: QuickAddModal Escape key (pre-existing UX issue)
+- Deferred: Mobile WhatsApp button overlay (pre-existing cosmetic issue)
