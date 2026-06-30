@@ -31,11 +31,37 @@ Each program has a defined scope, ordered task list, and a clear close condition
 
 ## Active Program
 
-None — EP5-P1 closed 2026-06-30 (production implementation complete). Awaiting Engineering Lead direction for EP5-P2 or next sprint.
+None — EP6-P1 closed 2026-06-30 (analytics infrastructure complete). Awaiting Engineering Lead direction for EP6-P1 Stage 2 (instrumentation) or next sprint.
 
 ---
 
 ## Completed Programs
+
+### EP6-P1 — Intelligence Analytics / Analytics Architecture
+
+**Objective:** Introduce analytics infrastructure — service module, session identity, event schema, and initialization component — without modifying any application component or coupling into the Intelligence Layer.
+**Scope:** `app/lib/analytics.ts` (new), `app/components/AnalyticsInit.tsx` (new), `app/layout.tsx` (modified). No application instrumentation. No provider installed.
+**Lead:** ChatGPT (Engineering Lead) + Claude (Implementation Engineer)
+**Opened:** 2026-06-30
+**Closed:** 2026-06-30
+
+**Task List:**
+
+| # | Gate | Task | Status |
+|---|---|---|---|
+| 1 | G1 | Repository Evidence Report — 10 areas: analytics/telemetry, event handling, shop flow, quiz flow, search flow, product click flow, cart flow, ProductDetail flow, routing, Supabase | Complete |
+| 2 | G2 | Engineering Assessment — 4 architectures evaluated; 10 topics assessed; Approach B (Shared Analytics Service) recommended and approved | Complete |
+| 3 | G3 | Implementation Plan — Stage 1 (infrastructure) fully planned; Stage 2 (instrumentation) insertion points listed in priority order | Complete |
+| 4 | G4 | Implementation — 3 files; provider-neutral stub; 10 payload types; 12 track functions; 9/9 browser validation | Complete |
+| 5 | G5 | Refinement — explicit `if (!ready) return;` in all 12 track function bodies; build pass; 9/9 validation reconfirmed; committed abf512e | Complete |
+
+**Close Condition:** `app/lib/analytics.ts` and `app/components/AnalyticsInit.tsx` created. `app/layout.tsx` updated. Build passes. Session UUID created and persists in localStorage. Intelligence Layer isolation confirmed. No application component instrumented.
+
+**Outcome:** Analytics infrastructure is in place and provider-neutral. Session identity operational via anonymous UUID in `localStorage['msr_session_id']`. Twelve typed track functions ready for Stage 2 instrumentation. Provider integration point clearly marked; no SDK installed. Intelligence Layer (`recommendFragrances`, `intentParser`, `knowledgeAdapter`, `explainability`) confirmed to have zero analytics imports. Commit abf512e.
+
+**Stage 2 Engineering Note:** 16 instrumentation insertion points are enumerated and ordered in the G3 plan. Stage 2 requires: (1) Engineering Lead provider selection (PostHog JS recommended), (2) provider SDK install and env var configuration, (3) application component instrumentation in implementation order.
+
+---
 
 ### EP5-P1 — Curated Discovery / Recommendation Slot Semantics
 

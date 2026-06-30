@@ -311,3 +311,49 @@ Never edit or delete past entries.
 - ShopByPersonality routing: all personality cards link to /quiz rather than /shop?q= with pre-seeded intent
 - Deferred: QuickAddModal Escape key (pre-existing UX issue)
 - Deferred: Mobile WhatsApp button overlay (pre-existing cosmetic issue)
+
+---
+
+### 2026-06-30 — EP6-P1 — Intelligence Analytics / Analytics Architecture
+
+**Participants:** Project Owner / Claude (Implementation Engineer) / ChatGPT (Engineering Lead)
+**Program:** EP6 — Intelligence Analytics (EP6-P1: Analytics Architecture — infrastructure only)
+
+**Decisions Made:**
+- Analytics observes behaviour; it never influences it — enforced as a documentation principle and architectural rule in `analytics.ts`
+- Intelligence Layer must never import `analytics.ts` — observability lives at call sites in consumers, not inside pure library functions
+- Provider selection deferred — provider integration point implemented as named stub (`providerInit`, `providerCapture`); no provider SDK installed, no env var hard-coded
+- Session identity: anonymous UUID in `localStorage['msr_session_id']` — consistent with existing cart and favorites persistence pattern; generated via `crypto.randomUUID()`
+- Timestamps are provider responsibility — client payloads carry no timestamp fields
+- `SESSION_KEY = "msr_session_id"` defined as module constant in `AnalyticsInit.tsx` — no literal repetition
+- G5 Engineering Lead refinement: `if (!ready) return;` required as explicit first statement in every public track function body — the `capture` helper retains its own guard as secondary defense; public contract must be self-documenting
+- `AnalyticsInit` component placed outside the provider tree in `layout.tsx` — no context dependencies; renders `null`
+- Approach B (Shared Analytics Service) selected from four evaluated architectures — matches codebase thin-module convention, centralizes schema ownership, testable via single module mock, sufficient portability for pre-launch single-provider context
+- Stage 2 (application instrumentation) deferred — 16 insertion points enumerated and ordered in G3 plan; no application components touched
+
+**Tasks Completed:**
+- G1 Repository Evidence Report: 10 areas surveyed — analytics/telemetry (none), event handling, shop flow, quiz flow, search flow, product click flow, cart flow, ProductDetail flow, routing, Supabase; 16 instrumentation points identified; architectural constraints documented
+- G2 Engineering Assessment: 4 architectures evaluated (A: Direct calls, B: Service module, C: Interface/adapter, D: Event bus); 10 topics assessed (abstraction layer, event model, provider adapter, session identity, schema, client/server split, ProductCard propagation, API boundaries, failure handling, portability); Approach B recommended and approved
+- G3 Implementation Plan: Stage 1 (infrastructure) fully planned; Stage 2 (instrumentation) insertion points listed in priority order without internal code
+- G4 Implementation: `app/lib/analytics.ts` created (documentation block, safeCall, ready flag, provider stub, 10 payload types, 12 track functions); `app/components/AnalyticsInit.tsx` created; `app/layout.tsx` modified; 9/9 browser validation pass
+- G5 Refinement: explicit `if (!ready) return;` added to all 12 track function bodies; build pass; 9/9 validation reconfirmed; committed abf512e
+
+**Build Result:** Pass — zero TypeScript errors, zero warnings, 118 pages (unchanged)
+
+**Files Changed:**
+- `app/lib/analytics.ts` (created — analytics service module)
+- `app/components/AnalyticsInit.tsx` (created — initialization component)
+- `app/layout.tsx` (modified — AnalyticsInit added)
+- `.ai/ENGINEERING_LOG.md` (this entry)
+- `.ai/CURRENT_TASK.md` (updated)
+- `.ai/SPRINT.md` (EP6-P1 added to Completed Programs)
+
+**Handoff:** EP6-P1 closed. Analytics infrastructure is in place. Session identity is operational. Intelligence Layer remains isolated. No application component is instrumented. Stage 2 instrumentation requires provider selection before implementation can begin.
+
+**Open Questions Carried Forward:**
+- Provider selection: PostHog JS recommended in G2; Engineering Lead to confirm before Stage 2
+- Stage 2 (instrumentation): 16 insertion points enumerated in G3 plan; ready to implement once provider is selected and configured
+- ShopByVibe functional wiring: vibe tiles have no onClick/search injection (decorative only)
+- ShopByPersonality routing: all personality cards link to /quiz rather than /shop?q= with pre-seeded intent
+- Deferred: QuickAddModal Escape key (pre-existing UX issue)
+- Deferred: Mobile WhatsApp button overlay (pre-existing cosmetic issue)

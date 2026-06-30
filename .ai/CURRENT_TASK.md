@@ -19,10 +19,10 @@ At the start of a new Claude Code session:
 ## Current Task
 
 **Status:** No active task
-**Program:** None — EP5-P1 closed 2026-06-30 (production implementation complete)
+**Program:** None — EP6-P1 closed 2026-06-30 (analytics infrastructure complete)
 
 **Goal:**
-_No active task. Awaiting Engineering Lead direction for EP5-P2 or next sprint._
+_No active task. Awaiting Engineering Lead direction for EP6-P1 Stage 2 (instrumentation) or next sprint._
 
 **Acceptance Criteria:**
 - [ ] _To be defined when next task is opened_
@@ -50,12 +50,12 @@ _None active._
 
 ## Context Notes
 
-**Last completed:** EP5-P1 Recommendation Slot Semantics (2026-06-30)
-- Commit: d830e6f
-- Changes: `app/data/types.ts`, `app/lib/knowledgeAdapter.ts`, `app/lib/recommendFragrances.ts`
-- Decision: Hidden Gem corrected (highest-scoring standard non-bestseller). Luxury Upgrade now uses `collection === "Elite"` via direct pass-through. No regressions.
+**Last completed:** EP6-P1 Analytics Infrastructure (2026-06-30)
+- Commit: abf512e
+- Changes: `app/lib/analytics.ts` (created), `app/components/AnalyticsInit.tsx` (created), `app/layout.tsx` (modified)
+- Decision: Analytics service module with provider-neutral stub. Session identity via localStorage UUID. Intelligence Layer isolation confirmed. No application instrumentation.
 - Build: Pass — zero TypeScript errors, zero warnings, 118 pages
-- Follow-up: Awaiting Engineering Lead direction for EP5-P2 or next sprint
+- Follow-up: Stage 2 instrumentation requires provider selection. 16 insertion points enumerated in G3 plan.
 
 ---
 
@@ -67,7 +67,7 @@ _N/A_
 
 ## Build Result
 
-**Last build:** 2026-06-30 — Pass. Zero TypeScript errors. Zero warnings. (EP4-P1A G4)
+**Last build:** 2026-06-30 — Pass. Zero TypeScript errors. Zero warnings. (EP6-P1 G5)
 
 ---
 
