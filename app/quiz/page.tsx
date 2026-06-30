@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect, useRef } from "react";
 import Link from "next/link";
 
 import Navbar from "../components/Navbar";
@@ -12,6 +12,12 @@ import { fragrances } from "../data/fragrances";
 import { adaptCatalogue, DisplayFragrance } from "../lib/knowledgeAdapter";
 import { recommendFragrances } from "../lib/recommendFragrances";
 import type { RecommendationResults } from "../lib/recommendFragrances";
+import {
+  trackQuizAnswer,
+  trackQuizCompleted,
+  trackQuizResults,
+  trackQuizWhatsApp,
+} from "../lib/analytics";
 
 const adaptedCatalogue = adaptCatalogue(fragrances as DisplayFragrance[]);
 const displayByTitle = new Map<string, DisplayFragrance>(
@@ -83,12 +89,16 @@ export default function QuizPage() {
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [quickOpen, setQuickOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<any>(null);
+  const hasTrackedResults = useRef<boolean>(false);
 
   const handleAnswer = (questionId: string, answer: string) => {
+    const isNew = answers[questionId] === undefined;
+    const newCompletionCount = isNew ? completed + 1 : completed;
     setAnswers((prev) => ({
       ...prev,
       [questionId]: answer,
     }));
+    trackQuizAnswer({ questionId, answer, completionCount: newCompletionCount });
   };
 
   const completed = Object.keys(answers).length;
@@ -122,6 +132,24 @@ export default function QuizPage() {
     }
     return flat;
   }, [recommendationResults]);
+
+  useEffect(() => {
+    if (completed !== questions.length) return;
+    trackQuizCompleted({ answers });
+  }, [completed]);
+
+  // Track only the first completed recommendation set.
+  // Re-answer recommendation updates are intentionally not tracked.
+  useEffect(() => {
+    if (hasTrackedResults.current) return;
+    if (recommended.length === 0) return;
+    if (completed < questions.length) return;
+    hasTrackedResults.current = true;
+    trackQuizResults({
+      recommendedTitles: recommended.map((f) => f.title),
+      resultCount: recommended.length,
+    });
+  }, [recommended]);
 
   return (
     <main className="min-h-screen bg-[#f9f6f2]">
@@ -328,7 +356,7 @@ export default function QuizPage() {
               </div>
 
               <div className="mb-8 grid gap-6 lg:grid-cols-3">
-                {recommended.map((fragrance) => (
+                {recommended.map((fragrance, index) => (
                   <ProductCard
                     key={fragrance.title}
                     {...fragrance}
@@ -336,6 +364,8 @@ export default function QuizPage() {
                       setSelectedProduct(fragrance);
                       setQuickOpen(true);
                     }}
+                    source="quiz"
+                    rank={index}
                   />
                 ))}
               </div>
@@ -345,6 +375,7 @@ export default function QuizPage() {
                 href="https://wa.me/27696863952"
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackQuizWhatsApp({ ctaType: "help" })}
                 className="mx-auto mt-10 flex w-fit rounded-full bg-black px-8 py-4 text-white font-bold transition-transform duration-300 hover:scale-105"
               >
                 Need Help Choosing?
@@ -355,6 +386,12 @@ export default function QuizPage() {
                 )}`}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() =>
+                  trackQuizWhatsApp({
+                    ctaType: "results",
+                    productTitles: recommended.slice(0, 3).map((f) => f.title),
+                  })
+                }
                 className="mx-auto mt-4 flex w-fit rounded-full bg-[#d89ca4] px-8 py-4 text-white font-bold transition-transform duration-300 hover:scale-105"
               >
                 Send My Results To WhatsApp
