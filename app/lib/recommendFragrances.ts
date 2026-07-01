@@ -113,7 +113,7 @@ export function recommendFragrances(
   const hiddenGem =
     scored.slice(1).find(
       (item) =>
-        item.popularity <= 6 && item.gender !== "unisex"
+        item.popularity <= 6 && item.collection !== "Elite"
     ) ||
     null;
 

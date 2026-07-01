@@ -178,8 +178,8 @@ Maximum possible score: **110** (all 5 dimensions match on a bestSeller product)
 #### TC-SC-03: hiddenGem — lowest-scoring non-bestSeller
 
 **Query:** Any single-signal query
-**Expected:** `hiddenGem` is a product with popularity ≤ 6 (non-bestSeller with popularity=5)
-**Code path:** `[...scored].reverse().find(item => item.popularity <= 6)` — finds the lowest-ranked product with popularity=5; falls back to `scored[2]` if none qualifies
+**Expected:** `hiddenGem` is a non-Elite product with popularity ≤ 6 (non-bestSeller with popularity=5)
+**Code path:** `scored.slice(1).find(item => item.popularity <= 6 && item.collection !== "Elite")` — finds the highest-scored non-Elite product with popularity ≤ 6; returns null if none qualifies
 
 ---
 
