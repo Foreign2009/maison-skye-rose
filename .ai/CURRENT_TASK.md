@@ -19,10 +19,10 @@ At the start of a new Claude Code session:
 ## Current Task
 
 **Status:** No active task
-**Program:** None — EP6-P4 closed 2026-07-01 (commerce analytics instrumentation complete)
+**Program:** None — EP8-P1 closed 2026-07-01 (foundation cleanup complete)
 
 **Goal:**
-_No active task. Awaiting Engineering Lead direction for next sprint._
+_No active task. Awaiting Engineering Lead direction for EP8-P2 or next sprint._
 
 **Acceptance Criteria:**
 - [ ] _To be defined when next task is opened_
@@ -50,14 +50,16 @@ _None active._
 
 ## Context Notes
 
-**Last completed:** EP6-P4 Commerce Instrumentation (2026-07-01)
-- Commit: 7da817e
-- Changes: 8 production files — `app/lib/analytics.ts` (CartPayload.source extended; 5 new payload types; 6 new track functions); `app/components/ProductDetail.tsx` (analytics imports; cartOpen destructure; useEffect extension; handleAddToCart; handleBuyNow); `app/components/QuickAddModal.tsx` (trackAddToCart); `app/components/MiniCart.tsx` (trackAddToCart × 3 surfaces; trackWhatsAppCheckout); `app/components/Navbar.tsx` (trackCartOpened bag-icon); `app/checkout/page.tsx` (trackCheckoutStarted; trackPaymentStarted); `app/payment-success/page.tsx` (sessionStorage guard; trackPaymentReturnSuccess); `app/payment-cancel/page.tsx` (sessionStorage guard; trackPaymentReturnCancelled)
-- Decisions: `!cartOpen` guard prevents duplicate `cart_opened` events; sessionStorage named constants prevent payment return events re-firing on refresh; PayFast return pages describe observed navigation behaviour only; `product_detail_viewed` extends existing `recentlyViewed` useEffect; `remove_from_cart` and `cart_quantity_changed` deferred
-- Build: Pass — zero TypeScript errors, zero warnings, 118 pages
-- Validation: 35/35 browser scenarios pass across 15 groups
-- Intelligence Layer: confirmed analytics-free
-- Future note: As analytics coverage expands beyond commerce, consider introducing shared constants (or a helper) for analytics source values to prevent vocabulary drift. Do not implement during EP6.
+**Last completed:** EP8-P1 Foundation Cleanup (2026-07-01)
+- Commits: af48a22 (documentation), 4cbf764 (architectural consistency), afdf97a (dead-file deletion)
+- Changes:
+  - Evaluation framework: 8 stale items corrected across `recommendation-suite.md`, `quality-metrics.md`, `evaluation-procedure.md` — TC-SC-03 code path, TC-SC-04 criterion (popularity → collection), AL-01 count (34 → 5), AL-04 coverage claim, M3 formula (/465 → fragrances.length), Deferred M3 note removed
+  - `app/lib/recommendFragrances.ts`: hiddenGem criterion `item.gender !== "unisex"` → `item.collection !== "Elite"` (architecturally consistent with luxuryUpgrade; zero behavioural change on current catalogue)
+  - `app/components/RecommendationCard.tsx`: JSX fallback (4 hardcoded strings) removed; `reasons` made required (`string[]`)
+  - Deleted: `app/data/fragranceDatabase.ts`, `app/data/fragranceQuizQuestions.ts`, `app/components/RecommendationSection.tsx` — all confirmed 0 imports before deletion
+- Decisions: No behavioural recommendation changes; M3 = 1.0000 confirmed unchanged after hiddenGem criterion fix; `reasons` required enforces TypeScript compile-time protection for all future callers
+- Build: Pass — zero TypeScript errors, zero warnings, 118 pages (all three phases)
+- `gender !== "unisex"` residual occurrences: 3 remaining in `.ai/` historical records only (ENGINEERING_LOG.md:308, SPRINT.md:167, baseline-results.md:190) — accurate records of prior state; no action required
 
 ---
 
@@ -69,7 +71,7 @@ _N/A_
 
 ## Build Result
 
-**Last build:** 2026-07-01 — Pass. Zero TypeScript errors. Zero warnings. (EP6-P4 G4)
+**Last build:** 2026-07-01 — Pass. Zero TypeScript errors. Zero warnings. (EP8-P1 G3)
 
 ---
 

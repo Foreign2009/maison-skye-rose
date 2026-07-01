@@ -31,11 +31,36 @@ Each program has a defined scope, ordered task list, and a clear close condition
 
 ## Active Program
 
-None — EP6-P4 closed 2026-07-01 (commerce analytics instrumentation complete). Awaiting Engineering Lead direction for next sprint.
+None — EP8-P1 closed 2026-07-01 (foundation cleanup complete). Awaiting Engineering Lead direction for EP8-P2 or next sprint.
 
 ---
 
 ## Completed Programs
+
+### EP8-P1 — Recommendation Intelligence Implementation / Foundation Cleanup
+
+**Objective:** Align the evaluation framework with the live recommendation engine, eliminate architectural inconsistencies in the recommendation engine, remove divergent fallback systems, and delete confirmed dead files.
+**Scope:** `.ai/evaluation/` (3 documents), `app/lib/recommendFragrances.ts`, `app/components/RecommendationCard.tsx`, `app/components/RecommendationSection.tsx` (deleted), `app/data/fragranceDatabase.ts` (deleted), `app/data/fragranceQuizQuestions.ts` (deleted). No behavioural recommendation changes.
+**Lead:** ChatGPT (Engineering Lead) + Claude (Implementation Engineer)
+**Opened:** 2026-07-01
+**Closed:** 2026-07-01
+
+**Task List:**
+
+| # | Gate | Task | Status |
+|---|---|---|---|
+| 1 | G1 | Repository Evidence Report — 5 areas: evaluation framework (8 stale items), recommendation engine (hiddenGem/luxuryUpgrade criterion inconsistency), dead files (fragranceDatabase, fragranceQuizQuestions), duplicate fallback systems (JSX vs explainability.ts), validation tooling | Complete |
+| 2 | G2 | Implementation Plan — 3-phase plan; documentation → architectural consistency → dead-file deletion; pre-deletion search protocol per Engineering Lead refinement | Complete |
+| 3 | G3 | Implementation — Phase 1: documentation corrections, commit af48a22; Phase 2: hiddenGem + RecommendationCard + TC-SC-03, commit 4cbf764; Phase 3: pre-deletion searches, 3 files deleted, reasons required, commit afdf97a | Complete |
+| 4 | G4 | Sprint Closure — AI-OS records updated; all 4 commits pushed to origin/main | Complete |
+
+**Close Condition:** Evaluation framework accurate. hiddenGem uses `collection !== "Elite"`. RecommendationCard JSX fallback removed. `reasons` required. Dead files deleted. M3 = 1.0000 confirmed unchanged. Build passes across all three phases.
+
+**Outcome:** Foundation cleanup complete. Repository has no dead files, no documentation drift in the evaluation framework, no divergent fallback systems, and no architectural inconsistencies in the recommendation engine. hiddenGem now uses `item.collection !== "Elite"` (aligned with luxuryUpgrade's `item.collection === "Elite"`). `reasons` is TypeScript-required on RecommendationCard. 486 lines of dead code removed. M3 confirmed 1.0000 post-implementation. Commits af48a22, 4cbf764, afdf97a.
+
+**Future Engineering Note:** `gender !== "unisex"` remains in 3 `.ai/` historical records (ENGINEERING_LOG.md, SPRINT.md, baseline-results.md) as accurate descriptions of the prior implementation. No action required.
+
+---
 
 ### EP6-P4 — Intelligence Analytics / Commerce Instrumentation
 

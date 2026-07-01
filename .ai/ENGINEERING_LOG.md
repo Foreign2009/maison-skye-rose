@@ -500,3 +500,53 @@ Never edit or delete past entries.
 - ShopByPersonality routing: all personality cards link to /quiz rather than /shop?q= with pre-seeded intent
 - Deferred: QuickAddModal Escape key (pre-existing UX issue)
 - Deferred: Mobile WhatsApp button overlay (pre-existing cosmetic issue)
+
+---
+
+### 2026-07-01 — EP8-P1 — Recommendation Intelligence Implementation / Foundation Cleanup
+
+**Participants:** Project Owner / Claude (Implementation Engineer) / ChatGPT (Engineering Lead)
+**Program:** EP8 — Recommendation Intelligence Implementation (EP8-P1: Foundation Cleanup)
+
+**Decisions Made:**
+- Documentation alignment: 8 stale items across 3 evaluation documents corrected to match live implementation — TC-SC-03 code path, TC-SC-04 criterion (popularity-based → collection-based), AL-01 Elite count (~34 → 5), AL-04 coverage claim (products may produce family=[] → M3 = 1.00), M3 formula (/465 → fragrances.length × 2 occurrences), Deferred M3 note removed from evaluation-procedure.md
+- hiddenGem criterion: `item.gender !== "unisex"` → `item.collection !== "Elite"` — architecturally consistent with `luxuryUpgrade`'s `item.collection === "Elite"`; zero behavioural change on current catalogue because all 5 Elite products have `gender: "unisex"`; M3 confirmed 1.0000 unchanged after fix
+- RecommendationCard JSX fallback removed: 4-string hardcoded fallback ("Popular signature scent", "Matches your fragrance profile", "Complements your lifestyle", "Recommended by Maison AI") replaced with `(reasons ?? []).map(...)` in Phase 2; null-coalescing removed in Phase 3 when `reasons` made required
+- `reasons` made required (`string[]`): TypeScript compile-time protection active for all future callers; previously `string[]?` allowed callers to omit it silently
+- Dead-file deletion: `fragranceDatabase.ts` (4 entries, wrong brand names), `fragranceQuizQuestions.ts` (diverged quiz config, dead occasion signal), `RecommendationSection.tsx` (renders RecommendationCard without reasons) — all confirmed 0 imports by repository-wide search immediately before each deletion per Engineering Lead refinement
+- `gender !== "unisex"` residual occurrences: 3 remaining in `.ai/` historical records only — all are accurate descriptions of the prior implementation; not modified; separately approved changes only
+
+**Tasks Completed:**
+- G1 Repository Evidence Report: 5 areas surveyed — evaluation framework (3 documents, 8 stale items), recommendation engine (hiddenGem `gender !== "unisex"` vs luxuryUpgrade `collection === "Elite"` inconsistency), dead files (fragranceDatabase.ts, fragranceQuizQuestions.ts, RecommendationSection.tsx), duplicate fallback systems (JSX 4-string vs explainability.ts FALLBACK_REASONS 2-string), validation tooling (.ts vs .mjs convention — justified deviation)
+- G2 Implementation Plan: 3-phase plan; pre-deletion search protocol added per Engineering Lead refinement; Phase 2 `gender !== "unisex"` full-repository search added per Engineering Lead refinement
+- G3 Implementation:
+  - Phase 1 — documentation: 8 stale items corrected; build pass; committed af48a22
+  - Phase 2 — architectural consistency: hiddenGem criterion fixed; TC-SC-03 updated; JSX fallback removed; M3 validated (1.0000); `gender !== "unisex"` residual occurrences documented; build pass; committed 4cbf764
+  - Phase 3 — dead-file deletion: pre-deletion search confirmed 0 imports × 3 files; files deleted; `reasons` required; build pass; committed afdf97a
+- G4 Sprint Closure: AI-OS records updated; all 4 commits pushed to origin/main
+
+**Build Result:** Pass — zero TypeScript errors, zero warnings, 118 pages (all three phases)
+
+**Files Changed (Production):**
+- `app/lib/recommendFragrances.ts` (modified — hiddenGem criterion `gender !== "unisex"` → `collection !== "Elite"`)
+- `app/components/RecommendationCard.tsx` (modified — JSX fallback removed; `reasons` made required)
+- `app/components/RecommendationSection.tsx` (deleted — 0 imports confirmed)
+- `app/data/fragranceDatabase.ts` (deleted — 0 imports confirmed)
+- `app/data/fragranceQuizQuestions.ts` (deleted — 0 imports confirmed)
+
+**Files Changed (Evaluation):**
+- `.ai/evaluation/recommendation-suite.md` (modified — TC-SC-03 code path, TC-SC-04 criterion, AL-01 count, AL-04 coverage claim)
+- `.ai/evaluation/quality-metrics.md` (modified — M3 formula /465 → fragrances.length; Deferred note removed)
+- `.ai/evaluation/evaluation-procedure.md` (modified — /465 in snippet and text; Deferred M3 note removed; validate-ep7p1-m3.ts referenced as preferred M3 method)
+
+**Handoff:** EP8-P1 closed. Foundation cleanup complete. Repository has no dead files, no documentation drift in the evaluation framework, no divergent fallback systems, and no architectural inconsistencies in the recommendation engine. M3 = 1.0000 confirmed unchanged. `reasons` is TypeScript-required. 486 lines of dead code removed. Awaiting Engineering Lead direction for EP8-P2 or next sprint.
+
+**Open Questions Carried Forward:**
+- `gender !== "unisex"` in ENGINEERING_LOG.md (this entry's predecessor at line 308), SPRINT.md (EP5-P1 Future Engineering Note), and baseline-results.md (EP7-P1 TC-SC-03 record) — accurate historical records; EP8-P1 has resolved the underlying inconsistency; no further action required
+- validate-ep7p1-m3.ts output still prints a "Documentation Note" about /465 — the documentation has been corrected; the note in the script output is now a false alarm; cosmetic cleanup candidate for a future sprint
+- Provider selection: PostHog JS recommended in EP6-P1 G2; still pending Engineering Lead confirmation
+- `remove_from_cart` and `cart_quantity_changed`: deferred from EP6-P4
+- ShopByVibe functional wiring: vibe tiles have no onClick/search injection (decorative only)
+- ShopByPersonality routing: all personality cards link to /quiz rather than /shop?q= with pre-seeded intent
+- Deferred: QuickAddModal Escape key (pre-existing UX issue)
+- Deferred: Mobile WhatsApp button overlay (pre-existing cosmetic issue)
