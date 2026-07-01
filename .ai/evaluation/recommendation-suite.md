@@ -92,7 +92,7 @@ Maximum possible score: **110** (all 5 dimensions match on a bestSeller product)
 
 **Input:** `"office wear"`
 **Expected signals:** `{ occasion: "Office" }`
-**Code path:** `sortedOccasions` longest-first: "Winter Evenings" (15) no; "Signature Scent" (14) no; "Luxury Events" (13) no; "Summer Days" (11) no; "Daily Wear" (10) no; "Date Night" (9) no; "Vacation" (8) no; "Clubbing" (8) no; "Wedding" (7) no; "Office" (6) yes
+**Code path:** `sortedOccasions` longest-first: "Winter Evenings" (15) no; "Summer Days" (11) no; "Daily Wear" (10) no; "Date Night" (9) no; "Vacation" (8) no; "Wedding" (7) no; "Office" (6) yes
 
 ---
 
