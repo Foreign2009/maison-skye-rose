@@ -34,7 +34,6 @@ const SORTED_VIBES = [...fragranceVibes].sort((a, b) => b.length - a.length);
 // "Chypre" and "Fruity" are aliased to prevent products yielding an empty family array,
 // since some profiles (e.g. "Chypre Fruity") contain only unmapped tokens.
 const PROFILE_ALIASES: Record<string, string> = {
-  marine: "Aquatic",      // Marine and Aquatic are the same family
   tea: "Aromatic",        // Tea (herbal/green) is aromatic family
   coffee: "Gourmand",     // Coffee is a gourmand accord
   chypre: "Fresh",        // Classical chypre (bergamot top) approximated as Fresh
