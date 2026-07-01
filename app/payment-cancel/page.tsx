@@ -1,12 +1,22 @@
 "use client";
 
+import { useEffect } from "react";
 import Link from "next/link";
 
 import { motion } from "framer-motion";
 
 import Navbar from "../components/Navbar";
+import { trackPaymentReturnCancelled } from "../lib/analytics";
+
+const PAYMENT_RETURN_CANCELLED_KEY = "msr_payment_return_cancelled";
 
 export default function PaymentCancelPage() {
+
+  useEffect(() => {
+    if (sessionStorage.getItem(PAYMENT_RETURN_CANCELLED_KEY)) return;
+    sessionStorage.setItem(PAYMENT_RETURN_CANCELLED_KEY, "1");
+    trackPaymentReturnCancelled();
+  }, []);
 
   return (
     <main className="min-h-screen overflow-hidden bg-[#f5f1eb] text-[#4f4a52]">

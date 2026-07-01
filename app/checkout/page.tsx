@@ -5,6 +5,7 @@ import { useState } from "react";
 import Navbar from "../components/Navbar";
 
 import { useCart } from "../context/CartContext";
+import { trackCheckoutStarted, trackPaymentStarted } from "../lib/analytics";
 
 export default function CheckoutPage() {
 
@@ -53,6 +54,12 @@ export default function CheckoutPage() {
     try {
 
       setLoading(true);
+
+      trackCheckoutStarted({
+        itemCount: cart.length,
+        cartTotal: total,
+        deliveryMethod: province,
+      });
 
       /* SAVE ORDER */
       const orderResponse =
@@ -125,6 +132,8 @@ export default function CheckoutPage() {
         data.success &&
         data.paymentUrl
       ) {
+
+        trackPaymentStarted({ amount: total });
 
         window.location.href =
           data.paymentUrl;

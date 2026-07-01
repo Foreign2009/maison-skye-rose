@@ -1,12 +1,22 @@
 "use client";
 
+import { useEffect } from "react";
 import Link from "next/link";
 
 import { motion } from "framer-motion";
 
 import Navbar from "../components/Navbar";
+import { trackPaymentReturnSuccess } from "../lib/analytics";
+
+const PAYMENT_RETURN_SUCCESS_KEY = "msr_payment_return_success";
 
 export default function PaymentSuccessPage() {
+
+  useEffect(() => {
+    if (sessionStorage.getItem(PAYMENT_RETURN_SUCCESS_KEY)) return;
+    sessionStorage.setItem(PAYMENT_RETURN_SUCCESS_KEY, "1");
+    trackPaymentReturnSuccess({});
+  }, []);
 
   return (
     <main className="min-h-screen overflow-hidden bg-[#f5f1eb] text-[#4f4a52]">

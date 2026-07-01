@@ -4,6 +4,7 @@ import { X } from "lucide-react";
 import { useCart } from "../context/CartContext";
 import Link from "next/link";
 import { useFavorites } from "../context/FavoritesContext";
+import { trackAddToCart, trackWhatsAppCheckout } from "../lib/analytics";
 import { useMemo, useState } from "react";
 import { fragrances } from "../data/fragrances";
 
@@ -49,6 +50,12 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
       quantity: 1,
       size: "5ml",
     });
+    trackAddToCart({
+      title: fragrance.title,
+      size: "5ml",
+      price: fragrance.prices?.["5ml"] ?? 0,
+      source: "minicart",
+    });
   };
 
   const quickAddRecent = (fragrance: any) => {
@@ -59,6 +66,12 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
       price: fragrance.prices?.["5ml"],
       quantity: 1,
       size: "5ml",
+    });
+    trackAddToCart({
+      title: fragrance.title,
+      size: "5ml",
+      price: fragrance.prices?.["5ml"] ?? 0,
+      source: "minicart",
     });
   };
 
@@ -167,6 +180,7 @@ Delivery Area:
 
 A member of our team will confirm your order and delivery details shortly.`;
 
+    trackWhatsAppCheckout({ itemCount: cart.length, cartTotal: total });
     window.open(`https://wa.me/27696863952?text=${encodeURIComponent(message)}`, `_blank`);
   };
 

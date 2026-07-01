@@ -138,7 +138,30 @@ export type CartPayload = {
   title: string;
   size: string;
   price: number;
-  source?: "pdp" | "quick-add" | "buy-now";
+  source?: "pdp" | "quick-add" | "buy-now" | "minicart";
+};
+
+export type CartOpenedPayload = {
+  source: "bag-icon" | "post-add";
+};
+
+export type CheckoutStartedPayload = {
+  itemCount: number;
+  cartTotal: number;
+  deliveryMethod: string;
+};
+
+export type PaymentStartedPayload = {
+  amount: number;
+};
+
+export type PaymentReturnPayload = {
+  itemCount?: number;
+};
+
+export type WhatsAppCheckoutPayload = {
+  itemCount: number;
+  cartTotal: number;
 };
 
 // ── Internal capture helper ───────────────────────────────────────────────────
@@ -210,4 +233,34 @@ export function trackAddToCart(payload: CartPayload): void {
 export function trackBuyNow(payload: CartPayload): void {
   if (!ready) return;
   capture("buy_now_clicked", payload);
+}
+
+export function trackCartOpened(payload: CartOpenedPayload): void {
+  if (!ready) return;
+  capture("cart_opened", payload);
+}
+
+export function trackCheckoutStarted(payload: CheckoutStartedPayload): void {
+  if (!ready) return;
+  capture("checkout_started", payload);
+}
+
+export function trackPaymentStarted(payload: PaymentStartedPayload): void {
+  if (!ready) return;
+  capture("payment_started", payload);
+}
+
+export function trackPaymentReturnSuccess(payload: PaymentReturnPayload): void {
+  if (!ready) return;
+  capture("payment_return_success", payload);
+}
+
+export function trackPaymentReturnCancelled(): void {
+  if (!ready) return;
+  capture("payment_return_cancelled", {});
+}
+
+export function trackWhatsAppCheckout(payload: WhatsAppCheckoutPayload): void {
+  if (!ready) return;
+  capture("whatsapp_checkout_started", payload);
 }

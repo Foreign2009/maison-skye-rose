@@ -12,6 +12,12 @@ import { adaptCatalogue, DisplayFragrance } from "../lib/knowledgeAdapter";
 import { recommendFragrances } from "../lib/recommendFragrances";
 import { generateReasons } from "../lib/explainability";
 import type { Fragrance } from "../data/types";
+import {
+  trackProductView,
+  trackAddToCart,
+  trackBuyNow,
+  trackCartOpened,
+} from "../lib/analytics";
 
 const adaptedCatalogue = adaptCatalogue(fragrances as DisplayFragrance[]);
 const adaptedByTitle = new Map<string, Fragrance>(adaptedCatalogue.map((f) => [f.name, f]));
@@ -30,7 +36,7 @@ export default function ProductDetail({
   const [showStickyBar, setShowStickyBar] = useState(false);
 
   const { addToCart } = useCart();
-  const { openCart } = useCartUI();
+  const { openCart, cartOpen } = useCartUI();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -60,6 +66,7 @@ export default function ProductDetail({
       "recentlyViewed",
       JSON.stringify([entry, ...filtered].slice(0, 12))
     );
+    trackProductView({ title: fragrance.title, collection: fragrance.collection });
   }, [fragrance.title]);
 
   const recommendations = useMemo(() => {
@@ -105,8 +112,16 @@ export default function ProductDetail({
       quantity: 1,
       size: selectedSize,
     });
-
-    openCart();
+    trackAddToCart({
+      title: fragrance.title,
+      size: selectedSize,
+      price: fragrance.prices[selectedSize],
+      source: "pdp",
+    });
+    if (!cartOpen) {
+      openCart();
+      trackCartOpened({ source: "post-add" });
+    }
   };
 
   const handleBuyNow = () => {
@@ -117,6 +132,18 @@ export default function ProductDetail({
       image: fragrance.images[selectedSize],
       quantity: 1,
       size: selectedSize,
+    });
+    trackAddToCart({
+      title: fragrance.title,
+      size: selectedSize,
+      price: fragrance.prices[selectedSize],
+      source: "buy-now",
+    });
+    trackBuyNow({
+      title: fragrance.title,
+      size: selectedSize,
+      price: fragrance.prices[selectedSize],
+      source: "buy-now",
     });
 
     const message = encodeURIComponent(

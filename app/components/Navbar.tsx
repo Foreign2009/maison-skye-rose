@@ -8,6 +8,7 @@ import { useCart } from "../context/CartContext";
 import { useFavorites } from "../context/FavoritesContext";
 import { useCartUI } from "../context/CartUIContext";
 import MiniCart from "./MiniCart";
+import { trackCartOpened } from "../lib/analytics";
 
 // Optimized: Static array defined outside the component scope to preserve performance memory allocations
 const ANNOUNCEMENTS = [
@@ -168,7 +169,12 @@ export default function Navbar() {
                 </Link>
 
                 <button
-                  onClick={openCart}
+                  onClick={() => {
+                    if (!cartOpen) {
+                      openCart();
+                      trackCartOpened({ source: "bag-icon" });
+                    }
+                  }}
                   className="group relative flex items-center p-1 text-[#4f4a52] hover:text-[#d89ca4] transition-colors"
                   aria-label="Open Cart"
                 >
