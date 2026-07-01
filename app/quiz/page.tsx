@@ -70,6 +70,9 @@ const questions = [
       "Woody",
       "Sweet",
       "Amber",
+      "Vanilla",
+      "Oud",
+      "Spicy",
     ],
   },
 
