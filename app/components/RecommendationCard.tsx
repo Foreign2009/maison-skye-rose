@@ -19,7 +19,7 @@ type RecommendationCardProps = {
 
   versatility?: number;
 
-  reasons?: string[];
+  reasons: string[];
 };
 
 export default function RecommendationCard({
@@ -89,7 +89,7 @@ export default function RecommendationCard({
 
         <ul className="mt-3 space-y-2 text-sm text-[#7b7480]">
 
-          {(reasons ?? []).map((reason) => (
+          {reasons.map((reason) => (
             <li key={reason}>✓ {reason}</li>
           ))}
 
