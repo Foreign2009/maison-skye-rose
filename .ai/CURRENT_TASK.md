@@ -19,10 +19,10 @@ At the start of a new Claude Code session:
 ## Current Task
 
 **Status:** No active task
-**Program:** None — EP6-P3 closed 2026-06-30 (quiz instrumentation complete)
+**Program:** None — EP6-P4 closed 2026-07-01 (commerce analytics instrumentation complete)
 
 **Goal:**
-_No active task. Awaiting Engineering Lead direction for EP6-P4 or next sprint._
+_No active task. Awaiting Engineering Lead direction for next sprint._
 
 **Acceptance Criteria:**
 - [ ] _To be defined when next task is opened_
@@ -50,14 +50,14 @@ _None active._
 
 ## Context Notes
 
-**Last completed:** EP6-P3 Quiz Instrumentation (2026-06-30)
-- Commit: 53c4c63
-- Changes: `app/quiz/page.tsx` — useEffect/useRef added to React import; analytics imports; `hasTrackedResults` ref; `handleAnswer` augmented; completion effect; results effect with guard comment; ProductCard `source="quiz"` / `rank={index}`; two WhatsApp `onClick` handlers
-- Decision: No `quiz_started` event. Inline `handleAnswer` for `quiz_answer_selected`. `useEffect([completed])` for one-shot `quiz_completed`. `useRef<boolean>` guard for one-shot `quiz_results_shown`. `source="quiz"` activates EP6-P2 ProductCard mechanism — no ProductCard changes needed.
+**Last completed:** EP6-P4 Commerce Instrumentation (2026-07-01)
+- Commit: 7da817e
+- Changes: 8 production files — `app/lib/analytics.ts` (CartPayload.source extended; 5 new payload types; 6 new track functions); `app/components/ProductDetail.tsx` (analytics imports; cartOpen destructure; useEffect extension; handleAddToCart; handleBuyNow); `app/components/QuickAddModal.tsx` (trackAddToCart); `app/components/MiniCart.tsx` (trackAddToCart × 3 surfaces; trackWhatsAppCheckout); `app/components/Navbar.tsx` (trackCartOpened bag-icon); `app/checkout/page.tsx` (trackCheckoutStarted; trackPaymentStarted); `app/payment-success/page.tsx` (sessionStorage guard; trackPaymentReturnSuccess); `app/payment-cancel/page.tsx` (sessionStorage guard; trackPaymentReturnCancelled)
+- Decisions: `!cartOpen` guard prevents duplicate `cart_opened` events; sessionStorage named constants prevent payment return events re-firing on refresh; PayFast return pages describe observed navigation behaviour only; `product_detail_viewed` extends existing `recentlyViewed` useEffect; `remove_from_cart` and `cart_quantity_changed` deferred
 - Build: Pass — zero TypeScript errors, zero warnings, 118 pages
-- Validation: 28/28 browser scenarios pass
+- Validation: 35/35 browser scenarios pass across 15 groups
 - Intelligence Layer: confirmed analytics-free
-- Future note: As additional customer journeys are instrumented, consider a shared helper or constants for analytics source construction. Do not implement now.
+- Future note: As analytics coverage expands beyond commerce, consider introducing shared constants (or a helper) for analytics source values to prevent vocabulary drift. Do not implement during EP6.
 
 ---
 
@@ -69,7 +69,7 @@ _N/A_
 
 ## Build Result
 
-**Last build:** 2026-06-30 — Pass. Zero TypeScript errors. Zero warnings. (EP6-P3 G5)
+**Last build:** 2026-07-01 — Pass. Zero TypeScript errors. Zero warnings. (EP6-P4 G4)
 
 ---
 

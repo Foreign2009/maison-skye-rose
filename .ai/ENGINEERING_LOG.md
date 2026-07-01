@@ -445,3 +445,58 @@ Never edit or delete past entries.
 - ShopByPersonality routing: all personality cards link to /quiz rather than /shop?q= with pre-seeded intent
 - Deferred: QuickAddModal Escape key (pre-existing UX issue)
 - Deferred: Mobile WhatsApp button overlay (pre-existing cosmetic issue)
+
+---
+
+### 2026-07-01 — EP6-P4 — Intelligence Analytics / Commerce Instrumentation
+
+**Participants:** Project Owner / Claude (Implementation Engineer) / ChatGPT (Engineering Lead)
+**Program:** EP6 — Intelligence Analytics (EP6-P4: Commerce Instrumentation)
+
+**Decisions Made:**
+- PayFast return pages describe observed application navigation behaviour only — NOT payment confirmation; event names are `payment_return_success` and `payment_return_cancelled`, never `payment_success`
+- `product_detail_viewed` extends the existing `recentlyViewed` useEffect — no second mount effect introduced
+- MiniCart quick-add uses `source: "minicart"` only — no additional MiniCart source values
+- `deliveryMethod: province` included in `checkout_started` payload — province state already existed in CheckoutPage; no new UI or calculations introduced
+- EP6-P4 scope limited to 9 events — `remove_from_cart` and `cart_quantity_changed` deferred
+- `!cartOpen` guard prevents `cart_opened` event from firing when cart is already open — applied at both Navbar bag-icon and ProductDetail post-add call sites
+- SessionStorage guards prevent payment return events re-firing on page refresh — named constants (`PAYMENT_RETURN_SUCCESS_KEY`, `PAYMENT_RETURN_CANCELLED_KEY`) declared at module level in each payment return page
+- `trackProductView` payload kept minimal — `title` and `collection` only; no expansion of existing schema
+- Intelligence Layer remains analytics-free — `recommendFragrances`, `intentParser`, `knowledgeAdapter`, `explainability` carry zero analytics imports
+
+**Tasks Completed:**
+- G1 Repository Evidence Report: 10 areas surveyed — Product Detail lifecycle, Cart lifecycle, Checkout lifecycle, existing analytics API, ProductCard usage, event opportunities, event timing, architectural boundaries, dependencies, risks
+- G2 Engineering Assessment: 12 topics assessed — instrumentation strategy across all commerce surfaces; PayFast boundary constraint documented; sessionStorage guard pattern selected
+- G3 Implementation Plan: 9-event plan approved; 8-file scope defined; sessionStorage named constants refinement applied; `deliveryMethod: province` confirmed as existing state
+- G4 Implementation: 8 production files modified — `analytics.ts` (CartPayload.source extended; 5 new payload types; 6 new track functions), `ProductDetail.tsx` (imports, cartOpen destructure, useEffect extension, handleAddToCart, handleBuyNow), `QuickAddModal.tsx` (trackAddToCart), `MiniCart.tsx` (trackAddToCart × 3 surfaces, trackWhatsAppCheckout), `Navbar.tsx` (trackCartOpened bag-icon), `checkout/page.tsx` (trackCheckoutStarted, trackPaymentStarted), `payment-success/page.tsx` (sessionStorage guard, trackPaymentReturnSuccess), `payment-cancel/page.tsx` (sessionStorage guard, trackPaymentReturnCancelled)
+- Build verification: Pass — zero TypeScript errors, zero warnings, 118 pages (unchanged)
+- Browser validation: 35/35 scenarios pass across 15 groups — all commerce events, Intelligence Layer isolation, EP6-P2/P3 regressions confirmed
+- Committed 7da817e — `feat(analytics): instrument commerce analytics`
+
+**Tasks Started:** None pending — all EP6-P4 tasks complete.
+
+**Build Result:** Pass — zero TypeScript errors, zero warnings, 118 pages (unchanged)
+
+**Files Changed:**
+- `app/lib/analytics.ts` (modified — CartPayload.source extended; 5 new payload types; 6 new track functions)
+- `app/components/ProductDetail.tsx` (modified — analytics imports; cartOpen destructure; useEffect extension; handleAddToCart; handleBuyNow)
+- `app/components/QuickAddModal.tsx` (modified — trackAddToCart)
+- `app/components/MiniCart.tsx` (modified — trackAddToCart × 3 quick-add surfaces; trackWhatsAppCheckout)
+- `app/components/Navbar.tsx` (modified — trackCartOpened bag-icon)
+- `app/checkout/page.tsx` (modified — trackCheckoutStarted; trackPaymentStarted)
+- `app/payment-success/page.tsx` (modified — sessionStorage guard; trackPaymentReturnSuccess)
+- `app/payment-cancel/page.tsx` (modified — sessionStorage guard; trackPaymentReturnCancelled)
+- `.ai/ENGINEERING_LOG.md` (this entry)
+- `.ai/CURRENT_TASK.md` (updated)
+- `.ai/SPRINT.md` (EP6-P4 added to Completed Programs)
+
+**Handoff:** EP6-P4 closed. Commerce analytics instrumentation complete. Analytics now covers the full customer journey: Discovery (EP6-P2), Quiz (EP6-P3), and Commerce (EP6-P4). Intelligence Layer remains isolated. Awaiting Engineering Lead direction for next sprint.
+
+**Open Questions Carried Forward:**
+- Provider selection: PostHog JS recommended in EP6-P1 G2; still pending Engineering Lead confirmation
+- Future engineering note: As analytics coverage expands beyond commerce, consider introducing shared constants (or a helper) for analytics source values to prevent vocabulary drift. Do not implement during EP6.
+- `remove_from_cart` and `cart_quantity_changed`: deferred — not in EP6-P4 scope; candidate for a future sprint
+- ShopByVibe functional wiring: vibe tiles have no onClick/search injection (decorative only)
+- ShopByPersonality routing: all personality cards link to /quiz rather than /shop?q= with pre-seeded intent
+- Deferred: QuickAddModal Escape key (pre-existing UX issue)
+- Deferred: Mobile WhatsApp button overlay (pre-existing cosmetic issue)

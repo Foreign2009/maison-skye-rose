@@ -31,11 +31,37 @@ Each program has a defined scope, ordered task list, and a clear close condition
 
 ## Active Program
 
-None — EP6-P3 closed 2026-06-30 (quiz instrumentation complete). Awaiting Engineering Lead direction for EP6-P4 or next sprint.
+None — EP6-P4 closed 2026-07-01 (commerce analytics instrumentation complete). Awaiting Engineering Lead direction for next sprint.
 
 ---
 
 ## Completed Programs
+
+### EP6-P4 — Intelligence Analytics / Commerce Instrumentation
+
+**Objective:** Instrument the Commerce journey with analytics events — product detail views, add-to-cart across all surfaces, cart opened, checkout started, payment started, payment return success, payment return cancelled, and WhatsApp checkout — using the EP6-P1 analytics infrastructure.
+**Scope:** `app/lib/analytics.ts`, `app/components/ProductDetail.tsx`, `app/components/QuickAddModal.tsx`, `app/components/MiniCart.tsx`, `app/components/Navbar.tsx`, `app/checkout/page.tsx`, `app/payment-success/page.tsx`, `app/payment-cancel/page.tsx`. Intelligence Layer untouched. `remove_from_cart` and `cart_quantity_changed` deferred.
+**Lead:** ChatGPT (Engineering Lead) + Claude (Implementation Engineer)
+**Opened:** 2026-07-01
+**Closed:** 2026-07-01
+
+**Task List:**
+
+| # | Gate | Task | Status |
+|---|---|---|---|
+| 1 | G1 | Repository Evidence Report — 10 areas: Product Detail lifecycle, Cart lifecycle, Checkout lifecycle, analytics API, ProductCard usage, event opportunities, event timing, architectural boundaries, dependencies, risks | Complete |
+| 2 | G2 | Engineering Assessment — 12 topics assessed; PayFast boundary constraint documented; sessionStorage guard pattern selected | Complete |
+| 3 | G3 | Implementation Plan — 9-event plan; 8-file scope; sessionStorage named constants; deliveryMethod: province confirmed | Complete |
+| 4 | G4 | Implementation — 8 production files modified; build pass; 35/35 browser validation; Intelligence Layer isolation confirmed; committed 7da817e | Complete |
+| 5 | G5 | Sprint Closure — AI-OS records updated; committed; pushed to origin/main | Complete |
+
+**Close Condition:** Nine commerce events instrumented. `!cartOpen` guard active. SessionStorage guards active. Build passes. Intelligence Layer analytics-free. 35/35 browser validation pass.
+
+**Outcome:** Commerce journey is fully instrumented. Nine event types operational: `product_detail_viewed`, `add_to_cart` (pdp / quick-add / buy-now / minicart), `cart_opened` (bag-icon / post-add), `checkout_started`, `payment_started`, `payment_return_success`, `payment_return_cancelled`, `buy_now_clicked`, `whatsapp_checkout_started`. Commit 7da817e.
+
+**Future Engineering Note:** As analytics coverage expands beyond commerce, consider introducing shared constants (or a helper) for analytics source values to prevent vocabulary drift. Do not implement during EP6.
+
+---
 
 ### EP6-P3 — Intelligence Analytics / Quiz Instrumentation
 
