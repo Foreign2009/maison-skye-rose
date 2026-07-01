@@ -183,12 +183,12 @@ Maximum possible score: **110** (all 5 dimensions match on a bestSeller product)
 
 ---
 
-#### TC-SC-04: luxuryUpgrade — first bestSeller in ranked list
+#### TC-SC-04: luxuryUpgrade — first Elite product in ranked list
 
 **Query:** Any query
-**Expected:** `luxuryUpgrade` is the first product with popularity ≥ 9 (bestSeller, popularity=10)
-**Code path:** `scored.find(item => item.popularity >= 9)` → finds first bestSeller in descending score order
-**Known behaviour:** If `bestMatch` is itself a bestSeller, then `luxuryUpgrade === bestMatch`. The UI layer (quiz/shop) handles deduplication via the `seen` Set.
+**Expected:** `luxuryUpgrade` is the first Elite-collection product in the ranked list, excluding `bestMatch`
+**Code path:** `scored.slice(1).find(item => item.collection === "Elite")` → finds the highest-scored Elite product
+**Known behaviour:** `luxuryUpgrade` is null if no Elite product ranks below `bestMatch`. `luxuryUpgrade` can never equal `bestMatch` — `slice(1)` excludes `scored[0]` by design.
 
 ---
 
@@ -261,10 +261,10 @@ These limitations are confirmed by code inspection. They define the boundaries o
 
 | ID | Description | Affected Test Cases | Impact |
 |---|---|---|---|
-| AL-01 | Elite products always adapt to gender=unisex | TC-KA-03, TC-SC-01 | ~34 Elite products score 0 on gender dimension for male/female queries |
+| AL-01 | Elite products always adapt to gender=unisex | TC-KA-03, TC-SC-01 | 5 Elite products score 0 on gender dimension for male/female queries |
 | AL-02 | Only two popularity values: bestSeller=10, non-bestSeller=5 | TC-KA-05, TC-SC-03, TC-SC-04 | Popularity creates a hard tier cliff; bestseller advantage can dominate close signal matches |
 | AL-03 | Occasion is derived from season lookup (SEASON_OCCASIONS), not a catalogue occasion field | TC-SC-01 | A fragrance suited for "Date Night" will only appear for date night queries if its season maps to "Date Night" in SEASON_OCCASIONS |
-| AL-04 | PROFILE_ALIASES covers 11 tokens; unmapped profile tokens produce no family extraction | TC-KA-04 | Profiles containing only unaliased tokens not in fragranceFamilies return family=[] |
+| AL-04 | PROFILE_ALIASES covers 11 tokens; unmapped profile tokens produce no family extraction | TC-KA-04 | M3 = 1.00 on the current catalogue — no product produces family=[]. Risk remains if new products are added with unmapped profile tokens. |
 | AL-05 | Vibe is extracted from the mood field (free-form marketing copy) | TC-EX-01, TC-EX-02 | Vibe extraction fires only when mood copy contains exact fragranceVibes vocabulary tokens |
 
 ---

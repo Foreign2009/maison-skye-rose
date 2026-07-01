@@ -60,7 +60,7 @@ SAR = average over all TC-EX-* cases of (signal dimensions reflected in reasons 
 AC = (products with family.length > 0) / total catalogue products
 ```
 
-**Measurement:** Execute `adaptCatalogue(fragrances).filter(f => f.family.length === 0).length` and compute `AC = 1 - (empty_count / 465)`. Requires code execution.
+**Measurement:** Run `npx tsx validate-ep7p1-m3.ts` from the project root. The script reports M3, per-product coverage, and token classification. Alternatively, execute directly: `adaptCatalogue(fragrances)` → filter `family.length === 0` → compute `AC = 1 - (empty_count / fragrances.length)`. Requires code execution.
 
 **Scale:** 0.0 – 1.0
 
@@ -68,7 +68,7 @@ AC = (products with family.length > 0) / total catalogue products
 
 **Regression threshold:** < 0.90 — medium priority; audit catalogue for unmapped profile tokens; update `PROFILE_ALIASES` in `knowledgeAdapter.ts` if needed.
 
-**Known risk:** Products with profiles composed entirely of tokens not in `fragranceFamilies` and not in `PROFILE_ALIASES` will produce `family=[]`. See AL-04 in `recommendation-suite.md`. Baseline AC is marked as requiring code execution — not verified by inspection alone.
+**Known risk:** Products with profiles composed entirely of tokens not in `fragranceFamilies` and not in `PROFILE_ALIASES` will produce `family=[]`. See AL-04 in `recommendation-suite.md`. Run `validate-ep7p1-m3.ts` to measure current coverage.
 
 ---
 

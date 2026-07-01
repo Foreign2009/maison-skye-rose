@@ -60,7 +60,7 @@ Groups 1–4 of the Core Benchmark (TC-IP-*, TC-KA-*, TC-SC-*, TC-EX-*) can be v
 4. Record all results in `baseline-results.md` under today's date.
 
 **Pass criterion:** Actual output matches expected output exactly.
-**Cannot Verify criterion:** Use this when the test case requires runtime evaluation that cannot be traced statically (e.g., the full `adaptCatalogue` output across 465 products for M3).
+**Cannot Verify criterion:** Use this when the test case requires runtime evaluation that cannot be traced statically (e.g., the full `adaptCatalogue` output across the catalogue for M3). For M3, run `validate-ep7p1-m3.ts` instead.
 
 ---
 
@@ -112,15 +112,14 @@ Count TC-SC-* and TC-E2E-* cases where `bestMatch` is relevant (matches ≥ 2 si
 For each TC-EX-* case: count signals in the query; count how many appear in generated reasons; compute ratio. Average ratios across all TC-EX-* cases.
 
 **M3 — Adapter Coverage (AC):**
-Requires code execution. If a REPL or Node session is available:
+Run `npx tsx validate-ep7p1-m3.ts` from the project root. The script reports M3, per-product coverage, and token classification. Record the reported AC value. Alternatively, execute directly:
 ```ts
 import { adaptCatalogue } from "./app/lib/knowledgeAdapter";
 import { fragrances } from "./app/data/fragrances";
 const adapted = adaptCatalogue(fragrances);
 const emptyFamily = adapted.filter(f => f.family.length === 0).length;
-console.log(`AC = ${1 - emptyFamily / 465}`);
+console.log(`AC = ${1 - emptyFamily / adapted.length}`);
 ```
-If not available, mark as "Deferred — requires code execution."
 
 **M4 — Gender Routing Accuracy (GRA):**
 Count gender-signal test cases (TC-SC-01, TC-E2E-01, TC-E2E-02) that pass. Divide by total gender-signal cases. Target: 1.0.
