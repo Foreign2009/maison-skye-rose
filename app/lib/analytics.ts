@@ -23,6 +23,8 @@
  *     All other code in this module is provider-neutral.
  */
 
+import posthog from "posthog-js";
+
 // ── Module state ──────────────────────────────────────────────────────────────
 
 let ready = false;
@@ -38,27 +40,22 @@ function safeCall(fn: () => void): void {
 }
 
 // ── PROVIDER INTEGRATION POINT ────────────────────────────────────────────────
-//
-// No provider is currently configured.
-//
-// When a provider is formally selected:
-//   1. Install the provider SDK:          npm install <provider-package>
-//   2. Add provider-specific env vars to  .env.local  (use the provider's own key name)
-//   3. Import the provider at the top of this file
-//   4. Replace providerInit() with the provider's initialisation call
-//   5. Replace providerCapture() with the provider's event capture call
-//
-// Timestamps are provider responsibility. Do not add client timestamps to properties.
-//
-// ─────────────────────────────────────────────────────────────────────────────
 
-function providerInit(_sessionId: string): void {
-  // Replace with: provider.init(process.env.NEXT_PUBLIC_PROVIDER_KEY!, { ... });
-  // Replace with: provider.identify(_sessionId);
+function providerInit(sessionId: string): void {
+  const key = process.env.NEXT_PUBLIC_POSTHOG_KEY;
+  if (!key) throw new Error("NEXT_PUBLIC_POSTHOG_KEY is not configured");
+  posthog.init(key, {
+    api_host: process.env.NEXT_PUBLIC_POSTHOG_HOST,
+    autocapture: false,
+    capture_pageview: false,
+    capture_pageleave: false,
+    disable_session_recording: true,
+    bootstrap: { distinctID: sessionId },
+  });
 }
 
-function providerCapture(_eventName: string, _properties: Record<string, unknown>): void {
-  // Replace with: provider.capture(_eventName, _properties);
+function providerCapture(eventName: string, properties: Record<string, unknown>): void {
+  posthog.capture(eventName, properties);
 }
 
 // ── Public initialisation ─────────────────────────────────────────────────────
