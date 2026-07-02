@@ -43,7 +43,7 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
 
   const quickAddFavorite = (fragrance: any) => {
     addToCart({
-      id: fragrance.title,
+      id: fragrance.title.toLowerCase().replace(/\s+/g, "-"),
       title: fragrance.title,
       image: fragrance.images?.["10ml"] || fragrance.images?.["5ml"],
       price: fragrance.prices?.["5ml"],
@@ -60,7 +60,7 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
 
   const quickAddRecent = (fragrance: any) => {
     addToCart({
-      id: fragrance.title,
+      id: fragrance.title.toLowerCase().replace(/\s+/g, "-"),
       title: fragrance.title,
       image: fragrance.images?.["10ml"] || fragrance.images?.["5ml"],
       price: fragrance.prices?.["5ml"],

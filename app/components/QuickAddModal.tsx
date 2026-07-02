@@ -35,7 +35,7 @@ export default function QuickAddModal({ open, onClose, title, images = {}, price
   if (!mounted) return null;
 
   const retailPrice = prices?.[selectedSize] || 0;
-  const effectivePrice = getWholesalePrice({ id: `${title}-${selectedSize}`, title, price: retailPrice, image: "", quantity: 1, size: selectedSize });
+  const effectivePrice = getWholesalePrice({ id: title.toLowerCase().replace(/\s+/g, "-"), title, price: retailPrice, image: "", quantity: 1, size: selectedSize });
   const total = effectivePrice * quantity;
   const combinedTotal = contextCartTotal + total;
   const amountToSample = Math.max(0, 400 - combinedTotal);
@@ -44,7 +44,7 @@ export default function QuickAddModal({ open, onClose, title, images = {}, price
 
   const handleAddToCart = () => {
     addToCart({
-      id: `${title}-${selectedSize}`,
+      id: title.toLowerCase().replace(/\s+/g, "-"),
       title,
       price: retailPrice,
       quantity,
