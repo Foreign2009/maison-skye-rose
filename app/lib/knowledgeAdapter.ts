@@ -31,13 +31,11 @@ const SORTED_VIBES = [...fragranceVibes].sort((a, b) => b.length - a.length);
 // ── Profile token alias table ─────────────────────────────────────────────────
 // Tokens that appear in catalogue profiles but have no direct fragranceFamilies equivalent.
 // All values are approximations — inferred, not authoritative.
-// "Chypre" and "Fruity" are aliased to prevent products yielding an empty family array,
-// since some profiles (e.g. "Chypre Fruity") contain only unmapped tokens.
+// "Chypre" is aliased because it has no direct vocabulary match.
 const PROFILE_ALIASES: Record<string, string> = {
   tea: "Aromatic",        // Tea (herbal/green) is aromatic family
   coffee: "Gourmand",     // Coffee is a gourmand accord
-  chypre: "Fresh",        // Classical chypre (bergamot top) approximated as Fresh
-  fruity: "Sweet",        // Fruity approximated as Sweet (imprecise — fruity ≠ sweet)
+  chypre: "Amber",        // Classical chypre (oakmoss/labdanum base) maps to Amber
   green: "Fresh",         // Green (herb, grass) belongs to the fresh family
   honey: "Sweet",         // Honey is a sweet note
   rum: "Gourmand",        // Rum is a warm gourmand note

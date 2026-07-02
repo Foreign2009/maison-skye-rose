@@ -17,4 +17,5 @@ export const fragranceFamilies = [
   "Musk",
   "Powdery",
   "Spicy",
+  "Fruity",
 ];
