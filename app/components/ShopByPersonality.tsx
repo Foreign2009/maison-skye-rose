@@ -2,7 +2,14 @@
 
 import Link from "next/link";
 
-const personalities = [
+interface PersonalityCard {
+  title: string;
+  description: string;
+  fragrances: string[];
+  query: string;
+}
+
+const personalities: PersonalityCard[] = [
   {
     title: "The Modern Gentleman",
 
@@ -15,7 +22,7 @@ const personalities = [
       "Aventus Inspired",
     ],
 
-    href: "/quiz",
+    query: "fresh for men luxury",
   },
 
   {
@@ -30,7 +37,7 @@ const personalities = [
       "Good Girl Inspired",
     ],
 
-    href: "/quiz",
+    query: "floral for her elegant",
   },
 
   {
@@ -45,7 +52,7 @@ const personalities = [
       "Stronger With You Inspired",
     ],
 
-    href: "/quiz",
+    query: "sexy amber for men",
   },
 
   {
@@ -60,7 +67,7 @@ const personalities = [
       "Oud Ispahan Inspired",
     ],
 
-    href: "/quiz",
+    query: "oud luxury",
   },
 
   {
@@ -75,7 +82,7 @@ const personalities = [
       "Allure Sport Inspired",
     ],
 
-    href: "/quiz",
+    query: "fresh clean for men",
   },
 
   {
@@ -90,7 +97,7 @@ const personalities = [
       "Tobacco Vanille Inspired",
     ],
 
-    href: "/quiz",
+    query: "bold amber",
   },
 ];
 
@@ -133,7 +140,7 @@ export default function ShopByPersonality() {
 
               <Link
                 key={personality.title}
-                href={personality.href}
+                href={`/shop?q=${encodeURIComponent(personality.query)}`}
               >
 
                 <div
