@@ -338,7 +338,7 @@ A member of our team will confirm your order and delivery details shortly.`;
         <div className="mt-3 flex justify-between text-sm">
           <span>Delivery</span>
           <span className="font-bold">
-            {delivery === 0 ? "FREE" : `R${delivery.toFixed(2)}`}
+            {delivery === 0 ? "FREE" : "Calculated at checkout"}
           </span>
         </div>
 

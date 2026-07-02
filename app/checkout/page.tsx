@@ -35,9 +35,6 @@ export default function CheckoutPage() {
       0
     );
 
-  const vat =
-    subtotal * 0.15;
-
   const delivery =
     province ===
     "Western Cape"
@@ -46,7 +43,6 @@ export default function CheckoutPage() {
 
   const total =
     subtotal +
-    vat +
     delivery;
 
   const handlePayment = async () => {
@@ -86,8 +82,6 @@ export default function CheckoutPage() {
               items: cart,
 
               subtotal,
-
-              vat,
 
               delivery,
 
@@ -237,18 +231,6 @@ export default function CheckoutPage() {
 
             <span>
               R{subtotal.toFixed(2)}
-            </span>
-
-          </div>
-
-          <div className="mt-4 flex justify-between">
-
-            <span>
-              VAT
-            </span>
-
-            <span>
-              R{vat.toFixed(2)}
             </span>
 
           </div>

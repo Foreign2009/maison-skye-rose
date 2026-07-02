@@ -23,7 +23,6 @@ export async function POST(
       province,
       items,
       subtotal,
-      vat,
       delivery,
       total,
     } = body;
@@ -39,7 +38,7 @@ export async function POST(
             province,
             items,
             subtotal,
-            vat,
+            vat: 0,
             delivery,
             total,
             payment_status:
