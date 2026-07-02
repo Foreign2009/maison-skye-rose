@@ -73,6 +73,7 @@ const questions = [
       "Vanilla",
       "Oud",
       "Spicy",
+      "Fruity",
     ],
   },
 
