@@ -1,5 +1,15 @@
+import type { Metadata } from "next";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+
+export const metadata: Metadata = {
+  title: "FAQ | Maison Skye & Rose",
+  description:
+    "Frequently asked questions about Maison Skye & Rose fragrances, delivery, sizing and ordering.",
+  alternates: {
+    canonical: "/faq",
+  },
+};
 
 const faqs = [
   {

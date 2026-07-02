@@ -1,5 +1,15 @@
+import type { Metadata } from "next";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+
+export const metadata: Metadata = {
+  title: "About Us | Maison Skye & Rose",
+  description:
+    "Learn about Maison Skye & Rose — a South African luxury fragrance brand offering premium inspired fragrances in 5ml, 10ml and 30ml.",
+  alternates: {
+    canonical: "/about",
+  },
+};
 
 export default function AboutPage() {
   return (

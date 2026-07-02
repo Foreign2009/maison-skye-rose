@@ -1,5 +1,15 @@
+import type { Metadata } from "next";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+
+export const metadata: Metadata = {
+  title: "Contact Us | Maison Skye & Rose",
+  description:
+    "Get in touch with Maison Skye & Rose. We're here to help with fragrance advice, orders and delivery enquiries.",
+  alternates: {
+    canonical: "/contact",
+  },
+};
 
 export default function ContactPage() {
   return (

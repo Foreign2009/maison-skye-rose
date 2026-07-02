@@ -1,5 +1,15 @@
+import type { Metadata } from "next";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+
+export const metadata: Metadata = {
+  title: "Terms & Conditions | Maison Skye & Rose",
+  description:
+    "Terms and conditions for shopping with Maison Skye & Rose, including ordering, returns and payment.",
+  alternates: {
+    canonical: "/terms",
+  },
+};
 
 export default function TermsPage() {
   return (

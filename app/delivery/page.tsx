@@ -1,5 +1,15 @@
+import type { Metadata } from "next";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+
+export const metadata: Metadata = {
+  title: "Delivery & Shipping | Maison Skye & Rose",
+  description:
+    "Delivery rates and shipping information for Maison Skye & Rose orders across South Africa.",
+  alternates: {
+    canonical: "/delivery",
+  },
+};
 
 const deliveryRates = [
   {
