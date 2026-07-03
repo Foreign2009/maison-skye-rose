@@ -7,17 +7,20 @@ import QuickAddModal from "../components/QuickAddModal";
 import ProductCard from "../components/ProductCard";
 import Footer from "../components/Footer";
 import SearchBar from "../components/SearchBar";
-import { fragrances } from "../data/fragrances";
 import { parseIntent, type IntentSignals } from "../lib/intentParser";
-import { adaptCatalogue, DisplayFragrance } from "../lib/knowledgeAdapter";
+import type { DisplayFragrance } from "../lib/knowledgeAdapter";
+import { mkcCatalogue } from "../lib/mkc/catalogue";
+import { toDisplayFragrance } from "../lib/mkc/displayAdapter";
+import { toRecommendationFragrance } from "../lib/mkc/recommendationAdapter";
 import { recommendFragrances } from "../lib/recommendFragrances";
 import { generateReasons } from "../lib/explainability";
 import { trackDiscovery, trackFilter, trackSort, trackConfidence } from "../lib/analytics";
 import type { AnalyticsSource } from "../lib/analytics";
 
-const adaptedCatalogue = adaptCatalogue(fragrances as DisplayFragrance[]);
+const displayCatalogue = mkcCatalogue.map(toDisplayFragrance);
+const adaptedCatalogue = mkcCatalogue.map(toRecommendationFragrance);
 const displayByTitle = new Map<string, DisplayFragrance>(
-  (fragrances as DisplayFragrance[]).map((f) => [f.title, f])
+  displayCatalogue.map((f) => [f.title, f])
 );
 const adaptedByTitle = new Map(adaptedCatalogue.map((f) => [f.name, f]));
 
@@ -30,7 +33,7 @@ const GENDER_LABELS: Record<NonNullable<IntentSignals["gender"]>, string> = {
 export default function ShopPage() {
   const [search, setSearch] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
-  const [selectedFragrance, setSelectedFragrance] = useState<any>(null);
+  const [selectedFragrance, setSelectedFragrance] = useState<DisplayFragrance | null>(null);
   const [quickOpen, setQuickOpen] = useState(false);
   const [currentFilter, setCurrentFilter] = useState("All");
   const [sortBy, setSortBy] = useState("Featured");
@@ -80,7 +83,7 @@ export default function ShopPage() {
 
     // Mode 0 — Empty query: full catalogue in catalogue order, filtered by active tab
     if (!searchTerm) {
-      return fragrances.filter((item: any) => matchesTab(item as DisplayFragrance));
+      return displayCatalogue.filter((item) => matchesTab(item));
     }
 
     // Mode 1 — Intent mode: recommendation-ranked results, intersected with active tab
@@ -100,14 +103,14 @@ export default function ShopPage() {
     }
 
     // Mode 2 — Keyword fallback: existing substring search, filtered by active tab
-    return fragrances.filter((item: any) => {
+    return displayCatalogue.filter((item) => {
       const matchesSearch =
         item.title.toLowerCase().includes(searchTerm) ||
         item.subtitle?.toLowerCase().includes(searchTerm) ||
         item.mood?.toLowerCase().includes(searchTerm) ||
         item.profile?.toLowerCase().includes(searchTerm) ||
         item.notes?.some((note: string) => note.toLowerCase().includes(searchTerm));
-      return matchesSearch && matchesTab(item as DisplayFragrance);
+      return matchesSearch && matchesTab(item);
     });
   }, [debouncedSearch, currentFilter, detectedSignals]);
 
