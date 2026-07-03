@@ -1,28 +1,46 @@
-# Architecture
+# Architecture — Maison Skye & Rose
 
 **Project:** Maison Skye & Rose
-**Framework:** Next.js 16.2.6 App Router
-**Related:** [README.md](README.md) · [PERFORMANCE.md](PERFORMANCE.md)
+**Framework:** Next.js 16 App Router
+**Last updated:** 2026-07-03
+**Related:** [DECISIONS.md](DECISIONS.md) · [REPOSITORY_STATUS.md](REPOSITORY_STATUS.md)
 
 ---
 
-## Project Structure
+## System Overview
+
+Maison Skye & Rose is a luxury fragrance ecommerce platform with an embedded intelligence layer. The architecture has three concerns:
+
+1. **Commerce** — product discovery, cart, checkout
+2. **Knowledge** — the Maison Knowledge Catalogue (MKC), the canonical fragrance model
+3. **Intelligence** — recommendation engine, intent parsing, explainability
+
+These systems are layered: Commerce surfaces consume Knowledge through Intelligence.
 
 ```
-app/
-├── api/                     # Route Handlers (server-side)
-│   ├── orders/route.ts      # POST: persist order to Supabase
-│   └── payfast/route.ts     # POST: initialize PayFast payment
-├── components/              # Shared UI components (mostly client)
-├── context/                 # React Context providers
-├── data/                    # Static product and brand data (TypeScript modules)
-├── lib/                     # Third-party client setup
-├── product/[slug]/          # Dynamic route — static at build time
-├── shop/                    # Client component page
-├── checkout/                # Client component page
-├── favorites/               # Client component page
-├── layout.tsx               # Root layout — provider tree
-└── page.tsx                 # Homepage — client component
+┌────────────────────────────────────────────────────────────────┐
+│                        Customer Surfaces                       │
+│   Homepage   Shop   Quiz   Product Detail   Quick View         │
+└─────────────────────┬──────────────────────────────────────────┘
+                      │
+┌─────────────────────▼──────────────────────────────────────────┐
+│                    Intelligence Layer                          │
+│   Intent Parser → Knowledge Adapter → Recommendation Engine   │
+│                                     → Explainability          │
+└─────────────────────┬──────────────────────────────────────────┘
+                      │
+┌─────────────────────▼──────────────────────────────────────────┐
+│               Maison Knowledge Catalogue (MKC)                 │
+│      FragranceKnowledge (canonical)                            │
+│      mkcCatalogue (93 entries)                                 │
+│      displayAdapter · recommendationAdapter · merchandising    │
+└─────────────────────┬──────────────────────────────────────────┘
+                      │
+┌─────────────────────▼──────────────────────────────────────────┐
+│                   Support Systems                              │
+│   Analytics (PostHog)   SEO (sitemap, robots, JSON-LD)         │
+│   Commerce (Cart, Checkout, Supabase)                          │
+└────────────────────────────────────────────────────────────────┘
 ```
 
 ---
@@ -31,16 +49,20 @@ app/
 
 This project uses the Next.js 16 App Router exclusively. There is no `pages/` directory.
 
-Key App Router decisions:
-
-- `app/layout.tsx` — Root layout wraps all pages with the full context provider tree
-- `app/product/[slug]/page.tsx` — Server component by default; uses `generateStaticParams` for static pre-rendering and `generateMetadata` for per-page SEO
-- All other pages (`shop`, `checkout`, `favorites`, `page.tsx`) are `"use client"` components because they require browser state
-- Route Handlers (`app/api/*/route.ts`) run server-side — no access to browser APIs
+| Convention | Usage |
+|---|---|
+| `app/layout.tsx` | Root layout — wraps all pages with the full Context provider tree |
+| `app/product/[slug]/page.tsx` | Server Component — `generateStaticParams` + `generateMetadata` + JSON-LD |
+| All other pages | `"use client"` — require localStorage, React Context, or event handlers |
+| `app/api/*/route.ts` | Route Handlers — server-only, no browser APIs |
+| `app/sitemap.ts` | Static sitemap generator |
+| `app/robots.ts` | Static robots.txt generator |
 
 ---
 
-## Context Provider Tree
+## Commerce System
+
+### Context Provider Tree
 
 Providers are nested in `app/layout.tsx` in this order (outermost first):
 
@@ -52,180 +74,425 @@ FavoritesProvider
         {children}
         CartSuccessToast
         FloatingWhatsApp
+        AnalyticsInit
 ```
 
-**Rationale:**
-- `FavoritesProvider` is outermost because the MiniCart reads from both `CartContext` and `FavoritesContext` — nesting order doesn't create circular dependency but establishes a clear ownership hierarchy
-- `CartUIProvider` wraps `CartFeedbackProvider` because the toast feedback is logically contained within the cart UI subsystem
-
-### Context Responsibilities
-
-| Context | File | Purpose |
+| Context | File | Responsibility |
 |---|---|---|
-| `CartContext` | `context/CartContext.tsx` | Cart items, totals, wholesale logic, localStorage persistence |
-| `CartUIContext` | `context/CartUIContext.tsx` | Cart drawer open/close state only |
-| `CartFeedbackContext` | `context/CartFeedbackContext.tsx` | Add-to-cart toast (auto-clears after 2600ms) |
 | `FavoritesContext` | `context/FavoritesContext.tsx` | Saved favorites, localStorage persistence |
-
----
-
-## Data Flow
-
-### Product Data
-
-All product data lives in `app/data/fragrances.ts` as a static TypeScript array. There is no runtime API call for product data — it is bundled at build time.
-
-```
-fragrances.ts → imported directly into components and pages
-              → generateStaticParams reads it at build time
-              → MiniCart reads it for recommendation scoring
-```
-
-**Type definition:** `app/data/types.ts` — `Fragrance` type defines the AI recommendation schema (scentCharacter, projection, sweetness, freshness, warmth, intensity, versatility, popularity). The product display schema (prices, images, collection, mood, notes array) is defined inline in `fragrances.ts`.
-
-Note: There is a type mismatch between `Fragrance` (in `types.ts`, used by the quiz/recommendation engine) and the product shape used by `ProductCard`, `CartContext`, and `MiniCart`. The display product data uses a flat `notes: string[]` array while `Fragrance` uses `notes: { top, heart, base }`. These are two parallel data models.
+| `CartContext` | `context/CartContext.tsx` | Cart items, totals, wholesale logic, localStorage |
+| `CartUIContext` | `context/CartUIContext.tsx` | MiniCart open/close state |
+| `CartFeedbackContext` | `context/CartFeedbackContext.tsx` | Add-to-cart toast (auto-clears 2600ms) |
 
 ### Cart Data Flow
 
 ```
-User action (Quick Add / Add to Cart)
+User action (Quick Add / Add to Cart / Buy Now)
   → addToCart() in CartContext
   → setCart() updates state
-  → useEffect saves to localStorage
+  → useEffect persists to localStorage
   → useMemo recomputes cartTotal, cartCount
   → wholesaleActive derived from cartCount >= 10
-  → getWholesalePrice() applies wholesale rates if active
+  → getWholesalePrice() applies wholesale rates when active
   → MiniCart reads all derived values via useCart()
+  → trackAddToCart() → analytics.ts → PostHog
 ```
 
-### Checkout Flow (WhatsApp — Primary)
+### Cart Composite Key
+
+Cart line items are uniquely identified by `id + size`. The `id` field is the URL slug of the fragrance (standardized in EP10). Same fragrance in different sizes = separate line items.
+
+### Checkout Flows
+
+**Primary — WhatsApp:**
+```
+MiniCart → "Checkout via WhatsApp"
+  → handleWhatsAppCheckout()
+  → wa.me/ URL with encoded order summary
+  → Manual order confirmation via WhatsApp
+```
+
+**Secondary — PayFast:**
+```
+Checkout form → handlePayment()
+  → POST /api/orders → Supabase (status: pending)
+  → POST /api/payfast → PayFast query string
+  → window.location.href → PayFast (sandbox)
+  → /payment-success or /payment-cancel
+```
+
+Note: PayFast is running on sandbox. No real payments are processed. See DECISIONS.md ADR-006.
+
+### Reward Tiers
+
+| Threshold | Reward |
+|---|---|
+| R400 | 1 free 5ml sample |
+| R700 | 2 free 5ml samples |
+| R1000 | 3 free 5ml samples |
+| R1500 | Free Discovery Set |
+
+### Wholesale Pricing
+
+Auto-activates at 10+ units in cart. No account required. Wholesale rates are applied by `getWholesalePrice()` in CartContext. MiniCart shows crossed-out retail price, green wholesale price, and savings amount.
+
+---
+
+## Maison Knowledge Catalogue (MKC)
+
+The MKC is the canonical fragrance knowledge system. It is the single source of truth for all fragrance data.
+
+### Canonical Model
+
+```typescript
+// app/lib/mkc/types.ts
+
+FragranceKnowledge {
+  // Identity
+  id, slug, brand, name, collection, catalogVersion, status
+
+  // Classification
+  gender, family[], scentCharacter, projection
+
+  // Composition
+  profile, season, notes { top[], heart[], base[] }, mood
+
+  // Discovery
+  vibe[], occasions[], seasons[], signatureStyle[], recommendedFor[]
+
+  // Merchandising
+  prices { "5ml", "10ml", "30ml" }
+  images { "5ml", "10ml", "30ml" }
+  bestSeller, newArrival, featured
+
+  // Education
+  subtitle?, description?
+
+  // Intelligence
+  sweetness, freshness, warmth, intensity, versatility, popularity
+}
+```
+
+### Two-Shape Model
+
+MKC projects into two shapes for different consumers:
 
 ```
-User clicks "Checkout via WhatsApp" in MiniCart
-  → handleWhatsAppCheckout() builds order message string
-  → window.open() to wa.me/27696863952 with encoded message
+FragranceKnowledge (canonical)
+       │
+       ├── toDisplayFragrance()  → DisplayFragrance
+       │   (app/lib/mkc/displayAdapter.ts)
+       │   Used by: shop page display, component UI
+       │
+       └── toRecommendationFragrance()  → Fragrance
+           (app/lib/mkc/recommendationAdapter.ts)
+           Used by: Intelligence Layer (scoring, signals)
 ```
 
-### Checkout Flow (PayFast — Secondary)
+The two shapes serve different concerns:
+- `DisplayFragrance` — optimized for UI rendering (flat notes array, merchandising fields)
+- `Fragrance` — optimized for Intelligence scoring (numeric axes, structured notes, collection)
+
+### Shared Merchandising
+
+```typescript
+// app/lib/mkc/merchandising.ts
+
+generateWhyYoullLikeIt(k: FragranceKnowledge): [string, string, string]
+```
+
+Derives three lifestyle bullets from MKC fields. No invented content. Pure deterministic function. Shared by FragranceQuickView and ProductDetail.
+
+### MKC Consumers
+
+| Consumer | Prop type | MKC entry point |
+|---|---|---|
+| `ProductDetail` | `knowledge: FragranceKnowledge` | Direct — all fields |
+| `FragranceQuickView` | `knowledge: FragranceKnowledge` | Direct — all fields |
+| `app/product/[slug]/page.tsx` | Server — `findKnowledge(slug)` | mkcCatalogue lookup |
+| `app/shop/page.tsx` | Client — module-level maps | toDisplayFragrance + toRecommendationFragrance |
+| `merchandising.ts` | Pure function | notes.top, scentCharacter, occasions, season |
+
+---
+
+## Intelligence Layer
+
+The Intelligence Layer translates customer intent (natural language search) into ranked fragrance recommendations. It is a pure TypeScript library — no React, no API calls, no side effects.
+
+**Architectural rule:** The Intelligence Layer must never import `analytics.ts`. Observability lives at call sites in consumers.
+
+### Modules
 
 ```
-User fills checkout form → handlePayment()
-  → POST /api/orders → Supabase insert (orders table, status: pending)
-  → POST /api/payfast → builds PayFast query string
-  → Returns sandbox URL
-  → window.location.href redirects to PayFast sandbox
-  → On return: /payment-success or /payment-cancel
+app/lib/
+├── intentParser.ts         — Natural language → IntentSignals
+├── knowledgeAdapter.ts     — Fragrance[] → scored candidates
+├── recommendFragrances.ts  — Scoring → 4 recommendation slots
+└── explainability.ts       — Candidate → [string, string] reasons
+```
+
+### Data Flow
+
+```
+User types search query (e.g., "fresh floral for summer")
+  │
+  ▼
+intentParser.ts — parseIntent(query)
+  → IntentSignals { gender?, occasion?, family?, vibe?, character? }
+  │
+  ▼
+knowledgeAdapter.ts — adaptCatalogue(fragrances) → Fragrance[]
+  → Normalised candidates with scoring fields
+  │
+  ▼
+recommendFragrances.ts — recommendFragrances(signals, candidates)
+  → RecommendationResult {
+       scored: ScoredFragrance[],
+       bestMatch: ScoredFragrance,
+       hiddenGem: ScoredFragrance | null,
+       luxuryUpgrade: ScoredFragrance | null,
+       alternative: ScoredFragrance | null,
+       matchStrength: "strong" | "moderate" | "partial",
+       mode: 0 | 1 | 2
+     }
+  │
+  ▼
+explainability.ts — generateReasons(signals, candidate)
+  → ExplanationResult { reasons: string[] }
+  │
+  ▼
+RecommendationCard — displays slot with reasons
+```
+
+### Recommendation Slots
+
+| Slot | Criterion | Customer label |
+|---|---|---|
+| bestMatch | Highest overall score | Best Match |
+| hiddenGem | Highest-scoring standard non-bestseller, not Elite | Hidden Gem |
+| luxuryUpgrade | Highest-scoring Elite collection product | Luxury Upgrade |
+| alternative | Second-highest overall score | You Might Also Like |
+
+### Discovery Modes
+
+| Mode | Condition | Shop behaviour |
+|---|---|---|
+| 0 | No search | Default sort, no signal pills, no confidence label |
+| 1 | Search with parsed intent signals | Recommendation ranking, signal pills, confidence label |
+| 2 | Search with no parseable signals | Keyword fallback, no pills, no label |
+
+### Shop Integration
+
+```
+app/shop/page.tsx
+  │
+  ├── detectedSignals useMemo — IntentSignals from intentParser
+  ├── firstCardStrength useMemo — matchStrength from recommendFragrances
+  ├── Signal pills JSX — "Curated for you: Fresh · Floral · Summer"
+  └── Confidence label JSX — "Perfect Match" / "Great Match"
+```
+
+### Quiz Integration
+
+```
+app/quiz/page.tsx
+  │
+  ├── User answers 5 questions (gender, family, occasion, character, vibe)
+  ├── recommendFragrances() called with quiz answers as signals
+  └── QuizResults — renders bestMatch, hiddenGem, luxuryUpgrade, alternative
 ```
 
 ---
 
-## Routing
+## Analytics System
 
-| Route | Type | Rendering |
-|---|---|---|
-| `/` | Client Component | CSR (homepage) |
-| `/shop` | Client Component | CSR (filter/search state) |
-| `/product/[slug]` | Server Component | SSG — pre-rendered at build |
-| `/checkout` | Client Component | CSR |
-| `/favorites` | Client Component | CSR |
-| `/recently-viewed` | Client Component | CSR |
-| `/best-sellers` | Client Component | CSR |
-| `/new-arrivals` | Client Component | CSR |
-| `/quiz` | Client Component | CSR |
-| `/collections/skye` | Client Component | CSR |
-| `/collections/rose` | Client Component | CSR |
-| `/collections/elite` | Client Component | CSR |
-| `/payment-success` | Client Component | CSR |
-| `/payment-cancel` | Client Component | CSR |
-| `/about`, `/faq`, `/contact`, `/delivery`, `/privacy`, `/terms`, `/wholesale` | Client Component | CSR — TODO: verify these pages exist and confirm rendering strategy |
-| `/api/orders` | Route Handler | Server |
-| `/api/payfast` | Route Handler | Server |
+### Architecture
+
+```
+Call site (component handler or useEffect)
+  → track*() function in app/lib/analytics.ts
+  → safeCall() — catches errors silently
+  → providerCapture() — PostHog capture (active)
+  → PostHog servers
+```
+
+**Key principle:** Analytics observes behaviour — it never influences it. The Intelligence Layer never imports analytics. Analytics calls always follow state updates, never precede them.
+
+### Session Identity
+
+```typescript
+// app/components/AnalyticsInit.tsx
+
+const SESSION_KEY = "msr_session_id";
+const existing = localStorage.getItem(SESSION_KEY);
+if (!existing) {
+  localStorage.setItem(SESSION_KEY, crypto.randomUUID());
+}
+```
+
+Anonymous UUID persists in `localStorage['msr_session_id']` across page loads.
+
+### Instrumented Events
+
+| Journey | Events |
+|---|---|
+| Discovery (shop) | `discovery_mode`, `confidence_label_shown`, `filter_applied`, `sort_applied`, `product_clicked` |
+| Quiz | `quiz_answer_selected`, `quiz_completed`, `quiz_results_shown`, `quiz_whatsapp_clicked`, `product_clicked` |
+| Commerce | `product_detail_viewed`, `add_to_cart`, `cart_opened`, `checkout_started`, `payment_started`, `payment_return_success`, `payment_return_cancelled`, `buy_now_clicked`, `whatsapp_checkout_started` |
+
+### Provider
+
+PostHog JS is the active provider. Environment variables:
+- `NEXT_PUBLIC_POSTHOG_KEY`
+- `NEXT_PUBLIC_POSTHOG_HOST`
+
+The provider integration point in `analytics.ts` is clearly marked so a future provider swap requires changes only within that file.
+
+---
+
+## SEO System
+
+### Per-Product SEO
+
+`app/product/[slug]/page.tsx` — Server Component:
+
+```typescript
+generateMetadata({ params }) → Metadata {
+  title: "${knowledge.name} | Maison Skye & Rose",
+  description: "${mood}. Notes: ${notes.slice(0,4)}. From R${startingPrice}.",
+  alternates: { canonical: "${baseUrl}/product/${slug}" },
+  openGraph: { title, description, url, images: [{ url: ogImage }] },
+  twitter: { card: "summary_large_image", ... }
+}
+```
+
+JSON-LD Product schema:
+```json
+{
+  "@type": "Product",
+  "name": "...",
+  "sku": "slug",
+  "offers": [
+    { "@type": "Offer", "name": "5ml", "price": 149 },
+    { "@type": "Offer", "name": "10ml", "price": 249 },
+    { "@type": "Offer", "name": "30ml", "price": 449 }
+  ]
+}
+```
+
+### Sitemap
+
+`app/sitemap.ts` — generates sitemap.xml from `mkcCatalogue`. All 93 product pages are indexed.
+
+### robots.txt
+
+`app/robots.ts` — configured robots.txt via Next.js App Router metadata route.
+
+---
+
+## Future Academy
+
+The Maison Fragrance Academy (EP13) is planned but not yet implemented. This section documents the approved architecture.
+
+### Planned Structure
+
+```
+app/
+├── academy/
+│   ├── page.tsx              — Hub (SSG, articles grouped by category)
+│   └── [slug]/
+│       └── page.tsx          — Article (SSG, generateStaticParams, generateMetadata, JSON-LD Article)
+├── components/academy/
+│   ├── AcademyArticleCard.tsx
+│   ├── ArticleContentRenderer.tsx
+│   └── ArticleRelatedFragrances.tsx
+└── lib/academy/
+    ├── types.ts              — AcademyArticle, AcademyCategory, AcademyContentBlock
+    └── catalogue.ts          — academyCatalogue (static TypeScript, mirrors MKC pattern)
+```
+
+### Academy Data Model
+
+```typescript
+AcademyArticle {
+  slug, title, subtitle, category, excerpt,
+  coverImage, readTime, content, relatedFragranceIds, publishedAt
+}
+
+AcademyCategory:
+  "Fragrance Families" | "Note Pyramids" | "How to Wear" |
+  "Choosing Your Scent" | "Seasons & Occasions" | "The Craft"
+
+AcademyContentBlock:
+  { type: "paragraph" | "heading" | "tip" | "note-list" | "fragrance-spotlight", ... }
+```
+
+Academy articles link to MKC via `relatedFragranceIds: string[]` — the `ArticleRelatedFragrances` component resolves these to product cards.
+
+---
+
+## Future AI
+
+When Ask Maison AI is implemented (reserved placeholder on ProductDetail), the design constraint is:
+
+**AI must consume structured knowledge from MKC — it must never invent fragrance information.**
+
+The `FragranceKnowledge.description`, `notes`, `mood`, `occasions`, `recommendedFor`, and `signatureStyle` fields provide the grounding data. The AI system will read from these fields and compose responses — not generate content about fragrances from its training data.
 
 ---
 
 ## State Management
 
-No external state management library (no Zustand, Redux, Jotai). All state is managed with:
+No external state library. All state is managed with:
 
-- **React Context** — shared app-level state (cart, favorites, UI)
-- **useState / useMemo / useCallback** — local component state and derived data
-- **localStorage** — cart and favorites persistence across sessions
-- **URL / Next.js router** — page navigation state
-
----
-
-## Component Hierarchy (Homepage)
-
-```
-page.tsx (HomePage)
-├── Navbar
-├── AnnouncementBar
-├── [Promo strip section]
-├── [KPI strip section]
-├── AIHeroSection
-├── LuxuryConfidenceBar
-├── TrustBar
-├── [Featured Fragrance section]
-├── BestSellers
-│   └── ProductCard × N
-├── DiscoverySets
-├── [Wholesale promo section]
-├── LatestAdditions
-│   ├── ProductCard × N
-│   └── QuickAddModal
-├── ShopByPersonality
-├── Testimonials
-├── FavoritesHome
-│   └── ProductCard × N (favorites only)
-├── RecentlyViewedHome
-│   └── ProductCard × N (localStorage)
-├── QuickAddModal (shared)
-└── Footer
-```
-
----
-
-## Server / Client Boundaries
-
-- **Server Components:** `app/product/[slug]/page.tsx` (async, reads params, injects JSON-LD)
-- **Route Handlers:** `app/api/orders/route.ts`, `app/api/payfast/route.ts`
-- **Client Components:** All other pages and the majority of components — they require `useCart`, `useFavorites`, `useCartUI`, `useCartFeedback`, local state, `localStorage`, `window`, or event handlers
-
-Components that are `"use client"` are marked with the directive at the top of the file.
+- **React Context** — shared app-level state (cart, favorites, UI, feedback)
+- **useState / useMemo / useCallback** — local and derived component state
+- **localStorage** — cart, favorites, recently viewed, analytics session ID
+- **URL / Next.js router** — navigation state
 
 ---
 
 ## Rendering Strategy
 
-| Page | Strategy | Why |
+| Surface | Strategy | Why |
 |---|---|---|
-| Product pages | Static Site Generation | SEO, performance, stable product data |
-| Homepage | Client-Side Rendering | Requires context (favorites, recently viewed) |
-| Shop | CSR | Search, filter, sort state |
-| Checkout | CSR | Cart state, form state |
+| Product pages | SSG | SEO, performance, stable MKC data |
+| Homepage | Client-side | Requires Context (favorites, recently viewed) |
+| Shop | Client-side | Search, filter, sort state |
+| Quiz | Client-side | Stateful multi-step flow |
+| Checkout | Client-side | Cart state, form state |
+| Academy hub (planned) | SSG | Pure static content |
+| Academy articles (planned) | SSG | Per-article metadata, JSON-LD |
 
 ---
 
-## Known Architectural Decisions
+## Module Relationships
 
-1. **Product data is static TypeScript** — not fetched from a CMS or API. This means re-deploy is required to add products. This was chosen for simplicity and build-time performance.
+```
+app/lib/mkc/
+  types.ts              ← defines FragranceKnowledge
+  catalogue.ts          → imports types.ts
+  displayAdapter.ts     → imports types.ts
+  recommendationAdapter.ts → imports types.ts (+ app/data/types.ts for Fragrance)
+  merchandising.ts      → imports types.ts
 
-2. **WhatsApp is the primary checkout** — PayFast is secondary. This is a business decision; WhatsApp allows manual order confirmation and flexibility.
+app/lib/
+  intentParser.ts       → pure — no imports
+  knowledgeAdapter.ts   → imports app/data/types.ts (Fragrance)
+  recommendFragrances.ts → imports intentParser, knowledgeAdapter
+  explainability.ts     → imports intentParser, knowledgeAdapter
+  analytics.ts          → pure — no imports from intelligence layer
 
-3. **Composite cart key is `id + size`** — the same fragrance in a different size is treated as a separate cart line item. `id` is typically `fragrance.title` (or `title-size` in QuickAddModal).
+app/components/
+  ProductDetail.tsx     → imports mkc/types, mkc/catalogue, mkc/merchandising,
+                           context/CartContext, context/FavoritesContext, lib/analytics
+  FragranceQuickView.tsx → imports mkc/types, mkc/merchandising,
+                           context/CartContext, context/CartFeedbackContext, lib/analytics
+  ProductCard.tsx       → imports context/CartContext, context/FavoritesContext, lib/analytics
+  MiniCart.tsx          → imports context/CartContext, context/CartUIContext, lib/analytics,
+                           data/fragrances, lib/knowledgeAdapter, lib/recommendFragrances
 
-4. **Two product data shapes exist** — `Fragrance` type (quiz/recommendation) and the display shape used by ProductCard/Cart. These are intentionally separate for different use cases.
-
-5. **No authentication** — the Supabase client uses the anon key. Order submission is unauthenticated. Customer identification is handled via the WhatsApp flow.
-
----
-
-## Future Expansion Points
-
-- CMS integration for product management without redeployment
-- Customer authentication via Supabase Auth
-- Order tracking dashboard
-- PayFast ITN (Instant Transaction Notification) webhook for automated order status updates
-- Inventory management
-- Email order confirmation
-- Wishlist sharing
+app/shop/page.tsx       → imports mkc/catalogue, mkc/displayAdapter, mkc/recommendationAdapter,
+                           lib/intentParser, lib/knowledgeAdapter, lib/recommendFragrances,
+                           lib/explainability, lib/analytics
+```
