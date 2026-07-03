@@ -10,55 +10,7 @@ import { useCart } from "../context/CartContext";
 import { useCartFeedback } from "../context/CartFeedbackContext";
 import { trackAddToCart } from "../lib/analytics";
 import type { FragranceKnowledge } from "../lib/mkc/types";
-
-// ── Why You'll Like It ────────────────────────────────────────────────────────
-// Pure function: derives three lifestyle bullets from MKC fields only.
-// No invented content — all values are structured transforms of existing knowledge.
-function generateWhyYoullLikeIt(k: FragranceKnowledge): [string, string, string] {
-  const topNote = k.notes.top[0]?.toLowerCase();
-  const scent   = k.scentCharacter;
-
-  const openingWord =
-    scent === "Fresh & Light"        ? "Fresh"
-    : scent === "Deep & Intense"     ? "Deep"
-    : scent === "Rich & Long Wearing" ? "Warm"
-    : "Refined";
-
-  const bullet1 = topNote
-    ? `${openingWord} ${topNote} opening`
-    : `${openingWord} ${(k.family[0] ?? "signature").toLowerCase()} character`;
-
-  const characterMap: Record<string, string> = {
-    "Fresh & Light":       "Light, effortless everyday character",
-    "Balanced Signature":  "Refined, balanced signature scent",
-    "Rich & Long Wearing": "Rich sillage that lasts all day",
-    "Deep & Intense":      "Bold, intense projection",
-  };
-
-  const occasionMap: Record<string, string> = {
-    "Daily Wear":      k.season === "All Season"
-                         ? "Easy, versatile everyday wear"
-                         : `Effortless for ${k.season.toLowerCase()} days`,
-    "Office":          "Confident, polished presence",
-    "Date Night":      "Made for memorable evenings",
-    "Wedding":         "Elegant for special occasions",
-    "Vacation":        "Carefree summer companion",
-    "Summer Days":     "Bright and airy for warm days",
-    "Winter Evenings": "Warm and inviting on cold nights",
-  };
-
-  const bullet3 =
-    occasionMap[k.occasions[0] ?? ""] ??
-    (k.season === "All Season"
-      ? "Wears beautifully year-round"
-      : `Perfect for ${k.season.toLowerCase()} wear`);
-
-  return [
-    bullet1,
-    characterMap[scent] ?? "Distinctive fragrance character",
-    bullet3,
-  ];
-}
+import { generateWhyYoullLikeIt } from "../lib/mkc/merchandising";
 
 // ── Collection styling ────────────────────────────────────────────────────────
 const COLLECTION_STYLES: Record<string, { pill: string; label: string }> = {

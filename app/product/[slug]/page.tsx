@@ -3,7 +3,8 @@ import { notFound } from "next/navigation";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import ProductDetail from "../../components/ProductDetail";
-import { fragrances } from "../../data/fragrances";
+import { mkcCatalogue } from "../../lib/mkc/catalogue";
+import type { FragranceKnowledge } from "../../lib/mkc/types";
 
 interface ProductPageProps {
   params: Promise<{
@@ -11,16 +12,12 @@ interface ProductPageProps {
   }>;
 }
 
-function toSlug(title: string): string {
-  return title.toLowerCase().replace(/\s+/g, "-");
-}
-
-function findFragrance(slug: string) {
-  return fragrances.find((item) => toSlug(item.title) === slug);
+function findKnowledge(slug: string): FragranceKnowledge | undefined {
+  return mkcCatalogue.find((k) => k.slug === slug);
 }
 
 export function generateStaticParams() {
-  return fragrances.map((f) => ({ slug: toSlug(f.title) }));
+  return mkcCatalogue.map((k) => ({ slug: k.slug }));
 }
 
 function normalizeImagePath(path: string): string {
@@ -31,21 +28,26 @@ export async function generateMetadata({
   params,
 }: ProductPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const fragrance = findFragrance(slug);
+  const knowledge = findKnowledge(slug);
 
-  if (!fragrance) return {};
+  if (!knowledge) return {};
 
   const baseUrl = process.env.NEXT_PUBLIC_WEBSITE_URL ?? "";
   const url = `${baseUrl}/product/${slug}`;
-  const imagePath = normalizeImagePath(fragrance.images["10ml"]);
+  const imagePath = normalizeImagePath(knowledge.images["10ml"]);
   const ogImage = `${baseUrl}${imagePath}`;
-  const startingPrice = Math.min(...Object.values(fragrance.prices));
-  const description = `${fragrance.mood} Notes: ${fragrance.notes.join(", ")}. From R${startingPrice}.`;
+  const startingPrice = Math.min(...Object.values(knowledge.prices));
+  const allNotes = [
+    ...knowledge.notes.top,
+    ...knowledge.notes.heart,
+    ...knowledge.notes.base,
+  ];
+  const description = `${knowledge.mood} Notes: ${allNotes.slice(0, 4).join(", ")}. From R${startingPrice}.`;
 
   return {
-    title: `${fragrance.title} | Maison Skye & Rose`,
+    title: `${knowledge.name} | Maison Skye & Rose`,
     description,
-    category: fragrance.collection,
+    category: knowledge.collection,
     robots: {
       index: true,
       follow: true,
@@ -54,23 +56,23 @@ export async function generateMetadata({
       canonical: url,
     },
     openGraph: {
-      title: `${fragrance.title} | Maison Skye & Rose`,
-      description: fragrance.mood,
+      title: `${knowledge.name} | Maison Skye & Rose`,
+      description: knowledge.mood,
       url,
       images: [
         {
           url: ogImage,
           width: 800,
           height: 800,
-          alt: fragrance.title,
+          alt: knowledge.name,
         },
       ],
       type: "website",
     },
     twitter: {
       card: "summary_large_image",
-      title: `${fragrance.title} | Maison Skye & Rose`,
-      description: fragrance.mood,
+      title: `${knowledge.name} | Maison Skye & Rose`,
+      description: knowledge.mood,
       images: [ogImage],
     },
   };
@@ -81,29 +83,29 @@ export default async function ProductPage({
 }: ProductPageProps) {
   const { slug } = await params;
 
-  const fragrance = findFragrance(slug);
+  const knowledge = findKnowledge(slug);
 
-  if (!fragrance) {
+  if (!knowledge) {
     notFound();
   }
 
   const baseUrl = process.env.NEXT_PUBLIC_WEBSITE_URL ?? "";
-  const imagePath = normalizeImagePath(fragrance.images["10ml"]);
+  const imagePath = normalizeImagePath(knowledge.images["10ml"]);
 
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Product",
-    name: fragrance.title,
-    description: fragrance.mood,
+    name: knowledge.name,
+    description: knowledge.mood,
     brand: {
       "@type": "Brand",
       name: "Maison Skye & Rose",
     },
     image: `${baseUrl}${imagePath}`,
     url: `${baseUrl}/product/${slug}`,
-    sku: slug,
-    category: fragrance.collection,
-    offers: Object.entries(fragrance.prices).map(([size, price]) => ({
+    sku: knowledge.slug,
+    category: knowledge.collection,
+    offers: Object.entries(knowledge.prices).map(([size, price]) => ({
       "@type": "Offer",
       name: size,
       price,
@@ -122,7 +124,7 @@ export default async function ProductPage({
       <main className="min-h-screen bg-[#f5f1eb]">
         <Navbar />
 
-        <ProductDetail fragrance={fragrance} />
+        <ProductDetail knowledge={knowledge} />
 
         <Footer />
       </main>
