@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useCallback } from "react";
 
 import Navbar from "../components/Navbar";
 import QuickAddModal from "../components/QuickAddModal";
@@ -16,6 +16,8 @@ import { recommendFragrances } from "../lib/recommendFragrances";
 import { generateReasons } from "../lib/explainability";
 import { trackDiscovery, trackFilter, trackSort, trackConfidence } from "../lib/analytics";
 import type { AnalyticsSource } from "../lib/analytics";
+import FragranceQuickView from "../components/FragranceQuickView";
+import type { FragranceKnowledge } from "../lib/mkc/types";
 
 const displayCatalogue = mkcCatalogue.map(toDisplayFragrance);
 const adaptedCatalogue = mkcCatalogue.map(toRecommendationFragrance);
@@ -23,6 +25,9 @@ const displayByTitle = new Map<string, DisplayFragrance>(
   displayCatalogue.map((f) => [f.title, f])
 );
 const adaptedByTitle = new Map(adaptedCatalogue.map((f) => [f.name, f]));
+const mkcByTitle = new Map<string, FragranceKnowledge>(
+  mkcCatalogue.map((k) => [k.name, k])
+);
 
 const GENDER_LABELS: Record<NonNullable<IntentSignals["gender"]>, string> = {
   male: "For Him",
@@ -38,6 +43,8 @@ export default function ShopPage() {
   const [currentFilter, setCurrentFilter] = useState("All");
   const [sortBy, setSortBy] = useState("Featured");
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [selectedKnowledge, setSelectedKnowledge] = useState<FragranceKnowledge | null>(null);
+  const [quickViewOpen, setQuickViewOpen] = useState(false);
 
   // Debounce search input — clears immediately, delays non-empty terms by 300ms
   useEffect(() => {
@@ -176,6 +183,13 @@ export default function ShopPage() {
       : currentMode === 1
         ? "shop-mode-1"
         : "shop-mode-2";
+
+  const handleLearnMore = useCallback((title: string) => {
+    const knowledge = mkcByTitle.get(title);
+    if (!knowledge) return;
+    setSelectedKnowledge(knowledge);
+    setQuickViewOpen(true);
+  }, []);
 
   return (
     <main className="min-h-screen bg-[#f5f1eb]">
@@ -322,12 +336,12 @@ export default function ShopPage() {
                       <p className="mb-1.5 text-[10px] md:text-xs font-semibold uppercase tracking-wider text-[#d89ca4]">
                         {firstCardStrength}
                       </p>
-                      <ProductCard {...fragrance} onQuickAdd={() => { setSelectedFragrance(fragrance); setQuickOpen(true); }} source={analyticsSource} rank={index} />
+                      <ProductCard {...fragrance} onQuickAdd={() => { setSelectedFragrance(fragrance); setQuickOpen(true); }} onLearnMore={() => handleLearnMore(fragrance.title)} source={analyticsSource} rank={index} />
                     </div>
                   );
                 }
                 return (
-                  <ProductCard key={fragrance.title} {...fragrance} onQuickAdd={() => { setSelectedFragrance(fragrance); setQuickOpen(true); }} source={analyticsSource} rank={index} />
+                  <ProductCard key={fragrance.title} {...fragrance} onQuickAdd={() => { setSelectedFragrance(fragrance); setQuickOpen(true); }} onLearnMore={() => handleLearnMore(fragrance.title)} source={analyticsSource} rank={index} />
                 );
               })}
             </div>
@@ -399,6 +413,12 @@ export default function ShopPage() {
           prices={selectedFragrance.prices}
         />
       )}
+
+      <FragranceQuickView
+        knowledge={selectedKnowledge}
+        open={quickViewOpen}
+        onClose={() => setQuickViewOpen(false)}
+      />
 
       <Footer />
     </main>

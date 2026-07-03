@@ -20,6 +20,7 @@ type ProductCardProps = {
   bestSeller?: boolean;
   newArrival?: boolean;
   onQuickAdd?: () => void;
+  onLearnMore?: () => void;
   priority?: boolean;
   source?: AnalyticsSource;
   rank?: number;
@@ -37,6 +38,7 @@ function ProductCard({
   bestSeller,
   newArrival,
   onQuickAdd,
+  onLearnMore,
   priority = false,
   source,
   rank,
@@ -86,6 +88,11 @@ function ProductCard({
       newArrival: newArrival ?? false,
     });
   }, [favorite, removeFromFavorites, addToFavorites, title, subtitle, mood, profile, season, notes, prices, images, bestSeller, newArrival]);
+
+  const handleLearnMoreClick = useCallback(() => {
+    saveRecentlyViewed();
+    onLearnMore?.();
+  }, [saveRecentlyViewed, onLearnMore]);
 
   return (
     <div className="relative flex h-full flex-col overflow-hidden rounded-[32px] bg-white p-4 md:p-6 border border-[#e8ddd6] shadow-[0_20px_60px_rgba(0,0,0,0.08)] transition-all duration-300 hover:-translate-y-2">
@@ -166,12 +173,23 @@ function ProductCard({
                 30ml offers the best value
               </p>
             </div>
-            <button
-              onClick={handleCardClick}
-              className="w-full rounded-full bg-gradient-to-r from-pink-400 to-blue-400 px-3 md:px-6 py-1.5 md:py-3 text-xs md:text-sm font-bold text-white shadow-lg transition-all hover:scale-105 hover:shadow-xl"
-            >
-              Quick Add
-            </button>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={handleCardClick}
+                className="flex-1 rounded-full bg-gradient-to-r from-pink-400 to-blue-400 px-3 md:px-6 py-1.5 md:py-3 text-xs md:text-sm font-bold text-white shadow-lg transition-all hover:scale-105 hover:shadow-xl"
+              >
+                Quick Add
+              </button>
+              {onLearnMore && (
+                <button
+                  onClick={handleLearnMoreClick}
+                  aria-label={`Learn more about ${title}`}
+                  className="hidden md:flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#e8ddd6] bg-white text-[#7b7480] transition-all hover:border-[#d89ca4] hover:text-[#d89ca4]"
+                >
+                  <span className="text-[11px] leading-none" aria-hidden="true">↗</span>
+                </button>
+              )}
+            </div>
           </div>
         </div>
       </div>
