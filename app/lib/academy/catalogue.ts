@@ -9,7 +9,10 @@ export const academyCatalogue: AcademyArticle[] = [
     excerpt:
       "Every fragrance tells a story in three acts. Learn how top, heart, and base notes work together to create the scent you experience from first spray to hours later.",
     readTime: 4,
+    featured: true,
     publishedAt: "2026-07-03",
+    relatedArticleIds: ["guide-to-fragrance-families", "what-makes-a-signature-scent"],
+    recommendedArticleIds: ["guide-to-fragrance-families", "how-to-wear-fragrance"],
     relatedFragranceIds: [
       "sauvage-inspired",
       "miss-dior-inspired",
@@ -90,6 +93,8 @@ export const academyCatalogue: AcademyArticle[] = [
       "Fragrance families are the language of perfumery. Understanding them helps you describe what you love, discover new fragrances confidently, and build a collection that reflects your personality.",
     readTime: 5,
     publishedAt: "2026-07-03",
+    relatedArticleIds: ["the-note-pyramid-explained", "what-makes-a-signature-scent"],
+    recommendedArticleIds: ["the-note-pyramid-explained", "choosing-your-season-scent"],
     relatedFragranceIds: [
       "miss-dior-inspired",
       "sauvage-inspired",
@@ -176,6 +181,8 @@ export const academyCatalogue: AcademyArticle[] = [
       "Most people apply fragrance incorrectly. Learn the techniques that maximize longevity, projection, and character — so your fragrance works with your body, not against it.",
     readTime: 4,
     publishedAt: "2026-07-03",
+    relatedArticleIds: ["how-to-layer-fragrances", "choosing-your-season-scent"],
+    recommendedArticleIds: ["how-to-layer-fragrances", "what-makes-a-signature-scent"],
     relatedFragranceIds: ["sauvage-inspired", "miss-dior-inspired"],
     content: [
       {
@@ -251,7 +258,10 @@ export const academyCatalogue: AcademyArticle[] = [
     excerpt:
       "A signature scent is a fragrance so aligned with your personality that people associate the smell with you. Here is how to find, test, and commit to one.",
     readTime: 5,
+    featured: true,
     publishedAt: "2026-07-03",
+    relatedArticleIds: ["guide-to-fragrance-families", "choosing-your-season-scent"],
+    recommendedArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained"],
     relatedFragranceIds: ["aventus-inspired", "delina-inspired"],
     content: [
       {
@@ -324,6 +334,8 @@ export const academyCatalogue: AcademyArticle[] = [
       "Heat amplifies projection. Cold mutes it. Humidity warps top notes. Learn how to choose fragrances that perform beautifully in each season rather than fighting the weather.",
     readTime: 4,
     publishedAt: "2026-07-03",
+    relatedArticleIds: ["how-to-wear-fragrance", "guide-to-fragrance-families"],
+    recommendedArticleIds: ["how-to-wear-fragrance", "what-makes-a-signature-scent"],
     relatedFragranceIds: [
       "bleu-de-chanel-inspired",
       "miss-dior-inspired",
@@ -401,6 +413,8 @@ export const academyCatalogue: AcademyArticle[] = [
       "Fragrance layering is the practice of combining two or more scents to create something that does not exist in a single bottle. It is an expressive, personal technique used by perfume enthusiasts worldwide.",
     readTime: 4,
     publishedAt: "2026-07-03",
+    relatedArticleIds: ["how-to-wear-fragrance", "what-makes-a-signature-scent"],
+    recommendedArticleIds: ["how-to-wear-fragrance", "choosing-your-season-scent"],
     relatedFragranceIds: ["sauvage-inspired", "miss-dior-inspired"],
     content: [
       {

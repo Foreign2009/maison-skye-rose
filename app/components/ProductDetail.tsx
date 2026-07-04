@@ -39,20 +39,29 @@ const COLLECTION_STYLES: Record<string, { pill: string; label: string }> = {
   Elite: { pill: "bg-[#f3f0fa] text-[#9b7ce0]", label: "Elite Collection" },
 };
 
-// ── Discover More knowledge cards (Fragrance Academy — Coming Soon) ───────────
-const DISCOVER_MORE = [
-  { title: "Fragrance Notes",    label: "Learn about fragrance notes"         },
-  { title: "Fragrance Families", label: "Learn about fragrance families"      },
-  { title: "Performance",        label: "Why fragrances perform differently"  },
-  { title: "Application",        label: "How to apply fragrance"              },
+// ── Discover More — static fallback (shown when Academy articles are not provided) ──
+const DISCOVER_MORE_FALLBACK = [
+  { key: "notes",    label: "Learn about fragrance notes"        },
+  { key: "families", label: "Learn about fragrance families"     },
+  { key: "perf",    label: "Why fragrances perform differently"  },
+  { key: "apply",   label: "How to apply fragrance"             },
 ];
+
+export interface DiscoverMoreArticle {
+  slug: string;
+  title: string;
+  category: string;
+  readTime: number;
+}
 
 // ─────────────────────────────────────────────────────────────────────────────
 
 export default function ProductDetail({
   knowledge,
+  discoverMoreArticles,
 }: {
   knowledge: FragranceKnowledge;
+  discoverMoreArticles?: DiscoverMoreArticle[];
 }) {
   const [selectedSize, setSelectedSize] =
     useState<"5ml" | "10ml" | "30ml">("10ml");
@@ -643,33 +652,70 @@ export default function ProductDetail({
         </div>
       </section>
 
-      {/* ── Discover More — Fragrance Academy placeholder cards ─────────────── */}
+      {/* ── Discover More — Fragrance Academy ───────────────────────────────── */}
       <section className="px-4 md:px-6 pb-8">
         <div className="mx-auto max-w-7xl">
           <div className="rounded-3xl bg-white p-6 md:p-10">
 
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between mb-6">
               <h2 className="text-2xl font-black text-[#4f4a52]">Discover More</h2>
-              <span className="rounded-full bg-[#f5f1eb] px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-zinc-400">
-                Fragrance Academy — Coming Soon
-              </span>
+              {discoverMoreArticles && discoverMoreArticles.length > 0 ? (
+                <span className="text-xs font-medium tracking-widest uppercase text-[#d89ca4]">
+                  Fragrance Academy
+                </span>
+              ) : (
+                <span className="rounded-full bg-[#f5f1eb] px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-zinc-400">
+                  Fragrance Academy — Coming Soon
+                </span>
+              )}
             </div>
 
-            <div className="mt-6 grid grid-cols-1 gap-3 md:grid-cols-2">
-              {DISCOVER_MORE.map((card) => (
-                <div
-                  key={card.title}
-                  className="flex cursor-default items-center justify-between rounded-2xl border border-[#ede8e1] bg-[#f9f7f4] px-5 py-4 transition-colors hover:border-[#d89ca4]/40"
-                >
-                  <span className="text-sm font-semibold text-[#4f4a52]">
-                    {card.label}
-                  </span>
-                  <span className="ml-4 shrink-0 text-sm font-bold text-[#d89ca4] opacity-30">
-                    →
-                  </span>
-                </div>
-              ))}
+            <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+              {discoverMoreArticles && discoverMoreArticles.length > 0
+                ? discoverMoreArticles.map((article) => (
+                    <Link
+                      key={article.slug}
+                      href={`/academy/${article.slug}`}
+                      className="flex items-start justify-between gap-4 rounded-2xl border border-[#ede8e1] bg-[#f9f7f4] px-5 py-4 transition-colors hover:border-[#d89ca4]/60 hover:bg-[#fdf6f7]"
+                    >
+                      <div className="min-w-0">
+                        <p className="text-[10px] font-semibold tracking-widest uppercase text-[#d89ca4] mb-0.5">
+                          {article.category}
+                        </p>
+                        <span className="text-sm font-semibold text-[#4f4a52]">
+                          {article.title}
+                        </span>
+                      </div>
+                      <span className="shrink-0 text-sm font-bold text-[#d89ca4] mt-0.5">
+                        →
+                      </span>
+                    </Link>
+                  ))
+                : DISCOVER_MORE_FALLBACK.map((card) => (
+                    <div
+                      key={card.key}
+                      className="flex cursor-default items-center justify-between rounded-2xl border border-[#ede8e1] bg-[#f9f7f4] px-5 py-4"
+                    >
+                      <span className="text-sm font-semibold text-[#4f4a52]">
+                        {card.label}
+                      </span>
+                      <span className="ml-4 shrink-0 text-sm font-bold text-[#d89ca4] opacity-30">
+                        →
+                      </span>
+                    </div>
+                  ))}
             </div>
+
+            {discoverMoreArticles && discoverMoreArticles.length > 0 && (
+              <div className="mt-5 text-right">
+                <Link
+                  href="/academy"
+                  className="text-sm font-medium text-[#d89ca4] hover:underline"
+                >
+                  Explore the Fragrance Academy →
+                </Link>
+              </div>
+            )}
 
           </div>
         </div>

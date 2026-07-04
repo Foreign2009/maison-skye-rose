@@ -11,7 +11,12 @@ export type AcademyContentBlock =
   | { type: "heading"; text: string }
   | { type: "tip"; text: string }
   | { type: "note-list"; notes: string[] }
-  | { type: "fragrance-spotlight"; fragranceId: string; caption: string };
+  | { type: "fragrance-spotlight"; fragranceId: string; caption: string }
+  | { type: "quote"; text: string; attribution?: string }
+  | { type: "warning"; text: string }
+  | { type: "comparison"; left: { label: string; text: string }; right: { label: string; text: string } }
+  | { type: "divider" }
+  | { type: "callout"; title?: string; body: string };
 
 export interface AcademyArticle {
   slug: string;
@@ -23,5 +28,8 @@ export interface AcademyArticle {
   readTime: number;
   content: AcademyContentBlock[];
   relatedFragranceIds: string[];
+  relatedArticleIds?: string[];
+  recommendedArticleIds?: string[];
+  featured?: boolean;
   publishedAt: string;
 }
