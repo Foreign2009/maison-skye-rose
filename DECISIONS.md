@@ -87,19 +87,25 @@ Each ADR records: what was decided, why, the consequences, and the current statu
 
 ---
 
-## ADR-006 — Payment Integration Postponed Until Customer Experience Is Mature
+## ADR-006 — Payment Automation Is Intentionally Deferred
 
-**Decision:** PayFast integration is built but intentionally kept in sandbox mode until the core customer experience (discovery, education, trust signals) is mature and validated. Live payments are not enabled until the commerce flow is complete and thoroughly tested.
+**Decision:** Payment automation (PayFast and any additional payment gateway) is intentionally deferred until the customer experience has matured. The launch strategy is:
 
-**Reason:** Enabling live payments before the customer experience is validated risks revenue loss (abandoned carts due to poor UX), refund requests (unclear product expectations), and trust damage (payment errors in an immature system). WhatsApp checkout provides a fully functional primary revenue path that requires no payment infrastructure.
+- **Primary checkout:** WhatsApp ordering — manual, conversational, relationship-first
+- **Future:** PayFast, additional payment gateways — only after the education, discovery, and trust layers are established
+
+**Reason:** Customers who do not understand a product will not trust paying for it automatically. Rushing to automate payment before educating customers about fragrance creates abandoned carts, refund requests, and trust damage. WhatsApp checkout is not a workaround — it is the right first channel. It allows the business to answer questions, build relationships, and understand customer needs before the payment experience is standardized.
+
+Payment automation should follow from a mature customer experience, not lead it.
 
 **Consequences:**
-- PayFast remains on sandbox URL until the launch checklist is complete
-- KI-01, KI-02, KI-03, KI-05, KI-06 remain open until a dedicated PayFast hardening sprint (EP 6.0)
-- WhatsApp is the authoritative and only live revenue path
-- The launch checklist in ROADMAP.md must be satisfied before switching PayFast to production
+- PayFast remains in sandbox mode — no real payments are processed
+- KI-01 through KI-06 (PayFast issues) are accepted known risks, deferred until EP 6.0
+- WhatsApp is the sole live revenue path and should be treated as a product feature
+- Payment automation work begins only after the Academy, AI, and MKC experience are stable
+- See ROADMAP EP 6.0 for the PayFast hardening plan
 
-**Status:** Active — see ROADMAP EP 6.0 for PayFast production hardening plan.
+**Status:** Active. Intentional deferral confirmed by Engineering Lead.
 
 ---
 
@@ -176,6 +182,29 @@ Each ADR records: what was decided, why, the consequences, and the current statu
 - This is an accepted business trade-off
 
 **Status:** Active — source: `CartContext.tsx` `wholesaleActive` derived value.
+
+---
+
+## ADR-013 — Customer Experience Before Automation
+
+**Decision:** Maison Skye & Rose prioritizes helping customers understand fragrances before automating purchases. Every engineering program should advance one or more of these principles:
+
+1. **Educate first** — The Academy, MKC, and product knowledge are more valuable than checkout speed
+2. **Build trust** — Customers trust what they understand; knowledge reduces uncertainty
+3. **Explain products** — MKC fields, Academy articles, and AI grounding exist to make fragrances legible to customers who have never smelled them
+4. **Reduce uncertainty** — A customer who is uncertain will not buy, no matter how smooth the payment flow
+5. **Automate later** — Payment automation, order management, and operational efficiency follow from a mature customer experience — they do not precede it
+
+**Reason:** Fragrances are experience goods — customers cannot try them before buying online. The only way to close that gap is through knowledge: fragrance families, note descriptions, occasion guidance, character profiles, and AI assistance. Building automated checkout before building knowledge infrastructure puts the cart before the horse.
+
+**Consequences:**
+- The Academy receives engineering priority as a first-class product
+- MKC continues expanding — more fragrances, richer fields, more consumers
+- AI features are grounded in structured MKC knowledge before they are deployed
+- Payment automation (ADR-006) is intentionally deferred
+- Every new feature must answer: does this help a customer understand or choose a fragrance?
+
+**Status:** Active — established by Engineering Lead directive, 2026-07-03.
 
 ---
 

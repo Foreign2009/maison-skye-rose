@@ -7,7 +7,7 @@ All notable engineering changes are documented here, grouped by Engineering Prog
 
 ---
 
-## EP4.5 — Governance Consolidation (2026-07-03)
+## GOVERNANCE-001 — Governance Consolidation (2026-07-03)
 
 Engineering infrastructure sprint. No application code changes.
 

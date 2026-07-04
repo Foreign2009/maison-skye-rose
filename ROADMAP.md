@@ -186,9 +186,9 @@ MKC established as the canonical fragrance model and integrated across all consu
 
 ---
 
-### Engineering Program 4.5 — Governance Consolidation (Current)
+### GOVERNANCE-001 — Governance Consolidation (Complete)
 
-Permanent engineering governance documents.
+Engineering infrastructure sprint. No application code changes.
 
 - PROJECT_STATUS.md (created)
 - REPOSITORY_STATUS.md (created)
@@ -202,19 +202,36 @@ Permanent engineering governance documents.
 
 ## Current
 
-### Engineering Program 5.0 — Maison Fragrance Academy
+### EP13 — Maison Fragrance Academy
+
+The Academy is a first-class product — the permanent knowledge platform for Maison Skye & Rose. It is not a blog or a supporting page. It is a structured educational platform that educates customers, builds trust, and grounds the AI in structured knowledge.
 
 **Sprint:** EP13-P1 — Academy Foundation
-**Status:** G1+G2+G3 planning complete. Awaiting G4 Engineering Lead approval.
+**Status:** G4 implementation in progress.
 
-**Planned scope:**
+**Initial scope (EP13-P1):**
 - `app/lib/academy/types.ts` — AcademyArticle, AcademyCategory, AcademyContentBlock
-- `app/lib/academy/catalogue.ts` — academyCatalogue (minimum 6 articles)
-- `app/academy/page.tsx` — hub page (SSG, grouped by category)
+- `app/lib/academy/catalogue.ts` — academyCatalogue (6 launch articles)
+- `app/academy/page.tsx` — hub page (SSG, articles grouped by category)
 - `app/academy/[slug]/page.tsx` — article pages (SSG, generateStaticParams, generateMetadata, JSON-LD Article schema)
 - `app/components/academy/` — AcademyArticleCard, ArticleContentRenderer, ArticleRelatedFragrances
 - Navbar: Academy link added
 - Footer: Academy link added to Explore column
+
+**Academy topics (long-term):**
+- Fragrance families (Floral, Woody, Oriental, Fresh, Chypre, Gourmand)
+- The note pyramid (Top / Heart / Base)
+- Projection and longevity
+- How to wear and apply fragrance
+- How to layer fragrances
+- Fragrance storage
+- Scent myths and common misconceptions
+- Seasonal fragrance guidance
+- Occasion guidance
+- Gift guides
+- Beginner's guide to perfume
+- Fragrance terminology
+- AI educational experiences
 
 ---
 

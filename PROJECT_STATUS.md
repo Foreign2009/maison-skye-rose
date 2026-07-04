@@ -8,18 +8,17 @@
 
 ## Current Engineering Program
 
-**Program:** EP4.5 — Governance Consolidation
-**Sprint:** EP4.5
-**Gate:** G1 (Implementation)
-**Objective:** Create permanent engineering governance documents. No customer-facing changes. No business logic changes.
+**Program:** EP13-P1 — Maison Fragrance Academy Foundation
+**Sprint:** EP13-P1
+**Gate:** G4 (Implementation)
+**Objective:** Build the Academy hub, article pages, data model, and navigation integration.
 
 ---
 
 ## Current Sprint
 
-**EP13-P1 — Academy Foundation (planning)**
-Gate G1+G2+G3 planning document produced and awaiting Engineering Lead approval.
-G4 implementation has not begun.
+**EP13-P1 — Academy Foundation**
+G1+G2+G3 planning approved by Engineering Lead. G4 implementation in progress.
 
 ---
 
@@ -67,6 +66,7 @@ Verify: `npm run build`
 | EP10 | — | Commerce Hardening | 2026-07-01 |
 | EP11 | — | Homepage & Vocabulary | 2026-07-01 |
 | EP12 | EP12-P1 through P4 | Maison Knowledge Catalogue — Consumer Experience | 2026-07-03 |
+| GOVERNANCE-001 | — | Governance Consolidation | 2026-07-03 |
 
 ---
 
@@ -143,10 +143,12 @@ Customer
 - `app/robots.ts` — robots.txt
 - Metadata base: `NEXT_PUBLIC_WEBSITE_URL`
 
-### Education (Planned)
-- Maison Fragrance Academy: EP13-P1 G1+G2+G3 planning complete
-- Status: Awaiting G4 Engineering Lead approval
-- Planned: Academy hub, 6 articles, Navbar + Footer links
+### Education (In Progress)
+The Academy is a first-class product — the long-term knowledge platform for Maison Skye & Rose.
+- Maison Fragrance Academy: EP13-P1 G4 implementation in progress
+- Scope: Academy hub, 6+ articles, Navbar + Footer links, MKC-powered related fragrances
+- Topics: fragrance families, note pyramid, wear & application, scent science, occasions & style, beginner guides
+- Long-term: fragrance terminology, storage, layering, seasonal guidance, gift guides, AI educational experiences
 
 ---
 
@@ -231,8 +233,8 @@ Customer
 ## Open Engineering Work
 
 ### EP13-P1 — Maison Fragrance Academy
-**Status:** G1+G2+G3 planning complete. Awaiting G4 approval.
-**Planned scope:** `app/lib/academy/` data model, academy hub page, 6 article pages, Navbar Academy link, Footer Academy link.
+**Status:** G4 implementation in progress.
+**Scope:** `app/lib/academy/` data model, Academy hub page, article pages, Navbar Academy link, Footer Academy link, MKC-powered related fragrances section.
 
 ---
 

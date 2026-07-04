@@ -390,11 +390,42 @@ JSON-LD Product schema:
 
 ---
 
-## Future Academy
+## Maison Knowledge Catalogue — Growth Principle
 
-The Maison Fragrance Academy (EP13) is planned but not yet implemented. This section documents the approved architecture.
+The MKC is designed for continuous growth. The catalogue is not fixed.
 
-### Planned Structure
+**Architectural guarantee:** Adding any number of fragrances to `mkcCatalogue` requires changes only to `app/lib/mkc/catalogue.ts`. No routes, adapters, components, or Intelligence Layer code changes. `generateStaticParams` picks up new slugs automatically. The sitemap picks up new products automatically.
+
+**Current scale:** 93 fragrances.
+**Design ceiling:** Hundreds or thousands of entries — the architecture is unchanged at any scale. The Intelligence Layer scores in O(n) time; MkC lookups use Map structures for O(1) access.
+
+**Growth pattern:** New supplier releases are added to `mkcCatalogue` as a new `FragranceKnowledge` object. All downstream consumers — product pages, shop, quiz, academy cross-links, analytics, SEO — automatically reflect the new entry on the next build.
+
+**Future consumers of MKC:**
+
+| Consumer | Status |
+|---|---|
+| Product Detail Pages | Live |
+| Shop page | Live |
+| Recommendation Engine | Live |
+| Analytics | Live |
+| SEO (sitemap, metadata, JSON-LD) | Live |
+| Fragrance Quick View | Live |
+| Academy — related fragrances | In progress (EP13) |
+| Search (structured + semantic) | Future |
+| AI Assistant (Ask Maison AI) | Future |
+| Mobile application | Future |
+| Future CMS / editorial layer | Future |
+
+No fragrance knowledge should exist outside MKC. If a new consumer needs fragrance data, the answer is always: add a field to `FragranceKnowledge` and project it through an adapter.
+
+---
+
+## Maison Fragrance Academy
+
+The Academy is a first-class product — the permanent knowledge platform for Maison Skye & Rose. It educates customers, builds trust, reduces purchase uncertainty, and grounds the AI in structured knowledge. It is not a blog and not a supporting page.
+
+### Structure
 
 ```
 app/
@@ -411,23 +442,46 @@ app/
     └── catalogue.ts          — academyCatalogue (static TypeScript, mirrors MKC pattern)
 ```
 
-### Academy Data Model
+### Data Model
 
 ```typescript
 AcademyArticle {
   slug, title, subtitle, category, excerpt,
-  coverImage, readTime, content, relatedFragranceIds, publishedAt
+  coverImage?, readTime, content, relatedFragranceIds, publishedAt
 }
 
 AcademyCategory:
-  "Fragrance Families" | "Note Pyramids" | "How to Wear" |
-  "Choosing Your Scent" | "Seasons & Occasions" | "The Craft"
+  "Fragrance Families" | "The Note Pyramid" | "Wear & Application" |
+  "Scent Science" | "Occasions & Style" | "Fragrance Fundamentals"
 
 AcademyContentBlock:
-  { type: "paragraph" | "heading" | "tip" | "note-list" | "fragrance-spotlight", ... }
+  | { type: "paragraph"; text: string }
+  | { type: "heading"; text: string }
+  | { type: "tip"; text: string }
+  | { type: "note-list"; notes: string[] }
+  | { type: "fragrance-spotlight"; fragranceId: string; caption: string }
 ```
 
-Academy articles link to MKC via `relatedFragranceIds: string[]` — the `ArticleRelatedFragrances` component resolves these to product cards.
+### Article Topics (by category)
+
+| Category | Topics |
+|---|---|
+| The Note Pyramid | Top/Heart/Base explained, how notes evolve on skin |
+| Fragrance Families | Floral, Woody, Oriental/Amber, Fresh, Chypre, Gourmand |
+| Wear & Application | Pulse points, how much to apply, layering, storage |
+| Scent Science | Projection, longevity, sillage, skin chemistry |
+| Occasions & Style | Seasonal guidance, office, evening, signature scent |
+| Fragrance Fundamentals | Beginner's guide, terminology, myths, gift guides |
+
+### MKC Integration
+
+Academy articles link to MKC via `relatedFragranceIds: string[]`. The `ArticleRelatedFragrances` component resolves these IDs against `mkcCatalogue` and renders product cards — the Academy drives discovery and commerce.
+
+### Growth Pattern
+
+Academy articles are static TypeScript objects in `academyCatalogue`. Adding a new article requires:
+1. Add a new `AcademyArticle` object to `app/lib/academy/catalogue.ts`
+2. The hub page, sitemap, and Article JSON-LD automatically reflect the new article on the next build
 
 ---
 
@@ -437,7 +491,7 @@ When Ask Maison AI is implemented (reserved placeholder on ProductDetail), the d
 
 **AI must consume structured knowledge from MKC — it must never invent fragrance information.**
 
-The `FragranceKnowledge.description`, `notes`, `mood`, `occasions`, `recommendedFor`, and `signatureStyle` fields provide the grounding data. The AI system will read from these fields and compose responses — not generate content about fragrances from its training data.
+The `FragranceKnowledge.description`, `notes`, `mood`, `occasions`, `recommendedFor`, and `signatureStyle` fields provide the grounding data. The AI system will read from these fields and compose responses — not generate content from training data alone. The Academy provides additional structured educational grounding for AI-generated guidance.
 
 ---
 
