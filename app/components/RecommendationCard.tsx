@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 type RecommendationCardProps = {
   title: string;
 
@@ -20,6 +22,8 @@ type RecommendationCardProps = {
   versatility?: number;
 
   reasons: string[];
+
+  slug?: string;
 };
 
 export default function RecommendationCard({
@@ -33,6 +37,7 @@ export default function RecommendationCard({
   intensity = 4,
   versatility = 5,
   reasons,
+  slug,
 }: RecommendationCardProps) {
 
   return (
@@ -53,7 +58,7 @@ export default function RecommendationCard({
 
         <p className="text-[10px] uppercase tracking-[0.35em] text-[#d89ca4]">
 
-          AI Recommendation
+          Curated Match
 
         </p>
 
@@ -196,6 +201,16 @@ export default function RecommendationCard({
         </p>
 
       </div>
+
+      {/* CTA — navigate to fragrance PDP */}
+      {slug && (
+        <Link
+          href={`/product/${slug}`}
+          className="mt-5 flex items-center justify-center gap-2 rounded-full bg-[#faf7f5] px-6 py-3 text-sm font-bold text-[#4f4a52] transition hover:bg-[#ede8e1]"
+        >
+          View Fragrance <span aria-hidden="true">→</span>
+        </Link>
+      )}
 
     </div>
 

@@ -1,0 +1,193 @@
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import Link from "next/link";
+import Navbar from "../../components/Navbar";
+import Footer from "../../components/Footer";
+import DiscoverCollectionGrid from "../../components/DiscoverCollectionGrid";
+import { COLLECTION_SPECS, getCollection } from "../../lib/discovery";
+import { toDisplayFragrance } from "../../lib/mkc/displayAdapter";
+
+interface PageProps {
+  params: Promise<{ id: string }>;
+}
+
+export function generateStaticParams() {
+  return COLLECTION_SPECS.map((s) => ({ id: s.id }));
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { id } = await params;
+  const spec = COLLECTION_SPECS.find((s) => s.id === id);
+  if (!spec) return {};
+
+  const baseUrl = process.env.NEXT_PUBLIC_WEBSITE_URL ?? "";
+
+  return {
+    title: `${spec.name} | Maison Skye & Rose`,
+    description: spec.description,
+    alternates: { canonical: `${baseUrl}/discover/${id}` },
+    openGraph: {
+      title: `${spec.name} | Maison Skye & Rose`,
+      description: spec.description,
+      url: `${baseUrl}/discover/${id}`,
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${spec.name} | Maison Skye & Rose`,
+      description: spec.description,
+    },
+  };
+}
+
+export default async function DiscoverCollectionPage({ params }: PageProps) {
+  const { id } = await params;
+  const spec = COLLECTION_SPECS.find((s) => s.id === id);
+  if (!spec) notFound();
+
+  const baseUrl = process.env.NEXT_PUBLIC_WEBSITE_URL ?? "";
+  const products = getCollection(spec.id).map(toDisplayFragrance);
+
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home",     item: `${baseUrl}/` },
+      { "@type": "ListItem", position: 2, name: "Discover", item: `${baseUrl}/discover` },
+      { "@type": "ListItem", position: 3, name: spec.name,  item: `${baseUrl}/discover/${spec.id}` },
+    ],
+  };
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+
+      <main className="min-h-screen bg-[#faf7f5]">
+        <Navbar />
+
+        {/* ── Breadcrumbs ──────────────────────────────────────────────────── */}
+        <nav
+          aria-label="Breadcrumb"
+          className="pt-32 md:pt-40 pb-4 px-4"
+        >
+          <ol className="mx-auto max-w-7xl flex items-center gap-2 text-xs text-[#7b7480]">
+            <li>
+              <Link href="/" className="hover:text-[#d89ca4] transition-colors">
+                Home
+              </Link>
+            </li>
+            <li aria-hidden="true">/</li>
+            <li>
+              <Link href="/discover" className="hover:text-[#d89ca4] transition-colors">
+                Discover
+              </Link>
+            </li>
+            <li aria-hidden="true">/</li>
+            <li className="font-semibold text-[#4f4a52]">{spec.name}</li>
+          </ol>
+        </nav>
+
+        {/* ── Hero ──────────────────────────────────────────────────────────── */}
+        <section className="px-4 pb-12 md:pb-20">
+          <div className="mx-auto max-w-7xl">
+            <div
+              className="rounded-[32px] p-8 md:p-16"
+              style={{ backgroundColor: `${spec.accentColor}10` }}
+            >
+              <div className="max-w-2xl">
+                <div className="flex items-center gap-4 mb-6">
+                  <span
+                    className="flex h-16 w-16 items-center justify-center rounded-2xl text-3xl shadow-sm"
+                    style={{ backgroundColor: `${spec.accentColor}20` }}
+                  >
+                    {spec.icon}
+                  </span>
+                  {spec.featured && (
+                    <span
+                      className="rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-[0.2em]"
+                      style={{
+                        backgroundColor: `${spec.accentColor}20`,
+                        color: spec.accentColor,
+                      }}
+                    >
+                      Featured Collection
+                    </span>
+                  )}
+                </div>
+
+                <h1 className="text-4xl md:text-6xl font-black tracking-[-0.05em] text-[#4f4a52]">
+                  {spec.name}
+                </h1>
+
+                <p className="mt-4 text-base md:text-lg text-[#7b7480] leading-7 max-w-xl">
+                  {spec.description}
+                </p>
+
+                <div className="mt-6 flex flex-wrap gap-2">
+                  {spec.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="rounded-full px-3 py-1 text-xs font-semibold"
+                      style={{
+                        backgroundColor: `${spec.accentColor}15`,
+                        color: spec.accentColor,
+                      }}
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+
+                <p className="mt-6 text-sm text-[#7b7480]">
+                  {products.length} fragrances in this collection
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ── Product Grid ──────────────────────────────────────────────────── */}
+        <section className="px-4 pb-16 md:pb-24">
+          <div className="mx-auto max-w-7xl">
+            <DiscoverCollectionGrid
+              fragrances={products}
+              source="discover-collection"
+              columns={4}
+            />
+          </div>
+        </section>
+
+        {/* ── CTA ───────────────────────────────────────────────────────────── */}
+        <section className="bg-white py-16 px-4 text-center">
+          <div className="mx-auto max-w-xl">
+            <p className="text-[11px] uppercase tracking-[0.4em] text-[#d89ca4]">
+              Not What You&apos;re Looking For?
+            </p>
+            <h2 className="mt-3 text-2xl md:text-3xl font-black text-[#4f4a52]">
+              Explore More Collections
+            </h2>
+            <div className="mt-6 flex flex-wrap gap-3 justify-center">
+              <Link
+                href="/discover"
+                className="rounded-full border border-[#ede8e1] bg-white px-6 py-3 text-sm font-bold uppercase tracking-widest text-[#4f4a52] transition hover:border-[#d89ca4]"
+              >
+                All Collections
+              </Link>
+              <Link
+                href="/shop"
+                className="rounded-full bg-black px-6 py-3 text-sm font-bold uppercase tracking-widest text-white transition hover:bg-zinc-800"
+              >
+                Browse All Fragrances
+              </Link>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <Footer />
+    </>
+  );
+}

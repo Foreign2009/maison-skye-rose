@@ -39,6 +39,17 @@ export const catalogueMaps = {
   ),
 };
 
+// ── Seasonal intelligence ─────────────────────────────────────────────────────
+// Returns the current Southern Hemisphere season (South Africa).
+
+export function getCurrentSeason(): "Spring" | "Summer" | "Autumn" | "Winter" {
+  const month = new Date().getMonth() + 1; // 1–12
+  if (month >= 3 && month <= 5) return "Autumn";
+  if (month >= 6 && month <= 8) return "Winter";
+  if (month >= 9 && month <= 11) return "Spring";
+  return "Summer"; // December, January, February
+}
+
 // ── Engine exports ────────────────────────────────────────────────────────────
 
 export { getSimilarFragrances }                            from "./similarityEngine";

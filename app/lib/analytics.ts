@@ -122,7 +122,14 @@ export type AnalyticsSource =
   | "shop-mode-2"
   | "quiz"
   | "pdp-recommendation"
-  | "recently-viewed";
+  | "recently-viewed"
+  | "homepage-trending"
+  | "homepage-hidden-gems"
+  | "homepage-seasonal"
+  | "homepage-signature"
+  | "discover-collection"
+  | "discover-seasonal"
+  | "discover-hidden-gems";
 
 export type ProductPayload = {
   title: string;

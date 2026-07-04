@@ -1,19 +1,24 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Navbar from "../components/Navbar";
 import ProductCard from "../components/ProductCard";
 import QuickAddModal from "../components/QuickAddModal";
-
-import { fragrances } from "../data/fragrances";
-import { useFavorites } from "../context/FavoritesContext";
+import { mkcCatalogue } from "../lib/mkc/catalogue";
+import { toDisplayFragrance } from "../lib/mkc/displayAdapter";
 
 export default function NewArrivalsPage() {
-  const { favorites, addToFavorites, removeFromFavorites } = useFavorites();
-  const [selectedFragrance, setSelectedFragrance] = useState<any>(null);
+  const [selectedFragrance, setSelectedFragrance] = useState<ReturnType<typeof toDisplayFragrance> | null>(null);
   const [quickOpen, setQuickOpen] = useState(false);
 
-  const products = fragrances.filter((item) => item.newArrival);
+  const products = useMemo(
+    () =>
+      mkcCatalogue
+        .filter((k) => k.newArrival)
+        .sort((a, b) => b.popularity - a.popularity)
+        .map(toDisplayFragrance),
+    []
+  );
 
   return (
     <main className="min-h-screen bg-[#f5f1eb]">
@@ -26,7 +31,7 @@ export default function NewArrivalsPage() {
               New Arrivals
             </h1>
             <p className="mt-6 text-zinc-600 max-w-2xl mx-auto">
-              Explore the newest additions to Maison Skye & Rose — modern fragrances inspired by luxury lifestyle.
+              Explore the newest additions to Maison Skye &amp; Rose — modern fragrances inspired by luxury lifestyle.
             </p>
           </div>
 
@@ -41,11 +46,15 @@ export default function NewArrivalsPage() {
               </div>
             ) : (
               <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-                {products.map((fragrance) => (
+                {products.map((fragrance, i) => (
                   <ProductCard
                     key={fragrance.title}
                     {...fragrance}
-                    onQuickAdd={() => { setSelectedFragrance(fragrance); setQuickOpen(true); }}
+                    rank={i + 1}
+                    onQuickAdd={() => {
+                      setSelectedFragrance(fragrance);
+                      setQuickOpen(true);
+                    }}
                   />
                 ))}
               </div>
@@ -66,4 +75,3 @@ export default function NewArrivalsPage() {
     </main>
   );
 }
-

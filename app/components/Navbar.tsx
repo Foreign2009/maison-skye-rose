@@ -46,14 +46,15 @@ export default function Navbar() {
 
   // Change 5 — Removed manual "HOME" link; Logo serves as Home button
   const navLinks = [
-    { href: "/shop", label: "Shop" },
+    { href: "/shop",        label: "Shop" },
+    { href: "/discover",    label: "Discover" },
     { href: "/new-arrivals", label: "New Arrivals" },
-    { href: "/academy", label: "Academy" },
-    { href: "/quiz", label: "Scent Finder", icon: true },
-    { href: "/wholesale", label: "Wholesale" },
+    { href: "/academy",     label: "Academy" },
+    { href: "/quiz",        label: "Scent Finder", icon: true },
+    { href: "/wholesale",   label: "Wholesale" },
   ];
 
-  // Destructured link allocations to accurately split evenly across the logo
+  // 3 left / 3 right split around the centred logo
   const leftLinks = navLinks.slice(0, 3);
   const rightLinks = navLinks.slice(3);
 

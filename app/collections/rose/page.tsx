@@ -1,33 +1,41 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import Navbar from "../../components/Navbar";
 import ProductCard from "../../components/ProductCard";
 import QuickAddModal from "../../components/QuickAddModal";
 import FloatingWhatsApp from "../../components/FloatingWhatsApp";
-
 import SearchBar from "../../components/SearchBar";
 import Footer from "../../components/Footer";
-import { fragrances } from "../../data/fragrances";
+import { mkcCatalogue } from "../../lib/mkc/catalogue";
+import { toDisplayFragrance } from "../../lib/mkc/displayAdapter";
 
 export default function RoseCollectionPage() {
   const [search, setSearch] = useState("");
-  const [selectedFragrance, setSelectedFragrance] = useState<any>(null);
+  const [selectedFragrance, setSelectedFragrance] = useState<ReturnType<typeof toDisplayFragrance> | null>(null);
   const [quickOpen, setQuickOpen] = useState(false);
-  
 
-  // Advanced search logic consistent with the main Shop page
-  const products = fragrances.filter((item) => {
-    if (item.collection !== "Rose") return false;
-
-    const searchTerm = search.toLowerCase();
-    const matchesSearch =
-      item.title.toLowerCase().includes(searchTerm) ||
-      item.subtitle?.toLowerCase().includes(searchTerm) ||
-      item.notes?.some((note: string) => note.toLowerCase().includes(searchTerm));
-
-    return matchesSearch;
-  });
+  const products = useMemo(() => {
+    const term = search.toLowerCase();
+    return mkcCatalogue
+      .filter((k) => {
+        if (k.collection !== "Rose") return false;
+        if (!term) return true;
+        return (
+          k.name.toLowerCase().includes(term) ||
+          (k.subtitle ?? "").toLowerCase().includes(term) ||
+          [...k.notes.top, ...k.notes.heart, ...k.notes.base].some((n) =>
+            n.toLowerCase().includes(term)
+          )
+        );
+      })
+      .sort((a, b) => {
+        if (a.bestSeller && !b.bestSeller) return -1;
+        if (!a.bestSeller && b.bestSeller) return 1;
+        return b.popularity - a.popularity;
+      })
+      .map(toDisplayFragrance);
+  }, [search]);
 
   return (
     <>
@@ -46,7 +54,7 @@ export default function RoseCollectionPage() {
           </h1>
 
           <p className="mt-8 max-w-2xl text-lg leading-9 text-zinc-600">
-            Timeless feminine luxury fragrances inspired by grace, 
+            Timeless feminine luxury fragrances inspired by grace,
             romance, beauty and soft sophistication.
           </p>
 
@@ -56,6 +64,9 @@ export default function RoseCollectionPage() {
               onChange={setSearch}
               placeholder="Search by name, note (e.g. vanilla, citrus)..."
             />
+            <p className="mt-4 text-sm text-zinc-500">
+              {products.length} fragrances available
+            </p>
           </div>
 
           <div className="mt-20 grid gap-8 md:grid-cols-2 xl:grid-cols-3">
@@ -64,13 +75,19 @@ export default function RoseCollectionPage() {
                 <ProductCard
                   key={fragrance.title}
                   {...fragrance}
-                  onQuickAdd={() => { setSelectedFragrance(fragrance); setQuickOpen(true); }}
+                  onQuickAdd={() => {
+                    setSelectedFragrance(fragrance);
+                    setQuickOpen(true);
+                  }}
                 />
               ))
             ) : (
               <div className="col-span-full py-20 text-center text-zinc-500">
-                <p>No fragrances found matching "{search}".</p>
-                <button onClick={() => setSearch("")} className="mt-4 text-[#d89ca4] underline font-bold uppercase tracking-widest">
+                <p>No fragrances found matching &ldquo;{search}&rdquo;.</p>
+                <button
+                  onClick={() => setSearch("")}
+                  className="mt-4 text-[#d89ca4] underline font-bold uppercase tracking-widest"
+                >
                   Clear search
                 </button>
               </div>
@@ -95,4 +112,3 @@ export default function RoseCollectionPage() {
     </>
   );
 }
-

@@ -27,23 +27,40 @@ function deriveSimilarityReasons(
   result: SimilarityResult
 ): string[] {
   const reasons: string[] = [];
-  const f = result.fragrance;
+  const { breakdown, fragrance: f } = result;
 
-  const sharedFamily = source.family.find((fam) => f.family.includes(fam));
-  if (sharedFamily) reasons.push(`Shares ${sharedFamily.toLowerCase()} character`);
-
-  if (source.scentCharacter === f.scentCharacter) {
-    reasons.push("Matching scent character");
+  if (breakdown.family > 0) {
+    const sharedFamily = source.family.find((fam) => f.family.includes(fam));
+    reasons.push(
+      sharedFamily
+        ? `Shares the same ${sharedFamily.toLowerCase()} character`
+        : "Belongs to a similar fragrance family"
+    );
   }
-
-  if (f.bestSeller) reasons.push("One of our most loved fragrances");
-
-  if (source.season === f.season) {
-    if (reasons.length < 2) reasons.push(`Ideal for ${f.season.toLowerCase()} wear`);
+  if (breakdown.character > 0) {
+    reasons.push("Matching overall scent personality");
+  }
+  if (breakdown.occasion > 0) {
+    reasons.push("Perfect for the same moments and occasions");
+  }
+  if (breakdown.season > 0) {
+    reasons.push(`Both shine in ${f.season.toLowerCase()} conditions`);
+  }
+  if (breakdown.notes > 0) {
+    reasons.push("Shares similar fragrance notes");
+  }
+  if (breakdown.projection > 0) {
+    reasons.push("Comparable strength and presence");
+  }
+  if (breakdown.collection > 0) {
+    reasons.push("From the same Maison collection");
+  }
+  if (f.bestSeller) {
+    reasons.push("One of our most loved fragrances");
   }
 
   while (reasons.length < 2) {
-    reasons.push("Carefully selected to complement your choice");
+    reasons.push("Thoughtfully selected to complement your choice");
   }
 
   return reasons.slice(0, 3);
@@ -709,17 +726,18 @@ export default function ProductDetail({
         </div>
       </section>
 
-      {/* ── Related Fragrances — powered by Discovery similarity engine ──── */}
+      {/* ── Why You'll Love It — powered by Discovery similarity engine ──── */}
       {(similarFragrances ?? []).length > 0 && (
         <section className="px-4 md:px-6 pb-8">
           <div className="mx-auto max-w-7xl">
             <h2 className="mb-8 text-2xl md:text-3xl font-black text-[#4f4a52]">
-              Related Fragrances
+              Why You&apos;ll Love It
             </h2>
             <div className="grid gap-6 lg:grid-cols-2">
               {(similarFragrances ?? []).map((result) => (
                 <RecommendationCard
                   key={result.fragrance.name}
+                  slug={result.fragrance.slug}
                   title={result.fragrance.name}
                   profile={result.fragrance.profile}
                   mood={result.fragrance.mood}
@@ -741,8 +759,7 @@ export default function ProductDetail({
         </section>
       )}
 
-      {/* ── You May Also Like ────────────────────────────────────────────────── */}
-      {/* TODO: Replace collection matching with MKC similarity scoring.         */}
+      {/* ── You May Also Like — same collection, best-seller ranked ──────────── */}
       <section className="px-4 md:px-6 pb-8">
         <div className="mx-auto max-w-7xl">
           <h2 className="mb-8 text-2xl md:text-3xl font-black text-[#4f4a52]">
@@ -751,6 +768,11 @@ export default function ProductDetail({
           <div className="grid grid-cols-2 gap-3 md:gap-6 md:grid-cols-4">
             {mkcCatalogue
               .filter((k) => k.collection === knowledge.collection && k.id !== knowledge.id)
+              .sort((a, b) => {
+                if (a.bestSeller && !b.bestSeller) return -1;
+                if (!a.bestSeller && b.bestSeller) return 1;
+                return b.popularity - a.popularity;
+              })
               .slice(0, 4)
               .map((item) => (
                 <Link

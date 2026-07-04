@@ -1,18 +1,27 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Navbar from "../../components/Navbar";
 import ProductCard from "../../components/ProductCard";
 import QuickAddModal from "../../components/QuickAddModal";
-
-import { fragrances } from "../../data/fragrances";
+import { mkcCatalogue } from "../../lib/mkc/catalogue";
+import { toDisplayFragrance } from "../../lib/mkc/displayAdapter";
 
 export default function EliteCollectionPage() {
-  const [selectedFragrance, setSelectedFragrance] = useState<any>(null);
+  const [selectedFragrance, setSelectedFragrance] = useState<ReturnType<typeof toDisplayFragrance> | null>(null);
   const [quickOpen, setQuickOpen] = useState(false);
 
-  const products = fragrances.filter(
-    (item) => item.collection === "Elite"
+  const products = useMemo(
+    () =>
+      mkcCatalogue
+        .filter((k) => k.collection === "Elite")
+        .sort((a, b) => {
+          if (a.bestSeller && !b.bestSeller) return -1;
+          if (!a.bestSeller && b.bestSeller) return 1;
+          return b.popularity - a.popularity;
+        })
+        .map(toDisplayFragrance),
+    []
   );
 
   return (
@@ -31,7 +40,7 @@ export default function EliteCollectionPage() {
         </h1>
 
         <p className="mt-8 max-w-2xl text-lg leading-9 text-zinc-600">
-          Exclusive niche fragrances inspired by the world's
+          Exclusive niche fragrances inspired by the world&apos;s
           most sought-after luxury perfume houses.
         </p>
 
@@ -40,7 +49,10 @@ export default function EliteCollectionPage() {
             <ProductCard
               key={fragrance.title}
               {...fragrance}
-              onQuickAdd={() => { setSelectedFragrance(fragrance); setQuickOpen(true); }}
+              onQuickAdd={() => {
+                setSelectedFragrance(fragrance);
+                setQuickOpen(true);
+              }}
             />
           ))}
         </div>
@@ -58,4 +70,3 @@ export default function EliteCollectionPage() {
     </main>
   );
 }
-
