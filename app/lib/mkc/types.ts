@@ -55,6 +55,12 @@ export type FragranceKnowledge = {
   subtitle?: string;
   description?: string;
 
+  // ── Academy integration ───────────────────────────────────────────────────────
+  academyArticleIds?: string[];  // Explicit Academy article slugs; overrides scoring engine
+  academyCategories?: string[];  // Academy category slugs relevant to this fragrance
+  educationTags?: string[];      // Tags shared with Academy Registry for cross-referencing
+  learningPath?: string[];       // Ordered article slugs for a guided learning experience
+
   // ── Intelligence ──────────────────────────────────────────────────────────────
   sweetness: number;
   freshness: number;

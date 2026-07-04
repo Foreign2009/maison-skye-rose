@@ -5,8 +5,7 @@ import Footer from "../../components/Footer";
 import ProductDetail from "../../components/ProductDetail";
 import { mkcCatalogue } from "../../lib/mkc/catalogue";
 import type { FragranceKnowledge } from "../../lib/mkc/types";
-import { getDiscoverMoreSlugs } from "../../lib/academy/discoverMore";
-import { academyCatalogue } from "../../lib/academy/catalogue";
+import { recommendAcademyArticles } from "../../lib/academy/recommendAcademyArticles";
 
 interface ProductPageProps {
   params: Promise<{
@@ -116,18 +115,12 @@ export default async function ProductPage({
     })),
   };
 
-  const discoverMoreArticles = getDiscoverMoreSlugs(knowledge)
-    .map((slug) => {
-      const article = academyCatalogue.find((a) => a.slug === slug);
-      if (!article) return null;
-      return {
-        slug: article.slug,
-        title: article.title,
-        category: article.category,
-        readTime: article.readTime,
-      };
-    })
-    .filter((a): a is NonNullable<typeof a> => a !== null);
+  const discoverMoreArticles = recommendAcademyArticles(knowledge).map((article) => ({
+    slug: article.slug,
+    title: article.title,
+    category: article.category,
+    readTime: article.readTime,
+  }));
 
   return (
     <>
