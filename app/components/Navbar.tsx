@@ -48,13 +48,14 @@ export default function Navbar() {
   const navLinks = [
     { href: "/shop", label: "Shop" },
     { href: "/new-arrivals", label: "New Arrivals" },
+    { href: "/academy", label: "Academy" },
     { href: "/quiz", label: "Scent Finder", icon: true },
     { href: "/wholesale", label: "Wholesale" },
   ];
 
   // Destructured link allocations to accurately split evenly across the logo
-  const leftLinks = navLinks.slice(0, 2);
-  const rightLinks = navLinks.slice(2);
+  const leftLinks = navLinks.slice(0, 3);
+  const rightLinks = navLinks.slice(3);
 
   return (
     <>

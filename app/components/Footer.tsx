@@ -51,6 +51,11 @@ export default function Footer() {
             </h4>
             <ul className="mt-4 space-y-2 text-zinc-400 text-sm">
               <li>
+                <Link href="/academy" className="transition duration-200 hover:text-white">
+                  Fragrance Academy
+                </Link>
+              </li>
+              <li>
                 <Link href="/quiz" className="transition duration-200 hover:text-white">
                   Fragrance Quiz
                 </Link>
