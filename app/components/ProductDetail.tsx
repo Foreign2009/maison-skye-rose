@@ -10,12 +10,9 @@ import Link from "next/link";
 import { brand } from "../data/brand";
 import RecommendationCard from "./RecommendationCard";
 import { mkcCatalogue } from "../lib/mkc/catalogue";
-import { toRecommendationFragrance } from "../lib/mkc/recommendationAdapter";
 import { generateWhyYoullLikeIt } from "../lib/mkc/merchandising";
 import type { FragranceKnowledge } from "../lib/mkc/types";
-import { recommendFragrances } from "../lib/recommendFragrances";
-import { generateReasons } from "../lib/explainability";
-import type { Fragrance } from "../data/types";
+import type { SimilarityResult } from "../lib/discovery/types";
 import {
   trackProductView,
   trackAddToCart,
@@ -23,14 +20,34 @@ import {
   trackCartOpened,
 } from "../lib/analytics";
 
-// ── Module-level catalogue maps ───────────────────────────────────────────────
-const adaptedCatalogue = mkcCatalogue.map(toRecommendationFragrance);
-const adaptedByTitle = new Map<string, Fragrance>(
-  adaptedCatalogue.map((f) => [f.name, f])
-);
-const mkcByName = new Map<string, FragranceKnowledge>(
-  mkcCatalogue.map((k) => [k.name, k])
-);
+// ── Similarity reasons helper ─────────────────────────────────────────────────
+
+function deriveSimilarityReasons(
+  source: FragranceKnowledge,
+  result: SimilarityResult
+): string[] {
+  const reasons: string[] = [];
+  const f = result.fragrance;
+
+  const sharedFamily = source.family.find((fam) => f.family.includes(fam));
+  if (sharedFamily) reasons.push(`Shares ${sharedFamily.toLowerCase()} character`);
+
+  if (source.scentCharacter === f.scentCharacter) {
+    reasons.push("Matching scent character");
+  }
+
+  if (f.bestSeller) reasons.push("One of our most loved fragrances");
+
+  if (source.season === f.season) {
+    if (reasons.length < 2) reasons.push(`Ideal for ${f.season.toLowerCase()} wear`);
+  }
+
+  while (reasons.length < 2) {
+    reasons.push("Carefully selected to complement your choice");
+  }
+
+  return reasons.slice(0, 3);
+}
 
 // ── Collection badge styles ───────────────────────────────────────────────────
 const COLLECTION_STYLES: Record<string, { pill: string; label: string }> = {
@@ -59,9 +76,11 @@ export interface DiscoverMoreArticle {
 export default function ProductDetail({
   knowledge,
   discoverMoreArticles,
+  similarFragrances,
 }: {
   knowledge: FragranceKnowledge;
   discoverMoreArticles?: DiscoverMoreArticle[];
+  similarFragrances?: SimilarityResult[];
 }) {
   const [selectedSize, setSelectedSize] =
     useState<"5ml" | "10ml" | "30ml">("10ml");
@@ -181,37 +200,6 @@ export default function ProductDetail({
   );
   const collStyle = COLLECTION_STYLES[knowledge.collection] ?? COLLECTION_STYLES.Skye;
 
-  // ── MKC-powered recommendations ───────────────────────────────────────────
-
-  const recommendations = useMemo(() => {
-    const adaptedCurrent = adaptedByTitle.get(knowledge.name);
-    if (!adaptedCurrent || adaptedCurrent.family.length === 0) return [];
-
-    const implicitIntent = {
-      gender: adaptedCurrent.gender,
-      family: adaptedCurrent.family[0] ?? "",
-    };
-
-    const results = recommendFragrances(adaptedCatalogue, implicitIntent);
-    const seen = new Set<string>();
-    const candidates: Array<{ rec: FragranceKnowledge; adapted: Fragrance; reasons: string[] }> = [];
-
-    for (const f of [
-      results.bestMatch,
-      ...results.similarMatches,
-      results.luxuryUpgrade,
-      results.hiddenGem,
-    ]) {
-      if (!f || f.name === knowledge.name || seen.has(f.name)) continue;
-      const rec = mkcByName.get(f.name);
-      if (!rec) continue;
-      seen.add(f.name);
-      candidates.push({ rec, adapted: f, reasons: generateReasons(implicitIntent, f).reasons });
-      if (candidates.length === 3) break;
-    }
-
-    return candidates;
-  }, [knowledge.name]);
 
   // ── Render ─────────────────────────────────────────────────────────────────
 
@@ -721,28 +709,31 @@ export default function ProductDetail({
         </div>
       </section>
 
-      {/* ── Related Fragrances ───────────────────────────────────────────────── */}
-      {/* TODO: Replace collection matching with MKC similarity scoring.         */}
-      {recommendations.length > 0 && (
+      {/* ── Related Fragrances — powered by Discovery similarity engine ──── */}
+      {(similarFragrances ?? []).length > 0 && (
         <section className="px-4 md:px-6 pb-8">
           <div className="mx-auto max-w-7xl">
             <h2 className="mb-8 text-2xl md:text-3xl font-black text-[#4f4a52]">
               Related Fragrances
             </h2>
             <div className="grid gap-6 lg:grid-cols-2">
-              {recommendations.map(({ rec, adapted, reasons }) => (
+              {(similarFragrances ?? []).map((result) => (
                 <RecommendationCard
-                  key={rec.name}
-                  title={rec.name}
-                  profile={rec.profile}
-                  mood={rec.mood}
-                  notes={[...rec.notes.top, ...rec.notes.heart, ...rec.notes.base]}
-                  freshness={adapted.freshness}
-                  warmth={adapted.warmth}
-                  sweetness={adapted.sweetness}
-                  intensity={adapted.intensity}
-                  versatility={adapted.versatility}
-                  reasons={reasons}
+                  key={result.fragrance.name}
+                  title={result.fragrance.name}
+                  profile={result.fragrance.profile}
+                  mood={result.fragrance.mood}
+                  notes={[
+                    ...result.fragrance.notes.top,
+                    ...result.fragrance.notes.heart,
+                    ...result.fragrance.notes.base,
+                  ]}
+                  freshness={result.fragrance.freshness}
+                  warmth={result.fragrance.warmth}
+                  sweetness={result.fragrance.sweetness}
+                  intensity={result.fragrance.intensity}
+                  versatility={result.fragrance.versatility}
+                  reasons={deriveSimilarityReasons(knowledge, result)}
                 />
               ))}
             </div>

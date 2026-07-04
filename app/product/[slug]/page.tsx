@@ -6,6 +6,7 @@ import ProductDetail from "../../components/ProductDetail";
 import { mkcCatalogue } from "../../lib/mkc/catalogue";
 import type { FragranceKnowledge } from "../../lib/mkc/types";
 import { recommendAcademyArticles } from "../../lib/academy/recommendAcademyArticles";
+import { getSimilarFragrances } from "../../lib/discovery/similarityEngine";
 
 interface ProductPageProps {
   params: Promise<{
@@ -122,6 +123,8 @@ export default async function ProductPage({
     readTime: article.readTime,
   }));
 
+  const similarFragrances = getSimilarFragrances(knowledge, { count: 3 });
+
   return (
     <>
       <script
@@ -132,7 +135,7 @@ export default async function ProductPage({
       <main className="min-h-screen bg-[#f5f1eb]">
         <Navbar />
 
-        <ProductDetail knowledge={knowledge} discoverMoreArticles={discoverMoreArticles} />
+        <ProductDetail knowledge={knowledge} discoverMoreArticles={discoverMoreArticles} similarFragrances={similarFragrances} />
 
         <Footer />
       </main>
