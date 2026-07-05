@@ -10,6 +10,7 @@ import { AcademyBreadcrumbs } from "../../components/academy/AcademyBreadcrumbs"
 import { AcademyTableOfContents } from "../../components/academy/AcademyTableOfContents";
 import { AcademyArticleNavigation } from "../../components/academy/AcademyArticleNavigation";
 import { ReadingProgress } from "../../components/academy/ReadingProgress";
+import AskAcademyButton from "../../components/AskAcademyButton";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -161,6 +162,9 @@ export default async function AcademyArticlePage({ params }: Props) {
                   year: "numeric",
                 })}
               </time>
+            </div>
+            <div className="mt-5">
+              <AskAcademyButton topic={article.category} />
             </div>
           </div>
         </section>

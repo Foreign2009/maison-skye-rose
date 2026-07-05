@@ -330,3 +330,80 @@ export function trackSearchCategorySelected(payload: SearchCategorySelectedPaylo
   if (!ready) return;
   capture("search_category_selected", payload);
 }
+
+// ── AI Concierge event payload types ─────────────────────────────────────────
+
+export type AiChatStartedPayload = {
+  trigger:   "float-button" | "pdp" | "academy" | "discover";
+  sessionId: string;
+};
+
+export type AiQueryPayload = {
+  query:     string;
+  sessionId: string;
+};
+
+export type AiRecommendationPayload = {
+  slugs:     string[];
+  intent:    string;
+  sessionId: string;
+};
+
+export type AiProductClickedPayload = {
+  slug:      string;
+  name:      string;
+  sessionId: string;
+};
+
+export type AiArticleOpenedPayload = {
+  slug:      string;
+  title:     string;
+  sessionId: string;
+};
+
+export type AiFollowupClickedPayload = {
+  suggestion: string;
+  sessionId:  string;
+};
+
+export type AiSessionCompletedPayload = {
+  turnCount:  number;
+  sessionId:  string;
+};
+
+// ── AI Concierge track functions ──────────────────────────────────────────────
+
+export function trackAiChatStarted(payload: AiChatStartedPayload): void {
+  if (!ready) return;
+  capture("ai_chat_started", payload);
+}
+
+export function trackAiQuery(payload: AiQueryPayload): void {
+  if (!ready) return;
+  capture("ai_query", payload);
+}
+
+export function trackAiRecommendation(payload: AiRecommendationPayload): void {
+  if (!ready) return;
+  capture("ai_recommendation", payload);
+}
+
+export function trackAiProductClicked(payload: AiProductClickedPayload): void {
+  if (!ready) return;
+  capture("ai_product_clicked", payload);
+}
+
+export function trackAiArticleOpened(payload: AiArticleOpenedPayload): void {
+  if (!ready) return;
+  capture("ai_article_opened", payload);
+}
+
+export function trackAiFollowupClicked(payload: AiFollowupClickedPayload): void {
+  if (!ready) return;
+  capture("ai_followup_clicked", payload);
+}
+
+export function trackAiSessionCompleted(payload: AiSessionCompletedPayload): void {
+  if (!ready) return;
+  capture("ai_session_completed", payload);
+}

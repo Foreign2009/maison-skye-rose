@@ -4,6 +4,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import CollectionCard from "../components/CollectionCard";
 import DiscoverCollectionGrid from "../components/DiscoverCollectionGrid";
+import HelpMeChooseButton from "../components/HelpMeChooseButton";
 import { COLLECTION_SPECS, getCollection, getCurrentSeason } from "../lib/discovery";
 import { toDisplayFragrance } from "../lib/mkc/displayAdapter";
 import { mkcCatalogue } from "../lib/mkc/catalogue";
@@ -98,6 +99,7 @@ export default function DiscoverPage() {
               >
                 Take the Scent Finder
               </Link>
+              <HelpMeChooseButton />
             </div>
           </div>
         </section>

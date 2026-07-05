@@ -18,53 +18,10 @@ import {
   trackAddToCart,
   trackBuyNow,
   trackCartOpened,
+  trackAiChatStarted,
 } from "../lib/analytics";
-
-// ── Similarity reasons helper ─────────────────────────────────────────────────
-
-function deriveSimilarityReasons(
-  source: FragranceKnowledge,
-  result: SimilarityResult
-): string[] {
-  const reasons: string[] = [];
-  const { breakdown, fragrance: f } = result;
-
-  if (breakdown.family > 0) {
-    const sharedFamily = source.family.find((fam) => f.family.includes(fam));
-    reasons.push(
-      sharedFamily
-        ? `Shares the same ${sharedFamily.toLowerCase()} character`
-        : "Belongs to a similar fragrance family"
-    );
-  }
-  if (breakdown.character > 0) {
-    reasons.push("Matching overall scent personality");
-  }
-  if (breakdown.occasion > 0) {
-    reasons.push("Perfect for the same moments and occasions");
-  }
-  if (breakdown.season > 0) {
-    reasons.push(`Both shine in ${f.season.toLowerCase()} conditions`);
-  }
-  if (breakdown.notes > 0) {
-    reasons.push("Shares similar fragrance notes");
-  }
-  if (breakdown.projection > 0) {
-    reasons.push("Comparable strength and presence");
-  }
-  if (breakdown.collection > 0) {
-    reasons.push("From the same Maison collection");
-  }
-  if (f.bestSeller) {
-    reasons.push("One of our most loved fragrances");
-  }
-
-  while (reasons.length < 2) {
-    reasons.push("Thoughtfully selected to complement your choice");
-  }
-
-  return reasons.slice(0, 3);
-}
+import { useConcierge } from "../context/ConciergeContext";
+import { deriveSimilarityReasons } from "../lib/concierge/similarityReasons";
 
 // ── Collection badge styles ───────────────────────────────────────────────────
 const COLLECTION_STYLES: Record<string, { pill: string; label: string }> = {
@@ -108,6 +65,7 @@ export default function ProductDetail({
   const { openCart, cartOpen }                            = useCartUI();
   const { addToFavorites, removeFromFavorites, isFavorite } = useFavorites();
   const favorite = isFavorite(knowledge.name);
+  const { openConcierge, conversationState } = useConcierge();
 
   // Scroll listener — sticky mobile bar
   useEffect(() => {
@@ -396,6 +354,17 @@ export default function ProductDetail({
                 className="mt-3 w-full rounded-2xl border-2 border-[#d89ca4] bg-transparent py-3 font-bold text-[#d89ca4] transition hover:bg-[#fff7f8]"
               >
                 Buy Now
+              </button>
+
+              {/* Ask About This Fragrance */}
+              <button
+                onClick={() => {
+                  openConcierge({ mentionedSlug: knowledge.slug });
+                  trackAiChatStarted({ trigger: "pdp", sessionId: conversationState.sessionId });
+                }}
+                className="mt-3 w-full rounded-2xl border border-[#efe8e1] bg-white py-3 text-sm font-semibold text-[#4f4a52] transition hover:border-[#d89ca4] hover:text-[#d89ca4]"
+              >
+                ✦ Ask About This Fragrance
               </button>
             </div>
           </div>
