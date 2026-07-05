@@ -107,8 +107,6 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
       .slice(0, 3);
   }, [cart]);
 
-  if (!isOpen) return null;
-
   const subtotal = cartTotal;
   const progressPercent =
     subtotal >= 1500 ? 100
@@ -185,7 +183,12 @@ A member of our team will confirm your order and delivery details shortly.`;
   };
 
   return (
-    <div className="fixed z-50 bg-[#fffdfb]/95 backdrop-blur-md bottom-0 left-0 right-0 md:bottom-6 md:right-6 md:left-auto w-full md:w-[420px] md:rounded-[32px] border border-black/5 shadow-[0_-10px_40px_rgba(0,0,0,0.08)] md:shadow-[0_25px_80px_rgba(0,0,0,0.12)] flex flex-col h-screen md:h-[85vh] overflow-hidden">
+    <div
+      aria-hidden={!isOpen}
+      className={`fixed z-50 bg-[#fffdfb]/95 backdrop-blur-md bottom-0 left-0 right-0 md:bottom-6 md:right-6 md:left-auto w-full md:w-[420px] md:rounded-[32px] border border-black/5 shadow-[0_-10px_40px_rgba(0,0,0,0.08)] md:shadow-[0_25px_80px_rgba(0,0,0,0.12)] flex flex-col h-screen md:h-[85vh] overflow-hidden transition-all duration-300 ease-in-out motion-reduce:transition-none ${
+        isOpen ? "translate-y-0 opacity-100" : "translate-y-full opacity-0 pointer-events-none"
+      }`}
+    >
       
       {/* Mobile Drag/Close Handle Area */}
       <div className="w-12 h-1.5 bg-zinc-300/60 rounded-full mx-auto mt-3 shrink-0 md:hidden" />

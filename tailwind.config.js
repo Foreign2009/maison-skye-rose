@@ -17,8 +17,9 @@ module.exports = {
         },
       },
       animation: {
-        "fade-in-up": "fadeInUp 0.65s ease-out forwards",
-        "float":      "float 6s ease-in-out infinite",
+        "fade-in-up":      "fadeInUp 0.65s ease-out forwards",
+        "fade-in-up-fast": "fadeInUp 0.25s ease-out forwards",
+        "float":           "float 6s ease-in-out infinite",
       },
     },
   },

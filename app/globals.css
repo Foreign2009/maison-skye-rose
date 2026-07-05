@@ -131,7 +131,7 @@ body {
 
 .float-animation {
   animation:
-    float 4s ease-in-out infinite;
+    float 6s ease-in-out infinite;
 }
 
 .glow-rotate {

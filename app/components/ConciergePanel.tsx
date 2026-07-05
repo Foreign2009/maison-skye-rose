@@ -180,13 +180,13 @@ export default function ConciergePanel() {
   return (
     <>
       {/* Mobile backdrop */}
-      {isOpen && (
-        <div
-          className="fixed inset-0 z-[79] bg-black/30 md:hidden"
-          onClick={handleClose}
-          aria-hidden="true"
-        />
-      )}
+      <div
+        className={`fixed inset-0 z-[79] bg-black/30 md:hidden transition-opacity duration-300 motion-reduce:transition-none ${
+          isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+        }`}
+        onClick={handleClose}
+        aria-hidden="true"
+      />
 
       {/* Panel */}
       <div

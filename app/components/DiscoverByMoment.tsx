@@ -151,7 +151,7 @@ export default function DiscoverByMoment() {
         </div>
 
         {/* ── Editorial story for selected moment ─────────────────────────── */}
-        <div className="mt-10 md:mt-12">
+        <div key={selectedId} className="mt-10 md:mt-12 animate-fade-in-up-fast">
 
           {/* Title + subtitle */}
           <h3 className="text-xl font-black tracking-[-0.03em] text-[#4f4a52] md:text-2xl">
@@ -181,7 +181,7 @@ export default function DiscoverByMoment() {
         {/* ── Fragrance recommendations ────────────────────────────────────── */}
 
         {/* Mobile: horizontal scroll */}
-        <div className="mt-10 flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide md:hidden">
+        <div key={`mobile-${selectedId}`} className="mt-10 flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide md:hidden animate-fade-in-up-fast">
           {fragrances.map((fragrance) => (
             <div key={fragrance.title} className="w-[210px] flex-shrink-0 snap-start">
               <ProductCard
@@ -197,7 +197,7 @@ export default function DiscoverByMoment() {
         </div>
 
         {/* Desktop: grid */}
-        <div className="hidden mt-10 gap-8 md:grid md:grid-cols-2 lg:grid-cols-4">
+        <div key={`desktop-${selectedId}`} className="hidden mt-10 gap-8 md:grid md:grid-cols-2 lg:grid-cols-4 animate-fade-in-up-fast">
           {fragrances.map((fragrance, i) => (
             <ProductCard
               key={fragrance.title}
@@ -213,7 +213,7 @@ export default function DiscoverByMoment() {
         </div>
 
         {/* ── Academy + Concierge + Discover footer ───────────────────────── */}
-        <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3 md:mt-12">
+        <div key={`footer-${selectedId}`} className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3 md:mt-12 animate-fade-in-up-fast">
           {currentMoment.academySlug && (
             <Link
               href={`/academy/${currentMoment.academySlug}`}
