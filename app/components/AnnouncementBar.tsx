@@ -3,12 +3,13 @@
 import { useState, useEffect } from "react";
 import { brand } from "../data/brand";
 
+const messages = [
+  "Your personal Concierge is ready — start your fragrance journey",
+  "Begin with 5ml · Free sample on orders over R400",
+  "WhatsApp ordering · Nationwide delivery across South Africa",
+];
+
 export default function AnnouncementBar() {
-  const messages = [
-    "Free Collection Available",
-    "Nationwide Delivery",
-    "WhatsApp Orders Welcome",
-  ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
 

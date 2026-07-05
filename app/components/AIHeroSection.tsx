@@ -32,14 +32,15 @@ export default function AIHeroSection() {
               A Digital Fragrance House
             </p>
 
-            <h1 className="mt-5 text-[2.75rem] font-black leading-[1.05] tracking-[-0.04em] text-[#4f4a52] md:text-[4rem]">
+            <h1 className="mt-5 text-[2rem] font-black leading-[1.05] tracking-[-0.04em] text-[#4f4a52] md:text-[3.5rem] lg:text-[2.75rem] xl:text-[4rem]">
               Find Your<br />
               Signature Scent
             </h1>
 
             <p className="mt-6 max-w-[460px] text-base leading-relaxed text-[#7b7480] md:text-lg">
-              93 carefully curated fragrances. Guided discovery through conversation.
-              Start with a 5ml and build a collection that&apos;s unmistakably yours.
+              Not a catalogue — a curated fragrance experience. Your personal
+              Concierge guides you through 93 carefully chosen scents to build
+              a collection that&apos;s unmistakably yours.
             </p>
 
             <div className="mt-10 flex flex-wrap gap-4">
@@ -55,24 +56,29 @@ export default function AIHeroSection() {
                 href="/shop"
                 className="inline-flex items-center rounded-full border border-[#d89ca4] px-8 py-4 text-sm font-bold uppercase tracking-wider text-[#d89ca4] transition-all duration-300 hover:bg-[#d89ca4]/5"
               >
-                Browse Collection
+                Explore the Collection
               </Link>
             </div>
 
             <p className="mt-8 text-[11px] text-[#9b9298]">
-              Free 5ml sample on orders over R400 &middot; Nationwide delivery
+              Start with 5ml &middot; Build your collection &middot; Nationwide delivery
             </p>
           </div>
 
           {/* Bottle showcase */}
           <div className="flex justify-center lg:justify-end">
-            <div className="relative aspect-square w-full max-w-[340px] md:max-w-[440px]">
+            <div className="relative aspect-square w-full max-w-[340px] animate-float motion-reduce:animate-none md:max-w-[440px]">
+              {/* Ambient glow */}
+              <div
+                aria-hidden="true"
+                className="absolute inset-[10%] rounded-full bg-[#f3dede] opacity-30 blur-3xl pointer-events-none"
+              />
               <Image
                 src="/images/glass-pink-30ml.png"
                 alt="Maison Skye & Rose signature 30ml fragrance bottle"
                 fill
                 priority
-                className="object-contain transition-transform duration-700 hover:scale-[1.03]"
+                className="relative object-contain"
                 sizes="(max-width: 768px) 340px, 440px"
               />
             </div>

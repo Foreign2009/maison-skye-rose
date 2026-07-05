@@ -105,7 +105,7 @@ export default function ShopByPersonality() {
 
   return (
 
-    <section className="px-5 py-24">
+    <section className="px-5 py-16 md:py-24">
 
       <div className="mx-auto max-w-7xl">
 
@@ -117,7 +117,7 @@ export default function ShopByPersonality() {
 
           </p>
 
-          <h2 className="mt-4 text-5xl font-black tracking-[-0.06em] text-[#4f4a52]">
+          <h2 className="mt-4 text-3xl font-black tracking-[-0.06em] text-[#4f4a52] md:text-5xl">
 
             Shop By Personality
 

@@ -132,7 +132,7 @@ export default function HomePage() {
                   Featured Creation
                 </span>
                 {featuredFragrance.bestSeller && (
-                  <span className="rounded-full bg-[#4f4a52] px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-white">
+                  <span className="rounded-full border border-[#4f4a52]/20 bg-[#4f4a52]/5 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-[#4f4a52]">
                     Most Loved
                   </span>
                 )}
