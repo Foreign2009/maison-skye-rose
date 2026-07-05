@@ -17,6 +17,7 @@ import ShopByPersonality from "./components/ShopByPersonality";
 import Testimonials from "./components/Testimonials";
 import RecentlyViewedHome from "./components/RecentlyViewedHome";
 import FavoritesHome from "./components/FavoritesHome";
+import MaisonCompanion from "./components/MaisonCompanion";
 import Footer from "./components/Footer";
 import QuickAddModal from "./components/QuickAddModal";
 import { mkcCatalogue } from "./lib/mkc/catalogue";
@@ -353,6 +354,9 @@ export default function HomePage() {
       <section className="bg-white">
         <FavoritesHome />
       </section>
+
+      {/* ── A NOTE FROM MAISON ─────────────────────────────────────────────── */}
+      <MaisonCompanion />
 
       <section className="bg-white">
         <RecentlyViewedHome />
