@@ -268,3 +268,65 @@ export function trackWhatsAppCheckout(payload: WhatsAppCheckoutPayload): void {
   if (!ready) return;
   capture("whatsapp_checkout_started", payload);
 }
+
+// ── Search event payload types ────────────────────────────────────────────────
+
+export type SearchOpenedPayload = {
+  trigger: "keyboard-slash" | "keyboard-ctrl-k" | "navbar-icon";
+};
+
+export type SearchClosedPayload = {
+  query: string;
+};
+
+export type SearchQueryPayload = {
+  query: string;
+};
+
+export type SearchResultClickedPayload = {
+  query: string;
+  title: string;
+  type:  string;
+  href:  string;
+};
+
+export type SearchNoResultsPayload = {
+  query: string;
+};
+
+export type SearchCategorySelectedPayload = {
+  category: "fragrance" | "collection" | "article";
+  query:    string;
+};
+
+// ── Search track functions ────────────────────────────────────────────────────
+
+export function trackSearchOpened(payload: SearchOpenedPayload): void {
+  if (!ready) return;
+  capture("search_opened", payload);
+}
+
+export function trackSearchClosed(payload: SearchClosedPayload): void {
+  if (!ready) return;
+  capture("search_closed", payload);
+}
+
+export function trackSearchQuery(payload: SearchQueryPayload): void {
+  if (!ready) return;
+  capture("search_query", payload);
+}
+
+export function trackSearchResultClicked(payload: SearchResultClickedPayload): void {
+  if (!ready) return;
+  capture("search_result_clicked", payload);
+}
+
+export function trackSearchNoResults(payload: SearchNoResultsPayload): void {
+  if (!ready) return;
+  capture("search_no_results", payload);
+}
+
+export function trackSearchCategorySelected(payload: SearchCategorySelectedPayload): void {
+  if (!ready) return;
+  capture("search_category_selected", payload);
+}

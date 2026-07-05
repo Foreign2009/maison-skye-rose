@@ -7,9 +7,11 @@ import { CartProvider } from "./context/CartContext";
 import { FavoritesProvider } from "./context/FavoritesContext";
 import { CartUIProvider } from "./context/CartUIContext";
 import { CartFeedbackProvider } from "./context/CartFeedbackContext";
+import { SearchUIProvider } from "./context/SearchUIContext";
 
 import CartSuccessToast from "./components/CartSuccessToast";
 import FloatingWhatsApp from "./components/FloatingWhatsApp";
+import GlobalSearch from "./components/GlobalSearch";
 import { AnalyticsInit } from "./components/AnalyticsInit";
 
 export const metadata: Metadata = {
@@ -60,10 +62,13 @@ export default function RootLayout({
           <CartProvider>
             <CartUIProvider>
               <CartFeedbackProvider>
-                {children}
+                <SearchUIProvider>
+                  {children}
 
-                <CartSuccessToast />
-                <FloatingWhatsApp />
+                  <CartSuccessToast />
+                  <FloatingWhatsApp />
+                  <GlobalSearch />
+                </SearchUIProvider>
               </CartFeedbackProvider>
             </CartUIProvider>
           </CartProvider>

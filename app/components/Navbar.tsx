@@ -3,12 +3,13 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ShoppingBag, Menu, X, User, Heart, Clock } from "lucide-react";
+import { ShoppingBag, Menu, X, User, Heart, Clock, Search } from "lucide-react";
 import { useCart } from "../context/CartContext";
 import { useFavorites } from "../context/FavoritesContext";
 import { useCartUI } from "../context/CartUIContext";
+import { useSearchUI } from "../context/SearchUIContext";
 import MiniCart from "./MiniCart";
-import { trackCartOpened } from "../lib/analytics";
+import { trackCartOpened, trackSearchOpened } from "../lib/analytics";
 
 // Optimized: Static array defined outside the component scope to preserve performance memory allocations
 const ANNOUNCEMENTS = [
@@ -23,7 +24,8 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
   const { cartOpen, openCart, closeCart } = useCartUI();
-  
+  const { openSearch } = useSearchUI();
+
   const { cart } = useCart();
   const totalItems = (cart || []).reduce((acc, item) => acc + item.quantity, 0);
 
@@ -138,6 +140,17 @@ export default function Navbar() {
 
               {/* Functional Icon Group */}
               <div className="flex items-center gap-3 md:gap-4 ml-0 md:ml-2">
+                <button
+                  onClick={() => {
+                    openSearch();
+                    trackSearchOpened({ trigger: "navbar-icon" });
+                  }}
+                  className="text-[#4f4a52] hover:text-[#d89ca4] transition-colors"
+                  aria-label="Search"
+                >
+                  <Search className="h-5 w-5 stroke-[1.75]" />
+                </button>
+
                 <Link
                   href="/favorites"
                   className="relative text-[#4f4a52] hover:text-[#d89ca4] transition-colors"
