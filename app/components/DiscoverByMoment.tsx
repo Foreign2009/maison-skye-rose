@@ -4,200 +4,59 @@ import { useState, useMemo } from "react";
 import Link from "next/link";
 import ProductCard from "./ProductCard";
 import QuickAddModal from "./QuickAddModal";
-import { getCollection, generateCollection } from "../lib/discovery";
+import { getCollection } from "../lib/discovery";
 import { toDisplayFragrance } from "../lib/mkc/displayAdapter";
-import type { CollectionSpec } from "../lib/discovery";
 import type { FragranceKnowledge } from "../lib/mkc/types";
+import type { ConversationContext } from "../lib/concierge/types";
+import { getMomentContent } from "../lib/discovery/momentContent";
 import { useConcierge } from "../context/ConciergeContext";
 import { trackAiChatStarted, trackMomentSelected } from "../lib/analytics";
 
-// ── Inline specs for moments without an existing named COLLECTION_SPEC ────────
-
-const WINTER_WARMTH_SPEC: CollectionSpec = {
-  id:          "winter-warmth",
-  name:        "Winter Warmth",
-  description: "Rich, warm fragrances for the colder months.",
-  tags:        ["winter", "warm", "rich", "oud", "amber"],
-  icon:        "",
-  accentColor: "#9b7ce0",
-  featured:    false,
-  filters: [
-    {
-      type:  "anyOf",
-      anyOf: [
-        { type: "season",   value: "Winter" },
-        { type: "occasion", value: "Winter Evenings" },
-      ],
-    },
-  ],
-  boosts: [
-    { type: "scentCharacter", value: "Rich & Long Wearing", points: 20 },
-    { type: "scentCharacter", value: "Deep & Intense",      points: 15 },
-    { type: "family",         value: "Oud",                 points: 15 },
-    { type: "family",         value: "Amber",               points: 12 },
-    { type: "bestSeller",                                    points: 10 },
-  ],
-  maxItems: 4,
-};
-
-const SPECIAL_OCCASION_SPEC: CollectionSpec = {
-  id:          "special-occasion",
-  name:        "Special Occasion",
-  description: "Exceptional fragrances for extraordinary moments.",
-  tags:        ["special", "wedding", "occasion", "celebration"],
-  icon:        "",
-  accentColor: "#d89ca4",
-  featured:    false,
-  filters: [
-    {
-      type:  "anyOf",
-      anyOf: [
-        { type: "occasion", value: "Wedding" },
-        { type: "occasion", value: "Date Night" },
-      ],
-    },
-  ],
-  boosts: [
-    { type: "bestSeller",                                    points: 20 },
-    { type: "projection",     value: "strong",               points: 15 },
-    { type: "scentCharacter", value: "Rich & Long Wearing",  points: 12 },
-    { type: "family",         value: "Floral",               points: 10 },
-  ],
-  maxItems: 4,
-};
-
 // ── Moment configuration ──────────────────────────────────────────────────────
-// Editorial copy (story, insight, academyCopy, conciergeCopy) is kept entirely
-// separate from recommendation logic. The Discovery Engine remains responsible
-// only for selecting fragrances.
+// Editorial copy lives in app/lib/discovery/momentContent.ts.
+// Inline CollectionSpecs for Winter Warmth and Special Occasion are now
+// canonical entries in app/lib/discovery/collectionEngine.ts.
 
 type MomentDef = {
-  id:            string;
-  label:         string;
-  subtitle:      string;
-  story:         string;
-  insight:       string;
-  academyCopy:   string;
-  conciergeCopy: string;
-  getFragrances: () => FragranceKnowledge[];
-  academySlug?:  string;
-  primary:       boolean;
+  id:               string;
+  label:            string;
+  subtitle:         string;
+  story:            string;
+  insight:          string;
+  academyCopy:      string;
+  conciergeCopy:    string;
+  conciergeContext: Partial<ConversationContext>;
+  getFragrances:    () => FragranceKnowledge[];
+  academySlug?:     string;
+  primary:          boolean;
 };
 
-const MOMENTS: MomentDef[] = [
-  {
-    id:       "everyday",
-    label:    "Everyday Signature",
-    subtitle: "A reliable anchor for every day.",
-    story:
-      "The fragrances we reach for every morning shape how the day begins. An everyday signature does not announce itself — it becomes part of who you are. Over time, it is the scent others associate with you without ever naming it.",
-    insight:
-      "Versatility is not a limitation. It is the mark of a fragrance confident enough to work everywhere.",
-    academyCopy:
-      "Learn how application and layering build all-day presence",
-    conciergeCopy:
-      "Your Concierge can help build your daily fragrance rotation based on your lifestyle",
-    getFragrances: () => getCollection("everyday-wear").slice(0, 4),
-    academySlug:   "how-to-wear-fragrance",
-    primary:       true,
-  },
-  {
-    id:       "office",
-    label:    "Office & Work",
-    subtitle: "Confident, considered, and professional.",
-    story:
-      "A workplace fragrance walks a careful line — it must project enough to feel intentional, yet not so much that it commands the room. The best office fragrances are the ones that make someone lean in slightly and quietly wonder.",
-    insight:
-      "Freshness and restraint are not compromises. They are the craft of choosing a fragrance for shared spaces.",
-    academyCopy:
-      "Discover which fragrance families perform best in professional environments",
-    conciergeCopy:
-      "Describe your workplace — your Concierge will suggest the right balance of presence and restraint",
-    getFragrances: () => getCollection("fresh-office").slice(0, 4),
-    academySlug:   "guide-to-fragrance-families",
-    primary:       true,
-  },
-  {
-    id:       "date-night",
-    label:    "Date Night",
-    subtitle: "Memorable from the first impression.",
-    story:
-      "An evening fragrance is part of the first impression, even before you speak. Worn well, it creates a peripheral awareness — a lingering presence that suggests confidence without demanding attention. These are fragrances that stay close.",
-    insight:
-      "The best evening fragrances are not loud. They are deep. Character, not volume, is what lingers.",
-    academyCopy:
-      "Discover how top, heart, and base notes unfold over the course of an evening",
-    conciergeCopy:
-      "Describe your evening — your Concierge will find your perfect match for the occasion",
-    getFragrances: () => getCollection("date-night").slice(0, 4),
-    academySlug:   "the-note-pyramid-explained",
-    primary:       true,
-  },
-  {
-    id:       "summer",
-    label:    "Summer Escape",
-    subtitle: "Light, bright, and made for warmth.",
-    story:
-      "Summer changes how fragrance behaves. Warmth intensifies projection and accelerates the drydown — what works in winter can feel overwhelming in the sun. The right summer fragrance is alive in the heat, light on the air, and effortless to wear from morning through to evening.",
-    insight:
-      "In summer, freshness is not just a note. It is a performance requirement.",
-    academyCopy:
-      "Learn how temperature affects fragrance families and why season matters in selection",
-    conciergeCopy:
-      "Tell your Concierge where you're headed this season and discover fragrances made for the journey",
-    getFragrances: () => getCollection("summer-essentials").slice(0, 4),
-    academySlug:   "guide-to-fragrance-families",
-    primary:       true,
-  },
-  {
-    id:       "first",
-    label:    "First Signature Fragrance",
-    subtitle: "Where every collection begins.",
-    story:
-      "Every fragrance wardrobe begins somewhere. The first signature is rarely the boldest or most complex — it is the one that feels right without needing to understand why. These are fragrances that welcome you into the practice of fragrance without overwhelming you with it.",
-    insight:
-      "The most approachable fragrances are not the least interesting. They are the most considered.",
-    academyCopy:
-      "Start with the fundamentals — discover the fragrance families that will guide your entire journey",
-    conciergeCopy:
-      "Your Concierge specialises in first signatures — share your instincts and let the journey begin",
-    getFragrances: () => getCollection("beginner-friendly").slice(0, 4),
-    academySlug:   "guide-to-fragrance-families",
-    primary:       true,
-  },
-  {
-    id:       "winter",
-    label:    "Winter Warmth",
-    subtitle: "Rich, enveloping, season-defining.",
-    story:
-      "Cold air is fragrance's most generous companion. In winter, base notes deepen, warmth amplifies, and the body's natural heat draws out a fragrance's fullest character. These are the scents built for that relationship — rich, enveloping, and made to endure.",
-    insight:
-      "Oud, amber, and warm woods are not trends. They are winter's native language.",
-    academyCopy:
-      "Understand how base notes define winter fragrances and why longevity matters in the cold",
-    conciergeCopy:
-      "Your Concierge can match you with a winter warmth that suits your character precisely",
-    getFragrances: () => generateCollection(WINTER_WARMTH_SPEC),
-    academySlug:   "the-note-pyramid-explained",
-    primary:       false,
-  },
-  {
-    id:       "special",
-    label:    "Special Occasion",
-    subtitle: "For the days that deserve to be remembered.",
-    story:
-      "Some fragrances are worn every day. Others are chosen for a single, specific day. A special occasion fragrance carries the weight of what it marks — it should feel exceptional, considered, and worthy of the moment it accompanies.",
-    insight:
-      "A fragrance worn on a meaningful day becomes permanently woven into the memory of that day.",
-    academyCopy:
-      "Explore what makes a fragrance truly exceptional and how to wear it for lasting impact",
-    conciergeCopy:
-      "Share your occasion with your Concierge — they will help you select a fragrance you'll remember",
-    getFragrances: () => generateCollection(SPECIAL_OCCASION_SPEC),
-    academySlug:   "how-to-wear-fragrance",
-    primary:       false,
-  },
-];
+const MOMENT_PRIMARIES = [
+  { id: "everyday-wear",     primary: true  },
+  { id: "fresh-office",      primary: true  },
+  { id: "date-night",        primary: true  },
+  { id: "summer-essentials", primary: true  },
+  { id: "beginner-friendly", primary: true  },
+  { id: "winter-warmth",     primary: false },
+  { id: "special-occasion",  primary: false },
+] as const;
+
+const MOMENTS: MomentDef[] = MOMENT_PRIMARIES.map(({ id, primary }) => {
+  const c = getMomentContent(id)!;
+  return {
+    id,
+    label:            c.label,
+    subtitle:         c.subtitle,
+    story:            c.story,
+    insight:          c.insight,
+    academyCopy:      c.academyCopy,
+    conciergeCopy:    c.conciergeCopy,
+    conciergeContext: c.conciergeContext,
+    academySlug:      c.academySlug,
+    getFragrances:    () => getCollection(id).slice(0, 4),
+    primary,
+  };
+});
 
 const PRIMARY_MOMENTS   = MOMENTS.filter((m) => m.primary);
 const SECONDARY_MOMENTS = MOMENTS.filter((m) => !m.primary);
@@ -236,7 +95,7 @@ export default function DiscoverByMoment() {
   }
 
   function handleConciergeOpen() {
-    openConcierge();
+    openConcierge(currentMoment.conciergeContext);
     trackAiChatStarted({ trigger: "moment-cta", sessionId: conversationState.sessionId });
   }
 
@@ -353,7 +212,7 @@ export default function DiscoverByMoment() {
           ))}
         </div>
 
-        {/* ── Academy + Concierge footer ───────────────────────────────────── */}
+        {/* ── Academy + Concierge + Discover footer ───────────────────────── */}
         <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3 md:mt-12">
           {currentMoment.academySlug && (
             <Link
@@ -370,6 +229,13 @@ export default function DiscoverByMoment() {
           >
             {currentMoment.conciergeCopy}
           </button>
+          <span aria-hidden="true" className="hidden h-4 w-px bg-[#e8e2de] md:block" />
+          <Link
+            href={`/discover/${currentMoment.id}`}
+            className="text-sm font-semibold text-[#7b7480] underline-offset-4 transition-colors hover:text-[#4f4a52] hover:underline"
+          >
+            Explore the full {currentMoment.label} collection →
+          </Link>
         </div>
 
       </div>

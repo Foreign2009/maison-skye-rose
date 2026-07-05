@@ -4,8 +4,12 @@ import Link from "next/link";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import DiscoverCollectionGrid from "../../components/DiscoverCollectionGrid";
+import CollectionCard from "../../components/CollectionCard";
+import MomentConciergeButton from "../../components/MomentConciergeButton";
 import { COLLECTION_SPECS, getCollection } from "../../lib/discovery";
+import { getMomentContent } from "../../lib/discovery/momentContent";
 import { toDisplayFragrance } from "../../lib/mkc/displayAdapter";
+import { academyCatalogue } from "../../lib/academy/catalogue";
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -45,8 +49,9 @@ export default async function DiscoverCollectionPage({ params }: PageProps) {
   const spec = COLLECTION_SPECS.find((s) => s.id === id);
   if (!spec) notFound();
 
-  const baseUrl = process.env.NEXT_PUBLIC_WEBSITE_URL ?? "";
-  const products = getCollection(spec.id).map(toDisplayFragrance);
+  const baseUrl        = process.env.NEXT_PUBLIC_WEBSITE_URL ?? "";
+  const momentContent  = getMomentContent(id);
+  const products       = getCollection(spec.id).map(toDisplayFragrance);
 
   const breadcrumbJsonLd = {
     "@context": "https://schema.org",
@@ -57,6 +62,224 @@ export default async function DiscoverCollectionPage({ params }: PageProps) {
       { "@type": "ListItem", position: 3, name: spec.name,  item: `${baseUrl}/discover/${spec.id}` },
     ],
   };
+
+  // ── Editorial moment page ───────────────────────────────────────────────────
+
+  if (momentContent) {
+    const relatedArticles = momentContent.relatedArticleSlugs
+      .map((slug) => academyCatalogue.find((a) => a.slug === slug))
+      .filter((a): a is NonNullable<typeof a> => a !== undefined);
+
+    const relatedMomentData = momentContent.relatedMomentIds
+      .map((mid) => {
+        const relatedSpec = COLLECTION_SPECS.find((s) => s.id === mid);
+        if (!relatedSpec) return null;
+        const relatedProducts = getCollection(mid);
+        return {
+          spec:         relatedSpec,
+          productCount: relatedProducts.length,
+          sampleImages: relatedProducts.slice(0, 3).map((k) => k.images["10ml"]),
+        };
+      })
+      .filter((d): d is NonNullable<typeof d> => d !== null);
+
+    return (
+      <>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+        />
+
+        <main className="min-h-screen bg-[#faf7f5]">
+          <Navbar />
+
+          {/* ── Breadcrumb ────────────────────────────────────────────────── */}
+          <nav aria-label="Breadcrumb" className="pt-32 md:pt-40 pb-4 px-4">
+            <ol className="mx-auto max-w-7xl flex items-center gap-2 text-xs text-[#7b7480]">
+              <li>
+                <Link href="/" className="hover:text-[#d89ca4] transition-colors">
+                  Home
+                </Link>
+              </li>
+              <li aria-hidden="true">/</li>
+              <li>
+                <Link href="/discover" className="hover:text-[#d89ca4] transition-colors">
+                  Discover
+                </Link>
+              </li>
+              <li aria-hidden="true">/</li>
+              <li className="font-semibold text-[#4f4a52]">{momentContent.label}</li>
+            </ol>
+          </nav>
+
+          {/* ── Editorial Hero ────────────────────────────────────────────── */}
+          <section className="px-4 pb-12 md:pb-20">
+            <div className="mx-auto max-w-7xl">
+              <div
+                className="rounded-[32px] p-8 md:p-16"
+                style={{ backgroundColor: `${spec.accentColor}10` }}
+              >
+                <div className="max-w-2xl">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.55em] text-[#d89ca4]">
+                    Discover by Moment
+                  </p>
+                  <h1 className="mt-4 text-4xl font-black tracking-[-0.05em] text-[#4f4a52] leading-tight md:text-6xl">
+                    {momentContent.label}
+                  </h1>
+                  <p className="mt-3 text-sm font-semibold" style={{ color: spec.accentColor }}>
+                    {momentContent.subtitle}
+                  </p>
+                  <p className="mt-6 text-base leading-[1.85] text-[#7b7480] md:text-lg">
+                    {momentContent.story}
+                  </p>
+
+                  {/* Maison Insight */}
+                  <div className="mt-8 border-l-2 border-[#d89ca4] pl-5">
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.35em] text-[#d89ca4]">
+                      Maison Insight
+                    </p>
+                    <p className="mt-2 text-sm leading-relaxed text-[#7b7480]">
+                      {momentContent.insight}
+                    </p>
+                  </div>
+
+                  <p className="mt-8 text-sm text-[#9b9298]">
+                    {products.length} fragrances in this collection
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* ── Curated Recommendations ───────────────────────────────────── */}
+          <section className="px-4 pb-16 md:pb-24">
+            <div className="mx-auto max-w-7xl">
+              <div className="mb-8 md:mb-10">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.55em] text-[#d89ca4]">
+                  Curated for this moment
+                </p>
+                <h2 className="mt-3 text-2xl font-black tracking-[-0.04em] text-[#4f4a52] md:text-3xl">
+                  The Collection
+                </h2>
+              </div>
+              <DiscoverCollectionGrid
+                fragrances={products}
+                source="discover-collection"
+                columns={4}
+              />
+            </div>
+          </section>
+
+          {/* ── Academy Articles ──────────────────────────────────────────── */}
+          {relatedArticles.length > 0 && (
+            <section className="bg-white py-16 px-4 md:py-24">
+              <div className="mx-auto max-w-7xl">
+                <div className="mb-10 max-w-2xl">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.55em] text-[#d89ca4]">
+                    Maison Academy
+                  </p>
+                  <h2 className="mt-3 text-2xl font-black tracking-[-0.04em] text-[#4f4a52] md:text-3xl">
+                    {momentContent.academyCopy}
+                  </h2>
+                </div>
+                <div className="grid gap-5 md:grid-cols-3">
+                  {relatedArticles.map(({ slug, title, excerpt, readTime }) => (
+                    <Link
+                      key={slug}
+                      href={`/academy/${slug}`}
+                      className="group block rounded-[20px] border border-[#f0ebe8] bg-[#faf7f5] p-7 transition-all duration-300 hover:border-[#d89ca4] hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)]"
+                    >
+                      <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#d89ca4]">
+                        {readTime} min read
+                      </p>
+                      <h3 className="mt-3 text-base font-black leading-snug text-[#4f4a52]">
+                        {title}
+                      </h3>
+                      <p className="mt-3 text-sm leading-relaxed text-[#7b7480]">
+                        {excerpt}
+                      </p>
+                      <p className="mt-5 text-sm font-bold text-[#d89ca4]">
+                        Read more →
+                      </p>
+                    </Link>
+                  ))}
+                </div>
+                <div className="mt-8">
+                  <Link
+                    href="/academy"
+                    className="text-sm font-semibold text-[#7b7480] underline-offset-4 transition-colors hover:text-[#4f4a52] hover:underline"
+                  >
+                    Visit the full Academy →
+                  </Link>
+                </div>
+              </div>
+            </section>
+          )}
+
+          {/* ── Concierge Continuation ────────────────────────────────────── */}
+          <section className="bg-[#faf7f5] py-16 px-4 md:py-24">
+            <div className="mx-auto max-w-7xl">
+              <div className="max-w-2xl">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.55em] text-[#d89ca4]">
+                  Your Personal Concierge
+                </p>
+                <h2 className="mt-3 text-2xl font-black tracking-[-0.04em] text-[#4f4a52] md:text-3xl">
+                  Not sure which one is right for you?
+                </h2>
+                <p className="mt-4 text-base leading-relaxed text-[#7b7480]">
+                  {momentContent.conciergeCopy}
+                </p>
+                <div className="mt-6">
+                  <MomentConciergeButton
+                    context={momentContent.conciergeContext}
+                    label="Ask your Concierge"
+                  />
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* ── Related Moments ───────────────────────────────────────────── */}
+          {relatedMomentData.length > 0 && (
+            <section className="bg-white py-16 px-4 md:py-24">
+              <div className="mx-auto max-w-7xl">
+                <div className="mb-10">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.55em] text-[#d89ca4]">
+                    Continue Exploring
+                  </p>
+                  <h2 className="mt-3 text-2xl font-black tracking-[-0.04em] text-[#4f4a52] md:text-3xl">
+                    Other Moments to Discover
+                  </h2>
+                </div>
+                <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+                  {relatedMomentData.map(({ spec: relSpec, productCount, sampleImages }) => (
+                    <CollectionCard
+                      key={relSpec.id}
+                      spec={relSpec}
+                      productCount={productCount}
+                      sampleImages={sampleImages}
+                    />
+                  ))}
+                </div>
+                <div className="mt-8">
+                  <Link
+                    href="/discover"
+                    className="text-sm font-semibold text-[#7b7480] underline-offset-4 transition-colors hover:text-[#4f4a52] hover:underline"
+                  >
+                    View all collections →
+                  </Link>
+                </div>
+              </div>
+            </section>
+          )}
+        </main>
+
+        <Footer />
+      </>
+    );
+  }
+
+  // ── Standard collection page ────────────────────────────────────────────────
 
   return (
     <>

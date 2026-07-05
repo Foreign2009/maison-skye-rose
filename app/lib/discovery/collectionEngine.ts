@@ -266,4 +266,57 @@ export const COLLECTION_SPECS: CollectionSpec[] = [
     ],
     maxItems: 8,
   },
+
+  {
+    id:          "winter-warmth",
+    name:        "Winter Warmth",
+    description: "Rich, warm fragrances built for the colder months. Base-heavy, enveloping, and made to endure.",
+    tags:        ["winter", "warm", "rich", "oud", "amber"],
+    icon:        "🕯️",
+    accentColor: "#9b7ce0",
+    featured:    false,
+    filters: [
+      {
+        type:  "anyOf",
+        anyOf: [
+          { type: "season",   value: "Winter" },
+          { type: "occasion", value: "Winter Evenings" },
+        ],
+      },
+    ],
+    boosts: [
+      { type: "scentCharacter", value: "Rich & Long Wearing", points: 20 },
+      { type: "scentCharacter", value: "Deep & Intense",      points: 15 },
+      { type: "family",         value: "Oud",                 points: 15 },
+      { type: "family",         value: "Amber",               points: 12 },
+      { type: "bestSeller",                                    points: 10 },
+    ],
+    maxItems: 8,
+  },
+
+  {
+    id:          "special-occasion",
+    name:        "Special Occasion",
+    description: "Exceptional fragrances for extraordinary moments. Chosen to mark and be remembered.",
+    tags:        ["special", "wedding", "occasion", "celebration", "memorable"],
+    icon:        "✨",
+    accentColor: "#d89ca4",
+    featured:    false,
+    filters: [
+      {
+        type:  "anyOf",
+        anyOf: [
+          { type: "occasion", value: "Wedding" },
+          { type: "occasion", value: "Date Night" },
+        ],
+      },
+    ],
+    boosts: [
+      { type: "bestSeller",                                   points: 20 },
+      { type: "projection",     value: "strong",              points: 15 },
+      { type: "scentCharacter", value: "Rich & Long Wearing", points: 12 },
+      { type: "family",         value: "Floral",              points: 10 },
+    ],
+    maxItems: 8,
+  },
 ];
