@@ -67,15 +67,18 @@ const SPECIAL_OCCASION_SPEC: CollectionSpec = {
 };
 
 // ── Moment configuration ──────────────────────────────────────────────────────
-// Editorial copy and discovery logic are kept separate.
-// The Discovery Engine remains responsible only for selecting fragrances.
+// Editorial copy (story, insight, academyCopy, conciergeCopy) is kept entirely
+// separate from recommendation logic. The Discovery Engine remains responsible
+// only for selecting fragrances.
 
 type MomentDef = {
   id:            string;
   label:         string;
   subtitle:      string;
-  description:   string;
-  why:           string;
+  story:         string;
+  insight:       string;
+  academyCopy:   string;
+  conciergeCopy: string;
   getFragrances: () => FragranceKnowledge[];
   academySlug?:  string;
   primary:       boolean;
@@ -83,85 +86,113 @@ type MomentDef = {
 
 const MOMENTS: MomentDef[] = [
   {
-    id:          "everyday",
-    label:       "Everyday Signature",
-    subtitle:    "A reliable anchor for every day.",
-    description:
-      "Fragrances you'll reach for without thinking. Versatile, balanced, and quietly personal — worn from morning to evening, season after season.",
-    why:
-      "These fragrances are rated most versatile across all occasions, making them ideal daily companions.",
+    id:       "everyday",
+    label:    "Everyday Signature",
+    subtitle: "A reliable anchor for every day.",
+    story:
+      "The fragrances we reach for every morning shape how the day begins. An everyday signature does not announce itself — it becomes part of who you are. Over time, it is the scent others associate with you without ever naming it.",
+    insight:
+      "Versatility is not a limitation. It is the mark of a fragrance confident enough to work everywhere.",
+    academyCopy:
+      "Learn how application and layering build all-day presence",
+    conciergeCopy:
+      "Your Concierge can help build your daily fragrance rotation based on your lifestyle",
     getFragrances: () => getCollection("everyday-wear").slice(0, 4),
     academySlug:   "how-to-wear-fragrance",
     primary:       true,
   },
   {
-    id:          "office",
-    label:       "Office & Work",
-    subtitle:    "Confident, considered, and professional.",
-    description:
-      "Clean, refined scents suited to shared environments. Present without being distracting — the kind of fragrance that earns quiet compliments.",
-    why:
-      "Curated for restrained projection and freshness. These fragrances make an impression without demanding attention.",
+    id:       "office",
+    label:    "Office & Work",
+    subtitle: "Confident, considered, and professional.",
+    story:
+      "A workplace fragrance walks a careful line — it must project enough to feel intentional, yet not so much that it commands the room. The best office fragrances are the ones that make someone lean in slightly and quietly wonder.",
+    insight:
+      "Freshness and restraint are not compromises. They are the craft of choosing a fragrance for shared spaces.",
+    academyCopy:
+      "Discover which fragrance families perform best in professional environments",
+    conciergeCopy:
+      "Describe your workplace — your Concierge will suggest the right balance of presence and restraint",
     getFragrances: () => getCollection("fresh-office").slice(0, 4),
     academySlug:   "guide-to-fragrance-families",
     primary:       true,
   },
   {
-    id:          "date-night",
-    label:       "Date Night",
-    subtitle:    "Memorable from the first impression.",
-    description:
-      "Fragrances that stay close without overwhelming the evening. Deeper, richer, and built to linger — for the moments worth remembering.",
-    why:
-      "Selected for warmth, sillage, and the kind of character that lingers long after you leave.",
+    id:       "date-night",
+    label:    "Date Night",
+    subtitle: "Memorable from the first impression.",
+    story:
+      "An evening fragrance is part of the first impression, even before you speak. Worn well, it creates a peripheral awareness — a lingering presence that suggests confidence without demanding attention. These are fragrances that stay close.",
+    insight:
+      "The best evening fragrances are not loud. They are deep. Character, not volume, is what lingers.",
+    academyCopy:
+      "Discover how top, heart, and base notes unfold over the course of an evening",
+    conciergeCopy:
+      "Describe your evening — your Concierge will find your perfect match for the occasion",
     getFragrances: () => getCollection("date-night").slice(0, 4),
     academySlug:   "the-note-pyramid-explained",
     primary:       true,
   },
   {
-    id:          "summer",
-    label:       "Summer Escape",
-    subtitle:    "Light, bright, and made for warmth.",
-    description:
-      "Fresh and vibrant fragrances that perform beautifully in the heat. Crisp without fading — alive in the sun and effortless in the air.",
-    why:
-      "Elevated for warm weather: high freshness, light projection, and a seasonal brightness that holds through the day.",
+    id:       "summer",
+    label:    "Summer Escape",
+    subtitle: "Light, bright, and made for warmth.",
+    story:
+      "Summer changes how fragrance behaves. Warmth intensifies projection and accelerates the drydown — what works in winter can feel overwhelming in the sun. The right summer fragrance is alive in the heat, light on the air, and effortless to wear from morning through to evening.",
+    insight:
+      "In summer, freshness is not just a note. It is a performance requirement.",
+    academyCopy:
+      "Learn how temperature affects fragrance families and why season matters in selection",
+    conciergeCopy:
+      "Tell your Concierge where you're headed this season and discover fragrances made for the journey",
     getFragrances: () => getCollection("summer-essentials").slice(0, 4),
     academySlug:   "guide-to-fragrance-families",
     primary:       true,
   },
   {
-    id:          "first",
-    label:       "First Signature Fragrance",
-    subtitle:    "Where every collection begins.",
-    description:
-      "Beginning your fragrance journey? These are the most approachable, versatile, and widely loved fragrances in the Maison collection — chosen to build confidence, not complexity.",
-    why:
-      "Recommended for their ease of wear, broad appeal, and forgiving character. The ideal starting point for any wardrobe.",
+    id:       "first",
+    label:    "First Signature Fragrance",
+    subtitle: "Where every collection begins.",
+    story:
+      "Every fragrance wardrobe begins somewhere. The first signature is rarely the boldest or most complex — it is the one that feels right without needing to understand why. These are fragrances that welcome you into the practice of fragrance without overwhelming you with it.",
+    insight:
+      "The most approachable fragrances are not the least interesting. They are the most considered.",
+    academyCopy:
+      "Start with the fundamentals — discover the fragrance families that will guide your entire journey",
+    conciergeCopy:
+      "Your Concierge specialises in first signatures — share your instincts and let the journey begin",
     getFragrances: () => getCollection("beginner-friendly").slice(0, 4),
     academySlug:   "guide-to-fragrance-families",
     primary:       true,
   },
   {
-    id:          "winter",
-    label:       "Winter Warmth",
-    subtitle:    "Rich, enveloping, season-defining.",
-    description:
-      "Fragrances built for the cold — warm base notes that wrap around you and endure from morning to evening. Deeper. Richer. Unmistakably winter.",
-    why:
-      "Curated for warmth, projection, and longevity — all of which intensify beautifully in cold air.",
+    id:       "winter",
+    label:    "Winter Warmth",
+    subtitle: "Rich, enveloping, season-defining.",
+    story:
+      "Cold air is fragrance's most generous companion. In winter, base notes deepen, warmth amplifies, and the body's natural heat draws out a fragrance's fullest character. These are the scents built for that relationship — rich, enveloping, and made to endure.",
+    insight:
+      "Oud, amber, and warm woods are not trends. They are winter's native language.",
+    academyCopy:
+      "Understand how base notes define winter fragrances and why longevity matters in the cold",
+    conciergeCopy:
+      "Your Concierge can match you with a winter warmth that suits your character precisely",
     getFragrances: () => generateCollection(WINTER_WARMTH_SPEC),
     academySlug:   "the-note-pyramid-explained",
     primary:       false,
   },
   {
-    id:          "special",
-    label:       "Special Occasion",
-    subtitle:    "For the days that deserve to be remembered.",
-    description:
-      "Weddings, milestones, celebrations — these are the fragrances you save for when it truly counts. Exceptional, intentional, and unforgettable.",
-    why:
-      "Selected for distinctiveness, quality, and the ability to mark a moment rather than simply accompany it.",
+    id:       "special",
+    label:    "Special Occasion",
+    subtitle: "For the days that deserve to be remembered.",
+    story:
+      "Some fragrances are worn every day. Others are chosen for a single, specific day. A special occasion fragrance carries the weight of what it marks — it should feel exceptional, considered, and worthy of the moment it accompanies.",
+    insight:
+      "A fragrance worn on a meaningful day becomes permanently woven into the memory of that day.",
+    academyCopy:
+      "Explore what makes a fragrance truly exceptional and how to wear it for lasting impact",
+    conciergeCopy:
+      "Share your occasion with your Concierge — they will help you select a fragrance you'll remember",
     getFragrances: () => generateCollection(SPECIAL_OCCASION_SPEC),
     academySlug:   "how-to-wear-fragrance",
     primary:       false,
@@ -260,26 +291,38 @@ export default function DiscoverByMoment() {
           )}
         </div>
 
-        {/* ── Editorial content for selected moment ───────────────────────── */}
+        {/* ── Editorial story for selected moment ─────────────────────────── */}
         <div className="mt-10 md:mt-12">
+
+          {/* Title + subtitle */}
           <h3 className="text-xl font-black tracking-[-0.03em] text-[#4f4a52] md:text-2xl">
             {currentMoment.label}
           </h3>
           <p className="mt-1 text-sm font-semibold text-[#d89ca4]">
             {currentMoment.subtitle}
           </p>
-          <p className="mt-4 max-w-2xl text-base leading-relaxed text-[#7b7480] md:text-lg">
-            {currentMoment.description}
+
+          {/* Story — editorial narrative */}
+          <p className="mt-6 max-w-2xl text-base leading-[1.85] text-[#7b7480] md:text-lg">
+            {currentMoment.story}
           </p>
-          <p className="mt-3 max-w-2xl text-sm text-[#9b9298]">
-            {currentMoment.why}
-          </p>
+
+          {/* Maison Insight — accent callout */}
+          <div className="mt-6 max-w-xl border-l-2 border-[#d89ca4] pl-5">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.35em] text-[#d89ca4]">
+              Maison Insight
+            </p>
+            <p className="mt-2 text-sm leading-relaxed text-[#7b7480]">
+              {currentMoment.insight}
+            </p>
+          </div>
+
         </div>
 
         {/* ── Fragrance recommendations ────────────────────────────────────── */}
 
         {/* Mobile: horizontal scroll */}
-        <div className="mt-8 flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide md:hidden">
+        <div className="mt-10 flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide md:hidden">
           {fragrances.map((fragrance) => (
             <div key={fragrance.title} className="w-[210px] flex-shrink-0 snap-start">
               <ProductCard
@@ -295,7 +338,7 @@ export default function DiscoverByMoment() {
         </div>
 
         {/* Desktop: grid */}
-        <div className="hidden mt-8 gap-8 md:grid md:grid-cols-2 lg:grid-cols-4">
+        <div className="hidden mt-10 gap-8 md:grid md:grid-cols-2 lg:grid-cols-4">
           {fragrances.map((fragrance, i) => (
             <ProductCard
               key={fragrance.title}
@@ -317,7 +360,7 @@ export default function DiscoverByMoment() {
               href={`/academy/${currentMoment.academySlug}`}
               className="text-sm font-semibold text-[#7b7480] underline-offset-4 transition-colors hover:text-[#4f4a52] hover:underline"
             >
-              Learn about this fragrance style →
+              {currentMoment.academyCopy} →
             </Link>
           )}
           <span aria-hidden="true" className="hidden h-4 w-px bg-[#e8e2de] md:block" />
@@ -325,7 +368,7 @@ export default function DiscoverByMoment() {
             onClick={handleConciergeOpen}
             className="text-sm font-semibold text-[#d89ca4] transition-colors hover:text-[#c48898]"
           >
-            Ask your Concierge for a personal recommendation
+            {currentMoment.conciergeCopy}
           </button>
         </div>
 
