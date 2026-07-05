@@ -128,6 +128,7 @@ export type AnalyticsSource =
   | "homepage-hidden-gems"
   | "homepage-seasonal"
   | "homepage-signature"
+  | "homepage-moment"
   | "discover-collection"
   | "discover-seasonal"
   | "discover-hidden-gems";
@@ -335,8 +336,12 @@ export function trackSearchCategorySelected(payload: SearchCategorySelectedPaylo
 // ── AI Concierge event payload types ─────────────────────────────────────────
 
 export type AiChatStartedPayload = {
-  trigger:   "float-button" | "pdp" | "academy" | "discover" | "hero-cta";
+  trigger:   "float-button" | "pdp" | "academy" | "discover" | "hero-cta" | "moment-cta";
   sessionId: string;
+};
+
+export type MomentSelectedPayload = {
+  momentId: string;
 };
 
 export type AiQueryPayload = {
@@ -449,4 +454,11 @@ export function trackAiComparisonStarted(payload: AiComparisonStartedPayload): v
 export function trackAiConversationDepth(payload: AiConversationDepthPayload): void {
   if (!ready) return;
   capture("ai_conversation_depth", payload);
+}
+
+// ── Discover by Moment events ─────────────────────────────────────────────────
+
+export function trackMomentSelected(payload: MomentSelectedPayload): void {
+  if (!ready) return;
+  capture("moment_selected", payload);
 }

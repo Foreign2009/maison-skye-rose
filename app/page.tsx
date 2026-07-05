@@ -11,6 +11,7 @@ import ProductCard from "./components/ProductCard";
 import AIHeroSection from "./components/AIHeroSection";
 import LuxuryConfidenceBar from "./components/LuxuryConfidenceBar";
 import BestSellers from "./components/BestSellers";
+import DiscoverByMoment from "./components/DiscoverByMoment";
 import LatestAdditions from "./components/LatestAdditions";
 import ShopByPersonality from "./components/ShopByPersonality";
 import Testimonials from "./components/Testimonials";
@@ -217,6 +218,9 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* ── DISCOVER BY MOMENT ─────────────────────────────────────────────── */}
+      <DiscoverByMoment />
 
       {/* ── CURATED DISCOVERY ──────────────────────────────────────────────── */}
       <section className="bg-white">
