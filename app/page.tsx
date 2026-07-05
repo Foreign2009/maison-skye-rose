@@ -9,7 +9,6 @@ import AnnouncementBar from "./components/AnnouncementBar";
 import ProductCard from "./components/ProductCard";
 import AIHeroSection from "./components/AIHeroSection";
 import LuxuryConfidenceBar from "./components/LuxuryConfidenceBar";
-import TrustBar from "./components/TrustBar";
 import BestSellers from "./components/BestSellers";
 import LatestAdditions from "./components/LatestAdditions";
 import DiscoverySets from "./components/DiscoverySets";
@@ -71,43 +70,8 @@ export default function HomePage() {
       <Navbar />
       <AnnouncementBar />
 
-      <section className="bg-[#b67d73] py-3">
-        <div className="mx-auto max-w-7xl px-4 text-center">
-          <p className="text-xs md:text-sm font-bold uppercase tracking-[0.25em] text-white">
-            🎁 Free 5ml Sample On Orders Over R400
-          </p>
-          <p className="mt-1 text-[11px] md:text-xs text-white/90">
-            Unlock up to 3 free samples and a Discovery Set as your order grows
-          </p>
-        </div>
-      </section>
-
-      <section className="bg-white border-b border-[#efe8e1]">
-        <div className="mx-auto max-w-7xl px-4">
-          <div className="grid grid-cols-2 md:grid-cols-4">
-            <div className="py-4 text-center">
-              <p className="text-lg font-black text-[#4f4a52]">465+</p>
-              <p className="text-[10px] uppercase tracking-[0.2em] text-[#7b7480]">Fragrances</p>
-            </div>
-            <div className="py-4 text-center">
-              <p className="text-lg font-black text-[#4f4a52]">R400+</p>
-              <p className="text-[10px] uppercase tracking-[0.2em] text-[#7b7480]">Free Sample</p>
-            </div>
-            <div className="py-4 text-center">
-              <p className="text-lg font-black text-[#4f4a52]">Fast</p>
-              <p className="text-[10px] uppercase tracking-[0.2em] text-[#7b7480]">WhatsApp Orders</p>
-            </div>
-            <div className="py-4 text-center">
-              <p className="text-lg font-black text-[#4f4a52]">SA</p>
-              <p className="text-[10px] uppercase tracking-[0.2em] text-[#7b7480]">Nationwide Delivery</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
       <AIHeroSection />
       <LuxuryConfidenceBar />
-      <TrustBar />
 
       {/* 1. Featured Fragrance Block */}
       <section className="bg-white py-8 md:py-24">

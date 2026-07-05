@@ -334,7 +334,7 @@ export function trackSearchCategorySelected(payload: SearchCategorySelectedPaylo
 // ── AI Concierge event payload types ─────────────────────────────────────────
 
 export type AiChatStartedPayload = {
-  trigger:   "float-button" | "pdp" | "academy" | "discover";
+  trigger:   "float-button" | "pdp" | "academy" | "discover" | "hero-cta";
   sessionId: string;
 };
 
