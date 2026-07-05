@@ -124,6 +124,7 @@ export type AnalyticsSource =
   | "pdp-recommendation"
   | "recently-viewed"
   | "homepage-trending"
+  | "homepage-new-arrivals"
   | "homepage-hidden-gems"
   | "homepage-seasonal"
   | "homepage-signature"

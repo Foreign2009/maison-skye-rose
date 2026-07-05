@@ -4,6 +4,7 @@ import { useState, useMemo } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { Sparkles } from "lucide-react";
 import Navbar from "./components/Navbar";
 import AnnouncementBar from "./components/AnnouncementBar";
 import ProductCard from "./components/ProductCard";
@@ -11,7 +12,6 @@ import AIHeroSection from "./components/AIHeroSection";
 import LuxuryConfidenceBar from "./components/LuxuryConfidenceBar";
 import BestSellers from "./components/BestSellers";
 import LatestAdditions from "./components/LatestAdditions";
-import DiscoverySets from "./components/DiscoverySets";
 import ShopByPersonality from "./components/ShopByPersonality";
 import Testimonials from "./components/Testimonials";
 import RecentlyViewedHome from "./components/RecentlyViewedHome";
@@ -20,7 +20,9 @@ import Footer from "./components/Footer";
 import QuickAddModal from "./components/QuickAddModal";
 import { mkcCatalogue } from "./lib/mkc/catalogue";
 import { toDisplayFragrance } from "./lib/mkc/displayAdapter";
-import { getCollection, getCurrentSeason } from "./lib/discovery";
+import { getCurrentSeason } from "./lib/discovery";
+import { useConcierge } from "./context/ConciergeContext";
+import { trackAiChatStarted } from "./lib/analytics";
 
 // ── Featured fragrance — first Skye best seller ───────────────────────────────
 const featuredKnowledge =
@@ -28,11 +30,7 @@ const featuredKnowledge =
   mkcCatalogue[0];
 const featuredFragrance = toDisplayFragrance(featuredKnowledge);
 
-// ── Discovery Engine sections (computed once at module level) ─────────────────
-const signatureScents = getCollection("signature-scents").map(toDisplayFragrance);
-const hiddenGems      = getCollection("hidden-gems").map(toDisplayFragrance);
-
-// ── Seasonal Picks — dynamically derived from MKC ────────────────────────────
+// ── Seasonal Picks ────────────────────────────────────────────────────────────
 const currentSeason = getCurrentSeason();
 const seasonalPicks = mkcCatalogue
   .filter((k) => k.season === currentSeason)
@@ -51,64 +49,102 @@ const SEASON_LABEL: Record<string, string> = {
   Winter: "Winter Warmers",
 };
 
+// ── Academy teaser ────────────────────────────────────────────────────────────
+const ACADEMY_TEASER = [
+  {
+    slug: "the-note-pyramid-explained",
+    title: "The Note Pyramid Explained",
+    excerpt:
+      "Every fragrance tells a story in three acts. Learn how top, heart, and base notes create the scent you experience.",
+    readTime: 4,
+  },
+  {
+    slug: "guide-to-fragrance-families",
+    title: "Your Guide to Fragrance Families",
+    excerpt:
+      "Fragrance families are the language of perfumery. Understanding them helps you discover new fragrances with confidence.",
+    readTime: 5,
+  },
+  {
+    slug: "how-to-wear-fragrance",
+    title: "How to Wear Fragrance",
+    excerpt:
+      "Most people apply fragrance incorrectly. Learn the techniques that maximise longevity and character.",
+    readTime: 4,
+  },
+];
+
+// ── Wardrobe roles ────────────────────────────────────────────────────────────
+const WARDROBE_ROLES = [
+  { role: "Everyday", description: "A reliable signature that works from morning to night." },
+  { role: "Office", description: "Clean, confident, and considered for the workplace." },
+  { role: "Evening", description: "Deeper, richer — for the moments that matter." },
+  { role: "Summer", description: "Fresh and light, made for warm weather." },
+  { role: "Winter", description: "Warm, enveloping, and season-defining." },
+  { role: "Special Occasions", description: "The fragrance you reach for when it counts." },
+];
+
 export default function HomePage() {
   const router = useRouter();
+  const { openConcierge, conversationState } = useConcierge();
   const [selectedFragrance, setSelectedFragrance] = useState<ReturnType<typeof toDisplayFragrance> | null>(null);
   const [quickOpen, setQuickOpen] = useState(false);
+
+  const seasonalDisplay = useMemo(() => seasonalPicks, []);
 
   const featuredMood =
     featuredFragrance.mood ||
     "A captivating blend crafted for those who leave an impression.";
 
-  // Limit slice for homepage grid sections
-  const signatureDisplay = useMemo(() => signatureScents.slice(0, 8), []);
-  const hiddenGemsDisplay = useMemo(() => hiddenGems.slice(0, 8), []);
-  const seasonalDisplay   = useMemo(() => seasonalPicks.slice(0, 8), []);
+  function handleConciergeOpen() {
+    openConcierge();
+    trackAiChatStarted({ trigger: "hero-cta", sessionId: conversationState.sessionId });
+  }
 
   return (
     <main className="min-h-screen bg-[#faf7f5] overflow-x-hidden">
       <Navbar />
       <AnnouncementBar />
 
+      {/* ── WELCOME ────────────────────────────────────────────────────────── */}
       <AIHeroSection />
+
+      {/* ── WHY MAISON ─────────────────────────────────────────────────────── */}
       <LuxuryConfidenceBar />
 
-      {/* 1. Featured Fragrance Block */}
-      <section className="bg-white py-8 md:py-24">
-        <div className="mx-auto max-w-7xl px-4 md:px-5">
-          <div className="bg-[#faf7f5] rounded-[32px] md:rounded-[40px] p-5 md:p-16 shadow-[0_20px_60px_rgba(0,0,0,0.02)] grid md:grid-cols-2 gap-8 md:gap-16 items-center">
-            <div className="relative h-[240px] md:h-[480px] w-full flex items-center justify-center rounded-[32px] bg-gradient-to-br from-[#faf7f5] via-white to-[#fdf8f6] p-6">
+      {/* ── A FEATURED CREATION ────────────────────────────────────────────── */}
+      <section className="bg-white py-16 md:py-24">
+        <div className="mx-auto max-w-7xl px-5">
+          <div className="bg-[#faf7f5] rounded-[32px] md:rounded-[40px] p-6 md:p-16 grid md:grid-cols-2 gap-8 md:gap-16 items-center">
+            <div className="relative h-[240px] md:h-[480px] w-full flex items-center justify-center rounded-[24px] bg-gradient-to-br from-[#faf7f5] via-white to-[#fdf8f6]">
               <Image
                 src={featuredFragrance.images?.["10ml"] || "/placeholder-perfume.png"}
                 alt={featuredFragrance.title || "Signature Scent"}
                 fill
-                className="object-contain p-6 transform transition-transform duration-700 hover:scale-105"
+                className="object-contain p-6 transition-transform duration-700 hover:scale-105"
                 sizes="(max-width: 768px) 100vw, 480px"
                 priority
               />
             </div>
             <div className="flex flex-col items-start text-left">
-              <div className="flex flex-wrap items-center gap-2 mb-3">
+              <div className="flex flex-wrap items-center gap-2 mb-4">
                 <span className="text-[10px] font-bold uppercase tracking-[0.6em] text-[#d89ca4]">
                   Featured Creation
                 </span>
                 {featuredFragrance.bestSeller && (
-                  <span className="rounded-full bg-black px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-white">
-                    Best Seller
+                  <span className="rounded-full bg-[#4f4a52] px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-white">
+                    Most Loved
                   </span>
                 )}
               </div>
-              <h2 className="text-3xl md:text-5xl font-black tracking-[-0.06em] text-[#4f4a52] leading-tight">
-                {featuredFragrance.title || "Maison Skye & Rose"}
+              <h2 className="text-3xl md:text-5xl font-black tracking-[-0.05em] text-[#4f4a52] leading-tight">
+                {featuredFragrance.title}
               </h2>
               <p className="mt-2 text-sm font-semibold text-[#d89ca4]">
-                {featuredFragrance.subtitle || "Extrait de Parfum"}
-              </p>
-              <p className="mt-2 text-xs uppercase tracking-[0.2em] text-[#7b7480]">
-                One of our most requested fragrances
+                {featuredFragrance.subtitle || "Signature Fragrance"}
               </p>
               {featuredFragrance.collection && (
-                <p className="mt-3 text-[11px] uppercase tracking-[0.3em] text-[#7b7480]">
+                <p className="mt-2 text-[11px] uppercase tracking-[0.3em] text-[#9b9298]">
                   {featuredFragrance.collection} Collection
                 </p>
               )}
@@ -118,46 +154,72 @@ export default function HomePage() {
               {featuredFragrance.notes && (
                 <div className="flex mt-6 flex-wrap gap-2">
                   {featuredFragrance.notes.slice(0, 3).map((note: string) => (
-                    <span key={note} className="rounded-full bg-white px-3 py-1 text-xs font-semibold text-[#d89ca4] border border-pink-50">
+                    <span
+                      key={note}
+                      className="rounded-full bg-white px-3 py-1 text-xs font-semibold text-[#d89ca4] border border-[#f0e8e8]"
+                    >
                       {note}
                     </span>
                   ))}
                 </div>
               )}
-              <p className="mt-5 text-2xl font-black text-[#4f4a52]">
+              <p className="mt-6 text-2xl font-black text-[#4f4a52]">
                 From R{featuredFragrance.prices["5ml"]}
               </p>
               <button
-                onClick={() =>
-                  router.push(
-                    `/product/${featuredFragrance.title
-                      .toLowerCase()
-                      .replace(/\s+/g, "-")}`
-                  )
-                }
-                className="mt-4 rounded-full bg-black px-8 py-4 text-sm font-bold uppercase tracking-widest text-white transition hover:bg-zinc-800 hover:scale-105 w-full sm:w-auto text-center"
+                onClick={() => router.push(`/product/${featuredKnowledge.slug}`)}
+                className="mt-5 rounded-full bg-[#4f4a52] px-8 py-4 text-sm font-bold uppercase tracking-widest text-white transition hover:bg-black hover:scale-[1.02] w-full sm:w-auto text-center"
               >
-                Shop Now
+                Discover This Scent
               </button>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Luxury Statement Divider */}
-      <section className="bg-white py-12 md:py-20 px-4">
-        <div className="mx-auto max-w-3xl text-center">
-          <p className="text-[11px] uppercase tracking-[0.5em] text-[#d89ca4]">The Maison Standard</p>
-          <h3 className="mt-4 text-2xl md:text-4xl font-black text-[#4f4a52]">Crafted For Every Occasion</h3>
-          <p className="mt-5 text-[#7b7480] leading-7 text-sm md:text-base">
-            Modern fragrances inspired by the world&apos;s most iconic scent journeys,
-            thoughtfully curated for everyday luxury.
-          </p>
+      {/* ── THE MAISON METHOD ──────────────────────────────────────────────── */}
+      <section className="bg-[#faf7f5] py-16 md:py-28">
+        <div className="mx-auto max-w-7xl px-5">
+          <div className="max-w-2xl mb-12 md:mb-16">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.55em] text-[#d89ca4]">
+              The Maison Method
+            </p>
+            <h2 className="mt-4 text-3xl md:text-5xl font-black tracking-[-0.05em] text-[#4f4a52] leading-tight">
+              Build Your Fragrance Wardrobe
+            </h2>
+            <p className="mt-5 text-base md:text-lg leading-relaxed text-[#7b7480]">
+              Just as you dress intentionally for each occasion, a fragrance wardrobe gives every moment its own signature. One bottle is a start. A wardrobe is a practice.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-5">
+            {WARDROBE_ROLES.map(({ role, description }) => (
+              <div
+                key={role}
+                className="rounded-[20px] bg-white border border-[#f0ebe8] p-6 md:p-8"
+              >
+                <p className="text-sm font-black text-[#4f4a52]">{role}</p>
+                <p className="mt-2 text-xs md:text-sm leading-relaxed text-[#7b7480]">
+                  {description}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-10 md:mt-12">
+            <button
+              onClick={handleConciergeOpen}
+              className="inline-flex items-center gap-2.5 rounded-full border border-[#4f4a52] px-8 py-4 text-sm font-bold uppercase tracking-wider text-[#4f4a52] transition-all duration-300 hover:bg-[#4f4a52] hover:text-white"
+            >
+              <Sparkles size={15} />
+              Let&apos;s discover together
+            </button>
+          </div>
         </div>
       </section>
 
-      {/* 2. Trending Now — powered by Discovery Engine */}
-      <section className="bg-[#faf7f5]">
+      {/* ── CURATED DISCOVERY ──────────────────────────────────────────────── */}
+      <section className="bg-white">
         <BestSellers
           onQuickAdd={(fragrance) => {
             setSelectedFragrance(fragrance);
@@ -166,230 +228,123 @@ export default function HomePage() {
         />
       </section>
 
-      <section className="bg-white py-10">
-        <div className="mx-auto max-w-5xl px-5 text-center">
-          <p className="text-[11px] uppercase tracking-[0.4em] text-[#d89ca4]">Most Loved Fragrances</p>
-          <h3 className="mt-4 text-2xl md:text-4xl font-black text-[#4f4a52]">
-            Trusted By Fragrance Lovers Across South Africa
-          </h3>
-          <p className="mt-5 text-sm md:text-base text-[#7b7480] max-w-2xl mx-auto">
-            Discover the fragrances our customers return for again and again.
-            Carefully selected inspirations designed for everyday luxury.
-          </p>
+      {/* ── CONTINUE LEARNING ──────────────────────────────────────────────── */}
+      <section className="bg-[#faf7f5] py-16 md:py-28">
+        <div className="mx-auto max-w-7xl px-5">
+          <div className="max-w-2xl mb-12">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.55em] text-[#d89ca4]">
+              Maison Academy
+            </p>
+            <h2 className="mt-4 text-3xl md:text-5xl font-black tracking-[-0.05em] text-[#4f4a52] leading-tight">
+              Build Your Fragrance Knowledge
+            </h2>
+            <p className="mt-5 text-base leading-relaxed text-[#7b7480]">
+              Understanding fragrance transforms every choice from a guess into an intention. Learn at your own pace.
+            </p>
+          </div>
+
+          <div className="grid gap-5 md:grid-cols-3">
+            {ACADEMY_TEASER.map(({ slug, title, excerpt, readTime }) => (
+              <Link
+                key={slug}
+                href={`/academy/${slug}`}
+                className="group block rounded-[20px] bg-white border border-[#f0ebe8] p-7 transition-all duration-300 hover:border-[#d89ca4] hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)]"
+              >
+                <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#d89ca4]">
+                  {readTime} min read
+                </p>
+                <h3 className="mt-3 text-base font-black text-[#4f4a52] leading-snug">
+                  {title}
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed text-[#7b7480]">
+                  {excerpt}
+                </p>
+                <p className="mt-5 text-sm font-bold text-[#d89ca4]">
+                  Read more →
+                </p>
+              </Link>
+            ))}
+          </div>
+
+          <div className="mt-10">
+            <Link
+              href="/academy"
+              className="inline-flex items-center rounded-full border border-[#d89ca4] px-8 py-4 text-sm font-bold uppercase tracking-wider text-[#d89ca4] transition-all duration-300 hover:bg-[#d89ca4]/5"
+            >
+              Visit the Academy
+            </Link>
+          </div>
         </div>
       </section>
 
-      {/* 3. Discovery Sets */}
+      {/* ── NEED GUIDANCE? ─────────────────────────────────────────────────── */}
       <section className="bg-white">
-        <div className="mx-auto max-w-5xl px-5 pt-10 text-center">
-          <p className="text-[11px] uppercase tracking-[0.4em] text-[#d89ca4]">Discovery Journey</p>
-          <h3 className="mt-4 text-2xl md:text-4xl font-black text-[#4f4a52]">Build Your Collection</h3>
-          <p className="mt-5 text-sm md:text-base text-[#7b7480] max-w-2xl mx-auto">
-            Most customers begin with 5ml fragrances to discover their favourites
-            before building a full collection.
-          </p>
-          <div className="mt-6 inline-flex rounded-full bg-[#faf7f5] px-5 py-3 text-sm font-semibold text-[#b67d73]">
-            🎁 Orders over R400 receive a FREE 5ml sample
-          </div>
-        </div>
-        <DiscoverySets />
-      </section>
-
-      {/* 4. Wholesale */}
-      <section className="bg-[#faf7f5] py-20">
-        <div className="mx-auto max-w-6xl px-5">
-          <div className="rounded-[40px] bg-white p-8 md:p-16 text-center shadow-[0_20px_60px_rgba(0,0,0,0.04)]">
-            <p className="text-xs uppercase tracking-[0.45em] text-[#d89ca4]">Wholesale Opportunities</p>
-            <h2 className="mt-4 text-3xl md:text-5xl font-black text-[#4f4a52]">Become A Maison Stockist</h2>
-            <p className="mx-auto mt-6 max-w-3xl text-[#7b7480]">
-              Mix and match any fragrances and bottle sizes.
-              Wholesale pricing starts from only 10 units.
-            </p>
-            <div className="mt-10 flex flex-wrap justify-center gap-4">
-              <span className="rounded-full bg-[#faf7f5] px-6 py-3 font-medium text-sm text-[#4f4a52]">5ml • R48</span>
-              <span className="rounded-full bg-[#faf7f5] px-6 py-3 font-medium text-sm text-[#4f4a52]">10ml • R77</span>
-              <span className="rounded-full bg-[#faf7f5] px-6 py-3 font-medium text-sm text-[#4f4a52]">30ml • R180</span>
-            </div>
-            <Link
-              href="/wholesale"
-              className="mt-10 inline-flex rounded-full bg-black px-8 py-4 text-sm font-bold uppercase tracking-widest text-white transition hover:bg-zinc-800 hover:scale-105"
-            >
-              Learn More
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* 5. Latest Additions — MKC new arrivals */}
-      <section className="bg-[#faf7f5]">
-        <LatestAdditions />
-      </section>
-
-      {/* 6. Seasonal Picks — dynamically generated from MKC */}
-      {seasonalDisplay.length > 0 && (
-        <section className="bg-white mx-auto max-w-7xl px-4 md:px-5 py-8 md:py-24">
-          <div className="mb-12 text-center">
-            <p className="text-[11px] uppercase tracking-[0.45em] text-[#d89ca4]">Curated For The Season</p>
-            <h2 className="mt-2 text-xl md:text-5xl font-black tracking-[-0.06em] text-[#4f4a52]">
-              {SEASON_LABEL[currentSeason] ?? "Seasonal Picks"}
-            </h2>
-          </div>
-
-          <div className="flex gap-4 overflow-x-auto pb-4 md:hidden snap-x snap-mandatory scrollbar-hide">
-            {seasonalDisplay.map((fragrance) => (
-              <div key={fragrance.title} className="w-[195px] flex-shrink-0 snap-start">
-                <ProductCard
-                  {...fragrance}
-                  source="homepage-seasonal"
-                  onQuickAdd={() => {
-                    setSelectedFragrance(fragrance);
-                    setQuickOpen(true);
-                  }}
-                />
-              </div>
-            ))}
-          </div>
-
-          <div className="hidden gap-8 md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {seasonalDisplay.map((fragrance, i) => (
-              <ProductCard
-                key={fragrance.title}
-                {...fragrance}
-                source="homepage-seasonal"
-                rank={i + 1}
-                onQuickAdd={() => {
-                  setSelectedFragrance(fragrance);
-                  setQuickOpen(true);
-                }}
-              />
-            ))}
-          </div>
-
-          <div className="mt-12 text-center">
-            <Link
-              href="/shop"
-              className="rounded-full bg-black px-8 py-4 text-sm font-bold uppercase tracking-widest text-white transition hover:bg-zinc-800"
-            >
-              Shop All Fragrances
-            </Link>
-          </div>
-        </section>
-      )}
-
-      {/* 7. Hidden Gems — Discovery Engine */}
-      {hiddenGemsDisplay.length > 0 && (
-        <section className="bg-[#faf7f5] mx-auto max-w-7xl px-4 md:px-5 py-8 md:py-24">
-          <div className="mb-12 text-center">
-            <p className="text-[11px] uppercase tracking-[0.45em] text-[#9b7ce0]">Beyond The Obvious</p>
-            <h2 className="mt-2 text-xl md:text-5xl font-black tracking-[-0.06em] text-[#4f4a52]">
-              Hidden Gems
-            </h2>
-            <p className="mt-4 text-sm md:text-base text-[#7b7480] max-w-xl mx-auto">
-              Extraordinary fragrances waiting to be discovered. The ones our most adventurous customers keep returning for.
-            </p>
-          </div>
-
-          <div className="flex gap-4 overflow-x-auto pb-4 md:hidden snap-x snap-mandatory scrollbar-hide">
-            {hiddenGemsDisplay.map((fragrance) => (
-              <div key={fragrance.title} className="w-[195px] flex-shrink-0 snap-start">
-                <ProductCard
-                  {...fragrance}
-                  source="homepage-hidden-gems"
-                  onQuickAdd={() => {
-                    setSelectedFragrance(fragrance);
-                    setQuickOpen(true);
-                  }}
-                />
-              </div>
-            ))}
-          </div>
-
-          <div className="hidden gap-8 md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {hiddenGemsDisplay.map((fragrance, i) => (
-              <ProductCard
-                key={fragrance.title}
-                {...fragrance}
-                source="homepage-hidden-gems"
-                rank={i + 1}
-                onQuickAdd={() => {
-                  setSelectedFragrance(fragrance);
-                  setQuickOpen(true);
-                }}
-              />
-            ))}
-          </div>
-
-          <div className="mt-12 text-center">
-            <Link
-              href="/discover/hidden-gems"
-              className="rounded-full border border-[#9b7ce0] px-8 py-4 text-sm font-bold uppercase tracking-widest text-[#9b7ce0] transition hover:bg-[#9b7ce0] hover:text-white"
-            >
-              Explore Hidden Gems →
-            </Link>
-          </div>
-        </section>
-      )}
-
-      {/* 8. Signature Scents — Discovery Engine */}
-      {signatureDisplay.length > 0 && (
-        <section className="bg-white mx-auto max-w-7xl px-4 md:px-5 py-8 md:py-24">
-          <div className="mb-12 text-center">
-            <p className="text-[11px] uppercase tracking-[0.45em] text-[#d89ca4]">Explore The Collection</p>
-            <h2 className="mt-2 text-xl md:text-5xl font-black tracking-[-0.06em] text-[#4f4a52]">
-              Signature Scents
-            </h2>
-          </div>
-
-          <div className="flex gap-4 overflow-x-auto pb-4 md:hidden snap-x snap-mandatory scrollbar-hide">
-            {signatureDisplay.map((fragrance) => (
-              <div key={fragrance.title} className="w-[195px] flex-shrink-0 snap-start">
-                <ProductCard
-                  {...fragrance}
-                  source="homepage-signature"
-                  onQuickAdd={() => {
-                    setSelectedFragrance(fragrance);
-                    setQuickOpen(true);
-                  }}
-                />
-              </div>
-            ))}
-          </div>
-
-          <div className="hidden gap-8 md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {signatureDisplay.map((fragrance, i) => (
-              <ProductCard
-                key={fragrance.title}
-                {...fragrance}
-                source="homepage-signature"
-                rank={i + 1}
-                onQuickAdd={() => {
-                  setSelectedFragrance(fragrance);
-                  setQuickOpen(true);
-                }}
-              />
-            ))}
-          </div>
-
-          <div className="mt-12 text-center">
-            <Link
-              href="/shop"
-              className="rounded-full bg-black px-8 py-4 text-sm font-bold uppercase tracking-widest text-white transition hover:bg-zinc-800"
-            >
-              View Full Collection
-            </Link>
-          </div>
-        </section>
-      )}
-
-      {/* 9. Quiz / Personality */}
-      <section className="bg-[#faf7f5]">
         <ShopByPersonality />
       </section>
 
-      {/* 10. Testimonials */}
-      <section className="bg-white">
+      {/* ── THE MAISON COMMUNITY ───────────────────────────────────────────── */}
+      <section className="bg-[#faf7f5]">
         <Testimonials />
       </section>
+
+      {/* ── CONTINUE EXPLORING ─────────────────────────────────────────────── */}
+      <section className="bg-white">
+        <LatestAdditions />
+      </section>
+
+      {seasonalDisplay.length > 0 && (
+        <section className="bg-[#faf7f5]">
+          <div className="mx-auto max-w-7xl px-4 md:px-5 py-16 md:py-24">
+            <div className="mb-12 text-center">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.55em] text-[#d89ca4]">
+                Curated For The Season
+              </p>
+              <h2 className="mt-3 text-3xl md:text-5xl font-black tracking-[-0.05em] text-[#4f4a52]">
+                {SEASON_LABEL[currentSeason] ?? "Seasonal Picks"}
+              </h2>
+            </div>
+
+            <div className="flex gap-4 overflow-x-auto pb-4 md:hidden snap-x snap-mandatory scrollbar-hide">
+              {seasonalDisplay.map((fragrance) => (
+                <div key={fragrance.title} className="w-[195px] flex-shrink-0 snap-start">
+                  <ProductCard
+                    {...fragrance}
+                    source="homepage-seasonal"
+                    onQuickAdd={() => {
+                      setSelectedFragrance(fragrance);
+                      setQuickOpen(true);
+                    }}
+                  />
+                </div>
+              ))}
+            </div>
+
+            <div className="hidden gap-8 md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+              {seasonalDisplay.map((fragrance, i) => (
+                <ProductCard
+                  key={fragrance.title}
+                  {...fragrance}
+                  source="homepage-seasonal"
+                  rank={i + 1}
+                  onQuickAdd={() => {
+                    setSelectedFragrance(fragrance);
+                    setQuickOpen(true);
+                  }}
+                />
+              ))}
+            </div>
+
+            <div className="mt-12 text-center">
+              <Link
+                href="/shop"
+                className="rounded-full bg-[#4f4a52] px-8 py-4 text-sm font-bold uppercase tracking-widest text-white transition hover:bg-black"
+              >
+                Shop All Fragrances
+              </Link>
+            </div>
+          </div>
+        </section>
+      )}
 
       <section className="bg-white">
         <FavoritesHome />

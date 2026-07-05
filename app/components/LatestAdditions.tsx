@@ -23,18 +23,16 @@ export default function LatestAdditions() {
   if (latestAdditions.length === 0) return null;
 
   return (
-    <section className="bg-white py-24">
+    <section className="py-16 md:py-24">
       <div className="mx-auto max-w-7xl px-6">
-        <p className="text-xs uppercase tracking-[0.4em] text-[#b67d73]">
-          Just Arrived
+        <p className="text-[10px] font-semibold uppercase tracking-[0.55em] text-[#d89ca4]">
+          Always Evolving
         </p>
-
-        <h2 className="mt-4 text-5xl font-black uppercase tracking-tighter text-[#4f4a52]">
-          Latest Additions
+        <h2 className="mt-3 text-3xl md:text-5xl font-black tracking-[-0.05em] text-[#4f4a52]">
+          Newly Curated
         </h2>
-
-        <p className="mt-6 max-w-2xl text-zinc-600">
-          Recently added luxury inspirations curated for our collection.
+        <p className="mt-4 text-sm md:text-base text-[#7b7480] max-w-2xl">
+          The latest additions to the Maison collection.
         </p>
 
         <div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
@@ -42,7 +40,7 @@ export default function LatestAdditions() {
             <ProductCard
               key={fragrance.title}
               {...fragrance}
-              source="homepage-trending"
+              source="homepage-new-arrivals"
               rank={i + 1}
               onQuickAdd={() => {
                 setSelectedFragrance(fragrance);
