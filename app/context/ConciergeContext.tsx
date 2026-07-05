@@ -8,7 +8,7 @@ import {
   type Dispatch,
   type ReactNode,
 } from "react";
-import type { ConversationState, ConversationContext, ConversationTurn } from "../lib/concierge/types";
+import type { ConversationState, ConversationContext, ConversationTurn, SessionUpdates } from "../lib/concierge/types";
 
 // ── Initial state ─────────────────────────────────────────────────────────────
 
@@ -28,11 +28,12 @@ function createInitialState(): ConversationState {
 // ── Actions ───────────────────────────────────────────────────────────────────
 
 export type ConciergeAction =
-  | { type: "OPEN";               options?: Partial<ConversationContext> }
+  | { type: "OPEN";                options?: Partial<ConversationContext> }
   | { type: "CLOSE" }
-  | { type: "ADD_TURN";           turn: ConversationTurn }
-  | { type: "UPDATE_CONTEXT";     context: Partial<ConversationContext> }
+  | { type: "ADD_TURN";            turn: ConversationTurn }
+  | { type: "UPDATE_CONTEXT";      context: Partial<ConversationContext> }
   | { type: "SET_RECOMMENDATIONS"; slugs: string[] }
+  | { type: "SET_SESSION_CONTEXT"; updates: SessionUpdates }
   | { type: "RESET" };
 
 // ── State ─────────────────────────────────────────────────────────────────────
@@ -89,6 +90,18 @@ function conciergeReducer(state: ConciergeUIState, action: ConciergeAction): Con
         conversationState: {
           ...state.conversationState,
           lastRecommendationSlugs: action.slugs,
+        },
+      };
+
+    case "SET_SESSION_CONTEXT":
+      return {
+        ...state,
+        conversationState: {
+          ...state.conversationState,
+          selectedSlug:    action.updates.selectedSlug    ?? state.conversationState.selectedSlug,
+          comparisonSlugs: action.updates.comparisonSlugs ?? state.conversationState.comparisonSlugs,
+          lastArticleSlug: action.updates.lastArticleSlug ?? state.conversationState.lastArticleSlug,
+          lastCollection:  action.updates.lastCollection  ?? state.conversationState.lastCollection,
         },
       };
 

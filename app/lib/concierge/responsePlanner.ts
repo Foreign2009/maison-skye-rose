@@ -2,30 +2,63 @@
  * Maison Concierge — Response Planner
  *
  * Interprets raw LLM output: extracts [PRODUCT:slug] and [ARTICLE:slug] markers,
- * falls back to retrieval context when the model omits markers, and selects
- * contextual follow-up suggestions.
+ * falls back to retrieval context when the model omits markers, and generates
+ * contextual follow-up suggestions based on the ConversationPlan.
+ *
+ * EP15-P2: planResponse now accepts ConversationPlan for richer follow-ups.
  */
 
 import type { ConversationIntent } from "./types";
-import type { RetrievalContext } from "./contextBuilder";
+import type { RetrievalContext }   from "./contextBuilder";
+import type { ConversationPlan }   from "./conversationPlanner";
 
 // ── Marker patterns ───────────────────────────────────────────────────────────
 
 const PRODUCT_RE = /\[PRODUCT:([a-z0-9-]+)\]/g;
 const ARTICLE_RE = /\[ARTICLE:([a-z0-9-]+)\]/g;
 
-// ── Follow-up suggestions by intent ──────────────────────────────────────────
+// ── Contextual follow-up generation ──────────────────────────────────────────
 
-const FOLLOW_UPS: Record<ConversationIntent, string[]> = {
-  similar_to:        ["Would you like something more intense?", "Shall I explore a different family?"],
-  comparison:        ["Which feels closer to what you're looking for?", "Want me to explain the key difference?"],
-  education:         ["Would you like to see fragrances in this family?", "Shall I recommend an article to start with?"],
-  occasion_search:   ["Would you prefer something subtler or more impactful?", "Shall I filter by a specific family?"],
-  seasonal:          ["Would you like year-round options too?", "Shall I show bestsellers for this season?"],
-  gift:              ["Is this for a man, woman, or anyone?", "What's the occasion for the gift?"],
-  general_discovery: ["Would you like to try our Scent Finder quiz?", "Tell me more about what you usually enjoy."],
-  clarification:     ["What scent families do you typically enjoy?", "What occasions would you wear this for?"],
+const STATIC_FOLLOW_UPS: Record<ConversationIntent, string[]> = {
+  similar_to:        ["Compare these", "Show me another", "Find something fresher"],
+  comparison:        ["Which is better for the office?", "Show me something different"],
+  education:         ["Show fragrances in this family", "Teach me more"],
+  occasion_search:   ["Find something subtler", "Show best sellers for this"],
+  seasonal:          ["Show year-round options", "Find something warmer"],
+  gift:              ["Is this good for her?", "Show luxury options"],
+  general_discovery: ["Help me find my signature scent", "Show best sellers"],
+  clarification:     ["Tell me what I usually wear", "Shop by occasion"],
 };
+
+function generateFollowUps(
+  plan:    ConversationPlan,
+  intent:  ConversationIntent,
+  hasRecs: boolean
+): string[] {
+  // Clarification turns — minimal, focused
+  if (plan.requiresClarification) {
+    return ["Tell me what you usually enjoy.", "Shop by occasion"];
+  }
+
+  // Comparison just completed
+  if (plan.requiresComparison) {
+    return ["Show me something different", "Find gifts", "Show best sellers"];
+  }
+
+  // Cache-reuse path — customer already has recommendations
+  if (plan.reuseRecommendations && hasRecs) {
+    return ["Compare these", "Show me another", "Teach me more"];
+  }
+
+  // Education completed
+  if (plan.nextIntent === "education" || intent === "education") {
+    return ["Show fragrances in this family", "Teach me more", "Find gifts"];
+  }
+
+  // Generic selection based on intent
+  const pool = STATIC_FOLLOW_UPS[intent] ?? STATIC_FOLLOW_UPS.general_discovery;
+  return pool.slice(0, 2);
+}
 
 // ── Public types ──────────────────────────────────────────────────────────────
 
@@ -41,8 +74,9 @@ export interface PlannedResponse {
 
 export function planResponse(
   rawContent: string,
-  intent: ConversationIntent,
-  retrieval: RetrievalContext
+  intent:     ConversationIntent,
+  retrieval:  RetrievalContext,
+  plan:       ConversationPlan
 ): PlannedResponse {
   const recommendedSlugs: string[] = [];
   const articleSlugs:     string[] = [];
@@ -69,13 +103,14 @@ export function planResponse(
 
   // Validate recommended slugs exist in retrieval context
   const validFragranceSlugs = new Set(retrieval.fragrances.map((f) => f.slug));
-  const filteredSlugs = recommendedSlugs.filter((s) => validFragranceSlugs.has(s));
-  const finalSlugs = filteredSlugs.length > 0 ? filteredSlugs : recommendedSlugs.slice(0, 3);
+  const filteredSlugs       = recommendedSlugs.filter((s) => validFragranceSlugs.has(s));
+  const finalSlugs          = filteredSlugs.length > 0 ? filteredSlugs : recommendedSlugs.slice(0, 3);
 
-  const followUpSuggestions = (FOLLOW_UPS[intent] ?? FOLLOW_UPS.general_discovery).slice(0, 2);
+  const hasRecs            = retrieval.fragrances.length > 0;
+  const followUpSuggestions = generateFollowUps(plan, intent, hasRecs).slice(0, 2);
 
   return {
-    content: content.replace(/\s{2,}/g, " ").trim(),
+    content:          content.replace(/\s{2,}/g, " ").trim(),
     recommendedSlugs: finalSlugs,
     articleSlugs,
     followUpSuggestions,

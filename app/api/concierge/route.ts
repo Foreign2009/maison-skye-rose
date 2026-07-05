@@ -3,40 +3,45 @@
  *
  * POST /api/concierge
  *
- * Receives a customer message and the current ConversationState.
- * Orchestrates: intent resolution → retrieval → context building →
- * Claude API → response planning → formatting → JSON response.
+ * EP15-P2 orchestration:
+ *   planConversation     — decide what kind of turn this is
+ *   resolveIntent        — classify the message (skipped when reusing cache)
+ *   planRetrieval        — fetch relevant fragrances/articles (skipped when cached)
+ *   buildCachedRetrieval — reconstruct context from state when cached
+ *   buildContext         — build structured prompt sections
+ *   callClaude           — invoke the LLM with system prompt + history
+ *   planResponse         — extract markers, generate contextual follow-ups
+ *   formatResponse       — resolve slugs → UI-safe objects
  *
- * The API key is ANTHROPIC_API_KEY (standard SDK default).
- * The model is CLAUDE_CONCIERGE_MODEL (env var, defaults to claude-sonnet-5).
- *
- * This is the only file in the project that imports @anthropic-ai/sdk.
- * It must remain server-only and never be imported by client components.
+ * Environment:
+ *   ANTHROPIC_API_KEY    — required (SDK default)
+ *   CLAUDE_CONCIERGE_MODEL — optional model override (default: claude-sonnet-5)
  */
 
 import { NextRequest, NextResponse } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
-import { resolveIntent }           from "../../lib/concierge/intentResolver";
-import { planRetrieval }           from "../../lib/concierge/retrievalPlanner";
-import { buildContext, renderContext } from "../../lib/concierge/contextBuilder";
+import { planConversation }                    from "../../lib/concierge/conversationPlanner";
+import { resolveIntent }                       from "../../lib/concierge/intentResolver";
+import { planRetrieval, buildCachedRetrieval } from "../../lib/concierge/retrievalPlanner";
+import { buildContext, renderContext }          from "../../lib/concierge/contextBuilder";
 import { buildSystemPrompt, validateResponse, SAFE_FALLBACK } from "../../lib/concierge/safetyGuard";
-import { planResponse }            from "../../lib/concierge/responsePlanner";
-import { formatResponse }          from "../../lib/concierge/responseFormatter";
-import type { ConversationState }  from "../../lib/concierge/types";
+import { planResponse }                        from "../../lib/concierge/responsePlanner";
+import { formatResponse }                      from "../../lib/concierge/responseFormatter";
+import type { ConversationState, SessionUpdates, FormattedResponse } from "../../lib/concierge/types";
 
 // ── Model configuration ───────────────────────────────────────────────────────
 
 const PRIMARY_MODEL  = process.env.CLAUDE_CONCIERGE_MODEL ?? "claude-sonnet-5";
 const FALLBACK_MODEL = "claude-haiku-4-5-20251001";
 const MAX_TOKENS     = 400;
-const MAX_HISTORY    = 8; // turns to include from conversation history
+const MAX_HISTORY    = 8;
 
 const client = new Anthropic();
 
 // ── Claude call with model fallback ──────────────────────────────────────────
 
 async function callClaude(
-  messages: Array<{ role: "user" | "assistant"; content: string }>,
+  messages:     Array<{ role: "user" | "assistant"; content: string }>,
   systemPrompt: string
 ): Promise<string> {
   async function attempt(model: string): Promise<string> {
@@ -72,20 +77,32 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       return NextResponse.json({ error: "message and state are required" }, { status: 400 });
     }
 
-    // 1. Resolve intent
-    const resolved = resolveIntent(message, state.context);
+    // 1. Conversation planning — decide action before retrieval
+    const plan = planConversation(message, state);
 
-    // 2. Plan retrieval
-    const retrieval = planRetrieval(resolved, state.context);
+    // 2. Retrieval — conditional on plan
+    let retrieval;
+    let resolvedIntent;
 
-    // 3. Build context
-    const builtContext   = buildContext(retrieval);
+    if (plan.requiresRetrieval) {
+      resolvedIntent = resolveIntent(message, state.context);
+      retrieval      = planRetrieval(resolvedIntent, state.context);
+    } else {
+      // Reuse cached recommendations without a new catalogue search
+      retrieval = buildCachedRetrieval(state);
+    }
+
+    // Determine the effective intent for response planning
+    const effectiveIntent = resolvedIntent?.intent ?? plan.nextIntent;
+
+    // 3. Build context — now includes conversation state and plan
+    const builtContext   = buildContext(retrieval, state, plan);
     const contextContent = renderContext(builtContext);
 
     // 4. Build system prompt
     const systemPrompt = buildSystemPrompt(contextContent);
 
-    // 5. Prepare history (last N turns, roles normalised)
+    // 5. Prepare message history
     const history = state.turns.slice(-MAX_HISTORY).map((turn) => ({
       role:    turn.role as "user" | "assistant",
       content: turn.content,
@@ -102,21 +119,32 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     const content = safe ? rawContent : SAFE_FALLBACK;
 
     // 8. Plan and format response
-    const planned   = planResponse(content, resolved.intent, retrieval);
+    const planned   = planResponse(content, effectiveIntent, retrieval, plan);
     const formatted = formatResponse(planned);
 
-    return NextResponse.json(formatted);
+    // 9. Derive session state updates for the client to store
+    const sessionUpdates: SessionUpdates = {
+      selectedSlug:    planned.recommendedSlugs[0],
+      lastArticleSlug: planned.articleSlugs[0],
+      lastCollection:  retrieval.collectionName,
+      comparisonSlugs: plan.requiresComparison
+        ? planned.recommendedSlugs.slice(0, 2)
+        : state.comparisonSlugs,
+    };
+
+    const response: FormattedResponse = { ...formatted, sessionUpdates };
+
+    return NextResponse.json(response);
 
   } catch (error) {
     console.error("[Concierge API]", error instanceof Error ? error.message : error);
 
-    // Always return 200 with fallback — never expose 500 to the UI
     return NextResponse.json({
       content:             SAFE_FALLBACK,
       fragrances:          [],
       articles:            [],
       followUpSuggestions: ["Tell me what scents you enjoy.", "What occasions do you need a fragrance for?"],
       intent:              "general_discovery",
-    } satisfies import("../../lib/concierge/types").FormattedResponse);
+    } satisfies FormattedResponse);
   }
 }

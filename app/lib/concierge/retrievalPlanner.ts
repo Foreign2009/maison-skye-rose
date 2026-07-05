@@ -15,7 +15,7 @@ import { buildSearchIndex } from "../search/indexBuilder";
 import type { SearchIndex } from "../search/types";
 import type { FragranceKnowledge } from "../mkc/types";
 import type { AcademyArticle } from "../academy/types";
-import type { ConversationContext } from "./types";
+import type { ConversationContext, ConversationState } from "./types";
 import type { ResolvedIntent } from "./intentResolver";
 import type { RetrievalContext } from "./contextBuilder";
 
@@ -192,4 +192,23 @@ export function planRetrieval(
   }
 
   return { fragrances, articles, collectionName };
+}
+
+/**
+ * Reconstructs a RetrievalContext from cached ConversationState without
+ * performing a new catalogue search. Used when ConversationPlanner returns
+ * reuseRecommendations = true.
+ */
+export function buildCachedRetrieval(state: ConversationState): RetrievalContext {
+  const fragrances = (state.lastRecommendationSlugs ?? [])
+    .map((slug) => catalogueMaps.bySlug.get(slug))
+    .filter((k): k is FragranceKnowledge => !!k);
+
+  const articles = state.lastArticleSlug
+    ? [academyCatalogue.find((a) => a.slug === state.lastArticleSlug)].filter(
+        (a): a is AcademyArticle => !!a
+      )
+    : [];
+
+  return { fragrances, articles, collectionName: state.lastCollection };
 }

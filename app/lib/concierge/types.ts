@@ -43,6 +43,11 @@ export interface ConversationState {
   turns:                    ConversationTurn[];
   context:                  ConversationContext;
   lastRecommendationSlugs?: string[];
+  // Conversational memory — updated after each turn (EP15-P2)
+  selectedSlug?:            string;
+  comparisonSlugs?:         string[];
+  lastArticleSlug?:         string;
+  lastCollection?:          string;
 }
 
 // ── UI-safe response types (no catalogue data) ────────────────────────────────
@@ -66,10 +71,18 @@ export interface FormattedArticle {
   href:     string;
 }
 
+export interface SessionUpdates {
+  selectedSlug?:    string;
+  comparisonSlugs?: string[];
+  lastArticleSlug?: string;
+  lastCollection?:  string;
+}
+
 export interface FormattedResponse {
   content:             string;
   fragrances:          FormattedFragrance[];
   articles:            FormattedArticle[];
   followUpSuggestions: string[];
   intent:              string;
+  sessionUpdates?:     SessionUpdates;
 }

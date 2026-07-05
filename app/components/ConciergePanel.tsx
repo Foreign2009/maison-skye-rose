@@ -12,6 +12,10 @@ import {
   trackAiArticleOpened,
   trackAiFollowupClicked,
   trackAiSessionCompleted,
+  trackAiClarification,
+  trackAiRecommendationReused,
+  trackAiComparisonStarted,
+  trackAiConversationDepth,
 } from "../lib/analytics";
 import type { FormattedResponse } from "../lib/concierge/types";
 
@@ -78,6 +82,7 @@ export default function ConciergePanel() {
       });
 
       const data: FormattedResponse = await res.json();
+      const turnDepth = stateForApi.turns.length;
 
       const assistantUIMessage: UIMessage = {
         role:                "assistant",
@@ -93,14 +98,37 @@ export default function ConciergePanel() {
         role:           "assistant" as const,
         content:        data.content,
         timestamp:      Date.now(),
+        intent:         data.intent as import("../lib/concierge/types").ConversationIntent,
         retrievedSlugs: data.fragrances.map((f) => f.slug),
       };
       dispatch({ type: "ADD_TURN",            turn: assistantTurn });
       dispatch({ type: "SET_RECOMMENDATIONS", slugs: data.fragrances.map((f) => f.slug) });
 
-      if (data.fragrances.length > 0) {
-        trackAiRecommendation({ slugs: data.fragrances.map((f) => f.slug), intent: data.intent, sessionId });
+      if (data.sessionUpdates) {
+        dispatch({ type: "SET_SESSION_CONTEXT", updates: data.sessionUpdates });
       }
+
+      // Analytics
+      const newSlugs = data.fragrances.map((f) => f.slug);
+      if (newSlugs.length > 0) {
+        trackAiRecommendation({ slugs: newSlugs, intent: data.intent, sessionId });
+
+        // Detect recommendation cache reuse: all returned slugs were in the previous set
+        const previousSlugs = conversationState.lastRecommendationSlugs ?? [];
+        const isReuse = previousSlugs.length > 0 &&
+          newSlugs.every((s) => previousSlugs.includes(s));
+        if (isReuse) {
+          trackAiRecommendationReused({ slugs: newSlugs, sessionId });
+        }
+      }
+      if (data.intent === "clarification") {
+        trackAiClarification({ sessionId, turnDepth });
+      }
+      if (data.sessionUpdates?.comparisonSlugs && data.sessionUpdates.comparisonSlugs.length >= 2) {
+        trackAiComparisonStarted({ slugs: data.sessionUpdates.comparisonSlugs, sessionId });
+      }
+      trackAiConversationDepth({ turnDepth, sessionId });
+
     } catch {
       setMessages((prev) => [
         ...prev,

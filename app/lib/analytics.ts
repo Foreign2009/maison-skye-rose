@@ -407,3 +407,45 @@ export function trackAiSessionCompleted(payload: AiSessionCompletedPayload): voi
   if (!ready) return;
   capture("ai_session_completed", payload);
 }
+
+// ── AI Concierge conversation events (EP15-P2) ────────────────────────────────
+
+export type AiClarificationPayload = {
+  sessionId:  string;
+  turnDepth:  number;
+};
+
+export type AiRecommendationReusedPayload = {
+  slugs:     string[];
+  sessionId: string;
+};
+
+export type AiComparisonStartedPayload = {
+  slugs:     string[];
+  sessionId: string;
+};
+
+export type AiConversationDepthPayload = {
+  turnDepth:  number;
+  sessionId:  string;
+};
+
+export function trackAiClarification(payload: AiClarificationPayload): void {
+  if (!ready) return;
+  capture("ai_clarification", payload);
+}
+
+export function trackAiRecommendationReused(payload: AiRecommendationReusedPayload): void {
+  if (!ready) return;
+  capture("ai_recommendation_reused", payload);
+}
+
+export function trackAiComparisonStarted(payload: AiComparisonStartedPayload): void {
+  if (!ready) return;
+  capture("ai_comparison_started", payload);
+}
+
+export function trackAiConversationDepth(payload: AiConversationDepthPayload): void {
+  if (!ready) return;
+  capture("ai_conversation_depth", payload);
+}
