@@ -19,7 +19,7 @@ const DELIVERY_RATES: Record<string, number> = {
 
 export default function CheckoutPage() {
   const router = useRouter();
-  const { cart } = useCart();
+  const { cart, clearCart } = useCart();
 
   const [name,     setName]     = useState("");
   const [phone,    setPhone]    = useState("");
@@ -83,6 +83,7 @@ export default function CheckoutPage() {
       };
 
       if (orderData.success && orderData.orderRef) {
+        clearCart();
         router.push(
           `/payment-success?ref=${encodeURIComponent(orderData.orderRef)}&total=${total.toFixed(2)}`
         );
