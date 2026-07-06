@@ -130,7 +130,7 @@ export default function QuickAddModal({ open, onClose, title, images = {}, price
 
               <div className="mt-6 flex gap-3">
                 <button onClick={onClose} className="flex-1 rounded-full border border-gray-200 py-4 font-semibold text-[#4f4a52] transition hover:bg-gray-50">Cancel</button>
-                <motion.button whileTap={{ scale: 0.97 }} onClick={handleAddToCart} className="flex-1 rounded-full bg-gradient-to-r from-pink-400 to-blue-400 py-4 font-semibold text-white shadow-lg transition hover:brightness-105">Add To Cart</motion.button>
+                <motion.button whileTap={{ scale: 0.97 }} onClick={handleAddToCart} className="flex-1 rounded-full bg-[#d89ca4] py-4 font-semibold text-white transition-all duration-300 hover:bg-[#c48898] hover:scale-[1.01]">Add To Cart</motion.button>
               </div>
             </div>
           </motion.div>

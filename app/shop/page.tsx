@@ -196,7 +196,7 @@ export default function ShopPage() {
       <Navbar />
 
       {/* SECTION 1: Top Hero & Search Bar Layout */}
-      <section className="px-4 md:px-6 pt-8 md:pt-40">
+      <section className="px-4 md:px-6 pt-24 md:pt-40">
         <div className="mx-auto max-w-7xl">
           {/* Hide Shop Hero on Mobile */}
           <div className="hidden md:block text-center">

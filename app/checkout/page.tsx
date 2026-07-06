@@ -7,6 +7,15 @@ import Navbar from "../components/Navbar";
 import { useCart } from "../context/CartContext";
 import { trackCheckoutStarted, trackPaymentStarted } from "../lib/analytics";
 
+const DELIVERY_RATES: Record<string, number> = {
+  "Cape Town Metro":       100,
+  "Western Cape Regional": 150,
+  "Gauteng":               180,
+  "KwaZulu-Natal":         180,
+  "Other Major Cities":    200,
+  "Outlying Areas":        300,
+};
+
 export default function CheckoutPage() {
 
   const { cart } = useCart();
@@ -21,7 +30,7 @@ export default function CheckoutPage() {
     useState("");
 
   const [province, setProvince] =
-    useState("Western Cape");
+    useState("Cape Town Metro");
 
   const [loading, setLoading] =
     useState(false);
@@ -35,11 +44,7 @@ export default function CheckoutPage() {
       0
     );
 
-  const delivery =
-    province ===
-    "Western Cape"
-      ? 100
-      : 180;
+  const delivery = DELIVERY_RATES[province] ?? 180;
 
   const total =
     subtotal +
@@ -162,62 +167,63 @@ export default function CheckoutPage() {
 
         <div className="mt-10 space-y-5">
 
-          <input
-            placeholder="Full Name"
-            value={name}
-            onChange={(e) =>
-              setName(
-                e.target.value
-              )
-            }
-            className="w-full rounded-2xl border p-5"
-          />
+          <div className="space-y-1.5">
+            <label htmlFor="checkout-name" className="block text-sm font-semibold text-[#4f4a52]">
+              Full Name
+            </label>
+            <input
+              id="checkout-name"
+              placeholder="e.g. Jane Smith"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="w-full rounded-2xl border p-5"
+            />
+          </div>
 
-          <input
-            placeholder="Phone"
-            value={phone}
-            onChange={(e) =>
-              setPhone(
-                e.target.value
-              )
-            }
-            className="w-full rounded-2xl border p-5"
-          />
+          <div className="space-y-1.5">
+            <label htmlFor="checkout-phone" className="block text-sm font-semibold text-[#4f4a52]">
+              Phone Number
+            </label>
+            <input
+              id="checkout-phone"
+              placeholder="e.g. 082 123 4567"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              className="w-full rounded-2xl border p-5"
+            />
+          </div>
 
-          <textarea
-            placeholder="Address"
-            value={address}
-            onChange={(e) =>
-              setAddress(
-                e.target.value
-              )
-            }
-            className="w-full rounded-2xl border p-5"
-          />
+          <div className="space-y-1.5">
+            <label htmlFor="checkout-address" className="block text-sm font-semibold text-[#4f4a52]">
+              Delivery Address
+            </label>
+            <textarea
+              id="checkout-address"
+              placeholder="Street address, suburb, city"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+              className="w-full rounded-2xl border p-5"
+            />
+          </div>
 
-          <select
-            value={province}
-            onChange={(e) =>
-              setProvince(
-                e.target.value
-              )
-            }
-            className="w-full rounded-2xl border p-5"
-          >
-
-            <option>
-              Western Cape
-            </option>
-
-            <option>
-              Gauteng
-            </option>
-
-            <option>
-              KwaZulu-Natal
-            </option>
-
-          </select>
+          <div className="space-y-1.5">
+            <label htmlFor="checkout-province" className="block text-sm font-semibold text-[#4f4a52]">
+              Delivery Area
+            </label>
+            <select
+              id="checkout-province"
+              value={province}
+              onChange={(e) => setProvince(e.target.value)}
+              className="w-full rounded-2xl border p-5"
+            >
+              <option>Cape Town Metro</option>
+              <option>Western Cape Regional</option>
+              <option>Gauteng</option>
+              <option>KwaZulu-Natal</option>
+              <option>Other Major Cities</option>
+              <option>Outlying Areas</option>
+            </select>
+          </div>
 
         </div>
 
@@ -262,7 +268,7 @@ export default function CheckoutPage() {
           <button
             onClick={handlePayment}
             disabled={loading}
-            className="mt-10 w-full rounded-full bg-black py-5 text-white"
+            className="mt-10 w-full rounded-full bg-[#4f4a52] py-5 font-bold text-white transition-all duration-300 hover:bg-black hover:scale-[1.01] focus:outline-none focus:ring-2 focus:ring-[#4f4a52] focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
           >
 
             {loading

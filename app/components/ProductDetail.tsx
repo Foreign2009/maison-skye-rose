@@ -185,11 +185,23 @@ export default function ProductDetail({
         <div className="mx-auto max-w-7xl">
 
           {/* Breadcrumb */}
-          <div className="hidden md:block mb-8">
-            <p className="text-sm text-zinc-500">
-              Shop / {knowledge.collection} / {knowledge.name}
-            </p>
-          </div>
+          <nav aria-label="Breadcrumb" className="hidden md:block mb-8">
+            <ol className="flex items-center gap-1 text-sm text-zinc-500">
+              <li>
+                <Link href="/shop" className="hover:text-[#d89ca4] transition-colors">Shop</Link>
+              </li>
+              <li aria-hidden="true"><span className="mx-1">/</span></li>
+              <li>
+                <Link href={`/collections/${knowledge.collection.toLowerCase()}`} className="hover:text-[#d89ca4] transition-colors">
+                  {knowledge.collection}
+                </Link>
+              </li>
+              <li aria-hidden="true"><span className="mx-1">/</span></li>
+              <li aria-current="page" className="font-medium text-[#4f4a52] truncate max-w-[200px]">
+                {knowledge.name}
+              </li>
+            </ol>
+          </nav>
 
           <div className="grid gap-6 md:p-8 lg:grid-cols-2">
 
@@ -729,7 +741,7 @@ export default function ProductDetail({
       )}
 
       {/* ── You May Also Like — same collection, best-seller ranked ──────────── */}
-      <section className="px-4 md:px-6 pb-8">
+      <section className="px-4 md:px-6 pb-52 md:pb-32">
         <div className="mx-auto max-w-7xl">
           <h2 className="mb-8 text-2xl md:text-3xl font-black text-[#4f4a52]">
             You May Also Like
@@ -766,38 +778,6 @@ export default function ProductDetail({
                   </p>
                 </Link>
               ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Customer Reviews ─────────────────────────────────────────────────── */}
-      {/* Reserved: Customer Reviews — Coming Soon                               */}
-      <section className="px-4 md:px-6 pb-8">
-        <div className="mx-auto max-w-7xl">
-          <div className="rounded-3xl border-2 border-dashed border-[#ede8e1] bg-white p-8 text-center">
-            <span className="inline-block rounded-full bg-[#f5f1eb] px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-zinc-400">
-              Coming Soon
-            </span>
-            <h2 className="mt-3 text-2xl font-black text-[#4f4a52]">Customer Reviews</h2>
-            <p className="mt-2 text-sm text-zinc-500">
-              Be the first to share your experience with {knowledge.name}.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* ── Ask Maison AI ────────────────────────────────────────────────────── */}
-      {/* Reserved: Ask Maison AI — No implementation                            */}
-      <section className="px-4 md:px-6 pb-52 md:pb-32">
-        <div className="mx-auto max-w-7xl">
-          <div className="rounded-3xl border border-[#ede8e1] bg-gradient-to-br from-[#f9f7f4] to-white p-8 text-center">
-            <span className="inline-block rounded-full bg-[#f5f1eb] px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-zinc-400">
-              Coming Soon
-            </span>
-            <h2 className="mt-3 text-2xl font-black text-[#4f4a52]">Ask Maison AI</h2>
-            <p className="mt-2 max-w-sm mx-auto text-sm text-zinc-500">
-              Your personal fragrance guide. Tell us your style and we&apos;ll match you to your perfect scent.
-            </p>
           </div>
         </div>
       </section>
