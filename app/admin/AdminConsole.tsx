@@ -46,6 +46,14 @@ export interface OrderRow {
   created_at:           string;
 }
 
+interface DashboardMetrics {
+  pendingRevenue:   number;
+  confirmedRevenue: number;
+  activeCount:      number;
+  needsAttention:   OrderRow[];
+  readyToShip:      OrderRow[];
+}
+
 // ── Constants ─────────────────────────────────────────────────────────────────
 
 const STATUS_COLORS: Record<OrderStatus, { badge: string; dot: string }> = {
@@ -82,6 +90,12 @@ const ACTION_BUTTON_STYLES: Partial<Record<OrderStatus, string>> = {
   cancelled:         "border border-red-200 bg-white text-red-500 hover:bg-red-50",
 };
 
+// Status priority for "Needs Attention" sort — lower number = higher urgency.
+const ATTENTION_PRIORITY: Partial<Record<OrderStatus, number>> = {
+  payment_confirmed: 0,
+  awaiting_payment:  1,
+};
+
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
 function formatDate(iso: string): string {
@@ -101,6 +115,86 @@ function toWhatsAppNumber(phone: string): string {
   return d;
 }
 
+// Returns how overdue an order is relative to its created_at timestamp.
+// Ages are calculated once at data-load time (inside useMemo on initialOrders).
+// Refresh the page to get updated ages.
+function orderAge(createdAt: string): { label: string; urgent: boolean } {
+  const hours = (Date.now() - new Date(createdAt).getTime()) / (1000 * 60 * 60);
+  if (hours < 24)  return { label: "",                                  urgent: false };
+  if (hours < 48)  return { label: `${Math.floor(hours)}h overdue`,    urgent: false };
+  return           { label: `${Math.floor(hours / 24)}d overdue`,      urgent: true  };
+}
+
+function fmtR(amount: number): string {
+  if (amount === 0) return "R0";
+  return "R" + Math.round(amount).toLocaleString("en-ZA");
+}
+
+// Derives all dashboard metrics from the order list.
+// Called inside useMemo — do not call directly in render.
+function computeDashboard(orders: OrderRow[]): DashboardMetrics {
+  const HOUR_24 = 24 * 60 * 60 * 1000;
+  const now     = Date.now();
+
+  let pendingRevenue   = 0;
+  let confirmedRevenue = 0;
+  let activeCount      = 0;
+  const needsAttention: OrderRow[] = [];
+  const readyToShip:    OrderRow[] = [];
+
+  for (const o of orders) {
+    const age = now - new Date(o.created_at).getTime();
+
+    switch (o.payment_status) {
+      case "awaiting_payment":
+        pendingRevenue += o.total;
+        activeCount++;
+        // Flag only once the 24-hour EFT window has passed.
+        if (age > HOUR_24) needsAttention.push(o);
+        break;
+
+      case "payment_confirmed":
+        confirmedRevenue += o.total;
+        activeCount++;
+        // Always flag — operator must move to processing.
+        needsAttention.push(o);
+        break;
+
+      case "processing":
+        confirmedRevenue += o.total;
+        activeCount++;
+        readyToShip.push(o);
+        break;
+
+      case "dispatched":
+        confirmedRevenue += o.total;
+        activeCount++;
+        break;
+
+      case "delivered":
+        confirmedRevenue += o.total;
+        break;
+
+      // "cancelled" — excluded from revenue and active count.
+    }
+  }
+
+  // Sort Needs Attention: payment_confirmed first, then oldest awaiting_payment.
+  needsAttention.sort((a, b) => {
+    const pa = ATTENTION_PRIORITY[a.payment_status] ?? 99;
+    const pb = ATTENTION_PRIORITY[b.payment_status] ?? 99;
+    if (pa !== pb) return pa - pb;
+    return new Date(a.created_at).getTime() - new Date(b.created_at).getTime();
+  });
+
+  // Sort Ready to Ship: oldest first (most overdue at top).
+  readyToShip.sort((a, b) =>
+    new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
+  );
+
+  return { pendingRevenue, confirmedRevenue, activeCount, needsAttention, readyToShip };
+}
+
 // ── StatusBadge ───────────────────────────────────────────────────────────────
 
 function StatusBadge({ status }: { status: OrderStatus }) {
@@ -109,6 +203,65 @@ function StatusBadge({ status }: { status: OrderStatus }) {
     <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wide ${badge}`}>
       {STATUS_LABELS[status] ?? status}
     </span>
+  );
+}
+
+// ── PriorityQueue ─────────────────────────────────────────────────────────────
+
+function PriorityQueue({
+  title,
+  orders,
+  badgeClass,
+  onSelect,
+}: {
+  title:      string;
+  orders:     OrderRow[];
+  badgeClass: string;
+  onSelect:   (ref: string) => void;
+}) {
+  const MAX      = 3;
+  const visible  = orders.slice(0, MAX);
+  const overflow = orders.length - MAX;
+
+  return (
+    <div>
+      <div className="mb-2 flex items-center gap-2">
+        <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#4f4a52]">
+          {title}
+        </span>
+        <span className={`rounded-full px-2 py-0.5 text-[9px] font-black ${badgeClass}`}>
+          {orders.length}
+        </span>
+      </div>
+      <div className="space-y-1.5">
+        {visible.map(o => {
+          const { label, urgent } = orderAge(o.created_at);
+          return (
+            <button
+              key={o.order_ref}
+              onClick={() => onSelect(o.order_ref)}
+              className="flex w-full items-center justify-between gap-3 rounded-xl border border-gray-100 bg-white px-4 py-2.5 text-left transition hover:border-[#4f4a52]/20 hover:shadow-sm"
+            >
+              <div className="flex min-w-0 items-center gap-2">
+                <StatusBadge status={o.payment_status} />
+                <span className="truncate text-sm text-[#4f4a52]">{o.customer_name}</span>
+              </div>
+              <div className="flex shrink-0 items-center gap-2">
+                {label && (
+                  <span className={`text-[10px] font-bold ${urgent ? "text-red-500" : "text-amber-600"}`}>
+                    {label}
+                  </span>
+                )}
+                <span className="text-sm font-bold text-[#4f4a52]">{fmtR(o.total)}</span>
+              </div>
+            </button>
+          );
+        })}
+        {overflow > 0 && (
+          <p className="pl-4 text-xs text-[#9b9298]">+{overflow} more — use the filter below</p>
+        )}
+      </div>
+    </div>
   );
 }
 
@@ -407,6 +560,8 @@ export default function AdminConsole({ initialOrders }: { initialOrders: OrderRo
     return c;
   }, [initialOrders]);
 
+  const dashboard = useMemo(() => computeDashboard(initialOrders), [initialOrders]);
+
   const filteredOrders = useMemo(() => {
     const q = searchQuery.toLowerCase().trim();
     return initialOrders.filter(o => {
@@ -429,6 +584,13 @@ export default function AdminConsole({ initialOrders }: { initialOrders: OrderRo
 
   function handleSelectOrder(ref: string) {
     setSelectedRef(prev => (prev === ref ? null : ref));
+  }
+
+  // Clicking a priority queue item selects the order and resets the filter
+  // to "all" so the order is always visible in the list.
+  function handlePrioritySelect(ref: string) {
+    setStatusFilter("all");
+    setSelectedRef(ref);
   }
 
   function handleStatusAction(status: OrderStatus) {
@@ -484,6 +646,9 @@ export default function AdminConsole({ initialOrders }: { initialOrders: OrderRo
     isPending,
   };
 
+  const hasPriorityItems =
+    dashboard.needsAttention.length > 0 || dashboard.readyToShip.length > 0;
+
   return (
     <div className="flex min-h-screen flex-col bg-[#f8f7f5]">
 
@@ -502,22 +667,69 @@ export default function AdminConsole({ initialOrders }: { initialOrders: OrderRo
         </form>
       </header>
 
-      {/* ── Summary Cards ─────────────────────────────────────────────────────── */}
-      <div className="flex gap-3 overflow-x-auto px-6 py-4">
+      {/* ── Revenue Briefing ──────────────────────────────────────────────────── */}
+      <div className="grid grid-cols-3 gap-3 px-6 pt-4 pb-3">
+        <div className="rounded-2xl border border-amber-100 bg-amber-50 px-4 py-4">
+          <p className="text-[9px] uppercase tracking-[0.35em] text-amber-600">Pending</p>
+          <p className="mt-1 text-xl font-black tabular-nums text-[#4f4a52]">
+            {fmtR(dashboard.pendingRevenue)}
+          </p>
+          <p className="mt-0.5 text-[10px] text-amber-600/80">awaiting payment</p>
+        </div>
+        <div className="rounded-2xl border border-blue-100 bg-blue-50 px-4 py-4">
+          <p className="text-[9px] uppercase tracking-[0.35em] text-blue-600">Confirmed</p>
+          <p className="mt-1 text-xl font-black tabular-nums text-[#4f4a52]">
+            {fmtR(dashboard.confirmedRevenue)}
+          </p>
+          <p className="mt-0.5 text-[10px] text-blue-600/80">payment received</p>
+        </div>
+        <div className="rounded-2xl border border-gray-100 bg-white px-4 py-4">
+          <p className="text-[9px] uppercase tracking-[0.35em] text-[#9b9298]">Active</p>
+          <p className="mt-1 text-xl font-black tabular-nums text-[#4f4a52]">
+            {dashboard.activeCount}
+          </p>
+          <p className="mt-0.5 text-[10px] text-[#9b9298]">open orders</p>
+        </div>
+      </div>
+
+      {/* ── Priority Queues ───────────────────────────────────────────────────── */}
+      {hasPriorityItems && (
+        <div className="space-y-4 px-6 pb-4">
+          {dashboard.needsAttention.length > 0 && (
+            <PriorityQueue
+              title="Needs Attention"
+              orders={dashboard.needsAttention}
+              badgeClass="bg-amber-500 text-white"
+              onSelect={handlePrioritySelect}
+            />
+          )}
+          {dashboard.readyToShip.length > 0 && (
+            <PriorityQueue
+              title="Ready to Ship"
+              orders={dashboard.readyToShip}
+              badgeClass="bg-indigo-500 text-white"
+              onSelect={handlePrioritySelect}
+            />
+          )}
+        </div>
+      )}
+
+      {/* ── Status Filter Cards ───────────────────────────────────────────────── */}
+      <div className="flex gap-2.5 overflow-x-auto px-6 pb-3">
         {ORDER_STATUSES.map(s => (
           <button
             key={s}
             onClick={() => setStatusFilter(prev => (prev === s ? "all" : s))}
-            className={`flex shrink-0 flex-col items-start rounded-2xl border px-5 py-4 transition-all ${
+            className={`flex shrink-0 flex-col items-start rounded-2xl border px-4 py-3 transition-all ${
               statusFilter === s
                 ? "border-[#4f4a52] bg-white shadow-sm"
                 : "border-transparent bg-white/70 hover:bg-white"
             }`}
           >
-            <span className="text-2xl font-black tabular-nums text-[#4f4a52]">
+            <span className="text-xl font-black tabular-nums text-[#4f4a52]">
               {statusCounts[s] ?? 0}
             </span>
-            <span className="mt-1 text-[9px] uppercase tracking-[0.3em] text-[#9b9298]">
+            <span className="mt-0.5 text-[9px] uppercase tracking-[0.3em] text-[#9b9298]">
               {STATUS_LABELS[s]}
             </span>
           </button>
@@ -559,40 +771,52 @@ export default function AdminConsole({ initialOrders }: { initialOrders: OrderRo
               </div>
             ) : (
               <div className="space-y-2">
-                {filteredOrders.map(order => (
-                  <button
-                    key={order.order_ref}
-                    onClick={() => handleSelectOrder(order.order_ref)}
-                    className={`w-full rounded-2xl border p-4 text-left transition-all hover:shadow-sm ${
-                      selectedRef === order.order_ref
-                        ? "border-[#4f4a52] bg-white shadow-sm"
-                        : "border-gray-100 bg-white hover:border-gray-200"
-                    }`}
-                  >
-                    <div className="flex items-start justify-between gap-3">
-                      <div className="min-w-0">
-                        <div className="flex flex-wrap items-center gap-2">
-                          <span className="text-sm font-bold text-[#4f4a52]">
-                            {order.order_ref}
-                          </span>
-                          <StatusBadge status={order.payment_status} />
+                {filteredOrders.map(order => {
+                  const ageInfo = order.payment_status === "awaiting_payment"
+                    ? orderAge(order.created_at)
+                    : null;
+                  return (
+                    <button
+                      key={order.order_ref}
+                      onClick={() => handleSelectOrder(order.order_ref)}
+                      className={`w-full rounded-2xl border p-4 text-left transition-all hover:shadow-sm ${
+                        selectedRef === order.order_ref
+                          ? "border-[#4f4a52] bg-white shadow-sm"
+                          : "border-gray-100 bg-white hover:border-gray-200"
+                      }`}
+                    >
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="min-w-0">
+                          <div className="flex flex-wrap items-center gap-2">
+                            <span className="text-sm font-bold text-[#4f4a52]">
+                              {order.order_ref}
+                            </span>
+                            <StatusBadge status={order.payment_status} />
+                            {ageInfo?.label && (
+                              <span className={`text-[10px] font-bold ${
+                                ageInfo.urgent ? "text-red-500" : "text-amber-600"
+                              }`}>
+                                {ageInfo.label}
+                              </span>
+                            )}
+                          </div>
+                          <p className="mt-0.5 truncate text-sm text-[#7b7480]">
+                            {order.customer_name} · {order.province}
+                          </p>
+                          <p className="mt-0.5 text-xs text-[#9b9298]">
+                            {formatDate(order.created_at)}
+                          </p>
                         </div>
-                        <p className="mt-0.5 truncate text-sm text-[#7b7480]">
-                          {order.customer_name} · {order.province}
-                        </p>
-                        <p className="mt-0.5 text-xs text-[#9b9298]">
-                          {formatDate(order.created_at)}
-                        </p>
+                        <div className="flex shrink-0 flex-col items-end gap-1">
+                          <span className="text-sm font-bold text-[#4f4a52]">
+                            R{order.total.toFixed(2)}
+                          </span>
+                          <ChevronRight size={14} className="text-[#9b9298]" />
+                        </div>
                       </div>
-                      <div className="flex shrink-0 flex-col items-end gap-1">
-                        <span className="text-sm font-bold text-[#4f4a52]">
-                          R{order.total.toFixed(2)}
-                        </span>
-                        <ChevronRight size={14} className="text-[#9b9298]" />
-                      </div>
-                    </div>
-                  </button>
-                ))}
+                    </button>
+                  );
+                })}
               </div>
             )}
           </div>
@@ -633,7 +857,6 @@ export default function AdminConsole({ initialOrders }: { initialOrders: OrderRo
               transition={{ type: "spring", damping: 30, stiffness: 300 }}
               className="fixed inset-x-0 bottom-0 z-30 max-h-[88vh] overflow-y-auto rounded-t-[28px] bg-white lg:hidden"
             >
-              {/* Drag handle */}
               <div className="flex justify-center pt-3 pb-1">
                 <div className="h-1 w-10 rounded-full bg-gray-200" />
               </div>
