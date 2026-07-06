@@ -95,13 +95,7 @@ export default function CheckoutPage() {
           }
         );
 
-      const orderData =
-        await orderResponse.json();
-
-      console.log(
-        "ORDER RESPONSE:",
-        orderData
-      );
+      await orderResponse.json();
 
       /* PAYFAST */
       const response =

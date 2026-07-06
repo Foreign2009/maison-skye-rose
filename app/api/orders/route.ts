@@ -11,11 +11,6 @@ export async function POST(
     const body =
       await request.json();
 
-    console.log(
-      "Incoming Order:",
-      body
-    );
-
     const {
       customer_name,
       phone,
@@ -49,9 +44,9 @@ export async function POST(
 
     if (error) {
 
-      console.log(
-        "SUPABASE ERROR:",
-        error
+      console.error(
+        "Order save failed:",
+        error instanceof Error ? error.message : "Supabase write error"
       );
 
       return NextResponse.json(
@@ -66,11 +61,6 @@ export async function POST(
 
     }
 
-    console.log(
-      "ORDER SAVED:",
-      data
-    );
-
     return NextResponse.json({
       success: true,
       order: data,
@@ -78,9 +68,9 @@ export async function POST(
 
   } catch (error) {
 
-    console.log(
-      "SERVER ERROR:",
-      error
+    console.error(
+      "Orders route error:",
+      error instanceof Error ? error.message : "Unknown error"
     );
 
     return NextResponse.json(
