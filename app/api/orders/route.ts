@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { supabase } from "@/app/lib/supabase";
+import type { StatusHistoryEntry } from "@/app/lib/orderStatus";
 
 const VALID_PROVINCES = [
   "Cape Town Metro",
@@ -107,14 +108,18 @@ export async function POST(request: Request) {
 
     const order_ref = generateOrderRef();
 
+    const initialHistory: StatusHistoryEntry[] = [
+      { status: "awaiting_payment", changed_at: new Date().toISOString(), note: "Order created" },
+    ];
+
     const { error } = await supabase
       .from("orders")
       .insert([
         {
           order_ref,
-          customer_name: customer_name.trim(),
-          phone:         phone.trim(),
-          address:       address.trim(),
+          customer_name:  customer_name.trim(),
+          phone:          phone.trim(),
+          address:        address.trim(),
           province,
           items,
           subtotal,
@@ -122,6 +127,7 @@ export async function POST(request: Request) {
           delivery,
           total,
           payment_status: "awaiting_payment",
+          status_history: initialHistory,
         },
       ]);
 
