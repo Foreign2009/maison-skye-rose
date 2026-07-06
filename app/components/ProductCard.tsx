@@ -176,7 +176,7 @@ function ProductCard({
             <div className="flex items-center gap-2">
               <button
                 onClick={handleCardClick}
-                className="flex-1 rounded-full bg-gradient-to-r from-pink-400 to-blue-400 px-3 md:px-6 py-1.5 md:py-3 text-xs md:text-sm font-bold text-white shadow-lg transition-all hover:scale-105 hover:shadow-xl"
+                className="flex-1 rounded-full bg-[#d89ca4] px-3 md:px-6 py-1.5 md:py-3 text-xs md:text-sm font-bold text-white transition-all duration-300 hover:bg-[#c48898] hover:scale-[1.02]"
               >
                 Quick Add
               </button>

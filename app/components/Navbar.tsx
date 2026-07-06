@@ -10,6 +10,7 @@ import { useCartUI } from "../context/CartUIContext";
 import { useSearchUI } from "../context/SearchUIContext";
 import MiniCart from "./MiniCart";
 import { trackCartOpened, trackSearchOpened } from "../lib/analytics";
+import { brand } from "../data/brand";
 
 // Optimized: Static array defined outside the component scope to preserve performance memory allocations
 const ANNOUNCEMENTS = [
@@ -17,7 +18,8 @@ const ANNOUNCEMENTS = [
   "Mix & Match Wholesale From 10 Bottles",
   "5ml R48 • 10ml R77 • 30ml R180",
   "WhatsApp Orders Welcome",
-  "465+ Signature Fragrances Available"
+  "465+ Signature Fragrances Available",
+  "Your personal Concierge is ready — start your fragrance journey",
 ];
 
 export default function Navbar() {
@@ -62,11 +64,19 @@ export default function Navbar() {
 
   return (
     <>
-      {/* Change 7 — Taller Announcement Bar */}
-      <div className="fixed top-0 left-0 right-0 z-50 bg-[#4f4a52] text-white text-[11px] uppercase tracking-[0.2em] font-semibold h-8 flex items-center justify-center select-none">
-        <span key={currentAnnouncement} className="animate-fade-in">
+      {/* Unified announcement bar — single global editorial voice */}
+      <div className="fixed top-0 left-0 right-0 z-50 bg-[#4f4a52] text-white text-[11px] uppercase tracking-[0.2em] font-semibold h-8 flex items-center justify-center gap-4 px-4 select-none">
+        <span key={currentAnnouncement} className="animate-fade-in truncate">
           {ANNOUNCEMENTS[currentAnnouncement]}
         </span>
+        <a
+          href={brand.social.whatsappLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hidden md:inline-flex shrink-0 items-center rounded-full border border-white/20 bg-white/10 px-3 py-0.5 text-[9px] font-bold uppercase tracking-[0.12em] text-white transition-colors hover:bg-white hover:text-[#4f4a52]"
+        >
+          WhatsApp
+        </a>
       </div>
 
       {/* Main Top Navigation Frame — Shifted top-8 to account for taller announcement bar */}

@@ -566,7 +566,7 @@ A member of our team will confirm your order and delivery details shortly.`;
           <button
             onClick={handleWhatsAppCheckout}
             disabled={!cart || cart.length === 0}
-            className="w-full rounded-full bg-gradient-to-r from-[#c8948a] to-[#b67d73] px-6 py-4 text-[11px] font-bold uppercase tracking-[0.25em] text-white shadow-[0_12px_30px_rgba(182,125,115,0.25)] transition-all duration-300 hover:scale-[1.01] hover:shadow-[0_16px_40px_rgba(182,125,115,0.35)] disabled:opacity-50"
+            className="w-full rounded-full bg-[#4f4a52] px-6 py-4 text-[11px] font-bold uppercase tracking-[0.25em] text-white transition-all duration-300 hover:bg-black hover:scale-[1.01] disabled:opacity-50"
           >
             Checkout via WhatsApp
           </button>

@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { Sparkles } from "lucide-react";
 import Navbar from "./components/Navbar";
-import AnnouncementBar from "./components/AnnouncementBar";
 import ProductCard from "./components/ProductCard";
 import AIHeroSection from "./components/AIHeroSection";
 import LuxuryConfidenceBar from "./components/LuxuryConfidenceBar";
@@ -106,7 +105,6 @@ export default function HomePage() {
   return (
     <main className="min-h-screen bg-[#faf7f5] overflow-x-hidden">
       <Navbar />
-      <AnnouncementBar />
 
       {/* ── WELCOME ────────────────────────────────────────────────────────── */}
       <AIHeroSection />
