@@ -3,7 +3,7 @@
 import { useState, useEffect, useMemo, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, ChevronRight, MessageCircle } from "lucide-react";
+import { X, ChevronRight, MessageCircle, Copy, Check, Printer } from "lucide-react";
 import {
   ORDER_STATUSES,
   VALID_TRANSITIONS,
@@ -108,6 +108,14 @@ function formatDate(iso: string): string {
   });
 }
 
+function formatShortDate(iso: string): string {
+  return new Date(iso).toLocaleDateString("en-ZA", {
+    day:   "2-digit",
+    month: "short",
+    year:  "numeric",
+  });
+}
+
 function toWhatsAppNumber(phone: string): string {
   const d = phone.replace(/\D/g, "");
   if (d.startsWith("27")) return d;
@@ -120,9 +128,9 @@ function toWhatsAppNumber(phone: string): string {
 // Refresh the page to get updated ages.
 function orderAge(createdAt: string): { label: string; urgent: boolean } {
   const hours = (Date.now() - new Date(createdAt).getTime()) / (1000 * 60 * 60);
-  if (hours < 24)  return { label: "",                                  urgent: false };
-  if (hours < 48)  return { label: `${Math.floor(hours)}h overdue`,    urgent: false };
-  return           { label: `${Math.floor(hours / 24)}d overdue`,      urgent: true  };
+  if (hours < 24)  return { label: "",                               urgent: false };
+  if (hours < 48)  return { label: `${Math.floor(hours)}h overdue`, urgent: false };
+  return           { label: `${Math.floor(hours / 24)}d overdue`,   urgent: true  };
 }
 
 function fmtR(amount: number): string {
@@ -149,37 +157,28 @@ function computeDashboard(orders: OrderRow[]): DashboardMetrics {
       case "awaiting_payment":
         pendingRevenue += o.total;
         activeCount++;
-        // Flag only once the 24-hour EFT window has passed.
         if (age > HOUR_24) needsAttention.push(o);
         break;
-
       case "payment_confirmed":
         confirmedRevenue += o.total;
         activeCount++;
-        // Always flag — operator must move to processing.
         needsAttention.push(o);
         break;
-
       case "processing":
         confirmedRevenue += o.total;
         activeCount++;
         readyToShip.push(o);
         break;
-
       case "dispatched":
         confirmedRevenue += o.total;
         activeCount++;
         break;
-
       case "delivered":
         confirmedRevenue += o.total;
         break;
-
-      // "cancelled" — excluded from revenue and active count.
     }
   }
 
-  // Sort Needs Attention: payment_confirmed first, then oldest awaiting_payment.
   needsAttention.sort((a, b) => {
     const pa = ATTENTION_PRIORITY[a.payment_status] ?? 99;
     const pb = ATTENTION_PRIORITY[b.payment_status] ?? 99;
@@ -187,7 +186,6 @@ function computeDashboard(orders: OrderRow[]): DashboardMetrics {
     return new Date(a.created_at).getTime() - new Date(b.created_at).getTime();
   });
 
-  // Sort Ready to Ship: oldest first (most overdue at top).
   readyToShip.sort((a, b) =>
     new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
   );
@@ -203,6 +201,33 @@ function StatusBadge({ status }: { status: OrderStatus }) {
     <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wide ${badge}`}>
       {STATUS_LABELS[status] ?? status}
     </span>
+  );
+}
+
+// ── CopyButton ────────────────────────────────────────────────────────────────
+
+function CopyButton({ value, label }: { value: string; label?: string }) {
+  const [copied, setCopied] = useState(false);
+
+  function handleCopy() {
+    navigator.clipboard.writeText(value).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1800);
+    }).catch(() => {});
+  }
+
+  return (
+    <button
+      onClick={handleCopy}
+      aria-label={label ?? "Copy"}
+      title={label ?? "Copy"}
+      className="shrink-0 rounded-lg p-1 text-[#9b9298] transition hover:bg-gray-100 hover:text-[#4f4a52]"
+    >
+      {copied
+        ? <Check size={12} className="text-green-500" />
+        : <Copy size={12} />
+      }
+    </button>
   );
 }
 
@@ -265,6 +290,111 @@ function PriorityQueue({
   );
 }
 
+// ── PackingSlip ───────────────────────────────────────────────────────────────
+// Print-only component. Hidden on screen via "hidden print:block" in parent wrapper.
+
+function PackingSlip({ order, printedAt }: { order: OrderRow; printedAt: string }) {
+  return (
+    <div className="font-sans text-black">
+      {/* Branding */}
+      <div className="mb-6 flex items-start justify-between">
+        <div>
+          <p className="text-[10px] uppercase tracking-[0.4em] text-gray-500">Packing Slip</p>
+          <h1 className="mt-1 text-2xl font-black uppercase tracking-tight">
+            Maison Skye & Rose
+          </h1>
+        </div>
+        <div className="text-right text-sm text-gray-600">
+          <p className="font-bold">{order.order_ref}</p>
+          <p>{formatShortDate(order.created_at)}</p>
+        </div>
+      </div>
+
+      <hr className="mb-6 border-gray-300" />
+
+      {/* Ship To */}
+      <div className="mb-6">
+        <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.4em] text-gray-500">Ship To</p>
+        <p className="text-base font-bold">{order.customer_name}</p>
+        <p className="text-sm text-gray-600">{order.phone}</p>
+        <p className="text-sm text-gray-600">{order.address}</p>
+        <p className="text-sm text-gray-600">{order.province}</p>
+      </div>
+
+      <hr className="mb-6 border-gray-300" />
+
+      {/* Items */}
+      <div className="mb-6">
+        <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.4em] text-gray-500">Items</p>
+        <div className="space-y-2.5">
+          {(order.items ?? []).map((item, i) => (
+            <div key={i} className="flex items-start justify-between gap-4">
+              <div className="flex items-start gap-3">
+                {/* Physical checkbox for packer to tick */}
+                <span className="mt-0.5 inline-block h-4 w-4 shrink-0 rounded border border-gray-400" />
+                <span className="text-sm">
+                  {item.title}
+                  {item.size ? ` (${item.size})` : ""} × {item.quantity}
+                </span>
+              </div>
+              <span className="shrink-0 text-sm font-semibold">
+                R{(item.price * item.quantity).toFixed(2)}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <hr className="mb-4 border-gray-300" />
+
+      {/* Totals */}
+      <div className="mb-6 flex flex-col items-end gap-1">
+        <div className="flex w-52 justify-between text-sm text-gray-600">
+          <span>Subtotal</span>
+          <span>R{order.subtotal.toFixed(2)}</span>
+        </div>
+        <div className="flex w-52 justify-between text-sm text-gray-600">
+          <span>Delivery ({order.province})</span>
+          <span>R{order.delivery.toFixed(2)}</span>
+        </div>
+        <div className="mt-1 flex w-52 justify-between border-t border-gray-300 pt-1 text-sm font-black text-black">
+          <span>TOTAL</span>
+          <span>R{order.total.toFixed(2)}</span>
+        </div>
+      </div>
+
+      {/* Tracking number (if dispatched) */}
+      {order.tracking_number && (
+        <>
+          <hr className="mb-4 border-gray-300" />
+          <div className="mb-6">
+            <p className="mb-1 text-[10px] font-bold uppercase tracking-[0.4em] text-gray-500">
+              Tracking
+            </p>
+            <p className="text-sm font-bold">{order.tracking_number}</p>
+          </div>
+        </>
+      )}
+
+      {/* Internal notes */}
+      {order.notes && (
+        <>
+          <hr className="mb-4 border-gray-300" />
+          <div className="mb-6">
+            <p className="mb-1 text-[10px] font-bold uppercase tracking-[0.4em] text-gray-500">
+              Notes
+            </p>
+            <p className="text-sm text-gray-700">{order.notes}</p>
+          </div>
+        </>
+      )}
+
+      <hr className="mb-4 border-gray-300" />
+      <p className="text-xs text-gray-400">Printed: {printedAt}</p>
+    </div>
+  );
+}
+
 // ── DetailPanel ───────────────────────────────────────────────────────────────
 
 interface DetailPanelProps {
@@ -300,223 +430,382 @@ function DetailPanel({
   isPending,
   onClose,
 }: DetailPanelProps) {
-  const waUrl = `https://wa.me/${toWhatsAppNumber(order.phone)}?text=${encodeURIComponent(
-    `Hi ${order.customer_name}! This is Maison Skye & Rose regarding your order ${order.order_ref}.`
-  )}`;
+  // Packing checklist — ephemeral, resets when order changes.
+  const [checkedItems,   setCheckedItems]   = useState<Set<number>>(new Set());
+  // Print timestamp — set just before window.print() so the slip shows accurate time.
+  const [printTimestamp, setPrintTimestamp] = useState<string>("");
 
+  useEffect(() => {
+    setCheckedItems(new Set());
+  }, [order.order_ref]);
+
+  const items    = order.items ?? [];
+  const allPacked = items.length > 0 && checkedItems.size === items.length;
   const firstName = order.customer_name.split(" ")[0];
 
+  const waUrl = `https://wa.me/${toWhatsAppNumber(order.phone)}?text=${encodeURIComponent(
+    `Hi ${firstName}! This is Maison Skye & Rose regarding your order ${order.order_ref}.`
+  )}`;
+
+  const dispatchWaUrl = order.tracking_number
+    ? `https://wa.me/${toWhatsAppNumber(order.phone)}?text=${encodeURIComponent(
+        `Hi ${firstName}! Great news — your Maison Skye & Rose order has been dispatched 🎉\n\nOrder: ${order.order_ref}\nTracking: ${order.tracking_number}\n\nThank you for shopping with us! 💜`
+      )}`
+    : null;
+
+  function handlePrint() {
+    const ts = new Date().toLocaleString("en-ZA", {
+      day: "2-digit", month: "short", year: "numeric",
+      hour: "2-digit", minute: "2-digit",
+    });
+    setPrintTimestamp(ts);
+    // Allow React one tick to re-render with the new timestamp before printing.
+    setTimeout(() => window.print(), 80);
+  }
+
   return (
-    <div className="flex flex-col">
-      {/* Header */}
-      <div className="flex items-start justify-between border-b border-gray-100 px-6 py-5">
-        <div>
-          <p className="text-xs font-black tracking-wide text-[#4f4a52]">{order.order_ref}</p>
-          <p className="mt-0.5 text-sm text-[#7b7480]">
-            {order.customer_name} · {order.province}
-          </p>
-          <div className="mt-2">
-            <StatusBadge status={order.payment_status} />
-          </div>
-        </div>
-        <button
-          onClick={onClose}
-          aria-label="Close"
-          className="rounded-full p-1.5 text-[#9b9298] transition hover:bg-gray-100 hover:text-[#4f4a52]"
-        >
-          <X size={18} />
-        </button>
-      </div>
+    <>
+      {/* ── Screen view (hidden during print) ─────────────────────────────── */}
+      <div className="flex flex-col print:hidden">
 
-      <div className="flex flex-col gap-7 px-6 py-6">
-        {/* ── Customer ──────────────────────────────────────────────────────── */}
-        <section>
-          <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#d89ca4]">Customer</p>
-          <div className="mt-3 space-y-1">
-            <p className="text-sm font-semibold text-[#4f4a52]">{order.customer_name}</p>
-            <p className="text-sm text-[#7b7480]">{order.phone}</p>
-            <p className="text-sm text-[#7b7480]">{order.address}</p>
-          </div>
-        </section>
-
-        {/* ── Items ─────────────────────────────────────────────────────────── */}
-        <section>
-          <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#d89ca4]">Items</p>
-          <div className="mt-3 space-y-2">
-            {(order.items ?? []).map((item, i) => (
-              <div key={i} className="flex items-start justify-between gap-2 text-sm">
-                <span className="text-[#7b7480]">
-                  {item.title}
-                  {item.size ? ` (${item.size})` : ""} × {item.quantity}
-                </span>
-                <span className="shrink-0 font-semibold text-[#4f4a52]">
-                  R{(item.price * item.quantity).toFixed(2)}
-                </span>
-              </div>
-            ))}
-            <div className="border-t border-gray-100 pt-2 space-y-1">
-              <div className="flex justify-between text-sm text-[#7b7480]">
-                <span>Delivery</span>
-                <span>R{order.delivery.toFixed(2)}</span>
-              </div>
-              <div className="flex justify-between text-sm font-black text-[#4f4a52]">
-                <span>Total</span>
-                <span>R{order.total.toFixed(2)}</span>
-              </div>
+        {/* Header */}
+        <div className="flex items-start justify-between border-b border-gray-100 px-6 py-5">
+          <div>
+            <div className="flex items-center gap-1">
+              <p className="text-xs font-black tracking-wide text-[#4f4a52]">{order.order_ref}</p>
+              <CopyButton value={order.order_ref} label="Copy order reference" />
             </div>
-          </div>
-          {order.tracking_number && (
-            <p className="mt-2 text-xs text-[#7b7480]">
-              Tracking:{" "}
-              <span className="font-semibold text-[#4f4a52]">{order.tracking_number}</span>
+            <p className="mt-0.5 text-sm text-[#7b7480]">
+              {order.customer_name} · {order.province}
             </p>
-          )}
-        </section>
-
-        {/* ── Actions ───────────────────────────────────────────────────────── */}
-        {nextStatuses.length > 0 && (
-          <section>
-            <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#d89ca4]">Actions</p>
-            <div className="mt-3">
-              {!pendingAction ? (
-                <div className="flex flex-wrap gap-2">
-                  {nextStatuses.map(s => (
-                    <button
-                      key={s}
-                      onClick={() => onActionClick(s)}
-                      disabled={isPending}
-                      className={`rounded-full px-4 py-2 text-xs font-bold transition-all disabled:opacity-50 ${ACTION_BUTTON_STYLES[s] ?? "bg-gray-100 text-[#4f4a52]"}`}
-                    >
-                      {ACTION_LABELS[s] ?? STATUS_LABELS[s]}
-                    </button>
-                  ))}
-                </div>
-              ) : (
-                <div className="space-y-3 rounded-2xl border border-gray-100 bg-gray-50 p-4">
-                  <p className="text-sm font-semibold text-[#4f4a52]">
-                    {ACTION_LABELS[pendingAction.status] ?? STATUS_LABELS[pendingAction.status]}
-                  </p>
-
-                  {pendingAction.status === "dispatched" && (
-                    <div>
-                      <label className="mb-1 block text-[10px] uppercase tracking-[0.3em] text-[#9b9298]">
-                        Tracking Number <span className="text-red-400">*</span>
-                      </label>
-                      <input
-                        type="text"
-                        value={pendingAction.trackingNumber}
-                        onChange={e => onPendingChange({ ...pendingAction, trackingNumber: e.target.value })}
-                        placeholder="e.g. SN123456789"
-                        autoFocus
-                        className="w-full rounded-xl border border-gray-200 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#4f4a52]/20"
-                      />
-                    </div>
-                  )}
-
-                  <div>
-                    <label className="mb-1 block text-[10px] uppercase tracking-[0.3em] text-[#9b9298]">
-                      Note (optional)
-                    </label>
-                    <textarea
-                      value={pendingAction.note}
-                      onChange={e => onPendingChange({ ...pendingAction, note: e.target.value })}
-                      placeholder="e.g. Confirmed via WhatsApp"
-                      rows={2}
-                      className="w-full resize-none rounded-xl border border-gray-200 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#4f4a52]/20"
-                    />
-                  </div>
-
-                  <div className="flex gap-2">
-                    <button
-                      onClick={onConfirmAction}
-                      disabled={
-                        isPending ||
-                        (pendingAction.status === "dispatched" && !pendingAction.trackingNumber.trim())
-                      }
-                      className="flex-1 rounded-full bg-[#4f4a52] py-2.5 text-xs font-bold text-white transition hover:bg-black disabled:opacity-40"
-                    >
-                      {isPending ? "Updating…" : "Confirm"}
-                    </button>
-                    <button
-                      onClick={onCancelAction}
-                      disabled={isPending}
-                      className="rounded-full border border-gray-200 px-4 py-2.5 text-xs font-semibold text-[#7b7480] transition hover:bg-gray-100"
-                    >
-                      Cancel
-                    </button>
-                  </div>
-                </div>
-              )}
+            <div className="mt-2">
+              <StatusBadge status={order.payment_status} />
             </div>
-          </section>
-        )}
-
-        {/* ── Feedback ──────────────────────────────────────────────────────── */}
-        {feedback && (
-          <p className={`rounded-2xl px-4 py-3 text-sm font-semibold ${
-            feedback.type === "success" ? "bg-green-50 text-green-700" : "bg-red-50 text-red-600"
-          }`}>
-            {feedback.text}
-          </p>
-        )}
-
-        {/* ── Timeline ──────────────────────────────────────────────────────── */}
-        <section>
-          <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#d89ca4]">Timeline</p>
-          <div className="mt-3 space-y-3">
-            {(order.status_history ?? []).map((entry, i) => {
-              const { dot } = STATUS_COLORS[entry.status] ?? STATUS_COLORS.awaiting_payment;
-              return (
-                <div key={i} className="flex items-start gap-3">
-                  <div className={`mt-1.5 h-2 w-2 shrink-0 rounded-full ${dot}`} />
-                  <div>
-                    <p className="text-sm font-semibold text-[#4f4a52]">
-                      {STATUS_LABELS[entry.status] ?? entry.status}
-                    </p>
-                    <p className="text-xs text-[#9b9298]">{formatDate(entry.changed_at)}</p>
-                    {entry.note && (
-                      <p className="mt-0.5 text-xs text-[#7b7480]">{entry.note}</p>
-                    )}
-                  </div>
-                </div>
-              );
-            })}
           </div>
-        </section>
-
-        {/* ── Internal Notes ────────────────────────────────────────────────── */}
-        <section>
-          <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#d89ca4]">Internal Notes</p>
-          <div className="mt-3">
-            <textarea
-              value={notesValue}
-              onChange={e => onNotesChange(e.target.value)}
-              placeholder="Private notes about this order…"
-              rows={3}
-              className="w-full resize-none rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#4f4a52]/20"
-            />
+          <div className="flex items-center gap-0.5">
             <button
-              onClick={onSaveNotes}
-              disabled={!notesChanged || isPending}
-              className="mt-2 rounded-full bg-[#4f4a52] px-5 py-2 text-xs font-bold text-white transition hover:bg-black disabled:opacity-40"
+              onClick={handlePrint}
+              aria-label="Print packing slip"
+              title="Print packing slip"
+              className="rounded-full p-1.5 text-[#9b9298] transition hover:bg-gray-100 hover:text-[#4f4a52]"
             >
-              {isPending ? "Saving…" : "Save Notes"}
+              <Printer size={16} />
+            </button>
+            <button
+              onClick={onClose}
+              aria-label="Close"
+              className="rounded-full p-1.5 text-[#9b9298] transition hover:bg-gray-100 hover:text-[#4f4a52]"
+            >
+              <X size={18} />
             </button>
           </div>
-        </section>
+        </div>
 
-        {/* ── WhatsApp ──────────────────────────────────────────────────────── */}
-        <a
-          href={waUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex w-full items-center justify-center gap-2 rounded-full bg-[#25D366] py-3.5 text-sm font-bold text-white transition hover:bg-[#1ebe59]"
-        >
-          <MessageCircle size={16} />
-          WhatsApp {firstName}
-        </a>
+        <div className="flex flex-col gap-7 px-6 py-6">
+
+          {/* ── Customer ──────────────────────────────────────────────────── */}
+          <section>
+            <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#d89ca4]">
+              Customer
+            </p>
+            <div className="mt-3 space-y-1.5">
+              <div className="flex items-center justify-between gap-2">
+                <p className="text-sm font-semibold text-[#4f4a52]">{order.customer_name}</p>
+                <CopyButton value={order.customer_name} label="Copy name" />
+              </div>
+              <div className="flex items-center justify-between gap-2">
+                <p className="text-sm text-[#7b7480]">{order.phone}</p>
+                <CopyButton value={order.phone} label="Copy phone" />
+              </div>
+              <div className="flex items-start justify-between gap-2">
+                <p className="text-sm text-[#7b7480]">{order.address}</p>
+                <CopyButton
+                  value={`${order.address}, ${order.province}`}
+                  label="Copy address"
+                />
+              </div>
+            </div>
+          </section>
+
+          {/* ── Items ─────────────────────────────────────────────────────── */}
+          <section>
+            <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#d89ca4]">
+              Items
+            </p>
+            <div className="mt-3 space-y-2">
+              {items.map((item, i) => (
+                <div key={i} className="flex items-start justify-between gap-2 text-sm">
+                  <span className="text-[#7b7480]">
+                    {item.title}
+                    {item.size ? ` (${item.size})` : ""} × {item.quantity}
+                  </span>
+                  <span className="shrink-0 font-semibold text-[#4f4a52]">
+                    R{(item.price * item.quantity).toFixed(2)}
+                  </span>
+                </div>
+              ))}
+              <div className="space-y-1 border-t border-gray-100 pt-2">
+                <div className="flex justify-between text-sm text-[#7b7480]">
+                  <span>Delivery</span>
+                  <span>R{order.delivery.toFixed(2)}</span>
+                </div>
+                <div className="flex justify-between text-sm font-black text-[#4f4a52]">
+                  <span>Total</span>
+                  <span>R{order.total.toFixed(2)}</span>
+                </div>
+              </div>
+            </div>
+            {order.tracking_number && (
+              <div className="mt-2 flex items-center justify-between gap-2">
+                <p className="text-xs text-[#7b7480]">
+                  Tracking:{" "}
+                  <span className="font-semibold text-[#4f4a52]">
+                    {order.tracking_number}
+                  </span>
+                </p>
+                <CopyButton
+                  value={order.tracking_number}
+                  label="Copy tracking number"
+                />
+              </div>
+            )}
+          </section>
+
+          {/* ── Packing Checklist — processing orders only ────────────────── */}
+          {order.payment_status === "processing" && items.length > 0 && (
+            <section>
+              <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#d89ca4]">
+                Packing Checklist
+              </p>
+              <div className="mt-3 space-y-1">
+                {items.map((item, i) => (
+                  <label
+                    key={i}
+                    className="flex cursor-pointer items-center gap-3 rounded-xl px-3 py-2 transition hover:bg-gray-50"
+                  >
+                    <input
+                      type="checkbox"
+                      checked={checkedItems.has(i)}
+                      onChange={() => {
+                        setCheckedItems(prev => {
+                          const next = new Set(prev);
+                          if (next.has(i)) next.delete(i); else next.add(i);
+                          return next;
+                        });
+                      }}
+                      className="h-4 w-4 rounded accent-[#4f4a52]"
+                    />
+                    <span
+                      className={`text-sm transition-colors ${
+                        checkedItems.has(i)
+                          ? "text-[#9b9298] line-through"
+                          : "text-[#4f4a52]"
+                      }`}
+                    >
+                      {item.title}
+                      {item.size ? ` (${item.size})` : ""} × {item.quantity}
+                    </span>
+                  </label>
+                ))}
+              </div>
+              {allPacked && (
+                <p className="mt-2 rounded-xl bg-green-50 px-3 py-2 text-xs font-semibold text-green-700">
+                  All items packed — ready to dispatch
+                </p>
+              )}
+            </section>
+          )}
+
+          {/* ── Actions ───────────────────────────────────────────────────── */}
+          {nextStatuses.length > 0 && (
+            <section>
+              <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#d89ca4]">
+                Actions
+              </p>
+              <div className="mt-3">
+                {!pendingAction ? (
+                  <div className="flex flex-wrap gap-2">
+                    {nextStatuses.map(s => (
+                      <button
+                        key={s}
+                        onClick={() => onActionClick(s)}
+                        disabled={isPending}
+                        className={`rounded-full px-4 py-2 text-xs font-bold transition-all disabled:opacity-50 ${ACTION_BUTTON_STYLES[s] ?? "bg-gray-100 text-[#4f4a52]"}`}
+                      >
+                        {ACTION_LABELS[s] ?? STATUS_LABELS[s]}
+                      </button>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="space-y-3 rounded-2xl border border-gray-100 bg-gray-50 p-4">
+                    <p className="text-sm font-semibold text-[#4f4a52]">
+                      {ACTION_LABELS[pendingAction.status] ?? STATUS_LABELS[pendingAction.status]}
+                    </p>
+
+                    {pendingAction.status === "dispatched" && (
+                      <div>
+                        <label className="mb-1 block text-[10px] uppercase tracking-[0.3em] text-[#9b9298]">
+                          Tracking Number <span className="text-red-400">*</span>
+                        </label>
+                        <div className="flex items-center gap-2">
+                          <input
+                            type="text"
+                            value={pendingAction.trackingNumber}
+                            onChange={e =>
+                              onPendingChange({ ...pendingAction, trackingNumber: e.target.value })
+                            }
+                            placeholder="e.g. SN123456789"
+                            autoFocus
+                            className="flex-1 rounded-xl border border-gray-200 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#4f4a52]/20"
+                          />
+                          {pendingAction.trackingNumber.trim() && (
+                            <CopyButton
+                              value={pendingAction.trackingNumber.trim()}
+                              label="Copy tracking number"
+                            />
+                          )}
+                        </div>
+                        <p className="mt-1 text-[10px] text-[#9b9298]">
+                          Copy the number above to paste into your courier portal.
+                        </p>
+                      </div>
+                    )}
+
+                    <div>
+                      <label className="mb-1 block text-[10px] uppercase tracking-[0.3em] text-[#9b9298]">
+                        Note (optional)
+                      </label>
+                      <textarea
+                        value={pendingAction.note}
+                        onChange={e =>
+                          onPendingChange({ ...pendingAction, note: e.target.value })
+                        }
+                        placeholder="e.g. Confirmed via WhatsApp"
+                        rows={2}
+                        className="w-full resize-none rounded-xl border border-gray-200 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#4f4a52]/20"
+                      />
+                    </div>
+
+                    <div className="flex gap-2">
+                      <button
+                        onClick={onConfirmAction}
+                        disabled={
+                          isPending ||
+                          (pendingAction.status === "dispatched" &&
+                            !pendingAction.trackingNumber.trim())
+                        }
+                        className="flex-1 rounded-full bg-[#4f4a52] py-2.5 text-xs font-bold text-white transition hover:bg-black disabled:opacity-40"
+                      >
+                        {isPending ? "Updating…" : "Confirm"}
+                      </button>
+                      <button
+                        onClick={onCancelAction}
+                        disabled={isPending}
+                        className="rounded-full border border-gray-200 px-4 py-2.5 text-xs font-semibold text-[#7b7480] transition hover:bg-gray-100"
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </section>
+          )}
+
+          {/* ── Feedback ──────────────────────────────────────────────────── */}
+          {feedback && (
+            <p
+              className={`rounded-2xl px-4 py-3 text-sm font-semibold ${
+                feedback.type === "success"
+                  ? "bg-green-50 text-green-700"
+                  : "bg-red-50 text-red-600"
+              }`}
+            >
+              {feedback.text}
+            </p>
+          )}
+
+          {/* ── Timeline ──────────────────────────────────────────────────── */}
+          <section>
+            <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#d89ca4]">
+              Timeline
+            </p>
+            <div className="mt-3 space-y-3">
+              {(order.status_history ?? []).map((entry, i) => {
+                const { dot } = STATUS_COLORS[entry.status] ?? STATUS_COLORS.awaiting_payment;
+                return (
+                  <div key={i} className="flex items-start gap-3">
+                    <div className={`mt-1.5 h-2 w-2 shrink-0 rounded-full ${dot}`} />
+                    <div>
+                      <p className="text-sm font-semibold text-[#4f4a52]">
+                        {STATUS_LABELS[entry.status] ?? entry.status}
+                      </p>
+                      <p className="text-xs text-[#9b9298]">{formatDate(entry.changed_at)}</p>
+                      {entry.note && (
+                        <p className="mt-0.5 text-xs text-[#7b7480]">{entry.note}</p>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </section>
+
+          {/* ── Internal Notes ────────────────────────────────────────────── */}
+          <section>
+            <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#d89ca4]">
+              Internal Notes
+            </p>
+            <div className="mt-3">
+              <textarea
+                value={notesValue}
+                onChange={e => onNotesChange(e.target.value)}
+                placeholder="Private notes about this order…"
+                rows={3}
+                className="w-full resize-none rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#4f4a52]/20"
+              />
+              <button
+                onClick={onSaveNotes}
+                disabled={!notesChanged || isPending}
+                className="mt-2 rounded-full bg-[#4f4a52] px-5 py-2 text-xs font-bold text-white transition hover:bg-black disabled:opacity-40"
+              >
+                {isPending ? "Saving…" : "Save Notes"}
+              </button>
+            </div>
+          </section>
+
+          {/* ── WhatsApp — general ────────────────────────────────────────── */}
+          <a
+            href={waUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex w-full items-center justify-center gap-2 rounded-full bg-[#25D366] py-3.5 text-sm font-bold text-white transition hover:bg-[#1ebe59]"
+          >
+            <MessageCircle size={16} />
+            WhatsApp {firstName}
+          </a>
+
+          {/* ── Dispatch notification — dispatched orders with tracking ───── */}
+          {order.payment_status === "dispatched" && dispatchWaUrl && (
+            <a
+              href={dispatchWaUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex w-full items-center justify-center gap-2 rounded-full border border-indigo-200 bg-indigo-50 py-3.5 text-sm font-bold text-indigo-700 transition hover:bg-indigo-100"
+            >
+              <MessageCircle size={16} />
+              Send Dispatch Notification
+            </a>
+          )}
+
+        </div>
       </div>
-    </div>
+
+      {/* ── Print view (hidden on screen, shown during print) ─────────────── */}
+      <div className="hidden print:block p-8">
+        <PackingSlip order={order} printedAt={printTimestamp} />
+      </div>
+    </>
   );
 }
 
@@ -586,8 +875,6 @@ export default function AdminConsole({ initialOrders }: { initialOrders: OrderRo
     setSelectedRef(prev => (prev === ref ? null : ref));
   }
 
-  // Clicking a priority queue item selects the order and resets the filter
-  // to "all" so the order is always visible in the list.
   function handlePrioritySelect(ref: string) {
     setStatusFilter("all");
     setSelectedRef(ref);
@@ -650,224 +937,262 @@ export default function AdminConsole({ initialOrders }: { initialOrders: OrderRo
     dashboard.needsAttention.length > 0 || dashboard.readyToShip.length > 0;
 
   return (
-    <div className="flex min-h-screen flex-col bg-[#f8f7f5]">
+    <>
+      {/* Print page settings — isolated to the admin console. */}
+      <style>{`
+        @media print {
+          @page { margin: 1.5cm; size: A4 portrait; }
+          body  { background: white !important; }
+        }
+      `}</style>
 
-      {/* ── Header ────────────────────────────────────────────────────────────── */}
-      <header className="flex items-center justify-between bg-[#4f4a52] px-6 py-4">
-        <div>
-          <p className="text-[9px] uppercase tracking-[0.5em] text-[#d89ca4]">Internal</p>
-          <h1 className="text-sm font-black uppercase tracking-widest text-white">
-            Maison Operations
-          </h1>
-        </div>
-        <form action={logoutAction}>
-          <button type="submit" className="text-xs text-white/60 transition hover:text-white">
-            Sign Out
-          </button>
-        </form>
-      </header>
+      <div className="flex min-h-screen flex-col bg-[#f8f7f5]">
 
-      {/* ── Revenue Briefing ──────────────────────────────────────────────────── */}
-      <div className="grid grid-cols-3 gap-3 px-6 pt-4 pb-3">
-        <div className="rounded-2xl border border-amber-100 bg-amber-50 px-4 py-4">
-          <p className="text-[9px] uppercase tracking-[0.35em] text-amber-600">Pending</p>
-          <p className="mt-1 text-xl font-black tabular-nums text-[#4f4a52]">
-            {fmtR(dashboard.pendingRevenue)}
-          </p>
-          <p className="mt-0.5 text-[10px] text-amber-600/80">awaiting payment</p>
-        </div>
-        <div className="rounded-2xl border border-blue-100 bg-blue-50 px-4 py-4">
-          <p className="text-[9px] uppercase tracking-[0.35em] text-blue-600">Confirmed</p>
-          <p className="mt-1 text-xl font-black tabular-nums text-[#4f4a52]">
-            {fmtR(dashboard.confirmedRevenue)}
-          </p>
-          <p className="mt-0.5 text-[10px] text-blue-600/80">payment received</p>
-        </div>
-        <div className="rounded-2xl border border-gray-100 bg-white px-4 py-4">
-          <p className="text-[9px] uppercase tracking-[0.35em] text-[#9b9298]">Active</p>
-          <p className="mt-1 text-xl font-black tabular-nums text-[#4f4a52]">
-            {dashboard.activeCount}
-          </p>
-          <p className="mt-0.5 text-[10px] text-[#9b9298]">open orders</p>
-        </div>
-      </div>
+        {/* ── Header ──────────────────────────────────────────────────────────── */}
+        <header className="flex items-center justify-between bg-[#4f4a52] px-6 py-4 print:hidden">
+          <div>
+            <p className="text-[9px] uppercase tracking-[0.5em] text-[#d89ca4]">Internal</p>
+            <h1 className="text-sm font-black uppercase tracking-widest text-white">
+              Maison Operations
+            </h1>
+          </div>
+          <form action={logoutAction}>
+            <button type="submit" className="text-xs text-white/60 transition hover:text-white">
+              Sign Out
+            </button>
+          </form>
+        </header>
 
-      {/* ── Priority Queues ───────────────────────────────────────────────────── */}
-      {hasPriorityItems && (
-        <div className="space-y-4 px-6 pb-4">
-          {dashboard.needsAttention.length > 0 && (
-            <PriorityQueue
-              title="Needs Attention"
-              orders={dashboard.needsAttention}
-              badgeClass="bg-amber-500 text-white"
-              onSelect={handlePrioritySelect}
-            />
-          )}
-          {dashboard.readyToShip.length > 0 && (
-            <PriorityQueue
-              title="Ready to Ship"
-              orders={dashboard.readyToShip}
-              badgeClass="bg-indigo-500 text-white"
-              onSelect={handlePrioritySelect}
-            />
-          )}
+        {/* ── Revenue Briefing ────────────────────────────────────────────────── */}
+        <div className="grid grid-cols-3 gap-3 px-6 pt-4 pb-3 print:hidden">
+          <div className="rounded-2xl border border-amber-100 bg-amber-50 px-4 py-4">
+            <p className="text-[9px] uppercase tracking-[0.35em] text-amber-600">Pending</p>
+            <p className="mt-1 text-xl font-black tabular-nums text-[#4f4a52]">
+              {fmtR(dashboard.pendingRevenue)}
+            </p>
+            <p className="mt-0.5 text-[10px] text-amber-600/80">awaiting payment</p>
+          </div>
+          <div className="rounded-2xl border border-blue-100 bg-blue-50 px-4 py-4">
+            <p className="text-[9px] uppercase tracking-[0.35em] text-blue-600">Confirmed</p>
+            <p className="mt-1 text-xl font-black tabular-nums text-[#4f4a52]">
+              {fmtR(dashboard.confirmedRevenue)}
+            </p>
+            <p className="mt-0.5 text-[10px] text-blue-600/80">payment received</p>
+          </div>
+          <div className="rounded-2xl border border-gray-100 bg-white px-4 py-4">
+            <p className="text-[9px] uppercase tracking-[0.35em] text-[#9b9298]">Active</p>
+            <p className="mt-1 text-xl font-black tabular-nums text-[#4f4a52]">
+              {dashboard.activeCount}
+            </p>
+            <p className="mt-0.5 text-[10px] text-[#9b9298]">open orders</p>
+          </div>
         </div>
-      )}
 
-      {/* ── Status Filter Cards ───────────────────────────────────────────────── */}
-      <div className="flex gap-2.5 overflow-x-auto px-6 pb-3">
-        {ORDER_STATUSES.map(s => (
+        {/* ── Priority Queues ──────────────────────────────────────────────────── */}
+        {hasPriorityItems && (
+          <div className="space-y-4 px-6 pb-4 print:hidden">
+            {dashboard.needsAttention.length > 0 && (
+              <PriorityQueue
+                title="Needs Attention"
+                orders={dashboard.needsAttention}
+                badgeClass="bg-amber-500 text-white"
+                onSelect={handlePrioritySelect}
+              />
+            )}
+            {dashboard.readyToShip.length > 0 && (
+              <PriorityQueue
+                title="Ready to Ship"
+                orders={dashboard.readyToShip}
+                badgeClass="bg-indigo-500 text-white"
+                onSelect={handlePrioritySelect}
+              />
+            )}
+          </div>
+        )}
+
+        {/* ── Packing Workspace Entry Point ────────────────────────────────────── */}
+        <div className="px-6 pb-3 print:hidden">
           <button
-            key={s}
-            onClick={() => setStatusFilter(prev => (prev === s ? "all" : s))}
-            className={`flex shrink-0 flex-col items-start rounded-2xl border px-4 py-3 transition-all ${
-              statusFilter === s
-                ? "border-[#4f4a52] bg-white shadow-sm"
-                : "border-transparent bg-white/70 hover:bg-white"
+            onClick={() =>
+              setStatusFilter(prev => (prev === "processing" ? "all" : "processing"))
+            }
+            className={`inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-xs font-bold transition-all ${
+              statusFilter === "processing"
+                ? "bg-purple-600 text-white shadow-sm"
+                : "border border-purple-200 bg-purple-50 text-purple-700 hover:bg-purple-100"
             }`}
           >
-            <span className="text-xl font-black tabular-nums text-[#4f4a52]">
-              {statusCounts[s] ?? 0}
-            </span>
-            <span className="mt-0.5 text-[9px] uppercase tracking-[0.3em] text-[#9b9298]">
-              {STATUS_LABELS[s]}
+            Ready for Packing
+            <span
+              className={`rounded-full px-2 py-0.5 text-[9px] font-black ${
+                statusFilter === "processing"
+                  ? "bg-white/20 text-white"
+                  : "bg-purple-200 text-purple-700"
+              }`}
+            >
+              {statusCounts.processing ?? 0}
             </span>
           </button>
-        ))}
-      </div>
+        </div>
 
-      {/* ── Main area ─────────────────────────────────────────────────────────── */}
-      <div className="flex min-h-0 flex-1 overflow-hidden">
-
-        {/* Orders list */}
-        <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
-
-          {/* Search + filter */}
-          <div className="flex items-center gap-3 px-6 py-3">
-            <input
-              type="search"
-              value={searchQuery}
-              onChange={e => setSearchQuery(e.target.value)}
-              placeholder="Search by name, reference, or phone…"
-              className="min-w-0 flex-1 rounded-2xl border border-gray-200 bg-white px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#4f4a52]/20"
-            />
-            <select
-              value={statusFilter}
-              onChange={e => setStatusFilter(e.target.value as OrderStatus | "all")}
-              className="shrink-0 rounded-2xl border border-gray-200 bg-white px-3 py-2.5 text-sm"
+        {/* ── Status Filter Cards ──────────────────────────────────────────────── */}
+        <div className="flex gap-2.5 overflow-x-auto px-6 pb-3 print:hidden">
+          {ORDER_STATUSES.map(s => (
+            <button
+              key={s}
+              onClick={() => setStatusFilter(prev => (prev === s ? "all" : s))}
+              className={`flex shrink-0 flex-col items-start rounded-2xl border px-4 py-3 transition-all ${
+                statusFilter === s
+                  ? "border-[#4f4a52] bg-white shadow-sm"
+                  : "border-transparent bg-white/70 hover:bg-white"
+              }`}
             >
-              <option value="all">All statuses</option>
-              {ORDER_STATUSES.map(s => (
-                <option key={s} value={s}>{STATUS_LABELS[s]}</option>
-              ))}
-            </select>
+              <span className="text-xl font-black tabular-nums text-[#4f4a52]">
+                {statusCounts[s] ?? 0}
+              </span>
+              <span className="mt-0.5 text-[9px] uppercase tracking-[0.3em] text-[#9b9298]">
+                {STATUS_LABELS[s]}
+              </span>
+            </button>
+          ))}
+        </div>
+
+        {/* ── Main area ────────────────────────────────────────────────────────── */}
+        <div className="flex min-h-0 flex-1 overflow-hidden">
+
+          {/* Orders list — hidden during print */}
+          <div className="flex min-w-0 flex-1 flex-col overflow-hidden print:hidden">
+
+            {/* Search + filter */}
+            <div className="flex items-center gap-3 px-6 py-3">
+              <input
+                type="search"
+                value={searchQuery}
+                onChange={e => setSearchQuery(e.target.value)}
+                placeholder="Search by name, reference, or phone…"
+                className="min-w-0 flex-1 rounded-2xl border border-gray-200 bg-white px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#4f4a52]/20"
+              />
+              <select
+                value={statusFilter}
+                onChange={e => setStatusFilter(e.target.value as OrderStatus | "all")}
+                className="shrink-0 rounded-2xl border border-gray-200 bg-white px-3 py-2.5 text-sm"
+              >
+                <option value="all">All statuses</option>
+                {ORDER_STATUSES.map(s => (
+                  <option key={s} value={s}>{STATUS_LABELS[s]}</option>
+                ))}
+              </select>
+            </div>
+
+            {/* Orders */}
+            <div className="flex-1 overflow-y-auto px-6 pb-8">
+              {filteredOrders.length === 0 ? (
+                <div className="flex h-40 items-center justify-center text-sm text-[#9b9298]">
+                  No orders match your search.
+                </div>
+              ) : (
+                <div className="space-y-2">
+                  {filteredOrders.map(order => {
+                    const ageInfo =
+                      order.payment_status === "awaiting_payment"
+                        ? orderAge(order.created_at)
+                        : null;
+                    return (
+                      <button
+                        key={order.order_ref}
+                        onClick={() => handleSelectOrder(order.order_ref)}
+                        className={`w-full rounded-2xl border p-4 text-left transition-all hover:shadow-sm ${
+                          selectedRef === order.order_ref
+                            ? "border-[#4f4a52] bg-white shadow-sm"
+                            : "border-gray-100 bg-white hover:border-gray-200"
+                        }`}
+                      >
+                        <div className="flex items-start justify-between gap-3">
+                          <div className="min-w-0">
+                            <div className="flex flex-wrap items-center gap-2">
+                              <span className="text-sm font-bold text-[#4f4a52]">
+                                {order.order_ref}
+                              </span>
+                              <StatusBadge status={order.payment_status} />
+                              {ageInfo?.label && (
+                                <span
+                                  className={`text-[10px] font-bold ${
+                                    ageInfo.urgent ? "text-red-500" : "text-amber-600"
+                                  }`}
+                                >
+                                  {ageInfo.label}
+                                </span>
+                              )}
+                            </div>
+                            <p className="mt-0.5 truncate text-sm text-[#7b7480]">
+                              {order.customer_name} · {order.province}
+                            </p>
+                            <p className="mt-0.5 text-xs text-[#9b9298]">
+                              {formatDate(order.created_at)}
+                            </p>
+                          </div>
+                          <div className="flex shrink-0 flex-col items-end gap-1">
+                            <span className="text-sm font-bold text-[#4f4a52]">
+                              R{order.total.toFixed(2)}
+                            </span>
+                            <ChevronRight size={14} className="text-[#9b9298]" />
+                          </div>
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
           </div>
 
-          {/* Orders */}
-          <div className="flex-1 overflow-y-auto px-6 pb-8">
-            {filteredOrders.length === 0 ? (
-              <div className="flex h-40 items-center justify-center text-sm text-[#9b9298]">
-                No orders match your search.
-              </div>
+          {/* ── Detail panel (desktop) — full-width during print ────────────── */}
+          <div className="hidden w-[440px] shrink-0 overflow-y-auto border-l border-gray-100 bg-white lg:block print:block print:w-full print:border-0">
+            {selectedOrder ? (
+              <DetailPanel
+                {...detailPanelProps}
+                onClose={() => setSelectedRef(null)}
+              />
             ) : (
-              <div className="space-y-2">
-                {filteredOrders.map(order => {
-                  const ageInfo = order.payment_status === "awaiting_payment"
-                    ? orderAge(order.created_at)
-                    : null;
-                  return (
-                    <button
-                      key={order.order_ref}
-                      onClick={() => handleSelectOrder(order.order_ref)}
-                      className={`w-full rounded-2xl border p-4 text-left transition-all hover:shadow-sm ${
-                        selectedRef === order.order_ref
-                          ? "border-[#4f4a52] bg-white shadow-sm"
-                          : "border-gray-100 bg-white hover:border-gray-200"
-                      }`}
-                    >
-                      <div className="flex items-start justify-between gap-3">
-                        <div className="min-w-0">
-                          <div className="flex flex-wrap items-center gap-2">
-                            <span className="text-sm font-bold text-[#4f4a52]">
-                              {order.order_ref}
-                            </span>
-                            <StatusBadge status={order.payment_status} />
-                            {ageInfo?.label && (
-                              <span className={`text-[10px] font-bold ${
-                                ageInfo.urgent ? "text-red-500" : "text-amber-600"
-                              }`}>
-                                {ageInfo.label}
-                              </span>
-                            )}
-                          </div>
-                          <p className="mt-0.5 truncate text-sm text-[#7b7480]">
-                            {order.customer_name} · {order.province}
-                          </p>
-                          <p className="mt-0.5 text-xs text-[#9b9298]">
-                            {formatDate(order.created_at)}
-                          </p>
-                        </div>
-                        <div className="flex shrink-0 flex-col items-end gap-1">
-                          <span className="text-sm font-bold text-[#4f4a52]">
-                            R{order.total.toFixed(2)}
-                          </span>
-                          <ChevronRight size={14} className="text-[#9b9298]" />
-                        </div>
-                      </div>
-                    </button>
-                  );
-                })}
+              <div className="flex h-full items-center justify-center print:hidden">
+                <p className="text-sm text-[#9b9298]">Select an order to view details</p>
               </div>
             )}
           </div>
         </div>
 
-        {/* ── Detail panel (desktop) ─────────────────────────────────────────── */}
-        <div className="hidden w-[440px] shrink-0 overflow-y-auto border-l border-gray-100 bg-white lg:block">
-          {selectedOrder ? (
-            <DetailPanel
-              {...detailPanelProps}
-              onClose={() => setSelectedRef(null)}
-            />
-          ) : (
-            <div className="flex h-full items-center justify-center">
-              <p className="text-sm text-[#9b9298]">Select an order to view details</p>
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* ── Detail panel (mobile overlay) ─────────────────────────────────────── */}
-      <AnimatePresence>
-        {selectedOrder && (
-          <>
-            <motion.div
-              key="backdrop"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setSelectedRef(null)}
-              className="fixed inset-0 z-20 bg-black/40 lg:hidden"
-            />
-            <motion.div
-              key="drawer"
-              initial={{ y: "100%" }}
-              animate={{ y: 0 }}
-              exit={{ y: "100%" }}
-              transition={{ type: "spring", damping: 30, stiffness: 300 }}
-              className="fixed inset-x-0 bottom-0 z-30 max-h-[88vh] overflow-y-auto rounded-t-[28px] bg-white lg:hidden"
-            >
-              <div className="flex justify-center pt-3 pb-1">
-                <div className="h-1 w-10 rounded-full bg-gray-200" />
-              </div>
-              <DetailPanel
-                {...detailPanelProps}
-                onClose={() => setSelectedRef(null)}
+        {/* ── Detail panel (mobile overlay) — hidden during print ─────────────── */}
+        <AnimatePresence>
+          {selectedOrder && (
+            <>
+              <motion.div
+                key="backdrop"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={() => setSelectedRef(null)}
+                className="fixed inset-0 z-20 bg-black/40 lg:hidden print:hidden"
               />
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
-    </div>
+              <motion.div
+                key="drawer"
+                initial={{ y: "100%" }}
+                animate={{ y: 0 }}
+                exit={{ y: "100%" }}
+                transition={{ type: "spring", damping: 30, stiffness: 300 }}
+                className="fixed inset-x-0 bottom-0 z-30 max-h-[88vh] overflow-y-auto rounded-t-[28px] bg-white lg:hidden print:hidden"
+              >
+                <div className="flex justify-center pb-1 pt-3">
+                  <div className="h-1 w-10 rounded-full bg-gray-200" />
+                </div>
+                <DetailPanel
+                  {...detailPanelProps}
+                  onClose={() => setSelectedRef(null)}
+                />
+              </motion.div>
+            </>
+          )}
+        </AnimatePresence>
+      </div>
+    </>
   );
 }
