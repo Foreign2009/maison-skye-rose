@@ -6,7 +6,8 @@
  * Future modules: searchRankingEngine.ts, personalizationEngine.ts, aiAdapter.ts
  */
 
-import type { FragranceKnowledge } from "../mkc/types";
+import type { FragranceKnowledge }  from "../mkc/types";
+import type { ConversationContext } from "../concierge/types";
 
 // ── Similarity ────────────────────────────────────────────────────────────────
 
@@ -60,6 +61,16 @@ export type CollectionBoost =
   | { type: "newArrival";     points: number }
   | { type: "popularity";     points: number };  // score += popularity × points / 10
 
+export interface EditorialContent {
+  introduction:     string;
+  purpose:          string;
+  wardrobePurpose:  string;
+  academyCopy:      string;
+  articleSlugs:     string[];
+  conciergeCopy:    string;
+  conciergeContext: Partial<ConversationContext>;
+}
+
 export interface CollectionSpec {
   id:          string;
   name:        string;
@@ -72,6 +83,7 @@ export interface CollectionSpec {
   filters:     CollectionFilter[];
   boosts:      CollectionBoost[];
   maxItems:    number;
+  editorial?:  EditorialContent;
 }
 
 // ── Search ────────────────────────────────────────────────────────────────────

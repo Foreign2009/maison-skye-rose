@@ -127,6 +127,18 @@ export const COLLECTION_SPECS: CollectionSpec[] = [
       { type: "bestSeller", points: 15 },
     ],
     maxItems: 8,
+    editorial: {
+      introduction:
+        "Vanilla in fragrance is widely misunderstood. Far from simple or sweet, it unfolds in layers across the drydown — warm, resinous, and deeply personal. These compositions settle into the skin differently on everyone who wears them, growing richer and more intimate as the day progresses.",
+      purpose:
+        "Vanilla and gourmand fragrances are the comfort layer of a considered wardrobe. Warm enough to be distinctive, familiar enough to feel effortless — they reward those willing to wear them through the full drydown rather than judge them at the first spray.",
+      wardrobePurpose:
+        "Gourmand fragrances sit naturally between evening signature and weekend piece. Richer than a standard daily fragrance but approachable enough for relaxed occasions. Layer over a lighter morning base for an evolved, all-day rotation.",
+      academyCopy:      "Understand the structure behind warmth and why base notes define these compositions",
+      articleSlugs:     ["the-note-pyramid-explained", "how-to-layer-fragrances", "guide-to-fragrance-families"],
+      conciergeCopy:    "Your Concierge can help you find the vanilla or gourmand fragrance that feels personal rather than sweet — and show you how to wear it for maximum effect.",
+      conciergeContext: { occasion: "Evening" },
+    },
   },
 
   {
@@ -188,6 +200,18 @@ export const COLLECTION_SPECS: CollectionSpec[] = [
       { type: "popularity",                      points: 10 },
     ],
     maxItems: 8,
+    editorial: {
+      introduction:
+        "A signature scent is not chosen — it is found. The fragrance that begins to feel like yours rather than something you are wearing. Distinctive enough to be noticed, versatile enough for daily use, and consistent enough to become unmistakably associated with you over time.",
+      purpose:
+        "Signature fragrances earn their place not through intensity but through fit — a fragrance so aligned with your natural character that wearing it feels effortless and, over time, unmistakable.",
+      wardrobePurpose:
+        "A signature is the anchor of a fragrance wardrobe. Once found, it becomes the fixed point from which seasonal pieces, evening fragrances, and special occasion scents orbit — each enhancing the presence of the other.",
+      academyCopy:      "Learn what separates a fragrance you wear from one that becomes truly yours",
+      articleSlugs:     ["what-makes-a-signature-scent", "guide-to-fragrance-families", "how-to-wear-fragrance"],
+      conciergeCopy:    "Finding a signature scent is a personal process. Share your instincts and preferences with your Concierge — they will guide you to the one that feels unmistakably yours.",
+      conciergeContext: { occasion: "Daily Wear" },
+    },
   },
 
   {
@@ -229,6 +253,18 @@ export const COLLECTION_SPECS: CollectionSpec[] = [
       { type: "bestSeller", points: 15 },
     ],
     maxItems: 8,
+    editorial: {
+      introduction:
+        "The Elite Collection represents Maison's most ambitious compositions — built without compromise on complexity, longevity, and character. These are not simply more expensive; they are built differently. Rarer materials, deeper accords, and longer development create an experience that evolves across hours of wear.",
+      purpose:
+        "Luxury fragrance is defined not by price but by complexity and the way a composition develops from opening to drydown. The Elite Collection holds the fragrances that reward the most patient, considered wearing.",
+      wardrobePurpose:
+        "An Elite fragrance elevates every wardrobe it joins. Whether worn as a statement piece for specific occasions or as a primary daily signature, it raises the standard of a collection and becomes a benchmark for every future addition.",
+      academyCopy:      "Explore what separates true complexity from surface-level impact — and how to wear it to full effect",
+      articleSlugs:     ["what-makes-a-signature-scent", "the-note-pyramid-explained", "how-to-wear-fragrance"],
+      conciergeCopy:    "Your Concierge knows the Elite Collection intimately. Share the occasion, the impression you want to leave, and let them guide you to the right composition.",
+      conciergeContext: { occasion: "Evening" },
+    },
   },
 
   {
@@ -246,6 +282,18 @@ export const COLLECTION_SPECS: CollectionSpec[] = [
       { type: "popularity", points: 10 },
     ],
     maxItems: 8,
+    editorial: {
+      introduction:
+        "Maison's most loved and newest arrivals — the fragrances that have found their moment. Best sellers earn that distinction through consistent performance across wearers, occasions, and seasons. The newest arrivals bring fresh perspective and character to an established collection.",
+      purpose:
+        "Trending fragrances balance broad accessibility with genuine depth. They connect quickly precisely because they are built to perform across the widest range of people and occasions — without sacrificing what makes them interesting.",
+      wardrobePurpose:
+        "Best sellers make reliable starting points for new wardrobes and strong additions to existing collections. Their broad performance means they sit comfortably alongside more specific seasonal or occasion-focused pieces.",
+      academyCopy:      "Build the knowledge to choose confidently — whether you're discovering your first fragrance or expanding your collection",
+      articleSlugs:     ["what-makes-a-signature-scent", "guide-to-fragrance-families", "how-to-wear-fragrance"],
+      conciergeCopy:    "Your Concierge can help you navigate what's trending and find the fragrance that connects with your specific character — not just the crowd.",
+      conciergeContext: { occasion: "Daily Wear" },
+    },
   },
 
   {
@@ -265,6 +313,18 @@ export const COLLECTION_SPECS: CollectionSpec[] = [
       { type: "popularity", points: -100 },
     ],
     maxItems: 8,
+    editorial: {
+      introduction:
+        "Some of Maison's most interesting compositions sit quietly beyond the bestseller lists. Not because they are lesser — but because the wearer who recognises them has not yet arrived. These are fragrances waiting for their person: considered, characterful, and rarely discovered by accident.",
+      purpose:
+        "Discovery fragrances reward curiosity. The fragrance you found rather than were shown carries a different kind of satisfaction — it becomes yours more completely because you chose it before the crowd did.",
+      wardrobePurpose:
+        "A hidden gem often becomes the most interesting piece in a wardrobe. The one people ask about. The one with a story. The one that holds its character across years and trends because it was never built to follow them.",
+      academyCopy:      "Develop the language to describe what you're looking for — and the confidence to choose something unexpected",
+      articleSlugs:     ["guide-to-fragrance-families", "the-note-pyramid-explained", "what-makes-a-signature-scent"],
+      conciergeCopy:    "Discovering something unexpected is best done with guidance. Your Concierge knows this collection well — share your instincts and let the search begin.",
+      conciergeContext: { occasion: "Daily Wear" },
+    },
   },
 
   {
@@ -295,6 +355,18 @@ export const COLLECTION_SPECS: CollectionSpec[] = [
       { type: "bestSeller",                        points: 12 },
     ],
     maxItems: 8,
+    editorial: {
+      introduction:
+        "Spring is the fragrance season for renewal. As temperatures warm and the air lightens, floral and fresh compositions return to full expression. These are fragrances built for exactly this moment — lighter in character, more expressive in the warmth, and naturally suited to the change in season.",
+      purpose:
+        "Spring fragrances thrive in moderate warmth — the temperature range that allows florals to bloom without distortion and fresh compositions to project cleanly. This is the most natural season to introduce a lighter signature or rediscover a floral that was overshadowed in winter.",
+      wardrobePurpose:
+        "A spring fragrance is the seasonal rotation piece — worn to complement a heavier year-round signature. Light floral or fresh-fruity compositions introduce texture and variety to any wardrobe through the warmer months.",
+      academyCopy:      "Learn how temperature and season shape which fragrances perform at their best",
+      articleSlugs:     ["choosing-your-season-scent", "guide-to-fragrance-families", "how-to-wear-fragrance"],
+      conciergeCopy:    "Your Concierge can help you identify which spring fragrances complement your existing wardrobe and guide you through the seasonal transition.",
+      conciergeContext: { season: "Spring" },
+    },
   },
 
   {
@@ -325,6 +397,18 @@ export const COLLECTION_SPECS: CollectionSpec[] = [
       { type: "bestSeller",                                   points: 10 },
     ],
     maxItems: 8,
+    editorial: {
+      introduction:
+        "Autumn is the richest fragrance season. As temperatures cool and air dries, warmer compositions come alive — revealing nuances that summer heat kept hidden. Woody, amber, and spice-forward fragrances find their fullest expression as the season turns.",
+      purpose:
+        "Cool, dry air is autumn's gift to fragrance. Base notes deepen, projection settles to skin-close warmth, and the body's natural heat layers perfectly with richer compositions. This is the season to rediscover what summer set aside.",
+      wardrobePurpose:
+        "Autumn invites a deliberate wardrobe transition. The woody and amber fragrances set aside in summer perform at their peak now — and this is the ideal season to add a richer signature that can carry through into winter.",
+      academyCopy:      "Understand how season shapes fragrance character and why autumn is the ideal time to explore depth",
+      articleSlugs:     ["choosing-your-season-scent", "how-to-layer-fragrances", "the-note-pyramid-explained"],
+      conciergeCopy:    "Your Concierge can guide your autumn transition — from selecting your first seasonal fragrance to understanding how to layer across the cooler months.",
+      conciergeContext: { season: "Autumn" },
+    },
   },
 
   {

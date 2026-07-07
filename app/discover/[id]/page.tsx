@@ -378,23 +378,36 @@ export default async function DiscoverCollectionPage({ params }: PageProps) {
                 </h1>
 
                 <p className="mt-4 text-base md:text-lg text-[#7b7480] leading-7 max-w-xl">
-                  {spec.description}
+                  {spec.editorial ? spec.editorial.introduction : spec.description}
                 </p>
 
-                <div className="mt-6 flex flex-wrap gap-2">
-                  {spec.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="rounded-full px-3 py-1 text-xs font-semibold"
-                      style={{
-                        backgroundColor: `${spec.accentColor}15`,
-                        color: spec.accentColor,
-                      }}
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
+                {spec.editorial && (
+                  <div className="mt-6 border-l-2 border-[#d89ca4] pl-5">
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.35em] text-[#d89ca4]">
+                      Maison Insight
+                    </p>
+                    <p className="mt-2 text-sm leading-relaxed text-[#7b7480]">
+                      {spec.editorial.purpose}
+                    </p>
+                  </div>
+                )}
+
+                {!spec.editorial && (
+                  <div className="mt-6 flex flex-wrap gap-2">
+                    {spec.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="rounded-full px-3 py-1 text-xs font-semibold"
+                        style={{
+                          backgroundColor: `${spec.accentColor}15`,
+                          color: spec.accentColor,
+                        }}
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                )}
 
                 <p className="mt-6 text-sm text-[#7b7480]">
                   {products.length} fragrances in this collection
@@ -407,6 +420,16 @@ export default async function DiscoverCollectionPage({ params }: PageProps) {
         {/* ── Product Grid ──────────────────────────────────────────────────── */}
         <section className="px-4 pb-16 md:pb-24">
           <div className="mx-auto max-w-7xl">
+            {spec.editorial && (
+              <div className="mb-8 md:mb-10">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.55em] text-[#d89ca4]">
+                  The Collection
+                </p>
+                <h2 className="mt-3 text-2xl font-black tracking-[-0.04em] text-[#4f4a52] md:text-3xl">
+                  {spec.name}
+                </h2>
+              </div>
+            )}
             <DiscoverCollectionGrid
               fragrances={products}
               source="discover-collection"
@@ -426,17 +449,95 @@ export default async function DiscoverCollectionPage({ params }: PageProps) {
                 Building a considered collection
               </p>
               <p className="mt-3 max-w-xl text-sm leading-7 text-[#7b7480]">
-                Not sure where this fits in your wardrobe? Your Concierge can help you understand how this collection layers with what you already own.
+                {spec.editorial
+                  ? spec.editorial.wardrobePurpose
+                  : "Not sure where this fits in your wardrobe? Your Concierge can help you understand how this collection layers with what you already own."}
               </p>
               <div className="mt-6">
                 <MomentConciergeButton
-                  context={{ occasion: spec.tags[0] }}
+                  context={spec.editorial ? spec.editorial.conciergeContext : { occasion: spec.tags[0] }}
                   label="Ask the Concierge"
                 />
               </div>
             </div>
           </div>
         </section>
+
+        {/* ── Academy Articles (editorial collections only) ──────────────────── */}
+        {spec.editorial && (() => {
+          const editorialArticles = spec.editorial.articleSlugs
+            .map((slug) => academyCatalogue.find((a) => a.slug === slug))
+            .filter((a): a is NonNullable<typeof a> => a !== undefined);
+          return editorialArticles.length > 0 ? (
+            <section className="bg-white py-16 px-4 md:py-24">
+              <div className="mx-auto max-w-7xl">
+                <div className="mb-10 max-w-2xl">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.55em] text-[#d89ca4]">
+                    Maison Academy
+                  </p>
+                  <h2 className="mt-3 text-2xl font-black tracking-[-0.04em] text-[#4f4a52] md:text-3xl">
+                    {spec.editorial.academyCopy}
+                  </h2>
+                </div>
+                <div className="grid gap-5 md:grid-cols-3">
+                  {editorialArticles.map(({ slug, title, excerpt, readTime }) => (
+                    <Link
+                      key={slug}
+                      href={`/academy/${slug}`}
+                      className="group block rounded-[20px] border border-[#f0ebe8] bg-[#faf7f5] p-7 transition-all duration-300 hover:border-[#d89ca4] hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)]"
+                    >
+                      <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#d89ca4]">
+                        {readTime} min read
+                      </p>
+                      <h3 className="mt-3 text-base font-black leading-snug text-[#4f4a52]">
+                        {title}
+                      </h3>
+                      <p className="mt-3 text-sm leading-relaxed text-[#7b7480]">
+                        {excerpt}
+                      </p>
+                      <p className="mt-5 text-sm font-bold text-[#d89ca4]">
+                        Read more →
+                      </p>
+                    </Link>
+                  ))}
+                </div>
+                <div className="mt-8">
+                  <Link
+                    href="/academy"
+                    className="text-sm font-semibold text-[#7b7480] underline-offset-4 transition-colors hover:text-[#4f4a52] hover:underline"
+                  >
+                    Visit the full Academy →
+                  </Link>
+                </div>
+              </div>
+            </section>
+          ) : null;
+        })()}
+
+        {/* ── Concierge Continuation (editorial collections only) ────────────── */}
+        {spec.editorial && (
+          <section className="bg-[#faf7f5] py-16 px-4 md:py-24">
+            <div className="mx-auto max-w-7xl">
+              <div className="max-w-2xl">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.55em] text-[#d89ca4]">
+                  Your Personal Concierge
+                </p>
+                <h2 className="mt-3 text-2xl font-black tracking-[-0.04em] text-[#4f4a52] md:text-3xl">
+                  Not sure which one is right for you?
+                </h2>
+                <p className="mt-4 text-base leading-relaxed text-[#7b7480]">
+                  {spec.editorial.conciergeCopy}
+                </p>
+                <div className="mt-6">
+                  <MomentConciergeButton
+                    context={spec.editorial.conciergeContext}
+                    label="Ask your Concierge"
+                  />
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* ── CTA ───────────────────────────────────────────────────────────── */}
         <section className="bg-white py-16 px-4 text-center">
