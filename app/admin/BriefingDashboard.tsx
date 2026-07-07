@@ -1,0 +1,476 @@
+"use client";
+
+import { useState, useEffect, useRef } from "react";
+import Link from "next/link";
+import { logoutAction } from "./actions";
+import type { OrderStatus } from "@/app/lib/orderStatus";
+import type { DiscoverySource } from "@/app/lib/discoveryAttribution";
+
+// ── Types ─────────────────────────────────────────────────────────────────────
+
+export interface SimpleOrder {
+  ref:       string;
+  name:      string;
+  status:    OrderStatus;
+  total:     number;
+  createdAt: string;
+}
+
+export interface FragranceInsight {
+  title:      string;
+  orderCount: number;
+  unitCount:  number;
+}
+
+export interface DiscoveryPathwayStat {
+  source:  DiscoverySource;
+  label:   string;
+  count:   number;
+}
+
+export interface MaisonBrief {
+  generatedAt:          string;
+  todayRevenue:         number;
+  todayOrders:          number;
+  weekRevenue:          number;
+  weekOrders:           number;
+  allTimeRevenue:       number;
+  activeCount:          number;
+  needsAttention:       SimpleOrder[];
+  readyToShip:          SimpleOrder[];
+  discoveryPathways:    DiscoveryPathwayStat[];
+  noAttributionCount:   number;
+  totalWithAttribution: number;
+  topFragrances:        FragranceInsight[];
+  pipeline:             Record<OrderStatus, number>;
+  totalOrders:          number;
+  cancelRate:           number;
+  last7DayOrders:       number;
+  last7DayRevenue:      number;
+  last30DayOrders:      number;
+  last30DayRevenue:     number;
+  avgHoursToConfirm:    number | null;
+  avgHoursToDispatch:   number | null;
+  avgHoursToDeliver:    number | null;
+  reflection:           string;
+}
+
+// ── Helpers ───────────────────────────────────────────────────────────────────
+
+function fmtR(n: number): string {
+  const parts = n.toFixed(2).split(".");
+  const int   = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return `R ${int}.${parts[1]}`;
+}
+
+function fmtHours(h: number): string {
+  if (h < 1) return "< 1h";
+  if (h < 24) return `${Math.round(h)}h`;
+  const d = Math.floor(h / 24);
+  const r = Math.round(h % 24);
+  return r > 0 ? `${d}d ${r}h` : `${d}d`;
+}
+
+function ageLabel(createdAt: string, ref: Date): string {
+  const h = (ref.getTime() - new Date(createdAt).getTime()) / 3600000;
+  if (h < 1) return "< 1h ago";
+  if (h < 24) return `${Math.round(h)}h ago`;
+  return `${Math.floor(h / 24)}d ago`;
+}
+
+const STATUS_LABELS: Record<OrderStatus, string> = {
+  awaiting_payment:  "Awaiting Payment",
+  payment_confirmed: "Payment Confirmed",
+  processing:        "Processing",
+  dispatched:        "Dispatched",
+  delivered:         "Delivered",
+  cancelled:         "Cancelled",
+};
+
+// ── MaisonNotes ───────────────────────────────────────────────────────────────
+
+function MaisonNotes() {
+  const [notes,     setNotes]     = useState("");
+  const [lastSaved, setLastSaved] = useState<Date | null>(null);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem("msr_briefing_notes");
+      if (saved) setNotes(saved);
+    } catch { /* sessionStorage unavailable */ }
+    return () => { if (timerRef.current) clearTimeout(timerRef.current); };
+  }, []);
+
+  function handleChange(val: string) {
+    setNotes(val);
+    if (timerRef.current) clearTimeout(timerRef.current);
+    timerRef.current = setTimeout(() => {
+      try {
+        localStorage.setItem("msr_briefing_notes", val);
+        setLastSaved(new Date());
+      } catch { /* silent */ }
+    }, 600);
+  }
+
+  return (
+    <div>
+      <div className="mb-3 flex items-center justify-between">
+        <span className="text-[10px] uppercase tracking-[0.4em] text-[#d89ca4]">Private Notes</span>
+        {lastSaved && (
+          <span className="text-[10px] text-[#4f4a52]/40">
+            Auto-saved · {lastSaved.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+          </span>
+        )}
+      </div>
+      <textarea
+        value={notes}
+        onChange={(e) => handleChange(e.target.value)}
+        placeholder="Notes visible only in this browser…"
+        rows={6}
+        aria-label="Private notes"
+        className="w-full resize-none rounded-2xl border border-gray-200 bg-white px-5 py-4 text-sm text-[#4f4a52] placeholder-[#4f4a52]/30 focus:outline-none focus:ring-2 focus:ring-[#4f4a52]/10"
+      />
+    </div>
+  );
+}
+
+// ── BriefingDashboard ─────────────────────────────────────────────────────────
+
+export default function BriefingDashboard({ brief }: { brief: MaisonBrief }) {
+  const [greeting, setGreeting] = useState("");
+  const [dateStr,  setDateStr]  = useState("");
+
+  useEffect(() => {
+    const d = new Date();
+    const h = d.getHours();
+    setGreeting(h < 12 ? "Good morning" : h < 17 ? "Good afternoon" : "Good evening");
+    setDateStr(
+      d.toLocaleDateString("en-GB", {
+        weekday: "long", day: "numeric", month: "long", year: "numeric",
+      })
+    );
+  }, []);
+
+  const briefTime = new Date(brief.generatedAt);
+  const generatedLabel = briefTime.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+
+  const PIPELINE_ORDER: OrderStatus[] = [
+    "awaiting_payment", "payment_confirmed", "processing",
+    "dispatched", "delivered", "cancelled",
+  ];
+
+  return (
+    <div className="flex min-h-screen flex-col bg-[#f8f7f5]">
+
+      {/* ── Header ───────────────────────────────────────────────────────────── */}
+      <header className="flex items-center justify-between bg-[#4f4a52] px-6 py-4 print:hidden">
+        <div className="flex items-center gap-6">
+          <div>
+            <p className="text-[9px] uppercase tracking-[0.5em] text-[#d89ca4]">Internal</p>
+            <p className="text-sm font-black uppercase tracking-widest text-white">Maison Operations</p>
+          </div>
+          <nav className="flex items-center gap-4">
+            <Link href="/admin" className="text-xs text-white/60 transition hover:text-white">
+              Operations
+            </Link>
+            <span className="text-xs font-bold text-white">Briefing</span>
+          </nav>
+        </div>
+        <form action={logoutAction}>
+          <button type="submit" className="text-xs text-white/60 transition hover:text-white">
+            Sign Out
+          </button>
+        </form>
+      </header>
+
+      {/* ── Content ──────────────────────────────────────────────────────────── */}
+      <div className="mx-auto w-full max-w-[780px] space-y-14 px-6 py-12">
+
+        {/* 1 · Good Morning ─────────────────────────────────────────────────── */}
+        <section>
+          <p className="text-[10px] uppercase tracking-[0.4em] text-[#d89ca4]">Maison Briefing</p>
+          {greeting && (
+            <h2 className="mt-2 text-3xl font-black text-[#4f4a52]">{greeting}.</h2>
+          )}
+          {dateStr && (
+            <p className="mt-1 text-sm text-[#4f4a52]/50">{dateStr}</p>
+          )}
+
+          <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-4">
+            <div>
+              <p className="text-[10px] uppercase tracking-[0.3em] text-[#4f4a52]/40">Today</p>
+              <p className="mt-1 text-2xl font-black tabular-nums text-[#4f4a52]">{fmtR(brief.todayRevenue)}</p>
+              <p className="mt-0.5 text-xs text-[#4f4a52]/40">
+                {brief.todayOrders} {brief.todayOrders === 1 ? "order" : "orders"}
+              </p>
+            </div>
+            <div>
+              <p className="text-[10px] uppercase tracking-[0.3em] text-[#4f4a52]/40">This Week</p>
+              <p className="mt-1 text-2xl font-black tabular-nums text-[#4f4a52]">{fmtR(brief.weekRevenue)}</p>
+              <p className="mt-0.5 text-xs text-[#4f4a52]/40">
+                {brief.weekOrders} {brief.weekOrders === 1 ? "order" : "orders"}
+              </p>
+            </div>
+            <div>
+              <p className="text-[10px] uppercase tracking-[0.3em] text-[#4f4a52]/40">All Time</p>
+              <p className="mt-1 text-2xl font-black tabular-nums text-[#4f4a52]">{fmtR(brief.allTimeRevenue)}</p>
+              <p className="mt-0.5 text-xs text-[#4f4a52]/40">confirmed revenue</p>
+            </div>
+            <div>
+              <p className="text-[10px] uppercase tracking-[0.3em] text-[#4f4a52]/40">Active</p>
+              <p className="mt-1 text-2xl font-black tabular-nums text-[#4f4a52]">{brief.activeCount}</p>
+              <p className="mt-0.5 text-xs text-[#4f4a52]/40">in progress</p>
+            </div>
+          </div>
+
+          <p className="mt-6 text-xs text-[#4f4a52]/30">Generated at {generatedLabel}.</p>
+        </section>
+
+        <hr className="border-gray-200" />
+
+        {/* 2 · Today's Priorities ───────────────────────────────────────────── */}
+        <section>
+          <p className="text-[10px] uppercase tracking-[0.4em] text-[#d89ca4]">Today&apos;s Priorities</p>
+          <h2 className="mt-2 text-xl font-black text-[#4f4a52]">Orders Requiring Attention</h2>
+
+          {brief.needsAttention.length === 0 && brief.readyToShip.length === 0 ? (
+            <p className="mt-6 text-sm text-[#4f4a52]/50">Everything is in order.</p>
+          ) : (
+            <div className="mt-6 space-y-8">
+
+              {brief.needsAttention.length > 0 && (
+                <div>
+                  <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-[#4f4a52]/40">
+                    Needs Attention
+                  </p>
+                  <div className="space-y-2">
+                    {brief.needsAttention.map((o) => (
+                      <div
+                        key={o.ref}
+                        className="flex items-center justify-between rounded-xl bg-white px-4 py-3 shadow-sm"
+                      >
+                        <div>
+                          <p className="text-sm font-semibold text-[#4f4a52]">{o.name}</p>
+                          <p className="text-[11px] text-[#4f4a52]/40">
+                            {o.ref} · {ageLabel(o.createdAt, briefTime)}
+                          </p>
+                        </div>
+                        <div className="text-right">
+                          <p className="text-xs font-semibold tabular-nums text-[#4f4a52]">{fmtR(o.total)}</p>
+                          <p className="text-[11px] text-[#4f4a52]/50">{STATUS_LABELS[o.status]}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {brief.readyToShip.length > 0 && (
+                <div>
+                  <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-[#4f4a52]/40">
+                    Ready to Ship
+                  </p>
+                  <div className="space-y-2">
+                    {brief.readyToShip.map((o) => (
+                      <div
+                        key={o.ref}
+                        className="flex items-center justify-between rounded-xl bg-white px-4 py-3 shadow-sm"
+                      >
+                        <div>
+                          <p className="text-sm font-semibold text-[#4f4a52]">{o.name}</p>
+                          <p className="text-[11px] text-[#4f4a52]/40">
+                            {o.ref} · {ageLabel(o.createdAt, briefTime)}
+                          </p>
+                        </div>
+                        <div className="text-right">
+                          <p className="text-xs font-semibold tabular-nums text-[#4f4a52]">{fmtR(o.total)}</p>
+                          <p className="text-[11px] text-[#4f4a52]/50">{STATUS_LABELS[o.status]}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+            </div>
+          )}
+        </section>
+
+        <hr className="border-gray-200" />
+
+        {/* 3 · Discovery Pathways ───────────────────────────────────────────── */}
+        <section>
+          <p className="text-[10px] uppercase tracking-[0.4em] text-[#d89ca4]">Discovery Pathways</p>
+          <h2 className="mt-2 text-xl font-black text-[#4f4a52]">How Customers Found Their Fragrance</h2>
+
+          {brief.discoveryPathways.length === 0 ? (
+            <p className="mt-6 text-sm leading-7 text-[#4f4a52]/50">
+              Discovery pathways will appear here as customers complete journeys through
+              Discover by Moment and the Scent Finder.
+            </p>
+          ) : (
+            <div className="mt-6 space-y-2">
+              {brief.discoveryPathways.map((p) => (
+                <div
+                  key={`${p.source}:${p.label}`}
+                  className="flex items-center justify-between rounded-xl bg-white px-4 py-3 shadow-sm"
+                >
+                  <p className="text-sm font-semibold text-[#4f4a52]">{p.label}</p>
+                  <p className="text-sm tabular-nums text-[#4f4a52]">
+                    {p.count}{" "}
+                    <span className="text-[#4f4a52]/40">{p.count === 1 ? "order" : "orders"}</span>
+                  </p>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {brief.noAttributionCount > 0 && (
+            <p className="mt-4 text-xs text-[#4f4a52]/40">
+              {brief.noAttributionCount}{" "}
+              {brief.noAttributionCount === 1 ? "order has" : "orders have"} no recorded discovery context.
+            </p>
+          )}
+        </section>
+
+        <hr className="border-gray-200" />
+
+        {/* 4 · Fragrances Creating Conversation ────────────────────────────── */}
+        <section>
+          <p className="text-[10px] uppercase tracking-[0.4em] text-[#d89ca4]">
+            Fragrances Creating Conversation
+          </p>
+          <h2 className="mt-2 text-xl font-black text-[#4f4a52]">Your Most Ordered Fragrances</h2>
+
+          {brief.topFragrances.length === 0 ? (
+            <p className="mt-6 text-sm text-[#4f4a52]/50">
+              Fragrance insights will appear here as confirmed orders arrive.
+            </p>
+          ) : (
+            <div className="mt-6 space-y-2">
+              {brief.topFragrances.map((f, i) => (
+                <div
+                  key={f.title}
+                  className="flex items-center gap-4 rounded-xl bg-white px-4 py-3 shadow-sm"
+                >
+                  <span className="w-5 shrink-0 text-center text-[11px] font-black text-[#4f4a52]/25">
+                    {i + 1}
+                  </span>
+                  <p className="flex-1 text-sm font-semibold text-[#4f4a52]">{f.title}</p>
+                  <p className="shrink-0 text-xs tabular-nums text-[#4f4a52]/50">
+                    {f.orderCount} {f.orderCount === 1 ? "order" : "orders"}
+                    {" · "}
+                    {f.unitCount} {f.unitCount === 1 ? "unit" : "units"}
+                  </p>
+                </div>
+              ))}
+            </div>
+          )}
+
+          <p className="mt-4 text-xs text-[#4f4a52]/30">From confirmed and delivered orders.</p>
+        </section>
+
+        <hr className="border-gray-200" />
+
+        {/* 5 · Operational Health ───────────────────────────────────────────── */}
+        <section>
+          <p className="text-[10px] uppercase tracking-[0.4em] text-[#d89ca4]">Operational Health</p>
+          <h2 className="mt-2 text-xl font-black text-[#4f4a52]">Maison at a Glance</h2>
+
+          <div className="mt-6 grid gap-4 sm:grid-cols-2">
+
+            {/* Pipeline */}
+            <div className="rounded-2xl bg-white p-5 shadow-sm">
+              <p className="mb-4 text-[10px] uppercase tracking-[0.3em] text-[#4f4a52]/40">Order Pipeline</p>
+              <div className="space-y-2.5">
+                {PIPELINE_ORDER.map((s) => (
+                  <div key={s} className="flex items-center justify-between">
+                    <span className="text-xs text-[#4f4a52]/60">{STATUS_LABELS[s]}</span>
+                    <span className="text-xs font-semibold tabular-nums text-[#4f4a52]">
+                      {brief.pipeline[s]}
+                    </span>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-4 space-y-1 border-t border-gray-100 pt-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs text-[#4f4a52]/40">Total orders</span>
+                  <span className="text-xs font-bold tabular-nums text-[#4f4a52]">{brief.totalOrders}</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-xs text-[#4f4a52]/40">Cancel rate</span>
+                  <span className="text-xs font-semibold tabular-nums text-[#4f4a52]">
+                    {(brief.cancelRate * 100).toFixed(1)}%
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Fulfilment timing */}
+            <div className="rounded-2xl bg-white p-5 shadow-sm">
+              <p className="mb-4 text-[10px] uppercase tracking-[0.3em] text-[#4f4a52]/40">
+                Fulfilment Timing
+              </p>
+              <div className="space-y-2.5">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs text-[#4f4a52]/60">Avg. to confirm</span>
+                  <span className="text-xs font-semibold tabular-nums text-[#4f4a52]">
+                    {brief.avgHoursToConfirm !== null ? fmtHours(brief.avgHoursToConfirm) : "—"}
+                  </span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-xs text-[#4f4a52]/60">Avg. to dispatch</span>
+                  <span className="text-xs font-semibold tabular-nums text-[#4f4a52]">
+                    {brief.avgHoursToDispatch !== null ? fmtHours(brief.avgHoursToDispatch) : "—"}
+                  </span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-xs text-[#4f4a52]/60">Avg. to deliver</span>
+                  <span className="text-xs font-semibold tabular-nums text-[#4f4a52]">
+                    {brief.avgHoursToDeliver !== null ? fmtHours(brief.avgHoursToDeliver) : "—"}
+                  </span>
+                </div>
+              </div>
+              <p className="mt-3 text-[10px] text-[#4f4a52]/30">Averages exclude outliers over 7 days.</p>
+              <div className="mt-4 space-y-1.5 border-t border-gray-100 pt-4">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs text-[#4f4a52]/60">Last 7 days</span>
+                  <span className="text-xs font-semibold tabular-nums text-[#4f4a52]">
+                    {brief.last7DayOrders} orders · {fmtR(brief.last7DayRevenue)}
+                  </span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-xs text-[#4f4a52]/60">Last 30 days</span>
+                  <span className="text-xs font-semibold tabular-nums text-[#4f4a52]">
+                    {brief.last30DayOrders} orders · {fmtR(brief.last30DayRevenue)}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <hr className="border-gray-200" />
+
+        {/* 6 · Maison Reflection ────────────────────────────────────────────── */}
+        <section>
+          <p className="text-[10px] uppercase tracking-[0.4em] text-[#d89ca4]">Maison Reflection</p>
+          <h2 className="mt-2 text-xl font-black text-[#4f4a52]">A Note on Your Week</h2>
+          <p className="mt-5 text-sm leading-7 text-[#4f4a52]/70">{brief.reflection}</p>
+        </section>
+
+        <hr className="border-gray-200" />
+
+        {/* 7 · Private Notes ────────────────────────────────────────────────── */}
+        <section className="pb-16">
+          <p className="text-[10px] uppercase tracking-[0.4em] text-[#d89ca4]">Your Space</p>
+          <h2 className="mt-2 mb-6 text-xl font-black text-[#4f4a52]">Maison Notes</h2>
+          <MaisonNotes />
+        </section>
+
+      </div>
+    </div>
+  );
+}

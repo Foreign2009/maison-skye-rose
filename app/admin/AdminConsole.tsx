@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useMemo, useTransition } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ChevronRight, MessageCircle, Copy, Check, Printer } from "lucide-react";
 import {
@@ -952,11 +953,19 @@ export default function AdminConsole({ initialOrders }: { initialOrders: OrderRo
 
         {/* ── Header ──────────────────────────────────────────────────────────── */}
         <header className="flex items-center justify-between bg-[#4f4a52] px-6 py-4 print:hidden">
-          <div>
-            <p className="text-[9px] uppercase tracking-[0.5em] text-[#d89ca4]">Internal</p>
-            <h1 className="text-sm font-black uppercase tracking-widest text-white">
-              Maison Operations
-            </h1>
+          <div className="flex items-center gap-6">
+            <div>
+              <p className="text-[9px] uppercase tracking-[0.5em] text-[#d89ca4]">Internal</p>
+              <h1 className="text-sm font-black uppercase tracking-widest text-white">
+                Maison Operations
+              </h1>
+            </div>
+            <nav className="flex items-center gap-4">
+              <span className="text-xs font-bold text-white">Operations</span>
+              <Link href="/admin/briefing" className="text-xs text-white/60 transition hover:text-white">
+                Briefing
+              </Link>
+            </nav>
           </div>
           <form action={logoutAction}>
             <button type="submit" className="text-xs text-white/60 transition hover:text-white">
