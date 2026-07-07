@@ -421,9 +421,14 @@ A member of our team will confirm your order and delivery details shortly.`;
             onClick={() => setShowRecommendations(!showRecommendations)}
             className="w-full py-4 text-left flex items-center justify-between"
           >
-            <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-zinc-500">
-              You May Also Like
-            </span>
+            <div>
+              <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-zinc-500">
+                You May Also Like
+              </span>
+              <p className="mt-0.5 text-[10px] font-normal normal-case tracking-normal text-zinc-400">
+                Each addition deepens your collection.
+              </p>
+            </div>
 
             <span className="text-xs font-bold text-[#b67d73]">
               {showRecommendations ? "−" : "+"}

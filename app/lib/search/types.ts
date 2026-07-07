@@ -34,10 +34,11 @@ export interface SearchDocument {
   aliases?:    string[];      // Shorthand identifiers (future: abbreviations, nicknames)
 
   // ── Fragrance-specific ───────────────────────────────────────────────────────
-  family?:    string[];
-  notes?:     string[];       // Flat: [...top, ...heart, ...base]
-  occasions?: string[];
-  season?:    string;
+  family?:         string[];
+  notes?:          string[];       // Flat: [...top, ...heart, ...base]
+  occasions?:      string[];
+  season?:         string;
+  wardrobeRole?:   string;
 
   // ── Academy-specific ─────────────────────────────────────────────────────────
   category?:      string;     // AcademyCategory

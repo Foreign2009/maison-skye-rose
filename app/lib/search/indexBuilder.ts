@@ -19,6 +19,7 @@ import { COLLECTION_SPECS } from "../discovery";
 import { academyCatalogue } from "../academy/catalogue";
 import { ARTICLE_REGISTRY } from "../academy/registry";
 import { getCategoryMeta } from "../academy/categories";
+import { computeWardrobe } from "../mkc/wardrobeEngine";
 import type { SearchDocument, SearchIndex } from "./types";
 
 // ── Utilities ─────────────────────────────────────────────────────────────────
@@ -73,6 +74,7 @@ function fragranceToDocument(k: FragranceKnowledge): SearchDocument {
     notes:       allNotes,
     occasions:   k.occasions,
     season:      k.season,
+    wardrobeRole: computeWardrobe(k).wardrobeRole,
     popularity:  k.popularity,
     searchWeight,
     href:        `/product/${k.slug}`,

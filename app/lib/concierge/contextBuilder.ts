@@ -14,6 +14,7 @@ import type { AcademyArticle }     from "../academy/types";
 import type { ConversationState }  from "./types";
 import type { ConversationPlan }   from "./conversationPlanner";
 import { catalogueMaps }           from "../discovery";
+import { computeWardrobe }         from "../mkc/wardrobeEngine";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -129,6 +130,7 @@ function buildFragranceSection(fragrances: FragranceKnowledge[], reuseMode: bool
       (k, i) =>
         `${i + 1}. ${k.name} [slug: ${k.slug}]
    Family: ${k.family.join(", ")} | Season: ${k.season} | Character: ${k.scentCharacter} | Projection: ${k.projection}
+   Wardrobe Role: ${computeWardrobe(k).wardrobeRole}
    Occasions: ${k.occasions.join(", ")}
    Top: ${k.notes.top.join(", ")}
    Heart: ${k.notes.heart.join(", ")}

@@ -19,11 +19,19 @@ type ProductCardProps = {
   images: { "5ml": string; "10ml": string; "30ml": string };
   bestSeller?: boolean;
   newArrival?: boolean;
+  scentCharacter?: string;
   onQuickAdd?: () => void;
   onLearnMore?: () => void;
   priority?: boolean;
   source?: AnalyticsSource;
   rank?: number;
+};
+
+const WARDROBE_ROLE_SHORT: Record<string, string> = {
+  "Fresh & Light":       "Opening Chapter",
+  "Balanced Signature":  "Daily Anchor",
+  "Rich & Long Wearing": "Statement Piece",
+  "Deep & Intense":      "Signature Depth",
 };
 
 function ProductCard({
@@ -37,6 +45,7 @@ function ProductCard({
   images,
   bestSeller,
   newArrival,
+  scentCharacter,
   onQuickAdd,
   onLearnMore,
   priority = false,
@@ -154,6 +163,11 @@ function ProductCard({
         
         <div className="hidden md:block mt-6">
           <p className="text-sm text-[#7b7480]">{profile} • {season}</p>
+          {scentCharacter && WARDROBE_ROLE_SHORT[scentCharacter] && (
+            <p className="mt-1 text-[10px] text-zinc-400 italic">
+              {WARDROBE_ROLE_SHORT[scentCharacter]}
+            </p>
+          )}
         </div>
 
         <div className="mt-auto pt-2 md:pt-8">

@@ -16,6 +16,7 @@ type GridFragrance = {
   images: { "5ml": string; "10ml": string; "30ml": string };
   bestSeller?: boolean;
   newArrival?: boolean;
+  scentCharacter?: string;
 };
 
 interface DiscoverCollectionGridProps {
@@ -54,6 +55,7 @@ export default function DiscoverCollectionGrid({
           <ProductCard
             key={fragrance.title}
             {...fragrance}
+            scentCharacter={fragrance.scentCharacter}
             source={source}
             rank={i + 1}
             onQuickAdd={() => {

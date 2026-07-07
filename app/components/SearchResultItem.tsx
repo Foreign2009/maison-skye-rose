@@ -73,6 +73,11 @@ export default function SearchResultItem({ match, onSelect, isHighlighted }: Pro
             {subtitle}
           </p>
         )}
+        {doc.type === "fragrance" && doc.wardrobeRole && (
+          <p className="text-[10px] text-zinc-400 italic truncate mt-0.5 leading-tight">
+            {doc.wardrobeRole}
+          </p>
+        )}
       </div>
 
       {/* CTA */}

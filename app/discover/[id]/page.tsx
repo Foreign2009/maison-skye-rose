@@ -52,7 +52,7 @@ export default async function DiscoverCollectionPage({ params }: PageProps) {
 
   const baseUrl        = process.env.NEXT_PUBLIC_WEBSITE_URL ?? "";
   const momentContent  = getMomentContent(id);
-  const products       = getCollection(spec.id).map(toDisplayFragrance);
+  const products       = getCollection(spec.id).map((k) => ({ ...toDisplayFragrance(k), scentCharacter: k.scentCharacter }));
 
   const breadcrumbJsonLd = {
     "@context": "https://schema.org",
@@ -145,6 +145,12 @@ export default async function DiscoverCollectionPage({ params }: PageProps) {
                     </p>
                   </div>
 
+                  {momentContent.wardrobeNote && (
+                    <p className="mt-6 text-sm italic leading-relaxed text-[#9b9298]">
+                      {momentContent.wardrobeNote}
+                    </p>
+                  )}
+
                   <p className="mt-8 text-sm text-[#9b9298]">
                     {products.length} fragrances in this collection
                   </p>
@@ -169,6 +175,29 @@ export default async function DiscoverCollectionPage({ params }: PageProps) {
                 source="discover-collection"
                 columns={4}
               />
+            </div>
+          </section>
+
+          {/* ── Wardrobe Perspective ──────────────────────────────────────── */}
+          <section className="px-4 pb-12 md:pb-16">
+            <div className="mx-auto max-w-7xl">
+              <div className="rounded-[24px] border border-[#ede8e1] bg-white px-8 py-8 md:px-10 md:py-10">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.45em] text-[#d89ca4]">
+                  A Wardrobe Perspective
+                </p>
+                <p className="mt-3 text-base font-black text-[#4f4a52] md:text-lg">
+                  Building a considered collection
+                </p>
+                <p className="mt-3 max-w-xl text-sm leading-7 text-[#7b7480]">
+                  {momentContent.conciergeCopy}
+                </p>
+                <div className="mt-6">
+                  <MomentConciergeButton
+                    context={momentContent.conciergeContext}
+                    label="Ask the Concierge"
+                  />
+                </div>
+              </div>
             </div>
           </section>
 
@@ -383,6 +412,29 @@ export default async function DiscoverCollectionPage({ params }: PageProps) {
               source="discover-collection"
               columns={4}
             />
+          </div>
+        </section>
+
+        {/* ── Wardrobe Perspective ──────────────────────────────────────────── */}
+        <section className="px-4 pb-12 md:pb-16">
+          <div className="mx-auto max-w-7xl">
+            <div className="rounded-[24px] border border-[#ede8e1] bg-white px-8 py-8 md:px-10 md:py-10">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.45em] text-[#d89ca4]">
+                A Wardrobe Perspective
+              </p>
+              <p className="mt-3 text-base font-black text-[#4f4a52] md:text-lg">
+                Building a considered collection
+              </p>
+              <p className="mt-3 max-w-xl text-sm leading-7 text-[#7b7480]">
+                Not sure where this fits in your wardrobe? Your Concierge can help you understand how this collection layers with what you already own.
+              </p>
+              <div className="mt-6">
+                <MomentConciergeButton
+                  context={{ occasion: spec.tags[0] }}
+                  label="Ask the Concierge"
+                />
+              </div>
+            </div>
           </div>
         </section>
 
