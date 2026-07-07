@@ -9,6 +9,7 @@ import { useFavorites } from "../context/FavoritesContext";
 import Link from "next/link";
 import { brand } from "../data/brand";
 import RecommendationCard from "./RecommendationCard";
+import FragranceWardrobe from "./FragranceWardrobe";
 import { mkcCatalogue } from "../lib/mkc/catalogue";
 import { generateWhyYoullLikeIt } from "../lib/mkc/merchandising";
 import type { FragranceKnowledge } from "../lib/mkc/types";
@@ -635,6 +636,16 @@ export default function ProductDetail({
 
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* ── Wardrobe Foundations ─────────────────────────────────────────────── */}
+      <section className="px-4 md:px-6 pb-8">
+        <div className="mx-auto max-w-7xl">
+          <FragranceWardrobe
+            knowledge={knowledge}
+            companions={(similarFragrances ?? []).slice(0, 2)}
+          />
         </div>
       </section>
 
