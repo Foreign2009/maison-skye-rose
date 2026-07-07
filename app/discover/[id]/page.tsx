@@ -8,6 +8,7 @@ import CollectionCard from "../../components/CollectionCard";
 import MomentConciergeButton from "../../components/MomentConciergeButton";
 import { COLLECTION_SPECS, getCollection } from "../../lib/discovery";
 import { getMomentContent } from "../../lib/discovery/momentContent";
+import DiscoveryAttributionSetter from "../../components/DiscoveryAttributionSetter";
 import { toDisplayFragrance } from "../../lib/mkc/displayAdapter";
 import { academyCatalogue } from "../../lib/academy/catalogue";
 
@@ -91,6 +92,7 @@ export default async function DiscoverCollectionPage({ params }: PageProps) {
         />
 
         <main className="min-h-screen bg-[#faf7f5]">
+          <DiscoveryAttributionSetter source="discover-moment" momentId={id} />
           <Navbar />
 
           {/* ── Breadcrumb ────────────────────────────────────────────────── */}
@@ -289,6 +291,7 @@ export default async function DiscoverCollectionPage({ params }: PageProps) {
       />
 
       <main className="min-h-screen bg-[#faf7f5]">
+        <DiscoveryAttributionSetter source="discover-moment" momentId={id} />
         <Navbar />
 
         {/* ── Breadcrumbs ──────────────────────────────────────────────────── */}

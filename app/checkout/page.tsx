@@ -7,6 +7,7 @@ import Navbar from "../components/Navbar";
 
 import { useCart } from "../context/CartContext";
 import { trackCheckoutStarted } from "../lib/analytics";
+import { getDiscoveryAttribution, clearDiscoveryAttribution } from "../lib/discoveryAttribution";
 
 const DELIVERY_RATES: Record<string, number> = {
   "Cape Town Metro":       100,
@@ -61,6 +62,8 @@ export default function CheckoutPage() {
         deliveryMethod: province,
       });
 
+      const discoveryContext = getDiscoveryAttribution();
+
       const orderResponse = await fetch("/api/orders", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -73,6 +76,7 @@ export default function CheckoutPage() {
           subtotal,
           delivery,
           total,
+          ...(discoveryContext ? { discovery_context: discoveryContext } : {}),
         }),
       });
 
@@ -83,6 +87,7 @@ export default function CheckoutPage() {
       };
 
       if (orderData.success && orderData.orderRef) {
+        clearDiscoveryAttribution();
         clearCart();
         router.push(
           `/payment-success?ref=${encodeURIComponent(orderData.orderRef)}&total=${total.toFixed(2)}`

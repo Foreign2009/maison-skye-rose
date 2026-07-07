@@ -11,6 +11,7 @@ import {
   type StatusHistoryEntry,
 } from "@/app/lib/orderStatus";
 import { logoutAction, updateStatusAction, updateNotesAction } from "./actions";
+import type { DiscoveryAttribution } from "@/app/lib/discoveryAttribution";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -43,6 +44,7 @@ export interface OrderRow {
   delivered_at:         string | null;
   cancelled_at:         string | null;
   status_history:       StatusHistoryEntry[];
+  discovery_context:    DiscoveryAttribution | null;
   created_at:           string;
 }
 

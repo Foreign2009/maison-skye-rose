@@ -18,6 +18,7 @@ import {
   trackQuizResults,
   trackQuizWhatsApp,
 } from "../lib/analytics";
+import { setDiscoveryAttribution } from "../lib/discoveryAttribution";
 
 const adaptedCatalogue = adaptCatalogue(fragrances as DisplayFragrance[]);
 const displayByTitle = new Map<string, DisplayFragrance>(
@@ -140,6 +141,7 @@ export default function QuizPage() {
   useEffect(() => {
     if (completed !== questions.length) return;
     trackQuizCompleted({ answers });
+    setDiscoveryAttribution({ source: "quiz" });
   }, [completed]);
 
   // Track only the first completed recommendation set.

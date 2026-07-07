@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { supabase } from "@/app/lib/supabase";
 import type { StatusHistoryEntry } from "@/app/lib/orderStatus";
+import { validateDiscoveryAttribution } from "@/app/lib/discoveryAttribution";
 
 const VALID_PROVINCES = [
   "Cape Town Metro",
@@ -95,16 +96,22 @@ export async function POST(request: Request) {
       subtotal,
       delivery,
       total,
+      discovery_context: rawDiscovery,
     } = body as {
-      customer_name: string;
-      phone:         string;
-      address:       string;
-      province:      string;
-      items:         unknown[];
-      subtotal:      number;
-      delivery:      number;
-      total:         number;
+      customer_name:      string;
+      phone:              string;
+      address:            string;
+      province:           string;
+      items:              unknown[];
+      subtotal:           number;
+      delivery:           number;
+      total:              number;
+      discovery_context?: unknown;
     };
+
+    const discoveryContext = rawDiscovery
+      ? validateDiscoveryAttribution(rawDiscovery)
+      : null;
 
     const order_ref = generateOrderRef();
 
@@ -117,17 +124,18 @@ export async function POST(request: Request) {
       .insert([
         {
           order_ref,
-          customer_name:  customer_name.trim(),
-          phone:          phone.trim(),
-          address:        address.trim(),
+          customer_name:     customer_name.trim(),
+          phone:             phone.trim(),
+          address:           address.trim(),
           province,
           items,
           subtotal,
-          vat:            0,
+          vat:               0,
           delivery,
           total,
-          payment_status: "awaiting_payment",
-          status_history: initialHistory,
+          payment_status:    "awaiting_payment",
+          status_history:    initialHistory,
+          discovery_context: discoveryContext ?? null,
         },
       ]);
 
