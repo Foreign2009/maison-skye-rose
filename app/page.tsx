@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { Sparkles } from "lucide-react";
 import Navbar from "./components/Navbar";
-import ProductCard from "./components/ProductCard";
 import AIHeroSection from "./components/AIHeroSection";
 import LuxuryConfidenceBar from "./components/LuxuryConfidenceBar";
 import BestSellers from "./components/BestSellers";
@@ -17,6 +16,7 @@ import Testimonials from "./components/Testimonials";
 import RecentlyViewedHome from "./components/RecentlyViewedHome";
 import FavoritesHome from "./components/FavoritesHome";
 import MaisonCompanion from "./components/MaisonCompanion";
+import SeasonalStory from "./components/SeasonalStory";
 import Footer from "./components/Footer";
 import QuickAddModal from "./components/QuickAddModal";
 import { mkcCatalogue } from "./lib/mkc/catalogue";
@@ -266,60 +266,14 @@ export default function HomePage() {
       </section>
 
       {seasonalDisplay.length > 0 && (
-        <section className="bg-[#faf7f5]">
-          <div className="mx-auto max-w-7xl px-4 md:px-5 py-16 md:py-24">
-            <div className="mb-12 text-center">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.55em] text-[#d89ca4]">
-                {seasonConfig.editorialTagline}
-              </p>
-              <h2 className="mt-3 text-3xl md:text-5xl font-black tracking-[-0.05em] text-[#4f4a52]">
-                {seasonConfig.editorialHeadline}
-              </h2>
-              <p className="mx-auto mt-4 max-w-xl text-sm leading-7 text-[#7b7480]">
-                {seasonConfig.editorialNote}
-              </p>
-            </div>
-
-            <div className="flex gap-4 overflow-x-auto pb-4 md:hidden snap-x snap-mandatory scrollbar-hide">
-              {seasonalDisplay.map((fragrance) => (
-                <div key={fragrance.title} className="w-[195px] flex-shrink-0 snap-start">
-                  <ProductCard
-                    {...fragrance}
-                    source="homepage-seasonal"
-                    onQuickAdd={() => {
-                      setSelectedFragrance(fragrance);
-                      setQuickOpen(true);
-                    }}
-                  />
-                </div>
-              ))}
-            </div>
-
-            <div className="hidden gap-8 md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              {seasonalDisplay.map((fragrance, i) => (
-                <ProductCard
-                  key={fragrance.title}
-                  {...fragrance}
-                  source="homepage-seasonal"
-                  rank={i + 1}
-                  onQuickAdd={() => {
-                    setSelectedFragrance(fragrance);
-                    setQuickOpen(true);
-                  }}
-                />
-              ))}
-            </div>
-
-            <div className="mt-12 text-center">
-              <Link
-                href="/shop"
-                className="rounded-full bg-[#4f4a52] px-8 py-4 text-sm font-bold uppercase tracking-widest text-white transition hover:bg-black"
-              >
-                Shop All Fragrances
-              </Link>
-            </div>
-          </div>
-        </section>
+        <SeasonalStory
+          config={seasonConfig}
+          fragrances={seasonalDisplay}
+          onQuickAdd={(fragrance) => {
+            setSelectedFragrance(fragrance);
+            setQuickOpen(true);
+          }}
+        />
       )}
 
       <section className="bg-white">
