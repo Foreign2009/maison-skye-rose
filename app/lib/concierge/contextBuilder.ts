@@ -13,8 +13,8 @@ import type { FragranceKnowledge } from "../mkc/types";
 import type { AcademyArticle }     from "../academy/types";
 import type { ConversationState }  from "./types";
 import type { ConversationPlan }   from "./conversationPlanner";
-import { catalogueMaps }           from "../discovery";
-import { computeWardrobe }         from "../mkc/wardrobeEngine";
+import { catalogueMaps, getCurrentSeason } from "../discovery";
+import { computeWardrobe }                 from "../mkc/wardrobeEngine";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -188,6 +188,14 @@ function buildInstructionsSection(plan: ConversationPlan): PromptSection {
   return { label: "RESPONSE INSTRUCTIONS", content: instructions.join("\n") };
 }
 
+function buildSeasonalContextSection(): PromptSection {
+  const season = getCurrentSeason();
+  return {
+    label:   "CURRENT SEASON",
+    content: `${season} (South Africa). When relevant, favour fragrances and recommendations suited to this season.`,
+  };
+}
+
 // ── Public API ────────────────────────────────────────────────────────────────
 
 export function buildContext(
@@ -196,6 +204,7 @@ export function buildContext(
   plan:      ConversationPlan
 ): BuiltContext {
   const sections: PromptSection[] = [
+    buildSeasonalContextSection(),
     buildConversationContextSection(state),
     buildGoalSection(plan, state),
     buildPreviousRecommendationsSection(state, retrieval.fragrances),

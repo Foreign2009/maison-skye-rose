@@ -268,6 +268,66 @@ export const COLLECTION_SPECS: CollectionSpec[] = [
   },
 
   {
+    id:          "spring-essentials",
+    name:        "Spring Essentials",
+    description: "Fresh, floral, and balanced — fragrances that bloom in the warmth of spring.",
+    tags:        ["spring", "floral", "fresh", "light", "seasonal"],
+    icon:        "🌸",
+    accentColor: "#c8a4c0",
+    featured:    true,
+    filters: [
+      {
+        type:  "anyOf",
+        anyOf: [
+          { type: "season",   value: "Spring"       },
+          { type: "family",   value: "Floral"       },
+          { type: "family",   value: "White Floral" },
+          { type: "family",   value: "Fresh"        },
+        ],
+      },
+    ],
+    boosts: [
+      { type: "season",     value: "Spring",       points: 20 },
+      { type: "family",     value: "Floral",       points: 18 },
+      { type: "family",     value: "White Floral", points: 15 },
+      { type: "family",     value: "Fresh",        points: 12 },
+      { type: "family",     value: "Fruity",       points:  8 },
+      { type: "bestSeller",                        points: 12 },
+    ],
+    maxItems: 8,
+  },
+
+  {
+    id:          "autumn-essentials",
+    name:        "Autumn Essentials",
+    description: "Woody, amber, and spice-forward fragrances that come alive as temperatures cool.",
+    tags:        ["autumn", "woody", "amber", "spicy", "warm", "seasonal"],
+    icon:        "🍂",
+    accentColor: "#b87a4a",
+    featured:    true,
+    filters: [
+      {
+        type:  "anyOf",
+        anyOf: [
+          { type: "season",   value: "Autumn" },
+          { type: "family",   value: "Woody"  },
+          { type: "family",   value: "Amber"  },
+          { type: "family",   value: "Spicy"  },
+        ],
+      },
+    ],
+    boosts: [
+      { type: "season",         value: "Autumn",             points: 20 },
+      { type: "family",         value: "Woody",              points: 20 },
+      { type: "family",         value: "Amber",              points: 18 },
+      { type: "family",         value: "Spicy",              points: 15 },
+      { type: "scentCharacter", value: "Rich & Long Wearing", points: 12 },
+      { type: "bestSeller",                                   points: 10 },
+    ],
+    maxItems: 8,
+  },
+
+  {
     id:          "winter-warmth",
     name:        "Winter Warmth",
     description: "Rich, warm fragrances built for the colder months. Base-heavy, enveloping, and made to endure.",

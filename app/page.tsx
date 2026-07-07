@@ -21,7 +21,8 @@ import Footer from "./components/Footer";
 import QuickAddModal from "./components/QuickAddModal";
 import { mkcCatalogue } from "./lib/mkc/catalogue";
 import { toDisplayFragrance } from "./lib/mkc/displayAdapter";
-import { getCurrentSeason } from "./lib/discovery";
+import { getCollection } from "./lib/discovery";
+import { getSeasonConfig, getSeasonalAcademyTeasers } from "./lib/editorial/seasonConfig";
 import { useConcierge } from "./context/ConciergeContext";
 import { trackAiChatStarted } from "./lib/analytics";
 
@@ -31,49 +32,10 @@ const featuredKnowledge =
   mkcCatalogue[0];
 const featuredFragrance = toDisplayFragrance(featuredKnowledge);
 
-// ── Seasonal Picks ────────────────────────────────────────────────────────────
-const currentSeason = getCurrentSeason();
-const seasonalPicks = mkcCatalogue
-  .filter((k) => k.season === currentSeason)
-  .sort((a, b) => {
-    if (a.bestSeller && !b.bestSeller) return -1;
-    if (!a.bestSeller && b.bestSeller) return 1;
-    return b.popularity - a.popularity;
-  })
-  .slice(0, 8)
-  .map(toDisplayFragrance);
-
-const SEASON_LABEL: Record<string, string> = {
-  Spring: "Spring Essentials",
-  Summer: "Summer Picks",
-  Autumn: "Autumn Favourites",
-  Winter: "Winter Warmers",
-};
-
-// ── Academy teaser ────────────────────────────────────────────────────────────
-const ACADEMY_TEASER = [
-  {
-    slug: "the-note-pyramid-explained",
-    title: "The Note Pyramid Explained",
-    excerpt:
-      "Every fragrance tells a story in three acts. Learn how top, heart, and base notes create the scent you experience.",
-    readTime: 4,
-  },
-  {
-    slug: "guide-to-fragrance-families",
-    title: "Your Guide to Fragrance Families",
-    excerpt:
-      "Fragrance families are the language of perfumery. Understanding them helps you discover new fragrances with confidence.",
-    readTime: 5,
-  },
-  {
-    slug: "how-to-wear-fragrance",
-    title: "How to Wear Fragrance",
-    excerpt:
-      "Most people apply fragrance incorrectly. Learn the techniques that maximise longevity and character.",
-    readTime: 4,
-  },
-];
+// ── Seasonal editorial config ─────────────────────────────────────────────────
+const seasonConfig   = getSeasonConfig();
+const seasonalPicks  = getCollection(seasonConfig.collectionId).map(toDisplayFragrance);
+const academyTeaser  = getSeasonalAcademyTeasers(seasonConfig);
 
 // ── Wardrobe roles ────────────────────────────────────────────────────────────
 const WARDROBE_ROLES = [
@@ -98,7 +60,7 @@ export default function HomePage() {
     "A captivating blend crafted for those who leave an impression.";
 
   function handleConciergeOpen() {
-    openConcierge();
+    openConcierge(seasonConfig.conciergeContext);
     trackAiChatStarted({ trigger: "hero-cta", sessionId: conversationState.sessionId });
   }
 
@@ -190,6 +152,14 @@ export default function HomePage() {
             <p className="mt-5 text-base md:text-lg leading-relaxed text-[#7b7480]">
               Just as you dress intentionally for each occasion, a fragrance wardrobe gives every moment its own signature. One bottle is a start. A wardrobe is a practice.
             </p>
+            <div className="mt-6 border-l-2 border-[#d89ca4] pl-5">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.35em] text-[#d89ca4]">
+                {seasonConfig.wardrobeHeadline}
+              </p>
+              <p className="mt-2 text-sm leading-relaxed text-[#7b7480]">
+                {seasonConfig.wardrobeGuidance}
+              </p>
+            </div>
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-5">
@@ -247,7 +217,7 @@ export default function HomePage() {
           </div>
 
           <div className="grid gap-5 md:grid-cols-3">
-            {ACADEMY_TEASER.map(({ slug, title, excerpt, readTime }) => (
+            {academyTeaser.map(({ slug, title, excerpt, readTime }) => (
               <Link
                 key={slug}
                 href={`/academy/${slug}`}
@@ -300,11 +270,14 @@ export default function HomePage() {
           <div className="mx-auto max-w-7xl px-4 md:px-5 py-16 md:py-24">
             <div className="mb-12 text-center">
               <p className="text-[10px] font-semibold uppercase tracking-[0.55em] text-[#d89ca4]">
-                Curated For The Season
+                {seasonConfig.editorialTagline}
               </p>
               <h2 className="mt-3 text-3xl md:text-5xl font-black tracking-[-0.05em] text-[#4f4a52]">
-                {SEASON_LABEL[currentSeason] ?? "Seasonal Picks"}
+                {seasonConfig.editorialHeadline}
               </h2>
+              <p className="mx-auto mt-4 max-w-xl text-sm leading-7 text-[#7b7480]">
+                {seasonConfig.editorialNote}
+              </p>
             </div>
 
             <div className="flex gap-4 overflow-x-auto pb-4 md:hidden snap-x snap-mandatory scrollbar-hide">
