@@ -12,5 +12,8 @@
  */
 
 import type { FragranceKnowledge } from "../types";
+import { sauvageInspired } from "./sauvage-inspired";
 
-export const nativeFragrances = new Map<string, FragranceKnowledge>();
+export const nativeFragrances = new Map<string, FragranceKnowledge>([
+  ["sauvage-inspired", sauvageInspired],
+]);
