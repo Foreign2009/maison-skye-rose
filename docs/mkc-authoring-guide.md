@@ -230,8 +230,33 @@ A strong description follows this structure:
 
 - Generic superlatives ("incredible", "amazing", "perfect")
 - Subjective quality claims ("the best", "most luxurious")
-- Promises about longevity, projection, or sillage outcomes — body chemistry varies
+- Any measurable performance claim — see the Performance Claim Policy below
 - Copying marketing copy from the inspiration fragrance brand
+
+---
+
+### Performance Claim Policy
+
+**Maison Skye & Rose does not make measurable performance claims about any fragrance. This is a permanent editorial standard.**
+
+Do not state or imply:
+
+- How many hours a fragrance lasts
+- Projection distance or sillage radius
+- Room-filling ability or detection range
+- Comparative longevity against other fragrances
+
+Specific phrases to avoid: *"lasts all day"*, *"hours after application"*, *"fills a room"*, *"long-lasting"*, *"strong sillage"*, *"lingers for hours after you've left"*, *"still going strong after X hours"*.
+
+**What to write instead:**
+
+Guide customers through the experience — the character of the fragrance, the moments and occasions it suits, the way it feels to wear, and when it is most at home. When a fragrance rewards close wearing, say so. When it suits evenings over offices, say so. When reapplication is part of the ritual, offer it as guidance rather than a performance correction.
+
+The `projection` field in Classification is descriptive context for the similarity engine and the Concierge — it describes the character of the fragrance's presence, not a guarantee of distance. Do not echo it as a marketing claim in editorial copy.
+
+**Why this policy exists:**
+
+Performance is personal. Skin chemistry, humidity, application method and clothing all affect how a fragrance behaves. Claims that set measurable expectations create outcomes Maison cannot guarantee and customers cannot reproduce. The goal of editorial copy is to help the customer choose the right fragrance for their life — not to make promises about how it will perform on theirs.
 
 ---
 
