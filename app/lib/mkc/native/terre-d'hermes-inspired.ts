@@ -81,11 +81,10 @@ export const terreDHermesInspired: FragranceKnowledge = {
   ],
 
   // ── Intelligence ─────────────────────────────────────────────────────────────
-  sweetness:       1,
-  freshness:       3,
-  warmth:          3,
-  intensity:       3,
-  versatility:     5,
-  popularity:      7,
-  longevitySignal: "long",
+  sweetness:   1,
+  freshness:   3,
+  warmth:      3,
+  intensity:   3,
+  versatility: 5,
+  popularity:  7,
 };

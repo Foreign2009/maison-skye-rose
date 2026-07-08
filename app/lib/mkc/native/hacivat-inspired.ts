@@ -57,8 +57,8 @@ export const hacivatInspired: FragranceKnowledge = {
     "Hacivat Inspired captures the balance that made the Xerjoff original beloved in the fragrance community — fruity brightness sitting perfectly over a woody, mossy base without either element overwhelming the other. " +
     "Pineapple and Bergamot open the composition with vivid tropical freshness, lifted by the gentle bite of Pink Pepper. " +
     "Oakmoss in the heart introduces a green, earthy complexity — the note that separates this from mass-market fruity woods, giving it a chypre-like quality that rewards close wearing. " +
-    "Sandalwood, Cedar, Patchouli and Vetiver combine in the base to produce a deep, lingering dry-down that feels genuinely luxurious. " +
-    "The result is a fragrance that works in every season and improves with every wearing.",
+    "Sandalwood, Cedar, Patchouli and Vetiver combine in the base to produce a richly textured dry-down that rewards wearing close — best appreciated in quiet moments and cool evening air. " +
+    "The result is a fragrance that works in every season and reveals new depth with each wearing.",
 
   // ── Academy integration ───────────────────────────────────────────────────────
   academyArticleIds: [
@@ -82,11 +82,10 @@ export const hacivatInspired: FragranceKnowledge = {
   ],
 
   // ── Intelligence ─────────────────────────────────────────────────────────────
-  sweetness:       2,
-  freshness:       3,
-  warmth:          3,
-  intensity:       4,
-  versatility:     4,
-  popularity:      9,
-  longevitySignal: "exceptional",
+  sweetness:   2,
+  freshness:   3,
+  warmth:      3,
+  intensity:   4,
+  versatility: 4,
+  popularity:  9,
 };

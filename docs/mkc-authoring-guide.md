@@ -200,7 +200,6 @@ All scores are integers. They drive the similarity engine, collection boosting, 
 | `intensity` | 1–5 | 1 = soft and close, 5 = very powerful projection |
 | `versatility` | 1–5 | 1 = niche/specialist, 5 = genuinely all-occasion |
 | `popularity` | 1–10 | 10 = #1 bestseller; 8–10 = bestsellers; 5 = average; 2–4 = niche |
-| `longevitySignal` | optional | `"moderate"` (4–6h) `"long"` (6–8h) `"exceptional"` (8h+); omit for average wearers |
 
 **Calibration guidance:** Population average for all 1–5 fields is 3. Calibrate relative to the full catalogue, not just the fragrance in isolation. A `freshness: 5` means the strongest fresh fragrance in the catalogue.
 

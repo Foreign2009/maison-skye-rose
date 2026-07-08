@@ -81,11 +81,10 @@ export const aventusInspired: FragranceKnowledge = {
   ],
 
   // ── Intelligence ─────────────────────────────────────────────────────────────
-  sweetness:       2,
-  freshness:       3,
-  warmth:          3,
-  intensity:       4,
-  versatility:     4,
-  popularity:      9,
-  longevitySignal: "exceptional",
+  sweetness:   2,
+  freshness:   3,
+  warmth:      3,
+  intensity:   4,
+  versatility: 4,
+  popularity:  9,
 };

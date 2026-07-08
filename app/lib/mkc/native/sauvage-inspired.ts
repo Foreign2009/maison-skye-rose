@@ -84,11 +84,10 @@ export const sauvageInspired: FragranceKnowledge = {
   ],
 
   // ── Intelligence ─────────────────────────────────────────────────────────────
-  sweetness:       1,
-  freshness:       5,
-  warmth:          3,
-  intensity:       4,
-  versatility:     5,
-  popularity:      10,
-  longevitySignal: "exceptional",
+  sweetness:   1,
+  freshness:   5,
+  warmth:      3,
+  intensity:   4,
+  versatility: 5,
+  popularity:  10,
 };

@@ -120,7 +120,4 @@ export const TEMPLATE_CONST: FragranceKnowledge = {
   versatility: 3,  // 1 = niche/specialist  … 5 = genuinely all-occasion
   // 1–10 popularity scale. Bestsellers: 8–10. Average: 5. Niche: 2–4.
   popularity:  5,
-  // OPTIONAL — set only when longevity is a defining characteristic.
-  // "moderate" = 4–6 hours | "long" = 6–8 hours | "exceptional" = 8+ hours
-  // longevitySignal: "exceptional",
 };

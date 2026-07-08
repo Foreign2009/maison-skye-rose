@@ -57,7 +57,7 @@ export const spicebombExtremeInspired: FragranceKnowledge = {
     "Spicebomb Extreme Inspired is Maison's interpretation of Viktor&Rolf's most intensely spiced masculine — a fragrance that makes no apologies for its ambition. " +
     "Cinnamon and Elemi open with a dry, almost fiery spice that immediately signals you are not wearing something subtle. " +
     "Tobacco, Cardamom and Saffron in the heart transform that opening spice into something richer and more complex: smoky, leathery, and luxurious in the way only these materials can achieve. " +
-    "Vanilla and Benzoin in the base soften the edges just enough to ensure wearability without diminishing the power — the result is a fragrance that warms from the inside out and lingers for hours after you have left the room.",
+    "Vanilla and Benzoin in the base soften the edges just enough to ensure wearability without diminishing the power — a fragrance that warms from the inside out and comes fully alive in cold evening air, when spice and depth are most at home.",
 
   // ── Academy integration ───────────────────────────────────────────────────────
   academyArticleIds: [
@@ -80,11 +80,10 @@ export const spicebombExtremeInspired: FragranceKnowledge = {
   ],
 
   // ── Intelligence ─────────────────────────────────────────────────────────────
-  sweetness:       3,
-  freshness:       1,
-  warmth:          5,
-  intensity:       5,
-  versatility:     2,
-  popularity:      8,
-  longevitySignal: "exceptional",
+  sweetness:   3,
+  freshness:   1,
+  warmth:      5,
+  intensity:   5,
+  versatility: 2,
+  popularity:  8,
 };

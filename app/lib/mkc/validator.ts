@@ -243,14 +243,6 @@ function checkIntelligence(k: FragranceKnowledge): ValidationIssue[] {
       `popularity must be an integer between 1 and 10 (got ${k.popularity})`));
   }
 
-  if (k.longevitySignal !== undefined) {
-    const validLongevity: string[] = ["moderate", "long", "exceptional"];
-    if (!validLongevity.includes(k.longevitySignal)) {
-      issues.push(e("LONGEVITY_INVALID", g, "longevitySignal",
-        `longevitySignal "${k.longevitySignal}" must be moderate, long, or exceptional`));
-    }
-  }
-
   return issues;
 }
 

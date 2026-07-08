@@ -81,11 +81,10 @@ export const erosInspired: FragranceKnowledge = {
   ],
 
   // ── Intelligence ─────────────────────────────────────────────────────────────
-  sweetness:       3,
-  freshness:       4,
-  warmth:          2,
-  intensity:       4,
-  versatility:     3,
-  popularity:      8,
-  longevitySignal: "exceptional",
+  sweetness:   3,
+  freshness:   4,
+  warmth:      2,
+  intensity:   4,
+  versatility: 3,
+  popularity:  8,
 };

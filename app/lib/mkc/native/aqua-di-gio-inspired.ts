@@ -57,7 +57,7 @@ export const aquaDiGioInspired: FragranceKnowledge = {
     "Aqua Di Gio Inspired translates the world's most recognised aquatic masculine into Maison's oil format. " +
     "Calabrian Bergamot and Neroli open with a sunlit Mediterranean clarity — bright, citrusy, immediately recognisable as warm-weather freshness. " +
     "The heart reveals Rosemary and Jasmine over a soft marine accord: not synthetic ocean, but the memory of the sea — salty, clean and alive. " +
-    "Patchouli and Cedar in the base deepen the dry-down just enough to prevent disappearance, while White Musk leaves a clean skin-close trail. " +
+    "Patchouli and Cedar in the base introduce quiet warmth to the dry-down — a presence that draws people closer rather than announcing itself from a distance. " +
     "This is the summer fragrance standard against which all others are measured.",
 
   // ── Academy integration ───────────────────────────────────────────────────────
@@ -81,11 +81,10 @@ export const aquaDiGioInspired: FragranceKnowledge = {
   ],
 
   // ── Intelligence ─────────────────────────────────────────────────────────────
-  sweetness:       1,
-  freshness:       5,
-  warmth:          1,
-  intensity:       2,
-  versatility:     3,
-  popularity:      8,
-  longevitySignal: "moderate",
+  sweetness:   1,
+  freshness:   5,
+  warmth:      1,
+  intensity:   2,
+  versatility: 3,
+  popularity:  8,
 };

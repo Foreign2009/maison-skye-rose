@@ -81,11 +81,10 @@ export const bleuDeChanelInspired: FragranceKnowledge = {
   ],
 
   // ── Intelligence ─────────────────────────────────────────────────────────────
-  sweetness:       1,
-  freshness:       4,
-  warmth:          2,
-  intensity:       3,
-  versatility:     5,
-  popularity:      7,
-  longevitySignal: "long",
+  sweetness:   1,
+  freshness:   4,
+  warmth:      2,
+  intensity:   3,
+  versatility: 5,
+  popularity:  7,
 };

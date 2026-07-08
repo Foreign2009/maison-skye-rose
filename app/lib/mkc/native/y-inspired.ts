@@ -81,11 +81,10 @@ export const yInspired: FragranceKnowledge = {
   ],
 
   // ── Intelligence ─────────────────────────────────────────────────────────────
-  sweetness:       2,
-  freshness:       4,
-  warmth:          3,
-  intensity:       3,
-  versatility:     5,
-  popularity:      7,
-  longevitySignal: "long",
+  sweetness:   2,
+  freshness:   4,
+  warmth:      3,
+  intensity:   3,
+  versatility: 5,
+  popularity:  7,
 };

@@ -81,11 +81,10 @@ export const pradaLHommeInspired: FragranceKnowledge = {
   ],
 
   // ── Intelligence ─────────────────────────────────────────────────────────────
-  sweetness:       2,
-  freshness:       2,
-  warmth:          3,
-  intensity:       2,
-  versatility:     4,
-  popularity:      6,
-  longevitySignal: "moderate",
+  sweetness:   2,
+  freshness:   2,
+  warmth:      3,
+  intensity:   2,
+  versatility: 4,
+  popularity:  6,
 };

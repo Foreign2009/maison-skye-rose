@@ -57,8 +57,7 @@ export const laytonInspired: FragranceKnowledge = {
     "Layton Inspired captures the opulent DNA of one of the Marly house's most celebrated creations — warm, generous and unmistakably luxurious. " +
     "Apple and Bergamot open with a crisp freshness that belies what's beneath, while Lavender adds an aromatic softness that makes the first impression both bright and elegant. " +
     "The heart is where Layton reveals its character: Jasmine, Cardamom and Geranium weave together in a rich aromatic accord that is simultaneously masculine and sensual. " +
-    "Vanilla, Sandalwood and Guaiac Wood in the base produce an exceptional longevity signature — smooth, creamy and deeply warm. " +
-    "Hours after application, Layton Inspired is still present, still magnetic, still working.",
+    "Vanilla, Sandalwood and Guaiac Wood in the base produce a smooth, creamy warmth that settles into the skin rather than projecting outward — reapply generously for evenings where presence matters most.",
 
   // ── Academy integration ───────────────────────────────────────────────────────
   academyArticleIds: [
@@ -82,11 +81,10 @@ export const laytonInspired: FragranceKnowledge = {
   ],
 
   // ── Intelligence ─────────────────────────────────────────────────────────────
-  sweetness:       4,
-  freshness:       2,
-  warmth:          5,
-  intensity:       4,
-  versatility:     3,
-  popularity:      9,
-  longevitySignal: "exceptional",
+  sweetness:   4,
+  freshness:   2,
+  warmth:      5,
+  intensity:   4,
+  versatility: 3,
+  popularity:  9,
 };
