@@ -107,7 +107,7 @@ export default function CheckoutPage() {
     <main className="min-h-screen bg-[#f5f1eb]">
       <Navbar />
 
-      <section className="mx-auto max-w-4xl px-6 py-20">
+      <section className="mx-auto max-w-4xl px-6 pt-32 md:pt-36 pb-20">
 
         <h1 className="text-5xl font-black uppercase">Checkout</h1>
 

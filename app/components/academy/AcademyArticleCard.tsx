@@ -18,7 +18,7 @@ export function AcademyArticleCard({ article, featured = false }: AcademyArticle
           : "bg-white border-[#e8e4e9] hover:border-[#d89ca4]"
       }`}
     >
-      <div className={`p-6 ${featured ? "p-7" : ""}`}>
+      <div className={featured ? "p-7" : "p-6"}>
         <div className="flex items-center gap-2 mb-3">
           <p className="text-[10px] font-semibold tracking-widest uppercase text-[#d89ca4]">
             {article.category}

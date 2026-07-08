@@ -7,6 +7,7 @@ import { useFavorites } from "../context/FavoritesContext";
 import { trackAddToCart, trackWhatsAppCheckout } from "../lib/analytics";
 import { useMemo, useState } from "react";
 import { fragrances } from "../data/fragrances";
+import { brand } from "../data/brand";
 
 interface MiniCartProps {
   isOpen: boolean;
@@ -179,11 +180,14 @@ Delivery Area:
 A member of our team will confirm your order and delivery details shortly.`;
 
     trackWhatsAppCheckout({ itemCount: cart.length, cartTotal: total });
-    window.open(`https://wa.me/27696863952?text=${encodeURIComponent(message)}`, `_blank`);
+    window.open(`https://wa.me/${brand.social.whatsappNumber}?text=${encodeURIComponent(message)}`, `_blank`);
   };
 
   return (
     <div
+      role="dialog"
+      aria-modal="true"
+      aria-label="Shopping cart"
       aria-hidden={!isOpen}
       className={`fixed z-50 bg-[#fffdfb]/95 backdrop-blur-md bottom-0 left-0 right-0 md:bottom-6 md:right-6 md:left-auto w-full md:w-[420px] md:rounded-[32px] border border-black/5 shadow-[0_-10px_40px_rgba(0,0,0,0.08)] md:shadow-[0_25px_80px_rgba(0,0,0,0.12)] flex flex-col h-screen md:h-[85vh] overflow-hidden transition-all duration-300 ease-in-out motion-reduce:transition-none ${
         isOpen ? "translate-y-0 opacity-100" : "translate-y-full opacity-0 pointer-events-none"
@@ -238,7 +242,7 @@ A member of our team will confirm your order and delivery details shortly.`;
         {/* Desktop Close Button */}
         <button
           onClick={onClose}
-          className="p-1 text-zinc-400 hover:text-black transition-colors rounded-full hover:bg-zinc-100"
+          className="p-2 text-zinc-400 hover:text-black transition-colors rounded-full hover:bg-zinc-100"
           aria-label="Close Cart"
         >
           <X className="h-5 w-5" />
@@ -303,7 +307,7 @@ A member of our team will confirm your order and delivery details shortly.`;
               <div className="mt-3 flex items-center gap-3">
                 <button
                   onClick={() => decreaseQuantity(item.id, item.size)}
-                  className="flex h-9 w-9 items-center justify-center rounded-full bg-[#f5f1eb] text-[#4f4a52] hover:bg-[#ece6de] transition-colors text-base font-bold"
+                  className="flex h-11 w-11 items-center justify-center rounded-full bg-[#f5f1eb] text-[#4f4a52] hover:bg-[#ece6de] transition-colors text-base font-bold"
                 >
                   -
                 </button>
@@ -312,7 +316,7 @@ A member of our team will confirm your order and delivery details shortly.`;
 
                 <button
                   onClick={() => increaseQuantity(item.id, item.size)}
-                  className="flex h-9 w-9 items-center justify-center rounded-full bg-[#f5f1eb] text-[#4f4a52] hover:bg-[#ece6de] transition-colors text-base font-bold"
+                  className="flex h-11 w-11 items-center justify-center rounded-full bg-[#f5f1eb] text-[#4f4a52] hover:bg-[#ece6de] transition-colors text-base font-bold"
                 >
                   +
                 </button>

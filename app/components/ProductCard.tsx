@@ -114,7 +114,7 @@ function ProductCard({
 
       <button 
         onClick={handleFavorite} 
-        className="absolute left-2 md:left-4 top-2 md:top-4 z-20 flex h-8 w-8 md:h-10 md:w-10 items-center justify-center rounded-full bg-white shadow-md transition-all"
+        className="absolute left-2 md:left-4 top-2 md:top-4 z-20 flex h-11 w-11 items-center justify-center rounded-full bg-white shadow-md transition-all"
       >
         <Heart className="h-4 w-4 md:h-[18px] md:w-[18px]" fill={favorite ? "currentColor" : "none"} />
       </button>
@@ -190,7 +190,7 @@ function ProductCard({
             <div className="flex items-center gap-2">
               <button
                 onClick={handleCardClick}
-                className="flex-1 rounded-full bg-[#d89ca4] px-3 md:px-6 py-1.5 md:py-3 text-xs md:text-sm font-bold text-white transition-all duration-300 hover:bg-[#c48898] hover:scale-[1.02]"
+                className="flex-1 rounded-full bg-[#d89ca4] px-3 md:px-6 py-2.5 md:py-3 text-xs md:text-sm font-bold text-white transition-all duration-300 hover:bg-[#c48898] hover:scale-[1.02]"
               >
                 Quick Add
               </button>

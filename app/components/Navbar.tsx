@@ -92,7 +92,7 @@ export default function Navbar() {
               <div className="flex md:hidden">
                 <button
                   onClick={() => setIsOpen(!isOpen)}
-                  className="text-[#4f4a52] hover:text-[#d89ca4] transition-colors"
+                  className="p-2.5 text-[#4f4a52] hover:text-[#d89ca4] transition-colors"
                   aria-label="Toggle Menu"
                 >
                   {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -155,7 +155,7 @@ export default function Navbar() {
                     openSearch();
                     trackSearchOpened({ trigger: "navbar-icon" });
                   }}
-                  className="text-[#4f4a52] hover:text-[#d89ca4] transition-colors"
+                  className="p-2 text-[#4f4a52] hover:text-[#d89ca4] transition-colors"
                   aria-label="Search"
                 >
                   <Search className="h-5 w-5 stroke-[1.75]" />
@@ -163,7 +163,7 @@ export default function Navbar() {
 
                 <Link
                   href="/favorites"
-                  className="relative text-[#4f4a52] hover:text-[#d89ca4] transition-colors"
+                  className="relative p-2 text-[#4f4a52] hover:text-[#d89ca4] transition-colors"
                   aria-label="Favorites"
                 >
                   <Heart className="h-5 w-5 stroke-[1.75]" />
@@ -177,7 +177,7 @@ export default function Navbar() {
 
                 <Link
                   href="/recently-viewed"
-                  className="relative text-[#4f4a52] hover:text-[#d89ca4] transition-colors"
+                  className="relative p-2 text-[#4f4a52] hover:text-[#d89ca4] transition-colors"
                   aria-label="Recently Viewed"
                 >
                   <Clock className="h-5 w-5 stroke-[1.75]" />
@@ -185,7 +185,7 @@ export default function Navbar() {
 
                 <Link
                   href="/account"
-                  className={`text-[#4f4a52] hover:text-[#d89ca4] transition-colors ${
+                  className={`p-2 text-[#4f4a52] hover:text-[#d89ca4] transition-colors ${
                     pathname === "/account" ? "text-[#d89ca4]" : ""
                   }`}
                   aria-label="Account"
@@ -200,7 +200,7 @@ export default function Navbar() {
                       trackCartOpened({ source: "bag-icon" });
                     }
                   }}
-                  className="group relative flex items-center p-1 text-[#4f4a52] hover:text-[#d89ca4] transition-colors"
+                  className="group relative flex items-center p-2 text-[#4f4a52] hover:text-[#d89ca4] transition-colors"
                   aria-label="Open Cart"
                 >
                   <ShoppingBag className="h-5 w-5 stroke-[1.75]" />
