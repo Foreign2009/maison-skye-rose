@@ -8,17 +8,15 @@ import { Copy, Check, MessageCircle } from "lucide-react";
 
 import Navbar from "../components/Navbar";
 import { trackPaymentReturnSuccess } from "../lib/analytics";
+import { brand } from "../data/brand";
 
-// TODO: Replace with actual business banking details before going live
 const BANKING_DETAILS = {
-  bank:          "FNB",
-  accountName:   "Maison Skye & Rose",
-  accountNumber: "XXXXXXXXXX",
-  accountType:   "Current / Cheque",
-  branchCode:    "250655",
-} as const;
-
-const WHATSAPP_NUMBER  = "27696863952";
+  bank:          process.env.NEXT_PUBLIC_BANK_NAME           ?? "",
+  accountName:   process.env.NEXT_PUBLIC_BANK_ACCOUNT_NAME   ?? "",
+  accountNumber: process.env.NEXT_PUBLIC_BANK_ACCOUNT_NUMBER ?? "",
+  accountType:   process.env.NEXT_PUBLIC_BANK_ACCOUNT_TYPE   ?? "",
+  branchCode:    process.env.NEXT_PUBLIC_BANK_BRANCH_CODE    ?? "",
+};
 const PAYMENT_TRACKED_KEY = "msr_eft_instructions_viewed";
 
 function CopyButton({ value }: { value: string }) {
@@ -64,7 +62,7 @@ function EFTConfirmationContent() {
   const whatsappMessage = encodeURIComponent(
     `Hi Maison Skye & Rose! 🌸\n\nI've placed an order and am sending proof of payment.\n\nOrder Reference: ${orderRef}\nAmount: ${totalDisplay}\n\nPlease find my proof of payment attached. Thank you!`
   );
-  const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${whatsappMessage}`;
+  const whatsappUrl = `https://wa.me/${brand.social.whatsappNumber}?text=${whatsappMessage}`;
 
   const bankingRows = [
     { label: "Bank",           value: BANKING_DETAILS.bank,          copyable: false, highlight: false },
