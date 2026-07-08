@@ -28,6 +28,7 @@
 
 import { adaptFragrance, DisplayFragrance } from "../knowledgeAdapter";
 import { fragrances } from "../../data/fragrances";
+import { nativeFragrances } from "./native";
 import type { FragranceKnowledge } from "./types";
 
 function hydrateFromDisplay(f: DisplayFragrance): FragranceKnowledge {
@@ -88,4 +89,7 @@ function hydrateFromDisplay(f: DisplayFragrance): FragranceKnowledge {
 }
 
 export const mkcCatalogue: FragranceKnowledge[] =
-  (fragrances as DisplayFragrance[]).map(hydrateFromDisplay);
+  (fragrances as DisplayFragrance[]).map((f) => {
+    const slug = f.title.toLowerCase().replace(/\s+/g, "-");
+    return nativeFragrances.get(slug) ?? hydrateFromDisplay(f);
+  });

@@ -68,4 +68,5 @@ export type FragranceKnowledge = {
   intensity: number;
   versatility: number;
   popularity: number;
+  longevitySignal?: "moderate" | "long" | "exceptional";
 };
