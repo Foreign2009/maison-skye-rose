@@ -230,6 +230,10 @@ All scores are integers. They drive the similarity engine, collection boosting, 
 | Sauvage Elixir Inspired | 2 | 3 | 4 | 5 | 2 | 8 |
 | Y EDP Inspired | 3 | 3 | 4 | 4 | 4 | 8 |
 | Naxos Inspired | 4 | 2 | 5 | 4 | 2 | 8 |
+| Side Effect Inspired | 4 | 2 | 4 | 4 | 2 | 8 |
+| God Of Fire Inspired | 3 | 4 | 2 | 3 | 3 | 7 |
+| Delina Inspired | 2 | 4 | 2 | 3 | 4 | 9 |
+| Baccarat Rouge 540 Inspired | 3 | 3 | 4 | 4 | 4 | 9 |
 
 **Calibration anchors per dimension:**
 
@@ -247,6 +251,13 @@ All scores are integers. They drive the similarity engine, collection boosting, 
 - **Sauvage Elixir Inspired (intensity: 5)** — Joins Spicebomb Extreme as the second intensity: 5 record. Sauvage Elixir reaches maximum intensity through concentrated weight and dry spice; Spicebomb Extreme reaches it through sheer projection force. Both are legitimate anchors for different reasons.
 - **Naxos Inspired (warmth: 5)** — Third warmth: 5 record. Layton is amber/vanilla/sandalwood warmth; Spicebomb Extreme is tobacco/cinnamon/benzoin warmth; Naxos is honey/tobacco/tonka warmth. All three are genuinely at maximum warmth via distinct routes — the diversity of routes at the same score is correct.
 - **Y EDP Inspired (warmth: 4, versatility: 4)** — Bridge record between the fresh designer signature tier (Y Inspired: warmth 3, versatility 5) and the richer amber tier (Layton: warmth 5, versatility 3). Calibrate future aromatic amber masculines between Y EDP and Layton on both dimensions.
+
+**Calibration notes for EP19-P3 anchors:**
+
+- **Side Effect Inspired (rum/tobacco warmth reference)** — The rum/tobacco/benzoin/vanilla oriental reference for the catalogue. warmth:4 (not 5) because the iris/heliotrope heart introduces a powdery-soapy quality that tempers the pure warmth relative to Naxos (honey/tobacco route, warmth:5). Future dark orientals with powdery notes calibrate against Side Effect. Future clean warm orientals calibrate against Naxos. The rum note appears as a free-form ingredient in notes[]; it is not in `fragranceFamilies.ts` and must never be used as a family value.
+- **God Of Fire Inspired (tropical fruity luxury reference)** — The catalogue's first dedicated summer-tropical record. freshness:4 reflects vibrant fruity energy; warmth:2 confirms its summer, non-oriental character. Versatility:3 reflects its season-specific scope. Future fruity-woody records in the summer register calibrate against God Of Fire.
+- **Delina Inspired (fresh feminine floral reference)** — The first Rose collection native record and the primary calibration anchor for feminine fragrances. sweetness:2 / freshness:4 / warmth:2 / intensity:3 establishes the baseline for modern fresh florals. Future Rose records calibrate against Delina on all five dimensions. Delina is also the editorial tone reference for Rose collection descriptions — read its description before authoring any Rose record.
+- **Baccarat Rouge 540 Inspired (luxury unisex amber reference)** — The first unisex record in the Rose collection and the modern amber-floral standard for the catalogue. sweetness:3 and freshness:3 are both at population mean — intentional, reflecting the paradox that BR540 is simultaneously sweet and airy. warmth:4 and intensity:4 place it firmly in the rich-but-wearable range. Future unisex amber records calibrate against BR540. Future all-season, high-versatility records note that BR540 (versatility:4, popularity:9) is the benchmark for cross-occasion unisex signatures.
 
 **Update this table** each time a new native record is committed. The table is permanent engineering state — it enables every future author to calibrate without reading all previous records.
 
@@ -333,6 +344,16 @@ Rose is Maison's feminine collection. The Rose editorial voice is warm and expre
 - Heavy oud/tobacco/leather → `Deep & Intense`
 
 **Vibe selection for Rose:** Every Rose record should include at least 2 vibes from the Rose & Elite group (`Feminine`, `Sensual`, `Delicate`, `Flirtatious`) alongside universal vibes. A heavy oriental Rose record might be `Sensual, Mysterious, Bold, Romantic, Wealthy`. A light floral might be `Feminine, Delicate, Elegant, Playful, Clean`.
+
+**Rose editorial reference records (EP19-P3 — first Rose native records):**
+
+These two records serve as the editorial and calibration benchmarks for all future Rose migrations. Read both descriptions before authoring any Rose record.
+
+- **Delina Inspired** — Modern feminine floral reference. Establishes the editorial tone for fresh, expressive Rose records: wearable elegance, confident femininity, floral-fruity freshness. Intelligence baseline: sweetness:2, freshness:4, warmth:2, intensity:3, versatility:4. The description demonstrates the Rose editorial voice for spring-summer florals: warm, personal, and grounded in real feminine experience rather than abstract luxury language.
+
+- **Baccarat Rouge 540 Inspired** — Luxury unisex amber benchmark. The first unisex record in the Rose collection. Demonstrates how the Rose editorial direction (Elegant, Expressive, Sophisticated) applies even to gender:unisex records. Intelligence baseline: sweetness:3, freshness:3, warmth:4, intensity:4, versatility:4. The description demonstrates how to write for a culturally iconic fragrance: earned reverence, not marketing copy.
+
+Future Rose records should position themselves relative to these two anchors when calibrating Intelligence scores and writing descriptions.
 
 ---
 

@@ -26,22 +26,30 @@ import { laytonInspired }         from "./layton-inspired";
 import { ultraMaleInspired }      from "./ultra-male-inspired";
 import { sauvageElixirInspired }  from "./sauvage-elixir-inspired";
 import { yEdpInspired }           from "./y-edp-inspired";
-import { naxosInspired }          from "./naxos-inspired";
+import { naxosInspired }                from "./naxos-inspired";
+import { sideEffectInspired }           from "./side-effect-inspired";
+import { godOfFireInspired }            from "./god-of-fire-inspired";
+import { delinaInspired }               from "./delina-inspired";
+import { baccaratRouge540Inspired }     from "./baccarat-rouge-540-inspired";
 
 export const nativeFragrances = new Map<string, FragranceKnowledge>([
-  ["sauvage-inspired",           sauvageInspired],
-  ["aventus-inspired",           aventusInspired],
-  ["bleu-de-chanel-inspired",    bleuDeChanelInspired],
-  ["aqua-di-gio-inspired",       aquaDiGioInspired],
-  ["y-inspired",                 yInspired],
-  ["eros-inspired",              erosInspired],
-  ["hacivat-inspired",           hacivatInspired],
-  ["terre-d'hermes-inspired",    terreDHermesInspired],
-  ["spicebomb-extreme-inspired", spicebombExtremeInspired],
-  ["prada-l'homme-inspired",     pradaLHommeInspired],
-  ["layton-inspired",            laytonInspired],
-  ["ultra-male-inspired",        ultraMaleInspired],
-  ["sauvage-elixir-inspired",    sauvageElixirInspired],
-  ["y-edp-inspired",             yEdpInspired],
-  ["naxos-inspired",             naxosInspired],
+  ["sauvage-inspired",              sauvageInspired],
+  ["aventus-inspired",              aventusInspired],
+  ["bleu-de-chanel-inspired",       bleuDeChanelInspired],
+  ["aqua-di-gio-inspired",          aquaDiGioInspired],
+  ["y-inspired",                    yInspired],
+  ["eros-inspired",                 erosInspired],
+  ["hacivat-inspired",              hacivatInspired],
+  ["terre-d'hermes-inspired",       terreDHermesInspired],
+  ["spicebomb-extreme-inspired",    spicebombExtremeInspired],
+  ["prada-l'homme-inspired",        pradaLHommeInspired],
+  ["layton-inspired",               laytonInspired],
+  ["ultra-male-inspired",           ultraMaleInspired],
+  ["sauvage-elixir-inspired",       sauvageElixirInspired],
+  ["y-edp-inspired",                yEdpInspired],
+  ["naxos-inspired",                naxosInspired],
+  ["side-effect-inspired",          sideEffectInspired],
+  ["god-of-fire-inspired",          godOfFireInspired],
+  ["delina-inspired",               delinaInspired],
+  ["baccarat-rouge-540-inspired",   baccaratRouge540Inspired],
 ]);
