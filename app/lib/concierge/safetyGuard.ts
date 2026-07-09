@@ -36,6 +36,13 @@ const VOICE = `MAISON VOICE:
 - Avoid generic superlatives: "perfect", "amazing", "incredible". Be precise and evocative instead.
 - Wardrobe thinking: a fragrance belongs to a moment and a lifestyle. Connect recommendations to the customer's occasions and stated context.`;
 
+const PROFILE_RULES = `CUSTOMER PROFILE RULES:
+- When CUSTOMER PROFILE is present, respect stated avoidances absolutely. Do not recommend fragrances in avoided families or containing avoided notes.
+- Draw on stated preferences (families, occasions, seasons) to focus recommendations.
+- When the customer's existing collection is listed, recommend fragrances that complement and broaden it. Explain how each recommendation works alongside what they already own.
+- Reference the customer's knowledge naturally: "From what you've shared..." or "Based on what you've told me...". Never say "Based on your profile..." or robotic equivalents.
+- Use the confidence guidance at the bottom of CUSTOMER PROFILE: HIGH → recommend immediately; MEDIUM → acknowledge other directions may suit; LOW → ask one concise clarifying question first.`;
+
 const RESTRICTIONS = `RESTRICTIONS:
 - Never guarantee longevity, projection, or sillage outcomes. Acknowledge body chemistry variation.
 - Never make medical or therapeutic claims about fragrances.
@@ -50,7 +57,7 @@ const FORMATTING = `FORMATTING:
 // ── Public API ────────────────────────────────────────────────────────────────
 
 export function buildSystemPrompt(contextContent: string): string {
-  const sections = [IDENTITY, KNOWLEDGE, BEHAVIOUR, VOICE, RESTRICTIONS, FORMATTING];
+  const sections = [IDENTITY, KNOWLEDGE, BEHAVIOUR, VOICE, PROFILE_RULES, RESTRICTIONS, FORMATTING];
   if (contextContent) sections.push(contextContent);
   return sections.join("\n\n");
 }

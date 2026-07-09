@@ -27,6 +27,7 @@ import { buildContext, renderContext }          from "../../lib/concierge/contex
 import { buildSystemPrompt, validateResponse, SAFE_FALLBACK } from "../../lib/concierge/safetyGuard";
 import { planResponse }                        from "../../lib/concierge/responsePlanner";
 import { formatResponse }                      from "../../lib/concierge/responseFormatter";
+import { extractProfile }                                           from "../../lib/concierge/profileExtractor";
 import type { ConversationState, SessionUpdates, FormattedResponse } from "../../lib/concierge/types";
 
 // ── Model configuration ───────────────────────────────────────────────────────
@@ -77,6 +78,9 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       return NextResponse.json({ error: "message and state are required" }, { status: 400 });
     }
 
+    // 0. Extract and accumulate profile from this message
+    const updatedProfile = extractProfile(message, state.profile);
+
     // 1. Conversation planning — decide action before retrieval
     const plan = planConversation(message, state);
 
@@ -95,8 +99,8 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     // Determine the effective intent for response planning
     const effectiveIntent = resolvedIntent?.intent ?? plan.nextIntent;
 
-    // 3. Build context — includes conversation state, plan, and resolved intent
-    const builtContext   = buildContext(retrieval, state, plan, effectiveIntent);
+    // 3. Build context — includes conversation state, plan, resolved intent, and accumulated profile
+    const builtContext   = buildContext(retrieval, { ...state, profile: updatedProfile }, plan, effectiveIntent);
     const contextContent = renderContext(builtContext);
 
     // 4. Build system prompt
@@ -130,6 +134,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       comparisonSlugs: plan.requiresComparison
         ? planned.recommendedSlugs.slice(0, 2)
         : state.comparisonSlugs,
+      profile:         updatedProfile,
     };
 
     const response: FormattedResponse = { ...formatted, sessionUpdates };

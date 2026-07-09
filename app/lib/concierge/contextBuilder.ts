@@ -11,7 +11,7 @@
 
 import type { FragranceKnowledge } from "../mkc/types";
 import type { AcademyArticle }     from "../academy/types";
-import type { ConversationState, ConversationIntent }  from "./types";
+import type { ConversationState, ConversationIntent, ConversationProfile }  from "./types";
 import type { ConversationPlan }   from "./conversationPlanner";
 import { catalogueMaps, getCurrentSeason } from "../discovery";
 import { computeWardrobe }                 from "../mkc/wardrobeEngine";
@@ -226,6 +226,67 @@ function buildInstructionsSection(
   return { label: "RESPONSE INSTRUCTIONS", content: instructions.join("\n") };
 }
 
+function buildProfileSection(profile: ConversationProfile | undefined): PromptSection {
+  if (!profile) return { label: "", content: "" };
+
+  const lines: string[] = [];
+  const confidenceHints: string[] = [];
+
+  if (profile.preferredFamilies?.value.length) {
+    lines.push(`Enjoys\n${profile.preferredFamilies.value.map((v) => `• ${v}`).join("\n")}`);
+    if (profile.preferredFamilies.confidence === "MEDIUM") {
+      confidenceHints.push("[Confidence: Medium — acknowledge that several directions may suit]");
+    }
+  }
+
+  if (profile.avoidedFamilies?.value.length) {
+    lines.push(`Avoids\n${profile.avoidedFamilies.value.map((v) => `• ${v}`).join("\n")}`);
+  }
+
+  if (profile.preferredNotes?.value.length) {
+    lines.push(`Preferred Notes\n${profile.preferredNotes.value.map((v) => `• ${v}`).join("\n")}`);
+  }
+
+  if (profile.avoidedNotes?.value.length) {
+    lines.push(`Avoided Notes\n${profile.avoidedNotes.value.map((v) => `• ${v}`).join("\n")}`);
+  }
+
+  if (profile.preferredOccasions?.value.length) {
+    lines.push(`Occasion\n${profile.preferredOccasions.value.map((v) => `• ${v}`).join("\n")}`);
+  }
+
+  if (profile.preferredSeasons?.value.length) {
+    lines.push(`Season\n${profile.preferredSeasons.value.map((v) => `• ${v}`).join("\n")}`);
+  }
+
+  if (profile.shoppingIntent?.value === "gift") {
+    const who = profile.shoppingFor?.value ?? "someone";
+    const gender = profile.recipientGender?.value;
+    const line = gender
+      ? `Gift — for ${who} (${gender})`
+      : `Gift — for ${who}`;
+    lines.push(`Shopping For\n• ${line}`);
+  }
+
+  if (profile.budget?.value) {
+    lines.push(`Budget\n• Around R${profile.budget.value}`);
+    if (profile.budget.confidence === "MEDIUM") {
+      confidenceHints.push("[Confidence: Medium — customer mentioned a figure but may be flexible]");
+    }
+  }
+
+  if (profile.existingCollection?.value.length) {
+    lines.push(
+      `Existing Collection\n${profile.existingCollection.value.map((v) => `• ${v}`).join("\n")}\n[Recommend fragrances that complement, not duplicate, this collection]`
+    );
+  }
+
+  if (lines.length === 0) return { label: "", content: "" };
+
+  const content = [...lines, ...confidenceHints].join("\n\n");
+  return { label: "CUSTOMER PROFILE", content };
+}
+
 function buildSeasonalContextSection(): PromptSection {
   const season = getCurrentSeason();
   return {
@@ -245,6 +306,7 @@ export function buildContext(
   const sections: PromptSection[] = [
     buildSeasonalContextSection(),
     buildConversationContextSection(state),
+    buildProfileSection(state.profile),
     buildGoalSection(plan, state, effectiveIntent),
     buildPreviousRecommendationsSection(state, retrieval.fragrances),
     buildFragranceSection(retrieval.fragrances, plan.reuseRecommendations),

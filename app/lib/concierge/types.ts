@@ -48,6 +48,41 @@ export interface ConversationState {
   comparisonSlugs?:         string[];
   lastArticleSlug?:         string;
   lastCollection?:          string;
+  // Structured consultation profile — session-scoped, never persisted (EP17-P2)
+  profile?:                 ConversationProfile;
+}
+
+// ── Conversation profile (EP17-P2) ────────────────────────────────────────────
+
+export type ProfileConfidence = "HIGH" | "MEDIUM" | "LOW";
+
+export interface ProfileField<T> {
+  value:      T;
+  confidence: ProfileConfidence;
+}
+
+export interface ConversationProfile {
+  // Scent preferences — additive unless genuinely contradicted (Refinement 1)
+  preferredFamilies?:  ProfileField<string[]>;
+  avoidedFamilies?:    ProfileField<string[]>;
+  preferredNotes?:     ProfileField<string[]>;
+  avoidedNotes?:       ProfileField<string[]>;
+
+  // Context preferences
+  preferredOccasions?: ProfileField<string[]>;
+  preferredSeasons?:   ProfileField<string[]>;
+  preferredGender?:    ProfileField<"male" | "female" | "unisex">;
+
+  // Shopping intent — scalar, newest wins
+  shoppingIntent?:  ProfileField<"self" | "gift">;
+  shoppingFor?:     ProfileField<string>;
+  recipientGender?: ProfileField<"male" | "female" | "unisex">;
+
+  // Commerce
+  budget?: ProfileField<number>;
+
+  // Wardrobe context — highest value field for wardrobe intelligence (Refinement 3)
+  existingCollection?: ProfileField<string[]>;
 }
 
 // ── UI-safe response types (no catalogue data) ────────────────────────────────
@@ -76,6 +111,7 @@ export interface SessionUpdates {
   comparisonSlugs?: string[];
   lastArticleSlug?: string;
   lastCollection?:  string;
+  profile?:         ConversationProfile;
 }
 
 export interface FormattedResponse {
