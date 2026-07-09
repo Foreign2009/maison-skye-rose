@@ -22,7 +22,11 @@ import { hacivatInspired } from "./hacivat-inspired";
 import { terreDHermesInspired } from "./terre-d'hermes-inspired";
 import { spicebombExtremeInspired } from "./spicebomb-extreme-inspired";
 import { pradaLHommeInspired } from "./prada-l'homme-inspired";
-import { laytonInspired } from "./layton-inspired";
+import { laytonInspired }         from "./layton-inspired";
+import { ultraMaleInspired }      from "./ultra-male-inspired";
+import { sauvageElixirInspired }  from "./sauvage-elixir-inspired";
+import { yEdpInspired }           from "./y-edp-inspired";
+import { naxosInspired }          from "./naxos-inspired";
 
 export const nativeFragrances = new Map<string, FragranceKnowledge>([
   ["sauvage-inspired",           sauvageInspired],
@@ -36,4 +40,8 @@ export const nativeFragrances = new Map<string, FragranceKnowledge>([
   ["spicebomb-extreme-inspired", spicebombExtremeInspired],
   ["prada-l'homme-inspired",     pradaLHommeInspired],
   ["layton-inspired",            laytonInspired],
+  ["ultra-male-inspired",        ultraMaleInspired],
+  ["sauvage-elixir-inspired",    sauvageElixirInspired],
+  ["y-edp-inspired",             yEdpInspired],
+  ["naxos-inspired",             naxosInspired],
 ]);

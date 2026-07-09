@@ -226,16 +226,27 @@ All scores are integers. They drive the similarity engine, collection boosting, 
 | Prada L'Homme Inspired | 2 | 2 | 3 | 2 | 4 | 6 |
 | Spicebomb Extreme Inspired | 3 | 1 | 5 | 5 | 2 | 8 |
 | Layton Inspired | 4 | 2 | 5 | 4 | 3 | 9 |
+| Ultra Male Inspired | 5 | 2 | 4 | 4 | 3 | 9 |
+| Sauvage Elixir Inspired | 2 | 3 | 4 | 5 | 2 | 8 |
+| Y EDP Inspired | 3 | 3 | 4 | 4 | 4 | 8 |
+| Naxos Inspired | 4 | 2 | 5 | 4 | 2 | 8 |
 
 **Calibration anchors per dimension:**
 
 | Dimension | Score 1 | Score 3 (baseline) | Score 5 |
 |---|---|---|---|
-| `sweetness` | Sauvage, Aqua Di Gio — no sweetness | Eros, Spicebomb — moderate spiced sweet | Layton — creamy vanilla forward |
-| `freshness` | Spicebomb Extreme — no freshness | Aventus, Hacivat, Terre D'Hermes | Sauvage, Aqua Di Gio — dominant citrus/aquatic |
-| `warmth` | Aqua Di Gio — cool, no warmth | Sauvage, Aventus — balanced | Layton, Spicebomb Extreme — amber/vanilla/tobacco |
-| `intensity` | — | Bleu, Y, Terre D'Hermes — moderate | Spicebomb Extreme — announces presence |
-| `versatility` | — | Eros, Layton, Aqua Di Gio — occasion focused | Sauvage, Bleu, Y, Terre D'Hermes — all-occasion |
+| `sweetness` | Sauvage, Aqua Di Gio, Terre D'Hermes — no sweetness | Eros, Spicebomb, Y EDP — moderate spiced or amber sweet | **Ultra Male** — pear/caramel/vanilla gourmand; the sweetness anchor |
+| `freshness` | Spicebomb Extreme — no freshness | Sauvage Elixir, Aventus, Hacivat, Terre D'Hermes — moderate | Sauvage, Aqua Di Gio — dominant citrus/aquatic; the freshness anchors |
+| `warmth` | Aqua Di Gio — cool, no warmth | Sauvage, Aventus, Y Inspired — balanced | **Layton, Spicebomb Extreme, Naxos** — amber/vanilla/tobacco; all three define maximum warmth via different routes |
+| `intensity` | — | Bleu, Y, Terre D'Hermes, Prada L'Homme — moderate | **Spicebomb Extreme, Sauvage Elixir** — both define maximum intensity; Spicebomb via sheer projection, Sauvage Elixir via concentrated weight |
+| `versatility` | Spicebomb Extreme, Sauvage Elixir, Naxos — specialist wear | Eros, Layton, Ultra Male, Aqua Di Gio — occasion focused | Sauvage, Bleu, Y, Y EDP, Terre D'Hermes — all-occasion range |
+
+**Calibration notes for EP19-P2 anchors:**
+
+- **Ultra Male Inspired (sweetness: 5)** — First sweetness: 5 record. The pear/caramel/vanilla combination places it at the top of the gourmand masculine range. Any future record that is sweeter than Ultra Male does not exist in this catalogue. Score relative to Ultra Male.
+- **Sauvage Elixir Inspired (intensity: 5)** — Joins Spicebomb Extreme as the second intensity: 5 record. Sauvage Elixir reaches maximum intensity through concentrated weight and dry spice; Spicebomb Extreme reaches it through sheer projection force. Both are legitimate anchors for different reasons.
+- **Naxos Inspired (warmth: 5)** — Third warmth: 5 record. Layton is amber/vanilla/sandalwood warmth; Spicebomb Extreme is tobacco/cinnamon/benzoin warmth; Naxos is honey/tobacco/tonka warmth. All three are genuinely at maximum warmth via distinct routes — the diversity of routes at the same score is correct.
+- **Y EDP Inspired (warmth: 4, versatility: 4)** — Bridge record between the fresh designer signature tier (Y Inspired: warmth 3, versatility 5) and the richer amber tier (Layton: warmth 5, versatility 3). Calibrate future aromatic amber masculines between Y EDP and Layton on both dimensions.
 
 **Update this table** each time a new native record is committed. The table is permanent engineering state — it enables every future author to calibrate without reading all previous records.
 
