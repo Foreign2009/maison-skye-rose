@@ -18,7 +18,8 @@ export type ConversationAction =
   | "reuse_cached"
   | "academy_lookup"
   | "follow_up"
-  | "refinement";
+  | "refinement"
+  | "alternative_exploration";
 
 export interface ConversationPlan {
   action:                ConversationAction;
@@ -52,6 +53,30 @@ const COMPARISON_PATTERNS = [
 const EDUCATION_PATTERNS = [
   "what is ", "what are ", "explain ", "teach me", "how does ", "why does ",
   "tell me about ", "how do ", "what makes ", "what's the difference between",
+];
+
+// Alternative exploration signals — curiosity-driven, no profile change (EP18-P2)
+// Fires before reference-back and refinement when a ConsultationPlan is active.
+const ALTERNATIVE_EXPLORATION_PATTERNS = [
+  // Generic — customer wants to see a different option
+  "show another", "show me another", "another option", "another one",
+  "more options", "what else", "anything else", "other options",
+  "see another", "show me something else",
+  // Rejection without avoidance — not convinced but not avoiding
+  "doesn't suit me", "don't think this suits", "not quite right",
+  "not quite what i", "not for me", "not really me",
+  "not sure about this", "something else",
+  // Character and direction exploration
+  "fresher option", "warmer option", "lighter option",
+  "another direction", "a different direction", "different interpretation",
+  "something different",
+  // Role-specific exploration
+  "another fresh", "another warm", "another evening", "another travel",
+  "another formal", "another daily", "another signature",
+  "different option for", "alternative for",
+  // Intelligence direction exploration
+  "less sweet", "less heavy", "less intense", "less dark",
+  "softer", "subtler",
 ];
 
 // Refinement signals — preference updates against an active consultation (EP18-P1)
@@ -152,7 +177,23 @@ export function planConversation(
     };
   }
 
-  // ── 2. Reference-back — "the first one", "show another", ordinal ────────────
+  // ── 2. Alternative exploration — curiosity against active consultation (EP18-P2)
+  // Must fire before reference-back so "show another" routes to exploration
+  // (not reuse_cached) when a ConsultationPlan is active.
+  if (state.consultationPlan &&
+      ALTERNATIVE_EXPLORATION_PATTERNS.some((p) => q.includes(p))) {
+    return {
+      action:                "alternative_exploration",
+      reason:                "Customer wants to explore an alternative for an active consultation role",
+      requiresRetrieval:     true,
+      requiresComparison:    false,
+      requiresClarification: false,
+      reuseRecommendations:  false,
+      nextIntent:            "general_discovery",
+    };
+  }
+
+  // ── 3. Reference-back — "the first one", "show another", ordinal ────────────
   const isReferenceBack = hasPreviousRecs && (
     REFERENCE_PATTERNS.some((p) => q.includes(p)) ||
     PRONOUN_PATTERNS.includes(q) ||
@@ -171,7 +212,7 @@ export function planConversation(
     };
   }
 
-  // ── 3. Education — "what is", "explain", "teach me" ─────────────────────────
+  // ── 4. Education — "what is", "explain", "teach me" ─────────────────────────
   if (EDUCATION_PATTERNS.some((p) => q.includes(p))) {
     return {
       action:                "academy_lookup",
@@ -184,7 +225,7 @@ export function planConversation(
     };
   }
 
-  // ── 4. Refinement — preference update against active consultation (EP18-P1) ───
+  // ── 5. Refinement — preference update against active consultation (EP18-P1) ───
   if (state.consultationPlan &&
       REFINEMENT_PATTERNS.some((p) => q.includes(p))) {
     return {
@@ -198,7 +239,7 @@ export function planConversation(
     };
   }
 
-  // ── 5. Clarification needed — first turn with no discoverable signals ─────────
+  // ── 6. Clarification needed — first turn with no discoverable signals ─────────
   // Use signal-based detection rather than word count so that short but
   // signal-rich messages ("Fresh and woody") proceed to search while longer
   // but signal-free messages ("I need a new fragrance") ask one question.
@@ -216,7 +257,7 @@ export function planConversation(
     };
   }
 
-  // ── 6. Default — new search ──────────────────────────────────────────────────
+  // ── 7. Default — new search ──────────────────────────────────────────────────
   return {
     action:                "new_search",
     reason:                "New customer query requiring retrieval",

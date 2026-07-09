@@ -11,7 +11,7 @@
 
 import type { FragranceKnowledge } from "../mkc/types";
 import type { AcademyArticle }     from "../academy/types";
-import type { ConversationState, ConversationIntent, ConversationProfile, RefinementState } from "./types";
+import type { ConversationState, ConversationIntent, ConversationProfile, RefinementState, ExplorationTarget } from "./types";
 import type { ConversationPlan }   from "./conversationPlanner";
 import { catalogueMaps, getCurrentSeason } from "../discovery";
 import { computeWardrobe }                 from "../mkc/wardrobeEngine";
@@ -185,10 +185,11 @@ function buildArticleSection(articles: AcademyArticle[]): PromptSection {
 }
 
 function buildInstructionsSection(
-  plan:             ConversationPlan,
-  state:            ConversationState,
-  effectiveIntent?: ConversationIntent,
-  refinement?:      RefinementState | null
+  plan:               ConversationPlan,
+  state:              ConversationState,
+  effectiveIntent?:   ConversationIntent,
+  refinement?:        RefinementState | null,
+  explorationTarget?: ExplorationTarget | null
 ): PromptSection {
   const instructions: string[] = [];
 
@@ -255,6 +256,36 @@ function buildInstructionsSection(
         "Frame as the consultation adapting to the updated budget — not replacing the collection."
       );
     }
+  }
+
+  // Exploration instructions (EP18-P2) — preserve stable roles, explain difference
+  if (plan.action === "alternative_exploration" && state.consultationPlan && explorationTarget) {
+    const target = explorationTarget.role;
+    const kept   = state.consultationPlan.roles.filter((r) => r.slug !== target.slug);
+
+    instructions.push("[Alternative exploration — do not rebuild the consultation]");
+
+    if (kept.length > 0) {
+      const keepList = kept.map((r) => `${r.title} (${r.name})`).join(", ");
+      instructions.push(`Preserve: ${keepList}`);
+    }
+
+    let exploreDetail = `Exploring alternative for: ${target.title} (currently ${target.name})`;
+    if (explorationTarget.characterPref && explorationTarget.characterPref !== target.character) {
+      exploreDetail += ` — exploring ${explorationTarget.characterPref} direction`;
+    } else if (explorationTarget.intelligenceHint) {
+      exploreDetail += ` — ${explorationTarget.intelligenceHint.direction} ${explorationTarget.intelligenceHint.dimension}`;
+    }
+    instructions.push(exploreDetail);
+    instructions.push(`Reason: ${explorationTarget.reason}`);
+    instructions.push(
+      "Select one alternative from FRAGRANCES IN CONTEXT. Tag it as [PRODUCT:slug]. " +
+      "Open by acknowledging what stays the same, then introduce the alternative as 'another direction' " +
+      "or 'a different interpretation' — never 'a better option'. " +
+      "Explain how this alternative differs in character, mood, or feel without ranking them. " +
+      "Do not imply the current assignment was wrong — the customer is exploring possibilities. " +
+      "After introducing the alternative, briefly confirm what the overall consultation still achieves."
+    );
   }
 
   // Gift: ask about the recipient when their preferences are not yet known.
@@ -428,13 +459,15 @@ function buildCollectionSection(profile: ConversationProfile | undefined): Promp
 }
 
 function buildConsultationPlanSection(
-  state:      ConversationState,
-  refinement?: RefinementState | null
+  state:              ConversationState,
+  refinement?:        RefinementState | null,
+  explorationTarget?: ExplorationTarget | null
 ): PromptSection {
   const plan = state.consultationPlan;
   if (!plan || plan.roles.length === 0) return { label: "", content: "" };
 
   const isRefinement  = !!refinement;
+  const isExploration = !!explorationTarget;
   const affectedSlugs = new Set(
     (refinement?.affectedRoles ?? []).map((r) => r.slug)
   );
@@ -456,7 +489,20 @@ function buildConsultationPlanSection(
       } else {
         lines.push("[KEEP]");
       }
+    } else if (isExploration) {
+      if (role.slug === explorationTarget!.role.slug) {
+        lines.push(`[EXPLORE — ${explorationTarget!.reason}]`);
+        if (explorationTarget!.characterPref) {
+          lines.push(`Target character: ${explorationTarget!.characterPref}`);
+        }
+        if (explorationTarget!.intelligenceHint) {
+          lines.push(`Direction: ${explorationTarget!.intelligenceHint.direction} ${explorationTarget!.intelligenceHint.dimension}`);
+        }
+      } else {
+        lines.push("[KEEP]");
+      }
     }
+
     lines.push("");
   }
 
@@ -474,11 +520,12 @@ function buildSeasonalContextSection(): PromptSection {
 // ── Public API ────────────────────────────────────────────────────────────────
 
 export function buildContext(
-  retrieval:        RetrievalContext,
-  state:            ConversationState,
-  plan:             ConversationPlan,
-  effectiveIntent?: ConversationIntent,
-  refinement?:      RefinementState | null
+  retrieval:          RetrievalContext,
+  state:              ConversationState,
+  plan:               ConversationPlan,
+  effectiveIntent?:   ConversationIntent,
+  refinement?:        RefinementState | null,
+  explorationTarget?: ExplorationTarget | null
 ): BuiltContext {
   const sections: PromptSection[] = [
     buildSeasonalContextSection(),
@@ -486,7 +533,7 @@ export function buildContext(
     buildProfileSection(state.profile),
     buildWardrobeSection(state.profile),
     buildCollectionSection(state.profile),
-    buildConsultationPlanSection(state, refinement),        // EP18-P1
+    buildConsultationPlanSection(state, refinement, explorationTarget),        // EP18-P1/P2
     buildGoalSection(plan, state, effectiveIntent),
     buildPreviousRecommendationsSection(state, retrieval.fragrances),
     buildFragranceSection(retrieval.fragrances, plan.reuseRecommendations),
@@ -494,7 +541,7 @@ export function buildContext(
       ? { label: "FEATURED COLLECTION", content: retrieval.collectionName }
       : { label: "", content: "" },
     buildArticleSection(retrieval.articles),
-    buildInstructionsSection(plan, state, effectiveIntent, refinement), // EP18-P1
+    buildInstructionsSection(plan, state, effectiveIntent, refinement, explorationTarget), // EP18-P1/P2
   ].filter((s) => s.label && s.content);
 
   const fullText      = sections.map((s) => `=== ${s.label} ===\n${s.content}`).join("\n\n");

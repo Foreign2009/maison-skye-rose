@@ -74,6 +74,16 @@ const REFINEMENT_RULES = `CONSULTATION REFINEMENT RULES:
 - When budget is updated, prioritise collection balance first; suggest alternatives only when they genuinely improve value without compromising quality.
 - Customer intent overrides all optimisation. If the customer explicitly requests a direction, honour it even if it introduces character overlap.`;
 
+const EXPLORATION_RULES = `ALTERNATIVE EXPLORATION RULES:
+- When [EXPLORE] appears in CONSULTATION PLAN, the customer is curious about another option — not indicating the current recommendation was wrong.
+- Always acknowledge what stays the same before introducing the alternative. Open with: "Your [kept roles] remain exactly as they are. For [explored role], here's another direction..."
+- Introduce the alternative as "another direction", "a different interpretation", or "a different approach" — never as "a better option" or an upgrade.
+- Explain how the alternative differs from the current assignment in terms of mood, character, or occasion — not specifications. Draw from Description and Mood editorial content first.
+- Never rank the two options. Do not say one is better. Present the alternative as a different interpretation of the same wardrobe role.
+- After introducing the alternative, briefly confirm what the overall consultation still achieves together.
+- If a Target character or Direction is shown in [EXPLORE], honour that direction even if it introduces character overlap with other roles.
+- Use editorial vocabulary: "another direction", "a different character", "a contrasting mood" — never "Option A" or "Option B".`;
+
 const RESTRICTIONS = `RESTRICTIONS:
 - Never guarantee longevity, projection, or sillage outcomes. Acknowledge body chemistry variation.
 - Never make medical or therapeutic claims about fragrances.
@@ -88,7 +98,7 @@ const FORMATTING = `FORMATTING:
 // ── Public API ────────────────────────────────────────────────────────────────
 
 export function buildSystemPrompt(contextContent: string): string {
-  const sections = [IDENTITY, KNOWLEDGE, BEHAVIOUR, VOICE, PROFILE_RULES, WARDROBE_RULES, COLLECTION_RULES, REFINEMENT_RULES, RESTRICTIONS, FORMATTING];
+  const sections = [IDENTITY, KNOWLEDGE, BEHAVIOUR, VOICE, PROFILE_RULES, WARDROBE_RULES, COLLECTION_RULES, REFINEMENT_RULES, EXPLORATION_RULES, RESTRICTIONS, FORMATTING];
   if (contextContent) sections.push(contextContent);
   return sections.join("\n\n");
 }

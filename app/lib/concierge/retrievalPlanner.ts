@@ -15,10 +15,21 @@ import { buildSearchIndex } from "../search/indexBuilder";
 import type { SearchIndex } from "../search/types";
 import type { FragranceKnowledge } from "../mkc/types";
 import type { AcademyArticle } from "../academy/types";
-import type { ConversationContext, ConversationState, ConversationProfile, ConsultationRole } from "./types";
+import type { ConversationContext, ConversationState, ConversationProfile, ConsultationRole, ExplorationTarget } from "./types";
 import type { ResolvedIntent } from "./intentResolver";
 import type { RetrievalContext } from "./contextBuilder";
 import { planCollection } from "./collectionPlanner";
+
+// ── Intelligence score accessor (EP18-P2) ─────────────────────────────────────
+
+type IntelligenceDim = "sweetness" | "freshness" | "warmth" | "intensity" | "versatility";
+const INTELLIGENCE_DIMS: IntelligenceDim[] = ["sweetness", "freshness", "warmth", "intensity", "versatility"];
+
+function getIntelligenceScore(k: FragranceKnowledge, dimension: string): number | null {
+  if (!INTELLIGENCE_DIMS.includes(dimension as IntelligenceDim)) return null;
+  const val = k[dimension as IntelligenceDim];
+  return typeof val === "number" ? val : null;
+}
 
 // ── Search index singleton (rebuilt once per server process) ──────────────────
 
@@ -60,10 +71,11 @@ function articlesFromSearch(rawQuery: string, limit = 2): AcademyArticle[] {
 // ── Public API ────────────────────────────────────────────────────────────────
 
 export function planRetrieval(
-  resolved:      ResolvedIntent,
-  context:       ConversationContext,
-  profile?:      ConversationProfile,
-  affectedRoles?: ConsultationRole[]
+  resolved:           ResolvedIntent,
+  context:            ConversationContext,
+  profile?:           ConversationProfile,
+  affectedRoles?:     ConsultationRole[],
+  explorationTarget?: ExplorationTarget
 ): RetrievalContext {
   const { intent, signals, entitySlug, compareSlug } = resolved;
 
@@ -174,7 +186,45 @@ export function planRetrieval(
       break;
     }
 
-    default: { // general_discovery | clarification | refinement
+    default: { // general_discovery | clarification | refinement | alternative_exploration
+      // Exploration retrieval (EP18-P2):
+      // Fetch candidates for the target role character, excluding the current
+      // assignment. Narrows by Intelligence score when a direction hint is
+      // available; falls through when no candidates pass the filter.
+      if (explorationTarget) {
+        const { role, characterPref, intelligenceHint } = explorationTarget;
+        const targetCharacter = characterPref ?? role.character;
+
+        let candidates = mkcCatalogue
+          .filter((k) => k.scentCharacter === targetCharacter && k.slug !== role.slug)
+          .sort((a, b) => {
+            if (a.bestSeller && !b.bestSeller) return -1;
+            if (!a.bestSeller && b.bestSeller)  return 1;
+            return b.popularity - a.popularity;
+          });
+
+        if (intelligenceHint) {
+          const currentFrag    = mkcCatalogue.find((k) => k.slug === role.slug);
+          const currentScore   = currentFrag ? getIntelligenceScore(currentFrag, intelligenceHint.dimension) : null;
+          if (currentScore !== null) {
+            const filtered = candidates.filter((k) => {
+              const kScore = getIntelligenceScore(k, intelligenceHint.dimension);
+              return kScore !== null && (
+                intelligenceHint.direction === "less" ? kScore < currentScore : kScore > currentScore
+              );
+            });
+            if (filtered.length > 0) candidates = filtered;
+            // Fall through to unfiltered candidates when no hits pass the score threshold
+          }
+        }
+
+        if (candidates.length > 0) {
+          fragrances = candidates.slice(0, 3);
+          break;
+        }
+        // Fall through to standard paths when no candidates found
+      }
+
       // Refinement retrieval (EP18-P1):
       // When specific roles are affected, retrieve compliant candidates for
       // those characters only — filtered to exclude the customer's avoidances

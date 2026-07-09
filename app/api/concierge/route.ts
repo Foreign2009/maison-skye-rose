@@ -28,8 +28,8 @@ import { buildSystemPrompt, validateResponse, SAFE_FALLBACK } from "../../lib/co
 import { planResponse }                        from "../../lib/concierge/responsePlanner";
 import { formatResponse }                      from "../../lib/concierge/responseFormatter";
 import { extractProfile }                                                              from "../../lib/concierge/profileExtractor";
-import { buildConsultationPlan, evolveConsultationPlan, detectAffectedRoles }          from "../../lib/concierge/consultationTracker";
-import type { ConversationState, SessionUpdates, FormattedResponse, ConsultationPlan } from "../../lib/concierge/types";
+import { buildConsultationPlan, evolveConsultationPlan, detectAffectedRoles, detectExplorationTarget } from "../../lib/concierge/consultationTracker";
+import type { ConversationState, SessionUpdates, FormattedResponse, ConsultationPlan }                 from "../../lib/concierge/types";
 
 // ── Model configuration ───────────────────────────────────────────────────────
 
@@ -90,13 +90,20 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     // 1. Conversation planning — decide action before retrieval
     const plan = planConversation(message, state);
 
+    // 1b. Detect exploration target when planning routes to alternative exploration (EP18-P2)
+    const explorationTarget = (plan.action === "alternative_exploration" && state.consultationPlan)
+      ? detectExplorationTarget(state.consultationPlan, message, state.selectedSlug)
+      : null;
+
     // 2. Retrieval — conditional on plan
     let retrieval;
     let resolvedIntent;
 
     if (plan.requiresRetrieval) {
       resolvedIntent = resolveIntent(message, state.context);
-      retrieval      = planRetrieval(resolvedIntent, state.context, updatedProfile, refinement?.affectedRoles);
+      // Refinement roles and exploration target are mutually exclusive per plan.action
+      const refinementRoles = plan.action === "refinement" ? refinement?.affectedRoles : undefined;
+      retrieval = planRetrieval(resolvedIntent, state.context, updatedProfile, refinementRoles, explorationTarget ?? undefined);
     } else {
       // Reuse cached recommendations without a new catalogue search
       retrieval = buildCachedRetrieval(state);
@@ -105,8 +112,9 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     // Determine the effective intent for response planning
     const effectiveIntent = resolvedIntent?.intent ?? plan.nextIntent;
 
-    // 3. Build context — includes conversation state, plan, resolved intent, accumulated profile, and refinement
-    const builtContext   = buildContext(retrieval, { ...state, profile: updatedProfile }, plan, effectiveIntent, refinement);
+    // 3. Build context — gate refinement and explorationTarget to their respective plan.action
+    const activeRefinement = plan.action === "refinement" ? refinement : null;
+    const builtContext     = buildContext(retrieval, { ...state, profile: updatedProfile }, plan, effectiveIntent, activeRefinement, explorationTarget);
     const contextContent = renderContext(builtContext);
 
     // 4. Build system prompt
@@ -132,13 +140,20 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     const planned   = planResponse(content, effectiveIntent, retrieval, plan);
     const formatted = formatResponse(planned);
 
-    // 8b. Build or evolve the consultation plan (EP18-P1)
-    // In refinement mode, merge kept roles from the existing plan with new
-    // assignments — preserving roles the customer did not ask to change.
+    // 8b. Build or evolve the consultation plan (EP18-P1/P2)
+    // Refinement and exploration both evolve only the affected/explored role —
+    // all other roles are preserved. The two paths are mutually exclusive per plan.action.
     const newPlan = buildConsultationPlan(planned.recommendedSlugs, updatedProfile);
+    const evolvedAffected =
+      plan.action === "refinement"               && (refinement?.affectedRoles?.length ?? 0) > 0
+        ? refinement!.affectedRoles
+      : plan.action === "alternative_exploration" && explorationTarget
+        ? [explorationTarget.role]
+      : null;
+
     const consultationPlan: ConsultationPlan | undefined =
-      refinement && state.consultationPlan && newPlan
-        ? evolveConsultationPlan(state.consultationPlan, refinement.affectedRoles, newPlan)
+      evolvedAffected && state.consultationPlan && newPlan
+        ? evolveConsultationPlan(state.consultationPlan, evolvedAffected, newPlan)
         : (newPlan ?? state.consultationPlan ?? undefined);
 
     // 9. Derive session state updates for the client to store

@@ -124,6 +124,15 @@ export interface RefinementState {
   budgetRefinement: boolean;
 }
 
+// ── Alternative exploration (EP18-P2) ─────────────────────────────────────────
+
+export interface ExplorationTarget {
+  role:              ConsultationRole;
+  characterPref?:    string;
+  intelligenceHint?: { dimension: string; direction: "more" | "less" };
+  reason:            string;
+}
+
 // ── UI-safe response types (no catalogue data) ────────────────────────────────
 
 export interface FormattedFragrance {

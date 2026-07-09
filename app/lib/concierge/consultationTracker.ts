@@ -24,7 +24,63 @@ import type {
   ConsultationRole,
   CollectionType,
   RefinementState,
+  ExplorationTarget,
 } from "./types";
+
+// ── Intelligence hint patterns (EP18-P2) ─────────────────────────────────────
+
+const INTELLIGENCE_HINTS: Array<{
+  patterns:  string[];
+  dimension: string;
+  direction: "more" | "less";
+}> = [
+  {
+    patterns:  ["less sweet", "not as sweet", "less sugary"],
+    dimension: "sweetness",
+    direction: "less",
+  },
+  {
+    patterns:  ["sweeter", "more sweet"],
+    dimension: "sweetness",
+    direction: "more",
+  },
+  {
+    patterns:  ["less intense", "softer", "quieter", "more subtle", "subtler"],
+    dimension: "intensity",
+    direction: "less",
+  },
+];
+
+// ── Exploration character preference patterns (EP18-P2) ───────────────────────
+
+const EXPLORATION_CHARACTER: Array<{
+  pattern:   RegExp;
+  character: string;
+}> = [
+  {
+    pattern:   /\b(fresher|lighter|airier|more fresh|something fresh|something lighter)\b/i,
+    character: "Fresh & Light",
+  },
+  {
+    pattern:   /\b(warmer|richer|heavier|more warm|something warmer|something richer)\b/i,
+    character: "Rich & Long Wearing",
+  },
+  {
+    pattern:   /\b(more balanced|more versatile|something balanced|something versatile)\b/i,
+    character: "Balanced Signature",
+  },
+  {
+    pattern:   /\b(more intense|bolder|darker|a statement|statement option)\b/i,
+    character: "Deep & Intense",
+  },
+];
+
+// ── Occasion keywords for role title matching (EP18-P2) ──────────────────────
+
+const ROLE_OCCASION_KEYWORDS = new Set([
+  "evening", "morning", "daily", "travel", "office", "work",
+  "formal", "dinner", "statement", "weekend", "casual", "everyday", "signature",
+]);
 
 // ── Discovery role titles ─────────────────────────────────────────────────────
 
@@ -244,4 +300,112 @@ export function detectAffectedRoles(
     : "budget guidance updated";
 
   return { affectedRoles: affected, reason, budgetRefinement: isBudgetChange };
+}
+
+/**
+ * Identifies which role in the active ConsultationPlan the customer is
+ * exploring alternatives for. Returns an ExplorationTarget describing the
+ * role, optional character preference (direction change), and optional
+ * Intelligence hint (score-based filtering).
+ *
+ * Role identification priority:
+ * 1. Occasion keyword in role title — "evening", "travel", "daily"…
+ * 2. Ordinal reference — "the second one", "first one"
+ * 3. Character preference direction — role mismatching the requested character
+ *    (or the matching role when exploring within the same character)
+ * 4. selectedSlug — most recently focused fragrance
+ * 5. Fallback — last role in the plan
+ *
+ * Returns null when the plan has no roles.
+ */
+export function detectExplorationTarget(
+  plan:          ConsultationPlan,
+  message:       string,
+  selectedSlug?: string
+): ExplorationTarget | null {
+  if (plan.roles.length === 0) return null;
+
+  const q = message.toLowerCase();
+
+  // 1. Intelligence hint
+  let intelligenceHint: { dimension: string; direction: "more" | "less" } | undefined;
+  for (const hint of INTELLIGENCE_HINTS) {
+    if (hint.patterns.some((p) => q.includes(p))) {
+      intelligenceHint = { dimension: hint.dimension, direction: hint.direction };
+      break;
+    }
+  }
+
+  // 2. Character preference (direction change or within-character exploration)
+  let characterPref: string | undefined;
+  for (const entry of EXPLORATION_CHARACTER) {
+    if (entry.pattern.test(message)) {
+      characterPref = entry.character;
+      break;
+    }
+  }
+
+  // 3. Find target role
+  let targetRole: ConsultationRole | null = null;
+
+  // 3a. Role title occasion keyword
+  for (const role of plan.roles) {
+    const titleWords = role.title.toLowerCase().split(/\s+/);
+    const matched = titleWords.some(
+      (w) => ROLE_OCCASION_KEYWORDS.has(w) && q.includes(w)
+    );
+    if (matched) {
+      targetRole = role;
+      break;
+    }
+  }
+
+  // 3b. Ordinal reference
+  if (!targetRole) {
+    const ordinalMatch = q.match(/\b(first|second|third)\b/);
+    if (ordinalMatch) {
+      const ordinalMap: Record<string, number> = { first: 1, second: 2, third: 3 };
+      const pos = ordinalMap[ordinalMatch[1]];
+      if (pos !== undefined) {
+        targetRole = plan.roles.find((r) => r.position === pos) ?? null;
+      }
+    }
+  }
+
+  // 3c. Character preference direction
+  if (!targetRole && characterPref) {
+    const matchingRole = plan.roles.find((r) => r.character === characterPref);
+    if (matchingRole) {
+      // A role already fills this character — explore alternatives within it
+      targetRole    = matchingRole;
+      characterPref = undefined; // No direction change; same character
+    } else {
+      // No role of this character — customer wants to change the opposing role
+      targetRole = plan.roles.find((r) => r.character !== characterPref) ?? null;
+    }
+  }
+
+  // 3d. Selected slug fallback
+  if (!targetRole && selectedSlug) {
+    targetRole = plan.roles.find((r) => r.slug === selectedSlug) ?? null;
+  }
+
+  // 3e. Last role in plan
+  if (!targetRole) {
+    targetRole = plan.roles[plan.roles.length - 1] ?? plan.roles[0] ?? null;
+  }
+
+  if (!targetRole) return null;
+
+  // 4. Build reason string
+  let reason: string;
+  if (characterPref) {
+    reason = `customer wants ${characterPref} alternative for ${targetRole.title}`;
+  } else if (intelligenceHint) {
+    reason = `customer wants ${intelligenceHint.direction} ${intelligenceHint.dimension} option for ${targetRole.title}`;
+  } else {
+    reason = `customer wants another option for ${targetRole.title}`;
+  }
+
+  return { role: targetRole, characterPref, intelligenceHint, reason };
 }
