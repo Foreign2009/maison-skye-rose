@@ -16,6 +16,7 @@ import type { ConversationPlan }   from "./conversationPlanner";
 import { catalogueMaps, getCurrentSeason } from "../discovery";
 import { computeWardrobe }                 from "../mkc/wardrobeEngine";
 import { analyseWardrobe }                 from "./wardrobeAnalyser";
+import { planCollection }                  from "./collectionPlanner";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -339,6 +340,50 @@ function buildWardrobeSection(profile: ConversationProfile | undefined): PromptS
   return { label: "WARDROBE ANALYSIS", content: lines.join("\n") };
 }
 
+function buildCollectionSection(profile: ConversationProfile | undefined): PromptSection {
+  if (!profile?.collectionType) return { label: "", content: "" };
+
+  const brief = planCollection(profile);
+  if (!brief || brief.roles.length === 0) return { label: "", content: "" };
+
+  const lines: string[] = [];
+
+  // Header — describe size in terms of new additions when wardrobe-aware
+  const sizeDesc = brief.wardrobeAware
+    ? `${brief.newCount} new addition${brief.newCount !== 1 ? "s" : ""} to complete a ${brief.targetSize}-fragrance collection`
+    : `${brief.targetSize} fragrance${brief.targetSize !== 1 ? "s" : ""}`;
+  lines.push(`Collection type: ${brief.label} (${sizeDesc})`);
+
+  if (brief.budgetNote) lines.push(`Budget guidance: ${brief.budgetNote}`);
+
+  if (brief.wardrobeAware) {
+    const filledCount = brief.targetSize - brief.newCount;
+    lines.push(`Wardrobe context: Existing collection already fills ${filledCount} role${filledCount !== 1 ? "s" : ""}. Recommend only the additions listed below.`);
+  }
+
+  lines.push("");
+
+  // Roles — each with character, title, and editorial purpose (Refinement 2)
+  for (const role of brief.roles) {
+    lines.push(`Role ${role.position} — ${role.title}`);
+    lines.push(`Character: ${role.character}`);
+    lines.push(`Purpose: ${role.purpose}`);
+    lines.push("");
+  }
+
+  // Framing instructions (Refinements 1, 3, 4, 8)
+  lines.push(
+    "[Curate this as a personal fragrance consultation, not a product list. " +
+    "Recommend one fragrance per role from FRAGRANCES IN CONTEXT. " +
+    "Explain each recommendation in terms of its role and what it brings to the collection. " +
+    "After individual recommendations, describe what the complete collection achieves together — the occasions, moods, and moments it collectively covers. " +
+    "Write as a luxury consultation: 'I'd build your collection around...' or 'I'd begin your wardrobe with...' — never 'Here are three fragrances.' " +
+    "Customer intent always overrides collection optimisation: if the customer explicitly wants only one character type, honour that preference entirely.]"
+  );
+
+  return { label: "COLLECTION BRIEF", content: lines.join("\n") };
+}
+
 function buildSeasonalContextSection(): PromptSection {
   const season = getCurrentSeason();
   return {
@@ -360,6 +405,7 @@ export function buildContext(
     buildConversationContextSection(state),
     buildProfileSection(state.profile),
     buildWardrobeSection(state.profile),
+    buildCollectionSection(state.profile),
     buildGoalSection(plan, state, effectiveIntent),
     buildPreviousRecommendationsSection(state, retrieval.fragrances),
     buildFragranceSection(retrieval.fragrances, plan.reuseRecommendations),

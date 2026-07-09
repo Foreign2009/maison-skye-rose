@@ -15,9 +15,10 @@ import { buildSearchIndex } from "../search/indexBuilder";
 import type { SearchIndex } from "../search/types";
 import type { FragranceKnowledge } from "../mkc/types";
 import type { AcademyArticle } from "../academy/types";
-import type { ConversationContext, ConversationState } from "./types";
+import type { ConversationContext, ConversationState, ConversationProfile } from "./types";
 import type { ResolvedIntent } from "./intentResolver";
 import type { RetrievalContext } from "./contextBuilder";
+import { planCollection } from "./collectionPlanner";
 
 // ── Search index singleton (rebuilt once per server process) ──────────────────
 
@@ -60,7 +61,8 @@ function articlesFromSearch(rawQuery: string, limit = 2): AcademyArticle[] {
 
 export function planRetrieval(
   resolved: ResolvedIntent,
-  context: ConversationContext
+  context:  ConversationContext,
+  profile?: ConversationProfile
 ): RetrievalContext {
   const { intent, signals, entitySlug, compareSlug } = resolved;
 
@@ -172,6 +174,31 @@ export function planRetrieval(
     }
 
     default: { // general_discovery | clarification
+      // Collection-aware retrieval (EP17-P4):
+      // When collection intent is active, retrieve candidates spanning the
+      // required scentCharacters so the LLM can assign one fragrance per role.
+      if (profile?.collectionType) {
+        const brief = planCollection(profile);
+        if (brief && brief.roles.length > 0) {
+          const roleChars = [...new Set(brief.roles.map((r) => r.character))];
+          const candidates = roleChars.flatMap((char) =>
+            mkcCatalogue
+              .filter((k) => k.scentCharacter === char)
+              .sort((a, b) => {
+                if (a.bestSeller && !b.bestSeller) return -1;
+                if (!a.bestSeller && b.bestSeller)  return 1;
+                return b.popularity - a.popularity;
+              })
+              .slice(0, 2)
+          );
+          if (candidates.length > 0) {
+            fragrances = candidates;
+            break;
+          }
+        }
+      }
+
+      // Standard discovery fallback
       const rawQuery = [signals.family, signals.occasion, signals.vibe, context.learningTopic]
         .filter(Boolean)
         .join(" ");

@@ -56,6 +56,17 @@ export interface ConversationState {
 
 export type ProfileConfidence = "HIGH" | "MEDIUM" | "LOW";
 
+// Collection planning (EP17-P4)
+export type CollectionType =
+  | "Starter"
+  | "Signature"
+  | "Business"
+  | "Travel"
+  | "Seasonal"
+  | "Minimal"
+  | "Luxury"
+  | "Custom";
+
 export interface ProfileField<T> {
   value:      T;
   confidence: ProfileConfidence;
@@ -83,6 +94,10 @@ export interface ConversationProfile {
 
   // Wardrobe context — highest value field for wardrobe intelligence (Refinement 3)
   existingCollection?: ProfileField<string[]>;
+
+  // Collection planning — session-scoped intent (EP17-P4)
+  collectionType?: ProfileField<CollectionType>;
+  collectionSize?: ProfileField<number>;
 }
 
 // ── UI-safe response types (no catalogue data) ────────────────────────────────

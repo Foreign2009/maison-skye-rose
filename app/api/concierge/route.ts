@@ -90,7 +90,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 
     if (plan.requiresRetrieval) {
       resolvedIntent = resolveIntent(message, state.context);
-      retrieval      = planRetrieval(resolvedIntent, state.context);
+      retrieval      = planRetrieval(resolvedIntent, state.context, updatedProfile);
     } else {
       // Reuse cached recommendations without a new catalogue search
       retrieval = buildCachedRetrieval(state);

@@ -13,7 +13,7 @@
  * - Contradiction resolution: newest signal wins and is removed from the opposite list.
  */
 
-import type { ConversationProfile, ProfileField, ProfileConfidence } from "./types";
+import type { ConversationProfile, ProfileField, ProfileConfidence, CollectionType } from "./types";
 
 // ── Vocabulary ────────────────────────────────────────────────────────────────
 
@@ -248,6 +248,68 @@ function extractExistingCollection(message: string): string[] {
   return found;
 }
 
+// ── Collection intent extraction (EP17-P4) ────────────────────────────────────
+
+const COLLECTION_TYPE_PATTERNS: Array<[RegExp, CollectionType]> = [
+  // Luxury — check before Starter/Custom to prevent "best starter" mis-classifying
+  [/\b(luxury|premium|best of|finest|spare no expense|no budget)\b.{0,30}\b(collection|wardrobe|fragrances?)\b/i, "Luxury"],
+
+  // Signature — single fragrance for everything
+  [/\bsignature (scent|fragrance|collection|wardrobe)\b/i, "Signature"],
+  [/\b(just|only) one (fragrance|scent)\b/i,              "Signature"],
+  [/\bone fragrance for (everything|all occasions?|everyday)\b/i, "Signature"],
+
+  // Business / Office
+  [/\b(business|office|work|professional|corporate)\b.{0,30}\b(collection|wardrobe|fragrances?|set)\b/i, "Business"],
+  [/\b(collection|wardrobe|fragrances?|set)\b.{0,30}\b(for|at)\b.{0,20}\b(office|work|business)\b/i,    "Business"],
+
+  // Travel
+  [/\btravel (collection|wardrobe|fragrances?|scents?)\b/i,       "Travel"],
+  [/\bfor (travelling|traveling|travel)\b/i,                       "Travel"],
+  [/\btravel.{0,25}\b(every|frequently|a lot|often|weekly|week)\b/i, "Travel"],
+  [/\bi travel\b/i,                                                 "Travel"],
+
+  // Seasonal
+  [/\b(summer|winter|spring|autumn|fall)\b.{0,30}\b(collection|wardrobe|rotation|set)\b/i, "Seasonal"],
+  [/\bseasonal (collection|wardrobe|rotation)\b/i,                                         "Seasonal"],
+
+  // Minimal
+  [/\b(minimal|minimalist|simple|streamlined)\b.{0,30}\b(collection|wardrobe|fragrances?)\b/i, "Minimal"],
+
+  // Starter — generic "build a wardrobe", beginner language
+  [/\b(starter|beginner|starting|first|new to|getting into|just starting)\b.{0,30}\b(collection|wardrobe|fragrances?)\b/i, "Starter"],
+  [/\b(build|start|create|put together|assemble)\b.{0,25}\b(a |my )?(wardrobe|collection|fragrance wardrobe)\b/i,          "Starter"],
+  [/\bhelp me build\b.{0,30}\b(wardrobe|collection)\b/i,                                                                   "Starter"],
+];
+
+function extractCollectionType(q: string): CollectionType | undefined {
+  for (const [pattern, type] of COLLECTION_TYPE_PATTERNS) {
+    if (pattern.test(q)) return type;
+  }
+  return undefined;
+}
+
+const WORD_TO_NUM: Record<string, number> = {
+  one: 1, two: 2, three: 3, four: 4, five: 5,
+};
+
+function extractCollectionSize(q: string): number | undefined {
+  // "three fragrances", "4 scents", "a collection of three", etc.
+  const m =
+    q.match(/\b(one|two|three|four|five|\d)\b.{0,25}\b(fragrances?|scents?|pieces?|bottles?)\b/i) ??
+    q.match(/\ba (collection|wardrobe) of (one|two|three|four|five|\d)\b/i);
+
+  if (m) {
+    const raw = m[m.length - 1].toLowerCase();  // last captured group = number token
+    return (WORD_TO_NUM[raw] ?? parseInt(raw, 10)) || undefined;
+  }
+
+  // "a complete / full wardrobe" → default 4
+  if (/\b(complete|full|whole)\b.{0,20}\b(wardrobe|collection)\b/.test(q)) return 4;
+
+  return undefined;
+}
+
 // ── Public API ────────────────────────────────────────────────────────────────
 
 /**
@@ -330,6 +392,17 @@ export function extractProfile(
     } else if (/\bfor women\b|\bfeminine fragrances?\b/.test(q)) {
       profile.preferredGender = { value: "female", confidence: "HIGH" };
     }
+  }
+
+  // ── 8. Collection intent (scalar — newest wins) (EP17-P4) ────────────────
+  const collectionType = extractCollectionType(q);
+  if (collectionType) {
+    profile.collectionType = { value: collectionType, confidence: "HIGH" };
+  }
+
+  const collectionSize = extractCollectionSize(q);
+  if (collectionSize !== undefined) {
+    profile.collectionSize = { value: collectionSize, confidence: "HIGH" };
   }
 
   return profile;
