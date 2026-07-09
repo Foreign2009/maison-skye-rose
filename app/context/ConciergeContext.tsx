@@ -102,7 +102,8 @@ function conciergeReducer(state: ConciergeUIState, action: ConciergeAction): Con
           comparisonSlugs: action.updates.comparisonSlugs ?? state.conversationState.comparisonSlugs,
           lastArticleSlug: action.updates.lastArticleSlug ?? state.conversationState.lastArticleSlug,
           lastCollection:  action.updates.lastCollection  ?? state.conversationState.lastCollection,
-          profile:         action.updates.profile         ?? state.conversationState.profile,
+          profile:          action.updates.profile          ?? state.conversationState.profile,
+          consultationPlan: action.updates.consultationPlan ?? state.conversationState.consultationPlan,
         },
       };
 

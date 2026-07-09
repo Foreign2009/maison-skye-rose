@@ -27,8 +27,9 @@ import { buildContext, renderContext }          from "../../lib/concierge/contex
 import { buildSystemPrompt, validateResponse, SAFE_FALLBACK } from "../../lib/concierge/safetyGuard";
 import { planResponse }                        from "../../lib/concierge/responsePlanner";
 import { formatResponse }                      from "../../lib/concierge/responseFormatter";
-import { extractProfile }                                           from "../../lib/concierge/profileExtractor";
-import type { ConversationState, SessionUpdates, FormattedResponse } from "../../lib/concierge/types";
+import { extractProfile }                                                              from "../../lib/concierge/profileExtractor";
+import { buildConsultationPlan, evolveConsultationPlan, detectAffectedRoles }          from "../../lib/concierge/consultationTracker";
+import type { ConversationState, SessionUpdates, FormattedResponse, ConsultationPlan } from "../../lib/concierge/types";
 
 // ── Model configuration ───────────────────────────────────────────────────────
 
@@ -81,6 +82,11 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     // 0. Extract and accumulate profile from this message
     const updatedProfile = extractProfile(message, state.profile);
 
+    // 0b. Detect refinement against the active consultation plan (EP18-P1)
+    const refinement = state.consultationPlan
+      ? detectAffectedRoles(state.consultationPlan, updatedProfile, message)
+      : null;
+
     // 1. Conversation planning — decide action before retrieval
     const plan = planConversation(message, state);
 
@@ -90,7 +96,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 
     if (plan.requiresRetrieval) {
       resolvedIntent = resolveIntent(message, state.context);
-      retrieval      = planRetrieval(resolvedIntent, state.context, updatedProfile);
+      retrieval      = planRetrieval(resolvedIntent, state.context, updatedProfile, refinement?.affectedRoles);
     } else {
       // Reuse cached recommendations without a new catalogue search
       retrieval = buildCachedRetrieval(state);
@@ -99,8 +105,8 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     // Determine the effective intent for response planning
     const effectiveIntent = resolvedIntent?.intent ?? plan.nextIntent;
 
-    // 3. Build context — includes conversation state, plan, resolved intent, and accumulated profile
-    const builtContext   = buildContext(retrieval, { ...state, profile: updatedProfile }, plan, effectiveIntent);
+    // 3. Build context — includes conversation state, plan, resolved intent, accumulated profile, and refinement
+    const builtContext   = buildContext(retrieval, { ...state, profile: updatedProfile }, plan, effectiveIntent, refinement);
     const contextContent = renderContext(builtContext);
 
     // 4. Build system prompt
@@ -126,6 +132,15 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     const planned   = planResponse(content, effectiveIntent, retrieval, plan);
     const formatted = formatResponse(planned);
 
+    // 8b. Build or evolve the consultation plan (EP18-P1)
+    // In refinement mode, merge kept roles from the existing plan with new
+    // assignments — preserving roles the customer did not ask to change.
+    const newPlan = buildConsultationPlan(planned.recommendedSlugs, updatedProfile);
+    const consultationPlan: ConsultationPlan | undefined =
+      refinement && state.consultationPlan && newPlan
+        ? evolveConsultationPlan(state.consultationPlan, refinement.affectedRoles, newPlan)
+        : (newPlan ?? state.consultationPlan ?? undefined);
+
     // 9. Derive session state updates for the client to store
     const sessionUpdates: SessionUpdates = {
       selectedSlug:    planned.recommendedSlugs[0],
@@ -135,6 +150,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
         ? planned.recommendedSlugs.slice(0, 2)
         : state.comparisonSlugs,
       profile:         updatedProfile,
+      consultationPlan,
     };
 
     const response: FormattedResponse = { ...formatted, sessionUpdates };

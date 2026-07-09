@@ -50,6 +50,8 @@ export interface ConversationState {
   lastCollection?:          string;
   // Structured consultation profile — session-scoped, never persisted (EP17-P2)
   profile?:                 ConversationProfile;
+  // Living consultation plan — evolves with each refinement, never persisted (EP18-P1)
+  consultationPlan?:        ConsultationPlan;
 }
 
 // ── Conversation profile (EP17-P2) ────────────────────────────────────────────
@@ -100,6 +102,28 @@ export interface ConversationProfile {
   collectionSize?: ProfileField<number>;
 }
 
+// ── Consultation plan (EP18-P1) ───────────────────────────────────────────────
+
+export interface ConsultationRole {
+  position:  number;
+  character: string;   // scentCharacter — targeted retrieval key
+  title:     string;   // e.g. "Evening Character"
+  slug:      string;   // Currently assigned fragrance slug
+  name:      string;   // Currently assigned fragrance display name
+}
+
+export interface ConsultationPlan {
+  type:  CollectionType | "Discovery";
+  label: string;
+  roles: ConsultationRole[];
+}
+
+export interface RefinementState {
+  affectedRoles:    ConsultationRole[];
+  reason:           string;
+  budgetRefinement: boolean;
+}
+
 // ── UI-safe response types (no catalogue data) ────────────────────────────────
 
 export interface FormattedFragrance {
@@ -126,7 +150,8 @@ export interface SessionUpdates {
   comparisonSlugs?: string[];
   lastArticleSlug?: string;
   lastCollection?:  string;
-  profile?:         ConversationProfile;
+  profile?:          ConversationProfile;
+  consultationPlan?: ConsultationPlan;
 }
 
 export interface FormattedResponse {

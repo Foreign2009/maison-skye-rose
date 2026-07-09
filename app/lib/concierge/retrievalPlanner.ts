@@ -15,7 +15,7 @@ import { buildSearchIndex } from "../search/indexBuilder";
 import type { SearchIndex } from "../search/types";
 import type { FragranceKnowledge } from "../mkc/types";
 import type { AcademyArticle } from "../academy/types";
-import type { ConversationContext, ConversationState, ConversationProfile } from "./types";
+import type { ConversationContext, ConversationState, ConversationProfile, ConsultationRole } from "./types";
 import type { ResolvedIntent } from "./intentResolver";
 import type { RetrievalContext } from "./contextBuilder";
 import { planCollection } from "./collectionPlanner";
@@ -60,9 +60,10 @@ function articlesFromSearch(rawQuery: string, limit = 2): AcademyArticle[] {
 // ── Public API ────────────────────────────────────────────────────────────────
 
 export function planRetrieval(
-  resolved: ResolvedIntent,
-  context:  ConversationContext,
-  profile?: ConversationProfile
+  resolved:      ResolvedIntent,
+  context:       ConversationContext,
+  profile?:      ConversationProfile,
+  affectedRoles?: ConsultationRole[]
 ): RetrievalContext {
   const { intent, signals, entitySlug, compareSlug } = resolved;
 
@@ -173,7 +174,48 @@ export function planRetrieval(
       break;
     }
 
-    default: { // general_discovery | clarification
+    default: { // general_discovery | clarification | refinement
+      // Refinement retrieval (EP18-P1):
+      // When specific roles are affected, retrieve compliant candidates for
+      // those characters only — filtered to exclude the customer's avoidances
+      // and the fragrances being replaced.
+      if (affectedRoles && affectedRoles.length > 0) {
+        const affectedChars   = [...new Set(affectedRoles.map((r) => r.character))];
+        const avoidedNotes    = (profile?.avoidedNotes?.value    ?? []).map((n) => n.toLowerCase());
+        const avoidedFamilies = (profile?.avoidedFamilies?.value ?? []).map((f) => f.toLowerCase());
+        const replacedSlugs   = new Set(affectedRoles.map((r) => r.slug));
+
+        const candidates = affectedChars.flatMap((char) =>
+          mkcCatalogue
+            .filter(
+              (k) =>
+                k.scentCharacter === char &&
+                !replacedSlugs.has(k.slug) &&
+                !avoidedNotes.some((an) =>
+                  [...k.notes.top, ...k.notes.heart, ...k.notes.base]
+                    .some((n) => n.toLowerCase().includes(an) || an.includes(n.toLowerCase()))
+                ) &&
+                !avoidedFamilies.some((af) =>
+                  k.family.some(
+                    (f) => f.toLowerCase().includes(af) || af.includes(f.toLowerCase())
+                  )
+                )
+            )
+            .sort((a, b) => {
+              if (a.bestSeller && !b.bestSeller) return -1;
+              if (!a.bestSeller && b.bestSeller)  return 1;
+              return b.popularity - a.popularity;
+            })
+            .slice(0, 3)
+        );
+
+        if (candidates.length > 0) {
+          fragrances = candidates;
+          break;
+        }
+        // Fall through to standard paths when no compliant candidates found
+      }
+
       // Collection-aware retrieval (EP17-P4):
       // When collection intent is active, retrieve candidates spanning the
       // required scentCharacters so the LLM can assign one fragrance per role.

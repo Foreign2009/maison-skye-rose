@@ -11,7 +11,7 @@
 
 import type { FragranceKnowledge } from "../mkc/types";
 import type { AcademyArticle }     from "../academy/types";
-import type { ConversationState, ConversationIntent, ConversationProfile }  from "./types";
+import type { ConversationState, ConversationIntent, ConversationProfile, RefinementState } from "./types";
 import type { ConversationPlan }   from "./conversationPlanner";
 import { catalogueMaps, getCurrentSeason } from "../discovery";
 import { computeWardrobe }                 from "../mkc/wardrobeEngine";
@@ -187,7 +187,8 @@ function buildArticleSection(articles: AcademyArticle[]): PromptSection {
 function buildInstructionsSection(
   plan:             ConversationPlan,
   state:            ConversationState,
-  effectiveIntent?: ConversationIntent
+  effectiveIntent?: ConversationIntent,
+  refinement?:      RefinementState | null
 ): PromptSection {
   const instructions: string[] = [];
 
@@ -212,6 +213,48 @@ function buildInstructionsSection(
       "Answer using the fragrances already shown. Do not introduce new ones.",
       "Tag referenced fragrances as [PRODUCT:slug]."
     );
+  }
+
+  // Refinement instructions (EP18-P1) — preserve roles, explain changes
+  if (plan.action === "refinement" && state.consultationPlan) {
+    const toReplace = refinement?.affectedRoles ?? [];
+    const kept = state.consultationPlan.roles.filter(
+      (r) => !toReplace.some((ar) => ar.slug === r.slug)
+    );
+
+    if (toReplace.length > 0) {
+      instructions.push("[Refinement mode — do not rebuild the consultation from scratch]");
+      if (kept.length > 0) {
+        const keepList = kept
+          .map((r) => `Role ${r.position} — ${r.title} (${r.name})`)
+          .join(", ");
+        instructions.push(`Preserve: ${keepList}`);
+      }
+      const replaceList = toReplace
+        .map((r) => `Role ${r.position} — ${r.title}`)
+        .join("; ");
+      instructions.push(
+        `Replace only: ${replaceList}${refinement?.reason ? ` — ${refinement.reason}` : ""}`
+      );
+      instructions.push("Select the replacement from FRAGRANCES IN CONTEXT. Tag it as [PRODUCT:slug].");
+      instructions.push(
+        "Frame as a consultation refinement: acknowledge what stays the same first, " +
+        "then introduce the replacement as completing the collection. " +
+        "Do not suggest the previous recommendation was wrong — the consultation is becoming more personalised. " +
+        "After introducing the replacement, restate what the complete collection now achieves together."
+      );
+    } else if (refinement?.budgetRefinement) {
+      instructions.push("[Budget refinement — collection structure preserved]");
+      const currentList = state.consultationPlan.roles
+        .map((r) => `Role ${r.position} — ${r.title} (${r.name})`)
+        .join(", ");
+      instructions.push(`Current assignments: ${currentList}`);
+      instructions.push(
+        "Budget guidance has been updated. Where better-value options are available in FRAGRANCES IN CONTEXT, " +
+        "suggest them for the relevant role. Preserve assignments where the existing fragrance remains the right choice. " +
+        "Frame as the consultation adapting to the updated budget — not replacing the collection."
+      );
+    }
   }
 
   // Gift: ask about the recipient when their preferences are not yet known.
@@ -384,6 +427,42 @@ function buildCollectionSection(profile: ConversationProfile | undefined): Promp
   return { label: "COLLECTION BRIEF", content: lines.join("\n") };
 }
 
+function buildConsultationPlanSection(
+  state:      ConversationState,
+  refinement?: RefinementState | null
+): PromptSection {
+  const plan = state.consultationPlan;
+  if (!plan || plan.roles.length === 0) return { label: "", content: "" };
+
+  const isRefinement  = !!refinement;
+  const affectedSlugs = new Set(
+    (refinement?.affectedRoles ?? []).map((r) => r.slug)
+  );
+
+  const lines: string[] = [];
+  lines.push(`${plan.label} — ${plan.roles.length} fragrance${plan.roles.length !== 1 ? "s" : ""}`);
+  lines.push("");
+
+  for (const role of plan.roles) {
+    lines.push(`Role ${role.position} — ${role.title}`);
+    lines.push(`Fragrance: ${role.name} [slug: ${role.slug}]`);
+    lines.push(`Character: ${role.character}`);
+
+    if (isRefinement) {
+      if (affectedSlugs.has(role.slug)) {
+        lines.push(`[REPLACE — ${refinement?.reason ?? "preference updated"}]`);
+      } else if (refinement?.budgetRefinement) {
+        lines.push("[REVIEW — budget guidance updated]");
+      } else {
+        lines.push("[KEEP]");
+      }
+    }
+    lines.push("");
+  }
+
+  return { label: "CONSULTATION PLAN", content: lines.join("\n").trim() };
+}
+
 function buildSeasonalContextSection(): PromptSection {
   const season = getCurrentSeason();
   return {
@@ -398,7 +477,8 @@ export function buildContext(
   retrieval:        RetrievalContext,
   state:            ConversationState,
   plan:             ConversationPlan,
-  effectiveIntent?: ConversationIntent
+  effectiveIntent?: ConversationIntent,
+  refinement?:      RefinementState | null
 ): BuiltContext {
   const sections: PromptSection[] = [
     buildSeasonalContextSection(),
@@ -406,6 +486,7 @@ export function buildContext(
     buildProfileSection(state.profile),
     buildWardrobeSection(state.profile),
     buildCollectionSection(state.profile),
+    buildConsultationPlanSection(state, refinement),        // EP18-P1
     buildGoalSection(plan, state, effectiveIntent),
     buildPreviousRecommendationsSection(state, retrieval.fragrances),
     buildFragranceSection(retrieval.fragrances, plan.reuseRecommendations),
@@ -413,7 +494,7 @@ export function buildContext(
       ? { label: "FEATURED COLLECTION", content: retrieval.collectionName }
       : { label: "", content: "" },
     buildArticleSection(retrieval.articles),
-    buildInstructionsSection(plan, state, effectiveIntent),
+    buildInstructionsSection(plan, state, effectiveIntent, refinement), // EP18-P1
   ].filter((s) => s.label && s.content);
 
   const fullText      = sections.map((s) => `=== ${s.label} ===\n${s.content}`).join("\n\n");

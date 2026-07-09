@@ -17,7 +17,8 @@ export type ConversationAction =
   | "comparison"
   | "reuse_cached"
   | "academy_lookup"
-  | "follow_up";
+  | "follow_up"
+  | "refinement";
 
 export interface ConversationPlan {
   action:                ConversationAction;
@@ -51,6 +52,19 @@ const COMPARISON_PATTERNS = [
 const EDUCATION_PATTERNS = [
   "what is ", "what are ", "explain ", "teach me", "how does ", "why does ",
   "tell me about ", "how do ", "what makes ", "what's the difference between",
+];
+
+// Refinement signals — preference updates against an active consultation (EP18-P1)
+const REFINEMENT_PATTERNS = [
+  "i don't like", "i dont like", "not a fan of", "i hate",
+  "too heavy", "too sweet", "too strong", "too light", "too dark", "too intense",
+  "something different", "swap", "replace", "change the",
+  "fresher option", "warmer option", "lighter option",
+  "less sweet", "less heavy", "less intense", "less dark",
+  "more fresh", "more warm", "more light", "more balanced",
+  "without vanilla", "without oud", "without musk",
+  "cheaper", "more affordable", "less expensive", "within my budget",
+  "budget has changed", "updated my budget", "more to spend",
 ];
 
 // Simple pronouns that are reference-back without other context
@@ -170,7 +184,21 @@ export function planConversation(
     };
   }
 
-  // ── 4. Clarification needed — first turn with no discoverable signals ─────────
+  // ── 4. Refinement — preference update against active consultation (EP18-P1) ───
+  if (state.consultationPlan &&
+      REFINEMENT_PATTERNS.some((p) => q.includes(p))) {
+    return {
+      action:                "refinement",
+      reason:                "Preference update against active consultation plan",
+      requiresRetrieval:     true,
+      requiresComparison:    false,
+      requiresClarification: false,
+      reuseRecommendations:  false,
+      nextIntent:            "general_discovery",
+    };
+  }
+
+  // ── 5. Clarification needed — first turn with no discoverable signals ─────────
   // Use signal-based detection rather than word count so that short but
   // signal-rich messages ("Fresh and woody") proceed to search while longer
   // but signal-free messages ("I need a new fragrance") ask one question.
@@ -188,7 +216,7 @@ export function planConversation(
     };
   }
 
-  // ── 5. Default — new search ──────────────────────────────────────────────────
+  // ── 6. Default — new search ──────────────────────────────────────────────────
   return {
     action:                "new_search",
     reason:                "New customer query requiring retrieval",
