@@ -95,8 +95,8 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     // Determine the effective intent for response planning
     const effectiveIntent = resolvedIntent?.intent ?? plan.nextIntent;
 
-    // 3. Build context — now includes conversation state and plan
-    const builtContext   = buildContext(retrieval, state, plan);
+    // 3. Build context — includes conversation state, plan, and resolved intent
+    const builtContext   = buildContext(retrieval, state, plan, effectiveIntent);
     const contextContent = renderContext(builtContext);
 
     // 4. Build system prompt

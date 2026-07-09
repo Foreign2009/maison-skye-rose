@@ -11,7 +11,7 @@
 
 import type { FragranceKnowledge } from "../mkc/types";
 import type { AcademyArticle }     from "../academy/types";
-import type { ConversationState }  from "./types";
+import type { ConversationState, ConversationIntent }  from "./types";
 import type { ConversationPlan }   from "./conversationPlanner";
 import { catalogueMaps, getCurrentSeason } from "../discovery";
 import { computeWardrobe }                 from "../mkc/wardrobeEngine";
@@ -69,26 +69,32 @@ function buildConversationContextSection(state: ConversationState): PromptSectio
   return { label: "CONVERSATION CONTEXT", content: parts.join("\n") };
 }
 
-function buildGoalSection(plan: ConversationPlan, state: ConversationState): PromptSection {
+function buildGoalSection(
+  plan:             ConversationPlan,
+  state:            ConversationState,
+  effectiveIntent?: ConversationIntent
+): PromptSection {
   const parts: string[] = [];
 
   if (plan.requiresComparison) {
-    parts.push("Goal: Compare fragrance options directly. Highlight meaningful differences.");
-    parts.push("Help the customer decide between the options.");
+    parts.push("Goal: Compare fragrance options directly. Highlight meaningful differences using Intelligence scores.");
+    parts.push("Help the customer decide between the options with a clear recommendation.");
   } else if (plan.requiresClarification) {
     parts.push("Goal: Intent is unclear. Ask one warm, concise clarifying question.");
     parts.push("Do not recommend specific fragrances until you understand their needs.");
   } else if (plan.reuseRecommendations) {
     parts.push("Goal: Follow up on previous recommendations. No new fragrances needed.");
     parts.push("Answer the question using the fragrances already presented.");
-  } else if (plan.nextIntent === "education") {
+  } else if (plan.nextIntent === "education" || effectiveIntent === "education") {
     parts.push("Goal: Provide a clear, engaging educational answer.");
     parts.push("Reference relevant Academy articles when available.");
-  } else if (plan.nextIntent === "gift") {
+  } else if (plan.nextIntent === "gift" || effectiveIntent === "gift") {
     parts.push("Goal: Help the customer select a fragrance as a gift.");
-    parts.push("Ask about the recipient if no information is available.");
-  } else if (plan.nextIntent === "seasonal") {
+    parts.push("If recipient details are unknown, ask the minimum question needed to personalise the recommendation.");
+  } else if (plan.nextIntent === "seasonal" || effectiveIntent === "seasonal") {
     parts.push("Goal: Recommend fragrances suited to the requested season.");
+  } else if (effectiveIntent === "occasion_search") {
+    parts.push("Goal: Recommend fragrances that suit the stated occasion.");
   }
 
   if (state.context.occasion && !plan.requiresComparison) {
@@ -125,18 +131,37 @@ function buildFragranceSection(fragrances: FragranceKnowledge[], reuseMode: bool
 
   const label = reuseMode ? "CURRENT FRAGRANCES IN DISCUSSION" : "FRAGRANCES IN CONTEXT";
 
+  // Fields ordered by editorial priority (Refinement 3):
+  // Description → Mood → Wardrobe Role → Vibe → Occasions → Notes → Intelligence
   const content = fragrances
-    .map(
-      (k, i) =>
-        `${i + 1}. ${k.name} [slug: ${k.slug}]
-   Family: ${k.family.join(", ")} | Season: ${k.season} | Character: ${k.scentCharacter} | Projection: ${k.projection}
-   Wardrobe Role: ${computeWardrobe(k).wardrobeRole}
-   Occasions: ${k.occasions.join(", ")}
-   Top: ${k.notes.top.join(", ")}
-   Heart: ${k.notes.heart.join(", ")}
-   Base: ${k.notes.base.join(", ")}
-   Profile: ${k.profile}${k.bestSeller ? "\n   [Best Seller]" : ""}${k.newArrival ? "\n   [New Arrival]" : ""}`
-    )
+    .map((k, i) => {
+      const lines: string[] = [`${i + 1}. ${k.name} [slug: ${k.slug}]`];
+
+      // Editorial content first — only present on native knowledge records
+      if (k.description) lines.push(`   Description: ${k.description}`);
+      lines.push(`   Mood: ${k.mood}`);
+      lines.push(`   Wardrobe Role: ${computeWardrobe(k).wardrobeRole} | Signature: ${k.signatureStyle.join(", ")}`);
+      lines.push(`   Vibe: ${k.vibe.join(", ")}`);
+      lines.push(`   Occasions: ${k.occasions.join(", ")}`);
+
+      // Composition — structural context
+      lines.push(`   Family: ${k.family.join(", ")} | Season: ${k.season} | Character: ${k.scentCharacter} | Projection: ${k.projection}`);
+      lines.push(`   Top: ${k.notes.top.join(", ")}`);
+      lines.push(`   Heart: ${k.notes.heart.join(", ")}`);
+      lines.push(`   Base: ${k.notes.base.join(", ")}`);
+      lines.push(`   Profile: ${k.profile}`);
+
+      // Intelligence scores — support comparisons and explanations
+      lines.push(`   Intelligence: sweetness ${k.sweetness}/5 · freshness ${k.freshness}/5 · warmth ${k.warmth}/5 · intensity ${k.intensity}/5 · versatility ${k.versatility}/5`);
+
+      // Persona fit
+      lines.push(`   Best for: ${k.recommendedFor.slice(0, 2).join("; ")}`);
+
+      if (k.bestSeller) lines.push("   [Best Seller]");
+      if (k.newArrival) lines.push("   [New Arrival]");
+
+      return lines.join("\n");
+    })
     .join("\n\n");
 
   return { label, content };
@@ -157,14 +182,18 @@ function buildArticleSection(articles: AcademyArticle[]): PromptSection {
   return { label: "ACADEMY ARTICLES IN CONTEXT", content };
 }
 
-function buildInstructionsSection(plan: ConversationPlan): PromptSection {
+function buildInstructionsSection(
+  plan:             ConversationPlan,
+  state:            ConversationState,
+  effectiveIntent?: ConversationIntent
+): PromptSection {
   const instructions: string[] = [];
 
   if (plan.requiresComparison) {
     instructions.push(
       "Compare the previous recommendations directly.",
-      "Focus on meaningful scent differences: family, notes, season, projection.",
-      "Give a clear recommendation for which to choose based on context.",
+      "Use Intelligence scores (sweetness, freshness, warmth, intensity) to highlight concrete differences.",
+      "Give a clear, decisive recommendation for which to choose.",
       "Tag each fragrance as [PRODUCT:slug]."
     );
   }
@@ -180,6 +209,15 @@ function buildInstructionsSection(plan: ConversationPlan): PromptSection {
     instructions.push(
       "Answer using the fragrances already shown. Do not introduce new ones.",
       "Tag referenced fragrances as [PRODUCT:slug]."
+    );
+  }
+
+  // Gift: ask about the recipient when their preferences are not yet known.
+  // Only fires when no gender or occasion context is available from prior turns.
+  const isGiftIntent = plan.nextIntent === "gift" || effectiveIntent === "gift" || !!state.context.giftContext;
+  if (isGiftIntent && !state.context.gender && !state.context.occasion) {
+    instructions.push(
+      "If the recipient's scent preferences or occasions are not clear from the conversation, ask ONE warm question before recommending."
     );
   }
 
@@ -199,21 +237,22 @@ function buildSeasonalContextSection(): PromptSection {
 // ── Public API ────────────────────────────────────────────────────────────────
 
 export function buildContext(
-  retrieval: RetrievalContext,
-  state:     ConversationState,
-  plan:      ConversationPlan
+  retrieval:        RetrievalContext,
+  state:            ConversationState,
+  plan:             ConversationPlan,
+  effectiveIntent?: ConversationIntent
 ): BuiltContext {
   const sections: PromptSection[] = [
     buildSeasonalContextSection(),
     buildConversationContextSection(state),
-    buildGoalSection(plan, state),
+    buildGoalSection(plan, state, effectiveIntent),
     buildPreviousRecommendationsSection(state, retrieval.fragrances),
     buildFragranceSection(retrieval.fragrances, plan.reuseRecommendations),
     retrieval.collectionName
       ? { label: "FEATURED COLLECTION", content: retrieval.collectionName }
       : { label: "", content: "" },
     buildArticleSection(retrieval.articles),
-    buildInstructionsSection(plan),
+    buildInstructionsSection(plan, state, effectiveIntent),
   ].filter((s) => s.label && s.content);
 
   const fullText      = sections.map((s) => `=== ${s.label} ===\n${s.content}`).join("\n\n");

@@ -56,6 +56,35 @@ const EDUCATION_PATTERNS = [
 // Simple pronouns that are reference-back without other context
 const PRONOUN_PATTERNS = ["why?", "which?", "really?", "both?", "them?", "this?"];
 
+// ── Discovery signal detection ────────────────────────────────────────────────
+//
+// Returns true when the message contains at least one actionable discovery
+// signal. Messages with any recognisable signal are sufficient to begin
+// recommending without a clarifying question. Only ask when the missing
+// information would materially improve the recommendation (Refinement 1).
+
+function hasDiscoverySignal(q: string): boolean {
+  // Fragrance families, character descriptors, finish styles
+  if (/\b(woody|floral|citrus|aquatic|fresh|amber|spicy|vanilla|oud|leather|musk|gourmand|aromatic|fruity|rose|powdery|sweet|warm|light|airy|deep|intense|rich|clean|crisp)\b/.test(q)) return true;
+  // Seasons
+  if (/\b(summer|winter|spring|autumn|fall)\b/.test(q)) return true;
+  // Gender cues
+  if (/\b(men|man|male|masculine|women|woman|female|feminine|unisex)\b/.test(q)) return true;
+  // Occasions and contexts
+  if (/\b(office|work|date|wedding|evening|daily|casual|vacation|holiday|gym|beach|formal|night)\b/.test(q)) return true;
+  // Gift context (specific enough to guide retrieval)
+  if (/\b(gift|present|partner|friend|mother|father|husband|wife|boyfriend|girlfriend)\b/.test(q) ||
+      /\bfor (him|her|them)\b/.test(q)) return true;
+  // Similarity / duplication intent
+  if (/\b(similar|inspired|dupe|clone|alternative|reminds me|smells like)\b/.test(q) ||
+      /\blike \b/.test(q)) return true;
+  // Comparison intent
+  if (/\b(compare|versus)\b/.test(q) || /\bvs\.?\b/.test(q)) return true;
+  // Lifestyle and vibe descriptors
+  if (/\b(luxury|confident|powerful|sexy|professional|elegant|playful|mysterious|romantic|bold|sophisticated|modern|wealthy|subtle|unique|signature)\b/.test(q)) return true;
+  return false;
+}
+
 // ── Ordinal reference detection ───────────────────────────────────────────────
 
 function detectOrdinalReference(q: string): number {
@@ -141,14 +170,16 @@ export function planConversation(
     };
   }
 
-  // ── 4. Clarification needed — very short, no prior context ──────────────────
-  const wordCount  = q.split(/\s+/).filter(Boolean).length;
-  const isUnclear  = wordCount <= 2 && !hasTurns;
+  // ── 4. Clarification needed — first turn with no discoverable signals ─────────
+  // Use signal-based detection rather than word count so that short but
+  // signal-rich messages ("Fresh and woody") proceed to search while longer
+  // but signal-free messages ("I need a new fragrance") ask one question.
+  const isUnclear = !hasTurns && !hasPreviousRecs && !hasDiscoverySignal(q);
 
   if (isUnclear) {
     return {
       action:                "clarification",
-      reason:                "Message too short to determine intent",
+      reason:                "No actionable discovery signal — ask one clarifying question",
       requiresRetrieval:     false,
       requiresComparison:    false,
       requiresClarification: true,
