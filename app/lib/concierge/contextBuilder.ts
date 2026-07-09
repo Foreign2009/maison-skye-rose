@@ -15,6 +15,7 @@ import type { ConversationState, ConversationIntent, ConversationProfile }  from
 import type { ConversationPlan }   from "./conversationPlanner";
 import { catalogueMaps, getCurrentSeason } from "../discovery";
 import { computeWardrobe }                 from "../mkc/wardrobeEngine";
+import { analyseWardrobe }                 from "./wardrobeAnalyser";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -287,6 +288,57 @@ function buildProfileSection(profile: ConversationProfile | undefined): PromptSe
   return { label: "CUSTOMER PROFILE", content };
 }
 
+function buildWardrobeSection(profile: ConversationProfile | undefined): PromptSection {
+  const names = profile?.existingCollection?.value;
+  if (!names?.length) return { label: "", content: "" };
+
+  const analysis = analyseWardrobe(names);
+  if (!analysis) return { label: "", content: "" };
+
+  const lines: string[] = [];
+
+  // Resolution header
+  const resolutionNote = analysis.resolvedCount < analysis.totalCount
+    ? `${analysis.resolvedCount} of ${analysis.totalCount} fragrances identified`
+    : `${analysis.resolvedCount} fragrance${analysis.resolvedCount !== 1 ? "s" : ""} identified`;
+  lines.push(`Collection style: ${analysis.style} (${resolutionNote})`);
+
+  // Character distribution
+  const charDisplay = Object.entries(analysis.characterCounts)
+    .filter(([, n]) => n > 0)
+    .map(([char, n]) => (n > 1 ? `${char} (×${n})` : char))
+    .join(" · ");
+  if (charDisplay) lines.push(`Character coverage: ${charDisplay}`);
+
+  // Occasion coverage
+  if (analysis.coveredOccasions.length > 0) {
+    lines.push(`Occasion coverage: ${analysis.coveredOccasions.join(" · ")}`);
+  }
+
+  // Family coverage
+  if (analysis.familyCoverage.length > 0) {
+    lines.push(`Family coverage: ${analysis.familyCoverage.join(" · ")}`);
+  }
+
+  lines.push("");
+
+  // Editorial strength description — always positive (Refinement 2)
+  lines.push(`Strengths: ${analysis.strengths}`);
+
+  // Opportunity description — framed as addition, never deficiency (Refinement 3)
+  if (analysis.opportunity) {
+    lines.push(`Opportunity: ${analysis.opportunity}.`);
+  } else {
+    lines.push("The collection is well-rounded — focus recommendations on the customer's stated preferences.");
+  }
+
+  // Customer intent override signal (Refinement 1)
+  lines.push("");
+  lines.push("[Customer intent always takes priority. If the customer explicitly requests a fragrance in a style already present in their collection, acknowledge the overlap and recommend the best option for their stated goal.]");
+
+  return { label: "WARDROBE ANALYSIS", content: lines.join("\n") };
+}
+
 function buildSeasonalContextSection(): PromptSection {
   const season = getCurrentSeason();
   return {
@@ -307,6 +359,7 @@ export function buildContext(
     buildSeasonalContextSection(),
     buildConversationContextSection(state),
     buildProfileSection(state.profile),
+    buildWardrobeSection(state.profile),
     buildGoalSection(plan, state, effectiveIntent),
     buildPreviousRecommendationsSection(state, retrieval.fragrances),
     buildFragranceSection(retrieval.fragrances, plan.reuseRecommendations),

@@ -43,6 +43,15 @@ const PROFILE_RULES = `CUSTOMER PROFILE RULES:
 - Reference the customer's knowledge naturally: "From what you've shared..." or "Based on what you've told me...". Never say "Based on your profile..." or robotic equivalents.
 - Use the confidence guidance at the bottom of CUSTOMER PROFILE: HIGH → recommend immediately; MEDIUM → acknowledge other directions may suit; LOW → ask one concise clarifying question first.`;
 
+const WARDROBE_RULES = `WARDROBE INTELLIGENCE RULES:
+- When WARDROBE ANALYSIS is present, use it to guide recommendations — favouring fragrances that fill identified opportunities rather than duplicating covered characters.
+- Customer intent always wins. If the customer explicitly requests a fragrance in a style they already own, acknowledge the overlap clearly, explain what distinguishes the new option, and recommend based on their stated goal. Never steer away from an explicit request.
+- Never describe a collection as incomplete, lacking, or weak. Frame every opportunity positively: "Your collection is especially strong for daytime — a richer evening fragrance would add a new dimension."
+- Avoid "You don't have..." framing. Prefer "A fragrance in this style would broaden your collection by..." or "The next natural addition would be...".
+- For each recommendation when wardrobe context is available, naturally cover: (1) what the existing collection already does well, (2) what this fragrance adds to it, (3) why the combination works together.
+- When recommending a fragrance that overlaps with something already owned, explain the overlap honestly — do not apologise for it. Only recommend overlap when the customer has explicitly requested alternatives, comparisons, or upgrades.
+- When WARDROBE ANALYSIS shows a Balanced collection, acknowledge the range and focus entirely on the customer's stated preferences and occasions rather than gap-filling.`;
+
 const RESTRICTIONS = `RESTRICTIONS:
 - Never guarantee longevity, projection, or sillage outcomes. Acknowledge body chemistry variation.
 - Never make medical or therapeutic claims about fragrances.
@@ -57,7 +66,7 @@ const FORMATTING = `FORMATTING:
 // ── Public API ────────────────────────────────────────────────────────────────
 
 export function buildSystemPrompt(contextContent: string): string {
-  const sections = [IDENTITY, KNOWLEDGE, BEHAVIOUR, VOICE, PROFILE_RULES, RESTRICTIONS, FORMATTING];
+  const sections = [IDENTITY, KNOWLEDGE, BEHAVIOUR, VOICE, PROFILE_RULES, WARDROBE_RULES, RESTRICTIONS, FORMATTING];
   if (contextContent) sections.push(contextContent);
   return sections.join("\n\n");
 }
