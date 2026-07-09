@@ -118,17 +118,25 @@ These fields feed the recommendation engine, the Concierge retrieval planner, an
 **Approved vibe vocabulary:**
 
 ```
-Luxury    Confident    Powerful    Sexy         Professional
-Clean     Elegant      Playful     Mysterious   Romantic
-Bold      Sophisticated  Modern    Wealthy      Old Money
+── Universal ──────────────────────────────────────────────
+Luxury      Confident    Powerful     Sexy         Professional
+Clean       Elegant      Playful      Mysterious   Romantic
+Bold        Sophisticated  Modern     Wealthy      Old Money
+
+── Rose & Elite ───────────────────────────────────────────
+Feminine    Sensual      Delicate     Flirtatious
 ```
 
-**Common occasions:**
+Select the 5–8 vibes that best describe the fragrance's character. A record can draw from both groups; most Rose records will include at least 2–3 entries from the Rose & Elite group. See [Vocabulary Governance](#vocabulary-governance) for how new vocabulary is proposed.
+
+**Approved occasion vocabulary:**
 
 ```
-Daily Wear    Office    Date Night    Weekend    Vacation
-Wedding       Evening   Summer Days   Winter Evenings
+Daily Wear    Office    Date Night    Weekend    Evening
+Vacation      Wedding   Summer Days   Winter Evenings
 ```
+
+Use 4–6 occasions per record. `Weekend` and `Evening` are appropriate for most warm/rich fragrances. Rose records may use any entry from this list; occasion choice should reflect the actual wearing context, not the target demographic. See [Vocabulary Governance](#vocabulary-governance) for how new occasions are proposed.
 
 ---
 
@@ -201,7 +209,35 @@ All scores are integers. They drive the similarity engine, collection boosting, 
 | `versatility` | 1–5 | 1 = niche/specialist, 5 = genuinely all-occasion |
 | `popularity` | 1–10 | 10 = #1 bestseller; 8–10 = bestsellers; 5 = average; 2–4 = niche |
 
-**Calibration guidance:** Population average for all 1–5 fields is 3. Calibrate relative to the full catalogue, not just the fragrance in isolation. A `freshness: 5` means the strongest fresh fragrance in the catalogue.
+**Score philosophy:** All scores are relative to the current native catalogue, not absolute. The population mean for all 1–5 dimensions is 3. Scores of 1 and 5 are reserved for genuine anchors — fragrances that define the extreme for that dimension. Most fragrances will score 2–4.
+
+**Calibration reference — all current native records:**
+
+| Fragrance | Sweet | Fresh | Warm | Int | Vers | Pop |
+|---|---|---|---|---|---|---|
+| Sauvage Inspired | 1 | 5 | 3 | 4 | 5 | 10 |
+| Aventus Inspired | 2 | 3 | 3 | 4 | 4 | 9 |
+| Bleu De Chanel Inspired | 1 | 4 | 2 | 3 | 5 | 7 |
+| Aqua Di Gio Inspired | 1 | 5 | 1 | 2 | 3 | 8 |
+| Y Inspired | 2 | 4 | 3 | 3 | 5 | 7 |
+| Eros Inspired | 3 | 4 | 2 | 4 | 3 | 8 |
+| Hacivat Inspired | 2 | 3 | 3 | 4 | 4 | 9 |
+| Terre D'Hermes Inspired | 1 | 3 | 3 | 3 | 5 | 7 |
+| Prada L'Homme Inspired | 2 | 2 | 3 | 2 | 4 | 6 |
+| Spicebomb Extreme Inspired | 3 | 1 | 5 | 5 | 2 | 8 |
+| Layton Inspired | 4 | 2 | 5 | 4 | 3 | 9 |
+
+**Calibration anchors per dimension:**
+
+| Dimension | Score 1 | Score 3 (baseline) | Score 5 |
+|---|---|---|---|
+| `sweetness` | Sauvage, Aqua Di Gio — no sweetness | Eros, Spicebomb — moderate spiced sweet | Layton — creamy vanilla forward |
+| `freshness` | Spicebomb Extreme — no freshness | Aventus, Hacivat, Terre D'Hermes | Sauvage, Aqua Di Gio — dominant citrus/aquatic |
+| `warmth` | Aqua Di Gio — cool, no warmth | Sauvage, Aventus — balanced | Layton, Spicebomb Extreme — amber/vanilla/tobacco |
+| `intensity` | — | Bleu, Y, Terre D'Hermes — moderate | Spicebomb Extreme — announces presence |
+| `versatility` | — | Eros, Layton, Aqua Di Gio — occasion focused | Sauvage, Bleu, Y, Terre D'Hermes — all-occasion |
+
+**Update this table** each time a new native record is committed. The table is permanent engineering state — it enables every future author to calibrate without reading all previous records.
 
 ---
 
@@ -235,6 +271,79 @@ A strong description follows this structure:
 
 ---
 
+### Collection-Specific Editorial Standards
+
+Each collection has a distinct editorial identity. Write description and mood copy in the voice of its collection, not the voice of the inspiration brand.
+
+---
+
+#### Skye
+
+**Editorial direction:** Confident. Modern. Versatile.
+
+Skye is Maison's masculine collection. The Skye editorial voice is assured and direct — it describes the experience of wearing the fragrance, not its ingredients. Skye copy grounds the fragrance in real life: office, a date, a morning run. The vocabulary is contemporary masculine luxury.
+
+**Writing principles:**
+- Lead with the occasion or the emotion, not the note
+- Use concrete masculine contexts: "the office on Monday", "crossing a crowded room", "the first cold evening of the year"
+- Avoid superlatives and abstract luxury language
+- Ambroxan, Cedar, Sandalwood — name the material and explain what it does
+- One description should make a man reach for his wallet, not reach for a dictionary
+
+**Gender default:** `"male"` unless the reference fragrance is marketed as officially unisex.
+
+**`scentCharacter` in practice:**
+- Dominant marine/citrus → `Fresh & Light`
+- Clean fougère or versatile designer → `Balanced Signature`
+- Amber/vanilla base, evening focus → `Rich & Long Wearing`
+- Oud/tobacco/leather, specialist → `Deep & Intense`
+
+---
+
+#### Rose
+
+**Editorial direction:** Elegant. Feminine. Expressive.
+
+Rose is Maison's feminine collection. The Rose editorial voice is warm and expressive — it describes how the fragrance makes a woman feel, and where it belongs in her life. Rose copy is sensory and evocative without being precious. It respects the complexity of feminine fragrance: a Rose record can be both powerful and delicate.
+
+**Writing principles:**
+- Lead with mood or atmosphere: the first warm morning of spring, the intimacy of a quiet evening
+- Feminine fragrances often reward the emotional impression as much as the olfactive one — write both
+- Do not default to florals — gourmand, oriental, and aldehyde fragrances deserve equally expressive copy
+- Use the extended vibe vocabulary freely: `Feminine`, `Sensual`, `Delicate`, `Flirtatious` are all valid
+- Rose description should feel like a conversation between the author and the customer, not a product sheet
+
+**Gender default:** `"female"` unless the reference fragrance is officially unisex (e.g., Baccarat Rouge 540 → `"unisex"`).
+
+**`scentCharacter` in practice:**
+- Bright citrus/white floral, effortless → `Fresh & Light`
+- Classic chypre or balanced floral → `Balanced Signature`
+- Gourmand/oriental, evening weight → `Rich & Long Wearing`
+- Heavy oud/tobacco/leather → `Deep & Intense`
+
+**Vibe selection for Rose:** Every Rose record should include at least 2 vibes from the Rose & Elite group (`Feminine`, `Sensual`, `Delicate`, `Flirtatious`) alongside universal vibes. A heavy oriental Rose record might be `Sensual, Mysterious, Bold, Romantic, Wealthy`. A light floral might be `Feminine, Delicate, Elegant, Playful, Clean`.
+
+---
+
+#### Elite
+
+**Editorial direction:** Rare. Artistic. Luxury-first.
+
+Elite is Maison's premium unisex collection. The Elite editorial voice is restrained and precise — it describes the fragrance as an object of art, not an accessory. Elite copy uses specialist vocabulary confidently (ambrette, orris, labdanum, oud) and trusts the customer to appreciate complexity.
+
+**Writing principles:**
+- Fewer, more deliberate sentences — one strong paragraph is more elite than three adequate ones
+- Name the raw material and its origin when known: Haitian Vetiver, Turkish Rose, Tasmanian Pepper
+- Do not explain what the fragrance is for — Elite customers know fragrance. Describe the experience instead
+- Elite records often have lower `versatility` scores (2–3) — specialist wear is a feature, not a limitation
+- The absence of sweetness or familiarity is often intentional — honour that in copy
+
+**Gender default:** `"unisex"` for all Elite records unless a specific gender target is editorial intent.
+
+**Vibe selection for Elite:** Focus on the rare and specialist end of the vocabulary: `Mysterious`, `Sophisticated`, `Old Money`, `Bold`, `Luxury`. Avoid populist vibes (`Playful`, `Modern`) unless the fragrance genuinely earns them.
+
+---
+
 ### Performance Claim Policy
 
 **Maison Skye & Rose does not make measurable performance claims about any fragrance. This is a permanent editorial standard.**
@@ -257,6 +366,65 @@ The `projection` field in Classification is descriptive context for the similari
 **Why this policy exists:**
 
 Performance is personal. Skin chemistry, humidity, application method and clothing all affect how a fragrance behaves. Claims that set measurable expectations create outcomes Maison cannot guarantee and customers cannot reproduce. The goal of editorial copy is to help the customer choose the right fragrance for their life — not to make promises about how it will perform on theirs.
+
+---
+
+## Vocabulary Governance
+
+Vocabulary files are governed assets. They are not open lists — every entry must serve a clear authoring purpose and be validated by the validator against actual records.
+
+### Governed files
+
+| File | Purpose |
+|---|---|
+| `app/data/fragranceVibes.ts` | Approved vibe values for native record `vibe[]` field |
+| `app/data/fragranceOccasions.ts` | Approved occasion values for native record `occasions[]` field |
+| `app/data/fragranceFamilies.ts` | Approved family values for native record `family[]` field |
+
+### Approved vocabulary (current state)
+
+**Vibes (19 entries):**
+```
+Universal: Luxury, Confident, Powerful, Sexy, Professional, Clean, Elegant,
+           Playful, Mysterious, Romantic, Bold, Sophisticated, Modern, Wealthy, Old Money
+
+Rose & Elite: Feminine, Sensual, Delicate, Flirtatious
+```
+
+**Occasions (9 entries):**
+```
+Daily Wear, Office, Date Night, Weekend, Evening,
+Vacation, Wedding, Summer Days, Winter Evenings
+```
+
+**Families (19 entries):**
+```
+Fresh, Aquatic, Citrus, Woody, Aromatic, Amber, Sweet, Gourmand, Floral,
+White Floral, Rose, Vanilla, Leather, Tobacco, Oud, Musk, Powdery, Spicy, Fruity
+```
+
+### Deprecated values
+
+None currently. When a value is deprecated:
+1. It is removed from the vocabulary file
+2. Existing records that use it are updated in the same commit
+3. The removal and reason are noted here
+
+### Proposing new vocabulary
+
+New vocabulary entries are proposed when:
+- An author encounters a fragrance character not expressible with current vocabulary
+- At least 3 upcoming records would use the new term
+- The term is not synonymous with an existing approved term
+
+**Proposal process:**
+1. Identify the gap and draft the proposed term
+2. Confirm it is not covered by existing vocabulary
+3. Add to the appropriate vocabulary file (`fragranceVibes.ts`, `fragranceOccasions.ts`, or `fragranceFamilies.ts`)
+4. Update this governance section and the approved vocabulary lists above
+5. Include it in the same commit as the first record that uses it
+
+**Do not** use unapproved values in native records — the validator will not catch vocabulary violations, but they create inconsistency in the discovery engine and Concierge retrieval.
 
 ---
 

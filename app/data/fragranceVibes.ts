@@ -1,4 +1,5 @@
 export const fragranceVibes = [
+  // Universal
   "Luxury",
   "Confident",
   "Powerful",
@@ -14,4 +15,9 @@ export const fragranceVibes = [
   "Modern",
   "Wealthy",
   "Old Money",
+  // Rose & Elite — feminine and expressive characters
+  "Feminine",
+  "Sensual",
+  "Delicate",
+  "Flirtatious",
 ];

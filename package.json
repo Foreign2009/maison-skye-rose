@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "mkc:new": "npx tsx scripts/mkc-scaffold.ts",
-    "mkc:validate": "npx tsx validate-native-records.ts"
+    "mkc:validate": "npx tsx validate-native-records.ts",
+    "mkc:coverage": "npx tsx scripts/mkc-coverage.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.110.0",
