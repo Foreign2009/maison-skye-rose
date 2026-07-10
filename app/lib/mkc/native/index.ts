@@ -31,6 +31,10 @@ import { sideEffectInspired }           from "./side-effect-inspired";
 import { godOfFireInspired }            from "./god-of-fire-inspired";
 import { delinaInspired }               from "./delina-inspired";
 import { baccaratRouge540Inspired }     from "./baccarat-rouge-540-inspired";
+import { imaginationInspired }          from "./imagination-inspired";
+import { strongerWithYouInspired }      from "./stronger-with-you-inspired";
+import { oudWoodInspired }              from "./oud-wood-inspired";
+import { invictusInspired }             from "./invictus-inspired";
 
 export const nativeFragrances = new Map<string, FragranceKnowledge>([
   ["sauvage-inspired",              sauvageInspired],
@@ -52,4 +56,8 @@ export const nativeFragrances = new Map<string, FragranceKnowledge>([
   ["god-of-fire-inspired",          godOfFireInspired],
   ["delina-inspired",               delinaInspired],
   ["baccarat-rouge-540-inspired",   baccaratRouge540Inspired],
+  ["imagination-inspired",          imaginationInspired],
+  ["stronger-with-you-inspired",    strongerWithYouInspired],
+  ["oud-wood-inspired",             oudWoodInspired],
+  ["invictus-inspired",             invictusInspired],
 ]);
