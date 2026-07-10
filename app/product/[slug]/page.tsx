@@ -5,6 +5,7 @@ import Footer from "../../components/Footer";
 import ProductDetail from "../../components/ProductDetail";
 import { mkcCatalogue } from "../../lib/mkc/catalogue";
 import type { FragranceKnowledge } from "../../lib/mkc/types";
+import { buildIndex, getRelationshipSummary } from "../../lib/mkc/graph";
 import { recommendAcademyArticles } from "../../lib/academy/recommendAcademyArticles";
 import { getSimilarFragrances } from "../../lib/discovery/similarityEngine";
 
@@ -116,6 +117,9 @@ export default async function ProductPage({
     })),
   };
 
+  const pdpIndex            = buildIndex(mkcCatalogue);
+  const relationshipSummary = getRelationshipSummary(knowledge, pdpIndex);
+
   const discoverMoreArticles = recommendAcademyArticles(knowledge).map((article) => ({
     slug: article.slug,
     title: article.title,
@@ -135,7 +139,7 @@ export default async function ProductPage({
       <main className="min-h-screen bg-[#f5f1eb]">
         <Navbar />
 
-        <ProductDetail knowledge={knowledge} discoverMoreArticles={discoverMoreArticles} similarFragrances={similarFragrances} />
+        <ProductDetail knowledge={knowledge} discoverMoreArticles={discoverMoreArticles} similarFragrances={similarFragrances} relationshipSummary={relationshipSummary} />
 
         <Footer />
       </main>

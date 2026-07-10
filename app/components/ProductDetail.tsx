@@ -13,6 +13,7 @@ import FragranceWardrobe from "./FragranceWardrobe";
 import { mkcCatalogue } from "../lib/mkc/catalogue";
 import { generateWhyYoullLikeIt } from "../lib/mkc/merchandising";
 import type { FragranceKnowledge } from "../lib/mkc/types";
+import type { RelationshipSummary } from "../lib/mkc/graph";
 import type { SimilarityResult } from "../lib/discovery/types";
 import {
   trackProductView,
@@ -52,10 +53,12 @@ export default function ProductDetail({
   knowledge,
   discoverMoreArticles,
   similarFragrances,
+  relationshipSummary,
 }: {
   knowledge: FragranceKnowledge;
   discoverMoreArticles?: DiscoverMoreArticle[];
   similarFragrances?: SimilarityResult[];
+  relationshipSummary?: RelationshipSummary;
 }) {
   const [selectedSize, setSelectedSize] =
     useState<"5ml" | "10ml" | "30ml">("10ml");
@@ -638,6 +641,95 @@ export default function ProductDetail({
           </div>
         </div>
       </section>
+
+      {/* ── Fragrance Connections ────────────────────────────────────────────── */}
+      {/* EP22-P1: intentionally lightweight — foundation for future graph exploration */}
+      {relationshipSummary?.hasRelationships && (
+        <section className="px-4 md:px-6 pb-8">
+          <div className="mx-auto max-w-7xl">
+            <div className="rounded-3xl bg-white p-6 md:p-10">
+              <h2 className="text-2xl font-black text-[#4f4a52]">Fragrance Connections</h2>
+
+              <div className="mt-8 space-y-7">
+
+                {relationshipSummary.evolutionOf && (
+                  <div>
+                    <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.22em] text-zinc-400">
+                      Evolved From
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      <Link
+                        href={`/product/${relationshipSummary.evolutionOf.slug}`}
+                        className="rounded-full border border-[#ede8e1] bg-[#f9f7f4] px-3 py-1.5 text-xs font-semibold text-[#4f4a52] transition hover:border-[#d89ca4] hover:text-[#d89ca4]"
+                      >
+                        {relationshipSummary.evolutionOf.name}
+                      </Link>
+                    </div>
+                  </div>
+                )}
+
+                {relationshipSummary.evolutions.length > 0 && (
+                  <div>
+                    <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.22em] text-zinc-400">
+                      Further Evolutions
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      {relationshipSummary.evolutions.map((r) => (
+                        <Link
+                          key={r.slug}
+                          href={`/product/${r.slug}`}
+                          className="rounded-full border border-[#ede8e1] bg-[#f9f7f4] px-3 py-1.5 text-xs font-semibold text-[#4f4a52] transition hover:border-[#d89ca4] hover:text-[#d89ca4]"
+                        >
+                          {r.name}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {relationshipSummary.alternatives.length > 0 && (
+                  <div>
+                    <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.22em] text-zinc-400">
+                      Comparable Alternatives
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      {relationshipSummary.alternatives.map((r) => (
+                        <Link
+                          key={r.slug}
+                          href={`/product/${r.slug}`}
+                          className="rounded-full border border-[#ede8e1] bg-[#f9f7f4] px-3 py-1.5 text-xs font-semibold text-[#4f4a52] transition hover:border-[#d89ca4] hover:text-[#d89ca4]"
+                        >
+                          {r.name}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {relationshipSummary.wardrobePartners.length > 0 && (
+                  <div>
+                    <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.22em] text-zinc-400">
+                      Wardrobe Partners
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      {relationshipSummary.wardrobePartners.map((r) => (
+                        <Link
+                          key={r.slug}
+                          href={`/product/${r.slug}`}
+                          className="rounded-full border border-[#ede8e1] bg-[#f9f7f4] px-3 py-1.5 text-xs font-semibold text-[#4f4a52] transition hover:border-[#d89ca4] hover:text-[#d89ca4]"
+                        >
+                          {r.name}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* ── Wardrobe Foundations ─────────────────────────────────────────────── */}
       <section className="px-4 md:px-6 pb-8">
