@@ -39,6 +39,10 @@ import { leMaleElixirInspired }         from "./le-male-elixir-inspired";
 import { oneMillionInspired }           from "./1-million-inspired";
 import { hawasInspired }                from "./hawas-inspired";
 import { ninePmInspired }               from "./9pm-inspired";
+import { strongerWithYouIntenselyInspired } from "./stronger-with-you-intensely-inspired";
+import { leBeauParadiseGardenInspired }     from "./le-beau-paradise-garden-inspired";
+import { azzaroMostWantedInspired }         from "./azzaro-most-wanted-inspired";
+import { valentinoUomoBornInRomaInspired }  from "./valentino-uomo-born-in-roma-inspired";
 
 export const nativeFragrances = new Map<string, FragranceKnowledge>([
   ["sauvage-inspired",              sauvageInspired],
@@ -64,8 +68,12 @@ export const nativeFragrances = new Map<string, FragranceKnowledge>([
   ["stronger-with-you-inspired",    strongerWithYouInspired],
   ["oud-wood-inspired",             oudWoodInspired],
   ["invictus-inspired",             invictusInspired],
-  ["le-male-elixir-inspired",       leMaleElixirInspired],
-  ["1-million-inspired",            oneMillionInspired],
-  ["hawas-inspired",                hawasInspired],
-  ["9pm-inspired",                  ninePmInspired],
+  ["le-male-elixir-inspired",                 leMaleElixirInspired],
+  ["1-million-inspired",                      oneMillionInspired],
+  ["hawas-inspired",                          hawasInspired],
+  ["9pm-inspired",                            ninePmInspired],
+  ["stronger-with-you-intensely-inspired",    strongerWithYouIntenselyInspired],
+  ["le-beau-paradise-garden-inspired",        leBeauParadiseGardenInspired],
+  ["azzaro-most-wanted-inspired",             azzaroMostWantedInspired],
+  ["valentino-uomo-born-in-roma-inspired",    valentinoUomoBornInRomaInspired],
 ]);

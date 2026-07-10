@@ -242,6 +242,10 @@ All scores are integers. They drive the similarity engine, collection boosting, 
 | 1 Million Inspired | 3 | 2 | 4 | 4 | 3 | 9 |
 | Hawas Inspired | 3 | 4 | 2 | 4 | 4 | 6 |
 | 9PM Inspired | 4 | 2 | 4 | 3 | 2 | 5 |
+| Stronger With You Intensely Inspired | 4 | 1 | 5 | 4 | 2 | 5 |
+| Le Beau Paradise Garden Inspired | 4 | 3 | 2 | 2 | 3 | 4 |
+| Azzaro Most Wanted Inspired | 4 | 1 | 4 | 3 | 3 | 5 |
+| Valentino Uomo Born In Roma Inspired | 1 | 3 | 3 | 2 | 5 | 5 |
 
 **Calibration anchors per dimension:**
 
@@ -280,6 +284,13 @@ All scores are integers. They drive the similarity engine, collection boosting, 
 - **1 Million Inspired (leather-spice statement reference)** — The catalogue's leather masculine anchor. sweetness:3 despite warm amber character because leather introduces dryness that tempers what the amber contributes — same sweetness tier as Y EDP and Eros, via different route. warmth:4 via leather route: drier than Layton's amber/vanilla warmth (5) but distinctly warmer than balanced aromatics. popularity:9 reflects global bestseller status — one of the world's most purchased masculines.
 - **Hawas Inspired (fresh aquatic with projection reference)** — intensity:4 in the fresh register is the notable calibration signal. Invictus (intensity:3) is the comparison: same freshness:4, but Hawas projects more assertively. sweetness:3 from apple accord distinguishes it from Invictus (sweetness:2) and Aqua Di Gio (sweetness:1). Establishes that fresh fragrances can reach intensity:4 when projection is a documented characteristic of the reference.
 - **9PM Inspired (sweet nightlife amber reference)** — sweetness:4 via apple/tonka/vanilla route, same tier as Stronger With You (sweetness:4) via chestnut/cinnamon route. The key distinction is versatility:2 vs SWY's versatility:3 — 9PM is a dedicated night-out masculine, SWY has broader autumn/winter range. popularity:5 is intentional: value-tier brand with community awareness but without mainstream designer recognition. Future accessible amber masculines calibrate against 9PM on the versatility/popularity axes.
+
+**Calibration notes for EP20-P3 anchors:**
+
+- **Stronger With You Intensely Inspired (amber evening evolution reference)** — Paired with Stronger With You (sweetness:4, warmth:4, intensity:3, versatility:3) to model the original-to-intensely progression: same sweetness tier, warmth escalates from 4→5, intensity escalates from 3→4, versatility contracts from 3→2. This is the fifth route to warmth:5, adding the apple/iris/vanilla/amber route alongside Layton (amber/sandalwood), Spicebomb Extreme (tobacco/benzoin), Naxos (honey/tobacco), and Le Male Elixir (honey/tonka). When a customer wants the next step from Stronger With You, these score differences explain the recommendation precisely.
+- **Le Beau Paradise Garden Inspired (tropical sweet summer benchmark)** — The catalogue's soft tropical sweet masculine. sweetness:4 in a fresh/summer frame is unusual — compare with Hawas (sweetness:3, intensity:4, bold projection) and God of Fire (sweetness:3, tropical mango energy). Le Beau Paradise Garden is sweeter than both with lower intensity (intensity:2) — intimate rather than projecting. The coconut/fig/tonka tropical route to sweetness:4. `newArrival: true` preserved from production data; update when status changes.
+- **Azzaro Most Wanted Inspired (dark amber gourmand benchmark)** — The toffee-hazelnut amber reference. Calibrate against 1 Million (sweetness:3, intensity:4, leather route — bold, theatrical) and 9PM (sweetness:4, intensity:3, versatility:2 — dedicated nightlife). Most Wanted occupies the space between: sweetness:4 via savory-toffee route, intensity:3 (intimate, not projecting), versatility:3 (broader autumn/winter range than 9PM). The correct distinction: Most Wanted seduces through proximity; 1 Million announces from a distance.
+- **Valentino Uomo Born In Roma Inspired (green aromatic all-season benchmark)** — The Italian aromatic counterpart to Terre D'Hermès (earthy mineral) and Prada L'Homme (powdery soft). All three sit at intensity:2 with versatility 4–5; differentiation is through note character: Terre D'Hermès is mineral/orange peel, Prada L'Homme is iris/cedar powdery, Born in Roma is violet leaf/sage/vetiver green. Born in Roma extends the all-occasion soft-projection tier (intensity:2, versatility:5) that Imagination Inspired established for fresh masculines — proving that versatility is earned through character, not volume, across both fresh and aromatic families.
 
 **Update this table** each time a new native record is committed. The table is permanent engineering state — it enables every future author to calibrate without reading all previous records.
 
