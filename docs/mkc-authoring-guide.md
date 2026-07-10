@@ -584,6 +584,151 @@ All future graph work should build on validated graph data rather than duplicate
 
 ---
 
+## Graph Services (EP21-P3)
+
+### Philosophy
+
+Relationship data belongs to native records.
+Relationship traversal belongs to `graph.ts`.
+
+`graph.ts` is the only supported way to traverse the Relationship Graph programmatically. Future engineering — Concierge, product pages, wardrobe analysis — should consume graph services rather than reading `relationships` fields directly.
+
+This separation exists because:
+
+- Native records are authored once and change infrequently.
+- Traversal logic (chain following, deduplication, graceful degradation) should not be duplicated across consumers.
+- A stable service layer means the graph data model can evolve without breaking consumers.
+
+---
+
+### Service Architecture
+
+Graph services are pure functions. There is no global state, no singleton, no runtime cache, and no import of `mkcCatalogue`.
+
+Consumers own the lifecycle of the `FragranceIndex`. The typical pattern:
+
+```typescript
+import { mkcCatalogue }                       from "@/app/lib/mkc/catalogue";
+import { buildIndex, getRelationshipSummary } from "@/app/lib/mkc/graph";
+
+// Build once per page or component tree, then reuse.
+const index   = buildIndex(mkcCatalogue);
+const summary = getRelationshipSummary(record, index);
+```
+
+`buildIndex` is O(n) over the catalogue. All subsequent service calls are O(1) per slug lookup.
+
+---
+
+### Service Reference
+
+**`buildIndex(records)`** → `Map<string, FragranceKnowledge>`
+
+Builds a slug-to-record map. Call once per consumer.
+
+---
+
+**`getRelationshipSummary(record, index)`** → `RelationshipSummary`
+
+The preferred consumer entry point. Returns all relationship types in a single typed call.
+
+```typescript
+interface RelationshipSummary {
+  hasRelationships: boolean;
+  evolutionOf:      FragranceKnowledge | null;
+  evolutions:       FragranceKnowledge[];
+  alternatives:     FragranceKnowledge[];
+  wardrobePartners: FragranceKnowledge[];
+  connected:        FragranceKnowledge[];   // deduplicated union of all types
+  totalConnections: number;
+}
+```
+
+All fields are typed and non-undefined. Records with no `relationships` field return `hasRelationships: false` with empty collections.
+
+---
+
+**`getEvolution(record, index)`** → `FragranceKnowledge | null`
+
+Returns the direct predecessor (`evolutionOf`) or null.
+
+---
+
+**`getEvolutionChain(record, index)`** → `FragranceKnowledge[]`
+
+Returns the full ancestor chain, ordered oldest to most recent. Does not include the record itself. Tolerates circular references and unresolved slugs via an internal visited-set. Returns `[]` for records with no ancestor.
+
+---
+
+**`getEvolutions(record, index)`** → `FragranceKnowledge[]`
+
+Returns all direct evolution descendants. Returns `[]` when none defined.
+
+---
+
+**`getAlternatives(record, index)`** → `FragranceKnowledge[]`
+
+Returns all alternative records. Returns `[]` when none defined.
+
+---
+
+**`getWardrobePartners(record, index)`** → `FragranceKnowledge[]`
+
+Returns all wardrobe partner records. Returns `[]` when none defined.
+
+---
+
+**`getConnectedFragrances(record, index)`** → `FragranceKnowledge[]`
+
+Returns all records connected by any relationship type, deduplicated. Ordering: ancestor → descendants → alternatives → wardrobe partners. Returns `[]` for records with no `relationships` field.
+
+---
+
+### Intended Consumer Pattern
+
+Concierge and product pages should call `getRelationshipSummary` once per record and destructure what they need:
+
+```typescript
+const { hasRelationships, evolutionOf, alternatives, wardrobePartners } =
+  getRelationshipSummary(record, index);
+
+if (evolutionOf) {
+  // surface "evolved from" context in the recommendation
+}
+if (alternatives.length > 0) {
+  // offer alternatives when the primary recommendation is unavailable
+}
+```
+
+Narrow queries (single relationship type) should use individual services only when the full summary would be wasteful.
+
+---
+
+### Graceful Degradation
+
+All services degrade gracefully:
+
+- Records with no `relationships` field return null, `[]`, or `false` as appropriate — never undefined, never errors.
+- Unresolved slugs (target not in index) are silently skipped.
+- The index may be built from any subset of the catalogue. Services only return records present in the provided index.
+
+Graph services do not validate relationship correctness — that is the responsibility of `validator.ts` (EP21-P2).
+
+---
+
+### Future Engineering
+
+EP21-P3 establishes the graph service foundation. Future sprints build on this layer:
+
+- **EP21-P4 — Concierge Graph Integration:** Concierge uses `getRelationshipSummary` to surface "evolved from," "pairs with," and "alternatives" context in consultation responses.
+- **EP21-P5 — Wardrobe Graph Analysis:** Graph-aware wardrobe analysis detects seasonal gaps and suggests wardrobe partners based on what the customer already owns.
+- **EP21-P6 — Similarity Graph Services:** Extends the graph service layer with similarity and proximity queries using Intelligence field data alongside graph structure.
+- **EP21-P7 — Relationship Explorer UI:** Product page or discovery component that surfaces relationship context visually.
+
+All future graph work should consume `graph.ts` services rather than re-implementing traversal logic.
+
+---
+
 ## Editorial Standards
 
 ### Maison Voice
