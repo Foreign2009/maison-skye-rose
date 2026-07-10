@@ -43,6 +43,12 @@ import { strongerWithYouIntenselyInspired } from "./stronger-with-you-intensely-
 import { leBeauParadiseGardenInspired }     from "./le-beau-paradise-garden-inspired";
 import { azzaroMostWantedInspired }         from "./azzaro-most-wanted-inspired";
 import { valentinoUomoBornInRomaInspired }  from "./valentino-uomo-born-in-roma-inspired";
+import { myslfInspired }                    from "./myslf-inspired";
+import { acquaDiGioProfondoInspired }       from "./acqua-di-gio-profondo-inspired";
+import { acquaDiGioParfumInspired }         from "./acqua-di-gio-parfum-inspired";
+import { pradaLunaRossaCarbonInspired }     from "./prada-luna-rossa-carbon-inspired";
+import { invictusVictoryInspired }          from "./invictus-victory-inspired";
+import { armaniCodeParfumInspired }         from "./armani-code-parfum-inspired";
 
 export const nativeFragrances = new Map<string, FragranceKnowledge>([
   ["sauvage-inspired",              sauvageInspired],
@@ -76,4 +82,10 @@ export const nativeFragrances = new Map<string, FragranceKnowledge>([
   ["le-beau-paradise-garden-inspired",        leBeauParadiseGardenInspired],
   ["azzaro-most-wanted-inspired",             azzaroMostWantedInspired],
   ["valentino-uomo-born-in-roma-inspired",    valentinoUomoBornInRomaInspired],
+  ["myslf-inspired",                          myslfInspired],
+  ["acqua-di-gio-profondo-inspired",          acquaDiGioProfondoInspired],
+  ["acqua-di-gio-parfum-inspired",            acquaDiGioParfumInspired],
+  ["prada-luna-rossa-carbon-inspired",        pradaLunaRossaCarbonInspired],
+  ["invictus-victory-inspired",               invictusVictoryInspired],
+  ["armani-code-parfum-inspired",             armaniCodeParfumInspired],
 ]);
