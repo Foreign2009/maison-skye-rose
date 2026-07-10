@@ -15,6 +15,7 @@ import type { ConversationState, ConversationIntent, ConversationProfile, Refine
 import type { ConversationPlan }   from "./conversationPlanner";
 import { catalogueMaps, getCurrentSeason } from "../discovery";
 import { computeWardrobe }                 from "../mkc/wardrobeEngine";
+import { getRelationshipSummary }          from "../mkc/graph";
 import { analyseWardrobe }                 from "./wardrobeAnalyser";
 import { planCollection }                  from "./collectionPlanner";
 
@@ -128,6 +129,20 @@ function buildPreviousRecommendationsSection(
   return { label: "PREVIOUS RECOMMENDATIONS", content: recs.join("\n") };
 }
 
+function buildRelationshipBlock(k: FragranceKnowledge): string | null {
+  const summary = getRelationshipSummary(k, catalogueMaps.bySlug);
+  if (!summary.hasRelationships) return null;
+
+  const parts: string[] = [];
+  if (summary.evolutionOf)              parts.push(`   • Evolved from: ${summary.evolutionOf.name}`);
+  if (summary.evolutions.length > 0)    parts.push(`   • Evolution: ${summary.evolutions.map((r) => r.name).join(", ")}`);
+  if (summary.alternatives.length > 0)  parts.push(`   • Alternative: ${summary.alternatives.map((r) => r.name).join(", ")}`);
+  if (summary.wardrobePartners.length > 0) parts.push(`   • Wardrobe partner: ${summary.wardrobePartners.map((r) => r.name).join(", ")}`);
+
+  if (parts.length === 0) return null;
+  return `   Relationships:\n${parts.join("\n")}`;
+}
+
 function buildFragranceSection(fragrances: FragranceKnowledge[], reuseMode: boolean): PromptSection {
   if (fragrances.length === 0) return { label: "", content: "" };
 
@@ -155,6 +170,10 @@ function buildFragranceSection(fragrances: FragranceKnowledge[], reuseMode: bool
 
       // Intelligence scores — support comparisons and explanations
       lines.push(`   Intelligence: sweetness ${k.sweetness}/5 · freshness ${k.freshness}/5 · warmth ${k.warmth}/5 · intensity ${k.intensity}/5 · versatility ${k.versatility}/5`);
+
+      // Relationship graph context — only for native records with authored relationships
+      const relBlock = buildRelationshipBlock(k);
+      if (relBlock) lines.push(relBlock);
 
       // Persona fit
       lines.push(`   Best for: ${k.recommendedFor.slice(0, 2).join("; ")}`);
