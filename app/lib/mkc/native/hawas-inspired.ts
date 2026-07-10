@@ -80,6 +80,11 @@ export const hawasInspired: FragranceKnowledge = {
     "how-to-wear-fragrance",
   ],
 
+  // ── Relationships ─────────────────────────────────────────────────────────────
+  relationships: {
+    wardrobePartners: ["le-beau-paradise-garden-inspired"],
+  },
+
   // ── Intelligence ─────────────────────────────────────────────────────────────
   // Fresh aquatic with projection reference for Wave 2. intensity:4 in the fresh
   // register is unusual — Hawas is specifically noted for above-average summer

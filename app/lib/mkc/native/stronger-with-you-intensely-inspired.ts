@@ -80,6 +80,11 @@ export const strongerWithYouIntenselyInspired: FragranceKnowledge = {
     "how-to-layer-fragrances",
   ],
 
+  // ── Relationships ─────────────────────────────────────────────────────────────
+  relationships: {
+    evolutionOf: "stronger-with-you-inspired",
+  },
+
   // ── Intelligence ─────────────────────────────────────────────────────────────
   // Amber evening evolution reference. Pair with Stronger With You (sweetness:4,
   // warmth:4, intensity:3) to understand the progression: same sweetness tier,

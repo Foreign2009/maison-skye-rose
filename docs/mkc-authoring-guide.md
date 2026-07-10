@@ -313,6 +313,152 @@ All scores are integers. They drive the similarity engine, collection boosting, 
 
 ---
 
+## Relationship Graph
+
+The Relationship Graph is a structured part of the Maison Knowledge Catalogue. It captures editorial knowledge about how fragrances connect to each other — not scoring or ranking, but context.
+
+Relationships answer questions like:
+- What evolved from this fragrance?
+- What belongs beside this in a wardrobe?
+- What serves a similar role for a customer with different preferences?
+
+Relationships must never imply one fragrance is objectively better than another. They represent editorial reasoning, not hierarchy.
+
+---
+
+### Relationship Model
+
+The canonical relationship model for MKC v1 is:
+
+```typescript
+relationships?: {
+  evolutionOf?:      string;    // slug of the direct predecessor in this fragrance line
+  evolutions?:       string[];  // slugs of fragrances that evolved FROM this record
+  alternatives?:     string[];  // slugs of comparable alternatives in a similar register
+  wardrobePartners?: string[];  // slugs recommended to own alongside this fragrance
+};
+```
+
+The `relationships` field is optional. Records without editorial relationships simply omit it. Sparse, accurate knowledge is preferable to dense but questionable links.
+
+---
+
+### Field Definitions
+
+**`evolutionOf`** (string, optional)
+
+This fragrance is a direct development of another fragrance in the same line. The relationship is directional: Sauvage Elixir evolved FROM Sauvage.
+
+Use when: the reference fragrance is a stronger, richer, or reformulated version within the same house/line — not just thematically similar. The connection must be unmistakable.
+
+Example: `evolutionOf: "sauvage-inspired"` on the Sauvage Elixir record.
+
+---
+
+**`evolutions`** (string[], optional)
+
+Other fragrances that evolved FROM this record. The directional counterpart to `evolutionOf`.
+
+Use when: one or more other native records are known evolutions of this fragrance. Always populate `evolutions` when the downstream record has `evolutionOf` pointing here.
+
+Example: `evolutions: ["sauvage-elixir-inspired"]` on the Sauvage record.
+
+---
+
+**`alternatives`** (string[], optional)
+
+Comparable native records that serve a similar role for a customer with different preferences. The relationship is non-directional — both records should list each other.
+
+Use when: two fragrances serve the same customer need through genuinely different routes (different house, different note character, or different aesthetic). The customer would realistically choose one or the other.
+
+Do NOT use for fragrances that are merely in the same family or have overlapping Intelligence scores. The editorial question is: "would a customer deciding between these two choose based on preference rather than need?"
+
+Example: `alternatives: ["prada-luna-rossa-carbon-inspired"]` on Prada L'Homme, reflecting that both are Prada masculines for the all-season professional register via entirely different note routes.
+
+---
+
+**`wardrobePartners`** (string[], optional)
+
+Native records recommended to own alongside this fragrance. The relationship is non-directional and both records should list each other.
+
+Use when: two fragrances complement each other in a complete wardrobe — most commonly a seasonal pair (summer + winter expression of the same energy) or an occasion pair (daytime + evening within the same register).
+
+Do NOT use for fragrances that are merely aesthetically compatible. The editorial question is: "would a customer who owns one naturally want to own the other?"
+
+Example: `wardrobePartners: ["invictus-victory-inspired"]` on Invictus Inspired, reflecting that the fresh summer champion and its winter amber evolution are the natural seasonal pair.
+
+---
+
+### Authoring Rules
+
+**Only author relationships between native records.** Never reference an adapter-only record in a relationship field. If the target slug is not in `app/lib/mkc/native/index.ts`, omit the relationship.
+
+**Preserve symmetry.** If Record A has `alternatives: ["record-b"]`, then Record B must have `alternatives: ["record-a"]`. If Record A has `wardrobePartners: ["record-b"]`, then Record B must have `wardrobePartners: ["record-a"]`. If this symmetry cannot be maintained, reconsider the relationship.
+
+**`evolutionOf` and `evolutions` are directional and always reciprocal.** If Record B has `evolutionOf: "record-a"`, then Record A must have `evolutions: ["record-b"]`.
+
+**Do not introduce relationships merely to increase graph density.** A record with zero relationships is correct if no genuine editorial relationship exists for it among current native records. Do not link records that happen to have similar Intelligence scores — that is what the Intelligence fields are for.
+
+**Do not imply quality hierarchy.** Relationships state connections, not rankings. An `evolutionOf` relationship means "same line, developed" not "better than." An `alternatives` relationship means "serves a similar need differently" not "inferior to."
+
+**Limit relationship fields to what the data can support.** A fragrance can appear in multiple relationship categories only when each is genuinely justified. Invictus appears in both `evolutions` and `wardrobePartners` for Victory because Victory is both an evolutionary development AND a seasonal complement — both are justified independently.
+
+---
+
+### When NOT to Create a Relationship
+
+- The target record is adapter-only (not in the native registry)
+- The connection is based only on shared Intelligence scores or fragrance families
+- The editorial justification requires reading about the brand or reference fragrance rather than the MKC records themselves
+- The relationship would need to be explained in a way that implies one fragrance is better, more authentic, or more prestigious than another
+- The relationship is speculative — "these might pair well" rather than "a customer who owns one would naturally want the other"
+
+---
+
+### EP21-P1 Authored Relationships
+
+As of EP21-P1, relationships have been authored for 21 of 37 native records. The remaining 16 records have no editorial relationships with currently native records.
+
+**Evolution chains:**
+
+| Predecessor | Evolution(s) |
+|---|---|
+| Sauvage Inspired | Sauvage Elixir Inspired |
+| Y Inspired | Y EDP Inspired |
+| Stronger With You Inspired | Stronger With You Intensely Inspired |
+| Invictus Inspired | Invictus Victory Inspired |
+| Aqua Di Gio Inspired | Acqua Di Gio Profondo Inspired, Acqua Di Gio Parfum Inspired |
+
+**Alternatives (bidirectional):**
+
+| Pair | Rationale |
+|---|---|
+| Acqua Di Gio Profondo ↔ Acqua Di Gio Parfum | Parallel evolutions of the same ADG lineage — mineral summer vs incense elevated |
+| Prada L'Homme ↔ Prada Luna Rossa Carbon | Two Prada masculines: powdery-intimate vs metallic-contemporary |
+| 1 Million Inspired ↔ Azzaro Most Wanted Inspired | Dark amber register: leather-theatrical vs toffee-intimate |
+| MYSLF Inspired ↔ Valentino Uomo Born In Roma Inspired | Both versatility:5 all-season aromatics via different note routes |
+| Layton Inspired ↔ Naxos Inspired | Both warmth:5 winter luxury masculines via different routes |
+
+**Wardrobe Partners (bidirectional):**
+
+| Pair | Rationale |
+|---|---|
+| Invictus Inspired ↔ Invictus Victory Inspired | Seasonal pair: fresh summer champion + warm winter amber |
+| Hawas Inspired ↔ Le Beau Paradise Garden Inspired | Summer wardrobe pair: bold fresh aquatic + intimate tropical sweet |
+
+---
+
+### Future Engineering
+
+A future EP21 sprint will introduce graph validation to verify:
+- Slug existence (all relationship targets resolve to native records)
+- Reciprocal symmetry (both sides of bidirectional relationships are authored)
+- Orphan detection (records referencing slugs that no longer exist)
+
+This validation is intentionally out of scope for EP21-P1. The data model and authoring are the foundation; validation builds on top.
+
+---
+
 ## Editorial Standards
 
 ### Maison Voice

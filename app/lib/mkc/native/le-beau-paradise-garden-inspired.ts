@@ -80,6 +80,11 @@ export const leBeauParadiseGardenInspired: FragranceKnowledge = {
     "how-to-wear-fragrance",
   ],
 
+  // ── Relationships ─────────────────────────────────────────────────────────────
+  relationships: {
+    wardrobePartners: ["hawas-inspired"],
+  },
+
   // ── Intelligence ─────────────────────────────────────────────────────────────
   // Tropical sweet summer benchmark. Occupies the sweet-fresh summer position that
   // no existing record covered: sweetness:4 in a summer/fresh frame, compared to

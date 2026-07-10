@@ -80,6 +80,12 @@ export const invictusInspired: FragranceKnowledge = {
     "what-makes-a-signature-scent",
   ],
 
+  // ── Relationships ─────────────────────────────────────────────────────────────
+  relationships: {
+    evolutions:       ["invictus-victory-inspired"],
+    wardrobePartners: ["invictus-victory-inspired"],
+  },
+
   // ── Intelligence ─────────────────────────────────────────────────────────────
   // Fresh through energy — compare Imagination (freshness:4, intensity:2, quiet elegance).
   // Shared freshness:4 but intensity:3 and versatility:5 confirm distinct personality.

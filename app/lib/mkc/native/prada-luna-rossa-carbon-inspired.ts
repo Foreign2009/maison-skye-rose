@@ -80,6 +80,11 @@ export const pradaLunaRossaCarbonInspired: FragranceKnowledge = {
     "choosing-your-season-scent",
   ],
 
+  // ── Relationships ─────────────────────────────────────────────────────────────
+  relationships: {
+    alternatives: ["prada-l'homme-inspired"],
+  },
+
   // ── Intelligence ─────────────────────────────────────────────────────────────
   // Metallic aromatic benchmark. Distinct from Prada L'Homme (sweetness:2, freshness:2,
   // warmth:3, intensity:2, versatility:4 — powdery iris, close-wearing intimacy) by character:

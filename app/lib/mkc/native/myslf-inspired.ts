@@ -80,6 +80,11 @@ export const myslfInspired: FragranceKnowledge = {
     "choosing-your-season-scent",
   ],
 
+  // ── Relationships ─────────────────────────────────────────────────────────────
+  relationships: {
+    alternatives: ["valentino-uomo-born-in-roma-inspired"],
+  },
+
   // ── Intelligence ─────────────────────────────────────────────────────────────
   // Modern clean floral masculine benchmark. Distinct from Born in Roma (sweetness:1,
   // freshness:3, warmth:3, intensity:2, versatility:5 — Italian green-aromatic via violet

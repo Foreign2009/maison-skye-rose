@@ -80,6 +80,12 @@ export const acquaDiGioProfondoInspired: FragranceKnowledge = {
     "how-to-wear-fragrance",
   ],
 
+  // ── Relationships ─────────────────────────────────────────────────────────────
+  relationships: {
+    evolutionOf:  "aqua-di-gio-inspired",
+    alternatives: ["acqua-di-gio-parfum-inspired"],
+  },
+
   // ── Intelligence ─────────────────────────────────────────────────────────────
   // Mineral aquatic benchmark. Distinct from Aqua Di Gio Inspired (freshness:5, intensity:2 —
   // the breezy summer classic) by depth and projection: Profondo is freshness:4 (mineral weight

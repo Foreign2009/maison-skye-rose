@@ -61,6 +61,14 @@ export type FragranceKnowledge = {
   educationTags?: string[];      // Tags shared with Academy Registry for cross-referencing
   learningPath?: string[];       // Ordered article slugs for a guided learning experience
 
+  // ── Relationships ─────────────────────────────────────────────────────────────
+  relationships?: {
+    evolutionOf?:      string;    // slug of the direct predecessor in this fragrance line
+    evolutions?:       string[];  // slugs of fragrances that evolved FROM this record
+    alternatives?:     string[];  // slugs of comparable alternatives in a similar register
+    wardrobePartners?: string[];  // slugs recommended to own alongside this fragrance
+  };
+
   // ── Intelligence ──────────────────────────────────────────────────────────────
   sweetness: number;
   freshness: number;

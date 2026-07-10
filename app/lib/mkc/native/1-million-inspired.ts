@@ -80,6 +80,11 @@ export const oneMillionInspired: FragranceKnowledge = {
     "choosing-your-season-scent",
   ],
 
+  // ── Relationships ─────────────────────────────────────────────────────────────
+  relationships: {
+    alternatives: ["azzaro-most-wanted-inspired"],
+  },
+
   // ── Intelligence ─────────────────────────────────────────────────────────────
   // Leather-spice statement reference for Wave 2. sweetness:3 despite being a warm
   // amber — leather tempers what the amber contributes, keeping it below SWY (4).

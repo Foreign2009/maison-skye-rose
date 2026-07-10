@@ -80,6 +80,11 @@ export const aquaDiGioInspired: FragranceKnowledge = {
     "choosing-your-season-scent",
   ],
 
+  // ── Relationships ─────────────────────────────────────────────────────────────
+  relationships: {
+    evolutions: ["acqua-di-gio-profondo-inspired", "acqua-di-gio-parfum-inspired"],
+  },
+
   // ── Intelligence ─────────────────────────────────────────────────────────────
   sweetness:   1,
   freshness:   5,

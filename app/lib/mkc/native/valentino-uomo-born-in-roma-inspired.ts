@@ -80,6 +80,11 @@ export const valentinoUomoBornInRomaInspired: FragranceKnowledge = {
     "choosing-your-season-scent",
   ],
 
+  // ── Relationships ─────────────────────────────────────────────────────────────
+  relationships: {
+    alternatives: ["myslf-inspired"],
+  },
+
   // ── Intelligence ─────────────────────────────────────────────────────────────
   // Green aromatic all-season benchmark. Distinguished from Terre D'Hermès
   // (sweetness:1, freshness:3, warmth:3, versatility:5 — earthy mineral) and

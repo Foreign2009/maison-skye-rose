@@ -80,6 +80,11 @@ export const strongerWithYouInspired: FragranceKnowledge = {
     "what-makes-a-signature-scent",
   ],
 
+  // ── Relationships ─────────────────────────────────────────────────────────────
+  relationships: {
+    evolutions: ["stronger-with-you-intensely-inspired"],
+  },
+
   // ── Intelligence ─────────────────────────────────────────────────────────────
   // Sweet-spicy warm anchor for Wave 2. Comparable to Layton (sweetness:4, warmth:4)
   // but Layton's lavender-amber structure is heavier. Chestnut-violet gives personality

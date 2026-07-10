@@ -82,6 +82,11 @@ export const yEdpInspired: FragranceKnowledge = {
     "how-to-wear-fragrance",
   ],
 
+  // ── Relationships ─────────────────────────────────────────────────────────────
+  relationships: {
+    evolutionOf: "y-inspired",
+  },
+
   // ── Intelligence ─────────────────────────────────────────────────────────────
   sweetness:   3,
   freshness:   3,

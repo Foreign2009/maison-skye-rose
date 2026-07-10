@@ -80,6 +80,11 @@ export const azzaroMostWantedInspired: FragranceKnowledge = {
     "choosing-your-season-scent",
   ],
 
+  // ── Relationships ─────────────────────────────────────────────────────────────
+  relationships: {
+    alternatives: ["1-million-inspired"],
+  },
+
   // ── Intelligence ─────────────────────────────────────────────────────────────
   // Dark amber gourmand benchmark. Distinct from 1 Million (sweetness:3, intensity:4,
   // leather route — bold leather-spice) and 9PM (sweetness:4, versatility:2 —

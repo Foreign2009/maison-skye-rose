@@ -80,6 +80,12 @@ export const acquaDiGioParfumInspired: FragranceKnowledge = {
     "how-to-layer-fragrances",
   ],
 
+  // ── Relationships ─────────────────────────────────────────────────────────────
+  relationships: {
+    evolutionOf:  "aqua-di-gio-inspired",
+    alternatives: ["acqua-di-gio-profondo-inspired"],
+  },
+
   // ── Intelligence ─────────────────────────────────────────────────────────────
   // Aquatic-incense transition benchmark. The third step in the ADG lineage calibration:
   // Aqua Di Gio (freshness:5, warmth:1, intensity:2 — pure breezy aquatic) →

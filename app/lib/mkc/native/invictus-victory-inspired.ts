@@ -80,6 +80,12 @@ export const invictusVictoryInspired: FragranceKnowledge = {
     "how-to-wear-fragrance",
   ],
 
+  // ── Relationships ─────────────────────────────────────────────────────────────
+  relationships: {
+    evolutionOf:      "invictus-inspired",
+    wardrobePartners: ["invictus-inspired"],
+  },
+
   // ── Intelligence ─────────────────────────────────────────────────────────────
   // Winter amber athletic benchmark. The Invictus line expressed as warm-season masculine:
   // Invictus Inspired (sweetness:2, freshness:4, warmth:2, intensity:3, versatility:5) vs

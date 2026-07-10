@@ -81,6 +81,11 @@ export const sauvageElixirInspired: FragranceKnowledge = {
     "what-makes-a-signature-scent",
   ],
 
+  // ── Relationships ─────────────────────────────────────────────────────────────
+  relationships: {
+    evolutionOf: "sauvage-inspired",
+  },
+
   // ── Intelligence ─────────────────────────────────────────────────────────────
   sweetness:   2,
   freshness:   3,
