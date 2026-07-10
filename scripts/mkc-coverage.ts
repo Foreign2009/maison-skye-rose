@@ -11,7 +11,7 @@
  */
 
 import { nativeFragrances }        from "../app/lib/mkc/native/index";
-import { validateKnowledgeRecord } from "../app/lib/mkc/validator";
+import { validateAll } from "../app/lib/mkc/validator";
 import { skyeFragrances }          from "../app/data/skye";
 import { roseFragrances }          from "../app/data/rose";
 import { eliteFragrances }         from "../app/data/elite";
@@ -92,7 +92,7 @@ const withRecommendedFor = native.filter((k) => (k.recommendedFor?.length     ??
 
 // ── Validation (read-only — mirrors mkc:validate without detailed output) ─────
 
-const validationResults  = native.map(validateKnowledgeRecord);
+const validationResults  = validateAll(native);
 const validationPassed   = validationResults.filter((r) => r.status === "PASS").length;
 const validationWarned   = validationResults.filter((r) => r.status === "PASS_WITH_WARNINGS").length;
 const validationFailed   = validationResults.filter((r) => r.status === "FAIL").length;

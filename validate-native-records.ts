@@ -8,7 +8,7 @@
  */
 
 import { nativeFragrances } from "./app/lib/mkc/native/index";
-import { validateKnowledgeRecord } from "./app/lib/mkc/validator";
+import { validateAll } from "./app/lib/mkc/validator";
 import type { ValidationResult, ValidationGroup } from "./app/lib/mkc/validator";
 
 // ── Formatting ────────────────────────────────────────────────────────────────
@@ -47,7 +47,7 @@ function formatResult(result: ValidationResult): void {
 
   const groupOrder: ValidationGroup[] = [
     "identity", "classification", "composition", "editorial",
-    "discovery", "intelligence", "commerce",
+    "discovery", "intelligence", "commerce", "relationships",
   ];
 
   for (const group of groupOrder) {
@@ -64,7 +64,7 @@ console.log("Maison Knowledge Catalogue — Native Record Validation");
 console.log(`Records: ${records.length}`);
 console.log("═".repeat(60));
 
-const results: ValidationResult[] = records.map(validateKnowledgeRecord);
+const results: ValidationResult[] = validateAll(records);
 
 for (const result of results) {
   formatResult(result);

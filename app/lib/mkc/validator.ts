@@ -21,7 +21,8 @@ export type ValidationGroup =
   | "editorial"
   | "discovery"
   | "intelligence"
-  | "commerce";
+  | "commerce"
+  | "relationships";
 
 export interface ValidationIssue {
   code:     string;
@@ -273,6 +274,125 @@ function checkCommerce(k: FragranceKnowledge): ValidationIssue[] {
   return issues;
 }
 
+function checkRelationships(
+  k: FragranceKnowledge,
+  allRecords?: ReadonlyMap<string, FragranceKnowledge>
+): ValidationIssue[] {
+  const issues: ValidationIssue[] = [];
+  const g: ValidationGroup = "relationships";
+  const rel = k.relationships;
+
+  if (!rel) return issues;
+
+  const self = k.slug;
+
+  // ── Per-record helpers ────────────────────────────────────────────────────────
+
+  function selfRef(field: string, slug: string): void {
+    if (slug === self) {
+      issues.push(e("RELATIONSHIP_SELF_REFERENCE", g, field,
+        `"${self}" lists itself in ${field} — a fragrance cannot reference its own slug`));
+    }
+  }
+
+  function checkDuplicates(field: string, slugs: string[]): void {
+    const seen = new Set<string>();
+    for (const slug of slugs) {
+      if (seen.has(slug)) {
+        issues.push(e("RELATIONSHIP_DUPLICATE_SLUG", g, field,
+          `"${slug}" appears more than once in ${field} for record "${self}"`));
+      }
+      seen.add(slug);
+    }
+  }
+
+  // ── Cross-record helpers ──────────────────────────────────────────────────────
+
+  function slugExists(field: string, slug: string): boolean {
+    if (!allRecords) return true;
+    if (!allRecords.has(slug)) {
+      issues.push(e("RELATIONSHIP_SLUG_NOT_FOUND", g, field,
+        `"${self}" references "${slug}" in ${field} — slug does not exist in the native registry`));
+      return false;
+    }
+    return true;
+  }
+
+  // ── evolutionOf ───────────────────────────────────────────────────────────────
+
+  if (rel.evolutionOf !== undefined) {
+    const pred = rel.evolutionOf;
+    selfRef("evolutionOf", pred);
+
+    if (allRecords && slugExists("evolutionOf", pred)) {
+      const predecessor = allRecords.get(pred)!;
+      const evolutions = predecessor.relationships?.evolutions ?? [];
+      if (!evolutions.includes(self)) {
+        issues.push(e("RELATIONSHIP_EVOLUTION_NOT_RECIPROCAL", g, "evolutionOf",
+          `"${self}" has evolutionOf: "${pred}", but "${pred}" does not list "${self}" in its evolutions — evolution chains must be fully reciprocal`));
+      }
+    }
+  }
+
+  // ── evolutions ────────────────────────────────────────────────────────────────
+
+  if (rel.evolutions && rel.evolutions.length > 0) {
+    checkDuplicates("evolutions", rel.evolutions);
+
+    for (const slug of rel.evolutions) {
+      selfRef("evolutions", slug);
+
+      if (allRecords && slugExists("evolutions", slug)) {
+        const child = allRecords.get(slug)!;
+        if (child.relationships?.evolutionOf !== self) {
+          issues.push(e("RELATIONSHIP_EVOLUTION_NOT_RECIPROCAL", g, "evolutions",
+            `"${self}" lists "${slug}" in evolutions, but "${slug}" does not have evolutionOf: "${self}" — evolution chains must be fully reciprocal`));
+        }
+      }
+    }
+  }
+
+  // ── alternatives ──────────────────────────────────────────────────────────────
+
+  if (rel.alternatives && rel.alternatives.length > 0) {
+    checkDuplicates("alternatives", rel.alternatives);
+
+    for (const slug of rel.alternatives) {
+      selfRef("alternatives", slug);
+
+      if (allRecords && slugExists("alternatives", slug)) {
+        const other = allRecords.get(slug)!;
+        const reciprocal = other.relationships?.alternatives ?? [];
+        if (!reciprocal.includes(self)) {
+          issues.push(e("RELATIONSHIP_ALTERNATIVES_NOT_RECIPROCAL", g, "alternatives",
+            `"${self}" lists "${slug}" as an alternative, but "${slug}" does not list "${self}" in its alternatives — alternative relationships must be symmetric`));
+        }
+      }
+    }
+  }
+
+  // ── wardrobePartners ──────────────────────────────────────────────────────────
+
+  if (rel.wardrobePartners && rel.wardrobePartners.length > 0) {
+    checkDuplicates("wardrobePartners", rel.wardrobePartners);
+
+    for (const slug of rel.wardrobePartners) {
+      selfRef("wardrobePartners", slug);
+
+      if (allRecords && slugExists("wardrobePartners", slug)) {
+        const partner = allRecords.get(slug)!;
+        const reciprocal = partner.relationships?.wardrobePartners ?? [];
+        if (!reciprocal.includes(self)) {
+          issues.push(e("RELATIONSHIP_WARDROBE_PARTNERS_NOT_RECIPROCAL", g, "wardrobePartners",
+            `"${self}" lists "${slug}" as a wardrobePartner, but "${slug}" does not list "${self}" in its wardrobePartners — wardrobe partner relationships must be symmetric`));
+        }
+      }
+    }
+  }
+
+  return issues;
+}
+
 // ── Status helpers ────────────────────────────────────────────────────────────
 
 function groupStatus(issues: ValidationIssue[]): ValidationStatus {
@@ -292,7 +412,7 @@ function overallStatus(groupResults: Record<ValidationGroup, ValidationGroupResu
 
 const GROUP_ORDER: ValidationGroup[] = [
   "identity", "classification", "composition", "editorial",
-  "discovery", "intelligence", "commerce",
+  "discovery", "intelligence", "commerce", "relationships",
 ];
 
 const VALIDATORS: Record<ValidationGroup, (k: FragranceKnowledge) => ValidationIssue[]> = {
@@ -303,13 +423,19 @@ const VALIDATORS: Record<ValidationGroup, (k: FragranceKnowledge) => ValidationI
   discovery:      checkDiscovery,
   intelligence:   checkIntelligence,
   commerce:       checkCommerce,
+  relationships:  (k) => checkRelationships(k),
 };
 
-export function validateKnowledgeRecord(record: FragranceKnowledge): ValidationResult {
+export function validateKnowledgeRecord(
+  record: FragranceKnowledge,
+  allRecords?: ReadonlyMap<string, FragranceKnowledge>
+): ValidationResult {
   const groups = {} as Record<ValidationGroup, ValidationGroupResult>;
 
   for (const group of GROUP_ORDER) {
-    const issues = VALIDATORS[group](record);
+    const issues = (group === "relationships" && allRecords)
+      ? checkRelationships(record, allRecords)
+      : VALIDATORS[group](record);
     groups[group] = { group, status: groupStatus(issues), issues };
   }
 
@@ -330,5 +456,6 @@ export function validateKnowledgeRecord(record: FragranceKnowledge): ValidationR
 }
 
 export function validateAll(records: FragranceKnowledge[]): ValidationResult[] {
-  return records.map(validateKnowledgeRecord);
+  const map = new Map<string, FragranceKnowledge>(records.map(r => [r.slug, r]));
+  return records.map(r => validateKnowledgeRecord(r, map));
 }

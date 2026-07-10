@@ -448,14 +448,139 @@ As of EP21-P1, relationships have been authored for 21 of 37 native records. The
 
 ---
 
+### Graph Validation (EP21-P2)
+
+Relationship graph validation is an official quality gate of the Maison Knowledge Catalogue. A record is not considered fully valid unless both its per-record data and its graph relationships are valid. Graph integrity is equal in importance to editorial integrity.
+
+Validation runs automatically via `npm run mkc:validate` and `npm run mkc:coverage`. The `relationships` group is the eighth validation group in the MKC quality gate.
+
+Records with no `relationships` field automatically PASS the relationships group. Validation only runs checks when relationship fields are present.
+
+---
+
+#### Validation Rules
+
+**Rule 1 — Slug must exist in native registry**
+
+Every slug referenced in any relationship field must be a registered key in `app/lib/mkc/native/index.ts`.
+
+Error code: `RELATIONSHIP_SLUG_NOT_FOUND`
+
+Message format: `"<source>" references "<target>" in <field> — slug does not exist in the native registry`
+
+Common cause: the target record is adapter-only (not yet migrated to a native record), or a slug was mistyped.
+
+---
+
+**Rule 2 — Alternative relationships must be symmetric**
+
+If Record A has `alternatives: ["record-b"]`, then Record B must have `alternatives: ["record-a"]`. The relationship must exist on both sides.
+
+Error code: `RELATIONSHIP_ALTERNATIVES_NOT_RECIPROCAL`
+
+Message format: `"<A>" lists "<B>" as an alternative, but "<B>" does not list "<A>" in its alternatives — alternative relationships must be symmetric`
+
+Common cause: authoring one side of the pair and not updating the other record.
+
+---
+
+**Rule 3 — Wardrobe partner relationships must be symmetric**
+
+If Record A has `wardrobePartners: ["record-b"]`, then Record B must have `wardrobePartners: ["record-a"]`. The relationship must exist on both sides.
+
+Error code: `RELATIONSHIP_WARDROBE_PARTNERS_NOT_RECIPROCAL`
+
+Message format: `"<A>" lists "<B>" as a wardrobePartner, but "<B>" does not list "<A>" in its wardrobePartners — wardrobe partner relationships must be symmetric`
+
+Common cause: authoring one side of the pair and not updating the other record.
+
+---
+
+**Rule 4 — Evolution chains must be fully reciprocal (evolutionOf direction)**
+
+If Record B has `evolutionOf: "record-a"`, then Record A must have `evolutions: ["record-b"]`.
+
+Error code: `RELATIONSHIP_EVOLUTION_NOT_RECIPROCAL`
+
+Message format: `"<B>" has evolutionOf: "<A>", but "<A>" does not list "<B>" in its evolutions — evolution chains must be fully reciprocal`
+
+---
+
+**Rule 5 — Evolution chains must be fully reciprocal (evolutions direction)**
+
+If Record A has `evolutions: ["record-b"]`, then Record B must have `evolutionOf: "record-a"`.
+
+Error code: `RELATIONSHIP_EVOLUTION_NOT_RECIPROCAL`
+
+Message format: `"<A>" lists "<B>" in evolutions, but "<B>" does not have evolutionOf: "<A>" — evolution chains must be fully reciprocal`
+
+---
+
+**Rule 6 — Self-reference is not permitted**
+
+No relationship field may reference the record's own slug.
+
+Error code: `RELATIONSHIP_SELF_REFERENCE`
+
+Message format: `"<slug>" lists itself in <field> — a fragrance cannot reference its own slug`
+
+Common cause: copy-paste error when authoring.
+
+---
+
+**Rule 7 — Duplicate slugs within a field are not permitted**
+
+No slug may appear more than once within the same relationship array (`evolutions`, `alternatives`, `wardrobePartners`).
+
+Error code: `RELATIONSHIP_DUPLICATE_SLUG`
+
+Message format: `"<slug>" appears more than once in <field> for record "<source>"`
+
+Common cause: copy-paste error or accidentally adding a slug that was already present.
+
+---
+
+#### Expected Authoring Workflow
+
+When adding a new relationship:
+
+1. Author the relationship on Record A.
+2. Navigate to Record B and add the reciprocal.
+3. Run `npm run mkc:validate` to confirm both records PASS the relationships group.
+4. If a `RELATIONSHIP_SLUG_NOT_FOUND` error appears, the target record is not yet native — remove the relationship until the target is migrated.
+
+All errors are hard failures. There are no warnings in the relationships group. A failed relationships check fails the entire record.
+
+---
+
+#### What Graph Validation Does Not Enforce
+
+Graph validation verifies structural integrity only. It does not verify:
+
+- Whether the editorial reasoning behind a relationship is sound
+- Whether two fragrances are genuinely complementary
+- Whether an alternatives pair serves the same customer need
+- Recommendation logic or Concierge behaviour
+
+Editorial quality of relationships remains the author's responsibility. Graph validation preserves consistency; it does not replace judgment.
+
+---
+
 ### Future Engineering
 
-A future EP21 sprint will introduce graph validation to verify:
-- Slug existence (all relationship targets resolve to native records)
-- Reciprocal symmetry (both sides of bidirectional relationships are authored)
-- Orphan detection (records referencing slugs that no longer exist)
+EP21-P2 (graph validation) is complete. Future engineering builds on this foundation:
 
-This validation is intentionally out of scope for EP21-P1. The data model and authoring are the foundation; validation builds on top.
+- **EP21-P3 — Relationship Graph Services:** API layer for graph traversal, enabling Concierge and product pages to query fragrance relationships.
+- **EP21-P4 — Concierge Graph Reasoning:** Concierge uses validated graph data to surface "evolved from," "pairs with," and "similar to" context in recommendations.
+- **EP21-P5 — Wardrobe Graph Analysis:** Graph-aware wardrobe analysis to identify seasonal gaps and suggest partners based on what the customer already owns.
+
+Future validation extensions that may be added in later sprints (out of scope for EP21-P2):
+- Orphan detection (records no longer referenced by any other record)
+- Disconnected graph detection (isolated records with no path to any other node)
+- Circular evolution detection (A → B → A)
+- Relationship coverage statistics
+
+All future graph work should build on validated graph data rather than duplicate validation elsewhere.
 
 ---
 
