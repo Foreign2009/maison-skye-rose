@@ -426,6 +426,18 @@ function buildWardrobeSection(profile: ConversationProfile | undefined): PromptS
     lines.push("The collection is well-rounded — focus recommendations on the customer's stated preferences.");
   }
 
+  // Graph insights — collection-level relationship analysis (EP21-P5)
+  const { graphInsights } = analysis;
+  if (graphInsights.completedPairs.length > 0) {
+    lines.push(`Graph coverage: ${graphInsights.completedPairs.join(" · ")}`);
+  }
+  if (graphInsights.missingEvolutions.length > 0) {
+    lines.push(`Natural line extensions: ${graphInsights.missingEvolutions.join(", ")}`);
+  }
+  if (graphInsights.missingPartners.length > 0) {
+    lines.push(`Natural seasonal companions: ${graphInsights.missingPartners.join(", ")}`);
+  }
+
   // Customer intent override signal (Refinement 1)
   lines.push("");
   lines.push("[Customer intent always takes priority. If the customer explicitly requests a fragrance in a style already present in their collection, acknowledge the overlap and recommend the best option for their stated goal.]");

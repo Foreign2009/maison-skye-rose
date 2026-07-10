@@ -14,8 +14,18 @@
 
 import { mkcCatalogue } from "../mkc/catalogue";
 import type { FragranceKnowledge } from "../mkc/types";
+import { buildIndex, getRelationshipSummary } from "../mkc/graph";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
+
+export interface WardrobeGraphInsights {
+  /** Both sides of an evolution or wardrobe-partner pair are present in the collection. */
+  completedPairs:    string[];
+  /** Evolution next-steps from owned records that are not yet in the collection. */
+  missingEvolutions: string[];
+  /** Wardrobe partners of owned records that are not yet in the collection. */
+  missingPartners:   string[];
+}
 
 export interface WardrobeAnalysis {
   resolvedCount:     number;
@@ -27,6 +37,7 @@ export interface WardrobeAnalysis {
   familyCoverage:    string[];
   strengths:         string;            // What the collection already does well
   opportunity:       string | null;     // What another fragrance would contribute
+  graphInsights:     WardrobeGraphInsights; // Relationship graph enrichment (EP21-P5)
 }
 
 // ── Vocabulary ────────────────────────────────────────────────────────────────
@@ -58,6 +69,10 @@ const OCCASION_GROUPS: Array<{ label: string; keywords: string[] }> = [
   { label: "Formal",     keywords: ["wedding", "formal", "gala", "black tie"] },
   { label: "Outdoor",    keywords: ["outdoor", "beach", "vacation", "holiday", "travel"] },
 ];
+
+// ── Graph index (built once at server start) ──────────────────────────────────
+
+const mkcIndex = buildIndex(mkcCatalogue);
 
 // ── Name resolution ───────────────────────────────────────────────────────────
 
@@ -233,6 +248,58 @@ export function analyseWardrobe(names: string[]): WardrobeAnalysis | null {
   const strengths   = describeStrengths(style, coveredOccasions);
   const opportunity = describeOpportunity(style, missingCharacters, coveredOccasions);
 
+  // ── Graph insights (EP21-P5) ──────────────────────────────────────────────
+  const ownedSlugs    = new Set(resolved.map((k) => k.slug));
+  const addedPairKeys = new Set<string>();
+
+  const completedPairs:    string[] = [];
+  const missingEvolutions: string[] = [];
+  const missingPartners:   string[] = [];
+
+  for (const k of resolved) {
+    const summary = getRelationshipSummary(k, mkcIndex);
+
+    // Completed evolution pair: own both this record and its predecessor
+    if (summary.evolutionOf && ownedSlugs.has(summary.evolutionOf.slug)) {
+      const pairKey = [k.slug, summary.evolutionOf.slug].sort().join("+");
+      if (!addedPairKeys.has(pairKey)) {
+        addedPairKeys.add(pairKey);
+        completedPairs.push(`${summary.evolutionOf.name} + ${k.name} (evolution line)`);
+      }
+    }
+
+    // Completed wardrobe partner pair: own both this record and a partner
+    for (const partner of summary.wardrobePartners) {
+      if (ownedSlugs.has(partner.slug)) {
+        const pairKey = [k.slug, partner.slug].sort().join("+");
+        if (!addedPairKeys.has(pairKey)) {
+          addedPairKeys.add(pairKey);
+          completedPairs.push(`${k.name} + ${partner.name} (seasonal pair)`);
+        }
+      }
+    }
+
+    // Missing evolutions: own the predecessor, not yet the evolution
+    for (const evo of summary.evolutions) {
+      if (!ownedSlugs.has(evo.slug)) {
+        missingEvolutions.push(evo.name);
+      }
+    }
+
+    // Missing wardrobe partners: own one side, not the other
+    for (const partner of summary.wardrobePartners) {
+      if (!ownedSlugs.has(partner.slug)) {
+        missingPartners.push(partner.name);
+      }
+    }
+  }
+
+  const graphInsights: WardrobeGraphInsights = {
+    completedPairs:    [...new Set(completedPairs)],
+    missingEvolutions: [...new Set(missingEvolutions)],
+    missingPartners:   [...new Set(missingPartners)],
+  };
+
   return {
     resolvedCount: resolved.length,
     totalCount:    names.length,
@@ -243,5 +310,6 @@ export function analyseWardrobe(names: string[]): WardrobeAnalysis | null {
     familyCoverage,
     strengths,
     opportunity,
+    graphInsights,
   };
 }
