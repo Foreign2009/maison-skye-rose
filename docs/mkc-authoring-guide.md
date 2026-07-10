@@ -234,6 +234,14 @@ All scores are integers. They drive the similarity engine, collection boosting, 
 | God Of Fire Inspired | 3 | 4 | 2 | 3 | 3 | 7 |
 | Delina Inspired | 2 | 4 | 2 | 3 | 4 | 9 |
 | Baccarat Rouge 540 Inspired | 3 | 3 | 4 | 4 | 4 | 9 |
+| Imagination Inspired | 1 | 4 | 2 | 2 | 4 | 4 |
+| Stronger With You Inspired | 4 | 2 | 4 | 3 | 3 | 6 |
+| Oud Wood Inspired | 1 | 1 | 4 | 4 | 2 | 5 |
+| Invictus Inspired | 2 | 4 | 2 | 3 | 5 | 8 |
+| Le Male Elixir Inspired | 5 | 1 | 5 | 4 | 2 | 7 |
+| 1 Million Inspired | 3 | 2 | 4 | 4 | 3 | 9 |
+| Hawas Inspired | 3 | 4 | 2 | 4 | 4 | 6 |
+| 9PM Inspired | 4 | 2 | 4 | 3 | 2 | 5 |
 
 **Calibration anchors per dimension:**
 
@@ -258,6 +266,20 @@ All scores are integers. They drive the similarity engine, collection boosting, 
 - **God Of Fire Inspired (tropical fruity luxury reference)** — The catalogue's first dedicated summer-tropical record. freshness:4 reflects vibrant fruity energy; warmth:2 confirms its summer, non-oriental character. Versatility:3 reflects its season-specific scope. Future fruity-woody records in the summer register calibrate against God Of Fire.
 - **Delina Inspired (fresh feminine floral reference)** — The first Rose collection native record and the primary calibration anchor for feminine fragrances. sweetness:2 / freshness:4 / warmth:2 / intensity:3 establishes the baseline for modern fresh florals. Future Rose records calibrate against Delina on all five dimensions. Delina is also the editorial tone reference for Rose collection descriptions — read its description before authoring any Rose record.
 - **Baccarat Rouge 540 Inspired (luxury unisex amber reference)** — The first unisex record in the Rose collection and the modern amber-floral standard for the catalogue. sweetness:3 and freshness:3 are both at population mean — intentional, reflecting the paradox that BR540 is simultaneously sweet and airy. warmth:4 and intensity:4 place it firmly in the rich-but-wearable range. Future unisex amber records calibrate against BR540. Future all-season, high-versatility records note that BR540 (versatility:4, popularity:9) is the benchmark for cross-occasion unisex signatures.
+
+**Calibration notes for EP20-P1 anchors:**
+
+- **Imagination Inspired (fresh through elegance reference)** — The catalogue's quiet luxury fresh masculine. freshness:4 and intensity:2 together define the close-wearing, intimate fresh tier — distinct from Invictus (freshness:4, intensity:3) which is fresh through energy. Future soft fresh masculines calibrate against Imagination on intensity. sweetness:1 and warmth:2 confirm a purely clean, zero-sweet orientation.
+- **Stronger With You Inspired (aromatic spice sweet reference)** — sweetness:4 and warmth:4 via chestnut/cinnamon/vanilla route, compared to Layton's lavender/amber route at the same tier. The key distinction is intensity:3 vs Layton's intensity:4 — Stronger With You is approachable where Layton is authoritative. Bridge record between the moderate warm tier (Y EDP: warmth:4) and the maximum warm tier (Layton: warmth:5).
+- **Oud Wood Inspired (specialist oud reference)** — First dedicated oud record. sweetness:1 and freshness:1 set the floor for the dry woody-spice character. warmth:4 via amber/tonka/sandalwood route — drier than Layton (warmth:5) because the oud brings resinous depth without vanilla sweetness. versatility:2 anchors the specialist-occasion tier for oud records; future oud fragrances calibrate against this baseline.
+- **Invictus Inspired (high-versatility fresh masculine reference)** — versatility:5 in the fresh register, alongside Sauvage and Bleu De Chanel in the all-occasion tier. The distinction: Invictus achieves versatility within its seasonal range (Spring/Summer) rather than across all seasons. intensity:3 and popularity:8 position it as the mainstream fresh masculine anchor alongside Aqua Di Gio (popularity:8, intensity:2).
+
+**Calibration notes for EP20-P2 anchors:**
+
+- **Le Male Elixir Inspired (honey sweetness reference)** — Second sweetness:5 record alongside Ultra Male. Different route: honey/iris/powdery vs Ultra Male's pear/caramel/gourmand. Also the fourth warmth:5 record, adding the honey/tonka/sandalwood route to Layton (amber/vanilla), Spicebomb Extreme (tobacco/cinnamon/benzoin), and Naxos (honey/tobacco). Future warm honey fragrances calibrate against Le Male Elixir; future gourmand masculines calibrate against Ultra Male. versatility:2 confirms the occasion-specific ceiling for sweet oriental masculines.
+- **1 Million Inspired (leather-spice statement reference)** — The catalogue's leather masculine anchor. sweetness:3 despite warm amber character because leather introduces dryness that tempers what the amber contributes — same sweetness tier as Y EDP and Eros, via different route. warmth:4 via leather route: drier than Layton's amber/vanilla warmth (5) but distinctly warmer than balanced aromatics. popularity:9 reflects global bestseller status — one of the world's most purchased masculines.
+- **Hawas Inspired (fresh aquatic with projection reference)** — intensity:4 in the fresh register is the notable calibration signal. Invictus (intensity:3) is the comparison: same freshness:4, but Hawas projects more assertively. sweetness:3 from apple accord distinguishes it from Invictus (sweetness:2) and Aqua Di Gio (sweetness:1). Establishes that fresh fragrances can reach intensity:4 when projection is a documented characteristic of the reference.
+- **9PM Inspired (sweet nightlife amber reference)** — sweetness:4 via apple/tonka/vanilla route, same tier as Stronger With You (sweetness:4) via chestnut/cinnamon route. The key distinction is versatility:2 vs SWY's versatility:3 — 9PM is a dedicated night-out masculine, SWY has broader autumn/winter range. popularity:5 is intentional: value-tier brand with community awareness but without mainstream designer recognition. Future accessible amber masculines calibrate against 9PM on the versatility/popularity axes.
 
 **Update this table** each time a new native record is committed. The table is permanent engineering state — it enables every future author to calibrate without reading all previous records.
 

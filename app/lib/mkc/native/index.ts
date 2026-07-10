@@ -35,6 +35,10 @@ import { imaginationInspired }          from "./imagination-inspired";
 import { strongerWithYouInspired }      from "./stronger-with-you-inspired";
 import { oudWoodInspired }              from "./oud-wood-inspired";
 import { invictusInspired }             from "./invictus-inspired";
+import { leMaleElixirInspired }         from "./le-male-elixir-inspired";
+import { oneMillionInspired }           from "./1-million-inspired";
+import { hawasInspired }                from "./hawas-inspired";
+import { ninePmInspired }               from "./9pm-inspired";
 
 export const nativeFragrances = new Map<string, FragranceKnowledge>([
   ["sauvage-inspired",              sauvageInspired],
@@ -60,4 +64,8 @@ export const nativeFragrances = new Map<string, FragranceKnowledge>([
   ["stronger-with-you-inspired",    strongerWithYouInspired],
   ["oud-wood-inspired",             oudWoodInspired],
   ["invictus-inspired",             invictusInspired],
+  ["le-male-elixir-inspired",       leMaleElixirInspired],
+  ["1-million-inspired",            oneMillionInspired],
+  ["hawas-inspired",                hawasInspired],
+  ["9pm-inspired",                  ninePmInspired],
 ]);
