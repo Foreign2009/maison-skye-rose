@@ -176,11 +176,20 @@ export function getRepresentativeFragrances(id: string): FragranceKnowledge[] {
 // Graph index built once at module initialisation — O(1) slug lookups thereafter.
 const graphIndex = buildIndex(mkcCatalogue);
 
+/** Explicit relationship category — consumed by Journey Intelligence for topic adaptation. */
+export type PathwayType =
+  | "alternative"      // comparable fragrance via a different route
+  | "evolution"        // more intense descendant of this line
+  | "wardrobe-partner" // recommended to own alongside
+  | "origin";          // ancestor in this fragrance line
+
 export interface DiscoveryPathway {
   /** The connected fragrance to explore. */
   fragrance: FragranceKnowledge;
   /** Educational label describing the relationship. Never promotional. */
   label:     string;
+  /** Explicit relationship category for Journey Intelligence. Not rendered. */
+  type:      PathwayType;
 }
 
 function computePathways(id: string): DiscoveryPathway[] {
@@ -197,21 +206,21 @@ function computePathways(id: string): DiscoveryPathway[] {
 
     // Ordered candidates — alternatives first, then evolutions, wardrobe partners,
     // then the ancestor. This priority produces the most exploratory journey.
-    const candidates: Array<{ fragrance: FragranceKnowledge; label: string }> = [
-      ...summary.alternatives.map(    (f) => ({ fragrance: f, label: "A different expression of this style"  })),
-      ...summary.evolutions.map(      (f) => ({ fragrance: f, label: "A more intense interpretation"          })),
-      ...summary.wardrobePartners.map((f) => ({ fragrance: f, label: "Often worn alongside"                   })),
+    const candidates: Array<{ fragrance: FragranceKnowledge; label: string; type: PathwayType }> = [
+      ...summary.alternatives.map(    (f) => ({ fragrance: f, label: "A different expression of this style",  type: "alternative"      as PathwayType })),
+      ...summary.evolutions.map(      (f) => ({ fragrance: f, label: "A more intense interpretation",          type: "evolution"        as PathwayType })),
+      ...summary.wardrobePartners.map((f) => ({ fragrance: f, label: "Often worn alongside",                   type: "wardrobe-partner" as PathwayType })),
       ...(summary.evolutionOf
-        ? [{ fragrance: summary.evolutionOf, label: "The origin of this fragrance line" }]
+        ? [{ fragrance: summary.evolutionOf, label: "The origin of this fragrance line", type: "origin" as PathwayType }]
         : []),
     ];
 
-    for (const { fragrance, label } of candidates) {
+    for (const { fragrance, label, type } of candidates) {
       if (pathways.length >= 2) break;
       if (representativeSlugs.has(fragrance.slug)) continue; // already shown above
       if (seenSlugs.has(fragrance.slug)) continue;            // dedup across reps
       seenSlugs.add(fragrance.slug);
-      pathways.push({ fragrance, label });
+      pathways.push({ fragrance, label, type });
     }
   }
 
@@ -237,22 +246,28 @@ export function getDiscoveryPathways(id: string): DiscoveryPathway[] {
 // Academy resolves topics to articles via resolveJourneyArticles() (journeyResolver.ts).
 //
 // Ownership:
-//   Discovery Intelligence (this module) → derives topics from collection dimensions
+//   Discovery Intelligence (this module) → derives topics from collection character
 //   Academy resolver (journeyResolver.ts) → maps topics to articles
 //
-// This separation allows Academy to expand its article library without
-// modifying Discovery Intelligence (EP24-P1, Refinement 4).
+// EP24-P2: topic derivation is context-aware — three signal layers:
+//   1. Collection dimensions (aggregate frequency — broad signal)
+//   2. Representative families (specific native records — more precise signal)
+//   3. Pathway relationship types (what exploration is already on the page)
 //
 // Only standard (non-editorial) collections receive journey topics.
 // Editorial collections manage their own article sections via spec.editorial.articleSlugs.
+//
+// JOURNEY_TOPICS_MAP depends on DIMENSIONS_MAP, REPRESENTATIVES_MAP, and PATHWAYS_MAP —
+// all initialised above. Module evaluation order (top-to-bottom) guarantees safety.
 
 /** Educational topics derived from collection character. One topic per educational intent. */
 export type JourneyTopic =
-  | "fragrance-families"  // collection has notable family diversity
-  | "seasonal-fragrance"  // collection has a strong specific season signal
-  | "signature-scent"     // collection suits formal or signature occasions
-  | "fragrance-wearing"   // general wearing guidance (fallback)
-  | "note-pyramid";       // collection has depth/complexity (Oud, Amber, Spicy, Woody)
+  | "fragrance-families"   // collection has notable family diversity
+  | "seasonal-fragrance"   // collection has a strong specific season signal
+  | "signature-scent"      // collection suits formal or signature occasions
+  | "fragrance-wearing"    // general wearing guidance (fallback)
+  | "note-pyramid"         // collection has depth/complexity (Oud, Amber, Spicy, Woody)
+  | "fragrance-layering";  // wardrobe partner pathways present — layering is relevant
 
 const DEEP_FAMILIES  = new Set(["Oud", "Amber", "Spicy", "Woody", "Oriental"]);
 const FRESH_FAMILIES = new Set(["Fresh", "Citrus", "Aquatic", "Aromatic"]);
@@ -263,11 +278,16 @@ function computeJourneyTopics(id: string): JourneyTopic[] {
   // Editorial collections manage their own article selection — skip.
   if (!spec || spec.editorial) return [];
 
-  const dims = DIMENSIONS_MAP.get(id);
+  const dims  = DIMENSIONS_MAP.get(id);
+  const reps  = REPRESENTATIVES_MAP.get(id) ?? [];
+  const paths = PATHWAYS_MAP.get(id) ?? [];
   if (!dims) return [];
 
   const { topFamilies, topOccasions, topSeasons } = dims;
   const topics: JourneyTopic[] = [];
+
+  // ── Layer 1: Collection dimension signals ─────────────────────────────────
+  // Aggregate frequency over the full collection — broad directional signal.
 
   // Specific season dominant (topSeasons[0] is the most frequent — "All Season" excluded).
   if (topSeasons.length > 0 && topSeasons[0] !== "All Season")
@@ -285,7 +305,29 @@ function computeJourneyTopics(id: string): JourneyTopic[] {
   if (topFamilies.some((f) => FRESH_FAMILIES.has(f)))
     topics.push("fragrance-families");
 
-  // Fallback: general wearing guidance when no stronger signal applies.
+  // ── Layer 2: Representative family reinforcement ──────────────────────────
+  // Representatives are the most specific, native-weighted records in the
+  // collection. Their families surface signals the aggregate threshold may miss.
+  if (!topics.includes("note-pyramid")) {
+    const repFamilies = reps.flatMap((r) => r.family);
+    if (repFamilies.some((f) => DEEP_FAMILIES.has(f)))
+      topics.push("note-pyramid");
+  }
+
+  // ── Layer 3: Pathway relationship type adaptation ─────────────────────────
+  // The relationship types shown on the page inform what is educationally adjacent.
+  // Evolution/origin pathways → note pyramid (why fragrances intensify across a line).
+  // Wardrobe partner pathways → layering (how fragrances complement one another).
+  const pathwayTypes = new Set(paths.map((p) => p.type));
+
+  if (!topics.includes("note-pyramid") &&
+      (pathwayTypes.has("evolution") || pathwayTypes.has("origin")))
+    topics.push("note-pyramid");
+
+  if (pathwayTypes.has("wardrobe-partner"))
+    topics.push("fragrance-layering");
+
+  // ── Fallback ──────────────────────────────────────────────────────────────
   if (topics.length === 0)
     topics.push("fragrance-wearing");
 
@@ -293,9 +335,6 @@ function computeJourneyTopics(id: string): JourneyTopic[] {
 }
 
 // ── Precomputed journey topics map ────────────────────────────────────────────
-// JOURNEY_TOPICS_MAP depends on DIMENSIONS_MAP, initialised above.
-// Module evaluation order (top-to-bottom) guarantees DIMENSIONS_MAP is
-// populated before this line executes.
 
 const JOURNEY_TOPICS_MAP = new Map<string, JourneyTopic[]>(
   COLLECTION_SPECS.map((spec) => [spec.id, computeJourneyTopics(spec.id)])

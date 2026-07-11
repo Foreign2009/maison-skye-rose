@@ -15,6 +15,7 @@
  * Discovery Intelligence remains stable — no changes required there (Refinement 4).
  *
  * EP24-P1 foundation: five topics, six articles.
+ * EP24-P2: adds "fragrance-layering" topic → how-to-layer-fragrances.
  */
 
 import type { AcademyArticle } from "./types";
@@ -31,6 +32,7 @@ const TOPIC_SLUG_MAP: Record<JourneyTopic, string[]> = {
   "signature-scent":     ["what-makes-a-signature-scent"],
   "fragrance-wearing":   ["how-to-wear-fragrance"],
   "note-pyramid":        ["the-note-pyramid-explained"],
+  "fragrance-layering":  ["how-to-layer-fragrances"],
 };
 
 /**
