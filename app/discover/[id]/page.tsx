@@ -10,7 +10,7 @@ import { COLLECTION_SPECS, getCollection } from "../../lib/discovery";
 import { getMomentContent } from "../../lib/discovery/momentContent";
 import { getCollectionDimensions, getRepresentativeFragrances, getDiscoveryPathways, getJourneyTopics } from "../../lib/discovery/discoveryIntelligence";
 import { resolveJourneyArticles } from "../../lib/academy/journeyResolver";
-import { getConnectedCollections } from "../../lib/discovery/discoveryGraph";
+import { getProgressionConnections } from "../../lib/discovery/discoveryProgression";
 import DiscoveryAttributionSetter from "../../components/DiscoveryAttributionSetter";
 import { CollectionDimensions } from "../../components/knowledge/CollectionDimensions";
 import { FragranceSpotlight } from "../../components/knowledge/FragranceSpotlight";
@@ -62,10 +62,11 @@ export default async function DiscoverCollectionPage({ params }: PageProps) {
   const pathways        = getDiscoveryPathways(spec.id);
   const journeyArticles = !spec.editorial ? resolveJourneyArticles(getJourneyTopics(spec.id)) : [];
   const connectedCollections = !spec.editorial
-    ? getConnectedCollections(spec.id).map((connSpec) => {
+    ? getProgressionConnections(spec.id).map(({ spec: connSpec, label }) => {
         const connProducts = getCollection(connSpec.id);
         return {
           spec:         connSpec,
+          label,
           productCount: connProducts.length,
           sampleImages: connProducts.slice(0, 3).map((k) => k.images["10ml"]),
         };
@@ -579,13 +580,17 @@ export default async function DiscoverCollectionPage({ params }: PageProps) {
                 </h2>
               </div>
               <div className="grid gap-5 md:grid-cols-2">
-                {connectedCollections.map(({ spec: connSpec, productCount, sampleImages }) => (
-                  <CollectionCard
-                    key={connSpec.id}
-                    spec={connSpec}
-                    productCount={productCount}
-                    sampleImages={sampleImages}
-                  />
+                {connectedCollections.map(({ spec: connSpec, productCount, sampleImages, label }) => (
+                  <div key={connSpec.id}>
+                    <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.4em] text-[#d89ca4]">
+                      {label}
+                    </p>
+                    <CollectionCard
+                      spec={connSpec}
+                      productCount={productCount}
+                      sampleImages={sampleImages}
+                    />
+                  </div>
                 ))}
               </div>
             </div>
