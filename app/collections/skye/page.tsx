@@ -9,6 +9,8 @@ import SearchBar from "../../components/SearchBar";
 import Footer from "../../components/Footer";
 import { mkcCatalogue } from "../../lib/mkc/catalogue";
 import { toDisplayFragrance } from "../../lib/mkc/displayAdapter";
+import { SKYE_INTELLIGENCE } from "../../lib/mkc/collectionIntelligence";
+import { CollectionCharacter } from "../../components/knowledge/CollectionCharacter";
 
 export default function SkyeCollectionPage() {
   const [search, setSearch] = useState("");
@@ -57,6 +59,12 @@ export default function SkyeCollectionPage() {
             Bold masculine luxury fragrances inspired by confidence,
             nightlife, movement and modern elegance.
           </p>
+
+          <CollectionCharacter
+            families={SKYE_INTELLIGENCE.topFamilies}
+            occasions={SKYE_INTELLIGENCE.topOccasions}
+            seasons={SKYE_INTELLIGENCE.topSeasons}
+          />
 
           <div className="mt-8">
             <SearchBar

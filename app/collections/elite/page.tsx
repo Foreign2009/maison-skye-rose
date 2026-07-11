@@ -6,6 +6,8 @@ import ProductCard from "../../components/ProductCard";
 import QuickAddModal from "../../components/QuickAddModal";
 import { mkcCatalogue } from "../../lib/mkc/catalogue";
 import { toDisplayFragrance } from "../../lib/mkc/displayAdapter";
+import { ELITE_INTELLIGENCE } from "../../lib/mkc/collectionIntelligence";
+import { CollectionCharacter } from "../../components/knowledge/CollectionCharacter";
 
 export default function EliteCollectionPage() {
   const [selectedFragrance, setSelectedFragrance] = useState<ReturnType<typeof toDisplayFragrance> | null>(null);
@@ -44,7 +46,13 @@ export default function EliteCollectionPage() {
           most sought-after luxury perfume houses.
         </p>
 
-        <div className="mt-20 grid gap-8 md:grid-cols-2 xl:grid-cols-3">
+        <CollectionCharacter
+          families={ELITE_INTELLIGENCE.topFamilies}
+          occasions={ELITE_INTELLIGENCE.topOccasions}
+          seasons={ELITE_INTELLIGENCE.topSeasons}
+        />
+
+        <div className="mt-8 grid gap-8 md:grid-cols-2 xl:grid-cols-3">
           {products.map((fragrance) => (
             <ProductCard
               key={fragrance.title}

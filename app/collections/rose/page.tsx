@@ -9,6 +9,8 @@ import SearchBar from "../../components/SearchBar";
 import Footer from "../../components/Footer";
 import { mkcCatalogue } from "../../lib/mkc/catalogue";
 import { toDisplayFragrance } from "../../lib/mkc/displayAdapter";
+import { ROSE_INTELLIGENCE } from "../../lib/mkc/collectionIntelligence";
+import { CollectionCharacter } from "../../components/knowledge/CollectionCharacter";
 
 export default function RoseCollectionPage() {
   const [search, setSearch] = useState("");
@@ -57,6 +59,12 @@ export default function RoseCollectionPage() {
             Timeless feminine luxury fragrances inspired by grace,
             romance, beauty and soft sophistication.
           </p>
+
+          <CollectionCharacter
+            families={ROSE_INTELLIGENCE.topFamilies}
+            occasions={ROSE_INTELLIGENCE.topOccasions}
+            seasons={ROSE_INTELLIGENCE.topSeasons}
+          />
 
           <div className="mt-12">
             <SearchBar
