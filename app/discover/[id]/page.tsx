@@ -8,7 +8,9 @@ import CollectionCard from "../../components/CollectionCard";
 import MomentConciergeButton from "../../components/MomentConciergeButton";
 import { COLLECTION_SPECS, getCollection } from "../../lib/discovery";
 import { getMomentContent } from "../../lib/discovery/momentContent";
+import { getCollectionDimensions } from "../../lib/discovery/discoveryIntelligence";
 import DiscoveryAttributionSetter from "../../components/DiscoveryAttributionSetter";
+import { CollectionDimensions } from "../../components/knowledge/CollectionDimensions";
 import { toDisplayFragrance } from "../../lib/mkc/displayAdapter";
 import { academyCatalogue } from "../../lib/academy/catalogue";
 
@@ -52,6 +54,7 @@ export default async function DiscoverCollectionPage({ params }: PageProps) {
 
   const baseUrl        = process.env.NEXT_PUBLIC_WEBSITE_URL ?? "";
   const momentContent  = getMomentContent(id);
+  const dimensions     = getCollectionDimensions(spec.id);
   const products       = getCollection(spec.id).map((k) => ({ ...toDisplayFragrance(k), scentCharacter: k.scentCharacter }));
 
   const breadcrumbJsonLd = {
@@ -416,6 +419,19 @@ export default async function DiscoverCollectionPage({ params }: PageProps) {
             </div>
           </div>
         </section>
+
+        {/* ── Discovery Intelligence ────────────────────────────────────────── */}
+        {dimensions && (
+          <section className="px-4 pb-4">
+            <div className="mx-auto max-w-7xl">
+              <CollectionDimensions
+                families={dimensions.topFamilies}
+                occasions={dimensions.topOccasions}
+                seasons={dimensions.topSeasons}
+              />
+            </div>
+          </section>
+        )}
 
         {/* ── Product Grid ──────────────────────────────────────────────────── */}
         <section className="px-4 pb-16 md:pb-24">
