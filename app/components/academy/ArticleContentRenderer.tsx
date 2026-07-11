@@ -1,11 +1,8 @@
 import type { AcademyContentBlock } from "../../lib/academy/types";
 import { AcademyCallout } from "./AcademyCallout";
 import { AcademyQuote } from "./AcademyQuote";
-import Image from "next/image";
-import Link from "next/link";
 import { mkcCatalogue } from "../../lib/mkc/catalogue";
-import { NoteChip } from "../knowledge/NoteChip";
-import { KnowledgeChip } from "../knowledge/KnowledgeChip";
+import { FragranceSpotlight } from "../knowledge/FragranceSpotlight";
 
 interface ArticleContentRendererProps {
   content: AcademyContentBlock[];
@@ -126,59 +123,12 @@ export function ArticleContentRenderer({ content }: ArticleContentRendererProps)
               (f) => f.id === block.fragranceId || f.slug === block.fragranceId
             );
             if (!fragrance) return null;
-            const spotlightNotes = [
-              ...fragrance.notes.top,
-              ...fragrance.notes.heart,
-              ...fragrance.notes.base,
-            ].slice(0, 5);
             return (
-              <div
+              <FragranceSpotlight
                 key={index}
-                className="rounded-xl border border-[#e8e4e9] bg-white overflow-hidden"
-              >
-                <div className="flex gap-4 p-5">
-                  <div className="shrink-0">
-                    <Image
-                      src={fragrance.images["10ml"]}
-                      alt={fragrance.name}
-                      width={72}
-                      height={72}
-                      className="rounded-lg bg-[#faf8f8] object-contain p-2"
-                    />
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <p className="text-[10px] font-semibold tracking-widest uppercase text-[#d89ca4] mb-0.5">
-                      {fragrance.collection} Collection
-                    </p>
-                    <p className="text-sm font-bold text-[#4f4a52] leading-snug">
-                      {fragrance.name}
-                    </p>
-                    <div className="mt-2 flex flex-wrap gap-1.5">
-                      <KnowledgeChip label={fragrance.profile} />
-                      <KnowledgeChip label={fragrance.season} />
-                    </div>
-                    <p className="mt-2 text-xs text-[#4f4a52]/70 leading-relaxed line-clamp-2">
-                      {fragrance.mood}
-                    </p>
-                    <div className="mt-2 flex flex-wrap gap-1">
-                      {spotlightNotes.map((note) => (
-                        <NoteChip key={note} note={note} size="sm" />
-                      ))}
-                    </div>
-                  </div>
-                </div>
-                <div className="border-t border-[#e8e4e9] bg-[#faf8f8] px-5 py-3 flex items-start justify-between gap-4">
-                  <p className="text-xs italic text-[#4f4a52]/60 leading-relaxed">
-                    {block.caption}
-                  </p>
-                  <Link
-                    href={`/product/${fragrance.slug}`}
-                    className="shrink-0 text-xs font-semibold text-[#d89ca4] hover:underline whitespace-nowrap"
-                  >
-                    Explore →
-                  </Link>
-                </div>
-              </div>
+                fragrance={fragrance}
+                caption={block.caption}
+              />
             );
           }
 

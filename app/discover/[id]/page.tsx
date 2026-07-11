@@ -8,9 +8,10 @@ import CollectionCard from "../../components/CollectionCard";
 import MomentConciergeButton from "../../components/MomentConciergeButton";
 import { COLLECTION_SPECS, getCollection } from "../../lib/discovery";
 import { getMomentContent } from "../../lib/discovery/momentContent";
-import { getCollectionDimensions } from "../../lib/discovery/discoveryIntelligence";
+import { getCollectionDimensions, getRepresentativeFragrances } from "../../lib/discovery/discoveryIntelligence";
 import DiscoveryAttributionSetter from "../../components/DiscoveryAttributionSetter";
 import { CollectionDimensions } from "../../components/knowledge/CollectionDimensions";
+import { FragranceSpotlight } from "../../components/knowledge/FragranceSpotlight";
 import { toDisplayFragrance } from "../../lib/mkc/displayAdapter";
 import { academyCatalogue } from "../../lib/academy/catalogue";
 
@@ -55,6 +56,7 @@ export default async function DiscoverCollectionPage({ params }: PageProps) {
   const baseUrl        = process.env.NEXT_PUBLIC_WEBSITE_URL ?? "";
   const momentContent  = getMomentContent(id);
   const dimensions     = getCollectionDimensions(spec.id);
+  const representatives = getRepresentativeFragrances(spec.id);
   const products       = getCollection(spec.id).map((k) => ({ ...toDisplayFragrance(k), scentCharacter: k.scentCharacter }));
 
   const breadcrumbJsonLd = {
@@ -429,6 +431,26 @@ export default async function DiscoverCollectionPage({ params }: PageProps) {
                 occasions={dimensions.topOccasions}
                 seasons={dimensions.topSeasons}
               />
+            </div>
+          </section>
+        )}
+
+        {/* ── Representative Fragrances ────────────────────────────────────── */}
+        {representatives.length > 0 && (
+          <section className="px-4 pb-8 md:pb-10">
+            <div className="mx-auto max-w-7xl">
+              <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-zinc-400 mb-4">
+                Fragrance Examples
+              </p>
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                {representatives.map((fragrance) => (
+                  <FragranceSpotlight
+                    key={fragrance.id}
+                    fragrance={fragrance}
+                    caption={fragrance.mood}
+                  />
+                ))}
+              </div>
             </div>
           </section>
         )}
