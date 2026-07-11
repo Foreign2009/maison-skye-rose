@@ -10,6 +10,7 @@ import { COLLECTION_SPECS, getCollection } from "../../lib/discovery";
 import { getMomentContent } from "../../lib/discovery/momentContent";
 import { getCollectionDimensions, getRepresentativeFragrances, getDiscoveryPathways, getJourneyTopics } from "../../lib/discovery/discoveryIntelligence";
 import { resolveJourneyArticles } from "../../lib/academy/journeyResolver";
+import { getConnectedCollections } from "../../lib/discovery/discoveryGraph";
 import DiscoveryAttributionSetter from "../../components/DiscoveryAttributionSetter";
 import { CollectionDimensions } from "../../components/knowledge/CollectionDimensions";
 import { FragranceSpotlight } from "../../components/knowledge/FragranceSpotlight";
@@ -60,6 +61,16 @@ export default async function DiscoverCollectionPage({ params }: PageProps) {
   const representatives = getRepresentativeFragrances(spec.id);
   const pathways        = getDiscoveryPathways(spec.id);
   const journeyArticles = !spec.editorial ? resolveJourneyArticles(getJourneyTopics(spec.id)) : [];
+  const connectedCollections = !spec.editorial
+    ? getConnectedCollections(spec.id).map((connSpec) => {
+        const connProducts = getCollection(connSpec.id);
+        return {
+          spec:         connSpec,
+          productCount: connProducts.length,
+          sampleImages: connProducts.slice(0, 3).map((k) => k.images["10ml"]),
+        };
+      })
+    : [];
   const products        = getCollection(spec.id).map((k) => ({ ...toDisplayFragrance(k), scentCharacter: k.scentCharacter }));
 
   const breadcrumbJsonLd = {
@@ -554,6 +565,32 @@ export default async function DiscoverCollectionPage({ params }: PageProps) {
             </div>
           </div>
         </section>
+
+        {/* ── Continue Your Journey (EP24-P3) ─────────────────────────────────── */}
+        {connectedCollections.length > 0 && (
+          <section className="bg-white py-16 px-4 md:py-20">
+            <div className="mx-auto max-w-7xl">
+              <div className="mb-8 md:mb-10">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.55em] text-[#d89ca4]">
+                  Continue Your Journey
+                </p>
+                <h2 className="mt-3 text-2xl font-black tracking-[-0.04em] text-[#4f4a52] md:text-3xl">
+                  Collections You Might Enjoy Next
+                </h2>
+              </div>
+              <div className="grid gap-5 md:grid-cols-2">
+                {connectedCollections.map(({ spec: connSpec, productCount, sampleImages }) => (
+                  <CollectionCard
+                    key={connSpec.id}
+                    spec={connSpec}
+                    productCount={productCount}
+                    sampleImages={sampleImages}
+                  />
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* ── Academy Articles (editorial collections only) ──────────────────── */}
         {spec.editorial && (() => {

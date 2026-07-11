@@ -343,3 +343,41 @@ const JOURNEY_TOPICS_MAP = new Map<string, JourneyTopic[]>(
 export function getJourneyTopics(id: string): JourneyTopic[] {
   return JOURNEY_TOPICS_MAP.get(id) ?? [];
 }
+
+// ── Collection profile ────────────────────────────────────────────────────────
+// A single public representation of the understood character of a collection.
+// Consumed by Discovery Graph for connection scoring — the graph should never
+// reconstruct individual intelligence independently (EP24-P3, Refinement 1).
+//
+// Contains all three layers of collection understanding:
+//   - dimensions      (aggregate frequency — EP23-P1)
+//   - representatives (native-weighted examples — EP23-P2)
+//   - topics          (adaptive educational intent — EP24-P1/P2)
+//
+// As Discovery Intelligence evolves, the profile absorbs new layers here.
+// Discovery Graph consumers remain decoupled from internal implementation.
+//
+// PROFILE_MAP depends on DIMENSIONS_MAP, REPRESENTATIVES_MAP, and JOURNEY_TOPICS_MAP —
+// all initialised above. Module evaluation order (top-to-bottom) guarantees safety.
+
+export interface CollectionProfile {
+  /** Dominant families, occasions, and seasons across the collection. */
+  dimensions:      CollectionDimensions;
+  /** Up to 2 native-preferred fragrances illustrating collection character. */
+  representatives: FragranceKnowledge[];
+  /** Adaptive educational topics derived from collection context. */
+  topics:          JourneyTopic[];
+}
+
+const PROFILE_MAP = new Map<string, CollectionProfile>(
+  COLLECTION_SPECS.map((spec) => [spec.id, {
+    dimensions:      DIMENSIONS_MAP.get(spec.id) ??
+                       { topFamilies: [], topOccasions: [], topSeasons: [] },
+    representatives: REPRESENTATIVES_MAP.get(spec.id) ?? [],
+    topics:          JOURNEY_TOPICS_MAP.get(spec.id) ?? [],
+  }])
+);
+
+export function getCollectionProfile(id: string): CollectionProfile | undefined {
+  return PROFILE_MAP.get(id);
+}
