@@ -230,3 +230,77 @@ const PATHWAYS_MAP = new Map<string, DiscoveryPathway[]>(
 export function getDiscoveryPathways(id: string): DiscoveryPathway[] {
   return PATHWAYS_MAP.get(id) ?? [];
 }
+
+// ── Journey topics ────────────────────────────────────────────────────────────
+// Derives educational intent from collection character.
+// Topics express WHAT a customer would benefit from learning — not which articles.
+// Academy resolves topics to articles via resolveJourneyArticles() (journeyResolver.ts).
+//
+// Ownership:
+//   Discovery Intelligence (this module) → derives topics from collection dimensions
+//   Academy resolver (journeyResolver.ts) → maps topics to articles
+//
+// This separation allows Academy to expand its article library without
+// modifying Discovery Intelligence (EP24-P1, Refinement 4).
+//
+// Only standard (non-editorial) collections receive journey topics.
+// Editorial collections manage their own article sections via spec.editorial.articleSlugs.
+
+/** Educational topics derived from collection character. One topic per educational intent. */
+export type JourneyTopic =
+  | "fragrance-families"  // collection has notable family diversity
+  | "seasonal-fragrance"  // collection has a strong specific season signal
+  | "signature-scent"     // collection suits formal or signature occasions
+  | "fragrance-wearing"   // general wearing guidance (fallback)
+  | "note-pyramid";       // collection has depth/complexity (Oud, Amber, Spicy, Woody)
+
+const DEEP_FAMILIES  = new Set(["Oud", "Amber", "Spicy", "Woody", "Oriental"]);
+const FRESH_FAMILIES = new Set(["Fresh", "Citrus", "Aquatic", "Aromatic"]);
+const EVENING_OCCS   = new Set(["Date Night", "Wedding", "Evening"]);
+
+function computeJourneyTopics(id: string): JourneyTopic[] {
+  const spec = COLLECTION_SPECS.find((s) => s.id === id);
+  // Editorial collections manage their own article selection — skip.
+  if (!spec || spec.editorial) return [];
+
+  const dims = DIMENSIONS_MAP.get(id);
+  if (!dims) return [];
+
+  const { topFamilies, topOccasions, topSeasons } = dims;
+  const topics: JourneyTopic[] = [];
+
+  // Specific season dominant (topSeasons[0] is the most frequent — "All Season" excluded).
+  if (topSeasons.length > 0 && topSeasons[0] !== "All Season")
+    topics.push("seasonal-fragrance");
+
+  // Deep/complex families: depth of composition is a notable learning signal.
+  if (topFamilies.some((f) => DEEP_FAMILIES.has(f)))
+    topics.push("note-pyramid");
+
+  // Evening/signature occasions: identity and signature are relevant concepts.
+  if (topOccasions.some((o) => EVENING_OCCS.has(o)))
+    topics.push("signature-scent");
+
+  // Fresh/aromatic families: family diversity is an educational entry point.
+  if (topFamilies.some((f) => FRESH_FAMILIES.has(f)))
+    topics.push("fragrance-families");
+
+  // Fallback: general wearing guidance when no stronger signal applies.
+  if (topics.length === 0)
+    topics.push("fragrance-wearing");
+
+  return topics;
+}
+
+// ── Precomputed journey topics map ────────────────────────────────────────────
+// JOURNEY_TOPICS_MAP depends on DIMENSIONS_MAP, initialised above.
+// Module evaluation order (top-to-bottom) guarantees DIMENSIONS_MAP is
+// populated before this line executes.
+
+const JOURNEY_TOPICS_MAP = new Map<string, JourneyTopic[]>(
+  COLLECTION_SPECS.map((spec) => [spec.id, computeJourneyTopics(spec.id)])
+);
+
+export function getJourneyTopics(id: string): JourneyTopic[] {
+  return JOURNEY_TOPICS_MAP.get(id) ?? [];
+}

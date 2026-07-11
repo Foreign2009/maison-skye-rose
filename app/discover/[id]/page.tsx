@@ -8,7 +8,8 @@ import CollectionCard from "../../components/CollectionCard";
 import MomentConciergeButton from "../../components/MomentConciergeButton";
 import { COLLECTION_SPECS, getCollection } from "../../lib/discovery";
 import { getMomentContent } from "../../lib/discovery/momentContent";
-import { getCollectionDimensions, getRepresentativeFragrances, getDiscoveryPathways } from "../../lib/discovery/discoveryIntelligence";
+import { getCollectionDimensions, getRepresentativeFragrances, getDiscoveryPathways, getJourneyTopics } from "../../lib/discovery/discoveryIntelligence";
+import { resolveJourneyArticles } from "../../lib/academy/journeyResolver";
 import DiscoveryAttributionSetter from "../../components/DiscoveryAttributionSetter";
 import { CollectionDimensions } from "../../components/knowledge/CollectionDimensions";
 import { FragranceSpotlight } from "../../components/knowledge/FragranceSpotlight";
@@ -58,6 +59,7 @@ export default async function DiscoverCollectionPage({ params }: PageProps) {
   const dimensions      = getCollectionDimensions(spec.id);
   const representatives = getRepresentativeFragrances(spec.id);
   const pathways        = getDiscoveryPathways(spec.id);
+  const journeyArticles = !spec.editorial ? resolveJourneyArticles(getJourneyTopics(spec.id)) : [];
   const products        = getCollection(spec.id).map((k) => ({ ...toDisplayFragrance(k), scentCharacter: k.scentCharacter }));
 
   const breadcrumbJsonLd = {
@@ -470,6 +472,37 @@ export default async function DiscoverCollectionPage({ params }: PageProps) {
                     fragrance={fragrance}
                     caption={label}
                   />
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* ── From the Academy (EP24-P1) ────────────────────────────────────── */}
+        {journeyArticles.length > 0 && (
+          <section className="px-4 pb-8 md:pb-10">
+            <div className="mx-auto max-w-7xl">
+              <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-zinc-400 mb-4">
+                From the Academy
+              </p>
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                {journeyArticles.map(({ slug, title, excerpt, readTime }) => (
+                  <Link
+                    key={slug}
+                    href={`/academy/${slug}`}
+                    className="group block rounded-[20px] border border-[#f0ebe8] bg-white p-6 transition-all duration-300 hover:border-[#d89ca4] hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)]"
+                  >
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#d89ca4]">
+                      {readTime} min read
+                    </p>
+                    <h3 className="mt-2 text-sm font-bold leading-snug text-[#4f4a52]">
+                      {title}
+                    </h3>
+                    <p className="mt-2 text-xs leading-relaxed text-[#7b7480] line-clamp-2">
+                      {excerpt}
+                    </p>
+                    <p className="mt-4 text-xs font-bold text-[#d89ca4]">Read more →</p>
+                  </Link>
                 ))}
               </div>
             </div>
