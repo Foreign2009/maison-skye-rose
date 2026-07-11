@@ -43,7 +43,18 @@ export function ArticleRelatedFragrances({ fragranceIds }: ArticleRelatedFragran
                 <p className="text-sm font-medium text-[#4f4a52] leading-tight group-hover:text-[#d89ca4] transition-colors duration-200 line-clamp-2">
                   {fragrance.name}
                 </p>
-                <p className="mt-1 text-xs text-[#4f4a52]/60">
+                <div className="mt-1.5 flex flex-wrap gap-1">
+                  <span className="rounded-full bg-[#f5f1eb] px-2 py-0.5 text-[10px] font-medium text-[#7b7480]">
+                    {fragrance.profile}
+                  </span>
+                  <span className="rounded-full bg-[#f5f1eb] px-2 py-0.5 text-[10px] font-medium text-[#7b7480]">
+                    {fragrance.season}
+                  </span>
+                </div>
+                <p className="mt-1.5 text-[11px] text-[#4f4a52]/55 leading-relaxed line-clamp-2">
+                  {fragrance.mood}
+                </p>
+                <p className="mt-1.5 text-xs text-[#4f4a52]/60">
                   From R{fragrance.prices["5ml"]}
                 </p>
               </div>

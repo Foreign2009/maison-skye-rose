@@ -68,6 +68,11 @@ export const academyCatalogue: AcademyArticle[] = [
         text: "Apply the fragrance to a pulse point — your wrist or inner elbow — and wait. Smell it immediately (top notes), again after 30 minutes (heart notes), and again 2 to 3 hours later (base notes). Only then do you know the full fragrance.",
       },
       {
+        type: "fragrance-spotlight",
+        fragranceId: "sauvage-inspired",
+        caption: "Sauvage Inspired follows the classic three-layer structure: bright bergamot and pepper in the opening, lavender and geranium through the heart, and a long-wearing ambroxan base — a clear illustration of how the note pyramid unfolds over time on a single fragrance.",
+      },
+      {
         type: "tip",
         text: "The Maison Knowledge Catalogue lists top, heart, and base notes for every fragrance. Use the note pyramid view on any product page to explore how your fragrance is structured.",
       },
@@ -305,6 +310,11 @@ export const academyCatalogue: AcademyArticle[] = [
         text: "The right signature scent should feel effortless. You should not think about it — it should feel like an extension of you. If you are still debating whether you like it after a week of wear, it is probably not your signature. The right fragrance creates a quiet confidence. You know it is right.",
       },
       {
+        type: "fragrance-spotlight",
+        fragranceId: "aventus-inspired",
+        caption: "Aventus Inspired demonstrates what a settled signature character feels like — a well-defined, confident composition that is consistent from first spray to dry-down, and recognisable without announcing itself.",
+      },
+      {
         type: "heading",
         text: "One Does Not Have to Be the Answer",
       },
@@ -390,6 +400,11 @@ export const academyCatalogue: AcademyArticle[] = [
       {
         type: "paragraph",
         text: "Some fragrances are genuinely versatile — typically balanced woody or fresh-woody compositions that are not extreme in any direction. These make excellent everyday signature scents because they perform reliably across changing conditions. Look for fragrances described as All Season in the Maison catalogue.",
+      },
+      {
+        type: "fragrance-spotlight",
+        fragranceId: "bleu-de-chanel-inspired",
+        caption: "Bleu de Chanel Inspired is a balanced woody-fresh composition — neither too light for winter nor too heavy for summer — that performs reliably across changing conditions. It is a practical example of what all-season character means on the skin.",
       },
       {
         type: "note-list",
