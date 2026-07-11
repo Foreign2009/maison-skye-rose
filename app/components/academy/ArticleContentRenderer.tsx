@@ -4,6 +4,8 @@ import { AcademyQuote } from "./AcademyQuote";
 import Image from "next/image";
 import Link from "next/link";
 import { mkcCatalogue } from "../../lib/mkc/catalogue";
+import { NoteChip } from "../knowledge/NoteChip";
+import { KnowledgeChip } from "../knowledge/KnowledgeChip";
 
 interface ArticleContentRendererProps {
   content: AcademyContentBlock[];
@@ -152,24 +154,15 @@ export function ArticleContentRenderer({ content }: ArticleContentRendererProps)
                       {fragrance.name}
                     </p>
                     <div className="mt-2 flex flex-wrap gap-1.5">
-                      <span className="rounded-full bg-[#f5f1eb] px-2.5 py-0.5 text-[11px] font-medium text-[#7b7480]">
-                        {fragrance.profile}
-                      </span>
-                      <span className="rounded-full bg-[#f5f1eb] px-2.5 py-0.5 text-[11px] font-medium text-[#7b7480]">
-                        {fragrance.season}
-                      </span>
+                      <KnowledgeChip label={fragrance.profile} />
+                      <KnowledgeChip label={fragrance.season} />
                     </div>
                     <p className="mt-2 text-xs text-[#4f4a52]/70 leading-relaxed line-clamp-2">
                       {fragrance.mood}
                     </p>
                     <div className="mt-2 flex flex-wrap gap-1">
                       {spotlightNotes.map((note) => (
-                        <span
-                          key={note}
-                          className="rounded-full bg-pink-50 px-2 py-0.5 text-[11px] font-medium text-[#d89ca4]"
-                        >
-                          {note}
-                        </span>
+                        <NoteChip key={note} note={note} size="sm" />
                       ))}
                     </div>
                   </div>

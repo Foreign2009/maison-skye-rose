@@ -7,6 +7,8 @@ import { trackAiChatStarted } from "../lib/analytics";
 import { computeWardrobe } from "../lib/mkc/wardrobeEngine";
 import type { FragranceKnowledge } from "../lib/mkc/types";
 import type { SimilarityResult } from "../lib/discovery/types";
+import { NoteChip } from "./knowledge/NoteChip";
+import { KnowledgeChip } from "./knowledge/KnowledgeChip";
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -56,12 +58,7 @@ export default function FragranceWardrobe({
           </p>
           <div className="flex flex-wrap gap-2">
             {wardrobe.bestFor.map((o) => (
-              <span
-                key={o}
-                className="rounded-full border border-[#ede8e1] bg-[#f9f7f4] px-3 py-1.5 text-xs font-semibold text-[#4f4a52]"
-              >
-                {o}
-              </span>
+              <KnowledgeChip key={o} label={o} variant="bordered" />
             ))}
           </div>
         </div>
@@ -83,12 +80,7 @@ export default function FragranceWardrobe({
             </p>
             <div className="flex flex-wrap gap-2">
               {wardrobe.personality.map((v) => (
-                <span
-                  key={v}
-                  className="rounded-full bg-pink-50 px-3 py-1.5 text-xs font-semibold text-[#d89ca4]"
-                >
-                  {v}
-                </span>
+                <NoteChip key={v} note={v} />
               ))}
             </div>
           </div>

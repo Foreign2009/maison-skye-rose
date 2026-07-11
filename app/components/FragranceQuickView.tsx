@@ -11,13 +11,9 @@ import { useCartFeedback } from "../context/CartFeedbackContext";
 import { trackAddToCart } from "../lib/analytics";
 import type { FragranceKnowledge } from "../lib/mkc/types";
 import { generateWhyYoullLikeIt } from "../lib/mkc/merchandising";
-
-// ── Collection styling ────────────────────────────────────────────────────────
-const COLLECTION_STYLES: Record<string, { pill: string; label: string }> = {
-  Skye:  { pill: "bg-blue-50 text-blue-600",     label: "Skye Collection"  },
-  Rose:  { pill: "bg-pink-50 text-[#d89ca4]",    label: "Rose Collection"  },
-  Elite: { pill: "bg-[#f3f0fa] text-[#9b7ce0]",  label: "Elite Collection" },
-};
+import { CollectionBadge } from "./knowledge/CollectionBadge";
+import { NoteChip } from "./knowledge/NoteChip";
+import { KnowledgeChip } from "./knowledge/KnowledgeChip";
 
 // ── Component ─────────────────────────────────────────────────────────────────
 interface FragranceQuickViewProps {
@@ -98,9 +94,6 @@ export default function FragranceQuickView({
         .filter(Boolean)
         .slice(0, 7)
     : [];
-  const collStyle   = knowledge
-    ? (COLLECTION_STYLES[knowledge.collection] ?? COLLECTION_STYLES.Skye)
-    : COLLECTION_STYLES.Skye;
   const currentPrice = knowledge ? knowledge.prices[selectedSize] : 0;
 
   const handleAddToCart = () => {
@@ -182,9 +175,7 @@ export default function FragranceQuickView({
 
                 {/* ── Identity ─────────────────────────────────────────── */}
                 <div>
-                  <span className={`inline-block rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] ${collStyle.pill}`}>
-                    {collStyle.label}
-                  </span>
+                  <CollectionBadge collection={knowledge.collection} />
 
                   <h2
                     id="fqv-title"
@@ -202,12 +193,7 @@ export default function FragranceQuickView({
                   {knowledge.family.length > 0 && (
                     <div className="mt-3 flex flex-wrap gap-1.5">
                       {knowledge.family.map((f) => (
-                        <span
-                          key={f}
-                          className="rounded-full bg-[#f5f1eb] px-3 py-1 text-[11px] font-semibold text-[#7b7480]"
-                        >
-                          {f}
-                        </span>
+                        <KnowledgeChip key={f} label={f} />
                       ))}
                     </div>
                   )}
@@ -241,12 +227,7 @@ export default function FragranceQuickView({
                   </p>
                   <div className="mt-3 flex flex-wrap gap-2">
                     {allNotes.map((note) => (
-                      <span
-                        key={note}
-                        className="rounded-full bg-pink-50 px-3 py-1.5 text-xs font-semibold text-[#d89ca4]"
-                      >
-                        {note}
-                      </span>
+                      <NoteChip key={note} note={note} />
                     ))}
                   </div>
                 </div>
@@ -262,12 +243,7 @@ export default function FragranceQuickView({
                       </p>
                       <div className="mt-2 flex flex-wrap gap-1.5">
                         {knowledge.occasions.map((o) => (
-                          <span
-                            key={o}
-                            className="rounded-full bg-[#f5f1eb] px-2.5 py-1 text-[11px] font-semibold text-[#7b7480]"
-                          >
-                            {o}
-                          </span>
+                          <KnowledgeChip key={o} label={o} />
                         ))}
                       </div>
                     </div>

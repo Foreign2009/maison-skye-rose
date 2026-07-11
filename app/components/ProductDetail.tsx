@@ -24,13 +24,10 @@ import {
 } from "../lib/analytics";
 import { useConcierge } from "../context/ConciergeContext";
 import { deriveSimilarityReasons } from "../lib/concierge/similarityReasons";
+import { CollectionBadge } from "./knowledge/CollectionBadge";
+import { NoteChip } from "./knowledge/NoteChip";
+import { KnowledgeChip } from "./knowledge/KnowledgeChip";
 
-// ── Collection badge styles ───────────────────────────────────────────────────
-const COLLECTION_STYLES: Record<string, { pill: string; label: string }> = {
-  Skye:  { pill: "bg-blue-50 text-blue-600",    label: "Skye Collection"  },
-  Rose:  { pill: "bg-pink-50 text-[#d89ca4]",   label: "Rose Collection"  },
-  Elite: { pill: "bg-[#f3f0fa] text-[#9b7ce0]", label: "Elite Collection" },
-};
 
 // ── Discover More — static fallback (shown when Academy articles are not provided) ──
 const DISCOVER_MORE_FALLBACK = [
@@ -177,9 +174,6 @@ export default function ProductDetail({
     () => [...knowledge.notes.top, ...knowledge.notes.heart, ...knowledge.notes.base].filter(Boolean),
     [knowledge]
   );
-  const collStyle = COLLECTION_STYLES[knowledge.collection] ?? COLLECTION_STYLES.Skye;
-
-
   // ── Render ─────────────────────────────────────────────────────────────────
 
   return (
@@ -245,9 +239,7 @@ export default function ProductDetail({
             {/* Identity + Commerce */}
             <div>
               {/* Collection badge */}
-              <span className={`inline-block rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] ${collStyle.pill}`}>
-                {collStyle.label}
-              </span>
+              <CollectionBadge collection={knowledge.collection} />
 
               {/* Fragrance name */}
               <h1 className="mt-3 text-[1.8rem] leading-tight md:text-5xl font-black tracking-[-0.05em] text-[#4f4a52]">
@@ -401,12 +393,7 @@ export default function ProductDetail({
                 </p>
                 <div className="mt-2.5 flex flex-wrap gap-1.5">
                   {knowledge.family.map((f) => (
-                    <span
-                      key={f}
-                      className="rounded-full bg-[#f5f1eb] px-2.5 py-1 text-[11px] font-semibold text-[#7b7480]"
-                    >
-                      {f}
-                    </span>
+                    <KnowledgeChip key={f} label={f} />
                   ))}
                 </div>
               </div>
@@ -438,12 +425,7 @@ export default function ProductDetail({
                 </p>
                 <div className="mt-2.5 flex flex-wrap gap-1.5">
                   {knowledge.occasions.map((o) => (
-                    <span
-                      key={o}
-                      className="rounded-full bg-[#f5f1eb] px-2.5 py-1 text-[11px] font-semibold text-[#7b7480]"
-                    >
-                      {o}
-                    </span>
+                    <KnowledgeChip key={o} label={o} />
                   ))}
                 </div>
               </div>
@@ -474,12 +456,7 @@ export default function ProductDetail({
             {/* Curated notes — always visible */}
             <div className="mt-6 flex flex-wrap gap-2">
               {allNotes.map((note) => (
-                <span
-                  key={note}
-                  className="rounded-full bg-pink-50 px-3 py-1.5 text-xs font-semibold text-[#d89ca4]"
-                >
-                  {note}
-                </span>
+                <NoteChip key={note} note={note} />
               ))}
             </div>
 
@@ -590,12 +567,7 @@ export default function ProductDetail({
                   </p>
                   <div className="flex flex-wrap gap-2">
                     {knowledge.recommendedFor.map((r) => (
-                      <span
-                        key={r}
-                        className="rounded-full border border-[#ede8e1] bg-[#f9f7f4] px-3 py-1.5 text-xs font-semibold text-[#4f4a52]"
-                      >
-                        {r}
-                      </span>
+                      <KnowledgeChip key={r} label={r} variant="bordered" />
                     ))}
                   </div>
                 </div>
@@ -608,12 +580,7 @@ export default function ProductDetail({
                   </p>
                   <div className="flex flex-wrap gap-2">
                     {knowledge.signatureStyle.map((s) => (
-                      <span
-                        key={s}
-                        className="rounded-full border border-[#ede8e1] bg-[#f9f7f4] px-3 py-1.5 text-xs font-semibold text-[#4f4a52]"
-                      >
-                        {s}
-                      </span>
+                      <KnowledgeChip key={s} label={s} variant="bordered" />
                     ))}
                   </div>
                 </div>
@@ -626,12 +593,7 @@ export default function ProductDetail({
                   </p>
                   <div className="flex flex-wrap gap-2">
                     {knowledge.occasions.map((o) => (
-                      <span
-                        key={o}
-                        className="rounded-full border border-[#ede8e1] bg-[#f9f7f4] px-3 py-1.5 text-xs font-semibold text-[#4f4a52]"
-                      >
-                        {o}
-                      </span>
+                      <KnowledgeChip key={o} label={o} variant="bordered" />
                     ))}
                   </div>
                 </div>
@@ -658,12 +620,7 @@ export default function ProductDetail({
                       Evolved From
                     </p>
                     <div className="flex flex-wrap gap-2">
-                      <Link
-                        href={`/product/${relationshipSummary.evolutionOf.slug}`}
-                        className="rounded-full border border-[#ede8e1] bg-[#f9f7f4] px-3 py-1.5 text-xs font-semibold text-[#4f4a52] transition hover:border-[#d89ca4] hover:text-[#d89ca4]"
-                      >
-                        {relationshipSummary.evolutionOf.name}
-                      </Link>
+                      <KnowledgeChip label={relationshipSummary.evolutionOf.name} variant="bordered" href={`/product/${relationshipSummary.evolutionOf.slug}`} />
                     </div>
                   </div>
                 )}
@@ -675,13 +632,7 @@ export default function ProductDetail({
                     </p>
                     <div className="flex flex-wrap gap-2">
                       {relationshipSummary.evolutions.map((r) => (
-                        <Link
-                          key={r.slug}
-                          href={`/product/${r.slug}`}
-                          className="rounded-full border border-[#ede8e1] bg-[#f9f7f4] px-3 py-1.5 text-xs font-semibold text-[#4f4a52] transition hover:border-[#d89ca4] hover:text-[#d89ca4]"
-                        >
-                          {r.name}
-                        </Link>
+                        <KnowledgeChip key={r.slug} label={r.name} variant="bordered" href={`/product/${r.slug}`} />
                       ))}
                     </div>
                   </div>
@@ -694,13 +645,7 @@ export default function ProductDetail({
                     </p>
                     <div className="flex flex-wrap gap-2">
                       {relationshipSummary.alternatives.map((r) => (
-                        <Link
-                          key={r.slug}
-                          href={`/product/${r.slug}`}
-                          className="rounded-full border border-[#ede8e1] bg-[#f9f7f4] px-3 py-1.5 text-xs font-semibold text-[#4f4a52] transition hover:border-[#d89ca4] hover:text-[#d89ca4]"
-                        >
-                          {r.name}
-                        </Link>
+                        <KnowledgeChip key={r.slug} label={r.name} variant="bordered" href={`/product/${r.slug}`} />
                       ))}
                     </div>
                   </div>
@@ -713,13 +658,7 @@ export default function ProductDetail({
                     </p>
                     <div className="flex flex-wrap gap-2">
                       {relationshipSummary.wardrobePartners.map((r) => (
-                        <Link
-                          key={r.slug}
-                          href={`/product/${r.slug}`}
-                          className="rounded-full border border-[#ede8e1] bg-[#f9f7f4] px-3 py-1.5 text-xs font-semibold text-[#4f4a52] transition hover:border-[#d89ca4] hover:text-[#d89ca4]"
-                        >
-                          {r.name}
-                        </Link>
+                        <KnowledgeChip key={r.slug} label={r.name} variant="bordered" href={`/product/${r.slug}`} />
                       ))}
                     </div>
                   </div>

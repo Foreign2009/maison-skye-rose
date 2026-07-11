@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { mkcCatalogue } from "../../lib/mkc/catalogue";
+import { KnowledgeChip } from "../knowledge/KnowledgeChip";
 
 interface ArticleRelatedFragrancesProps {
   fragranceIds: string[];
@@ -44,12 +45,8 @@ export function ArticleRelatedFragrances({ fragranceIds }: ArticleRelatedFragran
                   {fragrance.name}
                 </p>
                 <div className="mt-1.5 flex flex-wrap gap-1">
-                  <span className="rounded-full bg-[#f5f1eb] px-2 py-0.5 text-[10px] font-medium text-[#7b7480]">
-                    {fragrance.profile}
-                  </span>
-                  <span className="rounded-full bg-[#f5f1eb] px-2 py-0.5 text-[10px] font-medium text-[#7b7480]">
-                    {fragrance.season}
-                  </span>
+                  <KnowledgeChip label={fragrance.profile} />
+                  <KnowledgeChip label={fragrance.season} />
                 </div>
                 <p className="mt-1.5 text-[11px] text-[#4f4a52]/55 leading-relaxed line-clamp-2">
                   {fragrance.mood}
