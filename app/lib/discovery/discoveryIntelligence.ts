@@ -15,22 +15,25 @@
  * Performance: All collections precomputed at module initialisation.
  * Page components resolve from precomputed Maps — no per-render catalogue scans.
  *
- * EP23-P2 representative selection. Future evolution points (Refinement 7):
- *   - Relationship Graph weighting
- *   - Discovery pathway emphasis
- *   - Seasonal emphasis
+ * EP23-P3 guided discovery pathways — graph-driven exploration from representative
+ * fragrances via the Relationship Graph (Refinement 2: graph.ts is the traversal API).
+ * Future evolution points (Refinement 8):
  *   - Native knowledge weighting
- *   - Wardrobe relevance
+ *   - Seasonal context
+ *   - Current collection context
+ *   - Wardrobe awareness
+ *   - Discovery progression
  *
  * EP23-P1 dimension extension points:
  *   - Dominant scent character
  *   - Seasonal pathways
  *   - Collection comparisons
- *   - Guided discovery journeys
  */
 
 import type { FragranceKnowledge } from "../mkc/types";
 import { getCollection, COLLECTION_SPECS } from "./collectionEngine";
+import { buildIndex, getRelationshipSummary } from "../mkc/graph";
+import { mkcCatalogue } from "../mkc/catalogue";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -140,4 +143,90 @@ const REPRESENTATIVES_MAP = new Map<string, FragranceKnowledge[]>(
 
 export function getRepresentativeFragrances(id: string): FragranceKnowledge[] {
   return REPRESENTATIVES_MAP.get(id) ?? [];
+}
+
+// ── Guided discovery pathways ─────────────────────────────────────────────────
+// Maps representative fragrances to closely related fragrances via the Relationship
+// Graph. Answers: "If this example interested you, here are closely related places
+// to continue exploring." (EP23-P3, Refinement 1)
+//
+// All relationship traversal goes through getRelationshipSummary() — graph.ts
+// remains the single traversal API (Refinement 2).
+//
+// Pathway priority (Refinement 4):
+//   alternatives    → "A different expression of this style"
+//   evolutions      → "A more intense interpretation"
+//   wardrobePartners → "Often worn alongside"
+//   evolutionOf     → "The origin of this fragrance line"
+//
+// Graceful degradation: representatives without authored graph relationships
+// contribute nothing. If no representative has relationships, pathways is []
+// and no section renders (Refinement 6).
+//
+// Duplicate prevention: representative slugs are excluded from pathway results;
+// pathway targets are deduplicated across representatives (Refinement 7).
+//
+// Future evolution (Refinement 8):
+//   - Native knowledge weighting
+//   - Seasonal context
+//   - Current collection context
+//   - Wardrobe awareness
+//   - Discovery progression
+
+// Graph index built once at module initialisation — O(1) slug lookups thereafter.
+const graphIndex = buildIndex(mkcCatalogue);
+
+export interface DiscoveryPathway {
+  /** The connected fragrance to explore. */
+  fragrance: FragranceKnowledge;
+  /** Educational label describing the relationship. Never promotional. */
+  label:     string;
+}
+
+function computePathways(id: string): DiscoveryPathway[] {
+  const reps                = REPRESENTATIVES_MAP.get(id) ?? [];
+  const representativeSlugs = new Set(reps.map((r) => r.slug));
+  const pathways:  DiscoveryPathway[] = [];
+  const seenSlugs: Set<string>        = new Set();
+
+  for (const rep of reps) {
+    if (pathways.length >= 2) break;
+
+    const summary = getRelationshipSummary(rep, graphIndex);
+    if (!summary.hasRelationships) continue;
+
+    // Ordered candidates — alternatives first, then evolutions, wardrobe partners,
+    // then the ancestor. This priority produces the most exploratory journey.
+    const candidates: Array<{ fragrance: FragranceKnowledge; label: string }> = [
+      ...summary.alternatives.map(    (f) => ({ fragrance: f, label: "A different expression of this style"  })),
+      ...summary.evolutions.map(      (f) => ({ fragrance: f, label: "A more intense interpretation"          })),
+      ...summary.wardrobePartners.map((f) => ({ fragrance: f, label: "Often worn alongside"                   })),
+      ...(summary.evolutionOf
+        ? [{ fragrance: summary.evolutionOf, label: "The origin of this fragrance line" }]
+        : []),
+    ];
+
+    for (const { fragrance, label } of candidates) {
+      if (pathways.length >= 2) break;
+      if (representativeSlugs.has(fragrance.slug)) continue; // already shown above
+      if (seenSlugs.has(fragrance.slug)) continue;            // dedup across reps
+      seenSlugs.add(fragrance.slug);
+      pathways.push({ fragrance, label });
+    }
+  }
+
+  return pathways;
+}
+
+// ── Precomputed pathways map ──────────────────────────────────────────────────
+// PATHWAYS_MAP depends on REPRESENTATIVES_MAP, which is initialised above.
+// Module evaluation order (top-to-bottom) guarantees REPRESENTATIVES_MAP is
+// populated before this line executes.
+
+const PATHWAYS_MAP = new Map<string, DiscoveryPathway[]>(
+  COLLECTION_SPECS.map((spec) => [spec.id, computePathways(spec.id)])
+);
+
+export function getDiscoveryPathways(id: string): DiscoveryPathway[] {
+  return PATHWAYS_MAP.get(id) ?? [];
 }
