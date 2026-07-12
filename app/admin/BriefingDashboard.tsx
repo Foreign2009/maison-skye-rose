@@ -28,6 +28,29 @@ export interface DiscoveryPathwayStat {
   count:   number;
 }
 
+export interface CatalogueHealthRecord {
+  slug:         string;
+  tier:         "rich" | "standard" | "minimal";
+  overallScore: number;
+}
+
+export interface CatalogueHealth {
+  totalRecords:             number;
+  tierCounts: {
+    rich:     number;
+    standard: number;
+    minimal:  number;
+  };
+  avgOverallScore:          number;
+  avgEditorialCompleteness: number;
+  avgEducationalRichness:   number;
+  avgRelationshipRichness:  number;
+  avgDiscoveryReadiness:    number;
+  avgCompositionDepth:      number;
+  avgCommerceCompleteness:  number;
+  bottomTen:                CatalogueHealthRecord[];
+}
+
 export interface MaisonBrief {
   generatedAt:          string;
   todayRevenue:         number;
@@ -76,6 +99,16 @@ function ageLabel(createdAt: string, ref: Date): string {
   if (h < 1) return "< 1h ago";
   if (h < 24) return `${Math.round(h)}h ago`;
   return `${Math.floor(h / 24)}d ago`;
+}
+
+const TIER_META: Record<"rich" | "standard" | "minimal", { label: string; color: string }> = {
+  rich:     { label: "Rich",     color: "text-emerald-600"   },
+  standard: { label: "Standard", color: "text-[#4f4a52]/50"  },
+  minimal:  { label: "Minimal",  color: "text-[#d89ca4]"     },
+};
+
+function slugToTitle(slug: string): string {
+  return slug.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
 const STATUS_LABELS: Record<OrderStatus, string> = {
@@ -137,7 +170,13 @@ function MaisonNotes() {
 
 // ── BriefingDashboard ─────────────────────────────────────────────────────────
 
-export default function BriefingDashboard({ brief }: { brief: MaisonBrief }) {
+export default function BriefingDashboard({
+  brief,
+  catalogueHealth,
+}: {
+  brief:            MaisonBrief;
+  catalogueHealth:  CatalogueHealth;
+}) {
   const [greeting, setGreeting] = useState("");
   const [dateStr,  setDateStr]  = useState("");
 
@@ -463,7 +502,92 @@ export default function BriefingDashboard({ brief }: { brief: MaisonBrief }) {
 
         <hr className="border-gray-200" />
 
-        {/* 7 · Private Notes ────────────────────────────────────────────────── */}
+        {/* 7 · Catalogue Health ─────────────────────────────────────────────── */}
+        <section>
+          <p className="text-[10px] uppercase tracking-[0.4em] text-[#d89ca4]">Catalogue Health</p>
+          <h2 className="mt-2 text-xl font-black text-[#4f4a52]">Knowledge Catalogue at a Glance</h2>
+
+          {/* Tier distribution */}
+          <div className="mt-6 grid grid-cols-3 gap-4">
+            <div className="rounded-2xl bg-white p-5 shadow-sm text-center">
+              <p className="text-2xl font-black tabular-nums text-[#4f4a52]">{catalogueHealth.tierCounts.rich}</p>
+              <p className="mt-1 text-[10px] uppercase tracking-[0.3em] text-emerald-600">Rich</p>
+            </div>
+            <div className="rounded-2xl bg-white p-5 shadow-sm text-center">
+              <p className="text-2xl font-black tabular-nums text-[#4f4a52]">{catalogueHealth.tierCounts.standard}</p>
+              <p className="mt-1 text-[10px] uppercase tracking-[0.3em] text-[#4f4a52]/50">Standard</p>
+            </div>
+            <div className="rounded-2xl bg-white p-5 shadow-sm text-center">
+              <p className="text-2xl font-black tabular-nums text-[#4f4a52]">{catalogueHealth.tierCounts.minimal}</p>
+              <p className="mt-1 text-[10px] uppercase tracking-[0.3em] text-[#d89ca4]">Minimal</p>
+            </div>
+          </div>
+
+          {/* Average scores */}
+          <div className="mt-4 rounded-2xl bg-white p-5 shadow-sm">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-semibold text-[#4f4a52]/60">Avg. overall score</span>
+              <span className="text-xs font-bold tabular-nums text-[#4f4a52]">
+                {(catalogueHealth.avgOverallScore * 100).toFixed(1)}%
+              </span>
+            </div>
+            <div className="mt-4 space-y-2.5 border-t border-gray-100 pt-4">
+              {(
+                [
+                  ["Editorial Completeness",  catalogueHealth.avgEditorialCompleteness],
+                  ["Educational Richness",    catalogueHealth.avgEducationalRichness],
+                  ["Relationship Richness",   catalogueHealth.avgRelationshipRichness],
+                  ["Discovery Readiness",     catalogueHealth.avgDiscoveryReadiness],
+                  ["Composition Depth",       catalogueHealth.avgCompositionDepth],
+                  ["Commerce Completeness",   catalogueHealth.avgCommerceCompleteness],
+                ] as [string, number][]
+              ).map(([label, score]) => (
+                <div key={label} className="flex items-center justify-between">
+                  <span className="text-xs text-[#4f4a52]/60">{label}</span>
+                  <span className="text-xs font-semibold tabular-nums text-[#4f4a52]">
+                    {(score * 100).toFixed(1)}%
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Bottom 10 authoring candidates */}
+          <div className="mt-6">
+            <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-[#4f4a52]/40">
+              Authoring Candidates
+            </p>
+            <div className="space-y-2">
+              {catalogueHealth.bottomTen.map((r, i) => (
+                <div
+                  key={r.slug}
+                  className="flex items-center gap-4 rounded-xl bg-white px-4 py-3 shadow-sm"
+                >
+                  <span className="w-5 shrink-0 text-center text-[11px] font-black text-[#4f4a52]/25">
+                    {i + 1}
+                  </span>
+                  <p className="flex-1 text-sm font-semibold text-[#4f4a52]">{slugToTitle(r.slug)}</p>
+                  <div className="flex shrink-0 items-center gap-3">
+                    <span className={`text-[10px] font-semibold uppercase tracking-wider ${TIER_META[r.tier].color}`}>
+                      {TIER_META[r.tier].label}
+                    </span>
+                    <span className="text-xs tabular-nums text-[#4f4a52]/50">
+                      {(r.overallScore * 100).toFixed(0)}%
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <p className="mt-4 text-xs text-[#4f4a52]/30">
+            {catalogueHealth.totalRecords} records · Scores computed from 6 knowledge dimensions.
+          </p>
+        </section>
+
+        <hr className="border-gray-200" />
+
+        {/* 8 · Private Notes ────────────────────────────────────────────────── */}
         <section className="pb-16">
           <p className="text-[10px] uppercase tracking-[0.4em] text-[#d89ca4]">Your Space</p>
           <h2 className="mt-2 mb-6 text-xl font-black text-[#4f4a52]">Maison Notes</h2>

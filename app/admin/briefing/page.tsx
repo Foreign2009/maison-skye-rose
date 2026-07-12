@@ -6,9 +6,10 @@ import { getSupabaseAdmin } from "@/app/lib/supabaseAdmin";
 import { MOMENT_CONTENT }  from "@/app/lib/discovery/momentContent";
 import { COLLECTION_SPECS } from "@/app/lib/discovery/collectionEngine";
 import type { OrderRow }   from "@/app/admin/AdminConsole";
-import BriefingDashboard, { type MaisonBrief } from "@/app/admin/BriefingDashboard";
+import BriefingDashboard, { type MaisonBrief, type CatalogueHealth } from "@/app/admin/BriefingDashboard";
 import type { DiscoverySource } from "@/app/lib/discoveryAttribution";
 import type { OrderStatus }     from "@/app/lib/orderStatus";
+import { getAllQualityProfiles } from "@/app/lib/mkc/knowledgeQuality";
 
 export const metadata: Metadata = {
   title:  "Briefing | Maison Skye & Rose",
@@ -92,6 +93,49 @@ function computeReflection(data: {
   }
 
   return sentences.join(" ");
+}
+
+// ── Catalogue health computation ──────────────────────────────────────────────
+
+function computeCatalogueHealth(): CatalogueHealth {
+  const profiles = getAllQualityProfiles();
+  const total    = profiles.size;
+
+  let rich = 0, standard = 0, minimal = 0;
+  let sumOverall = 0, sumEditorial = 0, sumEducational = 0;
+  let sumRelationship = 0, sumDiscovery = 0, sumComposition = 0, sumCommerce = 0;
+
+  for (const p of profiles.values()) {
+    if      (p.tier === "rich")     rich++;
+    else if (p.tier === "standard") standard++;
+    else                            minimal++;
+
+    sumOverall      += p.overallScore;
+    sumEditorial    += p.editorialCompleteness;
+    sumEducational  += p.educationalRichness;
+    sumRelationship += p.relationshipRichness;
+    sumDiscovery    += p.discoveryReadiness;
+    sumComposition  += p.compositionDepth;
+    sumCommerce     += p.commerceCompleteness;
+  }
+
+  const bottomTen = [...profiles.entries()]
+    .map(([slug, p]) => ({ slug, tier: p.tier, overallScore: p.overallScore }))
+    .sort((a, b) => a.overallScore - b.overallScore)
+    .slice(0, 10);
+
+  return {
+    totalRecords:             total,
+    tierCounts:               { rich, standard, minimal },
+    avgOverallScore:          total > 0 ? sumOverall      / total : 0,
+    avgEditorialCompleteness: total > 0 ? sumEditorial    / total : 0,
+    avgEducationalRichness:   total > 0 ? sumEducational  / total : 0,
+    avgRelationshipRichness:  total > 0 ? sumRelationship / total : 0,
+    avgDiscoveryReadiness:    total > 0 ? sumDiscovery    / total : 0,
+    avgCompositionDepth:      total > 0 ? sumComposition  / total : 0,
+    avgCommerceCompleteness:  total > 0 ? sumCommerce     / total : 0,
+    bottomTen,
+  };
 }
 
 // ── Brief computation ─────────────────────────────────────────────────────────
@@ -288,6 +332,7 @@ export default async function BriefingPage() {
     console.warn("[Briefing] Could not fetch orders:", err instanceof Error ? err.message : err);
   }
 
-  const brief = computeBrief(orders, new Date());
-  return <BriefingDashboard brief={brief} />;
+  const brief            = computeBrief(orders, new Date());
+  const catalogueHealth  = computeCatalogueHealth();
+  return <BriefingDashboard brief={brief} catalogueHealth={catalogueHealth} />;
 }
