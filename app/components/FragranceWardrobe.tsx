@@ -10,6 +10,27 @@ import type { SimilarityResult } from "../lib/discovery/types";
 import { NoteChip } from "./knowledge/NoteChip";
 import { KnowledgeChip } from "./knowledge/KnowledgeChip";
 
+// ── Journey routing (EP26-P3) ─────────────────────────────────────────────────
+// Maps the wardrobe engine's nextStep scentCharacter to the most character-aligned
+// existing Discovery collection. The wardrobe engine owns the intelligence
+// (nextStep, nextLabel); this component owns the navigation translation.
+//
+// Selection rationale:
+//   "Balanced Signature" → signature-scents: editorial collection about everyday signatures
+//   "Rich & Long Wearing" → date-night:       occasion-focused; Rich & Long Wearing boosted
+//   "Deep & Intense"      → winter-warmth:    highest Deep & Intense boost in the catalogue
+// Fallback: /discover — the discovery hub, safe for any unmapped or null nextStep.
+
+const CHARACTER_DISCOVERY_ROUTE: Record<string, string> = {
+  "Balanced Signature": "/discover/signature-scents",
+  "Rich & Long Wearing": "/discover/date-night",
+  "Deep & Intense":     "/discover/winter-warmth",
+};
+
+function journeyHref(nextStep: string | null): string {
+  return (nextStep && CHARACTER_DISCOVERY_ROUTE[nextStep]) || "/discover";
+}
+
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
 function wardrobeNote(
@@ -118,7 +139,7 @@ export default function FragranceWardrobe({
           <p className="text-sm leading-7 text-zinc-600">{wardrobe.journey.editorial}</p>
           {wardrobe.journey.nextLabel && (
             <Link
-              href="/quiz"
+              href={journeyHref(wardrobe.journey.nextStep)}
               className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-[#d89ca4] transition hover:opacity-70"
             >
               {wardrobe.journey.nextLabel} →
