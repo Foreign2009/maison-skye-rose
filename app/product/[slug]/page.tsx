@@ -8,6 +8,7 @@ import type { FragranceKnowledge } from "../../lib/mkc/types";
 import { buildIndex, getRelationshipSummary } from "../../lib/mkc/graph";
 import { recommendAcademyArticles } from "../../lib/academy/recommendAcademyArticles";
 import { getSimilarFragrances } from "../../lib/discovery/similarityEngine";
+import { getKnowledgeQuality } from "../../lib/mkc/knowledgeQuality";
 
 interface ProductPageProps {
   params: Promise<{
@@ -128,6 +129,7 @@ export default async function ProductPage({
   }));
 
   const similarFragrances = getSimilarFragrances(knowledge, { count: 3 });
+  const qualityProfile    = getKnowledgeQuality(slug);
 
   return (
     <>
@@ -139,7 +141,7 @@ export default async function ProductPage({
       <main className="min-h-screen bg-[#f5f1eb]">
         <Navbar />
 
-        <ProductDetail knowledge={knowledge} discoverMoreArticles={discoverMoreArticles} similarFragrances={similarFragrances} relationshipSummary={relationshipSummary} />
+        <ProductDetail knowledge={knowledge} discoverMoreArticles={discoverMoreArticles} similarFragrances={similarFragrances} relationshipSummary={relationshipSummary} qualityProfile={qualityProfile} />
 
         <Footer />
       </main>

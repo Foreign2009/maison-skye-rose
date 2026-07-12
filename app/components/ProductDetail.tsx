@@ -27,15 +27,9 @@ import { deriveSimilarityReasons } from "../lib/concierge/similarityReasons";
 import { CollectionBadge } from "./knowledge/CollectionBadge";
 import { NoteChip } from "./knowledge/NoteChip";
 import { KnowledgeChip } from "./knowledge/KnowledgeChip";
+import type { KnowledgeQualityProfile } from "../lib/mkc/knowledgeQuality";
 
 
-// ── Discover More — static fallback (shown when Academy articles are not provided) ──
-const DISCOVER_MORE_FALLBACK = [
-  { key: "notes",    label: "Learn about fragrance notes"        },
-  { key: "families", label: "Learn about fragrance families"     },
-  { key: "perf",    label: "Why fragrances perform differently"  },
-  { key: "apply",   label: "How to apply fragrance"             },
-];
 
 export interface DiscoverMoreArticle {
   slug: string;
@@ -51,11 +45,13 @@ export default function ProductDetail({
   discoverMoreArticles,
   similarFragrances,
   relationshipSummary,
+  qualityProfile,
 }: {
   knowledge: FragranceKnowledge;
   discoverMoreArticles?: DiscoverMoreArticle[];
   similarFragrances?: SimilarityResult[];
   relationshipSummary?: RelationshipSummary;
+  qualityProfile?: KnowledgeQualityProfile;
 }) {
   const [selectedSize, setSelectedSize] =
     useState<"5ml" | "10ml" | "30ml">("10ml");
@@ -565,11 +561,22 @@ export default function ProductDetail({
                   <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.22em] text-zinc-400">
                     Recommended For
                   </p>
-                  <div className="flex flex-wrap gap-2">
-                    {knowledge.recommendedFor.map((r) => (
-                      <KnowledgeChip key={r} label={r} variant="bordered" />
-                    ))}
-                  </div>
+                  {qualityProfile?.isNative ? (
+                    <ul className="space-y-4">
+                      {knowledge.recommendedFor.map((r) => (
+                        <li key={r} className="flex items-start gap-4">
+                          <span className="mt-1 shrink-0 font-bold text-[#d89ca4]">✓</span>
+                          <span className="text-base leading-7 text-zinc-600">{r}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <div className="flex flex-wrap gap-2">
+                      {knowledge.recommendedFor.map((r) => (
+                        <KnowledgeChip key={r} label={r} variant="bordered" />
+                      ))}
+                    </div>
+                  )}
                 </div>
               )}
 
@@ -687,15 +694,9 @@ export default function ProductDetail({
 
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-2xl font-black text-[#4f4a52]">Discover More</h2>
-              {discoverMoreArticles && discoverMoreArticles.length > 0 ? (
-                <span className="text-xs font-medium tracking-widest uppercase text-[#d89ca4]">
-                  Fragrance Academy
-                </span>
-              ) : (
-                <span className="rounded-full bg-[#f5f1eb] px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-zinc-400">
-                  Fragrance Academy — Coming Soon
-                </span>
-              )}
+              <span className="text-xs font-medium tracking-widest uppercase text-[#d89ca4]">
+                {qualityProfile?.hasAcademyIntegration ? "Personally Curated" : "Fragrance Academy"}
+              </span>
             </div>
 
             <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
@@ -719,19 +720,19 @@ export default function ProductDetail({
                       </span>
                     </Link>
                   ))
-                : DISCOVER_MORE_FALLBACK.map((card) => (
-                    <div
-                      key={card.key}
-                      className="flex cursor-default items-center justify-between rounded-2xl border border-[#ede8e1] bg-[#f9f7f4] px-5 py-4"
-                    >
-                      <span className="text-sm font-semibold text-[#4f4a52]">
-                        {card.label}
-                      </span>
-                      <span className="ml-4 shrink-0 text-sm font-bold text-[#d89ca4] opacity-30">
-                        →
-                      </span>
+                : (
+                    <div className="col-span-2 rounded-2xl border border-[#ede8e1] bg-[#f9f7f4] px-5 py-6">
+                      <p className="text-sm leading-7 text-zinc-600">
+                        Our Concierge can guide you through this fragrance&apos;s character, help you understand the notes, and find the right size for you.
+                      </p>
+                      <button
+                        onClick={() => openConcierge({ mentionedSlug: knowledge.slug })}
+                        className="mt-4 text-sm font-semibold text-[#d89ca4] transition hover:opacity-70"
+                      >
+                        ✦ Ask About This Fragrance →
+                      </button>
                     </div>
-                  ))}
+                  )}
             </div>
 
             {discoverMoreArticles && discoverMoreArticles.length > 0 && (
