@@ -12,6 +12,7 @@ import { academyCatalogue } from "../academy/catalogue";
 import { mkcCatalogue } from "../mkc/catalogue";
 import { search } from "../search/searchEngine";
 import { buildSearchIndex } from "../search/indexBuilder";
+import { getKnowledgeQuality } from "../mkc/knowledgeQuality";
 import type { SearchIndex } from "../search/types";
 import type { FragranceKnowledge } from "../mkc/types";
 import type { AcademyArticle } from "../academy/types";
@@ -29,6 +30,20 @@ function getIntelligenceScore(k: FragranceKnowledge, dimension: string): number 
   if (!INTELLIGENCE_DIMS.includes(dimension as IntelligenceDim)) return null;
   const val = k[dimension as IntelligenceDim];
   return typeof val === "number" ? val : null;
+}
+
+// ── Quality-aware sort (EP25-P3) ───────────────────────────────────────────────
+// Bestseller priority is preserved. Knowledge quality breaks ties before
+// popularity, biasing the context window toward knowledge-rich records.
+// No record is excluded — sort order shifts, not the candidate set.
+
+function sortByQuality(a: FragranceKnowledge, b: FragranceKnowledge): number {
+  if (a.bestSeller && !b.bestSeller) return -1;
+  if (!a.bestSeller && b.bestSeller)  return 1;
+  const scoreA = getKnowledgeQuality(a.slug)?.overallScore ?? 0;
+  const scoreB = getKnowledgeQuality(b.slug)?.overallScore ?? 0;
+  if (scoreA !== scoreB) return scoreB - scoreA;
+  return b.popularity - a.popularity;
 }
 
 // ── Search index singleton (rebuilt once per server process) ──────────────────
@@ -160,11 +175,7 @@ export function planRetrieval(
 
       fragrances = mkcCatalogue
         .filter((k) => k.season === season || k.season === "All Season")
-        .sort((a, b) => {
-          if (a.bestSeller && !b.bestSeller) return -1;
-          if (!a.bestSeller && b.bestSeller)  return 1;
-          return b.popularity - a.popularity;
-        })
+        .sort(sortByQuality)
         .slice(0, 5);
 
       articles = articlesBySlug(["choosing-your-season-scent"]);
@@ -197,11 +208,7 @@ export function planRetrieval(
 
         let candidates = mkcCatalogue
           .filter((k) => k.scentCharacter === targetCharacter && k.slug !== role.slug)
-          .sort((a, b) => {
-            if (a.bestSeller && !b.bestSeller) return -1;
-            if (!a.bestSeller && b.bestSeller)  return 1;
-            return b.popularity - a.popularity;
-          });
+          .sort(sortByQuality);
 
         if (intelligenceHint) {
           const currentFrag    = mkcCatalogue.find((k) => k.slug === role.slug);
@@ -251,11 +258,7 @@ export function planRetrieval(
                   )
                 )
             )
-            .sort((a, b) => {
-              if (a.bestSeller && !b.bestSeller) return -1;
-              if (!a.bestSeller && b.bestSeller)  return 1;
-              return b.popularity - a.popularity;
-            })
+            .sort(sortByQuality)
             .slice(0, 3)
         );
 
@@ -276,11 +279,7 @@ export function planRetrieval(
           const candidates = roleChars.flatMap((char) =>
             mkcCatalogue
               .filter((k) => k.scentCharacter === char)
-              .sort((a, b) => {
-                if (a.bestSeller && !b.bestSeller) return -1;
-                if (!a.bestSeller && b.bestSeller)  return 1;
-                return b.popularity - a.popularity;
-              })
+              .sort(sortByQuality)
               .slice(0, 2)
           );
           if (candidates.length > 0) {

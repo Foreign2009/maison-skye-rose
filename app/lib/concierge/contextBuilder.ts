@@ -16,6 +16,7 @@ import type { ConversationPlan }   from "./conversationPlanner";
 import { catalogueMaps, getCurrentSeason } from "../discovery";
 import { computeWardrobe }                 from "../mkc/wardrobeEngine";
 import { getRelationshipSummary }          from "../mkc/graph";
+import { getKnowledgeQuality }             from "../mkc/knowledgeQuality";
 import { analyseWardrobe }                 from "./wardrobeAnalyser";
 import { planCollection }                  from "./collectionPlanner";
 
@@ -153,9 +154,15 @@ function buildFragranceSection(fragrances: FragranceKnowledge[], reuseMode: bool
   const content = fragrances
     .map((k, i) => {
       const lines: string[] = [`${i + 1}. ${k.name} [slug: ${k.slug}]`];
+      const quality = getKnowledgeQuality(k.slug);
 
-      // Editorial content first — only present on native knowledge records
+      // Editorial content — authored for native records only
       if (k.description) lines.push(`   Description: ${k.description}`);
+
+      // Educational depth signal — guides LLM when editorial richness is absent
+      if (quality?.educationalRichness === 0) {
+        lines.push(`   [Prioritise Academy article recommendations for educational depth on this fragrance]`);
+      }
       lines.push(`   Mood: ${k.mood}`);
       lines.push(`   Wardrobe Role: ${computeWardrobe(k).wardrobeRole} | Signature: ${k.signatureStyle.join(", ")}`);
       lines.push(`   Vibe: ${k.vibe.join(", ")}`);
