@@ -1,0 +1,43 @@
+{
+  "version": "1.0",
+  "runs": [
+    {
+      "slug": "miss-dior-inspired",
+      "name": "Miss Dior Inspired",
+      "wave": null,
+      "startedAt": "2026-07-12T19:15:13.203Z",
+      "completedAt": "2026-07-12T19:15:13.208Z",
+      "factoryVersion": "0.1.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "validate",
+          "status": "fail",
+          "durationMs": 0,
+          "message": "FAIL  [5 errors, 3 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 3
+        }
+      ],
+      "validationStatus": "FAIL",
+      "promotedAt": null
+    }
+  ]
+}
