@@ -207,10 +207,36 @@ function renderEducation(r: FragranceKnowledge, ann: AnnotationMap): string {
     }
   }
 
-  // Academy fields — omitted until P4
-  const academyAnn = ann.get("academyArticleIds");
-  if (academyAnn) {
-    lines.push(`  // academyArticleIds: (not set — will be linked in P4)  ${academyAnn.join("  ")}`);
+  // Academy integration — populated by EducationProducer
+  if (r.academyArticleIds !== undefined && r.academyArticleIds.length > 0) {
+    lines.push(fieldLine("academyArticleIds", renderStrArray(r.academyArticleIds), trailingAnnotation(ann, "academyArticleIds")));
+  } else {
+    const academyAnn = ann.get("academyArticleIds");
+    if (academyAnn) {
+      lines.push(`  // academyArticleIds: (not set)  ${academyAnn.join("  ")}`);
+    }
+  }
+
+  if (r.academyCategories !== undefined && r.academyCategories.length > 0) {
+    lines.push(fieldLine("academyCategories", renderStrArray(r.academyCategories), trailingAnnotation(ann, "academyCategories")));
+  }
+
+  if (r.educationTags !== undefined && r.educationTags.length > 0) {
+    lines.push(fieldLine("educationTags", renderStrArray(r.educationTags), trailingAnnotation(ann, "educationTags")));
+  } else {
+    const tagsAnn = ann.get("educationTags");
+    if (tagsAnn) {
+      lines.push(`  // educationTags:     (not set)  ${tagsAnn.join("  ")}`);
+    }
+  }
+
+  if (r.learningPath !== undefined && r.learningPath.length > 0) {
+    lines.push(fieldLine("learningPath", renderStrArray(r.learningPath), trailingAnnotation(ann, "learningPath")));
+  } else {
+    const pathAnn = ann.get("learningPath");
+    if (pathAnn) {
+      lines.push(`  // learningPath:      (not set)  ${pathAnn.join("  ")}`);
+    }
   }
 
   return lines.join("\n");

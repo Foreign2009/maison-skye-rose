@@ -1,10 +1,10 @@
 // ═════════════════════════════════════════════════════════════════
 // FACTORY DRAFT — miss-dior-inspired
 // ─────────────────────────────────────────────────────────────────
-// Generated:         2026-07-12T20:59:48.962Z
-// Factory version:   0.3.0
-// Prompt versions:   CompositionProducer@1.0.0  EditorialProducer@1.0.0  RelationshipProducer@1.0.0
-// Validation status: FAIL  [1 error(s), 3 warning(s)]
+// Generated:         2026-07-12T21:04:22.104Z
+// Factory version:   0.4.0
+// Prompt versions:   CompositionProducer@1.0.0  EditorialProducer@1.0.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0
+// Validation status: FAIL  [1 error(s), 0 warning(s)]
 // Projected KQ tier: (not available — requires Intelligence Producer)
 // ─────────────────────────────────────────────────────────────────
 // REVIEW CHECKLIST
@@ -40,9 +40,9 @@ export const missDiorInspired: FragranceKnowledge = {
   profile       : "Floral",
   season        : "Spring",
   notes: {
-    top:   ["Bergamot", "Rose Absolute", "Green Mandarin"],
+    top:   ["Bergamot", "Rose", "Pink Pepper"],
     heart: ["Peony", "Jasmine Sambac", "Iris Root"],
-    base:  ["Vanilla Bourbon", "Musk Ambrettolide", "Cedarwood"],
+    base:  ["Vanilla Bourbon", "Cedarwood", "Musk Ambroxan"],
   },
   mood          : "Elegant feminine florals with playful luxury.",
 
@@ -68,9 +68,23 @@ export const missDiorInspired: FragranceKnowledge = {
   newArrival    : false,
 
   // ── Education ───────────────────────────────────────────────────────────────
-  subtitle      : "Radiant Femininity",
-  description   : "Bergamot and rose absolute open with citrus brightness, immediately feminine and radiant. The heart layers peony and jasmine sambac into a luminous floral core, grounded by iris root's subtle powder. Vanilla bourbon and musk anchor the composition with warmth and skin-like sensuality.",
-  // academyArticleIds: (not set — will be linked in P4)  // FACTORY_WARN: ACADEMY_ARTICLES_NOT_LINKED — no academy articles linked — academy article boost (+50) will not apply
+  subtitle      : "Radiant Elegance",
+  description   : "A burst of bergamot and pink pepper frames a luminous rose, immediately elegant and alive. The heart deepens into peony and jasmine sambac—a creamy, full-bodied florality that hovers between whisper and declaration. Vanilla bourbon and cedarwood anchor the composition with warmth, never saccharine, revealing a fragrance as refined as it is radiant.",
+  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "what-makes-a-signature-scent", "how-to-layer-fragrances"],
+  academyCategories: ["fragrance-fundamentals", "fragrance-families", "the-note-pyramid"],
+  educationTags : [
+    "floral",
+    "rose",
+    "peony",
+    "jasmine",
+    "bergamot",
+    "feminine",
+    "elegant",
+    "signature-scent",
+    "spring",
+    "luxury",
+  ],
+  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "what-makes-a-signature-scent", "how-to-layer-fragrances"],
 
   // ── Intelligence ────────────────────────────────────────────────────────────
   // Approximated from profile + season. Calibrated by Intelligence Producer in P2.

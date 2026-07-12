@@ -9,10 +9,11 @@
  *   3. Composition    — AI: generate notes pyramid (CompositionProducer)
  *   4. Editorial      — AI: generate description + subtitle (EditorialProducer)
  *   5. Relationships  — AI: generate graph edges (RelationshipProducer)
- *   6. Merge          — consolidate all producer outputs
- *   7. Validate       — run MKC validator on merged record
- *   8. DraftBuild     — write TypeScript draft file
- *   9. Log            — record run to factory-log.json
+ *   6. Education      — AI: assign academy metadata (EducationProducer)
+ *   7. Merge          — consolidate all producer outputs
+ *   8. Validate       — run MKC validator on merged record
+ *   9. DraftBuild     — write TypeScript draft file
+ *  10. Log            — record run to factory-log.json
  */
 
 import path from "path";
@@ -27,13 +28,14 @@ import { ClaudeProvider }        from "./core/providers/ClaudeProvider";
 import { CompositionProducer }   from "./producers/CompositionProducer";
 import { EditorialProducer }     from "./producers/EditorialProducer";
 import { RelationshipProducer }  from "./producers/RelationshipProducer";
+import { EducationProducer }     from "./producers/EducationProducer";
 import { validateKnowledgeRecord } from "../../app/lib/mkc/validator";
 import type { FactoryConfig, ProducerResult } from "./core/types";
 import type { PipelineInput, PipelineResult, PipelineState, StageEntry } from "./types";
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 
-export const FACTORY_VERSION = "0.3.0";
+export const FACTORY_VERSION = "0.4.0";
 
 const ROOT      = process.cwd();
 const DRAFT_DIR = path.join(ROOT, "scripts", "factory", "drafts");
@@ -51,6 +53,7 @@ const DEFAULT_FACTORY_CONFIG: FactoryConfig = {
     CompositionProducer:  { enabled: true, temperature: 0.7, maxTokens: 512,  promptVersion: "1.0.0", promptFallback: "fail" },
     EditorialProducer:    { enabled: true, temperature: 0.8, maxTokens: 512,  promptVersion: "1.0.0", promptFallback: "fail" },
     RelationshipProducer: { enabled: true, temperature: 0.3, maxTokens: 1024, promptVersion: "1.0.0", promptFallback: "fail" },
+    EducationProducer:    { enabled: true, temperature: 0.4, maxTokens: 512,  promptVersion: "1.0.0", promptFallback: "fail" },
   },
   maxSessionTokens:     50_000,
   maxProducerTokens:    5_000,
@@ -192,13 +195,31 @@ export async function run(input: PipelineInput): Promise<PipelineResult> {
         : `${relResult.metrics.totalTokens} tokens  conf:${relResult.confidence.toFixed(2)}`,
     );
 
-    // ── Stage 6: Merge ───────────────────────────────────────────────────────
+    // Update context so EducationProducer sees relationships
+    const ctxAfterRel = relResult.status !== "failed" && relResult.status !== "skipped"
+      ? ContextBuilder.withMergedRecord(ctxAfterEdit, merge(scaffolded, compResult, editResult, relResult))
+      : ctxAfterEdit;
+
+    // ── Stage 6: Education Producer ──────────────────────────────────────────
+    const tEdu      = Date.now();
+    const eduResult = await new EducationProducer().run(ctxAfterRel, engine);
+    producerResults.push(eduResult);
+    stage(
+      "education",
+      eduResult.status === "success" ? "pass" : eduResult.status === "degraded" ? "degraded" : eduResult.status === "skipped" ? "skip" : "fail",
+      Date.now() - tEdu,
+      eduResult.status === "skipped"
+        ? eduResult.skippedReason
+        : `${eduResult.metrics.totalTokens} tokens  conf:${eduResult.confidence.toFixed(2)}`,
+    );
+
+    // ── Stage 7: Merge ───────────────────────────────────────────────────────
     const t2     = Date.now();
     const record = merge(scaffolded, ...producerResults);
     stage("merge", "pass", Date.now() - t2,
       hasApiKey ? `${engine.getSessionCost().totalTokens} tokens total` : "dry-run");
 
-    // ── Stage 7: Validate ───────────────────────────────────────────────────
+    // ── Stage 8: Validate ───────────────────────────────────────────────────
     const t3            = Date.now();
     const validationResult = validateKnowledgeRecord(record);
     const ms3           = Date.now() - t3;
@@ -224,12 +245,12 @@ export async function run(input: PipelineInput): Promise<PipelineResult> {
       producerResults,
     };
 
-    // ── Stage 8: Draft Build ────────────────────────────────────────────────
+    // ── Stage 9: Draft Build ────────────────────────────────────────────────
     const t4 = Date.now();
     const draftResult = buildDraft({ state, draftDir: DRAFT_DIR });
     stage("draft", "pass", Date.now() - t4);
 
-    // ── Stage 9: Log ────────────────────────────────────────────────────────
+    // ── Stage 10: Log ────────────────────────────────────────────────────────
     const t5 = Date.now();
     logRun({
       slug,
