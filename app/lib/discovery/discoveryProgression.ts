@@ -177,3 +177,7 @@ const PROGRESSION_MAP = new Map<string, ProgressionConnection[]>(
 export function getProgressionConnections(id: string): ProgressionConnection[] {
   return PROGRESSION_MAP.get(id) ?? [];
 }
+
+export function getProgressionDepth(id: string): ProgressionDepth {
+  return DEPTH_MAP.get(id) ?? 2;
+}

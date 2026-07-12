@@ -6,10 +6,17 @@ import { getSupabaseAdmin } from "@/app/lib/supabaseAdmin";
 import { MOMENT_CONTENT }  from "@/app/lib/discovery/momentContent";
 import { COLLECTION_SPECS } from "@/app/lib/discovery/collectionEngine";
 import type { OrderRow }   from "@/app/admin/AdminConsole";
-import BriefingDashboard, { type MaisonBrief, type CatalogueHealth } from "@/app/admin/BriefingDashboard";
+import BriefingDashboard, {
+  type MaisonBrief,
+  type CatalogueHealth,
+  type DiscoveryHealth,
+  type DiscoveryCollectionRecord,
+} from "@/app/admin/BriefingDashboard";
 import type { DiscoverySource } from "@/app/lib/discoveryAttribution";
 import type { OrderStatus }     from "@/app/lib/orderStatus";
 import { getAllQualityProfiles } from "@/app/lib/mkc/knowledgeQuality";
+import { getCollectionProfile }  from "@/app/lib/discovery/discoveryIntelligence";
+import { getProgressionDepth }   from "@/app/lib/discovery/discoveryProgression";
 
 export const metadata: Metadata = {
   title:  "Briefing | Maison Skye & Rose",
@@ -135,6 +142,42 @@ function computeCatalogueHealth(): CatalogueHealth {
     avgCompositionDepth:      total > 0 ? sumComposition  / total : 0,
     avgCommerceCompleteness:  total > 0 ? sumCommerce     / total : 0,
     bottomTen,
+  };
+}
+
+// ── Discovery health computation ──────────────────────────────────────────────
+
+function computeDiscoveryHealth(): DiscoveryHealth {
+  const qualityMap = getAllQualityProfiles();
+  let depth1 = 0, depth2 = 0, depth3 = 0;
+  let sumQuality = 0;
+  const records: DiscoveryCollectionRecord[] = [];
+
+  for (const spec of COLLECTION_SPECS) {
+    const depth   = getProgressionDepth(spec.id);
+    if      (depth === 1) depth1++;
+    else if (depth === 3) depth3++;
+    else                  depth2++;
+
+    const profile = getCollectionProfile(spec.id);
+    const reps    = profile?.representatives ?? [];
+    let repSum = 0, repCount = 0;
+    for (const rep of reps) {
+      const kq = qualityMap.get(rep.slug);
+      if (kq) { repSum += kq.discoveryReadiness; repCount++; }
+    }
+    const avgRepQuality = repCount > 0 ? repSum / repCount : 0;
+    sumQuality += avgRepQuality;
+    records.push({ id: spec.id, name: spec.name, depth, avgRepQuality, repCount });
+  }
+
+  const sortedByQuality = [...records].sort((a, b) => b.avgRepQuality - a.avgRepQuality);
+  return {
+    totalCollections: COLLECTION_SPECS.length,
+    depthCounts:      { depth1, depth2, depth3 },
+    avgRepQuality:    records.length > 0 ? sumQuality / records.length : 0,
+    topCollections:   sortedByQuality.slice(0, 5),
+    needsEnrichment:  sortedByQuality.slice(-5).reverse(),
   };
 }
 
@@ -334,5 +377,6 @@ export default async function BriefingPage() {
 
   const brief            = computeBrief(orders, new Date());
   const catalogueHealth  = computeCatalogueHealth();
-  return <BriefingDashboard brief={brief} catalogueHealth={catalogueHealth} />;
+  const discoveryHealth  = computeDiscoveryHealth();
+  return <BriefingDashboard brief={brief} catalogueHealth={catalogueHealth} discoveryHealth={discoveryHealth} />;
 }

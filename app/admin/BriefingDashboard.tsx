@@ -51,6 +51,22 @@ export interface CatalogueHealth {
   bottomTen:                CatalogueHealthRecord[];
 }
 
+export interface DiscoveryCollectionRecord {
+  id:            string;
+  name:          string;
+  depth:         number;
+  avgRepQuality: number;
+  repCount:      number;
+}
+
+export interface DiscoveryHealth {
+  totalCollections: number;
+  depthCounts:      { depth1: number; depth2: number; depth3: number };
+  avgRepQuality:    number;
+  topCollections:   DiscoveryCollectionRecord[];
+  needsEnrichment:  DiscoveryCollectionRecord[];
+}
+
 export interface MaisonBrief {
   generatedAt:          string;
   todayRevenue:         number;
@@ -173,9 +189,11 @@ function MaisonNotes() {
 export default function BriefingDashboard({
   brief,
   catalogueHealth,
+  discoveryHealth,
 }: {
   brief:            MaisonBrief;
   catalogueHealth:  CatalogueHealth;
+  discoveryHealth:  DiscoveryHealth;
 }) {
   const [greeting, setGreeting] = useState("");
   const [dateStr,  setDateStr]  = useState("");
@@ -587,7 +605,105 @@ export default function BriefingDashboard({
 
         <hr className="border-gray-200" />
 
-        {/* 8 · Private Notes ────────────────────────────────────────────────── */}
+        {/* 8 · Discovery Intelligence ───────────────────────────────────────── */}
+        <section>
+          <p className="text-[10px] uppercase tracking-[0.4em] text-[#d89ca4]">Discovery Intelligence</p>
+          <h2 className="mt-2 text-xl font-black text-[#4f4a52]">Discovery System at a Glance</h2>
+
+          {/* Depth distribution */}
+          <div className="mt-6 grid grid-cols-3 gap-4">
+            <div className="rounded-2xl bg-white p-5 shadow-sm text-center">
+              <p className="text-2xl font-black tabular-nums text-[#4f4a52]">{discoveryHealth.depthCounts.depth1}</p>
+              <p className="mt-1 text-[10px] uppercase tracking-[0.3em] text-[#4f4a52]/50">Accessible</p>
+            </div>
+            <div className="rounded-2xl bg-white p-5 shadow-sm text-center">
+              <p className="text-2xl font-black tabular-nums text-[#4f4a52]">{discoveryHealth.depthCounts.depth2}</p>
+              <p className="mt-1 text-[10px] uppercase tracking-[0.3em] text-[#4f4a52]/50">Versatile</p>
+            </div>
+            <div className="rounded-2xl bg-white p-5 shadow-sm text-center">
+              <p className="text-2xl font-black tabular-nums text-[#4f4a52]">{discoveryHealth.depthCounts.depth3}</p>
+              <p className="mt-1 text-[10px] uppercase tracking-[0.3em] text-emerald-600">Specialised</p>
+            </div>
+          </div>
+
+          {/* Summary */}
+          <div className="mt-4 rounded-2xl bg-white p-5 shadow-sm">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-semibold text-[#4f4a52]/60">Avg. representative quality</span>
+              <span className="text-xs font-bold tabular-nums text-[#4f4a52]">
+                {(discoveryHealth.avgRepQuality * 100).toFixed(1)}%
+              </span>
+            </div>
+            <div className="mt-3 flex items-center justify-between border-t border-gray-100 pt-3">
+              <span className="text-xs text-[#4f4a52]/60">Total collections</span>
+              <span className="text-xs font-semibold tabular-nums text-[#4f4a52]">{discoveryHealth.totalCollections}</span>
+            </div>
+          </div>
+
+          {/* Strongest collections */}
+          <div className="mt-6">
+            <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-[#4f4a52]/40">
+              Strongest Collections
+            </p>
+            <div className="space-y-2">
+              {discoveryHealth.topCollections.map((c, i) => (
+                <div
+                  key={c.id}
+                  className="flex items-center gap-4 rounded-xl bg-white px-4 py-3 shadow-sm"
+                >
+                  <span className="w-5 shrink-0 text-center text-[11px] font-black text-[#4f4a52]/25">
+                    {i + 1}
+                  </span>
+                  <p className="flex-1 text-sm font-semibold text-[#4f4a52]">{c.name}</p>
+                  <div className="flex shrink-0 items-center gap-3">
+                    <span className="text-[10px] font-semibold uppercase tracking-wider text-[#4f4a52]/40">
+                      Depth {c.depth}
+                    </span>
+                    <span className="text-xs tabular-nums text-[#4f4a52]/50">
+                      {(c.avgRepQuality * 100).toFixed(0)}%
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Enrichment candidates */}
+          <div className="mt-6">
+            <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-[#4f4a52]/40">
+              Enrichment Candidates
+            </p>
+            <div className="space-y-2">
+              {discoveryHealth.needsEnrichment.map((c, i) => (
+                <div
+                  key={c.id}
+                  className="flex items-center gap-4 rounded-xl bg-white px-4 py-3 shadow-sm"
+                >
+                  <span className="w-5 shrink-0 text-center text-[11px] font-black text-[#4f4a52]/25">
+                    {i + 1}
+                  </span>
+                  <p className="flex-1 text-sm font-semibold text-[#4f4a52]">{c.name}</p>
+                  <div className="flex shrink-0 items-center gap-3">
+                    <span className="text-[10px] font-semibold uppercase tracking-wider text-[#d89ca4]">
+                      Depth {c.depth}
+                    </span>
+                    <span className="text-xs tabular-nums text-[#4f4a52]/50">
+                      {(c.avgRepQuality * 100).toFixed(0)}%
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <p className="mt-4 text-xs text-[#4f4a52]/30">
+            {discoveryHealth.totalCollections} collections · Representative quality measured by discovery readiness.
+          </p>
+        </section>
+
+        <hr className="border-gray-200" />
+
+        {/* 9 · Private Notes ────────────────────────────────────────────────── */}
         <section className="pb-16">
           <p className="text-[10px] uppercase tracking-[0.4em] text-[#d89ca4]">Your Space</p>
           <h2 className="mt-2 mb-6 text-xl font-black text-[#4f4a52]">Maison Notes</h2>
