@@ -35,22 +35,21 @@
  *   Both appear in versatile daily-wear compositions. Including them would
  *   incorrectly elevate everyday-wear collections to Depth 3.
  *
- * Editorial heuristic. Future depth signals (Refinement 7 — EP24-P4):
- *   - Native knowledge density: collections with denser authored MKC records
- *     may warrant a higher depth signal as content coverage grows.
- *   - Relationship graph richness: collections whose representative fragrances
- *     have many authored graph relationships signal more complex compositions.
- *   - Academy coverage: collections whose journey topics map to multiple
- *     in-depth articles (note-pyramid, layering) are experientially deeper.
- *   - Wardrobe pathway density: collections with more wardrobe-partner pathways
- *     naturally introduce layering — an advanced practice.
- *   None of these belong in EP24-P4.
+ * Editorial heuristic. Depth signals (Refinement 7):
+ *   - Relationship graph richness: majority of representatives with
+ *     relationshipRichness ≥ 0.4 → Depth 3 signal  (EP26-P2)
+ *   - Academy coverage: majority of representatives with
+ *     educationalRichness ≥ 0.4 → Depth 3 signal    (EP26-P2)
+ *   - Native knowledge density: future evolution
+ *   - Wardrobe pathway density: future evolution
  */
 
-import type { CollectionSpec }   from "./types";
-import { COLLECTION_SPECS }      from "./collectionEngine";
-import { getCollectionProfile }  from "./discoveryIntelligence";
+import type { CollectionSpec }     from "./types";
+import type { FragranceKnowledge } from "../mkc/types";
+import { COLLECTION_SPECS }        from "./collectionEngine";
+import { getCollectionProfile }    from "./discoveryIntelligence";
 import { getConnectedCollections } from "./discoveryGraph";
+import { getKnowledgeQuality }     from "../mkc/knowledgeQuality";
 
 // ── Progression depth ─────────────────────────────────────────────────────────
 // Three editorial learning stages. Not customer skill levels (Refinement 3).
@@ -68,6 +67,28 @@ const SPECIALIST_FAMILIES = new Set(["Oud", "Amber", "Oriental"]);
 // occasion-specific layer of a wardrobe rather than a daily-wear anchor.
 const FORMAL_OCCASIONS = new Set(["Date Night", "Wedding", "Evening", "Winter Evenings"]);
 
+// KQ threshold for depth signals (EP26-P2).
+// Aligned with the Knowledge Quality standard-tier lower bound (overallScore ≥ 0.40).
+// A representative at or above this value on either dimension signals that the
+// collection has substantive editorial depth beyond what tags or families alone capture.
+const KQ_DEPTH_THRESHOLD = 0.4;
+
+// Returns true when a strict majority of representatives have relationshipRichness
+// or educationalRichness at or above KQ_DEPTH_THRESHOLD.
+// Implements the Knowledge Quality portion of Refinement 7 (EP26-P2).
+function representativesHaveKqDepth(reps: FragranceKnowledge[]): boolean {
+  if (reps.length === 0) return false;
+  const passing = reps.filter((r) => {
+    const kq = getKnowledgeQuality(r.slug);
+    return kq !== undefined && (
+      kq.relationshipRichness >= KQ_DEPTH_THRESHOLD ||
+      kq.educationalRichness  >= KQ_DEPTH_THRESHOLD
+    );
+  });
+  // Strict majority: passing must exceed half of the representative count.
+  return passing.length * 2 > reps.length;
+}
+
 function computeDepthLevel(id: string): ProgressionDepth {
   const spec = COLLECTION_SPECS.find((s) => s.id === id);
   // Editorial collections manage their own navigation structure — skip.
@@ -84,8 +105,9 @@ function computeDepthLevel(id: string): ProgressionDepth {
 
   const hasSpecialistFamily = topFamilies.some((f) => SPECIALIST_FAMILIES.has(f));
   const hasFormalOccasion   = topOccasions.some((o) => FORMAL_OCCASIONS.has(o));
+  const hasKqDepth          = representativesHaveKqDepth(profile.representatives);
 
-  if (hasSpecialistFamily || hasFormalOccasion) return 3;
+  if (hasSpecialistFamily || hasFormalOccasion || hasKqDepth) return 3;
   return 2;
 }
 
