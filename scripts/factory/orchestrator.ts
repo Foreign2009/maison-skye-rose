@@ -10,10 +10,11 @@
  *   4. Editorial      — AI: generate description + subtitle (EditorialProducer)
  *   5. Relationships  — AI: generate graph edges (RelationshipProducer)
  *   6. Education      — AI: assign academy metadata (EducationProducer)
- *   7. Merge          — consolidate all producer outputs
- *   8. Validate       — run MKC validator on merged record
- *   9. DraftBuild     — write TypeScript draft file
- *  10. Log            — record run to factory-log.json
+ *   7. Discovery      — AI: generate discovery intelligence (DiscoveryProducer)
+ *   8. Merge          — consolidate all producer outputs
+ *   9. Validate       — run MKC validator on merged record
+ *  10. DraftBuild     — write TypeScript draft file
+ *  11. Log            — record run to factory-log.json
  */
 
 import path from "path";
@@ -29,13 +30,14 @@ import { CompositionProducer }   from "./producers/CompositionProducer";
 import { EditorialProducer }     from "./producers/EditorialProducer";
 import { RelationshipProducer }  from "./producers/RelationshipProducer";
 import { EducationProducer }     from "./producers/EducationProducer";
+import { DiscoveryProducer }     from "./producers/DiscoveryProducer";
 import { validateKnowledgeRecord } from "../../app/lib/mkc/validator";
 import type { FactoryConfig, ProducerResult } from "./core/types";
 import type { PipelineInput, PipelineResult, PipelineState, StageEntry } from "./types";
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 
-export const FACTORY_VERSION = "0.4.0";
+export const FACTORY_VERSION = "0.5.0";
 
 const ROOT      = process.cwd();
 const DRAFT_DIR = path.join(ROOT, "scripts", "factory", "drafts");
@@ -54,6 +56,7 @@ const DEFAULT_FACTORY_CONFIG: FactoryConfig = {
     EditorialProducer:    { enabled: true, temperature: 0.8, maxTokens: 512,  promptVersion: "1.0.0", promptFallback: "fail" },
     RelationshipProducer: { enabled: true, temperature: 0.3, maxTokens: 1024, promptVersion: "1.0.0", promptFallback: "fail" },
     EducationProducer:    { enabled: true, temperature: 0.4, maxTokens: 512,  promptVersion: "1.0.0", promptFallback: "fail" },
+    DiscoveryProducer:    { enabled: true, temperature: 0.5, maxTokens: 768,  promptVersion: "1.0.0", promptFallback: "fail" },
   },
   maxSessionTokens:     50_000,
   maxProducerTokens:    5_000,
@@ -213,13 +216,31 @@ export async function run(input: PipelineInput): Promise<PipelineResult> {
         : `${eduResult.metrics.totalTokens} tokens  conf:${eduResult.confidence.toFixed(2)}`,
     );
 
-    // ── Stage 7: Merge ───────────────────────────────────────────────────────
+    // Update context so DiscoveryProducer sees the full enriched record
+    const ctxAfterEdu = eduResult.status !== "failed" && eduResult.status !== "skipped"
+      ? ContextBuilder.withMergedRecord(ctxAfterRel, merge(scaffolded, compResult, editResult, relResult, eduResult))
+      : ctxAfterRel;
+
+    // ── Stage 7: Discovery Producer ──────────────────────────────────────────
+    const tDisc      = Date.now();
+    const discResult = await new DiscoveryProducer().run(ctxAfterEdu, engine);
+    producerResults.push(discResult);
+    stage(
+      "discovery",
+      discResult.status === "success" ? "pass" : discResult.status === "degraded" ? "degraded" : discResult.status === "skipped" ? "skip" : "fail",
+      Date.now() - tDisc,
+      discResult.status === "skipped"
+        ? discResult.skippedReason
+        : `${discResult.metrics.totalTokens} tokens  conf:${discResult.confidence.toFixed(2)}`,
+    );
+
+    // ── Stage 8: Merge ───────────────────────────────────────────────────────
     const t2     = Date.now();
     const record = merge(scaffolded, ...producerResults);
     stage("merge", "pass", Date.now() - t2,
       hasApiKey ? `${engine.getSessionCost().totalTokens} tokens total` : "dry-run");
 
-    // ── Stage 8: Validate ───────────────────────────────────────────────────
+    // ── Stage 9: Validate ───────────────────────────────────────────────────
     const t3            = Date.now();
     const validationResult = validateKnowledgeRecord(record);
     const ms3           = Date.now() - t3;
@@ -245,12 +266,12 @@ export async function run(input: PipelineInput): Promise<PipelineResult> {
       producerResults,
     };
 
-    // ── Stage 9: Draft Build ────────────────────────────────────────────────
+    // ── Stage 10: Draft Build ────────────────────────────────────────────────
     const t4 = Date.now();
     const draftResult = buildDraft({ state, draftDir: DRAFT_DIR });
     stage("draft", "pass", Date.now() - t4);
 
-    // ── Stage 10: Log ────────────────────────────────────────────────────────
+    // ── Stage 11: Log ────────────────────────────────────────────────────────
     const t5 = Date.now();
     logRun({
       slug,

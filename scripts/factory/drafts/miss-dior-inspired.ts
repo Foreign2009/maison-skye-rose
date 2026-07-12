@@ -1,10 +1,10 @@
 // ═════════════════════════════════════════════════════════════════
 // FACTORY DRAFT — miss-dior-inspired
 // ─────────────────────────────────────────────────────────────────
-// Generated:         2026-07-12T21:04:22.104Z
-// Factory version:   0.4.0
-// Prompt versions:   CompositionProducer@1.0.0  EditorialProducer@1.0.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0
-// Validation status: FAIL  [1 error(s), 0 warning(s)]
+// Generated:         2026-07-12T21:22:40.119Z
+// Factory version:   0.5.0
+// Prompt versions:   CompositionProducer@1.0.0  EditorialProducer@1.0.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0
+// Validation status: PASS  [0 error(s), 0 warning(s)]
 // Projected KQ tier: (not available — requires Intelligence Producer)
 // ─────────────────────────────────────────────────────────────────
 // REVIEW CHECKLIST
@@ -40,18 +40,36 @@ export const missDiorInspired: FragranceKnowledge = {
   profile       : "Floral",
   season        : "Spring",
   notes: {
-    top:   ["Bergamot", "Rose", "Pink Pepper"],
-    heart: ["Peony", "Jasmine Sambac", "Iris Root"],
-    base:  ["Vanilla Bourbon", "Cedarwood", "Musk Ambroxan"],
+    top:   ["Bergamot", "Rose", "Grapefruit"],
+    heart: ["Peony", "Jasmine Sambac", "Pink Peppercorn"],
+    base:  ["Vanilla", "Musk", "Sandalwood"],
   },
   mood          : "Elegant feminine florals with playful luxury.",
 
   // ── Discovery ───────────────────────────────────────────────────────────────
-  vibe          : ["Feminine", "Elegant", "Playful", "Luxury"],
-  occasions     : ["Daily Wear", "Wedding"],
-  seasons       : ["Spring"],
-  signatureStyle: ["Soft Luxury"],
-  recommendedFor: [],  // FACTORY_ERROR: RECOMMENDED_FOR_MIN — minimum 2 recommendedFor values required (found 0)
+  vibe          : [
+    "Elegant",
+    "Playful",
+    "Feminine",
+    "Luxury",
+    "Refined",
+    "Bright",
+  ],
+  occasions     : [
+    "Daily Wear",
+    "Office",
+    "Date Night",
+    "Wedding",
+    "Weekend",
+  ],
+  seasons       : ["Spring", "Summer"],
+  signatureStyle: ["Soft Luxury", "Refined Florals", "Luminous Elegance"],
+  recommendedFor: [
+    "Women seeking an elegant rose fragrance that transitions seamlessly from daily wear to special occasions.",
+    "Those who appreciate balanced florals with playful sophistication—neither too sweet nor too austere.",
+    "Anyone building a signature scent wardrobe who wants luminous refinement that complements both casual and formal settings.",
+    "Fragrance lovers drawn to peony and jasmine as the emotional heart of their scent story.",
+  ],
 
   // ── Merchandising ───────────────────────────────────────────────────────────
   prices: {
@@ -68,20 +86,20 @@ export const missDiorInspired: FragranceKnowledge = {
   newArrival    : false,
 
   // ── Education ───────────────────────────────────────────────────────────────
-  subtitle      : "Radiant Elegance",
-  description   : "A burst of bergamot and pink pepper frames a luminous rose, immediately elegant and alive. The heart deepens into peony and jasmine sambac—a creamy, full-bodied florality that hovers between whisper and declaration. Vanilla bourbon and cedarwood anchor the composition with warmth, never saccharine, revealing a fragrance as refined as it is radiant.",
+  subtitle      : "Luminous Refinement",
+  description   : "A luminous rose opens with citrus brightness, unfolding into peony and jasmine that feels both refined and gently playful. The composition settles into warm vanilla and musk, creating an elegant second skin that carries the intimacy of luxury without pretense.",
   academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "what-makes-a-signature-scent", "how-to-layer-fragrances"],
-  academyCategories: ["fragrance-fundamentals", "fragrance-families", "the-note-pyramid"],
+  academyCategories: ["fragrance-families", "the-note-pyramid", "occasions-and-style"],
   educationTags : [
     "floral",
     "rose",
     "peony",
     "jasmine",
-    "bergamot",
     "feminine",
     "elegant",
     "signature-scent",
     "spring",
+    "everyday-wear",
     "luxury",
   ],
   learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "what-makes-a-signature-scent", "how-to-layer-fragrances"],

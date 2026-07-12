@@ -5,9 +5,9 @@
       "slug": "miss-dior-inspired",
       "name": "Miss Dior Inspired",
       "wave": null,
-      "startedAt": "2026-07-12T21:04:12.929Z",
-      "completedAt": "2026-07-12T21:04:22.106Z",
-      "factoryVersion": "0.4.0",
+      "startedAt": "2026-07-12T21:22:26.947Z",
+      "completedAt": "2026-07-12T21:22:40.121Z",
+      "factoryVersion": "0.5.0",
       "stages": [
         {
           "stage": "intake",
@@ -17,43 +17,49 @@
         {
           "stage": "scaffold",
           "status": "pass",
-          "durationMs": 1
+          "durationMs": 0
         },
         {
           "stage": "composition",
           "status": "pass",
-          "durationMs": 1967,
-          "message": "531 tokens  conf:0.50"
+          "durationMs": 1600,
+          "message": "529 tokens  conf:0.50"
         },
         {
           "stage": "editorial",
           "status": "pass",
-          "durationMs": 1876,
-          "message": "626 tokens  conf:0.50"
+          "durationMs": 1862,
+          "message": "597 tokens  conf:0.50"
         },
         {
           "stage": "relationships",
           "status": "pass",
-          "durationMs": 2850,
-          "message": "2214 tokens  conf:0.50"
+          "durationMs": 3594,
+          "message": "2221 tokens  conf:0.50"
         },
         {
           "stage": "education",
           "status": "pass",
-          "durationMs": 2475,
-          "message": "1361 tokens  conf:0.50"
+          "durationMs": 2668,
+          "message": "1392 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 3441,
+          "message": "1652 tokens  conf:0.50"
         },
         {
           "stage": "merge",
           "status": "pass",
           "durationMs": 0,
-          "message": "4732 tokens total"
+          "message": "6391 tokens total"
         },
         {
           "stage": "validate",
-          "status": "fail",
+          "status": "pass",
           "durationMs": 1,
-          "message": "FAIL  [1 errors, 0 warnings]"
+          "message": "PASS  [0 errors, 0 warnings]"
         },
         {
           "stage": "draft",
@@ -61,7 +67,7 @@
           "durationMs": 2
         }
       ],
-      "validationStatus": "FAIL",
+      "validationStatus": "PASS",
       "promotedAt": null
     }
   ]
