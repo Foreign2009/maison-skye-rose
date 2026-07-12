@@ -18,7 +18,7 @@
  * EP23-P3 guided discovery pathways — graph-driven exploration from representative
  * fragrances via the Relationship Graph (Refinement 2: graph.ts is the traversal API).
  * Future evolution points (Refinement 8):
- *   - Native knowledge weighting
+ *   - Native knowledge weighting  ← EP26-P1: discoveryReadiness applied to representative selection
  *   - Seasonal context
  *   - Current collection context
  *   - Wardrobe awareness
@@ -34,6 +34,7 @@ import type { FragranceKnowledge } from "../mkc/types";
 import { getCollection, COLLECTION_SPECS } from "./collectionEngine";
 import { buildIndex, getRelationshipSummary } from "../mkc/graph";
 import { mkcCatalogue } from "../mkc/catalogue";
+import { getKnowledgeQuality } from "../mkc/knowledgeQuality";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -92,11 +93,13 @@ export function getCollectionDimensions(id: string): CollectionDimensions | unde
 // Selects up to 2 fragrances that illustrate the character of a collection.
 // These are educational examples — not recommendations, rankings, or top picks.
 //
-// Selection strategy (Refinement 4):
+// Selection strategy (Refinement 4, updated EP26-P1):
 //   1. Prefer native records (catalogVersion set) — richer authored editorial data.
 //      Fall back to the full pool when no native records exist in the collection.
-//   2. Highest collection-fit: getCollection() is already sorted by boost score;
-//      the pool order is authoritative — most representative records come first.
+//   2. Quality-aware ordering (EP26-P1): within the pool, sort by discoveryReadiness
+//      DESC (Knowledge Quality), then popularity DESC. Records that have been more
+//      fully authored for discovery surfaces rank ahead of adapter-only records.
+//      No record is excluded — sort order shifts, not the candidate set.
 //   3. Editorial diversity: prefer different primary families between the two
 //      selections so customers see different expressions of the collection.
 //   4. Graceful fallback: if the diversity pass yields fewer than 2, fill
@@ -112,11 +115,21 @@ function selectRepresentatives(
   const natives = records.filter((r) => r.catalogVersion !== undefined);
   const pool    = natives.length > 0 ? natives : records;
 
+  // Quality-aware sort (EP26-P1): discoveryReadiness DESC, then popularity DESC.
+  // pool is already collection-relevant (boost-filtered by getCollection).
+  // Within that set, Knowledge Quality determines editorial surfacing priority.
+  const sortedPool = [...pool].sort((a, b) => {
+    const drA = getKnowledgeQuality(a.slug)?.discoveryReadiness ?? 0;
+    const drB = getKnowledgeQuality(b.slug)?.discoveryReadiness ?? 0;
+    if (drB !== drA) return drB - drA;
+    return b.popularity - a.popularity;
+  });
+
   // Diversity pass: build up to `count` with different primary families.
   const selected: FragranceKnowledge[] = [];
   const usedFamilies = new Set<string>();
 
-  for (const record of pool) {
+  for (const record of sortedPool) {
     if (selected.length >= count) break;
     const primaryFamily = record.family[0] ?? "";
     if (primaryFamily && usedFamilies.has(primaryFamily) && selected.length > 0) continue;
@@ -126,7 +139,7 @@ function selectRepresentatives(
 
   // Fill pass: add remaining slots regardless of family.
   if (selected.length < count) {
-    for (const record of pool) {
+    for (const record of sortedPool) {
       if (selected.length >= count) break;
       if (!selected.includes(record)) selected.push(record);
     }
