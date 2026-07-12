@@ -4,14 +4,15 @@
  * Controls the pipeline lifecycle for a single record.
  *
  * Pipeline stages:
- *   1. Intake       — locate record in supplier catalogue
- *   2. Scaffold     — derive all deterministic fields
- *   3. Composition  — AI: generate notes pyramid (CompositionProducer)
- *   4. Editorial    — AI: generate description + subtitle (EditorialProducer)
- *   5. Merge        — consolidate all producer outputs
- *   6. Validate     — run MKC validator on merged record
- *   7. DraftBuild   — write TypeScript draft file
- *   8. Log          — record run to factory-log.json
+ *   1. Intake         — locate record in supplier catalogue
+ *   2. Scaffold       — derive all deterministic fields
+ *   3. Composition    — AI: generate notes pyramid (CompositionProducer)
+ *   4. Editorial      — AI: generate description + subtitle (EditorialProducer)
+ *   5. Relationships  — AI: generate graph edges (RelationshipProducer)
+ *   6. Merge          — consolidate all producer outputs
+ *   7. Validate       — run MKC validator on merged record
+ *   8. DraftBuild     — write TypeScript draft file
+ *   9. Log            — record run to factory-log.json
  */
 
 import path from "path";
@@ -20,18 +21,19 @@ import { scaffold }            from "./scaffold";
 import { merge }               from "./merger";
 import { buildDraft }          from "./draftBuilder";
 import { logRun }              from "./metrics/factoryLogger";
-import { ContextBuilder }      from "./core/ContextBuilder";
-import { GenerationEngine }    from "./core/GenerationEngine";
-import { ClaudeProvider }      from "./core/providers/ClaudeProvider";
-import { CompositionProducer } from "./producers/CompositionProducer";
-import { EditorialProducer }   from "./producers/EditorialProducer";
+import { ContextBuilder }        from "./core/ContextBuilder";
+import { GenerationEngine }      from "./core/GenerationEngine";
+import { ClaudeProvider }        from "./core/providers/ClaudeProvider";
+import { CompositionProducer }   from "./producers/CompositionProducer";
+import { EditorialProducer }     from "./producers/EditorialProducer";
+import { RelationshipProducer }  from "./producers/RelationshipProducer";
 import { validateKnowledgeRecord } from "../../app/lib/mkc/validator";
 import type { FactoryConfig, ProducerResult } from "./core/types";
 import type { PipelineInput, PipelineResult, PipelineState, StageEntry } from "./types";
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 
-export const FACTORY_VERSION = "0.2.0";
+export const FACTORY_VERSION = "0.3.0";
 
 const ROOT      = process.cwd();
 const DRAFT_DIR = path.join(ROOT, "scripts", "factory", "drafts");
@@ -46,8 +48,9 @@ const DEFAULT_FACTORY_CONFIG: FactoryConfig = {
     },
   },
   producers: {
-    CompositionProducer: { enabled: true, temperature: 0.7, maxTokens: 512, promptVersion: "1.0.0", promptFallback: "fail" },
-    EditorialProducer:   { enabled: true, temperature: 0.8, maxTokens: 512, promptVersion: "1.0.0", promptFallback: "fail" },
+    CompositionProducer:  { enabled: true, temperature: 0.7, maxTokens: 512,  promptVersion: "1.0.0", promptFallback: "fail" },
+    EditorialProducer:    { enabled: true, temperature: 0.8, maxTokens: 512,  promptVersion: "1.0.0", promptFallback: "fail" },
+    RelationshipProducer: { enabled: true, temperature: 0.3, maxTokens: 1024, promptVersion: "1.0.0", promptFallback: "fail" },
   },
   maxSessionTokens:     50_000,
   maxProducerTokens:    5_000,
@@ -171,13 +174,31 @@ export async function run(input: PipelineInput): Promise<PipelineResult> {
         : `${editResult.metrics.totalTokens} tokens  conf:${editResult.confidence.toFixed(2)}`,
     );
 
-    // ── Stage 5: Merge ───────────────────────────────────────────────────────
+    // Update context so RelationshipProducer sees the full editorial output
+    const ctxAfterEdit = editResult.status !== "failed" && editResult.status !== "skipped"
+      ? ContextBuilder.withMergedRecord(ctxAfterComp, merge(scaffolded, compResult, editResult))
+      : ctxAfterComp;
+
+    // ── Stage 5: Relationship Producer ──────────────────────────────────────
+    const tRel      = Date.now();
+    const relResult = await new RelationshipProducer().run(ctxAfterEdit, engine);
+    producerResults.push(relResult);
+    stage(
+      "relationships",
+      relResult.status === "success" ? "pass" : relResult.status === "degraded" ? "degraded" : relResult.status === "skipped" ? "skip" : "fail",
+      Date.now() - tRel,
+      relResult.status === "skipped"
+        ? relResult.skippedReason
+        : `${relResult.metrics.totalTokens} tokens  conf:${relResult.confidence.toFixed(2)}`,
+    );
+
+    // ── Stage 6: Merge ───────────────────────────────────────────────────────
     const t2     = Date.now();
     const record = merge(scaffolded, ...producerResults);
     stage("merge", "pass", Date.now() - t2,
       hasApiKey ? `${engine.getSessionCost().totalTokens} tokens total` : "dry-run");
 
-    // ── Stage 6: Validate ───────────────────────────────────────────────────
+    // ── Stage 7: Validate ───────────────────────────────────────────────────
     const t3            = Date.now();
     const validationResult = validateKnowledgeRecord(record);
     const ms3           = Date.now() - t3;
@@ -203,12 +224,12 @@ export async function run(input: PipelineInput): Promise<PipelineResult> {
       producerResults,
     };
 
-    // ── Stage 7: Draft Build ────────────────────────────────────────────────
+    // ── Stage 8: Draft Build ────────────────────────────────────────────────
     const t4 = Date.now();
     const draftResult = buildDraft({ state, draftDir: DRAFT_DIR });
     stage("draft", "pass", Date.now() - t4);
 
-    // ── Stage 8: Log ────────────────────────────────────────────────────────
+    // ── Stage 9: Log ────────────────────────────────────────────────────────
     const t5 = Date.now();
     logRun({
       slug,

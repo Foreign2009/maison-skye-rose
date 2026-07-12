@@ -5,14 +5,14 @@
       "slug": "miss-dior-inspired",
       "name": "Miss Dior Inspired",
       "wave": null,
-      "startedAt": "2026-07-12T20:26:10.521Z",
-      "completedAt": "2026-07-12T20:26:13.817Z",
-      "factoryVersion": "0.2.0",
+      "startedAt": "2026-07-12T20:59:39.647Z",
+      "completedAt": "2026-07-12T20:59:48.964Z",
+      "factoryVersion": "0.3.0",
       "stages": [
         {
           "stage": "intake",
           "status": "pass",
-          "durationMs": 0
+          "durationMs": 1
         },
         {
           "stage": "scaffold",
@@ -22,20 +22,26 @@
         {
           "stage": "composition",
           "status": "pass",
-          "durationMs": 1646,
-          "message": "531 tokens  conf:0.50"
+          "durationMs": 4490,
+          "message": "534 tokens  conf:0.50"
         },
         {
           "stage": "editorial",
           "status": "pass",
-          "durationMs": 1643,
-          "message": "608 tokens  conf:0.50"
+          "durationMs": 1898,
+          "message": "611 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 2921,
+          "message": "2221 tokens  conf:0.50"
         },
         {
           "stage": "merge",
           "status": "pass",
           "durationMs": 0,
-          "message": "1139 tokens total"
+          "message": "3366 tokens total"
         },
         {
           "stage": "validate",

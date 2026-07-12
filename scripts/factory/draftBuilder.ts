@@ -232,24 +232,47 @@ function renderIntelligence(r: FragranceKnowledge, ann: AnnotationMap): string {
   ].join("\n");
 }
 
-// ── Relationship suggestions footer ──────────────────────────────────────────
+// ── Relationships ─────────────────────────────────────────────────────────────
 
-function renderRelationshipFooter(): string {
-  return `
-  // ── FACTORY: Relationship Suggestions (P1 — not populated) ──────────────────
-  // Relationship suggestions require the Relationship Producer (P3 AI enrichment).
-  // They will appear here after re-running the factory with P3 active.
+function renderRelationships(r: FragranceKnowledge, _ann: AnnotationMap): string {
+  const rel = r.relationships;
+
+  if (!rel || Object.keys(rel).length === 0) {
+    return `
+  // ── Relationships (not populated) ───────────────────────────────────────────
+  // Re-run the factory with an ANTHROPIC_API_KEY to generate relationship suggestions.
   //
   // To implement manually, add a relationships block:
   //   relationships: {
   //     alternatives:     [],  // slugs of comparable alternatives — must be symmetric
   //     wardrobePartners: [],  // slugs to own alongside this — must be symmetric
-  //     evolutionOf:      "",  // predecessor slug if this is a line evolution
-  //     evolutions:       [],  // successor slugs that evolved from this
   //   },
   //
-  // IMPORTANT: All relationship fields require reciprocal entries in the
-  // referenced records. Run npm run mkc:validate to verify integrity.`;
+  // IMPORTANT: All relationship fields require reciprocal entries in referenced records.`;
+  }
+
+  const lines: string[] = [
+    ``,
+    `  // ── Relationships ────────────────────────────────────────────────────────────`,
+    `  // REVIEW: Verify each suggestion and update the counterpart record symmetrically.`,
+    `  relationships: {`,
+  ];
+
+  if (rel.evolutionOf !== undefined) {
+    lines.push(`    evolutionOf:      ${renderStr(rel.evolutionOf)},`);
+  }
+  if (rel.evolutions && rel.evolutions.length > 0) {
+    lines.push(`    evolutions:       ${renderStrArray(rel.evolutions, "    ")},`);
+  }
+  if (rel.alternatives && rel.alternatives.length > 0) {
+    lines.push(`    alternatives:     ${renderStrArray(rel.alternatives, "    ")},`);
+  }
+  if (rel.wardrobePartners && rel.wardrobePartners.length > 0) {
+    lines.push(`    wardrobePartners: ${renderStrArray(rel.wardrobePartners, "    ")},`);
+  }
+
+  lines.push(`  },`);
+  return lines.join("\n");
 }
 
 // ── Header ────────────────────────────────────────────────────────────────────
@@ -324,7 +347,7 @@ export function buildDraft(input: DraftBuilderInput): DraftBuilderResult {
     renderMerchandising(record, ann),
     renderEducation(record, ann),
     renderIntelligence(record, ann),
-    renderRelationshipFooter(),
+    renderRelationships(record, ann),
     `};`,
     ``,
   ];

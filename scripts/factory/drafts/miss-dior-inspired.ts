@@ -1,9 +1,9 @@
 // ═════════════════════════════════════════════════════════════════
 // FACTORY DRAFT — miss-dior-inspired
 // ─────────────────────────────────────────────────────────────────
-// Generated:         2026-07-12T20:26:13.815Z
-// Factory version:   0.2.0
-// Prompt versions:   CompositionProducer@1.0.0  EditorialProducer@1.0.0
+// Generated:         2026-07-12T20:59:48.962Z
+// Factory version:   0.3.0
+// Prompt versions:   CompositionProducer@1.0.0  EditorialProducer@1.0.0  RelationshipProducer@1.0.0
 // Validation status: FAIL  [1 error(s), 3 warning(s)]
 // Projected KQ tier: (not available — requires Intelligence Producer)
 // ─────────────────────────────────────────────────────────────────
@@ -40,9 +40,9 @@ export const missDiorInspired: FragranceKnowledge = {
   profile       : "Floral",
   season        : "Spring",
   notes: {
-    top:   ["Bergamot", "Rose Absolute", "Pink Pepper"],
-    heart: ["Peony Absolute", "Iris Root", "Violet Leaf"],
-    base:  ["Vanilla Bourbon", "Musk Moschus", "Cedarwood"],
+    top:   ["Bergamot", "Rose Absolute", "Green Mandarin"],
+    heart: ["Peony", "Jasmine Sambac", "Iris Root"],
+    base:  ["Vanilla Bourbon", "Musk Ambrettolide", "Cedarwood"],
   },
   mood          : "Elegant feminine florals with playful luxury.",
 
@@ -68,8 +68,8 @@ export const missDiorInspired: FragranceKnowledge = {
   newArrival    : false,
 
   // ── Education ───────────────────────────────────────────────────────────────
-  subtitle      : "Radiant Bloom",
-  description   : "Bergamot and rose absolute bloom with a whisper of pink pepper, opening into a luminous heart of peony and iris that feels both ethereal and grounded. Vanilla bourbon and cedarwood settle into skin like silk, creating a fragrance that moves between softness and substance with effortless grace.",
+  subtitle      : "Radiant Femininity",
+  description   : "Bergamot and rose absolute open with citrus brightness, immediately feminine and radiant. The heart layers peony and jasmine sambac into a luminous floral core, grounded by iris root's subtle powder. Vanilla bourbon and musk anchor the composition with warmth and skin-like sensuality.",
   // academyArticleIds: (not set — will be linked in P4)  // FACTORY_WARN: ACADEMY_ARTICLES_NOT_LINKED — no academy articles linked — academy article boost (+50) will not apply
 
   // ── Intelligence ────────────────────────────────────────────────────────────
@@ -81,18 +81,10 @@ export const missDiorInspired: FragranceKnowledge = {
   versatility   : 3,
   popularity    : 10,
 
-  // ── FACTORY: Relationship Suggestions (P1 — not populated) ──────────────────
-  // Relationship suggestions require the Relationship Producer (P3 AI enrichment).
-  // They will appear here after re-running the factory with P3 active.
-  //
-  // To implement manually, add a relationships block:
-  //   relationships: {
-  //     alternatives:     [],  // slugs of comparable alternatives — must be symmetric
-  //     wardrobePartners: [],  // slugs to own alongside this — must be symmetric
-  //     evolutionOf:      "",  // predecessor slug if this is a line evolution
-  //     evolutions:       [],  // successor slugs that evolved from this
-  //   },
-  //
-  // IMPORTANT: All relationship fields require reciprocal entries in the
-  // referenced records. Run npm run mkc:validate to verify integrity.
+  // ── Relationships ────────────────────────────────────────────────────────────
+  // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
+  relationships: {
+    alternatives:     ["delina-inspired"],
+    wardrobePartners: ["sauvage-inspired", "bleu-de-chanel-inspired"],
+  },
 };
