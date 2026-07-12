@@ -1,36 +1,65 @@
 /**
- * Knowledge Factory — Orchestrator (P1)
+ * Knowledge Factory — Orchestrator
  *
  * Controls the pipeline lifecycle for a single record.
- * Coordinates all stages in dependency order.
  *
- * P1 pipeline stages:
- *   1. Intake      — locate record in supplier catalogue
- *   2. Scaffold    — derive all deterministic fields
- *   3. Merge       — consolidate (pass-through in P1)
- *   4. Validate    — run existing MKC validator
- *   5. DraftBuild  — write TypeScript draft file
- *   6. Log         — record run to factory-log.json
- *
- * P2 will add AI producer stages between Scaffold and Merge.
- * P3 will add the Relationship Producer to stage 2.
+ * Pipeline stages:
+ *   1. Intake       — locate record in supplier catalogue
+ *   2. Scaffold     — derive all deterministic fields
+ *   3. Composition  — AI: generate notes pyramid (CompositionProducer)
+ *   4. Editorial    — AI: generate description + subtitle (EditorialProducer)
+ *   5. Merge        — consolidate all producer outputs
+ *   6. Validate     — run MKC validator on merged record
+ *   7. DraftBuild   — write TypeScript draft file
+ *   8. Log          — record run to factory-log.json
  */
 
 import path from "path";
-import { intake }       from "./intake";
-import { scaffold }     from "./scaffold";
-import { merge }        from "./merger";
-import { buildDraft }   from "./draftBuilder";
-import { logRun }       from "./metrics/factoryLogger";
+import { intake }              from "./intake";
+import { scaffold }            from "./scaffold";
+import { merge }               from "./merger";
+import { buildDraft }          from "./draftBuilder";
+import { logRun }              from "./metrics/factoryLogger";
+import { ContextBuilder }      from "./core/ContextBuilder";
+import { GenerationEngine }    from "./core/GenerationEngine";
+import { ClaudeProvider }      from "./core/providers/ClaudeProvider";
+import { CompositionProducer } from "./producers/CompositionProducer";
+import { EditorialProducer }   from "./producers/EditorialProducer";
 import { validateKnowledgeRecord } from "../../app/lib/mkc/validator";
+import type { FactoryConfig, ProducerResult } from "./core/types";
 import type { PipelineInput, PipelineResult, PipelineState, StageEntry } from "./types";
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 
-export const FACTORY_VERSION = "0.1.0";
+export const FACTORY_VERSION = "0.2.0";
 
 const ROOT      = process.cwd();
 const DRAFT_DIR = path.join(ROOT, "scripts", "factory", "drafts");
+
+const DEFAULT_FACTORY_CONFIG: FactoryConfig = {
+  defaultProvider:      "claude",
+  providers: {
+    claude: {
+      name:         "claude",
+      modelId:      "claude-haiku-4-5-20251001",
+      apiKeyEnvVar: "ANTHROPIC_API_KEY",
+    },
+  },
+  producers: {
+    CompositionProducer: { enabled: true, temperature: 0.7, maxTokens: 512, promptVersion: "1.0.0", promptFallback: "fail" },
+    EditorialProducer:   { enabled: true, temperature: 0.8, maxTokens: 512, promptVersion: "1.0.0", promptFallback: "fail" },
+  },
+  maxSessionTokens:     50_000,
+  maxProducerTokens:    5_000,
+  dryRun:               false,
+  logLevel:             "normal",
+  logProducerArtifacts: false,
+  generationTimeout:    30_000,
+  producerTimeout:      60_000,
+  maxAttempts:          3,
+  backoffStrategy:      "exponential",
+  backoffBaseMs:        1_000,
+};
 
 // ── Pipeline runner ───────────────────────────────────────────────────────────
 
@@ -99,12 +128,56 @@ export async function run(input: PipelineInput): Promise<PipelineResult> {
 
     stage("scaffold", degraded ? "degraded" : "pass", ms1, degraded ? "knowledgeAdapter fallback used" : undefined);
 
-    // ── Stage 3: Merge (P1 pass-through) ───────────────────────────────────
-    const t2     = Date.now();
-    const record = merge(scaffolded);
-    stage("merge", "pass", Date.now() - t2);
+    // ── Stage 3: Composition Producer ──────────────────────────────────────
+    const hasApiKey    = Boolean(process.env.ANTHROPIC_API_KEY);
+    const factoryConfig: FactoryConfig = { ...DEFAULT_FACTORY_CONFIG, dryRun: !hasApiKey };
 
-    // ── Stage 4: Validate ───────────────────────────────────────────────────
+    const ctx0   = ContextBuilder.build(
+      { slug, displayFrag: result.displayFrag!, record: scaffolded, validationResult: null, stageLog, factoryVersion: FACTORY_VERSION },
+      factoryConfig,
+    );
+    const engine = new GenerationEngine(factoryConfig);
+    if (hasApiKey) engine.registerProvider(new ClaudeProvider());
+
+    const producerResults: ProducerResult[] = [];
+
+    const tComp      = Date.now();
+    const compResult = await new CompositionProducer().run(ctx0, engine);
+    producerResults.push(compResult);
+    stage(
+      "composition",
+      compResult.status === "success" ? "pass" : compResult.status === "degraded" ? "degraded" : compResult.status === "skipped" ? "skip" : "fail",
+      Date.now() - tComp,
+      compResult.status === "skipped"
+        ? compResult.skippedReason
+        : `${compResult.metrics.totalTokens} tokens  conf:${compResult.confidence.toFixed(2)}`,
+    );
+
+    // Update context so EditorialProducer sees the composition output
+    const ctxAfterComp = compResult.status !== "failed" && compResult.status !== "skipped"
+      ? ContextBuilder.withMergedRecord(ctx0, merge(scaffolded, compResult))
+      : ctx0;
+
+    // ── Stage 4: Editorial Producer ─────────────────────────────────────────
+    const tEdit      = Date.now();
+    const editResult = await new EditorialProducer().run(ctxAfterComp, engine);
+    producerResults.push(editResult);
+    stage(
+      "editorial",
+      editResult.status === "success" ? "pass" : editResult.status === "degraded" ? "degraded" : editResult.status === "skipped" ? "skip" : "fail",
+      Date.now() - tEdit,
+      editResult.status === "skipped"
+        ? editResult.skippedReason
+        : `${editResult.metrics.totalTokens} tokens  conf:${editResult.confidence.toFixed(2)}`,
+    );
+
+    // ── Stage 5: Merge ───────────────────────────────────────────────────────
+    const t2     = Date.now();
+    const record = merge(scaffolded, ...producerResults);
+    stage("merge", "pass", Date.now() - t2,
+      hasApiKey ? `${engine.getSessionCost().totalTokens} tokens total` : "dry-run");
+
+    // ── Stage 6: Validate ───────────────────────────────────────────────────
     const t3            = Date.now();
     const validationResult = validateKnowledgeRecord(record);
     const ms3           = Date.now() - t3;
@@ -127,14 +200,15 @@ export async function run(input: PipelineInput): Promise<PipelineResult> {
       validationResult,
       stageLog,
       factoryVersion:   FACTORY_VERSION,
+      producerResults,
     };
 
-    // ── Stage 5: Draft Build ────────────────────────────────────────────────
+    // ── Stage 7: Draft Build ────────────────────────────────────────────────
     const t4 = Date.now();
     const draftResult = buildDraft({ state, draftDir: DRAFT_DIR });
     stage("draft", "pass", Date.now() - t4);
 
-    // ── Stage 6: Log ────────────────────────────────────────────────────────
+    // ── Stage 8: Log ────────────────────────────────────────────────────────
     const t5 = Date.now();
     logRun({
       slug,

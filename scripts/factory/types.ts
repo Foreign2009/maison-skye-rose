@@ -1,13 +1,14 @@
 /**
- * Knowledge Factory — Shared Types (P1)
+ * Knowledge Factory — Shared Pipeline Types
  *
- * All types shared across factory modules.
- * P2 will extend these with ProducerResult, ProducerName, KQProjection.
+ * Pipeline-level types shared across factory modules.
+ * Core framework types (producer, engine, context) live in ./core/types.ts.
  */
 
 import type { FragranceKnowledge } from "../../app/lib/mkc/types";
 import type { DisplayFragrance }   from "../../app/lib/knowledgeAdapter";
 import type { ValidationResult }   from "../../app/lib/mkc/validator";
+import type { ProducerResult }     from "./core/types";
 
 // ── Intake ────────────────────────────────────────────────────────────────────
 
@@ -46,6 +47,7 @@ export interface PipelineState {
   validationResult: ValidationResult | null;
   stageLog:         StageEntry[];
   factoryVersion:   string;
+  producerResults?: ProducerResult[];
 }
 
 // ── Draft builder ─────────────────────────────────────────────────────────────

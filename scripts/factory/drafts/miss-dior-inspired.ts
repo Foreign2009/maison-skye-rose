@@ -1,15 +1,15 @@
 // ═════════════════════════════════════════════════════════════════
 // FACTORY DRAFT — miss-dior-inspired
 // ─────────────────────────────────────────────────────────────────
-// Generated:         2026-07-12T19:15:13.206Z
-// Factory version:   0.1.0
-// Prompt versions:   (none — P1 structural scaffold only)
-// Validation status: FAIL  [5 error(s), 3 warning(s)]
-// Projected KQ tier: (not available — requires P2 enrichment)
+// Generated:         2026-07-12T20:26:13.815Z
+// Factory version:   0.2.0
+// Prompt versions:   CompositionProducer@1.0.0  EditorialProducer@1.0.0
+// Validation status: FAIL  [1 error(s), 3 warning(s)]
+// Projected KQ tier: (not available — requires Intelligence Producer)
 // ─────────────────────────────────────────────────────────────────
 // REVIEW CHECKLIST
-//   □ Notes pyramid verified against reference fragrance (≥ 2 notes per tier)
-//   □ Description added in Maison editorial voice (2–4 sentences)
+//   □ Notes pyramid verified (≥ 2 per tier, no cross-tier duplicates)
+//   □ Description reviewed in Maison editorial voice
 //   □ Vibe tags meet minimum of 3 (from approved vocabulary)
 //   □ recommendedFor has minimum of 2 persona statements
 //   □ All FACTORY_ERROR markers resolved
@@ -40,9 +40,9 @@ export const missDiorInspired: FragranceKnowledge = {
   profile       : "Floral",
   season        : "Spring",
   notes: {
-    top:   ["Rose"],  // FACTORY_ERROR: NOTES_TOP_MIN — minimum 2 top notes required (found 1)
-    heart: ["Peony"],  // FACTORY_ERROR: NOTES_HEART_MIN — minimum 2 heart notes required (found 1)
-    base:  ["Vanilla"],  // FACTORY_ERROR: NOTES_BASE_MIN — minimum 2 base notes required (found 1)
+    top:   ["Bergamot", "Rose Absolute", "Pink Pepper"],
+    heart: ["Peony Absolute", "Iris Root", "Violet Leaf"],
+    base:  ["Vanilla Bourbon", "Musk Moschus", "Cedarwood"],
   },
   mood          : "Elegant feminine florals with playful luxury.",
 
@@ -68,10 +68,9 @@ export const missDiorInspired: FragranceKnowledge = {
   newArrival    : false,
 
   // ── Education ───────────────────────────────────────────────────────────────
-  subtitle      : "Soft Luxury",
-  // description:  (not set — required, will be authored in P2)
-  //  // FACTORY_ERROR: DESCRIPTION_REQUIRED — description is required for all native records
-  // academyArticleIds: (not set — will be linked in P2)  // FACTORY_WARN: ACADEMY_ARTICLES_NOT_LINKED — no academy articles linked — academy article boost (+50) will not apply
+  subtitle      : "Radiant Bloom",
+  description   : "Bergamot and rose absolute bloom with a whisper of pink pepper, opening into a luminous heart of peony and iris that feels both ethereal and grounded. Vanilla bourbon and cedarwood settle into skin like silk, creating a fragrance that moves between softness and substance with effortless grace.",
+  // academyArticleIds: (not set — will be linked in P4)  // FACTORY_WARN: ACADEMY_ARTICLES_NOT_LINKED — no academy articles linked — academy article boost (+50) will not apply
 
   // ── Intelligence ────────────────────────────────────────────────────────────
   // Approximated from profile + season. Calibrated by Intelligence Producer in P2.

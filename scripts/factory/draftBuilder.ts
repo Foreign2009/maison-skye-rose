@@ -191,23 +191,26 @@ function renderEducation(r: FragranceKnowledge, ann: AnnotationMap): string {
   if (r.subtitle !== undefined) {
     lines.push(fieldLine("subtitle", renderStr(r.subtitle), trailingAnnotation(ann, "subtitle")));
   } else {
-    const subtitleAnn = trailingAnnotation(ann, "subtitle");
-    lines.push(`  // subtitle:     (not set — will be set by Editorial Producer in P2)${subtitleAnn}`);
+    lines.push(`  // subtitle:     (not set)`);
   }
 
-  // description is intentionally omitted until P2 — show the annotation
-  const descAnn = ann.get("description");
-  if (descAnn) {
-    lines.push(`  // description:  (not set — required, will be authored in P2)`);
-    lines.push(`  //  ${descAnn.join("\n  //  ")}`);
+  // description — render when set (after P3 Editorial Producer), otherwise comment
+  if (r.description !== undefined) {
+    lines.push(fieldLine("description", renderStr(r.description), trailingAnnotation(ann, "description")));
   } else {
-    lines.push(`  // description:  (not set — will be authored in P2)`);
+    const descAnn = ann.get("description");
+    if (descAnn) {
+      lines.push(`  // description:  (not set — required)`);
+      lines.push(`  //  ${descAnn.join("\n  //  ")}`);
+    } else {
+      lines.push(`  // description:  (not set)`);
+    }
   }
 
-  // Academy fields — omitted in P1
+  // Academy fields — omitted until P4
   const academyAnn = ann.get("academyArticleIds");
   if (academyAnn) {
-    lines.push(`  // academyArticleIds: (not set — will be linked in P2)  ${academyAnn.join("  ")}`);
+    lines.push(`  // academyArticleIds: (not set — will be linked in P4)  ${academyAnn.join("  ")}`);
   }
 
   return lines.join("\n");
@@ -251,6 +254,14 @@ function renderRelationshipFooter(): string {
 
 // ── Header ────────────────────────────────────────────────────────────────────
 
+function renderPromptVersions(state: PipelineState): string {
+  const results = state.producerResults?.filter(r => r.promptVersion !== null) ?? [];
+  if (results.length === 0) return "(none — structural scaffold only)";
+  return results
+    .map(r => `${r.producerName}@${r.promptVersion}`)
+    .join("  ");
+}
+
 function renderHeader(state: PipelineState): string {
   const SEP = "═".repeat(65);
   const DIV = "─".repeat(65);
@@ -266,13 +277,13 @@ function renderHeader(state: PipelineState): string {
 // ${DIV}
 // Generated:         ${new Date().toISOString()}
 // Factory version:   ${state.factoryVersion}
-// Prompt versions:   (none — P1 structural scaffold only)
+// Prompt versions:   ${renderPromptVersions(state)}
 // Validation status: ${status}  [${countStr}]
-// Projected KQ tier: (not available — requires P2 enrichment)
+// Projected KQ tier: (not available — requires Intelligence Producer)
 // ${DIV}
 // REVIEW CHECKLIST
-//   □ Notes pyramid verified against reference fragrance (≥ 2 notes per tier)
-//   □ Description added in Maison editorial voice (2–4 sentences)
+//   □ Notes pyramid verified (≥ 2 per tier, no cross-tier duplicates)
+//   □ Description reviewed in Maison editorial voice
 //   □ Vibe tags meet minimum of 3 (from approved vocabulary)
 //   □ recommendedFor has minimum of 2 persona statements
 //   □ All FACTORY_ERROR markers resolved
