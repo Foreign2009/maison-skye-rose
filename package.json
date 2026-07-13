@@ -18,7 +18,9 @@
     "mkc:promote": "npx tsx scripts/factory/promotion/index.ts",
     "mkc:promote:report": "npx tsx scripts/factory/promotion/index.ts --report",
     "mkc:dashboard": "npx tsx scripts/factory/dashboard/index.ts",
-    "mkc:dashboard:json": "npx tsx scripts/factory/dashboard/index.ts --json"
+    "mkc:dashboard:json": "npx tsx scripts/factory/dashboard/index.ts --json",
+    "mkc:lifecycle": "npx tsx scripts/factory/lifecycle/index.ts",
+    "mkc:lifecycle:json": "npx tsx scripts/factory/lifecycle/index.ts --json"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.110.0",
