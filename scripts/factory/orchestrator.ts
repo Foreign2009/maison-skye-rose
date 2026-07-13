@@ -270,7 +270,7 @@ export async function run(input: PipelineInput): Promise<PipelineResult> {
     // ── Stage 10: Draft Build ────────────────────────────────────────────────
     const t4 = Date.now();
     let draftResult: { path: string };
-    if (input.dryRun) {
+    if (factoryConfig.dryRun) {
       draftResult = { path: path.join(DRAFT_DIR, `${slug}.ts`) };
       stage("draft", "pass", Date.now() - t4, "dry-run — skipped");
     } else {
@@ -280,7 +280,7 @@ export async function run(input: PipelineInput): Promise<PipelineResult> {
 
     // ── Stage 11: Log ────────────────────────────────────────────────────────
     const t5 = Date.now();
-    if (!input.dryRun) logRun({
+    if (!factoryConfig.dryRun) logRun({
       slug,
       name:             record.name,
       wave:             null,

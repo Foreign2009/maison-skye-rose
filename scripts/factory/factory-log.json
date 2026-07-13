@@ -2,6 +2,3801 @@
   "version": "1.0",
   "runs": [
     {
+      "slug": "haltane-inspired",
+      "name": "Haltane Inspired",
+      "wave": null,
+      "startedAt": "2026-07-13T18:31:20.193Z",
+      "completedAt": "2026-07-13T18:31:37.003Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 1
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "pass",
+          "durationMs": 1398,
+          "message": "529 tokens  conf:0.50"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 2129,
+          "message": "639 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 2331,
+          "message": "2155 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 2334,
+          "message": "1371 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 8616,
+          "message": "1674 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "6368 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "PASS  [0 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 1
+        }
+      ],
+      "validationStatus": "PASS",
+      "promotedAt": null
+    },
+    {
+      "slug": "kirke-overdose-inspired",
+      "name": "Kirke Overdose Inspired",
+      "wave": null,
+      "startedAt": "2026-07-13T18:31:17.480Z",
+      "completedAt": "2026-07-13T18:31:30.577Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "pass",
+          "durationMs": 1910,
+          "message": "540 tokens  conf:0.50"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 2143,
+          "message": "611 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 2732,
+          "message": "2292 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 2723,
+          "message": "1424 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 3588,
+          "message": "1664 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "6531 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "PASS  [0 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 1
+        }
+      ],
+      "validationStatus": "PASS",
+      "promotedAt": null
+    },
+    {
+      "slug": "gris-charnel-inspired",
+      "name": "Gris Charnel Inspired",
+      "wave": null,
+      "startedAt": "2026-07-13T18:31:16.644Z",
+      "completedAt": "2026-07-13T18:31:30.588Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 1
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "pass",
+          "durationMs": 1383,
+          "message": "535 tokens  conf:0.50"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 1724,
+          "message": "621 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 4025,
+          "message": "2391 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 2835,
+          "message": "1393 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 3974,
+          "message": "1713 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "6653 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "PASS  [0 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 1
+        }
+      ],
+      "validationStatus": "PASS",
+      "promotedAt": null
+    },
+    {
+      "slug": "oud-mood-inspired",
+      "name": "Oud Mood Inspired",
+      "wave": null,
+      "startedAt": "2026-07-13T18:31:08.105Z",
+      "completedAt": "2026-07-13T18:31:20.190Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "pass",
+          "durationMs": 1243,
+          "message": "524 tokens  conf:0.50"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 1617,
+          "message": "601 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 2567,
+          "message": "2154 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 2930,
+          "message": "1393 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 3727,
+          "message": "1644 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "6316 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "PASS  [0 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 1
+        }
+      ],
+      "validationStatus": "PASS",
+      "promotedAt": null
+    },
+    {
+      "slug": "hibiscus-mahajad-inspired",
+      "name": "Hibiscus Mahajad Inspired",
+      "wave": null,
+      "startedAt": "2026-07-13T18:31:04.693Z",
+      "completedAt": "2026-07-13T18:31:16.634Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "pass",
+          "durationMs": 1342,
+          "message": "534 tokens  conf:0.50"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 1869,
+          "message": "618 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 2057,
+          "message": "2114 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 2631,
+          "message": "1340 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 4040,
+          "message": "1655 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "6261 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "PASS  [0 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 2
+        }
+      ],
+      "validationStatus": "PASS",
+      "promotedAt": null
+    },
+    {
+      "slug": "wedding-silk-santal-inspired",
+      "name": "Wedding Silk Santal Inspired",
+      "wave": null,
+      "startedAt": "2026-07-13T18:31:01.087Z",
+      "completedAt": "2026-07-13T18:31:17.472Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 1
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "pass",
+          "durationMs": 1307,
+          "message": "536 tokens  conf:0.50"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 1550,
+          "message": "610 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 2460,
+          "message": "2217 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 6424,
+          "message": "1383 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 4640,
+          "message": "1681 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "6427 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "PASS  [0 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 3
+        }
+      ],
+      "validationStatus": "PASS",
+      "promotedAt": null
+    },
+    {
+      "slug": "vanilla-28-inspired",
+      "name": "Vanilla 28 Inspired",
+      "wave": null,
+      "startedAt": "2026-07-13T18:30:54.741Z",
+      "completedAt": "2026-07-13T18:31:08.102Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 1
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "pass",
+          "durationMs": 1441,
+          "message": "511 tokens  conf:0.50"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 1678,
+          "message": "584 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 2906,
+          "message": "2178 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 2886,
+          "message": "1336 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 4449,
+          "message": "1666 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "6275 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "PASS  [0 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 0
+        }
+      ],
+      "validationStatus": "PASS",
+      "promotedAt": null
+    },
+    {
+      "slug": "devotion-inspired",
+      "name": "Devotion Inspired",
+      "wave": null,
+      "startedAt": "2026-07-13T18:30:53.271Z",
+      "completedAt": "2026-07-13T18:31:04.689Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "pass",
+          "durationMs": 1402,
+          "message": "528 tokens  conf:0.50"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 1703,
+          "message": "596 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 1377,
+          "message": "2048 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 2973,
+          "message": "1317 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 3962,
+          "message": "1596 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "6085 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "PASS  [0 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 1
+        }
+      ],
+      "validationStatus": "PASS",
+      "promotedAt": null
+    },
+    {
+      "slug": "bianco-latte-inspired",
+      "name": "Bianco Latte Inspired",
+      "wave": null,
+      "startedAt": "2026-07-13T18:30:49.815Z",
+      "completedAt": "2026-07-13T18:31:01.084Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "pass",
+          "durationMs": 1930,
+          "message": "539 tokens  conf:0.50"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 2425,
+          "message": "612 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 890,
+          "message": "2062 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 2492,
+          "message": "1335 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 3531,
+          "message": "1639 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "6187 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "PASS  [0 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 1
+        }
+      ],
+      "validationStatus": "PASS",
+      "promotedAt": null
+    },
+    {
+      "slug": "blanche-bete-inspired",
+      "name": "Blanche Bete Inspired",
+      "wave": null,
+      "startedAt": "2026-07-13T18:30:43.340Z",
+      "completedAt": "2026-07-13T18:30:54.739Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "pass",
+          "durationMs": 1339,
+          "message": "537 tokens  conf:0.50"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 1538,
+          "message": "609 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 2402,
+          "message": "2168 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 2612,
+          "message": "1443 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 3507,
+          "message": "1568 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "6325 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "PASS  [0 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 1
+        }
+      ],
+      "validationStatus": "PASS",
+      "promotedAt": null
+    },
+    {
+      "slug": "gentle-fluidity-gold-inspired",
+      "name": "Gentle Fluidity Gold Inspired",
+      "wave": null,
+      "startedAt": "2026-07-13T18:30:41.917Z",
+      "completedAt": "2026-07-13T18:30:53.268Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "pass",
+          "durationMs": 1444,
+          "message": "528 tokens  conf:0.50"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 1819,
+          "message": "622 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 2082,
+          "message": "2119 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 2356,
+          "message": "1344 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 3649,
+          "message": "1624 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "6237 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "PASS  [0 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 1
+        }
+      ],
+      "validationStatus": "PASS",
+      "promotedAt": null
+    },
+    {
+      "slug": "guidance-inspired",
+      "name": "Guidance Inspired",
+      "wave": null,
+      "startedAt": "2026-07-13T18:30:37.981Z",
+      "completedAt": "2026-07-13T18:30:49.812Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "pass",
+          "durationMs": 1917,
+          "message": "531 tokens  conf:0.50"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 1470,
+          "message": "598 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 1667,
+          "message": "2105 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 3658,
+          "message": "1437 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 3118,
+          "message": "1517 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "6188 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "PASS  [0 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 1
+        }
+      ],
+      "validationStatus": "PASS",
+      "promotedAt": null
+    },
+    {
+      "slug": "rolling-in-love-inspired",
+      "name": "Rolling In Love Inspired",
+      "wave": null,
+      "startedAt": "2026-07-13T18:30:32.228Z",
+      "completedAt": "2026-07-13T18:30:43.337Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "pass",
+          "durationMs": 1129,
+          "message": "526 tokens  conf:0.50"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 1598,
+          "message": "599 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 2131,
+          "message": "2157 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 2368,
+          "message": "1338 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 3881,
+          "message": "1679 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "6299 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "PASS  [0 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 1
+        }
+      ],
+      "validationStatus": "PASS",
+      "promotedAt": null
+    },
+    {
+      "slug": "love-don't-be-shy-inspired",
+      "name": "Love Don't Be Shy Inspired",
+      "wave": null,
+      "startedAt": "2026-07-13T18:30:29.917Z",
+      "completedAt": "2026-07-13T18:30:41.914Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "pass",
+          "durationMs": 1107,
+          "message": "536 tokens  conf:0.50"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 2026,
+          "message": "616 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 2261,
+          "message": "2172 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 2808,
+          "message": "1346 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 3794,
+          "message": "1676 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "6346 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "PASS  [0 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 1
+        }
+      ],
+      "validationStatus": "PASS",
+      "promotedAt": null
+    },
+    {
+      "slug": "crystal-noir-inspired",
+      "name": "Crystal Noir Inspired",
+      "wave": null,
+      "startedAt": "2026-07-13T18:30:25.175Z",
+      "completedAt": "2026-07-13T18:30:37.977Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "pass",
+          "durationMs": 1042,
+          "message": "519 tokens  conf:0.50"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 2190,
+          "message": "598 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 2795,
+          "message": "2203 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 2633,
+          "message": "1381 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 4142,
+          "message": "1625 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "6326 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "PASS  [0 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 0
+        }
+      ],
+      "validationStatus": "PASS",
+      "promotedAt": null
+    },
+    {
+      "slug": "hypnotic-poison-inspired",
+      "name": "Hypnotic Poison Inspired",
+      "wave": null,
+      "startedAt": "2026-07-13T18:30:22.364Z",
+      "completedAt": "2026-07-13T18:30:32.216Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "pass",
+          "durationMs": 1158,
+          "message": "524 tokens  conf:0.50"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 1715,
+          "message": "594 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 973,
+          "message": "2047 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 2570,
+          "message": "1310 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 3433,
+          "message": "1599 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "6074 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "pass",
+          "durationMs": 1,
+          "message": "PASS  [0 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 2
+        }
+      ],
+      "validationStatus": "PASS",
+      "promotedAt": null
+    },
+    {
+      "slug": "j'adore-inspired",
+      "name": "J'adore Inspired",
+      "wave": null,
+      "startedAt": "2026-07-13T18:30:18.412Z",
+      "completedAt": "2026-07-13T18:30:29.913Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "pass",
+          "durationMs": 1950,
+          "message": "535 tokens  conf:0.50"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 1580,
+          "message": "601 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 2622,
+          "message": "2179 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 2283,
+          "message": "1351 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 3064,
+          "message": "1639 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "6305 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "PASS  [0 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 1
+        }
+      ],
+      "validationStatus": "PASS",
+      "promotedAt": null
+    },
+    {
+      "slug": "poison-girl-inspired",
+      "name": "Poison Girl Inspired",
+      "wave": null,
+      "startedAt": "2026-07-13T18:30:12.535Z",
+      "completedAt": "2026-07-13T18:30:25.173Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "pass",
+          "durationMs": 1708,
+          "message": "522 tokens  conf:0.50"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 2215,
+          "message": "598 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 2488,
+          "message": "2188 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 2930,
+          "message": "1396 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 3296,
+          "message": "1624 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "6328 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "PASS  [0 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 1
+        }
+      ],
+      "validationStatus": "PASS",
+      "promotedAt": null
+    },
+    {
+      "slug": "mon-paris-inspired",
+      "name": "Mon Paris Inspired",
+      "wave": null,
+      "startedAt": "2026-07-13T18:30:09.336Z",
+      "completedAt": "2026-07-13T18:30:22.360Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "pass",
+          "durationMs": 1477,
+          "message": "534 tokens  conf:0.50"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 1830,
+          "message": "615 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 2293,
+          "message": "2194 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 3928,
+          "message": "1362 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 3494,
+          "message": "1660 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "6365 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "PASS  [0 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 1
+        }
+      ],
+      "validationStatus": "PASS",
+      "promotedAt": null
+    },
+    {
+      "slug": "armani-si-inspired",
+      "name": "Armani Si Inspired",
+      "wave": null,
+      "startedAt": "2026-07-13T18:30:05.545Z",
+      "completedAt": "2026-07-13T18:30:18.400Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "pass",
+          "durationMs": 1102,
+          "message": "531 tokens  conf:0.50"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 1877,
+          "message": "613 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 2989,
+          "message": "2217 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 2506,
+          "message": "1362 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 4378,
+          "message": "1660 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "6383 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "PASS  [0 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 2
+        }
+      ],
+      "validationStatus": "PASS",
+      "promotedAt": null
+    },
+    {
+      "slug": "valentino-donna-born-in-roma-inspired",
+      "name": "Valentino Donna Born In Roma Inspired",
+      "wave": null,
+      "startedAt": "2026-07-13T18:30:00.799Z",
+      "completedAt": "2026-07-13T18:30:12.525Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "pass",
+          "durationMs": 1244,
+          "message": "537 tokens  conf:0.50"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 1592,
+          "message": "605 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 2238,
+          "message": "2186 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 2634,
+          "message": "1468 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 4015,
+          "message": "1713 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "6509 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "PASS  [0 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 3
+        }
+      ],
+      "validationStatus": "PASS",
+      "promotedAt": null
+    },
+    {
+      "slug": "chance-eau-fraiche-inspired",
+      "name": "Chance Eau Fraiche Inspired",
+      "wave": null,
+      "startedAt": "2026-07-13T18:29:58.697Z",
+      "completedAt": "2026-07-13T18:30:09.333Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "pass",
+          "durationMs": 1165,
+          "message": "537 tokens  conf:0.50"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 1539,
+          "message": "608 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 1100,
+          "message": "2063 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 3306,
+          "message": "1314 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 3524,
+          "message": "1620 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "6142 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "PASS  [0 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 1
+        }
+      ],
+      "validationStatus": "PASS",
+      "promotedAt": null
+    },
+    {
+      "slug": "chance-eau-tendre-inspired",
+      "name": "Chance Eau Tendre Inspired",
+      "wave": null,
+      "startedAt": "2026-07-13T18:29:52.591Z",
+      "completedAt": "2026-07-13T18:30:05.542Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "pass",
+          "durationMs": 1780,
+          "message": "536 tokens  conf:0.50"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 2074,
+          "message": "607 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 2974,
+          "message": "2287 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 2813,
+          "message": "1380 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 3308,
+          "message": "1633 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "6443 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "PASS  [0 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 1
+        }
+      ],
+      "validationStatus": "PASS",
+      "promotedAt": null
+    },
+    {
+      "slug": "libre-le-parfum-inspired",
+      "name": "Libre Le Parfum Inspired",
+      "wave": null,
+      "startedAt": "2026-07-13T18:29:49.208Z",
+      "completedAt": "2026-07-13T18:30:00.796Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 1
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "pass",
+          "durationMs": 1091,
+          "message": "522 tokens  conf:0.50"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 1775,
+          "message": "610 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 2023,
+          "message": "2111 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 3094,
+          "message": "1428 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 3603,
+          "message": "1618 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "6289 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "PASS  [0 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 1
+        }
+      ],
+      "validationStatus": "PASS",
+      "promotedAt": null
+    },
+    {
+      "slug": "alien-goddess-inspired",
+      "name": "Alien Goddess Inspired",
+      "wave": null,
+      "startedAt": "2026-07-13T18:29:46.610Z",
+      "completedAt": "2026-07-13T18:29:58.694Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "pass",
+          "durationMs": 1260,
+          "message": "520 tokens  conf:0.50"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 1578,
+          "message": "594 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 2165,
+          "message": "2152 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 2906,
+          "message": "1333 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 4173,
+          "message": "1675 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "6274 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "PASS  [0 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 1
+        }
+      ],
+      "validationStatus": "PASS",
+      "promotedAt": null
+    },
+    {
+      "slug": "alien-inspired",
+      "name": "Alien Inspired",
+      "wave": null,
+      "startedAt": "2026-07-13T18:29:35.597Z",
+      "completedAt": "2026-07-13T18:29:46.608Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "pass",
+          "durationMs": 1289,
+          "message": "529 tokens  conf:0.50"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 1804,
+          "message": "599 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 1875,
+          "message": "2102 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 2698,
+          "message": "1368 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 3342,
+          "message": "1609 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "6207 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "PASS  [0 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 2
+        }
+      ],
+      "validationStatus": "PASS",
+      "promotedAt": null
+    },
+    {
+      "slug": "baccarat-rouge-540-extrait-inspired",
+      "name": "Baccarat Rouge 540 Extrait Inspired",
+      "wave": null,
+      "startedAt": "2026-07-13T18:29:34.057Z",
+      "completedAt": "2026-07-13T18:29:52.587Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "pass",
+          "durationMs": 1278,
+          "message": "536 tokens  conf:0.50"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 7724,
+          "message": "623 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 3202,
+          "message": "2315 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 2832,
+          "message": "1353 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 3492,
+          "message": "1632 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "6459 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "PASS  [0 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 2
+        }
+      ],
+      "validationStatus": "PASS",
+      "promotedAt": null
+    },
+    {
+      "slug": "libre-intense-inspired",
+      "name": "Libre Intense Inspired",
+      "wave": null,
+      "startedAt": "2026-07-13T18:29:30.278Z",
+      "completedAt": "2026-07-13T18:29:49.205Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "pass",
+          "durationMs": 7991,
+          "message": "532 tokens  conf:0.50"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 1917,
+          "message": "607 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 2917,
+          "message": "2291 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 2404,
+          "message": "1353 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 3697,
+          "message": "1650 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "6433 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "PASS  [0 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 0
+        }
+      ],
+      "validationStatus": "PASS",
+      "promotedAt": null
+    },
+    {
+      "slug": "delina-exclusif-inspired",
+      "name": "Delina Exclusif Inspired",
+      "wave": null,
+      "startedAt": "2026-07-13T18:29:22.995Z",
+      "completedAt": "2026-07-13T18:29:35.586Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 1
+        },
+        {
+          "stage": "composition",
+          "status": "pass",
+          "durationMs": 1372,
+          "message": "513 tokens  conf:0.50"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 2165,
+          "message": "598 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 2854,
+          "message": "2264 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 2566,
+          "message": "1336 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 3630,
+          "message": "1611 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "6322 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "pass",
+          "durationMs": 1,
+          "message": "PASS  [0 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 2
+        }
+      ],
+      "validationStatus": "PASS",
+      "promotedAt": null
+    },
+    {
+      "slug": "good-girl-blush-inspired",
+      "name": "Good Girl Blush Inspired",
+      "wave": null,
+      "startedAt": "2026-07-13T18:29:20.829Z",
+      "completedAt": "2026-07-13T18:29:34.054Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "pass",
+          "durationMs": 1577,
+          "message": "526 tokens  conf:0.50"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 2022,
+          "message": "614 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 3439,
+          "message": "2156 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 2330,
+          "message": "1351 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 3856,
+          "message": "1666 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "6313 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "PASS  [0 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 1
+        }
+      ],
+      "validationStatus": "PASS",
+      "promotedAt": null
+    },
+    {
+      "slug": "burberry-goddess-inspired",
+      "name": "Burberry Goddess Inspired",
+      "wave": null,
+      "startedAt": "2026-07-13T18:29:16.930Z",
+      "completedAt": "2026-07-13T18:29:30.273Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "pass",
+          "durationMs": 1412,
+          "message": "526 tokens  conf:0.50"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 1755,
+          "message": "601 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 2768,
+          "message": "2160 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 3266,
+          "message": "1376 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 4140,
+          "message": "1658 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "6321 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "pass",
+          "durationMs": 1,
+          "message": "PASS  [0 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 1
+        }
+      ],
+      "validationStatus": "PASS",
+      "promotedAt": null
+    },
+    {
+      "slug": "kayali-vanilla-28-inspired",
+      "name": "Kayali Vanilla 28 Inspired",
+      "wave": null,
+      "startedAt": "2026-07-13T18:29:08.736Z",
+      "completedAt": "2026-07-13T18:29:22.984Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "pass",
+          "durationMs": 1148,
+          "message": "521 tokens  conf:0.50"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 1728,
+          "message": "608 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 3616,
+          "message": "2208 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 2581,
+          "message": "1339 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 5172,
+          "message": "1652 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "6328 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "PASS  [0 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 2
+        }
+      ],
+      "validationStatus": "PASS",
+      "promotedAt": null
+    },
+    {
+      "slug": "very-good-girl-inspired",
+      "name": "Very Good Girl Inspired",
+      "wave": null,
+      "startedAt": "2026-07-13T18:29:07.216Z",
+      "completedAt": "2026-07-13T18:29:20.826Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "pass",
+          "durationMs": 1433,
+          "message": "525 tokens  conf:0.50"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 2255,
+          "message": "609 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 3325,
+          "message": "2234 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 2763,
+          "message": "1354 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 3833,
+          "message": "1665 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "6387 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "PASS  [0 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 1
+        }
+      ],
+      "validationStatus": "PASS",
+      "promotedAt": null
+    },
+    {
+      "slug": "prada-paradoxe-inspired",
+      "name": "Prada Paradoxe Inspired",
+      "wave": null,
+      "startedAt": "2026-07-13T18:29:04.709Z",
+      "completedAt": "2026-07-13T18:29:16.927Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "pass",
+          "durationMs": 1623,
+          "message": "532 tokens  conf:0.50"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 1719,
+          "message": "603 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 2569,
+          "message": "2213 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 2166,
+          "message": "1355 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 4140,
+          "message": "1653 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "6356 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "PASS  [0 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 1
+        }
+      ],
+      "validationStatus": "PASS",
+      "promotedAt": null
+    },
+    {
+      "slug": "la-vie-est-belle-inspired",
+      "name": "La Vie Est Belle Inspired",
+      "wave": null,
+      "startedAt": "2026-07-13T18:28:56.501Z",
+      "completedAt": "2026-07-13T18:29:08.733Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "pass",
+          "durationMs": 1158,
+          "message": "519 tokens  conf:0.50"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 1764,
+          "message": "589 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 2577,
+          "message": "2197 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 2270,
+          "message": "1324 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 4462,
+          "message": "1637 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "6266 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "PASS  [0 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 1
+        }
+      ],
+      "validationStatus": "PASS",
+      "promotedAt": null
+    },
+    {
+      "slug": "flowerbomb-inspired",
+      "name": "Flowerbomb Inspired",
+      "wave": null,
+      "startedAt": "2026-07-13T18:28:54.582Z",
+      "completedAt": "2026-07-13T18:29:07.213Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "pass",
+          "durationMs": 1858,
+          "message": "530 tokens  conf:0.50"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 2191,
+          "message": "608 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 2082,
+          "message": "2150 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 2550,
+          "message": "1356 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 3948,
+          "message": "1650 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "6294 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "PASS  [0 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 2
+        }
+      ],
+      "validationStatus": "PASS",
+      "promotedAt": null
+    },
+    {
+      "slug": "burberry-her-inspired",
+      "name": "Burberry Her Inspired",
+      "wave": null,
+      "startedAt": "2026-07-13T18:28:52.709Z",
+      "completedAt": "2026-07-13T18:29:04.702Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "pass",
+          "durationMs": 1293,
+          "message": "525 tokens  conf:0.50"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 1537,
+          "message": "607 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 2721,
+          "message": "2107 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 3254,
+          "message": "1432 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 3187,
+          "message": "1606 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "6277 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "PASS  [0 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 1
+        }
+      ],
+      "validationStatus": "PASS",
+      "promotedAt": null
+    },
+    {
+      "slug": "my-way-inspired",
+      "name": "My Way Inspired",
+      "wave": null,
+      "startedAt": "2026-07-13T18:28:44.831Z",
+      "completedAt": "2026-07-13T18:28:56.498Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "pass",
+          "durationMs": 1157,
+          "message": "530 tokens  conf:0.50"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 2219,
+          "message": "602 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 2402,
+          "message": "2182 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 2231,
+          "message": "1342 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 3656,
+          "message": "1625 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "6281 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "PASS  [0 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 1
+        }
+      ],
+      "validationStatus": "PASS",
+      "promotedAt": null
+    },
+    {
+      "slug": "coco-mademoiselle-inspired",
+      "name": "Coco Mademoiselle Inspired",
+      "wave": null,
+      "startedAt": "2026-07-13T18:28:42.452Z",
+      "completedAt": "2026-07-13T18:28:54.579Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "pass",
+          "durationMs": 1394,
+          "message": "519 tokens  conf:0.50"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 2322,
+          "message": "596 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 2382,
+          "message": "2158 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 2323,
+          "message": "1326 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 3706,
+          "message": "1632 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "6231 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "PASS  [0 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 0
+        }
+      ],
+      "validationStatus": "PASS",
+      "promotedAt": null
+    },
+    {
+      "slug": "black-opium-inspired",
+      "name": "Black Opium Inspired",
+      "wave": null,
+      "startedAt": "2026-07-13T18:28:40.452Z",
+      "completedAt": "2026-07-13T18:28:52.706Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 1
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "pass",
+          "durationMs": 1271,
+          "message": "525 tokens  conf:0.50"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 1946,
+          "message": "599 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 2790,
+          "message": "2218 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 2680,
+          "message": "1384 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 3565,
+          "message": "1632 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "6358 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "PASS  [0 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 1
+        }
+      ],
+      "validationStatus": "PASS",
+      "promotedAt": null
+    },
+    {
+      "slug": "libre-inspired",
+      "name": "Libre Inspired",
+      "wave": null,
+      "startedAt": "2026-07-13T18:28:30.823Z",
+      "completedAt": "2026-07-13T18:28:44.828Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "pass",
+          "durationMs": 2420,
+          "message": "525 tokens  conf:0.50"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 1663,
+          "message": "591 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 3104,
+          "message": "2153 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 3306,
+          "message": "1394 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 3511,
+          "message": "1633 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "6296 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "PASS  [0 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 1
+        }
+      ],
+      "validationStatus": "PASS",
+      "promotedAt": null
+    },
+    {
+      "slug": "good-girl-inspired",
+      "name": "Good Girl Inspired",
+      "wave": null,
+      "startedAt": "2026-07-13T18:28:28.388Z",
+      "completedAt": "2026-07-13T18:28:42.449Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "pass",
+          "durationMs": 1648,
+          "message": "539 tokens  conf:0.50"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 1967,
+          "message": "636 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 2899,
+          "message": "2212 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 2835,
+          "message": "1370 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 4711,
+          "message": "1700 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "6457 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "PASS  [0 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 1
+        }
+      ],
+      "validationStatus": "PASS",
+      "promotedAt": null
+    },
+    {
+      "slug": "arabians-tonka-inspired",
+      "name": "Arabians Tonka Inspired",
+      "wave": null,
+      "startedAt": "2026-07-13T18:28:27.533Z",
+      "completedAt": "2026-07-13T18:28:40.450Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "pass",
+          "durationMs": 1230,
+          "message": "535 tokens  conf:0.50"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 1764,
+          "message": "608 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 3855,
+          "message": "2274 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 2473,
+          "message": "1356 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 3593,
+          "message": "1627 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "6400 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "PASS  [0 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 2
+        }
+      ],
+      "validationStatus": "PASS",
+      "promotedAt": null
+    },
+    {
+      "slug": "l'immensite-inspired",
+      "name": "L'immensite Inspired",
+      "wave": null,
+      "startedAt": "2026-07-13T18:28:16.699Z",
+      "completedAt": "2026-07-13T18:28:30.820Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "pass",
+          "durationMs": 1564,
+          "message": "529 tokens  conf:0.50"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 1635,
+          "message": "605 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 4691,
+          "message": "2423 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 2428,
+          "message": "1353 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 3802,
+          "message": "1628 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "6538 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "PASS  [0 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 1
+        }
+      ],
+      "validationStatus": "PASS",
+      "promotedAt": null
+    },
+    {
+      "slug": "ani-inspired",
+      "name": "Ani Inspired",
+      "wave": null,
+      "startedAt": "2026-07-13T18:28:14.627Z",
+      "completedAt": "2026-07-13T18:28:28.384Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 1
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "pass",
+          "durationMs": 1636,
+          "message": "524 tokens  conf:0.50"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 1934,
+          "message": "589 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 3494,
+          "message": "2331 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 2812,
+          "message": "1348 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 3879,
+          "message": "1629 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "6421 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "PASS  [0 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 1
+        }
+      ],
+      "validationStatus": "PASS",
+      "promotedAt": null
+    },
+    {
+      "slug": "oud-for-greatness-inspired",
+      "name": "Oud For Greatness Inspired",
+      "wave": null,
+      "startedAt": "2026-07-13T18:28:14.531Z",
+      "completedAt": "2026-07-13T18:28:27.530Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "pass",
+          "durationMs": 1138,
+          "message": "531 tokens  conf:0.50"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 1641,
+          "message": "610 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 3219,
+          "message": "2296 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 3008,
+          "message": "1413 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 3991,
+          "message": "1635 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "6485 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "PASS  [0 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 1
+        }
+      ],
+      "validationStatus": "PASS",
+      "promotedAt": null
+    },
+    {
+      "slug": "erba-pura-inspired",
+      "name": "Erba Pura Inspired",
+      "wave": null,
+      "startedAt": "2026-07-13T18:28:02.521Z",
+      "completedAt": "2026-07-13T18:28:16.688Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "pass",
+          "durationMs": 1028,
+          "message": "526 tokens  conf:0.50"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 2280,
+          "message": "609 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 3720,
+          "message": "2397 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 2820,
+          "message": "1392 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 4315,
+          "message": "1651 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "6575 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "PASS  [0 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 2
+        }
+      ],
+      "validationStatus": "PASS",
+      "promotedAt": null
+    },
+    {
+      "slug": "torino21-inspired",
+      "name": "Torino21 Inspired",
+      "wave": null,
+      "startedAt": "2026-07-13T18:28:01.400Z",
+      "completedAt": "2026-07-13T18:28:14.528Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "pass",
+          "durationMs": 1333,
+          "message": "538 tokens  conf:0.50"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 1514,
+          "message": "607 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 3501,
+          "message": "2344 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 2852,
+          "message": "1373 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 3926,
+          "message": "1678 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "6540 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "PASS  [0 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 1
+        }
+      ],
+      "validationStatus": "PASS",
+      "promotedAt": null
+    },
+    {
+      "slug": "pacific-chill-inspired",
+      "name": "Pacific Chill Inspired",
+      "wave": null,
+      "startedAt": "2026-07-13T18:28:01.232Z",
+      "completedAt": "2026-07-13T18:28:14.624Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "pass",
+          "durationMs": 1211,
+          "message": "529 tokens  conf:0.50"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 1957,
+          "message": "601 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 3038,
+          "message": "2277 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 2839,
+          "message": "1347 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 4345,
+          "message": "1694 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "6448 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "PASS  [0 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 2
+        }
+      ],
+      "validationStatus": "PASS",
+      "promotedAt": null
+    },
+    {
+      "slug": "afternoon-swim-inspired",
+      "name": "Afternoon Swim Inspired",
+      "wave": null,
+      "startedAt": "2026-07-13T18:27:49.184Z",
+      "completedAt": "2026-07-13T18:28:02.518Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "pass",
+          "durationMs": 1219,
+          "message": "529 tokens  conf:0.50"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 2338,
+          "message": "604 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 3787,
+          "message": "2393 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 2265,
+          "message": "1353 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 3724,
+          "message": "1654 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "6533 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "PASS  [0 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 1
+        }
+      ],
+      "validationStatus": "PASS",
+      "promotedAt": null
+    },
+    {
+      "slug": "ombre-nomade-inspired",
+      "name": "Ombre Nomade Inspired",
+      "wave": null,
+      "startedAt": "2026-07-13T18:27:48.306Z",
+      "completedAt": "2026-07-13T18:28:01.228Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "pass",
+          "durationMs": 1335,
+          "message": "523 tokens  conf:0.50"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 2152,
+          "message": "606 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 3255,
+          "message": "2212 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 2413,
+          "message": "1351 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 3765,
+          "message": "1628 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "6320 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "PASS  [0 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 2
+        }
+      ],
+      "validationStatus": "PASS",
+      "promotedAt": null
+    },
+    {
+      "slug": "althair-inspired",
+      "name": "Althair Inspired",
+      "wave": null,
+      "startedAt": "2026-07-13T18:27:46.350Z",
+      "completedAt": "2026-07-13T18:28:01.397Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "pass",
+          "durationMs": 1799,
+          "message": "530 tokens  conf:0.50"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 2455,
+          "message": "633 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 3984,
+          "message": "2353 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 2912,
+          "message": "1360 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 3896,
+          "message": "1673 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "6549 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "PASS  [0 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 1
+        }
+      ],
+      "validationStatus": "PASS",
+      "promotedAt": null
+    },
+    {
+      "slug": "carlisle-inspired",
+      "name": "Carlisle Inspired",
+      "wave": null,
+      "startedAt": "2026-07-13T18:27:34.041Z",
+      "completedAt": "2026-07-13T18:27:48.302Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "pass",
+          "durationMs": 1336,
+          "message": "528 tokens  conf:0.50"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 1580,
+          "message": "594 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 3674,
+          "message": "2335 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 3371,
+          "message": "1381 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 4299,
+          "message": "1649 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "6487 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "PASS  [0 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 1
+        }
+      ],
+      "validationStatus": "PASS",
+      "promotedAt": null
+    },
+    {
+      "slug": "silver-mountain-water-inspired",
+      "name": "Silver Mountain Water Inspired",
+      "wave": null,
+      "startedAt": "2026-07-13T18:27:34.040Z",
+      "completedAt": "2026-07-13T18:27:49.181Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "pass",
+          "durationMs": 2715,
+          "message": "533 tokens  conf:0.50"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 1688,
+          "message": "599 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 4453,
+          "message": "2337 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 2560,
+          "message": "1350 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 3723,
+          "message": "1652 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "6471 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "PASS  [0 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 1
+        }
+      ],
+      "validationStatus": "PASS",
+      "promotedAt": null
+    },
+    {
+      "slug": "creed-green-irish-tweed-inspired",
+      "name": "Creed Green Irish Tweed Inspired",
+      "wave": null,
+      "startedAt": "2026-07-13T18:27:34.016Z",
+      "completedAt": "2026-07-13T18:27:46.329Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 1
+        },
+        {
+          "stage": "composition",
+          "status": "pass",
+          "durationMs": 1435,
+          "message": "533 tokens  conf:0.50"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 1469,
+          "message": "591 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "degraded",
+          "durationMs": 3012,
+          "message": "2278 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 2647,
+          "message": "1350 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 3746,
+          "message": "1646 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "6398 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "pass",
+          "durationMs": 1,
+          "message": "PASS  [0 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 1
+        }
+      ],
+      "validationStatus": "PASS",
+      "promotedAt": null
+    },
+    {
       "slug": "miss-dior-inspired",
       "name": "Miss Dior Inspired",
       "wave": null,

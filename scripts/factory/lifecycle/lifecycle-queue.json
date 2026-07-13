@@ -1,0 +1,51 @@
+{
+  "version": "1.0",
+  "lastScannedAt": "2026-07-13T18:37:44.167Z",
+  "scannedCount": 93,
+  "jobs": [
+    {
+      "id": "bianco-latte-inspired::missing_relationships",
+      "slug": "bianco-latte-inspired",
+      "name": "Bianco Latte Inspired",
+      "collection": "Rose",
+      "reason": "missing_relationships",
+      "severity": "info",
+      "recommendedAction": "regenerate",
+      "detectedAt": "2026-07-13T18:37:44.188Z",
+      "details": "Draft is missing relationship edges (alternatives, wardrobePartners)."
+    },
+    {
+      "id": "chance-eau-fraiche-inspired::missing_relationships",
+      "slug": "chance-eau-fraiche-inspired",
+      "name": "Chance Eau Fraiche Inspired",
+      "collection": "Rose",
+      "reason": "missing_relationships",
+      "severity": "info",
+      "recommendedAction": "regenerate",
+      "detectedAt": "2026-07-13T18:37:44.185Z",
+      "details": "Draft is missing relationship edges (alternatives, wardrobePartners)."
+    },
+    {
+      "id": "devotion-inspired::missing_relationships",
+      "slug": "devotion-inspired",
+      "name": "Devotion Inspired",
+      "collection": "Rose",
+      "reason": "missing_relationships",
+      "severity": "info",
+      "recommendedAction": "regenerate",
+      "detectedAt": "2026-07-13T18:37:44.188Z",
+      "details": "Draft is missing relationship edges (alternatives, wardrobePartners)."
+    },
+    {
+      "id": "hypnotic-poison-inspired::missing_relationships",
+      "slug": "hypnotic-poison-inspired",
+      "name": "Hypnotic Poison Inspired",
+      "collection": "Rose",
+      "reason": "missing_relationships",
+      "severity": "info",
+      "recommendedAction": "regenerate",
+      "detectedAt": "2026-07-13T18:37:44.187Z",
+      "details": "Draft is missing relationship edges (alternatives, wardrobePartners)."
+    }
+  ]
+}

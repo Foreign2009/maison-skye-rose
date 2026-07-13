@@ -1,0 +1,20 @@
+{
+  "version": "1.0",
+  "entries": [
+    {
+      "timestamp": "2026-07-13T18:38:51.992Z",
+      "format": "human",
+      "durationMs": 39
+    },
+    {
+      "timestamp": "2026-07-13T17:48:52.643Z",
+      "format": "json",
+      "durationMs": 7
+    },
+    {
+      "timestamp": "2026-07-13T17:48:38.196Z",
+      "format": "human",
+      "durationMs": 31
+    }
+  ]
+}
