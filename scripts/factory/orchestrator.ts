@@ -76,15 +76,16 @@ export async function run(input: PipelineInput): Promise<PipelineResult> {
   const { slug, force } = input;
   const startedAt = Date.now();
   const stageLog:  StageEntry[] = [];
+  const log = (msg: string): void => { if (!input.silent) console.log(msg); };
 
   function stage(name: string, status: StageEntry["status"], durationMs: number, message?: string): void {
     stageLog.push({ stage: name, status, durationMs, message });
     const icon = status === "pass" ? "✓" : status === "degraded" ? "⚠" : "✗";
     const suffix = message ? `  (${message})` : "";
-    console.log(`  ${icon}  ${name.padEnd(12)} ${status.padStart(8)}  ${durationMs}ms${suffix}`);
+    log(`  ${icon}  ${name.padEnd(12)} ${status.padStart(8)}  ${durationMs}ms${suffix}`);
   }
 
-  console.log(`\n[mkc:factory] ${slug}`);
+  log(`\n[mkc:factory] ${slug}`);
 
   // ── Stage 1: Intake ─────────────────────────────────────────────────────────
   {
@@ -139,7 +140,7 @@ export async function run(input: PipelineInput): Promise<PipelineResult> {
 
     // ── Stage 3: Composition Producer ──────────────────────────────────────
     const hasApiKey    = Boolean(process.env.ANTHROPIC_API_KEY);
-    const factoryConfig: FactoryConfig = { ...DEFAULT_FACTORY_CONFIG, dryRun: !hasApiKey };
+    const factoryConfig: FactoryConfig = { ...DEFAULT_FACTORY_CONFIG, dryRun: input.dryRun || !hasApiKey };
 
     const ctx0   = ContextBuilder.build(
       { slug, displayFrag: result.displayFrag!, record: scaffolded, validationResult: null, stageLog, factoryVersion: FACTORY_VERSION },
@@ -268,12 +269,18 @@ export async function run(input: PipelineInput): Promise<PipelineResult> {
 
     // ── Stage 10: Draft Build ────────────────────────────────────────────────
     const t4 = Date.now();
-    const draftResult = buildDraft({ state, draftDir: DRAFT_DIR });
-    stage("draft", "pass", Date.now() - t4);
+    let draftResult: { path: string };
+    if (input.dryRun) {
+      draftResult = { path: path.join(DRAFT_DIR, `${slug}.ts`) };
+      stage("draft", "pass", Date.now() - t4, "dry-run — skipped");
+    } else {
+      draftResult = buildDraft({ state, draftDir: DRAFT_DIR });
+      stage("draft", "pass", Date.now() - t4);
+    }
 
     // ── Stage 11: Log ────────────────────────────────────────────────────────
     const t5 = Date.now();
-    logRun({
+    if (!input.dryRun) logRun({
       slug,
       name:             record.name,
       wave:             null,
@@ -290,10 +297,10 @@ export async function run(input: PipelineInput): Promise<PipelineResult> {
     const totalMs  = Date.now() - startedAt;
     const relPath  = `scripts/factory/drafts/${slug}.ts`;
 
-    console.log(`\n[mkc:factory] Complete — ${(totalMs / 1000).toFixed(2)}s`);
-    console.log(`              Draft:    ${relPath}`);
-    console.log(`              Status:   ${valStatus}  [${validationResult.totalErrors} errors, ${validationResult.totalWarnings} warnings]`);
-    console.log(`              Promote:  npm run mkc:factory:promote -- ${slug}\n`);
+    log(`\n[mkc:factory] Complete — ${(totalMs / 1000).toFixed(2)}s`);
+    log(`              Draft:    ${relPath}`);
+    log(`              Status:   ${valStatus}  [${validationResult.totalErrors} errors, ${validationResult.totalWarnings} warnings]`);
+    log(`              Promote:  npm run mkc:factory:promote -- ${slug}\n`);
 
     return {
       status:     degraded ? "degraded" : "complete",

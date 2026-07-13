@@ -11,7 +11,8 @@
     "mkc:validate": "npx tsx validate-native-records.ts",
     "mkc:coverage": "npx tsx scripts/mkc-coverage.ts",
     "mkc:factory": "npx tsx scripts/factory/index.ts",
-    "mkc:factory:promote": "npx tsx scripts/factory/index.ts --mode=promote"
+    "mkc:factory:promote": "npx tsx scripts/factory/index.ts --mode=promote",
+    "mkc:factory:batch": "npx tsx scripts/factory/batch/index.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.110.0",

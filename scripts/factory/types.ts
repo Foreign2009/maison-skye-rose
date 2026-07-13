@@ -69,6 +69,7 @@ export interface PipelineInput {
   slug:     string;
   force:    boolean;
   dryRun:   boolean;
+  silent?:  boolean;   // suppress per-stage console output (used by batch runner)
 }
 
 export interface PipelineResult {
