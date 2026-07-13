@@ -1,0 +1,1313 @@
+{
+  "version": "1.0",
+  "records": [
+    {
+      "slug": "miss-dior-inspired",
+      "name": "Miss Dior Inspired",
+      "collection": "Rose",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "CompositionProducer@1.0.0  EditorialProducer@1.0.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-07-13T17:11:31.142Z",
+      "reviewStartedAt": "2026-07-13T17:12:27.807Z",
+      "decidedAt": "2026-07-13T17:13:16.263Z",
+      "reviewer": "Adi",
+      "notes": [
+        {
+          "id": "note-1783962774498-87x0k",
+          "reviewer": "Adi",
+          "timestamp": "2026-07-13T17:12:54.498Z",
+          "section": "discovery",
+          "note": "Vibe tags look strong; confirm recommendedFor personas with brand voice guide",
+          "resolved": false
+        }
+      ],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Adi",
+        "timestamp": "2026-07-13T17:13:16.262Z",
+        "reason": "All sections verified"
+      }
+    },
+    {
+      "slug": "afternoon-swim-inspired",
+      "name": "Afternoon Swim Inspired",
+      "collection": "Skye",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "CompositionProducer@1.0.0  EditorialProducer@1.0.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-07-13T18:44:39.984Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-07-13T19:00:22.009Z",
+      "reviewer": "Adi",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Adi",
+        "timestamp": "2026-07-13T19:00:22.008Z",
+        "reason": "Meets Maison editorial quality standards"
+      }
+    },
+    {
+      "slug": "alien-goddess-inspired",
+      "name": "Alien Goddess Inspired",
+      "collection": "Rose",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "CompositionProducer@1.0.0  EditorialProducer@1.0.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-07-13T18:44:39.988Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-07-13T19:00:24.114Z",
+      "reviewer": "Adi",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Adi",
+        "timestamp": "2026-07-13T19:00:24.113Z",
+        "reason": "Meets Maison editorial quality standards"
+      }
+    },
+    {
+      "slug": "alien-inspired",
+      "name": "Alien Inspired",
+      "collection": "Rose",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "CompositionProducer@1.0.0  EditorialProducer@1.0.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-07-13T18:44:39.989Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-07-13T19:00:26.312Z",
+      "reviewer": "Adi",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Adi",
+        "timestamp": "2026-07-13T19:00:26.311Z",
+        "reason": "Meets Maison editorial quality standards"
+      }
+    },
+    {
+      "slug": "althair-inspired",
+      "name": "Althair Inspired",
+      "collection": "Skye",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "CompositionProducer@1.0.0  EditorialProducer@1.0.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-07-13T18:44:39.991Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-07-13T19:00:28.427Z",
+      "reviewer": "Adi",
+      "notes": [
+        {
+          "id": "note-1783969416031-i6f5t",
+          "reviewer": "Adi",
+          "timestamp": "2026-07-13T19:03:36.031Z",
+          "section": "merchandising",
+          "note": "newArrival:true was set by AI based on source fragrance novelty — confirm with business before promotion",
+          "resolved": false
+        }
+      ],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Adi",
+        "timestamp": "2026-07-13T19:00:28.426Z",
+        "reason": "Meets Maison editorial quality standards"
+      }
+    },
+    {
+      "slug": "ani-inspired",
+      "name": "Ani Inspired",
+      "collection": "Skye",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "CompositionProducer@1.0.0  EditorialProducer@1.0.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-07-13T18:44:39.993Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-07-13T19:00:30.671Z",
+      "reviewer": "Adi",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Adi",
+        "timestamp": "2026-07-13T19:00:30.670Z",
+        "reason": "Meets Maison editorial quality standards"
+      }
+    },
+    {
+      "slug": "arabians-tonka-inspired",
+      "name": "Arabians Tonka Inspired",
+      "collection": "Skye",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "CompositionProducer@1.0.0  EditorialProducer@1.0.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-07-13T18:44:39.995Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-07-13T19:00:33.066Z",
+      "reviewer": "Adi",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Adi",
+        "timestamp": "2026-07-13T19:00:33.065Z",
+        "reason": "Meets Maison editorial quality standards"
+      }
+    },
+    {
+      "slug": "armani-si-inspired",
+      "name": "Armani Si Inspired",
+      "collection": "Rose",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "CompositionProducer@1.0.0  EditorialProducer@1.0.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-07-13T18:44:39.999Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-07-13T19:00:35.284Z",
+      "reviewer": "Adi",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Adi",
+        "timestamp": "2026-07-13T19:00:35.284Z",
+        "reason": "Meets Maison editorial quality standards"
+      }
+    },
+    {
+      "slug": "baccarat-rouge-540-extrait-inspired",
+      "name": "Baccarat Rouge 540 Extrait Inspired",
+      "collection": "Rose",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "CompositionProducer@1.0.0  EditorialProducer@1.0.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-07-13T18:44:40.002Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-07-13T19:00:37.431Z",
+      "reviewer": "Adi",
+      "notes": [
+        {
+          "id": "note-1783969465713-ua8pz",
+          "reviewer": "Adi",
+          "timestamp": "2026-07-13T19:04:25.713Z",
+          "section": "editorial",
+          "note": "Subtitle 'Radiant Depth' collides with guidance-inspired — deduplicate before promotion",
+          "resolved": false
+        }
+      ],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Adi",
+        "timestamp": "2026-07-13T19:00:37.430Z",
+        "reason": "Meets Maison editorial quality standards"
+      }
+    },
+    {
+      "slug": "bianco-latte-inspired",
+      "name": "Bianco Latte Inspired",
+      "collection": "Rose",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "CompositionProducer@1.0.0  EditorialProducer@1.0.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "needs_regeneration",
+      "addedAt": "2026-07-13T18:44:40.004Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-07-13T18:52:54.760Z",
+      "reviewer": "Adi",
+      "notes": [],
+      "decision": {
+        "decision": "needs_regeneration",
+        "reviewer": "Adi",
+        "timestamp": "2026-07-13T18:52:54.760Z",
+        "reason": "Missing relationships block — factory left alternatives and wardrobePartners empty"
+      }
+    },
+    {
+      "slug": "black-opium-inspired",
+      "name": "Black Opium Inspired",
+      "collection": "Rose",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "CompositionProducer@1.0.0  EditorialProducer@1.0.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-07-13T18:44:40.006Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-07-13T19:00:39.510Z",
+      "reviewer": "Adi",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Adi",
+        "timestamp": "2026-07-13T19:00:39.509Z",
+        "reason": "Meets Maison editorial quality standards"
+      }
+    },
+    {
+      "slug": "blanche-bete-inspired",
+      "name": "Blanche Bete Inspired",
+      "collection": "Rose",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "CompositionProducer@1.0.0  EditorialProducer@1.0.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-07-13T18:44:40.008Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-07-13T19:00:41.627Z",
+      "reviewer": "Adi",
+      "notes": [
+        {
+          "id": "note-1783969485905-zkkyl",
+          "reviewer": "Adi",
+          "timestamp": "2026-07-13T19:04:45.905Z",
+          "section": "editorial",
+          "note": "subtitle 'Soft Luxury' duplicates signatureStyle entry exactly — minor naming redundancy",
+          "resolved": false
+        }
+      ],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Adi",
+        "timestamp": "2026-07-13T19:00:41.626Z",
+        "reason": "Meets Maison editorial quality standards"
+      }
+    },
+    {
+      "slug": "burberry-goddess-inspired",
+      "name": "Burberry Goddess Inspired",
+      "collection": "Rose",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "CompositionProducer@1.0.0  EditorialProducer@1.0.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-07-13T18:44:40.010Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-07-13T19:00:43.704Z",
+      "reviewer": "Adi",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Adi",
+        "timestamp": "2026-07-13T19:00:43.703Z",
+        "reason": "Meets Maison editorial quality standards"
+      }
+    },
+    {
+      "slug": "burberry-her-inspired",
+      "name": "Burberry Her Inspired",
+      "collection": "Rose",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "CompositionProducer@1.0.0  EditorialProducer@1.0.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-07-13T18:44:40.012Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-07-13T19:00:46.145Z",
+      "reviewer": "Adi",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Adi",
+        "timestamp": "2026-07-13T19:00:46.144Z",
+        "reason": "Meets Maison editorial quality standards"
+      }
+    },
+    {
+      "slug": "carlisle-inspired",
+      "name": "Carlisle Inspired",
+      "collection": "Skye",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "CompositionProducer@1.0.0  EditorialProducer@1.0.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-07-13T18:44:40.014Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-07-13T19:00:48.328Z",
+      "reviewer": "Adi",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Adi",
+        "timestamp": "2026-07-13T19:00:48.327Z",
+        "reason": "Meets Maison editorial quality standards"
+      }
+    },
+    {
+      "slug": "chance-eau-fraiche-inspired",
+      "name": "Chance Eau Fraiche Inspired",
+      "collection": "Rose",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "CompositionProducer@1.0.0  EditorialProducer@1.0.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "needs_regeneration",
+      "addedAt": "2026-07-13T18:44:40.016Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-07-13T18:52:57.352Z",
+      "reviewer": "Adi",
+      "notes": [],
+      "decision": {
+        "decision": "needs_regeneration",
+        "reviewer": "Adi",
+        "timestamp": "2026-07-13T18:52:57.351Z",
+        "reason": "Missing relationships block — factory left alternatives and wardrobePartners empty"
+      }
+    },
+    {
+      "slug": "chance-eau-tendre-inspired",
+      "name": "Chance Eau Tendre Inspired",
+      "collection": "Rose",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "CompositionProducer@1.0.0  EditorialProducer@1.0.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-07-13T18:44:40.018Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-07-13T19:00:50.571Z",
+      "reviewer": "Adi",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Adi",
+        "timestamp": "2026-07-13T19:00:50.571Z",
+        "reason": "Meets Maison editorial quality standards"
+      }
+    },
+    {
+      "slug": "coco-mademoiselle-inspired",
+      "name": "Coco Mademoiselle Inspired",
+      "collection": "Rose",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "CompositionProducer@1.0.0  EditorialProducer@1.0.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-07-13T18:44:40.020Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-07-13T19:00:52.697Z",
+      "reviewer": "Adi",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Adi",
+        "timestamp": "2026-07-13T19:00:52.696Z",
+        "reason": "Meets Maison editorial quality standards"
+      }
+    },
+    {
+      "slug": "creed-green-irish-tweed-inspired",
+      "name": "Creed Green Irish Tweed Inspired",
+      "collection": "Skye",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "CompositionProducer@1.0.0  EditorialProducer@1.0.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-07-13T18:44:40.023Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-07-13T19:00:55.080Z",
+      "reviewer": "Adi",
+      "notes": [
+        {
+          "id": "note-1783969476070-qc6h9",
+          "reviewer": "Adi",
+          "timestamp": "2026-07-13T19:04:36.070Z",
+          "section": "relationships",
+          "note": "Relationship slug corrected during review: terre-d-hermes-inspired changed to terre-d'hermes-inspired to match native record filename",
+          "resolved": false
+        }
+      ],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Adi",
+        "timestamp": "2026-07-13T19:00:55.079Z",
+        "reason": "Meets Maison editorial quality standards"
+      }
+    },
+    {
+      "slug": "crystal-noir-inspired",
+      "name": "Crystal Noir Inspired",
+      "collection": "Rose",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "CompositionProducer@1.0.0  EditorialProducer@1.0.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-07-13T18:44:40.025Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-07-13T19:00:57.789Z",
+      "reviewer": "Adi",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Adi",
+        "timestamp": "2026-07-13T19:00:57.788Z",
+        "reason": "Meets Maison editorial quality standards"
+      }
+    },
+    {
+      "slug": "delina-exclusif-inspired",
+      "name": "Delina Exclusif Inspired",
+      "collection": "Rose",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "CompositionProducer@1.0.0  EditorialProducer@1.0.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-07-13T18:44:40.026Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-07-13T19:01:00.176Z",
+      "reviewer": "Adi",
+      "notes": [
+        {
+          "id": "note-1783969441658-9hsst",
+          "reviewer": "Adi",
+          "timestamp": "2026-07-13T19:04:01.658Z",
+          "section": "merchandising",
+          "note": "bestSeller:true was set by AI — confirm with business before promotion",
+          "resolved": false
+        }
+      ],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Adi",
+        "timestamp": "2026-07-13T19:01:00.175Z",
+        "reason": "Meets Maison editorial quality standards"
+      }
+    },
+    {
+      "slug": "devotion-inspired",
+      "name": "Devotion Inspired",
+      "collection": "Rose",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "CompositionProducer@1.0.0  EditorialProducer@1.0.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "needs_regeneration",
+      "addedAt": "2026-07-13T18:44:40.029Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-07-13T18:52:59.799Z",
+      "reviewer": "Adi",
+      "notes": [],
+      "decision": {
+        "decision": "needs_regeneration",
+        "reviewer": "Adi",
+        "timestamp": "2026-07-13T18:52:59.799Z",
+        "reason": "Missing relationships block; freshness:5 inconsistent with Winter Vanilla Citrus + Rum profile"
+      }
+    },
+    {
+      "slug": "erba-pura-inspired",
+      "name": "Erba Pura Inspired",
+      "collection": "Skye",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "CompositionProducer@1.0.0  EditorialProducer@1.0.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-07-13T18:44:40.032Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-07-13T19:01:03.796Z",
+      "reviewer": "Adi",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Adi",
+        "timestamp": "2026-07-13T19:01:03.795Z",
+        "reason": "Meets Maison editorial quality standards"
+      }
+    },
+    {
+      "slug": "flowerbomb-inspired",
+      "name": "Flowerbomb Inspired",
+      "collection": "Rose",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "CompositionProducer@1.0.0  EditorialProducer@1.0.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-07-13T18:44:40.035Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-07-13T19:01:07.069Z",
+      "reviewer": "Adi",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Adi",
+        "timestamp": "2026-07-13T19:01:07.067Z",
+        "reason": "Meets Maison editorial quality standards"
+      }
+    },
+    {
+      "slug": "gentle-fluidity-gold-inspired",
+      "name": "Gentle Fluidity Gold Inspired",
+      "collection": "Rose",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "CompositionProducer@1.0.0  EditorialProducer@1.0.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-07-13T18:44:40.037Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-07-13T19:01:09.827Z",
+      "reviewer": "Adi",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Adi",
+        "timestamp": "2026-07-13T19:01:09.826Z",
+        "reason": "Meets Maison editorial quality standards"
+      }
+    },
+    {
+      "slug": "good-girl-blush-inspired",
+      "name": "Good Girl Blush Inspired",
+      "collection": "Rose",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "CompositionProducer@1.0.0  EditorialProducer@1.0.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-07-13T18:44:40.039Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-07-13T19:01:12.275Z",
+      "reviewer": "Adi",
+      "notes": [
+        {
+          "id": "note-1783969473561-kct5r",
+          "reviewer": "Adi",
+          "timestamp": "2026-07-13T19:04:33.561Z",
+          "section": "editorial",
+          "note": "recommendedFor item 3 uses 'reprising' which appears to be 'reapplying' — review before promotion",
+          "resolved": false
+        }
+      ],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Adi",
+        "timestamp": "2026-07-13T19:01:12.274Z",
+        "reason": "Meets Maison editorial quality standards"
+      }
+    },
+    {
+      "slug": "good-girl-inspired",
+      "name": "Good Girl Inspired",
+      "collection": "Rose",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "CompositionProducer@1.0.0  EditorialProducer@1.0.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-07-13T18:44:40.041Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-07-13T19:01:14.620Z",
+      "reviewer": "Adi",
+      "notes": [
+        {
+          "id": "note-1783969418663-p7ku4",
+          "reviewer": "Adi",
+          "timestamp": "2026-07-13T19:03:38.663Z",
+          "section": "merchandising",
+          "note": "newArrival:true was set by AI based on source fragrance novelty — confirm with business before promotion",
+          "resolved": false
+        }
+      ],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Adi",
+        "timestamp": "2026-07-13T19:01:14.619Z",
+        "reason": "Meets Maison editorial quality standards"
+      }
+    },
+    {
+      "slug": "gris-charnel-inspired",
+      "name": "Gris Charnel Inspired",
+      "collection": "Elite",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "CompositionProducer@1.0.0  EditorialProducer@1.0.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-07-13T18:44:40.043Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-07-13T19:01:17.234Z",
+      "reviewer": "Adi",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Adi",
+        "timestamp": "2026-07-13T19:01:17.233Z",
+        "reason": "Meets Maison editorial quality standards"
+      }
+    },
+    {
+      "slug": "guidance-inspired",
+      "name": "Guidance Inspired",
+      "collection": "Rose",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "CompositionProducer@1.0.0  EditorialProducer@1.0.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-07-13T18:44:40.045Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-07-13T19:01:19.624Z",
+      "reviewer": "Adi",
+      "notes": [
+        {
+          "id": "note-1783969421104-hbkg6",
+          "reviewer": "Adi",
+          "timestamp": "2026-07-13T19:03:41.104Z",
+          "section": "merchandising",
+          "note": "newArrival:true was set by AI based on source fragrance novelty — confirm with business before promotion",
+          "resolved": false
+        },
+        {
+          "id": "note-1783969463127-9d1xj",
+          "reviewer": "Adi",
+          "timestamp": "2026-07-13T19:04:23.127Z",
+          "section": "editorial",
+          "note": "Subtitle 'Radiant Depth' collides with baccarat-rouge-540-extrait-inspired — deduplicate before promotion",
+          "resolved": false
+        }
+      ],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Adi",
+        "timestamp": "2026-07-13T19:01:19.623Z",
+        "reason": "Meets Maison editorial quality standards"
+      }
+    },
+    {
+      "slug": "haltane-inspired",
+      "name": "Haltane Inspired",
+      "collection": "Elite",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "CompositionProducer@1.0.0  EditorialProducer@1.0.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-07-13T18:44:40.047Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-07-13T19:01:22.074Z",
+      "reviewer": "Adi",
+      "notes": [
+        {
+          "id": "note-1783969426496-z1m76",
+          "reviewer": "Adi",
+          "timestamp": "2026-07-13T19:03:46.496Z",
+          "section": "merchandising",
+          "note": "newArrival:true was set by AI based on source fragrance novelty — confirm with business before promotion",
+          "resolved": false
+        }
+      ],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Adi",
+        "timestamp": "2026-07-13T19:01:22.074Z",
+        "reason": "Meets Maison editorial quality standards"
+      }
+    },
+    {
+      "slug": "hibiscus-mahajad-inspired",
+      "name": "Hibiscus Mahajad Inspired",
+      "collection": "Elite",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "CompositionProducer@1.0.0  EditorialProducer@1.0.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-07-13T18:44:40.049Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-07-13T19:01:24.610Z",
+      "reviewer": "Adi",
+      "notes": [
+        {
+          "id": "note-1783969423774-6f6wl",
+          "reviewer": "Adi",
+          "timestamp": "2026-07-13T19:03:43.774Z",
+          "section": "merchandising",
+          "note": "newArrival:true was set by AI based on source fragrance novelty — confirm with business before promotion",
+          "resolved": false
+        }
+      ],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Adi",
+        "timestamp": "2026-07-13T19:01:24.610Z",
+        "reason": "Meets Maison editorial quality standards"
+      }
+    },
+    {
+      "slug": "hypnotic-poison-inspired",
+      "name": "Hypnotic Poison Inspired",
+      "collection": "Rose",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "CompositionProducer@1.0.0  EditorialProducer@1.0.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "needs_regeneration",
+      "addedAt": "2026-07-13T18:44:40.051Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-07-13T18:53:02.143Z",
+      "reviewer": "Adi",
+      "notes": [],
+      "decision": {
+        "decision": "needs_regeneration",
+        "reviewer": "Adi",
+        "timestamp": "2026-07-13T18:53:02.139Z",
+        "reason": "Missing relationships block — factory left alternatives and wardrobePartners empty"
+      }
+    },
+    {
+      "slug": "j'adore-inspired",
+      "name": "J",
+      "collection": "Rose",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "CompositionProducer@1.0.0  EditorialProducer@1.0.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-07-13T18:44:40.053Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-07-13T19:02:11.370Z",
+      "reviewer": "Adi",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Adi",
+        "timestamp": "2026-07-13T19:02:11.370Z",
+        "reason": "Meets Maison editorial quality standards"
+      }
+    },
+    {
+      "slug": "kayali-vanilla-28-inspired",
+      "name": "Kayali Vanilla 28 Inspired",
+      "collection": "Rose",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "CompositionProducer@1.0.0  EditorialProducer@1.0.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-07-13T18:44:40.055Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-07-13T19:02:14.368Z",
+      "reviewer": "Adi",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Adi",
+        "timestamp": "2026-07-13T19:02:14.368Z",
+        "reason": "Meets Maison editorial quality standards"
+      }
+    },
+    {
+      "slug": "kirke-overdose-inspired",
+      "name": "Kirke Overdose Inspired",
+      "collection": "Elite",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "CompositionProducer@1.0.0  EditorialProducer@1.0.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-07-13T18:44:40.057Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-07-13T19:02:17.142Z",
+      "reviewer": "Adi",
+      "notes": [
+        {
+          "id": "note-1783969429041-ej86i",
+          "reviewer": "Adi",
+          "timestamp": "2026-07-13T19:03:49.041Z",
+          "section": "merchandising",
+          "note": "newArrival:true was set by AI based on source fragrance novelty — confirm with business before promotion",
+          "resolved": false
+        }
+      ],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Adi",
+        "timestamp": "2026-07-13T19:02:17.141Z",
+        "reason": "Meets Maison editorial quality standards"
+      }
+    },
+    {
+      "slug": "l'immensite-inspired",
+      "name": "L",
+      "collection": "Skye",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "CompositionProducer@1.0.0  EditorialProducer@1.0.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-07-13T18:44:40.059Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-07-13T19:02:19.998Z",
+      "reviewer": "Adi",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Adi",
+        "timestamp": "2026-07-13T19:02:19.997Z",
+        "reason": "Meets Maison editorial quality standards"
+      }
+    },
+    {
+      "slug": "la-vie-est-belle-inspired",
+      "name": "La Vie Est Belle Inspired",
+      "collection": "Rose",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "CompositionProducer@1.0.0  EditorialProducer@1.0.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-07-13T18:44:40.061Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-07-13T19:02:22.474Z",
+      "reviewer": "Adi",
+      "notes": [
+        {
+          "id": "note-1783969468432-gydjl",
+          "reviewer": "Adi",
+          "timestamp": "2026-07-13T19:04:28.432Z",
+          "section": "editorial",
+          "note": "Subtitle 'Radiant Softness' collides with prada-paradoxe-inspired — deduplicate before promotion",
+          "resolved": false
+        }
+      ],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Adi",
+        "timestamp": "2026-07-13T19:02:22.473Z",
+        "reason": "Meets Maison editorial quality standards"
+      }
+    },
+    {
+      "slug": "libre-inspired",
+      "name": "Libre Inspired",
+      "collection": "Rose",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "CompositionProducer@1.0.0  EditorialProducer@1.0.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-07-13T18:44:40.064Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-07-13T19:02:24.963Z",
+      "reviewer": "Adi",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Adi",
+        "timestamp": "2026-07-13T19:02:24.962Z",
+        "reason": "Meets Maison editorial quality standards"
+      }
+    },
+    {
+      "slug": "libre-intense-inspired",
+      "name": "Libre Intense Inspired",
+      "collection": "Rose",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "CompositionProducer@1.0.0  EditorialProducer@1.0.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-07-13T18:44:40.067Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-07-13T19:02:27.699Z",
+      "reviewer": "Adi",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Adi",
+        "timestamp": "2026-07-13T19:02:27.698Z",
+        "reason": "Meets Maison editorial quality standards"
+      }
+    },
+    {
+      "slug": "libre-le-parfum-inspired",
+      "name": "Libre Le Parfum Inspired",
+      "collection": "Rose",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "CompositionProducer@1.0.0  EditorialProducer@1.0.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-07-13T18:44:40.070Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-07-13T19:02:30.348Z",
+      "reviewer": "Adi",
+      "notes": [
+        {
+          "id": "note-1783969481196-ictb9",
+          "reviewer": "Adi",
+          "timestamp": "2026-07-13T19:04:41.196Z",
+          "section": "relationships",
+          "note": "wardrobePartners missing — only alternatives populated; consider adding a male complement before promotion",
+          "resolved": false
+        }
+      ],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Adi",
+        "timestamp": "2026-07-13T19:02:30.348Z",
+        "reason": "Meets Maison editorial quality standards"
+      }
+    },
+    {
+      "slug": "love-don't-be-shy-inspired",
+      "name": "Love Don",
+      "collection": "Rose",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "CompositionProducer@1.0.0  EditorialProducer@1.0.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-07-13T18:44:40.072Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-07-13T19:02:33.030Z",
+      "reviewer": "Adi",
+      "notes": [
+        {
+          "id": "note-1783969434861-x4sgb",
+          "reviewer": "Adi",
+          "timestamp": "2026-07-13T19:03:54.861Z",
+          "section": "merchandising",
+          "note": "bestSeller:true was set by AI — confirm with business before promotion",
+          "resolved": false
+        }
+      ],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Adi",
+        "timestamp": "2026-07-13T19:02:33.024Z",
+        "reason": "Meets Maison editorial quality standards"
+      }
+    },
+    {
+      "slug": "mon-paris-inspired",
+      "name": "Mon Paris Inspired",
+      "collection": "Rose",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "CompositionProducer@1.0.0  EditorialProducer@1.0.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-07-13T18:44:40.075Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-07-13T19:02:35.621Z",
+      "reviewer": "Adi",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Adi",
+        "timestamp": "2026-07-13T19:02:35.620Z",
+        "reason": "Meets Maison editorial quality standards"
+      }
+    },
+    {
+      "slug": "my-way-inspired",
+      "name": "My Way Inspired",
+      "collection": "Rose",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "CompositionProducer@1.0.0  EditorialProducer@1.0.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-07-13T18:44:40.078Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-07-13T19:02:38.306Z",
+      "reviewer": "Adi",
+      "notes": [
+        {
+          "id": "note-1783969483549-x5bjx",
+          "reviewer": "Adi",
+          "timestamp": "2026-07-13T19:04:43.549Z",
+          "section": "relationships",
+          "note": "alternatives missing — only wardrobePartners populated; consider adding a comparable female fragrance before promotion",
+          "resolved": false
+        }
+      ],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Adi",
+        "timestamp": "2026-07-13T19:02:38.305Z",
+        "reason": "Meets Maison editorial quality standards"
+      }
+    },
+    {
+      "slug": "ombre-nomade-inspired",
+      "name": "Ombre Nomade Inspired",
+      "collection": "Skye",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "CompositionProducer@1.0.0  EditorialProducer@1.0.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-07-13T18:44:40.080Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-07-13T19:02:41.057Z",
+      "reviewer": "Adi",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Adi",
+        "timestamp": "2026-07-13T19:02:41.056Z",
+        "reason": "Meets Maison editorial quality standards"
+      }
+    },
+    {
+      "slug": "oud-for-greatness-inspired",
+      "name": "Oud For Greatness Inspired",
+      "collection": "Skye",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "CompositionProducer@1.0.0  EditorialProducer@1.0.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-07-13T18:44:40.083Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-07-13T19:02:43.268Z",
+      "reviewer": "Adi",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Adi",
+        "timestamp": "2026-07-13T19:02:43.267Z",
+        "reason": "Meets Maison editorial quality standards"
+      }
+    },
+    {
+      "slug": "oud-mood-inspired",
+      "name": "Oud Mood Inspired",
+      "collection": "Elite",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "CompositionProducer@1.0.0  EditorialProducer@1.0.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-07-13T18:44:40.086Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-07-13T19:02:45.894Z",
+      "reviewer": "Adi",
+      "notes": [
+        {
+          "id": "note-1783969478487-z6hby",
+          "reviewer": "Adi",
+          "timestamp": "2026-07-13T19:04:38.487Z",
+          "section": "editorial",
+          "note": "Description capitalisation corrected during review: note names lowercased to match Maison editorial voice",
+          "resolved": false
+        }
+      ],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Adi",
+        "timestamp": "2026-07-13T19:02:45.893Z",
+        "reason": "Meets Maison editorial quality standards"
+      }
+    },
+    {
+      "slug": "pacific-chill-inspired",
+      "name": "Pacific Chill Inspired",
+      "collection": "Skye",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "CompositionProducer@1.0.0  EditorialProducer@1.0.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-07-13T18:44:40.089Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-07-13T19:02:48.418Z",
+      "reviewer": "Adi",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Adi",
+        "timestamp": "2026-07-13T19:02:48.417Z",
+        "reason": "Meets Maison editorial quality standards"
+      }
+    },
+    {
+      "slug": "poison-girl-inspired",
+      "name": "Poison Girl Inspired",
+      "collection": "Rose",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "CompositionProducer@1.0.0  EditorialProducer@1.0.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "needs_regeneration",
+      "addedAt": "2026-07-13T18:44:40.091Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-07-13T18:53:04.537Z",
+      "reviewer": "Adi",
+      "notes": [],
+      "decision": {
+        "decision": "needs_regeneration",
+        "reviewer": "Adi",
+        "timestamp": "2026-07-13T18:53:04.536Z",
+        "reason": "Cross-tier note duplicate: Cinnamon in both top [Bergamot,Cinnamon,Vanilla] and heart [Orange Blossom,Tuberose,Cinnamon] tiers"
+      }
+    },
+    {
+      "slug": "prada-paradoxe-inspired",
+      "name": "Prada Paradoxe Inspired",
+      "collection": "Rose",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "CompositionProducer@1.0.0  EditorialProducer@1.0.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-07-13T18:44:40.093Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-07-13T19:02:51.198Z",
+      "reviewer": "Adi",
+      "notes": [
+        {
+          "id": "note-1783969471060-ocsec",
+          "reviewer": "Adi",
+          "timestamp": "2026-07-13T19:04:31.060Z",
+          "section": "editorial",
+          "note": "Subtitle 'Radiant Softness' collides with la-vie-est-belle-inspired — deduplicate before promotion",
+          "resolved": false
+        }
+      ],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Adi",
+        "timestamp": "2026-07-13T19:02:51.197Z",
+        "reason": "Meets Maison editorial quality standards"
+      }
+    },
+    {
+      "slug": "rolling-in-love-inspired",
+      "name": "Rolling In Love Inspired",
+      "collection": "Rose",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "CompositionProducer@1.0.0  EditorialProducer@1.0.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-07-13T18:44:40.097Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-07-13T19:02:53.605Z",
+      "reviewer": "Adi",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Adi",
+        "timestamp": "2026-07-13T19:02:53.605Z",
+        "reason": "Meets Maison editorial quality standards"
+      }
+    },
+    {
+      "slug": "silver-mountain-water-inspired",
+      "name": "Silver Mountain Water Inspired",
+      "collection": "Skye",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "CompositionProducer@1.0.0  EditorialProducer@1.0.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-07-13T18:44:40.102Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-07-13T19:02:56.033Z",
+      "reviewer": "Adi",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Adi",
+        "timestamp": "2026-07-13T19:02:56.032Z",
+        "reason": "Meets Maison editorial quality standards"
+      }
+    },
+    {
+      "slug": "torino21-inspired",
+      "name": "Torino21 Inspired",
+      "collection": "Skye",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "CompositionProducer@1.0.0  EditorialProducer@1.0.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-07-13T18:44:40.104Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-07-13T19:02:58.506Z",
+      "reviewer": "Adi",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Adi",
+        "timestamp": "2026-07-13T19:02:58.505Z",
+        "reason": "Meets Maison editorial quality standards"
+      }
+    },
+    {
+      "slug": "valentino-donna-born-in-roma-inspired",
+      "name": "Valentino Donna Born In Roma Inspired",
+      "collection": "Rose",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "CompositionProducer@1.0.0  EditorialProducer@1.0.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-07-13T18:44:40.105Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-07-13T19:03:00.958Z",
+      "reviewer": "Adi",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Adi",
+        "timestamp": "2026-07-13T19:03:00.957Z",
+        "reason": "Meets Maison editorial quality standards"
+      }
+    },
+    {
+      "slug": "vanilla-28-inspired",
+      "name": "Vanilla 28 Inspired",
+      "collection": "Rose",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "CompositionProducer@1.0.0  EditorialProducer@1.0.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-07-13T18:44:40.107Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-07-13T19:03:03.374Z",
+      "reviewer": "Adi",
+      "notes": [
+        {
+          "id": "note-1783969437941-qpvvv",
+          "reviewer": "Adi",
+          "timestamp": "2026-07-13T19:03:57.941Z",
+          "section": "merchandising",
+          "note": "bestSeller:true was set by AI — confirm with business before promotion",
+          "resolved": false
+        }
+      ],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Adi",
+        "timestamp": "2026-07-13T19:03:03.373Z",
+        "reason": "Meets Maison editorial quality standards"
+      }
+    },
+    {
+      "slug": "very-good-girl-inspired",
+      "name": "Very Good Girl Inspired",
+      "collection": "Rose",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "CompositionProducer@1.0.0  EditorialProducer@1.0.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-07-13T18:44:40.109Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-07-13T19:03:05.710Z",
+      "reviewer": "Adi",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Adi",
+        "timestamp": "2026-07-13T19:03:05.709Z",
+        "reason": "Meets Maison editorial quality standards"
+      }
+    },
+    {
+      "slug": "wedding-silk-santal-inspired",
+      "name": "Wedding Silk Santal Inspired",
+      "collection": "Rose",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "CompositionProducer@1.0.0  EditorialProducer@1.0.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-07-13T18:44:40.111Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-07-13T19:03:08.148Z",
+      "reviewer": "Adi",
+      "notes": [
+        {
+          "id": "note-1783969431523-uzl7u",
+          "reviewer": "Adi",
+          "timestamp": "2026-07-13T19:03:51.523Z",
+          "section": "merchandising",
+          "note": "newArrival:true was set by AI based on source fragrance novelty — confirm with business before promotion",
+          "resolved": false
+        }
+      ],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Adi",
+        "timestamp": "2026-07-13T19:03:08.147Z",
+        "reason": "Meets Maison editorial quality standards"
+      }
+    }
+  ]
+}

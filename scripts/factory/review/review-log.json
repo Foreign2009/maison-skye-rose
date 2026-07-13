@@ -1,0 +1,943 @@
+{
+  "version": "1.0",
+  "entries": [
+    {
+      "timestamp": "2026-07-13T17:11:31.144Z",
+      "action": "added_to_queue",
+      "slug": "miss-dior-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-07-13T17:12:27.809Z",
+      "action": "review_started",
+      "slug": "miss-dior-inspired",
+      "reviewer": "Adi",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-07-13T17:12:54.501Z",
+      "action": "note_added",
+      "slug": "miss-dior-inspired",
+      "reviewer": "Adi",
+      "details": "[discovery] Vibe tags look strong; confirm recommendedFor personas with brand voice guide"
+    },
+    {
+      "timestamp": "2026-07-13T17:13:16.264Z",
+      "action": "approved",
+      "slug": "miss-dior-inspired",
+      "reviewer": "Adi",
+      "details": "All sections verified"
+    },
+    {
+      "timestamp": "2026-07-13T18:44:39.986Z",
+      "action": "added_to_queue",
+      "slug": "afternoon-swim-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-07-13T18:44:39.988Z",
+      "action": "added_to_queue",
+      "slug": "alien-goddess-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-07-13T18:44:39.990Z",
+      "action": "added_to_queue",
+      "slug": "alien-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-07-13T18:44:39.992Z",
+      "action": "added_to_queue",
+      "slug": "althair-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-07-13T18:44:39.994Z",
+      "action": "added_to_queue",
+      "slug": "ani-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-07-13T18:44:39.997Z",
+      "action": "added_to_queue",
+      "slug": "arabians-tonka-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-07-13T18:44:40.001Z",
+      "action": "added_to_queue",
+      "slug": "armani-si-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-07-13T18:44:40.003Z",
+      "action": "added_to_queue",
+      "slug": "baccarat-rouge-540-extrait-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-07-13T18:44:40.005Z",
+      "action": "added_to_queue",
+      "slug": "bianco-latte-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-07-13T18:44:40.007Z",
+      "action": "added_to_queue",
+      "slug": "black-opium-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-07-13T18:44:40.009Z",
+      "action": "added_to_queue",
+      "slug": "blanche-bete-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-07-13T18:44:40.011Z",
+      "action": "added_to_queue",
+      "slug": "burberry-goddess-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-07-13T18:44:40.013Z",
+      "action": "added_to_queue",
+      "slug": "burberry-her-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-07-13T18:44:40.015Z",
+      "action": "added_to_queue",
+      "slug": "carlisle-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-07-13T18:44:40.017Z",
+      "action": "added_to_queue",
+      "slug": "chance-eau-fraiche-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-07-13T18:44:40.019Z",
+      "action": "added_to_queue",
+      "slug": "chance-eau-tendre-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-07-13T18:44:40.021Z",
+      "action": "added_to_queue",
+      "slug": "coco-mademoiselle-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-07-13T18:44:40.024Z",
+      "action": "added_to_queue",
+      "slug": "creed-green-irish-tweed-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-07-13T18:44:40.025Z",
+      "action": "added_to_queue",
+      "slug": "crystal-noir-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-07-13T18:44:40.027Z",
+      "action": "added_to_queue",
+      "slug": "delina-exclusif-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-07-13T18:44:40.030Z",
+      "action": "added_to_queue",
+      "slug": "devotion-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-07-13T18:44:40.033Z",
+      "action": "added_to_queue",
+      "slug": "erba-pura-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-07-13T18:44:40.036Z",
+      "action": "added_to_queue",
+      "slug": "flowerbomb-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-07-13T18:44:40.038Z",
+      "action": "added_to_queue",
+      "slug": "gentle-fluidity-gold-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-07-13T18:44:40.040Z",
+      "action": "added_to_queue",
+      "slug": "good-girl-blush-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-07-13T18:44:40.042Z",
+      "action": "added_to_queue",
+      "slug": "good-girl-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-07-13T18:44:40.044Z",
+      "action": "added_to_queue",
+      "slug": "gris-charnel-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-07-13T18:44:40.046Z",
+      "action": "added_to_queue",
+      "slug": "guidance-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-07-13T18:44:40.048Z",
+      "action": "added_to_queue",
+      "slug": "haltane-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-07-13T18:44:40.050Z",
+      "action": "added_to_queue",
+      "slug": "hibiscus-mahajad-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-07-13T18:44:40.052Z",
+      "action": "added_to_queue",
+      "slug": "hypnotic-poison-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-07-13T18:44:40.054Z",
+      "action": "added_to_queue",
+      "slug": "j'adore-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-07-13T18:44:40.056Z",
+      "action": "added_to_queue",
+      "slug": "kayali-vanilla-28-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-07-13T18:44:40.058Z",
+      "action": "added_to_queue",
+      "slug": "kirke-overdose-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-07-13T18:44:40.060Z",
+      "action": "added_to_queue",
+      "slug": "l'immensite-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-07-13T18:44:40.062Z",
+      "action": "added_to_queue",
+      "slug": "la-vie-est-belle-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-07-13T18:44:40.066Z",
+      "action": "added_to_queue",
+      "slug": "libre-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-07-13T18:44:40.069Z",
+      "action": "added_to_queue",
+      "slug": "libre-intense-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-07-13T18:44:40.071Z",
+      "action": "added_to_queue",
+      "slug": "libre-le-parfum-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-07-13T18:44:40.073Z",
+      "action": "added_to_queue",
+      "slug": "love-don't-be-shy-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-07-13T18:44:40.077Z",
+      "action": "added_to_queue",
+      "slug": "mon-paris-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-07-13T18:44:40.079Z",
+      "action": "added_to_queue",
+      "slug": "my-way-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-07-13T18:44:40.082Z",
+      "action": "added_to_queue",
+      "slug": "ombre-nomade-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-07-13T18:44:40.084Z",
+      "action": "added_to_queue",
+      "slug": "oud-for-greatness-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-07-13T18:44:40.087Z",
+      "action": "added_to_queue",
+      "slug": "oud-mood-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-07-13T18:44:40.090Z",
+      "action": "added_to_queue",
+      "slug": "pacific-chill-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-07-13T18:44:40.092Z",
+      "action": "added_to_queue",
+      "slug": "poison-girl-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-07-13T18:44:40.094Z",
+      "action": "added_to_queue",
+      "slug": "prada-paradoxe-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-07-13T18:44:40.100Z",
+      "action": "added_to_queue",
+      "slug": "rolling-in-love-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-07-13T18:44:40.103Z",
+      "action": "added_to_queue",
+      "slug": "silver-mountain-water-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-07-13T18:44:40.104Z",
+      "action": "added_to_queue",
+      "slug": "torino21-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-07-13T18:44:40.106Z",
+      "action": "added_to_queue",
+      "slug": "valentino-donna-born-in-roma-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-07-13T18:44:40.108Z",
+      "action": "added_to_queue",
+      "slug": "vanilla-28-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-07-13T18:44:40.110Z",
+      "action": "added_to_queue",
+      "slug": "very-good-girl-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-07-13T18:44:40.113Z",
+      "action": "added_to_queue",
+      "slug": "wedding-silk-santal-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-07-13T18:52:54.762Z",
+      "action": "needs_regeneration",
+      "slug": "bianco-latte-inspired",
+      "reviewer": "Adi",
+      "details": "Missing relationships block — factory left alternatives and wardrobePartners empty"
+    },
+    {
+      "timestamp": "2026-07-13T18:52:57.354Z",
+      "action": "needs_regeneration",
+      "slug": "chance-eau-fraiche-inspired",
+      "reviewer": "Adi",
+      "details": "Missing relationships block — factory left alternatives and wardrobePartners empty"
+    },
+    {
+      "timestamp": "2026-07-13T18:52:59.801Z",
+      "action": "needs_regeneration",
+      "slug": "devotion-inspired",
+      "reviewer": "Adi",
+      "details": "Missing relationships block; freshness:5 inconsistent with Winter Vanilla Citrus + Rum profile"
+    },
+    {
+      "timestamp": "2026-07-13T18:53:02.146Z",
+      "action": "needs_regeneration",
+      "slug": "hypnotic-poison-inspired",
+      "reviewer": "Adi",
+      "details": "Missing relationships block — factory left alternatives and wardrobePartners empty"
+    },
+    {
+      "timestamp": "2026-07-13T18:53:04.538Z",
+      "action": "needs_regeneration",
+      "slug": "poison-girl-inspired",
+      "reviewer": "Adi",
+      "details": "Cross-tier note duplicate: Cinnamon in both top [Bergamot,Cinnamon,Vanilla] and heart [Orange Blossom,Tuberose,Cinnamon] tiers"
+    },
+    {
+      "timestamp": "2026-07-13T19:00:22.010Z",
+      "action": "approved",
+      "slug": "afternoon-swim-inspired",
+      "reviewer": "Adi",
+      "details": "Meets Maison editorial quality standards"
+    },
+    {
+      "timestamp": "2026-07-13T19:00:24.116Z",
+      "action": "approved",
+      "slug": "alien-goddess-inspired",
+      "reviewer": "Adi",
+      "details": "Meets Maison editorial quality standards"
+    },
+    {
+      "timestamp": "2026-07-13T19:00:26.313Z",
+      "action": "approved",
+      "slug": "alien-inspired",
+      "reviewer": "Adi",
+      "details": "Meets Maison editorial quality standards"
+    },
+    {
+      "timestamp": "2026-07-13T19:00:28.429Z",
+      "action": "approved",
+      "slug": "althair-inspired",
+      "reviewer": "Adi",
+      "details": "Meets Maison editorial quality standards"
+    },
+    {
+      "timestamp": "2026-07-13T19:00:30.673Z",
+      "action": "approved",
+      "slug": "ani-inspired",
+      "reviewer": "Adi",
+      "details": "Meets Maison editorial quality standards"
+    },
+    {
+      "timestamp": "2026-07-13T19:00:33.068Z",
+      "action": "approved",
+      "slug": "arabians-tonka-inspired",
+      "reviewer": "Adi",
+      "details": "Meets Maison editorial quality standards"
+    },
+    {
+      "timestamp": "2026-07-13T19:00:35.286Z",
+      "action": "approved",
+      "slug": "armani-si-inspired",
+      "reviewer": "Adi",
+      "details": "Meets Maison editorial quality standards"
+    },
+    {
+      "timestamp": "2026-07-13T19:00:37.433Z",
+      "action": "approved",
+      "slug": "baccarat-rouge-540-extrait-inspired",
+      "reviewer": "Adi",
+      "details": "Meets Maison editorial quality standards"
+    },
+    {
+      "timestamp": "2026-07-13T19:00:39.512Z",
+      "action": "approved",
+      "slug": "black-opium-inspired",
+      "reviewer": "Adi",
+      "details": "Meets Maison editorial quality standards"
+    },
+    {
+      "timestamp": "2026-07-13T19:00:41.628Z",
+      "action": "approved",
+      "slug": "blanche-bete-inspired",
+      "reviewer": "Adi",
+      "details": "Meets Maison editorial quality standards"
+    },
+    {
+      "timestamp": "2026-07-13T19:00:43.706Z",
+      "action": "approved",
+      "slug": "burberry-goddess-inspired",
+      "reviewer": "Adi",
+      "details": "Meets Maison editorial quality standards"
+    },
+    {
+      "timestamp": "2026-07-13T19:00:46.147Z",
+      "action": "approved",
+      "slug": "burberry-her-inspired",
+      "reviewer": "Adi",
+      "details": "Meets Maison editorial quality standards"
+    },
+    {
+      "timestamp": "2026-07-13T19:00:48.330Z",
+      "action": "approved",
+      "slug": "carlisle-inspired",
+      "reviewer": "Adi",
+      "details": "Meets Maison editorial quality standards"
+    },
+    {
+      "timestamp": "2026-07-13T19:00:50.573Z",
+      "action": "approved",
+      "slug": "chance-eau-tendre-inspired",
+      "reviewer": "Adi",
+      "details": "Meets Maison editorial quality standards"
+    },
+    {
+      "timestamp": "2026-07-13T19:00:52.699Z",
+      "action": "approved",
+      "slug": "coco-mademoiselle-inspired",
+      "reviewer": "Adi",
+      "details": "Meets Maison editorial quality standards"
+    },
+    {
+      "timestamp": "2026-07-13T19:00:55.081Z",
+      "action": "approved",
+      "slug": "creed-green-irish-tweed-inspired",
+      "reviewer": "Adi",
+      "details": "Meets Maison editorial quality standards"
+    },
+    {
+      "timestamp": "2026-07-13T19:00:57.791Z",
+      "action": "approved",
+      "slug": "crystal-noir-inspired",
+      "reviewer": "Adi",
+      "details": "Meets Maison editorial quality standards"
+    },
+    {
+      "timestamp": "2026-07-13T19:01:00.177Z",
+      "action": "approved",
+      "slug": "delina-exclusif-inspired",
+      "reviewer": "Adi",
+      "details": "Meets Maison editorial quality standards"
+    },
+    {
+      "timestamp": "2026-07-13T19:01:03.798Z",
+      "action": "approved",
+      "slug": "erba-pura-inspired",
+      "reviewer": "Adi",
+      "details": "Meets Maison editorial quality standards"
+    },
+    {
+      "timestamp": "2026-07-13T19:01:07.071Z",
+      "action": "approved",
+      "slug": "flowerbomb-inspired",
+      "reviewer": "Adi",
+      "details": "Meets Maison editorial quality standards"
+    },
+    {
+      "timestamp": "2026-07-13T19:01:09.829Z",
+      "action": "approved",
+      "slug": "gentle-fluidity-gold-inspired",
+      "reviewer": "Adi",
+      "details": "Meets Maison editorial quality standards"
+    },
+    {
+      "timestamp": "2026-07-13T19:01:12.277Z",
+      "action": "approved",
+      "slug": "good-girl-blush-inspired",
+      "reviewer": "Adi",
+      "details": "Meets Maison editorial quality standards"
+    },
+    {
+      "timestamp": "2026-07-13T19:01:14.622Z",
+      "action": "approved",
+      "slug": "good-girl-inspired",
+      "reviewer": "Adi",
+      "details": "Meets Maison editorial quality standards"
+    },
+    {
+      "timestamp": "2026-07-13T19:01:17.237Z",
+      "action": "approved",
+      "slug": "gris-charnel-inspired",
+      "reviewer": "Adi",
+      "details": "Meets Maison editorial quality standards"
+    },
+    {
+      "timestamp": "2026-07-13T19:01:19.626Z",
+      "action": "approved",
+      "slug": "guidance-inspired",
+      "reviewer": "Adi",
+      "details": "Meets Maison editorial quality standards"
+    },
+    {
+      "timestamp": "2026-07-13T19:01:22.076Z",
+      "action": "approved",
+      "slug": "haltane-inspired",
+      "reviewer": "Adi",
+      "details": "Meets Maison editorial quality standards"
+    },
+    {
+      "timestamp": "2026-07-13T19:01:24.612Z",
+      "action": "approved",
+      "slug": "hibiscus-mahajad-inspired",
+      "reviewer": "Adi",
+      "details": "Meets Maison editorial quality standards"
+    },
+    {
+      "timestamp": "2026-07-13T19:02:11.372Z",
+      "action": "approved",
+      "slug": "j'adore-inspired",
+      "reviewer": "Adi",
+      "details": "Meets Maison editorial quality standards"
+    },
+    {
+      "timestamp": "2026-07-13T19:02:14.370Z",
+      "action": "approved",
+      "slug": "kayali-vanilla-28-inspired",
+      "reviewer": "Adi",
+      "details": "Meets Maison editorial quality standards"
+    },
+    {
+      "timestamp": "2026-07-13T19:02:17.144Z",
+      "action": "approved",
+      "slug": "kirke-overdose-inspired",
+      "reviewer": "Adi",
+      "details": "Meets Maison editorial quality standards"
+    },
+    {
+      "timestamp": "2026-07-13T19:02:20.001Z",
+      "action": "approved",
+      "slug": "l'immensite-inspired",
+      "reviewer": "Adi",
+      "details": "Meets Maison editorial quality standards"
+    },
+    {
+      "timestamp": "2026-07-13T19:02:22.476Z",
+      "action": "approved",
+      "slug": "la-vie-est-belle-inspired",
+      "reviewer": "Adi",
+      "details": "Meets Maison editorial quality standards"
+    },
+    {
+      "timestamp": "2026-07-13T19:02:24.965Z",
+      "action": "approved",
+      "slug": "libre-inspired",
+      "reviewer": "Adi",
+      "details": "Meets Maison editorial quality standards"
+    },
+    {
+      "timestamp": "2026-07-13T19:02:27.701Z",
+      "action": "approved",
+      "slug": "libre-intense-inspired",
+      "reviewer": "Adi",
+      "details": "Meets Maison editorial quality standards"
+    },
+    {
+      "timestamp": "2026-07-13T19:02:30.350Z",
+      "action": "approved",
+      "slug": "libre-le-parfum-inspired",
+      "reviewer": "Adi",
+      "details": "Meets Maison editorial quality standards"
+    },
+    {
+      "timestamp": "2026-07-13T19:02:33.032Z",
+      "action": "approved",
+      "slug": "love-don't-be-shy-inspired",
+      "reviewer": "Adi",
+      "details": "Meets Maison editorial quality standards"
+    },
+    {
+      "timestamp": "2026-07-13T19:02:35.623Z",
+      "action": "approved",
+      "slug": "mon-paris-inspired",
+      "reviewer": "Adi",
+      "details": "Meets Maison editorial quality standards"
+    },
+    {
+      "timestamp": "2026-07-13T19:02:38.307Z",
+      "action": "approved",
+      "slug": "my-way-inspired",
+      "reviewer": "Adi",
+      "details": "Meets Maison editorial quality standards"
+    },
+    {
+      "timestamp": "2026-07-13T19:02:41.059Z",
+      "action": "approved",
+      "slug": "ombre-nomade-inspired",
+      "reviewer": "Adi",
+      "details": "Meets Maison editorial quality standards"
+    },
+    {
+      "timestamp": "2026-07-13T19:02:43.272Z",
+      "action": "approved",
+      "slug": "oud-for-greatness-inspired",
+      "reviewer": "Adi",
+      "details": "Meets Maison editorial quality standards"
+    },
+    {
+      "timestamp": "2026-07-13T19:02:45.896Z",
+      "action": "approved",
+      "slug": "oud-mood-inspired",
+      "reviewer": "Adi",
+      "details": "Meets Maison editorial quality standards"
+    },
+    {
+      "timestamp": "2026-07-13T19:02:48.420Z",
+      "action": "approved",
+      "slug": "pacific-chill-inspired",
+      "reviewer": "Adi",
+      "details": "Meets Maison editorial quality standards"
+    },
+    {
+      "timestamp": "2026-07-13T19:02:51.199Z",
+      "action": "approved",
+      "slug": "prada-paradoxe-inspired",
+      "reviewer": "Adi",
+      "details": "Meets Maison editorial quality standards"
+    },
+    {
+      "timestamp": "2026-07-13T19:02:53.607Z",
+      "action": "approved",
+      "slug": "rolling-in-love-inspired",
+      "reviewer": "Adi",
+      "details": "Meets Maison editorial quality standards"
+    },
+    {
+      "timestamp": "2026-07-13T19:02:56.035Z",
+      "action": "approved",
+      "slug": "silver-mountain-water-inspired",
+      "reviewer": "Adi",
+      "details": "Meets Maison editorial quality standards"
+    },
+    {
+      "timestamp": "2026-07-13T19:02:58.507Z",
+      "action": "approved",
+      "slug": "torino21-inspired",
+      "reviewer": "Adi",
+      "details": "Meets Maison editorial quality standards"
+    },
+    {
+      "timestamp": "2026-07-13T19:03:00.959Z",
+      "action": "approved",
+      "slug": "valentino-donna-born-in-roma-inspired",
+      "reviewer": "Adi",
+      "details": "Meets Maison editorial quality standards"
+    },
+    {
+      "timestamp": "2026-07-13T19:03:03.376Z",
+      "action": "approved",
+      "slug": "vanilla-28-inspired",
+      "reviewer": "Adi",
+      "details": "Meets Maison editorial quality standards"
+    },
+    {
+      "timestamp": "2026-07-13T19:03:05.712Z",
+      "action": "approved",
+      "slug": "very-good-girl-inspired",
+      "reviewer": "Adi",
+      "details": "Meets Maison editorial quality standards"
+    },
+    {
+      "timestamp": "2026-07-13T19:03:08.150Z",
+      "action": "approved",
+      "slug": "wedding-silk-santal-inspired",
+      "reviewer": "Adi",
+      "details": "Meets Maison editorial quality standards"
+    },
+    {
+      "timestamp": "2026-07-13T19:03:36.035Z",
+      "action": "note_added",
+      "slug": "althair-inspired",
+      "reviewer": "Adi",
+      "details": "[merchandising] newArrival:true was set by AI based on source fragrance novelty — confirm with business before promotion"
+    },
+    {
+      "timestamp": "2026-07-13T19:03:38.671Z",
+      "action": "note_added",
+      "slug": "good-girl-inspired",
+      "reviewer": "Adi",
+      "details": "[merchandising] newArrival:true was set by AI based on source fragrance novelty — confirm with business before promotion"
+    },
+    {
+      "timestamp": "2026-07-13T19:03:41.108Z",
+      "action": "note_added",
+      "slug": "guidance-inspired",
+      "reviewer": "Adi",
+      "details": "[merchandising] newArrival:true was set by AI based on source fragrance novelty — confirm with business before promotion"
+    },
+    {
+      "timestamp": "2026-07-13T19:03:43.776Z",
+      "action": "note_added",
+      "slug": "hibiscus-mahajad-inspired",
+      "reviewer": "Adi",
+      "details": "[merchandising] newArrival:true was set by AI based on source fragrance novelty — confirm with business before promotion"
+    },
+    {
+      "timestamp": "2026-07-13T19:03:46.500Z",
+      "action": "note_added",
+      "slug": "haltane-inspired",
+      "reviewer": "Adi",
+      "details": "[merchandising] newArrival:true was set by AI based on source fragrance novelty — confirm with business before promotion"
+    },
+    {
+      "timestamp": "2026-07-13T19:03:49.043Z",
+      "action": "note_added",
+      "slug": "kirke-overdose-inspired",
+      "reviewer": "Adi",
+      "details": "[merchandising] newArrival:true was set by AI based on source fragrance novelty — confirm with business before promotion"
+    },
+    {
+      "timestamp": "2026-07-13T19:03:51.803Z",
+      "action": "note_added",
+      "slug": "wedding-silk-santal-inspired",
+      "reviewer": "Adi",
+      "details": "[merchandising] newArrival:true was set by AI based on source fragrance novelty — confirm with business before promotion"
+    },
+    {
+      "timestamp": "2026-07-13T19:03:54.863Z",
+      "action": "note_added",
+      "slug": "love-don't-be-shy-inspired",
+      "reviewer": "Adi",
+      "details": "[merchandising] bestSeller:true was set by AI — confirm with business before promotion"
+    },
+    {
+      "timestamp": "2026-07-13T19:03:57.943Z",
+      "action": "note_added",
+      "slug": "vanilla-28-inspired",
+      "reviewer": "Adi",
+      "details": "[merchandising] bestSeller:true was set by AI — confirm with business before promotion"
+    },
+    {
+      "timestamp": "2026-07-13T19:04:01.661Z",
+      "action": "note_added",
+      "slug": "delina-exclusif-inspired",
+      "reviewer": "Adi",
+      "details": "[merchandising] bestSeller:true was set by AI — confirm with business before promotion"
+    },
+    {
+      "timestamp": "2026-07-13T19:04:23.130Z",
+      "action": "note_added",
+      "slug": "guidance-inspired",
+      "reviewer": "Adi",
+      "details": "[editorial] Subtitle 'Radiant Depth' collides with baccarat-rouge-540-extrait-inspired — deduplicate before promotion"
+    },
+    {
+      "timestamp": "2026-07-13T19:04:25.716Z",
+      "action": "note_added",
+      "slug": "baccarat-rouge-540-extrait-inspired",
+      "reviewer": "Adi",
+      "details": "[editorial] Subtitle 'Radiant Depth' collides with guidance-inspired — deduplicate before promotion"
+    },
+    {
+      "timestamp": "2026-07-13T19:04:28.435Z",
+      "action": "note_added",
+      "slug": "la-vie-est-belle-inspired",
+      "reviewer": "Adi",
+      "details": "[editorial] Subtitle 'Radiant Softness' collides with prada-paradoxe-inspired — deduplicate before promotion"
+    },
+    {
+      "timestamp": "2026-07-13T19:04:31.064Z",
+      "action": "note_added",
+      "slug": "prada-paradoxe-inspired",
+      "reviewer": "Adi",
+      "details": "[editorial] Subtitle 'Radiant Softness' collides with la-vie-est-belle-inspired — deduplicate before promotion"
+    },
+    {
+      "timestamp": "2026-07-13T19:04:33.564Z",
+      "action": "note_added",
+      "slug": "good-girl-blush-inspired",
+      "reviewer": "Adi",
+      "details": "[editorial] recommendedFor item 3 uses 'reprising' which appears to be 'reapplying' — review before promotion"
+    },
+    {
+      "timestamp": "2026-07-13T19:04:36.072Z",
+      "action": "note_added",
+      "slug": "creed-green-irish-tweed-inspired",
+      "reviewer": "Adi",
+      "details": "[relationships] Relationship slug corrected during review: terre-d-hermes-inspired changed to terre-d'hermes-inspired to match native record filename"
+    },
+    {
+      "timestamp": "2026-07-13T19:04:38.490Z",
+      "action": "note_added",
+      "slug": "oud-mood-inspired",
+      "reviewer": "Adi",
+      "details": "[editorial] Description capitalisation corrected during review: note names lowercased to match Maison editorial voice"
+    },
+    {
+      "timestamp": "2026-07-13T19:04:41.198Z",
+      "action": "note_added",
+      "slug": "libre-le-parfum-inspired",
+      "reviewer": "Adi",
+      "details": "[relationships] wardrobePartners missing — only alternatives populated; consider adding a male complement before promotion"
+    },
+    {
+      "timestamp": "2026-07-13T19:04:43.551Z",
+      "action": "note_added",
+      "slug": "my-way-inspired",
+      "reviewer": "Adi",
+      "details": "[relationships] alternatives missing — only wardrobePartners populated; consider adding a comparable female fragrance before promotion"
+    },
+    {
+      "timestamp": "2026-07-13T19:04:45.965Z",
+      "action": "note_added",
+      "slug": "blanche-bete-inspired",
+      "reviewer": "Adi",
+      "details": "[editorial] subtitle 'Soft Luxury' duplicates signatureStyle entry exactly — minor naming redundancy"
+    }
+  ]
+}
