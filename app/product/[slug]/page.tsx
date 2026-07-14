@@ -4,20 +4,13 @@ import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import ProductDetail from "../../components/ProductDetail";
 import { mkcCatalogue } from "../../lib/mkc/catalogue";
-import type { FragranceKnowledge } from "../../lib/mkc/types";
-import { buildIndex, getRelationshipSummary } from "../../lib/mkc/graph";
-import { recommendAcademyArticles } from "../../lib/academy/recommendAcademyArticles";
 import { getSimilarFragrances } from "../../lib/discovery/similarityEngine";
-import { getKnowledgeQuality } from "../../lib/mkc/knowledgeQuality";
+import { getKnowledgeInsights } from "../../lib/intelligence";
 
 interface ProductPageProps {
   params: Promise<{
     slug: string;
   }>;
-}
-
-function findKnowledge(slug: string): FragranceKnowledge | undefined {
-  return mkcCatalogue.find((k) => k.slug === slug);
 }
 
 export function generateStaticParams() {
@@ -32,10 +25,10 @@ export async function generateMetadata({
   params,
 }: ProductPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const knowledge = findKnowledge(slug);
+  const insights = getKnowledgeInsights(slug);
+  if (!insights) return {};
 
-  if (!knowledge) return {};
-
+  const knowledge = insights.record;
   const baseUrl = process.env.NEXT_PUBLIC_WEBSITE_URL ?? "";
   const url = `${baseUrl}/product/${slug}`;
   const imagePath = normalizeImagePath(knowledge.images["10ml"]);
@@ -87,11 +80,22 @@ export default async function ProductPage({
 }: ProductPageProps) {
   const { slug } = await params;
 
-  const knowledge = findKnowledge(slug);
+  const insights = getKnowledgeInsights(slug);
+  if (!insights) notFound();
 
-  if (!knowledge) {
-    notFound();
-  }
+  const knowledge           = insights.record;
+  const relationshipSummary = insights.relationships;
+  const qualityProfile      = insights.quality ?? undefined;
+  const discoverMoreArticles = insights.discovery.academyArticles.map((article) => ({
+    slug:     article.slug,
+    title:    article.title,
+    category: article.category,
+    readTime: article.readTime,
+  }));
+
+  // getSimilarFragrances is retained: KnowledgeDiscovery.similarFragrances discards
+  // ScoreBreakdown, which deriveSimilarityReasons and RecommendationCard require.
+  const similarFragrances = getSimilarFragrances(knowledge, { count: 3 });
 
   const baseUrl = process.env.NEXT_PUBLIC_WEBSITE_URL ?? "";
   const imagePath = normalizeImagePath(knowledge.images["10ml"]);
@@ -117,19 +121,6 @@ export default async function ProductPage({
       availability: "https://schema.org/InStock",
     })),
   };
-
-  const pdpIndex            = buildIndex(mkcCatalogue);
-  const relationshipSummary = getRelationshipSummary(knowledge, pdpIndex);
-
-  const discoverMoreArticles = recommendAcademyArticles(knowledge).map((article) => ({
-    slug: article.slug,
-    title: article.title,
-    category: article.category,
-    readTime: article.readTime,
-  }));
-
-  const similarFragrances = getSimilarFragrances(knowledge, { count: 3 });
-  const qualityProfile    = getKnowledgeQuality(slug);
 
   return (
     <>

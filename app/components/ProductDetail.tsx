@@ -13,7 +13,7 @@ import FragranceWardrobe from "./FragranceWardrobe";
 import { mkcCatalogue } from "../lib/mkc/catalogue";
 import { generateWhyYoullLikeIt } from "../lib/mkc/merchandising";
 import type { FragranceKnowledge } from "../lib/mkc/types";
-import type { RelationshipSummary } from "../lib/mkc/graph";
+import type { KnowledgeRelationships } from "../lib/intelligence";
 import type { SimilarityResult } from "../lib/discovery/types";
 import {
   trackProductView,
@@ -50,7 +50,7 @@ export default function ProductDetail({
   knowledge: FragranceKnowledge;
   discoverMoreArticles?: DiscoverMoreArticle[];
   similarFragrances?: SimilarityResult[];
-  relationshipSummary?: RelationshipSummary;
+  relationshipSummary?: KnowledgeRelationships;
   qualityProfile?: KnowledgeQualityProfile;
 }) {
   const [selectedSize, setSelectedSize] =
