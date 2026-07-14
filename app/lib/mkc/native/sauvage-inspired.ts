@@ -86,6 +86,7 @@ export const sauvageInspired: FragranceKnowledge = {
   // ── Relationships ─────────────────────────────────────────────────────────────
   relationships: {
     evolutions: ["sauvage-elixir-inspired"],
+    wardrobePartners: ["afternoon-swim-inspired"],
   },
 
   // ── Intelligence ─────────────────────────────────────────────────────────────

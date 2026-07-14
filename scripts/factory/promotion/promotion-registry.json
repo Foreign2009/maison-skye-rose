@@ -1,0 +1,20 @@
+{
+  "version": "1.0",
+  "records": [
+    {
+      "slug": "afternoon-swim-inspired",
+      "name": "Afternoon Swim Inspired",
+      "collection": "Skye",
+      "operator": "Adi",
+      "reviewedBy": "Adi",
+      "status": "promoted",
+      "startedAt": "2026-07-14T17:33:57.701Z",
+      "completedAt": "2026-07-14T17:34:26.266Z",
+      "nativePath": "app/lib/mkc/native/afternoon-swim-inspired.ts",
+      "validationStatus": "PASS",
+      "buildResult": "pass",
+      "durationMs": 28566,
+      "error": null
+    }
+  ]
+}

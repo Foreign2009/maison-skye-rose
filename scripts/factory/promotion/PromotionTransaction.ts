@@ -23,6 +23,9 @@ import path from "path";
 import { spawnSync } from "child_process";
 import { nanoid } from "nanoid";
 
+import { synchronizeForPromotion } from "../graph/RelationshipSynchronizer";
+import type { SyncedFile } from "../graph/RelationshipSynchronizer";
+
 import { findRecord, updateRecord } from "../review/ReviewRegistry";
 import { logReviewAction } from "../review/ReviewLogger";
 import {
@@ -111,6 +114,7 @@ interface Backup {
   nativePath:    string;
   nativeContent: string | null;   // null = file did not exist before
   indexContent:  string;
+  syncedFiles:   SyncedFile[];    // native files modified by relationship sync
 }
 
 function rollback(backup: Backup, slug: string, symbol: string): void {
@@ -122,6 +126,11 @@ function rollback(backup: Backup, slug: string, symbol: string): void {
     if (existsSync(backup.nativePath)) unlinkSync(backup.nativePath);
   } else {
     writeFileSync(backup.nativePath, backup.nativeContent, "utf-8");
+  }
+
+  // Restore native records modified by relationship sync
+  for (const f of backup.syncedFiles) {
+    writeFileSync(f.path, f.originalContent, "utf-8");
   }
 }
 
@@ -194,6 +203,7 @@ export async function promoteSingle(
     nativePath,
     nativeContent: existsSync(nativePath) ? readFileSync(nativePath, "utf-8") : null,
     indexContent:  readFileSync(NATIVE_IDX, "utf-8"),
+    syncedFiles:   [],
   };
 
   // ── Register in-progress ──────────────────────────────────────────────────
@@ -270,6 +280,17 @@ export async function promoteSingle(
       message,
     };
   };
+
+  // ── 7.5 Relationship sync ─────────────────────────────────────────────────
+  // Adds reciprocal edges to referenced native records before validation runs.
+  const syncResult = synchronizeForPromotion(slug, draftContent, NATIVE_DIR);
+  backup.syncedFiles = syncResult.modifiedFiles;
+  if (syncResult.reciprocalsAdded.length > 0) {
+    logPromotionAction(
+      "relationships_synced", slug, operator,
+      `reciprocals:${syncResult.reciprocalsAdded.length}  files:${syncResult.modifiedFiles.length}`,
+    );
+  }
 
   // ── 8. Validate ───────────────────────────────────────────────────────────
   const validateResult = runValidate();

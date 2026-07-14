@@ -83,6 +83,7 @@ export const aquaDiGioInspired: FragranceKnowledge = {
   // ── Relationships ─────────────────────────────────────────────────────────────
   relationships: {
     evolutions: ["acqua-di-gio-profondo-inspired", "acqua-di-gio-parfum-inspired"],
+    alternatives: ["afternoon-swim-inspired"],
   },
 
   // ── Intelligence ─────────────────────────────────────────────────────────────

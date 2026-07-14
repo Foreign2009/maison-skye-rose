@@ -17,6 +17,8 @@
     "mkc:review:report": "npx tsx scripts/factory/review/index.ts --report",
     "mkc:promote": "npx tsx scripts/factory/promotion/index.ts",
     "mkc:promote:report": "npx tsx scripts/factory/promotion/index.ts --report",
+    "mkc:graph": "npx tsx scripts/factory/graph/index.ts",
+    "mkc:graph:report": "npx tsx scripts/factory/graph/index.ts --report",
     "mkc:dashboard": "npx tsx scripts/factory/dashboard/index.ts",
     "mkc:dashboard:json": "npx tsx scripts/factory/dashboard/index.ts --json",
     "mkc:lifecycle": "npx tsx scripts/factory/lifecycle/index.ts",

@@ -80,6 +80,11 @@ export const imaginationInspired: FragranceKnowledge = {
     "choosing-your-season-scent",
   ],
 
+  // ── Relationships ─────────────────────────────────────────────────────────────
+  relationships: {
+    alternatives: ["afternoon-swim-inspired"],
+  },
+
   // ── Intelligence ─────────────────────────────────────────────────────────────
   // Fresh through elegance rather than energy — compare Invictus (freshness:4, intensity:3).
   // Shares freshness:4 but intensity:2 confirms intimate, close-wearing character.

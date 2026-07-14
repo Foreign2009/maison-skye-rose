@@ -938,6 +938,13 @@
       "slug": "blanche-bete-inspired",
       "reviewer": "Adi",
       "details": "[editorial] subtitle 'Soft Luxury' duplicates signatureStyle entry exactly — minor naming redundancy"
+    },
+    {
+      "timestamp": "2026-07-14T17:34:26.270Z",
+      "action": "promoted",
+      "slug": "afternoon-swim-inspired",
+      "reviewer": "Adi",
+      "details": "promotionId:rvAO7AkVpSmK  nativePath:app/lib/mkc/native/afternoon-swim-inspired.ts"
     }
   ]
 }
