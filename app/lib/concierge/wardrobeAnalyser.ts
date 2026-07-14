@@ -14,7 +14,7 @@
 
 import { mkcCatalogue } from "../mkc/catalogue";
 import type { FragranceKnowledge } from "../mkc/types";
-import { buildIndex, getRelationshipSummary } from "../mkc/graph";
+import { getRelatedKnowledge } from "../intelligence";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -69,10 +69,6 @@ const OCCASION_GROUPS: Array<{ label: string; keywords: string[] }> = [
   { label: "Formal",     keywords: ["wedding", "formal", "gala", "black tie"] },
   { label: "Outdoor",    keywords: ["outdoor", "beach", "vacation", "holiday", "travel"] },
 ];
-
-// ── Graph index (built once at server start) ──────────────────────────────────
-
-const mkcIndex = buildIndex(mkcCatalogue);
 
 // ── Name resolution ───────────────────────────────────────────────────────────
 
@@ -257,19 +253,20 @@ export function analyseWardrobe(names: string[]): WardrobeAnalysis | null {
   const missingPartners:   string[] = [];
 
   for (const k of resolved) {
-    const summary = getRelationshipSummary(k, mkcIndex);
+    const relationships = getRelatedKnowledge(k.slug);
+    if (!relationships) continue;
 
     // Completed evolution pair: own both this record and its predecessor
-    if (summary.evolutionOf && ownedSlugs.has(summary.evolutionOf.slug)) {
-      const pairKey = [k.slug, summary.evolutionOf.slug].sort().join("+");
+    if (relationships.evolutionOf && ownedSlugs.has(relationships.evolutionOf.slug)) {
+      const pairKey = [k.slug, relationships.evolutionOf.slug].sort().join("+");
       if (!addedPairKeys.has(pairKey)) {
         addedPairKeys.add(pairKey);
-        completedPairs.push(`${summary.evolutionOf.name} + ${k.name} (evolution line)`);
+        completedPairs.push(`${relationships.evolutionOf.name} + ${k.name} (evolution line)`);
       }
     }
 
     // Completed wardrobe partner pair: own both this record and a partner
-    for (const partner of summary.wardrobePartners) {
+    for (const partner of relationships.wardrobePartners) {
       if (ownedSlugs.has(partner.slug)) {
         const pairKey = [k.slug, partner.slug].sort().join("+");
         if (!addedPairKeys.has(pairKey)) {
@@ -280,14 +277,14 @@ export function analyseWardrobe(names: string[]): WardrobeAnalysis | null {
     }
 
     // Missing evolutions: own the predecessor, not yet the evolution
-    for (const evo of summary.evolutions) {
+    for (const evo of relationships.evolutions) {
       if (!ownedSlugs.has(evo.slug)) {
         missingEvolutions.push(evo.name);
       }
     }
 
     // Missing wardrobe partners: own one side, not the other
-    for (const partner of summary.wardrobePartners) {
+    for (const partner of relationships.wardrobePartners) {
       if (!ownedSlugs.has(partner.slug)) {
         missingPartners.push(partner.name);
       }

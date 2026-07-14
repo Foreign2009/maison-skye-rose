@@ -13,10 +13,10 @@ import type { FragranceKnowledge } from "../mkc/types";
 import type { AcademyArticle }     from "../academy/types";
 import type { ConversationState, ConversationIntent, ConversationProfile, RefinementState, ExplorationTarget } from "./types";
 import type { ConversationPlan }   from "./conversationPlanner";
-import { catalogueMaps, getCurrentSeason } from "../discovery";
-import { computeWardrobe }                 from "../mkc/wardrobeEngine";
-import { getRelationshipSummary }          from "../mkc/graph";
-import { getKnowledgeQuality }             from "../mkc/knowledgeQuality";
+import { getCurrentSeason }                         from "../discovery";
+import { computeWardrobe }                          from "../mkc/wardrobeEngine";
+import { getKnowledgeQuality }                      from "../mkc/knowledgeQuality";
+import { getRelatedKnowledge, getKnowledgeSummary } from "../intelligence";
 import { analyseWardrobe }                 from "./wardrobeAnalyser";
 import { planCollection }                  from "./collectionPlanner";
 
@@ -48,20 +48,20 @@ function buildConversationContextSection(state: ConversationState): PromptSectio
 
   if ((state.lastRecommendationSlugs ?? []).length > 0) {
     const names = (state.lastRecommendationSlugs ?? [])
-      .map((slug) => catalogueMaps.bySlug.get(slug)?.name ?? slug)
+      .map((slug) => getKnowledgeSummary(slug)?.name ?? slug)
       .slice(0, 3)
       .join(", ");
     parts.push(`Previously recommended: ${names}`);
   }
 
   if (state.selectedSlug) {
-    const name = catalogueMaps.bySlug.get(state.selectedSlug)?.name;
+    const name = getKnowledgeSummary(state.selectedSlug)?.name;
     if (name) parts.push(`Customer is currently focused on: ${name}`);
   }
 
   if (state.comparisonSlugs && state.comparisonSlugs.length >= 2) {
     const names = state.comparisonSlugs
-      .map((s) => catalogueMaps.bySlug.get(s)?.name ?? s)
+      .map((s) => getKnowledgeSummary(s)?.name ?? s)
       .join(" vs ");
     parts.push(`Active comparison: ${names}`);
   }
@@ -120,7 +120,7 @@ function buildPreviousRecommendationsSection(
 
   const recs = slugs
     .map((slug, i) => {
-      const k = retrievalFragrances.find((f) => f.slug === slug) ?? catalogueMaps.bySlug.get(slug);
+      const k = retrievalFragrances.find((f) => f.slug === slug) ?? getKnowledgeSummary(slug);
       return k ? `${i + 1}. ${k.name} [slug: ${k.slug}] — ${k.family.join(", ")}` : null;
     })
     .filter((r): r is string => !!r);
@@ -131,14 +131,14 @@ function buildPreviousRecommendationsSection(
 }
 
 function buildRelationshipBlock(k: FragranceKnowledge): string | null {
-  const summary = getRelationshipSummary(k, catalogueMaps.bySlug);
-  if (!summary.hasRelationships) return null;
+  const relationships = getRelatedKnowledge(k.slug);
+  if (!relationships?.hasRelationships) return null;
 
   const parts: string[] = [];
-  if (summary.evolutionOf)              parts.push(`   • Evolved from: ${summary.evolutionOf.name}`);
-  if (summary.evolutions.length > 0)    parts.push(`   • Evolution: ${summary.evolutions.map((r) => r.name).join(", ")}`);
-  if (summary.alternatives.length > 0)  parts.push(`   • Alternative: ${summary.alternatives.map((r) => r.name).join(", ")}`);
-  if (summary.wardrobePartners.length > 0) parts.push(`   • Wardrobe partner: ${summary.wardrobePartners.map((r) => r.name).join(", ")}`);
+  if (relationships.evolutionOf)                   parts.push(`   • Evolved from: ${relationships.evolutionOf.name}`);
+  if (relationships.evolutions.length > 0)         parts.push(`   • Evolution: ${relationships.evolutions.map((r) => r.name).join(", ")}`);
+  if (relationships.alternatives.length > 0)       parts.push(`   • Alternative: ${relationships.alternatives.map((r) => r.name).join(", ")}`);
+  if (relationships.wardrobePartners.length > 0)   parts.push(`   • Wardrobe partner: ${relationships.wardrobePartners.map((r) => r.name).join(", ")}`);
 
   if (parts.length === 0) return null;
   return `   Relationships:\n${parts.join("\n")}`;
