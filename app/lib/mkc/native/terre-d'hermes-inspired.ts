@@ -80,6 +80,11 @@ export const terreDHermesInspired: FragranceKnowledge = {
     "what-makes-a-signature-scent",
   ],
 
+  // ── Relationships ─────────────────────────────────────────────────────────────
+  relationships: {
+    alternatives: ["creed-green-irish-tweed-inspired"],
+  },
+
   // ── Intelligence ─────────────────────────────────────────────────────────────
   sweetness:   1,
   freshness:   3,

@@ -1,0 +1,116 @@
+// ═════════════════════════════════════════════════════════════════
+// FACTORY DRAFT — love-don't-be-shy-inspired
+// ─────────────────────────────────────────────────────────────────
+// Generated:         2026-07-13T18:30:41.913Z
+// Factory version:   0.5.0
+// Prompt versions:   CompositionProducer@1.0.0  EditorialProducer@1.0.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0
+// Validation status: PASS  [0 error(s), 0 warning(s)]
+// Projected KQ tier: (not available — requires Intelligence Producer)
+// ─────────────────────────────────────────────────────────────────
+// REVIEW CHECKLIST
+//   □ Notes pyramid verified (≥ 2 per tier, no cross-tier duplicates)
+//   □ Description reviewed in Maison editorial voice
+//   □ Vibe tags meet minimum of 3 (from approved vocabulary)
+//   □ recommendedFor has minimum of 2 persona statements
+//   □ All FACTORY_ERROR markers resolved
+//   □ All FACTORY_WARN markers reviewed
+//   □ Relationship suggestions reviewed (see footer)
+//   □ npm run mkc:validate passes before promotion
+// ═════════════════════════════════════════════════════════════════
+
+import type { FragranceKnowledge } from "../types";
+
+export const loveDontBeShyInspired: FragranceKnowledge = {
+  // ── Identity ──────────────────────────────────────────────────────────────────
+  id            : "love-don't-be-shy-inspired",
+  slug          : "love-don't-be-shy-inspired",
+  brand         : "Maison Skye & Rose",
+  name          : "Love Don't Be Shy Inspired",
+  collection    : "Rose",
+  catalogVersion: "1.0",
+  status        : "active",
+
+  // ── Classification ────────────────────────────────────────────────────────────
+  gender        : "female",
+  family        : ["Gourmand", "Floral"],
+  scentCharacter: "Rich & Long Wearing",
+  projection    : "moderate",
+
+  // ── Composition ─────────────────────────────────────────────────────────────
+  profile       : "Marshmallow Floral",
+  season        : "Winter",
+  notes: {
+    top:   ["Marshmallow", "Pink Pepper", "Neroli"],
+    heart: ["Orange Blossom", "Rose Absolute", "Heliotrope"],
+    base:  ["Vanilla", "Tonka Bean", "Sandalwood"],
+  },
+  mood          : "Sweet and irresistible.",
+
+  // ── Discovery ───────────────────────────────────────────────────────────────
+  vibe          : [
+    "Sensual",
+    "Warm",
+    "Romantic",
+    "Soft",
+    "Luxurious",
+    "Irresistible",
+  ],
+  occasions     : ["Date Night", "Evening", "Weekend", "Formal"],
+  seasons       : ["Winter"],
+  signatureStyle: ["Gourmand Floral", "Soft Irresistibility", "Romance & Warmth"],
+  recommendedFor: [
+    "Women seeking a signature fragrance that balances sweetness with sophistication for intimate occasions and evenings.",
+    "Those who love gourmand fragrances but want floral elegance rather than pure dessert—comfort with depth.",
+    "Anyone drawn to rose fragrances that feel warm and enveloping rather than sharp or classical.",
+    "Women who want a fragrance that invites closeness and feels tactile, perfect for date nights and winter celebrations.",
+  ],
+
+  // ── Merchandising ───────────────────────────────────────────────────────────
+  prices: {
+    "5ml":  60,
+    "10ml": 100,
+    "30ml": 250,
+  },
+  images: {
+    "5ml":  "/images/pink-5ml.png",
+    "10ml": "/images/pink-10ml.png",
+    "30ml": "/images/glass-pink-30ml.png",
+  },
+  bestSeller    : true,
+  newArrival    : false,
+
+  // ── Education ───────────────────────────────────────────────────────────────
+  subtitle      : "Soft Irresistibility",
+  description   : "Opens with a dusted marshmallow sweetness and pink pepper's delicate bite, softening into rose absolute and orange blossom—a floral that exhales warmth rather than demands it. Vanilla and tonka bean anchor the composition in skin-soft comfort, creating a fragrance that feels like an intimate whisper rather than a declaration.",
+  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances", "choosing-your-season-scent"],
+  academyCategories: ["fragrance-families", "the-note-pyramid", "wear-and-application"],
+  educationTags : [
+    "gourmand",
+    "floral",
+    "marshmallow",
+    "rose",
+    "vanilla",
+    "tonka-bean",
+    "winter",
+    "date-night",
+    "feminine",
+    "long-wearing",
+  ],
+  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances"],
+
+  // ── Intelligence ────────────────────────────────────────────────────────────
+  // Approximated from profile + season. Calibrated by Intelligence Producer in P2.
+  sweetness     : 4,
+  freshness     : 3,
+  warmth        : 2,
+  intensity     : 4,
+  versatility   : 2,
+  popularity    : 10,
+
+  // ── Relationships ────────────────────────────────────────────────────────────
+  // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
+  relationships: {
+    alternatives:     ["delina-inspired"],
+    wardrobePartners: ["sauvage-inspired"],
+  },
+};

@@ -81,6 +81,11 @@ export const hacivatInspired: FragranceKnowledge = {
     "how-to-wear-fragrance",
   ],
 
+  // ── Relationships ─────────────────────────────────────────────────────────────
+  relationships: {
+    alternatives: ["erba-pura-inspired"],
+  },
+
   // ── Intelligence ─────────────────────────────────────────────────────────────
   sweetness:   2,
   freshness:   3,

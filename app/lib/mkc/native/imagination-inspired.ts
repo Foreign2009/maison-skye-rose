@@ -82,7 +82,7 @@ export const imaginationInspired: FragranceKnowledge = {
 
   // ── Relationships ─────────────────────────────────────────────────────────────
   relationships: {
-    alternatives: ["afternoon-swim-inspired"],
+    alternatives: ["afternoon-swim-inspired", "creed-green-irish-tweed-inspired", "l'immensite-inspired", "silver-mountain-water-inspired", "torino21-inspired"],
   },
 
   // ── Intelligence ─────────────────────────────────────────────────────────────

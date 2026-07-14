@@ -87,6 +87,12 @@ export const baccaratRouge540Inspired: FragranceKnowledge = {
     "how-to-wear-fragrance",
   ],
 
+  // ── Relationships ─────────────────────────────────────────────────────────────
+  relationships: {
+    wardrobePartners: ["alien-goddess-inspired", "kayali-vanilla-28-inspired", "kirke-overdose-inspired", "libre-inspired", "my-way-inspired", "oud-mood-inspired", "vanilla-28-inspired", "gentle-fluidity-gold-inspired", "gris-charnel-inspired", "haltane-inspired", "j'adore-inspired"],
+    alternatives: ["alien-inspired", "baccarat-rouge-540-extrait-inspired", "crystal-noir-inspired", "delina-exclusif-inspired", "libre-intense-inspired", "libre-le-parfum-inspired", "prada-paradoxe-inspired", "valentino-donna-born-in-roma-inspired", "guidance-inspired", "hibiscus-mahajad-inspired"],
+  },
+
   // ── Intelligence ─────────────────────────────────────────────────────────────
   // Luxury unisex amber reference — see docs/mkc-authoring-guide.md calibration anchors.
   // sweetness:3 and freshness:3 are both population mean — intentional.

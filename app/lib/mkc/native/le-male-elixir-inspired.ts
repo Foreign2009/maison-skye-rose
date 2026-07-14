@@ -80,6 +80,11 @@ export const leMaleElixirInspired: FragranceKnowledge = {
     "what-makes-a-signature-scent",
   ],
 
+  // ── Relationships ─────────────────────────────────────────────────────────────
+  relationships: {
+    alternatives: ["althair-inspired", "vanilla-28-inspired"],
+  },
+
   // ── Intelligence ─────────────────────────────────────────────────────────────
   // Honey sweetness reference for Wave 2. Occupies the sweetness:5 ceiling alongside
   // Ultra Male — different route (honey/iris/powdery vs pear/caramel/gourmand)

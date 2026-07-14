@@ -21,6 +21,1224 @@
       "slug": "afternoon-swim-inspired",
       "operator": "Adi",
       "details": "promotionId:rvAO7AkVpSmK  validation:PASS  nativePath:app/lib/mkc/native/afternoon-swim-inspired.ts"
+    },
+    {
+      "timestamp": "2026-07-14T17:37:47.577Z",
+      "action": "promotion_started",
+      "slug": "miss-dior-inspired",
+      "operator": "Adi",
+      "details": "symbol:missDiorInspired  reviewedBy:Adi"
+    },
+    {
+      "timestamp": "2026-07-14T17:37:47.582Z",
+      "action": "relationships_synced",
+      "slug": "miss-dior-inspired",
+      "operator": "Adi",
+      "details": "reciprocals:3  files:3"
+    },
+    {
+      "timestamp": "2026-07-14T17:38:13.748Z",
+      "action": "promotion_completed",
+      "slug": "miss-dior-inspired",
+      "operator": "Adi",
+      "details": "promotionId:R_u7_u_CCQD0  validation:PASS  nativePath:app/lib/mkc/native/miss-dior-inspired.ts"
+    },
+    {
+      "timestamp": "2026-07-14T17:38:13.751Z",
+      "action": "promotion_started",
+      "slug": "alien-goddess-inspired",
+      "operator": "Adi",
+      "details": "symbol:alienGoddessInspired  reviewedBy:Adi"
+    },
+    {
+      "timestamp": "2026-07-14T17:38:13.754Z",
+      "action": "relationships_synced",
+      "slug": "alien-goddess-inspired",
+      "operator": "Adi",
+      "details": "reciprocals:2  files:2"
+    },
+    {
+      "timestamp": "2026-07-14T17:38:42.703Z",
+      "action": "promotion_completed",
+      "slug": "alien-goddess-inspired",
+      "operator": "Adi",
+      "details": "promotionId:3jCF72zYi-5d  validation:PASS  nativePath:app/lib/mkc/native/alien-goddess-inspired.ts"
+    },
+    {
+      "timestamp": "2026-07-14T17:38:42.707Z",
+      "action": "promotion_started",
+      "slug": "alien-inspired",
+      "operator": "Adi",
+      "details": "symbol:alienInspired  reviewedBy:Adi"
+    },
+    {
+      "timestamp": "2026-07-14T17:38:42.710Z",
+      "action": "relationships_synced",
+      "slug": "alien-inspired",
+      "operator": "Adi",
+      "details": "reciprocals:1  files:1"
+    },
+    {
+      "timestamp": "2026-07-14T17:39:11.273Z",
+      "action": "promotion_completed",
+      "slug": "alien-inspired",
+      "operator": "Adi",
+      "details": "promotionId:NwQpy7UrWN5N  validation:PASS  nativePath:app/lib/mkc/native/alien-inspired.ts"
+    },
+    {
+      "timestamp": "2026-07-14T17:39:11.275Z",
+      "action": "promotion_started",
+      "slug": "althair-inspired",
+      "operator": "Adi",
+      "details": "symbol:althairInspired  reviewedBy:Adi"
+    },
+    {
+      "timestamp": "2026-07-14T17:39:11.280Z",
+      "action": "relationships_synced",
+      "slug": "althair-inspired",
+      "operator": "Adi",
+      "details": "reciprocals:4  files:4"
+    },
+    {
+      "timestamp": "2026-07-14T17:39:41.065Z",
+      "action": "promotion_completed",
+      "slug": "althair-inspired",
+      "operator": "Adi",
+      "details": "promotionId:soTttz9vBcma  validation:PASS  nativePath:app/lib/mkc/native/althair-inspired.ts"
+    },
+    {
+      "timestamp": "2026-07-14T17:39:41.067Z",
+      "action": "promotion_started",
+      "slug": "ani-inspired",
+      "operator": "Adi",
+      "details": "symbol:aniInspired  reviewedBy:Adi"
+    },
+    {
+      "timestamp": "2026-07-14T17:39:41.071Z",
+      "action": "relationships_synced",
+      "slug": "ani-inspired",
+      "operator": "Adi",
+      "details": "reciprocals:4  files:4"
+    },
+    {
+      "timestamp": "2026-07-14T17:40:08.302Z",
+      "action": "promotion_completed",
+      "slug": "ani-inspired",
+      "operator": "Adi",
+      "details": "promotionId:WpKNG1a5avRS  validation:PASS  nativePath:app/lib/mkc/native/ani-inspired.ts"
+    },
+    {
+      "timestamp": "2026-07-14T17:40:08.304Z",
+      "action": "promotion_started",
+      "slug": "arabians-tonka-inspired",
+      "operator": "Adi",
+      "details": "symbol:arabiansTonkaInspired  reviewedBy:Adi"
+    },
+    {
+      "timestamp": "2026-07-14T17:40:08.308Z",
+      "action": "relationships_synced",
+      "slug": "arabians-tonka-inspired",
+      "operator": "Adi",
+      "details": "reciprocals:3  files:3"
+    },
+    {
+      "timestamp": "2026-07-14T17:40:31.513Z",
+      "action": "promotion_completed",
+      "slug": "arabians-tonka-inspired",
+      "operator": "Adi",
+      "details": "promotionId:edqsV92_8-gI  validation:PASS  nativePath:app/lib/mkc/native/arabians-tonka-inspired.ts"
+    },
+    {
+      "timestamp": "2026-07-14T17:40:31.516Z",
+      "action": "promotion_started",
+      "slug": "armani-si-inspired",
+      "operator": "Adi",
+      "details": "symbol:armaniSiInspired  reviewedBy:Adi"
+    },
+    {
+      "timestamp": "2026-07-14T17:40:31.520Z",
+      "action": "relationships_synced",
+      "slug": "armani-si-inspired",
+      "operator": "Adi",
+      "details": "reciprocals:3  files:3"
+    },
+    {
+      "timestamp": "2026-07-14T17:40:56.309Z",
+      "action": "promotion_completed",
+      "slug": "armani-si-inspired",
+      "operator": "Adi",
+      "details": "promotionId:lWQaIBsbYDGk  validation:PASS  nativePath:app/lib/mkc/native/armani-si-inspired.ts"
+    },
+    {
+      "timestamp": "2026-07-14T17:40:56.312Z",
+      "action": "promotion_started",
+      "slug": "baccarat-rouge-540-extrait-inspired",
+      "operator": "Adi",
+      "details": "symbol:baccaratRouge540ExtraitInspired  reviewedBy:Adi"
+    },
+    {
+      "timestamp": "2026-07-14T17:40:56.316Z",
+      "action": "relationships_synced",
+      "slug": "baccarat-rouge-540-extrait-inspired",
+      "operator": "Adi",
+      "details": "reciprocals:3  files:3"
+    },
+    {
+      "timestamp": "2026-07-14T17:41:20.309Z",
+      "action": "promotion_completed",
+      "slug": "baccarat-rouge-540-extrait-inspired",
+      "operator": "Adi",
+      "details": "promotionId:mDrphIq9cd8Z  validation:PASS  nativePath:app/lib/mkc/native/baccarat-rouge-540-extrait-inspired.ts"
+    },
+    {
+      "timestamp": "2026-07-14T17:41:20.311Z",
+      "action": "promotion_started",
+      "slug": "black-opium-inspired",
+      "operator": "Adi",
+      "details": "symbol:blackOpiumInspired  reviewedBy:Adi"
+    },
+    {
+      "timestamp": "2026-07-14T17:41:20.314Z",
+      "action": "relationships_synced",
+      "slug": "black-opium-inspired",
+      "operator": "Adi",
+      "details": "reciprocals:3  files:3"
+    },
+    {
+      "timestamp": "2026-07-14T17:41:45.390Z",
+      "action": "promotion_completed",
+      "slug": "black-opium-inspired",
+      "operator": "Adi",
+      "details": "promotionId:CF2DajIliEBF  validation:PASS  nativePath:app/lib/mkc/native/black-opium-inspired.ts"
+    },
+    {
+      "timestamp": "2026-07-14T17:41:45.392Z",
+      "action": "promotion_started",
+      "slug": "blanche-bete-inspired",
+      "operator": "Adi",
+      "details": "symbol:blancheBeteInspired  reviewedBy:Adi"
+    },
+    {
+      "timestamp": "2026-07-14T17:41:45.395Z",
+      "action": "relationships_synced",
+      "slug": "blanche-bete-inspired",
+      "operator": "Adi",
+      "details": "reciprocals:2  files:2"
+    },
+    {
+      "timestamp": "2026-07-14T17:42:09.105Z",
+      "action": "promotion_completed",
+      "slug": "blanche-bete-inspired",
+      "operator": "Adi",
+      "details": "promotionId:dQP2_E3-C-l9  validation:PASS  nativePath:app/lib/mkc/native/blanche-bete-inspired.ts"
+    },
+    {
+      "timestamp": "2026-07-14T17:42:09.108Z",
+      "action": "promotion_started",
+      "slug": "burberry-goddess-inspired",
+      "operator": "Adi",
+      "details": "symbol:burberryGoddessInspired  reviewedBy:Adi"
+    },
+    {
+      "timestamp": "2026-07-14T17:42:09.112Z",
+      "action": "relationships_synced",
+      "slug": "burberry-goddess-inspired",
+      "operator": "Adi",
+      "details": "reciprocals:2  files:2"
+    },
+    {
+      "timestamp": "2026-07-14T17:42:35.336Z",
+      "action": "promotion_completed",
+      "slug": "burberry-goddess-inspired",
+      "operator": "Adi",
+      "details": "promotionId:KtpJwJmiYCDM  validation:PASS  nativePath:app/lib/mkc/native/burberry-goddess-inspired.ts"
+    },
+    {
+      "timestamp": "2026-07-14T17:42:35.345Z",
+      "action": "promotion_started",
+      "slug": "burberry-her-inspired",
+      "operator": "Adi",
+      "details": "symbol:burberryHerInspired  reviewedBy:Adi"
+    },
+    {
+      "timestamp": "2026-07-14T17:42:35.347Z",
+      "action": "relationships_synced",
+      "slug": "burberry-her-inspired",
+      "operator": "Adi",
+      "details": "reciprocals:1  files:1"
+    },
+    {
+      "timestamp": "2026-07-14T17:43:01.505Z",
+      "action": "promotion_completed",
+      "slug": "burberry-her-inspired",
+      "operator": "Adi",
+      "details": "promotionId:aVMStvgC-yGK  validation:PASS  nativePath:app/lib/mkc/native/burberry-her-inspired.ts"
+    },
+    {
+      "timestamp": "2026-07-14T17:43:01.507Z",
+      "action": "promotion_started",
+      "slug": "carlisle-inspired",
+      "operator": "Adi",
+      "details": "symbol:carlisleInspired  reviewedBy:Adi"
+    },
+    {
+      "timestamp": "2026-07-14T17:43:01.511Z",
+      "action": "relationships_synced",
+      "slug": "carlisle-inspired",
+      "operator": "Adi",
+      "details": "reciprocals:4  files:4"
+    },
+    {
+      "timestamp": "2026-07-14T17:43:28.133Z",
+      "action": "promotion_completed",
+      "slug": "carlisle-inspired",
+      "operator": "Adi",
+      "details": "promotionId:YYwN276d6hLP  validation:PASS  nativePath:app/lib/mkc/native/carlisle-inspired.ts"
+    },
+    {
+      "timestamp": "2026-07-14T17:43:28.137Z",
+      "action": "promotion_started",
+      "slug": "chance-eau-tendre-inspired",
+      "operator": "Adi",
+      "details": "symbol:chanceEauTendreInspired  reviewedBy:Adi"
+    },
+    {
+      "timestamp": "2026-07-14T17:43:28.140Z",
+      "action": "relationships_synced",
+      "slug": "chance-eau-tendre-inspired",
+      "operator": "Adi",
+      "details": "reciprocals:3  files:3"
+    },
+    {
+      "timestamp": "2026-07-14T17:43:54.570Z",
+      "action": "promotion_completed",
+      "slug": "chance-eau-tendre-inspired",
+      "operator": "Adi",
+      "details": "promotionId:b61wYLbkck0f  validation:PASS  nativePath:app/lib/mkc/native/chance-eau-tendre-inspired.ts"
+    },
+    {
+      "timestamp": "2026-07-14T17:43:54.574Z",
+      "action": "promotion_started",
+      "slug": "coco-mademoiselle-inspired",
+      "operator": "Adi",
+      "details": "symbol:cocoMademoiselleInspired  reviewedBy:Adi"
+    },
+    {
+      "timestamp": "2026-07-14T17:43:54.576Z",
+      "action": "relationships_synced",
+      "slug": "coco-mademoiselle-inspired",
+      "operator": "Adi",
+      "details": "reciprocals:2  files:2"
+    },
+    {
+      "timestamp": "2026-07-14T17:44:21.121Z",
+      "action": "promotion_completed",
+      "slug": "coco-mademoiselle-inspired",
+      "operator": "Adi",
+      "details": "promotionId:MZJHh4oQrBAh  validation:PASS  nativePath:app/lib/mkc/native/coco-mademoiselle-inspired.ts"
+    },
+    {
+      "timestamp": "2026-07-14T17:44:21.123Z",
+      "action": "promotion_started",
+      "slug": "creed-green-irish-tweed-inspired",
+      "operator": "Adi",
+      "details": "symbol:creedGreenIrishTweedInspired  reviewedBy:Adi"
+    },
+    {
+      "timestamp": "2026-07-14T17:44:21.126Z",
+      "action": "relationships_synced",
+      "slug": "creed-green-irish-tweed-inspired",
+      "operator": "Adi",
+      "details": "reciprocals:3  files:3"
+    },
+    {
+      "timestamp": "2026-07-14T17:44:47.701Z",
+      "action": "promotion_completed",
+      "slug": "creed-green-irish-tweed-inspired",
+      "operator": "Adi",
+      "details": "promotionId:QEc-GGwW8Wlw  validation:PASS  nativePath:app/lib/mkc/native/creed-green-irish-tweed-inspired.ts"
+    },
+    {
+      "timestamp": "2026-07-14T17:44:47.704Z",
+      "action": "promotion_started",
+      "slug": "crystal-noir-inspired",
+      "operator": "Adi",
+      "details": "symbol:crystalNoirInspired  reviewedBy:Adi"
+    },
+    {
+      "timestamp": "2026-07-14T17:44:47.708Z",
+      "action": "relationships_synced",
+      "slug": "crystal-noir-inspired",
+      "operator": "Adi",
+      "details": "reciprocals:3  files:3"
+    },
+    {
+      "timestamp": "2026-07-14T17:45:14.002Z",
+      "action": "promotion_completed",
+      "slug": "crystal-noir-inspired",
+      "operator": "Adi",
+      "details": "promotionId:KMFumq83WG71  validation:PASS  nativePath:app/lib/mkc/native/crystal-noir-inspired.ts"
+    },
+    {
+      "timestamp": "2026-07-14T17:45:14.004Z",
+      "action": "promotion_started",
+      "slug": "delina-exclusif-inspired",
+      "operator": "Adi",
+      "details": "symbol:delinaExclusifInspired  reviewedBy:Adi"
+    },
+    {
+      "timestamp": "2026-07-14T17:45:14.007Z",
+      "action": "relationships_synced",
+      "slug": "delina-exclusif-inspired",
+      "operator": "Adi",
+      "details": "reciprocals:3  files:3"
+    },
+    {
+      "timestamp": "2026-07-14T17:45:40.653Z",
+      "action": "promotion_completed",
+      "slug": "delina-exclusif-inspired",
+      "operator": "Adi",
+      "details": "promotionId:GfFJPNIqXBls  validation:PASS  nativePath:app/lib/mkc/native/delina-exclusif-inspired.ts"
+    },
+    {
+      "timestamp": "2026-07-14T17:45:40.656Z",
+      "action": "promotion_started",
+      "slug": "erba-pura-inspired",
+      "operator": "Adi",
+      "details": "symbol:erbaPuraInspired  reviewedBy:Adi"
+    },
+    {
+      "timestamp": "2026-07-14T17:45:40.660Z",
+      "action": "relationships_synced",
+      "slug": "erba-pura-inspired",
+      "operator": "Adi",
+      "details": "reciprocals:5  files:5"
+    },
+    {
+      "timestamp": "2026-07-14T17:46:07.790Z",
+      "action": "promotion_completed",
+      "slug": "erba-pura-inspired",
+      "operator": "Adi",
+      "details": "promotionId:lTXP2CRBuwIh  validation:PASS  nativePath:app/lib/mkc/native/erba-pura-inspired.ts"
+    },
+    {
+      "timestamp": "2026-07-14T17:46:07.792Z",
+      "action": "promotion_started",
+      "slug": "flowerbomb-inspired",
+      "operator": "Adi",
+      "details": "symbol:flowerbombInspired  reviewedBy:Adi"
+    },
+    {
+      "timestamp": "2026-07-14T17:46:07.795Z",
+      "action": "relationships_synced",
+      "slug": "flowerbomb-inspired",
+      "operator": "Adi",
+      "details": "reciprocals:2  files:2"
+    },
+    {
+      "timestamp": "2026-07-14T17:46:32.995Z",
+      "action": "promotion_completed",
+      "slug": "flowerbomb-inspired",
+      "operator": "Adi",
+      "details": "promotionId:tMYH7WZRJ9pR  validation:PASS  nativePath:app/lib/mkc/native/flowerbomb-inspired.ts"
+    },
+    {
+      "timestamp": "2026-07-14T17:46:32.997Z",
+      "action": "promotion_started",
+      "slug": "gentle-fluidity-gold-inspired",
+      "operator": "Adi",
+      "details": "symbol:gentleFluidityGoldInspired  reviewedBy:Adi"
+    },
+    {
+      "timestamp": "2026-07-14T17:46:32.999Z",
+      "action": "relationships_synced",
+      "slug": "gentle-fluidity-gold-inspired",
+      "operator": "Adi",
+      "details": "reciprocals:1  files:1"
+    },
+    {
+      "timestamp": "2026-07-14T17:46:55.814Z",
+      "action": "promotion_rolled_back",
+      "slug": "gentle-fluidity-gold-inspired",
+      "operator": "Adi",
+      "details": "reason:npm run build returned non-zero exit code"
+    },
+    {
+      "timestamp": "2026-07-14T17:46:55.816Z",
+      "action": "promotion_started",
+      "slug": "good-girl-blush-inspired",
+      "operator": "Adi",
+      "details": "symbol:goodGirlBlushInspired  reviewedBy:Adi"
+    },
+    {
+      "timestamp": "2026-07-14T17:46:55.820Z",
+      "action": "relationships_synced",
+      "slug": "good-girl-blush-inspired",
+      "operator": "Adi",
+      "details": "reciprocals:2  files:2"
+    },
+    {
+      "timestamp": "2026-07-14T17:47:18.301Z",
+      "action": "promotion_rolled_back",
+      "slug": "good-girl-blush-inspired",
+      "operator": "Adi",
+      "details": "reason:npm run build returned non-zero exit code"
+    },
+    {
+      "timestamp": "2026-07-14T17:47:18.303Z",
+      "action": "promotion_started",
+      "slug": "good-girl-inspired",
+      "operator": "Adi",
+      "details": "symbol:goodGirlInspired  reviewedBy:Adi"
+    },
+    {
+      "timestamp": "2026-07-14T17:47:18.308Z",
+      "action": "relationships_synced",
+      "slug": "good-girl-inspired",
+      "operator": "Adi",
+      "details": "reciprocals:3  files:3"
+    },
+    {
+      "timestamp": "2026-07-14T17:47:40.656Z",
+      "action": "promotion_rolled_back",
+      "slug": "good-girl-inspired",
+      "operator": "Adi",
+      "details": "reason:npm run build returned non-zero exit code"
+    },
+    {
+      "timestamp": "2026-07-14T17:47:40.659Z",
+      "action": "promotion_started",
+      "slug": "gris-charnel-inspired",
+      "operator": "Adi",
+      "details": "symbol:grisCharnelInspired  reviewedBy:Adi"
+    },
+    {
+      "timestamp": "2026-07-14T17:47:40.664Z",
+      "action": "relationships_synced",
+      "slug": "gris-charnel-inspired",
+      "operator": "Adi",
+      "details": "reciprocals:4  files:4"
+    },
+    {
+      "timestamp": "2026-07-14T17:48:02.996Z",
+      "action": "promotion_rolled_back",
+      "slug": "gris-charnel-inspired",
+      "operator": "Adi",
+      "details": "reason:npm run build returned non-zero exit code"
+    },
+    {
+      "timestamp": "2026-07-14T17:48:03.010Z",
+      "action": "promotion_started",
+      "slug": "guidance-inspired",
+      "operator": "Adi",
+      "details": "symbol:guidanceInspired  reviewedBy:Adi"
+    },
+    {
+      "timestamp": "2026-07-14T17:48:03.013Z",
+      "action": "relationships_synced",
+      "slug": "guidance-inspired",
+      "operator": "Adi",
+      "details": "reciprocals:1  files:1"
+    },
+    {
+      "timestamp": "2026-07-14T17:48:25.147Z",
+      "action": "promotion_rolled_back",
+      "slug": "guidance-inspired",
+      "operator": "Adi",
+      "details": "reason:npm run build returned non-zero exit code"
+    },
+    {
+      "timestamp": "2026-07-14T17:48:25.149Z",
+      "action": "promotion_started",
+      "slug": "haltane-inspired",
+      "operator": "Adi",
+      "details": "symbol:haltaneInspired  reviewedBy:Adi"
+    },
+    {
+      "timestamp": "2026-07-14T17:48:25.152Z",
+      "action": "relationships_synced",
+      "slug": "haltane-inspired",
+      "operator": "Adi",
+      "details": "reciprocals:2  files:2"
+    },
+    {
+      "timestamp": "2026-07-14T17:48:47.354Z",
+      "action": "promotion_rolled_back",
+      "slug": "haltane-inspired",
+      "operator": "Adi",
+      "details": "reason:npm run build returned non-zero exit code"
+    },
+    {
+      "timestamp": "2026-07-14T17:48:47.356Z",
+      "action": "promotion_started",
+      "slug": "hibiscus-mahajad-inspired",
+      "operator": "Adi",
+      "details": "symbol:hibiscusMahajadInspired  reviewedBy:Adi"
+    },
+    {
+      "timestamp": "2026-07-14T17:48:47.359Z",
+      "action": "relationships_synced",
+      "slug": "hibiscus-mahajad-inspired",
+      "operator": "Adi",
+      "details": "reciprocals:1  files:1"
+    },
+    {
+      "timestamp": "2026-07-14T17:49:09.609Z",
+      "action": "promotion_rolled_back",
+      "slug": "hibiscus-mahajad-inspired",
+      "operator": "Adi",
+      "details": "reason:npm run build returned non-zero exit code"
+    },
+    {
+      "timestamp": "2026-07-14T17:49:09.611Z",
+      "action": "promotion_started",
+      "slug": "j'adore-inspired",
+      "operator": "Adi",
+      "details": "symbol:jadoreInspired  reviewedBy:Adi"
+    },
+    {
+      "timestamp": "2026-07-14T17:49:09.616Z",
+      "action": "relationships_synced",
+      "slug": "j'adore-inspired",
+      "operator": "Adi",
+      "details": "reciprocals:2  files:2"
+    },
+    {
+      "timestamp": "2026-07-14T17:49:32.981Z",
+      "action": "promotion_rolled_back",
+      "slug": "j'adore-inspired",
+      "operator": "Adi",
+      "details": "reason:npm run build returned non-zero exit code"
+    },
+    {
+      "timestamp": "2026-07-14T17:49:32.985Z",
+      "action": "promotion_started",
+      "slug": "kayali-vanilla-28-inspired",
+      "operator": "Adi",
+      "details": "symbol:kayaliVanilla28Inspired  reviewedBy:Adi"
+    },
+    {
+      "timestamp": "2026-07-14T17:49:32.989Z",
+      "action": "relationships_synced",
+      "slug": "kayali-vanilla-28-inspired",
+      "operator": "Adi",
+      "details": "reciprocals:2  files:2"
+    },
+    {
+      "timestamp": "2026-07-14T17:49:58.389Z",
+      "action": "promotion_completed",
+      "slug": "kayali-vanilla-28-inspired",
+      "operator": "Adi",
+      "details": "promotionId:geqi8RT-P51i  validation:PASS  nativePath:app/lib/mkc/native/kayali-vanilla-28-inspired.ts"
+    },
+    {
+      "timestamp": "2026-07-14T17:49:58.392Z",
+      "action": "promotion_started",
+      "slug": "kirke-overdose-inspired",
+      "operator": "Adi",
+      "details": "symbol:kirkeOverdoseInspired  reviewedBy:Adi"
+    },
+    {
+      "timestamp": "2026-07-14T17:49:58.395Z",
+      "action": "relationships_synced",
+      "slug": "kirke-overdose-inspired",
+      "operator": "Adi",
+      "details": "reciprocals:3  files:3"
+    },
+    {
+      "timestamp": "2026-07-14T17:50:25.765Z",
+      "action": "promotion_completed",
+      "slug": "kirke-overdose-inspired",
+      "operator": "Adi",
+      "details": "promotionId:mpAepHB1bqA3  validation:PASS  nativePath:app/lib/mkc/native/kirke-overdose-inspired.ts"
+    },
+    {
+      "timestamp": "2026-07-14T17:50:25.768Z",
+      "action": "promotion_started",
+      "slug": "l'immensite-inspired",
+      "operator": "Adi",
+      "details": "symbol:limmensiteInspired  reviewedBy:Adi"
+    },
+    {
+      "timestamp": "2026-07-14T17:50:25.775Z",
+      "action": "relationships_synced",
+      "slug": "l'immensite-inspired",
+      "operator": "Adi",
+      "details": "reciprocals:5  files:5"
+    },
+    {
+      "timestamp": "2026-07-14T17:50:52.430Z",
+      "action": "promotion_completed",
+      "slug": "l'immensite-inspired",
+      "operator": "Adi",
+      "details": "promotionId:iCPINi5P3GT3  validation:PASS  nativePath:app/lib/mkc/native/l'immensite-inspired.ts"
+    },
+    {
+      "timestamp": "2026-07-14T17:50:52.432Z",
+      "action": "promotion_started",
+      "slug": "la-vie-est-belle-inspired",
+      "operator": "Adi",
+      "details": "symbol:laVieEstBelleInspired  reviewedBy:Adi"
+    },
+    {
+      "timestamp": "2026-07-14T17:50:52.436Z",
+      "action": "relationships_synced",
+      "slug": "la-vie-est-belle-inspired",
+      "operator": "Adi",
+      "details": "reciprocals:3  files:3"
+    },
+    {
+      "timestamp": "2026-07-14T17:51:18.864Z",
+      "action": "promotion_completed",
+      "slug": "la-vie-est-belle-inspired",
+      "operator": "Adi",
+      "details": "promotionId:a6xAK8Q5w2Jk  validation:PASS  nativePath:app/lib/mkc/native/la-vie-est-belle-inspired.ts"
+    },
+    {
+      "timestamp": "2026-07-14T17:51:18.868Z",
+      "action": "promotion_started",
+      "slug": "libre-inspired",
+      "operator": "Adi",
+      "details": "symbol:libreInspired  reviewedBy:Adi"
+    },
+    {
+      "timestamp": "2026-07-14T17:51:18.874Z",
+      "action": "relationships_synced",
+      "slug": "libre-inspired",
+      "operator": "Adi",
+      "details": "reciprocals:2  files:2"
+    },
+    {
+      "timestamp": "2026-07-14T17:51:45.394Z",
+      "action": "promotion_completed",
+      "slug": "libre-inspired",
+      "operator": "Adi",
+      "details": "promotionId:1T0dzk-tXbTY  validation:PASS  nativePath:app/lib/mkc/native/libre-inspired.ts"
+    },
+    {
+      "timestamp": "2026-07-14T17:51:45.397Z",
+      "action": "promotion_started",
+      "slug": "libre-intense-inspired",
+      "operator": "Adi",
+      "details": "symbol:libreIntenseInspired  reviewedBy:Adi"
+    },
+    {
+      "timestamp": "2026-07-14T17:51:45.400Z",
+      "action": "relationships_synced",
+      "slug": "libre-intense-inspired",
+      "operator": "Adi",
+      "details": "reciprocals:3  files:3"
+    },
+    {
+      "timestamp": "2026-07-14T17:52:11.300Z",
+      "action": "promotion_completed",
+      "slug": "libre-intense-inspired",
+      "operator": "Adi",
+      "details": "promotionId:7S0Cm_n_M-RM  validation:PASS  nativePath:app/lib/mkc/native/libre-intense-inspired.ts"
+    },
+    {
+      "timestamp": "2026-07-14T17:52:11.303Z",
+      "action": "promotion_started",
+      "slug": "libre-le-parfum-inspired",
+      "operator": "Adi",
+      "details": "symbol:libreLeParfumInspired  reviewedBy:Adi"
+    },
+    {
+      "timestamp": "2026-07-14T17:52:11.306Z",
+      "action": "relationships_synced",
+      "slug": "libre-le-parfum-inspired",
+      "operator": "Adi",
+      "details": "reciprocals:1  files:1"
+    },
+    {
+      "timestamp": "2026-07-14T17:52:37.980Z",
+      "action": "promotion_completed",
+      "slug": "libre-le-parfum-inspired",
+      "operator": "Adi",
+      "details": "promotionId:4WK4b4F0yOlb  validation:PASS  nativePath:app/lib/mkc/native/libre-le-parfum-inspired.ts"
+    },
+    {
+      "timestamp": "2026-07-14T17:52:37.983Z",
+      "action": "promotion_started",
+      "slug": "love-don't-be-shy-inspired",
+      "operator": "Adi",
+      "details": "symbol:loveDontBeShyInspired  reviewedBy:Adi"
+    },
+    {
+      "timestamp": "2026-07-14T17:52:37.986Z",
+      "action": "relationships_synced",
+      "slug": "love-don't-be-shy-inspired",
+      "operator": "Adi",
+      "details": "reciprocals:2  files:2"
+    },
+    {
+      "timestamp": "2026-07-14T17:53:07.345Z",
+      "action": "promotion_completed",
+      "slug": "love-don't-be-shy-inspired",
+      "operator": "Adi",
+      "details": "promotionId:AKfDWB7cqNq5  validation:PASS  nativePath:app/lib/mkc/native/love-don't-be-shy-inspired.ts"
+    },
+    {
+      "timestamp": "2026-07-14T17:53:07.350Z",
+      "action": "promotion_started",
+      "slug": "mon-paris-inspired",
+      "operator": "Adi",
+      "details": "symbol:monParisInspired  reviewedBy:Adi"
+    },
+    {
+      "timestamp": "2026-07-14T17:53:07.353Z",
+      "action": "relationships_synced",
+      "slug": "mon-paris-inspired",
+      "operator": "Adi",
+      "details": "reciprocals:2  files:2"
+    },
+    {
+      "timestamp": "2026-07-14T17:53:34.983Z",
+      "action": "promotion_completed",
+      "slug": "mon-paris-inspired",
+      "operator": "Adi",
+      "details": "promotionId:pQiq110rYHkd  validation:PASS  nativePath:app/lib/mkc/native/mon-paris-inspired.ts"
+    },
+    {
+      "timestamp": "2026-07-14T17:53:34.986Z",
+      "action": "promotion_started",
+      "slug": "my-way-inspired",
+      "operator": "Adi",
+      "details": "symbol:myWayInspired  reviewedBy:Adi"
+    },
+    {
+      "timestamp": "2026-07-14T17:53:34.989Z",
+      "action": "relationships_synced",
+      "slug": "my-way-inspired",
+      "operator": "Adi",
+      "details": "reciprocals:2  files:2"
+    },
+    {
+      "timestamp": "2026-07-14T17:53:59.875Z",
+      "action": "promotion_completed",
+      "slug": "my-way-inspired",
+      "operator": "Adi",
+      "details": "promotionId:gj0GST30r-oL  validation:PASS  nativePath:app/lib/mkc/native/my-way-inspired.ts"
+    },
+    {
+      "timestamp": "2026-07-14T17:53:59.877Z",
+      "action": "promotion_started",
+      "slug": "ombre-nomade-inspired",
+      "operator": "Adi",
+      "details": "symbol:ombreNomadeInspired  reviewedBy:Adi"
+    },
+    {
+      "timestamp": "2026-07-14T17:53:59.884Z",
+      "action": "relationships_synced",
+      "slug": "ombre-nomade-inspired",
+      "operator": "Adi",
+      "details": "reciprocals:3  files:3"
+    },
+    {
+      "timestamp": "2026-07-14T17:54:27.031Z",
+      "action": "promotion_completed",
+      "slug": "ombre-nomade-inspired",
+      "operator": "Adi",
+      "details": "promotionId:sX9TJqMh7HXq  validation:PASS  nativePath:app/lib/mkc/native/ombre-nomade-inspired.ts"
+    },
+    {
+      "timestamp": "2026-07-14T17:54:27.034Z",
+      "action": "promotion_started",
+      "slug": "oud-for-greatness-inspired",
+      "operator": "Adi",
+      "details": "symbol:oudForGreatnessInspired  reviewedBy:Adi"
+    },
+    {
+      "timestamp": "2026-07-14T17:54:27.037Z",
+      "action": "relationships_synced",
+      "slug": "oud-for-greatness-inspired",
+      "operator": "Adi",
+      "details": "reciprocals:3  files:3"
+    },
+    {
+      "timestamp": "2026-07-14T17:54:52.996Z",
+      "action": "promotion_completed",
+      "slug": "oud-for-greatness-inspired",
+      "operator": "Adi",
+      "details": "promotionId:oz1YccbOcdwN  validation:PASS  nativePath:app/lib/mkc/native/oud-for-greatness-inspired.ts"
+    },
+    {
+      "timestamp": "2026-07-14T17:54:53.000Z",
+      "action": "promotion_started",
+      "slug": "oud-mood-inspired",
+      "operator": "Adi",
+      "details": "symbol:oudMoodInspired  reviewedBy:Adi"
+    },
+    {
+      "timestamp": "2026-07-14T17:54:53.002Z",
+      "action": "relationships_synced",
+      "slug": "oud-mood-inspired",
+      "operator": "Adi",
+      "details": "reciprocals:2  files:2"
+    },
+    {
+      "timestamp": "2026-07-14T17:55:19.984Z",
+      "action": "promotion_completed",
+      "slug": "oud-mood-inspired",
+      "operator": "Adi",
+      "details": "promotionId:Jxm-VV8XM-MV  validation:PASS  nativePath:app/lib/mkc/native/oud-mood-inspired.ts"
+    },
+    {
+      "timestamp": "2026-07-14T17:55:19.986Z",
+      "action": "promotion_started",
+      "slug": "pacific-chill-inspired",
+      "operator": "Adi",
+      "details": "symbol:pacificChillInspired  reviewedBy:Adi"
+    },
+    {
+      "timestamp": "2026-07-14T17:55:19.990Z",
+      "action": "relationships_synced",
+      "slug": "pacific-chill-inspired",
+      "operator": "Adi",
+      "details": "reciprocals:3  files:3"
+    },
+    {
+      "timestamp": "2026-07-14T17:55:47.078Z",
+      "action": "promotion_completed",
+      "slug": "pacific-chill-inspired",
+      "operator": "Adi",
+      "details": "promotionId:xlhZAAR7qNsX  validation:PASS  nativePath:app/lib/mkc/native/pacific-chill-inspired.ts"
+    },
+    {
+      "timestamp": "2026-07-14T17:55:47.080Z",
+      "action": "promotion_started",
+      "slug": "prada-paradoxe-inspired",
+      "operator": "Adi",
+      "details": "symbol:pradaParadoxeInspired  reviewedBy:Adi"
+    },
+    {
+      "timestamp": "2026-07-14T17:55:47.084Z",
+      "action": "relationships_synced",
+      "slug": "prada-paradoxe-inspired",
+      "operator": "Adi",
+      "details": "reciprocals:3  files:3"
+    },
+    {
+      "timestamp": "2026-07-14T17:56:15.157Z",
+      "action": "promotion_completed",
+      "slug": "prada-paradoxe-inspired",
+      "operator": "Adi",
+      "details": "promotionId:JwMrhALBUssn  validation:PASS  nativePath:app/lib/mkc/native/prada-paradoxe-inspired.ts"
+    },
+    {
+      "timestamp": "2026-07-14T17:56:15.160Z",
+      "action": "promotion_started",
+      "slug": "rolling-in-love-inspired",
+      "operator": "Adi",
+      "details": "symbol:rollingInLoveInspired  reviewedBy:Adi"
+    },
+    {
+      "timestamp": "2026-07-14T17:56:15.163Z",
+      "action": "relationships_synced",
+      "slug": "rolling-in-love-inspired",
+      "operator": "Adi",
+      "details": "reciprocals:2  files:2"
+    },
+    {
+      "timestamp": "2026-07-14T17:56:39.974Z",
+      "action": "promotion_completed",
+      "slug": "rolling-in-love-inspired",
+      "operator": "Adi",
+      "details": "promotionId:wTmtniA-VFuY  validation:PASS  nativePath:app/lib/mkc/native/rolling-in-love-inspired.ts"
+    },
+    {
+      "timestamp": "2026-07-14T17:56:39.976Z",
+      "action": "promotion_started",
+      "slug": "silver-mountain-water-inspired",
+      "operator": "Adi",
+      "details": "symbol:silverMountainWaterInspired  reviewedBy:Adi"
+    },
+    {
+      "timestamp": "2026-07-14T17:56:39.980Z",
+      "action": "relationships_synced",
+      "slug": "silver-mountain-water-inspired",
+      "operator": "Adi",
+      "details": "reciprocals:4  files:4"
+    },
+    {
+      "timestamp": "2026-07-14T17:57:06.152Z",
+      "action": "promotion_completed",
+      "slug": "silver-mountain-water-inspired",
+      "operator": "Adi",
+      "details": "promotionId:ZvrRPdqEw3Ti  validation:PASS  nativePath:app/lib/mkc/native/silver-mountain-water-inspired.ts"
+    },
+    {
+      "timestamp": "2026-07-14T17:57:06.155Z",
+      "action": "promotion_started",
+      "slug": "torino21-inspired",
+      "operator": "Adi",
+      "details": "symbol:torino21Inspired  reviewedBy:Adi"
+    },
+    {
+      "timestamp": "2026-07-14T17:57:06.159Z",
+      "action": "relationships_synced",
+      "slug": "torino21-inspired",
+      "operator": "Adi",
+      "details": "reciprocals:4  files:4"
+    },
+    {
+      "timestamp": "2026-07-14T17:57:34.940Z",
+      "action": "promotion_completed",
+      "slug": "torino21-inspired",
+      "operator": "Adi",
+      "details": "promotionId:emzZ6VQf5rJA  validation:PASS  nativePath:app/lib/mkc/native/torino21-inspired.ts"
+    },
+    {
+      "timestamp": "2026-07-14T17:57:34.944Z",
+      "action": "promotion_started",
+      "slug": "valentino-donna-born-in-roma-inspired",
+      "operator": "Adi",
+      "details": "symbol:valentinoDonnaBornInRomaInspired  reviewedBy:Adi"
+    },
+    {
+      "timestamp": "2026-07-14T17:57:34.947Z",
+      "action": "relationships_synced",
+      "slug": "valentino-donna-born-in-roma-inspired",
+      "operator": "Adi",
+      "details": "reciprocals:2  files:2"
+    },
+    {
+      "timestamp": "2026-07-14T17:58:02.751Z",
+      "action": "promotion_completed",
+      "slug": "valentino-donna-born-in-roma-inspired",
+      "operator": "Adi",
+      "details": "promotionId:ehsJ65UX9L48  validation:PASS  nativePath:app/lib/mkc/native/valentino-donna-born-in-roma-inspired.ts"
+    },
+    {
+      "timestamp": "2026-07-14T17:58:02.754Z",
+      "action": "promotion_started",
+      "slug": "vanilla-28-inspired",
+      "operator": "Adi",
+      "details": "symbol:vanilla28Inspired  reviewedBy:Adi"
+    },
+    {
+      "timestamp": "2026-07-14T17:58:02.758Z",
+      "action": "relationships_synced",
+      "slug": "vanilla-28-inspired",
+      "operator": "Adi",
+      "details": "reciprocals:3  files:3"
+    },
+    {
+      "timestamp": "2026-07-14T17:58:30.909Z",
+      "action": "promotion_completed",
+      "slug": "vanilla-28-inspired",
+      "operator": "Adi",
+      "details": "promotionId:6bVCJ6KRygMa  validation:PASS  nativePath:app/lib/mkc/native/vanilla-28-inspired.ts"
+    },
+    {
+      "timestamp": "2026-07-14T17:58:30.911Z",
+      "action": "promotion_started",
+      "slug": "very-good-girl-inspired",
+      "operator": "Adi",
+      "details": "symbol:veryGoodGirlInspired  reviewedBy:Adi"
+    },
+    {
+      "timestamp": "2026-07-14T17:58:30.914Z",
+      "action": "relationships_synced",
+      "slug": "very-good-girl-inspired",
+      "operator": "Adi",
+      "details": "reciprocals:3  files:3"
+    },
+    {
+      "timestamp": "2026-07-14T17:58:59.337Z",
+      "action": "promotion_completed",
+      "slug": "very-good-girl-inspired",
+      "operator": "Adi",
+      "details": "promotionId:UIcwek1IopES  validation:PASS  nativePath:app/lib/mkc/native/very-good-girl-inspired.ts"
+    },
+    {
+      "timestamp": "2026-07-14T17:58:59.340Z",
+      "action": "promotion_started",
+      "slug": "wedding-silk-santal-inspired",
+      "operator": "Adi",
+      "details": "symbol:weddingSilkSantalInspired  reviewedBy:Adi"
+    },
+    {
+      "timestamp": "2026-07-14T17:58:59.344Z",
+      "action": "relationships_synced",
+      "slug": "wedding-silk-santal-inspired",
+      "operator": "Adi",
+      "details": "reciprocals:3  files:3"
+    },
+    {
+      "timestamp": "2026-07-14T17:59:25.442Z",
+      "action": "promotion_completed",
+      "slug": "wedding-silk-santal-inspired",
+      "operator": "Adi",
+      "details": "promotionId:pKpzuZjH4uyQ  validation:PASS  nativePath:app/lib/mkc/native/wedding-silk-santal-inspired.ts"
+    },
+    {
+      "timestamp": "2026-07-14T18:00:03.634Z",
+      "action": "promotion_started",
+      "slug": "gentle-fluidity-gold-inspired",
+      "operator": "Adi",
+      "details": "symbol:gentleFluidityGoldInspired  reviewedBy:Adi"
+    },
+    {
+      "timestamp": "2026-07-14T18:00:03.638Z",
+      "action": "relationships_synced",
+      "slug": "gentle-fluidity-gold-inspired",
+      "operator": "Adi",
+      "details": "reciprocals:1  files:1"
+    },
+    {
+      "timestamp": "2026-07-14T18:00:28.760Z",
+      "action": "promotion_completed",
+      "slug": "gentle-fluidity-gold-inspired",
+      "operator": "Adi",
+      "details": "promotionId:RMLPZoC9h18i  validation:PASS  nativePath:app/lib/mkc/native/gentle-fluidity-gold-inspired.ts"
+    },
+    {
+      "timestamp": "2026-07-14T18:00:28.764Z",
+      "action": "promotion_started",
+      "slug": "good-girl-blush-inspired",
+      "operator": "Adi",
+      "details": "symbol:goodGirlBlushInspired  reviewedBy:Adi"
+    },
+    {
+      "timestamp": "2026-07-14T18:00:28.767Z",
+      "action": "relationships_synced",
+      "slug": "good-girl-blush-inspired",
+      "operator": "Adi",
+      "details": "reciprocals:2  files:2"
+    },
+    {
+      "timestamp": "2026-07-14T18:00:58.867Z",
+      "action": "promotion_completed",
+      "slug": "good-girl-blush-inspired",
+      "operator": "Adi",
+      "details": "promotionId:k8P9Hb1XMGsj  validation:PASS  nativePath:app/lib/mkc/native/good-girl-blush-inspired.ts"
+    },
+    {
+      "timestamp": "2026-07-14T18:00:58.870Z",
+      "action": "promotion_started",
+      "slug": "good-girl-inspired",
+      "operator": "Adi",
+      "details": "symbol:goodGirlInspired  reviewedBy:Adi"
+    },
+    {
+      "timestamp": "2026-07-14T18:00:58.875Z",
+      "action": "relationships_synced",
+      "slug": "good-girl-inspired",
+      "operator": "Adi",
+      "details": "reciprocals:3  files:3"
+    },
+    {
+      "timestamp": "2026-07-14T18:01:25.584Z",
+      "action": "promotion_completed",
+      "slug": "good-girl-inspired",
+      "operator": "Adi",
+      "details": "promotionId:i96a-FjcASvC  validation:PASS  nativePath:app/lib/mkc/native/good-girl-inspired.ts"
+    },
+    {
+      "timestamp": "2026-07-14T18:01:25.587Z",
+      "action": "promotion_started",
+      "slug": "gris-charnel-inspired",
+      "operator": "Adi",
+      "details": "symbol:grisCharnelInspired  reviewedBy:Adi"
+    },
+    {
+      "timestamp": "2026-07-14T18:01:25.593Z",
+      "action": "relationships_synced",
+      "slug": "gris-charnel-inspired",
+      "operator": "Adi",
+      "details": "reciprocals:4  files:4"
+    },
+    {
+      "timestamp": "2026-07-14T18:01:52.505Z",
+      "action": "promotion_completed",
+      "slug": "gris-charnel-inspired",
+      "operator": "Adi",
+      "details": "promotionId:awg8XJgYHczp  validation:PASS  nativePath:app/lib/mkc/native/gris-charnel-inspired.ts"
+    },
+    {
+      "timestamp": "2026-07-14T18:01:52.507Z",
+      "action": "promotion_started",
+      "slug": "guidance-inspired",
+      "operator": "Adi",
+      "details": "symbol:guidanceInspired  reviewedBy:Adi"
+    },
+    {
+      "timestamp": "2026-07-14T18:01:52.510Z",
+      "action": "relationships_synced",
+      "slug": "guidance-inspired",
+      "operator": "Adi",
+      "details": "reciprocals:1  files:1"
+    },
+    {
+      "timestamp": "2026-07-14T18:02:19.039Z",
+      "action": "promotion_completed",
+      "slug": "guidance-inspired",
+      "operator": "Adi",
+      "details": "promotionId:Wcdv_hAO-1V4  validation:PASS  nativePath:app/lib/mkc/native/guidance-inspired.ts"
+    },
+    {
+      "timestamp": "2026-07-14T18:02:19.042Z",
+      "action": "promotion_started",
+      "slug": "haltane-inspired",
+      "operator": "Adi",
+      "details": "symbol:haltaneInspired  reviewedBy:Adi"
+    },
+    {
+      "timestamp": "2026-07-14T18:02:19.045Z",
+      "action": "relationships_synced",
+      "slug": "haltane-inspired",
+      "operator": "Adi",
+      "details": "reciprocals:2  files:2"
+    },
+    {
+      "timestamp": "2026-07-14T18:02:44.322Z",
+      "action": "promotion_completed",
+      "slug": "haltane-inspired",
+      "operator": "Adi",
+      "details": "promotionId:H01mIOsn_Pz1  validation:PASS  nativePath:app/lib/mkc/native/haltane-inspired.ts"
+    },
+    {
+      "timestamp": "2026-07-14T18:02:44.325Z",
+      "action": "promotion_started",
+      "slug": "hibiscus-mahajad-inspired",
+      "operator": "Adi",
+      "details": "symbol:hibiscusMahajadInspired  reviewedBy:Adi"
+    },
+    {
+      "timestamp": "2026-07-14T18:02:44.328Z",
+      "action": "relationships_synced",
+      "slug": "hibiscus-mahajad-inspired",
+      "operator": "Adi",
+      "details": "reciprocals:1  files:1"
+    },
+    {
+      "timestamp": "2026-07-14T18:03:09.618Z",
+      "action": "promotion_completed",
+      "slug": "hibiscus-mahajad-inspired",
+      "operator": "Adi",
+      "details": "promotionId:Orh1DlqCUGqD  validation:PASS  nativePath:app/lib/mkc/native/hibiscus-mahajad-inspired.ts"
+    },
+    {
+      "timestamp": "2026-07-14T18:03:09.621Z",
+      "action": "promotion_started",
+      "slug": "j'adore-inspired",
+      "operator": "Adi",
+      "details": "symbol:jadoreInspired  reviewedBy:Adi"
+    },
+    {
+      "timestamp": "2026-07-14T18:03:09.625Z",
+      "action": "relationships_synced",
+      "slug": "j'adore-inspired",
+      "operator": "Adi",
+      "details": "reciprocals:2  files:2"
+    },
+    {
+      "timestamp": "2026-07-14T18:03:34.982Z",
+      "action": "promotion_completed",
+      "slug": "j'adore-inspired",
+      "operator": "Adi",
+      "details": "promotionId:QeBpzId_dJzQ  validation:PASS  nativePath:app/lib/mkc/native/j'adore-inspired.ts"
     }
   ]
 }

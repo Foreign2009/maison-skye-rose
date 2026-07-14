@@ -82,6 +82,11 @@ export const godOfFireInspired: FragranceKnowledge = {
     "choosing-your-season-scent",
   ],
 
+  // ── Relationships ─────────────────────────────────────────────────────────────
+  relationships: {
+    alternatives: ["erba-pura-inspired", "kirke-overdose-inspired"],
+  },
+
   // ── Intelligence ─────────────────────────────────────────────────────────────
   // Tropical fruity luxury reference — see docs/mkc-authoring-guide.md calibration anchors.
   // freshness:4 reflects summer/tropical vibrancy; warmth:2 confirms summer orientation.

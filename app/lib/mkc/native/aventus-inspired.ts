@@ -80,6 +80,12 @@ export const aventusInspired: FragranceKnowledge = {
     "how-to-wear-fragrance",
   ],
 
+  // ── Relationships ─────────────────────────────────────────────────────────────
+  relationships: {
+    wardrobePartners: ["ani-inspired", "armani-si-inspired", "delina-exclusif-inspired", "oud-for-greatness-inspired", "very-good-girl-inspired"],
+    alternatives: ["erba-pura-inspired", "kirke-overdose-inspired"],
+  },
+
   // ── Intelligence ─────────────────────────────────────────────────────────────
   sweetness:   2,
   freshness:   3,

@@ -80,6 +80,11 @@ export const ninePmInspired: FragranceKnowledge = {
     "how-to-wear-fragrance",
   ],
 
+  // ── Relationships ─────────────────────────────────────────────────────────────
+  relationships: {
+    alternatives: ["althair-inspired", "vanilla-28-inspired"],
+  },
+
   // ── Intelligence ─────────────────────────────────────────────────────────────
   // Sweet nightlife amber reference for Wave 2. sweetness:4 from apple+tonka+vanilla —
   // same tier as Stronger With You (4) via different route (fruity amber vs spice amber).

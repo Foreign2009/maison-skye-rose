@@ -79,6 +79,12 @@ export const spicebombExtremeInspired: FragranceKnowledge = {
     "choosing-your-season-scent",
   ],
 
+  // ── Relationships ─────────────────────────────────────────────────────────────
+  relationships: {
+    wardrobePartners: ["althair-inspired", "armani-si-inspired", "libre-intense-inspired", "ombre-nomade-inspired", "pacific-chill-inspired", "silver-mountain-water-inspired", "very-good-girl-inspired", "gris-charnel-inspired"],
+    alternatives: ["ani-inspired", "carlisle-inspired"],
+  },
+
   // ── Intelligence ─────────────────────────────────────────────────────────────
   sweetness:   3,
   freshness:   1,

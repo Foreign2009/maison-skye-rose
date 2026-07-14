@@ -86,7 +86,7 @@ export const sauvageInspired: FragranceKnowledge = {
   // ── Relationships ─────────────────────────────────────────────────────────────
   relationships: {
     evolutions: ["sauvage-elixir-inspired"],
-    wardrobePartners: ["afternoon-swim-inspired"],
+    wardrobePartners: ["afternoon-swim-inspired", "miss-dior-inspired", "ani-inspired", "arabians-tonka-inspired", "blanche-bete-inspired", "burberry-goddess-inspired", "chance-eau-tendre-inspired", "coco-mademoiselle-inspired", "crystal-noir-inspired", "erba-pura-inspired", "flowerbomb-inspired", "libre-intense-inspired", "love-don't-be-shy-inspired", "mon-paris-inspired", "prada-paradoxe-inspired", "good-girl-blush-inspired"],
   },
 
   // ── Intelligence ─────────────────────────────────────────────────────────────

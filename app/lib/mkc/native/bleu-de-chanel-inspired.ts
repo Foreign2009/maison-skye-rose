@@ -80,6 +80,12 @@ export const bleuDeChanelInspired: FragranceKnowledge = {
     "how-to-wear-fragrance",
   ],
 
+  // ── Relationships ─────────────────────────────────────────────────────────────
+  relationships: {
+    wardrobePartners: ["miss-dior-inspired", "chance-eau-tendre-inspired", "prada-paradoxe-inspired", "good-girl-inspired"],
+    alternatives: ["l'immensite-inspired"],
+  },
+
   // ── Intelligence ─────────────────────────────────────────────────────────────
   sweetness:   1,
   freshness:   4,

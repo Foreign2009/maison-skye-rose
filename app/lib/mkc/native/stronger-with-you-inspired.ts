@@ -83,6 +83,8 @@ export const strongerWithYouInspired: FragranceKnowledge = {
   // ── Relationships ─────────────────────────────────────────────────────────────
   relationships: {
     evolutions: ["stronger-with-you-intensely-inspired"],
+    alternatives: ["carlisle-inspired"],
+    wardrobePartners: ["l'immensite-inspired"],
   },
 
   // ── Intelligence ─────────────────────────────────────────────────────────────

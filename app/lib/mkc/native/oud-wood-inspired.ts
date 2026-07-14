@@ -80,6 +80,12 @@ export const oudWoodInspired: FragranceKnowledge = {
     "how-to-layer-fragrances",
   ],
 
+  // ── Relationships ─────────────────────────────────────────────────────────────
+  relationships: {
+    alternatives: ["arabians-tonka-inspired", "ombre-nomade-inspired", "oud-for-greatness-inspired", "oud-mood-inspired", "haltane-inspired"],
+    wardrobePartners: ["baccarat-rouge-540-extrait-inspired", "crystal-noir-inspired"],
+  },
+
   // ── Intelligence ─────────────────────────────────────────────────────────────
   // First oud record in Wave 2. Anchors the specialist oud position in the collection.
   // sweetness:1 and freshness:1 confirm pure woody-spice dry character.

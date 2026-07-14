@@ -83,6 +83,7 @@ export const yInspired: FragranceKnowledge = {
   // ── Relationships ─────────────────────────────────────────────────────────────
   relationships: {
     evolutions: ["y-edp-inspired"],
+    alternatives: ["torino21-inspired"],
   },
 
   // ── Intelligence ─────────────────────────────────────────────────────────────

@@ -83,6 +83,12 @@ export const ultraMaleInspired: FragranceKnowledge = {
     "what-makes-a-signature-scent",
   ],
 
+  // ── Relationships ─────────────────────────────────────────────────────────────
+  relationships: {
+    alternatives: ["black-opium-inspired", "good-girl-inspired"],
+    wardrobePartners: ["la-vie-est-belle-inspired"],
+  },
+
   // ── Intelligence ─────────────────────────────────────────────────────────────
   sweetness:   5,
   freshness:   2,
