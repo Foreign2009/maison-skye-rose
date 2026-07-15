@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { X, Send, Sparkles } from "lucide-react";
 import { useConcierge }     from "../context/ConciergeContext";
+import { useFavorites }     from "../context/FavoritesContext";
 import ConciergeMessage, { type UIMessage } from "./ConciergeMessage";
 import ConciergeSuggestions from "./ConciergeSuggestions";
 import {
@@ -23,6 +24,7 @@ const MAX_CHARS = 280;
 
 export default function ConciergePanel() {
   const { isOpen, closeConcierge, dispatch, conversationState } = useConcierge();
+  const { favorites } = useFavorites();
 
   const [messages,   setMessages]   = useState<UIMessage[]>([]);
   const [input,      setInput]      = useState("");
@@ -75,10 +77,28 @@ export default function ConciergePanel() {
         turns: [...conversationState.turns, userTurn],
       };
 
+      // Assemble browser profile from persisted customer state
+      const savedTitles  = favorites.map((f) => f.title);
+      let   viewedTitles: string[] = [];
+      try {
+        const raw    = localStorage.getItem("recentlyViewed");
+        const parsed = raw ? JSON.parse(raw) as unknown : [];
+        if (Array.isArray(parsed)) {
+          viewedTitles = (parsed as Array<Record<string, unknown>>)
+            .map((v) => (v.title ?? v.name) as string | undefined)
+            .filter((t): t is string => typeof t === "string" && t.length > 0);
+        }
+      } catch {
+        // localStorage unavailable — continue without viewed history
+      }
+      const browserProfile = (savedTitles.length > 0 || viewedTitles.length > 0)
+        ? { savedTitles, viewedTitles }
+        : undefined;
+
       const res  = await fetch("/api/concierge", {
         method:  "POST",
         headers: { "Content-Type": "application/json" },
-        body:    JSON.stringify({ message: userMessage, state: stateForApi }),
+        body:    JSON.stringify({ message: userMessage, state: stateForApi, browserProfile }),
       });
 
       const data: FormattedResponse = await res.json();

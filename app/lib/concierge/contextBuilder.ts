@@ -13,6 +13,7 @@ import type { FragranceKnowledge } from "../mkc/types";
 import type { AcademyArticle }     from "../academy/types";
 import type { ConversationState, ConversationIntent, ConversationProfile, RefinementState, ExplorationTarget } from "./types";
 import type { ConversationPlan }   from "./conversationPlanner";
+import type { ConciergeCustomerContext } from "./customerAdapter";
 import { getCurrentSeason }                         from "../discovery";
 import { computeWardrobe }                          from "../mkc/wardrobeEngine";
 import { getKnowledgeQuality }                      from "../mkc/knowledgeQuality";
@@ -555,6 +556,60 @@ function buildSeasonalContextSection(): PromptSection {
   };
 }
 
+function buildCustomerAwarenessSection(
+  ctx: ConciergeCustomerContext,
+): PromptSection {
+  const parts: string[] = [];
+
+  const stageDescriptions: Record<string, string> = {
+    new:        "New visitor — no browsing history yet",
+    exploring:  "Actively browsing — has viewed fragrances but not yet saved",
+    engaged:    "Engaged — has saved favourites or completed the quiz",
+    converting: "Returning customer — has previously purchased",
+  };
+  parts.push(`Customer journey: ${stageDescriptions[ctx.journeyStage] ?? ctx.journeyStage}`);
+
+  if (ctx.hasSaved && ctx.savedSlugs.length > 0) {
+    const names = ctx.savedSlugs
+      .map((s) => getKnowledgeSummary(s)?.name ?? s)
+      .slice(0, 5)
+      .join(", ");
+    parts.push(`Saved favourites: ${names}`);
+  }
+
+  if (ctx.hasRecentlyViewed && ctx.recentlyViewed.length > 0) {
+    const names = ctx.recentlyViewed
+      .map((s) => getKnowledgeSummary(s)?.name ?? s)
+      .slice(0, 5)
+      .join(", ");
+    parts.push(`Recently viewed: ${names}`);
+  }
+
+  if (ctx.hasQuizResult && ctx.lastQuizSlugs.length > 0) {
+    const names = ctx.lastQuizSlugs
+      .map((s) => getKnowledgeSummary(s)?.name ?? s)
+      .slice(0, 3)
+      .join(", ");
+    parts.push(`Quiz matches: ${names}`);
+  }
+
+  if (ctx.hasPreferences) {
+    if (ctx.preferredFamilies.length > 0) {
+      parts.push(`Preferred families: ${ctx.preferredFamilies.join(", ")}`);
+    }
+    if (ctx.preferredOccasions.length > 0) {
+      parts.push(`Preferred occasions: ${ctx.preferredOccasions.join(", ")}`);
+    }
+    if (ctx.dominantGender) {
+      parts.push(`Dominant gender preference: ${ctx.dominantGender}`);
+    }
+  }
+
+  if (parts.length <= 1) return { label: "", content: "" };
+
+  return { label: "CUSTOMER AWARENESS", content: parts.join("\n") };
+}
+
 // ── Public API ────────────────────────────────────────────────────────────────
 
 export function buildContext(
@@ -563,12 +618,14 @@ export function buildContext(
   plan:               ConversationPlan,
   effectiveIntent?:   ConversationIntent,
   refinement?:        RefinementState | null,
-  explorationTarget?: ExplorationTarget | null
+  explorationTarget?: ExplorationTarget | null,
+  customerCtx?:       ConciergeCustomerContext | null,
 ): BuiltContext {
   const sections: PromptSection[] = [
     buildSeasonalContextSection(),
     buildConversationContextSection(state),
     buildProfileSection(state.profile),
+    customerCtx ? buildCustomerAwarenessSection(customerCtx) : { label: "", content: "" },
     buildWardrobeSection(state.profile),
     buildCollectionSection(state.profile),
     buildConsultationPlanSection(state, refinement, explorationTarget),        // EP18-P1/P2

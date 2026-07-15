@@ -29,7 +29,10 @@ import { planResponse }                        from "../../lib/concierge/respons
 import { formatResponse }                      from "../../lib/concierge/responseFormatter";
 import { extractProfile }                                                              from "../../lib/concierge/profileExtractor";
 import { buildConsultationPlan, evolveConsultationPlan, detectAffectedRoles, detectExplorationTarget } from "../../lib/concierge/consultationTracker";
+import { adaptCustomerProfile }                from "../../lib/concierge/customerAdapter";
+import { catalogueMaps }                       from "../../lib/discovery";
 import type { ConversationState, SessionUpdates, FormattedResponse, ConsultationPlan }                 from "../../lib/concierge/types";
+import type { UnifiedCustomerProfile }         from "../../lib/customer/profile/UnifiedCustomerProfile";
 
 // ── Model configuration ───────────────────────────────────────────────────────
 
@@ -39,6 +42,39 @@ const MAX_TOKENS     = 400;
 const MAX_HISTORY    = 8;
 
 const client = new Anthropic();
+
+// ── Browser profile assembly ───────────────────────────────────────────────────
+
+interface BrowserProfile {
+  savedTitles?:  readonly string[];
+  viewedTitles?: readonly string[];
+}
+
+function buildUnifiedProfileFromBrowser(
+  browser: BrowserProfile,
+): UnifiedCustomerProfile | null {
+  const byName     = catalogueMaps.byName;
+  const savedSlugs = (browser.savedTitles ?? [])
+    .map((t) => byName.get(t)?.slug)
+    .filter((s): s is string => !!s);
+  const recentlyViewed = (browser.viewedTitles ?? [])
+    .map((t) => byName.get(t)?.slug)
+    .filter((s): s is string => !!s);
+
+  if (savedSlugs.length === 0 && recentlyViewed.length === 0) return null;
+
+  const now = Date.now();
+  return {
+    tier:           "unified",
+    identity:       {},
+    metadata:       { version: 1, createdAt: now, updatedAt: now },
+    signals:        [],
+    recentlyViewed,
+    savedSlugs,
+    lastQuizSlugs:  [],
+    lastActiveAt:   null,
+  };
+}
 
 // ── Claude call with model fallback ──────────────────────────────────────────
 
@@ -72,12 +108,22 @@ async function callClaude(
 
 export async function POST(req: NextRequest): Promise<NextResponse> {
   try {
-    const body = await req.json() as { message?: string; state?: ConversationState };
+    const body = await req.json() as {
+      message?:       string;
+      state?:         ConversationState;
+      browserProfile?: BrowserProfile;
+    };
     const { message, state } = body;
 
     if (!message?.trim() || !state) {
       return NextResponse.json({ error: "message and state are required" }, { status: 400 });
     }
+
+    // Assemble unified customer profile from browser-persisted state (optional)
+    const unifiedProfile = body.browserProfile
+      ? buildUnifiedProfileFromBrowser(body.browserProfile)
+      : null;
+    const customerCtx = unifiedProfile ? adaptCustomerProfile(unifiedProfile) : null;
 
     // 0. Extract and accumulate profile from this message
     const updatedProfile = extractProfile(message, state.profile);
@@ -103,7 +149,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       resolvedIntent = resolveIntent(message, state.context);
       // Refinement roles and exploration target are mutually exclusive per plan.action
       const refinementRoles = plan.action === "refinement" ? refinement?.affectedRoles : undefined;
-      retrieval = planRetrieval(resolvedIntent, state.context, updatedProfile, refinementRoles, explorationTarget ?? undefined);
+      retrieval = planRetrieval(resolvedIntent, state.context, updatedProfile, refinementRoles, explorationTarget ?? undefined, unifiedProfile);
     } else {
       // Reuse cached recommendations without a new catalogue search
       retrieval = buildCachedRetrieval(state);
@@ -114,7 +160,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 
     // 3. Build context — gate refinement and explorationTarget to their respective plan.action
     const activeRefinement = plan.action === "refinement" ? refinement : null;
-    const builtContext     = buildContext(retrieval, { ...state, profile: updatedProfile }, plan, effectiveIntent, activeRefinement, explorationTarget);
+    const builtContext     = buildContext(retrieval, { ...state, profile: updatedProfile }, plan, effectiveIntent, activeRefinement, explorationTarget, customerCtx);
     const contextContent = renderContext(builtContext);
 
     // 4. Build system prompt

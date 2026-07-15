@@ -13,6 +13,8 @@ import { mkcCatalogue } from "../mkc/catalogue";
 import { search } from "../search/searchEngine";
 import { buildSearchIndex } from "../search/indexBuilder";
 import { getKnowledgeQuality } from "../mkc/knowledgeQuality";
+import { recommendForProfile } from "../customer/recommendations";
+import type { UnifiedCustomerProfile } from "../customer/profile/UnifiedCustomerProfile";
 import type { SearchIndex } from "../search/types";
 import type { FragranceKnowledge } from "../mkc/types";
 import type { AcademyArticle } from "../academy/types";
@@ -90,7 +92,8 @@ export function planRetrieval(
   context:            ConversationContext,
   profile?:           ConversationProfile,
   affectedRoles?:     ConsultationRole[],
-  explorationTarget?: ExplorationTarget
+  explorationTarget?: ExplorationTarget,
+  unifiedProfile?:    UnifiedCustomerProfile | null,
 ): RetrievalContext {
   const { intent, signals, entitySlug, compareSlug } = resolved;
 
@@ -297,6 +300,22 @@ export function planRetrieval(
       if (rawQuery) {
         fragrances = fragrancesByQuery(rawQuery, 5);
         articles   = articlesFromSearch(rawQuery, 2);
+      } else if (
+        unifiedProfile &&
+        (unifiedProfile.savedSlugs.length > 0 || unifiedProfile.recentlyViewed.length > 0)
+      ) {
+        // Personalised fallback: use RE when customer has browsing/save history
+        const result = recommendForProfile(unifiedProfile, 4);
+        if (result.success) {
+          const personal = result.recommendations
+            .map((r) => catalogueMaps.bySlug.get(r.slug))
+            .filter((k): k is FragranceKnowledge => !!k);
+          if (personal.length > 0) {
+            fragrances = personal;
+            break;
+          }
+        }
+        fragrances = getCollection("trending").slice(0, 4);
       } else {
         fragrances = getCollection("trending").slice(0, 4);
       }
