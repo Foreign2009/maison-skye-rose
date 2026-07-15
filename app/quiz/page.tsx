@@ -19,11 +19,24 @@ import {
   trackQuizWhatsApp,
 } from "../lib/analytics";
 import { setDiscoveryAttribution } from "../lib/discoveryAttribution";
+import { mkcCatalogue } from "../lib/mkc/catalogue";
+import { createLocalStorageProfileStorage } from "../lib/customer/storage/localStorageProfileStorage";
+import { createProfileManager } from "../lib/customer/profile/CustomerProfileManager";
+import { addSignalToDevice } from "../lib/customer/profile/DeviceProfile";
+import { buildQuizSignals } from "../lib/customer/quiz/quizSignalFactory";
 
 const adaptedCatalogue = adaptCatalogue(fragrances as DisplayFragrance[]);
 const displayByTitle = new Map<string, DisplayFragrance>(
   (fragrances as DisplayFragrance[]).map((f) => [f.title, f])
 );
+
+// Lean title → slug map for quiz result slug resolution.
+// Built once at module level to avoid per-render allocation.
+const mkcByName = new Map<string, string>(
+  mkcCatalogue.map((k) => [k.name, k.slug])
+);
+
+const DEVICE_ID_KEY = "msr_device_id";
 
 const questions = [
   {
@@ -95,6 +108,7 @@ export default function QuizPage() {
   const [quickOpen, setQuickOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<any>(null);
   const hasTrackedResults = useRef<boolean>(false);
+  const hasPersisted      = useRef<boolean>(false);
 
   const handleAnswer = (questionId: string, answer: string) => {
     const isNew = answers[questionId] === undefined;
@@ -156,6 +170,48 @@ export default function QuizPage() {
       resultCount: recommended.length,
     });
   }, [recommended]);
+
+  // Persist quiz signals and result slugs to the Customer Intelligence Platform.
+  // Fires once per page load on first complete quiz result.
+  // Failures are swallowed so storage unavailability never breaks the quiz.
+  useEffect(() => {
+    if (hasPersisted.current) return;
+    if (completed !== questions.length) return;
+    if (recommended.length === 0) return;
+    hasPersisted.current = true;
+
+    try {
+      const storage = createLocalStorageProfileStorage();
+      const manager = createProfileManager(storage);
+
+      let deviceId = localStorage.getItem(DEVICE_ID_KEY);
+      if (!deviceId) {
+        deviceId =
+          typeof crypto !== "undefined" && typeof crypto.randomUUID === "function"
+            ? crypto.randomUUID()
+            : `device-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
+        localStorage.setItem(DEVICE_ID_KEY, deviceId);
+      }
+
+      // Build HIGH-confidence signals from explicit quiz answers
+      const signals = buildQuizSignals(answers);
+      const withSignals = signals.reduce(
+        (device, signal) => addSignalToDevice(device, signal),
+        manager.loadDevice(deviceId),
+      );
+      manager.saveDevice(withSignals);
+
+      // Resolve result titles to mkcCatalogue slugs and persist
+      const slugs = recommended
+        .map((f) => mkcByName.get(f.title))
+        .filter((s): s is string => !!s);
+      if (slugs.length > 0) {
+        manager.recordQuizResult(deviceId, slugs);
+      }
+    } catch {
+      // localStorage unavailable — continue without persistence
+    }
+  }, [completed, recommended, answers]);
 
   return (
     <main className="min-h-screen bg-[#f9f6f2]">
