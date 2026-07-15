@@ -17,6 +17,14 @@
  *   PipelineRunMetrics          — internal pipeline sizing metrics
  *   PipelineRunResult           — pipeline output before metrics assembly
  *
+ * Intelligence types (EP10.0-P6):
+ *   PreferenceProfile       — derived family/occasion/season/gender preferences
+ *   ConnectionSets          — pre-computed relationship graph sets
+ *   ConfidenceLevel         — "HIGH" | "MEDIUM" | "LOW"
+ *   RecommendationConfidence — confidence score + level + reason
+ *   RecommendationTrace     — diagnostic scoring record
+ *   RecommendationExplanation — full explanation: confidence + reasons + trace + humanText
+ *
  * Contracts:
  *   RecommendationFilterContract   — filter(candidates, ctx): candidates
  *   RecommendationScorerContract   — score(candidates, ctx): candidates
@@ -25,10 +33,22 @@
  *
  * Default implementations:
  *   createExclusionFilter   — excludes currentSlug + excludeSlugs
- *   createUniformScorer     — placeholder: returns zero scores
+ *   createWeightedScorer    — real intelligence: preference + catalog + relation + discovery
  *   createScoreRanker       — sorts by score.total DESC, score.catalog DESC
- *   createNullExplainer     — placeholder: returns empty reasons
- *   createDefaultPipeline   — pre-wired with all four defaults
+ *   createReasonBuilder     — real intelligence: deterministic rule-based reasons
+ *   createDefaultPipeline   — pre-wired with real implementations
+ *   createUniformScorer     — placeholder (preserved for override/testing)
+ *   createNullExplainer     — placeholder (preserved for override/testing)
+ *
+ * Intelligence API (EP10.0-P6):
+ *   buildPreferenceProfile  — derive customer preferences from profile signals
+ *   scoreProfile            — score a candidate against a preference profile
+ *   buildConnectionSets     — pre-compute graph connection sets for scoring
+ *   scoreRelation           — score a candidate against connection sets
+ *   scoreDiscovery          — score a candidate's discovery readiness
+ *   calculateConfidence     — compute confidence level for a recommendation
+ *   buildTrace              — build diagnostic trace for a candidate
+ *   buildExplanation        — build full explanation (confidence + reasons + trace + humanText)
  *
  * Utilities:
  *   createZeroScore         — zero-value RecommendationScore
@@ -75,10 +95,28 @@ export { createExclusionFilter }   from "./RecommendationFilter";
 export { createUniformScorer }     from "./RecommendationScore";
 export { createScoreRanker }       from "./RecommendationRanking";
 export { createNullExplainer }     from "./RecommendationExplainer";
+export { createWeightedScorer }    from "./WeightedRecommendationScorer";
+export { createReasonBuilder, buildExplanation } from "./RecommendationReasonBuilder";
 export {
   RecommendationPipeline,
   createDefaultPipeline,
 }                                  from "./RecommendationPipeline";
+
+// ── Intelligence types (EP10.0-P6) ────────────────────────────────────────────
+
+export type { PreferenceProfile }        from "./PreferenceScorer";
+export type { ConnectionSets }           from "./RelationshipScorer";
+export type { ConfidenceLevel, RecommendationConfidence } from "./RecommendationConfidence";
+export type { RecommendationTrace }      from "./RecommendationTrace";
+export type { RecommendationExplanation } from "./RecommendationExplanation";
+
+// ── Intelligence API (EP10.0-P6) ──────────────────────────────────────────────
+
+export { buildPreferenceProfile, scoreProfile, getSummaryForSlug } from "./PreferenceScorer";
+export { buildConnectionSets, scoreRelation }   from "./RelationshipScorer";
+export { scoreDiscovery }                        from "./DiscoveryScorer";
+export { calculateConfidence }                   from "./RecommendationConfidence";
+export { buildTrace }                            from "./RecommendationTrace";
 
 // ── Utilities ─────────────────────────────────────────────────────────────────
 

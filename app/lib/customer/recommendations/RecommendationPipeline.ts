@@ -38,9 +38,9 @@ import type { RecommendationScorerContract }   from "./RecommendationScore";
 import type { RecommendationRankingContract }  from "./RecommendationRanking";
 import type { RecommendationExplainerContract } from "./RecommendationExplainer";
 import { createExclusionFilter }   from "./RecommendationFilter";
-import { createUniformScorer }     from "./RecommendationScore";
 import { createScoreRanker }       from "./RecommendationRanking";
-import { createNullExplainer }     from "./RecommendationExplainer";
+import { createWeightedScorer }    from "./WeightedRecommendationScorer";
+import { createReasonBuilder }     from "./RecommendationReasonBuilder";
 
 // ── Pipeline config ────────────────────────────────────────────────────────────
 
@@ -124,8 +124,8 @@ export class RecommendationPipeline {
 export function createDefaultPipeline(overrides: Partial<PipelineConfig> = {}): RecommendationPipeline {
   return new RecommendationPipeline({
     filter:    overrides.filter    ?? createExclusionFilter(),
-    scorer:    overrides.scorer    ?? createUniformScorer(),
+    scorer:    overrides.scorer    ?? createWeightedScorer(),
     ranker:    overrides.ranker    ?? createScoreRanker(),
-    explainer: overrides.explainer ?? createNullExplainer(),
+    explainer: overrides.explainer ?? createReasonBuilder(),
   });
 }
