@@ -3,36 +3,39 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import ProductCard from "./ProductCard";
-import { fragrances } from "../data/fragrances";
+import { catalogueMaps } from "../lib/discovery";
+import { toDisplayFragrance } from "../lib/mkc/displayAdapter";
+import type { DisplayFragrance } from "../lib/knowledgeAdapter";
 
 export default function RecentlyViewedHome() {
-  const [recentProducts, setRecentProducts] = useState<any[]>([]);
+  const [recentProducts, setRecentProducts] = useState<DisplayFragrance[]>([]);
 
   useEffect(() => {
-    const viewed = JSON.parse(
-      localStorage.getItem("recentlyViewed") || "[]"
-    );
-
-    // v3.5 Step 1 — Preserve true viewing order
-    const matches = viewed
-      .map((item: any) =>
-        fragrances.find((fragrance) => fragrance.title === item.title)
-      )
-      .filter(Boolean)
-      .slice(0, 4);
-
-    setRecentProducts(matches);
+    try {
+      const raw = JSON.parse(localStorage.getItem("recentlyViewed") ?? "[]");
+      const items: DisplayFragrance[] = (Array.isArray(raw) ? raw : [])
+        .map((item: unknown) => {
+          const title =
+            item && typeof item === "object" && "title" in item
+              ? String((item as Record<string, unknown>).title)
+              : "";
+          const knowledge = catalogueMaps.byName.get(title);
+          return knowledge ? toDisplayFragrance(knowledge) : null;
+        })
+        .filter((f): f is DisplayFragrance => f !== null)
+        .slice(0, 4);
+      setRecentProducts(items);
+    } catch {
+      // localStorage unavailable
+    }
   }, []);
 
-  if (recentProducts.length === 0) {
-    return null;
-  }
+  if (recentProducts.length === 0) return null;
 
   return (
     <section className="bg-white py-20">
       <div className="mx-auto max-w-7xl px-5">
         <div className="text-center">
-          {/* v3.5 Step 2 — Add count badge */}
           <p className="text-xs uppercase tracking-[0.45em] text-[#d89ca4]">
             Recently Viewed ({recentProducts.length})
           </p>
@@ -48,10 +51,7 @@ export default function RecentlyViewedHome() {
 
         <div className="mt-12 grid gap-6 md:grid-cols-4">
           {recentProducts.map((fragrance) => (
-            <ProductCard
-              key={fragrance.title}
-              {...fragrance}
-            />
+            <ProductCard key={fragrance.title} {...fragrance} />
           ))}
         </div>
 

@@ -4,24 +4,26 @@ import { useMemo } from "react";
 import Link from "next/link";
 import ProductCard from "./ProductCard";
 import { useFavorites } from "../context/FavoritesContext";
-import { fragrances } from "../data/fragrances";
+import { catalogueMaps } from "../lib/discovery";
+import { toDisplayFragrance } from "../lib/mkc/displayAdapter";
+import type { DisplayFragrance } from "../lib/knowledgeAdapter";
 
 export default function FavoritesHome() {
   const { favorites } = useFavorites();
 
   const favoriteProducts = useMemo(
-    () =>
-      fragrances
-        .filter((fragrance) =>
-          favorites.some((item) => item.title === fragrance.title)
-        )
+    (): DisplayFragrance[] =>
+      favorites
+        .map((f) => {
+          const knowledge = catalogueMaps.byName.get(f.title);
+          return knowledge ? toDisplayFragrance(knowledge) : null;
+        })
+        .filter((f): f is DisplayFragrance => f !== null)
         .slice(0, 4),
-    [favorites]
+    [favorites],
   );
 
-  if (favoriteProducts.length === 0) {
-    return null;
-  }
+  if (favoriteProducts.length === 0) return null;
 
   return (
     <section className="bg-white py-20">
@@ -36,16 +38,13 @@ export default function FavoritesHome() {
           </h2>
 
           <p className="mx-auto mt-6 max-w-2xl text-[#7b7480]">
-            Revisit the fragrances you've saved for later.
+            Revisit the fragrances you&apos;ve saved for later.
           </p>
         </div>
 
         <div className="mt-12 grid gap-6 md:grid-cols-4">
           {favoriteProducts.map((fragrance) => (
-            <ProductCard
-              key={fragrance.title}
-              {...fragrance}
-            />
+            <ProductCard key={fragrance.title} {...fragrance} />
           ))}
         </div>
 

@@ -13,9 +13,8 @@ import DiscoverByMoment from "./components/DiscoverByMoment";
 import LatestAdditions from "./components/LatestAdditions";
 import ShopByPersonality from "./components/ShopByPersonality";
 import Testimonials from "./components/Testimonials";
-import RecentlyViewedHome from "./components/RecentlyViewedHome";
-import FavoritesHome from "./components/FavoritesHome";
 import MaisonCompanion from "./components/MaisonCompanion";
+import YourFragranceJourney from "./components/YourFragranceJourney";
 import SeasonalStory from "./components/SeasonalStory";
 import Footer from "./components/Footer";
 import QuickAddModal from "./components/QuickAddModal";
@@ -276,16 +275,11 @@ export default function HomePage() {
         />
       )}
 
-      <section className="bg-white">
-        <FavoritesHome />
-      </section>
-
       {/* ── A NOTE FROM MAISON ─────────────────────────────────────────────── */}
       <MaisonCompanion />
 
-      <section className="bg-white">
-        <RecentlyViewedHome />
-      </section>
+      {/* ── YOUR FRAGRANCE JOURNEY ─────────────────────────────────────────── */}
+      <YourFragranceJourney />
 
       {selectedFragrance && (
         <QuickAddModal
