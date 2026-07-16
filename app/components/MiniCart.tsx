@@ -2,12 +2,12 @@
 import Image from "next/image";
 import { X } from "lucide-react";
 import { useCart } from "../context/CartContext";
-import Link from "next/link";
 import { useFavorites } from "../context/FavoritesContext";
 import { trackAddToCart, trackWhatsAppCheckout } from "../lib/analytics";
 import { useMemo, useState } from "react";
-import { fragrances } from "../data/fragrances";
 import { brand } from "../data/brand";
+import { getCartRecommendations } from "../lib/customer/sync/CartRecommendationStrategy";
+import type { DisplayFragrance } from "../lib/knowledgeAdapter";
 
 interface MiniCartProps {
   isOpen: boolean;
@@ -30,83 +30,61 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
   const { favorites } = useFavorites();
   const [showRecommendations, setShowRecommendations] = useState(false);
 
-  const favoriteRecommendations = useMemo(
-    () =>
-      fragrances
-        .filter(
-          (fragrance) =>
-            favorites.some((fav) => fav.title === fragrance.title) &&
-            !cart.some((item) => item.title === fragrance.title)
-        )
-        .slice(0, 3),
-    [favorites, cart]
-  );
+  const { fromFavorites, recentlyViewed: recentRecs, completeYourCollection } = useMemo(() => {
+    const recentTitles: string[] = [];
+    if (typeof window !== "undefined") {
+      try {
+        const raw = JSON.parse(localStorage.getItem("recentlyViewed") ?? "[]");
+        if (Array.isArray(raw)) {
+          for (const item of raw) {
+            if (item && typeof item === "object" && typeof item.title === "string") {
+              recentTitles.push(item.title);
+            }
+          }
+        }
+      } catch { }
+    }
+    return getCartRecommendations({
+      cartTitles:   cart.map((item) => item.title),
+      savedTitles:  favorites.map((f) => f.title),
+      recentTitles,
+      limit: 3,
+    });
+  }, [cart, favorites]);
 
-  const quickAddFavorite = (fragrance: any) => {
+  const quickAddFavorite = (fragrance: DisplayFragrance) => {
     addToCart({
-      id: fragrance.title.toLowerCase().replace(/\s+/g, "-"),
-      title: fragrance.title,
-      image: fragrance.images?.["10ml"] || fragrance.images?.["5ml"],
-      price: fragrance.prices?.["5ml"],
+      id:       fragrance.title.toLowerCase().replace(/\s+/g, "-"),
+      title:    fragrance.title,
+      image:    fragrance.images["10ml"] || fragrance.images["5ml"],
+      price:    fragrance.prices["5ml"],
       quantity: 1,
-      size: "5ml",
+      size:     "5ml",
     });
     trackAddToCart({
-      title: fragrance.title,
-      size: "5ml",
-      price: fragrance.prices?.["5ml"] ?? 0,
+      title:  fragrance.title,
+      size:   "5ml",
+      price:  fragrance.prices["5ml"],
       source: "minicart",
     });
   };
 
-  const quickAddRecent = (fragrance: any) => {
+  const quickAddRecent = (fragrance: DisplayFragrance) => {
     addToCart({
-      id: fragrance.title.toLowerCase().replace(/\s+/g, "-"),
-      title: fragrance.title,
-      image: fragrance.images?.["10ml"] || fragrance.images?.["5ml"],
-      price: fragrance.prices?.["5ml"],
+      id:       fragrance.title.toLowerCase().replace(/\s+/g, "-"),
+      title:    fragrance.title,
+      image:    fragrance.images["10ml"] || fragrance.images["5ml"],
+      price:    fragrance.prices["5ml"],
       quantity: 1,
-      size: "5ml",
+      size:     "5ml",
     });
     trackAddToCart({
-      title: fragrance.title,
-      size: "5ml",
-      price: fragrance.prices?.["5ml"] ?? 0,
+      title:  fragrance.title,
+      size:   "5ml",
+      price:  fragrance.prices["5ml"],
       source: "minicart",
     });
   };
-
-  const recentRecommendations = useMemo((): any[] => {
-    if (typeof window === "undefined") return [];
-    const viewed = JSON.parse(localStorage.getItem("recentlyViewed") || "[]");
-    return viewed
-      .map((item: any) => fragrances.find((fragrance) => fragrance.title === item.title))
-      .filter(Boolean)
-      .filter((fragrance: any) => !cart.some((cartItem) => cartItem.title === fragrance.title))
-      .slice(0, 3);
-  }, [cart]);
-
-  const collectionRecommendations = useMemo(() => {
-    if (cart.length === 0) return [];
-
-    const cartTitles = cart.map((item) => item.title);
-    const cartFragrance = fragrances.find((f) => f.title === cart[0]?.title);
-
-    return fragrances
-      .filter((fragrance) => !cartTitles.includes(fragrance.title))
-      .map((fragrance) => {
-        let score = 0;
-
-        if (fragrance.collection === cartFragrance?.collection) score += 3;
-        if (fragrance.profile === cartFragrance?.profile) score += 2;
-        if (fragrance.season === cartFragrance?.season) score += 1;
-        if (fragrance.bestSeller) score += 1;
-
-        return { ...fragrance, score };
-      })
-      .sort((a, b) => b.score - a.score)
-      .slice(0, 3);
-  }, [cart]);
 
   const subtotal = cartTotal;
   const progressPercent =
@@ -442,21 +420,21 @@ A member of our team will confirm your order and delivery details shortly.`;
           {showRecommendations && (
             <>
               {/* Favorites Recommendations Subsection */}
-              {favoriteRecommendations.length > 0 && (
+              {fromFavorites.length > 0 && (
                 <div className="py-4 border-t border-black/5 bg-[#fbf9f6] -mx-5 md:-mx-6 px-5 md:px-6">
                   <p className="text-[10px] uppercase tracking-[0.2em] font-bold text-zinc-400 mb-3">
                     From Your Favorites
                   </p>
                   <div className="space-y-2">
-                    {favoriteRecommendations.map((fragrance) => (
-                      <div 
-                        key={fragrance.title} 
+                    {fromFavorites.map((fragrance) => (
+                      <div
+                        key={fragrance.title}
                         className="flex items-center justify-between gap-3 bg-white border border-black/5 rounded-2xl p-2.5 shadow-sm"
                       >
                         <div className="flex items-center gap-3">
                           <div className="relative h-10 w-10 flex-shrink-0 rounded-xl bg-zinc-50 border border-black/5 overflow-hidden">
                             <Image
-                              src={fragrance.images?.["10ml"] || fragrance.images?.["5ml"]}
+                              src={fragrance.images["10ml"] || fragrance.images["5ml"]}
                               alt={fragrance.title}
                               fill
                               className="object-contain p-1"
@@ -468,7 +446,7 @@ A member of our team will confirm your order and delivery details shortly.`;
                               {fragrance.title}
                             </h4>
                             <p className="text-[10px] text-zinc-400 mt-0.5">
-                              From R{fragrance.prices?.["5ml"]}
+                              From R{fragrance.prices["5ml"]}
                             </p>
                           </div>
                         </div>
@@ -485,14 +463,14 @@ A member of our team will confirm your order and delivery details shortly.`;
               )}
 
               {/* Recently Viewed Section */}
-              {recentRecommendations.length > 0 && (
+              {recentRecs.length > 0 && (
                 <div className="py-4 border-t border-black/5 bg-white -mx-5 md:-mx-6 px-5 md:px-6">
                   <p className="text-[10px] uppercase tracking-[0.2em] font-bold text-zinc-400 mb-3">
                     Recently Viewed
                   </p>
 
                   <div className="space-y-2">
-                    {recentRecommendations.map((fragrance) => (
+                    {recentRecs.map((fragrance) => (
                       <div
                         key={fragrance.title}
                         className="flex items-center justify-between gap-3 bg-[#fbf9f6] border border-black/5 rounded-2xl p-2.5 shadow-sm"
@@ -500,10 +478,7 @@ A member of our team will confirm your order and delivery details shortly.`;
                         <div className="flex items-center gap-3">
                           <div className="relative h-10 w-10 flex-shrink-0 rounded-xl bg-zinc-50 border border-black/5 overflow-hidden">
                             <Image
-                              src={
-                                fragrance.images?.["10ml"] ||
-                                fragrance.images?.["5ml"]
-                              }
+                              src={fragrance.images["10ml"] || fragrance.images["5ml"]}
                               alt={fragrance.title}
                               fill
                               className="object-contain p-1"
@@ -517,7 +492,7 @@ A member of our team will confirm your order and delivery details shortly.`;
                             </h4>
 
                             <p className="text-[10px] text-zinc-400 mt-0.5">
-                              From R{fragrance.prices?.["5ml"]}
+                              From R{fragrance.prices["5ml"]}
                             </p>
                           </div>
                         </div>
@@ -534,14 +509,14 @@ A member of our team will confirm your order and delivery details shortly.`;
                 </div>
               )}
 
-              {collectionRecommendations.length > 0 && (
+              {completeYourCollection.length > 0 && (
                 <div className="py-4 border-t border-black/5 bg-[#fbf9f6] -mx-5 md:-mx-6 px-5 md:px-6">
                   <p className="text-[10px] uppercase tracking-[0.2em] font-bold text-zinc-400 mb-3">
                     Complete Your Collection
                   </p>
 
                   <div className="space-y-2">
-                    {collectionRecommendations.map((fragrance) => (
+                    {completeYourCollection.map((fragrance) => (
                       <div
                         key={fragrance.title}
                         className="flex items-center justify-between gap-3 bg-white border border-black/5 rounded-2xl p-2.5 shadow-sm"
