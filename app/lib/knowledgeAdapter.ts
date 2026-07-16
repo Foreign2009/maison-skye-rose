@@ -241,11 +241,3 @@ export function adaptFragrance(f: DisplayFragrance): Fragrance {
     collection:  f.collection,
   };
 }
-
-/**
- * Adapt the full production catalogue. Call once at module level in consumers
- * to avoid repeating the mapping on every render.
- */
-export function adaptCatalogue(fragrances: DisplayFragrance[]): Fragrance[] {
-  return fragrances.map(adaptFragrance);
-}
