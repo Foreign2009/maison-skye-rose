@@ -116,6 +116,6 @@ export const cocoMademoiselleInspired: FragranceKnowledge = {
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
     alternatives:     ["delina-inspired"],
-    wardrobePartners: ["sauvage-inspired"],
+    wardrobePartners: ["sauvage-inspired", "chance-eau-fraiche-inspired"],
   },
 };
