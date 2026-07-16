@@ -109,7 +109,7 @@ export const laVieEstBelleInspired: FragranceKnowledge = {
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["delina-inspired", "hypnotic-poison-inspired"],
+    alternatives:     ["delina-inspired", "hypnotic-poison-inspired", "bianco-latte-inspired"],
     wardrobePartners: ["ultra-male-inspired", "layton-inspired"],
   },
 };

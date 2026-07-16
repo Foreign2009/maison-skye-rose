@@ -89,7 +89,7 @@ export const delinaInspired: FragranceKnowledge = {
   // ── Relationships ─────────────────────────────────────────────────────────────
   relationships: {
     alternatives: ["miss-dior-inspired", "alien-goddess-inspired", "armani-si-inspired", "blanche-bete-inspired", "burberry-goddess-inspired", "burberry-her-inspired", "chance-eau-tendre-inspired", "coco-mademoiselle-inspired", "delina-exclusif-inspired", "flowerbomb-inspired", "kayali-vanilla-28-inspired", "la-vie-est-belle-inspired", "libre-inspired", "love-don't-be-shy-inspired", "mon-paris-inspired", "rolling-in-love-inspired", "very-good-girl-inspired", "wedding-silk-santal-inspired", "good-girl-blush-inspired", "j'adore-inspired"],
-    wardrobePartners: ["baccarat-rouge-540-extrait-inspired", "black-opium-inspired", "my-way-inspired", "hypnotic-poison-inspired"],
+    wardrobePartners: ["baccarat-rouge-540-extrait-inspired", "black-opium-inspired", "my-way-inspired", "hypnotic-poison-inspired", "bianco-latte-inspired"],
   },
 
   // ── Intelligence ─────────────────────────────────────────────────────────────
