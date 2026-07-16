@@ -8,8 +8,9 @@ import ProductCard from "../components/ProductCard";
 import FloatingWhatsApp from "../components/FloatingWhatsApp";
 import QuickAddModal from "../components/QuickAddModal";
 
-import { fragrances } from "../data/fragrances";
-import { adaptCatalogue, DisplayFragrance } from "../lib/knowledgeAdapter";
+import { catalogueMaps } from "../lib/discovery";
+import { toDisplayFragrance } from "../lib/mkc/displayAdapter";
+import type { DisplayFragrance } from "../lib/knowledgeAdapter";
 import { recommendFragrances } from "../lib/recommendFragrances";
 import type { RecommendationResults } from "../lib/recommendFragrances";
 import {
@@ -26,9 +27,9 @@ import { addSignalToDevice } from "../lib/customer/profile/DeviceProfile";
 import { buildQuizSignals } from "../lib/customer/quiz/quizSignalFactory";
 import { getOrCreateDeviceId } from "../lib/customer/identity/DeviceIdentity";
 
-const adaptedCatalogue = adaptCatalogue(fragrances as DisplayFragrance[]);
+const adaptedCatalogue = catalogueMaps.adapted;
 const displayByTitle = new Map<string, DisplayFragrance>(
-  (fragrances as DisplayFragrance[]).map((f) => [f.title, f])
+  [...catalogueMaps.byName.entries()].map(([name, k]) => [name, toDisplayFragrance(k)])
 );
 
 
