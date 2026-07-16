@@ -22,6 +22,7 @@ import {
   trackCartOpened,
   trackAiChatStarted,
 } from "../lib/analytics";
+import { recordProductView, toggleSavedProduct } from "../lib/customer/sync/CustomerProfileSync";
 import { useConcierge } from "../context/ConciergeContext";
 import { deriveSimilarityReasons } from "../lib/concierge/similarityReasons";
 import { CollectionBadge } from "./knowledge/CollectionBadge";
@@ -90,6 +91,7 @@ export default function ProductDetail({
       JSON.stringify([entry, ...filtered].slice(0, 12))
     );
     trackProductView({ title: knowledge.name, collection: knowledge.collection });
+    recordProductView(knowledge.slug);
   }, [knowledge.name]);
 
   // ── Commerce handlers ──────────────────────────────────────────────────────
@@ -146,21 +148,22 @@ export default function ProductDetail({
   const handleFavourite = useCallback(() => {
     if (favorite) {
       removeFromFavorites(knowledge.name);
-      return;
+    } else {
+      addToFavorites({
+        title:      knowledge.name,
+        subtitle:   knowledge.subtitle,
+        mood:       knowledge.mood,
+        profile:    knowledge.profile,
+        season:     knowledge.seasons,
+        notes:      [...knowledge.notes.top, ...knowledge.notes.heart, ...knowledge.notes.base],
+        prices:     knowledge.prices,
+        images:     knowledge.images,
+        image:      knowledge.images["10ml"],
+        bestSeller: knowledge.bestSeller,
+        newArrival: knowledge.newArrival,
+      });
     }
-    addToFavorites({
-      title:      knowledge.name,
-      subtitle:   knowledge.subtitle,
-      mood:       knowledge.mood,
-      profile:    knowledge.profile,
-      season:     knowledge.seasons,
-      notes:      [...knowledge.notes.top, ...knowledge.notes.heart, ...knowledge.notes.base],
-      prices:     knowledge.prices,
-      images:     knowledge.images,
-      image:      knowledge.images["10ml"],
-      bestSeller: knowledge.bestSeller,
-      newArrival: knowledge.newArrival,
-    });
+    toggleSavedProduct(knowledge.slug);
   }, [favorite, removeFromFavorites, addToFavorites, knowledge]);
 
   // ── Pre-computed display values ────────────────────────────────────────────
