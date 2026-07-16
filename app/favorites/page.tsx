@@ -1,21 +1,29 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Navbar from "../components/Navbar";
 import QuickAddModal from "../components/QuickAddModal";
 import Footer from "../components/Footer";
 import ProductCard from "../components/ProductCard";
-
 import { useFavorites } from "../context/FavoritesContext";
-import { fragrances } from "../data/fragrances";
+import { catalogueMaps } from "../lib/discovery";
+import { toDisplayFragrance } from "../lib/mkc/displayAdapter";
+import type { DisplayFragrance } from "../lib/knowledgeAdapter";
 
 export default function FavoritesPage() {
   const { favorites } = useFavorites();
-  const [selectedFragrance, setSelectedFragrance] = useState<any>(null);
+  const [selectedFragrance, setSelectedFragrance] = useState<DisplayFragrance | null>(null);
   const [quickOpen, setQuickOpen] = useState(false);
-  
-  const favoriteProducts = fragrances.filter((fragrance) =>
-    favorites.some((item) => item.title === fragrance.title)
+
+  const favoriteProducts = useMemo(
+    (): DisplayFragrance[] =>
+      favorites
+        .map((f) => {
+          const knowledge = catalogueMaps.byName.get(f.title);
+          return knowledge ? toDisplayFragrance(knowledge) : null;
+        })
+        .filter((f): f is DisplayFragrance => f !== null),
+    [favorites],
   );
 
   return (
@@ -82,16 +90,7 @@ export default function FavoritesPage() {
               {favoriteProducts.map((fragrance) => (
                 <ProductCard
                   key={fragrance.title}
-                  title={fragrance.title}
-                  subtitle={fragrance.subtitle}
-                  mood={fragrance.mood}
-                  profile={fragrance.profile}
-                  season={fragrance.season}
-                  notes={fragrance.notes}
-                  prices={fragrance.prices}
-                  images={fragrance.images}
-                  bestSeller={fragrance.bestSeller}
-                  newArrival={fragrance.newArrival}
+                  {...fragrance}
                   onQuickAdd={() => { setSelectedFragrance(fragrance); setQuickOpen(true); }}
                 />
               ))}

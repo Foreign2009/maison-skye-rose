@@ -5,17 +5,31 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import ProductCard from "../components/ProductCard";
 import QuickAddModal from "../components/QuickAddModal";
+import { catalogueMaps } from "../lib/discovery";
+import { toDisplayFragrance } from "../lib/mkc/displayAdapter";
+import type { DisplayFragrance } from "../lib/knowledgeAdapter";
 
 export default function RecentlyViewedPage() {
-  const [items, setItems] = useState<any[]>([]);
-  const [selectedFragrance, setSelectedFragrance] = useState<any>(null);
+  const [products, setProducts] = useState<DisplayFragrance[]>([]);
+  const [selectedFragrance, setSelectedFragrance] = useState<DisplayFragrance | null>(null);
   const [quickOpen, setQuickOpen] = useState(false);
 
   useEffect(() => {
-    const stored = localStorage.getItem("recentlyViewed");
-
-    if (stored) {
-      setItems(JSON.parse(stored));
+    try {
+      const raw = JSON.parse(localStorage.getItem("recentlyViewed") ?? "[]");
+      const resolved: DisplayFragrance[] = (Array.isArray(raw) ? raw : [])
+        .map((item: unknown) => {
+          const title =
+            item && typeof item === "object" && "title" in item
+              ? String((item as Record<string, unknown>).title)
+              : "";
+          const knowledge = catalogueMaps.byName.get(title);
+          return knowledge ? toDisplayFragrance(knowledge) : null;
+        })
+        .filter((f): f is DisplayFragrance => f !== null);
+      setProducts(resolved);
+    } catch {
+      // localStorage unavailable
     }
   }, []);
 
@@ -41,7 +55,7 @@ export default function RecentlyViewedPage() {
           </p>
 
           <div className="mt-6 inline-flex rounded-full bg-white px-5 py-2 text-sm font-semibold shadow-sm">
-            {items.length} Fragrance{items.length !== 1 ? "s" : ""} Viewed
+            {products.length} Fragrance{products.length !== 1 ? "s" : ""} Viewed
           </div>
         </div>
       </section>
@@ -55,7 +69,7 @@ export default function RecentlyViewedPage() {
             </p>
           </div>
 
-          {items.length === 0 ? (
+          {products.length === 0 ? (
             <div className="rounded-[40px] bg-white p-14 text-center shadow-sm">
               <h2 className="text-3xl font-black">
                 Your Fragrance Journey Starts Here
@@ -76,11 +90,11 @@ export default function RecentlyViewedPage() {
             </div>
           ) : (
             <div className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4">
-              {items.map((item) => (
+              {products.map((fragrance) => (
                 <ProductCard
-                  key={item.title}
-                  {...item}
-                  onQuickAdd={() => { setSelectedFragrance(item); setQuickOpen(true); }}
+                  key={fragrance.title}
+                  {...fragrance}
+                  onQuickAdd={() => { setSelectedFragrance(fragrance); setQuickOpen(true); }}
                 />
               ))}
             </div>
