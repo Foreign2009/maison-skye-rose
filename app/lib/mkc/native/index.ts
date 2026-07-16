@@ -103,6 +103,7 @@ import { jadoreInspired } from "./j'adore-inspired";
 import { hypnoticPoisonInspired } from "./hypnotic-poison-inspired";
 import { biancoLatteInspired } from "./bianco-latte-inspired";
 import { chanceEauFraicheInspired } from "./chance-eau-fraiche-inspired";
+import { poisonGirlInspired } from "./poison-girl-inspired";
 
 export const nativeFragrances = new Map<string, FragranceKnowledge>([
   ["sauvage-inspired",              sauvageInspired],
@@ -196,4 +197,5 @@ export const nativeFragrances = new Map<string, FragranceKnowledge>([
   ["hypnotic-poison-inspired", hypnoticPoisonInspired],
   ["bianco-latte-inspired",       biancoLatteInspired],
   ["chance-eau-fraiche-inspired", chanceEauFraicheInspired],
+  ["poison-girl-inspired",        poisonGirlInspired],
 ]);

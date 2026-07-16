@@ -94,6 +94,7 @@ export const hypnoticPoisonInspired: FragranceKnowledge = {
       "la-vie-est-belle-inspired",
       "love-don't-be-shy-inspired",
       "kayali-vanilla-28-inspired",
+      "poison-girl-inspired",
     ],
     wardrobePartners: ["delina-inspired", "baccarat-rouge-540-inspired"],
   },
