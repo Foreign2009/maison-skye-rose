@@ -9,9 +9,7 @@ import Footer from "../components/Footer";
 import SearchBar from "../components/SearchBar";
 import { parseIntent, type IntentSignals } from "../lib/intentParser";
 import type { DisplayFragrance } from "../lib/knowledgeAdapter";
-import { mkcCatalogue } from "../lib/mkc/catalogue";
-import { toDisplayFragrance } from "../lib/mkc/displayAdapter";
-import { toRecommendationFragrance } from "../lib/mkc/recommendationAdapter";
+import { catalogueMaps } from "../lib/discovery";
 import { recommendFragrances } from "../lib/recommendFragrances";
 import { generateReasons } from "../lib/explainability";
 import { trackDiscovery, trackFilter, trackSort, trackConfidence } from "../lib/analytics";
@@ -19,15 +17,6 @@ import type { AnalyticsSource } from "../lib/analytics";
 import FragranceQuickView from "../components/FragranceQuickView";
 import type { FragranceKnowledge } from "../lib/mkc/types";
 
-const displayCatalogue = mkcCatalogue.map(toDisplayFragrance);
-const adaptedCatalogue = mkcCatalogue.map(toRecommendationFragrance);
-const displayByTitle = new Map<string, DisplayFragrance>(
-  displayCatalogue.map((f) => [f.title, f])
-);
-const adaptedByTitle = new Map(adaptedCatalogue.map((f) => [f.name, f]));
-const mkcByTitle = new Map<string, FragranceKnowledge>(
-  mkcCatalogue.map((k) => [k.name, k])
-);
 
 const GENDER_LABELS: Record<NonNullable<IntentSignals["gender"]>, string> = {
   male: "For Him",
@@ -90,17 +79,17 @@ export default function ShopPage() {
 
     // Mode 0 — Empty query: full catalogue in catalogue order, filtered by active tab
     if (!searchTerm) {
-      return displayCatalogue.filter((item) => matchesTab(item));
+      return catalogueMaps.display.filter((item) => matchesTab(item));
     }
 
     // Mode 1 — Intent mode: recommendation-ranked results, intersected with active tab
     if (detectedSignals) {
-      const results = recommendFragrances(adaptedCatalogue, detectedSignals);
+      const results = recommendFragrances(catalogueMaps.adapted, detectedSignals);
       const seen = new Set<string>();
       const ranked: DisplayFragrance[] = [];
       for (const f of [results.bestMatch, ...results.similarMatches, results.luxuryUpgrade, results.hiddenGem]) {
         if (!f || seen.has(f.name)) continue;
-        const display = displayByTitle.get(f.name);
+        const display = catalogueMaps.displayByName.get(f.name);
         if (!display) continue;
         if (!matchesTab(display)) continue;
         seen.add(f.name);
@@ -110,7 +99,7 @@ export default function ShopPage() {
     }
 
     // Mode 2 — Keyword fallback: existing substring search, filtered by active tab
-    return displayCatalogue.filter((item) => {
+    return catalogueMaps.display.filter((item) => {
       const matchesSearch =
         item.title.toLowerCase().includes(searchTerm) ||
         item.subtitle?.toLowerCase().includes(searchTerm) ||
@@ -146,7 +135,7 @@ export default function ShopPage() {
   const firstCardStrength = useMemo((): "Perfect Match" | "Great Match" | null => {
     if (!detectedSignals || sortBy !== "Featured" || displayItems.length === 0) return null;
     const first = displayItems[0];
-    const adapted = adaptedByTitle.get(first.title);
+    const adapted = catalogueMaps.adaptedByName.get(first.title);
     if (!adapted) return null;
     const { matchStrength } = generateReasons(detectedSignals, adapted);
     if (matchStrength === "strong") return "Perfect Match";
@@ -185,7 +174,7 @@ export default function ShopPage() {
         : "shop-mode-2";
 
   const handleLearnMore = useCallback((title: string) => {
-    const knowledge = mkcByTitle.get(title);
+    const knowledge = catalogueMaps.byName.get(title);
     if (!knowledge) return;
     setSelectedKnowledge(knowledge);
     setQuickViewOpen(true);

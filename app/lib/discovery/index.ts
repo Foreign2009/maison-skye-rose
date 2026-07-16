@@ -19,8 +19,10 @@
 
 import { mkcCatalogue } from "../mkc/catalogue";
 import { toRecommendationFragrance } from "../mkc/recommendationAdapter";
+import { toDisplayFragrance } from "../mkc/displayAdapter";
 import type { FragranceKnowledge } from "../mkc/types";
 import type { Fragrance } from "../../data/types";
+import type { DisplayFragrance } from "../knowledgeAdapter";
 
 // ── Shared catalogue maps ─────────────────────────────────────────────────────
 // Computed once at module level. Import from here instead of recomputing
@@ -36,6 +38,10 @@ export const catalogueMaps = {
   adapted: mkcCatalogue.map(toRecommendationFragrance),
   adaptedByName: new Map<string, Fragrance>(
     mkcCatalogue.map((k) => [k.name, toRecommendationFragrance(k)])
+  ),
+  display: mkcCatalogue.map(toDisplayFragrance),
+  displayByName: new Map<string, DisplayFragrance>(
+    mkcCatalogue.map((k) => [k.name, toDisplayFragrance(k)])
   ),
 };
 
