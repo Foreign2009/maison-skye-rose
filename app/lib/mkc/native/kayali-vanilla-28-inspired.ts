@@ -1,23 +1,3 @@
-// ═════════════════════════════════════════════════════════════════
-// FACTORY DRAFT — kayali-vanilla-28-inspired
-// ─────────────────────────────────────────────────────────────────
-// Generated:         2026-07-13T18:29:22.982Z
-// Factory version:   0.5.0
-// Prompt versions:   CompositionProducer@1.0.0  EditorialProducer@1.0.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0
-// Validation status: PASS  [0 error(s), 0 warning(s)]
-// Projected KQ tier: (not available — requires Intelligence Producer)
-// ─────────────────────────────────────────────────────────────────
-// REVIEW CHECKLIST
-//   □ Notes pyramid verified (≥ 2 per tier, no cross-tier duplicates)
-//   □ Description reviewed in Maison editorial voice
-//   □ Vibe tags meet minimum of 3 (from approved vocabulary)
-//   □ recommendedFor has minimum of 2 persona statements
-//   □ All FACTORY_ERROR markers resolved
-//   □ All FACTORY_WARN markers reviewed
-//   □ Relationship suggestions reviewed (see footer)
-//   □ npm run mkc:validate passes before promotion
-// ═════════════════════════════════════════════════════════════════
-
 import type { FragranceKnowledge } from "../types";
 
 export const kayaliVanilla28Inspired: FragranceKnowledge = {
