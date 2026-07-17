@@ -11,8 +11,8 @@ export const academyCatalogue: AcademyArticle[] = [
     readTime: 4,
     featured: true,
     publishedAt: "2026-07-03",
-    relatedArticleIds: ["guide-to-fragrance-families", "what-makes-a-signature-scent"],
-    recommendedArticleIds: ["guide-to-fragrance-families", "how-to-wear-fragrance"],
+    relatedArticleIds: ["guide-to-fragrance-families", "what-makes-a-signature-scent", "vanilla-and-amber-the-warm-base", "musks-the-hidden-foundation"],
+    recommendedArticleIds: ["guide-to-fragrance-families", "vanilla-and-amber-the-warm-base"],
     relatedFragranceIds: [
       "sauvage-inspired",
       "miss-dior-inspired",
@@ -98,8 +98,8 @@ export const academyCatalogue: AcademyArticle[] = [
       "Fragrance families are the language of perfumery. Understanding them helps you describe what you love, discover new fragrances confidently, and build a collection that reflects your personality.",
     readTime: 5,
     publishedAt: "2026-07-03",
-    relatedArticleIds: ["the-note-pyramid-explained", "what-makes-a-signature-scent"],
-    recommendedArticleIds: ["the-note-pyramid-explained", "choosing-your-season-scent"],
+    relatedArticleIds: ["the-note-pyramid-explained", "what-makes-a-signature-scent", "the-world-of-floral-fragrances", "oriental-and-amber-fragrances", "woody-fragrances-explained", "fresh-citrus-and-aquatic-fragrances", "gourmand-fragrances-guide", "oud-the-worlds-most-complex-ingredient"],
+    recommendedArticleIds: ["the-world-of-floral-fragrances", "woody-fragrances-explained"],
     relatedFragranceIds: [
       "miss-dior-inspired",
       "sauvage-inspired",
@@ -186,8 +186,8 @@ export const academyCatalogue: AcademyArticle[] = [
       "Most people apply fragrance incorrectly. Learn the techniques that maximize longevity, projection, and character — so your fragrance works with your body, not against it.",
     readTime: 4,
     publishedAt: "2026-07-03",
-    relatedArticleIds: ["how-to-layer-fragrances", "choosing-your-season-scent"],
-    recommendedArticleIds: ["how-to-layer-fragrances", "what-makes-a-signature-scent"],
+    relatedArticleIds: ["how-to-layer-fragrances", "choosing-your-season-scent", "how-to-sample-before-you-commit", "storing-and-protecting-your-fragrances", "projection-and-sillage"],
+    recommendedArticleIds: ["how-to-layer-fragrances", "storing-and-protecting-your-fragrances"],
     relatedFragranceIds: ["sauvage-inspired", "miss-dior-inspired"],
     content: [
       {
@@ -265,8 +265,8 @@ export const academyCatalogue: AcademyArticle[] = [
     readTime: 5,
     featured: true,
     publishedAt: "2026-07-03",
-    relatedArticleIds: ["guide-to-fragrance-families", "choosing-your-season-scent"],
-    recommendedArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained"],
+    relatedArticleIds: ["guide-to-fragrance-families", "choosing-your-season-scent", "building-your-fragrance-wardrobe", "how-to-sample-before-you-commit"],
+    recommendedArticleIds: ["guide-to-fragrance-families", "building-your-fragrance-wardrobe"],
     relatedFragranceIds: ["aventus-inspired", "delina-inspired"],
     content: [
       {
@@ -344,8 +344,8 @@ export const academyCatalogue: AcademyArticle[] = [
       "Heat amplifies projection. Cold mutes it. Humidity warps top notes. Learn how to choose fragrances that perform beautifully in each season rather than fighting the weather.",
     readTime: 4,
     publishedAt: "2026-07-03",
-    relatedArticleIds: ["how-to-wear-fragrance", "guide-to-fragrance-families"],
-    recommendedArticleIds: ["how-to-wear-fragrance", "what-makes-a-signature-scent"],
+    relatedArticleIds: ["how-to-wear-fragrance", "guide-to-fragrance-families", "evening-and-date-night-fragrances", "office-and-professional-fragrances", "weekend-and-casual-fragrances"],
+    recommendedArticleIds: ["evening-and-date-night-fragrances", "office-and-professional-fragrances", "weekend-and-casual-fragrances"],
     relatedFragranceIds: [
       "bleu-de-chanel-inspired",
       "miss-dior-inspired",
@@ -428,8 +428,8 @@ export const academyCatalogue: AcademyArticle[] = [
       "Fragrance layering is the practice of combining two or more scents to create something that does not exist in a single bottle. It is an expressive, personal technique used by perfume enthusiasts worldwide.",
     readTime: 4,
     publishedAt: "2026-07-03",
-    relatedArticleIds: ["how-to-wear-fragrance", "what-makes-a-signature-scent"],
-    recommendedArticleIds: ["how-to-wear-fragrance", "choosing-your-season-scent"],
+    relatedArticleIds: ["how-to-wear-fragrance", "what-makes-a-signature-scent", "building-your-fragrance-wardrobe", "storing-and-protecting-your-fragrances"],
+    recommendedArticleIds: ["how-to-wear-fragrance", "building-your-fragrance-wardrobe"],
     relatedFragranceIds: ["sauvage-inspired", "miss-dior-inspired"],
     content: [
       {
@@ -805,8 +805,8 @@ export const academyCatalogue: AcademyArticle[] = [
       "The same fragrance can smell completely different on two people wearing it simultaneously. This is not marketing mythology — it is chemistry. Understanding why helps you choose fragrances more confidently and test them more accurately.",
     readTime: 5,
     publishedAt: "2026-07-17",
-    relatedArticleIds: ["how-to-wear-fragrance", "how-to-sample-before-you-commit"],
-    recommendedArticleIds: ["olfactory-fatigue", "the-science-of-longevity-and-projection"],
+    relatedArticleIds: ["how-to-wear-fragrance", "how-to-sample-before-you-commit", "how-scent-memory-works", "olfactory-fatigue"],
+    recommendedArticleIds: ["olfactory-fatigue", "how-scent-memory-works"],
     relatedFragranceIds: ["sauvage-inspired", "miss-dior-inspired", "aventus-inspired"],
     content: [
       {
@@ -877,8 +877,8 @@ export const academyCatalogue: AcademyArticle[] = [
       "You applied your fragrance 20 minutes ago. Now you cannot smell it at all. You consider reapplying. Everyone else around you can still smell it clearly. This is olfactory fatigue — and understanding it prevents one of the most common fragrance mistakes.",
     readTime: 3,
     publishedAt: "2026-07-17",
-    relatedArticleIds: ["how-to-wear-fragrance", "why-fragrances-smell-different-on-everyone"],
-    recommendedArticleIds: ["the-science-of-longevity-and-projection", "how-to-sample-before-you-commit"],
+    relatedArticleIds: ["how-to-wear-fragrance", "why-fragrances-smell-different-on-everyone", "how-scent-memory-works"],
+    recommendedArticleIds: ["the-science-of-longevity-and-projection", "how-scent-memory-works"],
     relatedFragranceIds: ["sauvage-inspired", "black-opium-inspired"],
     content: [
       {
@@ -944,8 +944,8 @@ export const academyCatalogue: AcademyArticle[] = [
       "Longevity and projection are not random. They are determined by molecular weight, volatility, fixatives, and formulation quality. Understanding the science behind lasting power helps you choose more intelligently and set realistic expectations for any fragrance.",
     readTime: 5,
     publishedAt: "2026-07-17",
-    relatedArticleIds: ["fragrance-concentration-explained", "the-note-pyramid-explained"],
-    recommendedArticleIds: ["olfactory-fatigue", "why-fragrances-smell-different-on-everyone"],
+    relatedArticleIds: ["fragrance-concentration-explained", "the-note-pyramid-explained", "musks-the-hidden-foundation", "projection-and-sillage"],
+    recommendedArticleIds: ["musks-the-hidden-foundation", "why-fragrances-smell-different-on-everyone"],
     relatedFragranceIds: ["sauvage-inspired", "aventus-inspired", "baccarat-rouge-540-inspired"],
     content: [
       {
@@ -1239,7 +1239,7 @@ export const academyCatalogue: AcademyArticle[] = [
     readTime: 5,
     publishedAt: "2026-07-17",
     relatedArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained"],
-    recommendedArticleIds: ["oriental-and-amber-fragrances", "fresh-citrus-and-aquatic-fragrances"],
+    recommendedArticleIds: ["oud-the-worlds-most-complex-ingredient", "oriental-and-amber-fragrances"],
     relatedFragranceIds: [
       "sauvage-inspired",
       "oud-wood-inspired",
@@ -1596,6 +1596,581 @@ export const academyCatalogue: AcademyArticle[] = [
           "Specific anosmia to certain musks is common — some people simply cannot detect Galaxolide",
           "The musk spectrum: clean/fresh → warm/powdery → intimate/skin-close → animalic",
           "Day-end dry-down = almost pure musk and base — the composition's true foundation",
+        ],
+      },
+    ],
+  },
+
+  {
+    slug: "evening-and-date-night-fragrances",
+    title: "Evening and Date Night Fragrances",
+    subtitle: "How to choose a fragrance that performs when the occasion demands it",
+    category: "Occasions & Style",
+    excerpt:
+      "Evening wear demands more from a fragrance — more presence, more depth, and more intention. The right scent for a date night or formal occasion is a different conversation entirely from your daytime choice.",
+    readTime: 5,
+    publishedAt: "2026-07-17",
+    relatedArticleIds: ["choosing-your-season-scent", "oriental-and-amber-fragrances"],
+    recommendedArticleIds: ["office-and-professional-fragrances", "building-your-fragrance-wardrobe"],
+    relatedFragranceIds: [
+      "layton-inspired",
+      "baccarat-rouge-540-inspired",
+      "9pm-inspired",
+      "black-opium-inspired",
+    ],
+    content: [
+      {
+        type: "paragraph",
+        text: "Evening fragrance operates by different rules. Where daytime fragrance should accompany without announcing, evening fragrance is permitted — even expected — to project with intention. The right choice depends on the specific occasion, the season, and how much presence you want to create.",
+      },
+      {
+        type: "heading",
+        text: "Why the Rules Change After Dark",
+      },
+      {
+        type: "paragraph",
+        text: "In a professional or public daytime environment, fragrance should respect the shared space. In an evening setting — a dinner, a date, a social event — the dynamic shifts. You are in closer proximity to fewer people for longer. A fragrance with presence, depth, and a strong dry-down becomes an advantage rather than an imposition. The evening is the moment to wear the fragrance you have been saving.",
+      },
+      {
+        type: "heading",
+        text: "The Oriental and Amber Families",
+      },
+      {
+        type: "paragraph",
+        text: "Oriental and amber fragrances are the natural home of evening wear. Built on slow-evaporating base notes — resins, ambers, vanilla, heavy musks — they project moderately in the opening and then retreat to a warm, intimate dry-down that lasts for hours. This behaviour is ideal for evening: you arrive with presence, and as the evening progresses, the fragrance becomes a subtle but persistent statement rather than a loud announcement.",
+      },
+      {
+        type: "heading",
+        text: "Woody-Oriental: Sophisticated Without Heaviness",
+      },
+      {
+        type: "paragraph",
+        text: "The woody-oriental category is particularly well-suited to formal evening occasions. It carries the warmth of amber and resin with the structure and grounding of sandalwood, cedar, or oud — adding sophistication to what might otherwise be a simply sweet composition. This is the territory of fragrances designed for the dinner table: intimate, long-lasting, and interesting without demanding attention.",
+      },
+      {
+        type: "heading",
+        text: "Floral-Oriental: Romantic Without Cliché",
+      },
+      {
+        type: "paragraph",
+        text: "For date nights specifically, the floral-oriental category strikes an effective balance. A warm amber and musk base with a rose or jasmine heart creates a fragrance that reads as romantic and feminine without defaulting to the obvious. The oriental base ensures longevity — the fragrance will still be present at the end of the evening. The floral heart provides approachability and softness.",
+      },
+      {
+        type: "heading",
+        text: "Calibrating Evening Application",
+      },
+      {
+        type: "paragraph",
+        text: "The instinct to apply more for an important occasion should be resisted. Rich, warm fragrances project more effectively in the heat of a restaurant or crowded venue than in open air. One or two sprays on pulse points is almost always the right amount. If anything, apply slightly less than you would in a casual setting — and allow the warmth of the occasion to amplify what is already there.",
+      },
+      {
+        type: "tip",
+        text: "Apply your evening fragrance 30 to 45 minutes before you leave the house. This gives the top notes time to settle so that what you arrive with is the heart — the most flattering and intentional part of the composition. Arriving in someone's top notes is a missed opportunity.",
+      },
+      {
+        type: "heading",
+        text: "What to Avoid in the Evening",
+      },
+      {
+        type: "paragraph",
+        text: "Very light, fresh, or aquatic fragrances rarely perform well in evening settings — they are designed for open air and daytime projection, and in a warm, enclosed environment they can feel thin and incongruous with the occasion. Extremely sweet gourmands without a balancing woody or resinous component can become cloying over a long evening. The middle ground — warm, structured, moderate projection — is the most reliable choice.",
+      },
+      {
+        type: "note-list",
+        notes: [
+          "Evening allows and rewards more presence than daytime wear",
+          "Oriental and amber families: warmth, depth, intimacy — ideal for evening",
+          "Woody-oriental: sophisticated structure without sweetness — formal occasions",
+          "Floral-oriental: romantic and feminine without being obvious",
+          "Apply 30–45 min before leaving — arrive in the heart, not the top notes",
+          "One or two sprays maximum — indoor heat amplifies projection significantly",
+          "Avoid very light fresh or purely sweet gourmand fragrances for formal evening wear",
+        ],
+      },
+    ],
+  },
+
+  {
+    slug: "office-and-professional-fragrances",
+    title: "Office and Professional Fragrances",
+    subtitle: "The fragrance rules of a shared professional environment",
+    category: "Occasions & Style",
+    excerpt:
+      "An office is a shared space. The fragrance that performs brilliantly on a Saturday can become an imposition to your colleagues on Monday. Understanding what makes a fragrance professionally appropriate is a sophisticated skill — and a considerate one.",
+    readTime: 4,
+    publishedAt: "2026-07-17",
+    relatedArticleIds: ["choosing-your-season-scent", "fresh-citrus-and-aquatic-fragrances"],
+    recommendedArticleIds: ["weekend-and-casual-fragrances", "what-makes-a-signature-scent"],
+    relatedFragranceIds: [
+      "sauvage-inspired",
+      "bleu-de-chanel-inspired",
+      "aqua-di-gio-inspired",
+      "y-inspired",
+    ],
+    content: [
+      {
+        type: "paragraph",
+        text: "The office is the most fragrance-constrained environment most people inhabit. Shared air conditioning, enclosed meeting rooms, close-proximity colleagues, and varying sensitivities create an environment where a thoughtful fragrance choice is both a professional and a personal virtue.",
+      },
+      {
+        type: "heading",
+        text: "The Unspoken Professional Fragrance Contract",
+      },
+      {
+        type: "paragraph",
+        text: "In a professional environment, the ideal fragrance is one that people notice only when they are close to you — not across the room. The goal is to complement your presence, not precede it. A fragrance that a colleague notices when you pass by is appropriate. A fragrance that reaches them before you enter the room has overstepped. This is not about suppressing self-expression — it is about respecting shared space.",
+      },
+      {
+        type: "heading",
+        text: "Why Light Projection Is a Professional Virtue",
+      },
+      {
+        type: "paragraph",
+        text: "Strong projection in a closed office environment — particularly in enclosed spaces like lifts, meeting rooms, or shared vehicles — can trigger headaches, respiratory sensitivity, and discomfort in colleagues who have no way to remove themselves. This is not a reflection on the fragrance itself. A fragrance that projects beautifully outdoors may genuinely overwhelm when worn indoors. A professional fragrance should work as a skin scent or a close-proximity scent, not a room-filling announcement.",
+      },
+      {
+        type: "heading",
+        text: "The Fresh-Woody-Aromatic Sweet Spot",
+      },
+      {
+        type: "paragraph",
+        text: "The most reliable professional fragrance architecture combines freshness (citrus or green opening), an aromatic or light woody heart (lavender, geranium, cedar, or vetiver), and a clean musk base. This combination creates a fragrance that is clean and pleasant in shared spaces, projects at a moderate level, performs well indoors, and complements rather than competes with the environment. Many of the most commercially successful masculine fragrances operate in exactly this space.",
+      },
+      {
+        type: "tip",
+        text: "The arm's-length test: before leaving for the office, spray your fragrance and wait five minutes. If you can smell it at an arm's length from your wrist, you are in the right range. If you can smell it from further away, consider applying one less spray or choosing something lighter.",
+      },
+      {
+        type: "heading",
+        text: "What to Avoid in the Office",
+      },
+      {
+        type: "paragraph",
+        text: "Heavy orientals and oud fragrances tend to project assertively and are built for evening or outdoor wear — in an office environment, their sillage can be too present for colleagues nearby. Very sweet gourmands (heavy vanilla, coffee, chocolate) can create an olfactory distraction in a shared space. Similarly, extremely citrus-forward fragrances may fade quickly to a musk base that is less appropriate than the opening suggested. The extremes of both the light and heavy spectrum can be problematic.",
+      },
+      {
+        type: "heading",
+        text: "Seasonality in the Office",
+      },
+      {
+        type: "paragraph",
+        text: "Office air conditioning alters the seasonal calculation. An air-conditioned office in summer may actually support slightly warmer fragrances than outdoor conditions would suggest — the cool air moderates projection. Conversely, a well-heated winter office can amplify a warm oriental to the point of overprojection. Choose your office fragrance based on the temperature you will spend most of your day in, not the temperature outside.",
+      },
+      {
+        type: "note-list",
+        notes: [
+          "Office fragrance should be a close-proximity experience, not a room-filling one",
+          "Fresh-woody-aromatic architecture: the most reliable professional choice",
+          "Arm's-length test: if detectable at arm's length, the level is appropriate",
+          "Avoid heavy orientals, strong gourmands, and very intense projection fragrances",
+          "Air conditioning changes the seasonal calculation — consider indoor temperature",
+          "One spray less than usual is often the right professional adjustment",
+        ],
+      },
+    ],
+  },
+
+  {
+    slug: "weekend-and-casual-fragrances",
+    title: "Weekend and Casual Fragrances",
+    subtitle: "When the fragrance rules relax — and how to use the freedom well",
+    category: "Occasions & Style",
+    excerpt:
+      "Casual wear is where fragrance exploration becomes most forgiving. With fewer social constraints and more open environments, the weekend is the right time to experiment, to rotate through your collection, and to discover what suits you outside the professional context.",
+    readTime: 4,
+    publishedAt: "2026-07-17",
+    relatedArticleIds: ["choosing-your-season-scent", "fresh-citrus-and-aquatic-fragrances"],
+    recommendedArticleIds: ["building-your-fragrance-wardrobe", "guide-to-fragrance-families"],
+    relatedFragranceIds: [
+      "aventus-inspired",
+      "aqua-di-gio-inspired",
+      "afternoon-swim-inspired",
+      "sauvage-inspired",
+    ],
+    content: [
+      {
+        type: "paragraph",
+        text: "The weekend removes the professional constraints and the need to consider shared enclosed spaces. You have more freedom to project, experiment, and explore parts of your collection that would not be appropriate from nine to five. This is where your fragrance wardrobe shows its range.",
+      },
+      {
+        type: "heading",
+        text: "The Exploration Mindset",
+      },
+      {
+        type: "paragraph",
+        text: "Casual weekend wear is the most forgiving fragrance context. You are typically outdoors or in relaxed social settings, where stronger projection is less intrusive and where a fragrance that does not quite suit you costs less socially than it would in a professional environment. Use this freedom deliberately: rotate through fragrances you are testing, try combinations you would not wear to work, and explore families you are less familiar with. Most fragrance discoveries happen in exactly this context.",
+      },
+      {
+        type: "heading",
+        text: "Fresh, Citrus, Aquatic: Activity and Outdoors",
+      },
+      {
+        type: "paragraph",
+        text: "For outdoor activities — sport, hiking, beach, or simply running errands in warm weather — fresh, citrus, and aquatic fragrances are the natural choice. They project well in open air, handle heat without distortion, and feel appropriate to an active context. They are not designed to last all day, which is acceptable when you can reapply without concern. An aquatic marine fragrance at the beach is not a compromise — it is a considered match between scent and setting.",
+      },
+      {
+        type: "heading",
+        text: "Aromatic and Light Woody: Versatile Day Wear",
+      },
+      {
+        type: "paragraph",
+        text: "The aromatic-fresh-woody architecture that dominates professional fragrance is equally at home on weekends. Fragrances in this territory — lavender and citrus over a cedar and musk base — are among the most versatile in any wardrobe. They work across temperatures, project appropriately in most settings, and transition easily from morning activity to an afternoon café or a casual evening. If you have one fragrance that works for everything, it is probably in this category.",
+      },
+      {
+        type: "heading",
+        text: "Social Occasions and Statement Fragrances",
+      },
+      {
+        type: "paragraph",
+        text: "A casual social occasion — lunch with friends, an outdoor gathering, a relaxed evening — is the right setting for something with more personality. A fragrance with a confident projection, an unusual note combination, or a slightly more assertive character is entirely appropriate here. This is where fragrances that would be too present for an office — a bright fruity-floral, a woody-amber, a slightly smoky vetiver — get their opportunity.",
+      },
+      {
+        type: "tip",
+        text: "The weekend is the best time to test fragrances you are evaluating before committing. Wearing a new fragrance for a full day in a relaxed context — when you can actually pay attention to how it evolves — gives you infinitely more information than a brief spray in a shop.",
+      },
+      {
+        type: "note-list",
+        notes: [
+          "Casual wear has fewer fragrance constraints — use the freedom deliberately",
+          "Fresh, citrus, aquatic: natural choice for outdoor activity and warm weather",
+          "Aromatic-fresh-woody: most versatile casual architecture — works everywhere",
+          "Social occasions: the right setting for bolder choices or statement fragrances",
+          "Weekend wear is ideal for testing fragrances before committing to full-size",
+          "Experiment on weekends — discovery happens when the stakes are lower",
+        ],
+      },
+    ],
+  },
+
+  {
+    slug: "building-your-fragrance-wardrobe",
+    title: "Building Your Fragrance Wardrobe",
+    subtitle: "How to build a considered collection that serves every occasion",
+    category: "Fragrance Fundamentals",
+    excerpt:
+      "A fragrance wardrobe is not a collection of bottles — it is a considered set of tools for different occasions, seasons, and moods. Building one intentionally means fewer regret purchases and a stronger personal style.",
+    readTime: 6,
+    publishedAt: "2026-07-17",
+    relatedArticleIds: ["what-makes-a-signature-scent", "choosing-your-season-scent"],
+    recommendedArticleIds: ["how-to-sample-before-you-commit", "storing-and-protecting-your-fragrances"],
+    relatedFragranceIds: [
+      "sauvage-inspired",
+      "baccarat-rouge-540-inspired",
+      "aventus-inspired",
+      "delina-inspired",
+    ],
+    content: [
+      {
+        type: "paragraph",
+        text: "Most fragrance collections are accidental — bottles accumulated from gifts, impulse purchases, and enthusiastic decisions that did not quite pan out. A fragrance wardrobe, by contrast, is intentional. It covers your actual needs, avoids redundancy, and gives you the right tool for any occasion without requiring a collection of twenty bottles.",
+      },
+      {
+        type: "heading",
+        text: "The Wardrobe Philosophy",
+      },
+      {
+        type: "paragraph",
+        text: "Before buying your next fragrance, ask the question a fashion-conscious person would ask before buying a new piece of clothing: what gap does this fill? Is it a replacement for something that has run out? Does it serve an occasion my current collection doesn't cover? Is it different enough in character from what I already own to justify the purchase? The discipline this question imposes prevents the single most common fragrance mistake: buying variations of fragrances you already have.",
+      },
+      {
+        type: "heading",
+        text: "The Three-Fragrance Foundation",
+      },
+      {
+        type: "paragraph",
+        text: "A well-functioning fragrance wardrobe can be built on as few as three bottles: one fresh or versatile everyday fragrance, one warm or evening fragrance, and one statement or seasonal fragrance. The everyday fragrance handles the majority of professional, casual, and social occasions — it should be broadly wearable and reliable. The warm evening fragrance covers dates, dinners, and cooler season wear. The statement fragrance is for occasions where you want to be noticed and remembered.",
+      },
+      {
+        type: "heading",
+        text: "Building Occasion Coverage",
+      },
+      {
+        type: "paragraph",
+        text: "Once the three-fragrance foundation is in place, additional bottles should address specific gaps: a seasonal fragrance (summer-specific fresh or winter-specific oriental), a occasion-specific fragrance (formal events, outdoor activities), or a genuine love purchase — a fragrance you wear simply because it makes you happy regardless of occasion. The order matters: fill needs before filling desires.",
+      },
+      {
+        type: "heading",
+        text: "Avoiding Redundancy",
+      },
+      {
+        type: "paragraph",
+        text: "Redundancy is the enemy of a functional wardrobe. Two fresh woody masculines that project similarly and last similarly serve the same purpose — one is redundant. Before adding a fragrance, compare it to what you already own: does it occupy a different family, season, occasion, or projection level? If the answer is no, you are not building a wardrobe — you are accumulating in a single category.",
+      },
+      {
+        type: "heading",
+        text: "Discovery Before Investment",
+      },
+      {
+        type: "paragraph",
+        text: "The most reliable rule in fragrance wardrobe building is never to buy full-size without testing first. A fragrance that smells extraordinary in a shop or on a test strip may perform very differently on your skin over a full day of wear. The 10ml size exists for exactly this purpose — wear a fragrance for a week, experience it in different temperatures and contexts, and only then commit to the full bottle. This discipline eliminates regret purchases almost entirely.",
+      },
+      {
+        type: "tip",
+        text: "Audit your current collection before your next purchase. How many bottles have you worn fewer than five times? Those represent gaps in either need or quality of the original decision. Understanding why a purchase did not work teaches more than the purchase itself.",
+      },
+      {
+        type: "heading",
+        text: "Quality Over Quantity",
+      },
+      {
+        type: "paragraph",
+        text: "Ten fragrances you wear regularly and love is a better wardrobe than fifty you rotate through occasionally. Frequent wear deepens your understanding of a fragrance — how it performs in different seasons, how your reaction to it evolves, how it interacts with different skin chemistry states. The best fragrance wardrobes are edited, not comprehensive.",
+      },
+      {
+        type: "note-list",
+        notes: [
+          "Ask what gap each new purchase fills before buying",
+          "Three-fragrance foundation: everyday versatile + evening warm + statement seasonal",
+          "Build occasion coverage before buying additional bottles",
+          "Avoid redundancy — two similar fragrances at the same projection level serve one purpose",
+          "Never buy full-size without testing first — 10ml samples exist for this",
+          "Audit your collection regularly — understand why some purchases did not work",
+          "Quality over quantity: ten fragrances you love beats fifty you rotate",
+        ],
+      },
+    ],
+  },
+
+  {
+    slug: "storing-and-protecting-your-fragrances",
+    title: "Storing and Protecting Your Fragrances",
+    subtitle: "The three enemies of fragrance — and how to defeat them",
+    category: "Wear & Application",
+    excerpt:
+      "A poorly stored fragrance degrades silently — the top notes shift, the character distorts, and the longevity reduces. Proper storage requires almost no effort and extends the life of every bottle you own.",
+    readTime: 4,
+    publishedAt: "2026-07-17",
+    relatedArticleIds: ["how-to-wear-fragrance", "building-your-fragrance-wardrobe"],
+    recommendedArticleIds: ["how-to-wear-fragrance", "how-to-sample-before-you-commit"],
+    relatedFragranceIds: ["aventus-inspired", "baccarat-rouge-540-inspired"],
+    content: [
+      {
+        type: "paragraph",
+        text: "Fragrance is a precise chemical composition. It is more sensitive to environmental conditions than most household goods — and more expensive to replace when those conditions cause it to degrade. The good news is that protecting your fragrance collection requires almost no effort. It requires only understanding the three things that damage it.",
+      },
+      {
+        type: "heading",
+        text: "The Three Enemies: Heat, Light, and Oxygen",
+      },
+      {
+        type: "paragraph",
+        text: "Heat accelerates the chemical reactions that cause fragrance to break down. Volatile top note molecules — the citrus, fresh, and aromatic notes that create the opening — are the most susceptible. A fragrance stored in heat will lose its top note precision first, leaving a composition that smells heavier and duller than it should. Light — particularly UV light — causes oxidation, which shifts the colour of the fragrance oil and alters its smell. Oxygen interacts with fragrance molecules whenever the bottle is opened, which is why partial bottles degrade faster than full ones.",
+      },
+      {
+        type: "heading",
+        text: "The Bathroom Shelf Problem",
+      },
+      {
+        type: "paragraph",
+        text: "The bathroom is the worst possible place to store fragrance. The combination of heat (from showers), steam (humidity), and daily temperature fluctuation creates the ideal conditions for rapid degradation. A fragrance left on a bathroom shelf that is exposed to daily shower steam and fluctuating temperatures may degrade noticeably within months. This is unfortunately where most people keep their fragrances — because it is where they apply them. The solution is simple: apply in the bathroom, then return the bottle to a cooler, darker location.",
+      },
+      {
+        type: "heading",
+        text: "Ideal Storage Conditions",
+      },
+      {
+        type: "paragraph",
+        text: "The ideal fragrance storage environment is cool, dark, and stable. A bedroom drawer, a wardrobe shelf, or a dedicated fragrance box away from windows and radiators provides exactly these conditions. Temperature stability is at least as important as temperature — a space that stays at a consistent 18–22 degrees is better than one that cycles between 15 degrees at night and 30 in the afternoon. Avoid any location with direct sunlight, even for short periods.",
+      },
+      {
+        type: "heading",
+        text: "Original Bottle vs. Decant",
+      },
+      {
+        type: "paragraph",
+        text: "The original bottle is the best container for fragrance storage. It is airtight when capped and typically opaque or coloured to reduce light exposure. If you travel with fragrance, use a small travel decant — a separate smaller bottle — rather than the original. Frequent opening of the main bottle and repeated exposure to air accelerates degradation over time. For fragrances you wear daily, this is less of a concern. For special-occasion bottles used infrequently, it matters considerably more.",
+      },
+      {
+        type: "tip",
+        text: "If a fragrance you have owned for some time smells noticeably different from when you first opened it — sharper, sour, or missing the warmth and depth you remember — it has likely degraded. Heat and light damage cannot be reversed. Check your storage conditions rather than assuming the fragrance has simply evolved.",
+      },
+      {
+        type: "heading",
+        text: "Shelf Life Expectations",
+      },
+      {
+        type: "paragraph",
+        text: "Most modern fragrances, properly stored, will remain stable and pleasant for three to five years. Fragrances with a high natural material content — particularly those using natural citruses, florals, or woody extracts — may degrade somewhat faster than those built primarily on synthetics, which are more chemically stable. A well-stored fragrance should smell essentially the same after two or three years as it did when first opened.",
+      },
+      {
+        type: "note-list",
+        notes: [
+          "Three enemies: heat (breaks down molecules), light (causes oxidation), oxygen (degrades on opening)",
+          "Bathroom shelf: worst possible storage — heat, steam, and temperature fluctuation",
+          "Ideal storage: cool, dark, stable temperature — drawer, wardrobe, or fragrance box",
+          "Temperature stability matters as much as low temperature",
+          "Original bottle is best; use travel decants to protect the main bottle",
+          "If a fragrance smells different from when opened, storage conditions may be the cause",
+          "Proper storage life: 3–5 years for most fragrances",
+        ],
+      },
+    ],
+  },
+
+  {
+    slug: "oud-the-worlds-most-complex-ingredient",
+    title: "Oud: The World's Most Complex Fragrance Ingredient",
+    subtitle: "What it actually is, where it comes from, and why it divides perfumery",
+    category: "Fragrance Families",
+    excerpt:
+      "Oud is simultaneously the most expensive, most culturally significant, and most misunderstood ingredient in perfumery. Understanding what it actually is — and the difference between natural oud, synthetic oud, and oud-inspired compositions — changes how you experience every fragrance that claims it.",
+    readTime: 6,
+    publishedAt: "2026-07-17",
+    relatedArticleIds: ["woody-fragrances-explained", "oriental-and-amber-fragrances"],
+    recommendedArticleIds: ["oriental-and-amber-fragrances", "evening-and-date-night-fragrances"],
+    relatedFragranceIds: [
+      "oud-mood-inspired",
+      "layton-inspired",
+      "baccarat-rouge-540-inspired",
+    ],
+    content: [
+      {
+        type: "paragraph",
+        text: "Oud — also called agarwood or oud al attar — is the resinous heartwood of the Aquilaria tree, infected by a specific mould and transformed over years or decades into one of the most complex natural materials in existence. It is the most expensive fragrance ingredient by weight, the foundation of an entire perfumery tradition spanning the Middle East, South and Southeast Asia, and East Asia, and increasingly the defining material of high-end Western niche perfumery.",
+      },
+      {
+        type: "heading",
+        text: "What Oud Actually Is",
+      },
+      {
+        type: "paragraph",
+        text: "The Aquilaria tree, native to Southeast Asia, India, and parts of the Middle East, produces a dark, resinous heartwood only under specific conditions: when the tree is infected by a particular mould (Phialophora parasitica and related species), it responds by producing resin as a defensive mechanism. This resin impregnates the wood over time. Uninfected Aquilaria wood is pale, light, and essentially odourless. Infected wood — oud — is dark, dense, and has a complex smell unlike anything else in nature.",
+      },
+      {
+        type: "heading",
+        text: "The Cost of Natural Oud",
+      },
+      {
+        type: "paragraph",
+        text: "Natural oud is among the most expensive materials on earth by weight. The rarity of naturally infected trees, the decades required to produce high-grade material, and the labour-intensive distillation process all contribute to prices that can exceed those of gold. The highest quality oud — vintage material from specific wild trees in Cambodia, India, or Laos — trades in small quantities at extraordinary prices. This rarity explains why natural oud is used in extremely small quantities even in fragrances that claim it, and why most mass-market oud fragrances use synthetics entirely.",
+      },
+      {
+        type: "heading",
+        text: "Natural vs Synthetic Oud",
+      },
+      {
+        type: "paragraph",
+        text: "Synthetic oud molecules — most commonly Agarwood and related aroma chemicals — capture specific facets of natural oud's character without the cost or supply limitation. They are not inferior by default: a well-deployed synthetic oud molecule can deliver the woody, slightly smoky, and resinous character associated with the material at a fraction of the cost, and with more predictable consistency. What synthetic oud typically cannot replicate is the animalic, leathery, fermenting depth of truly fine natural oud — the quality that makes veteran oud enthusiasts willing to pay premium prices.",
+      },
+      {
+        type: "heading",
+        text: "Regional Styles: Middle Eastern vs Western Oud",
+      },
+      {
+        type: "paragraph",
+        text: "The way oud is used in fragrance differs significantly by tradition. Middle Eastern oud perfumery tends to use oud as the centrepiece — dense, assertive, often animalic and challenging to those unfamiliar with the material. The compositions are built around the oud rather than around oud as one element among many. Western and niche interpretations of oud typically use it to add woody depth, smokiness, and luxury to a more conventional structure: the oud is present, but so are florals, ambers, musks, and other materials that soften and contextualise it. If you are new to oud, a Western oud-inspired composition is almost always the better entry point.",
+      },
+      {
+        type: "fragrance-spotlight",
+        fragranceId: "oud-mood-inspired",
+        caption: "Oud Mood Inspired represents a balanced approach to oud — the dark resinous character of the material is present and recognisable, but integrated into a composition with amber and musk that softens the more challenging animalic facets. It demonstrates what oud smells like in a Western context: luxurious, deep, and intimate rather than raw and confrontational.",
+      },
+      {
+        type: "heading",
+        text: "How to Approach Oud for the First Time",
+      },
+      {
+        type: "paragraph",
+        text: "Oud can be polarising on a first encounter — particularly natural or heavy synthetic oud with significant animalic character. The smell is unfamiliar to many Western noses trained on clean florals and fresh citrus. The most practical advice is to give it time: oud fragrances evolve considerably on skin over several hours, and the initial impression is often not representative of the dry-down. The wood, warmth, and depth that emerge after an hour are frequently the most compelling part of the composition.",
+      },
+      {
+        type: "tip",
+        text: "If you are curious about oud but uncertain, start with an oud-forward composition where the oud is balanced by rose, amber, or vanilla. Rose-oud is one of the most approachable combinations in all of perfumery — the rose softens the animalic quality while the oud adds depth and longevity to what would otherwise be a simple floral.",
+      },
+      {
+        type: "note-list",
+        notes: [
+          "Oud = resinous heartwood of the Aquilaria tree, produced only when infected by mould",
+          "Natural oud is one of the most expensive materials by weight in the world",
+          "Synthetic oud is widely used — it captures the woody-resinous character at accessible cost",
+          "Middle Eastern oud: oud-centred, dense, assertive; requires familiarity to appreciate",
+          "Western oud: oud as one element among many — more accessible for new wearers",
+          "Oud fragrances evolve significantly — the dry-down is often the most compelling phase",
+          "Rose-oud is the most approachable entry point for first-time oud wearers",
+        ],
+      },
+    ],
+  },
+
+  {
+    slug: "how-scent-memory-works",
+    title: "How Scent Memory Works",
+    subtitle: "Why smell is the most powerful trigger of memory and emotion — and what that means for fragrance",
+    category: "Scent Science",
+    excerpt:
+      "A single smell can transport you to a specific afternoon thirty years ago with a completeness and emotional clarity that no photograph or piece of music can match. This is not coincidence — it is anatomy. Understanding the olfactory-memory connection changes how you choose and wear fragrance.",
+    readTime: 5,
+    publishedAt: "2026-07-17",
+    relatedArticleIds: ["why-fragrances-smell-different-on-everyone", "olfactory-fatigue"],
+    recommendedArticleIds: ["what-makes-a-signature-scent", "why-fragrances-smell-different-on-everyone"],
+    relatedFragranceIds: [
+      "aventus-inspired",
+      "baccarat-rouge-540-inspired",
+      "miss-dior-inspired",
+    ],
+    content: [
+      {
+        type: "paragraph",
+        text: "Of all the senses, smell has the most direct and immediate connection to memory and emotion. A visual or auditory memory passes through the thalamus — the brain's relay station — before reaching the areas responsible for emotion and memory. An olfactory memory does not. It goes directly from the olfactory bulb to the amygdala (emotional processing) and the hippocampus (memory formation). This anatomical shortcut is the reason a smell can trigger a memory faster and more completely than any other sense.",
+      },
+      {
+        type: "heading",
+        text: "The Anatomy of the Connection",
+      },
+      {
+        type: "paragraph",
+        text: "When you inhale a scent, odour molecules bind to receptor cells in the olfactory epithelium — a small patch of tissue high inside your nasal cavity. These cells send signals directly to the olfactory bulb, which then connects to the amygdala and hippocampus without any cortical processing in between. The result is that smell bypasses the rational brain almost entirely. It hits emotion and memory first. You feel the response before you have time to intellectually identify the smell.",
+      },
+      {
+        type: "heading",
+        text: "The Proustian Effect",
+      },
+      {
+        type: "paragraph",
+        text: "Marcel Proust described the phenomenon most famously in his account of a madeleine dipped in tea triggering a complete and involuntary recall of his childhood. The neurological mechanism behind this is now well understood. Because olfactory signals bypass the cortex and route directly to memory structures, a smell associated with a specific time and place can trigger a complete retrieval of that moment — complete with the emotions, the sensory context, and the atmospheric quality of the memory. This involuntary, complete recall is the Proustian effect.",
+      },
+      {
+        type: "heading",
+        text: "First Encounters and Imprinting",
+      },
+      {
+        type: "paragraph",
+        text: "The first time you encounter a smell under emotionally significant conditions creates a particularly strong olfactory memory. Neurologically, this is called imprinting: the association between a smell and the emotional context in which it was first encountered becomes embedded with unusual permanence. This explains why a perfume worn by a parent, a first romantic partner, or a significant memory can trigger that association for decades. It also explains why first impressions of a fragrance are so emotionally loaded — your brain is forming a template it will apply every time you encounter that smell again.",
+      },
+      {
+        type: "heading",
+        text: "How Signature Scents Build Meaning Over Time",
+      },
+      {
+        type: "paragraph",
+        text: "When you wear the same fragrance consistently over months and years, you are not just building a personal style — you are building a memory archive. Every significant occasion you wear the fragrance contributes a layer of association: confidence, warmth, the feeling of a particular evening or relationship or achievement. This cumulative memory deposit is why long-worn signature fragrances feel so emotionally resonant. The fragrance has absorbed the meaning of the experiences you wore it during.",
+      },
+      {
+        type: "fragrance-spotlight",
+        fragranceId: "aventus-inspired",
+        caption: "Aventus Inspired is one of the most commonly cited signature fragrances for exactly this reason — its distinctive, confident character creates strong initial impressions and builds memorable associations over time. The specific combination of pineapple, birch, and musk creates an olfactory fingerprint that wearers and those around them reliably recognise and remember.",
+      },
+      {
+        type: "heading",
+        text: "Creating Intentional Scent Memories",
+      },
+      {
+        type: "paragraph",
+        text: "Understanding the olfactory-memory system allows you to use fragrance deliberately as a memory anchor. Wearing a specific fragrance on significant occasions — important events, milestones, travels, new relationships — creates intentional associations that persist and deepen. The fragrance becomes a portable archive of those experiences. Many people who understand this choose one fragrance per life chapter: not to wear it every day, but to wear it on days worth remembering.",
+      },
+      {
+        type: "tip",
+        text: "If you want a fragrance to carry genuine emotional resonance, wear it during moments that matter rather than saving it for special occasions where the pressure to enjoy it may work against you. The memory is created by the experience, not by the intention to create a memory.",
+      },
+      {
+        type: "note-list",
+        notes: [
+          "Smell bypasses the thalamus — it hits emotion and memory before rational thought",
+          "Olfactory signals go directly to the amygdala and hippocampus — no cortical relay",
+          "The Proustian effect: a smell can trigger complete, involuntary memories from any point in life",
+          "First encounters imprint strongly — the emotional context of the first smell becomes the template",
+          "Signature scents accumulate layers of meaning from every significant occasion worn",
+          "Use fragrance deliberately as a memory anchor — wear it during experiences worth remembering",
         ],
       },
     ],
