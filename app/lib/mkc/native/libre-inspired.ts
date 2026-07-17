@@ -61,7 +61,14 @@ export const libreInspired: FragranceKnowledge = {
   // ── Education ───────────────────────────────────────────────────────────────
   subtitle      : "Radiant Audacity",
   description   : "Lavender and pink pepper ignite with brightness, then settle into a lush heart of rose absolute and orange blossom that blooms with quiet intensity. Vanilla and amber anchor the composition, creating a warm, skin-close base that feels both sensual and restrained.",
-  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances", "what-makes-a-signature-scent"],
+  academyArticleIds: [
+    "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "the-world-of-floral-fragrances",
+    "oriental-and-amber-fragrances",
+    "office-and-professional-fragrances",
+    "what-makes-a-signature-scent",
+  ],
   academyCategories: ["fragrance-families", "the-note-pyramid", "wear-and-application"],
   educationTags : [
     "floral-amber",
@@ -75,7 +82,13 @@ export const libreInspired: FragranceKnowledge = {
     "bold",
     "long-wearing",
   ],
-  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances"],
+  learningPath  : [
+    "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "the-world-of-floral-fragrances",
+    "office-and-professional-fragrances",
+    "how-to-layer-fragrances",
+  ],
 
   // ── Intelligence ────────────────────────────────────────────────────────────
   // Approximated from profile + season. Calibrated by Intelligence Producer in P2.

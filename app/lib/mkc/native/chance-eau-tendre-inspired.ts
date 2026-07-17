@@ -61,7 +61,14 @@ export const chanceEauTendreInspired: FragranceKnowledge = {
   // ── Education ───────────────────────────────────────────────────────────────
   subtitle      : "Tender Luminescence",
   description   : "A luminous fruity floral that opens with grapefruit and pink pepper before settling into quince and rose absolute—delicate, never saccharine. Freesia and jasmine sambac create a warm, skin-close finish that lingers softly, grounded by subtle musk and sandalwood.",
-  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "what-makes-a-signature-scent", "how-to-layer-fragrances"],
+  academyArticleIds: [
+    "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "the-world-of-floral-fragrances",
+    "weekend-and-casual-fragrances",
+    "office-and-professional-fragrances",
+    "what-makes-a-signature-scent",
+  ],
   academyCategories: ["fragrance-families", "the-note-pyramid", "occasions-and-style"],
   educationTags : [
     "floral",
@@ -77,7 +84,13 @@ export const chanceEauTendreInspired: FragranceKnowledge = {
     "delicate",
     "daily-wear",
   ],
-  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "what-makes-a-signature-scent", "how-to-layer-fragrances"],
+  learningPath  : [
+    "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "the-world-of-floral-fragrances",
+    "office-and-professional-fragrances",
+    "choosing-your-season-scent",
+  ],
 
   // ── Intelligence ────────────────────────────────────────────────────────────
   // Approximated from profile + season. Calibrated by Intelligence Producer in P2.

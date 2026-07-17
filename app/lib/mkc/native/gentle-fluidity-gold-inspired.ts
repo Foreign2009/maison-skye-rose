@@ -60,7 +60,14 @@ export const gentleFluidityGoldInspired: FragranceKnowledge = {
   // ── Education ───────────────────────────────────────────────────────────────
   subtitle      : "Luminous Refinement",
   description   : "Bergamot and pink pepper open onto a luminous heart of rose absolute and amber, grounded in the soft warmth of white musk and vanilla. The fragrance settles into a refined second skin—neither floral nor gourmand, but a precise balance of both. Sandalwood and cashmeran deepen the composition into something quietly luxurious that persists without demanding attention.",
-  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances", "how-to-wear-fragrance"],
+  academyArticleIds: [
+    "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "vanilla-and-amber-the-warm-base",
+    "musks-the-hidden-foundation",
+    "office-and-professional-fragrances",
+    "how-to-layer-fragrances",
+  ],
   academyCategories: ["fragrance-families", "the-note-pyramid", "wear-and-application"],
   educationTags : [
     "vanilla",
@@ -74,7 +81,13 @@ export const gentleFluidityGoldInspired: FragranceKnowledge = {
     "daily-wear",
     "office",
   ],
-  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances"],
+  learningPath  : [
+    "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "vanilla-and-amber-the-warm-base",
+    "office-and-professional-fragrances",
+    "how-to-layer-fragrances",
+  ],
 
   // ── Intelligence ────────────────────────────────────────────────────────────
   // Approximated from profile + season. Calibrated by Intelligence Producer in P2.

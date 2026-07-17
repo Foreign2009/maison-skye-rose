@@ -61,7 +61,9 @@ export const imaginationInspired: FragranceKnowledge = {
   academyArticleIds: [
     "the-note-pyramid-explained",
     "guide-to-fragrance-families",
-    "how-to-wear-fragrance",
+    "fresh-citrus-and-aquatic-fragrances",
+    "woody-fragrances-explained",
+    "office-and-professional-fragrances",
     "choosing-your-season-scent",
   ],
   academyCategories: [
@@ -76,7 +78,8 @@ export const imaginationInspired: FragranceKnowledge = {
   learningPath: [
     "the-note-pyramid-explained",
     "guide-to-fragrance-families",
-    "how-to-wear-fragrance",
+    "fresh-citrus-and-aquatic-fragrances",
+    "office-and-professional-fragrances",
     "choosing-your-season-scent",
   ],
 

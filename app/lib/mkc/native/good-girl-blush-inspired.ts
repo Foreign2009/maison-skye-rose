@@ -68,7 +68,14 @@ export const goodGirlBlushInspired: FragranceKnowledge = {
   // ── Education ───────────────────────────────────────────────────────────────
   subtitle      : "Radiant Softness",
   description   : "Peony and pink pepper open with a whisper of bergamot, immediately feminine and luminous. The heart unfolds into rose absolute and creamy almond milk, softened by tuberose's indolic warmth. Vanilla bourbon and sandalwood anchor the composition in gentle sensuality, creating a fragrance that feels both intimate and radiant.",
-  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-wear-fragrance", "how-to-layer-fragrances"],
+  academyArticleIds: [
+    "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "vanilla-and-amber-the-warm-base",
+    "the-world-of-floral-fragrances",
+    "office-and-professional-fragrances",
+    "how-to-layer-fragrances",
+  ],
   academyCategories: ["fragrance-families", "the-note-pyramid", "wear-and-application"],
   educationTags : [
     "floral",
@@ -82,7 +89,13 @@ export const goodGirlBlushInspired: FragranceKnowledge = {
     "wedding",
     "layering",
   ],
-  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances", "how-to-wear-fragrance"],
+  learningPath  : [
+    "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "vanilla-and-amber-the-warm-base",
+    "office-and-professional-fragrances",
+    "choosing-your-season-scent",
+  ],
 
   // ── Intelligence ────────────────────────────────────────────────────────────
   // Approximated from profile + season. Calibrated by Intelligence Producer in P2.

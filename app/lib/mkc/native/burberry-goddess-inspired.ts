@@ -68,7 +68,14 @@ export const burberryGoddessInspired: FragranceKnowledge = {
   // ── Education ───────────────────────────────────────────────────────────────
   subtitle      : "Soft Elegance",
   description   : "Bergamot and pink pepper open with a whisper of vanilla, then rose absolute settles into the heart with lavender and iris—a floral composition that feels both intimate and refined. Cacao and sandalwood ground the fragrance, while vanilla musk creates a second skin that lingers without demanding attention.",
-  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances", "what-makes-a-signature-scent"],
+  academyArticleIds: [
+    "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "vanilla-and-amber-the-warm-base",
+    "the-world-of-floral-fragrances",
+    "office-and-professional-fragrances",
+    "what-makes-a-signature-scent",
+  ],
   academyCategories: ["fragrance-families", "the-note-pyramid", "wear-and-application"],
   educationTags : [
     "vanilla",
@@ -83,7 +90,13 @@ export const burberryGoddessInspired: FragranceKnowledge = {
     "all-season",
     "signature-scent",
   ],
-  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "what-makes-a-signature-scent", "how-to-layer-fragrances"],
+  learningPath  : [
+    "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "vanilla-and-amber-the-warm-base",
+    "office-and-professional-fragrances",
+    "how-to-layer-fragrances",
+  ],
 
   // ── Intelligence ────────────────────────────────────────────────────────────
   // Approximated from profile + season. Calibrated by Intelligence Producer in P2.

@@ -65,10 +65,12 @@ export const delinaInspired: FragranceKnowledge = {
 
   // ── Academy integration ───────────────────────────────────────────────────────
   academyArticleIds: [
-    "guide-to-fragrance-families",
     "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "the-world-of-floral-fragrances",
+    "weekend-and-casual-fragrances",
+    "evening-and-date-night-fragrances",
     "what-makes-a-signature-scent",
-    "how-to-wear-fragrance",
   ],
   academyCategories: [
     "fragrance-families",
@@ -82,8 +84,9 @@ export const delinaInspired: FragranceKnowledge = {
   learningPath: [
     "the-note-pyramid-explained",
     "guide-to-fragrance-families",
-    "what-makes-a-signature-scent",
-    "how-to-wear-fragrance",
+    "the-world-of-floral-fragrances",
+    "evening-and-date-night-fragrances",
+    "choosing-your-season-scent",
   ],
 
   // ── Relationships ─────────────────────────────────────────────────────────────

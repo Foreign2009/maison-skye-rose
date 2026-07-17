@@ -63,6 +63,9 @@ export const laytonInspired: FragranceKnowledge = {
   academyArticleIds: [
     "the-note-pyramid-explained",
     "guide-to-fragrance-families",
+    "oriental-and-amber-fragrances",
+    "vanilla-and-amber-the-warm-base",
+    "evening-and-date-night-fragrances",
     "what-makes-a-signature-scent",
   ],
   academyCategories: [
@@ -76,8 +79,9 @@ export const laytonInspired: FragranceKnowledge = {
   learningPath: [
     "the-note-pyramid-explained",
     "guide-to-fragrance-families",
-    "what-makes-a-signature-scent",
-    "how-to-wear-fragrance",
+    "oriental-and-amber-fragrances",
+    "evening-and-date-night-fragrances",
+    "choosing-your-season-scent",
   ],
 
   // ── Relationships ─────────────────────────────────────────────────────────────

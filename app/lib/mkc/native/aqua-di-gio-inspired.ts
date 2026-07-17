@@ -62,9 +62,12 @@ export const aquaDiGioInspired: FragranceKnowledge = {
 
   // ── Academy integration ───────────────────────────────────────────────────────
   academyArticleIds: [
+    "the-note-pyramid-explained",
     "guide-to-fragrance-families",
-    "how-to-wear-fragrance",
+    "fresh-citrus-and-aquatic-fragrances",
+    "office-and-professional-fragrances",
     "choosing-your-season-scent",
+    "how-to-wear-fragrance",
   ],
   academyCategories: [
     "fragrance-families",
@@ -77,6 +80,8 @@ export const aquaDiGioInspired: FragranceKnowledge = {
   learningPath: [
     "the-note-pyramid-explained",
     "guide-to-fragrance-families",
+    "fresh-citrus-and-aquatic-fragrances",
+    "office-and-professional-fragrances",
     "choosing-your-season-scent",
   ],
 

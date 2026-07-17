@@ -67,7 +67,14 @@ export const creedGreenIrishTweedInspired: FragranceKnowledge = {
   // ── Education ───────────────────────────────────────────────────────────────
   subtitle      : "Verdant Elegance",
   description   : "A green woody that opens with bright lemon and galbanum, then settles into a refined heart of violet leaf and iris root. Sandalwood and vetiver anchor the composition with quiet sophistication, creating something both crisp and enduring.",
-  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances", "how-to-wear-fragrance"],
+  academyArticleIds: [
+    "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "fresh-citrus-and-aquatic-fragrances",
+    "woody-fragrances-explained",
+    "office-and-professional-fragrances",
+    "how-to-layer-fragrances",
+  ],
   academyCategories: ["fragrance-families", "the-note-pyramid", "wear-and-application"],
   educationTags : [
     "fresh",
@@ -81,7 +88,13 @@ export const creedGreenIrishTweedInspired: FragranceKnowledge = {
     "sophisticated",
     "layering",
   ],
-  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances"],
+  learningPath  : [
+    "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "fresh-citrus-and-aquatic-fragrances",
+    "office-and-professional-fragrances",
+    "choosing-your-season-scent",
+  ],
 
   // ── Intelligence ────────────────────────────────────────────────────────────
   // Approximated from profile + season. Calibrated by Intelligence Producer in P2.

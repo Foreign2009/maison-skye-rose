@@ -61,7 +61,9 @@ export const strongerWithYouInspired: FragranceKnowledge = {
   academyArticleIds: [
     "the-note-pyramid-explained",
     "guide-to-fragrance-families",
-    "choosing-your-season-scent",
+    "fresh-citrus-and-aquatic-fragrances",
+    "oriental-and-amber-fragrances",
+    "evening-and-date-night-fragrances",
     "what-makes-a-signature-scent",
   ],
   academyCategories: [
@@ -76,8 +78,9 @@ export const strongerWithYouInspired: FragranceKnowledge = {
   learningPath: [
     "the-note-pyramid-explained",
     "guide-to-fragrance-families",
+    "fresh-citrus-and-aquatic-fragrances",
+    "evening-and-date-night-fragrances",
     "choosing-your-season-scent",
-    "what-makes-a-signature-scent",
   ],
 
   // ── Relationships ─────────────────────────────────────────────────────────────

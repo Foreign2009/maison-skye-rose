@@ -67,7 +67,14 @@ export const cocoMademoiselleInspired: FragranceKnowledge = {
   // ── Education ───────────────────────────────────────────────────────────────
   subtitle      : "Poised Femininity",
   description   : "Bitter orange and bergamot open with crystalline brightness, immediately feminine and alert. Rose absolute and jasmine sambac unfold at the heart—a sophisticated floral accord that refuses to whisper, anchored by patchouli and vanilla bourbon that ground the composition with sensual warmth and depth.",
-  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances", "how-to-wear-fragrance"],
+  academyArticleIds: [
+    "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "the-world-of-floral-fragrances",
+    "fresh-citrus-and-aquatic-fragrances",
+    "office-and-professional-fragrances",
+    "how-to-layer-fragrances",
+  ],
   academyCategories: ["fragrance-families", "the-note-pyramid", "wear-and-application"],
   educationTags : [
     "floral",
@@ -81,7 +88,13 @@ export const cocoMademoiselleInspired: FragranceKnowledge = {
     "office",
     "layering",
   ],
-  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances"],
+  learningPath  : [
+    "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "the-world-of-floral-fragrances",
+    "office-and-professional-fragrances",
+    "how-to-wear-fragrance",
+  ],
 
   // ── Intelligence ────────────────────────────────────────────────────────────
   // Approximated from profile + season. Calibrated by Intelligence Producer in P2.

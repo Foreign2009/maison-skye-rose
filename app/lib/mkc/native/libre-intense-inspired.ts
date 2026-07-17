@@ -61,7 +61,14 @@ export const libreIntenseInspired: FragranceKnowledge = {
   // ── Education ───────────────────────────────────────────────────────────────
   subtitle      : "Addictive Elegance",
   description   : "Lavender and pink pepper ignite with citrus brightness, then surrender to a sumptuous heart of red rose and amber resin that clings to skin like worn silk. Vanilla and sandalwood ground the composition in warm, addictive sensuality—a fragrance that smells like confidence feels.",
-  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances", "choosing-your-season-scent"],
+  academyArticleIds: [
+    "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "the-world-of-floral-fragrances",
+    "oriental-and-amber-fragrances",
+    "evening-and-date-night-fragrances",
+    "choosing-your-season-scent",
+  ],
   academyCategories: ["fragrance-families", "the-note-pyramid", "wear-and-application"],
   educationTags : [
     "floral",
@@ -75,7 +82,13 @@ export const libreIntenseInspired: FragranceKnowledge = {
     "confident",
     "long-wearing",
   ],
-  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances"],
+  learningPath  : [
+    "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "the-world-of-floral-fragrances",
+    "evening-and-date-night-fragrances",
+    "choosing-your-season-scent",
+  ],
 
   // ── Intelligence ────────────────────────────────────────────────────────────
   // Approximated from profile + season. Calibrated by Intelligence Producer in P2.

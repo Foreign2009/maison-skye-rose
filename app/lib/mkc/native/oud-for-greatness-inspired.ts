@@ -61,7 +61,14 @@ export const oudForGreatnessInspired: FragranceKnowledge = {
   // ── Education ───────────────────────────────────────────────────────────────
   subtitle      : "Unapologetic Depth",
   description   : "Black cardamom and bergamot ignite with a sharp, almost aggressive brightness before saffron and oud absolute settle into a deep, resinous heart that commands attention. Ambroxan and oud wood create a base of sustained power—animalic, grounding, unapologetically luxurious.",
-  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "choosing-your-season-scent", "how-to-layer-fragrances"],
+  academyArticleIds: [
+    "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "oriental-and-amber-fragrances",
+    "oud-the-worlds-most-complex-ingredient",
+    "evening-and-date-night-fragrances",
+    "choosing-your-season-scent",
+  ],
   academyCategories: ["fragrance-families", "the-note-pyramid", "occasions-and-style"],
   educationTags : [
     "oud",
@@ -75,7 +82,13 @@ export const oudForGreatnessInspired: FragranceKnowledge = {
     "date-night",
     "bold",
   ],
-  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "choosing-your-season-scent", "how-to-layer-fragrances"],
+  learningPath  : [
+    "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "oriental-and-amber-fragrances",
+    "evening-and-date-night-fragrances",
+    "choosing-your-season-scent",
+  ],
 
   // ── Intelligence ────────────────────────────────────────────────────────────
   // Approximated from profile + season. Calibrated by Intelligence Producer in P2.

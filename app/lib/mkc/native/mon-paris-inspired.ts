@@ -68,7 +68,14 @@ export const monParisInspired: FragranceKnowledge = {
   // ── Education ───────────────────────────────────────────────────────────────
   subtitle      : "Radiant Desire",
   description   : "Strawberry and bergamot ignite with a whisper of pink pepper, then dissolve into a heart of jasmine and red rose—sensual, not cloying. Vanilla bourbon and patchouli anchor the composition with warmth, creating a fragrance that feels both luminous and grounded, equally at home in daylight or after dark.",
-  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "what-makes-a-signature-scent", "how-to-layer-fragrances"],
+  academyArticleIds: [
+    "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "the-world-of-floral-fragrances",
+    "weekend-and-casual-fragrances",
+    "office-and-professional-fragrances",
+    "what-makes-a-signature-scent",
+  ],
   academyCategories: ["fragrance-families", "the-note-pyramid", "wear-and-application"],
   educationTags : [
     "fruity-floral",
@@ -82,7 +89,13 @@ export const monParisInspired: FragranceKnowledge = {
     "everyday-wear",
     "office",
   ],
-  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "what-makes-a-signature-scent", "how-to-layer-fragrances"],
+  learningPath  : [
+    "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "the-world-of-floral-fragrances",
+    "office-and-professional-fragrances",
+    "what-makes-a-signature-scent",
+  ],
 
   // ── Intelligence ────────────────────────────────────────────────────────────
   // Approximated from profile + season. Calibrated by Intelligence Producer in P2.

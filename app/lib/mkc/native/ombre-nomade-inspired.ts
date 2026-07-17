@@ -60,7 +60,14 @@ export const ombreNomadeInspired: FragranceKnowledge = {
   // ── Education ───────────────────────────────────────────────────────────────
   subtitle      : "Nocturnal Elegance",
   description   : "Black cardamom and oud open with austere brightness before the composition descends into rose absolute and leather—a whisper of civilization against vast, darkened landscape. Amber and vetiver anchor the base in animal warmth, creating a fragrance that moves between shadow and skin with quiet intensity.",
-  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances", "choosing-your-season-scent"],
+  academyArticleIds: [
+    "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "woody-fragrances-explained",
+    "oud-the-worlds-most-complex-ingredient",
+    "evening-and-date-night-fragrances",
+    "choosing-your-season-scent",
+  ],
   academyCategories: ["fragrance-families", "the-note-pyramid", "wear-and-application"],
   educationTags : [
     "oud",
@@ -76,7 +83,13 @@ export const ombreNomadeInspired: FragranceKnowledge = {
     "intense",
     "oriental",
   ],
-  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances", "choosing-your-season-scent"],
+  learningPath  : [
+    "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "woody-fragrances-explained",
+    "evening-and-date-night-fragrances",
+    "choosing-your-season-scent",
+  ],
 
   // ── Intelligence ────────────────────────────────────────────────────────────
   // Approximated from profile + season. Calibrated by Intelligence Producer in P2.

@@ -69,9 +69,11 @@ export const devotionInspired: FragranceKnowledge = {
 
   // ── Academy integration ───────────────────────────────────────────────────────
   academyArticleIds: [
-    "guide-to-fragrance-families",
     "the-note-pyramid-explained",
-    "choosing-your-season-scent",
+    "guide-to-fragrance-families",
+    "vanilla-and-amber-the-warm-base",
+    "fresh-citrus-and-aquatic-fragrances",
+    "office-and-professional-fragrances",
     "what-makes-a-signature-scent",
   ],
   academyCategories: [
@@ -87,7 +89,8 @@ export const devotionInspired: FragranceKnowledge = {
   learningPath: [
     "the-note-pyramid-explained",
     "guide-to-fragrance-families",
-    "what-makes-a-signature-scent",
+    "vanilla-and-amber-the-warm-base",
+    "office-and-professional-fragrances",
     "choosing-your-season-scent",
   ],
 

@@ -61,7 +61,14 @@ export const erbaPuraInspired: FragranceKnowledge = {
   // ── Education ───────────────────────────────────────────────────────────────
   subtitle      : "Bright Skin Musk",
   description   : "Sweet orange and grapefruit open with luminous clarity, then dissolve into a heart of lemon verbena and peach that feels both crisp and gourmand. White musk and ambroxan anchor the composition, transforming bright fruit into a second skin—addictive, warm, utterly wearable.",
-  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "choosing-your-season-scent", "how-to-wear-fragrance"],
+  academyArticleIds: [
+    "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "weekend-and-casual-fragrances",
+    "musks-the-hidden-foundation",
+    "office-and-professional-fragrances",
+    "choosing-your-season-scent",
+  ],
   academyCategories: ["fragrance-families", "the-note-pyramid", "occasions-and-style"],
   educationTags : [
     "fruity",
@@ -77,7 +84,13 @@ export const erbaPuraInspired: FragranceKnowledge = {
     "balanced",
     "signature",
   ],
-  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "choosing-your-season-scent", "how-to-wear-fragrance"],
+  learningPath  : [
+    "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "weekend-and-casual-fragrances",
+    "office-and-professional-fragrances",
+    "choosing-your-season-scent",
+  ],
 
   // ── Intelligence ────────────────────────────────────────────────────────────
   // Approximated from profile + season. Calibrated by Intelligence Producer in P2.

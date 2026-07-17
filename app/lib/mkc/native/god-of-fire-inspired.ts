@@ -61,10 +61,12 @@ export const godOfFireInspired: FragranceKnowledge = {
 
   // ── Academy integration ───────────────────────────────────────────────────────
   academyArticleIds: [
-    "guide-to-fragrance-families",
     "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "weekend-and-casual-fragrances",
+    "woody-fragrances-explained",
+    "evening-and-date-night-fragrances",
     "what-makes-a-signature-scent",
-    "choosing-your-season-scent",
   ],
   academyCategories: [
     "fragrance-families",
@@ -78,7 +80,8 @@ export const godOfFireInspired: FragranceKnowledge = {
   learningPath: [
     "the-note-pyramid-explained",
     "guide-to-fragrance-families",
-    "what-makes-a-signature-scent",
+    "weekend-and-casual-fragrances",
+    "evening-and-date-night-fragrances",
     "choosing-your-season-scent",
   ],
 

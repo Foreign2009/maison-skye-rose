@@ -63,6 +63,9 @@ export const aventusInspired: FragranceKnowledge = {
   academyArticleIds: [
     "the-note-pyramid-explained",
     "guide-to-fragrance-families",
+    "weekend-and-casual-fragrances",
+    "woody-fragrances-explained",
+    "office-and-professional-fragrances",
     "what-makes-a-signature-scent",
   ],
   academyCategories: [
@@ -76,8 +79,9 @@ export const aventusInspired: FragranceKnowledge = {
   learningPath: [
     "the-note-pyramid-explained",
     "guide-to-fragrance-families",
+    "weekend-and-casual-fragrances",
+    "office-and-professional-fragrances",
     "what-makes-a-signature-scent",
-    "how-to-wear-fragrance",
   ],
 
   // ── Relationships ─────────────────────────────────────────────────────────────

@@ -62,8 +62,11 @@ export const bleuDeChanelInspired: FragranceKnowledge = {
 
   // ── Academy integration ───────────────────────────────────────────────────────
   academyArticleIds: [
+    "the-note-pyramid-explained",
     "guide-to-fragrance-families",
-    "how-to-wear-fragrance",
+    "fresh-citrus-and-aquatic-fragrances",
+    "woody-fragrances-explained",
+    "office-and-professional-fragrances",
     "what-makes-a-signature-scent",
   ],
   academyCategories: [
@@ -77,7 +80,9 @@ export const bleuDeChanelInspired: FragranceKnowledge = {
   learningPath: [
     "the-note-pyramid-explained",
     "guide-to-fragrance-families",
-    "how-to-wear-fragrance",
+    "fresh-citrus-and-aquatic-fragrances",
+    "office-and-professional-fragrances",
+    "choosing-your-season-scent",
   ],
 
   // ── Relationships ─────────────────────────────────────────────────────────────

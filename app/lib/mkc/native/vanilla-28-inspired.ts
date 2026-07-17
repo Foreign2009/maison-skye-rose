@@ -62,7 +62,14 @@ export const vanilla28Inspired: FragranceKnowledge = {
   // ── Education ───────────────────────────────────────────────────────────────
   subtitle      : "Creamy Warmth",
   description   : "Opens with vanilla extract and pink pepper—warm spice meeting creamy sweetness. Brown sugar and tonka bean deepen into a honeyed heart, while amber and sandalwood settle into skin like cashmere against bare warmth. A fragrance that feels like indulgence without excess.",
-  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "choosing-your-season-scent", "how-to-layer-fragrances"],
+  academyArticleIds: [
+    "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "vanilla-and-amber-the-warm-base",
+    "oriental-and-amber-fragrances",
+    "evening-and-date-night-fragrances",
+    "choosing-your-season-scent",
+  ],
   academyCategories: ["fragrance-families", "the-note-pyramid", "occasions-and-style"],
   educationTags : [
     "vanilla",
@@ -76,7 +83,13 @@ export const vanilla28Inspired: FragranceKnowledge = {
     "gourmand",
     "sandalwood",
   ],
-  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "choosing-your-season-scent", "how-to-layer-fragrances"],
+  learningPath  : [
+    "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "vanilla-and-amber-the-warm-base",
+    "evening-and-date-night-fragrances",
+    "choosing-your-season-scent",
+  ],
 
   // ── Intelligence ────────────────────────────────────────────────────────────
   // Approximated from profile + season. Calibrated by Intelligence Producer in P2.

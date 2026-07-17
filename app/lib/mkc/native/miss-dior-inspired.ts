@@ -68,7 +68,14 @@ export const missDiorInspired: FragranceKnowledge = {
   // ── Education ───────────────────────────────────────────────────────────────
   subtitle      : "Luminous Refinement",
   description   : "A luminous rose opens with citrus brightness, unfolding into peony and jasmine that feels both refined and gently playful. The composition settles into warm vanilla and musk, creating an elegant second skin that carries the intimacy of luxury without pretense.",
-  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "what-makes-a-signature-scent", "how-to-layer-fragrances"],
+  academyArticleIds: [
+    "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "the-world-of-floral-fragrances",
+    "office-and-professional-fragrances",
+    "what-makes-a-signature-scent",
+    "how-to-layer-fragrances",
+  ],
   academyCategories: ["fragrance-families", "the-note-pyramid", "occasions-and-style"],
   educationTags : [
     "floral",
@@ -82,7 +89,13 @@ export const missDiorInspired: FragranceKnowledge = {
     "everyday-wear",
     "luxury",
   ],
-  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "what-makes-a-signature-scent", "how-to-layer-fragrances"],
+  learningPath  : [
+    "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "the-world-of-floral-fragrances",
+    "office-and-professional-fragrances",
+    "choosing-your-season-scent",
+  ],
 
   // ── Intelligence ────────────────────────────────────────────────────────────
   // Approximated from profile + season. Calibrated by Intelligence Producer in P2.

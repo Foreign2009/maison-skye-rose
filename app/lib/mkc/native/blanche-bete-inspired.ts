@@ -62,7 +62,14 @@ export const blancheBeteInspired: FragranceKnowledge = {
   // ── Education ───────────────────────────────────────────────────────────────
   subtitle      : "Soft Luxury",
   description   : "Milky bergamot and neroli dissolve into tuberose and vanilla absolute, a white floral wrapped in warm sandalwood and creamy amber. Addictive and intimate, it settles on skin like cashmere—soft, enveloping, impossibly close.",
-  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances", "how-to-wear-fragrance"],
+  academyArticleIds: [
+    "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "gourmand-fragrances-guide",
+    "the-world-of-floral-fragrances",
+    "evening-and-date-night-fragrances",
+    "how-to-layer-fragrances",
+  ],
   academyCategories: ["fragrance-families", "the-note-pyramid", "wear-and-application"],
   educationTags : [
     "gourmand",
@@ -76,7 +83,13 @@ export const blancheBeteInspired: FragranceKnowledge = {
     "long-wearing",
     "sensual",
   ],
-  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances"],
+  learningPath  : [
+    "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "gourmand-fragrances-guide",
+    "evening-and-date-night-fragrances",
+    "choosing-your-season-scent",
+  ],
 
   // ── Intelligence ────────────────────────────────────────────────────────────
   // Approximated from profile + season. Calibrated by Intelligence Producer in P2.

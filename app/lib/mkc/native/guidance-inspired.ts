@@ -61,7 +61,14 @@ export const guidanceInspired: FragranceKnowledge = {
   // ── Education ───────────────────────────────────────────────────────────────
   subtitle      : "Radiant Depth",
   description   : "Pear and pink pepper ignite a bright opening before rose absolute and jasmine settle into a warm, enveloping heart. Sandalwood and vanilla bourbon create a luminous base that whispers rather than shouts, drawing the wearer into its amber-tinged orbit.",
-  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "choosing-your-season-scent", "how-to-wear-fragrance"],
+  academyArticleIds: [
+    "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "the-world-of-floral-fragrances",
+    "oriental-and-amber-fragrances",
+    "evening-and-date-night-fragrances",
+    "choosing-your-season-scent",
+  ],
   academyCategories: ["fragrance-families", "the-note-pyramid", "occasions-and-style"],
   educationTags : [
     "amber-floral",
@@ -75,7 +82,13 @@ export const guidanceInspired: FragranceKnowledge = {
     "long-wearing",
     "rich",
   ],
-  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "choosing-your-season-scent", "how-to-wear-fragrance"],
+  learningPath  : [
+    "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "the-world-of-floral-fragrances",
+    "evening-and-date-night-fragrances",
+    "choosing-your-season-scent",
+  ],
 
   // ── Intelligence ────────────────────────────────────────────────────────────
   // Approximated from profile + season. Calibrated by Intelligence Producer in P2.

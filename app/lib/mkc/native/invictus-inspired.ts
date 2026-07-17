@@ -61,7 +61,9 @@ export const invictusInspired: FragranceKnowledge = {
   academyArticleIds: [
     "the-note-pyramid-explained",
     "guide-to-fragrance-families",
-    "choosing-your-season-scent",
+    "fresh-citrus-and-aquatic-fragrances",
+    "woody-fragrances-explained",
+    "office-and-professional-fragrances",
     "what-makes-a-signature-scent",
   ],
   academyCategories: [
@@ -76,8 +78,9 @@ export const invictusInspired: FragranceKnowledge = {
   learningPath: [
     "the-note-pyramid-explained",
     "guide-to-fragrance-families",
+    "fresh-citrus-and-aquatic-fragrances",
+    "office-and-professional-fragrances",
     "choosing-your-season-scent",
-    "what-makes-a-signature-scent",
   ],
 
   // ── Relationships ─────────────────────────────────────────────────────────────

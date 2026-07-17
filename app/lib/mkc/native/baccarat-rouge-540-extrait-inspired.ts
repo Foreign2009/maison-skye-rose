@@ -61,7 +61,14 @@ export const baccaratRouge540ExtraitInspired: FragranceKnowledge = {
   // ── Education ───────────────────────────────────────────────────────────────
   subtitle      : "Radiant Depth",
   description   : "Opens with a sharp burst of almond and pink pepper that softens immediately into saffron and rose absolute—a dark floral that radiates warmth rather than sweetness. Oud and ambergris emerge as the fragrance settles, creating a resinous, almost tactile second skin that lingers between sandalwood and vanilla absolute, deep and utterly hypnotic.",
-  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances", "choosing-your-season-scent"],
+  academyArticleIds: [
+    "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "woody-fragrances-explained",
+    "oriental-and-amber-fragrances",
+    "evening-and-date-night-fragrances",
+    "choosing-your-season-scent",
+  ],
   academyCategories: ["fragrance-families", "the-note-pyramid", "wear-and-application"],
   educationTags : [
     "amber",
@@ -77,7 +84,13 @@ export const baccaratRouge540ExtraitInspired: FragranceKnowledge = {
     "long-wearing",
     "rich",
   ],
-  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances", "choosing-your-season-scent"],
+  learningPath  : [
+    "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "woody-fragrances-explained",
+    "evening-and-date-night-fragrances",
+    "choosing-your-season-scent",
+  ],
 
   // ── Intelligence ────────────────────────────────────────────────────────────
   // Approximated from profile + season. Calibrated by Intelligence Producer in P2.

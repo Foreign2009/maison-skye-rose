@@ -62,7 +62,14 @@ export const veryGoodGirlInspired: FragranceKnowledge = {
   // ── Education ───────────────────────────────────────────────────────────────
   subtitle      : "Playful Allure",
   description   : "Litchi and pink pepper ignite a playful spark, while rose absolute and peony bloom into soft, creamy warmth with a whisper of almond milk. Vanilla bourbon and sandalwood settle into skin with a sensual, lingering musk that feels both intimate and unapologetic.",
-  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances", "what-makes-a-signature-scent"],
+  academyArticleIds: [
+    "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "the-world-of-floral-fragrances",
+    "weekend-and-casual-fragrances",
+    "office-and-professional-fragrances",
+    "what-makes-a-signature-scent",
+  ],
   academyCategories: ["fragrance-families", "the-note-pyramid", "wear-and-application"],
   educationTags : [
     "floral",
@@ -76,7 +83,13 @@ export const veryGoodGirlInspired: FragranceKnowledge = {
     "spring",
     "playful",
   ],
-  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances"],
+  learningPath  : [
+    "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "the-world-of-floral-fragrances",
+    "office-and-professional-fragrances",
+    "choosing-your-season-scent",
+  ],
 
   // ── Intelligence ────────────────────────────────────────────────────────────
   // Approximated from profile + season. Calibrated by Intelligence Producer in P2.

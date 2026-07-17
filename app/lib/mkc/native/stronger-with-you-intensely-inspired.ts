@@ -61,8 +61,10 @@ export const strongerWithYouIntenselyInspired: FragranceKnowledge = {
   academyArticleIds: [
     "the-note-pyramid-explained",
     "guide-to-fragrance-families",
+    "oriental-and-amber-fragrances",
+    "vanilla-and-amber-the-warm-base",
+    "evening-and-date-night-fragrances",
     "choosing-your-season-scent",
-    "how-to-layer-fragrances",
   ],
   academyCategories: [
     "fragrance-families",
@@ -76,8 +78,9 @@ export const strongerWithYouIntenselyInspired: FragranceKnowledge = {
   learningPath: [
     "the-note-pyramid-explained",
     "guide-to-fragrance-families",
+    "oriental-and-amber-fragrances",
+    "evening-and-date-night-fragrances",
     "choosing-your-season-scent",
-    "how-to-layer-fragrances",
   ],
 
   // ── Relationships ─────────────────────────────────────────────────────────────

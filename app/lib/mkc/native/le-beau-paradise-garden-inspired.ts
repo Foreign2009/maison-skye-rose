@@ -59,8 +59,10 @@ export const leBeauParadiseGardenInspired: FragranceKnowledge = {
 
   // ── Academy integration ───────────────────────────────────────────────────────
   academyArticleIds: [
-    "guide-to-fragrance-families",
     "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "fresh-citrus-and-aquatic-fragrances",
+    "gourmand-fragrances-guide",
     "choosing-your-season-scent",
     "how-to-wear-fragrance",
   ],
@@ -76,8 +78,8 @@ export const leBeauParadiseGardenInspired: FragranceKnowledge = {
   learningPath: [
     "the-note-pyramid-explained",
     "guide-to-fragrance-families",
+    "fresh-citrus-and-aquatic-fragrances",
     "choosing-your-season-scent",
-    "how-to-wear-fragrance",
   ],
 
   // ── Relationships ─────────────────────────────────────────────────────────────

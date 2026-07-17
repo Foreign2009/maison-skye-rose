@@ -61,8 +61,11 @@ export const spicebombExtremeInspired: FragranceKnowledge = {
 
   // ── Academy integration ───────────────────────────────────────────────────────
   academyArticleIds: [
+    "the-note-pyramid-explained",
     "guide-to-fragrance-families",
-    "choosing-your-season-scent",
+    "oriental-and-amber-fragrances",
+    "oud-the-worlds-most-complex-ingredient",
+    "evening-and-date-night-fragrances",
     "what-makes-a-signature-scent",
   ],
   academyCategories: [
@@ -76,6 +79,8 @@ export const spicebombExtremeInspired: FragranceKnowledge = {
   learningPath: [
     "the-note-pyramid-explained",
     "guide-to-fragrance-families",
+    "oriental-and-amber-fragrances",
+    "evening-and-date-night-fragrances",
     "choosing-your-season-scent",
   ],
 

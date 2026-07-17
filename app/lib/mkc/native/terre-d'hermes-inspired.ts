@@ -62,9 +62,12 @@ export const terreDHermesInspired: FragranceKnowledge = {
 
   // ── Academy integration ───────────────────────────────────────────────────────
   academyArticleIds: [
+    "the-note-pyramid-explained",
     "guide-to-fragrance-families",
+    "fresh-citrus-and-aquatic-fragrances",
+    "woody-fragrances-explained",
+    "office-and-professional-fragrances",
     "what-makes-a-signature-scent",
-    "how-to-wear-fragrance",
   ],
   academyCategories: [
     "fragrance-families",
@@ -77,6 +80,8 @@ export const terreDHermesInspired: FragranceKnowledge = {
   learningPath: [
     "the-note-pyramid-explained",
     "guide-to-fragrance-families",
+    "fresh-citrus-and-aquatic-fragrances",
+    "office-and-professional-fragrances",
     "what-makes-a-signature-scent",
   ],
 

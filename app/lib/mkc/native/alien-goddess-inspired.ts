@@ -68,7 +68,14 @@ export const alienGoddessInspired: FragranceKnowledge = {
   // ── Education ───────────────────────────────────────────────────────────────
   subtitle      : "Radiant Bloom",
   description   : "Coconut milk and yuzu open with sun-drenched clarity, yielding to a luminous heart of jasmine sambac and tuberose that blooms without apology. Vanilla absolute and sandalwood anchor the composition in warm, creamy depth—a fragrance that radiates from within.",
-  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances", "choosing-your-season-scent"],
+  academyArticleIds: [
+    "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "vanilla-and-amber-the-warm-base",
+    "the-world-of-floral-fragrances",
+    "office-and-professional-fragrances",
+    "choosing-your-season-scent",
+  ],
   academyCategories: ["fragrance-families", "the-note-pyramid", "wear-and-application"],
   educationTags : [
     "vanilla",
@@ -82,7 +89,13 @@ export const alienGoddessInspired: FragranceKnowledge = {
     "layering",
     "tropical",
   ],
-  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances", "choosing-your-season-scent"],
+  learningPath  : [
+    "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "vanilla-and-amber-the-warm-base",
+    "office-and-professional-fragrances",
+    "choosing-your-season-scent",
+  ],
 
   // ── Intelligence ────────────────────────────────────────────────────────────
   // Approximated from profile + season. Calibrated by Intelligence Producer in P2.

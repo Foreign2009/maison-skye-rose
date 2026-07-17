@@ -60,7 +60,14 @@ export const armaniSiInspired: FragranceKnowledge = {
   // ── Education ───────────────────────────────────────────────────────────────
   subtitle      : "Radiant Restraint",
   description   : "Blackcurrant and bergamot open with a whisper of pink pepper, giving way to a heart of rose absolute and freesia that unfolds with measured grace. Vanilla and patchouli anchor the composition, creating a chypre that feels both luminous and grounded—a fragrance that moves through the day without announcement.",
-  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances", "how-to-wear-fragrance"],
+  academyArticleIds: [
+    "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "weekend-and-casual-fragrances",
+    "oriental-and-amber-fragrances",
+    "office-and-professional-fragrances",
+    "how-to-layer-fragrances",
+  ],
   academyCategories: ["fragrance-families", "the-note-pyramid", "wear-and-application"],
   educationTags : [
     "fruity",
@@ -74,7 +81,13 @@ export const armaniSiInspired: FragranceKnowledge = {
     "office",
     "daily-wear",
   ],
-  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances", "how-to-wear-fragrance"],
+  learningPath  : [
+    "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "weekend-and-casual-fragrances",
+    "office-and-professional-fragrances",
+    "how-to-layer-fragrances",
+  ],
 
   // ── Intelligence ────────────────────────────────────────────────────────────
   // Approximated from profile + season. Calibrated by Intelligence Producer in P2.

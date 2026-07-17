@@ -68,7 +68,14 @@ export const weddingSilkSantalInspired: FragranceKnowledge = {
   // ── Education ───────────────────────────────────────────────────────────────
   subtitle      : "Soft Luxury",
   description   : "Champagne and neroli open into a luminous heart of tuberose and vanilla absolute, where creamy sandalwood and white musk create an intimate second skin. The fragrance settles into warm amber resin and soft sandalwood, a gentle veil of luxury that feels both ceremonial and deeply personal.",
-  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances", "what-makes-a-signature-scent"],
+  academyArticleIds: [
+    "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "vanilla-and-amber-the-warm-base",
+    "the-world-of-floral-fragrances",
+    "office-and-professional-fragrances",
+    "what-makes-a-signature-scent",
+  ],
   academyCategories: ["fragrance-families", "the-note-pyramid", "wear-and-application"],
   educationTags : [
     "vanilla",
@@ -82,7 +89,13 @@ export const weddingSilkSantalInspired: FragranceKnowledge = {
     "all-season",
     "office-wear",
   ],
-  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances", "what-makes-a-signature-scent"],
+  learningPath  : [
+    "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "vanilla-and-amber-the-warm-base",
+    "office-and-professional-fragrances",
+    "how-to-layer-fragrances",
+  ],
 
   // ── Intelligence ────────────────────────────────────────────────────────────
   // Approximated from profile + season. Calibrated by Intelligence Producer in P2.

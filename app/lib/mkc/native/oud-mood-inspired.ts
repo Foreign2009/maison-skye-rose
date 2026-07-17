@@ -61,7 +61,14 @@ export const oudMoodInspired: FragranceKnowledge = {
   // ── Education ───────────────────────────────────────────────────────────────
   subtitle      : "Honeyed Darkness",
   description   : "Oud distillate and black cardamom open with austere spice, then settle into a warm embrace of amber resin and labdanum. Caramel absolute and sandalwood deepen the base into something honeyed and intimate—a fragrance that wraps rather than announces.",
-  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances", "choosing-your-season-scent"],
+  academyArticleIds: [
+    "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "oriental-and-amber-fragrances",
+    "oud-the-worlds-most-complex-ingredient",
+    "evening-and-date-night-fragrances",
+    "choosing-your-season-scent",
+  ],
   academyCategories: ["fragrance-families", "the-note-pyramid", "occasions-and-style"],
   educationTags : [
     "oud",
@@ -77,7 +84,13 @@ export const oudMoodInspired: FragranceKnowledge = {
     "date-night",
     "woody-amber",
   ],
-  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "choosing-your-season-scent", "how-to-layer-fragrances"],
+  learningPath  : [
+    "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "oriental-and-amber-fragrances",
+    "evening-and-date-night-fragrances",
+    "choosing-your-season-scent",
+  ],
 
   // ── Intelligence ────────────────────────────────────────────────────────────
   // Approximated from profile + season. Calibrated by Intelligence Producer in P2.

@@ -62,9 +62,12 @@ export const hacivatInspired: FragranceKnowledge = {
 
   // ── Academy integration ───────────────────────────────────────────────────────
   academyArticleIds: [
-    "guide-to-fragrance-families",
-    "what-makes-a-signature-scent",
     "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "weekend-and-casual-fragrances",
+    "woody-fragrances-explained",
+    "office-and-professional-fragrances",
+    "what-makes-a-signature-scent",
   ],
   academyCategories: [
     "fragrance-families",
@@ -77,8 +80,9 @@ export const hacivatInspired: FragranceKnowledge = {
   learningPath: [
     "the-note-pyramid-explained",
     "guide-to-fragrance-families",
+    "weekend-and-casual-fragrances",
+    "office-and-professional-fragrances",
     "what-makes-a-signature-scent",
-    "how-to-wear-fragrance",
   ],
 
   // ── Relationships ─────────────────────────────────────────────────────────────

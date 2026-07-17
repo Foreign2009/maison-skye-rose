@@ -61,7 +61,14 @@ export const hibiscusMahajadInspired: FragranceKnowledge = {
   // ── Education ───────────────────────────────────────────────────────────────
   subtitle      : "Floral Defiance",
   description   : "Hibiscus absolute opens with a sharp floral declaration, cut through pink pepper and bergamot into an iris-centered heart of rose and resinous opoponax. Leather grounds the composition—not aggressive, but present—while vetiver and ambroxan create a warm, textured finish that feels both intimate and artistic.",
-  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-wear-fragrance", "what-makes-a-signature-scent"],
+  academyArticleIds: [
+    "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "oud-the-worlds-most-complex-ingredient",
+    "the-world-of-floral-fragrances",
+    "office-and-professional-fragrances",
+    "what-makes-a-signature-scent",
+  ],
   academyCategories: ["fragrance-families", "the-note-pyramid", "wear-and-application"],
   educationTags : [
     "leather",
@@ -75,7 +82,13 @@ export const hibiscusMahajadInspired: FragranceKnowledge = {
     "office-wear",
     "signature-scent",
   ],
-  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-wear-fragrance", "what-makes-a-signature-scent"],
+  learningPath  : [
+    "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "oud-the-worlds-most-complex-ingredient",
+    "office-and-professional-fragrances",
+    "how-to-wear-fragrance",
+  ],
 
   // ── Intelligence ────────────────────────────────────────────────────────────
   // Approximated from profile + season. Calibrated by Intelligence Producer in P2.

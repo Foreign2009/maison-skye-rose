@@ -59,10 +59,12 @@ export const valentinoUomoBornInRomaInspired: FragranceKnowledge = {
 
   // ── Academy integration ───────────────────────────────────────────────────────
   academyArticleIds: [
-    "what-makes-a-signature-scent",
-    "guide-to-fragrance-families",
     "the-note-pyramid-explained",
-    "choosing-your-season-scent",
+    "guide-to-fragrance-families",
+    "fresh-citrus-and-aquatic-fragrances",
+    "woody-fragrances-explained",
+    "office-and-professional-fragrances",
+    "what-makes-a-signature-scent",
   ],
   academyCategories: [
     "fragrance-fundamentals",
@@ -74,10 +76,11 @@ export const valentinoUomoBornInRomaInspired: FragranceKnowledge = {
     "all-season", "professional", "versatile", "refined", "italian",
   ],
   learningPath: [
-    "what-makes-a-signature-scent",
-    "guide-to-fragrance-families",
     "the-note-pyramid-explained",
-    "choosing-your-season-scent",
+    "guide-to-fragrance-families",
+    "fresh-citrus-and-aquatic-fragrances",
+    "office-and-professional-fragrances",
+    "what-makes-a-signature-scent",
   ],
 
   // ── Relationships ─────────────────────────────────────────────────────────────

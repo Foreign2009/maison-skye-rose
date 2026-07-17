@@ -61,7 +61,14 @@ export const silverMountainWaterInspired: FragranceKnowledge = {
   // ── Education ───────────────────────────────────────────────────────────────
   subtitle      : "Luminous Clarity",
   description   : "Bergamot and lemon zest open into a crystalline landscape where green tea and cucumber accord meet white peony—a composition that feels both luminous and grounded. Musk and cedarwood anchor the freshness without weight, leaving skin cool and radiant.",
-  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "choosing-your-season-scent", "how-to-wear-fragrance"],
+  academyArticleIds: [
+    "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "fresh-citrus-and-aquatic-fragrances",
+    "office-and-professional-fragrances",
+    "choosing-your-season-scent",
+    "how-to-wear-fragrance",
+  ],
   academyCategories: ["fragrance-families", "the-note-pyramid", "occasions-and-style"],
   educationTags : [
     "citrus",
@@ -75,7 +82,13 @@ export const silverMountainWaterInspired: FragranceKnowledge = {
     "clean",
     "light",
   ],
-  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "choosing-your-season-scent"],
+  learningPath  : [
+    "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "fresh-citrus-and-aquatic-fragrances",
+    "office-and-professional-fragrances",
+    "choosing-your-season-scent",
+  ],
 
   // ── Intelligence ────────────────────────────────────────────────────────────
   // Approximated from profile + season. Calibrated by Intelligence Producer in P2.

@@ -62,7 +62,14 @@ export const afternoonSwimInspired: FragranceKnowledge = {
   // ── Education ───────────────────────────────────────────────────────────────
   subtitle      : "Bright Arrival",
   description   : "Blood orange and neroli open with a bright, almost salt-tinged clarity, while petrichor and white tea anchor the heart in something more grounded—less escape, more arrival. Ambroxan and sandalwood dry down to skin-warm amber, creating a fragrance that feels both energized and intimate.",
-  academyArticleIds: ["guide-to-fragrance-families", "choosing-your-season-scent", "the-note-pyramid-explained", "how-to-wear-fragrance"],
+  academyArticleIds: [
+    "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "fresh-citrus-and-aquatic-fragrances",
+    "office-and-professional-fragrances",
+    "choosing-your-season-scent",
+    "how-to-wear-fragrance",
+  ],
   academyCategories: ["fragrance-families", "occasions-and-style", "the-note-pyramid"],
   educationTags : [
     "citrus",
@@ -76,7 +83,13 @@ export const afternoonSwimInspired: FragranceKnowledge = {
     "clean",
     "aquatic",
   ],
-  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "choosing-your-season-scent", "how-to-wear-fragrance"],
+  learningPath  : [
+    "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "fresh-citrus-and-aquatic-fragrances",
+    "office-and-professional-fragrances",
+    "choosing-your-season-scent",
+  ],
 
   // ── Intelligence ────────────────────────────────────────────────────────────
   // Approximated from profile + season. Calibrated by Intelligence Producer in P2.

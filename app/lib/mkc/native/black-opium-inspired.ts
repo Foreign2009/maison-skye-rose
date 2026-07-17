@@ -62,7 +62,14 @@ export const blackOpiumInspired: FragranceKnowledge = {
   // ── Education ───────────────────────────────────────────────────────────────
   subtitle      : "Velvet Night",
   description   : "Espresso and pink pepper ignite on skin, yielding to a heart of red rose and Madagascar vanilla that lingers with the warmth of tonka and sandalwood. Sensual without surrender, addictive without apology—a fragrance that wraps around you like velvet in darkness.",
-  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances", "choosing-your-season-scent"],
+  academyArticleIds: [
+    "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "gourmand-fragrances-guide",
+    "vanilla-and-amber-the-warm-base",
+    "evening-and-date-night-fragrances",
+    "choosing-your-season-scent",
+  ],
   academyCategories: ["fragrance-families", "the-note-pyramid", "occasions-and-style"],
   educationTags : [
     "gourmand",
@@ -76,7 +83,13 @@ export const blackOpiumInspired: FragranceKnowledge = {
     "rich",
     "long-wearing",
   ],
-  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "choosing-your-season-scent", "how-to-layer-fragrances"],
+  learningPath  : [
+    "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "gourmand-fragrances-guide",
+    "evening-and-date-night-fragrances",
+    "choosing-your-season-scent",
+  ],
 
   // ── Intelligence ────────────────────────────────────────────────────────────
   // Approximated from profile + season. Calibrated by Intelligence Producer in P2.

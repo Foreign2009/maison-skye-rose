@@ -61,7 +61,14 @@ export const delinaExclusifInspired: FragranceKnowledge = {
   // ── Education ───────────────────────────────────────────────────────────────
   subtitle      : "Opulent Warmth",
   description   : "Pink peppercorn and bergamot ignite with a sharp, crystalline brightness before the composition settles into rose absolute and vanilla bourbon—a dense, honeyed heart that feels both intimate and grand. Incense and ambroxan anchor the fragrance in warmth, creating a lingering halo of amber smoke that deepens against skin.",
-  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances", "choosing-your-season-scent"],
+  academyArticleIds: [
+    "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "oriental-and-amber-fragrances",
+    "the-world-of-floral-fragrances",
+    "evening-and-date-night-fragrances",
+    "choosing-your-season-scent",
+  ],
   academyCategories: ["fragrance-families", "the-note-pyramid", "wear-and-application"],
   educationTags : [
     "amber",
@@ -75,7 +82,13 @@ export const delinaExclusifInspired: FragranceKnowledge = {
     "winter",
     "date-night",
   ],
-  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances"],
+  learningPath  : [
+    "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "oriental-and-amber-fragrances",
+    "evening-and-date-night-fragrances",
+    "choosing-your-season-scent",
+  ],
 
   // ── Intelligence ────────────────────────────────────────────────────────────
   // Approximated from profile + season. Calibrated by Intelligence Producer in P2.

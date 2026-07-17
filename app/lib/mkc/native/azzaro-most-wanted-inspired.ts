@@ -61,8 +61,10 @@ export const azzaroMostWantedInspired: FragranceKnowledge = {
   academyArticleIds: [
     "the-note-pyramid-explained",
     "guide-to-fragrance-families",
+    "oriental-and-amber-fragrances",
+    "gourmand-fragrances-guide",
+    "evening-and-date-night-fragrances",
     "what-makes-a-signature-scent",
-    "choosing-your-season-scent",
   ],
   academyCategories: [
     "fragrance-families",
@@ -76,7 +78,8 @@ export const azzaroMostWantedInspired: FragranceKnowledge = {
   learningPath: [
     "the-note-pyramid-explained",
     "guide-to-fragrance-families",
-    "what-makes-a-signature-scent",
+    "oriental-and-amber-fragrances",
+    "evening-and-date-night-fragrances",
     "choosing-your-season-scent",
   ],
 

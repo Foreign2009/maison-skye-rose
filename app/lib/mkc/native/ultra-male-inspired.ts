@@ -62,9 +62,11 @@ export const ultraMaleInspired: FragranceKnowledge = {
 
   // ── Academy integration ───────────────────────────────────────────────────────
   academyArticleIds: [
-    "guide-to-fragrance-families",
     "the-note-pyramid-explained",
-    "choosing-your-season-scent",
+    "guide-to-fragrance-families",
+    "gourmand-fragrances-guide",
+    "oriental-and-amber-fragrances",
+    "evening-and-date-night-fragrances",
     "what-makes-a-signature-scent",
   ],
   academyCategories: [
@@ -79,8 +81,9 @@ export const ultraMaleInspired: FragranceKnowledge = {
   learningPath: [
     "the-note-pyramid-explained",
     "guide-to-fragrance-families",
+    "gourmand-fragrances-guide",
+    "evening-and-date-night-fragrances",
     "choosing-your-season-scent",
-    "what-makes-a-signature-scent",
   ],
 
   // ── Relationships ─────────────────────────────────────────────────────────────

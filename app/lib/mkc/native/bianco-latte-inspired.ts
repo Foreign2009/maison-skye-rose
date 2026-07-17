@@ -63,9 +63,11 @@ export const biancoLatteInspired: FragranceKnowledge = {
 
   // ── Academy integration ───────────────────────────────────────────────────────
   academyArticleIds: [
-    "guide-to-fragrance-families",
     "the-note-pyramid-explained",
-    "how-to-layer-fragrances",
+    "guide-to-fragrance-families",
+    "gourmand-fragrances-guide",
+    "the-world-of-floral-fragrances",
+    "office-and-professional-fragrances",
     "choosing-your-season-scent",
   ],
   academyCategories: [
@@ -81,8 +83,9 @@ export const biancoLatteInspired: FragranceKnowledge = {
   learningPath: [
     "the-note-pyramid-explained",
     "guide-to-fragrance-families",
+    "gourmand-fragrances-guide",
+    "office-and-professional-fragrances",
     "how-to-layer-fragrances",
-    "choosing-your-season-scent",
   ],
 
   // ── Relationships ─────────────────────────────────────────────────────────────

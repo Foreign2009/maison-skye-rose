@@ -66,10 +66,12 @@ export const poisonGirlInspired: FragranceKnowledge = {
 
   // ── Academy integration ───────────────────────────────────────────────────────
   academyArticleIds: [
-    "guide-to-fragrance-families",
     "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "gourmand-fragrances-guide",
+    "oriental-and-amber-fragrances",
+    "evening-and-date-night-fragrances",
     "what-makes-a-signature-scent",
-    "choosing-your-season-scent",
   ],
   academyCategories: [
     "fragrance-families",
@@ -84,7 +86,8 @@ export const poisonGirlInspired: FragranceKnowledge = {
   learningPath: [
     "the-note-pyramid-explained",
     "guide-to-fragrance-families",
-    "what-makes-a-signature-scent",
+    "gourmand-fragrances-guide",
+    "evening-and-date-night-fragrances",
     "choosing-your-season-scent",
   ],
 

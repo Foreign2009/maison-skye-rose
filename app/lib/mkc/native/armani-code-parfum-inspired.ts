@@ -59,10 +59,12 @@ export const armaniCodeParfumInspired: FragranceKnowledge = {
 
   // ── Academy integration ───────────────────────────────────────────────────────
   academyArticleIds: [
-    "what-makes-a-signature-scent",
-    "guide-to-fragrance-families",
     "the-note-pyramid-explained",
-    "choosing-your-season-scent",
+    "guide-to-fragrance-families",
+    "woody-fragrances-explained",
+    "fresh-citrus-and-aquatic-fragrances",
+    "evening-and-date-night-fragrances",
+    "what-makes-a-signature-scent",
   ],
   academyCategories: [
     "fragrance-fundamentals",
@@ -74,9 +76,10 @@ export const armaniCodeParfumInspired: FragranceKnowledge = {
     "aromatic", "woody", "masculine", "winter", "autumn", "evening", "elegant", "refined",
   ],
   learningPath: [
-    "what-makes-a-signature-scent",
-    "guide-to-fragrance-families",
     "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "woody-fragrances-explained",
+    "evening-and-date-night-fragrances",
     "choosing-your-season-scent",
   ],
 

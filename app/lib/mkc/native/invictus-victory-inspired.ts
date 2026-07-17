@@ -59,10 +59,12 @@ export const invictusVictoryInspired: FragranceKnowledge = {
 
   // ── Academy integration ───────────────────────────────────────────────────────
   academyArticleIds: [
-    "guide-to-fragrance-families",
     "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "oriental-and-amber-fragrances",
+    "vanilla-and-amber-the-warm-base",
+    "evening-and-date-night-fragrances",
     "choosing-your-season-scent",
-    "how-to-wear-fragrance",
   ],
   academyCategories: [
     "fragrance-families",
@@ -74,10 +76,11 @@ export const invictusVictoryInspired: FragranceKnowledge = {
     "masculine", "winter", "autumn", "sweet", "bold", "powerful", "sexy", "warm",
   ],
   learningPath: [
-    "guide-to-fragrance-families",
     "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "oriental-and-amber-fragrances",
+    "evening-and-date-night-fragrances",
     "choosing-your-season-scent",
-    "how-to-wear-fragrance",
   ],
 
   // ── Relationships ─────────────────────────────────────────────────────────────

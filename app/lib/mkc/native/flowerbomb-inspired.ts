@@ -67,7 +67,14 @@ export const flowerbombInspired: FragranceKnowledge = {
   // ── Education ───────────────────────────────────────────────────────────────
   subtitle      : "Blooming Seduction",
   description   : "Bergamot and grapefruit ignite a luminous opening before rose absolute and tuberose bloom into a heady, intoxicating heart. Patchouli and amber ground the composition in sensual warmth, while vanilla bourbon adds a whisper of sweetness that lingers on skin like silk.",
-  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances", "choosing-your-season-scent"],
+  academyArticleIds: [
+    "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "the-world-of-floral-fragrances",
+    "gourmand-fragrances-guide",
+    "office-and-professional-fragrances",
+    "choosing-your-season-scent",
+  ],
   academyCategories: ["fragrance-families", "the-note-pyramid", "occasions-and-style"],
   educationTags : [
     "floral",
@@ -81,7 +88,13 @@ export const flowerbombInspired: FragranceKnowledge = {
     "layering",
     "amber-vanilla",
   ],
-  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances"],
+  learningPath  : [
+    "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "the-world-of-floral-fragrances",
+    "office-and-professional-fragrances",
+    "choosing-your-season-scent",
+  ],
 
   // ── Intelligence ────────────────────────────────────────────────────────────
   // Approximated from profile + season. Calibrated by Intelligence Producer in P2.

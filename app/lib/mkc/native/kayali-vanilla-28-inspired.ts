@@ -62,7 +62,14 @@ export const kayaliVanilla28Inspired: FragranceKnowledge = {
   // ── Education ───────────────────────────────────────────────────────────────
   subtitle      : "Creamy Warmth",
   description   : "Vanilla Bourbon and pink pepper open with gentle spice, surrendering immediately to a creamy heart of tonka bean and rose absolute—a pairing that tastes as much as it smells. Amber resin and sandalwood anchor the composition in warm skin, creating a fragrance that feels like a whispered indulgence rather than a shout.",
-  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances", "choosing-your-season-scent"],
+  academyArticleIds: [
+    "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "gourmand-fragrances-guide",
+    "vanilla-and-amber-the-warm-base",
+    "evening-and-date-night-fragrances",
+    "choosing-your-season-scent",
+  ],
   academyCategories: ["fragrance-families", "the-note-pyramid", "occasions-and-style"],
   educationTags : [
     "vanilla",
@@ -76,7 +83,13 @@ export const kayaliVanilla28Inspired: FragranceKnowledge = {
     "date-night",
     "layering",
   ],
-  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "choosing-your-season-scent", "how-to-layer-fragrances"],
+  learningPath  : [
+    "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "gourmand-fragrances-guide",
+    "evening-and-date-night-fragrances",
+    "choosing-your-season-scent",
+  ],
 
   // ── Intelligence ────────────────────────────────────────────────────────────
   // Approximated from profile + season. Calibrated by Intelligence Producer in P2.

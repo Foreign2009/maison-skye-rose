@@ -62,7 +62,14 @@ export const goodGirlInspired: FragranceKnowledge = {
   // ── Education ───────────────────────────────────────────────────────────────
   subtitle      : "Velvet Audacity",
   description   : "Pink pepper and bergamot ignite with tonka bean's honeyed warmth, giving way to a cocoa-dusted heart of tuberose and almond milk that feels both creamy and carnivorous. Jasmine sambac and vanilla bourbon settle into amber resin, building a fragrance of confident sweetness—the kind that lingers on skin like a second heartbeat.",
-  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "choosing-your-season-scent", "how-to-layer-fragrances"],
+  academyArticleIds: [
+    "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "oriental-and-amber-fragrances",
+    "gourmand-fragrances-guide",
+    "evening-and-date-night-fragrances",
+    "choosing-your-season-scent",
+  ],
   academyCategories: ["fragrance-families", "the-note-pyramid", "occasions-and-style"],
   educationTags : [
     "amber",
@@ -78,7 +85,13 @@ export const goodGirlInspired: FragranceKnowledge = {
     "date-night",
     "long-wearing",
   ],
-  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "choosing-your-season-scent", "how-to-layer-fragrances"],
+  learningPath  : [
+    "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "oriental-and-amber-fragrances",
+    "evening-and-date-night-fragrances",
+    "choosing-your-season-scent",
+  ],
 
   // ── Intelligence ────────────────────────────────────────────────────────────
   // Approximated from profile + season. Calibrated by Intelligence Producer in P2.

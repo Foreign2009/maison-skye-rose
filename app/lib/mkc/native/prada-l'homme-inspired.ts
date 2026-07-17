@@ -64,6 +64,9 @@ export const pradaLHommeInspired: FragranceKnowledge = {
   academyArticleIds: [
     "the-note-pyramid-explained",
     "guide-to-fragrance-families",
+    "woody-fragrances-explained",
+    "fresh-citrus-and-aquatic-fragrances",
+    "office-and-professional-fragrances",
     "how-to-wear-fragrance",
   ],
   academyCategories: [
@@ -77,7 +80,9 @@ export const pradaLHommeInspired: FragranceKnowledge = {
   learningPath: [
     "the-note-pyramid-explained",
     "guide-to-fragrance-families",
-    "how-to-wear-fragrance",
+    "woody-fragrances-explained",
+    "office-and-professional-fragrances",
+    "what-makes-a-signature-scent",
   ],
 
   // ── Relationships ─────────────────────────────────────────────────────────────

@@ -61,7 +61,14 @@ export const kirkeOverdoseInspired: FragranceKnowledge = {
   // ── Education ───────────────────────────────────────────────────────────────
   subtitle      : "Velvet Frenzy",
   description   : "Passionfruit and grapefruit detonate against pink pepper, then dissolve into creamy peach and tuberose that cling to skin like silk. A muscular amber and sandalwood base transforms the sweetness into something feral and hypnotic—luxury that refuses to whisper.",
-  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "choosing-your-season-scent", "how-to-layer-fragrances"],
+  academyArticleIds: [
+    "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "weekend-and-casual-fragrances",
+    "musks-the-hidden-foundation",
+    "office-and-professional-fragrances",
+    "choosing-your-season-scent",
+  ],
   academyCategories: ["fragrance-families", "the-note-pyramid", "occasions-and-style"],
   educationTags : [
     "fruity-musk",
@@ -76,7 +83,13 @@ export const kirkeOverdoseInspired: FragranceKnowledge = {
     "signature",
     "unisex",
   ],
-  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "choosing-your-season-scent", "how-to-layer-fragrances"],
+  learningPath  : [
+    "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "weekend-and-casual-fragrances",
+    "office-and-professional-fragrances",
+    "choosing-your-season-scent",
+  ],
 
   // ── Intelligence ────────────────────────────────────────────────────────────
   // Approximated from profile + season. Calibrated by Intelligence Producer in P2.

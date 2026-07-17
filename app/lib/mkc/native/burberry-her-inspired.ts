@@ -61,7 +61,14 @@ export const burberryHerInspired: FragranceKnowledge = {
   // ── Education ───────────────────────────────────────────────────────────────
   subtitle      : "Velvet Sweetness",
   description   : "Strawberry and bergamot open with a whisper of pink pepper, catching light like summer skin. The heart softens into raspberry and peony, anchored by the creamy tenderness of almond milk, while vanilla and tonka bean create a warm, lingering sweetness that feels both indulgent and effortless.",
-  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "choosing-your-season-scent", "how-to-wear-fragrance"],
+  academyArticleIds: [
+    "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "gourmand-fragrances-guide",
+    "weekend-and-casual-fragrances",
+    "office-and-professional-fragrances",
+    "choosing-your-season-scent",
+  ],
   academyCategories: ["fragrance-families", "the-note-pyramid", "occasions-and-style"],
   educationTags : [
     "gourmand",
@@ -75,7 +82,13 @@ export const burberryHerInspired: FragranceKnowledge = {
     "long-wearing",
     "feminine",
   ],
-  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "choosing-your-season-scent"],
+  learningPath  : [
+    "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "gourmand-fragrances-guide",
+    "office-and-professional-fragrances",
+    "choosing-your-season-scent",
+  ],
 
   // ── Intelligence ────────────────────────────────────────────────────────────
   // Approximated from profile + season. Calibrated by Intelligence Producer in P2.

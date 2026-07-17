@@ -66,10 +66,12 @@ export const baccaratRouge540Inspired: FragranceKnowledge = {
 
   // ── Academy integration ───────────────────────────────────────────────────────
   academyArticleIds: [
-    "guide-to-fragrance-families",
-    "what-makes-a-signature-scent",
     "the-note-pyramid-explained",
-    "how-to-wear-fragrance",
+    "guide-to-fragrance-families",
+    "oriental-and-amber-fragrances",
+    "the-world-of-floral-fragrances",
+    "evening-and-date-night-fragrances",
+    "what-makes-a-signature-scent",
   ],
   academyCategories: [
     "fragrance-families",
@@ -83,8 +85,9 @@ export const baccaratRouge540Inspired: FragranceKnowledge = {
   learningPath: [
     "the-note-pyramid-explained",
     "guide-to-fragrance-families",
+    "oriental-and-amber-fragrances",
+    "evening-and-date-night-fragrances",
     "what-makes-a-signature-scent",
-    "how-to-wear-fragrance",
   ],
 
   // ── Relationships ─────────────────────────────────────────────────────────────

@@ -59,10 +59,12 @@ export const acquaDiGioParfumInspired: FragranceKnowledge = {
 
   // ── Academy integration ───────────────────────────────────────────────────────
   academyArticleIds: [
-    "what-makes-a-signature-scent",
-    "guide-to-fragrance-families",
     "the-note-pyramid-explained",
-    "how-to-layer-fragrances",
+    "guide-to-fragrance-families",
+    "fresh-citrus-and-aquatic-fragrances",
+    "woody-fragrances-explained",
+    "evening-and-date-night-fragrances",
+    "what-makes-a-signature-scent",
   ],
   academyCategories: [
     "fragrance-families",
@@ -74,10 +76,11 @@ export const acquaDiGioParfumInspired: FragranceKnowledge = {
     "aquatic", "fresh", "masculine", "summer", "autumn", "evening", "luxury", "sophisticated",
   ],
   learningPath: [
-    "what-makes-a-signature-scent",
-    "guide-to-fragrance-families",
     "the-note-pyramid-explained",
-    "how-to-layer-fragrances",
+    "guide-to-fragrance-families",
+    "fresh-citrus-and-aquatic-fragrances",
+    "evening-and-date-night-fragrances",
+    "choosing-your-season-scent",
   ],
 
   // ── Relationships ─────────────────────────────────────────────────────────────

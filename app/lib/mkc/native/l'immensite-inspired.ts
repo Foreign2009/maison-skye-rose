@@ -66,7 +66,14 @@ export const limmensiteInspired: FragranceKnowledge = {
   // ── Education ───────────────────────────────────────────────────────────────
   subtitle      : "Boundless Light",
   description   : "Grapefruit and bergamot ignite with a whisper of pink pepper—a burst of clean radiance that dissolves into warm ginger and neroli. Amber and sandalwood settle beneath, creating a sophisticated second skin that feels both weightless and grounded, perfect for sunlit moments that demand presence without effort.",
-  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "choosing-your-season-scent", "how-to-wear-fragrance"],
+  academyArticleIds: [
+    "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "fresh-citrus-and-aquatic-fragrances",
+    "oriental-and-amber-fragrances",
+    "office-and-professional-fragrances",
+    "choosing-your-season-scent",
+  ],
   academyCategories: ["fragrance-families", "the-note-pyramid", "occasions-and-style"],
   educationTags : [
     "citrus",
@@ -80,7 +87,13 @@ export const limmensiteInspired: FragranceKnowledge = {
     "saffron",
     "sandalwood",
   ],
-  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "choosing-your-season-scent"],
+  learningPath  : [
+    "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "fresh-citrus-and-aquatic-fragrances",
+    "office-and-professional-fragrances",
+    "choosing-your-season-scent",
+  ],
 
   // ── Intelligence ────────────────────────────────────────────────────────────
   // Approximated from profile + season. Calibrated by Intelligence Producer in P2.

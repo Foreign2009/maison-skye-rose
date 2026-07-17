@@ -61,7 +61,14 @@ export const arabiansTonkaInspired: FragranceKnowledge = {
   // ── Education ───────────────────────────────────────────────────────────────
   subtitle      : "Dark Amber Ritual",
   description   : "Black pepper and tonka bean ignite against deep oud and rose absolute, building into a dark amber resin that unfolds like aged leather and incense. Vanilla bourbon and sandalwood anchor the base with a sensual warmth that lingers on skin, unapologetic and hypnotic.",
-  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances", "how-to-wear-fragrance"],
+  academyArticleIds: [
+    "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "oriental-and-amber-fragrances",
+    "oud-the-worlds-most-complex-ingredient",
+    "evening-and-date-night-fragrances",
+    "how-to-layer-fragrances",
+  ],
   academyCategories: ["fragrance-families", "the-note-pyramid", "wear-and-application"],
   educationTags : [
     "oud",
@@ -77,7 +84,13 @@ export const arabiansTonkaInspired: FragranceKnowledge = {
     "layering",
     "masculine",
   ],
-  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances"],
+  learningPath  : [
+    "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "oriental-and-amber-fragrances",
+    "evening-and-date-night-fragrances",
+    "choosing-your-season-scent",
+  ],
 
   // ── Intelligence ────────────────────────────────────────────────────────────
   // Approximated from profile + season. Calibrated by Intelligence Producer in P2.

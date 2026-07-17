@@ -59,8 +59,10 @@ export const acquaDiGioProfondoInspired: FragranceKnowledge = {
 
   // ── Academy integration ───────────────────────────────────────────────────────
   academyArticleIds: [
-    "guide-to-fragrance-families",
     "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "fresh-citrus-and-aquatic-fragrances",
+    "woody-fragrances-explained",
     "choosing-your-season-scent",
     "how-to-wear-fragrance",
   ],
@@ -74,10 +76,10 @@ export const acquaDiGioProfondoInspired: FragranceKnowledge = {
     "fresh", "masculine", "summer", "dark", "powerful", "bold", "ocean",
   ],
   learningPath: [
-    "guide-to-fragrance-families",
     "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "fresh-citrus-and-aquatic-fragrances",
     "choosing-your-season-scent",
-    "how-to-wear-fragrance",
   ],
 
   // ── Relationships ─────────────────────────────────────────────────────────────

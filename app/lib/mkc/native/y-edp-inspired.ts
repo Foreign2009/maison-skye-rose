@@ -61,10 +61,12 @@ export const yEdpInspired: FragranceKnowledge = {
 
   // ── Academy integration ───────────────────────────────────────────────────────
   academyArticleIds: [
-    "guide-to-fragrance-families",
-    "what-makes-a-signature-scent",
     "the-note-pyramid-explained",
-    "how-to-wear-fragrance",
+    "guide-to-fragrance-families",
+    "fresh-citrus-and-aquatic-fragrances",
+    "woody-fragrances-explained",
+    "office-and-professional-fragrances",
+    "what-makes-a-signature-scent",
   ],
   academyCategories: [
     "fragrance-families",
@@ -78,8 +80,9 @@ export const yEdpInspired: FragranceKnowledge = {
   learningPath: [
     "the-note-pyramid-explained",
     "guide-to-fragrance-families",
+    "fresh-citrus-and-aquatic-fragrances",
+    "office-and-professional-fragrances",
     "what-makes-a-signature-scent",
-    "how-to-wear-fragrance",
   ],
 
   // ── Relationships ─────────────────────────────────────────────────────────────

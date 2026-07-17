@@ -66,9 +66,11 @@ export const chanceEauFraicheInspired: FragranceKnowledge = {
 
   // ── Academy integration ───────────────────────────────────────────────────────
   academyArticleIds: [
-    "guide-to-fragrance-families",
     "the-note-pyramid-explained",
-    "choosing-your-season-scent",
+    "guide-to-fragrance-families",
+    "fresh-citrus-and-aquatic-fragrances",
+    "the-world-of-floral-fragrances",
+    "office-and-professional-fragrances",
     "what-makes-a-signature-scent",
   ],
   academyCategories: [
@@ -84,8 +86,9 @@ export const chanceEauFraicheInspired: FragranceKnowledge = {
   learningPath: [
     "the-note-pyramid-explained",
     "guide-to-fragrance-families",
+    "fresh-citrus-and-aquatic-fragrances",
+    "office-and-professional-fragrances",
     "choosing-your-season-scent",
-    "what-makes-a-signature-scent",
   ],
 
   // ── Relationships ─────────────────────────────────────────────────────────────

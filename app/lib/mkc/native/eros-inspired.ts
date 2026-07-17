@@ -63,6 +63,9 @@ export const erosInspired: FragranceKnowledge = {
   academyArticleIds: [
     "the-note-pyramid-explained",
     "guide-to-fragrance-families",
+    "fresh-citrus-and-aquatic-fragrances",
+    "vanilla-and-amber-the-warm-base",
+    "evening-and-date-night-fragrances",
     "what-makes-a-signature-scent",
   ],
   academyCategories: [
@@ -76,8 +79,9 @@ export const erosInspired: FragranceKnowledge = {
   learningPath: [
     "the-note-pyramid-explained",
     "guide-to-fragrance-families",
-    "what-makes-a-signature-scent",
-    "how-to-wear-fragrance",
+    "fresh-citrus-and-aquatic-fragrances",
+    "evening-and-date-night-fragrances",
+    "choosing-your-season-scent",
   ],
 
   // ── Intelligence ─────────────────────────────────────────────────────────────

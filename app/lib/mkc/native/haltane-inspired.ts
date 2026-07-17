@@ -62,7 +62,14 @@ export const haltaneInspired: FragranceKnowledge = {
   // ── Education ───────────────────────────────────────────────────────────────
   subtitle      : "Gilded Restraint",
   description   : "Saffron and pink pepper ignite a spiced opening before dissolving into creamy praline and rose, grounding into a deep, resinous oud that lingers with amber warmth. This is woody sweetness rendered in shadow—sophisticated, never cloying, with the austere elegance of aged wood and precious incense. A fragrance that moves between restraint and richness, each layer revealing itself with deliberate grace.",
-  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances", "how-to-wear-fragrance"],
+  academyArticleIds: [
+    "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "woody-fragrances-explained",
+    "oud-the-worlds-most-complex-ingredient",
+    "evening-and-date-night-fragrances",
+    "how-to-layer-fragrances",
+  ],
   academyCategories: ["fragrance-families", "the-note-pyramid", "wear-and-application"],
   educationTags : [
     "oud",
@@ -77,7 +84,13 @@ export const haltaneInspired: FragranceKnowledge = {
     "winter",
     "unisex",
   ],
-  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances"],
+  learningPath  : [
+    "the-note-pyramid-explained",
+    "guide-to-fragrance-families",
+    "woody-fragrances-explained",
+    "evening-and-date-night-fragrances",
+    "choosing-your-season-scent",
+  ],
 
   // ── Intelligence ────────────────────────────────────────────────────────────
   // Approximated from profile + season. Calibrated by Intelligence Producer in P2.
