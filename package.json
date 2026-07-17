@@ -9,6 +9,7 @@
     "lint": "eslint",
     "mkc:new": "npx tsx scripts/mkc-scaffold.ts",
     "mkc:validate": "npx tsx validate-native-records.ts",
+    "academy:validate": "npx tsx scripts/validate-academy.ts",
     "mkc:coverage": "npx tsx scripts/mkc-coverage.ts",
     "mkc:factory": "npx tsx scripts/factory/index.ts",
     "mkc:factory:promote": "npx tsx scripts/factory/index.ts --mode=promote",
