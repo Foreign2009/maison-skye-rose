@@ -42,6 +42,42 @@ export interface DiscoverMoreArticle {
 
 // ─────────────────────────────────────────────────────────────────────────────
 
+const GENDER_LABELS: Record<FragranceKnowledge["gender"], string> = {
+  male:   "For Him",
+  female: "For Her",
+  unisex: "Unisex",
+};
+
+const PROJECTION_LABELS: Record<FragranceKnowledge["projection"], string> = {
+  soft:     "Soft",
+  moderate: "Moderate",
+  strong:   "Strong",
+};
+
+const FAMILY_ACADEMY_HEADERS: Record<string, string> = {
+  "Amber":        "Discover the World of Amber",
+  "Vanilla":      "Discover the World of Vanilla",
+  "Rose":         "Discover the World of Rose",
+  "Oud":          "Discover the World of Oud",
+  "Musk":         "Discover the World of Musk",
+  "Floral":       "Discover the World of Florals",
+  "White Floral": "Discover White Floral Fragrances",
+  "Fruity":       "Discover Fruity Fragrances",
+  "Citrus":       "Discover Fresh Citrus Fragrances",
+  "Fresh":        "Discover Fresh Fragrances",
+  "Sweet":        "Discover Sweet Fragrances",
+  "Woody":        "Explore Woody Fragrances",
+  "Aromatic":     "Explore Aromatic Fragrances",
+  "Spicy":        "Explore Spicy Fragrances",
+  "Leather":      "Explore Leather Fragrances",
+  "Aquatic":      "Explore Aquatic Fragrances",
+  "Gourmand":     "Explore Gourmand Fragrances",
+  "Tobacco":      "Explore Tobacco Fragrances",
+  "Powdery":      "Discover Powdery Fragrances",
+};
+
+// ─────────────────────────────────────────────────────────────────────────────
+
 export default function ProductDetail({
   knowledge,
   discoverMoreArticles,
@@ -174,6 +210,7 @@ export default function ProductDetail({
     () => [...knowledge.notes.top, ...knowledge.notes.heart, ...knowledge.notes.base].filter(Boolean),
     [knowledge]
   );
+  const academyHeader = FAMILY_ACADEMY_HEADERS[knowledge.family[0] ?? ""] ?? "Discover More";
   // ── Render ─────────────────────────────────────────────────────────────────
 
   return (
@@ -253,8 +290,11 @@ export default function ProductDetail({
                 </p>
               )}
 
-              {/* Profile + Season chips */}
+              {/* Profile + Season + Gender chips */}
               <div className="mt-3 flex flex-wrap gap-1.5">
+                <span className="rounded-full bg-white px-2.5 py-1 text-[11px] font-medium shadow-sm">
+                  {GENDER_LABELS[knowledge.gender]}
+                </span>
                 <span className="rounded-full bg-white px-2.5 py-1 text-[11px] font-medium shadow-sm">
                   {knowledge.profile}
                 </span>
@@ -384,7 +424,7 @@ export default function ProductDetail({
         <div className="mx-auto max-w-7xl">
           <div className="rounded-3xl bg-white p-6 md:p-10">
             <h2 className="text-2xl font-black text-[#4f4a52]">Quick Facts</h2>
-            <div className="mt-8 grid grid-cols-2 gap-6 md:grid-cols-4">
+            <div className="mt-8 grid grid-cols-2 gap-6 md:grid-cols-5">
 
               {/* Family */}
               <div>
@@ -428,6 +468,16 @@ export default function ProductDetail({
                     <KnowledgeChip key={o} label={o} />
                   ))}
                 </div>
+              </div>
+
+              {/* Sillage */}
+              <div>
+                <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-zinc-400">
+                  Sillage
+                </p>
+                <p className="mt-2.5 text-sm font-semibold text-[#4f4a52]">
+                  {PROJECTION_LABELS[knowledge.projection]}
+                </p>
               </div>
 
             </div>
@@ -706,7 +756,7 @@ export default function ProductDetail({
           <div className="rounded-3xl bg-white p-6 md:p-10">
 
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl font-black text-[#4f4a52]">Discover More</h2>
+              <h2 className="text-2xl font-black text-[#4f4a52]">{academyHeader}</h2>
               <span className="text-xs font-medium tracking-widest uppercase text-[#d89ca4]">
                 {qualityProfile?.hasAcademyIntegration ? "Personally Curated" : "Fragrance Academy"}
               </span>
