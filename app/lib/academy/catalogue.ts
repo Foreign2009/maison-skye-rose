@@ -492,4 +492,588 @@ export const academyCatalogue: AcademyArticle[] = [
       },
     ],
   },
+
+  {
+    slug: "fragrance-concentration-explained",
+    title: "Fragrance Concentration Explained",
+    subtitle: "EDT, EDP, Parfum, Extrait — what the numbers mean and how to choose",
+    category: "Fragrance Fundamentals",
+    excerpt:
+      "Eau de Toilette, Eau de Parfum, Parfum, Extrait — the labels on fragrance bottles describe concentration levels that directly affect how long a fragrance lasts, how far it projects, and what it costs. Here is what they actually mean.",
+    readTime: 4,
+    publishedAt: "2026-07-17",
+    relatedArticleIds: ["what-makes-a-signature-scent", "projection-and-sillage"],
+    recommendedArticleIds: ["the-science-of-longevity-and-projection", "how-to-sample-before-you-commit"],
+    relatedFragranceIds: ["sauvage-inspired", "aventus-inspired", "delina-inspired"],
+    content: [
+      {
+        type: "paragraph",
+        text: "Every fragrance exists on a concentration spectrum. The higher the concentration of fragrance oil dissolved in alcohol, the more intense, longer-lasting, and typically more expensive the result. Understanding this spectrum changes how you shop and how you wear fragrance.",
+      },
+      {
+        type: "heading",
+        text: "What the Percentage Actually Means",
+      },
+      {
+        type: "paragraph",
+        text: "Fragrance concentration refers to the percentage of pure fragrance oil dissolved in a carrier — typically alcohol and a small amount of water. The four main concentration types are Eau de Cologne (EDC) at 2–4%, Eau de Toilette (EDT) at 5–15%, Eau de Parfum (EDP) at 15–20%, and Parfum or Extrait de Parfum at 20–40%.",
+      },
+      {
+        type: "heading",
+        text: "Eau de Toilette",
+      },
+      {
+        type: "paragraph",
+        text: "EDT is the most widely produced concentration. At 5–15% fragrance oil, it tends to project brightly on first application and fade to a moderate skin scent over 3–5 hours. Many signature fragrances were originally designed as EDTs — the formula is optimised for a fresh, airy opening that softens gracefully. EDTs are typically the most affordable concentration and work particularly well in warm weather when lighter projection is desirable.",
+      },
+      {
+        type: "heading",
+        text: "Eau de Parfum",
+      },
+      {
+        type: "paragraph",
+        text: "EDP typically sits at 15–20% concentration. The higher oil content produces stronger initial projection, a richer and often more complex mid-stage, and a more pronounced base note dry-down. Most people find an EDP lasts 6–8 hours on skin. The added depth also means the character of the fragrance is more fully expressed — the heart and base notes that define the composition come through more clearly than in the EDT version.",
+      },
+      {
+        type: "heading",
+        text: "Parfum and Extrait",
+      },
+      {
+        type: "paragraph",
+        text: "Parfum (also called Extrait de Parfum) ranges from 20–40% concentration. It is the most intimate, intense, and long-lasting form — and the most expensive. Parfum tends to project close to the skin rather than filling a room: the high oil content slows evaporation dramatically, creating a fragrance that stays on skin for 10–14 hours or more. The character is often more complex and personal than lower concentrations of the same formula.",
+      },
+      {
+        type: "tip",
+        text: "Concentration is not the same as quality. A beautifully formulated EDT will outlast a poorly constructed EDP. Concentration affects character and longevity — it does not determine whether a fragrance is good.",
+      },
+      {
+        type: "heading",
+        text: "Concentration Does Not Guarantee Longevity",
+      },
+      {
+        type: "paragraph",
+        text: "The relationship between concentration and longevity is real but not absolute. What determines longevity is the combination of concentration, formulation quality, the specific molecules used, and how fixatives anchor the base. A heavy musk-and-amber base in an EDP will outlast a poorly fixed Parfum. When evaluating longevity, always test on your own skin — the formula, not just the label, determines the result.",
+      },
+      {
+        type: "heading",
+        text: "Which Concentration to Choose",
+      },
+      {
+        type: "paragraph",
+        text: "Choose EDT for warm weather, daytime wear, or when you prefer a lighter projection that stays close to skin by mid-afternoon. Choose EDP for year-round versatility, stronger projection, and more pronounced character — particularly in cooler seasons. Choose Parfum when you want maximum intensity and longevity for special occasions, or when you prefer a fragrance that stays entirely private and skin-close.",
+      },
+      {
+        type: "note-list",
+        notes: [
+          "EDT: 5–15% — fresh, airy, 3–5 hours — ideal for warm weather and daytime",
+          "EDP: 15–20% — fuller, richer, 6–8 hours — best all-season choice",
+          "Parfum/Extrait: 20–40% — intense, intimate, 10+ hours — special occasions",
+          "Higher concentration ≠ better quality — formulation quality matters equally",
+          "Always test on skin — concentration behaves differently on every person",
+        ],
+      },
+    ],
+  },
+
+  {
+    slug: "projection-and-sillage",
+    title: "Projection and Sillage: How Far Your Fragrance Travels",
+    subtitle: "Understanding the radius of your scent — and why it matters",
+    category: "Fragrance Fundamentals",
+    excerpt:
+      "Projection describes how far a fragrance radiates from your body. Sillage is the trail it leaves when you move. Together they determine whether your fragrance announces your arrival or stays entirely private. Understanding both changes how you choose and wear scent.",
+    readTime: 4,
+    publishedAt: "2026-07-17",
+    relatedArticleIds: ["what-makes-a-signature-scent", "fragrance-concentration-explained"],
+    recommendedArticleIds: ["how-to-wear-fragrance", "the-science-of-longevity-and-projection"],
+    relatedFragranceIds: ["sauvage-inspired", "aventus-inspired", "bleu-de-chanel-inspired"],
+    content: [
+      {
+        type: "paragraph",
+        text: "Two of the most important qualities of any fragrance — and the two most often confused — are projection and sillage. They are related but distinct. Learning to recognise them changes how you evaluate fragrance and how you match scent to situation.",
+      },
+      {
+        type: "heading",
+        text: "Projection — The Radius Around You",
+      },
+      {
+        type: "paragraph",
+        text: "Projection is the distance at which someone standing near you can detect your fragrance. A fragrance with strong projection makes itself known at arm's length or further. A skin-close fragrance with low projection is only detectable on close contact — an embrace, a conversation at close range. Projection is determined primarily by the fragrance's molecular composition and concentration, though application technique plays a role.",
+      },
+      {
+        type: "heading",
+        text: "Sillage — The Trail You Leave",
+      },
+      {
+        type: "paragraph",
+        text: "Sillage (pronounced see-yazh — from the French word for a ship's wake) is the scented trail a fragrance leaves in the air after you pass through a space. High sillage means others will notice your fragrance after you have left the room. Low sillage means the fragrance stays close to your body even while you are moving. Sillage is influenced by both projection strength and the specific molecules chosen — some project strongly while standing still but leave little trail; others are quiet up close but linger in the air.",
+      },
+      {
+        type: "heading",
+        text: "The Projection Spectrum",
+      },
+      {
+        type: "paragraph",
+        text: "Fragrance projection typically falls into three zones. Skin scent means the fragrance is only detectable within a few centimetres — intimate, personal, barely there to anyone but the wearer. Moderate projection means the fragrance is perceptible to someone standing beside you or in conversation range. Strong projection — sometimes called beast mode for the most extreme examples — means the fragrance fills a space and announces your presence before you arrive.",
+      },
+      {
+        type: "tip",
+        text: "The elevator test: if someone can clearly smell your fragrance in a small enclosed space after you leave, your projection is strong. If someone has to lean in to detect it, it is skin-close. Neither is wrong — it depends entirely on the occasion.",
+      },
+      {
+        type: "heading",
+        text: "Matching Projection to Occasion",
+      },
+      {
+        type: "paragraph",
+        text: "In a professional office shared with others, skin-close or moderate projection is respectful — strong projection in a small space can overwhelm colleagues who did not choose to smell your fragrance. In an outdoor setting, evening venue, or when you want your presence to be felt, stronger projection is appropriate. Application quantity directly affects how far a fragrance projects — this is one variable always within your control.",
+      },
+      {
+        type: "heading",
+        text: "Why Projection Changes Over Time",
+      },
+      {
+        type: "paragraph",
+        text: "Projection is not fixed. A fragrance that opens with strong projection in the first hour — driven by volatile top notes — will soften to a more intimate skin-close presence as the base notes take over. This is why some fragrances that feel overwhelming in the first minutes become effortlessly pleasant after 30. Give a fragrance time before judging its projection character.",
+      },
+      {
+        type: "note-list",
+        notes: [
+          "Projection: the radius at which others detect your fragrance from still",
+          "Sillage: the trail your fragrance leaves in a space as you move through it",
+          "Strong projection is appropriate outdoors and in the evening",
+          "Skin-close projection is more considerate in professional and enclosed settings",
+          "Projection softens over time as volatile top notes fade to base notes",
+          "More application = more projection — control this deliberately",
+        ],
+      },
+    ],
+  },
+
+  {
+    slug: "fragrance-vocabulary",
+    title: "The Fragrance Vocabulary: Words for What You Smell",
+    subtitle: "The essential descriptive language of perfumery — with examples",
+    category: "Fragrance Fundamentals",
+    excerpt:
+      "Most people can identify that they love a fragrance but struggle to describe why. The vocabulary of perfumery is a small set of precise terms that unlock the ability to articulate preferences, communicate with clarity, and discover new fragrances with confidence.",
+    readTime: 5,
+    publishedAt: "2026-07-17",
+    relatedArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained"],
+    recommendedArticleIds: ["what-makes-a-signature-scent", "how-inspired-fragrances-work"],
+    relatedFragranceIds: [
+      "sauvage-inspired",
+      "black-opium-inspired",
+      "bleu-de-chanel-inspired",
+      "delina-inspired",
+    ],
+    content: [
+      {
+        type: "paragraph",
+        text: "Fragrance vocabulary is not technical jargon. It is a small set of precise descriptors that translate the experience of smelling into language. Once you learn these terms, you will find it far easier to describe what you love, identify what you dislike, and communicate with enough precision to discover new fragrances confidently.",
+      },
+      {
+        type: "heading",
+        text: "Light and Airy",
+      },
+      {
+        type: "paragraph",
+        text: "Fresh means clean and invigorating — a brightness with no heaviness. Not necessarily citrus, though citrus is often fresh. A fresh fragrance creates the impression of open air. Clean describes a laundry-adjacent quality — soft musks, soap, white florals. It is comforting and universally wearable but intentionally simple. Aquatic suggests sea air, water, or marine accords — an open, ozone-like quality that reads as wide and expansive. Green refers to the smell of cut stems, leaves, freshly mown grass, or herbs — a living, botanical quality.",
+      },
+      {
+        type: "heading",
+        text: "Warm and Rich",
+      },
+      {
+        type: "paragraph",
+        text: "Warm describes a fragrance with visible heat — usually from amber, vanilla, resins, or musks. It creates the impression of skin, comfort, and proximity. Gourmand refers to edible warmth — vanilla, chocolate, caramel, coffee. A fragrance that smells like something you could eat. Sweet describes obvious sweetness, usually from synthetic musks, vanilla, or fruit accords. Spicy indicates the presence of pepper, cardamom, clove, cinnamon, or similar spice materials — a sharp, biting warmth distinct from amber's softer heat.",
+      },
+      {
+        type: "heading",
+        text: "Woody, Earthy, and Complex",
+      },
+      {
+        type: "paragraph",
+        text: "Woody describes the smell of living or cut wood — cedar, sandalwood, vetiver, oud. Woody can range from clean and dry to dark and smoky. Earthy refers to soil, moss, roots, petrichor — a grounded, natural quality. Musky means the base-level skin scent that underlies most fragrances — intimate, human, close. Some musks are clearly detectable; others work subliminally to make a fragrance feel personal. Resinous describes the amber, labdanum, or benzoin quality of raw resins — thick, warm, slightly dark. Powdery suggests the soft, dry quality of face powder or iris — it smooths and softens everything beneath it.",
+      },
+      {
+        type: "heading",
+        text: "Unusual Descriptors Worth Knowing",
+      },
+      {
+        type: "paragraph",
+        text: "Animalic describes the raw, skin-like, sometimes challenging quality of certain musks — in modern formulations, more intimate than disturbing. Smoky or leathery indicates the presence of birch tar, smoke accord, or leather materials — dark, assertive, distinctive. Floral is obvious but worth defining precisely: the smell of living or abstracted flowers, distinct from fresh or sweet. Metallic describes a cold, sharp, almost clinical quality found in some modern molecular fragrances.",
+      },
+      {
+        type: "tip",
+        text: "When exploring a new fragrance, try three descriptors: one for how it opens (top note character), one for what dominates after 30 minutes (heart character), and one for how it ends hours later (base character). This three-word description is more useful than any single word.",
+      },
+      {
+        type: "note-list",
+        notes: [
+          "Fresh — clean, bright, open air",
+          "Clean — laundry-adjacent, soft, universally wearable",
+          "Aquatic — marine, ozone, expansive",
+          "Warm — amber, vanilla, resin, proximity",
+          "Gourmand — edible: vanilla, coffee, chocolate",
+          "Woody — cedar, sandalwood, vetiver, oud",
+          "Musky — intimate, skin-close, subliminal",
+          "Powdery — soft, dry, iris-like smoothness",
+          "Animalic — raw, human, intense and intimate",
+        ],
+      },
+    ],
+  },
+
+  {
+    slug: "how-inspired-fragrances-work",
+    title: "How Inspired Fragrances Work",
+    subtitle: "What inspiration means in perfumery — and why it matters",
+    category: "Fragrance Fundamentals",
+    excerpt:
+      "An inspired fragrance is a perfumer's response to an existing scent — a new composition that captures the spirit, character, and olfactive direction of a reference without copying it. Understanding how this works resolves the most common question new customers ask.",
+    readTime: 4,
+    publishedAt: "2026-07-17",
+    relatedArticleIds: ["what-makes-a-signature-scent", "fragrance-vocabulary"],
+    recommendedArticleIds: ["guide-to-fragrance-families", "how-to-sample-before-you-commit"],
+    relatedFragranceIds: [
+      "sauvage-inspired",
+      "aventus-inspired",
+      "delina-inspired",
+      "black-opium-inspired",
+    ],
+    content: [
+      {
+        type: "paragraph",
+        text: "The word inspired on a fragrance bottle carries a specific meaning in perfumery. It means the composition was created in response to an existing reference — sharing its olfactive character, emotional direction, and note structure while being an independently authored formula. This is not a grey area: inspired fragrances are a recognised, legitimate, and widely practised segment of the perfumery industry.",
+      },
+      {
+        type: "heading",
+        text: "The Difference Between Inspired and Counterfeit",
+      },
+      {
+        type: "paragraph",
+        text: "A counterfeit fragrance pretends to be something it is not. It copies the bottle, label, branding, and name of an existing product and misrepresents itself as the original. Counterfeit fragrances are illegal and often made with unregulated ingredients. An inspired fragrance does the opposite: it is fully transparent about what it is, carries its own branding and name, and is formulated independently. The inspiration is the creative brief — the finished fragrance is a new composition.",
+      },
+      {
+        type: "heading",
+        text: "How Perfumers Work from Inspiration",
+      },
+      {
+        type: "paragraph",
+        text: "A perfumer working from a creative brief — whether that brief is a famous reference or any other concept — analyses the character they are aiming for and builds a formula from the ground up. The note pyramid, the specific molecules, the ratios, and the fixatives are all the perfumer's own choices. The result may share a family, an emotional register, and a recognisable opening character with the reference, but it is never a chemical copy. Fragrance formulas cannot be patented in most jurisdictions — only the brand name and bottle design are protected.",
+      },
+      {
+        type: "tip",
+        text: "The quality of an inspired fragrance is entirely independent of its reference. A well-formulated inspired fragrance using quality materials will perform better than a poorly formulated original. Always evaluate the fragrance itself — not the name on the reference.",
+      },
+      {
+        type: "heading",
+        text: "Why Quality Inspired Fragrances Are Worn by Sophisticated Customers",
+      },
+      {
+        type: "paragraph",
+        text: "The appeal of an inspired fragrance is not price alone. Many customers discover a fragrance direction they love — a specific character, note combination, or emotional register — and want that experience without paying for a brand name, luxury retailer markup, or designer packaging. A high-quality inspired fragrance delivers the same olfactive experience with a different formula, different branding, and a fraction of the cost. Customers who understand fragrance at a deeper level are often the most enthusiastic inspired fragrance wearers.",
+      },
+      {
+        type: "heading",
+        text: "How to Evaluate What You Are Wearing",
+      },
+      {
+        type: "paragraph",
+        text: "The standard for any fragrance is the experience it creates on your skin. Does it open well? Does the heart develop interestingly? Does the dry-down reward the hours you wear it? These are the only questions that matter. The Maison Skye & Rose catalogue is built on the belief that fragrance character — not brand ownership — is what creates a signature scent.",
+      },
+      {
+        type: "note-list",
+        notes: [
+          "Inspired means an independently formulated composition in the direction of a reference",
+          "Counterfeit means pretending to be the original — illegal and unrelated to inspired",
+          "Fragrance formulas are not patented — inspired composition is a legitimate creative practice",
+          "Quality inspired fragrances use the same calibre of ingredients as originals",
+          "Evaluate the fragrance on its own merits — not the name of the reference",
+        ],
+      },
+    ],
+  },
+
+  {
+    slug: "why-fragrances-smell-different-on-everyone",
+    title: "Why Fragrances Smell Different on Everyone",
+    subtitle: "Body chemistry, skin pH, and why testing on skin is the only reliable test",
+    category: "Scent Science",
+    excerpt:
+      "The same fragrance can smell completely different on two people wearing it simultaneously. This is not marketing mythology — it is chemistry. Understanding why helps you choose fragrances more confidently and test them more accurately.",
+    readTime: 5,
+    publishedAt: "2026-07-17",
+    relatedArticleIds: ["how-to-wear-fragrance", "how-to-sample-before-you-commit"],
+    recommendedArticleIds: ["olfactory-fatigue", "the-science-of-longevity-and-projection"],
+    relatedFragranceIds: ["sauvage-inspired", "miss-dior-inspired", "aventus-inspired"],
+    content: [
+      {
+        type: "paragraph",
+        text: "You have heard someone describe a fragrance as magical on a friend — then tried it yourself and found something entirely different. This is one of the most common experiences in fragrance, and it has a precise scientific explanation. Your body chemistry is not passive — it actively transforms every fragrance you apply.",
+      },
+      {
+        type: "heading",
+        text: "Skin pH",
+      },
+      {
+        type: "paragraph",
+        text: "Healthy skin maintains a slightly acidic pH of 4.5 to 5.5. This surface acidity varies between people based on genetics, diet, skincare products, and hormones. Fragrance molecules interact with this acid mantle as they evaporate from the skin surface. More acidic skin tends to amplify citrus and fresh notes while softening sweet and heavy base notes. Less acidic skin may produce the reverse effect. The same fragrance molecule, reacting with different pH environments, produces detectably different olfactive results.",
+      },
+      {
+        type: "heading",
+        text: "Natural Skin Oils and Sebum",
+      },
+      {
+        type: "paragraph",
+        text: "Your skin produces sebum — a mixture of fatty acids, wax esters, and squalene that coats and protects the skin surface. Sebum content varies considerably between individuals. Oilier skin provides a richer carrier for fragrance molecules, often extending longevity and deepening the base note character. Drier skin has less sebum to carry the molecules, resulting in faster evaporation and a more fleeting wearing experience. This is one of the reasons moisturised skin consistently performs better as a fragrance carrier.",
+      },
+      {
+        type: "heading",
+        text: "Body Temperature",
+      },
+      {
+        type: "paragraph",
+        text: "Heat accelerates evaporation. People who run warmer — through natural metabolism, exercise, or environment — project fragrances more aggressively and experience faster dry-down. The same fragrance that lasts all day on one person may fade within three hours on someone who runs hotter. This is not a deficiency in the fragrance — it means warm-bodied individuals project more powerfully while the fragrance is present, but may need to reapply for all-day wear.",
+      },
+      {
+        type: "heading",
+        text: "Skin Microbiome",
+      },
+      {
+        type: "paragraph",
+        text: "The skin is home to billions of microorganisms — bacteria, fungi, and other microbes that make up the skin microbiome. This microbiome is as individual as a fingerprint and varies significantly based on genetics, environment, diet, and personal care habits. The microbiome interacts with fragrance molecules, particularly musk molecules, in ways that are still being studied. This explains why some people detect certain musks clearly while others cannot perceive them at all — a phenomenon called specific anosmia.",
+      },
+      {
+        type: "fragrance-spotlight",
+        fragranceId: "sauvage-inspired",
+        caption: "Sauvage Inspired contains Ambroxan, a synthetic molecule derived from ambergris that interacts intensely with individual skin chemistry. On some people it projects powerfully for ten hours; on others it becomes a skin scent within two. This is the body chemistry effect in practice — not a quality variation, but a chemistry one.",
+      },
+      {
+        type: "tip",
+        text: "The only reliable fragrance test is on your own skin, worn for a full day. A spray on the wrist in a store for 30 seconds tells you almost nothing about how a fragrance will perform in your specific chemistry.",
+      },
+      {
+        type: "note-list",
+        notes: [
+          "Skin pH (4.5–5.5) varies by person and transforms how fragrance molecules evaporate",
+          "Natural skin oils (sebum) extend longevity — drier skin evaporates fragrance faster",
+          "Body temperature accelerates evaporation — warm-bodied people project more intensely",
+          "Skin microbiome affects how musk and base note molecules are detected",
+          "The same fragrance will smell measurably different on two people — this is chemistry",
+          "Test on your own skin for a full day before committing to a full-size purchase",
+        ],
+      },
+    ],
+  },
+
+  {
+    slug: "olfactory-fatigue",
+    title: "Olfactory Fatigue: Why You Stop Smelling Your Own Fragrance",
+    subtitle: "Understanding your nose's adaptation mechanism — and how to work with it",
+    category: "Scent Science",
+    excerpt:
+      "You applied your fragrance 20 minutes ago. Now you cannot smell it at all. You consider reapplying. Everyone else around you can still smell it clearly. This is olfactory fatigue — and understanding it prevents one of the most common fragrance mistakes.",
+    readTime: 3,
+    publishedAt: "2026-07-17",
+    relatedArticleIds: ["how-to-wear-fragrance", "why-fragrances-smell-different-on-everyone"],
+    recommendedArticleIds: ["the-science-of-longevity-and-projection", "how-to-sample-before-you-commit"],
+    relatedFragranceIds: ["sauvage-inspired", "black-opium-inspired"],
+    content: [
+      {
+        type: "paragraph",
+        text: "The olfactory system is one of the most sophisticated sensory systems in the human body. It is also one of the fastest to adapt. When you are continuously exposed to a specific smell, your nose deliberately attenuates its sensitivity to that smell — a protective mechanism that prevents your brain from being overwhelmed by constant sensory input. The result: you stop smelling your own fragrance long before it has faded.",
+      },
+      {
+        type: "heading",
+        text: "What Actually Happened",
+      },
+      {
+        type: "paragraph",
+        text: "Within 20 to 30 minutes of applying a fragrance, your olfactory receptors begin adapting to the continuous signal. This is called olfactory habituation. The receptors do not stop working — they stop reporting the signal to the brain because the brain has classified it as background information. This is the same mechanism that makes you stop noticing the smell of your own home within minutes of arriving, even when visitors notice it immediately.",
+      },
+      {
+        type: "heading",
+        text: "Your Fragrance Is Still There",
+      },
+      {
+        type: "paragraph",
+        text: "This is the most important thing to understand: olfactory fatigue does not mean your fragrance has faded. It means your own sensory system has adapted to it. Others who have not been continuously exposed to it will detect it fully. The fragrance on your skin is unchanged — only your perception of it has shifted. The instinct to reapply is almost always wrong, and acting on it leads to over-application.",
+      },
+      {
+        type: "tip",
+        text: "Before reapplying, ask someone nearby if they can still smell your fragrance. If they can, do not reapply. Trust others as your calibration point — you cannot reliably judge your own application once habituation has occurred.",
+      },
+      {
+        type: "heading",
+        text: "How to Reset Your Nose",
+      },
+      {
+        type: "paragraph",
+        text: "Stepping away from a familiar environment helps — fresh air resets the olfactory baseline faster than staying in the same space. Smelling something completely different briefly disrupts the adapted signal. Time is the most reliable reset — 15 to 20 minutes in a different environment allows your olfactory receptors to recalibrate. When testing multiple fragrances, use the same reset between each one.",
+      },
+      {
+        type: "heading",
+        text: "The Over-Application Trap",
+      },
+      {
+        type: "paragraph",
+        text: "Olfactory fatigue is the root cause of most over-application in fragrance. The wearer cannot smell their own fragrance, assumes it has faded, applies more, and creates a projection that others find overwhelming. The correct approach is to apply your fragrance intentionally at the start of the day — one or two sprays for most fragrances — and trust the application without checking it. Your fragrance is almost certainly still present.",
+      },
+      {
+        type: "note-list",
+        notes: [
+          "Olfactory habituation: your nose adapts to your own fragrance within 20–30 minutes",
+          "Your fragrance is still present — only your perception of it has shifted",
+          "Others around you can still smell it clearly — use them as your calibration",
+          "Do not reapply based on your own inability to detect your fragrance",
+          "Reset your nose with fresh air and time in a different environment",
+          "Over-application is almost always caused by olfactory fatigue misread as fading",
+        ],
+      },
+    ],
+  },
+
+  {
+    slug: "the-science-of-longevity-and-projection",
+    title: "The Science of Longevity and Projection",
+    subtitle: "Why some fragrances last 14 hours and others vanish in 90 minutes",
+    category: "Scent Science",
+    excerpt:
+      "Longevity and projection are not random. They are determined by molecular weight, volatility, fixatives, and formulation quality. Understanding the science behind lasting power helps you choose more intelligently and set realistic expectations for any fragrance.",
+    readTime: 5,
+    publishedAt: "2026-07-17",
+    relatedArticleIds: ["fragrance-concentration-explained", "the-note-pyramid-explained"],
+    recommendedArticleIds: ["olfactory-fatigue", "why-fragrances-smell-different-on-everyone"],
+    relatedFragranceIds: ["sauvage-inspired", "aventus-inspired", "baccarat-rouge-540-inspired"],
+    content: [
+      {
+        type: "paragraph",
+        text: "Why does one fragrance last all day on a single spray while another requires reapplication by lunchtime? The answer is chemistry — specifically, molecular weight, volatility, and the presence of fixative molecules that slow evaporation. Once you understand these principles, you can predict roughly how long a fragrance will last before you test it.",
+      },
+      {
+        type: "heading",
+        text: "Molecular Weight and Volatility",
+      },
+      {
+        type: "paragraph",
+        text: "Every fragrance is a mixture of molecules of different weights. Lighter molecules — lower molecular weight — evaporate faster from skin. This is why top notes disappear quickly: citrus molecules, green notes, and light aromatics are among the lightest and most volatile fragrance materials. Heavier molecules — musks, ambers, resins, and woody materials — evaporate slowly, which is why base notes persist for hours or days. A fragrance's longevity is largely determined by the weight profile of its base notes.",
+      },
+      {
+        type: "heading",
+        text: "How Fixatives Work",
+      },
+      {
+        type: "paragraph",
+        text: "Fixatives are molecules that slow the evaporation of other fragrance components by binding to them or by creating a base that resists volatilisation. Natural fixatives include musks, ambergris and its synthetic derivative Ambroxan, benzoin, labdanum, and orris root. A well-fixed fragrance uses base note materials that hold the entire composition in place — extending not just base note duration but also the mid-stage life of the heart notes above them.",
+      },
+      {
+        type: "tip",
+        text: "Ambroxan — the synthetic molecule derived from ambergris — is one of the most powerful fixatives in modern perfumery. Its presence in a fragrance is a reliable predictor of strong longevity and projection. Sauvage Inspired contains significant Ambroxan in its base, which accounts for its exceptional performance on skin.",
+      },
+      {
+        type: "heading",
+        text: "The Concentration Misconception",
+      },
+      {
+        type: "paragraph",
+        text: "Many people assume that a higher concentration always produces better longevity. This is only partially true. Concentration (the percentage of fragrance oil) matters, but the specific molecules in the formula matter equally. A well-fixed EDT built on heavy woody and musk bases will outlast a poorly fixed EDP with an emphasis on volatile top and heart notes. Longevity comes from the base structure, not the concentration label alone.",
+      },
+      {
+        type: "heading",
+        text: "Application Surface and Longevity",
+      },
+      {
+        type: "paragraph",
+        text: "Where you apply fragrance directly affects longevity. Warm pulse points initially improve projection through heat but accelerate evaporation over time. Hair and clothing retain fragrance molecules far longer than skin — sometimes for days. Moisturised skin provides a richer carrier for fragrance oils, consistently extending longevity compared to dry skin. For maximum staying power: apply to moisturised pulse points and allow the clothing nearest them to catch the sillage.",
+      },
+      {
+        type: "heading",
+        text: "Why Longevity Varies Between Wearers",
+      },
+      {
+        type: "paragraph",
+        text: "Even the same fragrance, same concentration, and same application technique will last different durations on different people. Body temperature, skin pH, sebum production, and skin microbiome all affect how quickly molecules evaporate and how they interact with skin. A person who runs warm and has dry skin will experience significantly shorter longevity than someone with cooler temperature and oily skin. This is the body chemistry variable — not a defect in the fragrance.",
+      },
+      {
+        type: "note-list",
+        notes: [
+          "Light molecules (top notes) evaporate in minutes; heavy molecules (base notes) last hours",
+          "Fixatives — musks, ambers, Ambroxan — slow evaporation and extend longevity",
+          "Higher concentration improves longevity only if the formula has a strong base structure",
+          "Moisturised skin consistently outperforms dry skin for fragrance longevity",
+          "Hair and clothing retain fragrance far longer than skin",
+          "Individual body chemistry creates longevity differences of 2–6 hours between wearers",
+        ],
+      },
+    ],
+  },
+
+  {
+    slug: "how-to-sample-before-you-commit",
+    title: "How to Sample Before You Commit",
+    subtitle: "The right way to test a fragrance on skin before choosing a full size",
+    category: "Wear & Application",
+    excerpt:
+      "Most fragrance regret comes from not testing properly. A quick spray in a store, a smell from the bottle, or a paper strip test tells you almost nothing about how a fragrance will perform in your chemistry. Here is how to test correctly.",
+    readTime: 3,
+    publishedAt: "2026-07-17",
+    relatedArticleIds: ["how-to-wear-fragrance", "why-fragrances-smell-different-on-everyone"],
+    recommendedArticleIds: ["the-note-pyramid-explained", "what-makes-a-signature-scent"],
+    relatedFragranceIds: ["sauvage-inspired", "delina-inspired", "miss-dior-inspired"],
+    content: [
+      {
+        type: "paragraph",
+        text: "Fragrance testing is a skill. Most people test incorrectly — they smell a fragrance briefly, form an impression based on top notes, and make a purchase decision on incomplete information. The result is regret when the dry-down turns out to be different from the opening. Testing correctly is simple once you understand why the standard approach fails.",
+      },
+      {
+        type: "heading",
+        text: "Why Strip Testing Fails",
+      },
+      {
+        type: "paragraph",
+        text: "Paper strips (blotters) have one legitimate use: smelling a fragrance's rough character before deciding whether to test it on skin. They cannot tell you how a fragrance will perform on your body. Paper does not have a pH. Paper does not produce sebum or body heat. Paper does not have a microbiome. The skin interaction that defines how a fragrance actually smells and lasts is entirely absent from a strip test. Use strips for elimination, not evaluation.",
+      },
+      {
+        type: "heading",
+        text: "The Three-Stage Skin Test",
+      },
+      {
+        type: "paragraph",
+        text: "Apply the fragrance to a pulse point — inner wrist or inner elbow. Do not rub. Then wait. Stage one is the opening: what you smell in the first 5–15 minutes is top notes — the first impression, designed to be bright and immediately appealing, but not representative of the full fragrance. Stage two is the heart: at 30–60 minutes, the top notes fade and the true character of the fragrance emerges. This is the most important stage. Stage three is the dry-down: at 2–4 hours, base notes are all that remain. This is the fragrance you will be wearing for the rest of the day.",
+      },
+      {
+        type: "tip",
+        text: "Never judge a fragrance in the first 15 minutes. What you smell on the first spray is top notes — the greeting, not the story. Many fragrances that smell unremarkable on first spray reveal beautiful heart and base notes in the hour that follows.",
+      },
+      {
+        type: "heading",
+        text: "How Many Fragrances at Once",
+      },
+      {
+        type: "paragraph",
+        text: "Your nose can distinguish multiple fragrances simultaneously, but loses accuracy after three or four different stimuli. When testing at home, limit yourself to two fragrances — one on each wrist. Allow time between testing sessions for your nose to reset. Sampling multiple fragrances across several days produces far more useful information than testing six at once in a single session.",
+      },
+      {
+        type: "heading",
+        text: "What the 5ml Is For",
+      },
+      {
+        type: "paragraph",
+        text: "The 5ml size exists precisely for committed skin testing. A single wearing cannot tell you whether a fragrance will work for your life, your wardrobe, and your chemistry. The 5ml gives you enough liquid to wear the fragrance four to six times across different conditions — morning, evening, summer heat, cooler day — and to form a genuine relationship with it before investing in 10ml or 30ml. Consider the 5ml the final confirmation step before committing to a signature.",
+      },
+      {
+        type: "note-list",
+        notes: [
+          "Paper strips are for elimination only — never for final evaluation",
+          "Test on skin: pH, sebum, and body heat transform how fragrance actually smells",
+          "Stage 1 (0–15 min): top notes — the opening impression",
+          "Stage 2 (30–60 min): heart notes — the true character",
+          "Stage 3 (2–4 hours): base notes — what you wear all day",
+          "5ml size: wear a fragrance 4–6 times before committing to 30ml",
+        ],
+      },
+    ],
+  },
 ];

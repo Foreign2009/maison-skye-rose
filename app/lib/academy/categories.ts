@@ -96,7 +96,7 @@ export const ACADEMY_CATEGORIES: CategoryMeta[] = [
       "The science of fragrance — how smell works, why fragrances perform differently, and what chemistry determines longevity and projection.",
     icon: "◈",
     accentColor: "#b0b8c4",
-    featuredArticleId: undefined,
+    featuredArticleId: "why-fragrances-smell-different-on-everyone",
   },
 ];
 
