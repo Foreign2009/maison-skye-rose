@@ -30,6 +30,7 @@ import { NoteChip } from "./knowledge/NoteChip";
 import { KnowledgeChip } from "./knowledge/KnowledgeChip";
 import type { KnowledgeQualityProfile } from "../lib/mkc/knowledgeQuality";
 import { LearningPathPanel } from "./academy/LearningPathPanel";
+import { explainArticleRecommendation } from "../lib/academy/explainArticleRecommendation";
 
 
 
@@ -764,25 +765,33 @@ export default function ProductDetail({
 
             <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
               {discoverMoreArticles && discoverMoreArticles.length > 0
-                ? discoverMoreArticles.map((article) => (
-                    <Link
-                      key={article.slug}
-                      href={`/academy/${article.slug}`}
-                      className="flex items-start justify-between gap-4 rounded-2xl border border-[#ede8e1] bg-[#f9f7f4] px-5 py-4 transition-colors hover:border-[#d89ca4]/60 hover:bg-[#fdf6f7]"
-                    >
-                      <div className="min-w-0">
-                        <p className="text-[10px] font-semibold tracking-widest uppercase text-[#d89ca4] mb-0.5">
-                          {article.category}
-                        </p>
-                        <span className="text-sm font-semibold text-[#4f4a52]">
-                          {article.title}
+                ? discoverMoreArticles.map((article) => {
+                    const explanation = explainArticleRecommendation(knowledge, article);
+                    return (
+                      <Link
+                        key={article.slug}
+                        href={`/academy/${article.slug}`}
+                        className="flex items-start justify-between gap-4 rounded-2xl border border-[#ede8e1] bg-[#f9f7f4] px-5 py-4 transition-colors hover:border-[#d89ca4]/60 hover:bg-[#fdf6f7]"
+                      >
+                        <div className="min-w-0">
+                          <p className="text-[10px] font-semibold tracking-widest uppercase text-[#d89ca4] mb-0.5">
+                            {article.category}
+                          </p>
+                          <span className="text-sm font-semibold text-[#4f4a52]">
+                            {article.title}
+                          </span>
+                          {explanation && (
+                            <p className="mt-1 text-[10px] text-zinc-400">
+                              {explanation}
+                            </p>
+                          )}
+                        </div>
+                        <span className="shrink-0 text-sm font-bold text-[#d89ca4] mt-0.5">
+                          →
                         </span>
-                      </div>
-                      <span className="shrink-0 text-sm font-bold text-[#d89ca4] mt-0.5">
-                        →
-                      </span>
-                    </Link>
-                  ))
+                      </Link>
+                    );
+                  })
                 : (
                     <div className="col-span-2 rounded-2xl border border-[#ede8e1] bg-[#f9f7f4] px-5 py-6">
                       <p className="text-sm leading-7 text-zinc-600">
