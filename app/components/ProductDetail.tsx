@@ -29,6 +29,7 @@ import { CollectionBadge } from "./knowledge/CollectionBadge";
 import { NoteChip } from "./knowledge/NoteChip";
 import { KnowledgeChip } from "./knowledge/KnowledgeChip";
 import type { KnowledgeQualityProfile } from "../lib/mkc/knowledgeQuality";
+import { LearningPathPanel } from "./academy/LearningPathPanel";
 
 
 
@@ -689,6 +690,15 @@ export default function ProductDetail({
           />
         </div>
       </section>
+
+      {/* ── Your Learning Path — Fragrance Academy ──────────────────────────── */}
+      {knowledge.learningPath && knowledge.learningPath.length > 0 && (
+        <section className="px-4 md:px-6 pb-8">
+          <div className="mx-auto max-w-7xl">
+            <LearningPathPanel slugs={knowledge.learningPath} />
+          </div>
+        </section>
+      )}
 
       {/* ── Discover More — Fragrance Academy ───────────────────────────────── */}
       <section className="px-4 md:px-6 pb-8">
