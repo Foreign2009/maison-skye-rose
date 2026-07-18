@@ -49,6 +49,15 @@ const SCENT_CHARACTERS = [
   "Deep & Intense",
 ] as const;
 
+// Fragrance families — frequency-ordered; only values that exist in the catalogue
+const CATALOGUE_FAMILIES: string[] = (() => {
+  const freq = new Map<string, number>();
+  for (const k of catalogueMaps.byName.values()) {
+    for (const f of k.family) freq.set(f, (freq.get(f) ?? 0) + 1);
+  }
+  return [...freq.entries()].sort((a, b) => b[1] - a[1]).map(([f]) => f);
+})();
+
 function chipCls(active: boolean) {
   return active
     ? "shrink-0 rounded-full bg-[#d89ca4] px-2.5 py-1 text-[11px] font-semibold text-white border border-[#d89ca4] transition-all"
@@ -68,6 +77,7 @@ export default function ShopPage() {
   const [selectedOccasion,  setSelectedOccasion]  = useState<string | null>(null);
   const [selectedSeason,    setSelectedSeason]    = useState<string | null>(null);
   const [selectedCharacter, setSelectedCharacter] = useState<string | null>(null);
+  const [selectedFamily,    setSelectedFamily]    = useState<string | null>(null);
 
   // Debounce search input — clears immediately, delays non-empty terms by 300ms
   useEffect(() => {
@@ -146,16 +156,17 @@ export default function ShopPage() {
 
   // 2a. Dimension predicates — applied after search/tab, before sort
   const dimensionFiltered = useMemo((): DisplayFragrance[] => {
-    if (!selectedOccasion && !selectedSeason && !selectedCharacter) return filtered;
+    if (!selectedOccasion && !selectedSeason && !selectedCharacter && !selectedFamily) return filtered;
     return filtered.filter((item) => {
       const k = catalogueMaps.byName.get(item.title);
       if (!k) return true;
       if (selectedOccasion  && !k.occasions.includes(selectedOccasion)) return false;
       if (selectedSeason    && !k.seasons.includes(selectedSeason))     return false;
       if (selectedCharacter && k.scentCharacter !== selectedCharacter)  return false;
+      if (selectedFamily    && !k.family.includes(selectedFamily))      return false;
       return true;
     });
-  }, [filtered, selectedOccasion, selectedSeason, selectedCharacter]);
+  }, [filtered, selectedOccasion, selectedSeason, selectedCharacter, selectedFamily]);
 
   // 2b. Sorting & Extra Filtering Logic — memoized; only recomputes when filtered list or sort changes
   const displayItems = useMemo(() => {
@@ -211,12 +222,13 @@ export default function ShopPage() {
     });
   }, [firstCardStrength]);
 
-  const hasDimensionFilters = selectedOccasion !== null || selectedSeason !== null || selectedCharacter !== null;
+  const hasDimensionFilters = selectedOccasion !== null || selectedSeason !== null || selectedCharacter !== null || selectedFamily !== null;
 
   function clearDimensionFilters() {
     setSelectedOccasion(null);
     setSelectedSeason(null);
     setSelectedCharacter(null);
+    setSelectedFamily(null);
   }
 
   const isMainMobileTab = (tab: string) => ["All", "Skye", "Rose", "Elite"].includes(tab);
@@ -370,6 +382,24 @@ export default function ShopPage() {
                 className={chipCls(selectedCharacter === char)}
               >
                 {char}
+              </button>
+            ))}
+          </div>
+
+          {/* Family */}
+          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar">
+            <span className="shrink-0 text-[10px] font-bold uppercase tracking-[0.18em] text-zinc-400 w-[64px]">Family</span>
+            {CATALOGUE_FAMILIES.map((fam) => (
+              <button
+                key={fam}
+                onClick={() => {
+                  const next = selectedFamily === fam ? null : fam;
+                  setSelectedFamily(next);
+                  trackFilter({ filter: next ?? "clear-family", mode: currentMode, resultCount: displayItems.length });
+                }}
+                className={chipCls(selectedFamily === fam)}
+              >
+                {fam}
               </button>
             ))}
           </div>
@@ -539,6 +569,21 @@ export default function ShopPage() {
                     className={chipCls(selectedCharacter === char)}
                   >
                     {char}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="py-4 border-t border-zinc-100">
+              <label className="block text-xs font-bold uppercase text-zinc-400 tracking-wider mb-2">Fragrance Family</label>
+              <div className="flex flex-wrap gap-2">
+                {CATALOGUE_FAMILIES.map((fam) => (
+                  <button
+                    key={fam}
+                    onClick={() => setSelectedFamily(selectedFamily === fam ? null : fam)}
+                    className={chipCls(selectedFamily === fam)}
+                  >
+                    {fam}
                   </button>
                 ))}
               </div>

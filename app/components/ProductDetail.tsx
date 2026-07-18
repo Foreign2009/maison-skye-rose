@@ -249,6 +249,43 @@ export default function ProductDetail({
   const contextSentence = relationshipSummary
     ? buildRelationshipContext(relationshipSummary)
     : null;
+
+  // ── Continue Your Journey ─────────────────────────────────────────────────
+  // Priority 1: relationship graph (allConnected = KnowledgeSummary[])
+  // Priority 2: similarity engine (SimilarityResult[])
+  // Priority 3: same-collection, best-seller ranked
+  const journeyFragrances = useMemo(() => {
+    const seen = new Set<string>([knowledge.slug]);
+    const result: Array<{ slug: string; name: string; image: string; price: number }> = [];
+
+    for (const rel of (relationshipSummary?.allConnected ?? [])) {
+      if (result.length >= 4 || seen.has(rel.slug)) continue;
+      seen.add(rel.slug);
+      result.push({ slug: rel.slug, name: rel.name, image: rel.images["5ml"], price: rel.prices["5ml"] });
+    }
+
+    for (const sim of (similarFragrances ?? [])) {
+      if (result.length >= 4 || seen.has(sim.fragrance.slug)) continue;
+      seen.add(sim.fragrance.slug);
+      result.push({ slug: sim.fragrance.slug, name: sim.fragrance.name, image: sim.fragrance.images["5ml"], price: sim.fragrance.prices["5ml"] });
+    }
+
+    if (result.length < 4) {
+      const pool = mkcCatalogue
+        .filter((k) => k.collection === knowledge.collection && !seen.has(k.slug))
+        .sort((a, b) => {
+          if (a.bestSeller && !b.bestSeller) return -1;
+          if (!a.bestSeller && b.bestSeller) return 1;
+          return b.popularity - a.popularity;
+        });
+      for (const k of pool) {
+        if (result.length >= 4) break;
+        result.push({ slug: k.slug, name: k.name, image: k.images["5ml"], price: k.prices["5ml"] });
+      }
+    }
+
+    return result;
+  }, [knowledge, relationshipSummary, similarFragrances]);
   // ── Render ─────────────────────────────────────────────────────────────────
 
   return (
@@ -915,6 +952,45 @@ export default function ProductDetail({
           </div>
         </div>
       </section>
+
+      {/* ── Continue Your Journey ─────────────────────────────────────────── */}
+      {journeyFragrances.length > 0 && (
+        <section className="px-4 md:px-6 pb-8">
+          <div className="mx-auto max-w-7xl">
+            <div className="rounded-3xl bg-white p-6 md:p-10">
+              <h2 className="text-2xl font-black text-[#4f4a52]">Continue Your Journey</h2>
+              <p className="mt-2 text-sm text-zinc-500 leading-6">
+                Fragrances that extend naturally from {knowledge.name}.
+              </p>
+              <div className="mt-8 grid grid-cols-2 gap-3 md:gap-6 md:grid-cols-4">
+                {journeyFragrances.map((item) => (
+                  <Link
+                    key={item.slug}
+                    href={`/product/${item.slug}`}
+                    className="rounded-3xl bg-[#f9f7f4] p-4 md:p-6 transition hover:shadow-lg"
+                  >
+                    <div className="relative h-24 md:h-40">
+                      <Image
+                        src={item.image}
+                        alt={item.name}
+                        fill
+                        className="object-contain"
+                        sizes="(max-width: 768px) 50vw, 25vw"
+                      />
+                    </div>
+                    <h3 className="mt-4 font-bold text-sm md:text-base text-[#4f4a52]">
+                      {item.name}
+                    </h3>
+                    <p className="mt-2 text-xs md:text-sm text-zinc-500">
+                      From R{item.price}
+                    </p>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* ── Why You'll Love It — powered by Discovery similarity engine ──── */}
       {(similarFragrances ?? []).length > 0 && (
