@@ -15,6 +15,7 @@ import { recommendFragrances } from "../lib/recommendFragrances";
 import type { RecommendationResults } from "../lib/recommendFragrances";
 import { getKnowledgeRecommendations } from "../lib/intelligence";
 import RecommendationCard from "../components/RecommendationCard";
+import IntelligenceSection from "../components/IntelligenceSection";
 import {
   trackQuizAnswer,
   trackQuizCompleted,
@@ -28,11 +29,20 @@ import { createProfileManager } from "../lib/customer/profile/CustomerProfileMan
 import { addSignalToDevice } from "../lib/customer/profile/DeviceProfile";
 import { buildQuizSignals } from "../lib/customer/quiz/quizSignalFactory";
 import { getOrCreateDeviceId } from "../lib/customer/identity/DeviceIdentity";
+import { CHARACTER_STAGES } from "../lib/mkc/wardrobeEngine";
+import { getArticlesForFamily, resolveArticles } from "../lib/academy/academyRelationships";
 
 const adaptedCatalogue = catalogueMaps.adapted;
 const displayByTitle = new Map<string, DisplayFragrance>(
   [...catalogueMaps.byName.entries()].map(([name, k]) => [name, toDisplayFragrance(k)])
 );
+
+const CHARACTER_ACCENTS: Record<string, string> = {
+  "Fresh & Light":       "#7a8fa3",
+  "Balanced Signature":  "#6aaa8a",
+  "Rich & Long Wearing": "#c4935a",
+  "Deep & Intense":      "#9b7ce0",
+};
 
 
 const questions = [
@@ -170,6 +180,16 @@ export default function QuizPage() {
     () => kieResults?.hiddenGem ? (catalogueMaps.byName.get(kieResults.hiddenGem.name) ?? null) : null,
     [kieResults],
   );
+
+  const characterStage = useMemo(
+    () => CHARACTER_STAGES.find((s) => s.character === answers.character) ?? null,
+    [answers.character],
+  );
+
+  const learnArticles = useMemo(() => {
+    if (!answers.family) return [];
+    return resolveArticles(getArticlesForFamily(answers.family)).slice(0, 2);
+  }, [answers.family]);
 
   useEffect(() => {
     if (completed !== questions.length) return;
@@ -535,10 +555,145 @@ export default function QuizPage() {
               >
                 Send My Results To WhatsApp
               </a>
+
+              {/* PART B — YOUR FRAGRANCE JOURNEY */}
+              {completed === questions.length && characterStage && (
+                <div className="mt-16">
+                  <div className="mb-6 flex items-center gap-3">
+                    <span
+                      className="h-px flex-1"
+                      style={{ background: `linear-gradient(to right, ${CHARACTER_ACCENTS[characterStage.character] ?? "#d89ca4"}40, transparent)` }}
+                    />
+                    <div className="text-center">
+                      <p
+                        className="text-[11px] uppercase tracking-[0.35em]"
+                        style={{ color: CHARACTER_ACCENTS[characterStage.character] ?? "#d89ca4" }}
+                      >
+                        Your Fragrance Journey
+                      </p>
+                      <h3 className="mt-1 text-xl font-black text-[#4f4a52]">Your Scent Character</h3>
+                    </div>
+                    <span
+                      className="h-px flex-1"
+                      style={{ background: `linear-gradient(to left, ${CHARACTER_ACCENTS[characterStage.character] ?? "#d89ca4"}40, transparent)` }}
+                    />
+                  </div>
+
+                  <div className="rounded-[32px] border border-white/60 bg-white/70 p-8 shadow-[0_20px_60px_rgba(0,0,0,0.04)] backdrop-blur-[16px]">
+                    <div
+                      className="mb-1 inline-flex items-center gap-2 rounded-full px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.45em]"
+                      style={{
+                        backgroundColor: `${CHARACTER_ACCENTS[characterStage.character] ?? "#d89ca4"}15`,
+                        color: CHARACTER_ACCENTS[characterStage.character] ?? "#d89ca4",
+                      }}
+                    >
+                      Stage {CHARACTER_STAGES.findIndex((s) => s.character === characterStage.character) + 1} of 4
+                    </div>
+
+                    <h4 className="mt-4 text-3xl font-black tracking-[-0.04em] text-[#4f4a52]">
+                      {characterStage.character}
+                    </h4>
+                    <p
+                      className="mt-1 text-sm font-semibold"
+                      style={{ color: CHARACTER_ACCENTS[characterStage.character] ?? "#d89ca4" }}
+                    >
+                      {characterStage.role}
+                    </p>
+
+                    <p className="mt-4 text-sm leading-7 text-[#7b7480]">
+                      {characterStage.description}
+                    </p>
+
+                    <div
+                      className="mt-5 border-l-2 pl-5"
+                      style={{ borderColor: CHARACTER_ACCENTS[characterStage.character] ?? "#d89ca4" }}
+                    >
+                      <p className="text-sm leading-relaxed text-[#7b7480]">
+                        {characterStage.editorial}
+                      </p>
+                    </div>
+
+                    {characterStage.nextStep && (
+                      <p className="mt-5 text-xs text-[#7b7480]">
+                        Ready to go deeper?{" "}
+                        <span
+                          className="font-semibold"
+                          style={{ color: CHARACTER_ACCENTS[characterStage.character] ?? "#d89ca4" }}
+                        >
+                          {characterStage.nextLabel}
+                        </span>
+                      </p>
+                    )}
+
+                    <Link
+                      href="/discover/character-journey"
+                      className="mt-6 inline-flex items-center gap-2 rounded-full border px-5 py-2.5 text-sm font-bold transition-colors hover:opacity-80"
+                      style={{
+                        borderColor: CHARACTER_ACCENTS[characterStage.character] ?? "#d89ca4",
+                        color: CHARACTER_ACCENTS[characterStage.character] ?? "#d89ca4",
+                      }}
+                    >
+                      Explore the Character Journey →
+                    </Link>
+                  </div>
+                </div>
+              )}
+
+              {/* PART C — CONTINUE LEARNING */}
+              {completed === questions.length && learnArticles.length > 0 && (
+                <div className="mt-12">
+                  <div className="mb-6 flex items-center gap-3">
+                    <span className="h-px flex-1 bg-gradient-to-r from-[#d89ca4]/30 to-transparent" />
+                    <div className="text-center">
+                      <p className="text-[11px] uppercase tracking-[0.35em] text-[#d89ca4]">
+                        Continue Learning
+                      </p>
+                      <h3 className="mt-1 text-xl font-black text-[#4f4a52]">Deepen Your Knowledge</h3>
+                    </div>
+                    <span className="h-px flex-1 bg-gradient-to-l from-[#d89ca4]/30 to-transparent" />
+                  </div>
+
+                  <div className="grid gap-4 md:grid-cols-2">
+                    {learnArticles.map((article) => (
+                      <Link
+                        key={article.slug}
+                        href={`/academy/${article.slug}`}
+                        className="group rounded-[24px] border border-white/60 bg-white/70 p-6 shadow-[0_8px_32px_rgba(0,0,0,0.04)] backdrop-blur-[16px] transition-shadow hover:shadow-[0_16px_48px_rgba(0,0,0,0.08)]"
+                      >
+                        <p className="text-[10px] font-semibold uppercase tracking-[0.45em] text-[#d89ca4]">
+                          {article.category}
+                        </p>
+                        <h4 className="mt-2 text-lg font-black tracking-[-0.03em] text-[#4f4a52] group-hover:text-[#d89ca4] transition-colors">
+                          {article.title}
+                        </h4>
+                        <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-[#7b7480]">
+                          {article.excerpt}
+                        </p>
+                        <p className="mt-4 text-xs font-semibold text-[#7b7480]">
+                          {article.readTime} min read →
+                        </p>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
             </>
           )}
         </div>
       </section>
+
+      {/* PART A — CONTINUE DISCOVERING */}
+      {completed === questions.length && (
+        <IntelligenceSection
+          personalisedLabel="Continue Discovering"
+          personalisedHeading="Selected For Your Fragrance Profile"
+          personalisedBody="Based on the preferences you have shared, these fragrances from across the Maison collection reflect the style and character you are drawn to."
+          discoveryLabel="Continue Discovering"
+          discoveryHeading="Explore the Maison Collection"
+          discoveryBody="A curated introduction to the depth and range of Maison Skye & Rose — fragrances worth discovering next."
+          source="quiz-continuation"
+        />
+      )}
 
       {/* Floating WhatsApp Component Mounted Here */}
       <FloatingWhatsApp />

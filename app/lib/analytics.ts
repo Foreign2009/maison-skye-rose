@@ -141,7 +141,8 @@ export type AnalyticsSource =
   | "compare-related"
   | "collection-skye-recommendation"
   | "collection-rose-recommendation"
-  | "collection-elite-recommendation";
+  | "collection-elite-recommendation"
+  | "quiz-continuation";
 
 export type ProductPayload = {
   title: string;
