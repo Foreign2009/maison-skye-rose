@@ -5,6 +5,7 @@ import Navbar from "../components/Navbar";
 import QuickAddModal from "../components/QuickAddModal";
 import Footer from "../components/Footer";
 import ProductCard from "../components/ProductCard";
+import IntelligenceSection from "../components/IntelligenceSection";
 import { useFavorites } from "../context/FavoritesContext";
 import { catalogueMaps } from "../lib/discovery";
 import { toDisplayFragrance } from "../lib/mkc/displayAdapter";
@@ -98,6 +99,16 @@ export default function FavoritesPage() {
           )}
         </div>
       </section>
+
+      <IntelligenceSection
+        personalisedLabel="You Might Also Like"
+        personalisedHeading="Chosen For Your Taste"
+        personalisedBody="Selected from across the Maison Skye & Rose collection based on the fragrances you have saved and explored."
+        discoveryLabel="You Might Also Like"
+        discoveryHeading="Start Your Collection"
+        discoveryBody="A curated introduction to the depth and range of Maison Skye & Rose — fragrances worth saving."
+        source="favorites-recommendation"
+      />
 
       {selectedFragrance && (
         <QuickAddModal

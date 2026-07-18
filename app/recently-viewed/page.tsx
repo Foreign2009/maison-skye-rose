@@ -5,6 +5,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import ProductCard from "../components/ProductCard";
 import QuickAddModal from "../components/QuickAddModal";
+import IntelligenceSection from "../components/IntelligenceSection";
 import { catalogueMaps } from "../lib/discovery";
 import { toDisplayFragrance } from "../lib/mkc/displayAdapter";
 import type { DisplayFragrance } from "../lib/knowledgeAdapter";
@@ -102,6 +103,16 @@ export default function RecentlyViewedPage() {
 
         </div>
       </section>
+
+      <IntelligenceSection
+        personalisedLabel="Continue Exploring"
+        personalisedHeading="Based On Your Journey"
+        personalisedBody="Selected from across the Maison Skye & Rose collection to continue the exploration you have already begun."
+        discoveryLabel="Continue Exploring"
+        discoveryHeading="Discover What Awaits"
+        discoveryBody="A curated introduction to the Maison Skye & Rose collection — fragrances worth exploring next."
+        source="recently-viewed-recommendation"
+      />
 
       {selectedFragrance && (
         <QuickAddModal

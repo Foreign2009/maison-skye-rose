@@ -134,7 +134,9 @@ export type AnalyticsSource =
   | "discover-hidden-gems"
   | "homepage-curated"
   | "best-sellers-recommendation"
-  | "new-arrivals-recommendation";
+  | "new-arrivals-recommendation"
+  | "favorites-recommendation"
+  | "recently-viewed-recommendation";
 
 export type ProductPayload = {
   title: string;
