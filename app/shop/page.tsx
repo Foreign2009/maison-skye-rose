@@ -24,6 +24,37 @@ const GENDER_LABELS: Record<NonNullable<IntentSignals["gender"]>, string> = {
   unisex: "Unisex",
 };
 
+// ── Dimension filter values ───────────────────────────────────────────────────
+
+const OCCASION_ORDER = [
+  "Daily Wear", "Office", "Date Night", "Evening",
+  "Summer Days", "Winter Evenings", "Wedding",
+] as const;
+
+// Verified at module init: only show occasions that exist in the repository
+const CATALOGUE_OCCASIONS: string[] = (() => {
+  const seen = new Set<string>();
+  for (const k of catalogueMaps.byName.values()) {
+    for (const o of k.occasions) seen.add(o);
+  }
+  return OCCASION_ORDER.filter((o) => seen.has(o));
+})();
+
+const CATALOGUE_SEASONS = ["Spring", "Summer", "Autumn", "Winter"] as const;
+
+const SCENT_CHARACTERS = [
+  "Fresh & Light",
+  "Balanced Signature",
+  "Rich & Long Wearing",
+  "Deep & Intense",
+] as const;
+
+function chipCls(active: boolean) {
+  return active
+    ? "shrink-0 rounded-full bg-[#d89ca4] px-2.5 py-1 text-[11px] font-semibold text-white border border-[#d89ca4] transition-all"
+    : "shrink-0 rounded-full bg-[#f5f1eb] px-2.5 py-1 text-[11px] font-semibold text-[#7b7480] border border-transparent hover:border-[#d89ca4] hover:text-[#d89ca4] transition-all";
+}
+
 export default function ShopPage() {
   const [search, setSearch] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
@@ -34,6 +65,9 @@ export default function ShopPage() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [selectedKnowledge, setSelectedKnowledge] = useState<FragranceKnowledge | null>(null);
   const [quickViewOpen, setQuickViewOpen] = useState(false);
+  const [selectedOccasion,  setSelectedOccasion]  = useState<string | null>(null);
+  const [selectedSeason,    setSelectedSeason]    = useState<string | null>(null);
+  const [selectedCharacter, setSelectedCharacter] = useState<string | null>(null);
 
   // Debounce search input — clears immediately, delays non-empty terms by 300ms
   useEffect(() => {
@@ -110,9 +144,22 @@ export default function ShopPage() {
     });
   }, [debouncedSearch, currentFilter, detectedSignals]);
 
-  // 2. Sorting & Extra Filtering Logic — memoized; only recomputes when filtered list or sort changes
+  // 2a. Dimension predicates — applied after search/tab, before sort
+  const dimensionFiltered = useMemo((): DisplayFragrance[] => {
+    if (!selectedOccasion && !selectedSeason && !selectedCharacter) return filtered;
+    return filtered.filter((item) => {
+      const k = catalogueMaps.byName.get(item.title);
+      if (!k) return true;
+      if (selectedOccasion  && !k.occasions.includes(selectedOccasion)) return false;
+      if (selectedSeason    && !k.seasons.includes(selectedSeason))     return false;
+      if (selectedCharacter && k.scentCharacter !== selectedCharacter)  return false;
+      return true;
+    });
+  }, [filtered, selectedOccasion, selectedSeason, selectedCharacter]);
+
+  // 2b. Sorting & Extra Filtering Logic — memoized; only recomputes when filtered list or sort changes
   const displayItems = useMemo(() => {
-    let items = [...filtered];
+    let items = [...dimensionFiltered];
 
     if (sortBy === "Price Low → High") {
       items.sort((a, b) => a.prices["5ml"] - b.prices["5ml"]);
@@ -128,7 +175,7 @@ export default function ShopPage() {
     }
 
     return items;
-  }, [filtered, sortBy]);
+  }, [dimensionFiltered, sortBy]);
 
   // Confidence label for the first recommendation card in Mode 1 with default sort.
   // Suppressed for Mode 0, Mode 2, non-default sort orders, and "partial" matchStrength.
@@ -163,6 +210,14 @@ export default function ShopPage() {
       productTitle: displayItems[0].title,
     });
   }, [firstCardStrength]);
+
+  const hasDimensionFilters = selectedOccasion !== null || selectedSeason !== null || selectedCharacter !== null;
+
+  function clearDimensionFilters() {
+    setSelectedOccasion(null);
+    setSelectedSeason(null);
+    setSelectedCharacter(null);
+  }
 
   const isMainMobileTab = (tab: string) => ["All", "Skye", "Rose", "Elite"].includes(tab);
 
@@ -239,7 +294,7 @@ export default function ShopPage() {
             onClick={() => setIsDrawerOpen(true)}
             className="flex md:hidden items-center gap-1 rounded-xl border border-zinc-200 bg-white px-4 py-2 text-xs font-semibold uppercase tracking-wider text-zinc-600 active:bg-zinc-50 shrink-0"
           >
-            Filters {(sortBy !== "Featured" || ["Best Sellers", "New Arrivals"].includes(currentFilter)) && "•"} ▼
+            Filters {(sortBy !== "Featured" || ["Best Sellers", "New Arrivals"].includes(currentFilter) || hasDimensionFilters) && "•"} ▼
           </button>
 
           <select 
@@ -260,6 +315,80 @@ export default function ShopPage() {
       </div>
 
       <div className="h-[56px] md:hidden" />
+
+      {/* DIMENSION FILTER ROW — additive predicates: Occasion · Season · Character */}
+      <div className="px-4 md:px-6 md:mt-2">
+        <div className="mx-auto max-w-7xl space-y-2 py-3">
+
+          {/* Occasion */}
+          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar">
+            <span className="shrink-0 text-[10px] font-bold uppercase tracking-[0.18em] text-zinc-400 w-[64px]">Occasion</span>
+            {CATALOGUE_OCCASIONS.map((occ) => (
+              <button
+                key={occ}
+                onClick={() => {
+                  const next = selectedOccasion === occ ? null : occ;
+                  setSelectedOccasion(next);
+                  trackFilter({ filter: next ?? "clear-occasion", mode: currentMode, resultCount: displayItems.length });
+                }}
+                className={chipCls(selectedOccasion === occ)}
+              >
+                {occ}
+              </button>
+            ))}
+          </div>
+
+          {/* Season */}
+          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar">
+            <span className="shrink-0 text-[10px] font-bold uppercase tracking-[0.18em] text-zinc-400 w-[64px]">Season</span>
+            {CATALOGUE_SEASONS.map((sea) => (
+              <button
+                key={sea}
+                onClick={() => {
+                  const next = selectedSeason === sea ? null : sea;
+                  setSelectedSeason(next);
+                  trackFilter({ filter: next ?? "clear-season", mode: currentMode, resultCount: displayItems.length });
+                }}
+                className={chipCls(selectedSeason === sea)}
+              >
+                {sea}
+              </button>
+            ))}
+          </div>
+
+          {/* Scent Character */}
+          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar">
+            <span className="shrink-0 text-[10px] font-bold uppercase tracking-[0.18em] text-zinc-400 w-[64px]">Character</span>
+            {SCENT_CHARACTERS.map((char) => (
+              <button
+                key={char}
+                onClick={() => {
+                  const next = selectedCharacter === char ? null : char;
+                  setSelectedCharacter(next);
+                  trackFilter({ filter: next ?? "clear-character", mode: currentMode, resultCount: displayItems.length });
+                }}
+                className={chipCls(selectedCharacter === char)}
+              >
+                {char}
+              </button>
+            ))}
+          </div>
+
+          {/* Clear Filters — only shown when at least one dimension filter is active */}
+          {hasDimensionFilters && (
+            <div className="flex items-center gap-2 pt-0.5">
+              <span className="w-[64px]" />
+              <button
+                onClick={clearDimensionFilters}
+                className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#d89ca4] hover:underline"
+              >
+                Clear Filters ×
+              </button>
+            </div>
+          )}
+
+        </div>
+      </div>
 
       {/* SECTION 2: Main Product Output Grid */}
       <section className="px-4 md:px-6 pb-14 mt-4 md:mt-6">
@@ -305,12 +434,13 @@ export default function ShopPage() {
             <div className="py-20 text-center border-t border-zinc-200">
               <h3 className="text-3xl font-black text-[#4f4a52]">Your fragrance journey starts here.</h3>
               <p className="mt-4 text-zinc-500">No matches found for "{search}".</p>
-              <button 
+              <button
                 onClick={() => {
-                  setSearch(""); 
+                  setSearch("");
                   setCurrentFilter("All");
                   setSortBy("Featured");
-                }} 
+                  clearDimensionFilters();
+                }}
                 className="mt-8 text-[#d89ca4] underline font-bold uppercase tracking-widest"
               >
                 Explore our collection →
@@ -364,6 +494,51 @@ export default function ShopPage() {
                     }`}
                   >
                     {segment}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="py-4 border-t border-zinc-100">
+              <label className="block text-xs font-bold uppercase text-zinc-400 tracking-wider mb-2">Occasion</label>
+              <div className="flex flex-wrap gap-2">
+                {CATALOGUE_OCCASIONS.map((occ) => (
+                  <button
+                    key={occ}
+                    onClick={() => setSelectedOccasion(selectedOccasion === occ ? null : occ)}
+                    className={chipCls(selectedOccasion === occ)}
+                  >
+                    {occ}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="py-4 border-t border-zinc-100">
+              <label className="block text-xs font-bold uppercase text-zinc-400 tracking-wider mb-2">Season</label>
+              <div className="flex flex-wrap gap-2">
+                {CATALOGUE_SEASONS.map((sea) => (
+                  <button
+                    key={sea}
+                    onClick={() => setSelectedSeason(selectedSeason === sea ? null : sea)}
+                    className={chipCls(selectedSeason === sea)}
+                  >
+                    {sea}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="py-4 border-t border-zinc-100">
+              <label className="block text-xs font-bold uppercase text-zinc-400 tracking-wider mb-2">Scent Character</label>
+              <div className="flex flex-wrap gap-2">
+                {SCENT_CHARACTERS.map((char) => (
+                  <button
+                    key={char}
+                    onClick={() => setSelectedCharacter(selectedCharacter === char ? null : char)}
+                    className={chipCls(selectedCharacter === char)}
+                  >
+                    {char}
                   </button>
                 ))}
               </div>
