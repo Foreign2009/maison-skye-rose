@@ -65,6 +65,35 @@ export function getCollection(
   return generateCollection(spec, catalogue);
 }
 
+/**
+ * Returns which COLLECTION_SPECS a given fragrance qualifies for.
+ *
+ * A fragrance qualifies when it passes every filter in a spec.
+ * Collections with no filters are excluded (they match everything — no signal).
+ *
+ * Ordering:
+ *   1. featured === true first
+ *   2. Higher filter count (more specific collection) before lower
+ *   3. Repository order within ties (stable)
+ *
+ * Returns at most 3 results.
+ */
+export function getCollectionsForFragrance(
+  fragrance: FragranceKnowledge,
+): CollectionSpec[] {
+  return COLLECTION_SPECS
+    .filter((spec) =>
+      spec.filters.length > 0 &&
+      spec.filters.every((f) => matchesFilter(fragrance, f))
+    )
+    .sort((a, b) => {
+      if (a.featured !== b.featured) return a.featured ? -1 : 1;
+      if (b.filters.length !== a.filters.length) return b.filters.length - a.filters.length;
+      return 0;
+    })
+    .slice(0, 3);
+}
+
 // ── Built-in collection specifications ───────────────────────────────────────
 
 export const COLLECTION_SPECS: CollectionSpec[] = [

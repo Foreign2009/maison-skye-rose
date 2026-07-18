@@ -5,6 +5,7 @@ import Footer from "../../components/Footer";
 import ProductDetail from "../../components/ProductDetail";
 import { mkcCatalogue } from "../../lib/mkc/catalogue";
 import { getSimilarFragrances } from "../../lib/discovery/similarityEngine";
+import { getCollectionsForFragrance } from "../../lib/discovery/collectionEngine";
 import { getKnowledgeInsights } from "../../lib/intelligence";
 
 interface ProductPageProps {
@@ -97,6 +98,13 @@ export default async function ProductPage({
   // ScoreBreakdown, which deriveSimilarityReasons and RecommendationCard require.
   const similarFragrances = getSimilarFragrances(knowledge, { count: 3 });
 
+  const discoveryCollections = getCollectionsForFragrance(knowledge).map((s) => ({
+    id:       s.id,
+    name:     s.name,
+    icon:     s.icon,
+    featured: s.featured,
+  }));
+
   const baseUrl = process.env.NEXT_PUBLIC_WEBSITE_URL ?? "";
   const imagePath = normalizeImagePath(knowledge.images["10ml"]);
 
@@ -132,7 +140,7 @@ export default async function ProductPage({
       <main className="min-h-screen bg-[#f5f1eb]">
         <Navbar />
 
-        <ProductDetail knowledge={knowledge} discoverMoreArticles={discoverMoreArticles} similarFragrances={similarFragrances} relationshipSummary={relationshipSummary} qualityProfile={qualityProfile} />
+        <ProductDetail knowledge={knowledge} discoverMoreArticles={discoverMoreArticles} similarFragrances={similarFragrances} relationshipSummary={relationshipSummary} qualityProfile={qualityProfile} discoveryCollections={discoveryCollections} />
 
         <Footer />
       </main>

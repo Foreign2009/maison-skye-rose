@@ -41,6 +41,13 @@ export interface DiscoverMoreArticle {
   readTime: number;
 }
 
+export interface DiscoveryCollectionRef {
+  id:       string;
+  name:     string;
+  icon:     string;
+  featured: boolean;
+}
+
 // ─────────────────────────────────────────────────────────────────────────────
 
 const GENDER_LABELS: Record<FragranceKnowledge["gender"], string> = {
@@ -85,12 +92,14 @@ export default function ProductDetail({
   similarFragrances,
   relationshipSummary,
   qualityProfile,
+  discoveryCollections,
 }: {
   knowledge: FragranceKnowledge;
   discoverMoreArticles?: DiscoverMoreArticle[];
   similarFragrances?: SimilarityResult[];
   relationshipSummary?: KnowledgeRelationships;
   qualityProfile?: KnowledgeQualityProfile;
+  discoveryCollections?: DiscoveryCollectionRef[];
 }) {
   const [selectedSize, setSelectedSize] =
     useState<"5ml" | "10ml" | "30ml">("10ml");
@@ -741,6 +750,27 @@ export default function ProductDetail({
           />
         </div>
       </section>
+
+      {/* ── Featured In — Discovery Collections ──────────────────────────────── */}
+      {discoveryCollections && discoveryCollections.length > 0 && (
+        <section className="px-4 md:px-6 pb-8">
+          <div className="mx-auto max-w-7xl">
+            <div className="rounded-3xl bg-white p-6 md:p-10">
+              <h2 className="text-2xl font-black text-[#4f4a52]">Featured In</h2>
+              <div className="mt-6 flex flex-wrap gap-2">
+                {discoveryCollections.map((col) => (
+                  <KnowledgeChip
+                    key={col.id}
+                    label={`${col.icon} ${col.name}`}
+                    variant="bordered"
+                    href={`/discover/${col.id}`}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* ── Your Learning Path — Fragrance Academy ──────────────────────────── */}
       {knowledge.learningPath && knowledge.learningPath.length > 0 && (
