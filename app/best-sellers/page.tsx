@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import Navbar from "../components/Navbar";
 import ProductCard from "../components/ProductCard";
 import QuickAddModal from "../components/QuickAddModal";
+import IntelligenceSection from "../components/IntelligenceSection";
 import { mkcCatalogue } from "../lib/mkc/catalogue";
 import { toDisplayFragrance } from "../lib/mkc/displayAdapter";
 
@@ -64,6 +65,16 @@ export default function BestSellersPage() {
           )}
         </div>
       </section>
+
+      <IntelligenceSection
+        personalisedLabel="Discover More Like These"
+        personalisedHeading="Selected For Your Fragrance Profile"
+        personalisedBody="Based on the fragrances you have explored, these selections share the character and style you are drawn to."
+        discoveryLabel="Discover More Like These"
+        discoveryHeading="You May Also Love"
+        discoveryBody="A curated selection from across the Maison Skye & Rose collection to complement the best sellers you are exploring."
+        source="best-sellers-recommendation"
+      />
 
       {selectedFragrance && (
         <QuickAddModal

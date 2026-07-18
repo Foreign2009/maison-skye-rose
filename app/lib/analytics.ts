@@ -132,7 +132,9 @@ export type AnalyticsSource =
   | "discover-collection"
   | "discover-seasonal"
   | "discover-hidden-gems"
-  | "homepage-curated";
+  | "homepage-curated"
+  | "best-sellers-recommendation"
+  | "new-arrivals-recommendation";
 
 export type ProductPayload = {
   title: string;

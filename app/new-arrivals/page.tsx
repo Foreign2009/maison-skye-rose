@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import Navbar from "../components/Navbar";
 import ProductCard from "../components/ProductCard";
 import QuickAddModal from "../components/QuickAddModal";
+import IntelligenceSection from "../components/IntelligenceSection";
 import { mkcCatalogue } from "../lib/mkc/catalogue";
 import { toDisplayFragrance } from "../lib/mkc/displayAdapter";
 
@@ -62,6 +63,16 @@ export default function NewArrivalsPage() {
           </div>
         </div>
       </section>
+
+      <IntelligenceSection
+        personalisedLabel="Continue Discovering"
+        personalisedHeading="Matched To Your Preferences"
+        personalisedBody="Selected from across the full Maison Skye & Rose catalogue to reflect the style and character you have expressed."
+        discoveryLabel="Continue Discovering"
+        discoveryHeading="Explore the Collection"
+        discoveryBody="A curated selection to guide you further into the depth and range of Maison Skye & Rose."
+        source="new-arrivals-recommendation"
+      />
 
       {selectedFragrance && (
         <QuickAddModal
