@@ -5,6 +5,7 @@ import { getKnowledgeInsights } from "../lib/intelligence";
 import { getSimilarFragrances } from "../lib/discovery/similarityEngine";
 import { deriveSimilarityReasons } from "../lib/concierge/similarityReasons";
 import { getCollectionsForFragrance } from "../lib/discovery/collectionEngine";
+import { generateWhyYoullLikeIt } from "../lib/mkc/merchandising";
 import ComparisonView from "../components/ComparisonView";
 import type {
   FragranceComparisonDTO,
@@ -161,6 +162,19 @@ export default async function ComparePage({ searchParams }: ComparePageProps) {
     character:  { a: recA.scentCharacter, b: recB.scentCharacter, same: recA.scentCharacter === recB.scentCharacter },
     collections: { shared: sharedCollections, uniqueA: uniqueCollectionsA, uniqueB: uniqueCollectionsB },
     graphRelationship,
+    commercial: {
+      prices: {
+        "5ml":  { a: recA.prices["5ml"],  b: recB.prices["5ml"]  },
+        "10ml": { a: recA.prices["10ml"], b: recB.prices["10ml"] },
+        "30ml": { a: recA.prices["30ml"], b: recB.prices["30ml"] },
+      },
+      whyYoullLikeIt: {
+        a: generateWhyYoullLikeIt(recA),
+        b: generateWhyYoullLikeIt(recB),
+      },
+      collection: { a: recA.collection, b: recB.collection },
+      popularity:  { a: recA.popularity, b: recB.popularity },
+    },
   };
 
   return (

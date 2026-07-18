@@ -4,6 +4,7 @@ import Link from "next/link";
 import RecommendationCard from "./RecommendationCard";
 import { NoteChip } from "./knowledge/NoteChip";
 import { KnowledgeChip } from "./knowledge/KnowledgeChip";
+import { CollectionBadge } from "./knowledge/CollectionBadge";
 
 // ── DTOs ──────────────────────────────────────────────────────────────────────
 
@@ -64,6 +65,19 @@ export interface ComparisonDimensions {
     uniqueB: CollectionRef[];
   };
   graphRelationship: GraphRelationship | null;
+  commercial: {
+    prices: {
+      "5ml":  { a: number; b: number };
+      "10ml": { a: number; b: number };
+      "30ml": { a: number; b: number };
+    };
+    whyYoullLikeIt: {
+      a: [string, string, string];
+      b: [string, string, string];
+    };
+    collection: { a: string; b: string };
+    popularity:  { a: number; b: number };
+  };
 }
 
 // ── Constants ─────────────────────────────────────────────────────────────────
@@ -123,7 +137,7 @@ export default function ComparisonView({
   reasons:     string[];
   dimensions:  ComparisonDimensions;
 }) {
-  const { notes, occasions, seasons, projection, character, collections, graphRelationship } = dimensions;
+  const { notes, occasions, seasons, projection, character, collections, graphRelationship, commercial } = dimensions;
 
   return (
     <>
@@ -449,6 +463,83 @@ export default function ComparisonView({
           </div>
         </SectionCard>
       )}
+
+      {/* ── Section 8: Price Comparison ─────────────────────────────────────── */}
+      <SectionCard title="Price Comparison">
+        <div className="mt-6 overflow-hidden rounded-2xl bg-[#f9f7f4]">
+          <div className="grid grid-cols-3 border-b border-[#ede8e1] px-5 py-3">
+            <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-zinc-400">Size</p>
+            <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-zinc-400 text-center truncate">{fragranceA.name}</p>
+            <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-zinc-400 text-center truncate">{fragranceB.name}</p>
+          </div>
+          {(["5ml", "10ml", "30ml"] as const).map((size, i) => (
+            <div
+              key={size}
+              className={`grid grid-cols-3 px-5 py-4 ${i < 2 ? "border-b border-[#ede8e1]" : ""}`}
+            >
+              <p className="text-sm font-semibold text-[#4f4a52]">{size}</p>
+              <p className="text-sm font-bold text-[#4f4a52] text-center">R{commercial.prices[size].a}</p>
+              <p className="text-sm font-bold text-[#4f4a52] text-center">R{commercial.prices[size].b}</p>
+            </div>
+          ))}
+        </div>
+      </SectionCard>
+
+      {/* ── Section 9: Why You'll Like Each ─────────────────────────────────── */}
+      <SectionCard title="Why You'll Like Each">
+        <div className="mt-8 grid gap-8 md:grid-cols-2">
+          <div>
+            <SubLabel>{fragranceA.name}</SubLabel>
+            <ul className="space-y-3">
+              {commercial.whyYoullLikeIt.a.map((bullet) => (
+                <li key={bullet} className="flex items-start gap-2 text-sm text-[#7b7480]">
+                  <span className="mt-0.5 shrink-0 text-[#d89ca4]">✓</span>
+                  <span>{bullet}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <SubLabel>{fragranceB.name}</SubLabel>
+            <ul className="space-y-3">
+              {commercial.whyYoullLikeIt.b.map((bullet) => (
+                <li key={bullet} className="flex items-start gap-2 text-sm text-[#7b7480]">
+                  <span className="mt-0.5 shrink-0 text-[#4f4a52]">✓</span>
+                  <span>{bullet}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </SectionCard>
+
+      {/* ── Section 10: Collection ───────────────────────────────────────────── */}
+      <SectionCard title="Collection">
+        <div className="mt-6 overflow-hidden rounded-2xl bg-[#f9f7f4]">
+          <div className="flex items-center justify-between px-5 py-4 border-b border-[#ede8e1]">
+            <p className="text-sm text-zinc-500 truncate mr-4">{fragranceA.name}</p>
+            <CollectionBadge collection={commercial.collection.a} />
+          </div>
+          <div className="flex items-center justify-between px-5 py-4">
+            <p className="text-sm text-zinc-500 truncate mr-4">{fragranceB.name}</p>
+            <CollectionBadge collection={commercial.collection.b} />
+          </div>
+        </div>
+      </SectionCard>
+
+      {/* ── Section 11: Popularity ───────────────────────────────────────────── */}
+      <SectionCard title="Popularity">
+        <div className="mt-6 overflow-hidden rounded-2xl bg-[#f9f7f4]">
+          <div className="flex items-center justify-between px-5 py-4 border-b border-[#ede8e1]">
+            <p className="text-sm text-zinc-500 truncate mr-4">{fragranceA.name}</p>
+            <p className="text-sm font-bold text-[#4f4a52] shrink-0">{commercial.popularity.a}</p>
+          </div>
+          <div className="flex items-center justify-between px-5 py-4">
+            <p className="text-sm text-zinc-500 truncate mr-4">{fragranceB.name}</p>
+            <p className="text-sm font-bold text-[#4f4a52] shrink-0">{commercial.popularity.b}</p>
+          </div>
+        </div>
+      </SectionCard>
 
     </>
   );
