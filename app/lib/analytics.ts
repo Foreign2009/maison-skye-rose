@@ -131,7 +131,8 @@ export type AnalyticsSource =
   | "homepage-moment"
   | "discover-collection"
   | "discover-seasonal"
-  | "discover-hidden-gems";
+  | "discover-hidden-gems"
+  | "homepage-curated";
 
 export type ProductPayload = {
   title: string;

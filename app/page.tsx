@@ -24,6 +24,7 @@ import { getCollection } from "./lib/discovery";
 import { getSeasonConfig, getSeasonalAcademyTeasers } from "./lib/editorial/seasonConfig";
 import { useConcierge } from "./context/ConciergeContext";
 import { trackAiChatStarted } from "./lib/analytics";
+import CuratedForYou from "./components/CuratedForYou";
 
 // ── Featured fragrance — first Skye best seller ───────────────────────────────
 const featuredKnowledge =
@@ -199,6 +200,9 @@ export default function HomePage() {
           }}
         />
       </section>
+
+      {/* ── CURATED FOR YOU ────────────────────────────────────────────────── */}
+      <CuratedForYou />
 
       {/* ── CONTINUE LEARNING ──────────────────────────────────────────────── */}
       <section className="bg-[#faf7f5] py-16 md:py-28">
