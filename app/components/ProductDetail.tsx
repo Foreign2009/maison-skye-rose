@@ -84,6 +84,29 @@ const FAMILY_ACADEMY_HEADERS: Record<string, string> = {
   "Powdery":      "Discover Powdery Fragrances",
 };
 
+function formatSeasons(seasons: string[]): string {
+  if (seasons.length >= 4) return "All Seasons";
+  if (seasons.length <= 1) return seasons[0] ?? "";
+  const last = seasons[seasons.length - 1];
+  return `${seasons.slice(0, -1).join(", ")} and ${last}`;
+}
+
+function buildRelationshipContext(relationships: KnowledgeRelationships): string | null {
+  if (relationships.evolutionOf) {
+    return `A natural progression from ${relationships.evolutionOf.name}.`;
+  }
+  if (relationships.evolutions.length > 0) {
+    return "Explore richer interpretations within the same fragrance family.";
+  }
+  if (relationships.alternatives.length > 0) {
+    return "Also enjoyed by customers exploring similar scent profiles.";
+  }
+  if (relationships.wardrobePartners.length > 0) {
+    return "Pairs well with complementary fragrances in a wardrobe rotation.";
+  }
+  return null;
+}
+
 // ─────────────────────────────────────────────────────────────────────────────
 
 export default function ProductDetail({
@@ -221,6 +244,9 @@ export default function ProductDetail({
     [knowledge]
   );
   const academyHeader = FAMILY_ACADEMY_HEADERS[knowledge.family[0] ?? ""] ?? "Discover More";
+  const contextSentence = relationshipSummary
+    ? buildRelationshipContext(relationshipSummary)
+    : null;
   // ── Render ─────────────────────────────────────────────────────────────────
 
   return (
@@ -657,6 +683,19 @@ export default function ProductDetail({
                 </div>
               )}
 
+              {knowledge.vibe.length > 0 && (
+                <div>
+                  <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.22em] text-zinc-400">
+                    Vibe
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {knowledge.vibe.map((v) => (
+                      <KnowledgeChip key={v} label={v} variant="bordered" />
+                    ))}
+                  </div>
+                </div>
+              )}
+
               {knowledge.occasions.length > 0 && (
                 <div>
                   <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.22em] text-zinc-400">
@@ -667,6 +706,17 @@ export default function ProductDetail({
                       <KnowledgeChip key={o} label={o} variant="bordered" />
                     ))}
                   </div>
+                </div>
+              )}
+
+              {knowledge.seasons.length > 0 && (
+                <div>
+                  <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.22em] text-zinc-400">
+                    Best Worn In
+                  </p>
+                  <p className="text-sm font-semibold text-[#4f4a52]">
+                    {formatSeasons(knowledge.seasons)}
+                  </p>
                 </div>
               )}
 
@@ -682,6 +732,10 @@ export default function ProductDetail({
           <div className="mx-auto max-w-7xl">
             <div className="rounded-3xl bg-white p-6 md:p-10">
               <h2 className="text-2xl font-black text-[#4f4a52]">Fragrance Connections</h2>
+
+              {contextSentence && (
+                <p className="mt-3 text-sm leading-7 text-zinc-500">{contextSentence}</p>
+              )}
 
               <div className="mt-8 space-y-7">
 
