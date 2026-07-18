@@ -14,7 +14,7 @@ export interface WardrobeData {
   };
 }
 
-type ScentCharacter = FragranceKnowledge["scentCharacter"];
+export type ScentCharacter = FragranceKnowledge["scentCharacter"];
 
 // ── Wardrobe role map ─────────────────────────────────────────────────────────
 
@@ -68,6 +68,28 @@ const CHARACTER_PROGRESSION: Record<
     nextLabel: null,
   },
 };
+
+// ── Character stages ──────────────────────────────────────────────────────────
+
+export interface CharacterStage {
+  character:   ScentCharacter;
+  role:        string;
+  description: string;
+  editorial:   string;
+  nextStep:    ScentCharacter | null;
+  nextLabel:   string | null;
+}
+
+export const CHARACTER_STAGES: readonly CharacterStage[] = (
+  ["Fresh & Light", "Balanced Signature", "Rich & Long Wearing", "Deep & Intense"] as const
+).map((character) => ({
+  character,
+  role:        WARDROBE_ROLES[character].role,
+  description: WARDROBE_ROLES[character].description,
+  editorial:   CHARACTER_PROGRESSION[character].editorial,
+  nextStep:    CHARACTER_PROGRESSION[character].nextStep,
+  nextLabel:   CHARACTER_PROGRESSION[character].nextLabel,
+}));
 
 // ── Public API ────────────────────────────────────────────────────────────────
 

@@ -8,6 +8,7 @@ import HelpMeChooseButton from "../components/HelpMeChooseButton";
 import { COLLECTION_SPECS, getCollection, getCurrentSeason } from "../lib/discovery";
 import { toDisplayFragrance } from "../lib/mkc/displayAdapter";
 import { mkcCatalogue } from "../lib/mkc/catalogue";
+import { CHARACTER_STAGES } from "../lib/mkc/wardrobeEngine";
 
 export const metadata: Metadata = {
   title: "Discover Fragrances | Maison Skye & Rose",
@@ -41,6 +42,23 @@ const specData = COLLECTION_SPECS.map((spec) => {
 
 const featuredSpecData = specData.filter((d) => d.spec.featured);
 const allSpecData = specData;
+
+// Editorial collections — featured first, then repository order
+const editorialSpecData = specData
+  .filter((d) => !!d.spec.editorial)
+  .sort((a, b) => {
+    if (a.spec.featured && !b.spec.featured) return -1;
+    if (!a.spec.featured && b.spec.featured) return 1;
+    return 0;
+  });
+
+// Accent colours sourced from existing COLLECTION_SPECS.accentColor values
+const CHARACTER_ACCENTS: Record<string, string> = {
+  "Fresh & Light":       "#7a8fa3", // fresh-office
+  "Balanced Signature":  "#6aaa8a", // everyday-wear
+  "Rich & Long Wearing": "#c4935a", // vanilla-lovers
+  "Deep & Intense":      "#9b7ce0", // luxury-picks
+};
 
 // Seasonal picks
 const season = getCurrentSeason();
@@ -159,23 +177,93 @@ export default function DiscoverPage() {
           </section>
         )}
 
-        {/* ── Editor's Choice — placeholder ────────────────────────────────── */}
-        <section className="py-16 md:py-24 px-4">
+        {/* ── Explore by Scent Character ────────────────────────────────── */}
+        <section className="bg-white py-16 md:py-24 px-4">
           <div className="mx-auto max-w-7xl">
-            <div className="rounded-[32px] border-2 border-dashed border-[#ede8e1] bg-white p-8 md:p-16 text-center">
-              <span className="inline-block rounded-full bg-[#f5f1eb] px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-zinc-400">
-                Coming Soon
-              </span>
-              <h2 className="mt-4 text-2xl md:text-3xl font-black text-[#4f4a52]">
-                Editor&apos;s Choice
-              </h2>
-              <p className="mt-3 text-sm text-zinc-500 max-w-sm mx-auto">
-                Our curated selection of exceptional fragrances — personally
-                chosen by the Maison team.
+            <div className="mb-10 text-center">
+              <p className="text-[11px] uppercase tracking-[0.45em] text-[#d89ca4]">
+                Your Fragrance Journey
               </p>
+              <h2 className="mt-2 text-2xl md:text-4xl font-black text-[#4f4a52]">
+                Explore by Scent Character
+              </h2>
+            </div>
+
+            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+              {CHARACTER_STAGES.map((stage, i) => {
+                const accent = CHARACTER_ACCENTS[stage.character] ?? "#d89ca4";
+                return (
+                  <Link
+                    key={stage.character}
+                    href="/discover/character-journey"
+                    className="group flex flex-col rounded-[32px] border border-[#ede8e1] bg-white p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_60px_rgba(0,0,0,0.10)]"
+                  >
+                    <div className="mb-4">
+                      <span
+                        className="inline-block rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-[0.18em] mb-2"
+                        style={{ backgroundColor: `${accent}18`, color: accent }}
+                      >
+                        Stage {i + 1}
+                      </span>
+                      <h3 className="text-base font-black text-[#4f4a52] leading-snug group-hover:text-[#d89ca4] transition-colors">
+                        {stage.character}
+                      </h3>
+                      <p className="mt-1 text-sm font-semibold" style={{ color: accent }}>
+                        {stage.role}
+                      </p>
+                    </div>
+
+                    <p className="text-xs leading-5 text-[#7b7480] line-clamp-4 flex-1">
+                      {stage.editorial}
+                    </p>
+
+                    {stage.nextLabel && (
+                      <p className="mt-3 text-[10px] font-semibold uppercase tracking-[0.18em] text-zinc-400">
+                        {stage.nextLabel} →
+                      </p>
+                    )}
+
+                    <div className="mt-5 flex items-center gap-1.5 text-sm font-bold text-[#d89ca4] group-hover:gap-2.5 transition-all">
+                      <span>Explore Collection</span>
+                      <span>→</span>
+                    </div>
+                  </Link>
+                );
+              })}
             </div>
           </div>
         </section>
+
+        {/* ── Editor's Choice ───────────────────────────────────────────────── */}
+        {editorialSpecData.length > 0 && (
+          <section className="py-16 md:py-24 px-4">
+            <div className="mx-auto max-w-7xl">
+              <div className="mb-10 text-center">
+                <p className="text-[11px] uppercase tracking-[0.45em] text-[#d89ca4]">
+                  Curated Selection
+                </p>
+                <h2 className="mt-2 text-2xl md:text-4xl font-black text-[#4f4a52]">
+                  Editor&apos;s Choice
+                </h2>
+                <p className="mt-3 text-sm text-[#7b7480] max-w-md mx-auto">
+                  Our curated selection of exceptional fragrances — personally
+                  chosen by the Maison team.
+                </p>
+              </div>
+
+              <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+                {editorialSpecData.map(({ spec, productCount, sampleImages }) => (
+                  <CollectionCard
+                    key={spec.id}
+                    spec={spec}
+                    productCount={productCount}
+                    sampleImages={sampleImages}
+                  />
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* ── Hidden Gems ───────────────────────────────────────────────────── */}
         {hiddenGemsProducts.length > 0 && (
