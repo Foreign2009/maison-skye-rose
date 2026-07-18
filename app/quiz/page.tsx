@@ -13,6 +13,8 @@ import { toDisplayFragrance } from "../lib/mkc/displayAdapter";
 import type { DisplayFragrance } from "../lib/knowledgeAdapter";
 import { recommendFragrances } from "../lib/recommendFragrances";
 import type { RecommendationResults } from "../lib/recommendFragrances";
+import { getKnowledgeRecommendations } from "../lib/intelligence";
+import RecommendationCard from "../components/RecommendationCard";
 import {
   trackQuizAnswer,
   trackQuizCompleted,
@@ -146,6 +148,28 @@ export default function QuizPage() {
     }
     return flat;
   }, [recommendationResults]);
+
+  // KIE structured recommendation slots — exposes Luxury Upgrade and Hidden Gem as typed KnowledgeSummary objects
+  const kieResults = useMemo(() => {
+    if (Object.keys(answers).length === 0) return null;
+    return getKnowledgeRecommendations({
+      gender:    answers.gender?.toLowerCase(),
+      occasion:  answers.occasion,
+      vibe:      answers.vibe,
+      family:    answers.family,
+      character: answers.character,
+    });
+  }, [answers]);
+
+  // Full FragranceKnowledge lookups for RecommendationCard (requires profile, mood, notes, sensor bars)
+  const luxuryKnowledge = useMemo(
+    () => kieResults?.luxuryUpgrade ? (catalogueMaps.byName.get(kieResults.luxuryUpgrade.name) ?? null) : null,
+    [kieResults],
+  );
+  const gemKnowledge = useMemo(
+    () => kieResults?.hiddenGem ? (catalogueMaps.byName.get(kieResults.hiddenGem.name) ?? null) : null,
+    [kieResults],
+  );
 
   useEffect(() => {
     if (completed !== questions.length) return;
@@ -403,6 +427,72 @@ export default function QuizPage() {
                   </h3>
                 </div>
               </div>
+
+              {/* LUXURY UPGRADE — Elite Collection slot from KIE recommendation engine */}
+              {kieResults?.luxuryUpgrade && luxuryKnowledge && (
+                <div className="mb-10">
+                  <div className="mb-4 flex items-center gap-3">
+                    <span className="h-px flex-1 bg-gradient-to-r from-[#9b7ce0]/30 to-transparent" />
+                    <div className="text-center">
+                      <p className="text-[11px] uppercase tracking-[0.35em] text-[#9b7ce0]">Luxury Upgrade</p>
+                      <h3 className="mt-1 text-xl font-black text-[#4f4a52]">Step Into the Elite Collection</h3>
+                    </div>
+                    <span className="h-px flex-1 bg-gradient-to-l from-[#9b7ce0]/30 to-transparent" />
+                  </div>
+                  <p className="mb-5 text-center text-sm text-zinc-500 max-w-md mx-auto">
+                    A premium composition from the Elite Collection that aligns with your profile — built for depth and distinction.
+                  </p>
+                  <div className="mx-auto max-w-md">
+                    <RecommendationCard
+                      title={kieResults.luxuryUpgrade.name}
+                      subtitle={kieResults.luxuryUpgrade.subtitle ?? undefined}
+                      profile={luxuryKnowledge.profile}
+                      mood={luxuryKnowledge.mood}
+                      notes={[...luxuryKnowledge.notes.top, ...luxuryKnowledge.notes.heart].slice(0, 5)}
+                      freshness={luxuryKnowledge.freshness}
+                      warmth={luxuryKnowledge.warmth}
+                      sweetness={luxuryKnowledge.sweetness}
+                      intensity={luxuryKnowledge.intensity}
+                      versatility={luxuryKnowledge.versatility}
+                      reasons={[...kieResults.luxuryUpgrade.whyYoullLikeIt]}
+                      slug={kieResults.luxuryUpgrade.slug}
+                    />
+                  </div>
+                </div>
+              )}
+
+              {/* HIDDEN GEM — less-discovered slot from KIE recommendation engine */}
+              {kieResults?.hiddenGem && gemKnowledge && (
+                <div className="mb-10">
+                  <div className="mb-4 flex items-center gap-3">
+                    <span className="h-px flex-1 bg-gradient-to-r from-[#9b7ce0]/30 to-transparent" />
+                    <div className="text-center">
+                      <p className="text-[11px] uppercase tracking-[0.35em] text-[#9b7ce0]">Hidden Gem</p>
+                      <h3 className="mt-1 text-xl font-black text-[#4f4a52]">Beyond the Bestsellers</h3>
+                    </div>
+                    <span className="h-px flex-1 bg-gradient-to-l from-[#9b7ce0]/30 to-transparent" />
+                  </div>
+                  <p className="mb-5 text-center text-sm text-zinc-500 max-w-md mx-auto">
+                    A less-discovered fragrance that fits your profile — found before the crowd does.
+                  </p>
+                  <div className="mx-auto max-w-md">
+                    <RecommendationCard
+                      title={kieResults.hiddenGem.name}
+                      subtitle={kieResults.hiddenGem.subtitle ?? undefined}
+                      profile={gemKnowledge.profile}
+                      mood={gemKnowledge.mood}
+                      notes={[...gemKnowledge.notes.top, ...gemKnowledge.notes.heart].slice(0, 5)}
+                      freshness={gemKnowledge.freshness}
+                      warmth={gemKnowledge.warmth}
+                      sweetness={gemKnowledge.sweetness}
+                      intensity={gemKnowledge.intensity}
+                      versatility={gemKnowledge.versatility}
+                      reasons={[...kieResults.hiddenGem.whyYoullLikeIt]}
+                      slug={kieResults.hiddenGem.slug}
+                    />
+                  </div>
+                </div>
+              )}
 
               <div className="mb-8 grid gap-6 lg:grid-cols-3">
                 {recommended.map((fragrance, index) => (
