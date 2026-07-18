@@ -11,6 +11,7 @@ import { mkcCatalogue } from "../../lib/mkc/catalogue";
 import { toDisplayFragrance } from "../../lib/mkc/displayAdapter";
 import { ROSE_INTELLIGENCE } from "../../lib/mkc/collectionIntelligence";
 import { CollectionCharacter } from "../../components/knowledge/CollectionCharacter";
+import IntelligenceSection from "../../components/IntelligenceSection";
 
 export default function RoseCollectionPage() {
   const [search, setSearch] = useState("");
@@ -102,6 +103,17 @@ export default function RoseCollectionPage() {
             )}
           </div>
         </section>
+
+        <IntelligenceSection
+          personalisedLabel="Continue Your Journey"
+          personalisedHeading="Selected For Your Fragrance Profile"
+          personalisedBody="From across the Maison Skye & Rose collection, selected to complement the timeless, graceful world of Rose."
+          discoveryLabel="Continue Your Journey"
+          discoveryHeading="Explore Further"
+          discoveryBody="A curated selection from across the full Maison Skye & Rose collection to continue your discovery."
+          source="collection-rose-recommendation"
+          className="bg-white"
+        />
 
         {selectedFragrance && (
           <QuickAddModal

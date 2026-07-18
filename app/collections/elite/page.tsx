@@ -8,6 +8,7 @@ import { mkcCatalogue } from "../../lib/mkc/catalogue";
 import { toDisplayFragrance } from "../../lib/mkc/displayAdapter";
 import { ELITE_INTELLIGENCE } from "../../lib/mkc/collectionIntelligence";
 import { CollectionCharacter } from "../../components/knowledge/CollectionCharacter";
+import IntelligenceSection from "../../components/IntelligenceSection";
 
 export default function EliteCollectionPage() {
   const [selectedFragrance, setSelectedFragrance] = useState<ReturnType<typeof toDisplayFragrance> | null>(null);
@@ -65,6 +66,17 @@ export default function EliteCollectionPage() {
           ))}
         </div>
       </section>
+
+      <IntelligenceSection
+        personalisedLabel="Continue Your Journey"
+        personalisedHeading="Selected For Your Fragrance Profile"
+        personalisedBody="From across the Maison Skye & Rose collection, selected to complement the exclusive, niche world of Elite."
+        discoveryLabel="Continue Your Journey"
+        discoveryHeading="Explore Further"
+        discoveryBody="A curated selection from across the full Maison Skye & Rose collection to continue your discovery."
+        source="collection-elite-recommendation"
+        className="bg-white"
+      />
 
       {selectedFragrance && (
         <QuickAddModal

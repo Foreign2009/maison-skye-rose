@@ -138,7 +138,10 @@ export type AnalyticsSource =
   | "favorites-recommendation"
   | "recently-viewed-recommendation"
   | "compare-post-decision"
-  | "compare-related";
+  | "compare-related"
+  | "collection-skye-recommendation"
+  | "collection-rose-recommendation"
+  | "collection-elite-recommendation";
 
 export type ProductPayload = {
   title: string;
