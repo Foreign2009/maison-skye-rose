@@ -5,6 +5,8 @@ import Link from "next/link";
 type RecommendationCardProps = {
   title: string;
 
+  subtitle?: string | null;
+
   profile: string;
 
   mood: string;
@@ -28,6 +30,7 @@ type RecommendationCardProps = {
 
 export default function RecommendationCard({
   title,
+  subtitle,
   profile,
   mood,
   notes,
@@ -67,6 +70,10 @@ export default function RecommendationCard({
           {title}
 
         </h3>
+
+        {subtitle && (
+          <p className="mt-1 text-sm font-semibold text-[#b67d73]">{subtitle}</p>
+        )}
 
       </div>
 

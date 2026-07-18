@@ -31,6 +31,7 @@ import { KnowledgeChip } from "./knowledge/KnowledgeChip";
 import type { KnowledgeQualityProfile } from "../lib/mkc/knowledgeQuality";
 import { LearningPathPanel } from "./academy/LearningPathPanel";
 import { explainArticleRecommendation } from "../lib/academy/explainArticleRecommendation";
+import ComparePickerOverlay from "./ComparePickerOverlay";
 
 
 
@@ -128,6 +129,7 @@ export default function ProductDetail({
     useState<"5ml" | "10ml" | "30ml">("10ml");
   const [showStickyBar,   setShowStickyBar]   = useState(false);
   const [pyramidExpanded, setPyramidExpanded] = useState(false);
+  const [compareOpen,     setCompareOpen]     = useState(false);
 
   const { addToCart }                                     = useCart();
   const { openCart, cartOpen }                            = useCartUI();
@@ -449,6 +451,14 @@ export default function ProductDetail({
                 className="mt-3 w-full rounded-2xl border border-[#efe8e1] bg-white py-3 text-sm font-semibold text-[#4f4a52] transition hover:border-[#d89ca4] hover:text-[#d89ca4]"
               >
                 ✦ Ask About This Fragrance
+              </button>
+
+              {/* Compare */}
+              <button
+                onClick={() => setCompareOpen(true)}
+                className="mt-3 w-full rounded-2xl border border-[#efe8e1] bg-white py-3 text-sm font-semibold text-[#4f4a52] transition hover:border-[#d89ca4] hover:text-[#d89ca4]"
+              >
+                ⇄ Compare with Another Fragrance
               </button>
             </div>
           </div>
@@ -1010,6 +1020,12 @@ export default function ProductDetail({
           </div>
         </div>
       )}
+
+      <ComparePickerOverlay
+        isOpen={compareOpen}
+        onClose={() => setCompareOpen(false)}
+        currentSlug={knowledge.slug}
+      />
     </>
   );
 }
