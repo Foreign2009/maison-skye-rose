@@ -4,8 +4,12 @@ import Footer from "../components/Footer";
 import { getKnowledgeInsights } from "../lib/intelligence";
 import { getSimilarFragrances } from "../lib/discovery/similarityEngine";
 import { deriveSimilarityReasons } from "../lib/concierge/similarityReasons";
+import { getCollectionsForFragrance } from "../lib/discovery/collectionEngine";
 import ComparisonView from "../components/ComparisonView";
-import type { FragranceComparisonDTO } from "../components/ComparisonView";
+import type {
+  FragranceComparisonDTO,
+  ComparisonDimensions,
+} from "../components/ComparisonView";
 
 export const metadata: Metadata = {
   title: "Compare Fragrances | Maison Skye & Rose",
@@ -56,59 +60,118 @@ export default async function ComparePage({ searchParams }: ComparePageProps) {
     return <ErrorState message={`Fragrance "${b}" could not be found.`} />;
   }
 
-  // Full similarity set ensures B is always present (93 total, excluding A = 92 candidates)
-  const allSimilar = getSimilarFragrances(insightsA.record, { count: 93 });
-  const resultForB = allSimilar.find((r) => r.fragrance.slug === insightsB.record.slug);
+  const recA = insightsA.record;
+  const recB = insightsB.record;
 
-  // Safe fallback: zero-score result if B is somehow absent
+  // ── Similarity reasons ──────────────────────────────────────────────────────
+  // Full similarity run guarantees B appears in results (93 total − 1 = 92 candidates)
+  const allSimilar     = getSimilarFragrances(recA, { count: 93 });
+  const resultForB     = allSimilar.find((r) => r.fragrance.slug === recB.slug);
   const similarityResult = resultForB ?? {
-    fragrance:  insightsB.record,
+    fragrance:  recB,
     totalScore: 0,
     breakdown:  { family: 0, notes: 0, season: 0, occasion: 0, character: 0, projection: 0, collection: 0, popularity: 0 },
   };
+  const reasons = deriveSimilarityReasons(recA, similarityResult);
 
-  const reasons = deriveSimilarityReasons(insightsA.record, similarityResult);
+  // ── Notes comparison ────────────────────────────────────────────────────────
+  const flatNotesA = new Set([...recA.notes.top, ...recA.notes.heart, ...recA.notes.base]);
+  const flatNotesB = new Set([...recB.notes.top, ...recB.notes.heart, ...recB.notes.base]);
+  const sharedNotes  = [...flatNotesA].filter((n) => flatNotesB.has(n));
+  const uniqueNotesA = [...flatNotesA].filter((n) => !flatNotesB.has(n));
+  const uniqueNotesB = [...flatNotesB].filter((n) => !flatNotesA.has(n));
+
+  // ── Occasions comparison ────────────────────────────────────────────────────
+  const occSetB = new Set(recB.occasions);
+  const occSetA = new Set(recA.occasions);
+  const sharedOccasions  = recA.occasions.filter((o) => occSetB.has(o));
+  const uniqueOccasionsA = recA.occasions.filter((o) => !occSetB.has(o));
+  const uniqueOccasionsB = recB.occasions.filter((o) => !occSetA.has(o));
+
+  // ── Seasons comparison ──────────────────────────────────────────────────────
+  const seaSetB = new Set(recB.seasons);
+  const seaSetA = new Set(recA.seasons);
+  const sharedSeasons  = recA.seasons.filter((s) => seaSetB.has(s));
+  const uniqueSeasonsA = recA.seasons.filter((s) => !seaSetB.has(s));
+  const uniqueSeasonsB = recB.seasons.filter((s) => !seaSetA.has(s));
+
+  // ── Collections comparison ──────────────────────────────────────────────────
+  const colsA    = getCollectionsForFragrance(recA).map((c) => ({ id: c.id, name: c.name, icon: c.icon }));
+  const colsB    = getCollectionsForFragrance(recB).map((c) => ({ id: c.id, name: c.name, icon: c.icon }));
+  const colBIds  = new Set(colsB.map((c) => c.id));
+  const colAIds  = new Set(colsA.map((c) => c.id));
+  const sharedCollections  = colsA.filter((c) =>  colBIds.has(c.id));
+  const uniqueCollectionsA = colsA.filter((c) => !colBIds.has(c.id));
+  const uniqueCollectionsB = colsB.filter((c) => !colAIds.has(c.id));
+
+  // ── Graph relationship ──────────────────────────────────────────────────────
+  // Labels sourced from discoveryIntelligence.ts pathway copy — not new prose.
+  const relA = insightsA.relationships;
+  const relB = insightsB.relationships;
+  const slugA = recA.slug;
+  const slugB = recB.slug;
+
+  type RelEntry = { label: string; type: string } | null;
+  let graphRelationship: RelEntry = null;
+
+  if      (relA.evolutionOf?.slug === slugB || relB.evolutionOf?.slug === slugA)
+    graphRelationship = { label: "The origin of this fragrance line",    type: "origin"           };
+  else if (relA.evolutions.some((e) => e.slug === slugB) || relB.evolutions.some((e) => e.slug === slugA))
+    graphRelationship = { label: "A more intense interpretation",         type: "evolution"        };
+  else if (relA.alternatives.some((e) => e.slug === slugB) || relB.alternatives.some((e) => e.slug === slugA))
+    graphRelationship = { label: "A different expression of this style",  type: "alternative"      };
+  else if (relA.wardrobePartners.some((e) => e.slug === slugB) || relB.wardrobePartners.some((e) => e.slug === slugA))
+    graphRelationship = { label: "Often worn alongside",                  type: "wardrobe-partner" };
+
+  // ── Serializable DTOs ───────────────────────────────────────────────────────
 
   const fragranceA: FragranceComparisonDTO = {
-    slug:        insightsA.record.slug,
-    name:        insightsA.record.name,
-    subtitle:    insightsA.record.subtitle ?? null,
-    mood:        insightsA.record.mood,
-    profile:     insightsA.record.profile,
-    freshness:   insightsA.record.freshness,
-    warmth:      insightsA.record.warmth,
-    sweetness:   insightsA.record.sweetness,
-    intensity:   insightsA.record.intensity,
-    versatility: insightsA.record.versatility,
-    notes: [
-      ...insightsA.record.notes.top,
-      ...insightsA.record.notes.heart,
-      ...insightsA.record.notes.base,
-    ],
+    slug:        recA.slug,
+    name:        recA.name,
+    subtitle:    recA.subtitle ?? null,
+    mood:        recA.mood,
+    profile:     recA.profile,
+    freshness:   recA.freshness,
+    warmth:      recA.warmth,
+    sweetness:   recA.sweetness,
+    intensity:   recA.intensity,
+    versatility: recA.versatility,
+    notes:       [...recA.notes.top, ...recA.notes.heart, ...recA.notes.base],
   };
 
   const fragranceB: FragranceComparisonDTO = {
-    slug:        insightsB.record.slug,
-    name:        insightsB.record.name,
-    subtitle:    insightsB.record.subtitle ?? null,
-    mood:        insightsB.record.mood,
-    profile:     insightsB.record.profile,
-    freshness:   insightsB.record.freshness,
-    warmth:      insightsB.record.warmth,
-    sweetness:   insightsB.record.sweetness,
-    intensity:   insightsB.record.intensity,
-    versatility: insightsB.record.versatility,
-    notes: [
-      ...insightsB.record.notes.top,
-      ...insightsB.record.notes.heart,
-      ...insightsB.record.notes.base,
-    ],
+    slug:        recB.slug,
+    name:        recB.name,
+    subtitle:    recB.subtitle ?? null,
+    mood:        recB.mood,
+    profile:     recB.profile,
+    freshness:   recB.freshness,
+    warmth:      recB.warmth,
+    sweetness:   recB.sweetness,
+    intensity:   recB.intensity,
+    versatility: recB.versatility,
+    notes:       [...recB.notes.top, ...recB.notes.heart, ...recB.notes.base],
+  };
+
+  const dimensions: ComparisonDimensions = {
+    notes:      { shared: sharedNotes,      uniqueA: uniqueNotesA,      uniqueB: uniqueNotesB      },
+    occasions:  { shared: sharedOccasions,  uniqueA: uniqueOccasionsA,  uniqueB: uniqueOccasionsB  },
+    seasons:    { shared: sharedSeasons,    uniqueA: uniqueSeasonsA,    uniqueB: uniqueSeasonsB     },
+    projection: { a: recA.projection, b: recB.projection, same: recA.projection === recB.projection },
+    character:  { a: recA.scentCharacter, b: recB.scentCharacter, same: recA.scentCharacter === recB.scentCharacter },
+    collections: { shared: sharedCollections, uniqueA: uniqueCollectionsA, uniqueB: uniqueCollectionsB },
+    graphRelationship,
   };
 
   return (
     <main className="min-h-screen bg-[#f5f1eb]">
       <Navbar />
-      <ComparisonView fragranceA={fragranceA} fragranceB={fragranceB} reasons={reasons} />
+      <ComparisonView
+        fragranceA={fragranceA}
+        fragranceB={fragranceB}
+        reasons={reasons}
+        dimensions={dimensions}
+      />
       <Footer />
     </main>
   );
