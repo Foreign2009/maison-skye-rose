@@ -136,7 +136,9 @@ export type AnalyticsSource =
   | "best-sellers-recommendation"
   | "new-arrivals-recommendation"
   | "favorites-recommendation"
-  | "recently-viewed-recommendation";
+  | "recently-viewed-recommendation"
+  | "compare-post-decision"
+  | "compare-related";
 
 export type ProductPayload = {
   title: string;

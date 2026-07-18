@@ -6,7 +6,10 @@ import { getSimilarFragrances } from "../lib/discovery/similarityEngine";
 import { deriveSimilarityReasons } from "../lib/concierge/similarityReasons";
 import { getCollectionsForFragrance } from "../lib/discovery/collectionEngine";
 import { generateWhyYoullLikeIt } from "../lib/mkc/merchandising";
+import { catalogueMaps } from "../lib/discovery";
+import { toDisplayFragrance } from "../lib/mkc/displayAdapter";
 import ComparisonView from "../components/ComparisonView";
+import ComparePostDecision from "../components/ComparePostDecision";
 import type {
   FragranceComparisonDTO,
   ComparisonDimensions,
@@ -124,6 +127,25 @@ export default async function ComparePage({ searchParams }: ComparePageProps) {
   else if (relA.wardrobePartners.some((e) => e.slug === slugB) || relB.wardrobePartners.some((e) => e.slug === slugA))
     graphRelationship = { label: "Often worn alongside",                  type: "wardrobe-partner" };
 
+  // ── Post-decision: related fragrances ────────────────────────────────────────
+  const comparedSlugs = new Set([slugA, slugB]);
+
+  const relatedFragrances = [
+    ...relA.alternatives,
+    ...relA.evolutions,
+    ...(relA.evolutionOf ? [relA.evolutionOf] : []),
+  ]
+    .filter((s) => !comparedSlugs.has(s.slug))
+    .slice(0, 6)
+    .map((s) => {
+      const k = catalogueMaps.bySlug.get(s.slug);
+      return k ? { ...toDisplayFragrance(k), scentCharacter: k.scentCharacter } : null;
+    })
+    .filter((item): item is NonNullable<typeof item> => item !== null);
+
+  const purchaseA = { slug: recA.slug, name: recA.name, prices: recA.prices, images: recA.images };
+  const purchaseB = { slug: recB.slug, name: recB.name, prices: recB.prices, images: recB.images };
+
   // ── Serializable DTOs ───────────────────────────────────────────────────────
 
   const fragranceA: FragranceComparisonDTO = {
@@ -185,6 +207,11 @@ export default async function ComparePage({ searchParams }: ComparePageProps) {
         fragranceB={fragranceB}
         reasons={reasons}
         dimensions={dimensions}
+      />
+      <ComparePostDecision
+        fragA={purchaseA}
+        fragB={purchaseB}
+        relatedFragrances={relatedFragrances}
       />
       <Footer />
     </main>
