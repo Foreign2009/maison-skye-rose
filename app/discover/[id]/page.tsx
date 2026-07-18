@@ -6,7 +6,8 @@ import Footer from "../../components/Footer";
 import DiscoverCollectionGrid from "../../components/DiscoverCollectionGrid";
 import CollectionCard from "../../components/CollectionCard";
 import MomentConciergeButton from "../../components/MomentConciergeButton";
-import { COLLECTION_SPECS, getCollection } from "../../lib/discovery";
+import { COLLECTION_SPECS, getCollection, catalogueMaps } from "../../lib/discovery";
+import { getRelatedKnowledge } from "../../lib/intelligence";
 import { getMomentContent } from "../../lib/discovery/momentContent";
 import { getCollectionDimensions, getRepresentativeFragrances, getDiscoveryPathways, getJourneyTopics } from "../../lib/discovery/discoveryIntelligence";
 import { resolveJourneyArticles } from "../../lib/academy/journeyResolver";
@@ -73,6 +74,39 @@ export default async function DiscoverCollectionPage({ params }: PageProps) {
       })
     : [];
   const products        = getCollection(spec.id).map((k) => ({ ...toDisplayFragrance(k), scentCharacter: k.scentCharacter }));
+
+  // ── Relationship enrichment (EP17.0-P5) ──────────────────────────────────────
+  // Source: graph relationships of the primary representative fragrance.
+  // Excludes: collection members and pathways already shown on the page.
+  const primaryRep      = representatives[0] ?? null;
+  const repRelationships = primaryRep ? getRelatedKnowledge(primaryRep.slug) : null;
+
+  const collectionSlugs = new Set<string>(getCollection(spec.id).map((k) => k.slug));
+  const pathwaySlugs    = new Set<string>(pathways.map((p) => p.fragrance.slug));
+  const shownSlugs      = new Set<string>([...collectionSlugs, ...pathwaySlugs]);
+
+  const relatedSummaries = repRelationships
+    ? [...repRelationships.alternatives, ...repRelationships.evolutions].filter((s) => !shownSlugs.has(s.slug))
+    : [];
+
+  const relatedGridItems = relatedSummaries
+    .map((s) => {
+      const k = catalogueMaps.bySlug.get(s.slug);
+      return k ? { ...toDisplayFragrance(k), scentCharacter: k.scentCharacter } : null;
+    })
+    .filter((item): item is NonNullable<typeof item> => item !== null);
+
+  const relatedSlugsSet = new Set<string>(relatedSummaries.map((s) => s.slug));
+
+  const wardrobeGridItems = repRelationships
+    ? repRelationships.wardrobePartners
+        .filter((s) => !shownSlugs.has(s.slug) && !relatedSlugsSet.has(s.slug))
+        .map((s) => {
+          const k = catalogueMaps.bySlug.get(s.slug);
+          return k ? { ...toDisplayFragrance(k), scentCharacter: k.scentCharacter } : null;
+        })
+        .filter((item): item is NonNullable<typeof item> => item !== null)
+    : [];
 
   const breadcrumbJsonLd = {
     "@context": "https://schema.org",
@@ -566,6 +600,48 @@ export default async function DiscoverCollectionPage({ params }: PageProps) {
             </div>
           </div>
         </section>
+
+        {/* ── Related Fragrances (EP17.0-P5) ──────────────────────────────────── */}
+        {relatedGridItems.length > 0 && (
+          <section className="px-4 pb-12 md:pb-16">
+            <div className="mx-auto max-w-7xl">
+              <div className="mb-8 md:mb-10">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.55em] text-[#d89ca4]">
+                  Related Fragrances
+                </p>
+                <h2 className="mt-3 text-2xl font-black tracking-[-0.04em] text-[#4f4a52] md:text-3xl">
+                  Comparable Expressions
+                </h2>
+              </div>
+              <DiscoverCollectionGrid
+                fragrances={relatedGridItems}
+                source="discover-collection"
+                columns={3}
+              />
+            </div>
+          </section>
+        )}
+
+        {/* ── Complete Your Wardrobe (EP17.0-P5) ───────────────────────────────── */}
+        {wardrobeGridItems.length > 0 && (
+          <section className="bg-white py-12 px-4 md:py-16">
+            <div className="mx-auto max-w-7xl">
+              <div className="mb-8 md:mb-10">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.55em] text-[#d89ca4]">
+                  Complete Your Wardrobe
+                </p>
+                <h2 className="mt-3 text-2xl font-black tracking-[-0.04em] text-[#4f4a52] md:text-3xl">
+                  Often Worn Alongside
+                </h2>
+              </div>
+              <DiscoverCollectionGrid
+                fragrances={wardrobeGridItems}
+                source="discover-collection"
+                columns={3}
+              />
+            </div>
+          </section>
+        )}
 
         {/* ── Continue Your Journey (EP24-P3) ─────────────────────────────────── */}
         {connectedCollections.length > 0 && (
