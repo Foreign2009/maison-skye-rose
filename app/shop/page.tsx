@@ -15,6 +15,7 @@ import { generateReasons } from "../lib/explainability";
 import { trackDiscovery, trackFilter, trackSort, trackConfidence } from "../lib/analytics";
 import type { AnalyticsSource } from "../lib/analytics";
 import FragranceQuickView from "../components/FragranceQuickView";
+import IntelligenceSection from "../components/IntelligenceSection";
 import type { FragranceKnowledge } from "../lib/mkc/types";
 
 
@@ -720,6 +721,16 @@ export default function ShopPage() {
         knowledge={selectedKnowledge}
         open={quickViewOpen}
         onClose={() => setQuickViewOpen(false)}
+      />
+
+      <IntelligenceSection
+        personalisedLabel="Selected For You"
+        personalisedHeading="Chosen For Your Taste"
+        personalisedBody="Selected from across the Maison Skye & Rose collection based on your fragrance journey."
+        discoveryLabel="You Might Also Like"
+        discoveryHeading="Worth Discovering"
+        discoveryBody="A curated selection from the Maison Skye & Rose collection to inspire your next fragrance choice."
+        source="shop-recommendation"
       />
 
       <Footer />

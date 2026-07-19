@@ -143,7 +143,8 @@ export type AnalyticsSource =
   | "collection-rose-recommendation"
   | "collection-elite-recommendation"
   | "quiz-continuation"
-  | "character-journey-profile";
+  | "character-journey-profile"
+  | "shop-recommendation";
 
 export type ProductPayload = {
   title: string;
