@@ -6,6 +6,7 @@ import QuickAddModal from "../components/QuickAddModal";
 import Footer from "../components/Footer";
 import ProductCard from "../components/ProductCard";
 import IntelligenceSection from "../components/IntelligenceSection";
+import CustomerInsightsPanel from "../components/CustomerInsightsPanel";
 import { useFavorites } from "../context/FavoritesContext";
 import { catalogueMaps } from "../lib/discovery";
 import { toDisplayFragrance } from "../lib/mkc/displayAdapter";
@@ -68,6 +69,9 @@ export default function FavoritesPage() {
               Save favorites, compare fragrances, and build your perfect collection.
             </p>
           </div>
+
+          {/* Customer intelligence — journey stage + learned preferences */}
+          <CustomerInsightsPanel />
 
           {favoriteProducts.length === 0 ? (
             <div className="rounded-[40px] bg-white p-14 text-center shadow-sm">

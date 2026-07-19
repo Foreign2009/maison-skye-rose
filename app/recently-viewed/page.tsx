@@ -6,6 +6,7 @@ import Footer from "../components/Footer";
 import ProductCard from "../components/ProductCard";
 import QuickAddModal from "../components/QuickAddModal";
 import IntelligenceSection from "../components/IntelligenceSection";
+import CustomerInsightsPanel from "../components/CustomerInsightsPanel";
 import { catalogueMaps } from "../lib/discovery";
 import { toDisplayFragrance } from "../lib/mkc/displayAdapter";
 import type { DisplayFragrance } from "../lib/knowledgeAdapter";
@@ -69,6 +70,9 @@ export default function RecentlyViewedPage() {
               465+ Signature Fragrances Available
             </p>
           </div>
+
+          {/* Customer intelligence — journey stage + learned preferences */}
+          <CustomerInsightsPanel />
 
           {products.length === 0 ? (
             <div className="rounded-[40px] bg-white p-14 text-center shadow-sm">

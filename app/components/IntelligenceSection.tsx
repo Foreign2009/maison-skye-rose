@@ -35,15 +35,15 @@ export default function IntelligenceSection({
 }: IntelligenceSectionProps) {
   const { profile, isReady } = useUnifiedCustomerProfile();
 
-  const { fragrances, isPersonalised } = useMemo(() => {
-    if (!profile) return { fragrances: [], isPersonalised: false };
+  const { fragrances, isPersonalised, reasonContext } = useMemo(() => {
+    if (!profile) return { fragrances: [], isPersonalised: false, reasonContext: null };
 
     const personalised = hasMeaningfulProfile(profile);
     const result = personalised
       ? recommendForProfile(profile)
       : recommendDiscovery(profile);
 
-    if (!result.success) return { fragrances: [], isPersonalised: false };
+    if (!result.success) return { fragrances: [], isPersonalised: false, reasonContext: null };
 
     const fragrances = result.recommendations
       .map((rec) => {
@@ -54,7 +54,12 @@ export default function IntelligenceSection({
       })
       .filter((f): f is NonNullable<typeof f> => f !== null);
 
-    return { fragrances, isPersonalised: personalised };
+    // Part D: surface the top reason from the first recommendation as context
+    const topReason = personalised
+      ? result.recommendations[0]?.reasons[0]?.description ?? null
+      : null;
+
+    return { fragrances, isPersonalised: personalised, reasonContext: topReason };
   }, [profile]);
 
   if (!isReady || fragrances.length === 0) return null;
@@ -70,7 +75,7 @@ export default function IntelligenceSection({
             {isPersonalised ? personalisedHeading : discoveryHeading}
           </h2>
           <p className="mt-5 text-base leading-relaxed text-[#7b7480]">
-            {isPersonalised ? personalisedBody : discoveryBody}
+            {isPersonalised ? (reasonContext ?? personalisedBody) : discoveryBody}
           </p>
         </div>
 
