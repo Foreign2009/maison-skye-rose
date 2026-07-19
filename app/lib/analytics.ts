@@ -148,6 +148,7 @@ export type AnalyticsSource =
 
 export type ProductPayload = {
   title: string;
+  slug?: string;
   collection?: "Skye" | "Rose" | "Elite";
   source?: AnalyticsSource;
   rank?: number;
@@ -474,4 +475,27 @@ export function trackAiConversationDepth(payload: AiConversationDepthPayload): v
 export function trackMomentSelected(payload: MomentSelectedPayload): void {
   if (!ready) return;
   capture("moment_selected", payload);
+}
+
+// ── Recommendation feedback events ────────────────────────────────────────────
+//
+// Impression anchor: recommendation_set_shown fires once when a recommendation
+// set is first rendered. Downstream product_clicked events carry source + rank
+// which PostHog can join back to the impression via the slugs[] array.
+//
+// strategy and surface are plain strings to avoid importing Recommendation
+// Engine internals into the analytics module.
+
+export type RecommendationShownPayload = {
+  strategy:          string;
+  surface:           AnalyticsSource;
+  count:             number;
+  slugs:             string[];
+  isPersonalised:    boolean;
+  processingTimeMs?: number;
+};
+
+export function trackRecommendationShown(payload: RecommendationShownPayload): void {
+  if (!ready) return;
+  capture("recommendation_set_shown", payload);
 }

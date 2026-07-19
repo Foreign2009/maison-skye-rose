@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { trackProductClick } from "../lib/analytics";
 
 type RecommendationCardProps = {
   title: string;
@@ -26,6 +27,7 @@ type RecommendationCardProps = {
   reasons: string[];
 
   slug?: string;
+  rank?: number;
 };
 
 export default function RecommendationCard({
@@ -41,6 +43,7 @@ export default function RecommendationCard({
   versatility = 5,
   reasons,
   slug,
+  rank,
 }: RecommendationCardProps) {
 
   return (
@@ -213,6 +216,7 @@ export default function RecommendationCard({
       {slug && (
         <Link
           href={`/product/${slug}`}
+          onClick={() => trackProductClick({ title, slug, source: "pdp-recommendation", rank })}
           className="mt-5 flex items-center justify-center gap-2 rounded-full bg-[#faf7f5] px-6 py-3 text-sm font-bold text-[#4f4a52] transition hover:bg-[#ede8e1]"
         >
           View Fragrance <span aria-hidden="true">→</span>

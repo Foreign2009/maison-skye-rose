@@ -58,6 +58,52 @@ function reasonLabel(t: RecommendationReasonType | null): string {
   return t.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
+interface FeedbackEvent {
+  name:            string;
+  isNew:           boolean;
+  payload:         string;
+  correlationKeys: string;
+  component:       string;
+}
+
+const FEEDBACK_EVENTS: FeedbackEvent[] = [
+  {
+    name:            "recommendation_set_shown",
+    isNew:           true,
+    payload:         "strategy, surface, count, slugs[], isPersonalised, processingTimeMs",
+    correlationKeys: "slugs[] — impression anchor for all downstream attribution",
+    component:       "IntelligenceSection",
+  },
+  {
+    name:            "product_clicked",
+    isNew:           false,
+    payload:         "title, slug, source, rank",
+    correlationKeys: "slug (primary), source, rank",
+    component:       "ProductCard, RecommendationCard",
+  },
+  {
+    name:            "product_detail_viewed",
+    isNew:           false,
+    payload:         "title, source, rank",
+    correlationKeys: "title → slug via catalogue, source",
+    component:       "ProductDetail",
+  },
+  {
+    name:            "add_to_cart",
+    isNew:           false,
+    payload:         "title, size, price, source",
+    correlationKeys: "title → slug via catalogue, source",
+    component:       "QuickAddModal, ProductDetail",
+  },
+  {
+    name:            "checkout_started",
+    isNew:           false,
+    payload:         "itemCount, cartTotal, deliveryMethod",
+    correlationKeys: "session-level downstream conversion",
+    component:       "checkout/page.tsx",
+  },
+];
+
 const STRATEGIES: Array<{
   name:        string;
   description: string;
@@ -319,6 +365,94 @@ export default function IntelligenceDashboard({ data }: { data: IntelligenceData
                 </div>
                 <p className="mt-1.5 text-xs text-[#4f4a52]/60">{s.description}</p>
                 <p className="mt-1 text-[10px] text-[#4f4a52]/40">Callers: {s.callers}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <hr className="border-gray-200" />
+
+        {/* 6 · Feedback Loop ────────────────────────────────────────────────── */}
+        <section>
+          <p className="text-[10px] uppercase tracking-[0.4em] text-[#d89ca4]">Feedback Loop</p>
+          <h2 className="mt-2 text-xl font-black text-[#4f4a52]">Recommendation Outcome Events</h2>
+          <p className="mt-3 max-w-xl text-sm text-[#4f4a52]/50">
+            Outcome events are captured via PostHog when customers interact with
+            recommendations. The impression anchor (
+            <span className="font-mono">recommendation_set_shown</span>) records the
+            ordered slug list so downstream events can be attributed to the originating
+            recommendation set.
+          </p>
+          <p className="mt-2 max-w-xl text-xs text-[#4f4a52]/40">
+            Correlation model: <span className="font-mono">slug</span> (primary key) +{" "}
+            <span className="font-mono">source</span> +{" "}
+            <span className="font-mono">rank</span> (analytical dimensions).
+          </p>
+
+          {/* Intelligence lifecycle */}
+          <div className="mt-6 rounded-2xl bg-white p-5 shadow-sm">
+            <p className="mb-5 text-[10px] uppercase tracking-[0.3em] text-[#4f4a52]/40">
+              Intelligence Lifecycle
+            </p>
+            <div className="space-y-0">
+              {FEEDBACK_EVENTS.map((ev, i) => (
+                <div key={ev.name} className="flex items-stretch gap-4">
+                  <div className="flex flex-col items-center">
+                    <div
+                      className={`mt-1 h-2.5 w-2.5 shrink-0 rounded-full ${
+                        ev.isNew ? "bg-[#d89ca4]" : "bg-[#4f4a52]/20"
+                      }`}
+                    />
+                    {i < FEEDBACK_EVENTS.length - 1 && (
+                      <div className="my-1 w-px flex-1 bg-[#4f4a52]/10" />
+                    )}
+                  </div>
+                  <div className="pb-4">
+                    <div className="flex items-center gap-2">
+                      <span className="font-mono text-sm font-bold text-[#4f4a52]">
+                        {ev.name}
+                      </span>
+                      {ev.isNew && (
+                        <span className="text-[10px] font-semibold uppercase tracking-wider text-emerald-600">
+                          New
+                        </span>
+                      )}
+                    </div>
+                    <p className="mt-0.5 text-[10px] text-[#4f4a52]/40">{ev.component}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Event detail cards */}
+          <div className="mt-4 space-y-2">
+            {FEEDBACK_EVENTS.map((ev) => (
+              <div key={ev.name} className="rounded-xl bg-white px-5 py-4 shadow-sm">
+                <div className="flex items-center gap-2">
+                  <span
+                    className={`shrink-0 text-[10px] font-semibold uppercase tracking-wider ${
+                      ev.isNew ? "text-emerald-600" : "text-[#4f4a52]/30"
+                    }`}
+                  >
+                    {ev.isNew ? "New" : "Existing"}
+                  </span>
+                  <span className="font-mono text-sm font-bold text-[#4f4a52]">{ev.name}</span>
+                </div>
+                <div className="mt-2 space-y-1">
+                  <p className="text-[10px] text-[#4f4a52]/50">
+                    Payload:{" "}
+                    <span className="font-mono text-[#4f4a52]/70">{ev.payload}</span>
+                  </p>
+                  <p className="text-[10px] text-[#4f4a52]/50">
+                    Correlation:{" "}
+                    <span className="text-[#4f4a52]/70">{ev.correlationKeys}</span>
+                  </p>
+                  <p className="text-[10px] text-[#4f4a52]/50">
+                    Component:{" "}
+                    <span className="text-[#4f4a52]/70">{ev.component}</span>
+                  </p>
+                </div>
               </div>
             ))}
           </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useRef, useEffect } from "react";
 import { useUnifiedCustomerProfile } from "../lib/customer/hooks/useUnifiedCustomerProfile";
 import {
   recommendForProfile,
@@ -10,6 +10,7 @@ import { catalogueMaps } from "../lib/discovery";
 import { toDisplayFragrance } from "../lib/mkc/displayAdapter";
 import { hasMeaningfulProfile } from "../lib/customer/profile/profileUtils";
 import type { AnalyticsSource } from "../lib/analytics";
+import { trackRecommendationShown } from "../lib/analytics";
 import DiscoverCollectionGrid from "./DiscoverCollectionGrid";
 
 interface IntelligenceSectionProps {
@@ -35,15 +36,16 @@ export default function IntelligenceSection({
 }: IntelligenceSectionProps) {
   const { profile, isReady } = useUnifiedCustomerProfile();
 
-  const { fragrances, isPersonalised, reasonContext } = useMemo(() => {
-    if (!profile) return { fragrances: [], isPersonalised: false, reasonContext: null };
+  const { fragrances, isPersonalised, reasonContext, feedbackSlugs, processingTimeMs } = useMemo(() => {
+    const empty = { fragrances: [], isPersonalised: false, reasonContext: null, feedbackSlugs: [] as string[], processingTimeMs: 0 };
+    if (!profile) return empty;
 
     const personalised = hasMeaningfulProfile(profile);
     const result = personalised
       ? recommendForProfile(profile)
       : recommendDiscovery(profile);
 
-    if (!result.success) return { fragrances: [], isPersonalised: false, reasonContext: null };
+    if (!result.success) return empty;
 
     const fragrances = result.recommendations
       .map((rec) => {
@@ -59,8 +61,29 @@ export default function IntelligenceSection({
       ? result.recommendations[0]?.reasons[0]?.description ?? null
       : null;
 
-    return { fragrances, isPersonalised: personalised, reasonContext: topReason };
+    return {
+      fragrances,
+      isPersonalised:  personalised,
+      reasonContext:   topReason,
+      feedbackSlugs:   result.recommendations.map((r) => r.slug),
+      processingTimeMs: result.metrics.processingTimeMs,
+    };
   }, [profile]);
+
+  // Fire recommendation impression once when the set is first rendered.
+  const firedRef = useRef(false);
+  useEffect(() => {
+    if (firedRef.current || !isReady || feedbackSlugs.length === 0) return;
+    firedRef.current = true;
+    trackRecommendationShown({
+      strategy:        isPersonalised ? "personalised" : "discovery",
+      surface:         source,
+      count:           feedbackSlugs.length,
+      slugs:           feedbackSlugs,
+      isPersonalised,
+      processingTimeMs,
+    });
+  }, [isReady, feedbackSlugs, isPersonalised, source, processingTimeMs]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (!isReady || fragrances.length === 0) return null;
 
