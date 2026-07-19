@@ -26,6 +26,8 @@ import { createLocalStorageProfileStorage } from "../storage/localStorageProfile
 import { createProfileManager }             from "../profile/CustomerProfileManager";
 import { getOrCreateDeviceId }              from "../identity/DeviceIdentity";
 import { mkcNameToSlug }                    from "../../mkc/catalogueLookup";
+import { buildSignal }                      from "../signals/SignalBuilder";
+import { addSignalToDevice }                from "../profile/DeviceProfile";
 
 // ── Internal helpers ──────────────────────────────────────────────────────────
 
@@ -81,15 +83,42 @@ export function recordQuizResult(
 }
 
 /**
- * Reserved for future search signal emission.
+ * Emit a search_query signal. Called by SearchOverlay on debounced user queries.
  */
-export function recordSearch(_query: string): void {
-  // Not yet wired
+export function recordSearch(query: string): void {
+  if (!query.trim()) return;
+  try {
+    const { manager, deviceId } = getManager();
+    const device   = manager.loadDevice(deviceId);
+    const signaled = addSignalToDevice(device, buildSignal({
+      source:     "search",
+      type:       "search_query",
+      payload:    { query: query.trim() },
+      confidence: "MEDIUM",
+    }));
+    manager.saveDevice(signaled);
+  } catch {
+    // localStorage unavailable or unexpected error
+  }
 }
 
 /**
- * Reserved for future cart signal emission.
+ * Emit a cart fragrance_engagement signal. Called on add-to-cart interactions.
+ * Accepts a canonical slug or display title; title → slug resolution is handled internally.
  */
-export function recordCart(_slug: string): void {
-  // Not yet wired
+export function recordCart(slugOrTitle: string): void {
+  try {
+    const slug     = resolveSlug(slugOrTitle);
+    const { manager, deviceId } = getManager();
+    const device   = manager.loadDevice(deviceId);
+    const signaled = addSignalToDevice(device, buildSignal({
+      source:     "cart",
+      type:       "fragrance_engagement",
+      payload:    { slug, action: "cart_add" },
+      confidence: "MEDIUM",
+    }));
+    manager.saveDevice(signaled);
+  } catch {
+    // localStorage unavailable or unexpected error
+  }
 }

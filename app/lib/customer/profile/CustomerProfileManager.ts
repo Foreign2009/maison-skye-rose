@@ -35,6 +35,7 @@ import {
 } from "./DeviceProfile";
 import { mergeSessionToDevice, mergeDeviceToUnified } from "./ProfileMerge";
 import { serializeDeviceProfile, deserializeDeviceProfile } from "./ProfileSerializer";
+import { buildSignal } from "../signals/SignalBuilder";
 
 // ── Storage contract ──────────────────────────────────────────────────────────
 
@@ -140,15 +141,30 @@ export function createProfileManager(
     saveDevice,
 
     recordView(deviceId: string, slug: string): DeviceProfile {
-      const updated = addRecentlyViewed(loadDevice(deviceId), slug);
-      saveDevice(updated);
-      return updated;
+      const device   = loadDevice(deviceId);
+      const viewed   = addRecentlyViewed(device, slug);
+      const signaled = addSignalToDevice(viewed, buildSignal({
+        source:     "view",
+        type:       "fragrance_engagement",
+        payload:    { slug },
+        confidence: "LOW",
+      }));
+      saveDevice(signaled);
+      return signaled;
     },
 
     toggleSaved(deviceId: string, slug: string): DeviceProfile {
-      const updated = toggleSavedSlug(loadDevice(deviceId), slug);
-      saveDevice(updated);
-      return updated;
+      const device   = loadDevice(deviceId);
+      const isSaved  = device.savedSlugs.includes(slug);
+      const toggled  = toggleSavedSlug(device, slug);
+      const signaled = addSignalToDevice(toggled, buildSignal({
+        source:     "favorite",
+        type:       "fragrance_save",
+        payload:    { slug, saved: !isSaved },
+        confidence: "MEDIUM",
+      }));
+      saveDevice(signaled);
+      return signaled;
     },
 
     recordQuizResult(deviceId: string, slugs: readonly string[]): DeviceProfile {

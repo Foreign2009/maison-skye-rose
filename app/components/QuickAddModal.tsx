@@ -7,6 +7,7 @@ import { createPortal } from "react-dom";
 import { useCart } from "../context/CartContext";
 import { useCartFeedback } from "../context/CartFeedbackContext";
 import { trackAddToCart } from "../lib/analytics";
+import { recordCart } from "../lib/customer/sync/CustomerProfileSync";
 
 interface QuickAddModalProps {
   open: boolean;
@@ -57,6 +58,7 @@ export default function QuickAddModal({ open, onClose, title, images = {}, price
       price: retailPrice,
       source: "quick-add",
     });
+    recordCart(title);
     showFeedback({
       title,
       image: selectedImage,

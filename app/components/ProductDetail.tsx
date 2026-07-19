@@ -22,7 +22,7 @@ import {
   trackCartOpened,
   trackAiChatStarted,
 } from "../lib/analytics";
-import { recordProductView, toggleSavedProduct } from "../lib/customer/sync/CustomerProfileSync";
+import { recordProductView, toggleSavedProduct, recordCart } from "../lib/customer/sync/CustomerProfileSync";
 import { useConcierge } from "../context/ConciergeContext";
 import { deriveSimilarityReasons } from "../lib/concierge/similarityReasons";
 import { CollectionBadge } from "./knowledge/CollectionBadge";
@@ -183,6 +183,7 @@ export default function ProductDetail({
       price:  knowledge.prices[selectedSize],
       source: "pdp",
     });
+    recordCart(knowledge.slug);
     if (!cartOpen) {
       openCart();
       trackCartOpened({ source: "post-add" });
@@ -204,6 +205,7 @@ export default function ProductDetail({
       price:  knowledge.prices[selectedSize],
       source: "buy-now",
     });
+    recordCart(knowledge.slug);
     trackBuyNow({
       title:  knowledge.name,
       size:   selectedSize,

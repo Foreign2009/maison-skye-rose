@@ -11,6 +11,7 @@ import {
   trackSearchNoResults,
   trackSearchClosed,
 } from "../lib/analytics";
+import { recordSearch } from "../lib/customer/sync/CustomerProfileSync";
 import type { SearchDocument } from "../lib/search/types";
 
 interface Props {
@@ -49,6 +50,7 @@ export default function SearchOverlay({ isOpen, onClose }: Props) {
       const q = inputValue.trim();
       setDebouncedQuery(q);
       trackSearchQuery({ query: q });
+      recordSearch(q);
     }, DEBOUNCE_MS);
     return () => clearTimeout(t);
   }, [inputValue]);
