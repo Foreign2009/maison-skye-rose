@@ -26,6 +26,7 @@ type ProductCardProps = {
   priority?: boolean;
   source?: AnalyticsSource;
   rank?: number;
+  recReason?: string | null;
 };
 
 const WARDROBE_ROLE_SHORT: Record<string, string> = {
@@ -52,6 +53,7 @@ function ProductCard({
   priority = false,
   source,
   rank,
+  recReason,
 }: ProductCardProps) {
   const { addToFavorites, removeFromFavorites, isFavorite } = useFavorites();
   const favorite = isFavorite(title);
@@ -149,7 +151,13 @@ function ProductCard({
         
         {/* Luxury mobile rule: Kept subtitle on desktop, hidden on mobile */}
         <p className="hidden md:block mt-2 min-h-[40px] text-sm font-semibold text-[#d89ca4]">{subtitle}</p>
-        
+
+        {recReason && (
+          <p className="hidden md:block mt-1 text-[11px] italic leading-5 text-[#9b9298] line-clamp-1">
+            {recReason}
+          </p>
+        )}
+
         <p className="hidden md:block mt-4 line-clamp-2 text-sm leading-6 text-[#7b7480]">{mood}</p>
         
         <div className="hidden md:flex mt-6 flex-wrap gap-2">

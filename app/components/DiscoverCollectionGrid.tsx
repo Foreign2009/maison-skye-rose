@@ -17,6 +17,7 @@ type GridFragrance = {
   bestSeller?: boolean;
   newArrival?: boolean;
   scentCharacter?: string;
+  recReason?: string | null;
 };
 
 interface DiscoverCollectionGridProps {

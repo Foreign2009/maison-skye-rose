@@ -51,7 +51,11 @@ export default function IntelligenceSection({
       .map((rec) => {
         const knowledge = catalogueMaps.bySlug.get(rec.slug);
         return knowledge
-          ? { ...toDisplayFragrance(knowledge), scentCharacter: knowledge.scentCharacter }
+          ? {
+              ...toDisplayFragrance(knowledge),
+              scentCharacter: knowledge.scentCharacter,
+              recReason: rec.reasons[0]?.description ?? null,
+            }
           : null;
       })
       .filter((f): f is NonNullable<typeof f> => f !== null);
