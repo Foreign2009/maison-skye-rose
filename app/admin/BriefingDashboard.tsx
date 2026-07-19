@@ -232,6 +232,9 @@ export default function BriefingDashboard({
               Operations
             </Link>
             <span className="text-xs font-bold text-white">Briefing</span>
+            <Link href="/admin/intelligence" className="text-xs text-white/60 transition hover:text-white">
+              Intelligence
+            </Link>
           </nav>
         </div>
         <form action={logoutAction}>
