@@ -146,7 +146,11 @@ export default async function DiscoverCollectionPage({ params }: PageProps) {
         />
 
         <main className="min-h-screen bg-[#faf7f5]">
-          <DiscoveryAttributionSetter source="discover-moment" momentId={id} />
+          <DiscoveryAttributionSetter
+            source="discover-moment"
+            momentId={id}
+            dimensions={dimensions ? { families: dimensions.topFamilies, occasions: dimensions.topOccasions, seasons: dimensions.topSeasons } : undefined}
+          />
           <Navbar />
 
           {/* ── Breadcrumb ────────────────────────────────────────────────── */}
@@ -374,7 +378,11 @@ export default async function DiscoverCollectionPage({ params }: PageProps) {
       />
 
       <main className="min-h-screen bg-[#faf7f5]">
-        <DiscoveryAttributionSetter source="discover-moment" momentId={id} />
+        <DiscoveryAttributionSetter
+          source="discover-moment"
+          momentId={id}
+          dimensions={dimensions ? { families: dimensions.topFamilies, occasions: dimensions.topOccasions, seasons: dimensions.topSeasons } : undefined}
+        />
         <Navbar />
 
         {/* ── Breadcrumbs ──────────────────────────────────────────────────── */}

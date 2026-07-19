@@ -103,6 +103,32 @@ export function recordSearch(query: string): void {
 }
 
 /**
+ * Emit a discovery_path signal when a customer visits a Discover collection page.
+ * Encodes the collection's top families, occasions, and seasons at LOW confidence.
+ */
+export function recordDiscoveryFilter(
+  collectionId: string,
+  families:     readonly string[],
+  occasions:    readonly string[],
+  seasons:      readonly string[],
+): void {
+  if (!collectionId) return;
+  try {
+    const { manager, deviceId } = getManager();
+    const device   = manager.loadDevice(deviceId);
+    const signaled = addSignalToDevice(device, buildSignal({
+      source:     "discovery",
+      type:       "discovery_path",
+      payload:    { collectionId, families: [...families], occasions: [...occasions], seasons: [...seasons] },
+      confidence: "LOW",
+    }));
+    manager.saveDevice(signaled);
+  } catch {
+    // localStorage unavailable or unexpected error
+  }
+}
+
+/**
  * Emit a cart fragrance_engagement signal. Called on add-to-cart interactions.
  * Accepts a canonical slug or display title; title → slug resolution is handled internally.
  */

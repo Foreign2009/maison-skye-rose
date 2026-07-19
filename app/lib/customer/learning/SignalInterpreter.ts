@@ -170,8 +170,20 @@ export class PurchaseInterpreter extends BaseInterpreter {
 
 export class DiscoveryInterpreter extends BaseInterpreter {
   readonly source = "discovery" as const;
-  interpret(_signal: CustomerSignal, _context: LearningContext): readonly PreferenceCandidate[] {
-    // discovery_path emission deferred to post-EP19.1 — placeholder.
-    return [];
+
+  interpret(signal: CustomerSignal, _context: LearningContext): readonly PreferenceCandidate[] {
+    if (signal.type !== "discovery_path") return [];
+
+    const { families, occasions, seasons } = signal.payload as {
+      families?: unknown;
+      occasions?: unknown;
+      seasons?:  unknown;
+    };
+
+    const out: PreferenceCandidate[] = [];
+    if (Array.isArray(families))  for (const f of families)  if (typeof f === "string") out.push(candidate(signal, "family_preference",   f, true));
+    if (Array.isArray(occasions)) for (const o of occasions) if (typeof o === "string") out.push(candidate(signal, "occasion_preference", o, true));
+    if (Array.isArray(seasons))   for (const s of seasons)   if (typeof s === "string") out.push(candidate(signal, "season_preference",   s, true));
+    return out;
   }
 }
