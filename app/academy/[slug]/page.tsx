@@ -6,6 +6,8 @@ import { categoryToSlug } from "../../lib/academy/categories";
 import { ArticleContentRenderer } from "../../components/academy/ArticleContentRenderer";
 import { ArticleRelatedFragrances } from "../../components/academy/ArticleRelatedFragrances";
 import { ArticleRelatedArticles } from "../../components/academy/ArticleRelatedArticles";
+import { ArticleRelatedCollections } from "../../components/academy/ArticleRelatedCollections";
+import { getFragrancesForArticle, getCollectionsForArticle } from "../../lib/academy/academyRelationships";
 import { AcademyBreadcrumbs } from "../../components/academy/AcademyBreadcrumbs";
 import { AcademyTableOfContents } from "../../components/academy/AcademyTableOfContents";
 import { AcademyArticleNavigation } from "../../components/academy/AcademyArticleNavigation";
@@ -59,6 +61,14 @@ export default async function AcademyArticlePage({ params }: Props) {
     currentIndex < academyCatalogue.length - 1
       ? academyCatalogue[currentIndex + 1]
       : null;
+
+  // ── Relationship-driven commerce links ─────────────────────────────────────
+  const relatedFragranceSlugs = getFragrancesForArticle(article.slug)
+    .sort((a, b) => (b.bestSeller ? 1 : 0) - (a.bestSeller ? 1 : 0) || b.popularity - a.popularity)
+    .slice(0, 6)
+    .map((f) => f.slug);
+
+  const relatedCollections = getCollectionsForArticle(article.slug);
 
   // ── TOC headings from content ──────────────────────────────────────────────
   const headings = article.content
@@ -193,11 +203,14 @@ export default async function AcademyArticlePage({ params }: Props) {
                 />
               )}
 
-              {/* Related fragrances */}
-              {article.relatedFragranceIds.length > 0 && (
-                <ArticleRelatedFragrances
-                  fragranceIds={article.relatedFragranceIds}
-                />
+              {/* Related fragrances — relationship-driven via getFragrancesForArticle() */}
+              {relatedFragranceSlugs.length > 0 && (
+                <ArticleRelatedFragrances fragranceIds={relatedFragranceSlugs} />
+              )}
+
+              {/* Related collections — relationship-driven via getCollectionsForArticle() */}
+              {relatedCollections.length > 0 && (
+                <ArticleRelatedCollections collections={relatedCollections} />
               )}
 
               {/* Continue learning */}
