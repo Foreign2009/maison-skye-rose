@@ -9,6 +9,7 @@ import { CHARACTER_STAGES } from "../../lib/mkc/wardrobeEngine";
 import { generateCollection } from "../../lib/discovery";
 import { toDisplayFragrance } from "../../lib/mkc/displayAdapter";
 import type { CollectionSpec } from "../../lib/discovery/types";
+import CharacterJourneyProfile from "../../components/CharacterJourneyProfile";
 
 export const metadata: Metadata = {
   title: "Build Your Fragrance Wardrobe | Maison Skye & Rose",
@@ -126,6 +127,9 @@ export default function CharacterJourneyPage() {
             </div>
           </div>
         </section>
+
+        {/* ── Personalised profile (client — hydrates after SSR) ──────────── */}
+        <CharacterJourneyProfile />
 
         {/* ── Stages ──────────────────────────────────────────────────────── */}
         {stageData.map(({ stage, accent, products }, i) => (
