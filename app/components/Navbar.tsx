@@ -183,15 +183,12 @@ export default function Navbar() {
                   <Clock className="h-5 w-5 stroke-[1.75]" />
                 </Link>
 
-                {/* TODO(EP21.3): Temporary route — /account does not exist. Routing to /favorites
-                    as the closest available intelligence destination. Replace with /fragrance-profile
-                    when EP21 Profile Foundation is implemented. */}
                 <Link
-                  href="/favorites"
+                  href="/fragrance-profile"
                   className={`p-2 text-[#4f4a52] hover:text-[#d89ca4] transition-colors ${
-                    pathname === "/favorites" ? "text-[#d89ca4]" : ""
+                    pathname === "/fragrance-profile" ? "text-[#d89ca4]" : ""
                   }`}
-                  aria-label="Account"
+                  aria-label="Your Fragrance Profile"
                 >
                   <User className="h-5 w-5 stroke-[1.75]" />
                 </Link>

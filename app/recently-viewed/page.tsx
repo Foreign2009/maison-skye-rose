@@ -10,11 +10,14 @@ import CustomerInsightsPanel from "../components/CustomerInsightsPanel";
 import { catalogueMaps } from "../lib/discovery";
 import { toDisplayFragrance } from "../lib/mkc/displayAdapter";
 import type { DisplayFragrance } from "../lib/knowledgeAdapter";
+import { useUnifiedCustomerProfile } from "../lib/customer/hooks/useUnifiedCustomerProfile";
+import { buildRecommendationContext } from "../lib/adaptive/buildRecommendationContext";
 
 export default function RecentlyViewedPage() {
   const [products, setProducts] = useState<DisplayFragrance[]>([]);
   const [selectedFragrance, setSelectedFragrance] = useState<DisplayFragrance | null>(null);
   const [quickOpen, setQuickOpen] = useState(false);
+  const { profile } = useUnifiedCustomerProfile();
 
   useEffect(() => {
     try {
@@ -115,6 +118,7 @@ export default function RecentlyViewedPage() {
         discoveryLabel="Continue Exploring"
         discoveryHeading="Discover What Awaits"
         discoveryBody="A curated introduction to the Maison Skye & Rose collection — fragrances worth exploring next."
+        context={buildRecommendationContext("recently-viewed", profile)}
         source="recently-viewed-recommendation"
       />
 

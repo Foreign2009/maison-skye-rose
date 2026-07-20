@@ -12,15 +12,19 @@ import { toDisplayFragrance } from "../../lib/mkc/displayAdapter";
 import { ROSE_INTELLIGENCE } from "../../lib/mkc/collectionIntelligence";
 import { CollectionCharacter } from "../../components/knowledge/CollectionCharacter";
 import IntelligenceSection from "../../components/IntelligenceSection";
+import { useUnifiedCustomerProfile } from "../../lib/customer/hooks/useUnifiedCustomerProfile";
+import { applyAdaptiveOrdering } from "../../lib/adaptive/adaptiveOrdering";
+import { buildRecommendationContext } from "../../lib/adaptive/buildRecommendationContext";
 
 export default function RoseCollectionPage() {
   const [search, setSearch] = useState("");
   const [selectedFragrance, setSelectedFragrance] = useState<ReturnType<typeof toDisplayFragrance> | null>(null);
   const [quickOpen, setQuickOpen] = useState(false);
+  const { profile } = useUnifiedCustomerProfile();
 
   const products = useMemo(() => {
     const term = search.toLowerCase();
-    return mkcCatalogue
+    const sorted = mkcCatalogue
       .filter((k) => {
         if (k.collection !== "Rose") return false;
         if (!term) return true;
@@ -36,9 +40,9 @@ export default function RoseCollectionPage() {
         if (a.bestSeller && !b.bestSeller) return -1;
         if (!a.bestSeller && b.bestSeller) return 1;
         return b.popularity - a.popularity;
-      })
-      .map(toDisplayFragrance);
-  }, [search]);
+      });
+    return applyAdaptiveOrdering(sorted, profile).map(toDisplayFragrance);
+  }, [search, profile]);
 
   return (
     <>
@@ -111,6 +115,7 @@ export default function RoseCollectionPage() {
           discoveryLabel="Continue Your Journey"
           discoveryHeading="Explore Further"
           discoveryBody="A curated selection from across the full Maison Skye & Rose collection to continue your discovery."
+          context={buildRecommendationContext("collection", profile, { collection: "Rose" })}
           source="collection-rose-recommendation"
           className="bg-white"
         />

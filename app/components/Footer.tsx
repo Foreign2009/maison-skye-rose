@@ -61,6 +61,11 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/fragrance-profile" className="transition duration-200 hover:text-white">
+                  Fragrance Profile
+                </Link>
+              </li>
+              <li>
                 <Link href="/about" className="transition duration-200 hover:text-white">
                   About Us
                 </Link>

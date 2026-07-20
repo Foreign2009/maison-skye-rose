@@ -570,6 +570,12 @@ export default function QuizPage() {
                       <p className="mt-1 text-sm leading-relaxed text-[#7b7480]">
                         Your answers have shaped your Maison profile — recommendations across the site will now reflect your fragrance preferences.
                       </p>
+                      <Link
+                        href="/fragrance-profile"
+                        className="mt-3 inline-flex text-sm font-semibold text-[#d89ca4] hover:underline"
+                      >
+                        View your Fragrance Profile →
+                      </Link>
                     </div>
                   </div>
                 </div>

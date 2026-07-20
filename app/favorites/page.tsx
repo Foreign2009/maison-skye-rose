@@ -11,11 +11,14 @@ import { useFavorites } from "../context/FavoritesContext";
 import { catalogueMaps } from "../lib/discovery";
 import { toDisplayFragrance } from "../lib/mkc/displayAdapter";
 import type { DisplayFragrance } from "../lib/knowledgeAdapter";
+import { useUnifiedCustomerProfile } from "../lib/customer/hooks/useUnifiedCustomerProfile";
+import { buildRecommendationContext } from "../lib/adaptive/buildRecommendationContext";
 
 export default function FavoritesPage() {
   const { favorites } = useFavorites();
   const [selectedFragrance, setSelectedFragrance] = useState<DisplayFragrance | null>(null);
   const [quickOpen, setQuickOpen] = useState(false);
+  const { profile } = useUnifiedCustomerProfile();
 
   const favoriteProducts = useMemo(
     (): DisplayFragrance[] =>
@@ -111,6 +114,7 @@ export default function FavoritesPage() {
         discoveryLabel="You Might Also Like"
         discoveryHeading="Start Your Collection"
         discoveryBody="A curated introduction to the depth and range of Maison Skye & Rose — fragrances worth saving."
+        context={buildRecommendationContext("favorites", profile)}
         source="favorites-recommendation"
       />
 

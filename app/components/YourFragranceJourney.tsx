@@ -3,8 +3,9 @@
 /**
  * Your Fragrance Journey
  *
- * Canonical customer intelligence dashboard. Activated when the customer has
+ * Customer intelligence preview surface. Activated when the customer has
  * any meaningful interaction history (viewed, saved, or quiz results).
+ * Links to the canonical Fragrance Profile for the complete customer view.
  *
  * Responsibilities:
  *   - Calls useUnifiedCustomerProfile() to assemble the profile
@@ -214,6 +215,15 @@ export default function YourFragranceJourney() {
             </div>
           </div>
         )}
+
+        <div className="mt-10 pt-8 border-t border-[#e8ddd6]">
+          <Link
+            href="/fragrance-profile"
+            className="text-sm font-semibold text-[#d89ca4] hover:underline"
+          >
+            View your full Fragrance Profile →
+          </Link>
+        </div>
 
       </div>
 

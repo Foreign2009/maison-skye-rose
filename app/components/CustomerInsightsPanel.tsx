@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo }                     from "react";
+import Link                            from "next/link";
 import { useUnifiedCustomerProfile }   from "../lib/customer/hooks/useUnifiedCustomerProfile";
 import { getCustomerInsights }         from "../lib/customer/intelligence/CustomerIntelligenceEngine";
 import { KnowledgeChip }               from "./knowledge/KnowledgeChip";
@@ -83,6 +84,15 @@ export default function CustomerInsightsPanel() {
           </p>
         </div>
       )}
+
+      <div className="mt-4 pt-4 border-t border-[#f0ebe5]">
+        <Link
+          href="/fragrance-profile"
+          className="text-sm font-semibold text-[#d89ca4] hover:underline"
+        >
+          Your Fragrance Profile →
+        </Link>
+      </div>
 
     </div>
   );

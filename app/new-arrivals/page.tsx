@@ -7,18 +7,23 @@ import QuickAddModal from "../components/QuickAddModal";
 import IntelligenceSection from "../components/IntelligenceSection";
 import { mkcCatalogue } from "../lib/mkc/catalogue";
 import { toDisplayFragrance } from "../lib/mkc/displayAdapter";
+import { useUnifiedCustomerProfile } from "../lib/customer/hooks/useUnifiedCustomerProfile";
+import { applyAdaptiveOrdering } from "../lib/adaptive/adaptiveOrdering";
+import { buildRecommendationContext } from "../lib/adaptive/buildRecommendationContext";
 
 export default function NewArrivalsPage() {
   const [selectedFragrance, setSelectedFragrance] = useState<ReturnType<typeof toDisplayFragrance> | null>(null);
   const [quickOpen, setQuickOpen] = useState(false);
+  const { profile } = useUnifiedCustomerProfile();
 
   const products = useMemo(
-    () =>
-      mkcCatalogue
+    () => {
+      const sorted = mkcCatalogue
         .filter((k) => k.newArrival)
-        .sort((a, b) => b.popularity - a.popularity)
-        .map(toDisplayFragrance),
-    []
+        .sort((a, b) => b.popularity - a.popularity);
+      return applyAdaptiveOrdering(sorted, profile).map(toDisplayFragrance);
+    },
+    [profile]
   );
 
   return (
@@ -71,6 +76,7 @@ export default function NewArrivalsPage() {
         discoveryLabel="Continue Discovering"
         discoveryHeading="Explore the Collection"
         discoveryBody="A curated selection to guide you further into the depth and range of Maison Skye & Rose."
+        context={buildRecommendationContext("new-arrivals", profile)}
         source="new-arrivals-recommendation"
       />
 

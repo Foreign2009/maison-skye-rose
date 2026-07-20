@@ -12,6 +12,7 @@ import { hasMeaningfulProfile } from "../lib/customer/profile/profileUtils";
 import type { AnalyticsSource } from "../lib/analytics";
 import { trackRecommendationShown } from "../lib/analytics";
 import DiscoverCollectionGrid from "./DiscoverCollectionGrid";
+import type { RecommendationDisplayContext } from "../lib/adaptive/buildRecommendationContext";
 
 interface IntelligenceSectionProps {
   personalisedLabel: string;
@@ -22,6 +23,7 @@ interface IntelligenceSectionProps {
   discoveryBody: string;
   source: AnalyticsSource;
   className?: string;
+  context?: RecommendationDisplayContext | null;
 }
 
 export default function IntelligenceSection({
@@ -33,6 +35,7 @@ export default function IntelligenceSection({
   discoveryBody,
   source,
   className = "bg-[#faf7f5]",
+  context,
 }: IntelligenceSectionProps) {
   const { profile, isReady } = useUnifiedCustomerProfile();
 
@@ -96,13 +99,13 @@ export default function IntelligenceSection({
       <div className="mx-auto max-w-7xl px-5">
         <div className="max-w-2xl mb-12">
           <p className="text-[10px] font-semibold uppercase tracking-[0.55em] text-[#d89ca4]">
-            {isPersonalised ? personalisedLabel : discoveryLabel}
+            {isPersonalised ? (context?.label ?? personalisedLabel) : discoveryLabel}
           </p>
           <h2 className="mt-4 text-3xl md:text-5xl font-black tracking-[-0.05em] text-[#4f4a52] leading-tight">
-            {isPersonalised ? personalisedHeading : discoveryHeading}
+            {isPersonalised ? (context?.heading ?? personalisedHeading) : discoveryHeading}
           </h2>
           <p className="mt-5 text-base leading-relaxed text-[#7b7480]">
-            {isPersonalised ? (reasonContext ?? personalisedBody) : discoveryBody}
+            {isPersonalised ? (reasonContext ?? context?.body ?? personalisedBody) : discoveryBody}
           </p>
         </div>
 

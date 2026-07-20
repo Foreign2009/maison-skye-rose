@@ -7,18 +7,23 @@ import QuickAddModal from "../components/QuickAddModal";
 import IntelligenceSection from "../components/IntelligenceSection";
 import { mkcCatalogue } from "../lib/mkc/catalogue";
 import { toDisplayFragrance } from "../lib/mkc/displayAdapter";
+import { useUnifiedCustomerProfile } from "../lib/customer/hooks/useUnifiedCustomerProfile";
+import { applyAdaptiveOrdering } from "../lib/adaptive/adaptiveOrdering";
+import { buildRecommendationContext } from "../lib/adaptive/buildRecommendationContext";
 
 export default function BestSellersPage() {
   const [selectedFragrance, setSelectedFragrance] = useState<ReturnType<typeof toDisplayFragrance> | null>(null);
   const [quickOpen, setQuickOpen] = useState(false);
+  const { profile } = useUnifiedCustomerProfile();
 
   const products = useMemo(
-    () =>
-      mkcCatalogue
+    () => {
+      const sorted = mkcCatalogue
         .filter((k) => k.bestSeller)
-        .sort((a, b) => b.popularity - a.popularity)
-        .map(toDisplayFragrance),
-    []
+        .sort((a, b) => b.popularity - a.popularity);
+      return applyAdaptiveOrdering(sorted, profile).map(toDisplayFragrance);
+    },
+    [profile]
   );
 
   return (
@@ -73,6 +78,7 @@ export default function BestSellersPage() {
         discoveryLabel="Discover More Like These"
         discoveryHeading="You May Also Love"
         discoveryBody="A curated selection from across the Maison Skye & Rose collection to complement the best sellers you are exploring."
+        context={buildRecommendationContext("best-sellers", profile)}
         source="best-sellers-recommendation"
       />
 

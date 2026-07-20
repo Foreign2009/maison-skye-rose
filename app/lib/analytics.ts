@@ -144,7 +144,8 @@ export type AnalyticsSource =
   | "collection-elite-recommendation"
   | "quiz-continuation"
   | "character-journey-profile"
-  | "shop-recommendation";
+  | "shop-recommendation"
+  | "profile-page-recommendation";
 
 export type ProductPayload = {
   title: string;
