@@ -111,6 +111,12 @@ export default function IntelligenceSection({
           source={source}
           columns={3}
         />
+
+        {isPersonalised && (
+          <p className="mt-8 text-center text-xs text-[#7b7480]/60">
+            Your recommendations improve as you save, explore, and search across Maison.
+          </p>
+        )}
       </div>
     </section>
   );

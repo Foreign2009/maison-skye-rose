@@ -68,7 +68,7 @@ export default function EliteCollectionPage() {
       </section>
 
       <IntelligenceSection
-        personalisedLabel="Continue Your Journey"
+        personalisedLabel="Selected For You"
         personalisedHeading="Selected For Your Fragrance Profile"
         personalisedBody="From across the Maison Skye & Rose collection, selected to complement the exclusive, niche world of Elite."
         discoveryLabel="Continue Your Journey"

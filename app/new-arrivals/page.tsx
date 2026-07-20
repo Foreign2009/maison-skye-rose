@@ -65,7 +65,7 @@ export default function NewArrivalsPage() {
       </section>
 
       <IntelligenceSection
-        personalisedLabel="Continue Discovering"
+        personalisedLabel="Selected For You"
         personalisedHeading="Matched To Your Preferences"
         personalisedBody="Selected from across the full Maison Skye & Rose catalogue to reflect the style and character you have expressed."
         discoveryLabel="Continue Discovering"

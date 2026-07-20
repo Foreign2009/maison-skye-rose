@@ -105,7 +105,7 @@ export default function SkyeCollectionPage() {
         </section>
 
         <IntelligenceSection
-          personalisedLabel="Continue Your Journey"
+          personalisedLabel="Selected For You"
           personalisedHeading="Selected For Your Fragrance Profile"
           personalisedBody="From across the Maison Skye & Rose collection, selected to complement the bold, confident world of Skye."
           discoveryLabel="Continue Your Journey"

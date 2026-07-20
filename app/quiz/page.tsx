@@ -556,6 +556,25 @@ export default function QuizPage() {
                 Send My Results To WhatsApp
               </a>
 
+              {/* PROFILE FEEDBACK — confirms quiz signals were recorded */}
+              {completed === questions.length && (
+                <div className="mt-10 rounded-[28px] border border-[#e8ddd6] bg-[#faf7f5] px-6 py-5">
+                  <div className="flex items-start gap-4">
+                    <div className="mt-0.5 shrink-0 flex h-8 w-8 items-center justify-center rounded-full bg-[#d89ca4]/15">
+                      <span className="text-[#d89ca4] text-sm font-bold">✓</span>
+                    </div>
+                    <div>
+                      <p className="text-sm font-bold text-[#4f4a52]">
+                        Your Fragrance Profile is ready.
+                      </p>
+                      <p className="mt-1 text-sm leading-relaxed text-[#7b7480]">
+                        Your answers have shaped your Maison profile — recommendations across the site will now reflect your fragrance preferences.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
+
               {/* PART B — YOUR FRAGRANCE JOURNEY */}
               {completed === questions.length && characterStage && (
                 <div className="mt-16">
@@ -685,7 +704,7 @@ export default function QuizPage() {
       {/* PART A — CONTINUE DISCOVERING */}
       {completed === questions.length && (
         <IntelligenceSection
-          personalisedLabel="Continue Discovering"
+          personalisedLabel="Selected For You"
           personalisedHeading="Selected For Your Fragrance Profile"
           personalisedBody="Based on the preferences you have shared, these fragrances from across the Maison collection reflect the style and character you are drawn to."
           discoveryLabel="Continue Discovering"

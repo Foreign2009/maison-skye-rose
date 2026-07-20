@@ -84,14 +84,20 @@ export default function YourFragranceJourney() {
   );
 
   // RE — personalised recommendations (only when profile has data, not for "new" stage)
-  const recommendationCards = useMemo((): DisplayFragrance[] => {
+  const recommendationCards = useMemo((): (DisplayFragrance & { recReason: string | null })[] => {
     if (!profile || !journey || journey.stage === "new") return [];
     const result = recommendForProfile(profile, 4);
     if (!result.success) return [];
     return result.recommendations
-      .map((r) => catalogueMaps.bySlug.get(r.slug))
-      .filter((k): k is FragranceKnowledge => k !== undefined)
-      .map(toDisplayFragrance);
+      .map((r) => {
+        const k = catalogueMaps.bySlug.get(r.slug);
+        if (!k) return null;
+        return {
+          ...toDisplayFragrance(k),
+          recReason: r.reasons[0]?.description ?? null,
+        };
+      })
+      .filter((f): f is NonNullable<typeof f> => f !== null);
   }, [profile, journey]);
 
   // Nothing to render until localStorage has been read
@@ -117,7 +123,7 @@ export default function YourFragranceJourney() {
 
         {/* ── Journey Stage Banner ─────────────────────────────────────────── */}
         <div className="mb-12">
-          <p className="text-[11px] uppercase tracking-[0.45em] text-[#d89ca4]">
+          <p className="text-[10px] uppercase tracking-[0.55em] text-[#d89ca4]">
             {copy.label}
           </p>
           <h2 className="mt-4 text-3xl md:text-5xl font-black tracking-[-0.05em] text-[#4f4a52] leading-tight">
@@ -183,12 +189,17 @@ export default function YourFragranceJourney() {
         {recommendationCards.length > 0 && (
           <div>
             <div className="mb-6">
-              <p className="text-[11px] uppercase tracking-[0.45em] text-[#d89ca4]">
+              <p className="text-[10px] uppercase tracking-[0.55em] text-[#d89ca4]">
                 Selected For You
               </p>
               <h3 className="mt-2 text-xl font-black text-[#4f4a52]">
-                Personalised Picks
+                Recommended For You
               </h3>
+              {recommendationCards[0]?.recReason != null && (
+                <p className="mt-2 text-sm leading-relaxed text-[#7b7480]">
+                  {recommendationCards[0]?.recReason}
+                </p>
+              )}
             </div>
 
             <div className="grid gap-6 md:grid-cols-4">
@@ -196,6 +207,7 @@ export default function YourFragranceJourney() {
                 <ProductCard
                   key={fragrance.title}
                   {...fragrance}
+                  recReason={fragrance.recReason}
                   onQuickAdd={() => openQuickAdd(fragrance)}
                 />
               ))}

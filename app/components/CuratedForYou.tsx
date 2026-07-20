@@ -14,24 +14,33 @@ import DiscoverCollectionGrid from "./DiscoverCollectionGrid";
 export default function CuratedForYou() {
   const { profile, isReady } = useUnifiedCustomerProfile();
 
-  const { fragrances, isPersonalised } = useMemo(() => {
-    if (!profile) return { fragrances: [], isPersonalised: false };
+  const { fragrances, isPersonalised, topReason } = useMemo(() => {
+    const empty = { fragrances: [] as ReturnType<typeof toDisplayFragrance>[], isPersonalised: false, topReason: null as string | null };
+    if (!profile) return empty;
 
     const personalised = hasMeaningfulProfile(profile);
     const result = personalised
       ? recommendForProfile(profile)
       : recommendDiscovery(profile);
 
-    if (!result.success) return { fragrances: [], isPersonalised: false };
+    if (!result.success) return empty;
 
     const fragrances = result.recommendations
       .map((rec) => {
         const knowledge = catalogueMaps.bySlug.get(rec.slug);
-        return knowledge ? toDisplayFragrance(knowledge) : null;
+        if (!knowledge) return null;
+        return {
+          ...toDisplayFragrance(knowledge),
+          recReason: rec.reasons[0]?.description ?? null,
+        };
       })
-      .filter((f): f is ReturnType<typeof toDisplayFragrance> => f !== null);
+      .filter((f): f is NonNullable<typeof f> => f !== null);
 
-    return { fragrances, isPersonalised: personalised };
+    const topReason = personalised
+      ? result.recommendations[0]?.reasons[0]?.description ?? null
+      : null;
+
+    return { fragrances, isPersonalised: personalised, topReason };
   }, [profile]);
 
   if (!isReady || fragrances.length === 0) return null;
@@ -50,7 +59,7 @@ export default function CuratedForYou() {
           </h2>
           <p className="mt-5 text-base leading-relaxed text-[#7b7480]">
             {isPersonalised
-              ? "A selection built around the fragrances you have explored and the preferences you have expressed."
+              ? (topReason ?? "A selection built around the fragrances you have explored and the preferences you have expressed.")
               : "A curated selection chosen to introduce you to the depth and range of the Maison Skye & Rose collection."}
           </p>
         </div>

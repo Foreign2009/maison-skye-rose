@@ -66,7 +66,7 @@ export default function FavoritesPage() {
           {/* Action-Oriented Sub-banner */}
           <div className="mb-8 rounded-3xl bg-white p-5 text-center shadow-sm">
             <p className="font-semibold text-[#b67d73]">
-              Save favorites, compare fragrances, and build your perfect collection.
+              Save fragrances you love — each save helps personalise your Maison recommendations.
             </p>
           </div>
 
@@ -105,7 +105,7 @@ export default function FavoritesPage() {
       </section>
 
       <IntelligenceSection
-        personalisedLabel="You Might Also Like"
+        personalisedLabel="Selected For You"
         personalisedHeading="Chosen For Your Taste"
         personalisedBody="Selected from across the Maison Skye & Rose collection based on the fragrances you have saved and explored."
         discoveryLabel="You Might Also Like"

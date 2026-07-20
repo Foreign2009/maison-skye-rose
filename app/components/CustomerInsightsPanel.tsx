@@ -45,7 +45,7 @@ export default function CustomerInsightsPanel() {
   const hasPrefs = families.length > 0 || occasions.length > 0 || seasons.length > 0 || gender !== null;
 
   return (
-    <div className="mb-8 rounded-3xl border border-[#e8e4e9] bg-white p-5 md:p-6">
+    <div className="mb-8 rounded-3xl border border-[#e8ddd6] bg-white p-5 md:p-6">
 
       {/* Journey stage ───────────────────────────────────────────────────────── */}
       <div className="flex flex-wrap items-center gap-3 mb-4">
@@ -78,6 +78,9 @@ export default function CustomerInsightsPanel() {
               <KnowledgeChip label={gender} variant="bordered" />
             )}
           </div>
+          <p className="mt-3 text-[10px] text-[#7b7480]/50 leading-relaxed">
+            Learned from your saved fragrances and browsing history.
+          </p>
         </div>
       )}
 

@@ -67,7 +67,7 @@ export default function BestSellersPage() {
       </section>
 
       <IntelligenceSection
-        personalisedLabel="Discover More Like These"
+        personalisedLabel="Selected For You"
         personalisedHeading="Selected For Your Fragrance Profile"
         personalisedBody="Based on the fragrances you have explored, these selections share the character and style you are drawn to."
         discoveryLabel="Discover More Like These"

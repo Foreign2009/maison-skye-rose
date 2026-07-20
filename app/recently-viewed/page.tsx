@@ -67,7 +67,7 @@ export default function RecentlyViewedPage() {
 
           <div className="mb-8 rounded-3xl bg-white p-5 text-center shadow-sm">
             <p className="font-semibold text-[#b67d73]">
-              465+ Signature Fragrances Available
+              Every fragrance you explore refines your Maison recommendations.
             </p>
           </div>
 
@@ -109,7 +109,7 @@ export default function RecentlyViewedPage() {
       </section>
 
       <IntelligenceSection
-        personalisedLabel="Continue Exploring"
+        personalisedLabel="Selected For You"
         personalisedHeading="Based On Your Journey"
         personalisedBody="Selected from across the Maison Skye & Rose collection to continue the exploration you have already begun."
         discoveryLabel="Continue Exploring"

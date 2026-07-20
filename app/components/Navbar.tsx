@@ -54,7 +54,7 @@ export default function Navbar() {
     { href: "/discover",    label: "Discover" },
     { href: "/new-arrivals", label: "New Arrivals" },
     { href: "/academy",     label: "Academy" },
-    { href: "/quiz",        label: "Scent Finder", icon: true },
+    { href: "/quiz",        label: "Fragrance Quiz", icon: true },
     { href: "/wholesale",   label: "Wholesale" },
   ];
 
@@ -183,10 +183,13 @@ export default function Navbar() {
                   <Clock className="h-5 w-5 stroke-[1.75]" />
                 </Link>
 
+                {/* TODO(EP21.3): Temporary route — /account does not exist. Routing to /favorites
+                    as the closest available intelligence destination. Replace with /fragrance-profile
+                    when EP21 Profile Foundation is implemented. */}
                 <Link
-                  href="/account"
+                  href="/favorites"
                   className={`p-2 text-[#4f4a52] hover:text-[#d89ca4] transition-colors ${
-                    pathname === "/account" ? "text-[#d89ca4]" : ""
+                    pathname === "/favorites" ? "text-[#d89ca4]" : ""
                   }`}
                   aria-label="Account"
                 >
