@@ -1,31 +1,24 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useRef, useEffect } from "react";
 import Link from "next/link";
 import { useUnifiedCustomerProfile } from "../lib/customer/hooks/useUnifiedCustomerProfile";
-import {
-  recommendForProfile,
-  recommendDiscovery,
-} from "../lib/customer/recommendations/RecommendationEngine";
+import { getContextualRecommendations } from "../lib/intelligence/ExperienceIntelligence";
 import { catalogueMaps } from "../lib/discovery";
 import { toDisplayFragrance } from "../lib/mkc/displayAdapter";
-import { hasMeaningfulProfile } from "../lib/customer/profile/profileUtils";
 import DiscoverCollectionGrid from "./DiscoverCollectionGrid";
-import { buildRecommendationContext } from "../lib/adaptive/buildRecommendationContext";
+import { trackExperienceIntelligenceShown } from "../lib/analytics";
 
 export default function CuratedForYou() {
   const { profile, isReady } = useUnifiedCustomerProfile();
 
-  const { fragrances, isPersonalised, topReason, context } = useMemo(() => {
-    const empty = { fragrances: [] as ReturnType<typeof toDisplayFragrance>[], isPersonalised: false, topReason: null as string | null, context: null };
+  const { fragrances, isPersonalised, topReason, context, feedbackSlugs, processingTimeMs } = useMemo(() => {
+    const empty = { fragrances: [] as ReturnType<typeof toDisplayFragrance>[], isPersonalised: false, topReason: null as string | null, context: null, feedbackSlugs: [] as string[], processingTimeMs: undefined as number | undefined };
     if (!profile) return empty;
 
-    const personalised = hasMeaningfulProfile(profile);
-    const result = personalised
-      ? recommendForProfile(profile)
-      : recommendDiscovery(profile);
+    const result = getContextualRecommendations("homepage", profile);
 
-    if (!result.success) return empty;
+    if (!result.success || result.recommendations.length === 0) return empty;
 
     const fragrances = result.recommendations
       .map((rec) => {
@@ -38,14 +31,35 @@ export default function CuratedForYou() {
       })
       .filter((f): f is NonNullable<typeof f> => f !== null);
 
-    const topReason = personalised
+    const topReason = result.isPersonalised
       ? result.recommendations[0]?.reasons[0]?.description ?? null
       : null;
 
-    const context = personalised ? buildRecommendationContext("homepage", profile) : null;
-
-    return { fragrances, isPersonalised: personalised, topReason, context };
+    return {
+      fragrances,
+      isPersonalised:   result.isPersonalised,
+      topReason,
+      context:          result.context,
+      feedbackSlugs:    result.recommendations.map((r) => r.slug),
+      processingTimeMs: result.metrics.processingTimeMs,
+    };
   }, [profile]);
+
+  const firedRef = useRef(false);
+  useEffect(() => {
+    if (firedRef.current || !isReady || feedbackSlugs.length === 0) return;
+    firedRef.current = true;
+    trackExperienceIntelligenceShown({
+      experience:          "homepage",
+      strategy:            isPersonalised ? "personalised" : "discovery",
+      profileType:         isPersonalised ? "personalised" : "discovery",
+      seeded:              false,
+      recommendationCount: feedbackSlugs.length,
+      slugs:               feedbackSlugs,
+      renderSource:        "homepage-curated",
+      processingTimeMs,
+    });
+  }, [isReady, feedbackSlugs, isPersonalised, processingTimeMs]);
 
   if (!isReady || fragrances.length === 0) return null;
 
