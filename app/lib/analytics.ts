@@ -147,7 +147,10 @@ export type AnalyticsSource =
   | "shop-recommendation"
   | "profile-page-recommendation"
   | "discover-intelligence"
-  | "academy-intelligence";
+  | "academy-intelligence"
+  | "minicart-favorites"
+  | "minicart-recently-viewed"
+  | "minicart-complete-collection";
 
 export type ProductPayload = {
   title: string;
@@ -548,4 +551,20 @@ export function trackCartRecommendationsShown(
 ): void {
   if (!ready) return;
   capture("cart_recommendations_shown", payload);
+}
+
+// ── Favourite preference signals ───────────────────────────────────────────────
+// Fires when a customer adds or removes a product from favourites.
+// source identifies the surface where the heart was clicked.
+
+export type FavouriteToggledPayload = {
+  title:   string;
+  slug?:   string;
+  source?: AnalyticsSource;
+  action:  "add" | "remove";
+};
+
+export function trackFavouriteToggled(payload: FavouriteToggledPayload): void {
+  if (!ready) return;
+  capture("favourite_toggled", payload);
 }

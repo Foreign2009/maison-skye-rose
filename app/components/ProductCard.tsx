@@ -6,7 +6,7 @@ import Link from "next/link";
 import { Heart } from "lucide-react";
 import { useFavorites } from "../context/FavoritesContext";
 import type { AnalyticsSource } from "../lib/analytics";
-import { trackProductClick } from "../lib/analytics";
+import { trackProductClick, trackFavouriteToggled } from "../lib/analytics";
 import { toggleSavedProduct } from "../lib/customer/sync/CustomerProfileSync";
 
 type ProductCardProps = {
@@ -84,6 +84,7 @@ function ProductCard({
   }, [saveRecentlyViewed, source, rank, title, slug, productSlug]);
 
   const handleFavorite = useCallback(() => {
+    const action = favorite ? "remove" : "add";
     if (favorite) {
       removeFromFavorites(title);
     } else {
@@ -102,7 +103,8 @@ function ProductCard({
       });
     }
     toggleSavedProduct(title);
-  }, [favorite, removeFromFavorites, addToFavorites, title, subtitle, mood, profile, season, notes, prices, images, bestSeller, newArrival]);
+    trackFavouriteToggled({ title, slug: slug ?? productSlug, source, action });
+  }, [favorite, removeFromFavorites, addToFavorites, title, subtitle, mood, profile, season, notes, prices, images, bestSeller, newArrival, slug, productSlug, source]);
 
   const handleLearnMoreClick = useCallback(() => {
     saveRecentlyViewed();

@@ -68,24 +68,12 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
     });
   }, [showRecommendations, fromFavorites.length, recentRecs.length, completeYourCollection.length]);
 
-  const quickAddFavorite = (fragrance: DisplayFragrance) => {
-    addToCart({
-      id:       fragrance.title.toLowerCase().replace(/\s+/g, "-"),
-      title:    fragrance.title,
-      image:    fragrance.images["10ml"] || fragrance.images["5ml"],
-      price:    fragrance.prices["5ml"],
-      quantity: 1,
-      size:     "5ml",
-    });
-    trackAddToCart({
-      title:  fragrance.title,
-      size:   "5ml",
-      price:  fragrance.prices["5ml"],
-      source: "minicart",
-    });
-  };
+  type MiniCartSection =
+    | "minicart-favorites"
+    | "minicart-recently-viewed"
+    | "minicart-complete-collection";
 
-  const quickAddRecent = (fragrance: DisplayFragrance) => {
+  const quickAddFromSection = (fragrance: DisplayFragrance, section: MiniCartSection) => {
     addToCart({
       id:       fragrance.title.toLowerCase().replace(/\s+/g, "-"),
       title:    fragrance.title,
@@ -95,10 +83,11 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
       size:     "5ml",
     });
     trackAddToCart({
-      title:  fragrance.title,
-      size:   "5ml",
-      price:  fragrance.prices["5ml"],
-      source: "minicart",
+      title:               fragrance.title,
+      size:                "5ml",
+      price:               fragrance.prices["5ml"],
+      source:              "minicart",
+      recommendationSource: section,
     });
   };
 
@@ -467,7 +456,7 @@ A member of our team will confirm your order and delivery details shortly.`;
                           </div>
                         </div>
                         <button
-                          onClick={() => quickAddFavorite(fragrance)}
+                          onClick={() => quickAddFromSection(fragrance, "minicart-favorites")}
                           className="text-[10px] font-bold uppercase tracking-wider text-white bg-[#b67d73] hover:bg-[#a96e65] px-3 py-1.5 rounded-full transition-all duration-200"
                         >
                           + Add 5ml
@@ -514,7 +503,7 @@ A member of our team will confirm your order and delivery details shortly.`;
                         </div>
 
                         <button
-                          onClick={() => quickAddRecent(fragrance)}
+                          onClick={() => quickAddFromSection(fragrance, "minicart-recently-viewed")}
                           className="text-[10px] font-bold uppercase tracking-wider text-white bg-[#4f4a52] hover:bg-[#3f3b42] px-3 py-1.5 rounded-full transition-all duration-200"
                         >
                           + Add 5ml
@@ -548,7 +537,7 @@ A member of our team will confirm your order and delivery details shortly.`;
                         </div>
 
                         <button
-                          onClick={() => quickAddRecent(fragrance)}
+                          onClick={() => quickAddFromSection(fragrance, "minicart-complete-collection")}
                           className="text-[10px] font-bold uppercase tracking-wider text-white bg-[#b67d73] px-3 py-1.5 rounded-full"
                         >
                           + Add 5ml
