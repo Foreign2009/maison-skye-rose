@@ -23,7 +23,6 @@ import {
 import { catalogueMaps } from "../lib/discovery";
 import { toDisplayFragrance } from "../lib/mkc/displayAdapter";
 import { CHARACTER_STAGES } from "../lib/mkc/wardrobeEngine";
-import { buildRecommendationContext } from "../lib/adaptive/buildRecommendationContext";
 import type { CustomerJourneyStage } from "../lib/customer/intelligence/CustomerJourney";
 import type { CharacterStage } from "../lib/mkc/wardrobeEngine";
 import type { DisplayFragrance } from "../lib/knowledgeAdapter";
@@ -643,13 +642,13 @@ export default function FragranceProfilePage() {
 
       {/* ── Selected For You — discovery or personalised ──────────────────── */}
       <IntelligenceSection
+        experience="fragrance_profile"
         personalisedLabel="Selected For You"
         personalisedHeading="Selected For Your Profile"
         personalisedBody="Selected from across the Maison collection based on your explored fragrances, saved pieces, and expressed preferences."
         discoveryLabel="A Maison Introduction"
         discoveryHeading="Begin Your Discovery"
         discoveryBody="A curated selection from across the Maison collection — each piece worth exploring."
-        context={buildRecommendationContext("fragrance-profile", profile)}
         source="profile-page-recommendation"
         className="bg-[#faf7f5]"
       />

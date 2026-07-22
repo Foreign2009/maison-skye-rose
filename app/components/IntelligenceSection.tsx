@@ -2,19 +2,17 @@
 
 import { useMemo, useRef, useEffect } from "react";
 import { useUnifiedCustomerProfile } from "../lib/customer/hooks/useUnifiedCustomerProfile";
-import {
-  recommendForProfile,
-  recommendDiscovery,
-} from "../lib/customer/recommendations/RecommendationEngine";
+import { getContextualRecommendations } from "../lib/intelligence/ExperienceIntelligence";
+import type { ExperienceType } from "../lib/intelligence/ExperienceIntelligence";
 import { catalogueMaps } from "../lib/discovery";
 import { toDisplayFragrance } from "../lib/mkc/displayAdapter";
-import { hasMeaningfulProfile } from "../lib/customer/profile/profileUtils";
 import type { AnalyticsSource } from "../lib/analytics";
-import { trackRecommendationShown } from "../lib/analytics";
+import { trackExperienceIntelligenceShown } from "../lib/analytics";
 import DiscoverCollectionGrid from "./DiscoverCollectionGrid";
 import type { RecommendationDisplayContext } from "../lib/adaptive/buildRecommendationContext";
 
 interface IntelligenceSectionProps {
+  experience: ExperienceType;
   personalisedLabel: string;
   personalisedHeading: string;
   personalisedBody: string;
@@ -23,10 +21,13 @@ interface IntelligenceSectionProps {
   discoveryBody: string;
   source: AnalyticsSource;
   className?: string;
+  // Optional override for pages that build context externally (collection, best-sellers, new-arrivals).
+  // Takes priority over context derived internally from ExperienceIntelligence.
   context?: RecommendationDisplayContext | null;
 }
 
 export default function IntelligenceSection({
+  experience,
   personalisedLabel,
   personalisedHeading,
   personalisedBody,
@@ -35,20 +36,17 @@ export default function IntelligenceSection({
   discoveryBody,
   source,
   className = "bg-[#faf7f5]",
-  context,
+  context: contextOverride,
 }: IntelligenceSectionProps) {
   const { profile, isReady } = useUnifiedCustomerProfile();
 
-  const { fragrances, isPersonalised, reasonContext, feedbackSlugs, processingTimeMs } = useMemo(() => {
-    const empty = { fragrances: [], isPersonalised: false, reasonContext: null, feedbackSlugs: [] as string[], processingTimeMs: 0 };
+  const { fragrances, isPersonalised, reasonContext, feedbackSlugs, processingTimeMs, resultContext } = useMemo(() => {
+    const empty = { fragrances: [], isPersonalised: false, reasonContext: null, feedbackSlugs: [] as string[], processingTimeMs: 0, resultContext: null as RecommendationDisplayContext | null };
     if (!profile) return empty;
 
-    const personalised = hasMeaningfulProfile(profile);
-    const result = personalised
-      ? recommendForProfile(profile)
-      : recommendDiscovery(profile);
+    const result = getContextualRecommendations(experience, profile);
 
-    if (!result.success) return empty;
+    if (!result.success || result.recommendations.length === 0) return empty;
 
     const fragrances = result.recommendations
       .map((rec) => {
@@ -63,34 +61,39 @@ export default function IntelligenceSection({
       })
       .filter((f): f is NonNullable<typeof f> => f !== null);
 
-    // Part D: surface the top reason from the first recommendation as context
-    const topReason = personalised
+    const topReason = result.isPersonalised
       ? result.recommendations[0]?.reasons[0]?.description ?? null
       : null;
 
     return {
       fragrances,
-      isPersonalised:  personalised,
-      reasonContext:   topReason,
-      feedbackSlugs:   result.recommendations.map((r) => r.slug),
+      isPersonalised:   result.isPersonalised,
+      reasonContext:    topReason,
+      feedbackSlugs:    result.recommendations.map((r) => r.slug),
       processingTimeMs: result.metrics.processingTimeMs,
+      resultContext:    result.context,
     };
-  }, [profile]);
+  }, [profile, experience]);
 
-  // Fire recommendation impression once when the set is first rendered.
+  // External context override takes priority; falls back to EI-derived context.
+  const context = contextOverride ?? resultContext;
+
+  // Fire experience intelligence impression once when the set is first rendered.
   const firedRef = useRef(false);
   useEffect(() => {
     if (firedRef.current || !isReady || feedbackSlugs.length === 0) return;
     firedRef.current = true;
-    trackRecommendationShown({
-      strategy:        isPersonalised ? "personalised" : "discovery",
-      surface:         source,
-      count:           feedbackSlugs.length,
-      slugs:           feedbackSlugs,
-      isPersonalised,
+    trackExperienceIntelligenceShown({
+      experience,
+      strategy:            isPersonalised ? "personalised" : "discovery",
+      profileType:         isPersonalised ? "personalised" : "discovery",
+      seeded:              false,
+      recommendationCount: feedbackSlugs.length,
+      slugs:               feedbackSlugs,
+      renderSource:        source,
       processingTimeMs,
     });
-  }, [isReady, feedbackSlugs, isPersonalised, source, processingTimeMs]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [isReady, feedbackSlugs, isPersonalised, source, processingTimeMs, experience]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (!isReady || fragrances.length === 0) return null;
 

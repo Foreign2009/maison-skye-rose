@@ -710,6 +710,7 @@ export default function QuizPage() {
       {/* PART A — CONTINUE DISCOVERING */}
       {completed === questions.length && (
         <IntelligenceSection
+          experience="quiz"
           personalisedLabel="Selected For You"
           personalisedHeading="Selected For Your Fragrance Profile"
           personalisedBody="Based on the preferences you have shared, these fragrances from across the Maison collection reflect the style and character you are drawn to."

@@ -76,6 +76,7 @@ export default function NewArrivalsPage() {
         discoveryLabel="Continue Discovering"
         discoveryHeading="Explore the Collection"
         discoveryBody="A curated selection to guide you further into the depth and range of Maison Skye & Rose."
+        experience="shop"
         context={buildRecommendationContext("new-arrivals", profile)}
         source="new-arrivals-recommendation"
       />

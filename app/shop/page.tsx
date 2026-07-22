@@ -724,6 +724,7 @@ export default function ShopPage() {
       />
 
       <IntelligenceSection
+        experience="shop"
         personalisedLabel="Selected For You"
         personalisedHeading="Chosen For Your Taste"
         personalisedBody="Selected from across the Maison Skye & Rose collection based on your fragrance journey."

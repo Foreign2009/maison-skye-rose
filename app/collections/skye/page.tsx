@@ -115,6 +115,7 @@ export default function SkyeCollectionPage() {
           discoveryLabel="Continue Your Journey"
           discoveryHeading="Explore Further"
           discoveryBody="A curated selection from across the full Maison Skye & Rose collection to continue your discovery."
+          experience="shop"
           context={buildRecommendationContext("collection", profile, { collection: "Skye" })}
           source="collection-skye-recommendation"
           className="bg-white"
