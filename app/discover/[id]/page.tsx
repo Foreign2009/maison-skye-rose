@@ -13,6 +13,7 @@ import { getCollectionDimensions, getRepresentativeFragrances, getDiscoveryPathw
 import { resolveJourneyArticles } from "../../lib/academy/journeyResolver";
 import { getProgressionConnections } from "../../lib/discovery/discoveryProgression";
 import DiscoveryAttributionSetter from "../../components/DiscoveryAttributionSetter";
+import { DiscoveryIntelligenceSection } from "../../components/discover/DiscoveryIntelligenceSection";
 import { CollectionDimensions } from "../../components/knowledge/CollectionDimensions";
 import { FragranceSpotlight } from "../../components/knowledge/FragranceSpotlight";
 import { toDisplayFragrance } from "../../lib/mkc/displayAdapter";
@@ -73,7 +74,17 @@ export default async function DiscoverCollectionPage({ params }: PageProps) {
         };
       })
     : [];
-  const products        = getCollection(spec.id).map((k) => ({ ...toDisplayFragrance(k), scentCharacter: k.scentCharacter }));
+  const rawCollection   = getCollection(spec.id);
+  const products        = rawCollection.map((k) => ({ ...toDisplayFragrance(k), scentCharacter: k.scentCharacter }));
+
+  // ── ExperienceIntelligence seed data (EP25.4) ─────────────────────────────────
+  // Seeds: top 5 representative slugs to seed cold-start discovery profiles.
+  // Excludes: all collection slugs — never repeated in the "Recommended Next" section.
+  const discoverySeedSlugs = [...rawCollection]
+    .sort((a, b) => (b.bestSeller ? 1 : 0) - (a.bestSeller ? 1 : 0) || b.popularity - a.popularity)
+    .slice(0, 5)
+    .map((k) => k.slug);
+  const discoveryExcludeSlugs = rawCollection.map((k) => k.slug);
 
   // ── Relationship enrichment (EP17.0-P5) ──────────────────────────────────────
   // Source: graph relationships of the primary representative fragrance.
@@ -81,7 +92,7 @@ export default async function DiscoverCollectionPage({ params }: PageProps) {
   const primaryRep      = representatives[0] ?? null;
   const repRelationships = primaryRep ? getRelatedKnowledge(primaryRep.slug) : null;
 
-  const collectionSlugs = new Set<string>(getCollection(spec.id).map((k) => k.slug));
+  const collectionSlugs = new Set<string>(rawCollection.map((k) => k.slug));
   const pathwaySlugs    = new Set<string>(pathways.map((p) => p.fragrance.slug));
   const shownSlugs      = new Set<string>([...collectionSlugs, ...pathwaySlugs]);
 
@@ -327,6 +338,13 @@ export default async function DiscoverCollectionPage({ params }: PageProps) {
               </div>
             </div>
           </section>
+
+          {/* ── Recommended Next (EP25.4) ────────────────────────────────── */}
+          <DiscoveryIntelligenceSection
+            seedSlugs={discoverySeedSlugs}
+            excludeSlugs={discoveryExcludeSlugs}
+            collectionName={spec.name}
+          />
 
           {/* ── Related Moments ───────────────────────────────────────────── */}
           {relatedMomentData.length > 0 && (
@@ -756,6 +774,13 @@ export default async function DiscoverCollectionPage({ params }: PageProps) {
             </div>
           </section>
         )}
+
+        {/* ── Recommended Next (EP25.4) ────────────────────────────────────── */}
+        <DiscoveryIntelligenceSection
+          seedSlugs={discoverySeedSlugs}
+          excludeSlugs={discoveryExcludeSlugs}
+          collectionName={spec.name}
+        />
 
         {/* ── CTA ───────────────────────────────────────────────────────────── */}
         <section className="bg-white py-16 px-4 text-center">

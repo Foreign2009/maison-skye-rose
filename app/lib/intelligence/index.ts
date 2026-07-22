@@ -49,3 +49,13 @@ export type { KnowledgeDiscovery }             from "./KnowledgeDiscovery";
 export type { CollectionInsights, MaisonCollection } from "./KnowledgeCollections";
 export type { RecommendationOptions, KnowledgeRecommendationResult } from "./KnowledgeRecommendations";
 export type { KnowledgeMetrics, DiscoveryReadinessDistribution }     from "./KnowledgeMetrics";
+
+// ── Experience Intelligence (EP25.2) ──────────────────────────────────────────
+
+export type { ExperienceType, ExperienceOptions, ExperienceIntelligenceResult } from "./ExperienceIntelligence";
+export {
+  getContextualRecommendations,
+  getRecommendations,
+  getDiscoveryRecommendations,
+  getRelatedRecommendations,
+} from "./ExperienceIntelligence";

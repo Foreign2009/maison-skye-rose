@@ -145,7 +145,9 @@ export type AnalyticsSource =
   | "quiz-continuation"
   | "character-journey-profile"
   | "shop-recommendation"
-  | "profile-page-recommendation";
+  | "profile-page-recommendation"
+  | "discover-intelligence"
+  | "academy-intelligence";
 
 export type ProductPayload = {
   title: string;
@@ -499,4 +501,30 @@ export type RecommendationShownPayload = {
 export function trackRecommendationShown(payload: RecommendationShownPayload): void {
   if (!ready) return;
   capture("recommendation_set_shown", payload);
+}
+
+// ── ExperienceIntelligence analytics ──────────────────────────────────────────
+//
+// Canonical event for all ExperienceIntelligence consumers.
+// Fires once per render when recommendations are first shown.
+// Parallel to recommendation_set_shown but carries cross-experience context.
+
+export type ExperienceProfileType = "personalised" | "seeded" | "discovery";
+
+export type ExperienceIntelligenceShownPayload = {
+  experience:          string;           // ExperienceType e.g. "academy", "discover"
+  strategy:            string;           // RE strategy e.g. "personalised", "discovery"
+  profileType:         ExperienceProfileType; // data source that drove the result
+  seeded:              boolean;          // true when cold-start seeds were injected
+  recommendationCount: number;           // count of rendered recommendations
+  slugs:               string[];         // rendered slugs — join key for PostHog funnels
+  renderSource:        AnalyticsSource;  // surface identifier
+  processingTimeMs?:   number;           // RE processing time from result metrics
+};
+
+export function trackExperienceIntelligenceShown(
+  payload: ExperienceIntelligenceShownPayload,
+): void {
+  if (!ready) return;
+  capture("experience_intelligence_shown", payload);
 }

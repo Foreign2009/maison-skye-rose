@@ -4,7 +4,7 @@ import Link from "next/link";
 import { academyCatalogue } from "../../lib/academy/catalogue";
 import { categoryToSlug } from "../../lib/academy/categories";
 import { ArticleContentRenderer } from "../../components/academy/ArticleContentRenderer";
-import { ArticleRelatedFragrances } from "../../components/academy/ArticleRelatedFragrances";
+import { AcademyIntelligenceSection } from "../../components/academy/AcademyIntelligenceSection";
 import { ArticleRelatedArticles } from "../../components/academy/ArticleRelatedArticles";
 import { ArticleRelatedCollections } from "../../components/academy/ArticleRelatedCollections";
 import { getFragrancesForArticle, getCollectionsForArticle } from "../../lib/academy/academyRelationships";
@@ -203,10 +203,11 @@ export default async function AcademyArticlePage({ params }: Props) {
                 />
               )}
 
-              {/* Related fragrances — relationship-driven via getFragrancesForArticle() */}
-              {relatedFragranceSlugs.length > 0 && (
-                <ArticleRelatedFragrances fragranceIds={relatedFragranceSlugs} />
-              )}
+              {/* Related fragrances — ExperienceIntelligence (EP25.3) */}
+              <AcademyIntelligenceSection
+                articleSeedSlugs={relatedFragranceSlugs}
+                articleCategory={article.category}
+              />
 
               {/* Related collections — relationship-driven via getCollectionsForArticle() */}
               {relatedCollections.length > 0 && (
