@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo, useCallback } from "react";
+import { useState, useEffect, useMemo, useCallback, useRef } from "react";
 import Image from "next/image";
 import { Heart, ChevronDown, ChevronUp } from "lucide-react";
 import { useCart } from "../context/CartContext";
@@ -21,6 +21,8 @@ import {
   trackBuyNow,
   trackCartOpened,
   trackAiChatStarted,
+  trackProductClick,
+  trackRecommendationShown,
 } from "../lib/analytics";
 import { recordProductView, toggleSavedProduct, recordCart } from "../lib/customer/sync/CustomerProfileSync";
 import { useConcierge } from "../context/ConciergeContext";
@@ -166,6 +168,20 @@ export default function ProductDetail({
     trackProductView({ title: knowledge.name, collection: knowledge.collection });
     recordProductView(knowledge.slug);
   }, [knowledge.name]);
+
+  // Similarity impression — fires once when "Why You'll Love It" section resolves
+  const similarityFiredRef = useRef(false);
+  useEffect(() => {
+    if (similarityFiredRef.current || !similarFragrances || similarFragrances.length === 0) return;
+    similarityFiredRef.current = true;
+    trackRecommendationShown({
+      strategy:       "similar",
+      surface:        "pdp-recommendation",
+      count:          similarFragrances.length,
+      slugs:          similarFragrances.map((r) => r.fragrance.slug),
+      isPersonalised: false,
+    });
+  }, [similarFragrances]);
 
   // ── Commerce handlers ──────────────────────────────────────────────────────
 
@@ -966,10 +982,11 @@ export default function ProductDetail({
                 Fragrances that extend naturally from {knowledge.name}.
               </p>
               <div className="mt-8 grid grid-cols-2 gap-3 md:gap-6 md:grid-cols-4">
-                {journeyFragrances.map((item) => (
+                {journeyFragrances.map((item, index) => (
                   <Link
                     key={item.slug}
                     href={`/product/${item.slug}`}
+                    onClick={() => trackProductClick({ title: item.name, slug: item.slug, source: "pdp-journey", rank: index + 1 })}
                     className="rounded-3xl bg-[#f9f7f4] p-4 md:p-6 transition hover:shadow-lg"
                   >
                     <div className="relative h-24 md:h-40">
@@ -1005,11 +1022,12 @@ export default function ProductDetail({
               Why You&apos;ll Love It
             </h2>
             <div className="grid gap-6 lg:grid-cols-2">
-              {(similarFragrances ?? []).map((result) => (
+              {(similarFragrances ?? []).map((result, index) => (
                 <RecommendationCard
                   key={result.fragrance.name}
                   slug={result.fragrance.slug}
                   title={result.fragrance.name}
+                  rank={index + 1}
                   profile={result.fragrance.profile}
                   mood={result.fragrance.mood}
                   notes={[
@@ -1045,10 +1063,11 @@ export default function ProductDetail({
                 return b.popularity - a.popularity;
               })
               .slice(0, 4)
-              .map((item) => (
+              .map((item, index) => (
                 <Link
                   key={item.name}
                   href={`/product/${item.slug}`}
+                  onClick={() => trackProductClick({ title: item.name, slug: item.slug, source: "pdp-collection", rank: index + 1 })}
                   className="rounded-3xl bg-white p-4 md:p-6 transition hover:shadow-lg"
                 >
                   <div className="relative h-24 md:h-40">

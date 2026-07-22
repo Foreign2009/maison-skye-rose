@@ -150,7 +150,9 @@ export type AnalyticsSource =
   | "academy-intelligence"
   | "minicart-favorites"
   | "minicart-recently-viewed"
-  | "minicart-complete-collection";
+  | "minicart-complete-collection"
+  | "pdp-journey"
+  | "pdp-collection";
 
 export type ProductPayload = {
   title: string;
