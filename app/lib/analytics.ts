@@ -570,3 +570,21 @@ export function trackFavouriteToggled(payload: FavouriteToggledPayload): void {
   if (!ready) return;
   capture("favourite_toggled", payload);
 }
+
+// ── Recommendation conversion attribution ─────────────────────────────────────
+// Fires at checkout initiation when the session contains a recommendation
+// interaction. Supplements existing checkout analytics — does not replace them.
+// ageMs: elapsed time between recommendation interaction and checkout initiation.
+
+export type RecommendationCheckoutAttributedPayload = {
+  surface:  string;
+  slug?:    string;
+  ageMs?:   number;
+};
+
+export function trackRecommendationCheckoutAttributed(
+  payload: RecommendationCheckoutAttributedPayload,
+): void {
+  if (!ready) return;
+  capture("recommendation_checkout_attributed", payload);
+}

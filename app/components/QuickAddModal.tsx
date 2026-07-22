@@ -9,17 +9,19 @@ import { useCartFeedback } from "../context/CartFeedbackContext";
 import { trackAddToCart } from "../lib/analytics";
 import type { AnalyticsSource } from "../lib/analytics";
 import { recordCart } from "../lib/customer/sync/CustomerProfileSync";
+import { setRecommendationAttribution } from "../lib/recommendationAttribution";
 
 interface QuickAddModalProps {
   open: boolean;
   onClose: () => void;
   title: string;
+  slug?: string;
   images?: { [key: string]: string };
   prices?: { [key: string]: number };
   source?: AnalyticsSource;
 }
 
-export default function QuickAddModal({ open, onClose, title, images = {}, prices = {}, source }: QuickAddModalProps) {
+export default function QuickAddModal({ open, onClose, title, slug, images = {}, prices = {}, source }: QuickAddModalProps) {
   const { addToCart, cartTotal: contextCartTotal, getWholesalePrice } = useCart();
   const { showFeedback } = useCartFeedback();
   const [mounted, setMounted] = useState(false);
@@ -61,6 +63,12 @@ export default function QuickAddModal({ open, onClose, title, images = {}, price
       source:            "quick-add",
       ...(source !== undefined && { recommendationSource: source }),
     });
+    if (source !== undefined) {
+      setRecommendationAttribution({
+        surface: source,
+        slug:    slug ?? title.toLowerCase().replace(/\s+/g, "-"),
+      });
+    }
     recordCart(title);
     showFeedback({
       title,

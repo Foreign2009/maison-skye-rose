@@ -3,7 +3,8 @@ import Image from "next/image";
 import { X } from "lucide-react";
 import { useCart } from "../context/CartContext";
 import { useFavorites } from "../context/FavoritesContext";
-import { trackAddToCart, trackWhatsAppCheckout, trackCartRecommendationsShown } from "../lib/analytics";
+import { trackAddToCart, trackWhatsAppCheckout, trackCartRecommendationsShown, trackRecommendationCheckoutAttributed } from "../lib/analytics";
+import { setRecommendationAttribution, getRecommendationAttribution } from "../lib/recommendationAttribution";
 import { useMemo, useState, useRef, useEffect } from "react";
 import { brand } from "../data/brand";
 import { getCartRecommendations } from "../lib/customer/sync/CartRecommendationStrategy";
@@ -89,6 +90,10 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
       source:              "minicart",
       recommendationSource: section,
     });
+    setRecommendationAttribution({
+      surface: section,
+      slug:    fragrance.title.toLowerCase().replace(/\s+/g, "-"),
+    });
   };
 
   const subtotal = cartTotal;
@@ -163,6 +168,14 @@ Delivery Area:
 A member of our team will confirm your order and delivery details shortly.`;
 
     trackWhatsAppCheckout({ itemCount: cart.length, cartTotal: total });
+    const recAttribution = getRecommendationAttribution();
+    if (recAttribution) {
+      trackRecommendationCheckoutAttributed({
+        surface: recAttribution.surface,
+        slug:    recAttribution.slug,
+        ageMs:   Date.now() - recAttribution.setAt,
+      });
+    }
     window.open(`https://wa.me/${brand.social.whatsappNumber}?text=${encodeURIComponent(message)}`, `_blank`);
   };
 

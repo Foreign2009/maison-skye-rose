@@ -6,8 +6,9 @@ import { useRouter } from "next/navigation";
 import Navbar from "../components/Navbar";
 
 import { useCart } from "../context/CartContext";
-import { trackCheckoutStarted } from "../lib/analytics";
+import { trackCheckoutStarted, trackRecommendationCheckoutAttributed } from "../lib/analytics";
 import { getDiscoveryAttribution, clearDiscoveryAttribution } from "../lib/discoveryAttribution";
+import { getRecommendationAttribution, clearRecommendationAttribution } from "../lib/recommendationAttribution";
 
 const DELIVERY_RATES: Record<string, number> = {
   "Cape Town Metro":       100,
@@ -62,6 +63,15 @@ export default function CheckoutPage() {
         deliveryMethod: province,
       });
 
+      const recAttribution = getRecommendationAttribution();
+      if (recAttribution) {
+        trackRecommendationCheckoutAttributed({
+          surface: recAttribution.surface,
+          slug:    recAttribution.slug,
+          ageMs:   Date.now() - recAttribution.setAt,
+        });
+      }
+
       const discoveryContext = getDiscoveryAttribution();
 
       const orderResponse = await fetch("/api/orders", {
@@ -88,6 +98,7 @@ export default function CheckoutPage() {
 
       if (orderData.success && orderData.orderRef) {
         clearDiscoveryAttribution();
+        clearRecommendationAttribution();
         clearCart();
         router.push(
           `/payment-success?ref=${encodeURIComponent(orderData.orderRef)}&total=${total.toFixed(2)}`

@@ -74,6 +74,7 @@ export default function DiscoverCollectionGrid({
           open={quickOpen}
           onClose={() => setQuickOpen(false)}
           title={selectedFragrance.title}
+          slug={selectedFragrance.slug}
           images={selectedFragrance.images}
           prices={selectedFragrance.prices}
           source={source}
