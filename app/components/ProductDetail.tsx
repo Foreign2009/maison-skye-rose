@@ -32,6 +32,7 @@ import type { KnowledgeQualityProfile } from "../lib/mkc/knowledgeQuality";
 import { LearningPathPanel } from "./academy/LearningPathPanel";
 import { explainArticleRecommendation } from "../lib/academy/explainArticleRecommendation";
 import ComparePickerOverlay from "./ComparePickerOverlay";
+import ProductIntelligenceSection from "./ProductIntelligenceSection";
 
 
 
@@ -993,6 +994,8 @@ export default function ProductDetail({
           </div>
         </section>
       )}
+
+      <ProductIntelligenceSection currentSlug={knowledge.slug} />
 
       {/* ── Why You'll Love It — powered by Discovery similarity engine ──── */}
       {(similarFragrances ?? []).length > 0 && (
