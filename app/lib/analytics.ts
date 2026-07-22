@@ -528,3 +528,23 @@ export function trackExperienceIntelligenceShown(
   if (!ready) return;
   capture("experience_intelligence_shown", payload);
 }
+
+// ── Cart recommendation observability ─────────────────────────────────────────
+// Fires when the MiniCart "You May Also Like" panel is expanded and at least
+// one recommendation is visible. Three behavioural sections are measured
+// independently so each strategy's contribution is queryable separately.
+
+export type CartRecommendationsShownPayload = {
+  fromFavoritesCount:          number;
+  recentlyViewedCount:         number;
+  completeYourCollectionCount: number;
+  totalCount:                  number;
+  renderSource:                "minicart";
+};
+
+export function trackCartRecommendationsShown(
+  payload: CartRecommendationsShownPayload,
+): void {
+  if (!ready) return;
+  capture("cart_recommendations_shown", payload);
+}

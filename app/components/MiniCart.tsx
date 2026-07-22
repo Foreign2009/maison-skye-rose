@@ -3,8 +3,8 @@ import Image from "next/image";
 import { X } from "lucide-react";
 import { useCart } from "../context/CartContext";
 import { useFavorites } from "../context/FavoritesContext";
-import { trackAddToCart, trackWhatsAppCheckout } from "../lib/analytics";
-import { useMemo, useState } from "react";
+import { trackAddToCart, trackWhatsAppCheckout, trackCartRecommendationsShown } from "../lib/analytics";
+import { useMemo, useState, useRef, useEffect } from "react";
 import { brand } from "../data/brand";
 import { getCartRecommendations } from "../lib/customer/sync/CartRecommendationStrategy";
 import type { DisplayFragrance } from "../lib/knowledgeAdapter";
@@ -51,6 +51,22 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
       limit: 3,
     });
   }, [cart, favorites]);
+
+  const impressionFired = useRef(false);
+  useEffect(() => {
+    if (!showRecommendations) return;
+    if (impressionFired.current) return;
+    const total = fromFavorites.length + recentRecs.length + completeYourCollection.length;
+    if (total === 0) return;
+    impressionFired.current = true;
+    trackCartRecommendationsShown({
+      fromFavoritesCount:          fromFavorites.length,
+      recentlyViewedCount:         recentRecs.length,
+      completeYourCollectionCount: completeYourCollection.length,
+      totalCount:                  total,
+      renderSource:                "minicart",
+    });
+  }, [showRecommendations, fromFavorites.length, recentRecs.length, completeYourCollection.length]);
 
   const quickAddFavorite = (fragrance: DisplayFragrance) => {
     addToCart({
