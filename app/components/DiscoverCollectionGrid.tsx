@@ -18,6 +18,7 @@ type GridFragrance = {
   newArrival?: boolean;
   scentCharacter?: string;
   recReason?: string | null;
+  slug?: string;
 };
 
 interface DiscoverCollectionGridProps {
@@ -56,6 +57,7 @@ export default function DiscoverCollectionGrid({
           <ProductCard
             key={fragrance.title}
             {...fragrance}
+            slug={fragrance.slug}
             scentCharacter={fragrance.scentCharacter}
             source={source}
             rank={i + 1}
@@ -74,6 +76,7 @@ export default function DiscoverCollectionGrid({
           title={selectedFragrance.title}
           images={selectedFragrance.images}
           prices={selectedFragrance.prices}
+          source={source}
         />
       )}
     </>

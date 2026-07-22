@@ -7,6 +7,7 @@ import { createPortal } from "react-dom";
 import { useCart } from "../context/CartContext";
 import { useCartFeedback } from "../context/CartFeedbackContext";
 import { trackAddToCart } from "../lib/analytics";
+import type { AnalyticsSource } from "../lib/analytics";
 import { recordCart } from "../lib/customer/sync/CustomerProfileSync";
 
 interface QuickAddModalProps {
@@ -15,9 +16,10 @@ interface QuickAddModalProps {
   title: string;
   images?: { [key: string]: string };
   prices?: { [key: string]: number };
+  source?: AnalyticsSource;
 }
 
-export default function QuickAddModal({ open, onClose, title, images = {}, prices = {} }: QuickAddModalProps) {
+export default function QuickAddModal({ open, onClose, title, images = {}, prices = {}, source }: QuickAddModalProps) {
   const { addToCart, cartTotal: contextCartTotal, getWholesalePrice } = useCart();
   const { showFeedback } = useCartFeedback();
   const [mounted, setMounted] = useState(false);
@@ -54,9 +56,10 @@ export default function QuickAddModal({ open, onClose, title, images = {}, price
     });
     trackAddToCart({
       title,
-      size: selectedSize,
-      price: retailPrice,
-      source: "quick-add",
+      size:              selectedSize,
+      price:             retailPrice,
+      source:            "quick-add",
+      ...(source !== undefined && { recommendationSource: source }),
     });
     recordCart(title);
     showFeedback({

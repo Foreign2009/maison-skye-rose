@@ -162,6 +162,7 @@ export type CartPayload = {
   size: string;
   price: number;
   source?: "pdp" | "quick-add" | "buy-now" | "minicart";
+  recommendationSource?: AnalyticsSource;
 };
 
 export type CartOpenedPayload = {

@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useUnifiedCustomerProfile } from "../../lib/customer/hooks/useUnifiedCustomerProfile";
 import { getContextualRecommendations } from "../../lib/intelligence/ExperienceIntelligence";
 import { hasMeaningfulProfile } from "../../lib/customer/profile/profileUtils";
-import { trackExperienceIntelligenceShown } from "../../lib/analytics";
+import { trackExperienceIntelligenceShown, trackProductClick } from "../../lib/analytics";
 import { catalogueMaps } from "../../lib/discovery";
 import { toDisplayFragrance } from "../../lib/mkc/displayAdapter";
 import { KnowledgeChip } from "../knowledge/KnowledgeChip";
@@ -112,10 +112,11 @@ export function AcademyIntelligenceSection({
       </p>
 
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
-        {fragrances.map((fragrance) => (
+        {fragrances.map((fragrance, index) => (
           <Link
             key={fragrance.slug}
             href={`/product/${fragrance.slug}`}
+            onClick={() => trackProductClick({ title: fragrance.title, slug: fragrance.slug, source: "academy-intelligence", rank: index + 1 })}
             className="group block rounded-xl border border-[#e8e4e9] hover:border-[#d89ca4] transition-colors duration-200 overflow-hidden bg-white"
           >
             <div className="relative aspect-square bg-[#faf8f8]">

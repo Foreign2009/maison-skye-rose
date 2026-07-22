@@ -27,6 +27,7 @@ type ProductCardProps = {
   source?: AnalyticsSource;
   rank?: number;
   recReason?: string | null;
+  slug?: string;
 };
 
 const WARDROBE_ROLE_SHORT: Record<string, string> = {
@@ -54,6 +55,7 @@ function ProductCard({
   source,
   rank,
   recReason,
+  slug,
 }: ProductCardProps) {
   const { addToFavorites, removeFromFavorites, isFavorite } = useFavorites();
   const favorite = isFavorite(title);
@@ -77,9 +79,9 @@ function ProductCard({
   const handleProductNavigation = useCallback(() => {
     saveRecentlyViewed();
     if (source !== undefined) {
-      trackProductClick({ title, source, rank });
+      trackProductClick({ title, slug: slug ?? productSlug, source, rank });
     }
-  }, [saveRecentlyViewed, source, rank, title]);
+  }, [saveRecentlyViewed, source, rank, title, slug, productSlug]);
 
   const handleFavorite = useCallback(() => {
     if (favorite) {
@@ -125,7 +127,7 @@ function ProductCard({
 
       {/* Premium Upgrade: Compressed height on mobile to bring focus up */}
       <Link
-        href={`/product/${productSlug}`}
+        href={`/product/${slug ?? productSlug}`}
         onClick={handleProductNavigation}
         className="relative flex h-[110px] md:h-[280px] cursor-pointer items-center justify-center rounded-[24px] bg-gradient-to-br from-pink-50 to-blue-50 p-3 md:p-4"
       >
@@ -141,7 +143,7 @@ function ProductCard({
 
       <div className="mt-2 md:mt-6 flex flex-1 flex-col">
         <Link
-          href={`/product/${productSlug}`}
+          href={`/product/${slug ?? productSlug}`}
           onClick={handleProductNavigation}
         >
           <h3 className="min-h-[32px] md:min-h-[64px] text-sm md:text-2xl font-black text-[#4f4a52] leading-tight hover:text-[#d89ca4] transition-colors">
