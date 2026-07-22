@@ -10,6 +10,7 @@ import { catalogueMaps } from "../lib/discovery";
 import { toDisplayFragrance } from "../lib/mkc/displayAdapter";
 import ComparisonView from "../components/ComparisonView";
 import ComparePostDecision from "../components/ComparePostDecision";
+import CompareIntelligenceSection from "../components/CompareIntelligenceSection";
 import type {
   FragranceComparisonDTO,
   ComparisonDimensions,
@@ -213,6 +214,7 @@ export default async function ComparePage({ searchParams }: ComparePageProps) {
         fragB={purchaseB}
         relatedFragrances={relatedFragrances}
       />
+      <CompareIntelligenceSection excludeSlugs={[slugA, slugB]} />
       <Footer />
     </main>
   );
