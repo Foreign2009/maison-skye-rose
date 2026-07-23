@@ -166,7 +166,7 @@ export default async function IntelligencePage() {
   // ── Experiment status — baseline mode (EP24.1 pending) ───────────────────────
 
   const experimentStatus = {
-    frameworkImplemented: false as const,
+    frameworkImplemented: true as const,
     activeExperiments:    [] as readonly string[],
     baselineMode:         true,
   };

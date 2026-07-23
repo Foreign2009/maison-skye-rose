@@ -12,6 +12,9 @@ import {
   type QualityBand,
   type QualityMetricKey,
 } from "@/app/lib/customer/recommendations/RecommendationQuality";
+import {
+  listExperiments,
+} from "@/app/lib/customer/recommendations/RecommendationExperiments";
 
 // ── UI helpers ────────────────────────────────────────────────────────────────
 
@@ -435,6 +438,172 @@ const EVENT_SCHEMAS = [
   },
 ] as const;
 
+// ── Experiment Registry Section ───────────────────────────────────────────────
+
+const LIFECYCLE_COLORS: Record<string, string> = {
+  draft:      "bg-gray-100 text-gray-600",
+  active:     "bg-green-50 text-green-700",
+  evaluating: "bg-blue-50 text-blue-700",
+  ready:      "bg-purple-50 text-purple-700",
+  promoted:   "bg-emerald-50 text-emerald-700",
+  archived:   "bg-amber-50 text-amber-700",
+};
+
+function ExperimentRegistrySection() {
+  const experiments = listExperiments();
+  const activeCount = experiments.filter((e) => e.status === "active").length;
+  const draftCount  = experiments.filter((e) => e.status === "draft").length;
+
+  return (
+    <section>
+      <SectionLabel>Experiment Registry</SectionLabel>
+      <SectionHeading>Registered Experiments</SectionHeading>
+      <p className="mt-2 mb-5 text-sm text-[#7b7480]">
+        Canonical registry of recommendation experiments. Experiments in{" "}
+        <span className="font-semibold text-[#4f4a52]">draft</span> status are metadata only —
+        no traffic routing is active. An experiment affects recommendation behaviour only when
+        status is <span className="font-semibold text-[#4f4a52]">active</span> and routing
+        is implemented at the call site.
+      </p>
+
+      {/* Summary chips */}
+      <div className="mb-5 flex flex-wrap gap-3">
+        <div className="rounded-xl border border-gray-100 bg-white px-4 py-3 shadow-sm">
+          <p className="text-[10px] text-[#a09aa6]">Total registered</p>
+          <p className="mt-0.5 text-lg font-black text-[#4f4a52]">{experiments.length}</p>
+        </div>
+        <div className="rounded-xl border border-gray-100 bg-white px-4 py-3 shadow-sm">
+          <p className="text-[10px] text-[#a09aa6]">Active</p>
+          <p className={`mt-0.5 text-lg font-black ${activeCount > 0 ? "text-green-600" : "text-[#a09aa6]"}`}>
+            {activeCount}
+          </p>
+        </div>
+        <div className="rounded-xl border border-gray-100 bg-white px-4 py-3 shadow-sm">
+          <p className="text-[10px] text-[#a09aa6]">Draft</p>
+          <p className="mt-0.5 text-lg font-black text-[#4f4a52]">{draftCount}</p>
+        </div>
+      </div>
+
+      {/* Experiment cards */}
+      <div className="space-y-4">
+        {experiments.map((exp) => (
+          <Card key={exp.id}>
+            {/* Header */}
+            <div className="flex items-start justify-between gap-4 mb-4">
+              <div>
+                <div className="flex items-center gap-2 mb-1">
+                  <code className="text-[10px] font-mono text-[#a09aa6]">{exp.id}</code>
+                  <span
+                    className={`rounded-md px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide ${LIFECYCLE_COLORS[exp.status] ?? "bg-gray-100 text-gray-600"}`}
+                  >
+                    {exp.status}
+                  </span>
+                </div>
+                <p className="font-black uppercase tracking-tight text-[#4f4a52]">
+                  {exp.displayName}
+                </p>
+                <p className="mt-1 text-xs text-[#7b7480] leading-relaxed max-w-lg">
+                  {exp.description}
+                </p>
+              </div>
+              <div className="shrink-0 text-right text-[11px] text-[#a09aa6] space-y-0.5">
+                <p>Created {exp.createdDate}</p>
+                <p>Owner: {exp.owner}</p>
+              </div>
+            </div>
+
+            {/* Strategy comparison */}
+            <div className="mb-4 flex items-center gap-3 rounded-xl bg-gray-50 px-4 py-3">
+              <div className="flex-1">
+                <p className="text-[10px] uppercase tracking-widest text-[#a09aa6] mb-1">Baseline</p>
+                <code className="text-sm font-bold text-[#4f4a52]">{exp.baselineStrategy}</code>
+              </div>
+              <span className="text-[#d89ca4] font-bold">→</span>
+              <div className="flex-1">
+                <p className="text-[10px] uppercase tracking-widest text-[#a09aa6] mb-1">Candidate</p>
+                <code className="text-sm font-bold text-[#4f4a52]">{exp.candidateStrategy}</code>
+              </div>
+            </div>
+
+            {/* Hypothesis */}
+            <div className="mb-4">
+              <p className="text-[10px] uppercase tracking-widest text-[#a09aa6] mb-1">Hypothesis</p>
+              <p className="text-xs text-[#7b7480] leading-relaxed">{exp.hypothesis}</p>
+            </div>
+
+            {/* Success criteria */}
+            <div className="mb-4">
+              <p className="text-[10px] uppercase tracking-widest text-[#a09aa6] mb-2">
+                Success Criteria
+              </p>
+              <div className="space-y-2">
+                {exp.successCriteria.map((c, i) => (
+                  <div
+                    key={i}
+                    className="flex items-center gap-3 rounded-lg border border-gray-100 bg-white px-3 py-2"
+                  >
+                    <span
+                      className="shrink-0 rounded px-1.5 py-0.5 text-[10px] font-bold"
+                      style={{
+                        color:           QUALITY_BAND_COLORS[c.targetBand],
+                        backgroundColor: QUALITY_BAND_COLORS[c.targetBand] + "15",
+                        borderColor:     QUALITY_BAND_COLORS[c.targetBand] + "33",
+                        border:          "1px solid",
+                      }}
+                    >
+                      {c.targetBand}
+                    </span>
+                    <span className="font-mono text-[11px] text-[#7b7480]">
+                      {QUALITY_THRESHOLDS[c.metric].label}
+                    </span>
+                    <span className="font-mono text-[11px] font-bold text-[#4f4a52]">
+                      ≥ {formatRate(c.threshold)}
+                    </span>
+                    <span className="text-[11px] text-[#a09aa6]">{c.description}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Target surfaces */}
+            <div className="mb-3">
+              <p className="text-[10px] uppercase tracking-widest text-[#a09aa6] mb-2">
+                Target Surfaces
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {exp.targetSurfaces.map((s) => (
+                  <code
+                    key={s}
+                    className="rounded-lg bg-gray-50 px-3 py-1 text-[11px] font-mono text-[#7b7480]"
+                  >
+                    {s}
+                  </code>
+                ))}
+              </div>
+            </div>
+
+            {/* Notes */}
+            {exp.notes && (
+              <p className="text-[11px] text-[#a09aa6] leading-relaxed border-t border-gray-50 pt-3">
+                {exp.notes}
+              </p>
+            )}
+          </Card>
+        ))}
+      </div>
+
+      {experiments.length === 0 && (
+        <div className="rounded-2xl border border-dashed border-gray-200 bg-white px-6 py-10 text-center">
+          <p className="text-sm text-[#a09aa6]">No experiments registered yet.</p>
+          <p className="mt-1 text-xs text-[#a09aa6]">
+            Add entries to EXPERIMENT_REGISTRY in RecommendationExperiments.ts.
+          </p>
+        </div>
+      )}
+    </section>
+  );
+}
+
 // ── Quality Framework Section ─────────────────────────────────────────────────
 
 const ORDERED_METRICS: QualityMetricKey[] = [
@@ -674,7 +843,12 @@ export default function RecommendationPerformanceDashboard({ generatedAt }: Prop
 
         <hr className="border-gray-200" />
 
-        {/* ── 3 · Engine Breakdown ── */}
+        {/* ── 3 · Experiment Registry ── */}
+        <ExperimentRegistrySection />
+
+        <hr className="border-gray-200" />
+
+        {/* ── 4 · Engine Breakdown ── */}
         <section>
           <SectionLabel>Engine Breakdown</SectionLabel>
           <SectionHeading>Surfaces by Engine</SectionHeading>
