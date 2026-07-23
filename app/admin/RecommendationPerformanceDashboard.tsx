@@ -3,6 +3,15 @@
 import React, { useState } from "react";
 import Link                 from "next/link";
 import { logoutAction }     from "./actions";
+import {
+  QUALITY_THRESHOLDS,
+  QUALITY_BAND_COLORS,
+  QUALITY_BAND_DESCRIPTIONS,
+  computeCoverage,
+  formatRate,
+  type QualityBand,
+  type QualityMetricKey,
+} from "@/app/lib/customer/recommendations/RecommendationQuality";
 
 // ── UI helpers ────────────────────────────────────────────────────────────────
 
@@ -426,6 +435,146 @@ const EVENT_SCHEMAS = [
   },
 ] as const;
 
+// ── Quality Framework Section ─────────────────────────────────────────────────
+
+const ORDERED_METRICS: QualityMetricKey[] = [
+  "ctr",
+  "favouriteRate",
+  "addToCartRate",
+  "checkoutAttributionRate",
+  "coverage",
+];
+
+const BANDS: QualityBand[] = ["Excellent", "Healthy", "Needs Attention", "Critical"];
+
+function QualityFrameworkSection() {
+  const coverage = computeCoverage();
+
+  return (
+    <section>
+      <SectionLabel>Quality Framework</SectionLabel>
+      <SectionHeading>KPI Thresholds &amp; Classification</SectionHeading>
+      <p className="mt-2 mb-5 text-sm text-[#7b7480]">
+        Centralized quality bands and thresholds for every recommendation KPI.
+        All dashboards and future optimisation work reference this single source.
+        Coverage is computed from the codebase — all other KPIs require PostHog data.
+      </p>
+
+      {/* Quality band legend */}
+      <div className="mb-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
+        {BANDS.map((band) => (
+          <div
+            key={band}
+            className="rounded-2xl border border-gray-100 bg-white p-4 shadow-sm"
+          >
+            <div
+              className="mb-2 h-1.5 w-8 rounded-full"
+              style={{ backgroundColor: QUALITY_BAND_COLORS[band] }}
+            />
+            <p className="text-xs font-bold text-[#4f4a52]">{band}</p>
+            <p className="mt-1 text-[11px] text-[#a09aa6] leading-snug">
+              {QUALITY_BAND_DESCRIPTIONS[band]}
+            </p>
+          </div>
+        ))}
+      </div>
+
+      {/* Threshold table */}
+      <div className="overflow-x-auto rounded-2xl border border-gray-100 bg-white shadow-sm">
+        <table className="w-full text-xs">
+          <thead>
+            <tr className="border-b border-gray-100 bg-gray-50/60">
+              <th className="px-4 py-3 text-left text-[10px] font-bold uppercase tracking-widest text-[#7b7480]">KPI</th>
+              <th className="px-4 py-3 text-left text-[10px] font-bold uppercase tracking-widest text-[#7b7480]">Formula</th>
+              <th className="px-3 py-3 text-center text-[10px] font-bold uppercase tracking-widest" style={{ color: QUALITY_BAND_COLORS["Excellent"] }}>Excellent</th>
+              <th className="px-3 py-3 text-center text-[10px] font-bold uppercase tracking-widest" style={{ color: QUALITY_BAND_COLORS["Healthy"] }}>Healthy</th>
+              <th className="px-3 py-3 text-center text-[10px] font-bold uppercase tracking-widest" style={{ color: QUALITY_BAND_COLORS["Needs Attention"] }}>OK</th>
+              <th className="px-3 py-3 text-center text-[10px] font-bold uppercase tracking-widest" style={{ color: QUALITY_BAND_COLORS["Critical"] }}>Critical</th>
+              <th className="px-3 py-3 text-center text-[10px] font-bold uppercase tracking-widest text-[#7b7480]">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {ORDERED_METRICS.map((key) => {
+              const t      = QUALITY_THRESHOLDS[key];
+              const isLive = key === "coverage";
+              return (
+                <tr key={key} className="border-b border-gray-50 last:border-0">
+                  <td className="px-4 py-3 font-semibold text-[#4f4a52]">{t.label}</td>
+                  <td className="px-4 py-3 font-mono text-[11px] text-[#7b7480]">{t.formula}</td>
+                  <td className="px-3 py-3 text-center font-mono tabular-nums text-[#4f4a52]">≥ {formatRate(t.excellent)}</td>
+                  <td className="px-3 py-3 text-center font-mono tabular-nums text-[#4f4a52]">≥ {formatRate(t.healthy)}</td>
+                  <td className="px-3 py-3 text-center font-mono tabular-nums text-[#4f4a52]">≥ {formatRate(t.needsAttention)}</td>
+                  <td className="px-3 py-3 text-center font-mono tabular-nums text-[#4f4a52]">&lt; {formatRate(t.needsAttention)}</td>
+                  <td className="px-3 py-3 text-center">
+                    {isLive ? (
+                      <span
+                        className="rounded-lg border px-2 py-0.5 text-[10px] font-bold"
+                        style={{
+                          color:           QUALITY_BAND_COLORS[coverage.band as QualityBand],
+                          borderColor:     QUALITY_BAND_COLORS[coverage.band as QualityBand] + "33",
+                          backgroundColor: QUALITY_BAND_COLORS[coverage.band as QualityBand] + "11",
+                        }}
+                      >
+                        {formatRate(coverage.value ?? 0)} · {coverage.band}
+                      </span>
+                    ) : (
+                      <span className="text-[10px] text-[#a09aa6]">Pending PostHog</span>
+                    )}
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+
+      {/* Coverage live result */}
+      <div className="mt-4 rounded-2xl border border-gray-100 bg-white p-5 shadow-sm">
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <p className="text-[10px] uppercase tracking-[0.3em] text-[#a09aa6]">Live — computed from codebase</p>
+            <p className="mt-1 font-black uppercase tracking-tight text-[#4f4a52]">
+              Recommendation Coverage
+            </p>
+            <p className="mt-1 text-xs text-[#7b7480]">
+              {String(coverage.value !== null ? coverage.value * 20 : 0)}/20 instrumented surfaces · {QUALITY_THRESHOLDS.coverage.formula}
+            </p>
+            <p className="mt-2 text-xs text-[#a09aa6] leading-relaxed max-w-sm">
+              {QUALITY_THRESHOLDS.coverage.interpretation}
+            </p>
+          </div>
+          <div className="shrink-0 text-right">
+            <p
+              className="text-3xl font-black tabular-nums"
+              style={{ color: QUALITY_BAND_COLORS[coverage.band as QualityBand] }}
+            >
+              {formatRate(coverage.value ?? 0)}
+            </p>
+            <p
+              className="mt-1 text-xs font-bold uppercase tracking-widest"
+              style={{ color: QUALITY_BAND_COLORS[coverage.band as QualityBand] }}
+            >
+              {coverage.band}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Pending KPIs note */}
+      <div className="mt-4 rounded-2xl border border-amber-100 bg-amber-50/50 p-4">
+        <p className="text-xs font-semibold text-amber-700">
+          CTR · Favourite Rate · Add-to-Cart Rate · Checkout Attribution Rate
+        </p>
+        <p className="mt-1 text-[11px] text-amber-600">
+          These KPIs require PostHog data. Run the HogQL queries in the section below, then apply
+          the thresholds above to classify each surface. Thresholds are defined once in
+          RecommendationQuality.ts and shared across all admin dashboards.
+        </p>
+      </div>
+    </section>
+  );
+}
+
 // ── Component ─────────────────────────────────────────────────────────────────
 
 interface Props {
@@ -520,7 +669,12 @@ export default function RecommendationPerformanceDashboard({ generatedAt }: Prop
 
         <hr className="border-gray-200" />
 
-        {/* ── 2 · Engine Breakdown ── */}
+        {/* ── 2 · Quality Framework ── */}
+        <QualityFrameworkSection />
+
+        <hr className="border-gray-200" />
+
+        {/* ── 3 · Engine Breakdown ── */}
         <section>
           <SectionLabel>Engine Breakdown</SectionLabel>
           <SectionHeading>Surfaces by Engine</SectionHeading>

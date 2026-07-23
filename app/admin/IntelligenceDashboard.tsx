@@ -13,6 +13,13 @@ import type {
   CurrentBaseline,
   ExperimentLifecycleStage,
 } from "@/app/lib/customer/recommendations/ExperimentPromotion";
+import {
+  QUALITY_THRESHOLDS,
+  QUALITY_BAND_COLORS,
+  classifyBand,
+  formatRate,
+  formatThresholdRange,
+} from "@/app/lib/customer/recommendations/RecommendationQuality";
 
 // ── Shared types ──────────────────────────────────────────────────────────────
 
@@ -457,6 +464,40 @@ function RecommendationHealthSection({ data }: { data: IntelligenceData }) {
   );
 }
 
+// ── Quality cell helper ───────────────────────────────────────────────────────
+// Shows a quality band badge when a live value is available, or a threshold
+// reference when the metric is still pending analytics integration.
+
+function QualityCell({
+  value,
+  metric,
+}: {
+  value:  number | null;
+  metric: "ctr" | "favouriteRate" | "addToCartRate";
+}) {
+  if (value !== null) {
+    const band  = classifyBand(metric, value);
+    const color = QUALITY_BAND_COLORS[band];
+    return (
+      <span
+        className="inline-block rounded border px-1.5 py-0.5 font-mono text-[10px] font-bold tabular-nums"
+        style={{ color, borderColor: color + "44", backgroundColor: color + "11" }}
+      >
+        {formatRate(value)}
+      </span>
+    );
+  }
+  const t = QUALITY_THRESHOLDS[metric];
+  return (
+    <span
+      className="block text-[9px] leading-tight text-[#4f4a52]/25"
+      title={formatThresholdRange(t)}
+    >
+      —
+    </span>
+  );
+}
+
 // ── 3 · StrategyPerformanceSection ────────────────────────────────────────────
 
 function StrategyPerformanceSection({ snapshot }: { snapshot: StrategyPerformanceSnapshot }) {
@@ -514,9 +555,15 @@ function StrategyPerformanceSection({ snapshot }: { snapshot: StrategyPerformanc
                 <td className="px-3 py-3 text-right tabular-nums text-[#4f4a52]">
                   {s.avgReasonCount.toFixed(1)}
                 </td>
-                <td className="px-3 py-3 text-right text-[#4f4a52]/30">—</td>
-                <td className="px-3 py-3 text-right text-[#4f4a52]/30">—</td>
-                <td className="px-3 py-3 text-right text-[#4f4a52]/30">—</td>
+                <td className="px-3 py-3 text-right">
+                  <QualityCell value={s.clickThroughRate} metric="ctr" />
+                </td>
+                <td className="px-3 py-3 text-right">
+                  <QualityCell value={s.saveRate} metric="favouriteRate" />
+                </td>
+                <td className="px-3 py-3 text-right">
+                  <QualityCell value={s.addToCartRate} metric="addToCartRate" />
+                </td>
               </tr>
             ))}
           </tbody>
@@ -524,6 +571,8 @@ function StrategyPerformanceSection({ snapshot }: { snapshot: StrategyPerformanc
       </div>
       <p className="mt-2 text-[10px] text-[#4f4a52]/30">
         ● Active in production.&nbsp;&nbsp;○ Reserved.&nbsp;&nbsp;CTR / Save / Cart pending EP23.5 analytics integration.
+        Thresholds: CTR ≥{formatRate(QUALITY_THRESHOLDS.ctr.healthy)} Healthy · Save ≥{formatRate(QUALITY_THRESHOLDS.favouriteRate.healthy)} · Cart ≥{formatRate(QUALITY_THRESHOLDS.addToCartRate.healthy)}.
+        Quality bands defined in RecommendationQuality.ts.
       </p>
     </section>
   );
