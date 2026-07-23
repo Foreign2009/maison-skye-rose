@@ -24,6 +24,7 @@ import {
   evaluatePromotionReadiness,
   buildCurrentBaseline,
 } from "@/app/lib/customer/recommendations/ExperimentPromotion";
+import { queryRecommendationAnalytics } from "@/app/lib/analytics/recommendationAnalytics";
 
 export const metadata: Metadata = {
   title:  "Intelligence | Maison Skye & Rose",
@@ -149,14 +150,21 @@ export default async function IntelligencePage() {
     featured:    mkcCatalogue.filter((r) => r.featured).length,
   };
 
+  // ── Live analytics — PostHog query (EP29-P1) ─────────────────────────────────
+  // Null when POSTHOG_PERSONAL_API_KEY / POSTHOG_PROJECT_ID are absent or
+  // the PostHog API is unreachable. All analytics fields fall back to null.
+
+  const analyticsData = await queryRecommendationAnalytics();
+
   // ── Strategy performance snapshot ────────────────────────────────────────────
 
+  const bs = analyticsData?.byStrategy;
   const performanceSnapshot = buildPerformanceSnapshot([
-    computePerformanceSummary("personalised",  true,  personalisedResult,  personalisedData.confidences),
-    computePerformanceSummary("discovery",     true,  discoveryResult,     discoveryData.confidences),
-    computePerformanceSummary("similar",       true,  similarResult,       similarData.confidences),
-    computePerformanceSummary("complementary", true,  complementaryResult, complementaryData.confidences),
-    computePerformanceSummary("trending",      false, trendingResult,      trendingData.confidences),
+    computePerformanceSummary("personalised",  true,  personalisedResult,  personalisedData.confidences,  { analyticsSnapshot: bs?.personalised }),
+    computePerformanceSummary("discovery",     true,  discoveryResult,     discoveryData.confidences,     { analyticsSnapshot: bs?.discovery }),
+    computePerformanceSummary("similar",       true,  similarResult,       similarData.confidences,       { analyticsSnapshot: bs?.similar }),
+    computePerformanceSummary("complementary", true,  complementaryResult, complementaryData.confidences, { analyticsSnapshot: bs?.complementary }),
+    computePerformanceSummary("trending",      false, trendingResult,      trendingData.confidences,      { analyticsSnapshot: bs?.trending }),
   ]);
 
   // ── Signal calibration ───────────────────────────────────────────────────────

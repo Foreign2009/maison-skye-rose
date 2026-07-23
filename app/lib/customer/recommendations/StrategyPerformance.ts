@@ -20,30 +20,41 @@ import type { RecommendationResult }   from "./RecommendationResult";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
+// Analytics overlay — supplied by recommendationAnalytics.ts at render time.
+// All fields are optional and nullable so existing call sites remain unchanged.
+export interface StrategyAnalyticsInput {
+  readonly clickThroughRate?:        number | null;
+  readonly saveRate?:                number | null;
+  readonly addToCartRate?:           number | null;
+  readonly checkoutAttributionRate?: number | null;
+  readonly recommendationsShown?:    number | null;
+}
+
 export interface StrategyPerformanceSummary {
-  readonly strategy:             RecommendationStrategy;
-  readonly active:               boolean;
-  readonly poolSize:             number;
-  readonly filteredSize:         number;
-  readonly returnedSize:         number;
-  readonly processingTimeMs:     number;
-  readonly filterPassRate:       number;
-  readonly avgScore:             number;
-  readonly avgProfileScore:      number;
-  readonly avgCatalogScore:      number;
-  readonly avgRelationScore:     number;
-  readonly avgDiscoveryScore:    number;
-  readonly avgConfidence:        number;
-  readonly avgReasonCount:       number;
-  // Pending EP23.5 analytics integration
-  readonly recommendationsShown: number | null;
-  readonly clickThroughRate:     number | null;
-  readonly saveRate:             number | null;
-  readonly addToCartRate:        number | null;
+  readonly strategy:                RecommendationStrategy;
+  readonly active:                  boolean;
+  readonly poolSize:                number;
+  readonly filteredSize:            number;
+  readonly returnedSize:            number;
+  readonly processingTimeMs:        number;
+  readonly filterPassRate:          number;
+  readonly avgScore:                number;
+  readonly avgProfileScore:         number;
+  readonly avgCatalogScore:         number;
+  readonly avgRelationScore:        number;
+  readonly avgDiscoveryScore:       number;
+  readonly avgConfidence:           number;
+  readonly avgReasonCount:          number;
+  // Live analytics — populated by EP29-P1 via analyticsSnapshot in computePerformanceSummary opts
+  readonly recommendationsShown:    number | null;
+  readonly clickThroughRate:        number | null;
+  readonly saveRate:                number | null;
+  readonly addToCartRate:           number | null;
+  readonly checkoutAttributionRate: number | null;
   // Pending EP24.1 / EP24.2 wiring
-  readonly experimentId:         string | null;
-  readonly variantKey:           string | null;
-  readonly calibrationId:        string | null;
+  readonly experimentId:            string | null;
+  readonly variantKey:              string | null;
+  readonly calibrationId:           string | null;
 }
 
 export interface StrategyPerformanceSnapshot {
@@ -69,9 +80,10 @@ export function computePerformanceSummary(
   result:      RecommendationResult,
   confidences: readonly { score: number; reasonCount: number }[],
   opts?: {
-    experimentId?:  string;
-    variantKey?:    string;
-    calibrationId?: string;
+    experimentId?:       string;
+    variantKey?:         string;
+    calibrationId?:      string;
+    analyticsSnapshot?:  StrategyAnalyticsInput;
   },
 ): StrategyPerformanceSummary {
   const { poolSize, filteredSize, returnedSize, processingTimeMs } = result.metrics;
@@ -92,13 +104,14 @@ export function computePerformanceSummary(
     avgDiscoveryScore:     round3(avg(recs.map((r) => r.score.discovery))),
     avgConfidence:         round3(avg(confidences.map((c) => c.score))),
     avgReasonCount:        round3(avg(confidences.map((c) => c.reasonCount))),
-    recommendationsShown:  null,
-    clickThroughRate:      null,
-    saveRate:              null,
-    addToCartRate:         null,
-    experimentId:          opts?.experimentId  ?? null,
-    variantKey:            opts?.variantKey    ?? null,
-    calibrationId:         opts?.calibrationId ?? null,
+    recommendationsShown:    opts?.analyticsSnapshot?.recommendationsShown    ?? null,
+    clickThroughRate:        opts?.analyticsSnapshot?.clickThroughRate        ?? null,
+    saveRate:                opts?.analyticsSnapshot?.saveRate                ?? null,
+    addToCartRate:           opts?.analyticsSnapshot?.addToCartRate           ?? null,
+    checkoutAttributionRate: opts?.analyticsSnapshot?.checkoutAttributionRate ?? null,
+    experimentId:            opts?.experimentId  ?? null,
+    variantKey:              opts?.variantKey    ?? null,
+    calibrationId:           opts?.calibrationId ?? null,
   };
 }
 
