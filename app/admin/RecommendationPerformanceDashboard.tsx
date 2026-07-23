@@ -15,6 +15,12 @@ import {
 import {
   listExperiments,
 } from "@/app/lib/customer/recommendations/RecommendationExperiments";
+import {
+  listBenchmarks,
+  type BenchmarkComparison,
+  type BenchmarkReadinessState,
+  type BenchmarkVerdict,
+} from "@/app/lib/customer/recommendations/RecommendationBenchmark";
 
 // ── UI helpers ────────────────────────────────────────────────────────────────
 
@@ -744,6 +750,197 @@ function QualityFrameworkSection() {
   );
 }
 
+// ── Strategy Benchmarks ───────────────────────────────────────────────────────
+
+const READINESS_STYLES: Record<BenchmarkReadinessState, string> = {
+  "not-ready":          "bg-gray-100    text-gray-600    border-gray-200",
+  "awaiting-analytics": "bg-amber-50   text-amber-700   border-amber-100",
+  "ready-to-evaluate":  "bg-blue-50    text-blue-700    border-blue-100",
+  "completed":          "bg-green-50   text-green-700   border-green-100",
+};
+
+const READINESS_LABELS: Record<BenchmarkReadinessState, string> = {
+  "not-ready":          "Not Ready",
+  "awaiting-analytics": "Awaiting Analytics",
+  "ready-to-evaluate":  "Ready to Evaluate",
+  "completed":          "Completed",
+};
+
+const VERDICT_STYLES: Record<BenchmarkVerdict, string> = {
+  "pending":        "bg-gray-100  text-gray-500",
+  "candidate-wins": "bg-green-50  text-green-700",
+  "baseline-wins":  "bg-amber-50  text-amber-700",
+  "inconclusive":   "bg-purple-50 text-purple-700",
+};
+
+const VERDICT_LABELS: Record<BenchmarkVerdict, string> = {
+  "pending":        "Pending",
+  "candidate-wins": "Candidate Wins",
+  "baseline-wins":  "Baseline Wins",
+  "inconclusive":   "Inconclusive",
+};
+
+function BenchmarkCard({ benchmark }: { benchmark: BenchmarkComparison }) {
+  const { readiness, result, kpiComparisons } = benchmark;
+  return (
+    <Card>
+      {/* Header */}
+      <div className="mb-4 flex flex-wrap items-start justify-between gap-3">
+        <div>
+          <p className="font-black text-[#4f4a52]">{benchmark.displayName}</p>
+          <p className="mt-0.5 font-mono text-[11px] text-[#a09aa6]">{benchmark.experimentId}</p>
+        </div>
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="rounded-full border bg-gray-50 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-widest text-[#7b7480]">
+            {benchmark.lifecycleStatus}
+          </span>
+          <span
+            className={`rounded-full border px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-widest ${READINESS_STYLES[readiness.state]}`}
+          >
+            {READINESS_LABELS[readiness.state]}
+          </span>
+        </div>
+      </div>
+
+      {/* Strategy comparison */}
+      <div className="mb-4 flex items-center gap-2 text-sm">
+        <span className="rounded-lg bg-gray-50 px-2.5 py-1 font-mono text-[11px] text-[#7b7480]">
+          {benchmark.baselineStrategy}
+        </span>
+        <span className="text-[#a09aa6]">→</span>
+        <span className="rounded-lg bg-[#f9f0f2] px-2.5 py-1 font-mono text-[11px] text-[#d89ca4]">
+          {benchmark.candidateStrategy}
+        </span>
+        <span className="ml-1 text-xs text-[#a09aa6]">
+          on {benchmark.targetSurfaces.join(", ")}
+        </span>
+      </div>
+
+      {/* Readiness */}
+      <div className="mb-4 rounded-xl border border-gray-100 bg-gray-50/60 p-3.5">
+        <p className="mb-1 text-[10px] font-bold uppercase tracking-widest text-[#a09aa6]">Readiness</p>
+        <p className="text-sm text-[#4f4a52]">{readiness.reason}</p>
+        {readiness.blockers.length > 0 && (
+          <ul className="mt-2 space-y-1">
+            {readiness.blockers.map((b, i) => (
+              <li key={i} className="flex items-start gap-1.5 text-xs text-[#7b7480]">
+                <span className="mt-px text-amber-400">▲</span>
+                {b}
+              </li>
+            ))}
+          </ul>
+        )}
+        <p className="mt-2 text-[11px] text-[#a09aa6]">
+          <span className="font-semibold">Next step:</span> {readiness.nextStep}
+        </p>
+      </div>
+
+      {/* Methodology */}
+      <p className="mb-4 text-[11px] text-[#a09aa6]">
+        <span className="font-semibold text-[#7b7480]">Methodology:</span>{" "}
+        {benchmark.methodology}
+      </p>
+
+      {/* KPI comparison table */}
+      <div className="overflow-x-auto rounded-xl border border-gray-100">
+        <table className="w-full text-sm">
+          <thead>
+            <tr className="border-b border-gray-100 bg-gray-50/60">
+              <th className="px-3 py-2.5 text-left text-[10px] font-bold uppercase tracking-widest text-[#7b7480]">Metric</th>
+              <th className="px-3 py-2.5 text-left text-[10px] font-bold uppercase tracking-widest text-[#7b7480]">Target</th>
+              <th className="px-3 py-2.5 text-center text-[10px] font-bold uppercase tracking-widest text-[#7b7480]">Baseline</th>
+              <th className="px-3 py-2.5 text-center text-[10px] font-bold uppercase tracking-widest text-[#7b7480]">Candidate</th>
+              <th className="hidden px-3 py-2.5 text-center text-[10px] font-bold uppercase tracking-widest text-[#7b7480] md:table-cell">Δ</th>
+              <th className="px-3 py-2.5 text-center text-[10px] font-bold uppercase tracking-widest text-[#7b7480]">Verdict</th>
+            </tr>
+          </thead>
+          <tbody>
+            {kpiComparisons.map((kpi) => (
+              <tr key={kpi.metric} className="border-b border-gray-50 last:border-0">
+                <td className="px-3 py-2.5">
+                  <p className="font-semibold text-[#4f4a52] text-xs">{kpi.label}</p>
+                  <p className="text-[10px] text-[#a09aa6]">{kpi.formula}</p>
+                </td>
+                <td className="px-3 py-2.5">
+                  <span className="font-mono text-xs text-[#7b7480]">
+                    ≥ {formatRate(kpi.threshold)}
+                  </span>
+                  <span className="ml-1 text-[10px] text-[#a09aa6]">({kpi.targetBand})</span>
+                </td>
+                <td className="px-3 py-2.5 text-center font-mono text-xs text-[#a09aa6]">
+                  {kpi.baselineValue !== null ? formatRate(kpi.baselineValue) : "—"}
+                </td>
+                <td className="px-3 py-2.5 text-center font-mono text-xs text-[#a09aa6]">
+                  {kpi.candidateValue !== null ? formatRate(kpi.candidateValue) : "—"}
+                </td>
+                <td className="hidden px-3 py-2.5 text-center font-mono text-xs text-[#a09aa6] md:table-cell">
+                  {kpi.delta !== null
+                    ? `${kpi.delta >= 0 ? "+" : ""}${formatRate(kpi.delta)}`
+                    : "—"}
+                </td>
+                <td className="px-3 py-2.5 text-center">
+                  <span
+                    className={`rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest ${VERDICT_STYLES[kpi.verdict]}`}
+                  >
+                    {VERDICT_LABELS[kpi.verdict]}
+                  </span>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {/* Overall result */}
+      <div className="mt-3 flex items-center justify-between gap-3">
+        <p className="text-[11px] text-[#a09aa6]">{result.recommendation}</p>
+        <span
+          className={`shrink-0 rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest ${VERDICT_STYLES[result.overallVerdict]}`}
+        >
+          {VERDICT_LABELS[result.overallVerdict]}
+        </span>
+      </div>
+    </Card>
+  );
+}
+
+function StrategyBenchmarkSection() {
+  const benchmarks = listBenchmarks();
+  const readyCount = benchmarks.filter((b) => b.readiness.state === "ready-to-evaluate").length;
+
+  return (
+    <section>
+      <SectionLabel>Benchmark Framework</SectionLabel>
+      <SectionHeading>Strategy Benchmarks</SectionHeading>
+      <p className="mt-2 mb-4 text-sm text-[#7b7480]">
+        Each registered experiment defines baseline and candidate strategies with explicit
+        success criteria drawn from the Quality Framework. Benchmark results are computed
+        from live analytics supplied via PostHog HogQL queries — no values are fabricated.
+        When analytics are unavailable the benchmark reports "Pending" for all KPI comparisons.
+      </p>
+
+      {/* Summary chips */}
+      <div className="mb-5 flex flex-wrap gap-2">
+        <span className="rounded-full border border-gray-100 bg-white px-3 py-1 text-[11px] font-semibold text-[#4f4a52] shadow-sm">
+          {benchmarks.length} benchmark{benchmarks.length !== 1 ? "s" : ""} registered
+        </span>
+        <span className="rounded-full border border-gray-100 bg-white px-3 py-1 text-[11px] font-semibold text-[#4f4a52] shadow-sm">
+          {readyCount} ready to evaluate
+        </span>
+        <span className="rounded-full border border-gray-100 bg-white px-3 py-1 text-[11px] font-semibold text-[#4f4a52] shadow-sm">
+          Analytics pending · EP23.5
+        </span>
+      </div>
+
+      <div className="space-y-4">
+        {benchmarks.map((b) => (
+          <BenchmarkCard key={b.experimentId} benchmark={b} />
+        ))}
+      </div>
+    </section>
+  );
+}
+
 // ── Component ─────────────────────────────────────────────────────────────────
 
 interface Props {
@@ -848,7 +1045,12 @@ export default function RecommendationPerformanceDashboard({ generatedAt }: Prop
 
         <hr className="border-gray-200" />
 
-        {/* ── 4 · Engine Breakdown ── */}
+        {/* ── 4 · Strategy Benchmarks ── */}
+        <StrategyBenchmarkSection />
+
+        <hr className="border-gray-200" />
+
+        {/* ── 5 · Engine Breakdown ── */}
         <section>
           <SectionLabel>Engine Breakdown</SectionLabel>
           <SectionHeading>Surfaces by Engine</SectionHeading>
