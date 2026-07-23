@@ -21,6 +21,11 @@ import {
   type BenchmarkReadinessState,
   type BenchmarkVerdict,
 } from "@/app/lib/customer/recommendations/RecommendationBenchmark";
+import {
+  evaluateOptimisationReadiness,
+  type OptimisationReadinessLevel,
+  type OptimisationDimensionStatus,
+} from "@/app/lib/customer/recommendations/RecommendationOptimisationReadiness";
 
 // ── UI helpers ────────────────────────────────────────────────────────────────
 
@@ -750,6 +755,189 @@ function QualityFrameworkSection() {
   );
 }
 
+// ── Optimisation Readiness ────────────────────────────────────────────────────
+
+const READINESS_LEVEL_STYLES: Record<OptimisationReadinessLevel, string> = {
+  "not-ready":                          "bg-red-50    text-red-700    border-red-200",
+  "partially-ready":                    "bg-amber-50  text-amber-700  border-amber-200",
+  "ready-for-controlled-optimisation":  "bg-blue-50   text-blue-700   border-blue-200",
+  "ready-for-production-optimisation":  "bg-green-50  text-green-700  border-green-200",
+};
+
+const READINESS_LEVEL_LABELS: Record<OptimisationReadinessLevel, string> = {
+  "not-ready":                          "Not Ready",
+  "partially-ready":                    "Partially Ready",
+  "ready-for-controlled-optimisation":  "Ready for Controlled Optimisation",
+  "ready-for-production-optimisation":  "Ready for Production Optimisation",
+};
+
+const DIMENSION_STATUS_STYLES: Record<OptimisationDimensionStatus, string> = {
+  "complete":          "bg-green-50  text-green-700  border-green-100",
+  "partially-ready":   "bg-amber-50  text-amber-700  border-amber-100",
+  "pending":           "bg-gray-100  text-gray-500   border-gray-200",
+  "not-ready":         "bg-red-50    text-red-700    border-red-100",
+};
+
+const DIMENSION_STATUS_LABELS: Record<OptimisationDimensionStatus, string> = {
+  "complete":          "Complete",
+  "partially-ready":   "Partially Ready",
+  "pending":           "Pending",
+  "not-ready":         "Not Ready",
+};
+
+const CHECK_STATUS_STYLES = {
+  pass:    "text-green-500",
+  fail:    "text-red-500",
+  pending: "text-amber-400",
+} as const;
+
+const CHECK_STATUS_SYMBOLS = {
+  pass:    "✓",
+  fail:    "✕",
+  pending: "◌",
+} as const;
+
+function OptimisationReadinessSection() {
+  const report = evaluateOptimisationReadiness();
+  const { overallLevel, overallSummary, dimensions, blockingIssues, completedFoundations, recommendedNextProgram } = report;
+  const completeCount = dimensions.filter((d) => d.status === "complete").length;
+
+  return (
+    <section>
+      <SectionLabel>Certification</SectionLabel>
+      <SectionHeading>Optimisation Readiness</SectionHeading>
+      <p className="mt-2 mb-5 text-sm text-[#7b7480]">
+        Repository-derived readiness assessment across all recommendation optimisation dimensions.
+        No runtime analytics are queried. All verdicts derive from module exports and repository state.
+      </p>
+
+      {/* Overall level */}
+      <Card className="mb-5">
+        <div className="flex flex-wrap items-start justify-between gap-4">
+          <div className="flex-1 min-w-0">
+            <p className="text-[10px] uppercase tracking-[0.4em] text-[#a09aa6] mb-1">Overall Readiness</p>
+            <span
+              className={`inline-flex items-center rounded-xl border px-3 py-1.5 text-sm font-bold ${READINESS_LEVEL_STYLES[overallLevel]}`}
+            >
+              {READINESS_LEVEL_LABELS[overallLevel]}
+            </span>
+            <p className="mt-3 text-sm text-[#4f4a52] leading-relaxed">{overallSummary}</p>
+          </div>
+          <div className="flex flex-col items-end gap-2 shrink-0">
+            <span className="rounded-full border border-gray-100 bg-white px-3 py-1 text-[11px] font-semibold text-[#4f4a52] shadow-sm">
+              {completeCount}/{dimensions.length} dimensions complete
+            </span>
+            <span className="rounded-full border border-gray-100 bg-white px-3 py-1 text-[11px] font-semibold text-[#4f4a52] shadow-sm">
+              {blockingIssues.length} blocking issue{blockingIssues.length !== 1 ? "s" : ""}
+            </span>
+          </div>
+        </div>
+      </Card>
+
+      {/* Dimensions table */}
+      <div className="overflow-x-auto rounded-2xl border border-gray-100 bg-white shadow-sm mb-5">
+        <table className="w-full text-sm">
+          <thead>
+            <tr className="border-b border-gray-100 bg-gray-50/60">
+              <th className="px-4 py-3 text-left text-[10px] font-bold uppercase tracking-widest text-[#7b7480]">Dimension</th>
+              <th className="px-4 py-3 text-left text-[10px] font-bold uppercase tracking-widest text-[#7b7480]">Status</th>
+              <th className="hidden px-4 py-3 text-left text-[10px] font-bold uppercase tracking-widest text-[#7b7480] md:table-cell">Summary</th>
+              <th className="hidden px-4 py-3 text-left text-[10px] font-bold uppercase tracking-widest text-[#7b7480] lg:table-cell">Next Step</th>
+            </tr>
+          </thead>
+          <tbody>
+            {dimensions.map((dim) => (
+              <tr key={dim.key} className="border-b border-gray-50 last:border-0">
+                <td className="px-4 py-3 font-semibold text-[#4f4a52] whitespace-nowrap">{dim.label}</td>
+                <td className="px-4 py-3">
+                  <span
+                    className={`rounded-full border px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-widest whitespace-nowrap ${DIMENSION_STATUS_STYLES[dim.status]}`}
+                  >
+                    {DIMENSION_STATUS_LABELS[dim.status]}
+                  </span>
+                </td>
+                <td className="hidden px-4 py-3 text-xs text-[#7b7480] md:table-cell">{dim.summary}</td>
+                <td className="hidden px-4 py-3 text-xs text-[#a09aa6] lg:table-cell">{dim.recommendedNextStep}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <div className="grid gap-4 md:grid-cols-2 mb-5">
+        {/* Completed foundations */}
+        <Card>
+          <p className="mb-3 text-[10px] font-bold uppercase tracking-widest text-[#a09aa6]">
+            Completed Foundations
+          </p>
+          <ul className="space-y-1.5">
+            {completedFoundations.map((f) => (
+              <li key={f} className="flex items-center gap-2 text-sm text-[#4f4a52]">
+                <span className="text-green-500 font-bold">✓</span>
+                {f}
+              </li>
+            ))}
+          </ul>
+        </Card>
+
+        {/* Blocking issues */}
+        <Card>
+          <p className="mb-3 text-[10px] font-bold uppercase tracking-widest text-[#a09aa6]">
+            Blocking Issues {blockingIssues.length === 0 && <span className="ml-1 text-green-500">None</span>}
+          </p>
+          {blockingIssues.length === 0 ? (
+            <p className="text-sm text-[#a09aa6]">No blocking issues. All architectural foundations are in place.</p>
+          ) : (
+            <ul className="space-y-1.5">
+              {blockingIssues.map((issue, i) => (
+                <li key={i} className="flex items-start gap-2 text-sm text-[#7b7480]">
+                  <span className="mt-px text-red-500 font-bold shrink-0">✕</span>
+                  {issue}
+                </li>
+              ))}
+            </ul>
+          )}
+        </Card>
+      </div>
+
+      {/* Check detail — collapsed by default to keep the section scannable */}
+      <div className="mb-5 space-y-3">
+        {dimensions.filter((d) => d.status !== "complete").map((dim) => (
+          <Card key={dim.key}>
+            <div className="flex items-center justify-between gap-3 mb-3">
+              <p className="font-semibold text-[#4f4a52]">{dim.label}</p>
+              <span className={`rounded-full border px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-widest ${DIMENSION_STATUS_STYLES[dim.status]}`}>
+                {DIMENSION_STATUS_LABELS[dim.status]}
+              </span>
+            </div>
+            <div className="space-y-1.5">
+              {dim.checks.map((check) => (
+                <div key={check.id} className="flex items-start gap-2.5">
+                  <span className={`mt-0.5 text-xs font-bold shrink-0 ${CHECK_STATUS_STYLES[check.status]}`}>
+                    {CHECK_STATUS_SYMBOLS[check.status]}
+                  </span>
+                  <div className="min-w-0">
+                    <p className="text-xs text-[#4f4a52]">{check.description}</p>
+                    <p className="text-[10px] text-[#a09aa6] mt-0.5">{check.evidence}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </Card>
+        ))}
+      </div>
+
+      {/* Recommended next program */}
+      <div className="rounded-2xl border border-blue-100 bg-blue-50/60 p-4">
+        <p className="text-[10px] font-bold uppercase tracking-widest text-blue-500 mb-1.5">
+          Recommended Next Engineering Program
+        </p>
+        <p className="text-sm text-[#4f4a52]">{recommendedNextProgram}</p>
+      </div>
+    </section>
+  );
+}
+
 // ── Strategy Benchmarks ───────────────────────────────────────────────────────
 
 const READINESS_STYLES: Record<BenchmarkReadinessState, string> = {
@@ -998,6 +1186,11 @@ export default function RecommendationPerformanceDashboard({ generatedAt }: Prop
           </p>
           <p className="mt-1.5 text-[11px] text-[#a09aa6]">Generated {ts}</p>
         </section>
+
+        <hr className="border-gray-200" />
+
+        {/* ── 0 · Optimisation Readiness ── */}
+        <OptimisationReadinessSection />
 
         <hr className="border-gray-200" />
 
