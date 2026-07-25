@@ -471,6 +471,9 @@ export default function CustomerIntelligenceDashboard({ behaviourReport, journey
               Performance
             </Link>
             <span className="text-xs font-bold text-white">Customer Intelligence</span>
+            <Link href="/admin/commerce-intelligence" className="text-xs text-white/60 transition hover:text-white">
+              Commerce Intelligence
+            </Link>
           </nav>
         </div>
         <form action={logoutAction}>
