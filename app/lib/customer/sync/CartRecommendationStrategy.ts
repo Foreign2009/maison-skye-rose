@@ -26,6 +26,7 @@ import { catalogueMaps }      from "../../discovery";
 import { toDisplayFragrance } from "../../mkc/displayAdapter";
 import { recommend }          from "../recommendations/RecommendationEngine";
 import { createContext }      from "../recommendations/RecommendationContext";
+import { resolveRecommendationStrategy } from "../recommendations/RecommendationStrategyResolver";
 import { createProfileMetadata } from "../profile/ProfileMetadata";
 import type { DisplayFragrance }       from "../../knowledgeAdapter";
 import type { UnifiedCustomerProfile } from "../profile/UnifiedCustomerProfile";
@@ -113,8 +114,11 @@ function resolveComplementary(
   if (!pivotSlug) return [];
 
   try {
+    const strategy = resolveRecommendationStrategy("complementary", {
+      surfaceId: "minicart-complete-collection",
+    }).strategy;
     const result = recommend(
-      createContext(anonymousProfile(), "complementary", {
+      createContext(anonymousProfile(), strategy, {
         limit,
         currentSlug:  pivotSlug,
         excludeSlugs: cartSlugs,

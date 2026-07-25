@@ -14,6 +14,7 @@ import {
 } from "@/app/lib/customer/recommendations/RecommendationQuality";
 import {
   listExperiments,
+  listActiveExperiments,
 } from "@/app/lib/customer/recommendations/RecommendationExperiments";
 import {
   listBenchmarks,
@@ -1129,6 +1130,144 @@ function StrategyBenchmarkSection() {
   );
 }
 
+// ── Strategy Resolution Section ───────────────────────────────────────────────
+
+const RESOLUTION_RULES = [
+  { surface: "product (PDP)",                           defaultStrategy: "similar",        note: "Always similar — product context" },
+  { surface: "compare",                                 defaultStrategy: "complementary",  note: "Always complementary — wardrobe pairing" },
+  { surface: "discover",                                defaultStrategy: "discovery",      note: "Always discovery — exploration context" },
+  { surface: "concierge (currentSlug present)",         defaultStrategy: "similar",        note: "Slug provided — similarity context" },
+  { surface: "concierge (no slug, with profile)",       defaultStrategy: "personalised",   note: "Profile signals present" },
+  { surface: "concierge (no slug, cold-start)",         defaultStrategy: "discovery",      note: "No signals — exploration fallback" },
+  { surface: "homepage / shop / collections (profile)", defaultStrategy: "personalised",   note: "Profile signals present" },
+  { surface: "homepage / shop / collections (cold)",    defaultStrategy: "discovery",      note: "No signals — exploration fallback" },
+  { surface: "minicart-complete-collection",            defaultStrategy: "complementary",  note: "Cart context — wardrobe completion" },
+];
+
+function StrategyResolutionSection() {
+  const activeExperiments = listActiveExperiments();
+  const activeCount = activeExperiments.length;
+  const isBaseline  = activeCount === 0;
+
+  return (
+    <section>
+      <SectionLabel>Experiment Execution</SectionLabel>
+      <SectionHeading>Strategy Resolution</SectionHeading>
+      <p className="mt-2 mb-5 text-sm text-[#7b7480]">
+        All production strategy selection passes through{" "}
+        <code className="rounded bg-gray-100 px-1 font-mono text-[11px] text-[#4f4a52]">
+          resolveRecommendationStrategy()
+        </code>.
+        The resolver consults the experiment registry on every call and returns the candidate
+        strategy when an active experiment overrides the surface&apos;s default. In baseline mode
+        (no active experiments) the resolver is transparent — every call returns the default
+        strategy unchanged and behaviour is identical to direct assignment.
+      </p>
+
+      {/* Status */}
+      <div className="mb-5 flex flex-wrap gap-3">
+        <div className="rounded-xl border border-gray-100 bg-white px-4 py-3 shadow-sm">
+          <p className="text-[10px] text-[#a09aa6]">Resolver</p>
+          <p className="mt-0.5 text-sm font-black text-green-600">Implemented ✓</p>
+        </div>
+        <div className="rounded-xl border border-gray-100 bg-white px-4 py-3 shadow-sm">
+          <p className="text-[10px] text-[#a09aa6]">Mode</p>
+          <p className={`mt-0.5 text-sm font-black ${isBaseline ? "text-[#4f4a52]" : "text-green-600"}`}>
+            {isBaseline ? "Baseline" : "Experiment Active"}
+          </p>
+        </div>
+        <div className="rounded-xl border border-gray-100 bg-white px-4 py-3 shadow-sm">
+          <p className="text-[10px] text-[#a09aa6]">Active experiments</p>
+          <p className={`mt-0.5 text-sm font-black ${activeCount > 0 ? "text-green-600" : "text-[#a09aa6]"}`}>
+            {activeCount}
+          </p>
+        </div>
+        <div className="rounded-xl border border-gray-100 bg-white px-4 py-3 shadow-sm">
+          <p className="text-[10px] text-[#a09aa6]">Production call sites</p>
+          <p className="mt-0.5 text-sm font-black text-[#4f4a52]">2</p>
+        </div>
+      </div>
+
+      {/* Call sites */}
+      <Card className="mb-5">
+        <p className="mb-3 text-[10px] font-bold uppercase tracking-widest text-[#a09aa6]">
+          Registered Call Sites
+        </p>
+        <div className="space-y-2">
+          {[
+            {
+              file: "ExperienceIntelligence.ts",
+              fn:   "resolveStrategy()",
+              note: "All customer-facing EI surfaces — shop, PDP, discover, homepage, concierge, and more",
+            },
+            {
+              file: "CartRecommendationStrategy.ts",
+              fn:   "resolveComplementary()",
+              note: "MiniCart — Complete Your Collection (surface: minicart-complete-collection)",
+            },
+          ].map((site) => (
+            <div key={site.file} className="rounded-xl border border-gray-100 bg-gray-50/60 px-4 py-3">
+              <div className="mb-1 flex flex-wrap items-center gap-2">
+                <code className="text-xs font-bold text-[#4f4a52]">{site.file}</code>
+                <code className="text-[11px] text-[#d89ca4]">{site.fn}</code>
+              </div>
+              <p className="text-[11px] text-[#a09aa6]">{site.note}</p>
+            </div>
+          ))}
+        </div>
+      </Card>
+
+      {/* Default strategy rules */}
+      <div className="mb-5 overflow-x-auto rounded-2xl border border-gray-100 bg-white shadow-sm">
+        <table className="w-full text-xs">
+          <thead>
+            <tr className="border-b border-gray-100 bg-gray-50/60">
+              <th className="px-4 py-3 text-left text-[10px] font-bold uppercase tracking-widest text-[#7b7480]">
+                Surface / Experience
+              </th>
+              <th className="px-4 py-3 text-left text-[10px] font-bold uppercase tracking-widest text-[#7b7480]">
+                Default Strategy
+              </th>
+              <th className="hidden px-4 py-3 text-left text-[10px] font-bold uppercase tracking-widest text-[#7b7480] md:table-cell">
+                Rule
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {RESOLUTION_RULES.map((rule) => (
+              <tr key={rule.surface} className="border-b border-gray-50 last:border-0">
+                <td className="px-4 py-2.5 font-mono text-[11px] text-[#7b7480]">{rule.surface}</td>
+                <td className="px-4 py-2.5">
+                  <code className="rounded-lg bg-gray-50 px-2 py-0.5 text-[11px] font-bold text-[#4f4a52]">
+                    {rule.defaultStrategy}
+                  </code>
+                </td>
+                <td className="hidden px-4 py-2.5 text-[11px] text-[#a09aa6] md:table-cell">
+                  {rule.note}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {/* Activation instructions */}
+      <div className="rounded-2xl border border-blue-100 bg-blue-50/60 p-4">
+        <p className="mb-1.5 text-[10px] font-bold uppercase tracking-widest text-blue-500">
+          How to Activate an Experiment
+        </p>
+        <p className="text-sm text-[#4f4a52]">
+          Set <code className="rounded bg-blue-100 px-1 font-mono text-xs">status: &quot;active&quot;</code> on
+          a registered experiment in{" "}
+          <code className="font-mono text-xs">RecommendationExperiments.ts</code>. The resolver
+          automatically routes the experiment&apos;s target surfaces to the candidate strategy on the
+          next deploy — no call-site changes are required.
+        </p>
+      </div>
+    </section>
+  );
+}
+
 // ── Component ─────────────────────────────────────────────────────────────────
 
 interface Props {
@@ -1243,7 +1382,12 @@ export default function RecommendationPerformanceDashboard({ generatedAt }: Prop
 
         <hr className="border-gray-200" />
 
-        {/* ── 5 · Engine Breakdown ── */}
+        {/* ── 5 · Strategy Resolution ── */}
+        <StrategyResolutionSection />
+
+        <hr className="border-gray-200" />
+
+        {/* ── 6 · Engine Breakdown ── */}
         <section>
           <SectionLabel>Engine Breakdown</SectionLabel>
           <SectionHeading>Surfaces by Engine</SectionHeading>

@@ -43,6 +43,7 @@ import {
   type PageType,
   type RecommendationDisplayContext,
 } from "../adaptive/buildRecommendationContext";
+import { resolveRecommendationStrategy } from "../customer/recommendations/RecommendationStrategyResolver";
 
 // ── Experience context ────────────────────────────────────────────────────────
 
@@ -88,16 +89,19 @@ function resolveStrategy(
   profile:    UnifiedCustomerProfile,
   options:    ExperienceOptions,
 ): RecommendationStrategy {
+  let defaultStrategy: RecommendationStrategy;
   switch (experience) {
-    case "product":   return "similar";
-    case "compare":   return "complementary";
-    case "discover":  return "discovery";
-    case "concierge": return options.currentSlug
+    case "product":   defaultStrategy = "similar"; break;
+    case "compare":   defaultStrategy = "complementary"; break;
+    case "discover":  defaultStrategy = "discovery"; break;
+    case "concierge": defaultStrategy = options.currentSlug
       ? "similar"
       : hasMeaningfulProfile(profile) ? "personalised" : "discovery";
+      break;
     default:
-      return hasMeaningfulProfile(profile) ? "personalised" : "discovery";
+      defaultStrategy = hasMeaningfulProfile(profile) ? "personalised" : "discovery";
   }
+  return resolveRecommendationStrategy(defaultStrategy).strategy;
 }
 
 // ── Page type mapping ─────────────────────────────────────────────────────────
