@@ -3,6 +3,9 @@ import { cookies }       from "next/headers";
 import { createHash }    from "crypto";
 import { redirect }      from "next/navigation";
 import RecommendationPerformanceDashboard from "@/app/admin/RecommendationPerformanceDashboard";
+import { queryRecommendationAnalytics }   from "@/app/lib/analytics/recommendationAnalytics";
+import { buildSignalCalibrationReport }   from "@/app/lib/customer/signals/SignalCalibration";
+import { buildRecommendationInsights }    from "@/app/lib/customer/recommendations/RecommendationInsights";
 
 export const metadata: Metadata = {
   title:  "Recommendation Performance | Maison Skye & Rose",
@@ -21,5 +24,14 @@ export default async function RecommendationPerformancePage() {
   const isAuth      = !!session && session === computeSessionToken();
   if (!isAuth) redirect("/admin");
 
-  return <RecommendationPerformanceDashboard generatedAt={new Date().toISOString()} />;
+  const analytics    = await queryRecommendationAnalytics();
+  const signals      = buildSignalCalibrationReport();
+  const insightReport = buildRecommendationInsights(analytics, signals);
+
+  return (
+    <RecommendationPerformanceDashboard
+      generatedAt={new Date().toISOString()}
+      insightReport={insightReport}
+    />
+  );
 }

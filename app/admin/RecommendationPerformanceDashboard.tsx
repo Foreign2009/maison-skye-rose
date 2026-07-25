@@ -27,6 +27,16 @@ import {
   type OptimisationReadinessLevel,
   type OptimisationDimensionStatus,
 } from "@/app/lib/customer/recommendations/RecommendationOptimisationReadiness";
+import type {
+  RecommendationInsightReport,
+  StrategyInsight,
+  OpportunityAlert,
+  OperationalRecommendation,
+  InsightStatus,
+  AlertSeverity,
+  GuidancePriority,
+  HealthStatus,
+} from "@/app/lib/customer/recommendations/RecommendationInsights";
 
 // ── UI helpers ────────────────────────────────────────────────────────────────
 
@@ -1268,13 +1278,343 @@ function StrategyResolutionSection() {
   );
 }
 
+// ── Insight Sections ──────────────────────────────────────────────────────────
+
+const HEALTH_STATUS_STYLES: Record<HealthStatus, string> = {
+  "excellent":              "bg-green-50  text-green-700  border-green-200",
+  "healthy":                "bg-blue-50   text-blue-700   border-blue-200",
+  "needs-attention":        "bg-amber-50  text-amber-700  border-amber-200",
+  "critical":               "bg-red-50    text-red-700    border-red-200",
+  "insufficient-evidence":  "bg-gray-100  text-gray-600   border-gray-200",
+};
+
+const HEALTH_STATUS_LABELS: Record<HealthStatus, string> = {
+  "excellent":             "Excellent",
+  "healthy":               "Healthy",
+  "needs-attention":       "Needs Attention",
+  "critical":              "Critical",
+  "insufficient-evidence": "Awaiting Evidence",
+};
+
+const INSIGHT_STATUS_STYLES: Record<InsightStatus, string> = {
+  "strongest":             "bg-green-50  text-green-700  border-green-100",
+  "healthy":               "bg-blue-50   text-blue-700   border-blue-100",
+  "needs-attention":       "bg-amber-50  text-amber-700  border-amber-100",
+  "weakest":               "bg-red-50    text-red-700    border-red-100",
+  "insufficient-evidence": "bg-gray-100  text-gray-500   border-gray-200",
+};
+
+const INSIGHT_STATUS_LABELS: Record<InsightStatus, string> = {
+  "strongest":             "Top Performer",
+  "healthy":               "Healthy",
+  "needs-attention":       "Needs Attention",
+  "weakest":               "Lowest Engagement",
+  "insufficient-evidence": "Awaiting Data",
+};
+
+const SEVERITY_STYLES: Record<AlertSeverity, string> = {
+  "high":   "bg-red-50    text-red-700    border-red-100",
+  "medium": "bg-amber-50  text-amber-700  border-amber-100",
+  "low":    "bg-gray-100  text-gray-600   border-gray-200",
+};
+
+const SEVERITY_LABELS: Record<AlertSeverity, string> = {
+  "high":   "High",
+  "medium": "Medium",
+  "low":    "Low",
+};
+
+const GUIDANCE_PRIORITY_STYLES: Record<GuidancePriority, string> = {
+  "high":   "bg-red-50    text-red-700",
+  "medium": "bg-amber-50  text-amber-700",
+  "low":    "bg-gray-100  text-gray-500",
+};
+
+const BAND_STYLES: Record<string, string> = {
+  "Excellent":       "bg-green-50  text-green-700  border-green-100",
+  "Healthy":         "bg-blue-50   text-blue-700   border-blue-100",
+  "Needs Attention": "bg-amber-50  text-amber-700  border-amber-100",
+  "Critical":        "bg-red-50    text-red-700    border-red-100",
+  "Pending":         "bg-gray-100  text-gray-500   border-gray-200",
+};
+
+function ExecutiveSummarySection({ report }: { report: RecommendationInsightReport }) {
+  const { executiveSummary: s, analyticsAvailable, analyticsWindowDays } = report;
+
+  return (
+    <section>
+      <SectionLabel>Intelligence Summary</SectionLabel>
+      <SectionHeading>Executive Summary</SectionHeading>
+      <p className="mt-2 mb-5 text-sm text-[#7b7480]">
+        Derived from live analytics, signal calibration, and benchmark outputs.
+        Updated on every page load.
+      </p>
+
+      {/* Overall health card */}
+      <Card className="mb-5">
+        <div className="flex flex-wrap items-start justify-between gap-4">
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-3 mb-3">
+              <span
+                className={`inline-flex items-center rounded-xl border px-3 py-1.5 text-sm font-bold ${HEALTH_STATUS_STYLES[s.healthStatus]}`}
+              >
+                {HEALTH_STATUS_LABELS[s.healthStatus]}
+              </span>
+              {analyticsAvailable && analyticsWindowDays !== null && (
+                <span className="rounded-full border border-gray-100 bg-white px-3 py-1 text-[11px] text-[#a09aa6] shadow-sm">
+                  {analyticsWindowDays}-day window
+                </span>
+              )}
+            </div>
+            <p className="font-black text-[#4f4a52] mb-1">{s.headline}</p>
+            <p className="text-sm text-[#7b7480]">{s.summary}</p>
+          </div>
+          <div className="flex flex-col items-end gap-2 shrink-0 text-right">
+            <p className="text-[10px] text-[#a09aa6]">Strategies with data</p>
+            <p className="text-2xl font-black text-[#4f4a52]">{s.strategiesAnalyzed}</p>
+            {s.alertCount > 0 && (
+              <>
+                <p className="text-[10px] text-[#a09aa6]">Alerts</p>
+                <p className="text-2xl font-black text-red-600">{s.alertCount}</p>
+              </>
+            )}
+          </div>
+        </div>
+
+        {/* Priority action */}
+        <div className="mt-4 rounded-xl border border-blue-100 bg-blue-50/60 px-4 py-3">
+          <p className="text-[10px] font-bold uppercase tracking-widest text-blue-500 mb-1">
+            Priority Action
+          </p>
+          <p className="text-sm text-[#4f4a52]">{s.priorityAction}</p>
+        </div>
+      </Card>
+
+      {/* Strengths + Risks */}
+      <div className="grid gap-4 md:grid-cols-2">
+        <Card>
+          <p className="mb-3 text-[10px] font-bold uppercase tracking-widest text-green-500">
+            Key Strengths
+          </p>
+          <ul className="space-y-1.5">
+            {s.keyStrengths.map((strength, i) => (
+              <li key={i} className="flex items-start gap-2 text-sm text-[#4f4a52]">
+                <span className="mt-px text-green-500 font-bold shrink-0">✓</span>
+                {strength}
+              </li>
+            ))}
+          </ul>
+        </Card>
+        <Card>
+          <p className="mb-3 text-[10px] font-bold uppercase tracking-widest text-amber-500">
+            Key Risks
+          </p>
+          {s.keyRisks.length === 0 ? (
+            <p className="text-sm text-[#a09aa6]">No risks identified.</p>
+          ) : (
+            <ul className="space-y-1.5">
+              {s.keyRisks.map((risk, i) => (
+                <li key={i} className="flex items-start gap-2 text-sm text-[#7b7480]">
+                  <span className="mt-px text-amber-400 font-bold shrink-0">▲</span>
+                  {risk}
+                </li>
+              ))}
+            </ul>
+          )}
+        </Card>
+      </div>
+    </section>
+  );
+}
+
+function InsightsSection({ insights }: { insights: readonly StrategyInsight[] }) {
+  const withEvidence = insights.filter((i) => i.evidenceAvailable);
+  const pending      = insights.filter((i) => !i.evidenceAvailable);
+
+  return (
+    <section>
+      <SectionLabel>Strategy Intelligence</SectionLabel>
+      <SectionHeading>Strategy Insights</SectionHeading>
+      <p className="mt-2 mb-5 text-sm text-[#7b7480]">
+        Per-strategy performance ranked by click-through rate.
+        Strongest and Weakest labels apply only when at least two strategies have analytics data.
+      </p>
+
+      {withEvidence.length === 0 && (
+        <div className="rounded-2xl border border-dashed border-gray-200 bg-white px-6 py-10 text-center mb-5">
+          <p className="text-sm text-[#a09aa6]">No analytics data available yet.</p>
+          <p className="mt-1 text-xs text-[#a09aa6]">
+            Configure PostHog environment variables to unlock strategy insights.
+          </p>
+        </div>
+      )}
+
+      {withEvidence.length > 0 && (
+        <div className="space-y-3 mb-5">
+          {withEvidence.map((insight) => (
+            <Card key={insight.strategy}>
+              <div className="flex flex-wrap items-start justify-between gap-3">
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 mb-1.5">
+                    <span className="font-black uppercase tracking-tight text-[#4f4a52]">
+                      {insight.strategy.charAt(0).toUpperCase() + insight.strategy.slice(1)}
+                    </span>
+                    <span
+                      className={`rounded-full border px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-widest ${INSIGHT_STATUS_STYLES[insight.status]}`}
+                    >
+                      {INSIGHT_STATUS_LABELS[insight.status]}
+                    </span>
+                  </div>
+                  <p className="text-xs text-[#7b7480] leading-relaxed">{insight.detail}</p>
+                </div>
+                <div className="flex items-center gap-2 shrink-0">
+                  <div className="text-right">
+                    <p className="text-[10px] text-[#a09aa6]">CTR</p>
+                    <span className={`rounded-lg border px-2 py-0.5 text-[11px] font-bold ${BAND_STYLES[insight.ctrBand]}`}>
+                      {insight.ctrValue !== null
+                        ? `${(insight.ctrValue * 100).toFixed(1)}%`
+                        : "—"}
+                    </span>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-[10px] text-[#a09aa6]">ATC</p>
+                    <span className={`rounded-lg border px-2 py-0.5 text-[11px] font-bold ${BAND_STYLES[insight.atcBand]}`}>
+                      {insight.atcValue !== null
+                        ? `${(insight.atcValue * 100).toFixed(1)}%`
+                        : "—"}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </Card>
+          ))}
+        </div>
+      )}
+
+      {pending.length > 0 && (
+        <div className="rounded-2xl border border-gray-100 bg-white p-4">
+          <p className="mb-2 text-[10px] font-bold uppercase tracking-widest text-[#a09aa6]">
+            Awaiting Analytics ({pending.length})
+          </p>
+          <div className="flex flex-wrap gap-2">
+            {pending.map((i) => (
+              <span
+                key={i.strategy}
+                className="rounded-full border border-gray-200 bg-gray-50 px-3 py-0.5 text-[11px] font-mono text-[#a09aa6]"
+              >
+                {i.strategy}
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
+    </section>
+  );
+}
+
+function OpportunityDetectionSection({ opportunities }: { opportunities: readonly OpportunityAlert[] }) {
+  return (
+    <section>
+      <SectionLabel>Opportunity Detection</SectionLabel>
+      <SectionHeading>Alerts &amp; Opportunities</SectionHeading>
+      <p className="mt-2 mb-5 text-sm text-[#7b7480]">
+        Issues and improvement opportunities derived from quality band classifications
+        and benchmark results. High-severity alerts require immediate review.
+      </p>
+
+      {opportunities.length === 0 && (
+        <div className="rounded-2xl border border-dashed border-gray-200 bg-white px-6 py-10 text-center">
+          <p className="text-sm text-green-600 font-semibold">No alerts detected.</p>
+          <p className="mt-1 text-xs text-[#a09aa6]">
+            All measured strategies are within acceptable quality bands, or analytics are pending.
+          </p>
+        </div>
+      )}
+
+      {opportunities.length > 0 && (
+        <div className="space-y-3">
+          {opportunities.map((alert, i) => (
+            <Card key={i}>
+              <div className="flex flex-wrap items-start justify-between gap-3 mb-3">
+                <div className="flex items-center gap-2">
+                  <span
+                    className={`rounded-full border px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-widest ${SEVERITY_STYLES[alert.severity]}`}
+                  >
+                    {SEVERITY_LABELS[alert.severity]}
+                  </span>
+                  <code className="rounded-lg bg-gray-50 px-2 py-0.5 text-[11px] font-mono text-[#7b7480]">
+                    {alert.strategy}
+                  </code>
+                </div>
+              </div>
+              <p className="font-bold text-sm text-[#4f4a52] mb-1">{alert.headline}</p>
+              <p className="text-xs text-[#7b7480] mb-2">{alert.detail}</p>
+              <div className="rounded-xl bg-gray-50 px-3 py-2 mb-2">
+                <p className="text-[10px] font-bold uppercase tracking-widest text-[#a09aa6] mb-0.5">Evidence</p>
+                <p className="text-xs text-[#7b7480]">{alert.evidence}</p>
+              </div>
+              <div className="rounded-xl border border-blue-100 bg-blue-50/60 px-3 py-2">
+                <p className="text-[10px] font-bold uppercase tracking-widest text-blue-500 mb-0.5">Guidance</p>
+                <p className="text-xs text-[#4f4a52]">{alert.guidance}</p>
+              </div>
+            </Card>
+          ))}
+        </div>
+      )}
+    </section>
+  );
+}
+
+function OperationalGuidanceSection({ guidance }: { guidance: readonly OperationalRecommendation[] }) {
+  return (
+    <section>
+      <SectionLabel>Operational Intelligence</SectionLabel>
+      <SectionHeading>Operational Recommendations</SectionHeading>
+      <p className="mt-2 mb-5 text-sm text-[#7b7480]">
+        Ranked action items derived from analytics availability, signal health, and experiment state.
+        High-priority items should be addressed before the next analysis cycle.
+      </p>
+
+      {guidance.length === 0 && (
+        <div className="rounded-2xl border border-dashed border-gray-200 bg-white px-6 py-10 text-center">
+          <p className="text-sm text-green-600 font-semibold">No operational actions required.</p>
+        </div>
+      )}
+
+      {guidance.length > 0 && (
+        <div className="space-y-3">
+          {guidance.map((rec, i) => (
+            <Card key={i}>
+              <div className="flex flex-wrap items-start justify-between gap-3 mb-2">
+                <div className="flex items-center gap-2">
+                  <span
+                    className={`rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-widest ${GUIDANCE_PRIORITY_STYLES[rec.priority]}`}
+                  >
+                    {rec.priority.charAt(0).toUpperCase() + rec.priority.slice(1)} priority
+                  </span>
+                  <span className="rounded-lg bg-gray-100 px-2 py-0.5 text-[10px] font-mono text-[#7b7480]">
+                    {rec.category}
+                  </span>
+                </div>
+              </div>
+              <p className="font-bold text-sm text-[#4f4a52] mb-1">{rec.headline}</p>
+              <p className="text-xs text-[#7b7480]">{rec.detail}</p>
+            </Card>
+          ))}
+        </div>
+      )}
+    </section>
+  );
+}
+
 // ── Component ─────────────────────────────────────────────────────────────────
 
 interface Props {
-  generatedAt: string;
+  generatedAt:  string;
+  insightReport: RecommendationInsightReport;
 }
 
-export default function RecommendationPerformanceDashboard({ generatedAt }: Props) {
+export default function RecommendationPerformanceDashboard({ generatedAt, insightReport }: Props) {
   const ts = new Date(generatedAt).toLocaleString("en-ZA", {
     dateStyle: "medium",
     timeStyle: "short",
@@ -1325,6 +1665,26 @@ export default function RecommendationPerformanceDashboard({ generatedAt }: Prop
           </p>
           <p className="mt-1.5 text-[11px] text-[#a09aa6]">Generated {ts}</p>
         </section>
+
+        <hr className="border-gray-200" />
+
+        {/* ── I · Executive Summary ── */}
+        <ExecutiveSummarySection report={insightReport} />
+
+        <hr className="border-gray-200" />
+
+        {/* ── II · Strategy Insights ── */}
+        <InsightsSection insights={insightReport.insights} />
+
+        <hr className="border-gray-200" />
+
+        {/* ── III · Opportunity Detection ── */}
+        <OpportunityDetectionSection opportunities={insightReport.opportunities} />
+
+        <hr className="border-gray-200" />
+
+        {/* ── IV · Operational Guidance ── */}
+        <OperationalGuidanceSection guidance={insightReport.guidance} />
 
         <hr className="border-gray-200" />
 
