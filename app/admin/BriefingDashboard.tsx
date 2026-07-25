@@ -238,6 +238,9 @@ export default function BriefingDashboard({
             <Link href="/admin/recommendation-performance" className="text-xs text-white/60 transition hover:text-white">
               Performance
             </Link>
+            <Link href="/admin/customer-intelligence" className="text-xs text-white/60 transition hover:text-white">
+              Customer Intelligence
+            </Link>
           </nav>
         </div>
         <form action={logoutAction}>

@@ -1641,6 +1641,9 @@ export default function RecommendationPerformanceDashboard({ generatedAt, insigh
               Intelligence
             </Link>
             <span className="text-xs font-bold text-white">Performance</span>
+            <Link href="/admin/customer-intelligence" className="text-xs text-white/60 transition hover:text-white">
+              Customer Intelligence
+            </Link>
           </nav>
         </div>
         <form action={logoutAction}>
