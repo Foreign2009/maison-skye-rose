@@ -519,6 +519,9 @@ export default function CommerceIntelligenceDashboard({ behaviourReport, funnelR
               Customer Intelligence
             </Link>
             <span className="text-xs font-bold text-white">Commerce Intelligence</span>
+            <Link href="/admin/executive-operations" className="text-xs text-white/60 transition hover:text-white">
+              Executive Operations
+            </Link>
           </nav>
         </div>
         <form action={logoutAction}>
