@@ -989,6 +989,9 @@ export default function AdminConsole({ initialOrders }: { initialOrders: OrderRo
               <Link href="/admin/alert-center" className="text-xs text-white/60 transition hover:text-white">
                 Alert Center
               </Link>
+              <Link href="/admin/executive-digest" className="text-xs text-white/60 transition hover:text-white">
+                Executive Digest
+              </Link>
             </nav>
           </div>
           <form action={logoutAction}>

@@ -367,6 +367,9 @@ export default function OperationsAlertCenter({ report }: Props) {
               Alerts
             </Link>
             <span className="text-xs font-bold text-white">Alert Center</span>
+            <Link href="/admin/executive-digest" className="text-xs text-white/60 transition hover:text-white">
+              Executive Digest
+            </Link>
           </nav>
         </div>
         <form action={logoutAction}>
