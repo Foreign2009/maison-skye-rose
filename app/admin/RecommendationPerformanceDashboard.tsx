@@ -1653,6 +1653,9 @@ export default function RecommendationPerformanceDashboard({ generatedAt, insigh
             <Link href="/admin/operations" className="text-xs text-white/60 transition hover:text-white">
               Unified Operations
             </Link>
+            <Link href="/admin/alerts" className="text-xs text-white/60 transition hover:text-white">
+              Alerts
+            </Link>
           </nav>
         </div>
         <form action={logoutAction}>
