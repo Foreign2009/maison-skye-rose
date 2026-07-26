@@ -364,6 +364,9 @@ export default function ExecutiveReportHistoryDashboard({ history }: Props) {
               Executive Report Archive Center
             </Link>
             <span className="text-xs font-bold text-white">Executive Report History</span>
+            <Link href="/admin/executive-report-history-center" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report History Center
+            </Link>
           </nav>
         </div>
         <form action={logoutAction}>

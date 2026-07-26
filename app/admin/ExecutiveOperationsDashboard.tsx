@@ -315,6 +315,9 @@ export default function ExecutiveOperationsDashboard({ report }: Props) {
             <Link href="/admin/executive-report-history" className="text-xs text-white/60 transition hover:text-white">
               Executive Report History
             </Link>
+            <Link href="/admin/executive-report-history-center" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report History Center
+            </Link>
           </nav>
         </div>
         <form action={logoutAction}>
