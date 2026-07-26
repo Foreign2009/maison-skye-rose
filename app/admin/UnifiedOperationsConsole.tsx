@@ -3,11 +3,8 @@
 import React            from "react";
 import Link             from "next/link";
 import { logoutAction } from "./actions";
-import type {
-  ExecutiveOperationsReport,
-  ExecutiveSection,
-  ExecutiveStatus,
-} from "@/app/lib/operations/ExecutiveOperationsTypes";
+import type { ExecutiveOperationsReport, ExecutiveStatus } from "@/app/lib/operations/ExecutiveOperationsTypes";
+import type { ExecutiveBriefing, ObservationPriority }    from "@/app/lib/operations/ExecutiveBriefingTypes";
 
 // ── UI helpers ────────────────────────────────────────────────────────────────
 
@@ -60,50 +57,86 @@ const STATUS_LABELS: Record<ExecutiveStatus, string> = {
   "offline":            "Offline",
 };
 
-// ── Section 1: Executive Overview ─────────────────────────────────────────────
+const PRIORITY_STYLES: Record<ObservationPriority, string> = {
+  "high":   "border-red-100   bg-red-50   text-red-700",
+  "medium": "border-amber-100 bg-amber-50 text-amber-700",
+  "low":    "border-gray-200  bg-gray-100 text-gray-500",
+};
 
-function ExecutiveOverviewSection({ report }: { report: ExecutiveOperationsReport }) {
-  const { summary, generatedAt, analyticsAvailable } = report;
+// ── Section 1: Executive Header ───────────────────────────────────────────────
 
+function ExecutiveHeaderSection({ briefing }: { briefing: ExecutiveBriefing }) {
   return (
     <section>
-      <SectionLabel>Executive Operations</SectionLabel>
-      <SectionHeading>Executive Overview</SectionHeading>
+      <SectionLabel>Unified Operations</SectionLabel>
+      <SectionHeading>Executive Header</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Cross-domain platform health across Recommendation, Customer, and Commerce intelligence.
-        Updated on every page load.
+        Cross-domain platform status at a glance. Updated on every page load.
       </p>
 
       <div className="mb-4 flex flex-wrap items-center gap-3">
-        <span className={`rounded-full border px-3 py-1 text-xs font-semibold ${STATUS_STYLES[summary.platformStatus]}`}>
-          {STATUS_LABELS[summary.platformStatus]}
+        <span className={`rounded-full border px-3 py-1 text-xs font-semibold ${STATUS_STYLES[briefing.platformStatus]}`}>
+          {STATUS_LABELS[briefing.platformStatus]}
         </span>
         <span className="rounded-full border border-gray-100 bg-white px-3 py-1 text-xs text-[#7b7480]">
-          {summary.activeIntelligence} / {summary.totalDomains} domains active
-        </span>
-        <span className="rounded-full border border-gray-100 bg-white px-3 py-1 text-xs text-[#7b7480]">
-          Generated: {fmtDate(generatedAt)}
+          Generated: {fmtDate(briefing.generatedAt)}
         </span>
       </div>
 
       <Card>
         <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Platform Headline</p>
-        <p className="mt-2 text-base font-bold text-[#4f4a52]">{summary.headline}</p>
+        <p className="mt-2 text-base font-bold text-[#4f4a52]">{briefing.platformHeadline}</p>
       </Card>
-
-      {!analyticsAvailable && (
-        <div className="mt-4 rounded-xl border border-amber-100 bg-amber-50 px-4 py-3 text-sm text-amber-700">
-          No analytics available across any domain. Configure PostHog environment variables to enable intelligence.
-        </div>
-      )}
     </section>
   );
 }
 
-// ── Section 2: Platform Status ────────────────────────────────────────────────
+// ── Section 2: Executive Briefing ─────────────────────────────────────────────
 
-function PlatformStatusSection({ report }: { report: ExecutiveOperationsReport }) {
-  const { sections, summary } = report;
+function ExecutiveBriefingSection({ briefing }: { briefing: ExecutiveBriefing }) {
+  return (
+    <section>
+      <SectionLabel>Intelligence Briefing</SectionLabel>
+      <SectionHeading>Executive Briefing</SectionHeading>
+      <p className="mt-2 mb-5 text-sm text-[#7b7480]">
+        Observations derived from platform and domain status. No analytics queries.
+      </p>
+
+      <Card className="mb-4">
+        <div className="flex items-center gap-6">
+          <div className="text-center">
+            <p className="text-2xl font-black text-[#4f4a52]">{briefing.activeIntelligence}</p>
+            <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Active</p>
+          </div>
+          <div className="h-8 w-px bg-gray-100" />
+          <div className="text-center">
+            <p className="text-2xl font-black text-[#4f4a52]">{briefing.totalDomains}</p>
+            <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Total Domains</p>
+          </div>
+        </div>
+      </Card>
+
+      <Card>
+        <p className="mb-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Observations</p>
+        <ul className="space-y-3">
+          {briefing.observations.map((obs, i) => (
+            <li key={i} className="flex items-start gap-3">
+              <span className={`mt-0.5 shrink-0 rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${PRIORITY_STYLES[obs.priority]}`}>
+                {obs.priority}
+              </span>
+              <p className="text-sm text-[#7b7480]">{obs.text}</p>
+            </li>
+          ))}
+        </ul>
+      </Card>
+    </section>
+  );
+}
+
+// ── Section 3: Platform Status ────────────────────────────────────────────────
+
+function PlatformStatusSection({ operations }: { operations: ExecutiveOperationsReport }) {
+  const { sections, summary } = operations;
 
   return (
     <section>
@@ -152,74 +185,60 @@ function PlatformStatusSection({ report }: { report: ExecutiveOperationsReport }
   );
 }
 
-// ── Section 3–5: Domain Sections ──────────────────────────────────────────────
+// ── Section 4: Domain Overview ────────────────────────────────────────────────
 
-function DomainSection({ section, index }: { section: ExecutiveSection; index: number }) {
-  const labels = ["Recommendation Intelligence", "Customer Intelligence", "Commerce Intelligence"];
-  const headings = ["Recommendation Domain", "Customer Domain", "Commerce Domain"];
+function DomainOverviewSection({ operations }: { operations: ExecutiveOperationsReport }) {
+  const { sections } = operations;
 
   return (
     <section>
-      <SectionLabel>{labels[index] ?? section.domain}</SectionLabel>
-      <SectionHeading>{headings[index] ?? section.domain}</SectionHeading>
+      <SectionLabel>Domain Intelligence</SectionLabel>
+      <SectionHeading>Domain Overview</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        {section.analyticsAvailable
-          ? "Analytics connected. Domain status derived from live intelligence reports."
-          : "No analytics available for this domain."}
+        Status, headline, and key metric for each intelligence domain.
       </p>
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-        <Card>
-          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Status</p>
-          <div className="mt-2">
-            <span className={`rounded-full border px-3 py-1 text-xs font-bold uppercase ${STATUS_STYLES[section.status]}`}>
-              {STATUS_LABELS[section.status]}
-            </span>
+      <div className="space-y-4">
+        {sections.map((s) => (
+          <div key={s.domain} className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+            <Card>
+              <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">{s.domain}</p>
+              <div className="mt-2">
+                <span className={`rounded-full border px-3 py-1 text-xs font-bold uppercase ${STATUS_STYLES[s.status]}`}>
+                  {STATUS_LABELS[s.status]}
+                </span>
+              </div>
+              <p className="mt-2 text-[10px] uppercase tracking-wider text-[#a09aa6]">
+                {s.analyticsAvailable ? "Analytics connected" : "No analytics"}
+              </p>
+            </Card>
+            <Card className="sm:col-span-2">
+              <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Headline</p>
+              <p className="mt-2 text-sm font-medium leading-snug text-[#4f4a52]">{s.headline}</p>
+              <p className="mt-3 text-xl font-black text-[#4f4a52]">{s.keyMetric}</p>
+            </Card>
           </div>
-        </Card>
-        <Card className="sm:col-span-2">
-          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Headline</p>
-          <p className="mt-2 text-sm font-medium leading-snug text-[#4f4a52]">{section.headline}</p>
-          <p className="mt-3 text-xl font-black text-[#4f4a52]">{section.keyMetric}</p>
-        </Card>
+        ))}
       </div>
     </section>
   );
 }
 
-// ── Section 6: Operations Summary ────────────────────────────────────────────
+// ── Section 5: Operations Report ──────────────────────────────────────────────
 
-function OperationsSummarySection({ report }: { report: ExecutiveOperationsReport }) {
-  const { sections, summary } = report;
-
-  const attentionDomains = sections.filter((s) => s.status === "attention-required").map((s) => s.domain);
-  const monitoringDomains = sections.filter((s) => s.status === "monitoring").map((s) => s.domain);
-  const offlineDomains   = sections.filter((s) => s.status === "offline").map((s) => s.domain);
-
-  const observations: string[] = [];
-  if (attentionDomains.length > 0) {
-    observations.push(`Attention required: ${attentionDomains.join(", ")}.`);
-  }
-  if (monitoringDomains.length > 0) {
-    observations.push(`Under monitoring: ${monitoringDomains.join(", ")}.`);
-  }
-  if (offlineDomains.length > 0) {
-    observations.push(`Offline (no analytics): ${offlineDomains.join(", ")}.`);
-  }
-  if (observations.length === 0) {
-    observations.push("All intelligence systems are operational.");
-  }
+function OperationsReportSection({ operations }: { operations: ExecutiveOperationsReport }) {
+  const { summary, analyticsAvailable } = operations;
 
   return (
     <section>
       <SectionLabel>Operations</SectionLabel>
-      <SectionHeading>Operations Summary</SectionHeading>
+      <SectionHeading>Operations Report</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
         Aggregated platform health signal across all intelligence domains.
       </p>
 
       <Card className="mb-4">
-        <div className="flex items-center gap-4">
+        <div className="flex flex-wrap items-center gap-4">
           <span className={`rounded-full border px-4 py-1.5 text-xs font-bold uppercase tracking-wider ${STATUS_STYLES[summary.platformStatus]}`}>
             {STATUS_LABELS[summary.platformStatus]}
           </span>
@@ -227,21 +246,47 @@ function OperationsSummarySection({ report }: { report: ExecutiveOperationsRepor
         </div>
       </Card>
 
-      <Card>
-        <p className="mb-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Observations</p>
-        <ul className="space-y-2">
-          {observations.map((obs) => (
-            <li key={obs} className="text-sm text-[#7b7480]">
-              — {obs}
-            </li>
-          ))}
-        </ul>
-        {!summary.analyticsAvailable && (
-          <p className="mt-3 text-sm text-[#7b7480]">
-            — Configure PostHog environment variables to enable analytics across all domains.
-          </p>
-        )}
-      </Card>
+      {!analyticsAvailable && (
+        <div className="rounded-xl border border-amber-100 bg-amber-50 px-4 py-3 text-sm text-amber-700">
+          No analytics available across any domain. Configure PostHog environment variables to enable intelligence.
+        </div>
+      )}
+    </section>
+  );
+}
+
+// ── Section 6: Quick Navigation ───────────────────────────────────────────────
+
+const NAV_LINKS = [
+  { href: "/admin",                            label: "Operations" },
+  { href: "/admin/briefing",                   label: "Briefing" },
+  { href: "/admin/intelligence",               label: "Intelligence" },
+  { href: "/admin/recommendation-performance", label: "Recommendation" },
+  { href: "/admin/customer-intelligence",      label: "Customer" },
+  { href: "/admin/commerce-intelligence",      label: "Commerce" },
+  { href: "/admin/executive-operations",       label: "Executive Operations" },
+] as const;
+
+function QuickNavigationSection() {
+  return (
+    <section>
+      <SectionLabel>Navigation</SectionLabel>
+      <SectionHeading>Quick Navigation</SectionHeading>
+      <p className="mt-2 mb-5 text-sm text-[#7b7480]">
+        Direct access to all intelligence and operations consoles.
+      </p>
+
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+        {NAV_LINKS.map(({ href, label }) => (
+          <Link
+            key={href}
+            href={href}
+            className="rounded-2xl border border-gray-100 bg-white px-4 py-3 text-sm font-medium text-[#4f4a52] shadow-sm transition hover:border-[#d89ca4] hover:text-[#d89ca4]"
+          >
+            {label}
+          </Link>
+        ))}
+      </div>
     </section>
   );
 }
@@ -249,12 +294,13 @@ function OperationsSummarySection({ report }: { report: ExecutiveOperationsRepor
 // ── Props ─────────────────────────────────────────────────────────────────────
 
 interface Props {
-  report: ExecutiveOperationsReport;
+  operations: ExecutiveOperationsReport;
+  briefing:   ExecutiveBriefing;
 }
 
 // ── Main export ───────────────────────────────────────────────────────────────
 
-export default function ExecutiveOperationsDashboard({ report }: Props) {
+export default function UnifiedOperationsConsole({ operations, briefing }: Props) {
   return (
     <div className="min-h-screen bg-[#f5f1eb]">
 
@@ -284,10 +330,10 @@ export default function ExecutiveOperationsDashboard({ report }: Props) {
             <Link href="/admin/commerce-intelligence" className="text-xs text-white/60 transition hover:text-white">
               Commerce Intelligence
             </Link>
-            <span className="text-xs font-bold text-white">Executive Operations</span>
-            <Link href="/admin/operations" className="text-xs text-white/60 transition hover:text-white">
-              Unified Operations
+            <Link href="/admin/executive-operations" className="text-xs text-white/60 transition hover:text-white">
+              Executive Operations
             </Link>
+            <span className="text-xs font-bold text-white">Unified Operations</span>
           </nav>
         </div>
         <form action={logoutAction}>
@@ -300,24 +346,27 @@ export default function ExecutiveOperationsDashboard({ report }: Props) {
       {/* ── Content ── */}
       <div className="mx-auto w-full max-w-[780px] space-y-14 px-6 py-12">
 
-        <ExecutiveOverviewSection report={report} />
+        <ExecutiveHeaderSection briefing={briefing} />
 
         <hr className="border-gray-200" />
 
-        <PlatformStatusSection report={report} />
+        <ExecutiveBriefingSection briefing={briefing} />
 
         <hr className="border-gray-200" />
 
-        {report.sections.map((section, i) => (
-          <React.Fragment key={section.domain}>
-            <DomainSection section={section} index={i} />
-            {i < report.sections.length - 1 && <hr className="border-gray-200" />}
-          </React.Fragment>
-        ))}
+        <PlatformStatusSection operations={operations} />
 
         <hr className="border-gray-200" />
 
-        <OperationsSummarySection report={report} />
+        <DomainOverviewSection operations={operations} />
+
+        <hr className="border-gray-200" />
+
+        <OperationsReportSection operations={operations} />
+
+        <hr className="border-gray-200" />
+
+        <QuickNavigationSection />
 
       </div>
     </div>

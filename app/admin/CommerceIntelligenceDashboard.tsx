@@ -522,6 +522,9 @@ export default function CommerceIntelligenceDashboard({ behaviourReport, funnelR
             <Link href="/admin/executive-operations" className="text-xs text-white/60 transition hover:text-white">
               Executive Operations
             </Link>
+            <Link href="/admin/operations" className="text-xs text-white/60 transition hover:text-white">
+              Unified Operations
+            </Link>
           </nav>
         </div>
         <form action={logoutAction}>
