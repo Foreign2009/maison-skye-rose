@@ -4,6 +4,7 @@ import React            from "react";
 import Link             from "next/link";
 import { logoutAction } from "./actions";
 import type {
+  AlertCategory,
   AlertSeverity,
   AlertStatus,
   OperationsAlert,
@@ -73,6 +74,17 @@ const STATUS_LABELS: Record<AlertStatus, string> = {
   "resolved":   "Resolved",
 };
 
+const CATEGORY_LABELS: Record<AlertCategory, string> = {
+  "platform":       "Platform",
+  "recommendation": "Recommendation",
+  "customer":       "Customer",
+  "commerce":       "Commerce",
+  "operations":     "Operations",
+};
+
+const ALL_SEVERITIES: readonly AlertSeverity[] = ["critical", "high", "medium", "low"];
+const ALL_CATEGORIES: readonly AlertCategory[] = ["platform", "recommendation", "customer", "commerce", "operations"];
+
 // ── Alert Card ────────────────────────────────────────────────────────────────
 
 function AlertCard({ alert }: { alert: OperationsAlert }) {
@@ -96,15 +108,15 @@ function AlertCard({ alert }: { alert: OperationsAlert }) {
   );
 }
 
-// ── Section 1: Executive Summary ──────────────────────────────────────────────
+// ── Section 1: Executive Overview ─────────────────────────────────────────────
 
-function ExecutiveSummarySection({ report }: { report: OperationsAlertReport }) {
+function ExecutiveOverviewSection({ report }: { report: OperationsAlertReport }) {
   return (
     <section>
-      <SectionLabel>Operations Alerts</SectionLabel>
-      <SectionHeading>Executive Summary</SectionHeading>
+      <SectionLabel>Operations Alert Center</SectionLabel>
+      <SectionHeading>Executive Overview</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Standardized alert state derived from all intelligence domains. Updated on every page load.
+        Aggregated alert state across all intelligence domains. Updated on every page load.
       </p>
 
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
@@ -133,121 +145,140 @@ function ExecutiveSummarySection({ report }: { report: OperationsAlertReport }) 
   );
 }
 
-// ── Section 2: Platform Alert ─────────────────────────────────────────────────
+// ── Section 2: Alert Queue ────────────────────────────────────────────────────
 
-function PlatformAlertSection({ report }: { report: OperationsAlertReport }) {
-  const alert = report.alerts.find((a) => a.id === "platform-summary");
-
+function AlertQueueSection({ report }: { report: OperationsAlertReport }) {
   return (
     <section>
-      <SectionLabel>Platform</SectionLabel>
-      <SectionHeading>Platform Alert</SectionHeading>
+      <SectionLabel>Queue</SectionLabel>
+      <SectionHeading>Alert Queue</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Aggregated platform status derived from all intelligence domains.
-      </p>
-
-      {alert ? (
-        <AlertCard alert={alert} />
-      ) : (
-        <Card>
-          <p className="text-sm text-[#7b7480]">Platform alert unavailable.</p>
-        </Card>
-      )}
-    </section>
-  );
-}
-
-// ── Section 3: Domain Alerts ──────────────────────────────────────────────────
-
-function DomainAlertsSection({ report }: { report: OperationsAlertReport }) {
-  const domainAlerts = report.alerts.filter((a) => a.id !== "platform-summary");
-
-  return (
-    <section>
-      <SectionLabel>Domains</SectionLabel>
-      <SectionHeading>Domain Alerts</SectionHeading>
-      <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Alert state for each intelligence domain.
-      </p>
-
-      <div className="space-y-4">
-        {domainAlerts.map((alert) => (
-          <AlertCard key={alert.id} alert={alert} />
-        ))}
-      </div>
-    </section>
-  );
-}
-
-// ── Section 4: Alert Statistics ───────────────────────────────────────────────
-
-function AlertStatisticsSection({ report }: { report: OperationsAlertReport }) {
-  const resolvedCount  = report.alerts.length - report.activeCount;
-
-  return (
-    <section>
-      <SectionLabel>Statistics</SectionLabel>
-      <SectionHeading>Alert Statistics</SectionHeading>
-      <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Aggregated alert counts. No calculations performed in the UI layer.
+        All alerts in the exact order received. No sorting applied.
       </p>
 
       <Card>
-        <div className="grid grid-cols-2 gap-6 sm:grid-cols-4">
-          <div>
-            <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Critical</p>
-            <p className="mt-2 text-2xl font-black text-[#4f4a52]">{report.criticalCount}</p>
-          </div>
-          <div>
-            <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Active</p>
-            <p className="mt-2 text-2xl font-black text-[#4f4a52]">{report.activeCount}</p>
-          </div>
-          <div>
-            <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Resolved</p>
-            <p className="mt-2 text-2xl font-black text-[#4f4a52]">{resolvedCount}</p>
-          </div>
-          <div>
-            <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Total</p>
-            <p className="mt-2 text-2xl font-black text-[#4f4a52]">{report.alerts.length}</p>
-          </div>
+        <div className="divide-y divide-gray-100">
+          {report.alerts.map((alert, i) => (
+            <div key={alert.id} className="flex items-center gap-3 py-3 first:pt-0 last:pb-0">
+              <span className="w-5 shrink-0 text-center text-[10px] font-bold text-[#a09aa6]">
+                {i + 1}
+              </span>
+              <div className="min-w-0 flex-1">
+                <p className="text-sm font-semibold text-[#4f4a52]">{alert.title}</p>
+                <p className="mt-0.5 truncate text-[10px] text-[#7b7480]">{alert.origin}</p>
+              </div>
+              <div className="flex shrink-0 items-center gap-1.5">
+                <span className={`rounded-full border px-2 py-0.5 text-[8px] font-bold uppercase ${SEVERITY_STYLES[alert.severity]}`}>
+                  {SEVERITY_LABELS[alert.severity]}
+                </span>
+                <span className={`rounded-full border px-2 py-0.5 text-[8px] font-bold uppercase ${STATUS_STYLES[alert.status]}`}>
+                  {STATUS_LABELS[alert.status]}
+                </span>
+              </div>
+            </div>
+          ))}
         </div>
-
-        {!report.analyticsAvailable && (
-          <p className="mt-4 text-sm text-[#7b7480]">
-            Analytics offline — alerts reflect unavailable domain status only.
-          </p>
-        )}
       </Card>
     </section>
   );
 }
 
-// ── Section 5: Alert Timeline ─────────────────────────────────────────────────
+// ── Section 3: Severity Summary ───────────────────────────────────────────────
 
-function AlertTimelineSection({ report }: { report: OperationsAlertReport }) {
+function SeveritySummarySection({ report }: { report: OperationsAlertReport }) {
   return (
     <section>
-      <SectionLabel>Timeline</SectionLabel>
-      <SectionHeading>Alert Timeline</SectionHeading>
+      <SectionLabel>Severity</SectionLabel>
+      <SectionHeading>Severity Summary</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        All alerts in the order they were generated. No sorting applied.
+        Alert counts grouped by severity level.
+      </p>
+
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+        {ALL_SEVERITIES.map((sev) => {
+          const sevAlerts = report.alerts.filter((a) => a.severity === sev);
+          return (
+            <Card key={sev}>
+              <span className={`inline-block rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${SEVERITY_STYLES[sev]}`}>
+                {SEVERITY_LABELS[sev]}
+              </span>
+              <p className="mt-3 text-2xl font-black text-[#4f4a52]">{sevAlerts.length}</p>
+              <p className="mt-1 text-[10px] uppercase tracking-widest text-[#a09aa6]">
+                {sevAlerts.length === 1 ? "alert" : "alerts"}
+              </p>
+              {sevAlerts.length > 0 && (
+                <ul className="mt-3 space-y-1">
+                  {sevAlerts.map((a) => (
+                    <li key={a.id} className="text-[10px] text-[#7b7480]">— {a.title}</li>
+                  ))}
+                </ul>
+              )}
+            </Card>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
+
+// ── Section 4: Category Summary ───────────────────────────────────────────────
+
+function CategorySummarySection({ report }: { report: OperationsAlertReport }) {
+  const activeCategories = ALL_CATEGORIES.filter((cat) =>
+    report.alerts.some((a) => a.category === cat),
+  );
+
+  return (
+    <section>
+      <SectionLabel>Categories</SectionLabel>
+      <SectionHeading>Category Summary</SectionHeading>
+      <p className="mt-2 mb-5 text-sm text-[#7b7480]">
+        Alert distribution across operational categories.
+      </p>
+
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        {activeCategories.map((cat) => {
+          const catAlerts = report.alerts.filter((a) => a.category === cat);
+          return (
+            <Card key={cat}>
+              <div className="mb-3 flex items-center justify-between">
+                <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">
+                  {CATEGORY_LABELS[cat]}
+                </p>
+                <p className="text-xl font-black text-[#4f4a52]">{catAlerts.length}</p>
+              </div>
+              <div className="space-y-2">
+                {catAlerts.map((a) => (
+                  <div key={a.id} className="flex items-center gap-2">
+                    <span className={`shrink-0 rounded-full border px-1.5 py-0.5 text-[8px] font-bold uppercase ${SEVERITY_STYLES[a.severity]}`}>
+                      {SEVERITY_LABELS[a.severity]}
+                    </span>
+                    <span className="text-[10px] text-[#7b7480]">{a.title}</span>
+                  </div>
+                ))}
+              </div>
+            </Card>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
+
+// ── Section 5: Alert Detail List ──────────────────────────────────────────────
+
+function AlertDetailListSection({ report }: { report: OperationsAlertReport }) {
+  return (
+    <section>
+      <SectionLabel>Detail</SectionLabel>
+      <SectionHeading>Alert Detail List</SectionHeading>
+      <p className="mt-2 mb-5 text-sm text-[#7b7480]">
+        Full detail for every alert in the report.
       </p>
 
       <div className="space-y-4">
-        {report.alerts.map((alert, i) => (
-          <div key={alert.id} className="flex gap-4">
-            <div className="flex flex-col items-center">
-              <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-gray-200 bg-white text-[10px] font-bold text-[#a09aa6]">
-                {i + 1}
-              </div>
-              {i < report.alerts.length - 1 && (
-                <div className="mt-1 w-px flex-1 bg-gray-200" />
-              )}
-            </div>
-            <div className="min-w-0 flex-1 pb-4">
-              <AlertCard alert={alert} />
-            </div>
-          </div>
+        {report.alerts.map((alert) => (
+          <AlertCard key={alert.id} alert={alert} />
         ))}
       </div>
     </section>
@@ -261,6 +292,7 @@ const QUICK_NAV_LINKS = [
   { href: "/admin/operations",           label: "Unified Operations" },
   { href: "/admin/executive-operations", label: "Executive Operations" },
   { href: "/admin/alerts",               label: "Alerts" },
+  { href: "/admin/alert-center",         label: "Alert Center" },
 ] as const;
 
 function QuickNavigationSection() {
@@ -272,7 +304,7 @@ function QuickNavigationSection() {
         Direct access to operations consoles.
       </p>
 
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
         {QUICK_NAV_LINKS.map(({ href, label }) => (
           <Link
             key={href}
@@ -295,7 +327,7 @@ interface Props {
 
 // ── Main export ───────────────────────────────────────────────────────────────
 
-export default function OperationsAlertDashboard({ report }: Props) {
+export default function OperationsAlertCenter({ report }: Props) {
   return (
     <div className="min-h-screen bg-[#f5f1eb]">
 
@@ -331,10 +363,10 @@ export default function OperationsAlertDashboard({ report }: Props) {
             <Link href="/admin/operations" className="text-xs text-white/60 transition hover:text-white">
               Unified Operations
             </Link>
-            <span className="text-xs font-bold text-white">Alerts</span>
-            <Link href="/admin/alert-center" className="text-xs text-white/60 transition hover:text-white">
-              Alert Center
+            <Link href="/admin/alerts" className="text-xs text-white/60 transition hover:text-white">
+              Alerts
             </Link>
+            <span className="text-xs font-bold text-white">Alert Center</span>
           </nav>
         </div>
         <form action={logoutAction}>
@@ -347,23 +379,23 @@ export default function OperationsAlertDashboard({ report }: Props) {
       {/* ── Content ── */}
       <div className="mx-auto w-full max-w-[780px] space-y-14 px-6 py-12">
 
-        <ExecutiveSummarySection report={report} />
+        <ExecutiveOverviewSection report={report} />
 
         <hr className="border-gray-200" />
 
-        <PlatformAlertSection report={report} />
+        <AlertQueueSection report={report} />
 
         <hr className="border-gray-200" />
 
-        <DomainAlertsSection report={report} />
+        <SeveritySummarySection report={report} />
 
         <hr className="border-gray-200" />
 
-        <AlertStatisticsSection report={report} />
+        <CategorySummarySection report={report} />
 
         <hr className="border-gray-200" />
 
-        <AlertTimelineSection report={report} />
+        <AlertDetailListSection report={report} />
 
         <hr className="border-gray-200" />
 
