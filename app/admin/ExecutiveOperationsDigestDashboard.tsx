@@ -310,6 +310,9 @@ export default function ExecutiveOperationsDigestDashboard({ digest }: Props) {
             <Link href="/admin/executive-report-center" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Center
             </Link>
+            <Link href="/admin/executive-report-archive" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report Archive
+            </Link>
           </nav>
         </div>
         <form action={logoutAction}>
