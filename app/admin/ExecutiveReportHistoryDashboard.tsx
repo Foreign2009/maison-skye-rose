@@ -3,11 +3,11 @@
 import React            from "react";
 import Link             from "next/link";
 import { logoutAction } from "./actions";
-import type { AlertSeverity }          from "@/app/lib/operations/OperationsAlertTypes";
+import type { AlertSeverity } from "@/app/lib/operations/OperationsAlertTypes";
 import type {
-  ExecutiveReport,
-  ExecutiveReportSection,
-} from "@/app/lib/operations/ExecutiveReportTypes";
+  ExecutiveReportHistory,
+  ExecutiveReportHistoryEntry,
+} from "@/app/lib/operations/ExecutiveReportHistoryTypes";
 
 // ── UI helpers ────────────────────────────────────────────────────────────────
 
@@ -60,96 +60,46 @@ const SEVERITY_LABELS: Record<AlertSeverity, string> = {
   "low":      "Low",
 };
 
-// ── Section 1: Executive Headline ─────────────────────────────────────────────
+// ── Section 1: History Overview ───────────────────────────────────────────────
 
-function ExecutiveHeadlineSection({ report }: { report: ExecutiveReport }) {
+function HistoryOverviewSection({ history }: { history: ExecutiveReportHistory }) {
   return (
     <section>
-      <SectionLabel>Executive Report</SectionLabel>
-      <SectionHeading>Executive Headline</SectionHeading>
+      <SectionLabel>Executive Report History</SectionLabel>
+      <SectionHeading>History Overview</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Authoritative executive headline derived from the platform operations digest.
-        Refreshed on every page load.
+        Aggregate view of the executive report history. Refreshed on every page load.
       </p>
 
-      <div className="mb-4 flex flex-wrap items-center gap-3">
-        <span className={`rounded-full border px-3 py-1 text-xs font-semibold ${SEVERITY_STYLES[report.overallStatus]}`}>
-          {SEVERITY_LABELS[report.overallStatus]}
-        </span>
-        <span className="rounded-full border border-gray-100 bg-white px-3 py-1 text-xs text-[#7b7480]">
-          Generated: {fmtDate(report.generatedAt)}
-        </span>
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <Card>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Total Records</p>
+          <p className="mt-2 text-3xl font-black text-[#4f4a52]">{history.records.length}</p>
+        </Card>
+        <Card>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">History Generated</p>
+          <p className="mt-2 text-sm font-bold text-[#4f4a52]">{fmtDate(history.generatedAt)}</p>
+        </Card>
       </div>
-
-      <Card>
-        <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Platform Headline</p>
-        <p className="mt-3 text-lg font-black leading-snug text-[#4f4a52]">
-          {report.headline.text}
-        </p>
-      </Card>
     </section>
   );
 }
 
-// ── Section 2: Executive Summary ──────────────────────────────────────────────
+// ── Section 2: History Timeline ───────────────────────────────────────────────
 
-function ExecutiveSummarySection({ report }: { report: ExecutiveReport }) {
-  return (
-    <section>
-      <SectionLabel>Summary</SectionLabel>
-      <SectionHeading>Executive Summary</SectionHeading>
-      <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Concise executive summary projected from the operations digest.
-        No additional analysis applied.
-      </p>
+function HistoryTimelineSection({ history }: { history: ExecutiveReportHistory }) {
+  const records = history.records.slice().reverse();
 
-      <Card>
-        <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Summary</p>
-        <p className="mt-3 text-base leading-relaxed text-[#4f4a52]">{report.executiveSummary}</p>
-      </Card>
-    </section>
-  );
-}
-
-// ── Section 3: Report Sections ────────────────────────────────────────────────
-
-function ReportSectionCard({
-  section,
-  index,
-}: {
-  section: ExecutiveReportSection;
-  index:   number;
-}) {
-  const num = String(index + 1).padStart(2, "0");
-
-  return (
-    <Card>
-      <div className="mb-3 flex items-start justify-between gap-4">
-        <div className="flex items-center gap-3">
-          <span className="text-2xl font-black text-[#e8e3ef]">{num}</span>
-          <p className="text-sm font-bold uppercase tracking-wide text-[#4f4a52]">{section.title}</p>
-        </div>
-        <span className="shrink-0 rounded-full border border-gray-100 bg-gray-50 px-2 py-0.5 text-[9px] font-mono text-[#a09aa6]">
-          {section.alertId}
-        </span>
-      </div>
-      <div className="h-px bg-gray-100" />
-      <p className="mt-3 text-sm leading-relaxed text-[#7b7480]">{section.body}</p>
-    </Card>
-  );
-}
-
-function ReportSectionsSection({ report }: { report: ExecutiveReport }) {
-  if (report.sections.length === 0) {
+  if (records.length === 0) {
     return (
       <section>
-        <SectionLabel>Sections</SectionLabel>
-        <SectionHeading>Report Sections</SectionHeading>
+        <SectionLabel>Timeline</SectionLabel>
+        <SectionHeading>History Timeline</SectionHeading>
         <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-          Report sections projected from the operations digest.
+          Chronological record of all history entries.
         </p>
         <Card>
-          <p className="text-sm text-[#7b7480]">No active sections. All alerts resolved.</p>
+          <p className="text-sm text-[#7b7480]">No history records available.</p>
         </Card>
       </section>
     );
@@ -157,67 +107,133 @@ function ReportSectionsSection({ report }: { report: ExecutiveReport }) {
 
   return (
     <section>
-      <SectionLabel>Sections</SectionLabel>
-      <SectionHeading>Report Sections</SectionHeading>
+      <SectionLabel>Timeline</SectionLabel>
+      <SectionHeading>History Timeline</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        {report.sections.length} section{report.sections.length === 1 ? "" : "s"} projected from the operations digest.
+        {records.length} record{records.length === 1 ? "" : "s"}. Newest first.
+      </p>
+
+      <Card>
+        <div className="divide-y divide-gray-100">
+          {records.map((record, i) => (
+            <div key={i} className="flex items-start gap-3 py-3 first:pt-0 last:pb-0">
+              <span className="mt-0.5 w-5 shrink-0 text-center text-[10px] font-bold text-[#a09aa6]">
+                {i + 1}
+              </span>
+              <div className="min-w-0 flex-1">
+                <p className="text-sm font-semibold text-[#4f4a52]">{record.headline.text}</p>
+                <p className="mt-0.5 text-[10px] text-[#7b7480]">{fmtDate(record.generatedAt)}</p>
+              </div>
+              <div className="flex shrink-0 flex-col items-end gap-1">
+                <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${SEVERITY_STYLES[record.overallStatus]}`}>
+                  {SEVERITY_LABELS[record.overallStatus]}
+                </span>
+                <span className="text-[9px] text-[#a09aa6]">
+                  {record.entryCount} entr{record.entryCount === 1 ? "y" : "ies"}
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </Card>
+    </section>
+  );
+}
+
+// ── Section 3: History Records ────────────────────────────────────────────────
+
+function HistoryRecordCard({ record }: { record: ExecutiveReportHistoryEntry }) {
+  return (
+    <Card>
+      <div className="mb-3 flex flex-wrap items-center gap-2">
+        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${SEVERITY_STYLES[record.overallStatus]}`}>
+          {SEVERITY_LABELS[record.overallStatus]}
+        </span>
+        <span className="ml-auto text-[10px] text-[#a09aa6]">{fmtDate(record.generatedAt)}</span>
+      </div>
+      <p className="text-sm font-bold text-[#4f4a52]">{record.headline.text}</p>
+      <p className="mt-2 text-sm leading-relaxed text-[#7b7480]">{record.executiveSummary}</p>
+      <p className="mt-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">
+        {record.entryCount} archive entr{record.entryCount === 1 ? "y" : "ies"}
+      </p>
+    </Card>
+  );
+}
+
+function HistoryRecordsSection({ history }: { history: ExecutiveReportHistory }) {
+  if (history.records.length === 0) {
+    return (
+      <section>
+        <SectionLabel>Records</SectionLabel>
+        <SectionHeading>History Records</SectionHeading>
+        <p className="mt-2 mb-5 text-sm text-[#7b7480]">
+          Full detail for every history record.
+        </p>
+        <Card>
+          <p className="text-sm text-[#7b7480]">No history records available.</p>
+        </Card>
+      </section>
+    );
+  }
+
+  return (
+    <section>
+      <SectionLabel>Records</SectionLabel>
+      <SectionHeading>History Records</SectionHeading>
+      <p className="mt-2 mb-5 text-sm text-[#7b7480]">
+        {history.records.length} record{history.records.length === 1 ? "" : "s"} in the history.
         Displayed exactly as received.
       </p>
 
       <div className="space-y-4">
-        {report.sections.map((section, i) => (
-          <ReportSectionCard key={section.alertId} section={section} index={i} />
+        {history.records.map((record, i) => (
+          <HistoryRecordCard key={i} record={record} />
         ))}
       </div>
     </section>
   );
 }
 
-// ── Section 4: Report Status ──────────────────────────────────────────────────
+// ── Section 4: History Status ─────────────────────────────────────────────────
 
-function ReportStatusSection({ report }: { report: ExecutiveReport }) {
+function HistoryStatusSection({ history }: { history: ExecutiveReportHistory }) {
+  const latestGeneratedAt = history.records.length > 0
+    ? history.records[history.records.length - 1].generatedAt
+    : null;
+
   return (
     <section>
       <SectionLabel>Status</SectionLabel>
-      <SectionHeading>Report Status</SectionHeading>
+      <SectionHeading>History Status</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Overall platform status and analytics connectivity at report generation time.
+        Aggregate history status at generation time.
       </p>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <Card>
-          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Overall Status</p>
-          <div className="mt-3">
-            <span className={`rounded-full border px-4 py-1.5 text-xs font-bold uppercase tracking-wider ${SEVERITY_STYLES[report.overallStatus]}`}>
-              {SEVERITY_LABELS[report.overallStatus]}
-            </span>
-          </div>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Total History Records</p>
+          <p className="mt-3 text-3xl font-black text-[#4f4a52]">{history.records.length}</p>
         </Card>
         <Card>
-          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Analytics</p>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Latest Generated At</p>
           <p className="mt-3 text-sm font-bold text-[#4f4a52]">
-            {report.analyticsAvailable ? "Connected" : "Offline"}
+            {latestGeneratedAt ? fmtDate(latestGeneratedAt) : "—"}
           </p>
-          {!report.analyticsAvailable && (
-            <p className="mt-1 text-[10px] text-[#7b7480]">
-              Configure PostHog environment variables to enable live intelligence.
-            </p>
-          )}
         </Card>
       </div>
     </section>
   );
 }
 
-// ── Section 5: Report Metadata ────────────────────────────────────────────────
+// ── Section 5: History Metadata ───────────────────────────────────────────────
 
-function ReportMetadataSection({ report }: { report: ExecutiveReport }) {
+function HistoryMetadataSection({ history }: { history: ExecutiveReportHistory }) {
   return (
     <section>
       <SectionLabel>Metadata</SectionLabel>
-      <SectionHeading>Report Metadata</SectionHeading>
+      <SectionHeading>History Metadata</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Report generation metadata. No data is stored or persisted.
+        History generation metadata. No data is stored or persisted.
       </p>
 
       <Card>
@@ -225,15 +241,11 @@ function ReportMetadataSection({ report }: { report: ExecutiveReport }) {
           <tbody className="divide-y divide-gray-100">
             <tr>
               <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Generated At</td>
-              <td className="py-3 text-right text-[#4f4a52]">{fmtDate(report.generatedAt)}</td>
+              <td className="py-3 text-right text-[#4f4a52]">{fmtDate(history.generatedAt)}</td>
             </tr>
             <tr>
-              <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Analytics Available</td>
-              <td className="py-3 text-right text-[#4f4a52]">{report.analyticsAvailable ? "Yes" : "No"}</td>
-            </tr>
-            <tr>
-              <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Report Sections</td>
-              <td className="py-3 text-right text-[#4f4a52]">{report.sections.length}</td>
+              <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">History Records</td>
+              <td className="py-3 text-right text-[#4f4a52]">{history.records.length}</td>
             </tr>
           </tbody>
         </table>
@@ -245,14 +257,18 @@ function ReportMetadataSection({ report }: { report: ExecutiveReport }) {
 // ── Section 6: Quick Navigation ───────────────────────────────────────────────
 
 const QUICK_NAV_LINKS = [
-  { href: "/admin",                      label: "Operations" },
-  { href: "/admin/operations",           label: "Unified Operations" },
-  { href: "/admin/executive-operations", label: "Executive Operations" },
-  { href: "/admin/alerts",               label: "Alerts" },
-  { href: "/admin/alert-center",         label: "Alert Center" },
-  { href: "/admin/executive-digest",     label: "Executive Digest" },
-  { href: "/admin/executive-briefing",   label: "Executive Briefing" },
-  { href: "/admin/executive-report",     label: "Executive Report" },
+  { href: "/admin",                                 label: "Operations" },
+  { href: "/admin/operations",                      label: "Unified Operations" },
+  { href: "/admin/executive-operations",            label: "Executive Operations" },
+  { href: "/admin/alerts",                          label: "Alerts" },
+  { href: "/admin/alert-center",                    label: "Alert Center" },
+  { href: "/admin/executive-digest",                label: "Executive Digest" },
+  { href: "/admin/executive-briefing",              label: "Executive Briefing" },
+  { href: "/admin/executive-report",                label: "Executive Report" },
+  { href: "/admin/executive-report-center",         label: "Executive Report Center" },
+  { href: "/admin/executive-report-archive",        label: "Executive Report Archive" },
+  { href: "/admin/executive-report-archive-center", label: "Executive Report Archive Center" },
+  { href: "/admin/executive-report-history",        label: "Executive Report History" },
 ] as const;
 
 function QuickNavigationSection() {
@@ -282,12 +298,12 @@ function QuickNavigationSection() {
 // ── Props ─────────────────────────────────────────────────────────────────────
 
 interface Props {
-  report: ExecutiveReport;
+  history: ExecutiveReportHistory;
 }
 
 // ── Main export ───────────────────────────────────────────────────────────────
 
-export default function ExecutiveReportDashboard({ report }: Props) {
+export default function ExecutiveReportHistoryDashboard({ history }: Props) {
   return (
     <div className="min-h-screen bg-[#f5f1eb]">
 
@@ -335,7 +351,9 @@ export default function ExecutiveReportDashboard({ report }: Props) {
             <Link href="/admin/executive-briefing" className="text-xs text-white/60 transition hover:text-white">
               Executive Briefing
             </Link>
-            <span className="text-xs font-bold text-white">Executive Report</span>
+            <Link href="/admin/executive-report" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report
+            </Link>
             <Link href="/admin/executive-report-center" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Center
             </Link>
@@ -345,9 +363,7 @@ export default function ExecutiveReportDashboard({ report }: Props) {
             <Link href="/admin/executive-report-archive-center" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Archive Center
             </Link>
-            <Link href="/admin/executive-report-history" className="text-xs text-white/60 transition hover:text-white">
-              Executive Report History
-            </Link>
+            <span className="text-xs font-bold text-white">Executive Report History</span>
           </nav>
         </div>
         <form action={logoutAction}>
@@ -360,23 +376,23 @@ export default function ExecutiveReportDashboard({ report }: Props) {
       {/* ── Content ── */}
       <div className="mx-auto w-full max-w-[780px] space-y-14 px-6 py-12">
 
-        <ExecutiveHeadlineSection report={report} />
+        <HistoryOverviewSection history={history} />
 
         <hr className="border-gray-200" />
 
-        <ExecutiveSummarySection report={report} />
+        <HistoryTimelineSection history={history} />
 
         <hr className="border-gray-200" />
 
-        <ReportSectionsSection report={report} />
+        <HistoryRecordsSection history={history} />
 
         <hr className="border-gray-200" />
 
-        <ReportStatusSection report={report} />
+        <HistoryStatusSection history={history} />
 
         <hr className="border-gray-200" />
 
-        <ReportMetadataSection report={report} />
+        <HistoryMetadataSection history={history} />
 
         <hr className="border-gray-200" />
 

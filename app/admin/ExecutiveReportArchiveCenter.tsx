@@ -364,6 +364,9 @@ export default function ExecutiveReportArchiveCenter({ archive }: Props) {
               Executive Report Archive
             </Link>
             <span className="text-xs font-bold text-white">Executive Report Archive Center</span>
+            <Link href="/admin/executive-report-history" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report History
+            </Link>
           </nav>
         </div>
         <form action={logoutAction}>
