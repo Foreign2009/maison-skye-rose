@@ -1665,6 +1665,9 @@ export default function RecommendationPerformanceDashboard({ generatedAt, insigh
             <Link href="/admin/executive-briefing" className="text-xs text-white/60 transition hover:text-white">
               Executive Briefing
             </Link>
+            <Link href="/admin/executive-report" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report
+            </Link>
           </nav>
         </div>
         <form action={logoutAction}>
