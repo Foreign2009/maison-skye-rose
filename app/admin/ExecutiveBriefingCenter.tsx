@@ -60,64 +60,100 @@ const SEVERITY_LABELS: Record<AlertSeverity, string> = {
   "low":      "Low",
 };
 
-// ── Section 1: Executive Headline ─────────────────────────────────────────────
+const READINESS_LABELS: Record<AlertSeverity, string> = {
+  "critical": "Attention Required",
+  "high":     "Review Required",
+  "medium":   "Monitoring",
+  "low":      "Ready",
+};
 
-function ExecutiveHeadlineSection({ digest }: { digest: ExecutiveOperationsDigest }) {
+// ── Section 1: Executive Overview ─────────────────────────────────────────────
+
+function ExecutiveOverviewSection({ digest }: { digest: ExecutiveOperationsDigest }) {
   return (
     <section>
-      <SectionLabel>Executive Operations Digest</SectionLabel>
-      <SectionHeading>Executive Headline</SectionHeading>
+      <SectionLabel>Executive Briefing Center</SectionLabel>
+      <SectionHeading>Executive Overview</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Top-level executive framing of current platform operational state.
-        Updated on every page load.
+        Authoritative executive view of current platform operational state.
+        Refreshed on every page load.
       </p>
 
-      <div className="mb-4 flex flex-wrap items-center gap-3">
+      <div className="mb-5 flex flex-wrap items-center gap-3">
         <span className={`rounded-full border px-3 py-1 text-xs font-semibold ${SEVERITY_STYLES[digest.overallStatus]}`}>
           {SEVERITY_LABELS[digest.overallStatus]}
         </span>
         <span className="rounded-full border border-gray-100 bg-white px-3 py-1 text-xs text-[#7b7480]">
-          Generated: {fmtDate(digest.generatedAt)}
+          {fmtDate(digest.generatedAt)}
         </span>
       </div>
 
       <Card>
-        <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Platform Headline</p>
-        <p className="mt-2 text-base font-bold text-[#4f4a52]">{digest.headline.text}</p>
+        <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Executive Headline</p>
+        <p className="mt-3 text-lg font-black leading-snug text-[#4f4a52]">
+          {digest.headline.text}
+        </p>
       </Card>
     </section>
   );
 }
 
-// ── Section 2: Digest Summary ─────────────────────────────────────────────────
+// ── Section 2: Strategic Summary ─────────────────────────────────────────────
 
-function DigestSummarySection({ digest }: { digest: ExecutiveOperationsDigest }) {
+function StrategicSummarySection({ digest }: { digest: ExecutiveOperationsDigest }) {
   return (
     <section>
-      <SectionLabel>Summary</SectionLabel>
-      <SectionHeading>Digest Summary</SectionHeading>
+      <SectionLabel>Strategic</SectionLabel>
+      <SectionHeading>Strategic Summary</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Concise executive summary synthesized from the operational alert briefing.
+        Executive summary synthesized from the operational alert briefing.
+        No additional processing applied.
       </p>
 
       <Card>
-        <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Executive Summary</p>
-        <p className="mt-3 text-sm leading-relaxed text-[#4f4a52]">{digest.summary}</p>
+        <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Summary</p>
+        <p className="mt-3 text-base leading-relaxed text-[#4f4a52]">{digest.summary}</p>
       </Card>
     </section>
   );
 }
 
-// ── Section 3: Key Observations ───────────────────────────────────────────────
+// ── Section 3: Executive Observations ────────────────────────────────────────
 
-function KeyObservationsSection({ digest }: { digest: ExecutiveOperationsDigest }) {
+function ObservationWorkspaceCard({
+  obs,
+  index,
+}: {
+  obs:   ExecutiveDigestSection;
+  index: number;
+}) {
+  const num = String(index + 1).padStart(2, "0");
+
+  return (
+    <Card>
+      <div className="mb-3 flex items-start justify-between gap-4">
+        <div className="flex items-center gap-3">
+          <span className="text-2xl font-black text-[#e8e3ef]">{num}</span>
+          <p className="text-sm font-bold uppercase tracking-wide text-[#4f4a52]">{obs.title}</p>
+        </div>
+        <span className="shrink-0 rounded-full border border-gray-100 bg-gray-50 px-2 py-0.5 text-[9px] font-mono text-[#a09aa6]">
+          {obs.alertId}
+        </span>
+      </div>
+      <div className="h-px bg-gray-100" />
+      <p className="mt-3 text-sm leading-relaxed text-[#7b7480]">{obs.body}</p>
+    </Card>
+  );
+}
+
+function ExecutiveObservationsSection({ digest }: { digest: ExecutiveOperationsDigest }) {
   if (digest.keyObservations.length === 0) {
     return (
       <section>
         <SectionLabel>Observations</SectionLabel>
-        <SectionHeading>Key Observations</SectionHeading>
+        <SectionHeading>Executive Observations</SectionHeading>
         <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-          Observations projected from alert briefing.
+          Observations derived from the operational alert briefing.
         </p>
         <Card>
           <p className="text-sm text-[#7b7480]">No active observations. All alerts resolved.</p>
@@ -129,87 +165,89 @@ function KeyObservationsSection({ digest }: { digest: ExecutiveOperationsDigest 
   return (
     <section>
       <SectionLabel>Observations</SectionLabel>
-      <SectionHeading>Key Observations</SectionHeading>
+      <SectionHeading>Executive Observations</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        {digest.keyObservations.length} observation{digest.keyObservations.length === 1 ? "" : "s"} projected from the alert briefing.
+        {digest.keyObservations.length} observation{digest.keyObservations.length === 1 ? "" : "s"} for executive review.
+        Displayed exactly as received.
       </p>
 
       <div className="space-y-4">
-        {digest.keyObservations.map((obs: ExecutiveDigestSection) => (
-          <Card key={obs.alertId}>
-            <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">{obs.title}</p>
-            <p className="mt-2 text-sm leading-relaxed text-[#4f4a52]">{obs.body}</p>
-          </Card>
+        {digest.keyObservations.map((obs, i) => (
+          <ObservationWorkspaceCard key={obs.alertId} obs={obs} index={i} />
         ))}
       </div>
     </section>
   );
 }
 
-// ── Section 4: Operational Status ─────────────────────────────────────────────
+// ── Section 4: Operational Readiness ─────────────────────────────────────────
 
-function OperationalStatusSection({ digest }: { digest: ExecutiveOperationsDigest }) {
+function OperationalReadinessSection({ digest }: { digest: ExecutiveOperationsDigest }) {
   return (
     <section>
-      <SectionLabel>Status</SectionLabel>
-      <SectionHeading>Operational Status</SectionHeading>
+      <SectionLabel>Readiness</SectionLabel>
+      <SectionHeading>Operational Readiness</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Overall platform status and analytics connectivity.
+        Platform readiness assessment derived from operational status and analytics availability.
       </p>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <Card>
-          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Overall Status</p>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Platform Readiness</p>
+          <p className="mt-3 text-xl font-black text-[#4f4a52]">
+            {READINESS_LABELS[digest.overallStatus]}
+          </p>
           <div className="mt-3">
-            <span className={`rounded-full border px-4 py-1.5 text-xs font-bold uppercase tracking-wider ${SEVERITY_STYLES[digest.overallStatus]}`}>
+            <span className={`rounded-full border px-3 py-1 text-xs font-bold uppercase ${SEVERITY_STYLES[digest.overallStatus]}`}>
               {SEVERITY_LABELS[digest.overallStatus]}
             </span>
           </div>
         </Card>
+
         <Card>
-          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Analytics</p>
-          <p className="mt-3 text-sm font-bold text-[#4f4a52]">
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Intelligence Availability</p>
+          <p className="mt-3 text-xl font-black text-[#4f4a52]">
             {digest.analyticsAvailable ? "Connected" : "Offline"}
           </p>
-          {!digest.analyticsAvailable && (
-            <p className="mt-1 text-[10px] text-[#7b7480]">
-              Configure PostHog environment variables to enable live intelligence.
-            </p>
-          )}
+          <p className="mt-2 text-[10px] uppercase tracking-wider text-[#a09aa6]">
+            {digest.analyticsAvailable
+              ? "Live analytics connected"
+              : "Configure PostHog to enable"}
+          </p>
         </Card>
       </div>
     </section>
   );
 }
 
-// ── Section 5: Generated Information ─────────────────────────────────────────
+// ── Section 5: Digest Metadata ────────────────────────────────────────────────
 
-function GeneratedInformationSection({ digest }: { digest: ExecutiveOperationsDigest }) {
+function DigestMetadataSection({ digest }: { digest: ExecutiveOperationsDigest }) {
   return (
     <section>
       <SectionLabel>Metadata</SectionLabel>
-      <SectionHeading>Generated Information</SectionHeading>
+      <SectionHeading>Digest Metadata</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Digest generation metadata. No user data is stored or persisted.
+        Digest generation metadata. No data is stored or persisted.
       </p>
 
       <Card>
-        <div className="space-y-4">
-          <div>
-            <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Generated At</p>
-            <p className="mt-1 text-sm text-[#4f4a52]">{fmtDate(digest.generatedAt)}</p>
-          </div>
-          <div className="h-px bg-gray-100" />
-          <div>
-            <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Analytics Available</p>
-            <p className="mt-1 text-sm text-[#4f4a52]">{digest.analyticsAvailable ? "Yes" : "No"}</p>
-          </div>
-          <div className="h-px bg-gray-100" />
-          <div>
-            <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Key Observations</p>
-            <p className="mt-1 text-sm text-[#4f4a52]">{digest.keyObservations.length}</p>
-          </div>
-        </div>
+        <table className="w-full text-sm">
+          <tbody className="divide-y divide-gray-100">
+            <tr>
+              <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Generated At</td>
+              <td className="py-3 text-right text-[#4f4a52]">{fmtDate(digest.generatedAt)}</td>
+            </tr>
+            <tr>
+              <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Analytics Available</td>
+              <td className="py-3 text-right text-[#4f4a52]">{digest.analyticsAvailable ? "Yes" : "No"}</td>
+            </tr>
+            <tr>
+              <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Key Observations</td>
+              <td className="py-3 text-right text-[#4f4a52]">{digest.keyObservations.length}</td>
+            </tr>
+          </tbody>
+        </table>
       </Card>
     </section>
   );
@@ -218,12 +256,13 @@ function GeneratedInformationSection({ digest }: { digest: ExecutiveOperationsDi
 // ── Section 6: Quick Navigation ───────────────────────────────────────────────
 
 const QUICK_NAV_LINKS = [
-  { href: "/admin",                      label: "Operations" },
-  { href: "/admin/operations",           label: "Unified Operations" },
-  { href: "/admin/executive-operations", label: "Executive Operations" },
-  { href: "/admin/alerts",               label: "Alerts" },
-  { href: "/admin/alert-center",         label: "Alert Center" },
-  { href: "/admin/executive-digest",     label: "Executive Digest" },
+  { href: "/admin",                        label: "Operations" },
+  { href: "/admin/operations",             label: "Unified Operations" },
+  { href: "/admin/executive-operations",   label: "Executive Operations" },
+  { href: "/admin/alerts",                 label: "Alerts" },
+  { href: "/admin/alert-center",           label: "Alert Center" },
+  { href: "/admin/executive-digest",       label: "Executive Digest" },
+  { href: "/admin/executive-briefing",     label: "Executive Briefing" },
 ] as const;
 
 function QuickNavigationSection() {
@@ -235,7 +274,7 @@ function QuickNavigationSection() {
         Direct access to operations and intelligence consoles.
       </p>
 
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
         {QUICK_NAV_LINKS.map(({ href, label }) => (
           <Link
             key={href}
@@ -258,7 +297,7 @@ interface Props {
 
 // ── Main export ───────────────────────────────────────────────────────────────
 
-export default function ExecutiveOperationsDigestDashboard({ digest }: Props) {
+export default function ExecutiveBriefingCenter({ digest }: Props) {
   return (
     <div className="min-h-screen bg-[#f5f1eb]">
 
@@ -300,10 +339,10 @@ export default function ExecutiveOperationsDigestDashboard({ digest }: Props) {
             <Link href="/admin/alert-center" className="text-xs text-white/60 transition hover:text-white">
               Alert Center
             </Link>
-            <span className="text-xs font-bold text-white">Executive Digest</span>
-            <Link href="/admin/executive-briefing" className="text-xs text-white/60 transition hover:text-white">
-              Executive Briefing
+            <Link href="/admin/executive-digest" className="text-xs text-white/60 transition hover:text-white">
+              Executive Digest
             </Link>
+            <span className="text-xs font-bold text-white">Executive Briefing</span>
           </nav>
         </div>
         <form action={logoutAction}>
@@ -316,23 +355,23 @@ export default function ExecutiveOperationsDigestDashboard({ digest }: Props) {
       {/* ── Content ── */}
       <div className="mx-auto w-full max-w-[780px] space-y-14 px-6 py-12">
 
-        <ExecutiveHeadlineSection digest={digest} />
+        <ExecutiveOverviewSection digest={digest} />
 
         <hr className="border-gray-200" />
 
-        <DigestSummarySection digest={digest} />
+        <StrategicSummarySection digest={digest} />
 
         <hr className="border-gray-200" />
 
-        <KeyObservationsSection digest={digest} />
+        <ExecutiveObservationsSection digest={digest} />
 
         <hr className="border-gray-200" />
 
-        <OperationalStatusSection digest={digest} />
+        <OperationalReadinessSection digest={digest} />
 
         <hr className="border-gray-200" />
 
-        <GeneratedInformationSection digest={digest} />
+        <DigestMetadataSection digest={digest} />
 
         <hr className="border-gray-200" />
 
