@@ -382,6 +382,9 @@ export default function OperationsAlertCenter({ report }: Props) {
             <Link href="/admin/executive-report-archive" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Archive
             </Link>
+            <Link href="/admin/executive-report-archive-center" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report Archive Center
+            </Link>
           </nav>
         </div>
         <form action={logoutAction}>
