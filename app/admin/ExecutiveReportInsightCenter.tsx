@@ -5,9 +5,10 @@ import Link             from "next/link";
 import { logoutAction } from "./actions";
 import type { AlertSeverity } from "@/app/lib/operations/OperationsAlertTypes";
 import type {
-  ExecutiveReportHistory,
-  ExecutiveReportHistoryEntry,
-} from "@/app/lib/operations/ExecutiveReportHistoryTypes";
+  ExecutiveReportInsight,
+  ExecutiveReportInsightEntry,
+  ExecutiveReportInsightState,
+} from "@/app/lib/operations/ExecutiveReportInsightTypes";
 
 // ── UI helpers ────────────────────────────────────────────────────────────────
 
@@ -60,44 +61,56 @@ const SEVERITY_LABELS: Record<AlertSeverity, string> = {
   "low":      "Low",
 };
 
-// ── Section 1: History Workspace Overview ─────────────────────────────────────
+const INSIGHT_STATE_STYLES: Record<ExecutiveReportInsightState, string> = {
+  "new":     "border-blue-200  bg-blue-50   text-blue-700",
+  "stable":  "border-gray-200  bg-gray-100  text-gray-500",
+  "updated": "border-amber-100 bg-amber-50  text-amber-700",
+};
 
-function HistoryWorkspaceOverviewSection({ history }: { history: ExecutiveReportHistory }) {
+const INSIGHT_STATE_LABELS: Record<ExecutiveReportInsightState, string> = {
+  "new":     "New",
+  "stable":  "Stable",
+  "updated": "Updated",
+};
+
+// ── Section 1: Insight Workspace Overview ─────────────────────────────────────
+
+function InsightWorkspaceOverviewSection({ insight }: { insight: ExecutiveReportInsight }) {
   return (
     <section>
-      <SectionLabel>Executive Report History Center</SectionLabel>
-      <SectionHeading>History Workspace Overview</SectionHeading>
+      <SectionLabel>Executive Report Insight Center</SectionLabel>
+      <SectionHeading>Insight Workspace Overview</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Workspace view of the executive report history. Refreshed on every page load.
+        Workspace view of the executive report insight. Refreshed on every page load.
       </p>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <Card>
           <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Total Records</p>
-          <p className="mt-2 text-3xl font-black text-[#4f4a52]">{history.records.length}</p>
+          <p className="mt-2 text-3xl font-black text-[#4f4a52]">{insight.records.length}</p>
         </Card>
         <Card>
-          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">History Generated</p>
-          <p className="mt-2 text-sm font-bold text-[#4f4a52]">{fmtDate(history.generatedAt)}</p>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Insight Generated</p>
+          <p className="mt-2 text-sm font-bold text-[#4f4a52]">{fmtDate(insight.generatedAt)}</p>
         </Card>
       </div>
     </section>
   );
 }
 
-// ── Section 2: Executive Summary Workspace ────────────────────────────────────
+// ── Section 2: Executive Insight Workspace ────────────────────────────────────
 
-function ExecutiveSummaryWorkspaceSection({ history }: { history: ExecutiveReportHistory }) {
-  if (history.records.length === 0) {
+function ExecutiveInsightWorkspaceSection({ insight }: { insight: ExecutiveReportInsight }) {
+  if (insight.records.length === 0) {
     return (
       <section>
         <SectionLabel>Workspace</SectionLabel>
-        <SectionHeading>Executive Summary Workspace</SectionHeading>
+        <SectionHeading>Executive Insight Workspace</SectionHeading>
         <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-          Executive summaries for review. Displayed exactly as received.
+          Insight entries for review. Displayed exactly as received.
         </p>
         <Card>
-          <p className="text-sm text-[#7b7480]">No history records available.</p>
+          <p className="text-sm text-[#7b7480]">No insight records available.</p>
         </Card>
       </section>
     );
@@ -106,16 +119,30 @@ function ExecutiveSummaryWorkspaceSection({ history }: { history: ExecutiveRepor
   return (
     <section>
       <SectionLabel>Workspace</SectionLabel>
-      <SectionHeading>Executive Summary Workspace</SectionHeading>
+      <SectionHeading>Executive Insight Workspace</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Executive summaries for review. Displayed exactly as received. No processing applied.
+        Insight entries for review. Displayed exactly as received. No processing applied.
       </p>
 
       <div className="space-y-4">
-        {history.records.map((record, i) => (
+        {insight.records.map((entry, i) => (
           <Card key={i}>
-            <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">{record.headline.text}</p>
-            <p className="mt-3 text-base leading-relaxed text-[#4f4a52]">{record.executiveSummary}</p>
+            <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">
+              {entry.delta.comparison.current.headline.text}
+            </p>
+            {entry.delta.comparison.previous && (
+              <p className="mt-1 text-[10px] text-[#a09aa6]">
+                Previous: {entry.delta.comparison.previous.headline.text}
+              </p>
+            )}
+            <div className="mt-2 mb-3">
+              <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${INSIGHT_STATE_STYLES[entry.state]}`}>
+                {INSIGHT_STATE_LABELS[entry.state]}
+              </span>
+            </div>
+            <p className="text-base leading-relaxed text-[#4f4a52]">
+              {entry.delta.comparison.current.executiveSummary}
+            </p>
           </Card>
         ))}
       </div>
@@ -123,42 +150,49 @@ function ExecutiveSummaryWorkspaceSection({ history }: { history: ExecutiveRepor
   );
 }
 
-// ── Section 3: History Review Workspace ───────────────────────────────────────
+// ── Section 3: Insight Review Workspace ───────────────────────────────────────
 
-function HistoryWorkspaceCard({ record }: { record: ExecutiveReportHistoryEntry }) {
+function InsightWorkspaceCard({ entry }: { entry: ExecutiveReportInsightEntry }) {
   return (
     <Card>
       <div className="mb-3 flex items-start justify-between gap-4">
         <p className="text-sm font-bold uppercase tracking-wide text-[#4f4a52]">
-          {record.headline.text}
+          {entry.delta.comparison.current.headline.text}
         </p>
-        <span className={`shrink-0 rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${SEVERITY_STYLES[record.overallStatus]}`}>
-          {SEVERITY_LABELS[record.overallStatus]}
-        </span>
+        <div className="flex shrink-0 flex-col items-end gap-1">
+          <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${INSIGHT_STATE_STYLES[entry.state]}`}>
+            {INSIGHT_STATE_LABELS[entry.state]}
+          </span>
+          <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${SEVERITY_STYLES[entry.delta.comparison.current.overallStatus]}`}>
+            {SEVERITY_LABELS[entry.delta.comparison.current.overallStatus]}
+          </span>
+        </div>
       </div>
       <div className="h-px bg-gray-100" />
-      <p className="mt-3 text-sm leading-relaxed text-[#7b7480]">{record.executiveSummary}</p>
+      <p className="mt-3 text-sm leading-relaxed text-[#7b7480]">
+        {entry.delta.comparison.current.executiveSummary}
+      </p>
       <div className="mt-3 flex flex-wrap items-center gap-3">
-        <span className="text-[10px] text-[#a09aa6]">{fmtDate(record.generatedAt)}</span>
+        <span className="text-[10px] text-[#a09aa6]">{fmtDate(entry.generatedAt)}</span>
         <span className="text-[10px] uppercase tracking-wider text-[#a09aa6]">
-          {record.entryCount} entr{record.entryCount === 1 ? "y" : "ies"}
+          Previous: {entry.delta.comparison.previous?.headline.text ?? "—"}
         </span>
       </div>
     </Card>
   );
 }
 
-function HistoryReviewWorkspaceSection({ history }: { history: ExecutiveReportHistory }) {
-  if (history.records.length === 0) {
+function InsightReviewWorkspaceSection({ insight }: { insight: ExecutiveReportInsight }) {
+  if (insight.records.length === 0) {
     return (
       <section>
         <SectionLabel>Review</SectionLabel>
-        <SectionHeading>History Review Workspace</SectionHeading>
+        <SectionHeading>Insight Review Workspace</SectionHeading>
         <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-          History records for executive review.
+          Insight records for executive review.
         </p>
         <Card>
-          <p className="text-sm text-[#7b7480]">No history records available.</p>
+          <p className="text-sm text-[#7b7480]">No insight records available.</p>
         </Card>
       </section>
     );
@@ -167,40 +201,40 @@ function HistoryReviewWorkspaceSection({ history }: { history: ExecutiveReportHi
   return (
     <section>
       <SectionLabel>Review</SectionLabel>
-      <SectionHeading>History Review Workspace</SectionHeading>
+      <SectionHeading>Insight Review Workspace</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        {history.records.length} record{history.records.length === 1 ? "" : "s"} for executive review.
+        {insight.records.length} record{insight.records.length === 1 ? "" : "s"} for executive review.
         Displayed exactly as received.
       </p>
 
       <div className="space-y-4">
-        {history.records.map((record, i) => (
-          <HistoryWorkspaceCard key={i} record={record} />
+        {insight.records.map((entry, i) => (
+          <InsightWorkspaceCard key={i} entry={entry} />
         ))}
       </div>
     </section>
   );
 }
 
-// ── Section 4: History Readiness ──────────────────────────────────────────────
+// ── Section 4: Insight Readiness ──────────────────────────────────────────────
 
-function HistoryReadinessSection({ history }: { history: ExecutiveReportHistory }) {
-  const latestGeneratedAt = history.records.length > 0
-    ? history.records[history.records.length - 1].generatedAt
+function InsightReadinessSection({ insight }: { insight: ExecutiveReportInsight }) {
+  const latestGeneratedAt = insight.records.length > 0
+    ? insight.records[insight.records.length - 1].generatedAt
     : null;
 
   return (
     <section>
       <SectionLabel>Readiness</SectionLabel>
-      <SectionHeading>History Readiness</SectionHeading>
+      <SectionHeading>Insight Readiness</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Aggregate history readiness at generation time.
+        Aggregate insight readiness at generation time.
       </p>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <Card>
-          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Total History Records</p>
-          <p className="mt-3 text-3xl font-black text-[#4f4a52]">{history.records.length}</p>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Total Insight Records</p>
+          <p className="mt-3 text-3xl font-black text-[#4f4a52]">{insight.records.length}</p>
         </Card>
         <Card>
           <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Latest Generated At</p>
@@ -213,15 +247,15 @@ function HistoryReadinessSection({ history }: { history: ExecutiveReportHistory 
   );
 }
 
-// ── Section 5: History Metadata ───────────────────────────────────────────────
+// ── Section 5: Insight Metadata ───────────────────────────────────────────────
 
-function HistoryMetadataSection({ history }: { history: ExecutiveReportHistory }) {
+function InsightMetadataSection({ insight }: { insight: ExecutiveReportInsight }) {
   return (
     <section>
       <SectionLabel>Metadata</SectionLabel>
-      <SectionHeading>History Metadata</SectionHeading>
+      <SectionHeading>Insight Metadata</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        History generation metadata. No data is stored or persisted.
+        Insight generation metadata. No data is stored or persisted.
       </p>
 
       <Card>
@@ -229,11 +263,11 @@ function HistoryMetadataSection({ history }: { history: ExecutiveReportHistory }
           <tbody className="divide-y divide-gray-100">
             <tr>
               <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Generated At</td>
-              <td className="py-3 text-right text-[#4f4a52]">{fmtDate(history.generatedAt)}</td>
+              <td className="py-3 text-right text-[#4f4a52]">{fmtDate(insight.generatedAt)}</td>
             </tr>
             <tr>
-              <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">History Records</td>
-              <td className="py-3 text-right text-[#4f4a52]">{history.records.length}</td>
+              <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Insight Records</td>
+              <td className="py-3 text-right text-[#4f4a52]">{insight.records.length}</td>
             </tr>
           </tbody>
         </table>
@@ -245,19 +279,25 @@ function HistoryMetadataSection({ history }: { history: ExecutiveReportHistory }
 // ── Section 6: Quick Navigation ───────────────────────────────────────────────
 
 const QUICK_NAV_LINKS = [
-  { href: "/admin",                                  label: "Operations" },
-  { href: "/admin/operations",                       label: "Unified Operations" },
-  { href: "/admin/executive-operations",             label: "Executive Operations" },
-  { href: "/admin/alerts",                           label: "Alerts" },
-  { href: "/admin/alert-center",                     label: "Alert Center" },
-  { href: "/admin/executive-digest",                 label: "Executive Digest" },
-  { href: "/admin/executive-briefing",               label: "Executive Briefing" },
-  { href: "/admin/executive-report",                 label: "Executive Report" },
-  { href: "/admin/executive-report-center",          label: "Executive Report Center" },
-  { href: "/admin/executive-report-archive",         label: "Executive Report Archive" },
-  { href: "/admin/executive-report-archive-center",  label: "Executive Report Archive Center" },
-  { href: "/admin/executive-report-history",         label: "Executive Report History" },
-  { href: "/admin/executive-report-history-center",  label: "Executive Report History Center" },
+  { href: "/admin",                                    label: "Operations" },
+  { href: "/admin/operations",                         label: "Unified Operations" },
+  { href: "/admin/executive-operations",               label: "Executive Operations" },
+  { href: "/admin/alerts",                             label: "Alerts" },
+  { href: "/admin/alert-center",                       label: "Alert Center" },
+  { href: "/admin/executive-digest",                   label: "Executive Digest" },
+  { href: "/admin/executive-briefing",                 label: "Executive Briefing" },
+  { href: "/admin/executive-report",                   label: "Executive Report" },
+  { href: "/admin/executive-report-center",            label: "Executive Report Center" },
+  { href: "/admin/executive-report-archive",           label: "Executive Report Archive" },
+  { href: "/admin/executive-report-archive-center",    label: "Executive Report Archive Center" },
+  { href: "/admin/executive-report-history",           label: "Executive Report History" },
+  { href: "/admin/executive-report-history-center",    label: "Executive Report History Center" },
+  { href: "/admin/executive-report-comparison",        label: "Executive Report Comparison" },
+  { href: "/admin/executive-report-comparison-center", label: "Executive Report Comparison Center" },
+  { href: "/admin/executive-report-delta",             label: "Executive Report Delta" },
+  { href: "/admin/executive-report-delta-center",      label: "Executive Report Delta Center" },
+  { href: "/admin/executive-report-insight",           label: "Executive Report Insight" },
+  { href: "/admin/executive-report-insight-center",    label: "Executive Report Insight Center" },
 ] as const;
 
 function QuickNavigationSection() {
@@ -287,12 +327,12 @@ function QuickNavigationSection() {
 // ── Props ─────────────────────────────────────────────────────────────────────
 
 interface Props {
-  history: ExecutiveReportHistory;
+  insight: ExecutiveReportInsight;
 }
 
 // ── Main export ───────────────────────────────────────────────────────────────
 
-export default function ExecutiveReportHistoryCenter({ history }: Props) {
+export default function ExecutiveReportInsightCenter({ insight }: Props) {
   return (
     <div className="min-h-screen bg-[#f5f1eb]">
 
@@ -355,7 +395,9 @@ export default function ExecutiveReportHistoryCenter({ history }: Props) {
             <Link href="/admin/executive-report-history" className="text-xs text-white/60 transition hover:text-white">
               Executive Report History
             </Link>
-            <span className="text-xs font-bold text-white">Executive Report History Center</span>
+            <Link href="/admin/executive-report-history-center" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report History Center
+            </Link>
             <Link href="/admin/executive-report-comparison" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Comparison
             </Link>
@@ -371,9 +413,7 @@ export default function ExecutiveReportHistoryCenter({ history }: Props) {
             <Link href="/admin/executive-report-insight" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Insight
             </Link>
-            <Link href="/admin/executive-report-insight-center" className="text-xs text-white/60 transition hover:text-white">
-              Executive Report Insight Center
-            </Link>
+            <span className="text-xs font-bold text-white">Executive Report Insight Center</span>
           </nav>
         </div>
         <form action={logoutAction}>
@@ -386,23 +426,23 @@ export default function ExecutiveReportHistoryCenter({ history }: Props) {
       {/* ── Content ── */}
       <div className="mx-auto w-full max-w-[780px] space-y-14 px-6 py-12">
 
-        <HistoryWorkspaceOverviewSection history={history} />
+        <InsightWorkspaceOverviewSection insight={insight} />
 
         <hr className="border-gray-200" />
 
-        <ExecutiveSummaryWorkspaceSection history={history} />
+        <ExecutiveInsightWorkspaceSection insight={insight} />
 
         <hr className="border-gray-200" />
 
-        <HistoryReviewWorkspaceSection history={history} />
+        <InsightReviewWorkspaceSection insight={insight} />
 
         <hr className="border-gray-200" />
 
-        <HistoryReadinessSection history={history} />
+        <InsightReadinessSection insight={insight} />
 
         <hr className="border-gray-200" />
 
-        <HistoryMetadataSection history={history} />
+        <InsightMetadataSection insight={insight} />
 
         <hr className="border-gray-200" />
 
