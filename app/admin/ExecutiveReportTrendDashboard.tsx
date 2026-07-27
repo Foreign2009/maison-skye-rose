@@ -413,6 +413,9 @@ export default function ExecutiveReportTrendDashboard({ trend }: Props) {
               Executive Report Insight Center
             </Link>
             <span className="text-xs font-bold text-white">Executive Report Trend</span>
+            <Link href="/admin/executive-report-trend-center" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report Trend Center
+            </Link>
           </nav>
         </div>
         <form action={logoutAction}>

@@ -5,10 +5,10 @@ import Link             from "next/link";
 import { logoutAction } from "./actions";
 import type { AlertSeverity } from "@/app/lib/operations/OperationsAlertTypes";
 import type {
-  ExecutiveReportDelta,
-  ExecutiveReportDeltaEntry,
-  ExecutiveReportDeltaState,
-} from "@/app/lib/operations/ExecutiveReportDeltaTypes";
+  ExecutiveReportTrend,
+  ExecutiveReportTrendEntry,
+  ExecutiveReportTrendState,
+} from "@/app/lib/operations/ExecutiveReportTrendTypes";
 
 // ── UI helpers ────────────────────────────────────────────────────────────────
 
@@ -61,56 +61,56 @@ const SEVERITY_LABELS: Record<AlertSeverity, string> = {
   "low":      "Low",
 };
 
-const DELTA_STATE_STYLES: Record<ExecutiveReportDeltaState, string> = {
-  "initial":   "border-blue-200  bg-blue-50   text-blue-700",
-  "unchanged": "border-gray-200  bg-gray-100  text-gray-500",
-  "changed":   "border-amber-100 bg-amber-50  text-amber-700",
+const TREND_STATE_STYLES: Record<ExecutiveReportTrendState, string> = {
+  "emerging":  "border-blue-200  bg-blue-50  text-blue-700",
+  "stable":    "border-gray-200  bg-gray-100 text-gray-500",
+  "improving": "border-green-200 bg-green-50 text-green-700",
 };
 
-const DELTA_STATE_LABELS: Record<ExecutiveReportDeltaState, string> = {
-  "initial":   "Initial",
-  "unchanged": "Unchanged",
-  "changed":   "Changed",
+const TREND_STATE_LABELS: Record<ExecutiveReportTrendState, string> = {
+  "emerging":  "Emerging",
+  "stable":    "Stable",
+  "improving": "Improving",
 };
 
-// ── Section 1: Delta Overview ─────────────────────────────────────────────────
+// ── Section 1: Trend Workspace Overview ───────────────────────────────────────
 
-function DeltaOverviewSection({ delta }: { delta: ExecutiveReportDelta }) {
+function TrendWorkspaceOverviewSection({ trend }: { trend: ExecutiveReportTrend }) {
   return (
     <section>
-      <SectionLabel>Executive Report Delta</SectionLabel>
-      <SectionHeading>Delta Overview</SectionHeading>
+      <SectionLabel>Executive Report Trend Center</SectionLabel>
+      <SectionHeading>Trend Workspace Overview</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Aggregate view of the executive report delta. Refreshed on every page load.
+        Aggregate view of the executive report trend workspace. Refreshed on every page load.
       </p>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <Card>
           <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Total Records</p>
-          <p className="mt-2 text-3xl font-black text-[#4f4a52]">{delta.records.length}</p>
+          <p className="mt-2 text-3xl font-black text-[#4f4a52]">{trend.records.length}</p>
         </Card>
         <Card>
-          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Delta Generated</p>
-          <p className="mt-2 text-sm font-bold text-[#4f4a52]">{fmtDate(delta.generatedAt)}</p>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Trend Generated</p>
+          <p className="mt-2 text-sm font-bold text-[#4f4a52]">{fmtDate(trend.generatedAt)}</p>
         </Card>
       </div>
     </section>
   );
 }
 
-// ── Section 2: Delta Timeline ─────────────────────────────────────────────────
+// ── Section 2: Executive Trend Workspace ──────────────────────────────────────
 
-function DeltaTimelineSection({ delta }: { delta: ExecutiveReportDelta }) {
-  if (delta.records.length === 0) {
+function ExecutiveTrendWorkspaceSection({ trend }: { trend: ExecutiveReportTrend }) {
+  if (trend.records.length === 0) {
     return (
       <section>
-        <SectionLabel>Timeline</SectionLabel>
-        <SectionHeading>Delta Timeline</SectionHeading>
+        <SectionLabel>Workspace</SectionLabel>
+        <SectionHeading>Executive Trend Workspace</SectionHeading>
         <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-          Chronological record of all delta entries.
+          Full trend workspace for executive review.
         </p>
         <Card>
-          <p className="text-sm text-[#7b7480]">No delta records available.</p>
+          <p className="text-sm text-[#7b7480]">No trend records available.</p>
         </Card>
       </section>
     );
@@ -118,28 +118,31 @@ function DeltaTimelineSection({ delta }: { delta: ExecutiveReportDelta }) {
 
   return (
     <section>
-      <SectionLabel>Timeline</SectionLabel>
-      <SectionHeading>Delta Timeline</SectionHeading>
+      <SectionLabel>Workspace</SectionLabel>
+      <SectionHeading>Executive Trend Workspace</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        {delta.records.length} record{delta.records.length === 1 ? "" : "s"}. Displayed as received.
+        {trend.records.length} record{trend.records.length === 1 ? "" : "s"} in the trend workspace.
       </p>
 
       <Card>
         <div className="divide-y divide-gray-100">
-          {delta.records.map((entry, i) => (
-            <div key={i} className="flex items-start gap-3 py-3 first:pt-0 last:pb-0">
-              <span className="mt-0.5 w-5 shrink-0 text-center text-[10px] font-bold text-[#a09aa6]">
-                {i + 1}
-              </span>
-              <div className="min-w-0 flex-1">
-                <p className="text-sm font-semibold text-[#4f4a52]">
-                  {entry.comparison.current.headline.text}
-                </p>
-                <p className="mt-0.5 text-[10px] text-[#7b7480]">{fmtDate(entry.generatedAt)}</p>
+          {trend.records.map((entry, i) => (
+            <div key={i} className="py-4 first:pt-0 last:pb-0">
+              <div className="mb-2 flex items-center gap-2">
+                <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${TREND_STATE_STYLES[entry.state]}`}>
+                  {TREND_STATE_LABELS[entry.state]}
+                </span>
+                <span className="ml-auto text-[10px] text-[#a09aa6]">{fmtDate(entry.generatedAt)}</span>
               </div>
-              <span className={`shrink-0 rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${DELTA_STATE_STYLES[entry.state]}`}>
-                {DELTA_STATE_LABELS[entry.state]}
-              </span>
+              <p className="text-sm font-bold text-[#4f4a52]">
+                {entry.insight.delta.comparison.current.headline.text}
+              </p>
+              <p className="mt-1 text-[10px] text-[#a09aa6]">
+                Previous: {entry.insight.delta.comparison.previous?.headline.text ?? "—"}
+              </p>
+              <p className="mt-2 text-sm leading-relaxed text-[#7b7480]">
+                {entry.insight.delta.comparison.current.executiveSummary}
+              </p>
             </div>
           ))}
         </div>
@@ -148,41 +151,46 @@ function DeltaTimelineSection({ delta }: { delta: ExecutiveReportDelta }) {
   );
 }
 
-// ── Section 3: Delta Records ──────────────────────────────────────────────────
+// ── Section 3: Trend Review Workspace ────────────────────────────────────────
 
-function DeltaRecordCard({ entry }: { entry: ExecutiveReportDeltaEntry }) {
+function TrendWorkspaceCard({ entry }: { entry: ExecutiveReportTrendEntry }) {
   return (
     <Card>
       <div className="mb-3 flex flex-wrap items-center gap-2">
-        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${DELTA_STATE_STYLES[entry.state]}`}>
-          {DELTA_STATE_LABELS[entry.state]}
+        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${TREND_STATE_STYLES[entry.state]}`}>
+          {TREND_STATE_LABELS[entry.state]}
         </span>
-        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${SEVERITY_STYLES[entry.comparison.current.overallStatus]}`}>
-          {SEVERITY_LABELS[entry.comparison.current.overallStatus]}
+        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${SEVERITY_STYLES[entry.insight.delta.comparison.current.overallStatus]}`}>
+          {SEVERITY_LABELS[entry.insight.delta.comparison.current.overallStatus]}
         </span>
         <span className="ml-auto text-[10px] text-[#a09aa6]">{fmtDate(entry.generatedAt)}</span>
       </div>
-      <p className="text-sm font-bold text-[#4f4a52]">{entry.comparison.current.headline.text}</p>
+      <p className="text-sm font-bold text-[#4f4a52]">
+        {entry.insight.delta.comparison.current.headline.text}
+      </p>
       <div className="my-3 h-px bg-gray-100" />
       <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Previous Headline</p>
       <p className="mt-1 text-sm text-[#7b7480]">
-        {entry.comparison.previous?.headline.text ?? "—"}
+        {entry.insight.delta.comparison.previous?.headline.text ?? "—"}
+      </p>
+      <p className="mt-3 text-sm leading-relaxed text-[#7b7480]">
+        {entry.insight.delta.comparison.current.executiveSummary}
       </p>
     </Card>
   );
 }
 
-function DeltaRecordsSection({ delta }: { delta: ExecutiveReportDelta }) {
-  if (delta.records.length === 0) {
+function TrendReviewWorkspaceSection({ trend }: { trend: ExecutiveReportTrend }) {
+  if (trend.records.length === 0) {
     return (
       <section>
-        <SectionLabel>Records</SectionLabel>
-        <SectionHeading>Delta Records</SectionHeading>
+        <SectionLabel>Review</SectionLabel>
+        <SectionHeading>Trend Review Workspace</SectionHeading>
         <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-          Full detail for every delta record.
+          Detailed review cards for every trend record.
         </p>
         <Card>
-          <p className="text-sm text-[#7b7480]">No delta records available.</p>
+          <p className="text-sm text-[#7b7480]">No trend records available.</p>
         </Card>
       </section>
     );
@@ -190,41 +198,41 @@ function DeltaRecordsSection({ delta }: { delta: ExecutiveReportDelta }) {
 
   return (
     <section>
-      <SectionLabel>Records</SectionLabel>
-      <SectionHeading>Delta Records</SectionHeading>
+      <SectionLabel>Review</SectionLabel>
+      <SectionHeading>Trend Review Workspace</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        {delta.records.length} record{delta.records.length === 1 ? "" : "s"} in the delta.
+        {trend.records.length} record{trend.records.length === 1 ? "" : "s"} under review.
         Displayed exactly as received.
       </p>
 
       <div className="space-y-4">
-        {delta.records.map((entry, i) => (
-          <DeltaRecordCard key={i} entry={entry} />
+        {trend.records.map((entry, i) => (
+          <TrendWorkspaceCard key={i} entry={entry} />
         ))}
       </div>
     </section>
   );
 }
 
-// ── Section 4: Delta Status ───────────────────────────────────────────────────
+// ── Section 4: Trend Readiness ────────────────────────────────────────────────
 
-function DeltaStatusSection({ delta }: { delta: ExecutiveReportDelta }) {
-  const latestGeneratedAt = delta.records.length > 0
-    ? delta.records[delta.records.length - 1].generatedAt
+function TrendReadinessSection({ trend }: { trend: ExecutiveReportTrend }) {
+  const latestGeneratedAt = trend.records.length > 0
+    ? trend.records[trend.records.length - 1].generatedAt
     : null;
 
   return (
     <section>
-      <SectionLabel>Status</SectionLabel>
-      <SectionHeading>Delta Status</SectionHeading>
+      <SectionLabel>Readiness</SectionLabel>
+      <SectionHeading>Trend Readiness</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Aggregate delta status at generation time.
+        Trend readiness indicators at generation time.
       </p>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <Card>
-          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Total Delta Records</p>
-          <p className="mt-3 text-3xl font-black text-[#4f4a52]">{delta.records.length}</p>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Total Trend Records</p>
+          <p className="mt-3 text-3xl font-black text-[#4f4a52]">{trend.records.length}</p>
         </Card>
         <Card>
           <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Latest Generated At</p>
@@ -237,15 +245,15 @@ function DeltaStatusSection({ delta }: { delta: ExecutiveReportDelta }) {
   );
 }
 
-// ── Section 5: Delta Metadata ─────────────────────────────────────────────────
+// ── Section 5: Trend Metadata ─────────────────────────────────────────────────
 
-function DeltaMetadataSection({ delta }: { delta: ExecutiveReportDelta }) {
+function TrendMetadataSection({ trend }: { trend: ExecutiveReportTrend }) {
   return (
     <section>
       <SectionLabel>Metadata</SectionLabel>
-      <SectionHeading>Delta Metadata</SectionHeading>
+      <SectionHeading>Trend Metadata</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Delta generation metadata. No data is stored or persisted.
+        Trend generation metadata. No data is stored or persisted.
       </p>
 
       <Card>
@@ -253,11 +261,11 @@ function DeltaMetadataSection({ delta }: { delta: ExecutiveReportDelta }) {
           <tbody className="divide-y divide-gray-100">
             <tr>
               <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Generated At</td>
-              <td className="py-3 text-right text-[#4f4a52]">{fmtDate(delta.generatedAt)}</td>
+              <td className="py-3 text-right text-[#4f4a52]">{fmtDate(trend.generatedAt)}</td>
             </tr>
             <tr>
-              <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Delta Records</td>
-              <td className="py-3 text-right text-[#4f4a52]">{delta.records.length}</td>
+              <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Trend Records</td>
+              <td className="py-3 text-right text-[#4f4a52]">{trend.records.length}</td>
             </tr>
           </tbody>
         </table>
@@ -269,22 +277,27 @@ function DeltaMetadataSection({ delta }: { delta: ExecutiveReportDelta }) {
 // ── Section 6: Quick Navigation ───────────────────────────────────────────────
 
 const QUICK_NAV_LINKS = [
-  { href: "/admin",                                   label: "Operations" },
-  { href: "/admin/operations",                        label: "Unified Operations" },
-  { href: "/admin/executive-operations",              label: "Executive Operations" },
-  { href: "/admin/alerts",                            label: "Alerts" },
-  { href: "/admin/alert-center",                      label: "Alert Center" },
-  { href: "/admin/executive-digest",                  label: "Executive Digest" },
-  { href: "/admin/executive-briefing",                label: "Executive Briefing" },
-  { href: "/admin/executive-report",                  label: "Executive Report" },
-  { href: "/admin/executive-report-center",           label: "Executive Report Center" },
-  { href: "/admin/executive-report-archive",          label: "Executive Report Archive" },
-  { href: "/admin/executive-report-archive-center",   label: "Executive Report Archive Center" },
-  { href: "/admin/executive-report-history",          label: "Executive Report History" },
-  { href: "/admin/executive-report-history-center",   label: "Executive Report History Center" },
-  { href: "/admin/executive-report-comparison",       label: "Executive Report Comparison" },
-  { href: "/admin/executive-report-comparison-center", label: "Executive Report Comparison Center" },
-  { href: "/admin/executive-report-delta",            label: "Executive Report Delta" },
+  { href: "/admin",                                       label: "Operations" },
+  { href: "/admin/operations",                            label: "Unified Operations" },
+  { href: "/admin/executive-operations",                  label: "Executive Operations" },
+  { href: "/admin/alerts",                                label: "Alerts" },
+  { href: "/admin/alert-center",                          label: "Alert Center" },
+  { href: "/admin/executive-digest",                      label: "Executive Digest" },
+  { href: "/admin/executive-briefing",                    label: "Executive Briefing" },
+  { href: "/admin/executive-report",                      label: "Executive Report" },
+  { href: "/admin/executive-report-center",               label: "Executive Report Center" },
+  { href: "/admin/executive-report-archive",              label: "Executive Report Archive" },
+  { href: "/admin/executive-report-archive-center",       label: "Executive Report Archive Center" },
+  { href: "/admin/executive-report-history",              label: "Executive Report History" },
+  { href: "/admin/executive-report-history-center",       label: "Executive Report History Center" },
+  { href: "/admin/executive-report-comparison",           label: "Executive Report Comparison" },
+  { href: "/admin/executive-report-comparison-center",    label: "Executive Report Comparison Center" },
+  { href: "/admin/executive-report-delta",                label: "Executive Report Delta" },
+  { href: "/admin/executive-report-delta-center",         label: "Executive Report Delta Center" },
+  { href: "/admin/executive-report-insight",              label: "Executive Report Insight" },
+  { href: "/admin/executive-report-insight-center",       label: "Executive Report Insight Center" },
+  { href: "/admin/executive-report-trend",                label: "Executive Report Trend" },
+  { href: "/admin/executive-report-trend-center",         label: "Executive Report Trend Center" },
 ] as const;
 
 function QuickNavigationSection() {
@@ -314,12 +327,12 @@ function QuickNavigationSection() {
 // ── Props ─────────────────────────────────────────────────────────────────────
 
 interface Props {
-  delta: ExecutiveReportDelta;
+  trend: ExecutiveReportTrend;
 }
 
 // ── Main export ───────────────────────────────────────────────────────────────
 
-export default function ExecutiveReportDeltaDashboard({ delta }: Props) {
+export default function ExecutiveReportTrendCenter({ trend }: Props) {
   return (
     <div className="min-h-screen bg-[#f5f1eb]">
 
@@ -391,7 +404,9 @@ export default function ExecutiveReportDeltaDashboard({ delta }: Props) {
             <Link href="/admin/executive-report-comparison-center" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Comparison Center
             </Link>
-            <span className="text-xs font-bold text-white">Executive Report Delta</span>
+            <Link href="/admin/executive-report-delta" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report Delta
+            </Link>
             <Link href="/admin/executive-report-delta-center" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Delta Center
             </Link>
@@ -404,9 +419,7 @@ export default function ExecutiveReportDeltaDashboard({ delta }: Props) {
             <Link href="/admin/executive-report-trend" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Trend
             </Link>
-            <Link href="/admin/executive-report-trend-center" className="text-xs text-white/60 transition hover:text-white">
-              Executive Report Trend Center
-            </Link>
+            <span className="text-xs font-bold text-white">Executive Report Trend Center</span>
           </nav>
         </div>
         <form action={logoutAction}>
@@ -419,23 +432,23 @@ export default function ExecutiveReportDeltaDashboard({ delta }: Props) {
       {/* ── Content ── */}
       <div className="mx-auto w-full max-w-[780px] space-y-14 px-6 py-12">
 
-        <DeltaOverviewSection delta={delta} />
+        <TrendWorkspaceOverviewSection trend={trend} />
 
         <hr className="border-gray-200" />
 
-        <DeltaTimelineSection delta={delta} />
+        <ExecutiveTrendWorkspaceSection trend={trend} />
 
         <hr className="border-gray-200" />
 
-        <DeltaRecordsSection delta={delta} />
+        <TrendReviewWorkspaceSection trend={trend} />
 
         <hr className="border-gray-200" />
 
-        <DeltaStatusSection delta={delta} />
+        <TrendReadinessSection trend={trend} />
 
         <hr className="border-gray-200" />
 
-        <DeltaMetadataSection delta={delta} />
+        <TrendMetadataSection trend={trend} />
 
         <hr className="border-gray-200" />
 
