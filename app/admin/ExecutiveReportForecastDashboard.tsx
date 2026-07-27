@@ -421,6 +421,9 @@ export default function ExecutiveReportForecastDashboard({ forecast }: Props) {
               Executive Report Trend Center
             </Link>
             <span className="text-xs font-bold text-white">Executive Report Forecast</span>
+            <Link href="/admin/executive-report-forecast-center" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report Forecast Center
+            </Link>
           </nav>
         </div>
         <form action={logoutAction}>

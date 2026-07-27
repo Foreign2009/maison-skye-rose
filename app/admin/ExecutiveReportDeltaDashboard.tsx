@@ -410,6 +410,9 @@ export default function ExecutiveReportDeltaDashboard({ delta }: Props) {
             <Link href="/admin/executive-report-forecast" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Forecast
             </Link>
+            <Link href="/admin/executive-report-forecast-center" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report Forecast Center
+            </Link>
           </nav>
         </div>
         <form action={logoutAction}>

@@ -5,9 +5,10 @@ import Link             from "next/link";
 import { logoutAction } from "./actions";
 import type { AlertSeverity } from "@/app/lib/operations/OperationsAlertTypes";
 import type {
-  ExecutiveReportComparison,
-  ExecutiveReportComparisonEntry,
-} from "@/app/lib/operations/ExecutiveReportComparisonTypes";
+  ExecutiveReportForecast,
+  ExecutiveReportForecastEntry,
+  ExecutiveReportForecastState,
+} from "@/app/lib/operations/ExecutiveReportForecastTypes";
 
 // ── UI helpers ────────────────────────────────────────────────────────────────
 
@@ -60,44 +61,56 @@ const SEVERITY_LABELS: Record<AlertSeverity, string> = {
   "low":      "Low",
 };
 
-// ── Section 1: Comparison Overview ────────────────────────────────────────────
+const FORECAST_STATE_STYLES: Record<ExecutiveReportForecastState, string> = {
+  "watch":        "border-amber-100  bg-amber-50  text-amber-700",
+  "steady":       "border-gray-200   bg-gray-100  text-gray-500",
+  "accelerating": "border-green-200  bg-green-50  text-green-700",
+};
 
-function ComparisonOverviewSection({ comparison }: { comparison: ExecutiveReportComparison }) {
+const FORECAST_STATE_LABELS: Record<ExecutiveReportForecastState, string> = {
+  "watch":        "Watch",
+  "steady":       "Steady",
+  "accelerating": "Accelerating",
+};
+
+// ── Section 1: Forecast Workspace Overview ────────────────────────────────────
+
+function ForecastWorkspaceOverviewSection({ forecast }: { forecast: ExecutiveReportForecast }) {
   return (
     <section>
-      <SectionLabel>Executive Report Comparison</SectionLabel>
-      <SectionHeading>Comparison Overview</SectionHeading>
+      <SectionLabel>Executive Report Forecast Center</SectionLabel>
+      <SectionHeading>Forecast Workspace Overview</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Aggregate view of the executive report comparison. Refreshed on every page load.
+        Aggregate view of the executive report forecast workspace. Refreshed on every page load.
       </p>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <Card>
           <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Total Records</p>
-          <p className="mt-2 text-3xl font-black text-[#4f4a52]">{comparison.records.length}</p>
+          <p className="mt-2 text-3xl font-black text-[#4f4a52]">{forecast.records.length}</p>
         </Card>
         <Card>
-          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Comparison Generated</p>
-          <p className="mt-2 text-sm font-bold text-[#4f4a52]">{fmtDate(comparison.generatedAt)}</p>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Forecast Generated</p>
+          <p className="mt-2 text-sm font-bold text-[#4f4a52]">{fmtDate(forecast.generatedAt)}</p>
         </Card>
       </div>
     </section>
   );
 }
 
-// ── Section 2: Comparison Timeline ───────────────────────────────────────────
+// ── Section 2: Executive Forecast Workspace ───────────────────────────────────
 
-function ComparisonTimelineSection({ comparison }: { comparison: ExecutiveReportComparison }) {
-  if (comparison.records.length === 0) {
+function ExecutiveForecastWorkspaceSection({ forecast }: { forecast: ExecutiveReportForecast }) {
+  if (forecast.records.length === 0) {
     return (
       <section>
-        <SectionLabel>Timeline</SectionLabel>
-        <SectionHeading>Comparison Timeline</SectionHeading>
+        <SectionLabel>Workspace</SectionLabel>
+        <SectionHeading>Executive Forecast Workspace</SectionHeading>
         <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-          Chronological record of all comparison entries.
+          Full forecast workspace for executive review.
         </p>
         <Card>
-          <p className="text-sm text-[#7b7480]">No comparison records available.</p>
+          <p className="text-sm text-[#7b7480]">No forecast records available.</p>
         </Card>
       </section>
     );
@@ -105,30 +118,31 @@ function ComparisonTimelineSection({ comparison }: { comparison: ExecutiveReport
 
   return (
     <section>
-      <SectionLabel>Timeline</SectionLabel>
-      <SectionHeading>Comparison Timeline</SectionHeading>
+      <SectionLabel>Workspace</SectionLabel>
+      <SectionHeading>Executive Forecast Workspace</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        {comparison.records.length} record{comparison.records.length === 1 ? "" : "s"}. Displayed as received.
+        {forecast.records.length} record{forecast.records.length === 1 ? "" : "s"} in the forecast workspace.
       </p>
 
       <Card>
         <div className="divide-y divide-gray-100">
-          {comparison.records.map((entry, i) => (
-            <div key={i} className="flex items-start gap-3 py-3 first:pt-0 last:pb-0">
-              <span className="mt-0.5 w-5 shrink-0 text-center text-[10px] font-bold text-[#a09aa6]">
-                {i + 1}
-              </span>
-              <div className="min-w-0 flex-1">
-                <p className="text-sm font-semibold text-[#4f4a52]">{entry.current.headline.text}</p>
-                <p className="mt-0.5 text-[10px] text-[#7b7480]">{fmtDate(entry.generatedAt)}</p>
+          {forecast.records.map((entry, i) => (
+            <div key={i} className="py-4 first:pt-0 last:pb-0">
+              <div className="mb-2 flex items-center gap-2">
+                <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${FORECAST_STATE_STYLES[entry.state]}`}>
+                  {FORECAST_STATE_LABELS[entry.state]}
+                </span>
+                <span className="ml-auto text-[10px] text-[#a09aa6]">{fmtDate(entry.generatedAt)}</span>
               </div>
-              <span className={`shrink-0 rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${
-                entry.isFirstRecord
-                  ? "border-gray-200 bg-gray-100 text-gray-500"
-                  : "border-blue-200 bg-blue-50 text-blue-700"
-              }`}>
-                {entry.isFirstRecord ? "First Record" : "Subsequent"}
-              </span>
+              <p className="text-sm font-bold text-[#4f4a52]">
+                {entry.trend.insight.delta.comparison.current.headline.text}
+              </p>
+              <p className="mt-1 text-[10px] text-[#a09aa6]">
+                Previous: {entry.trend.insight.delta.comparison.previous?.headline.text ?? "—"}
+              </p>
+              <p className="mt-2 text-sm leading-relaxed text-[#7b7480]">
+                {entry.trend.insight.delta.comparison.current.executiveSummary}
+              </p>
             </div>
           ))}
         </div>
@@ -137,45 +151,46 @@ function ComparisonTimelineSection({ comparison }: { comparison: ExecutiveReport
   );
 }
 
-// ── Section 3: Comparison Records ────────────────────────────────────────────
+// ── Section 3: Forecast Review Workspace ──────────────────────────────────────
 
-function ComparisonRecordCard({ entry }: { entry: ExecutiveReportComparisonEntry }) {
+function ForecastWorkspaceCard({ entry }: { entry: ExecutiveReportForecastEntry }) {
   return (
     <Card>
       <div className="mb-3 flex flex-wrap items-center gap-2">
-        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${SEVERITY_STYLES[entry.current.overallStatus]}`}>
-          {SEVERITY_LABELS[entry.current.overallStatus]}
+        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${FORECAST_STATE_STYLES[entry.state]}`}>
+          {FORECAST_STATE_LABELS[entry.state]}
         </span>
-        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${
-          entry.isFirstRecord
-            ? "border-gray-200 bg-gray-100 text-gray-500"
-            : "border-blue-200 bg-blue-50 text-blue-700"
-        }`}>
-          {entry.isFirstRecord ? "First Record" : "Subsequent Record"}
+        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${SEVERITY_STYLES[entry.trend.insight.delta.comparison.current.overallStatus]}`}>
+          {SEVERITY_LABELS[entry.trend.insight.delta.comparison.current.overallStatus]}
         </span>
         <span className="ml-auto text-[10px] text-[#a09aa6]">{fmtDate(entry.generatedAt)}</span>
       </div>
-      <p className="text-sm font-bold text-[#4f4a52]">{entry.current.headline.text}</p>
+      <p className="text-sm font-bold text-[#4f4a52]">
+        {entry.trend.insight.delta.comparison.current.headline.text}
+      </p>
       <div className="my-3 h-px bg-gray-100" />
       <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Previous Headline</p>
       <p className="mt-1 text-sm text-[#7b7480]">
-        {entry.previous?.headline.text ?? "—"}
+        {entry.trend.insight.delta.comparison.previous?.headline.text ?? "—"}
+      </p>
+      <p className="mt-3 text-sm leading-relaxed text-[#7b7480]">
+        {entry.trend.insight.delta.comparison.current.executiveSummary}
       </p>
     </Card>
   );
 }
 
-function ComparisonRecordsSection({ comparison }: { comparison: ExecutiveReportComparison }) {
-  if (comparison.records.length === 0) {
+function ForecastReviewWorkspaceSection({ forecast }: { forecast: ExecutiveReportForecast }) {
+  if (forecast.records.length === 0) {
     return (
       <section>
-        <SectionLabel>Records</SectionLabel>
-        <SectionHeading>Comparison Records</SectionHeading>
+        <SectionLabel>Review</SectionLabel>
+        <SectionHeading>Forecast Review Workspace</SectionHeading>
         <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-          Full detail for every comparison record.
+          Detailed review cards for every forecast record.
         </p>
         <Card>
-          <p className="text-sm text-[#7b7480]">No comparison records available.</p>
+          <p className="text-sm text-[#7b7480]">No forecast records available.</p>
         </Card>
       </section>
     );
@@ -183,41 +198,41 @@ function ComparisonRecordsSection({ comparison }: { comparison: ExecutiveReportC
 
   return (
     <section>
-      <SectionLabel>Records</SectionLabel>
-      <SectionHeading>Comparison Records</SectionHeading>
+      <SectionLabel>Review</SectionLabel>
+      <SectionHeading>Forecast Review Workspace</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        {comparison.records.length} record{comparison.records.length === 1 ? "" : "s"} in the comparison.
+        {forecast.records.length} record{forecast.records.length === 1 ? "" : "s"} under review.
         Displayed exactly as received.
       </p>
 
       <div className="space-y-4">
-        {comparison.records.map((entry, i) => (
-          <ComparisonRecordCard key={i} entry={entry} />
+        {forecast.records.map((entry, i) => (
+          <ForecastWorkspaceCard key={i} entry={entry} />
         ))}
       </div>
     </section>
   );
 }
 
-// ── Section 4: Comparison Status ─────────────────────────────────────────────
+// ── Section 4: Forecast Readiness ─────────────────────────────────────────────
 
-function ComparisonStatusSection({ comparison }: { comparison: ExecutiveReportComparison }) {
-  const latestGeneratedAt = comparison.records.length > 0
-    ? comparison.records[comparison.records.length - 1].generatedAt
+function ForecastReadinessSection({ forecast }: { forecast: ExecutiveReportForecast }) {
+  const latestGeneratedAt = forecast.records.length > 0
+    ? forecast.records[forecast.records.length - 1].generatedAt
     : null;
 
   return (
     <section>
-      <SectionLabel>Status</SectionLabel>
-      <SectionHeading>Comparison Status</SectionHeading>
+      <SectionLabel>Readiness</SectionLabel>
+      <SectionHeading>Forecast Readiness</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Aggregate comparison status at generation time.
+        Forecast readiness indicators at generation time.
       </p>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <Card>
-          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Total Comparison Records</p>
-          <p className="mt-3 text-3xl font-black text-[#4f4a52]">{comparison.records.length}</p>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Total Forecast Records</p>
+          <p className="mt-3 text-3xl font-black text-[#4f4a52]">{forecast.records.length}</p>
         </Card>
         <Card>
           <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Latest Generated At</p>
@@ -230,15 +245,15 @@ function ComparisonStatusSection({ comparison }: { comparison: ExecutiveReportCo
   );
 }
 
-// ── Section 5: Comparison Metadata ───────────────────────────────────────────
+// ── Section 5: Forecast Metadata ──────────────────────────────────────────────
 
-function ComparisonMetadataSection({ comparison }: { comparison: ExecutiveReportComparison }) {
+function ForecastMetadataSection({ forecast }: { forecast: ExecutiveReportForecast }) {
   return (
     <section>
       <SectionLabel>Metadata</SectionLabel>
-      <SectionHeading>Comparison Metadata</SectionHeading>
+      <SectionHeading>Forecast Metadata</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Comparison generation metadata. No data is stored or persisted.
+        Forecast generation metadata. No data is stored or persisted.
       </p>
 
       <Card>
@@ -246,11 +261,11 @@ function ComparisonMetadataSection({ comparison }: { comparison: ExecutiveReport
           <tbody className="divide-y divide-gray-100">
             <tr>
               <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Generated At</td>
-              <td className="py-3 text-right text-[#4f4a52]">{fmtDate(comparison.generatedAt)}</td>
+              <td className="py-3 text-right text-[#4f4a52]">{fmtDate(forecast.generatedAt)}</td>
             </tr>
             <tr>
-              <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Comparison Records</td>
-              <td className="py-3 text-right text-[#4f4a52]">{comparison.records.length}</td>
+              <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Forecast Records</td>
+              <td className="py-3 text-right text-[#4f4a52]">{forecast.records.length}</td>
             </tr>
           </tbody>
         </table>
@@ -262,20 +277,29 @@ function ComparisonMetadataSection({ comparison }: { comparison: ExecutiveReport
 // ── Section 6: Quick Navigation ───────────────────────────────────────────────
 
 const QUICK_NAV_LINKS = [
-  { href: "/admin",                                  label: "Operations" },
-  { href: "/admin/operations",                       label: "Unified Operations" },
-  { href: "/admin/executive-operations",             label: "Executive Operations" },
-  { href: "/admin/alerts",                           label: "Alerts" },
-  { href: "/admin/alert-center",                     label: "Alert Center" },
-  { href: "/admin/executive-digest",                 label: "Executive Digest" },
-  { href: "/admin/executive-briefing",               label: "Executive Briefing" },
-  { href: "/admin/executive-report",                 label: "Executive Report" },
-  { href: "/admin/executive-report-center",          label: "Executive Report Center" },
-  { href: "/admin/executive-report-archive",         label: "Executive Report Archive" },
-  { href: "/admin/executive-report-archive-center",  label: "Executive Report Archive Center" },
-  { href: "/admin/executive-report-history",         label: "Executive Report History" },
-  { href: "/admin/executive-report-history-center",  label: "Executive Report History Center" },
-  { href: "/admin/executive-report-comparison",      label: "Executive Report Comparison" },
+  { href: "/admin",                                          label: "Operations" },
+  { href: "/admin/operations",                               label: "Unified Operations" },
+  { href: "/admin/executive-operations",                     label: "Executive Operations" },
+  { href: "/admin/alerts",                                   label: "Alerts" },
+  { href: "/admin/alert-center",                             label: "Alert Center" },
+  { href: "/admin/executive-digest",                         label: "Executive Digest" },
+  { href: "/admin/executive-briefing",                       label: "Executive Briefing" },
+  { href: "/admin/executive-report",                         label: "Executive Report" },
+  { href: "/admin/executive-report-center",                  label: "Executive Report Center" },
+  { href: "/admin/executive-report-archive",                 label: "Executive Report Archive" },
+  { href: "/admin/executive-report-archive-center",          label: "Executive Report Archive Center" },
+  { href: "/admin/executive-report-history",                 label: "Executive Report History" },
+  { href: "/admin/executive-report-history-center",          label: "Executive Report History Center" },
+  { href: "/admin/executive-report-comparison",              label: "Executive Report Comparison" },
+  { href: "/admin/executive-report-comparison-center",       label: "Executive Report Comparison Center" },
+  { href: "/admin/executive-report-delta",                   label: "Executive Report Delta" },
+  { href: "/admin/executive-report-delta-center",            label: "Executive Report Delta Center" },
+  { href: "/admin/executive-report-insight",                 label: "Executive Report Insight" },
+  { href: "/admin/executive-report-insight-center",          label: "Executive Report Insight Center" },
+  { href: "/admin/executive-report-trend",                   label: "Executive Report Trend" },
+  { href: "/admin/executive-report-trend-center",            label: "Executive Report Trend Center" },
+  { href: "/admin/executive-report-forecast",                label: "Executive Report Forecast" },
+  { href: "/admin/executive-report-forecast-center",         label: "Executive Report Forecast Center" },
 ] as const;
 
 function QuickNavigationSection() {
@@ -305,12 +329,12 @@ function QuickNavigationSection() {
 // ── Props ─────────────────────────────────────────────────────────────────────
 
 interface Props {
-  comparison: ExecutiveReportComparison;
+  forecast: ExecutiveReportForecast;
 }
 
 // ── Main export ───────────────────────────────────────────────────────────────
 
-export default function ExecutiveReportComparisonDashboard({ comparison }: Props) {
+export default function ExecutiveReportForecastCenter({ forecast }: Props) {
   return (
     <div className="min-h-screen bg-[#f5f1eb]">
 
@@ -376,7 +400,9 @@ export default function ExecutiveReportComparisonDashboard({ comparison }: Props
             <Link href="/admin/executive-report-history-center" className="text-xs text-white/60 transition hover:text-white">
               Executive Report History Center
             </Link>
-            <span className="text-xs font-bold text-white">Executive Report Comparison</span>
+            <Link href="/admin/executive-report-comparison" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report Comparison
+            </Link>
             <Link href="/admin/executive-report-comparison-center" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Comparison Center
             </Link>
@@ -401,9 +427,7 @@ export default function ExecutiveReportComparisonDashboard({ comparison }: Props
             <Link href="/admin/executive-report-forecast" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Forecast
             </Link>
-            <Link href="/admin/executive-report-forecast-center" className="text-xs text-white/60 transition hover:text-white">
-              Executive Report Forecast Center
-            </Link>
+            <span className="text-xs font-bold text-white">Executive Report Forecast Center</span>
           </nav>
         </div>
         <form action={logoutAction}>
@@ -416,23 +440,23 @@ export default function ExecutiveReportComparisonDashboard({ comparison }: Props
       {/* ── Content ── */}
       <div className="mx-auto w-full max-w-[780px] space-y-14 px-6 py-12">
 
-        <ComparisonOverviewSection comparison={comparison} />
+        <ForecastWorkspaceOverviewSection forecast={forecast} />
 
         <hr className="border-gray-200" />
 
-        <ComparisonTimelineSection comparison={comparison} />
+        <ExecutiveForecastWorkspaceSection forecast={forecast} />
 
         <hr className="border-gray-200" />
 
-        <ComparisonRecordsSection comparison={comparison} />
+        <ForecastReviewWorkspaceSection forecast={forecast} />
 
         <hr className="border-gray-200" />
 
-        <ComparisonStatusSection comparison={comparison} />
+        <ForecastReadinessSection forecast={forecast} />
 
         <hr className="border-gray-200" />
 
-        <ComparisonMetadataSection comparison={comparison} />
+        <ForecastMetadataSection forecast={forecast} />
 
         <hr className="border-gray-200" />
 
