@@ -377,6 +377,9 @@ export default function ExecutiveReportComparisonDashboard({ comparison }: Props
               Executive Report History Center
             </Link>
             <span className="text-xs font-bold text-white">Executive Report Comparison</span>
+            <Link href="/admin/executive-report-comparison-center" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report Comparison Center
+            </Link>
           </nav>
         </div>
         <form action={logoutAction}>

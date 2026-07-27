@@ -1153,6 +1153,9 @@ export default function IntelligenceDashboard({ data }: { data: IntelligenceData
             <Link href="/admin/executive-report-comparison" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Comparison
             </Link>
+            <Link href="/admin/executive-report-comparison-center" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report Comparison Center
+            </Link>
           </nav>
         </div>
         <form action={logoutAction}>
