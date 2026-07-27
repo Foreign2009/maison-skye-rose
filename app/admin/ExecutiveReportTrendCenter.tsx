@@ -420,6 +420,9 @@ export default function ExecutiveReportTrendCenter({ trend }: Props) {
               Executive Report Trend
             </Link>
             <span className="text-xs font-bold text-white">Executive Report Trend Center</span>
+            <Link href="/admin/executive-report-forecast" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report Forecast
+            </Link>
           </nav>
         </div>
         <form action={logoutAction}>

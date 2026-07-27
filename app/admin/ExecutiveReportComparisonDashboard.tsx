@@ -398,6 +398,9 @@ export default function ExecutiveReportComparisonDashboard({ comparison }: Props
             <Link href="/admin/executive-report-trend-center" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Trend Center
             </Link>
+            <Link href="/admin/executive-report-forecast" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report Forecast
+            </Link>
           </nav>
         </div>
         <form action={logoutAction}>

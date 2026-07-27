@@ -5,10 +5,10 @@ import Link             from "next/link";
 import { logoutAction } from "./actions";
 import type { AlertSeverity } from "@/app/lib/operations/OperationsAlertTypes";
 import type {
-  ExecutiveReportDelta,
-  ExecutiveReportDeltaEntry,
-  ExecutiveReportDeltaState,
-} from "@/app/lib/operations/ExecutiveReportDeltaTypes";
+  ExecutiveReportForecast,
+  ExecutiveReportForecastEntry,
+  ExecutiveReportForecastState,
+} from "@/app/lib/operations/ExecutiveReportForecastTypes";
 
 // ── UI helpers ────────────────────────────────────────────────────────────────
 
@@ -61,56 +61,56 @@ const SEVERITY_LABELS: Record<AlertSeverity, string> = {
   "low":      "Low",
 };
 
-const DELTA_STATE_STYLES: Record<ExecutiveReportDeltaState, string> = {
-  "initial":   "border-blue-200  bg-blue-50   text-blue-700",
-  "unchanged": "border-gray-200  bg-gray-100  text-gray-500",
-  "changed":   "border-amber-100 bg-amber-50  text-amber-700",
+const FORECAST_STATE_STYLES: Record<ExecutiveReportForecastState, string> = {
+  "watch":        "border-amber-100  bg-amber-50  text-amber-700",
+  "steady":       "border-gray-200   bg-gray-100  text-gray-500",
+  "accelerating": "border-green-200  bg-green-50  text-green-700",
 };
 
-const DELTA_STATE_LABELS: Record<ExecutiveReportDeltaState, string> = {
-  "initial":   "Initial",
-  "unchanged": "Unchanged",
-  "changed":   "Changed",
+const FORECAST_STATE_LABELS: Record<ExecutiveReportForecastState, string> = {
+  "watch":        "Watch",
+  "steady":       "Steady",
+  "accelerating": "Accelerating",
 };
 
-// ── Section 1: Delta Workspace Overview ───────────────────────────────────────
+// ── Section 1: Forecast Overview ──────────────────────────────────────────────
 
-function DeltaWorkspaceOverviewSection({ delta }: { delta: ExecutiveReportDelta }) {
+function ForecastOverviewSection({ forecast }: { forecast: ExecutiveReportForecast }) {
   return (
     <section>
-      <SectionLabel>Executive Report Delta Center</SectionLabel>
-      <SectionHeading>Delta Workspace Overview</SectionHeading>
+      <SectionLabel>Executive Report Forecast</SectionLabel>
+      <SectionHeading>Forecast Overview</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Workspace view of the executive report delta. Refreshed on every page load.
+        Aggregate view of the executive report forecast. Refreshed on every page load.
       </p>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <Card>
           <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Total Records</p>
-          <p className="mt-2 text-3xl font-black text-[#4f4a52]">{delta.records.length}</p>
+          <p className="mt-2 text-3xl font-black text-[#4f4a52]">{forecast.records.length}</p>
         </Card>
         <Card>
-          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Delta Generated</p>
-          <p className="mt-2 text-sm font-bold text-[#4f4a52]">{fmtDate(delta.generatedAt)}</p>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Forecast Generated</p>
+          <p className="mt-2 text-sm font-bold text-[#4f4a52]">{fmtDate(forecast.generatedAt)}</p>
         </Card>
       </div>
     </section>
   );
 }
 
-// ── Section 2: Executive Delta Workspace ──────────────────────────────────────
+// ── Section 2: Forecast Timeline ──────────────────────────────────────────────
 
-function ExecutiveDeltaWorkspaceSection({ delta }: { delta: ExecutiveReportDelta }) {
-  if (delta.records.length === 0) {
+function ForecastTimelineSection({ forecast }: { forecast: ExecutiveReportForecast }) {
+  if (forecast.records.length === 0) {
     return (
       <section>
-        <SectionLabel>Workspace</SectionLabel>
-        <SectionHeading>Executive Delta Workspace</SectionHeading>
+        <SectionLabel>Timeline</SectionLabel>
+        <SectionHeading>Forecast Timeline</SectionHeading>
         <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-          Delta entries for review. Displayed exactly as received.
+          Chronological record of all forecast entries.
         </p>
         <Card>
-          <p className="text-sm text-[#7b7480]">No delta records available.</p>
+          <p className="text-sm text-[#7b7480]">No forecast records available.</p>
         </Card>
       </section>
     );
@@ -118,81 +118,76 @@ function ExecutiveDeltaWorkspaceSection({ delta }: { delta: ExecutiveReportDelta
 
   return (
     <section>
-      <SectionLabel>Workspace</SectionLabel>
-      <SectionHeading>Executive Delta Workspace</SectionHeading>
+      <SectionLabel>Timeline</SectionLabel>
+      <SectionHeading>Forecast Timeline</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Delta entries for review. Displayed exactly as received. No processing applied.
+        {forecast.records.length} record{forecast.records.length === 1 ? "" : "s"}. Displayed as received.
       </p>
 
-      <div className="space-y-4">
-        {delta.records.map((entry, i) => (
-          <Card key={i}>
-            <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">
-              {entry.comparison.current.headline.text}
-            </p>
-            {entry.comparison.previous && (
-              <p className="mt-1 text-[10px] text-[#a09aa6]">
-                Previous: {entry.comparison.previous.headline.text}
-              </p>
-            )}
-            <div className="mt-2 mb-3">
-              <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${DELTA_STATE_STYLES[entry.state]}`}>
-                {DELTA_STATE_LABELS[entry.state]}
+      <Card>
+        <div className="divide-y divide-gray-100">
+          {forecast.records.map((entry, i) => (
+            <div key={i} className="flex items-start gap-3 py-3 first:pt-0 last:pb-0">
+              <span className="mt-0.5 w-5 shrink-0 text-center text-[10px] font-bold text-[#a09aa6]">
+                {i + 1}
+              </span>
+              <div className="min-w-0 flex-1">
+                <p className="text-sm font-semibold text-[#4f4a52]">
+                  {entry.trend.insight.delta.comparison.current.headline.text}
+                </p>
+                <p className="mt-0.5 text-[10px] text-[#7b7480]">{fmtDate(entry.generatedAt)}</p>
+              </div>
+              <span className={`shrink-0 rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${FORECAST_STATE_STYLES[entry.state]}`}>
+                {FORECAST_STATE_LABELS[entry.state]}
               </span>
             </div>
-            <p className="text-base leading-relaxed text-[#4f4a52]">
-              {entry.comparison.current.executiveSummary}
-            </p>
-          </Card>
-        ))}
-      </div>
+          ))}
+        </div>
+      </Card>
     </section>
   );
 }
 
-// ── Section 3: Delta Review Workspace ────────────────────────────────────────
+// ── Section 3: Forecast Records ───────────────────────────────────────────────
 
-function DeltaWorkspaceCard({ entry }: { entry: ExecutiveReportDeltaEntry }) {
+function ForecastRecordCard({ entry }: { entry: ExecutiveReportForecastEntry }) {
   return (
     <Card>
-      <div className="mb-3 flex items-start justify-between gap-4">
-        <p className="text-sm font-bold uppercase tracking-wide text-[#4f4a52]">
-          {entry.comparison.current.headline.text}
-        </p>
-        <div className="flex shrink-0 flex-col items-end gap-1">
-          <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${DELTA_STATE_STYLES[entry.state]}`}>
-            {DELTA_STATE_LABELS[entry.state]}
-          </span>
-          <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${SEVERITY_STYLES[entry.comparison.current.overallStatus]}`}>
-            {SEVERITY_LABELS[entry.comparison.current.overallStatus]}
-          </span>
-        </div>
-      </div>
-      <div className="h-px bg-gray-100" />
-      <p className="mt-3 text-sm leading-relaxed text-[#7b7480]">
-        {entry.comparison.current.executiveSummary}
-      </p>
-      <div className="mt-3 flex flex-wrap items-center gap-3">
-        <span className="text-[10px] text-[#a09aa6]">{fmtDate(entry.generatedAt)}</span>
-        <span className="text-[10px] uppercase tracking-wider text-[#a09aa6]">
-          Previous: {entry.comparison.previous?.headline.text ?? "—"}
+      <div className="mb-3 flex flex-wrap items-center gap-2">
+        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${FORECAST_STATE_STYLES[entry.state]}`}>
+          {FORECAST_STATE_LABELS[entry.state]}
         </span>
+        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${SEVERITY_STYLES[entry.trend.insight.delta.comparison.current.overallStatus]}`}>
+          {SEVERITY_LABELS[entry.trend.insight.delta.comparison.current.overallStatus]}
+        </span>
+        <span className="ml-auto text-[10px] text-[#a09aa6]">{fmtDate(entry.generatedAt)}</span>
       </div>
+      <p className="text-sm font-bold text-[#4f4a52]">
+        {entry.trend.insight.delta.comparison.current.headline.text}
+      </p>
+      <div className="my-3 h-px bg-gray-100" />
+      <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Previous Headline</p>
+      <p className="mt-1 text-sm text-[#7b7480]">
+        {entry.trend.insight.delta.comparison.previous?.headline.text ?? "—"}
+      </p>
+      <p className="mt-3 text-sm leading-relaxed text-[#7b7480]">
+        {entry.trend.insight.delta.comparison.current.executiveSummary}
+      </p>
     </Card>
   );
 }
 
-function DeltaReviewWorkspaceSection({ delta }: { delta: ExecutiveReportDelta }) {
-  if (delta.records.length === 0) {
+function ForecastRecordsSection({ forecast }: { forecast: ExecutiveReportForecast }) {
+  if (forecast.records.length === 0) {
     return (
       <section>
-        <SectionLabel>Review</SectionLabel>
-        <SectionHeading>Delta Review Workspace</SectionHeading>
+        <SectionLabel>Records</SectionLabel>
+        <SectionHeading>Forecast Records</SectionHeading>
         <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-          Delta records for executive review.
+          Full detail for every forecast record.
         </p>
         <Card>
-          <p className="text-sm text-[#7b7480]">No delta records available.</p>
+          <p className="text-sm text-[#7b7480]">No forecast records available.</p>
         </Card>
       </section>
     );
@@ -200,41 +195,41 @@ function DeltaReviewWorkspaceSection({ delta }: { delta: ExecutiveReportDelta })
 
   return (
     <section>
-      <SectionLabel>Review</SectionLabel>
-      <SectionHeading>Delta Review Workspace</SectionHeading>
+      <SectionLabel>Records</SectionLabel>
+      <SectionHeading>Forecast Records</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        {delta.records.length} record{delta.records.length === 1 ? "" : "s"} for executive review.
+        {forecast.records.length} record{forecast.records.length === 1 ? "" : "s"} in the forecast.
         Displayed exactly as received.
       </p>
 
       <div className="space-y-4">
-        {delta.records.map((entry, i) => (
-          <DeltaWorkspaceCard key={i} entry={entry} />
+        {forecast.records.map((entry, i) => (
+          <ForecastRecordCard key={i} entry={entry} />
         ))}
       </div>
     </section>
   );
 }
 
-// ── Section 4: Delta Readiness ────────────────────────────────────────────────
+// ── Section 4: Forecast Status ────────────────────────────────────────────────
 
-function DeltaReadinessSection({ delta }: { delta: ExecutiveReportDelta }) {
-  const latestGeneratedAt = delta.records.length > 0
-    ? delta.records[delta.records.length - 1].generatedAt
+function ForecastStatusSection({ forecast }: { forecast: ExecutiveReportForecast }) {
+  const latestGeneratedAt = forecast.records.length > 0
+    ? forecast.records[forecast.records.length - 1].generatedAt
     : null;
 
   return (
     <section>
-      <SectionLabel>Readiness</SectionLabel>
-      <SectionHeading>Delta Readiness</SectionHeading>
+      <SectionLabel>Status</SectionLabel>
+      <SectionHeading>Forecast Status</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Aggregate delta readiness at generation time.
+        Aggregate forecast status at generation time.
       </p>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <Card>
-          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Total Delta Records</p>
-          <p className="mt-3 text-3xl font-black text-[#4f4a52]">{delta.records.length}</p>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Total Forecast Records</p>
+          <p className="mt-3 text-3xl font-black text-[#4f4a52]">{forecast.records.length}</p>
         </Card>
         <Card>
           <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Latest Generated At</p>
@@ -247,15 +242,15 @@ function DeltaReadinessSection({ delta }: { delta: ExecutiveReportDelta }) {
   );
 }
 
-// ── Section 5: Delta Metadata ─────────────────────────────────────────────────
+// ── Section 5: Forecast Metadata ──────────────────────────────────────────────
 
-function DeltaMetadataSection({ delta }: { delta: ExecutiveReportDelta }) {
+function ForecastMetadataSection({ forecast }: { forecast: ExecutiveReportForecast }) {
   return (
     <section>
       <SectionLabel>Metadata</SectionLabel>
-      <SectionHeading>Delta Metadata</SectionHeading>
+      <SectionHeading>Forecast Metadata</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Delta generation metadata. No data is stored or persisted.
+        Forecast generation metadata. No data is stored or persisted.
       </p>
 
       <Card>
@@ -263,11 +258,11 @@ function DeltaMetadataSection({ delta }: { delta: ExecutiveReportDelta }) {
           <tbody className="divide-y divide-gray-100">
             <tr>
               <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Generated At</td>
-              <td className="py-3 text-right text-[#4f4a52]">{fmtDate(delta.generatedAt)}</td>
+              <td className="py-3 text-right text-[#4f4a52]">{fmtDate(forecast.generatedAt)}</td>
             </tr>
             <tr>
-              <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Delta Records</td>
-              <td className="py-3 text-right text-[#4f4a52]">{delta.records.length}</td>
+              <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Forecast Records</td>
+              <td className="py-3 text-right text-[#4f4a52]">{forecast.records.length}</td>
             </tr>
           </tbody>
         </table>
@@ -279,23 +274,28 @@ function DeltaMetadataSection({ delta }: { delta: ExecutiveReportDelta }) {
 // ── Section 6: Quick Navigation ───────────────────────────────────────────────
 
 const QUICK_NAV_LINKS = [
-  { href: "/admin",                                   label: "Operations" },
-  { href: "/admin/operations",                        label: "Unified Operations" },
-  { href: "/admin/executive-operations",              label: "Executive Operations" },
-  { href: "/admin/alerts",                            label: "Alerts" },
-  { href: "/admin/alert-center",                      label: "Alert Center" },
-  { href: "/admin/executive-digest",                  label: "Executive Digest" },
-  { href: "/admin/executive-briefing",                label: "Executive Briefing" },
-  { href: "/admin/executive-report",                  label: "Executive Report" },
-  { href: "/admin/executive-report-center",           label: "Executive Report Center" },
-  { href: "/admin/executive-report-archive",          label: "Executive Report Archive" },
-  { href: "/admin/executive-report-archive-center",   label: "Executive Report Archive Center" },
-  { href: "/admin/executive-report-history",          label: "Executive Report History" },
-  { href: "/admin/executive-report-history-center",   label: "Executive Report History Center" },
-  { href: "/admin/executive-report-comparison",       label: "Executive Report Comparison" },
-  { href: "/admin/executive-report-comparison-center", label: "Executive Report Comparison Center" },
-  { href: "/admin/executive-report-delta",            label: "Executive Report Delta" },
-  { href: "/admin/executive-report-delta-center",     label: "Executive Report Delta Center" },
+  { href: "/admin",                                       label: "Operations" },
+  { href: "/admin/operations",                            label: "Unified Operations" },
+  { href: "/admin/executive-operations",                  label: "Executive Operations" },
+  { href: "/admin/alerts",                                label: "Alerts" },
+  { href: "/admin/alert-center",                          label: "Alert Center" },
+  { href: "/admin/executive-digest",                      label: "Executive Digest" },
+  { href: "/admin/executive-briefing",                    label: "Executive Briefing" },
+  { href: "/admin/executive-report",                      label: "Executive Report" },
+  { href: "/admin/executive-report-center",               label: "Executive Report Center" },
+  { href: "/admin/executive-report-archive",              label: "Executive Report Archive" },
+  { href: "/admin/executive-report-archive-center",       label: "Executive Report Archive Center" },
+  { href: "/admin/executive-report-history",              label: "Executive Report History" },
+  { href: "/admin/executive-report-history-center",       label: "Executive Report History Center" },
+  { href: "/admin/executive-report-comparison",           label: "Executive Report Comparison" },
+  { href: "/admin/executive-report-comparison-center",    label: "Executive Report Comparison Center" },
+  { href: "/admin/executive-report-delta",                label: "Executive Report Delta" },
+  { href: "/admin/executive-report-delta-center",         label: "Executive Report Delta Center" },
+  { href: "/admin/executive-report-insight",              label: "Executive Report Insight" },
+  { href: "/admin/executive-report-insight-center",       label: "Executive Report Insight Center" },
+  { href: "/admin/executive-report-trend",                label: "Executive Report Trend" },
+  { href: "/admin/executive-report-trend-center",         label: "Executive Report Trend Center" },
+  { href: "/admin/executive-report-forecast",             label: "Executive Report Forecast" },
 ] as const;
 
 function QuickNavigationSection() {
@@ -325,12 +325,12 @@ function QuickNavigationSection() {
 // ── Props ─────────────────────────────────────────────────────────────────────
 
 interface Props {
-  delta: ExecutiveReportDelta;
+  forecast: ExecutiveReportForecast;
 }
 
 // ── Main export ───────────────────────────────────────────────────────────────
 
-export default function ExecutiveReportDeltaCenter({ delta }: Props) {
+export default function ExecutiveReportForecastDashboard({ forecast }: Props) {
   return (
     <div className="min-h-screen bg-[#f5f1eb]">
 
@@ -405,7 +405,9 @@ export default function ExecutiveReportDeltaCenter({ delta }: Props) {
             <Link href="/admin/executive-report-delta" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Delta
             </Link>
-            <span className="text-xs font-bold text-white">Executive Report Delta Center</span>
+            <Link href="/admin/executive-report-delta-center" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report Delta Center
+            </Link>
             <Link href="/admin/executive-report-insight" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Insight
             </Link>
@@ -418,9 +420,7 @@ export default function ExecutiveReportDeltaCenter({ delta }: Props) {
             <Link href="/admin/executive-report-trend-center" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Trend Center
             </Link>
-            <Link href="/admin/executive-report-forecast" className="text-xs text-white/60 transition hover:text-white">
-              Executive Report Forecast
-            </Link>
+            <span className="text-xs font-bold text-white">Executive Report Forecast</span>
           </nav>
         </div>
         <form action={logoutAction}>
@@ -433,23 +433,23 @@ export default function ExecutiveReportDeltaCenter({ delta }: Props) {
       {/* ── Content ── */}
       <div className="mx-auto w-full max-w-[780px] space-y-14 px-6 py-12">
 
-        <DeltaWorkspaceOverviewSection delta={delta} />
+        <ForecastOverviewSection forecast={forecast} />
 
         <hr className="border-gray-200" />
 
-        <ExecutiveDeltaWorkspaceSection delta={delta} />
+        <ForecastTimelineSection forecast={forecast} />
 
         <hr className="border-gray-200" />
 
-        <DeltaReviewWorkspaceSection delta={delta} />
+        <ForecastRecordsSection forecast={forecast} />
 
         <hr className="border-gray-200" />
 
-        <DeltaReadinessSection delta={delta} />
+        <ForecastStatusSection forecast={forecast} />
 
         <hr className="border-gray-200" />
 
-        <DeltaMetadataSection delta={delta} />
+        <ForecastMetadataSection forecast={forecast} />
 
         <hr className="border-gray-200" />
 
