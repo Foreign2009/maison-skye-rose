@@ -382,6 +382,9 @@ export default function ExecutiveReportComparisonCenter({ comparison }: Props) {
               Executive Report Comparison
             </Link>
             <span className="text-xs font-bold text-white">Executive Report Comparison Center</span>
+            <Link href="/admin/executive-report-delta" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report Delta
+            </Link>
           </nav>
         </div>
         <form action={logoutAction}>
