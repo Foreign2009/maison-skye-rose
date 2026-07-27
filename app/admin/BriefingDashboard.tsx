@@ -298,6 +298,9 @@ export default function BriefingDashboard({
             <Link href="/admin/executive-report-insight-center" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Insight Center
             </Link>
+            <Link href="/admin/executive-report-trend" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report Trend
+            </Link>
           </nav>
         </div>
         <form action={logoutAction}>

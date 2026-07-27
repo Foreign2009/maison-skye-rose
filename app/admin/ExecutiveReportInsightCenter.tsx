@@ -414,6 +414,9 @@ export default function ExecutiveReportInsightCenter({ insight }: Props) {
               Executive Report Insight
             </Link>
             <span className="text-xs font-bold text-white">Executive Report Insight Center</span>
+            <Link href="/admin/executive-report-trend" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report Trend
+            </Link>
           </nav>
         </div>
         <form action={logoutAction}>
