@@ -3,11 +3,11 @@
 import React            from "react";
 import Link             from "next/link";
 import { logoutAction } from "./actions";
-import type { AlertCategory, AlertSeverity } from "@/app/lib/operations/OperationsAlertTypes";
+import type { AlertSeverity } from "@/app/lib/operations/OperationsAlertTypes";
 import type {
-  ExecutiveReportArchive,
-  ExecutiveReportArchiveEntry,
-} from "@/app/lib/operations/ExecutiveReportArchiveTypes";
+  ExecutiveReportComparison,
+  ExecutiveReportComparisonEntry,
+} from "@/app/lib/operations/ExecutiveReportComparisonTypes";
 
 // ── UI helpers ────────────────────────────────────────────────────────────────
 
@@ -60,108 +60,44 @@ const SEVERITY_LABELS: Record<AlertSeverity, string> = {
   "low":      "Low",
 };
 
-const READINESS_LABELS: Record<AlertSeverity, string> = {
-  "critical": "Attention Required",
-  "high":     "Review Required",
-  "medium":   "Monitoring",
-  "low":      "Ready",
-};
+// ── Section 1: Comparison Overview ────────────────────────────────────────────
 
-const CATEGORY_LABELS: Record<AlertCategory, string> = {
-  "platform":       "Platform",
-  "recommendation": "Recommendation",
-  "customer":       "Customer",
-  "commerce":       "Commerce",
-  "operations":     "Operations",
-};
-
-// ── Section 1: Archive Overview ───────────────────────────────────────────────
-
-function ArchiveOverviewSection({ archive }: { archive: ExecutiveReportArchive }) {
+function ComparisonOverviewSection({ comparison }: { comparison: ExecutiveReportComparison }) {
   return (
     <section>
-      <SectionLabel>Executive Report Archive Center</SectionLabel>
-      <SectionHeading>Archive Overview</SectionHeading>
+      <SectionLabel>Executive Report Comparison</SectionLabel>
+      <SectionHeading>Comparison Overview</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Workspace view of the current executive report archive. Refreshed on every page load.
+        Aggregate view of the executive report comparison. Refreshed on every page load.
       </p>
 
-      <div className="mb-5 flex flex-wrap items-center gap-3">
-        <span className={`rounded-full border px-3 py-1 text-xs font-semibold ${SEVERITY_STYLES[archive.overallStatus]}`}>
-          {SEVERITY_LABELS[archive.overallStatus]}
-        </span>
-        <span className="rounded-full border border-gray-100 bg-white px-3 py-1 text-xs text-[#7b7480]">
-          {fmtDate(archive.generatedAt)}
-        </span>
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <Card>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Total Records</p>
+          <p className="mt-2 text-3xl font-black text-[#4f4a52]">{comparison.records.length}</p>
+        </Card>
+        <Card>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Comparison Generated</p>
+          <p className="mt-2 text-sm font-bold text-[#4f4a52]">{fmtDate(comparison.generatedAt)}</p>
+        </Card>
       </div>
-
-      <Card>
-        <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Executive Headline</p>
-        <p className="mt-3 text-lg font-black leading-snug text-[#4f4a52]">
-          {archive.headline.text}
-        </p>
-      </Card>
     </section>
   );
 }
 
-// ── Section 2: Executive Summary Workspace ────────────────────────────────────
+// ── Section 2: Comparison Timeline ───────────────────────────────────────────
 
-function ExecutiveSummaryWorkspaceSection({ archive }: { archive: ExecutiveReportArchive }) {
-  return (
-    <section>
-      <SectionLabel>Workspace</SectionLabel>
-      <SectionHeading>Executive Summary Workspace</SectionHeading>
-      <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Executive summary for review. Displayed exactly as received. No processing applied.
-      </p>
-
-      <Card>
-        <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Executive Summary</p>
-        <p className="mt-3 text-base leading-relaxed text-[#4f4a52]">{archive.executiveSummary}</p>
-      </Card>
-    </section>
-  );
-}
-
-// ── Section 3: Archive Review Workspace ───────────────────────────────────────
-
-function ArchiveWorkspaceCard({ entry }: { entry: ExecutiveReportArchiveEntry }) {
-  const num = String(entry.sequence).padStart(2, "0");
-
-  return (
-    <Card>
-      <div className="mb-3 flex items-start justify-between gap-4">
-        <div className="flex items-center gap-3">
-          <span className="text-2xl font-black text-[#e8e3ef]">{num}</span>
-          <p className="text-sm font-bold uppercase tracking-wide text-[#4f4a52]">{entry.title}</p>
-        </div>
-        <div className="flex shrink-0 flex-col items-end gap-1">
-          <span className="rounded-full border border-gray-100 bg-gray-50 px-2 py-0.5 text-[9px] font-mono text-[#a09aa6]">
-            {entry.alertId}
-          </span>
-          <span className="text-[9px] uppercase tracking-wider text-[#a09aa6]">
-            {CATEGORY_LABELS[entry.category]}
-          </span>
-        </div>
-      </div>
-      <div className="h-px bg-gray-100" />
-      <p className="mt-3 text-sm leading-relaxed text-[#7b7480]">{entry.body}</p>
-    </Card>
-  );
-}
-
-function ArchiveReviewWorkspaceSection({ archive }: { archive: ExecutiveReportArchive }) {
-  if (archive.entries.length === 0) {
+function ComparisonTimelineSection({ comparison }: { comparison: ExecutiveReportComparison }) {
+  if (comparison.records.length === 0) {
     return (
       <section>
-        <SectionLabel>Review</SectionLabel>
-        <SectionHeading>Archive Review Workspace</SectionHeading>
+        <SectionLabel>Timeline</SectionLabel>
+        <SectionHeading>Comparison Timeline</SectionHeading>
         <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-          Archive entries for executive review.
+          Chronological record of all comparison entries.
         </p>
         <Card>
-          <p className="text-sm text-[#7b7480]">No archive entries. All alerts resolved.</p>
+          <p className="text-sm text-[#7b7480]">No comparison records available.</p>
         </Card>
       </section>
     );
@@ -169,55 +105,124 @@ function ArchiveReviewWorkspaceSection({ archive }: { archive: ExecutiveReportAr
 
   return (
     <section>
-      <SectionLabel>Review</SectionLabel>
-      <SectionHeading>Archive Review Workspace</SectionHeading>
+      <SectionLabel>Timeline</SectionLabel>
+      <SectionHeading>Comparison Timeline</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        {archive.entries.length} entr{archive.entries.length === 1 ? "y" : "ies"} for executive review.
+        {comparison.records.length} record{comparison.records.length === 1 ? "" : "s"}. Displayed as received.
+      </p>
+
+      <Card>
+        <div className="divide-y divide-gray-100">
+          {comparison.records.map((entry, i) => (
+            <div key={i} className="flex items-start gap-3 py-3 first:pt-0 last:pb-0">
+              <span className="mt-0.5 w-5 shrink-0 text-center text-[10px] font-bold text-[#a09aa6]">
+                {i + 1}
+              </span>
+              <div className="min-w-0 flex-1">
+                <p className="text-sm font-semibold text-[#4f4a52]">{entry.current.headline.text}</p>
+                <p className="mt-0.5 text-[10px] text-[#7b7480]">{fmtDate(entry.generatedAt)}</p>
+              </div>
+              <span className={`shrink-0 rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${
+                entry.isFirstRecord
+                  ? "border-gray-200 bg-gray-100 text-gray-500"
+                  : "border-blue-200 bg-blue-50 text-blue-700"
+              }`}>
+                {entry.isFirstRecord ? "First Record" : "Subsequent"}
+              </span>
+            </div>
+          ))}
+        </div>
+      </Card>
+    </section>
+  );
+}
+
+// ── Section 3: Comparison Records ────────────────────────────────────────────
+
+function ComparisonRecordCard({ entry }: { entry: ExecutiveReportComparisonEntry }) {
+  return (
+    <Card>
+      <div className="mb-3 flex flex-wrap items-center gap-2">
+        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${SEVERITY_STYLES[entry.current.overallStatus]}`}>
+          {SEVERITY_LABELS[entry.current.overallStatus]}
+        </span>
+        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${
+          entry.isFirstRecord
+            ? "border-gray-200 bg-gray-100 text-gray-500"
+            : "border-blue-200 bg-blue-50 text-blue-700"
+        }`}>
+          {entry.isFirstRecord ? "First Record" : "Subsequent Record"}
+        </span>
+        <span className="ml-auto text-[10px] text-[#a09aa6]">{fmtDate(entry.generatedAt)}</span>
+      </div>
+      <p className="text-sm font-bold text-[#4f4a52]">{entry.current.headline.text}</p>
+      <div className="my-3 h-px bg-gray-100" />
+      <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Previous Headline</p>
+      <p className="mt-1 text-sm text-[#7b7480]">
+        {entry.previous?.headline.text ?? "—"}
+      </p>
+    </Card>
+  );
+}
+
+function ComparisonRecordsSection({ comparison }: { comparison: ExecutiveReportComparison }) {
+  if (comparison.records.length === 0) {
+    return (
+      <section>
+        <SectionLabel>Records</SectionLabel>
+        <SectionHeading>Comparison Records</SectionHeading>
+        <p className="mt-2 mb-5 text-sm text-[#7b7480]">
+          Full detail for every comparison record.
+        </p>
+        <Card>
+          <p className="text-sm text-[#7b7480]">No comparison records available.</p>
+        </Card>
+      </section>
+    );
+  }
+
+  return (
+    <section>
+      <SectionLabel>Records</SectionLabel>
+      <SectionHeading>Comparison Records</SectionHeading>
+      <p className="mt-2 mb-5 text-sm text-[#7b7480]">
+        {comparison.records.length} record{comparison.records.length === 1 ? "" : "s"} in the comparison.
         Displayed exactly as received.
       </p>
 
       <div className="space-y-4">
-        {archive.entries.map((entry) => (
-          <ArchiveWorkspaceCard key={entry.alertId} entry={entry} />
+        {comparison.records.map((entry, i) => (
+          <ComparisonRecordCard key={i} entry={entry} />
         ))}
       </div>
     </section>
   );
 }
 
-// ── Section 4: Archive Readiness ──────────────────────────────────────────────
+// ── Section 4: Comparison Status ─────────────────────────────────────────────
 
-function ArchiveReadinessSection({ archive }: { archive: ExecutiveReportArchive }) {
+function ComparisonStatusSection({ comparison }: { comparison: ExecutiveReportComparison }) {
+  const latestGeneratedAt = comparison.records.length > 0
+    ? comparison.records[comparison.records.length - 1].generatedAt
+    : null;
+
   return (
     <section>
-      <SectionLabel>Readiness</SectionLabel>
-      <SectionHeading>Archive Readiness</SectionHeading>
+      <SectionLabel>Status</SectionLabel>
+      <SectionHeading>Comparison Status</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Platform readiness assessment derived from operational status and analytics availability.
+        Aggregate comparison status at generation time.
       </p>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <Card>
-          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Platform Readiness</p>
-          <p className="mt-3 text-xl font-black text-[#4f4a52]">
-            {READINESS_LABELS[archive.overallStatus]}
-          </p>
-          <div className="mt-3">
-            <span className={`rounded-full border px-3 py-1 text-xs font-bold uppercase ${SEVERITY_STYLES[archive.overallStatus]}`}>
-              {SEVERITY_LABELS[archive.overallStatus]}
-            </span>
-          </div>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Total Comparison Records</p>
+          <p className="mt-3 text-3xl font-black text-[#4f4a52]">{comparison.records.length}</p>
         </Card>
-
         <Card>
-          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Intelligence Availability</p>
-          <p className="mt-3 text-xl font-black text-[#4f4a52]">
-            {archive.analyticsAvailable ? "Connected" : "Offline"}
-          </p>
-          <p className="mt-2 text-[10px] uppercase tracking-wider text-[#a09aa6]">
-            {archive.analyticsAvailable
-              ? "Live analytics connected"
-              : "Configure PostHog to enable"}
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Latest Generated At</p>
+          <p className="mt-3 text-sm font-bold text-[#4f4a52]">
+            {latestGeneratedAt ? fmtDate(latestGeneratedAt) : "—"}
           </p>
         </Card>
       </div>
@@ -225,15 +230,15 @@ function ArchiveReadinessSection({ archive }: { archive: ExecutiveReportArchive 
   );
 }
 
-// ── Section 5: Archive Metadata ───────────────────────────────────────────────
+// ── Section 5: Comparison Metadata ───────────────────────────────────────────
 
-function ArchiveMetadataSection({ archive }: { archive: ExecutiveReportArchive }) {
+function ComparisonMetadataSection({ comparison }: { comparison: ExecutiveReportComparison }) {
   return (
     <section>
       <SectionLabel>Metadata</SectionLabel>
-      <SectionHeading>Archive Metadata</SectionHeading>
+      <SectionHeading>Comparison Metadata</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Archive generation metadata. No data is stored or persisted.
+        Comparison generation metadata. No data is stored or persisted.
       </p>
 
       <Card>
@@ -241,15 +246,11 @@ function ArchiveMetadataSection({ archive }: { archive: ExecutiveReportArchive }
           <tbody className="divide-y divide-gray-100">
             <tr>
               <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Generated At</td>
-              <td className="py-3 text-right text-[#4f4a52]">{fmtDate(archive.generatedAt)}</td>
+              <td className="py-3 text-right text-[#4f4a52]">{fmtDate(comparison.generatedAt)}</td>
             </tr>
             <tr>
-              <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Analytics Available</td>
-              <td className="py-3 text-right text-[#4f4a52]">{archive.analyticsAvailable ? "Yes" : "No"}</td>
-            </tr>
-            <tr>
-              <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Archive Entries</td>
-              <td className="py-3 text-right text-[#4f4a52]">{archive.entries.length}</td>
+              <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Comparison Records</td>
+              <td className="py-3 text-right text-[#4f4a52]">{comparison.records.length}</td>
             </tr>
           </tbody>
         </table>
@@ -261,17 +262,20 @@ function ArchiveMetadataSection({ archive }: { archive: ExecutiveReportArchive }
 // ── Section 6: Quick Navigation ───────────────────────────────────────────────
 
 const QUICK_NAV_LINKS = [
-  { href: "/admin",                                 label: "Operations" },
-  { href: "/admin/operations",                      label: "Unified Operations" },
-  { href: "/admin/executive-operations",            label: "Executive Operations" },
-  { href: "/admin/alerts",                          label: "Alerts" },
-  { href: "/admin/alert-center",                    label: "Alert Center" },
-  { href: "/admin/executive-digest",                label: "Executive Digest" },
-  { href: "/admin/executive-briefing",              label: "Executive Briefing" },
-  { href: "/admin/executive-report",                label: "Executive Report" },
-  { href: "/admin/executive-report-center",         label: "Executive Report Center" },
-  { href: "/admin/executive-report-archive",        label: "Executive Report Archive" },
-  { href: "/admin/executive-report-archive-center", label: "Executive Report Archive Center" },
+  { href: "/admin",                                  label: "Operations" },
+  { href: "/admin/operations",                       label: "Unified Operations" },
+  { href: "/admin/executive-operations",             label: "Executive Operations" },
+  { href: "/admin/alerts",                           label: "Alerts" },
+  { href: "/admin/alert-center",                     label: "Alert Center" },
+  { href: "/admin/executive-digest",                 label: "Executive Digest" },
+  { href: "/admin/executive-briefing",               label: "Executive Briefing" },
+  { href: "/admin/executive-report",                 label: "Executive Report" },
+  { href: "/admin/executive-report-center",          label: "Executive Report Center" },
+  { href: "/admin/executive-report-archive",         label: "Executive Report Archive" },
+  { href: "/admin/executive-report-archive-center",  label: "Executive Report Archive Center" },
+  { href: "/admin/executive-report-history",         label: "Executive Report History" },
+  { href: "/admin/executive-report-history-center",  label: "Executive Report History Center" },
+  { href: "/admin/executive-report-comparison",      label: "Executive Report Comparison" },
 ] as const;
 
 function QuickNavigationSection() {
@@ -301,12 +305,12 @@ function QuickNavigationSection() {
 // ── Props ─────────────────────────────────────────────────────────────────────
 
 interface Props {
-  archive: ExecutiveReportArchive;
+  comparison: ExecutiveReportComparison;
 }
 
 // ── Main export ───────────────────────────────────────────────────────────────
 
-export default function ExecutiveReportArchiveCenter({ archive }: Props) {
+export default function ExecutiveReportComparisonDashboard({ comparison }: Props) {
   return (
     <div className="min-h-screen bg-[#f5f1eb]">
 
@@ -363,16 +367,16 @@ export default function ExecutiveReportArchiveCenter({ archive }: Props) {
             <Link href="/admin/executive-report-archive" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Archive
             </Link>
-            <span className="text-xs font-bold text-white">Executive Report Archive Center</span>
+            <Link href="/admin/executive-report-archive-center" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report Archive Center
+            </Link>
             <Link href="/admin/executive-report-history" className="text-xs text-white/60 transition hover:text-white">
               Executive Report History
             </Link>
             <Link href="/admin/executive-report-history-center" className="text-xs text-white/60 transition hover:text-white">
               Executive Report History Center
             </Link>
-            <Link href="/admin/executive-report-comparison" className="text-xs text-white/60 transition hover:text-white">
-              Executive Report Comparison
-            </Link>
+            <span className="text-xs font-bold text-white">Executive Report Comparison</span>
           </nav>
         </div>
         <form action={logoutAction}>
@@ -385,23 +389,23 @@ export default function ExecutiveReportArchiveCenter({ archive }: Props) {
       {/* ── Content ── */}
       <div className="mx-auto w-full max-w-[780px] space-y-14 px-6 py-12">
 
-        <ArchiveOverviewSection archive={archive} />
+        <ComparisonOverviewSection comparison={comparison} />
 
         <hr className="border-gray-200" />
 
-        <ExecutiveSummaryWorkspaceSection archive={archive} />
+        <ComparisonTimelineSection comparison={comparison} />
 
         <hr className="border-gray-200" />
 
-        <ArchiveReviewWorkspaceSection archive={archive} />
+        <ComparisonRecordsSection comparison={comparison} />
 
         <hr className="border-gray-200" />
 
-        <ArchiveReadinessSection archive={archive} />
+        <ComparisonStatusSection comparison={comparison} />
 
         <hr className="border-gray-200" />
 
-        <ArchiveMetadataSection archive={archive} />
+        <ComparisonMetadataSection comparison={comparison} />
 
         <hr className="border-gray-200" />
 

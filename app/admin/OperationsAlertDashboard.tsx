@@ -359,6 +359,9 @@ export default function OperationsAlertDashboard({ report }: Props) {
             <Link href="/admin/executive-report-history-center" className="text-xs text-white/60 transition hover:text-white">
               Executive Report History Center
             </Link>
+            <Link href="/admin/executive-report-comparison" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report Comparison
+            </Link>
           </nav>
         </div>
         <form action={logoutAction}>
