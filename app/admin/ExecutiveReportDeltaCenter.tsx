@@ -406,6 +406,9 @@ export default function ExecutiveReportDeltaCenter({ delta }: Props) {
               Executive Report Delta
             </Link>
             <span className="text-xs font-bold text-white">Executive Report Delta Center</span>
+            <Link href="/admin/executive-report-insight" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report Insight
+            </Link>
           </nav>
         </div>
         <form action={logoutAction}>
