@@ -5,10 +5,10 @@ import Link             from "next/link";
 import { logoutAction } from "./actions";
 import type { AlertSeverity } from "@/app/lib/operations/OperationsAlertTypes";
 import type {
-  ExecutiveReportExecution,
-  ExecutiveReportExecutionEntry,
-  ExecutiveReportExecutionState,
-} from "@/app/lib/operations/ExecutiveReportExecutionTypes";
+  ExecutiveReportCompletion,
+  ExecutiveReportCompletionEntry,
+  ExecutiveReportCompletionState,
+} from "@/app/lib/operations/ExecutiveReportCompletionTypes";
 
 // ── UI helpers ────────────────────────────────────────────────────────────────
 
@@ -61,56 +61,56 @@ const SEVERITY_LABELS: Record<AlertSeverity, string> = {
   "low":      "Low",
 };
 
-const EXECUTION_STATE_STYLES: Record<ExecutiveReportExecutionState, string> = {
-  "queued":    "border-amber-100  bg-amber-50  text-amber-700",
-  "executing": "border-gray-200   bg-gray-100  text-gray-500",
-  "executed":  "border-green-200  bg-green-50  text-green-700",
+const COMPLETION_STATE_STYLES: Record<ExecutiveReportCompletionState, string> = {
+  "scheduled":  "border-amber-100  bg-amber-50  text-amber-700",
+  "completing": "border-gray-200   bg-gray-100  text-gray-500",
+  "completed":  "border-green-200  bg-green-50  text-green-700",
 };
 
-const EXECUTION_STATE_LABELS: Record<ExecutiveReportExecutionState, string> = {
-  "queued":    "Queued",
-  "executing": "Executing",
-  "executed":  "Executed",
+const COMPLETION_STATE_LABELS: Record<ExecutiveReportCompletionState, string> = {
+  "scheduled":  "Scheduled",
+  "completing": "Completing",
+  "completed":  "Completed",
 };
 
-// ── Section 1: Execution Workspace Overview ───────────────────────────────────
+// ── Section 1: Completion Overview ────────────────────────────────────────────
 
-function ExecutionWorkspaceOverviewSection({ execution }: { execution: ExecutiveReportExecution }) {
+function CompletionOverviewSection({ completion }: { completion: ExecutiveReportCompletion }) {
   return (
     <section>
-      <SectionLabel>Executive Report Execution Center</SectionLabel>
-      <SectionHeading>Execution Workspace Overview</SectionHeading>
+      <SectionLabel>Executive Report Completion</SectionLabel>
+      <SectionHeading>Completion Overview</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Aggregate view of the executive report execution workspace. Refreshed on every page load.
+        Aggregate view of the executive report completion pipeline. Refreshed on every page load.
       </p>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <Card>
           <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Total Records</p>
-          <p className="mt-2 text-3xl font-black text-[#4f4a52]">{execution.records.length}</p>
+          <p className="mt-2 text-3xl font-black text-[#4f4a52]">{completion.records.length}</p>
         </Card>
         <Card>
-          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Execution Generated</p>
-          <p className="mt-2 text-sm font-bold text-[#4f4a52]">{fmtDate(execution.generatedAt)}</p>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Completion Generated</p>
+          <p className="mt-2 text-sm font-bold text-[#4f4a52]">{fmtDate(completion.generatedAt)}</p>
         </Card>
       </div>
     </section>
   );
 }
 
-// ── Section 2: Executive Execution Workspace ──────────────────────────────────
+// ── Section 2: Completion Timeline ────────────────────────────────────────────
 
-function ExecutiveExecutionWorkspaceSection({ execution }: { execution: ExecutiveReportExecution }) {
-  if (execution.records.length === 0) {
+function CompletionTimelineSection({ completion }: { completion: ExecutiveReportCompletion }) {
+  if (completion.records.length === 0) {
     return (
       <section>
-        <SectionLabel>Workspace</SectionLabel>
-        <SectionHeading>Executive Execution Workspace</SectionHeading>
+        <SectionLabel>Timeline</SectionLabel>
+        <SectionHeading>Completion Timeline</SectionHeading>
         <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-          Full execution workspace for executive review.
+          Chronological view of all completion records.
         </p>
         <Card>
-          <p className="text-sm text-[#7b7480]">No execution records available.</p>
+          <p className="text-sm text-[#7b7480]">No completion records available.</p>
         </Card>
       </section>
     );
@@ -118,30 +118,30 @@ function ExecutiveExecutionWorkspaceSection({ execution }: { execution: Executiv
 
   return (
     <section>
-      <SectionLabel>Workspace</SectionLabel>
-      <SectionHeading>Executive Execution Workspace</SectionHeading>
+      <SectionLabel>Timeline</SectionLabel>
+      <SectionHeading>Completion Timeline</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        {execution.records.length} record{execution.records.length === 1 ? "" : "s"} in the execution workspace.
+        {completion.records.length} record{completion.records.length === 1 ? "" : "s"} in the completion pipeline.
       </p>
 
       <Card>
         <div className="divide-y divide-gray-100">
-          {execution.records.map((entry, i) => (
+          {completion.records.map((entry, i) => (
             <div key={i} className="py-4 first:pt-0 last:pb-0">
               <div className="mb-2 flex items-center gap-2">
-                <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${EXECUTION_STATE_STYLES[entry.state]}`}>
-                  {EXECUTION_STATE_LABELS[entry.state]}
+                <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${COMPLETION_STATE_STYLES[entry.state]}`}>
+                  {COMPLETION_STATE_LABELS[entry.state]}
                 </span>
                 <span className="ml-auto text-[10px] text-[#a09aa6]">{fmtDate(entry.generatedAt)}</span>
               </div>
               <p className="text-sm font-bold text-[#4f4a52]">
-                {entry.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.headline.text}
+                {entry.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.headline.text}
               </p>
               <p className="mt-1 text-[10px] text-[#a09aa6]">
-                Previous: {entry.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.previous?.headline.text ?? "—"}
+                Previous: {entry.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.previous?.headline.text ?? "—"}
               </p>
               <p className="mt-2 text-sm leading-relaxed text-[#7b7480]">
-                {entry.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.executiveSummary}
+                {entry.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.executiveSummary}
               </p>
             </div>
           ))}
@@ -151,46 +151,46 @@ function ExecutiveExecutionWorkspaceSection({ execution }: { execution: Executiv
   );
 }
 
-// ── Section 3: Execution Review Workspace ─────────────────────────────────────
+// ── Section 3: Completion Records ─────────────────────────────────────────────
 
-function ExecutionWorkspaceCard({ entry }: { entry: ExecutiveReportExecutionEntry }) {
+function CompletionWorkspaceCard({ entry }: { entry: ExecutiveReportCompletionEntry }) {
   return (
     <Card>
       <div className="mb-3 flex flex-wrap items-center gap-2">
-        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${EXECUTION_STATE_STYLES[entry.state]}`}>
-          {EXECUTION_STATE_LABELS[entry.state]}
+        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${COMPLETION_STATE_STYLES[entry.state]}`}>
+          {COMPLETION_STATE_LABELS[entry.state]}
         </span>
-        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${SEVERITY_STYLES[entry.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.overallStatus]}`}>
-          {SEVERITY_LABELS[entry.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.overallStatus]}
+        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${SEVERITY_STYLES[entry.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.overallStatus]}`}>
+          {SEVERITY_LABELS[entry.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.overallStatus]}
         </span>
         <span className="ml-auto text-[10px] text-[#a09aa6]">{fmtDate(entry.generatedAt)}</span>
       </div>
       <p className="text-sm font-bold text-[#4f4a52]">
-        {entry.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.headline.text}
+        {entry.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.headline.text}
       </p>
       <div className="my-3 h-px bg-gray-100" />
       <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Previous Headline</p>
       <p className="mt-1 text-sm text-[#7b7480]">
-        {entry.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.previous?.headline.text ?? "—"}
+        {entry.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.previous?.headline.text ?? "—"}
       </p>
       <p className="mt-3 text-sm leading-relaxed text-[#7b7480]">
-        {entry.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.executiveSummary}
+        {entry.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.executiveSummary}
       </p>
     </Card>
   );
 }
 
-function ExecutionReviewWorkspaceSection({ execution }: { execution: ExecutiveReportExecution }) {
-  if (execution.records.length === 0) {
+function CompletionRecordsSection({ completion }: { completion: ExecutiveReportCompletion }) {
+  if (completion.records.length === 0) {
     return (
       <section>
-        <SectionLabel>Review</SectionLabel>
-        <SectionHeading>Execution Review Workspace</SectionHeading>
+        <SectionLabel>Records</SectionLabel>
+        <SectionHeading>Completion Records</SectionHeading>
         <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-          Detailed review cards for every execution record.
+          Detailed review cards for every completion record.
         </p>
         <Card>
-          <p className="text-sm text-[#7b7480]">No execution records available.</p>
+          <p className="text-sm text-[#7b7480]">No completion records available.</p>
         </Card>
       </section>
     );
@@ -198,41 +198,41 @@ function ExecutionReviewWorkspaceSection({ execution }: { execution: ExecutiveRe
 
   return (
     <section>
-      <SectionLabel>Review</SectionLabel>
-      <SectionHeading>Execution Review Workspace</SectionHeading>
+      <SectionLabel>Records</SectionLabel>
+      <SectionHeading>Completion Records</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        {execution.records.length} record{execution.records.length === 1 ? "" : "s"} under review.
+        {completion.records.length} record{completion.records.length === 1 ? "" : "s"} in completion review.
         Displayed exactly as received.
       </p>
 
       <div className="space-y-4">
-        {execution.records.map((entry, i) => (
-          <ExecutionWorkspaceCard key={i} entry={entry} />
+        {completion.records.map((entry, i) => (
+          <CompletionWorkspaceCard key={i} entry={entry} />
         ))}
       </div>
     </section>
   );
 }
 
-// ── Section 4: Execution Readiness ────────────────────────────────────────────
+// ── Section 4: Completion Status ──────────────────────────────────────────────
 
-function ExecutionReadinessSection({ execution }: { execution: ExecutiveReportExecution }) {
-  const latestGeneratedAt = execution.records.length > 0
-    ? execution.records[execution.records.length - 1].generatedAt
+function CompletionStatusSection({ completion }: { completion: ExecutiveReportCompletion }) {
+  const latestGeneratedAt = completion.records.length > 0
+    ? completion.records[completion.records.length - 1].generatedAt
     : null;
 
   return (
     <section>
-      <SectionLabel>Readiness</SectionLabel>
-      <SectionHeading>Execution Readiness</SectionHeading>
+      <SectionLabel>Status</SectionLabel>
+      <SectionHeading>Completion Status</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Execution readiness indicators at generation time.
+        Completion readiness indicators at generation time.
       </p>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <Card>
-          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Total Execution Records</p>
-          <p className="mt-3 text-3xl font-black text-[#4f4a52]">{execution.records.length}</p>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Total Completion Records</p>
+          <p className="mt-3 text-3xl font-black text-[#4f4a52]">{completion.records.length}</p>
         </Card>
         <Card>
           <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Latest Generated At</p>
@@ -245,15 +245,15 @@ function ExecutionReadinessSection({ execution }: { execution: ExecutiveReportEx
   );
 }
 
-// ── Section 5: Execution Metadata ─────────────────────────────────────────────
+// ── Section 5: Completion Metadata ────────────────────────────────────────────
 
-function ExecutionMetadataSection({ execution }: { execution: ExecutiveReportExecution }) {
+function CompletionMetadataSection({ completion }: { completion: ExecutiveReportCompletion }) {
   return (
     <section>
       <SectionLabel>Metadata</SectionLabel>
-      <SectionHeading>Execution Metadata</SectionHeading>
+      <SectionHeading>Completion Metadata</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Execution generation metadata. No data is stored or persisted.
+        Completion generation metadata. No data is stored or persisted.
       </p>
 
       <Card>
@@ -261,11 +261,11 @@ function ExecutionMetadataSection({ execution }: { execution: ExecutiveReportExe
           <tbody className="divide-y divide-gray-100">
             <tr>
               <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Generated At</td>
-              <td className="py-3 text-right text-[#4f4a52]">{fmtDate(execution.generatedAt)}</td>
+              <td className="py-3 text-right text-[#4f4a52]">{fmtDate(completion.generatedAt)}</td>
             </tr>
             <tr>
-              <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Execution Records</td>
-              <td className="py-3 text-right text-[#4f4a52]">{execution.records.length}</td>
+              <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Completion Records</td>
+              <td className="py-3 text-right text-[#4f4a52]">{completion.records.length}</td>
             </tr>
           </tbody>
         </table>
@@ -341,12 +341,12 @@ function QuickNavigationSection() {
 // ── Props ─────────────────────────────────────────────────────────────────────
 
 interface Props {
-  execution: ExecutiveReportExecution;
+  completion: ExecutiveReportCompletion;
 }
 
 // ── Main export ───────────────────────────────────────────────────────────────
 
-export default function ExecutiveReportExecutionCenter({ execution }: Props) {
+export default function ExecutiveReportCompletionDashboard({ completion }: Props) {
   return (
     <div className="min-h-screen bg-[#f5f1eb]">
 
@@ -475,10 +475,10 @@ export default function ExecutiveReportExecutionCenter({ execution }: Props) {
             <Link href="/admin/executive-report-execution" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Execution
             </Link>
-            <span className="text-xs font-bold text-white">Executive Report Execution Center</span>
-            <Link href="/admin/executive-report-completion" className="text-xs text-white/60 transition hover:text-white">
-              Executive Report Completion
+            <Link href="/admin/executive-report-execution-center" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report Execution Center
             </Link>
+            <span className="text-xs font-bold text-white">Executive Report Completion</span>
           </nav>
         </div>
         <form action={logoutAction}>
@@ -491,23 +491,23 @@ export default function ExecutiveReportExecutionCenter({ execution }: Props) {
       {/* ── Content ── */}
       <div className="mx-auto w-full max-w-[780px] space-y-14 px-6 py-12">
 
-        <ExecutionWorkspaceOverviewSection execution={execution} />
+        <CompletionOverviewSection completion={completion} />
 
         <hr className="border-gray-200" />
 
-        <ExecutiveExecutionWorkspaceSection execution={execution} />
+        <CompletionTimelineSection completion={completion} />
 
         <hr className="border-gray-200" />
 
-        <ExecutionReviewWorkspaceSection execution={execution} />
+        <CompletionRecordsSection completion={completion} />
 
         <hr className="border-gray-200" />
 
-        <ExecutionReadinessSection execution={execution} />
+        <CompletionStatusSection completion={completion} />
 
         <hr className="border-gray-200" />
 
-        <ExecutionMetadataSection execution={execution} />
+        <CompletionMetadataSection completion={completion} />
 
         <hr className="border-gray-200" />
 

@@ -470,6 +470,9 @@ export default function ExecutiveReportActionCenter({ action }: Props) {
             <Link href="/admin/executive-report-execution-center" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Execution Center
             </Link>
+            <Link href="/admin/executive-report-completion" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report Completion
+            </Link>
           </nav>
         </div>
         <form action={logoutAction}>
