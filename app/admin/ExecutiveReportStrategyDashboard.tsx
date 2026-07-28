@@ -5,9 +5,10 @@ import Link             from "next/link";
 import { logoutAction } from "./actions";
 import type { AlertSeverity } from "@/app/lib/operations/OperationsAlertTypes";
 import type {
-  ExecutiveReportHistory,
-  ExecutiveReportHistoryEntry,
-} from "@/app/lib/operations/ExecutiveReportHistoryTypes";
+  ExecutiveReportStrategy,
+  ExecutiveReportStrategyEntry,
+  ExecutiveReportStrategyState,
+} from "@/app/lib/operations/ExecutiveReportStrategyTypes";
 
 // ── UI helpers ────────────────────────────────────────────────────────────────
 
@@ -60,46 +61,56 @@ const SEVERITY_LABELS: Record<AlertSeverity, string> = {
   "low":      "Low",
 };
 
-// ── Section 1: History Overview ───────────────────────────────────────────────
+const STRATEGY_STATE_STYLES: Record<ExecutiveReportStrategyState, string> = {
+  "evaluate": "border-amber-100  bg-amber-50  text-amber-700",
+  "maintain": "border-gray-200   bg-gray-100  text-gray-500",
+  "scale":    "border-green-200  bg-green-50  text-green-700",
+};
 
-function HistoryOverviewSection({ history }: { history: ExecutiveReportHistory }) {
+const STRATEGY_STATE_LABELS: Record<ExecutiveReportStrategyState, string> = {
+  "evaluate": "Evaluate",
+  "maintain": "Maintain",
+  "scale":    "Scale",
+};
+
+// ── Section 1: Strategy Overview ──────────────────────────────────────────────
+
+function StrategyOverviewSection({ strategy }: { strategy: ExecutiveReportStrategy }) {
   return (
     <section>
-      <SectionLabel>Executive Report History</SectionLabel>
-      <SectionHeading>History Overview</SectionHeading>
+      <SectionLabel>Executive Report Strategy</SectionLabel>
+      <SectionHeading>Strategy Overview</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Aggregate view of the executive report history. Refreshed on every page load.
+        Aggregate view of the executive report strategy. Refreshed on every page load.
       </p>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <Card>
           <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Total Records</p>
-          <p className="mt-2 text-3xl font-black text-[#4f4a52]">{history.records.length}</p>
+          <p className="mt-2 text-3xl font-black text-[#4f4a52]">{strategy.records.length}</p>
         </Card>
         <Card>
-          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">History Generated</p>
-          <p className="mt-2 text-sm font-bold text-[#4f4a52]">{fmtDate(history.generatedAt)}</p>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Strategy Generated</p>
+          <p className="mt-2 text-sm font-bold text-[#4f4a52]">{fmtDate(strategy.generatedAt)}</p>
         </Card>
       </div>
     </section>
   );
 }
 
-// ── Section 2: History Timeline ───────────────────────────────────────────────
+// ── Section 2: Strategy Timeline ──────────────────────────────────────────────
 
-function HistoryTimelineSection({ history }: { history: ExecutiveReportHistory }) {
-  const records = history.records.slice().reverse();
-
-  if (records.length === 0) {
+function StrategyTimelineSection({ strategy }: { strategy: ExecutiveReportStrategy }) {
+  if (strategy.records.length === 0) {
     return (
       <section>
         <SectionLabel>Timeline</SectionLabel>
-        <SectionHeading>History Timeline</SectionHeading>
+        <SectionHeading>Strategy Timeline</SectionHeading>
         <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-          Chronological record of all history entries.
+          Chronological record of all strategy entries.
         </p>
         <Card>
-          <p className="text-sm text-[#7b7480]">No history records available.</p>
+          <p className="text-sm text-[#7b7480]">No strategy records available.</p>
         </Card>
       </section>
     );
@@ -108,30 +119,27 @@ function HistoryTimelineSection({ history }: { history: ExecutiveReportHistory }
   return (
     <section>
       <SectionLabel>Timeline</SectionLabel>
-      <SectionHeading>History Timeline</SectionHeading>
+      <SectionHeading>Strategy Timeline</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        {records.length} record{records.length === 1 ? "" : "s"}. Newest first.
+        {strategy.records.length} record{strategy.records.length === 1 ? "" : "s"}. Displayed as received.
       </p>
 
       <Card>
         <div className="divide-y divide-gray-100">
-          {records.map((record, i) => (
+          {strategy.records.map((entry, i) => (
             <div key={i} className="flex items-start gap-3 py-3 first:pt-0 last:pb-0">
               <span className="mt-0.5 w-5 shrink-0 text-center text-[10px] font-bold text-[#a09aa6]">
                 {i + 1}
               </span>
               <div className="min-w-0 flex-1">
-                <p className="text-sm font-semibold text-[#4f4a52]">{record.headline.text}</p>
-                <p className="mt-0.5 text-[10px] text-[#7b7480]">{fmtDate(record.generatedAt)}</p>
+                <p className="text-sm font-semibold text-[#4f4a52]">
+                  {entry.outlook.forecast.trend.insight.delta.comparison.current.headline.text}
+                </p>
+                <p className="mt-0.5 text-[10px] text-[#7b7480]">{fmtDate(entry.generatedAt)}</p>
               </div>
-              <div className="flex shrink-0 flex-col items-end gap-1">
-                <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${SEVERITY_STYLES[record.overallStatus]}`}>
-                  {SEVERITY_LABELS[record.overallStatus]}
-                </span>
-                <span className="text-[9px] text-[#a09aa6]">
-                  {record.entryCount} entr{record.entryCount === 1 ? "y" : "ies"}
-                </span>
-              </div>
+              <span className={`shrink-0 rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${STRATEGY_STATE_STYLES[entry.state]}`}>
+                {STRATEGY_STATE_LABELS[entry.state]}
+              </span>
             </div>
           ))}
         </div>
@@ -140,37 +148,46 @@ function HistoryTimelineSection({ history }: { history: ExecutiveReportHistory }
   );
 }
 
-// ── Section 3: History Records ────────────────────────────────────────────────
+// ── Section 3: Strategy Records ───────────────────────────────────────────────
 
-function HistoryRecordCard({ record }: { record: ExecutiveReportHistoryEntry }) {
+function StrategyRecordCard({ entry }: { entry: ExecutiveReportStrategyEntry }) {
   return (
     <Card>
       <div className="mb-3 flex flex-wrap items-center gap-2">
-        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${SEVERITY_STYLES[record.overallStatus]}`}>
-          {SEVERITY_LABELS[record.overallStatus]}
+        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${STRATEGY_STATE_STYLES[entry.state]}`}>
+          {STRATEGY_STATE_LABELS[entry.state]}
         </span>
-        <span className="ml-auto text-[10px] text-[#a09aa6]">{fmtDate(record.generatedAt)}</span>
+        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${SEVERITY_STYLES[entry.outlook.forecast.trend.insight.delta.comparison.current.overallStatus]}`}>
+          {SEVERITY_LABELS[entry.outlook.forecast.trend.insight.delta.comparison.current.overallStatus]}
+        </span>
+        <span className="ml-auto text-[10px] text-[#a09aa6]">{fmtDate(entry.generatedAt)}</span>
       </div>
-      <p className="text-sm font-bold text-[#4f4a52]">{record.headline.text}</p>
-      <p className="mt-2 text-sm leading-relaxed text-[#7b7480]">{record.executiveSummary}</p>
-      <p className="mt-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">
-        {record.entryCount} archive entr{record.entryCount === 1 ? "y" : "ies"}
+      <p className="text-sm font-bold text-[#4f4a52]">
+        {entry.outlook.forecast.trend.insight.delta.comparison.current.headline.text}
+      </p>
+      <div className="my-3 h-px bg-gray-100" />
+      <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Previous Headline</p>
+      <p className="mt-1 text-sm text-[#7b7480]">
+        {entry.outlook.forecast.trend.insight.delta.comparison.previous?.headline.text ?? "—"}
+      </p>
+      <p className="mt-3 text-sm leading-relaxed text-[#7b7480]">
+        {entry.outlook.forecast.trend.insight.delta.comparison.current.executiveSummary}
       </p>
     </Card>
   );
 }
 
-function HistoryRecordsSection({ history }: { history: ExecutiveReportHistory }) {
-  if (history.records.length === 0) {
+function StrategyRecordsSection({ strategy }: { strategy: ExecutiveReportStrategy }) {
+  if (strategy.records.length === 0) {
     return (
       <section>
         <SectionLabel>Records</SectionLabel>
-        <SectionHeading>History Records</SectionHeading>
+        <SectionHeading>Strategy Records</SectionHeading>
         <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-          Full detail for every history record.
+          Full detail for every strategy record.
         </p>
         <Card>
-          <p className="text-sm text-[#7b7480]">No history records available.</p>
+          <p className="text-sm text-[#7b7480]">No strategy records available.</p>
         </Card>
       </section>
     );
@@ -179,40 +196,40 @@ function HistoryRecordsSection({ history }: { history: ExecutiveReportHistory })
   return (
     <section>
       <SectionLabel>Records</SectionLabel>
-      <SectionHeading>History Records</SectionHeading>
+      <SectionHeading>Strategy Records</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        {history.records.length} record{history.records.length === 1 ? "" : "s"} in the history.
+        {strategy.records.length} record{strategy.records.length === 1 ? "" : "s"} in the strategy.
         Displayed exactly as received.
       </p>
 
       <div className="space-y-4">
-        {history.records.map((record, i) => (
-          <HistoryRecordCard key={i} record={record} />
+        {strategy.records.map((entry, i) => (
+          <StrategyRecordCard key={i} entry={entry} />
         ))}
       </div>
     </section>
   );
 }
 
-// ── Section 4: History Status ─────────────────────────────────────────────────
+// ── Section 4: Strategy Status ────────────────────────────────────────────────
 
-function HistoryStatusSection({ history }: { history: ExecutiveReportHistory }) {
-  const latestGeneratedAt = history.records.length > 0
-    ? history.records[history.records.length - 1].generatedAt
+function StrategyStatusSection({ strategy }: { strategy: ExecutiveReportStrategy }) {
+  const latestGeneratedAt = strategy.records.length > 0
+    ? strategy.records[strategy.records.length - 1].generatedAt
     : null;
 
   return (
     <section>
       <SectionLabel>Status</SectionLabel>
-      <SectionHeading>History Status</SectionHeading>
+      <SectionHeading>Strategy Status</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Aggregate history status at generation time.
+        Aggregate strategy status at generation time.
       </p>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <Card>
-          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Total History Records</p>
-          <p className="mt-3 text-3xl font-black text-[#4f4a52]">{history.records.length}</p>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Total Strategy Records</p>
+          <p className="mt-3 text-3xl font-black text-[#4f4a52]">{strategy.records.length}</p>
         </Card>
         <Card>
           <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Latest Generated At</p>
@@ -225,15 +242,15 @@ function HistoryStatusSection({ history }: { history: ExecutiveReportHistory }) 
   );
 }
 
-// ── Section 5: History Metadata ───────────────────────────────────────────────
+// ── Section 5: Strategy Metadata ──────────────────────────────────────────────
 
-function HistoryMetadataSection({ history }: { history: ExecutiveReportHistory }) {
+function StrategyMetadataSection({ strategy }: { strategy: ExecutiveReportStrategy }) {
   return (
     <section>
       <SectionLabel>Metadata</SectionLabel>
-      <SectionHeading>History Metadata</SectionHeading>
+      <SectionHeading>Strategy Metadata</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        History generation metadata. No data is stored or persisted.
+        Strategy generation metadata. No data is stored or persisted.
       </p>
 
       <Card>
@@ -241,11 +258,11 @@ function HistoryMetadataSection({ history }: { history: ExecutiveReportHistory }
           <tbody className="divide-y divide-gray-100">
             <tr>
               <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Generated At</td>
-              <td className="py-3 text-right text-[#4f4a52]">{fmtDate(history.generatedAt)}</td>
+              <td className="py-3 text-right text-[#4f4a52]">{fmtDate(strategy.generatedAt)}</td>
             </tr>
             <tr>
-              <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">History Records</td>
-              <td className="py-3 text-right text-[#4f4a52]">{history.records.length}</td>
+              <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Strategy Records</td>
+              <td className="py-3 text-right text-[#4f4a52]">{strategy.records.length}</td>
             </tr>
           </tbody>
         </table>
@@ -257,18 +274,32 @@ function HistoryMetadataSection({ history }: { history: ExecutiveReportHistory }
 // ── Section 6: Quick Navigation ───────────────────────────────────────────────
 
 const QUICK_NAV_LINKS = [
-  { href: "/admin",                                 label: "Operations" },
-  { href: "/admin/operations",                      label: "Unified Operations" },
-  { href: "/admin/executive-operations",            label: "Executive Operations" },
-  { href: "/admin/alerts",                          label: "Alerts" },
-  { href: "/admin/alert-center",                    label: "Alert Center" },
-  { href: "/admin/executive-digest",                label: "Executive Digest" },
-  { href: "/admin/executive-briefing",              label: "Executive Briefing" },
-  { href: "/admin/executive-report",                label: "Executive Report" },
-  { href: "/admin/executive-report-center",         label: "Executive Report Center" },
-  { href: "/admin/executive-report-archive",        label: "Executive Report Archive" },
-  { href: "/admin/executive-report-archive-center", label: "Executive Report Archive Center" },
-  { href: "/admin/executive-report-history",        label: "Executive Report History" },
+  { href: "/admin",                                          label: "Operations" },
+  { href: "/admin/operations",                               label: "Unified Operations" },
+  { href: "/admin/executive-operations",                     label: "Executive Operations" },
+  { href: "/admin/alerts",                                   label: "Alerts" },
+  { href: "/admin/alert-center",                             label: "Alert Center" },
+  { href: "/admin/executive-digest",                         label: "Executive Digest" },
+  { href: "/admin/executive-briefing",                       label: "Executive Briefing" },
+  { href: "/admin/executive-report",                         label: "Executive Report" },
+  { href: "/admin/executive-report-center",                  label: "Executive Report Center" },
+  { href: "/admin/executive-report-archive",                 label: "Executive Report Archive" },
+  { href: "/admin/executive-report-archive-center",          label: "Executive Report Archive Center" },
+  { href: "/admin/executive-report-history",                 label: "Executive Report History" },
+  { href: "/admin/executive-report-history-center",          label: "Executive Report History Center" },
+  { href: "/admin/executive-report-comparison",              label: "Executive Report Comparison" },
+  { href: "/admin/executive-report-comparison-center",       label: "Executive Report Comparison Center" },
+  { href: "/admin/executive-report-delta",                   label: "Executive Report Delta" },
+  { href: "/admin/executive-report-delta-center",            label: "Executive Report Delta Center" },
+  { href: "/admin/executive-report-insight",                 label: "Executive Report Insight" },
+  { href: "/admin/executive-report-insight-center",          label: "Executive Report Insight Center" },
+  { href: "/admin/executive-report-trend",                   label: "Executive Report Trend" },
+  { href: "/admin/executive-report-trend-center",            label: "Executive Report Trend Center" },
+  { href: "/admin/executive-report-forecast",                label: "Executive Report Forecast" },
+  { href: "/admin/executive-report-forecast-center",         label: "Executive Report Forecast Center" },
+  { href: "/admin/executive-report-outlook",                 label: "Executive Report Outlook" },
+  { href: "/admin/executive-report-outlook-center",          label: "Executive Report Outlook Center" },
+  { href: "/admin/executive-report-strategy",                label: "Executive Report Strategy" },
 ] as const;
 
 function QuickNavigationSection() {
@@ -298,12 +329,12 @@ function QuickNavigationSection() {
 // ── Props ─────────────────────────────────────────────────────────────────────
 
 interface Props {
-  history: ExecutiveReportHistory;
+  strategy: ExecutiveReportStrategy;
 }
 
 // ── Main export ───────────────────────────────────────────────────────────────
 
-export default function ExecutiveReportHistoryDashboard({ history }: Props) {
+export default function ExecutiveReportStrategyDashboard({ strategy }: Props) {
   return (
     <div className="min-h-screen bg-[#f5f1eb]">
 
@@ -363,7 +394,9 @@ export default function ExecutiveReportHistoryDashboard({ history }: Props) {
             <Link href="/admin/executive-report-archive-center" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Archive Center
             </Link>
-            <span className="text-xs font-bold text-white">Executive Report History</span>
+            <Link href="/admin/executive-report-history" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report History
+            </Link>
             <Link href="/admin/executive-report-history-center" className="text-xs text-white/60 transition hover:text-white">
               Executive Report History Center
             </Link>
@@ -403,9 +436,7 @@ export default function ExecutiveReportHistoryDashboard({ history }: Props) {
             <Link href="/admin/executive-report-outlook-center" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Outlook Center
             </Link>
-            <Link href="/admin/executive-report-strategy" className="text-xs text-white/60 transition hover:text-white">
-              Executive Report Strategy
-            </Link>
+            <span className="text-xs font-bold text-white">Executive Report Strategy</span>
           </nav>
         </div>
         <form action={logoutAction}>
@@ -418,23 +449,23 @@ export default function ExecutiveReportHistoryDashboard({ history }: Props) {
       {/* ── Content ── */}
       <div className="mx-auto w-full max-w-[780px] space-y-14 px-6 py-12">
 
-        <HistoryOverviewSection history={history} />
+        <StrategyOverviewSection strategy={strategy} />
 
         <hr className="border-gray-200" />
 
-        <HistoryTimelineSection history={history} />
+        <StrategyTimelineSection strategy={strategy} />
 
         <hr className="border-gray-200" />
 
-        <HistoryRecordsSection history={history} />
+        <StrategyRecordsSection strategy={strategy} />
 
         <hr className="border-gray-200" />
 
-        <HistoryStatusSection history={history} />
+        <StrategyStatusSection strategy={strategy} />
 
         <hr className="border-gray-200" />
 
-        <HistoryMetadataSection history={history} />
+        <StrategyMetadataSection strategy={strategy} />
 
         <hr className="border-gray-200" />
 
