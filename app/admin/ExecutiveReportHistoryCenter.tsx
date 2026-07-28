@@ -395,6 +395,9 @@ export default function ExecutiveReportHistoryCenter({ history }: Props) {
             <Link href="/admin/executive-report-strategy" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Strategy
             </Link>
+            <Link href="/admin/executive-report-strategy-center" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report Strategy Center
+            </Link>
           </nav>
         </div>
         <form action={logoutAction}>
