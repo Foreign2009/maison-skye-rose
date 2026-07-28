@@ -624,6 +624,9 @@ export default function CommerceIntelligenceDashboard({ behaviourReport, funnelR
             <Link href="/admin/executive-report-completion" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Completion
             </Link>
+            <Link href="/admin/executive-report-completion-center" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report Completion Center
+            </Link>
           </nav>
         </div>
         <form action={logoutAction}>
