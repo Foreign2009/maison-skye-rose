@@ -429,6 +429,9 @@ export default function ExecutiveReportOutlookDashboard({ outlook }: Props) {
               Executive Report Forecast Center
             </Link>
             <span className="text-xs font-bold text-white">Executive Report Outlook</span>
+            <Link href="/admin/executive-report-outlook-center" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report Outlook Center
+            </Link>
           </nav>
         </div>
         <form action={logoutAction}>

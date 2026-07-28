@@ -416,6 +416,9 @@ export default function ExecutiveReportDeltaDashboard({ delta }: Props) {
             <Link href="/admin/executive-report-outlook" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Outlook
             </Link>
+            <Link href="/admin/executive-report-outlook-center" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report Outlook Center
+            </Link>
           </nav>
         </div>
         <form action={logoutAction}>
