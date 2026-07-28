@@ -418,6 +418,9 @@ export default function ExecutiveReportHistoryDashboard({ history }: Props) {
             <Link href="/admin/executive-report-decision" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Decision
             </Link>
+            <Link href="/admin/executive-report-decision-center" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report Decision Center
+            </Link>
           </nav>
         </div>
         <form action={logoutAction}>
