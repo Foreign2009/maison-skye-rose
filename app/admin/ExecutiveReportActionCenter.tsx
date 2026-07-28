@@ -3,11 +3,12 @@
 import React            from "react";
 import Link             from "next/link";
 import { logoutAction } from "./actions";
-import type { AlertCategory, AlertSeverity } from "@/app/lib/operations/OperationsAlertTypes";
+import type { AlertSeverity } from "@/app/lib/operations/OperationsAlertTypes";
 import type {
-  ExecutiveReportArchive,
-  ExecutiveReportArchiveEntry,
-} from "@/app/lib/operations/ExecutiveReportArchiveTypes";
+  ExecutiveReportAction,
+  ExecutiveReportActionEntry,
+  ExecutiveReportActionState,
+} from "@/app/lib/operations/ExecutiveReportActionTypes";
 
 // ── UI helpers ────────────────────────────────────────────────────────────────
 
@@ -60,108 +61,136 @@ const SEVERITY_LABELS: Record<AlertSeverity, string> = {
   "low":      "Low",
 };
 
-const READINESS_LABELS: Record<AlertSeverity, string> = {
-  "critical": "Attention Required",
-  "high":     "Review Required",
-  "medium":   "Monitoring",
-  "low":      "Ready",
+const ACTION_STATE_STYLES: Record<ExecutiveReportActionState, string> = {
+  "plan":     "border-amber-100  bg-amber-50  text-amber-700",
+  "continue": "border-gray-200   bg-gray-100  text-gray-500",
+  "execute":  "border-green-200  bg-green-50  text-green-700",
 };
 
-const CATEGORY_LABELS: Record<AlertCategory, string> = {
-  "platform":       "Platform",
-  "recommendation": "Recommendation",
-  "customer":       "Customer",
-  "commerce":       "Commerce",
-  "operations":     "Operations",
+const ACTION_STATE_LABELS: Record<ExecutiveReportActionState, string> = {
+  "plan":     "Plan",
+  "continue": "Continue",
+  "execute":  "Execute",
 };
 
-// ── Section 1: Archive Overview ───────────────────────────────────────────────
+// ── Section 1: Action Workspace Overview ──────────────────────────────────────
 
-function ArchiveOverviewSection({ archive }: { archive: ExecutiveReportArchive }) {
+function ActionWorkspaceOverviewSection({ action }: { action: ExecutiveReportAction }) {
   return (
     <section>
-      <SectionLabel>Executive Report Archive Center</SectionLabel>
-      <SectionHeading>Archive Overview</SectionHeading>
+      <SectionLabel>Executive Report Action Center</SectionLabel>
+      <SectionHeading>Action Workspace Overview</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Workspace view of the current executive report archive. Refreshed on every page load.
+        Aggregate view of the executive report action workspace. Refreshed on every page load.
       </p>
 
-      <div className="mb-5 flex flex-wrap items-center gap-3">
-        <span className={`rounded-full border px-3 py-1 text-xs font-semibold ${SEVERITY_STYLES[archive.overallStatus]}`}>
-          {SEVERITY_LABELS[archive.overallStatus]}
-        </span>
-        <span className="rounded-full border border-gray-100 bg-white px-3 py-1 text-xs text-[#7b7480]">
-          {fmtDate(archive.generatedAt)}
-        </span>
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <Card>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Total Records</p>
+          <p className="mt-2 text-3xl font-black text-[#4f4a52]">{action.records.length}</p>
+        </Card>
+        <Card>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Action Generated</p>
+          <p className="mt-2 text-sm font-bold text-[#4f4a52]">{fmtDate(action.generatedAt)}</p>
+        </Card>
       </div>
-
-      <Card>
-        <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Executive Headline</p>
-        <p className="mt-3 text-lg font-black leading-snug text-[#4f4a52]">
-          {archive.headline.text}
-        </p>
-      </Card>
     </section>
   );
 }
 
-// ── Section 2: Executive Summary Workspace ────────────────────────────────────
+// ── Section 2: Executive Action Workspace ─────────────────────────────────────
 
-function ExecutiveSummaryWorkspaceSection({ archive }: { archive: ExecutiveReportArchive }) {
+function ExecutiveActionWorkspaceSection({ action }: { action: ExecutiveReportAction }) {
+  if (action.records.length === 0) {
+    return (
+      <section>
+        <SectionLabel>Workspace</SectionLabel>
+        <SectionHeading>Executive Action Workspace</SectionHeading>
+        <p className="mt-2 mb-5 text-sm text-[#7b7480]">
+          Full action workspace for executive review.
+        </p>
+        <Card>
+          <p className="text-sm text-[#7b7480]">No action records available.</p>
+        </Card>
+      </section>
+    );
+  }
+
   return (
     <section>
       <SectionLabel>Workspace</SectionLabel>
-      <SectionHeading>Executive Summary Workspace</SectionHeading>
+      <SectionHeading>Executive Action Workspace</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Executive summary for review. Displayed exactly as received. No processing applied.
+        {action.records.length} record{action.records.length === 1 ? "" : "s"} in the action workspace.
       </p>
 
       <Card>
-        <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Executive Summary</p>
-        <p className="mt-3 text-base leading-relaxed text-[#4f4a52]">{archive.executiveSummary}</p>
+        <div className="divide-y divide-gray-100">
+          {action.records.map((entry, i) => (
+            <div key={i} className="py-4 first:pt-0 last:pb-0">
+              <div className="mb-2 flex items-center gap-2">
+                <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${ACTION_STATE_STYLES[entry.state]}`}>
+                  {ACTION_STATE_LABELS[entry.state]}
+                </span>
+                <span className="ml-auto text-[10px] text-[#a09aa6]">{fmtDate(entry.generatedAt)}</span>
+              </div>
+              <p className="text-sm font-bold text-[#4f4a52]">
+                {entry.strategy.outlook.forecast.trend.insight.delta.comparison.current.headline.text}
+              </p>
+              <p className="mt-1 text-[10px] text-[#a09aa6]">
+                Previous: {entry.strategy.outlook.forecast.trend.insight.delta.comparison.previous?.headline.text ?? "—"}
+              </p>
+              <p className="mt-2 text-sm leading-relaxed text-[#7b7480]">
+                {entry.strategy.outlook.forecast.trend.insight.delta.comparison.current.executiveSummary}
+              </p>
+            </div>
+          ))}
+        </div>
       </Card>
     </section>
   );
 }
 
-// ── Section 3: Archive Review Workspace ───────────────────────────────────────
+// ── Section 3: Action Review Workspace ────────────────────────────────────────
 
-function ArchiveWorkspaceCard({ entry }: { entry: ExecutiveReportArchiveEntry }) {
-  const num = String(entry.sequence).padStart(2, "0");
-
+function ActionWorkspaceCard({ entry }: { entry: ExecutiveReportActionEntry }) {
   return (
     <Card>
-      <div className="mb-3 flex items-start justify-between gap-4">
-        <div className="flex items-center gap-3">
-          <span className="text-2xl font-black text-[#e8e3ef]">{num}</span>
-          <p className="text-sm font-bold uppercase tracking-wide text-[#4f4a52]">{entry.title}</p>
-        </div>
-        <div className="flex shrink-0 flex-col items-end gap-1">
-          <span className="rounded-full border border-gray-100 bg-gray-50 px-2 py-0.5 text-[9px] font-mono text-[#a09aa6]">
-            {entry.alertId}
-          </span>
-          <span className="text-[9px] uppercase tracking-wider text-[#a09aa6]">
-            {CATEGORY_LABELS[entry.category]}
-          </span>
-        </div>
+      <div className="mb-3 flex flex-wrap items-center gap-2">
+        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${ACTION_STATE_STYLES[entry.state]}`}>
+          {ACTION_STATE_LABELS[entry.state]}
+        </span>
+        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${SEVERITY_STYLES[entry.strategy.outlook.forecast.trend.insight.delta.comparison.current.overallStatus]}`}>
+          {SEVERITY_LABELS[entry.strategy.outlook.forecast.trend.insight.delta.comparison.current.overallStatus]}
+        </span>
+        <span className="ml-auto text-[10px] text-[#a09aa6]">{fmtDate(entry.generatedAt)}</span>
       </div>
-      <div className="h-px bg-gray-100" />
-      <p className="mt-3 text-sm leading-relaxed text-[#7b7480]">{entry.body}</p>
+      <p className="text-sm font-bold text-[#4f4a52]">
+        {entry.strategy.outlook.forecast.trend.insight.delta.comparison.current.headline.text}
+      </p>
+      <div className="my-3 h-px bg-gray-100" />
+      <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Previous Headline</p>
+      <p className="mt-1 text-sm text-[#7b7480]">
+        {entry.strategy.outlook.forecast.trend.insight.delta.comparison.previous?.headline.text ?? "—"}
+      </p>
+      <p className="mt-3 text-sm leading-relaxed text-[#7b7480]">
+        {entry.strategy.outlook.forecast.trend.insight.delta.comparison.current.executiveSummary}
+      </p>
     </Card>
   );
 }
 
-function ArchiveReviewWorkspaceSection({ archive }: { archive: ExecutiveReportArchive }) {
-  if (archive.entries.length === 0) {
+function ActionReviewWorkspaceSection({ action }: { action: ExecutiveReportAction }) {
+  if (action.records.length === 0) {
     return (
       <section>
         <SectionLabel>Review</SectionLabel>
-        <SectionHeading>Archive Review Workspace</SectionHeading>
+        <SectionHeading>Action Review Workspace</SectionHeading>
         <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-          Archive entries for executive review.
+          Detailed review cards for every action record.
         </p>
         <Card>
-          <p className="text-sm text-[#7b7480]">No archive entries. All alerts resolved.</p>
+          <p className="text-sm text-[#7b7480]">No action records available.</p>
         </Card>
       </section>
     );
@@ -170,54 +199,45 @@ function ArchiveReviewWorkspaceSection({ archive }: { archive: ExecutiveReportAr
   return (
     <section>
       <SectionLabel>Review</SectionLabel>
-      <SectionHeading>Archive Review Workspace</SectionHeading>
+      <SectionHeading>Action Review Workspace</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        {archive.entries.length} entr{archive.entries.length === 1 ? "y" : "ies"} for executive review.
+        {action.records.length} record{action.records.length === 1 ? "" : "s"} under review.
         Displayed exactly as received.
       </p>
 
       <div className="space-y-4">
-        {archive.entries.map((entry) => (
-          <ArchiveWorkspaceCard key={entry.alertId} entry={entry} />
+        {action.records.map((entry, i) => (
+          <ActionWorkspaceCard key={i} entry={entry} />
         ))}
       </div>
     </section>
   );
 }
 
-// ── Section 4: Archive Readiness ──────────────────────────────────────────────
+// ── Section 4: Action Readiness ───────────────────────────────────────────────
 
-function ArchiveReadinessSection({ archive }: { archive: ExecutiveReportArchive }) {
+function ActionReadinessSection({ action }: { action: ExecutiveReportAction }) {
+  const latestGeneratedAt = action.records.length > 0
+    ? action.records[action.records.length - 1].generatedAt
+    : null;
+
   return (
     <section>
       <SectionLabel>Readiness</SectionLabel>
-      <SectionHeading>Archive Readiness</SectionHeading>
+      <SectionHeading>Action Readiness</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Platform readiness assessment derived from operational status and analytics availability.
+        Action readiness indicators at generation time.
       </p>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <Card>
-          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Platform Readiness</p>
-          <p className="mt-3 text-xl font-black text-[#4f4a52]">
-            {READINESS_LABELS[archive.overallStatus]}
-          </p>
-          <div className="mt-3">
-            <span className={`rounded-full border px-3 py-1 text-xs font-bold uppercase ${SEVERITY_STYLES[archive.overallStatus]}`}>
-              {SEVERITY_LABELS[archive.overallStatus]}
-            </span>
-          </div>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Total Action Records</p>
+          <p className="mt-3 text-3xl font-black text-[#4f4a52]">{action.records.length}</p>
         </Card>
-
         <Card>
-          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Intelligence Availability</p>
-          <p className="mt-3 text-xl font-black text-[#4f4a52]">
-            {archive.analyticsAvailable ? "Connected" : "Offline"}
-          </p>
-          <p className="mt-2 text-[10px] uppercase tracking-wider text-[#a09aa6]">
-            {archive.analyticsAvailable
-              ? "Live analytics connected"
-              : "Configure PostHog to enable"}
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Latest Generated At</p>
+          <p className="mt-3 text-sm font-bold text-[#4f4a52]">
+            {latestGeneratedAt ? fmtDate(latestGeneratedAt) : "—"}
           </p>
         </Card>
       </div>
@@ -225,15 +245,15 @@ function ArchiveReadinessSection({ archive }: { archive: ExecutiveReportArchive 
   );
 }
 
-// ── Section 5: Archive Metadata ───────────────────────────────────────────────
+// ── Section 5: Action Metadata ────────────────────────────────────────────────
 
-function ArchiveMetadataSection({ archive }: { archive: ExecutiveReportArchive }) {
+function ActionMetadataSection({ action }: { action: ExecutiveReportAction }) {
   return (
     <section>
       <SectionLabel>Metadata</SectionLabel>
-      <SectionHeading>Archive Metadata</SectionHeading>
+      <SectionHeading>Action Metadata</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Archive generation metadata. No data is stored or persisted.
+        Action generation metadata. No data is stored or persisted.
       </p>
 
       <Card>
@@ -241,15 +261,11 @@ function ArchiveMetadataSection({ archive }: { archive: ExecutiveReportArchive }
           <tbody className="divide-y divide-gray-100">
             <tr>
               <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Generated At</td>
-              <td className="py-3 text-right text-[#4f4a52]">{fmtDate(archive.generatedAt)}</td>
+              <td className="py-3 text-right text-[#4f4a52]">{fmtDate(action.generatedAt)}</td>
             </tr>
             <tr>
-              <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Analytics Available</td>
-              <td className="py-3 text-right text-[#4f4a52]">{archive.analyticsAvailable ? "Yes" : "No"}</td>
-            </tr>
-            <tr>
-              <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Archive Entries</td>
-              <td className="py-3 text-right text-[#4f4a52]">{archive.entries.length}</td>
+              <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Action Records</td>
+              <td className="py-3 text-right text-[#4f4a52]">{action.records.length}</td>
             </tr>
           </tbody>
         </table>
@@ -261,17 +277,35 @@ function ArchiveMetadataSection({ archive }: { archive: ExecutiveReportArchive }
 // ── Section 6: Quick Navigation ───────────────────────────────────────────────
 
 const QUICK_NAV_LINKS = [
-  { href: "/admin",                                 label: "Operations" },
-  { href: "/admin/operations",                      label: "Unified Operations" },
-  { href: "/admin/executive-operations",            label: "Executive Operations" },
-  { href: "/admin/alerts",                          label: "Alerts" },
-  { href: "/admin/alert-center",                    label: "Alert Center" },
-  { href: "/admin/executive-digest",                label: "Executive Digest" },
-  { href: "/admin/executive-briefing",              label: "Executive Briefing" },
-  { href: "/admin/executive-report",                label: "Executive Report" },
-  { href: "/admin/executive-report-center",         label: "Executive Report Center" },
-  { href: "/admin/executive-report-archive",        label: "Executive Report Archive" },
-  { href: "/admin/executive-report-archive-center", label: "Executive Report Archive Center" },
+  { href: "/admin",                                          label: "Operations" },
+  { href: "/admin/operations",                               label: "Unified Operations" },
+  { href: "/admin/executive-operations",                     label: "Executive Operations" },
+  { href: "/admin/alerts",                                   label: "Alerts" },
+  { href: "/admin/alert-center",                             label: "Alert Center" },
+  { href: "/admin/executive-digest",                         label: "Executive Digest" },
+  { href: "/admin/executive-briefing",                       label: "Executive Briefing" },
+  { href: "/admin/executive-report",                         label: "Executive Report" },
+  { href: "/admin/executive-report-center",                  label: "Executive Report Center" },
+  { href: "/admin/executive-report-archive",                 label: "Executive Report Archive" },
+  { href: "/admin/executive-report-archive-center",          label: "Executive Report Archive Center" },
+  { href: "/admin/executive-report-history",                 label: "Executive Report History" },
+  { href: "/admin/executive-report-history-center",          label: "Executive Report History Center" },
+  { href: "/admin/executive-report-comparison",              label: "Executive Report Comparison" },
+  { href: "/admin/executive-report-comparison-center",       label: "Executive Report Comparison Center" },
+  { href: "/admin/executive-report-delta",                   label: "Executive Report Delta" },
+  { href: "/admin/executive-report-delta-center",            label: "Executive Report Delta Center" },
+  { href: "/admin/executive-report-insight",                 label: "Executive Report Insight" },
+  { href: "/admin/executive-report-insight-center",          label: "Executive Report Insight Center" },
+  { href: "/admin/executive-report-trend",                   label: "Executive Report Trend" },
+  { href: "/admin/executive-report-trend-center",            label: "Executive Report Trend Center" },
+  { href: "/admin/executive-report-forecast",                label: "Executive Report Forecast" },
+  { href: "/admin/executive-report-forecast-center",         label: "Executive Report Forecast Center" },
+  { href: "/admin/executive-report-outlook",                 label: "Executive Report Outlook" },
+  { href: "/admin/executive-report-outlook-center",          label: "Executive Report Outlook Center" },
+  { href: "/admin/executive-report-strategy",                label: "Executive Report Strategy" },
+  { href: "/admin/executive-report-strategy-center",         label: "Executive Report Strategy Center" },
+  { href: "/admin/executive-report-action",                  label: "Executive Report Action" },
+  { href: "/admin/executive-report-action-center",           label: "Executive Report Action Center" },
 ] as const;
 
 function QuickNavigationSection() {
@@ -301,12 +335,12 @@ function QuickNavigationSection() {
 // ── Props ─────────────────────────────────────────────────────────────────────
 
 interface Props {
-  archive: ExecutiveReportArchive;
+  action: ExecutiveReportAction;
 }
 
 // ── Main export ───────────────────────────────────────────────────────────────
 
-export default function ExecutiveReportArchiveCenter({ archive }: Props) {
+export default function ExecutiveReportActionCenter({ action }: Props) {
   return (
     <div className="min-h-screen bg-[#f5f1eb]">
 
@@ -363,7 +397,9 @@ export default function ExecutiveReportArchiveCenter({ archive }: Props) {
             <Link href="/admin/executive-report-archive" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Archive
             </Link>
-            <span className="text-xs font-bold text-white">Executive Report Archive Center</span>
+            <Link href="/admin/executive-report-archive-center" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report Archive Center
+            </Link>
             <Link href="/admin/executive-report-history" className="text-xs text-white/60 transition hover:text-white">
               Executive Report History
             </Link>
@@ -415,9 +451,7 @@ export default function ExecutiveReportArchiveCenter({ archive }: Props) {
             <Link href="/admin/executive-report-action" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Action
             </Link>
-            <Link href="/admin/executive-report-action-center" className="text-xs text-white/60 transition hover:text-white">
-              Executive Report Action Center
-            </Link>
+            <span className="text-xs font-bold text-white">Executive Report Action Center</span>
           </nav>
         </div>
         <form action={logoutAction}>
@@ -430,23 +464,23 @@ export default function ExecutiveReportArchiveCenter({ archive }: Props) {
       {/* ── Content ── */}
       <div className="mx-auto w-full max-w-[780px] space-y-14 px-6 py-12">
 
-        <ArchiveOverviewSection archive={archive} />
+        <ActionWorkspaceOverviewSection action={action} />
 
         <hr className="border-gray-200" />
 
-        <ExecutiveSummaryWorkspaceSection archive={archive} />
+        <ExecutiveActionWorkspaceSection action={action} />
 
         <hr className="border-gray-200" />
 
-        <ArchiveReviewWorkspaceSection archive={archive} />
+        <ActionReviewWorkspaceSection action={action} />
 
         <hr className="border-gray-200" />
 
-        <ArchiveReadinessSection archive={archive} />
+        <ActionReadinessSection action={action} />
 
         <hr className="border-gray-200" />
 
-        <ArchiveMetadataSection archive={archive} />
+        <ActionMetadataSection action={action} />
 
         <hr className="border-gray-200" />
 
