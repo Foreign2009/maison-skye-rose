@@ -1,14 +1,14 @@
-﻿"use client";
+"use client";
 
 import React            from "react";
 import Link             from "next/link";
 import { logoutAction } from "./actions";
 import type { AlertSeverity } from "@/app/lib/operations/OperationsAlertTypes";
 import type {
-  ExecutiveReportStrategy,
-  ExecutiveReportStrategyEntry,
-  ExecutiveReportStrategyState,
-} from "@/app/lib/operations/ExecutiveReportStrategyTypes";
+  ExecutiveReportApproval,
+  ExecutiveReportApprovalEntry,
+  ExecutiveReportApprovalState,
+} from "@/app/lib/operations/ExecutiveReportApprovalTypes";
 
 // ── UI helpers ────────────────────────────────────────────────────────────────
 
@@ -61,56 +61,56 @@ const SEVERITY_LABELS: Record<AlertSeverity, string> = {
   "low":      "Low",
 };
 
-const STRATEGY_STATE_STYLES: Record<ExecutiveReportStrategyState, string> = {
-  "evaluate": "border-amber-100  bg-amber-50  text-amber-700",
-  "maintain": "border-gray-200   bg-gray-100  text-gray-500",
-  "scale":    "border-green-200  bg-green-50  text-green-700",
+const APPROVAL_STATE_STYLES: Record<ExecutiveReportApprovalState, string> = {
+  "awaiting":  "border-amber-100  bg-amber-50  text-amber-700",
+  "approved":  "border-gray-200   bg-gray-100  text-gray-500",
+  "completed": "border-green-200  bg-green-50  text-green-700",
 };
 
-const STRATEGY_STATE_LABELS: Record<ExecutiveReportStrategyState, string> = {
-  "evaluate": "Evaluate",
-  "maintain": "Maintain",
-  "scale":    "Scale",
+const APPROVAL_STATE_LABELS: Record<ExecutiveReportApprovalState, string> = {
+  "awaiting":  "Awaiting",
+  "approved":  "Approved",
+  "completed": "Completed",
 };
 
-// ── Section 1: Strategy Workspace Overview ────────────────────────────────────
+// ── Section 1: Approval Workspace Overview ────────────────────────────────────
 
-function StrategyWorkspaceOverviewSection({ strategy }: { strategy: ExecutiveReportStrategy }) {
+function ApprovalWorkspaceOverviewSection({ approval }: { approval: ExecutiveReportApproval }) {
   return (
     <section>
-      <SectionLabel>Executive Report Strategy Center</SectionLabel>
-      <SectionHeading>Strategy Workspace Overview</SectionHeading>
+      <SectionLabel>Executive Report Approval Center</SectionLabel>
+      <SectionHeading>Approval Workspace Overview</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Aggregate view of the executive report strategy workspace. Refreshed on every page load.
+        Aggregate view of the executive report approval workspace. Refreshed on every page load.
       </p>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <Card>
           <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Total Records</p>
-          <p className="mt-2 text-3xl font-black text-[#4f4a52]">{strategy.records.length}</p>
+          <p className="mt-2 text-3xl font-black text-[#4f4a52]">{approval.records.length}</p>
         </Card>
         <Card>
-          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Strategy Generated</p>
-          <p className="mt-2 text-sm font-bold text-[#4f4a52]">{fmtDate(strategy.generatedAt)}</p>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Approval Generated</p>
+          <p className="mt-2 text-sm font-bold text-[#4f4a52]">{fmtDate(approval.generatedAt)}</p>
         </Card>
       </div>
     </section>
   );
 }
 
-// ── Section 2: Executive Strategy Workspace ───────────────────────────────────
+// ── Section 2: Executive Approval Workspace ───────────────────────────────────
 
-function ExecutiveStrategyWorkspaceSection({ strategy }: { strategy: ExecutiveReportStrategy }) {
-  if (strategy.records.length === 0) {
+function ExecutiveApprovalWorkspaceSection({ approval }: { approval: ExecutiveReportApproval }) {
+  if (approval.records.length === 0) {
     return (
       <section>
         <SectionLabel>Workspace</SectionLabel>
-        <SectionHeading>Executive Strategy Workspace</SectionHeading>
+        <SectionHeading>Executive Approval Workspace</SectionHeading>
         <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-          Full strategy workspace for executive review.
+          Full approval workspace for executive review.
         </p>
         <Card>
-          <p className="text-sm text-[#7b7480]">No strategy records available.</p>
+          <p className="text-sm text-[#7b7480]">No approval records available.</p>
         </Card>
       </section>
     );
@@ -119,29 +119,29 @@ function ExecutiveStrategyWorkspaceSection({ strategy }: { strategy: ExecutiveRe
   return (
     <section>
       <SectionLabel>Workspace</SectionLabel>
-      <SectionHeading>Executive Strategy Workspace</SectionHeading>
+      <SectionHeading>Executive Approval Workspace</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        {strategy.records.length} record{strategy.records.length === 1 ? "" : "s"} in the strategy workspace.
+        {approval.records.length} record{approval.records.length === 1 ? "" : "s"} in the approval workspace.
       </p>
 
       <Card>
         <div className="divide-y divide-gray-100">
-          {strategy.records.map((entry, i) => (
+          {approval.records.map((entry, i) => (
             <div key={i} className="py-4 first:pt-0 last:pb-0">
               <div className="mb-2 flex items-center gap-2">
-                <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${STRATEGY_STATE_STYLES[entry.state]}`}>
-                  {STRATEGY_STATE_LABELS[entry.state]}
+                <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${APPROVAL_STATE_STYLES[entry.state]}`}>
+                  {APPROVAL_STATE_LABELS[entry.state]}
                 </span>
                 <span className="ml-auto text-[10px] text-[#a09aa6]">{fmtDate(entry.generatedAt)}</span>
               </div>
               <p className="text-sm font-bold text-[#4f4a52]">
-                {entry.outlook.forecast.trend.insight.delta.comparison.current.headline.text}
+                {entry.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.headline.text}
               </p>
               <p className="mt-1 text-[10px] text-[#a09aa6]">
-                Previous: {entry.outlook.forecast.trend.insight.delta.comparison.previous?.headline.text ?? "—"}
+                Previous: {entry.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.previous?.headline.text ?? "—"}
               </p>
               <p className="mt-2 text-sm leading-relaxed text-[#7b7480]">
-                {entry.outlook.forecast.trend.insight.delta.comparison.current.executiveSummary}
+                {entry.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.executiveSummary}
               </p>
             </div>
           ))}
@@ -151,46 +151,46 @@ function ExecutiveStrategyWorkspaceSection({ strategy }: { strategy: ExecutiveRe
   );
 }
 
-// ── Section 3: Strategy Review Workspace ──────────────────────────────────────
+// ── Section 3: Approval Review Workspace ──────────────────────────────────────
 
-function StrategyWorkspaceCard({ entry }: { entry: ExecutiveReportStrategyEntry }) {
+function ApprovalWorkspaceCard({ entry }: { entry: ExecutiveReportApprovalEntry }) {
   return (
     <Card>
       <div className="mb-3 flex flex-wrap items-center gap-2">
-        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${STRATEGY_STATE_STYLES[entry.state]}`}>
-          {STRATEGY_STATE_LABELS[entry.state]}
+        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${APPROVAL_STATE_STYLES[entry.state]}`}>
+          {APPROVAL_STATE_LABELS[entry.state]}
         </span>
-        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${SEVERITY_STYLES[entry.outlook.forecast.trend.insight.delta.comparison.current.overallStatus]}`}>
-          {SEVERITY_LABELS[entry.outlook.forecast.trend.insight.delta.comparison.current.overallStatus]}
+        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${SEVERITY_STYLES[entry.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.overallStatus]}`}>
+          {SEVERITY_LABELS[entry.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.overallStatus]}
         </span>
         <span className="ml-auto text-[10px] text-[#a09aa6]">{fmtDate(entry.generatedAt)}</span>
       </div>
       <p className="text-sm font-bold text-[#4f4a52]">
-        {entry.outlook.forecast.trend.insight.delta.comparison.current.headline.text}
+        {entry.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.headline.text}
       </p>
       <div className="my-3 h-px bg-gray-100" />
       <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Previous Headline</p>
       <p className="mt-1 text-sm text-[#7b7480]">
-        {entry.outlook.forecast.trend.insight.delta.comparison.previous?.headline.text ?? "—"}
+        {entry.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.previous?.headline.text ?? "—"}
       </p>
       <p className="mt-3 text-sm leading-relaxed text-[#7b7480]">
-        {entry.outlook.forecast.trend.insight.delta.comparison.current.executiveSummary}
+        {entry.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.executiveSummary}
       </p>
     </Card>
   );
 }
 
-function StrategyReviewWorkspaceSection({ strategy }: { strategy: ExecutiveReportStrategy }) {
-  if (strategy.records.length === 0) {
+function ApprovalReviewWorkspaceSection({ approval }: { approval: ExecutiveReportApproval }) {
+  if (approval.records.length === 0) {
     return (
       <section>
         <SectionLabel>Review</SectionLabel>
-        <SectionHeading>Strategy Review Workspace</SectionHeading>
+        <SectionHeading>Approval Review Workspace</SectionHeading>
         <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-          Detailed review cards for every strategy record.
+          Detailed review cards for every approval record.
         </p>
         <Card>
-          <p className="text-sm text-[#7b7480]">No strategy records available.</p>
+          <p className="text-sm text-[#7b7480]">No approval records available.</p>
         </Card>
       </section>
     );
@@ -199,40 +199,40 @@ function StrategyReviewWorkspaceSection({ strategy }: { strategy: ExecutiveRepor
   return (
     <section>
       <SectionLabel>Review</SectionLabel>
-      <SectionHeading>Strategy Review Workspace</SectionHeading>
+      <SectionHeading>Approval Review Workspace</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        {strategy.records.length} record{strategy.records.length === 1 ? "" : "s"} under review.
+        {approval.records.length} record{approval.records.length === 1 ? "" : "s"} under review.
         Displayed exactly as received.
       </p>
 
       <div className="space-y-4">
-        {strategy.records.map((entry, i) => (
-          <StrategyWorkspaceCard key={i} entry={entry} />
+        {approval.records.map((entry, i) => (
+          <ApprovalWorkspaceCard key={i} entry={entry} />
         ))}
       </div>
     </section>
   );
 }
 
-// ── Section 4: Strategy Readiness ─────────────────────────────────────────────
+// ── Section 4: Approval Readiness ─────────────────────────────────────────────
 
-function StrategyReadinessSection({ strategy }: { strategy: ExecutiveReportStrategy }) {
-  const latestGeneratedAt = strategy.records.length > 0
-    ? strategy.records[strategy.records.length - 1].generatedAt
+function ApprovalReadinessSection({ approval }: { approval: ExecutiveReportApproval }) {
+  const latestGeneratedAt = approval.records.length > 0
+    ? approval.records[approval.records.length - 1].generatedAt
     : null;
 
   return (
     <section>
       <SectionLabel>Readiness</SectionLabel>
-      <SectionHeading>Strategy Readiness</SectionHeading>
+      <SectionHeading>Approval Readiness</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Strategy readiness indicators at generation time.
+        Approval readiness indicators at generation time.
       </p>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <Card>
-          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Total Strategy Records</p>
-          <p className="mt-3 text-3xl font-black text-[#4f4a52]">{strategy.records.length}</p>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Total Approval Records</p>
+          <p className="mt-3 text-3xl font-black text-[#4f4a52]">{approval.records.length}</p>
         </Card>
         <Card>
           <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Latest Generated At</p>
@@ -245,15 +245,15 @@ function StrategyReadinessSection({ strategy }: { strategy: ExecutiveReportStrat
   );
 }
 
-// ── Section 5: Strategy Metadata ──────────────────────────────────────────────
+// ── Section 5: Approval Metadata ──────────────────────────────────────────────
 
-function StrategyMetadataSection({ strategy }: { strategy: ExecutiveReportStrategy }) {
+function ApprovalMetadataSection({ approval }: { approval: ExecutiveReportApproval }) {
   return (
     <section>
       <SectionLabel>Metadata</SectionLabel>
-      <SectionHeading>Strategy Metadata</SectionHeading>
+      <SectionHeading>Approval Metadata</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Strategy generation metadata. No data is stored or persisted.
+        Approval generation metadata. No data is stored or persisted.
       </p>
 
       <Card>
@@ -261,11 +261,11 @@ function StrategyMetadataSection({ strategy }: { strategy: ExecutiveReportStrate
           <tbody className="divide-y divide-gray-100">
             <tr>
               <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Generated At</td>
-              <td className="py-3 text-right text-[#4f4a52]">{fmtDate(strategy.generatedAt)}</td>
+              <td className="py-3 text-right text-[#4f4a52]">{fmtDate(approval.generatedAt)}</td>
             </tr>
             <tr>
-              <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Strategy Records</td>
-              <td className="py-3 text-right text-[#4f4a52]">{strategy.records.length}</td>
+              <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Approval Records</td>
+              <td className="py-3 text-right text-[#4f4a52]">{approval.records.length}</td>
             </tr>
           </tbody>
         </table>
@@ -304,6 +304,12 @@ const QUICK_NAV_LINKS = [
   { href: "/admin/executive-report-outlook-center",          label: "Executive Report Outlook Center" },
   { href: "/admin/executive-report-strategy",                label: "Executive Report Strategy" },
   { href: "/admin/executive-report-strategy-center",         label: "Executive Report Strategy Center" },
+  { href: "/admin/executive-report-action",                  label: "Executive Report Action" },
+  { href: "/admin/executive-report-action-center",           label: "Executive Report Action Center" },
+  { href: "/admin/executive-report-decision",                label: "Executive Report Decision" },
+  { href: "/admin/executive-report-decision-center",         label: "Executive Report Decision Center" },
+  { href: "/admin/executive-report-approval",                label: "Executive Report Approval" },
+  { href: "/admin/executive-report-approval-center",         label: "Executive Report Approval Center" },
 ] as const;
 
 function QuickNavigationSection() {
@@ -333,12 +339,12 @@ function QuickNavigationSection() {
 // ── Props ─────────────────────────────────────────────────────────────────────
 
 interface Props {
-  strategy: ExecutiveReportStrategy;
+  approval: ExecutiveReportApproval;
 }
 
 // ── Main export ───────────────────────────────────────────────────────────────
 
-export default function ExecutiveReportStrategyCenter({ strategy }: Props) {
+export default function ExecutiveReportApprovalCenter({ approval }: Props) {
   return (
     <div className="min-h-screen bg-[#f5f1eb]">
 
@@ -443,7 +449,9 @@ export default function ExecutiveReportStrategyCenter({ strategy }: Props) {
             <Link href="/admin/executive-report-strategy" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Strategy
             </Link>
-            <span className="text-xs font-bold text-white">Executive Report Strategy Center</span>
+            <Link href="/admin/executive-report-strategy-center" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report Strategy Center
+            </Link>
             <Link href="/admin/executive-report-action" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Action
             </Link>
@@ -459,9 +467,7 @@ export default function ExecutiveReportStrategyCenter({ strategy }: Props) {
             <Link href="/admin/executive-report-approval" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Approval
             </Link>
-            <Link href="/admin/executive-report-approval-center" className="text-xs text-white/60 transition hover:text-white">
-              Executive Report Approval Center
-            </Link>
+            <span className="text-xs font-bold text-white">Executive Report Approval Center</span>
           </nav>
         </div>
         <form action={logoutAction}>
@@ -474,23 +480,23 @@ export default function ExecutiveReportStrategyCenter({ strategy }: Props) {
       {/* ── Content ── */}
       <div className="mx-auto w-full max-w-[780px] space-y-14 px-6 py-12">
 
-        <StrategyWorkspaceOverviewSection strategy={strategy} />
+        <ApprovalWorkspaceOverviewSection approval={approval} />
 
         <hr className="border-gray-200" />
 
-        <ExecutiveStrategyWorkspaceSection strategy={strategy} />
+        <ExecutiveApprovalWorkspaceSection approval={approval} />
 
         <hr className="border-gray-200" />
 
-        <StrategyReviewWorkspaceSection strategy={strategy} />
+        <ApprovalReviewWorkspaceSection approval={approval} />
 
         <hr className="border-gray-200" />
 
-        <StrategyReadinessSection strategy={strategy} />
+        <ApprovalReadinessSection approval={approval} />
 
         <hr className="border-gray-200" />
 
-        <StrategyMetadataSection strategy={strategy} />
+        <ApprovalMetadataSection approval={approval} />
 
         <hr className="border-gray-200" />
 
