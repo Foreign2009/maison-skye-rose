@@ -1055,6 +1055,9 @@ export default function AdminConsole({ initialOrders }: { initialOrders: OrderRo
               <Link href="/admin/executive-report-strategy-center" className="text-xs text-white/60 transition hover:text-white">
                 Executive Report Strategy Center
               </Link>
+              <Link href="/admin/executive-report-action" className="text-xs text-white/60 transition hover:text-white">
+                Executive Report Action
+              </Link>
             </nav>
           </div>
           <form action={logoutAction}>

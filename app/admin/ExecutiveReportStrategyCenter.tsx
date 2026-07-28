@@ -444,6 +444,9 @@ export default function ExecutiveReportStrategyCenter({ strategy }: Props) {
               Executive Report Strategy
             </Link>
             <span className="text-xs font-bold text-white">Executive Report Strategy Center</span>
+            <Link href="/admin/executive-report-action" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report Action
+            </Link>
           </nav>
         </div>
         <form action={logoutAction}>
