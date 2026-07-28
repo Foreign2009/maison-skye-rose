@@ -1210,6 +1210,9 @@ export default function IntelligenceDashboard({ data }: { data: IntelligenceData
             <Link href="/admin/executive-report-approval-center" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Approval Center
             </Link>
+            <Link href="/admin/executive-report-execution" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report Execution
+            </Link>
           </nav>
         </div>
         <form action={logoutAction}>
