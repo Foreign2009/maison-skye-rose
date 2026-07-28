@@ -460,6 +460,9 @@ export default function ExecutiveReportDecisionCenter({ decision }: Props) {
               Executive Report Decision
             </Link>
             <span className="text-xs font-bold text-white">Executive Report Decision Center</span>
+            <Link href="/admin/executive-report-approval" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report Approval
+            </Link>
           </nav>
         </div>
         <form action={logoutAction}>
