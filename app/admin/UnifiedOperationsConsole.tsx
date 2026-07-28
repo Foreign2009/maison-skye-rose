@@ -412,6 +412,9 @@ export default function UnifiedOperationsConsole({ operations, briefing }: Props
             <Link href="/admin/executive-report-action-center" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Action Center
             </Link>
+            <Link href="/admin/executive-report-decision" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report Decision
+            </Link>
           </nav>
         </div>
         <form action={logoutAction}>

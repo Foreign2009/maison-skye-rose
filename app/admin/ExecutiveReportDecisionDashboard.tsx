@@ -5,10 +5,10 @@ import Link             from "next/link";
 import { logoutAction } from "./actions";
 import type { AlertSeverity } from "@/app/lib/operations/OperationsAlertTypes";
 import type {
-  ExecutiveReportAction,
-  ExecutiveReportActionEntry,
-  ExecutiveReportActionState,
-} from "@/app/lib/operations/ExecutiveReportActionTypes";
+  ExecutiveReportDecision,
+  ExecutiveReportDecisionEntry,
+  ExecutiveReportDecisionState,
+} from "@/app/lib/operations/ExecutiveReportDecisionTypes";
 
 // ── UI helpers ────────────────────────────────────────────────────────────────
 
@@ -61,56 +61,56 @@ const SEVERITY_LABELS: Record<AlertSeverity, string> = {
   "low":      "Low",
 };
 
-const ACTION_STATE_STYLES: Record<ExecutiveReportActionState, string> = {
-  "plan":     "border-amber-100  bg-amber-50  text-amber-700",
-  "continue": "border-gray-200   bg-gray-100  text-gray-500",
-  "execute":  "border-green-200  bg-green-50  text-green-700",
+const DECISION_STATE_STYLES: Record<ExecutiveReportDecisionState, string> = {
+  "pending":     "border-amber-100  bg-amber-50  text-amber-700",
+  "approved":    "border-gray-200   bg-gray-100  text-gray-500",
+  "implemented": "border-green-200  bg-green-50  text-green-700",
 };
 
-const ACTION_STATE_LABELS: Record<ExecutiveReportActionState, string> = {
-  "plan":     "Plan",
-  "continue": "Continue",
-  "execute":  "Execute",
+const DECISION_STATE_LABELS: Record<ExecutiveReportDecisionState, string> = {
+  "pending":     "Pending",
+  "approved":    "Approved",
+  "implemented": "Implemented",
 };
 
-// ── Section 1: Action Workspace Overview ──────────────────────────────────────
+// ── Section 1: Decision Overview ──────────────────────────────────────────────
 
-function ActionWorkspaceOverviewSection({ action }: { action: ExecutiveReportAction }) {
+function DecisionOverviewSection({ decision }: { decision: ExecutiveReportDecision }) {
   return (
     <section>
-      <SectionLabel>Executive Report Action Center</SectionLabel>
-      <SectionHeading>Action Workspace Overview</SectionHeading>
+      <SectionLabel>Executive Report Decision</SectionLabel>
+      <SectionHeading>Decision Overview</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Aggregate view of the executive report action workspace. Refreshed on every page load.
+        Aggregate view of the executive report decision layer. Refreshed on every page load.
       </p>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <Card>
           <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Total Records</p>
-          <p className="mt-2 text-3xl font-black text-[#4f4a52]">{action.records.length}</p>
+          <p className="mt-2 text-3xl font-black text-[#4f4a52]">{decision.records.length}</p>
         </Card>
         <Card>
-          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Action Generated</p>
-          <p className="mt-2 text-sm font-bold text-[#4f4a52]">{fmtDate(action.generatedAt)}</p>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Decision Generated</p>
+          <p className="mt-2 text-sm font-bold text-[#4f4a52]">{fmtDate(decision.generatedAt)}</p>
         </Card>
       </div>
     </section>
   );
 }
 
-// ── Section 2: Executive Action Workspace ─────────────────────────────────────
+// ── Section 2: Decision Timeline ──────────────────────────────────────────────
 
-function ExecutiveActionWorkspaceSection({ action }: { action: ExecutiveReportAction }) {
-  if (action.records.length === 0) {
+function DecisionTimelineSection({ decision }: { decision: ExecutiveReportDecision }) {
+  if (decision.records.length === 0) {
     return (
       <section>
-        <SectionLabel>Workspace</SectionLabel>
-        <SectionHeading>Executive Action Workspace</SectionHeading>
+        <SectionLabel>Timeline</SectionLabel>
+        <SectionHeading>Decision Timeline</SectionHeading>
         <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-          Full action workspace for executive review.
+          Chronological view of all decision records.
         </p>
         <Card>
-          <p className="text-sm text-[#7b7480]">No action records available.</p>
+          <p className="text-sm text-[#7b7480]">No decision records available.</p>
         </Card>
       </section>
     );
@@ -118,30 +118,24 @@ function ExecutiveActionWorkspaceSection({ action }: { action: ExecutiveReportAc
 
   return (
     <section>
-      <SectionLabel>Workspace</SectionLabel>
-      <SectionHeading>Executive Action Workspace</SectionHeading>
+      <SectionLabel>Timeline</SectionLabel>
+      <SectionHeading>Decision Timeline</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        {action.records.length} record{action.records.length === 1 ? "" : "s"} in the action workspace.
+        {decision.records.length} record{decision.records.length === 1 ? "" : "s"} in the decision timeline.
       </p>
 
       <Card>
         <div className="divide-y divide-gray-100">
-          {action.records.map((entry, i) => (
+          {decision.records.map((entry, i) => (
             <div key={i} className="py-4 first:pt-0 last:pb-0">
               <div className="mb-2 flex items-center gap-2">
-                <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${ACTION_STATE_STYLES[entry.state]}`}>
-                  {ACTION_STATE_LABELS[entry.state]}
+                <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${DECISION_STATE_STYLES[entry.state]}`}>
+                  {DECISION_STATE_LABELS[entry.state]}
                 </span>
                 <span className="ml-auto text-[10px] text-[#a09aa6]">{fmtDate(entry.generatedAt)}</span>
               </div>
               <p className="text-sm font-bold text-[#4f4a52]">
-                {entry.strategy.outlook.forecast.trend.insight.delta.comparison.current.headline.text}
-              </p>
-              <p className="mt-1 text-[10px] text-[#a09aa6]">
-                Previous: {entry.strategy.outlook.forecast.trend.insight.delta.comparison.previous?.headline.text ?? "—"}
-              </p>
-              <p className="mt-2 text-sm leading-relaxed text-[#7b7480]">
-                {entry.strategy.outlook.forecast.trend.insight.delta.comparison.current.executiveSummary}
+                {entry.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.headline.text}
               </p>
             </div>
           ))}
@@ -151,46 +145,46 @@ function ExecutiveActionWorkspaceSection({ action }: { action: ExecutiveReportAc
   );
 }
 
-// ── Section 3: Action Review Workspace ────────────────────────────────────────
+// ── Section 3: Decision Records ───────────────────────────────────────────────
 
-function ActionWorkspaceCard({ entry }: { entry: ExecutiveReportActionEntry }) {
+function DecisionRecordCard({ entry }: { entry: ExecutiveReportDecisionEntry }) {
   return (
     <Card>
       <div className="mb-3 flex flex-wrap items-center gap-2">
-        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${ACTION_STATE_STYLES[entry.state]}`}>
-          {ACTION_STATE_LABELS[entry.state]}
+        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${DECISION_STATE_STYLES[entry.state]}`}>
+          {DECISION_STATE_LABELS[entry.state]}
         </span>
-        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${SEVERITY_STYLES[entry.strategy.outlook.forecast.trend.insight.delta.comparison.current.overallStatus]}`}>
-          {SEVERITY_LABELS[entry.strategy.outlook.forecast.trend.insight.delta.comparison.current.overallStatus]}
+        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${SEVERITY_STYLES[entry.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.overallStatus]}`}>
+          {SEVERITY_LABELS[entry.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.overallStatus]}
         </span>
         <span className="ml-auto text-[10px] text-[#a09aa6]">{fmtDate(entry.generatedAt)}</span>
       </div>
       <p className="text-sm font-bold text-[#4f4a52]">
-        {entry.strategy.outlook.forecast.trend.insight.delta.comparison.current.headline.text}
+        {entry.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.headline.text}
       </p>
       <div className="my-3 h-px bg-gray-100" />
       <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Previous Headline</p>
       <p className="mt-1 text-sm text-[#7b7480]">
-        {entry.strategy.outlook.forecast.trend.insight.delta.comparison.previous?.headline.text ?? "—"}
+        {entry.action.strategy.outlook.forecast.trend.insight.delta.comparison.previous?.headline.text ?? "—"}
       </p>
       <p className="mt-3 text-sm leading-relaxed text-[#7b7480]">
-        {entry.strategy.outlook.forecast.trend.insight.delta.comparison.current.executiveSummary}
+        {entry.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.executiveSummary}
       </p>
     </Card>
   );
 }
 
-function ActionReviewWorkspaceSection({ action }: { action: ExecutiveReportAction }) {
-  if (action.records.length === 0) {
+function DecisionRecordsSection({ decision }: { decision: ExecutiveReportDecision }) {
+  if (decision.records.length === 0) {
     return (
       <section>
-        <SectionLabel>Review</SectionLabel>
-        <SectionHeading>Action Review Workspace</SectionHeading>
+        <SectionLabel>Records</SectionLabel>
+        <SectionHeading>Decision Records</SectionHeading>
         <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-          Detailed review cards for every action record.
+          Detailed review cards for every decision record.
         </p>
         <Card>
-          <p className="text-sm text-[#7b7480]">No action records available.</p>
+          <p className="text-sm text-[#7b7480]">No decision records available.</p>
         </Card>
       </section>
     );
@@ -198,41 +192,40 @@ function ActionReviewWorkspaceSection({ action }: { action: ExecutiveReportActio
 
   return (
     <section>
-      <SectionLabel>Review</SectionLabel>
-      <SectionHeading>Action Review Workspace</SectionHeading>
+      <SectionLabel>Records</SectionLabel>
+      <SectionHeading>Decision Records</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        {action.records.length} record{action.records.length === 1 ? "" : "s"} under review.
-        Displayed exactly as received.
+        {decision.records.length} record{decision.records.length === 1 ? "" : "s"} displayed exactly as received.
       </p>
 
       <div className="space-y-4">
-        {action.records.map((entry, i) => (
-          <ActionWorkspaceCard key={i} entry={entry} />
+        {decision.records.map((entry, i) => (
+          <DecisionRecordCard key={i} entry={entry} />
         ))}
       </div>
     </section>
   );
 }
 
-// ── Section 4: Action Readiness ───────────────────────────────────────────────
+// ── Section 4: Decision Status ────────────────────────────────────────────────
 
-function ActionReadinessSection({ action }: { action: ExecutiveReportAction }) {
-  const latestGeneratedAt = action.records.length > 0
-    ? action.records[action.records.length - 1].generatedAt
+function DecisionStatusSection({ decision }: { decision: ExecutiveReportDecision }) {
+  const latestGeneratedAt = decision.records.length > 0
+    ? decision.records[decision.records.length - 1].generatedAt
     : null;
 
   return (
     <section>
-      <SectionLabel>Readiness</SectionLabel>
-      <SectionHeading>Action Readiness</SectionHeading>
+      <SectionLabel>Status</SectionLabel>
+      <SectionHeading>Decision Status</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Action readiness indicators at generation time.
+        Decision status indicators at generation time.
       </p>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <Card>
-          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Total Action Records</p>
-          <p className="mt-3 text-3xl font-black text-[#4f4a52]">{action.records.length}</p>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Total Decision Records</p>
+          <p className="mt-3 text-3xl font-black text-[#4f4a52]">{decision.records.length}</p>
         </Card>
         <Card>
           <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Latest Generated At</p>
@@ -245,15 +238,15 @@ function ActionReadinessSection({ action }: { action: ExecutiveReportAction }) {
   );
 }
 
-// ── Section 5: Action Metadata ────────────────────────────────────────────────
+// ── Section 5: Decision Metadata ──────────────────────────────────────────────
 
-function ActionMetadataSection({ action }: { action: ExecutiveReportAction }) {
+function DecisionMetadataSection({ decision }: { decision: ExecutiveReportDecision }) {
   return (
     <section>
       <SectionLabel>Metadata</SectionLabel>
-      <SectionHeading>Action Metadata</SectionHeading>
+      <SectionHeading>Decision Metadata</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Action generation metadata. No data is stored or persisted.
+        Decision generation metadata. No data is stored or persisted.
       </p>
 
       <Card>
@@ -261,11 +254,11 @@ function ActionMetadataSection({ action }: { action: ExecutiveReportAction }) {
           <tbody className="divide-y divide-gray-100">
             <tr>
               <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Generated At</td>
-              <td className="py-3 text-right text-[#4f4a52]">{fmtDate(action.generatedAt)}</td>
+              <td className="py-3 text-right text-[#4f4a52]">{fmtDate(decision.generatedAt)}</td>
             </tr>
             <tr>
-              <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Action Records</td>
-              <td className="py-3 text-right text-[#4f4a52]">{action.records.length}</td>
+              <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Decision Records</td>
+              <td className="py-3 text-right text-[#4f4a52]">{decision.records.length}</td>
             </tr>
           </tbody>
         </table>
@@ -306,6 +299,7 @@ const QUICK_NAV_LINKS = [
   { href: "/admin/executive-report-strategy-center",         label: "Executive Report Strategy Center" },
   { href: "/admin/executive-report-action",                  label: "Executive Report Action" },
   { href: "/admin/executive-report-action-center",           label: "Executive Report Action Center" },
+  { href: "/admin/executive-report-decision",                label: "Executive Report Decision" },
 ] as const;
 
 function QuickNavigationSection() {
@@ -335,12 +329,12 @@ function QuickNavigationSection() {
 // ── Props ─────────────────────────────────────────────────────────────────────
 
 interface Props {
-  action: ExecutiveReportAction;
+  decision: ExecutiveReportDecision;
 }
 
 // ── Main export ───────────────────────────────────────────────────────────────
 
-export default function ExecutiveReportActionCenter({ action }: Props) {
+export default function ExecutiveReportDecisionDashboard({ decision }: Props) {
   return (
     <div className="min-h-screen bg-[#f5f1eb]">
 
@@ -451,10 +445,10 @@ export default function ExecutiveReportActionCenter({ action }: Props) {
             <Link href="/admin/executive-report-action" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Action
             </Link>
-            <span className="text-xs font-bold text-white">Executive Report Action Center</span>
-            <Link href="/admin/executive-report-decision" className="text-xs text-white/60 transition hover:text-white">
-              Executive Report Decision
+            <Link href="/admin/executive-report-action-center" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report Action Center
             </Link>
+            <span className="text-xs font-bold text-white">Executive Report Decision</span>
           </nav>
         </div>
         <form action={logoutAction}>
@@ -467,23 +461,23 @@ export default function ExecutiveReportActionCenter({ action }: Props) {
       {/* ── Content ── */}
       <div className="mx-auto w-full max-w-[780px] space-y-14 px-6 py-12">
 
-        <ActionWorkspaceOverviewSection action={action} />
+        <DecisionOverviewSection decision={decision} />
 
         <hr className="border-gray-200" />
 
-        <ExecutiveActionWorkspaceSection action={action} />
+        <DecisionTimelineSection decision={decision} />
 
         <hr className="border-gray-200" />
 
-        <ActionReviewWorkspaceSection action={action} />
+        <DecisionRecordsSection decision={decision} />
 
         <hr className="border-gray-200" />
 
-        <ActionReadinessSection action={action} />
+        <DecisionStatusSection decision={decision} />
 
         <hr className="border-gray-200" />
 
-        <ActionMetadataSection action={action} />
+        <DecisionMetadataSection decision={decision} />
 
         <hr className="border-gray-200" />
 
