@@ -1,14 +1,14 @@
-﻿"use client";
+"use client";
 
 import React            from "react";
 import Link             from "next/link";
 import { logoutAction } from "./actions";
 import type { AlertSeverity } from "@/app/lib/operations/OperationsAlertTypes";
 import type {
-  ExecutiveReportOutlook,
-  ExecutiveReportOutlookEntry,
-  ExecutiveReportOutlookState,
-} from "@/app/lib/operations/ExecutiveReportOutlookTypes";
+  ExecutiveReportExecution,
+  ExecutiveReportExecutionEntry,
+  ExecutiveReportExecutionState,
+} from "@/app/lib/operations/ExecutiveReportExecutionTypes";
 
 // ── UI helpers ────────────────────────────────────────────────────────────────
 
@@ -61,56 +61,56 @@ const SEVERITY_LABELS: Record<AlertSeverity, string> = {
   "low":      "Low",
 };
 
-const OUTLOOK_STATE_STYLES: Record<ExecutiveReportOutlookState, string> = {
-  "monitor":   "border-amber-100  bg-amber-50  text-amber-700",
-  "healthy":   "border-gray-200   bg-gray-100  text-gray-500",
-  "expanding": "border-green-200  bg-green-50  text-green-700",
+const EXECUTION_STATE_STYLES: Record<ExecutiveReportExecutionState, string> = {
+  "queued":    "border-amber-100  bg-amber-50  text-amber-700",
+  "executing": "border-gray-200   bg-gray-100  text-gray-500",
+  "executed":  "border-green-200  bg-green-50  text-green-700",
 };
 
-const OUTLOOK_STATE_LABELS: Record<ExecutiveReportOutlookState, string> = {
-  "monitor":   "Monitor",
-  "healthy":   "Healthy",
-  "expanding": "Expanding",
+const EXECUTION_STATE_LABELS: Record<ExecutiveReportExecutionState, string> = {
+  "queued":    "Queued",
+  "executing": "Executing",
+  "executed":  "Executed",
 };
 
-// ── Section 1: Outlook Workspace Overview ─────────────────────────────────────
+// ── Section 1: Execution Workspace Overview ───────────────────────────────────
 
-function OutlookWorkspaceOverviewSection({ outlook }: { outlook: ExecutiveReportOutlook }) {
+function ExecutionWorkspaceOverviewSection({ execution }: { execution: ExecutiveReportExecution }) {
   return (
     <section>
-      <SectionLabel>Executive Report Outlook Center</SectionLabel>
-      <SectionHeading>Outlook Workspace Overview</SectionHeading>
+      <SectionLabel>Executive Report Execution Center</SectionLabel>
+      <SectionHeading>Execution Workspace Overview</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Aggregate view of the executive report outlook workspace. Refreshed on every page load.
+        Aggregate view of the executive report execution workspace. Refreshed on every page load.
       </p>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <Card>
           <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Total Records</p>
-          <p className="mt-2 text-3xl font-black text-[#4f4a52]">{outlook.records.length}</p>
+          <p className="mt-2 text-3xl font-black text-[#4f4a52]">{execution.records.length}</p>
         </Card>
         <Card>
-          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Outlook Generated</p>
-          <p className="mt-2 text-sm font-bold text-[#4f4a52]">{fmtDate(outlook.generatedAt)}</p>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Execution Generated</p>
+          <p className="mt-2 text-sm font-bold text-[#4f4a52]">{fmtDate(execution.generatedAt)}</p>
         </Card>
       </div>
     </section>
   );
 }
 
-// ── Section 2: Executive Outlook Workspace ────────────────────────────────────
+// ── Section 2: Executive Execution Workspace ──────────────────────────────────
 
-function ExecutiveOutlookWorkspaceSection({ outlook }: { outlook: ExecutiveReportOutlook }) {
-  if (outlook.records.length === 0) {
+function ExecutiveExecutionWorkspaceSection({ execution }: { execution: ExecutiveReportExecution }) {
+  if (execution.records.length === 0) {
     return (
       <section>
         <SectionLabel>Workspace</SectionLabel>
-        <SectionHeading>Executive Outlook Workspace</SectionHeading>
+        <SectionHeading>Executive Execution Workspace</SectionHeading>
         <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-          Full outlook workspace for executive review.
+          Full execution workspace for executive review.
         </p>
         <Card>
-          <p className="text-sm text-[#7b7480]">No outlook records available.</p>
+          <p className="text-sm text-[#7b7480]">No execution records available.</p>
         </Card>
       </section>
     );
@@ -119,29 +119,29 @@ function ExecutiveOutlookWorkspaceSection({ outlook }: { outlook: ExecutiveRepor
   return (
     <section>
       <SectionLabel>Workspace</SectionLabel>
-      <SectionHeading>Executive Outlook Workspace</SectionHeading>
+      <SectionHeading>Executive Execution Workspace</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        {outlook.records.length} record{outlook.records.length === 1 ? "" : "s"} in the outlook workspace.
+        {execution.records.length} record{execution.records.length === 1 ? "" : "s"} in the execution workspace.
       </p>
 
       <Card>
         <div className="divide-y divide-gray-100">
-          {outlook.records.map((entry, i) => (
+          {execution.records.map((entry, i) => (
             <div key={i} className="py-4 first:pt-0 last:pb-0">
               <div className="mb-2 flex items-center gap-2">
-                <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${OUTLOOK_STATE_STYLES[entry.state]}`}>
-                  {OUTLOOK_STATE_LABELS[entry.state]}
+                <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${EXECUTION_STATE_STYLES[entry.state]}`}>
+                  {EXECUTION_STATE_LABELS[entry.state]}
                 </span>
                 <span className="ml-auto text-[10px] text-[#a09aa6]">{fmtDate(entry.generatedAt)}</span>
               </div>
               <p className="text-sm font-bold text-[#4f4a52]">
-                {entry.forecast.trend.insight.delta.comparison.current.headline.text}
+                {entry.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.headline.text}
               </p>
               <p className="mt-1 text-[10px] text-[#a09aa6]">
-                Previous: {entry.forecast.trend.insight.delta.comparison.previous?.headline.text ?? "—"}
+                Previous: {entry.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.previous?.headline.text ?? "—"}
               </p>
               <p className="mt-2 text-sm leading-relaxed text-[#7b7480]">
-                {entry.forecast.trend.insight.delta.comparison.current.executiveSummary}
+                {entry.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.executiveSummary}
               </p>
             </div>
           ))}
@@ -151,46 +151,46 @@ function ExecutiveOutlookWorkspaceSection({ outlook }: { outlook: ExecutiveRepor
   );
 }
 
-// ── Section 3: Outlook Review Workspace ───────────────────────────────────────
+// ── Section 3: Execution Review Workspace ─────────────────────────────────────
 
-function OutlookWorkspaceCard({ entry }: { entry: ExecutiveReportOutlookEntry }) {
+function ExecutionWorkspaceCard({ entry }: { entry: ExecutiveReportExecutionEntry }) {
   return (
     <Card>
       <div className="mb-3 flex flex-wrap items-center gap-2">
-        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${OUTLOOK_STATE_STYLES[entry.state]}`}>
-          {OUTLOOK_STATE_LABELS[entry.state]}
+        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${EXECUTION_STATE_STYLES[entry.state]}`}>
+          {EXECUTION_STATE_LABELS[entry.state]}
         </span>
-        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${SEVERITY_STYLES[entry.forecast.trend.insight.delta.comparison.current.overallStatus]}`}>
-          {SEVERITY_LABELS[entry.forecast.trend.insight.delta.comparison.current.overallStatus]}
+        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${SEVERITY_STYLES[entry.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.overallStatus]}`}>
+          {SEVERITY_LABELS[entry.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.overallStatus]}
         </span>
         <span className="ml-auto text-[10px] text-[#a09aa6]">{fmtDate(entry.generatedAt)}</span>
       </div>
       <p className="text-sm font-bold text-[#4f4a52]">
-        {entry.forecast.trend.insight.delta.comparison.current.headline.text}
+        {entry.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.headline.text}
       </p>
       <div className="my-3 h-px bg-gray-100" />
       <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Previous Headline</p>
       <p className="mt-1 text-sm text-[#7b7480]">
-        {entry.forecast.trend.insight.delta.comparison.previous?.headline.text ?? "—"}
+        {entry.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.previous?.headline.text ?? "—"}
       </p>
       <p className="mt-3 text-sm leading-relaxed text-[#7b7480]">
-        {entry.forecast.trend.insight.delta.comparison.current.executiveSummary}
+        {entry.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.executiveSummary}
       </p>
     </Card>
   );
 }
 
-function OutlookReviewWorkspaceSection({ outlook }: { outlook: ExecutiveReportOutlook }) {
-  if (outlook.records.length === 0) {
+function ExecutionReviewWorkspaceSection({ execution }: { execution: ExecutiveReportExecution }) {
+  if (execution.records.length === 0) {
     return (
       <section>
         <SectionLabel>Review</SectionLabel>
-        <SectionHeading>Outlook Review Workspace</SectionHeading>
+        <SectionHeading>Execution Review Workspace</SectionHeading>
         <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-          Detailed review cards for every outlook record.
+          Detailed review cards for every execution record.
         </p>
         <Card>
-          <p className="text-sm text-[#7b7480]">No outlook records available.</p>
+          <p className="text-sm text-[#7b7480]">No execution records available.</p>
         </Card>
       </section>
     );
@@ -199,40 +199,40 @@ function OutlookReviewWorkspaceSection({ outlook }: { outlook: ExecutiveReportOu
   return (
     <section>
       <SectionLabel>Review</SectionLabel>
-      <SectionHeading>Outlook Review Workspace</SectionHeading>
+      <SectionHeading>Execution Review Workspace</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        {outlook.records.length} record{outlook.records.length === 1 ? "" : "s"} under review.
+        {execution.records.length} record{execution.records.length === 1 ? "" : "s"} under review.
         Displayed exactly as received.
       </p>
 
       <div className="space-y-4">
-        {outlook.records.map((entry, i) => (
-          <OutlookWorkspaceCard key={i} entry={entry} />
+        {execution.records.map((entry, i) => (
+          <ExecutionWorkspaceCard key={i} entry={entry} />
         ))}
       </div>
     </section>
   );
 }
 
-// ── Section 4: Outlook Readiness ──────────────────────────────────────────────
+// ── Section 4: Execution Readiness ────────────────────────────────────────────
 
-function OutlookReadinessSection({ outlook }: { outlook: ExecutiveReportOutlook }) {
-  const latestGeneratedAt = outlook.records.length > 0
-    ? outlook.records[outlook.records.length - 1].generatedAt
+function ExecutionReadinessSection({ execution }: { execution: ExecutiveReportExecution }) {
+  const latestGeneratedAt = execution.records.length > 0
+    ? execution.records[execution.records.length - 1].generatedAt
     : null;
 
   return (
     <section>
       <SectionLabel>Readiness</SectionLabel>
-      <SectionHeading>Outlook Readiness</SectionHeading>
+      <SectionHeading>Execution Readiness</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Outlook readiness indicators at generation time.
+        Execution readiness indicators at generation time.
       </p>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <Card>
-          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Total Outlook Records</p>
-          <p className="mt-3 text-3xl font-black text-[#4f4a52]">{outlook.records.length}</p>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Total Execution Records</p>
+          <p className="mt-3 text-3xl font-black text-[#4f4a52]">{execution.records.length}</p>
         </Card>
         <Card>
           <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Latest Generated At</p>
@@ -245,15 +245,15 @@ function OutlookReadinessSection({ outlook }: { outlook: ExecutiveReportOutlook 
   );
 }
 
-// ── Section 5: Outlook Metadata ───────────────────────────────────────────────
+// ── Section 5: Execution Metadata ─────────────────────────────────────────────
 
-function OutlookMetadataSection({ outlook }: { outlook: ExecutiveReportOutlook }) {
+function ExecutionMetadataSection({ execution }: { execution: ExecutiveReportExecution }) {
   return (
     <section>
       <SectionLabel>Metadata</SectionLabel>
-      <SectionHeading>Outlook Metadata</SectionHeading>
+      <SectionHeading>Execution Metadata</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Outlook generation metadata. No data is stored or persisted.
+        Execution generation metadata. No data is stored or persisted.
       </p>
 
       <Card>
@@ -261,11 +261,11 @@ function OutlookMetadataSection({ outlook }: { outlook: ExecutiveReportOutlook }
           <tbody className="divide-y divide-gray-100">
             <tr>
               <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Generated At</td>
-              <td className="py-3 text-right text-[#4f4a52]">{fmtDate(outlook.generatedAt)}</td>
+              <td className="py-3 text-right text-[#4f4a52]">{fmtDate(execution.generatedAt)}</td>
             </tr>
             <tr>
-              <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Outlook Records</td>
-              <td className="py-3 text-right text-[#4f4a52]">{outlook.records.length}</td>
+              <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Execution Records</td>
+              <td className="py-3 text-right text-[#4f4a52]">{execution.records.length}</td>
             </tr>
           </tbody>
         </table>
@@ -302,6 +302,16 @@ const QUICK_NAV_LINKS = [
   { href: "/admin/executive-report-forecast-center",         label: "Executive Report Forecast Center" },
   { href: "/admin/executive-report-outlook",                 label: "Executive Report Outlook" },
   { href: "/admin/executive-report-outlook-center",          label: "Executive Report Outlook Center" },
+  { href: "/admin/executive-report-strategy",                label: "Executive Report Strategy" },
+  { href: "/admin/executive-report-strategy-center",         label: "Executive Report Strategy Center" },
+  { href: "/admin/executive-report-action",                  label: "Executive Report Action" },
+  { href: "/admin/executive-report-action-center",           label: "Executive Report Action Center" },
+  { href: "/admin/executive-report-decision",                label: "Executive Report Decision" },
+  { href: "/admin/executive-report-decision-center",         label: "Executive Report Decision Center" },
+  { href: "/admin/executive-report-approval",                label: "Executive Report Approval" },
+  { href: "/admin/executive-report-approval-center",         label: "Executive Report Approval Center" },
+  { href: "/admin/executive-report-execution",               label: "Executive Report Execution" },
+  { href: "/admin/executive-report-execution-center",        label: "Executive Report Execution Center" },
 ] as const;
 
 function QuickNavigationSection() {
@@ -331,12 +341,12 @@ function QuickNavigationSection() {
 // ── Props ─────────────────────────────────────────────────────────────────────
 
 interface Props {
-  outlook: ExecutiveReportOutlook;
+  execution: ExecutiveReportExecution;
 }
 
 // ── Main export ───────────────────────────────────────────────────────────────
 
-export default function ExecutiveReportOutlookCenter({ outlook }: Props) {
+export default function ExecutiveReportExecutionCenter({ execution }: Props) {
   return (
     <div className="min-h-screen bg-[#f5f1eb]">
 
@@ -435,7 +445,9 @@ export default function ExecutiveReportOutlookCenter({ outlook }: Props) {
             <Link href="/admin/executive-report-outlook" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Outlook
             </Link>
-            <span className="text-xs font-bold text-white">Executive Report Outlook Center</span>
+            <Link href="/admin/executive-report-outlook-center" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report Outlook Center
+            </Link>
             <Link href="/admin/executive-report-strategy" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Strategy
             </Link>
@@ -463,9 +475,7 @@ export default function ExecutiveReportOutlookCenter({ outlook }: Props) {
             <Link href="/admin/executive-report-execution" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Execution
             </Link>
-            <Link href="/admin/executive-report-execution-center" className="text-xs text-white/60 transition hover:text-white">
-              Executive Report Execution Center
-            </Link>
+            <span className="text-xs font-bold text-white">Executive Report Execution Center</span>
           </nav>
         </div>
         <form action={logoutAction}>
@@ -478,23 +488,23 @@ export default function ExecutiveReportOutlookCenter({ outlook }: Props) {
       {/* ── Content ── */}
       <div className="mx-auto w-full max-w-[780px] space-y-14 px-6 py-12">
 
-        <OutlookWorkspaceOverviewSection outlook={outlook} />
+        <ExecutionWorkspaceOverviewSection execution={execution} />
 
         <hr className="border-gray-200" />
 
-        <ExecutiveOutlookWorkspaceSection outlook={outlook} />
+        <ExecutiveExecutionWorkspaceSection execution={execution} />
 
         <hr className="border-gray-200" />
 
-        <OutlookReviewWorkspaceSection outlook={outlook} />
+        <ExecutionReviewWorkspaceSection execution={execution} />
 
         <hr className="border-gray-200" />
 
-        <OutlookReadinessSection outlook={outlook} />
+        <ExecutionReadinessSection execution={execution} />
 
         <hr className="border-gray-200" />
 
-        <OutlookMetadataSection outlook={outlook} />
+        <ExecutionMetadataSection execution={execution} />
 
         <hr className="border-gray-200" />
 
