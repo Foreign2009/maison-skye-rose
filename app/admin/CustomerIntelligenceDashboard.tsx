@@ -606,6 +606,9 @@ export default function CustomerIntelligenceDashboard({ behaviourReport, journey
             <Link href="/admin/executive-report-acknowledgement-center" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Acknowledgement Center
             </Link>
+            <Link href="/admin/executive-report-receipt" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report Receipt
+            </Link>
           </nav>
         </div>
         <form action={logoutAction}>
