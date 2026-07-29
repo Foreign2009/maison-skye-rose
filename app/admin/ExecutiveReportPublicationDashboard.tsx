@@ -485,6 +485,9 @@ export default function ExecutiveReportPublicationDashboard({ publication }: Pro
               Executive Report Completion Center
             </Link>
             <span className="text-xs font-bold text-white">Executive Report Publication</span>
+            <Link href="/admin/executive-report-publication-center" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report Publication Center
+            </Link>
           </nav>
         </div>
         <form action={logoutAction}>

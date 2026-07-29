@@ -1,13 +1,14 @@
-﻿"use client";
+"use client";
 
 import React            from "react";
 import Link             from "next/link";
 import { logoutAction } from "./actions";
-import type { AlertSeverity }          from "@/app/lib/operations/OperationsAlertTypes";
+import type { AlertSeverity } from "@/app/lib/operations/OperationsAlertTypes";
 import type {
-  ExecutiveReport,
-  ExecutiveReportSection,
-} from "@/app/lib/operations/ExecutiveReportTypes";
+  ExecutiveReportPublication,
+  ExecutiveReportPublicationEntry,
+  ExecutiveReportPublicationState,
+} from "@/app/lib/operations/ExecutiveReportPublicationTypes";
 
 // ── UI helpers ────────────────────────────────────────────────────────────────
 
@@ -60,96 +61,54 @@ const SEVERITY_LABELS: Record<AlertSeverity, string> = {
   "low":      "Low",
 };
 
-// ── Section 1: Executive Headline ─────────────────────────────────────────────
+const PUBLICATION_STATE_STYLES: Record<ExecutiveReportPublicationState, string> = {
+  "publishing": "border-gray-200  bg-gray-100  text-gray-500",
+  "published":  "border-green-200 bg-green-50  text-green-700",
+};
 
-function ExecutiveHeadlineSection({ report }: { report: ExecutiveReport }) {
+const PUBLICATION_STATE_LABELS: Record<ExecutiveReportPublicationState, string> = {
+  "publishing": "Publishing",
+  "published":  "Published",
+};
+
+// ── Section 1: Publication Workspace Overview ─────────────────────────────────
+
+function PublicationWorkspaceOverviewSection({ publication }: { publication: ExecutiveReportPublication }) {
   return (
     <section>
-      <SectionLabel>Executive Report</SectionLabel>
-      <SectionHeading>Executive Headline</SectionHeading>
+      <SectionLabel>Executive Report Publication Center</SectionLabel>
+      <SectionHeading>Publication Workspace Overview</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Authoritative executive headline derived from the platform operations digest.
-        Refreshed on every page load.
+        Aggregate view of the executive report publication workspace. Refreshed on every page load.
       </p>
 
-      <div className="mb-4 flex flex-wrap items-center gap-3">
-        <span className={`rounded-full border px-3 py-1 text-xs font-semibold ${SEVERITY_STYLES[report.overallStatus]}`}>
-          {SEVERITY_LABELS[report.overallStatus]}
-        </span>
-        <span className="rounded-full border border-gray-100 bg-white px-3 py-1 text-xs text-[#7b7480]">
-          Generated: {fmtDate(report.generatedAt)}
-        </span>
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <Card>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Total Records</p>
+          <p className="mt-2 text-3xl font-black text-[#4f4a52]">{publication.records.length}</p>
+        </Card>
+        <Card>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Publication Generated</p>
+          <p className="mt-2 text-sm font-bold text-[#4f4a52]">{fmtDate(publication.generatedAt)}</p>
+        </Card>
       </div>
-
-      <Card>
-        <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Platform Headline</p>
-        <p className="mt-3 text-lg font-black leading-snug text-[#4f4a52]">
-          {report.headline.text}
-        </p>
-      </Card>
     </section>
   );
 }
 
-// ── Section 2: Executive Summary ──────────────────────────────────────────────
+// ── Section 2: Executive Publication Workspace ────────────────────────────────
 
-function ExecutiveSummarySection({ report }: { report: ExecutiveReport }) {
-  return (
-    <section>
-      <SectionLabel>Summary</SectionLabel>
-      <SectionHeading>Executive Summary</SectionHeading>
-      <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Concise executive summary projected from the operations digest.
-        No additional analysis applied.
-      </p>
-
-      <Card>
-        <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Summary</p>
-        <p className="mt-3 text-base leading-relaxed text-[#4f4a52]">{report.executiveSummary}</p>
-      </Card>
-    </section>
-  );
-}
-
-// ── Section 3: Report Sections ────────────────────────────────────────────────
-
-function ReportSectionCard({
-  section,
-  index,
-}: {
-  section: ExecutiveReportSection;
-  index:   number;
-}) {
-  const num = String(index + 1).padStart(2, "0");
-
-  return (
-    <Card>
-      <div className="mb-3 flex items-start justify-between gap-4">
-        <div className="flex items-center gap-3">
-          <span className="text-2xl font-black text-[#e8e3ef]">{num}</span>
-          <p className="text-sm font-bold uppercase tracking-wide text-[#4f4a52]">{section.title}</p>
-        </div>
-        <span className="shrink-0 rounded-full border border-gray-100 bg-gray-50 px-2 py-0.5 text-[9px] font-mono text-[#a09aa6]">
-          {section.alertId}
-        </span>
-      </div>
-      <div className="h-px bg-gray-100" />
-      <p className="mt-3 text-sm leading-relaxed text-[#7b7480]">{section.body}</p>
-    </Card>
-  );
-}
-
-function ReportSectionsSection({ report }: { report: ExecutiveReport }) {
-  if (report.sections.length === 0) {
+function ExecutivePublicationWorkspaceSection({ publication }: { publication: ExecutiveReportPublication }) {
+  if (publication.records.length === 0) {
     return (
       <section>
-        <SectionLabel>Sections</SectionLabel>
-        <SectionHeading>Report Sections</SectionHeading>
+        <SectionLabel>Workspace</SectionLabel>
+        <SectionHeading>Executive Publication Workspace</SectionHeading>
         <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-          Report sections projected from the operations digest.
+          Full publication workspace for executive review.
         </p>
         <Card>
-          <p className="text-sm text-[#7b7480]">No active sections. All alerts resolved.</p>
+          <p className="text-sm text-[#7b7480]">No publication records available.</p>
         </Card>
       </section>
     );
@@ -157,67 +116,142 @@ function ReportSectionsSection({ report }: { report: ExecutiveReport }) {
 
   return (
     <section>
-      <SectionLabel>Sections</SectionLabel>
-      <SectionHeading>Report Sections</SectionHeading>
+      <SectionLabel>Workspace</SectionLabel>
+      <SectionHeading>Executive Publication Workspace</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        {report.sections.length} section{report.sections.length === 1 ? "" : "s"} projected from the operations digest.
+        {publication.records.length} record{publication.records.length === 1 ? "" : "s"} in the publication workspace.
+      </p>
+
+      <Card>
+        <div className="divide-y divide-gray-100">
+          {publication.records.map((entry, i) => (
+            <div key={i} className="py-4 first:pt-0 last:pb-0">
+              <div className="mb-2 flex items-center gap-2">
+                <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${PUBLICATION_STATE_STYLES[entry.state]}`}>
+                  {PUBLICATION_STATE_LABELS[entry.state]}
+                </span>
+                <span className="ml-auto text-[10px] text-[#a09aa6]">{fmtDate(entry.generatedAt)}</span>
+              </div>
+              <p className="text-sm font-bold text-[#4f4a52]">
+                {entry.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.headline.text}
+              </p>
+              <p className="mt-1 text-[10px] text-[#a09aa6]">
+                Previous: {entry.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.previous?.headline.text ?? "—"}
+              </p>
+              <p className="mt-2 text-sm leading-relaxed text-[#7b7480]">
+                {entry.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.executiveSummary}
+              </p>
+            </div>
+          ))}
+        </div>
+      </Card>
+    </section>
+  );
+}
+
+// ── Section 3: Publication Review Workspace ───────────────────────────────────
+
+function PublicationWorkspaceCard({ entry }: { entry: ExecutiveReportPublicationEntry }) {
+  return (
+    <Card>
+      <div className="mb-3 flex flex-wrap items-center gap-2">
+        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${PUBLICATION_STATE_STYLES[entry.state]}`}>
+          {PUBLICATION_STATE_LABELS[entry.state]}
+        </span>
+        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${SEVERITY_STYLES[entry.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.overallStatus]}`}>
+          {SEVERITY_LABELS[entry.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.overallStatus]}
+        </span>
+        <span className="ml-auto text-[10px] text-[#a09aa6]">{fmtDate(entry.generatedAt)}</span>
+      </div>
+      <p className="text-sm font-bold text-[#4f4a52]">
+        {entry.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.headline.text}
+      </p>
+      <div className="my-3 h-px bg-gray-100" />
+      <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Previous Headline</p>
+      <p className="mt-1 text-sm text-[#7b7480]">
+        {entry.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.previous?.headline.text ?? "—"}
+      </p>
+      <p className="mt-3 text-sm leading-relaxed text-[#7b7480]">
+        {entry.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.executiveSummary}
+      </p>
+    </Card>
+  );
+}
+
+function PublicationReviewWorkspaceSection({ publication }: { publication: ExecutiveReportPublication }) {
+  if (publication.records.length === 0) {
+    return (
+      <section>
+        <SectionLabel>Review</SectionLabel>
+        <SectionHeading>Publication Review Workspace</SectionHeading>
+        <p className="mt-2 mb-5 text-sm text-[#7b7480]">
+          Detailed review cards for every publication record.
+        </p>
+        <Card>
+          <p className="text-sm text-[#7b7480]">No publication records available.</p>
+        </Card>
+      </section>
+    );
+  }
+
+  return (
+    <section>
+      <SectionLabel>Review</SectionLabel>
+      <SectionHeading>Publication Review Workspace</SectionHeading>
+      <p className="mt-2 mb-5 text-sm text-[#7b7480]">
+        {publication.records.length} record{publication.records.length === 1 ? "" : "s"} in publication review.
         Displayed exactly as received.
       </p>
 
       <div className="space-y-4">
-        {report.sections.map((section, i) => (
-          <ReportSectionCard key={section.alertId} section={section} index={i} />
+        {publication.records.map((entry, i) => (
+          <PublicationWorkspaceCard key={i} entry={entry} />
         ))}
       </div>
     </section>
   );
 }
 
-// ── Section 4: Report Status ──────────────────────────────────────────────────
+// ── Section 4: Publication Readiness ──────────────────────────────────────────
 
-function ReportStatusSection({ report }: { report: ExecutiveReport }) {
+function PublicationReadinessSection({ publication }: { publication: ExecutiveReportPublication }) {
+  const latestGeneratedAt = publication.records.length > 0
+    ? publication.records[publication.records.length - 1].generatedAt
+    : null;
+
   return (
     <section>
-      <SectionLabel>Status</SectionLabel>
-      <SectionHeading>Report Status</SectionHeading>
+      <SectionLabel>Readiness</SectionLabel>
+      <SectionHeading>Publication Readiness</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Overall platform status and analytics connectivity at report generation time.
+        Publication readiness indicators at generation time.
       </p>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <Card>
-          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Overall Status</p>
-          <div className="mt-3">
-            <span className={`rounded-full border px-4 py-1.5 text-xs font-bold uppercase tracking-wider ${SEVERITY_STYLES[report.overallStatus]}`}>
-              {SEVERITY_LABELS[report.overallStatus]}
-            </span>
-          </div>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Total Publication Records</p>
+          <p className="mt-3 text-3xl font-black text-[#4f4a52]">{publication.records.length}</p>
         </Card>
         <Card>
-          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Analytics</p>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Latest Generated At</p>
           <p className="mt-3 text-sm font-bold text-[#4f4a52]">
-            {report.analyticsAvailable ? "Connected" : "Offline"}
+            {latestGeneratedAt ? fmtDate(latestGeneratedAt) : "—"}
           </p>
-          {!report.analyticsAvailable && (
-            <p className="mt-1 text-[10px] text-[#7b7480]">
-              Configure PostHog environment variables to enable live intelligence.
-            </p>
-          )}
         </Card>
       </div>
     </section>
   );
 }
 
-// ── Section 5: Report Metadata ────────────────────────────────────────────────
+// ── Section 5: Publication Metadata ───────────────────────────────────────────
 
-function ReportMetadataSection({ report }: { report: ExecutiveReport }) {
+function PublicationMetadataSection({ publication }: { publication: ExecutiveReportPublication }) {
   return (
     <section>
       <SectionLabel>Metadata</SectionLabel>
-      <SectionHeading>Report Metadata</SectionHeading>
+      <SectionHeading>Publication Metadata</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Report generation metadata. No data is stored or persisted.
+        Publication center generation metadata. No data is stored or persisted.
       </p>
 
       <Card>
@@ -225,15 +259,11 @@ function ReportMetadataSection({ report }: { report: ExecutiveReport }) {
           <tbody className="divide-y divide-gray-100">
             <tr>
               <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Generated At</td>
-              <td className="py-3 text-right text-[#4f4a52]">{fmtDate(report.generatedAt)}</td>
+              <td className="py-3 text-right text-[#4f4a52]">{fmtDate(publication.generatedAt)}</td>
             </tr>
             <tr>
-              <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Analytics Available</td>
-              <td className="py-3 text-right text-[#4f4a52]">{report.analyticsAvailable ? "Yes" : "No"}</td>
-            </tr>
-            <tr>
-              <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Report Sections</td>
-              <td className="py-3 text-right text-[#4f4a52]">{report.sections.length}</td>
+              <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Publication Records</td>
+              <td className="py-3 text-right text-[#4f4a52]">{publication.records.length}</td>
             </tr>
           </tbody>
         </table>
@@ -245,14 +275,45 @@ function ReportMetadataSection({ report }: { report: ExecutiveReport }) {
 // ── Section 6: Quick Navigation ───────────────────────────────────────────────
 
 const QUICK_NAV_LINKS = [
-  { href: "/admin",                      label: "Operations" },
-  { href: "/admin/operations",           label: "Unified Operations" },
-  { href: "/admin/executive-operations", label: "Executive Operations" },
-  { href: "/admin/alerts",               label: "Alerts" },
-  { href: "/admin/alert-center",         label: "Alert Center" },
-  { href: "/admin/executive-digest",     label: "Executive Digest" },
-  { href: "/admin/executive-briefing",   label: "Executive Briefing" },
-  { href: "/admin/executive-report",     label: "Executive Report" },
+  { href: "/admin",                                          label: "Operations" },
+  { href: "/admin/operations",                               label: "Unified Operations" },
+  { href: "/admin/executive-operations",                     label: "Executive Operations" },
+  { href: "/admin/alerts",                                   label: "Alerts" },
+  { href: "/admin/alert-center",                             label: "Alert Center" },
+  { href: "/admin/executive-digest",                         label: "Executive Digest" },
+  { href: "/admin/executive-briefing",                       label: "Executive Briefing" },
+  { href: "/admin/executive-report",                         label: "Executive Report" },
+  { href: "/admin/executive-report-center",                  label: "Executive Report Center" },
+  { href: "/admin/executive-report-archive",                 label: "Executive Report Archive" },
+  { href: "/admin/executive-report-archive-center",          label: "Executive Report Archive Center" },
+  { href: "/admin/executive-report-history",                 label: "Executive Report History" },
+  { href: "/admin/executive-report-history-center",          label: "Executive Report History Center" },
+  { href: "/admin/executive-report-comparison",              label: "Executive Report Comparison" },
+  { href: "/admin/executive-report-comparison-center",       label: "Executive Report Comparison Center" },
+  { href: "/admin/executive-report-delta",                   label: "Executive Report Delta" },
+  { href: "/admin/executive-report-delta-center",            label: "Executive Report Delta Center" },
+  { href: "/admin/executive-report-insight",                 label: "Executive Report Insight" },
+  { href: "/admin/executive-report-insight-center",          label: "Executive Report Insight Center" },
+  { href: "/admin/executive-report-trend",                   label: "Executive Report Trend" },
+  { href: "/admin/executive-report-trend-center",            label: "Executive Report Trend Center" },
+  { href: "/admin/executive-report-forecast",                label: "Executive Report Forecast" },
+  { href: "/admin/executive-report-forecast-center",         label: "Executive Report Forecast Center" },
+  { href: "/admin/executive-report-outlook",                 label: "Executive Report Outlook" },
+  { href: "/admin/executive-report-outlook-center",          label: "Executive Report Outlook Center" },
+  { href: "/admin/executive-report-strategy",                label: "Executive Report Strategy" },
+  { href: "/admin/executive-report-strategy-center",         label: "Executive Report Strategy Center" },
+  { href: "/admin/executive-report-action",                  label: "Executive Report Action" },
+  { href: "/admin/executive-report-action-center",           label: "Executive Report Action Center" },
+  { href: "/admin/executive-report-decision",                label: "Executive Report Decision" },
+  { href: "/admin/executive-report-decision-center",         label: "Executive Report Decision Center" },
+  { href: "/admin/executive-report-approval",                label: "Executive Report Approval" },
+  { href: "/admin/executive-report-approval-center",         label: "Executive Report Approval Center" },
+  { href: "/admin/executive-report-execution",               label: "Executive Report Execution" },
+  { href: "/admin/executive-report-execution-center",        label: "Executive Report Execution Center" },
+  { href: "/admin/executive-report-completion",              label: "Executive Report Completion" },
+  { href: "/admin/executive-report-completion-center",       label: "Executive Report Completion Center" },
+  { href: "/admin/executive-report-publication",             label: "Executive Report Publication" },
+  { href: "/admin/executive-report-publication-center",      label: "Executive Report Publication Center" },
 ] as const;
 
 function QuickNavigationSection() {
@@ -282,12 +343,12 @@ function QuickNavigationSection() {
 // ── Props ─────────────────────────────────────────────────────────────────────
 
 interface Props {
-  report: ExecutiveReport;
+  publication: ExecutiveReportPublication;
 }
 
 // ── Main export ───────────────────────────────────────────────────────────────
 
-export default function ExecutiveReportDashboard({ report }: Props) {
+export default function ExecutiveReportPublicationCenter({ publication }: Props) {
   return (
     <div className="min-h-screen bg-[#f5f1eb]">
 
@@ -335,7 +396,9 @@ export default function ExecutiveReportDashboard({ report }: Props) {
             <Link href="/admin/executive-briefing" className="text-xs text-white/60 transition hover:text-white">
               Executive Briefing
             </Link>
-            <span className="text-xs font-bold text-white">Executive Report</span>
+            <Link href="/admin/executive-report" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report
+            </Link>
             <Link href="/admin/executive-report-center" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Center
             </Link>
@@ -426,9 +489,7 @@ export default function ExecutiveReportDashboard({ report }: Props) {
             <Link href="/admin/executive-report-publication" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Publication
             </Link>
-            <Link href="/admin/executive-report-publication-center" className="text-xs text-white/60 transition hover:text-white">
-              Executive Report Publication Center
-            </Link>
+            <span className="text-xs font-bold text-white">Executive Report Publication Center</span>
           </nav>
         </div>
         <form action={logoutAction}>
@@ -441,23 +502,23 @@ export default function ExecutiveReportDashboard({ report }: Props) {
       {/* ── Content ── */}
       <div className="mx-auto w-full max-w-[780px] space-y-14 px-6 py-12">
 
-        <ExecutiveHeadlineSection report={report} />
+        <PublicationWorkspaceOverviewSection publication={publication} />
 
         <hr className="border-gray-200" />
 
-        <ExecutiveSummarySection report={report} />
+        <ExecutivePublicationWorkspaceSection publication={publication} />
 
         <hr className="border-gray-200" />
 
-        <ReportSectionsSection report={report} />
+        <PublicationReviewWorkspaceSection publication={publication} />
 
         <hr className="border-gray-200" />
 
-        <ReportStatusSection report={report} />
+        <PublicationReadinessSection publication={publication} />
 
         <hr className="border-gray-200" />
 
-        <ReportMetadataSection report={report} />
+        <PublicationMetadataSection publication={publication} />
 
         <hr className="border-gray-200" />
 
