@@ -454,6 +454,9 @@ export default function ExecutiveReportComparisonCenter({ comparison }: Props) {
             <Link href="/admin/executive-report-publication-center" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Publication Center
             </Link>
+            <Link href="/admin/executive-report-distribution" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report Distribution
+            </Link>
           </nav>
         </div>
         <form action={logoutAction}>
