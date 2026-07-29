@@ -484,6 +484,9 @@ export default function ExecutiveReportCompletionCenter({ completion }: Props) {
               Executive Report Completion
             </Link>
             <span className="text-xs font-bold text-white">Executive Report Completion Center</span>
+            <Link href="/admin/executive-report-publication" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report Publication
+            </Link>
           </nav>
         </div>
         <form action={logoutAction}>
