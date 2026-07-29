@@ -1,13 +1,14 @@
-﻿"use client";
+"use client";
 
 import React            from "react";
 import Link             from "next/link";
 import { logoutAction } from "./actions";
-import type { AlertSeverity }              from "@/app/lib/operations/OperationsAlertTypes";
+import type { AlertSeverity } from "@/app/lib/operations/OperationsAlertTypes";
 import type {
-  ExecutiveDigestSection,
-  ExecutiveOperationsDigest,
-} from "@/app/lib/operations/ExecutiveOperationsDigestTypes";
+  ExecutiveReportDelivery,
+  ExecutiveReportDeliveryEntry,
+  ExecutiveReportDeliveryState,
+} from "@/app/lib/operations/ExecutiveReportDeliveryTypes";
 
 // ── UI helpers ────────────────────────────────────────────────────────────────
 
@@ -60,67 +61,54 @@ const SEVERITY_LABELS: Record<AlertSeverity, string> = {
   "low":      "Low",
 };
 
-// ── Section 1: Executive Headline ─────────────────────────────────────────────
+const DELIVERY_STATE_STYLES: Record<ExecutiveReportDeliveryState, string> = {
+  "delivering": "border-gray-200  bg-gray-100  text-gray-500",
+  "delivered":  "border-green-200 bg-green-50  text-green-700",
+};
 
-function ExecutiveHeadlineSection({ digest }: { digest: ExecutiveOperationsDigest }) {
+const DELIVERY_STATE_LABELS: Record<ExecutiveReportDeliveryState, string> = {
+  "delivering": "Delivering",
+  "delivered":  "Delivered",
+};
+
+// ── Section 1: Delivery Overview ──────────────────────────────────────────────
+
+function DeliveryOverviewSection({ delivery }: { delivery: ExecutiveReportDelivery }) {
   return (
     <section>
-      <SectionLabel>Executive Operations Digest</SectionLabel>
-      <SectionHeading>Executive Headline</SectionHeading>
+      <SectionLabel>Executive Report Delivery</SectionLabel>
+      <SectionHeading>Delivery Overview</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Top-level executive framing of current platform operational state.
-        Updated on every page load.
+        Aggregate view of the executive report delivery stage. Refreshed on every page load.
       </p>
 
-      <div className="mb-4 flex flex-wrap items-center gap-3">
-        <span className={`rounded-full border px-3 py-1 text-xs font-semibold ${SEVERITY_STYLES[digest.overallStatus]}`}>
-          {SEVERITY_LABELS[digest.overallStatus]}
-        </span>
-        <span className="rounded-full border border-gray-100 bg-white px-3 py-1 text-xs text-[#7b7480]">
-          Generated: {fmtDate(digest.generatedAt)}
-        </span>
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <Card>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Total Records</p>
+          <p className="mt-2 text-3xl font-black text-[#4f4a52]">{delivery.records.length}</p>
+        </Card>
+        <Card>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Delivery Generated</p>
+          <p className="mt-2 text-sm font-bold text-[#4f4a52]">{fmtDate(delivery.generatedAt)}</p>
+        </Card>
       </div>
-
-      <Card>
-        <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Platform Headline</p>
-        <p className="mt-2 text-base font-bold text-[#4f4a52]">{digest.headline.text}</p>
-      </Card>
     </section>
   );
 }
 
-// ── Section 2: Digest Summary ─────────────────────────────────────────────────
+// ── Section 2: Delivery Timeline ──────────────────────────────────────────────
 
-function DigestSummarySection({ digest }: { digest: ExecutiveOperationsDigest }) {
-  return (
-    <section>
-      <SectionLabel>Summary</SectionLabel>
-      <SectionHeading>Digest Summary</SectionHeading>
-      <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Concise executive summary synthesized from the operational alert briefing.
-      </p>
-
-      <Card>
-        <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Executive Summary</p>
-        <p className="mt-3 text-sm leading-relaxed text-[#4f4a52]">{digest.summary}</p>
-      </Card>
-    </section>
-  );
-}
-
-// ── Section 3: Key Observations ───────────────────────────────────────────────
-
-function KeyObservationsSection({ digest }: { digest: ExecutiveOperationsDigest }) {
-  if (digest.keyObservations.length === 0) {
+function DeliveryTimelineSection({ delivery }: { delivery: ExecutiveReportDelivery }) {
+  if (delivery.records.length === 0) {
     return (
       <section>
-        <SectionLabel>Observations</SectionLabel>
-        <SectionHeading>Key Observations</SectionHeading>
+        <SectionLabel>Timeline</SectionLabel>
+        <SectionHeading>Delivery Timeline</SectionHeading>
         <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-          Observations projected from alert briefing.
+          Chronological view of all delivery records.
         </p>
         <Card>
-          <p className="text-sm text-[#7b7480]">No active observations. All alerts resolved.</p>
+          <p className="text-sm text-[#7b7480]">No delivery records available.</p>
         </Card>
       </section>
     );
@@ -128,88 +116,157 @@ function KeyObservationsSection({ digest }: { digest: ExecutiveOperationsDigest 
 
   return (
     <section>
-      <SectionLabel>Observations</SectionLabel>
-      <SectionHeading>Key Observations</SectionHeading>
+      <SectionLabel>Timeline</SectionLabel>
+      <SectionHeading>Delivery Timeline</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        {digest.keyObservations.length} observation{digest.keyObservations.length === 1 ? "" : "s"} projected from the alert briefing.
+        {delivery.records.length} record{delivery.records.length === 1 ? "" : "s"} in the delivery timeline.
+      </p>
+
+      <Card>
+        <div className="divide-y divide-gray-100">
+          {delivery.records.map((entry, i) => (
+            <div key={i} className="py-4 first:pt-0 last:pb-0">
+              <div className="mb-2 flex items-center gap-2">
+                <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${DELIVERY_STATE_STYLES[entry.state]}`}>
+                  {DELIVERY_STATE_LABELS[entry.state]}
+                </span>
+                <span className="ml-auto text-[10px] text-[#a09aa6]">{fmtDate(entry.generatedAt)}</span>
+              </div>
+              <p className="text-sm font-bold text-[#4f4a52]">
+                {entry.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.headline.text}
+              </p>
+              <p className="mt-1 text-[10px] text-[#a09aa6]">
+                Previous: {entry.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.previous?.headline.text ?? "—"}
+              </p>
+              <p className="mt-2 text-sm leading-relaxed text-[#7b7480]">
+                {entry.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.executiveSummary}
+              </p>
+            </div>
+          ))}
+        </div>
+      </Card>
+    </section>
+  );
+}
+
+// ── Section 3: Delivery Records ───────────────────────────────────────────────
+
+function DeliveryRecordCard({ entry }: { entry: ExecutiveReportDeliveryEntry }) {
+  return (
+    <Card>
+      <div className="mb-3 flex flex-wrap items-center gap-2">
+        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${DELIVERY_STATE_STYLES[entry.state]}`}>
+          {DELIVERY_STATE_LABELS[entry.state]}
+        </span>
+        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${SEVERITY_STYLES[entry.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.overallStatus]}`}>
+          {SEVERITY_LABELS[entry.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.overallStatus]}
+        </span>
+        <span className="ml-auto text-[10px] text-[#a09aa6]">{fmtDate(entry.generatedAt)}</span>
+      </div>
+      <p className="text-sm font-bold text-[#4f4a52]">
+        {entry.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.headline.text}
+      </p>
+      <div className="my-3 h-px bg-gray-100" />
+      <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Previous Headline</p>
+      <p className="mt-1 text-sm text-[#7b7480]">
+        {entry.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.previous?.headline.text ?? "—"}
+      </p>
+      <p className="mt-3 text-sm leading-relaxed text-[#7b7480]">
+        {entry.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.executiveSummary}
+      </p>
+    </Card>
+  );
+}
+
+function DeliveryRecordsSection({ delivery }: { delivery: ExecutiveReportDelivery }) {
+  if (delivery.records.length === 0) {
+    return (
+      <section>
+        <SectionLabel>Records</SectionLabel>
+        <SectionHeading>Delivery Records</SectionHeading>
+        <p className="mt-2 mb-5 text-sm text-[#7b7480]">
+          Detailed view of every delivery record.
+        </p>
+        <Card>
+          <p className="text-sm text-[#7b7480]">No delivery records available.</p>
+        </Card>
+      </section>
+    );
+  }
+
+  return (
+    <section>
+      <SectionLabel>Records</SectionLabel>
+      <SectionHeading>Delivery Records</SectionHeading>
+      <p className="mt-2 mb-5 text-sm text-[#7b7480]">
+        {delivery.records.length} record{delivery.records.length === 1 ? "" : "s"} in delivery.
+        Displayed exactly as received.
       </p>
 
       <div className="space-y-4">
-        {digest.keyObservations.map((obs: ExecutiveDigestSection) => (
-          <Card key={obs.alertId}>
-            <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">{obs.title}</p>
-            <p className="mt-2 text-sm leading-relaxed text-[#4f4a52]">{obs.body}</p>
-          </Card>
+        {delivery.records.map((entry, i) => (
+          <DeliveryRecordCard key={i} entry={entry} />
         ))}
       </div>
     </section>
   );
 }
 
-// ── Section 4: Operational Status ─────────────────────────────────────────────
+// ── Section 4: Delivery Status ────────────────────────────────────────────────
 
-function OperationalStatusSection({ digest }: { digest: ExecutiveOperationsDigest }) {
+function DeliveryStatusSection({ delivery }: { delivery: ExecutiveReportDelivery }) {
+  const latestGeneratedAt = delivery.records.length > 0
+    ? delivery.records[delivery.records.length - 1].generatedAt
+    : null;
+
   return (
     <section>
       <SectionLabel>Status</SectionLabel>
-      <SectionHeading>Operational Status</SectionHeading>
+      <SectionHeading>Delivery Status</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Overall platform status and analytics connectivity.
+        Delivery status indicators at generation time.
       </p>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <Card>
-          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Overall Status</p>
-          <div className="mt-3">
-            <span className={`rounded-full border px-4 py-1.5 text-xs font-bold uppercase tracking-wider ${SEVERITY_STYLES[digest.overallStatus]}`}>
-              {SEVERITY_LABELS[digest.overallStatus]}
-            </span>
-          </div>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Total Delivery Records</p>
+          <p className="mt-3 text-3xl font-black text-[#4f4a52]">{delivery.records.length}</p>
         </Card>
         <Card>
-          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Analytics</p>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Latest Generated At</p>
           <p className="mt-3 text-sm font-bold text-[#4f4a52]">
-            {digest.analyticsAvailable ? "Connected" : "Offline"}
+            {latestGeneratedAt ? fmtDate(latestGeneratedAt) : "—"}
           </p>
-          {!digest.analyticsAvailable && (
-            <p className="mt-1 text-[10px] text-[#7b7480]">
-              Configure PostHog environment variables to enable live intelligence.
-            </p>
-          )}
         </Card>
       </div>
     </section>
   );
 }
 
-// ── Section 5: Generated Information ─────────────────────────────────────────
+// ── Section 5: Delivery Metadata ──────────────────────────────────────────────
 
-function GeneratedInformationSection({ digest }: { digest: ExecutiveOperationsDigest }) {
+function DeliveryMetadataSection({ delivery }: { delivery: ExecutiveReportDelivery }) {
   return (
     <section>
       <SectionLabel>Metadata</SectionLabel>
-      <SectionHeading>Generated Information</SectionHeading>
+      <SectionHeading>Delivery Metadata</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Digest generation metadata. No user data is stored or persisted.
+        Delivery generation metadata. No data is stored or persisted.
       </p>
 
       <Card>
-        <div className="space-y-4">
-          <div>
-            <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Generated At</p>
-            <p className="mt-1 text-sm text-[#4f4a52]">{fmtDate(digest.generatedAt)}</p>
-          </div>
-          <div className="h-px bg-gray-100" />
-          <div>
-            <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Analytics Available</p>
-            <p className="mt-1 text-sm text-[#4f4a52]">{digest.analyticsAvailable ? "Yes" : "No"}</p>
-          </div>
-          <div className="h-px bg-gray-100" />
-          <div>
-            <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Key Observations</p>
-            <p className="mt-1 text-sm text-[#4f4a52]">{digest.keyObservations.length}</p>
-          </div>
-        </div>
+        <table className="w-full text-sm">
+          <tbody className="divide-y divide-gray-100">
+            <tr>
+              <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Generated At</td>
+              <td className="py-3 text-right text-[#4f4a52]">{fmtDate(delivery.generatedAt)}</td>
+            </tr>
+            <tr>
+              <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Delivery Records</td>
+              <td className="py-3 text-right text-[#4f4a52]">{delivery.records.length}</td>
+            </tr>
+          </tbody>
+        </table>
       </Card>
     </section>
   );
@@ -218,12 +275,47 @@ function GeneratedInformationSection({ digest }: { digest: ExecutiveOperationsDi
 // ── Section 6: Quick Navigation ───────────────────────────────────────────────
 
 const QUICK_NAV_LINKS = [
-  { href: "/admin",                      label: "Operations" },
-  { href: "/admin/operations",           label: "Unified Operations" },
-  { href: "/admin/executive-operations", label: "Executive Operations" },
-  { href: "/admin/alerts",               label: "Alerts" },
-  { href: "/admin/alert-center",         label: "Alert Center" },
-  { href: "/admin/executive-digest",     label: "Executive Digest" },
+  { href: "/admin",                                          label: "Operations" },
+  { href: "/admin/operations",                               label: "Unified Operations" },
+  { href: "/admin/executive-operations",                     label: "Executive Operations" },
+  { href: "/admin/alerts",                                   label: "Alerts" },
+  { href: "/admin/alert-center",                             label: "Alert Center" },
+  { href: "/admin/executive-digest",                         label: "Executive Digest" },
+  { href: "/admin/executive-briefing",                       label: "Executive Briefing" },
+  { href: "/admin/executive-report",                         label: "Executive Report" },
+  { href: "/admin/executive-report-center",                  label: "Executive Report Center" },
+  { href: "/admin/executive-report-archive",                 label: "Executive Report Archive" },
+  { href: "/admin/executive-report-archive-center",          label: "Executive Report Archive Center" },
+  { href: "/admin/executive-report-history",                 label: "Executive Report History" },
+  { href: "/admin/executive-report-history-center",          label: "Executive Report History Center" },
+  { href: "/admin/executive-report-comparison",              label: "Executive Report Comparison" },
+  { href: "/admin/executive-report-comparison-center",       label: "Executive Report Comparison Center" },
+  { href: "/admin/executive-report-delta",                   label: "Executive Report Delta" },
+  { href: "/admin/executive-report-delta-center",            label: "Executive Report Delta Center" },
+  { href: "/admin/executive-report-insight",                 label: "Executive Report Insight" },
+  { href: "/admin/executive-report-insight-center",          label: "Executive Report Insight Center" },
+  { href: "/admin/executive-report-trend",                   label: "Executive Report Trend" },
+  { href: "/admin/executive-report-trend-center",            label: "Executive Report Trend Center" },
+  { href: "/admin/executive-report-forecast",                label: "Executive Report Forecast" },
+  { href: "/admin/executive-report-forecast-center",         label: "Executive Report Forecast Center" },
+  { href: "/admin/executive-report-outlook",                 label: "Executive Report Outlook" },
+  { href: "/admin/executive-report-outlook-center",          label: "Executive Report Outlook Center" },
+  { href: "/admin/executive-report-strategy",                label: "Executive Report Strategy" },
+  { href: "/admin/executive-report-strategy-center",         label: "Executive Report Strategy Center" },
+  { href: "/admin/executive-report-action",                  label: "Executive Report Action" },
+  { href: "/admin/executive-report-action-center",           label: "Executive Report Action Center" },
+  { href: "/admin/executive-report-decision",                label: "Executive Report Decision" },
+  { href: "/admin/executive-report-decision-center",         label: "Executive Report Decision Center" },
+  { href: "/admin/executive-report-approval",                label: "Executive Report Approval" },
+  { href: "/admin/executive-report-approval-center",         label: "Executive Report Approval Center" },
+  { href: "/admin/executive-report-execution",               label: "Executive Report Execution" },
+  { href: "/admin/executive-report-execution-center",        label: "Executive Report Execution Center" },
+  { href: "/admin/executive-report-completion",              label: "Executive Report Completion" },
+  { href: "/admin/executive-report-completion-center",       label: "Executive Report Completion Center" },
+  { href: "/admin/executive-report-publication",             label: "Executive Report Publication" },
+  { href: "/admin/executive-report-publication-center",      label: "Executive Report Publication Center" },
+  { href: "/admin/executive-report-distribution",            label: "Executive Report Distribution" },
+  { href: "/admin/executive-report-distribution-center",     label: "Executive Report Distribution Center" },
 ] as const;
 
 function QuickNavigationSection() {
@@ -235,7 +327,7 @@ function QuickNavigationSection() {
         Direct access to operations and intelligence consoles.
       </p>
 
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
         {QUICK_NAV_LINKS.map(({ href, label }) => (
           <Link
             key={href}
@@ -253,12 +345,12 @@ function QuickNavigationSection() {
 // ── Props ─────────────────────────────────────────────────────────────────────
 
 interface Props {
-  digest: ExecutiveOperationsDigest;
+  delivery: ExecutiveReportDelivery;
 }
 
 // ── Main export ───────────────────────────────────────────────────────────────
 
-export default function ExecutiveOperationsDigestDashboard({ digest }: Props) {
+export default function ExecutiveReportDeliveryDashboard({ delivery }: Props) {
   return (
     <div className="min-h-screen bg-[#f5f1eb]">
 
@@ -300,7 +392,9 @@ export default function ExecutiveOperationsDigestDashboard({ digest }: Props) {
             <Link href="/admin/alert-center" className="text-xs text-white/60 transition hover:text-white">
               Alert Center
             </Link>
-            <span className="text-xs font-bold text-white">Executive Digest</span>
+            <Link href="/admin/executive-digest" className="text-xs text-white/60 transition hover:text-white">
+              Executive Digest
+            </Link>
             <Link href="/admin/executive-briefing" className="text-xs text-white/60 transition hover:text-white">
               Executive Briefing
             </Link>
@@ -406,9 +500,7 @@ export default function ExecutiveOperationsDigestDashboard({ digest }: Props) {
             <Link href="/admin/executive-report-distribution-center" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Distribution Center
             </Link>
-            <Link href="/admin/executive-report-delivery" className="text-xs text-white/60 transition hover:text-white">
-              Executive Report Delivery
-            </Link>
+            <span className="text-xs font-bold text-white">Executive Report Delivery</span>
           </nav>
         </div>
         <form action={logoutAction}>
@@ -421,23 +513,23 @@ export default function ExecutiveOperationsDigestDashboard({ digest }: Props) {
       {/* ── Content ── */}
       <div className="mx-auto w-full max-w-[780px] space-y-14 px-6 py-12">
 
-        <ExecutiveHeadlineSection digest={digest} />
+        <DeliveryOverviewSection delivery={delivery} />
 
         <hr className="border-gray-200" />
 
-        <DigestSummarySection digest={digest} />
+        <DeliveryTimelineSection delivery={delivery} />
 
         <hr className="border-gray-200" />
 
-        <KeyObservationsSection digest={digest} />
+        <DeliveryRecordsSection delivery={delivery} />
 
         <hr className="border-gray-200" />
 
-        <OperationalStatusSection digest={digest} />
+        <DeliveryStatusSection delivery={delivery} />
 
         <hr className="border-gray-200" />
 
-        <GeneratedInformationSection digest={digest} />
+        <DeliveryMetadataSection delivery={delivery} />
 
         <hr className="border-gray-200" />
 
