@@ -495,6 +495,9 @@ export default function ExecutiveReportExecutionDashboard({ execution }: Props) 
             <Link href="/admin/executive-report-delivery" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Delivery
             </Link>
+            <Link href="/admin/executive-report-delivery-center" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report Delivery Center
+            </Link>
           </nav>
         </div>
         <form action={logoutAction}>
