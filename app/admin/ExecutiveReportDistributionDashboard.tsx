@@ -493,6 +493,9 @@ export default function ExecutiveReportDistributionDashboard({ distribution }: P
               Executive Report Publication Center
             </Link>
             <span className="text-xs font-bold text-white">Executive Report Distribution</span>
+            <Link href="/admin/executive-report-distribution-center" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report Distribution Center
+            </Link>
           </nav>
         </div>
         <form action={logoutAction}>

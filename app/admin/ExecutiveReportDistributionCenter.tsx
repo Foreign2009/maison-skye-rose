@@ -1,14 +1,14 @@
-﻿"use client";
+"use client";
 
 import React            from "react";
 import Link             from "next/link";
 import { logoutAction } from "./actions";
 import type { AlertSeverity } from "@/app/lib/operations/OperationsAlertTypes";
 import type {
-  ExecutiveReportPublication,
-  ExecutiveReportPublicationEntry,
-  ExecutiveReportPublicationState,
-} from "@/app/lib/operations/ExecutiveReportPublicationTypes";
+  ExecutiveReportDistribution,
+  ExecutiveReportDistributionEntry,
+  ExecutiveReportDistributionState,
+} from "@/app/lib/operations/ExecutiveReportDistributionTypes";
 
 // ── UI helpers ────────────────────────────────────────────────────────────────
 
@@ -61,54 +61,54 @@ const SEVERITY_LABELS: Record<AlertSeverity, string> = {
   "low":      "Low",
 };
 
-const PUBLICATION_STATE_STYLES: Record<ExecutiveReportPublicationState, string> = {
-  "publishing": "border-gray-200  bg-gray-100  text-gray-500",
-  "published":  "border-green-200 bg-green-50  text-green-700",
+const DISTRIBUTION_STATE_STYLES: Record<ExecutiveReportDistributionState, string> = {
+  "distributing": "border-gray-200  bg-gray-100  text-gray-500",
+  "distributed":  "border-green-200 bg-green-50  text-green-700",
 };
 
-const PUBLICATION_STATE_LABELS: Record<ExecutiveReportPublicationState, string> = {
-  "publishing": "Publishing",
-  "published":  "Published",
+const DISTRIBUTION_STATE_LABELS: Record<ExecutiveReportDistributionState, string> = {
+  "distributing": "Distributing",
+  "distributed":  "Distributed",
 };
 
-// ── Section 1: Publication Overview ──────────────────────────────────────────
+// ── Section 1: Distribution Workspace Overview ────────────────────────────────
 
-function PublicationOverviewSection({ publication }: { publication: ExecutiveReportPublication }) {
+function DistributionWorkspaceOverviewSection({ distribution }: { distribution: ExecutiveReportDistribution }) {
   return (
     <section>
-      <SectionLabel>Executive Report Publication</SectionLabel>
-      <SectionHeading>Publication Overview</SectionHeading>
+      <SectionLabel>Executive Report Distribution Center</SectionLabel>
+      <SectionHeading>Distribution Workspace Overview</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Aggregate view of the executive report publication pipeline. Refreshed on every page load.
+        Aggregate view of the executive report distribution workspace. Refreshed on every page load.
       </p>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <Card>
           <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Total Records</p>
-          <p className="mt-2 text-3xl font-black text-[#4f4a52]">{publication.records.length}</p>
+          <p className="mt-2 text-3xl font-black text-[#4f4a52]">{distribution.records.length}</p>
         </Card>
         <Card>
-          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Publication Generated</p>
-          <p className="mt-2 text-sm font-bold text-[#4f4a52]">{fmtDate(publication.generatedAt)}</p>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Distribution Generated</p>
+          <p className="mt-2 text-sm font-bold text-[#4f4a52]">{fmtDate(distribution.generatedAt)}</p>
         </Card>
       </div>
     </section>
   );
 }
 
-// ── Section 2: Publication Timeline ──────────────────────────────────────────
+// ── Section 2: Executive Distribution Workspace ───────────────────────────────
 
-function PublicationTimelineSection({ publication }: { publication: ExecutiveReportPublication }) {
-  if (publication.records.length === 0) {
+function ExecutiveDistributionWorkspaceSection({ distribution }: { distribution: ExecutiveReportDistribution }) {
+  if (distribution.records.length === 0) {
     return (
       <section>
-        <SectionLabel>Timeline</SectionLabel>
-        <SectionHeading>Publication Timeline</SectionHeading>
+        <SectionLabel>Workspace</SectionLabel>
+        <SectionHeading>Executive Distribution Workspace</SectionHeading>
         <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-          Chronological view of all publication records.
+          Full distribution workspace for executive review.
         </p>
         <Card>
-          <p className="text-sm text-[#7b7480]">No publication records available.</p>
+          <p className="text-sm text-[#7b7480]">No distribution records available.</p>
         </Card>
       </section>
     );
@@ -116,30 +116,30 @@ function PublicationTimelineSection({ publication }: { publication: ExecutiveRep
 
   return (
     <section>
-      <SectionLabel>Timeline</SectionLabel>
-      <SectionHeading>Publication Timeline</SectionHeading>
+      <SectionLabel>Workspace</SectionLabel>
+      <SectionHeading>Executive Distribution Workspace</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        {publication.records.length} record{publication.records.length === 1 ? "" : "s"} in the publication pipeline.
+        {distribution.records.length} record{distribution.records.length === 1 ? "" : "s"} in the distribution workspace.
       </p>
 
       <Card>
         <div className="divide-y divide-gray-100">
-          {publication.records.map((entry, i) => (
+          {distribution.records.map((entry, i) => (
             <div key={i} className="py-4 first:pt-0 last:pb-0">
               <div className="mb-2 flex items-center gap-2">
-                <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${PUBLICATION_STATE_STYLES[entry.state]}`}>
-                  {PUBLICATION_STATE_LABELS[entry.state]}
+                <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${DISTRIBUTION_STATE_STYLES[entry.state]}`}>
+                  {DISTRIBUTION_STATE_LABELS[entry.state]}
                 </span>
                 <span className="ml-auto text-[10px] text-[#a09aa6]">{fmtDate(entry.generatedAt)}</span>
               </div>
               <p className="text-sm font-bold text-[#4f4a52]">
-                {entry.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.headline.text}
+                {entry.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.headline.text}
               </p>
               <p className="mt-1 text-[10px] text-[#a09aa6]">
-                Previous: {entry.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.previous?.headline.text ?? "—"}
+                Previous: {entry.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.previous?.headline.text ?? "—"}
               </p>
               <p className="mt-2 text-sm leading-relaxed text-[#7b7480]">
-                {entry.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.executiveSummary}
+                {entry.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.executiveSummary}
               </p>
             </div>
           ))}
@@ -149,46 +149,46 @@ function PublicationTimelineSection({ publication }: { publication: ExecutiveRep
   );
 }
 
-// ── Section 3: Publication Records ────────────────────────────────────────────
+// ── Section 3: Distribution Review Workspace ──────────────────────────────────
 
-function PublicationWorkspaceCard({ entry }: { entry: ExecutiveReportPublicationEntry }) {
+function DistributionWorkspaceCard({ entry }: { entry: ExecutiveReportDistributionEntry }) {
   return (
     <Card>
       <div className="mb-3 flex flex-wrap items-center gap-2">
-        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${PUBLICATION_STATE_STYLES[entry.state]}`}>
-          {PUBLICATION_STATE_LABELS[entry.state]}
+        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${DISTRIBUTION_STATE_STYLES[entry.state]}`}>
+          {DISTRIBUTION_STATE_LABELS[entry.state]}
         </span>
-        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${SEVERITY_STYLES[entry.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.overallStatus]}`}>
-          {SEVERITY_LABELS[entry.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.overallStatus]}
+        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${SEVERITY_STYLES[entry.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.overallStatus]}`}>
+          {SEVERITY_LABELS[entry.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.overallStatus]}
         </span>
         <span className="ml-auto text-[10px] text-[#a09aa6]">{fmtDate(entry.generatedAt)}</span>
       </div>
       <p className="text-sm font-bold text-[#4f4a52]">
-        {entry.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.headline.text}
+        {entry.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.headline.text}
       </p>
       <div className="my-3 h-px bg-gray-100" />
       <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Previous Headline</p>
       <p className="mt-1 text-sm text-[#7b7480]">
-        {entry.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.previous?.headline.text ?? "—"}
+        {entry.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.previous?.headline.text ?? "—"}
       </p>
       <p className="mt-3 text-sm leading-relaxed text-[#7b7480]">
-        {entry.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.executiveSummary}
+        {entry.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.executiveSummary}
       </p>
     </Card>
   );
 }
 
-function PublicationRecordsSection({ publication }: { publication: ExecutiveReportPublication }) {
-  if (publication.records.length === 0) {
+function DistributionReviewWorkspaceSection({ distribution }: { distribution: ExecutiveReportDistribution }) {
+  if (distribution.records.length === 0) {
     return (
       <section>
-        <SectionLabel>Records</SectionLabel>
-        <SectionHeading>Publication Records</SectionHeading>
+        <SectionLabel>Review</SectionLabel>
+        <SectionHeading>Distribution Review Workspace</SectionHeading>
         <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-          Detailed review cards for every publication record.
+          Detailed review cards for every distribution record.
         </p>
         <Card>
-          <p className="text-sm text-[#7b7480]">No publication records available.</p>
+          <p className="text-sm text-[#7b7480]">No distribution records available.</p>
         </Card>
       </section>
     );
@@ -196,41 +196,41 @@ function PublicationRecordsSection({ publication }: { publication: ExecutiveRepo
 
   return (
     <section>
-      <SectionLabel>Records</SectionLabel>
-      <SectionHeading>Publication Records</SectionHeading>
+      <SectionLabel>Review</SectionLabel>
+      <SectionHeading>Distribution Review Workspace</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        {publication.records.length} record{publication.records.length === 1 ? "" : "s"} in publication review.
+        {distribution.records.length} record{distribution.records.length === 1 ? "" : "s"} in distribution review.
         Displayed exactly as received.
       </p>
 
       <div className="space-y-4">
-        {publication.records.map((entry, i) => (
-          <PublicationWorkspaceCard key={i} entry={entry} />
+        {distribution.records.map((entry, i) => (
+          <DistributionWorkspaceCard key={i} entry={entry} />
         ))}
       </div>
     </section>
   );
 }
 
-// ── Section 4: Publication Status ─────────────────────────────────────────────
+// ── Section 4: Distribution Readiness ─────────────────────────────────────────
 
-function PublicationStatusSection({ publication }: { publication: ExecutiveReportPublication }) {
-  const latestGeneratedAt = publication.records.length > 0
-    ? publication.records[publication.records.length - 1].generatedAt
+function DistributionReadinessSection({ distribution }: { distribution: ExecutiveReportDistribution }) {
+  const latestGeneratedAt = distribution.records.length > 0
+    ? distribution.records[distribution.records.length - 1].generatedAt
     : null;
 
   return (
     <section>
-      <SectionLabel>Status</SectionLabel>
-      <SectionHeading>Publication Status</SectionHeading>
+      <SectionLabel>Readiness</SectionLabel>
+      <SectionHeading>Distribution Readiness</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Publication readiness indicators at generation time.
+        Distribution readiness indicators at generation time.
       </p>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <Card>
-          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Total Publication Records</p>
-          <p className="mt-3 text-3xl font-black text-[#4f4a52]">{publication.records.length}</p>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Total Distribution Records</p>
+          <p className="mt-3 text-3xl font-black text-[#4f4a52]">{distribution.records.length}</p>
         </Card>
         <Card>
           <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Latest Generated At</p>
@@ -243,15 +243,15 @@ function PublicationStatusSection({ publication }: { publication: ExecutiveRepor
   );
 }
 
-// ── Section 5: Publication Metadata ───────────────────────────────────────────
+// ── Section 5: Distribution Metadata ──────────────────────────────────────────
 
-function PublicationMetadataSection({ publication }: { publication: ExecutiveReportPublication }) {
+function DistributionMetadataSection({ distribution }: { distribution: ExecutiveReportDistribution }) {
   return (
     <section>
       <SectionLabel>Metadata</SectionLabel>
-      <SectionHeading>Publication Metadata</SectionHeading>
+      <SectionHeading>Distribution Metadata</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Publication generation metadata. No data is stored or persisted.
+        Distribution center generation metadata. No data is stored or persisted.
       </p>
 
       <Card>
@@ -259,11 +259,11 @@ function PublicationMetadataSection({ publication }: { publication: ExecutiveRep
           <tbody className="divide-y divide-gray-100">
             <tr>
               <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Generated At</td>
-              <td className="py-3 text-right text-[#4f4a52]">{fmtDate(publication.generatedAt)}</td>
+              <td className="py-3 text-right text-[#4f4a52]">{fmtDate(distribution.generatedAt)}</td>
             </tr>
             <tr>
-              <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Publication Records</td>
-              <td className="py-3 text-right text-[#4f4a52]">{publication.records.length}</td>
+              <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Distribution Records</td>
+              <td className="py-3 text-right text-[#4f4a52]">{distribution.records.length}</td>
             </tr>
           </tbody>
         </table>
@@ -312,6 +312,10 @@ const QUICK_NAV_LINKS = [
   { href: "/admin/executive-report-execution-center",        label: "Executive Report Execution Center" },
   { href: "/admin/executive-report-completion",              label: "Executive Report Completion" },
   { href: "/admin/executive-report-completion-center",       label: "Executive Report Completion Center" },
+  { href: "/admin/executive-report-publication",             label: "Executive Report Publication" },
+  { href: "/admin/executive-report-publication-center",      label: "Executive Report Publication Center" },
+  { href: "/admin/executive-report-distribution",            label: "Executive Report Distribution" },
+  { href: "/admin/executive-report-distribution-center",     label: "Executive Report Distribution Center" },
 ] as const;
 
 function QuickNavigationSection() {
@@ -341,12 +345,12 @@ function QuickNavigationSection() {
 // ── Props ─────────────────────────────────────────────────────────────────────
 
 interface Props {
-  publication: ExecutiveReportPublication;
+  distribution: ExecutiveReportDistribution;
 }
 
 // ── Main export ───────────────────────────────────────────────────────────────
 
-export default function ExecutiveReportPublicationDashboard({ publication }: Props) {
+export default function ExecutiveReportDistributionCenter({ distribution }: Props) {
   return (
     <div className="min-h-screen bg-[#f5f1eb]">
 
@@ -484,16 +488,16 @@ export default function ExecutiveReportPublicationDashboard({ publication }: Pro
             <Link href="/admin/executive-report-completion-center" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Completion Center
             </Link>
-            <span className="text-xs font-bold text-white">Executive Report Publication</span>
+            <Link href="/admin/executive-report-publication" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report Publication
+            </Link>
             <Link href="/admin/executive-report-publication-center" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Publication Center
             </Link>
             <Link href="/admin/executive-report-distribution" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Distribution
             </Link>
-            <Link href="/admin/executive-report-distribution-center" className="text-xs text-white/60 transition hover:text-white">
-              Executive Report Distribution Center
-            </Link>
+            <span className="text-xs font-bold text-white">Executive Report Distribution Center</span>
           </nav>
         </div>
         <form action={logoutAction}>
@@ -506,23 +510,23 @@ export default function ExecutiveReportPublicationDashboard({ publication }: Pro
       {/* ── Content ── */}
       <div className="mx-auto w-full max-w-[780px] space-y-14 px-6 py-12">
 
-        <PublicationOverviewSection publication={publication} />
+        <DistributionWorkspaceOverviewSection distribution={distribution} />
 
         <hr className="border-gray-200" />
 
-        <PublicationTimelineSection publication={publication} />
+        <ExecutiveDistributionWorkspaceSection distribution={distribution} />
 
         <hr className="border-gray-200" />
 
-        <PublicationRecordsSection publication={publication} />
+        <DistributionReviewWorkspaceSection distribution={distribution} />
 
         <hr className="border-gray-200" />
 
-        <PublicationStatusSection publication={publication} />
+        <DistributionReadinessSection distribution={distribution} />
 
         <hr className="border-gray-200" />
 
-        <PublicationMetadataSection publication={publication} />
+        <DistributionMetadataSection distribution={distribution} />
 
         <hr className="border-gray-200" />
 
