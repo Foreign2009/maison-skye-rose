@@ -504,6 +504,9 @@ export default function ExecutiveReportDistributionCenter({ distribution }: Prop
             <Link href="/admin/executive-report-delivery-center" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Delivery Center
             </Link>
+            <Link href="/admin/executive-report-acknowledgement" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report Acknowledgement
+            </Link>
           </nav>
         </div>
         <form action={logoutAction}>

@@ -1,14 +1,14 @@
-﻿"use client";
+"use client";
 
 import React            from "react";
 import Link             from "next/link";
 import { logoutAction } from "./actions";
 import type { AlertSeverity } from "@/app/lib/operations/OperationsAlertTypes";
 import type {
-  ExecutiveReportDecision,
-  ExecutiveReportDecisionEntry,
-  ExecutiveReportDecisionState,
-} from "@/app/lib/operations/ExecutiveReportDecisionTypes";
+  ExecutiveReportAcknowledgement,
+  ExecutiveReportAcknowledgementEntry,
+  ExecutiveReportAcknowledgementState,
+} from "@/app/lib/operations/ExecutiveReportAcknowledgementTypes";
 
 // ── UI helpers ────────────────────────────────────────────────────────────────
 
@@ -61,56 +61,54 @@ const SEVERITY_LABELS: Record<AlertSeverity, string> = {
   "low":      "Low",
 };
 
-const DECISION_STATE_STYLES: Record<ExecutiveReportDecisionState, string> = {
-  "pending":     "border-amber-100  bg-amber-50  text-amber-700",
-  "approved":    "border-gray-200   bg-gray-100  text-gray-500",
-  "implemented": "border-green-200  bg-green-50  text-green-700",
+const ACKNOWLEDGEMENT_STATE_STYLES: Record<ExecutiveReportAcknowledgementState, string> = {
+  "acknowledging": "border-gray-200  bg-gray-100  text-gray-500",
+  "acknowledged":  "border-green-200 bg-green-50  text-green-700",
 };
 
-const DECISION_STATE_LABELS: Record<ExecutiveReportDecisionState, string> = {
-  "pending":     "Pending",
-  "approved":    "Approved",
-  "implemented": "Implemented",
+const ACKNOWLEDGEMENT_STATE_LABELS: Record<ExecutiveReportAcknowledgementState, string> = {
+  "acknowledging": "Acknowledging",
+  "acknowledged":  "Acknowledged",
 };
 
-// ── Section 1: Decision Workspace Overview ────────────────────────────────────
+// ── Section 1: Acknowledgement Overview ───────────────────────────────────────
 
-function DecisionWorkspaceOverviewSection({ decision }: { decision: ExecutiveReportDecision }) {
+function AcknowledgementOverviewSection({ acknowledgement }: { acknowledgement: ExecutiveReportAcknowledgement }) {
   return (
     <section>
-      <SectionLabel>Executive Report Decision Center</SectionLabel>
-      <SectionHeading>Decision Workspace Overview</SectionHeading>
+      <SectionLabel>Executive Report Acknowledgement</SectionLabel>
+      <SectionHeading>Acknowledgement Overview</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Aggregate view of the executive report decision workspace. Refreshed on every page load.
+        Aggregate view of the executive report acknowledgement stage. Refreshed on every page load.
       </p>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <Card>
           <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Total Records</p>
-          <p className="mt-2 text-3xl font-black text-[#4f4a52]">{decision.records.length}</p>
+          <p className="mt-2 text-3xl font-black text-[#4f4a52]">{acknowledgement.records.length}</p>
         </Card>
         <Card>
-          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Decision Generated</p>
-          <p className="mt-2 text-sm font-bold text-[#4f4a52]">{fmtDate(decision.generatedAt)}</p>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Acknowledgement Generated</p>
+          <p className="mt-2 text-sm font-bold text-[#4f4a52]">{fmtDate(acknowledgement.generatedAt)}</p>
         </Card>
       </div>
     </section>
   );
 }
 
-// ── Section 2: Executive Decision Workspace ───────────────────────────────────
+// ── Section 2: Acknowledgement Timeline ───────────────────────────────────────
 
-function ExecutiveDecisionWorkspaceSection({ decision }: { decision: ExecutiveReportDecision }) {
-  if (decision.records.length === 0) {
+function AcknowledgementTimelineSection({ acknowledgement }: { acknowledgement: ExecutiveReportAcknowledgement }) {
+  if (acknowledgement.records.length === 0) {
     return (
       <section>
-        <SectionLabel>Workspace</SectionLabel>
-        <SectionHeading>Executive Decision Workspace</SectionHeading>
+        <SectionLabel>Timeline</SectionLabel>
+        <SectionHeading>Acknowledgement Timeline</SectionHeading>
         <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-          Full decision workspace for executive review.
+          Chronological view of all acknowledgement records.
         </p>
         <Card>
-          <p className="text-sm text-[#7b7480]">No decision records available.</p>
+          <p className="text-sm text-[#7b7480]">No acknowledgement records available.</p>
         </Card>
       </section>
     );
@@ -118,30 +116,30 @@ function ExecutiveDecisionWorkspaceSection({ decision }: { decision: ExecutiveRe
 
   return (
     <section>
-      <SectionLabel>Workspace</SectionLabel>
-      <SectionHeading>Executive Decision Workspace</SectionHeading>
+      <SectionLabel>Timeline</SectionLabel>
+      <SectionHeading>Acknowledgement Timeline</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        {decision.records.length} record{decision.records.length === 1 ? "" : "s"} in the decision workspace.
+        {acknowledgement.records.length} record{acknowledgement.records.length === 1 ? "" : "s"} in the acknowledgement timeline.
       </p>
 
       <Card>
         <div className="divide-y divide-gray-100">
-          {decision.records.map((entry, i) => (
+          {acknowledgement.records.map((entry, i) => (
             <div key={i} className="py-4 first:pt-0 last:pb-0">
               <div className="mb-2 flex items-center gap-2">
-                <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${DECISION_STATE_STYLES[entry.state]}`}>
-                  {DECISION_STATE_LABELS[entry.state]}
+                <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${ACKNOWLEDGEMENT_STATE_STYLES[entry.state]}`}>
+                  {ACKNOWLEDGEMENT_STATE_LABELS[entry.state]}
                 </span>
                 <span className="ml-auto text-[10px] text-[#a09aa6]">{fmtDate(entry.generatedAt)}</span>
               </div>
               <p className="text-sm font-bold text-[#4f4a52]">
-                {entry.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.headline.text}
+                {entry.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.headline.text}
               </p>
               <p className="mt-1 text-[10px] text-[#a09aa6]">
-                Previous: {entry.action.strategy.outlook.forecast.trend.insight.delta.comparison.previous?.headline.text ?? "—"}
+                Previous: {entry.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.previous?.headline.text ?? "—"}
               </p>
               <p className="mt-2 text-sm leading-relaxed text-[#7b7480]">
-                {entry.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.executiveSummary}
+                {entry.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.executiveSummary}
               </p>
             </div>
           ))}
@@ -151,46 +149,46 @@ function ExecutiveDecisionWorkspaceSection({ decision }: { decision: ExecutiveRe
   );
 }
 
-// ── Section 3: Decision Review Workspace ──────────────────────────────────────
+// ── Section 3: Acknowledgement Records ────────────────────────────────────────
 
-function DecisionWorkspaceCard({ entry }: { entry: ExecutiveReportDecisionEntry }) {
+function AcknowledgementRecordCard({ entry }: { entry: ExecutiveReportAcknowledgementEntry }) {
   return (
     <Card>
       <div className="mb-3 flex flex-wrap items-center gap-2">
-        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${DECISION_STATE_STYLES[entry.state]}`}>
-          {DECISION_STATE_LABELS[entry.state]}
+        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${ACKNOWLEDGEMENT_STATE_STYLES[entry.state]}`}>
+          {ACKNOWLEDGEMENT_STATE_LABELS[entry.state]}
         </span>
-        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${SEVERITY_STYLES[entry.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.overallStatus]}`}>
-          {SEVERITY_LABELS[entry.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.overallStatus]}
+        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${SEVERITY_STYLES[entry.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.overallStatus]}`}>
+          {SEVERITY_LABELS[entry.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.overallStatus]}
         </span>
         <span className="ml-auto text-[10px] text-[#a09aa6]">{fmtDate(entry.generatedAt)}</span>
       </div>
       <p className="text-sm font-bold text-[#4f4a52]">
-        {entry.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.headline.text}
+        {entry.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.headline.text}
       </p>
       <div className="my-3 h-px bg-gray-100" />
       <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Previous Headline</p>
       <p className="mt-1 text-sm text-[#7b7480]">
-        {entry.action.strategy.outlook.forecast.trend.insight.delta.comparison.previous?.headline.text ?? "—"}
+        {entry.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.previous?.headline.text ?? "—"}
       </p>
       <p className="mt-3 text-sm leading-relaxed text-[#7b7480]">
-        {entry.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.executiveSummary}
+        {entry.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.executiveSummary}
       </p>
     </Card>
   );
 }
 
-function DecisionReviewWorkspaceSection({ decision }: { decision: ExecutiveReportDecision }) {
-  if (decision.records.length === 0) {
+function AcknowledgementRecordsSection({ acknowledgement }: { acknowledgement: ExecutiveReportAcknowledgement }) {
+  if (acknowledgement.records.length === 0) {
     return (
       <section>
-        <SectionLabel>Review</SectionLabel>
-        <SectionHeading>Decision Review Workspace</SectionHeading>
+        <SectionLabel>Records</SectionLabel>
+        <SectionHeading>Acknowledgement Records</SectionHeading>
         <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-          Detailed review cards for every decision record.
+          Detailed view of every acknowledgement record.
         </p>
         <Card>
-          <p className="text-sm text-[#7b7480]">No decision records available.</p>
+          <p className="text-sm text-[#7b7480]">No acknowledgement records available.</p>
         </Card>
       </section>
     );
@@ -198,41 +196,41 @@ function DecisionReviewWorkspaceSection({ decision }: { decision: ExecutiveRepor
 
   return (
     <section>
-      <SectionLabel>Review</SectionLabel>
-      <SectionHeading>Decision Review Workspace</SectionHeading>
+      <SectionLabel>Records</SectionLabel>
+      <SectionHeading>Acknowledgement Records</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        {decision.records.length} record{decision.records.length === 1 ? "" : "s"} under review.
+        {acknowledgement.records.length} record{acknowledgement.records.length === 1 ? "" : "s"} in acknowledgement.
         Displayed exactly as received.
       </p>
 
       <div className="space-y-4">
-        {decision.records.map((entry, i) => (
-          <DecisionWorkspaceCard key={i} entry={entry} />
+        {acknowledgement.records.map((entry, i) => (
+          <AcknowledgementRecordCard key={i} entry={entry} />
         ))}
       </div>
     </section>
   );
 }
 
-// ── Section 4: Decision Readiness ─────────────────────────────────────────────
+// ── Section 4: Acknowledgement Status ─────────────────────────────────────────
 
-function DecisionReadinessSection({ decision }: { decision: ExecutiveReportDecision }) {
-  const latestGeneratedAt = decision.records.length > 0
-    ? decision.records[decision.records.length - 1].generatedAt
+function AcknowledgementStatusSection({ acknowledgement }: { acknowledgement: ExecutiveReportAcknowledgement }) {
+  const latestGeneratedAt = acknowledgement.records.length > 0
+    ? acknowledgement.records[acknowledgement.records.length - 1].generatedAt
     : null;
 
   return (
     <section>
-      <SectionLabel>Readiness</SectionLabel>
-      <SectionHeading>Decision Readiness</SectionHeading>
+      <SectionLabel>Status</SectionLabel>
+      <SectionHeading>Acknowledgement Status</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Decision readiness indicators at generation time.
+        Acknowledgement status indicators at generation time.
       </p>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <Card>
-          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Total Decision Records</p>
-          <p className="mt-3 text-3xl font-black text-[#4f4a52]">{decision.records.length}</p>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Total Acknowledgement Records</p>
+          <p className="mt-3 text-3xl font-black text-[#4f4a52]">{acknowledgement.records.length}</p>
         </Card>
         <Card>
           <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Latest Generated At</p>
@@ -245,15 +243,15 @@ function DecisionReadinessSection({ decision }: { decision: ExecutiveReportDecis
   );
 }
 
-// ── Section 5: Decision Metadata ──────────────────────────────────────────────
+// ── Section 5: Acknowledgement Metadata ───────────────────────────────────────
 
-function DecisionMetadataSection({ decision }: { decision: ExecutiveReportDecision }) {
+function AcknowledgementMetadataSection({ acknowledgement }: { acknowledgement: ExecutiveReportAcknowledgement }) {
   return (
     <section>
       <SectionLabel>Metadata</SectionLabel>
-      <SectionHeading>Decision Metadata</SectionHeading>
+      <SectionHeading>Acknowledgement Metadata</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Decision generation metadata. No data is stored or persisted.
+        Acknowledgement generation metadata. No data is stored or persisted.
       </p>
 
       <Card>
@@ -261,11 +259,11 @@ function DecisionMetadataSection({ decision }: { decision: ExecutiveReportDecisi
           <tbody className="divide-y divide-gray-100">
             <tr>
               <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Generated At</td>
-              <td className="py-3 text-right text-[#4f4a52]">{fmtDate(decision.generatedAt)}</td>
+              <td className="py-3 text-right text-[#4f4a52]">{fmtDate(acknowledgement.generatedAt)}</td>
             </tr>
             <tr>
-              <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Decision Records</td>
-              <td className="py-3 text-right text-[#4f4a52]">{decision.records.length}</td>
+              <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Acknowledgement Records</td>
+              <td className="py-3 text-right text-[#4f4a52]">{acknowledgement.records.length}</td>
             </tr>
           </tbody>
         </table>
@@ -308,6 +306,18 @@ const QUICK_NAV_LINKS = [
   { href: "/admin/executive-report-action-center",           label: "Executive Report Action Center" },
   { href: "/admin/executive-report-decision",                label: "Executive Report Decision" },
   { href: "/admin/executive-report-decision-center",         label: "Executive Report Decision Center" },
+  { href: "/admin/executive-report-approval",                label: "Executive Report Approval" },
+  { href: "/admin/executive-report-approval-center",         label: "Executive Report Approval Center" },
+  { href: "/admin/executive-report-execution",               label: "Executive Report Execution" },
+  { href: "/admin/executive-report-execution-center",        label: "Executive Report Execution Center" },
+  { href: "/admin/executive-report-completion",              label: "Executive Report Completion" },
+  { href: "/admin/executive-report-completion-center",       label: "Executive Report Completion Center" },
+  { href: "/admin/executive-report-publication",             label: "Executive Report Publication" },
+  { href: "/admin/executive-report-publication-center",      label: "Executive Report Publication Center" },
+  { href: "/admin/executive-report-distribution",            label: "Executive Report Distribution" },
+  { href: "/admin/executive-report-distribution-center",     label: "Executive Report Distribution Center" },
+  { href: "/admin/executive-report-delivery",                label: "Executive Report Delivery" },
+  { href: "/admin/executive-report-delivery-center",         label: "Executive Report Delivery Center" },
 ] as const;
 
 function QuickNavigationSection() {
@@ -337,12 +347,12 @@ function QuickNavigationSection() {
 // ── Props ─────────────────────────────────────────────────────────────────────
 
 interface Props {
-  decision: ExecutiveReportDecision;
+  acknowledgement: ExecutiveReportAcknowledgement;
 }
 
 // ── Main export ───────────────────────────────────────────────────────────────
 
-export default function ExecutiveReportDecisionCenter({ decision }: Props) {
+export default function ExecutiveReportAcknowledgementDashboard({ acknowledgement }: Props) {
   return (
     <div className="min-h-screen bg-[#f5f1eb]">
 
@@ -459,7 +469,9 @@ export default function ExecutiveReportDecisionCenter({ decision }: Props) {
             <Link href="/admin/executive-report-decision" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Decision
             </Link>
-            <span className="text-xs font-bold text-white">Executive Report Decision Center</span>
+            <Link href="/admin/executive-report-decision-center" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report Decision Center
+            </Link>
             <Link href="/admin/executive-report-approval" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Approval
             </Link>
@@ -496,9 +508,7 @@ export default function ExecutiveReportDecisionCenter({ decision }: Props) {
             <Link href="/admin/executive-report-delivery-center" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Delivery Center
             </Link>
-            <Link href="/admin/executive-report-acknowledgement" className="text-xs text-white/60 transition hover:text-white">
-              Executive Report Acknowledgement
-            </Link>
+            <span className="text-xs font-bold text-white">Executive Report Acknowledgement</span>
           </nav>
         </div>
         <form action={logoutAction}>
@@ -511,23 +521,23 @@ export default function ExecutiveReportDecisionCenter({ decision }: Props) {
       {/* ── Content ── */}
       <div className="mx-auto w-full max-w-[780px] space-y-14 px-6 py-12">
 
-        <DecisionWorkspaceOverviewSection decision={decision} />
+        <AcknowledgementOverviewSection acknowledgement={acknowledgement} />
 
         <hr className="border-gray-200" />
 
-        <ExecutiveDecisionWorkspaceSection decision={decision} />
+        <AcknowledgementTimelineSection acknowledgement={acknowledgement} />
 
         <hr className="border-gray-200" />
 
-        <DecisionReviewWorkspaceSection decision={decision} />
+        <AcknowledgementRecordsSection acknowledgement={acknowledgement} />
 
         <hr className="border-gray-200" />
 
-        <DecisionReadinessSection decision={decision} />
+        <AcknowledgementStatusSection acknowledgement={acknowledgement} />
 
         <hr className="border-gray-200" />
 
-        <DecisionMetadataSection decision={decision} />
+        <AcknowledgementMetadataSection acknowledgement={acknowledgement} />
 
         <hr className="border-gray-200" />
 

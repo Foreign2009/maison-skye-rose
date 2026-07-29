@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import React            from "react";
 import Link             from "next/link";
@@ -10,7 +10,7 @@ import type {
   ExecutiveReportDeliveryState,
 } from "@/app/lib/operations/ExecutiveReportDeliveryTypes";
 
-// ── UI helpers ────────────────────────────────────────────────────────────────
+// â”€â”€ UI helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
@@ -36,7 +36,7 @@ function Card({ children, className = "" }: { children: React.ReactNode; classNa
   );
 }
 
-// ── Formatter ─────────────────────────────────────────────────────────────────
+// â”€â”€ Formatter â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 function fmtDate(iso: string): string {
   return new Date(iso).toLocaleString("en-GB", {
@@ -45,7 +45,7 @@ function fmtDate(iso: string): string {
   });
 }
 
-// ── Style maps ────────────────────────────────────────────────────────────────
+// â”€â”€ Style maps â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 const SEVERITY_STYLES: Record<AlertSeverity, string> = {
   "critical": "border-red-200    bg-red-50    text-red-700",
@@ -71,7 +71,7 @@ const DELIVERY_STATE_LABELS: Record<ExecutiveReportDeliveryState, string> = {
   "delivered":  "Delivered",
 };
 
-// ── Section 1: Delivery Overview ──────────────────────────────────────────────
+// â”€â”€ Section 1: Delivery Overview â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 function DeliveryOverviewSection({ delivery }: { delivery: ExecutiveReportDelivery }) {
   return (
@@ -96,7 +96,7 @@ function DeliveryOverviewSection({ delivery }: { delivery: ExecutiveReportDelive
   );
 }
 
-// ── Section 2: Delivery Timeline ──────────────────────────────────────────────
+// â”€â”€ Section 2: Delivery Timeline â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 function DeliveryTimelineSection({ delivery }: { delivery: ExecutiveReportDelivery }) {
   if (delivery.records.length === 0) {
@@ -136,7 +136,7 @@ function DeliveryTimelineSection({ delivery }: { delivery: ExecutiveReportDelive
                 {entry.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.headline.text}
               </p>
               <p className="mt-1 text-[10px] text-[#a09aa6]">
-                Previous: {entry.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.previous?.headline.text ?? "—"}
+                Previous: {entry.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.previous?.headline.text ?? "â€”"}
               </p>
               <p className="mt-2 text-sm leading-relaxed text-[#7b7480]">
                 {entry.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.executiveSummary}
@@ -149,7 +149,7 @@ function DeliveryTimelineSection({ delivery }: { delivery: ExecutiveReportDelive
   );
 }
 
-// ── Section 3: Delivery Records ───────────────────────────────────────────────
+// â”€â”€ Section 3: Delivery Records â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 function DeliveryRecordCard({ entry }: { entry: ExecutiveReportDeliveryEntry }) {
   return (
@@ -169,7 +169,7 @@ function DeliveryRecordCard({ entry }: { entry: ExecutiveReportDeliveryEntry }) 
       <div className="my-3 h-px bg-gray-100" />
       <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Previous Headline</p>
       <p className="mt-1 text-sm text-[#7b7480]">
-        {entry.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.previous?.headline.text ?? "—"}
+        {entry.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.previous?.headline.text ?? "â€”"}
       </p>
       <p className="mt-3 text-sm leading-relaxed text-[#7b7480]">
         {entry.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.executiveSummary}
@@ -212,7 +212,7 @@ function DeliveryRecordsSection({ delivery }: { delivery: ExecutiveReportDeliver
   );
 }
 
-// ── Section 4: Delivery Status ────────────────────────────────────────────────
+// â”€â”€ Section 4: Delivery Status â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 function DeliveryStatusSection({ delivery }: { delivery: ExecutiveReportDelivery }) {
   const latestGeneratedAt = delivery.records.length > 0
@@ -235,7 +235,7 @@ function DeliveryStatusSection({ delivery }: { delivery: ExecutiveReportDelivery
         <Card>
           <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Latest Generated At</p>
           <p className="mt-3 text-sm font-bold text-[#4f4a52]">
-            {latestGeneratedAt ? fmtDate(latestGeneratedAt) : "—"}
+            {latestGeneratedAt ? fmtDate(latestGeneratedAt) : "â€”"}
           </p>
         </Card>
       </div>
@@ -243,7 +243,7 @@ function DeliveryStatusSection({ delivery }: { delivery: ExecutiveReportDelivery
   );
 }
 
-// ── Section 5: Delivery Metadata ──────────────────────────────────────────────
+// â”€â”€ Section 5: Delivery Metadata â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 function DeliveryMetadataSection({ delivery }: { delivery: ExecutiveReportDelivery }) {
   return (
@@ -272,7 +272,7 @@ function DeliveryMetadataSection({ delivery }: { delivery: ExecutiveReportDelive
   );
 }
 
-// ── Section 6: Quick Navigation ───────────────────────────────────────────────
+// â”€â”€ Section 6: Quick Navigation â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 const QUICK_NAV_LINKS = [
   { href: "/admin",                                          label: "Operations" },
@@ -342,19 +342,19 @@ function QuickNavigationSection() {
   );
 }
 
-// ── Props ─────────────────────────────────────────────────────────────────────
+// â”€â”€ Props â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 interface Props {
   delivery: ExecutiveReportDelivery;
 }
 
-// ── Main export ───────────────────────────────────────────────────────────────
+// â”€â”€ Main export â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export default function ExecutiveReportDeliveryDashboard({ delivery }: Props) {
   return (
     <div className="min-h-screen bg-[#f5f1eb]">
 
-      {/* ── Header ── */}
+      {/* â”€â”€ Header â”€â”€ */}
       <header className="flex items-center justify-between bg-[#4f4a52] px-6 py-4 print:hidden">
         <div className="flex items-center gap-6">
           <div>
@@ -504,6 +504,9 @@ export default function ExecutiveReportDeliveryDashboard({ delivery }: Props) {
             <Link href="/admin/executive-report-delivery-center" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Delivery Center
             </Link>
+            <Link href="/admin/executive-report-acknowledgement" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report Acknowledgement
+            </Link>
           </nav>
         </div>
         <form action={logoutAction}>
@@ -513,7 +516,7 @@ export default function ExecutiveReportDeliveryDashboard({ delivery }: Props) {
         </form>
       </header>
 
-      {/* ── Content ── */}
+      {/* â”€â”€ Content â”€â”€ */}
       <div className="mx-auto w-full max-w-[780px] space-y-14 px-6 py-12">
 
         <DeliveryOverviewSection delivery={delivery} />
