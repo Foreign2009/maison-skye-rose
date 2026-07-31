@@ -514,6 +514,9 @@ export default function ExecutiveReportCompletionCenter({ completion }: Props) {
             <Link href="/admin/executive-report-receipt-center" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Receipt Center
             </Link>
+            <Link href="/admin/executive-report-confirmation" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report Confirmation
+            </Link>
           </nav>
         </div>
         <form action={logoutAction}>

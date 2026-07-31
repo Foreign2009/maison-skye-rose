@@ -522,6 +522,9 @@ export default function ExecutiveReportReceiptCenter({ receipt }: Props) {
               Executive Report Receipt
             </Link>
             <span className="text-xs font-bold text-white">Executive Report Receipt Center</span>
+            <Link href="/admin/executive-report-confirmation" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report Confirmation
+            </Link>
           </nav>
         </div>
         <form action={logoutAction}>

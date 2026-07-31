@@ -1,14 +1,14 @@
-﻿"use client";
+"use client";
 
 import React            from "react";
 import Link             from "next/link";
 import { logoutAction } from "./actions";
 import type { AlertSeverity } from "@/app/lib/operations/OperationsAlertTypes";
 import type {
-  ExecutiveReportApproval,
-  ExecutiveReportApprovalEntry,
-  ExecutiveReportApprovalState,
-} from "@/app/lib/operations/ExecutiveReportApprovalTypes";
+  ExecutiveReportConfirmation,
+  ExecutiveReportConfirmationEntry,
+  ExecutiveReportConfirmationState,
+} from "@/app/lib/operations/ExecutiveReportConfirmationTypes";
 
 // ── UI helpers ────────────────────────────────────────────────────────────────
 
@@ -61,56 +61,54 @@ const SEVERITY_LABELS: Record<AlertSeverity, string> = {
   "low":      "Low",
 };
 
-const APPROVAL_STATE_STYLES: Record<ExecutiveReportApprovalState, string> = {
-  "awaiting":  "border-amber-100  bg-amber-50  text-amber-700",
-  "approved":  "border-gray-200   bg-gray-100  text-gray-500",
-  "completed": "border-green-200  bg-green-50  text-green-700",
+const CONFIRMATION_STATE_STYLES: Record<ExecutiveReportConfirmationState, string> = {
+  "confirming": "border-gray-200  bg-gray-100  text-gray-500",
+  "confirmed":  "border-green-200 bg-green-50  text-green-700",
 };
 
-const APPROVAL_STATE_LABELS: Record<ExecutiveReportApprovalState, string> = {
-  "awaiting":  "Awaiting",
-  "approved":  "Approved",
-  "completed": "Completed",
+const CONFIRMATION_STATE_LABELS: Record<ExecutiveReportConfirmationState, string> = {
+  "confirming": "Confirming",
+  "confirmed":  "Confirmed",
 };
 
-// ── Section 1: Approval Workspace Overview ────────────────────────────────────
+// ── Section 1: Confirmation Overview ─────────────────────────────────────────
 
-function ApprovalWorkspaceOverviewSection({ approval }: { approval: ExecutiveReportApproval }) {
+function ConfirmationOverviewSection({ confirmation }: { confirmation: ExecutiveReportConfirmation }) {
   return (
     <section>
-      <SectionLabel>Executive Report Approval Center</SectionLabel>
-      <SectionHeading>Approval Workspace Overview</SectionHeading>
+      <SectionLabel>Executive Report Confirmation</SectionLabel>
+      <SectionHeading>Confirmation Overview</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Aggregate view of the executive report approval workspace. Refreshed on every page load.
+        Aggregate view of the executive report confirmation pipeline. Refreshed on every page load.
       </p>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <Card>
           <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Total Records</p>
-          <p className="mt-2 text-3xl font-black text-[#4f4a52]">{approval.records.length}</p>
+          <p className="mt-2 text-3xl font-black text-[#4f4a52]">{confirmation.records.length}</p>
         </Card>
         <Card>
-          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Approval Generated</p>
-          <p className="mt-2 text-sm font-bold text-[#4f4a52]">{fmtDate(approval.generatedAt)}</p>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Confirmation Generated</p>
+          <p className="mt-2 text-sm font-bold text-[#4f4a52]">{fmtDate(confirmation.generatedAt)}</p>
         </Card>
       </div>
     </section>
   );
 }
 
-// ── Section 2: Executive Approval Workspace ───────────────────────────────────
+// ── Section 2: Confirmation Timeline ─────────────────────────────────────────
 
-function ExecutiveApprovalWorkspaceSection({ approval }: { approval: ExecutiveReportApproval }) {
-  if (approval.records.length === 0) {
+function ConfirmationTimelineSection({ confirmation }: { confirmation: ExecutiveReportConfirmation }) {
+  if (confirmation.records.length === 0) {
     return (
       <section>
-        <SectionLabel>Workspace</SectionLabel>
-        <SectionHeading>Executive Approval Workspace</SectionHeading>
+        <SectionLabel>Timeline</SectionLabel>
+        <SectionHeading>Confirmation Timeline</SectionHeading>
         <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-          Full approval workspace for executive review.
+          Chronological view of confirmation records.
         </p>
         <Card>
-          <p className="text-sm text-[#7b7480]">No approval records available.</p>
+          <p className="text-sm text-[#7b7480]">No confirmation records available.</p>
         </Card>
       </section>
     );
@@ -118,30 +116,30 @@ function ExecutiveApprovalWorkspaceSection({ approval }: { approval: ExecutiveRe
 
   return (
     <section>
-      <SectionLabel>Workspace</SectionLabel>
-      <SectionHeading>Executive Approval Workspace</SectionHeading>
+      <SectionLabel>Timeline</SectionLabel>
+      <SectionHeading>Confirmation Timeline</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        {approval.records.length} record{approval.records.length === 1 ? "" : "s"} in the approval workspace.
+        {confirmation.records.length} record{confirmation.records.length === 1 ? "" : "s"} in the confirmation timeline.
       </p>
 
       <Card>
         <div className="divide-y divide-gray-100">
-          {approval.records.map((entry, i) => (
+          {confirmation.records.map((entry, i) => (
             <div key={i} className="py-4 first:pt-0 last:pb-0">
               <div className="mb-2 flex items-center gap-2">
-                <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${APPROVAL_STATE_STYLES[entry.state]}`}>
-                  {APPROVAL_STATE_LABELS[entry.state]}
+                <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${CONFIRMATION_STATE_STYLES[entry.state]}`}>
+                  {CONFIRMATION_STATE_LABELS[entry.state]}
                 </span>
                 <span className="ml-auto text-[10px] text-[#a09aa6]">{fmtDate(entry.generatedAt)}</span>
               </div>
               <p className="text-sm font-bold text-[#4f4a52]">
-                {entry.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.headline.text}
+                {entry.receipt.acknowledgement.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.headline.text}
               </p>
               <p className="mt-1 text-[10px] text-[#a09aa6]">
-                Previous: {entry.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.previous?.headline.text ?? "—"}
+                Previous: {entry.receipt.acknowledgement.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.previous?.headline.text ?? "—"}
               </p>
               <p className="mt-2 text-sm leading-relaxed text-[#7b7480]">
-                {entry.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.executiveSummary}
+                {entry.receipt.acknowledgement.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.executiveSummary}
               </p>
             </div>
           ))}
@@ -151,46 +149,46 @@ function ExecutiveApprovalWorkspaceSection({ approval }: { approval: ExecutiveRe
   );
 }
 
-// ── Section 3: Approval Review Workspace ──────────────────────────────────────
+// ── Section 3: Confirmation Records ──────────────────────────────────────────
 
-function ApprovalWorkspaceCard({ entry }: { entry: ExecutiveReportApprovalEntry }) {
+function ConfirmationRecordCard({ entry }: { entry: ExecutiveReportConfirmationEntry }) {
   return (
     <Card>
       <div className="mb-3 flex flex-wrap items-center gap-2">
-        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${APPROVAL_STATE_STYLES[entry.state]}`}>
-          {APPROVAL_STATE_LABELS[entry.state]}
+        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${CONFIRMATION_STATE_STYLES[entry.state]}`}>
+          {CONFIRMATION_STATE_LABELS[entry.state]}
         </span>
-        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${SEVERITY_STYLES[entry.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.overallStatus]}`}>
-          {SEVERITY_LABELS[entry.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.overallStatus]}
+        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${SEVERITY_STYLES[entry.receipt.acknowledgement.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.overallStatus]}`}>
+          {SEVERITY_LABELS[entry.receipt.acknowledgement.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.overallStatus]}
         </span>
         <span className="ml-auto text-[10px] text-[#a09aa6]">{fmtDate(entry.generatedAt)}</span>
       </div>
       <p className="text-sm font-bold text-[#4f4a52]">
-        {entry.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.headline.text}
+        {entry.receipt.acknowledgement.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.headline.text}
       </p>
       <div className="my-3 h-px bg-gray-100" />
       <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Previous Headline</p>
       <p className="mt-1 text-sm text-[#7b7480]">
-        {entry.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.previous?.headline.text ?? "—"}
+        {entry.receipt.acknowledgement.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.previous?.headline.text ?? "—"}
       </p>
       <p className="mt-3 text-sm leading-relaxed text-[#7b7480]">
-        {entry.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.executiveSummary}
+        {entry.receipt.acknowledgement.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.executiveSummary}
       </p>
     </Card>
   );
 }
 
-function ApprovalReviewWorkspaceSection({ approval }: { approval: ExecutiveReportApproval }) {
-  if (approval.records.length === 0) {
+function ConfirmationRecordsSection({ confirmation }: { confirmation: ExecutiveReportConfirmation }) {
+  if (confirmation.records.length === 0) {
     return (
       <section>
-        <SectionLabel>Review</SectionLabel>
-        <SectionHeading>Approval Review Workspace</SectionHeading>
+        <SectionLabel>Records</SectionLabel>
+        <SectionHeading>Confirmation Records</SectionHeading>
         <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-          Detailed review cards for every approval record.
+          Detailed record cards for every confirmation entry.
         </p>
         <Card>
-          <p className="text-sm text-[#7b7480]">No approval records available.</p>
+          <p className="text-sm text-[#7b7480]">No confirmation records available.</p>
         </Card>
       </section>
     );
@@ -198,41 +196,41 @@ function ApprovalReviewWorkspaceSection({ approval }: { approval: ExecutiveRepor
 
   return (
     <section>
-      <SectionLabel>Review</SectionLabel>
-      <SectionHeading>Approval Review Workspace</SectionHeading>
+      <SectionLabel>Records</SectionLabel>
+      <SectionHeading>Confirmation Records</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        {approval.records.length} record{approval.records.length === 1 ? "" : "s"} under review.
-        Displayed exactly as received.
+        {confirmation.records.length} record{confirmation.records.length === 1 ? "" : "s"} in confirmation.
+        Displayed exactly as confirmed.
       </p>
 
       <div className="space-y-4">
-        {approval.records.map((entry, i) => (
-          <ApprovalWorkspaceCard key={i} entry={entry} />
+        {confirmation.records.map((entry, i) => (
+          <ConfirmationRecordCard key={i} entry={entry} />
         ))}
       </div>
     </section>
   );
 }
 
-// ── Section 4: Approval Readiness ─────────────────────────────────────────────
+// ── Section 4: Confirmation Status ───────────────────────────────────────────
 
-function ApprovalReadinessSection({ approval }: { approval: ExecutiveReportApproval }) {
-  const latestGeneratedAt = approval.records.length > 0
-    ? approval.records[approval.records.length - 1].generatedAt
+function ConfirmationStatusSection({ confirmation }: { confirmation: ExecutiveReportConfirmation }) {
+  const latestGeneratedAt = confirmation.records.length > 0
+    ? confirmation.records[confirmation.records.length - 1].generatedAt
     : null;
 
   return (
     <section>
-      <SectionLabel>Readiness</SectionLabel>
-      <SectionHeading>Approval Readiness</SectionHeading>
+      <SectionLabel>Status</SectionLabel>
+      <SectionHeading>Confirmation Status</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Approval readiness indicators at generation time.
+        Confirmation status indicators at generation time.
       </p>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <Card>
-          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Total Approval Records</p>
-          <p className="mt-3 text-3xl font-black text-[#4f4a52]">{approval.records.length}</p>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Total Confirmation Records</p>
+          <p className="mt-3 text-3xl font-black text-[#4f4a52]">{confirmation.records.length}</p>
         </Card>
         <Card>
           <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Latest Generated At</p>
@@ -245,15 +243,15 @@ function ApprovalReadinessSection({ approval }: { approval: ExecutiveReportAppro
   );
 }
 
-// ── Section 5: Approval Metadata ──────────────────────────────────────────────
+// ── Section 5: Confirmation Metadata ─────────────────────────────────────────
 
-function ApprovalMetadataSection({ approval }: { approval: ExecutiveReportApproval }) {
+function ConfirmationMetadataSection({ confirmation }: { confirmation: ExecutiveReportConfirmation }) {
   return (
     <section>
       <SectionLabel>Metadata</SectionLabel>
-      <SectionHeading>Approval Metadata</SectionHeading>
+      <SectionHeading>Confirmation Metadata</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Approval generation metadata. No data is stored or persisted.
+        Confirmation generation metadata. No data is stored or persisted.
       </p>
 
       <Card>
@@ -261,11 +259,11 @@ function ApprovalMetadataSection({ approval }: { approval: ExecutiveReportApprov
           <tbody className="divide-y divide-gray-100">
             <tr>
               <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Generated At</td>
-              <td className="py-3 text-right text-[#4f4a52]">{fmtDate(approval.generatedAt)}</td>
+              <td className="py-3 text-right text-[#4f4a52]">{fmtDate(confirmation.generatedAt)}</td>
             </tr>
             <tr>
-              <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Approval Records</td>
-              <td className="py-3 text-right text-[#4f4a52]">{approval.records.length}</td>
+              <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Confirmation Records</td>
+              <td className="py-3 text-right text-[#4f4a52]">{confirmation.records.length}</td>
             </tr>
           </tbody>
         </table>
@@ -277,39 +275,53 @@ function ApprovalMetadataSection({ approval }: { approval: ExecutiveReportApprov
 // ── Section 6: Quick Navigation ───────────────────────────────────────────────
 
 const QUICK_NAV_LINKS = [
-  { href: "/admin",                                          label: "Operations" },
-  { href: "/admin/operations",                               label: "Unified Operations" },
-  { href: "/admin/executive-operations",                     label: "Executive Operations" },
-  { href: "/admin/alerts",                                   label: "Alerts" },
-  { href: "/admin/alert-center",                             label: "Alert Center" },
-  { href: "/admin/executive-digest",                         label: "Executive Digest" },
-  { href: "/admin/executive-briefing",                       label: "Executive Briefing" },
-  { href: "/admin/executive-report",                         label: "Executive Report" },
-  { href: "/admin/executive-report-center",                  label: "Executive Report Center" },
-  { href: "/admin/executive-report-archive",                 label: "Executive Report Archive" },
-  { href: "/admin/executive-report-archive-center",          label: "Executive Report Archive Center" },
-  { href: "/admin/executive-report-history",                 label: "Executive Report History" },
-  { href: "/admin/executive-report-history-center",          label: "Executive Report History Center" },
-  { href: "/admin/executive-report-comparison",              label: "Executive Report Comparison" },
-  { href: "/admin/executive-report-comparison-center",       label: "Executive Report Comparison Center" },
-  { href: "/admin/executive-report-delta",                   label: "Executive Report Delta" },
-  { href: "/admin/executive-report-delta-center",            label: "Executive Report Delta Center" },
-  { href: "/admin/executive-report-insight",                 label: "Executive Report Insight" },
-  { href: "/admin/executive-report-insight-center",          label: "Executive Report Insight Center" },
-  { href: "/admin/executive-report-trend",                   label: "Executive Report Trend" },
-  { href: "/admin/executive-report-trend-center",            label: "Executive Report Trend Center" },
-  { href: "/admin/executive-report-forecast",                label: "Executive Report Forecast" },
-  { href: "/admin/executive-report-forecast-center",         label: "Executive Report Forecast Center" },
-  { href: "/admin/executive-report-outlook",                 label: "Executive Report Outlook" },
-  { href: "/admin/executive-report-outlook-center",          label: "Executive Report Outlook Center" },
-  { href: "/admin/executive-report-strategy",                label: "Executive Report Strategy" },
-  { href: "/admin/executive-report-strategy-center",         label: "Executive Report Strategy Center" },
-  { href: "/admin/executive-report-action",                  label: "Executive Report Action" },
-  { href: "/admin/executive-report-action-center",           label: "Executive Report Action Center" },
-  { href: "/admin/executive-report-decision",                label: "Executive Report Decision" },
-  { href: "/admin/executive-report-decision-center",         label: "Executive Report Decision Center" },
-  { href: "/admin/executive-report-approval",                label: "Executive Report Approval" },
-  { href: "/admin/executive-report-approval-center",         label: "Executive Report Approval Center" },
+  { href: "/admin",                                              label: "Operations" },
+  { href: "/admin/operations",                                   label: "Unified Operations" },
+  { href: "/admin/executive-operations",                         label: "Executive Operations" },
+  { href: "/admin/alerts",                                       label: "Alerts" },
+  { href: "/admin/alert-center",                                 label: "Alert Center" },
+  { href: "/admin/executive-digest",                             label: "Executive Digest" },
+  { href: "/admin/executive-briefing",                           label: "Executive Briefing" },
+  { href: "/admin/executive-report",                             label: "Executive Report" },
+  { href: "/admin/executive-report-center",                      label: "Executive Report Center" },
+  { href: "/admin/executive-report-archive",                     label: "Executive Report Archive" },
+  { href: "/admin/executive-report-archive-center",              label: "Executive Report Archive Center" },
+  { href: "/admin/executive-report-history",                     label: "Executive Report History" },
+  { href: "/admin/executive-report-history-center",              label: "Executive Report History Center" },
+  { href: "/admin/executive-report-comparison",                  label: "Executive Report Comparison" },
+  { href: "/admin/executive-report-comparison-center",           label: "Executive Report Comparison Center" },
+  { href: "/admin/executive-report-delta",                       label: "Executive Report Delta" },
+  { href: "/admin/executive-report-delta-center",                label: "Executive Report Delta Center" },
+  { href: "/admin/executive-report-insight",                     label: "Executive Report Insight" },
+  { href: "/admin/executive-report-insight-center",              label: "Executive Report Insight Center" },
+  { href: "/admin/executive-report-trend",                       label: "Executive Report Trend" },
+  { href: "/admin/executive-report-trend-center",                label: "Executive Report Trend Center" },
+  { href: "/admin/executive-report-forecast",                    label: "Executive Report Forecast" },
+  { href: "/admin/executive-report-forecast-center",             label: "Executive Report Forecast Center" },
+  { href: "/admin/executive-report-outlook",                     label: "Executive Report Outlook" },
+  { href: "/admin/executive-report-outlook-center",              label: "Executive Report Outlook Center" },
+  { href: "/admin/executive-report-strategy",                    label: "Executive Report Strategy" },
+  { href: "/admin/executive-report-strategy-center",             label: "Executive Report Strategy Center" },
+  { href: "/admin/executive-report-action",                      label: "Executive Report Action" },
+  { href: "/admin/executive-report-action-center",               label: "Executive Report Action Center" },
+  { href: "/admin/executive-report-decision",                    label: "Executive Report Decision" },
+  { href: "/admin/executive-report-decision-center",             label: "Executive Report Decision Center" },
+  { href: "/admin/executive-report-approval",                    label: "Executive Report Approval" },
+  { href: "/admin/executive-report-approval-center",             label: "Executive Report Approval Center" },
+  { href: "/admin/executive-report-execution",                   label: "Executive Report Execution" },
+  { href: "/admin/executive-report-execution-center",            label: "Executive Report Execution Center" },
+  { href: "/admin/executive-report-completion",                  label: "Executive Report Completion" },
+  { href: "/admin/executive-report-completion-center",           label: "Executive Report Completion Center" },
+  { href: "/admin/executive-report-publication",                 label: "Executive Report Publication" },
+  { href: "/admin/executive-report-publication-center",          label: "Executive Report Publication Center" },
+  { href: "/admin/executive-report-distribution",                label: "Executive Report Distribution" },
+  { href: "/admin/executive-report-distribution-center",         label: "Executive Report Distribution Center" },
+  { href: "/admin/executive-report-delivery",                    label: "Executive Report Delivery" },
+  { href: "/admin/executive-report-delivery-center",             label: "Executive Report Delivery Center" },
+  { href: "/admin/executive-report-acknowledgement",             label: "Executive Report Acknowledgement" },
+  { href: "/admin/executive-report-acknowledgement-center",      label: "Executive Report Acknowledgement Center" },
+  { href: "/admin/executive-report-receipt",                     label: "Executive Report Receipt" },
+  { href: "/admin/executive-report-receipt-center",              label: "Executive Report Receipt Center" },
 ] as const;
 
 function QuickNavigationSection() {
@@ -339,12 +351,12 @@ function QuickNavigationSection() {
 // ── Props ─────────────────────────────────────────────────────────────────────
 
 interface Props {
-  approval: ExecutiveReportApproval;
+  confirmation: ExecutiveReportConfirmation;
 }
 
 // ── Main export ───────────────────────────────────────────────────────────────
 
-export default function ExecutiveReportApprovalCenter({ approval }: Props) {
+export default function ExecutiveReportConfirmationDashboard({ confirmation }: Props) {
   return (
     <div className="min-h-screen bg-[#f5f1eb]">
 
@@ -467,7 +479,9 @@ export default function ExecutiveReportApprovalCenter({ approval }: Props) {
             <Link href="/admin/executive-report-approval" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Approval
             </Link>
-            <span className="text-xs font-bold text-white">Executive Report Approval Center</span>
+            <Link href="/admin/executive-report-approval-center" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report Approval Center
+            </Link>
             <Link href="/admin/executive-report-execution" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Execution
             </Link>
@@ -510,9 +524,7 @@ export default function ExecutiveReportApprovalCenter({ approval }: Props) {
             <Link href="/admin/executive-report-receipt-center" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Receipt Center
             </Link>
-            <Link href="/admin/executive-report-confirmation" className="text-xs text-white/60 transition hover:text-white">
-              Executive Report Confirmation
-            </Link>
+            <span className="text-xs font-bold text-white">Executive Report Confirmation</span>
           </nav>
         </div>
         <form action={logoutAction}>
@@ -525,23 +537,23 @@ export default function ExecutiveReportApprovalCenter({ approval }: Props) {
       {/* ── Content ── */}
       <div className="mx-auto w-full max-w-[780px] space-y-14 px-6 py-12">
 
-        <ApprovalWorkspaceOverviewSection approval={approval} />
+        <ConfirmationOverviewSection confirmation={confirmation} />
 
         <hr className="border-gray-200" />
 
-        <ExecutiveApprovalWorkspaceSection approval={approval} />
+        <ConfirmationTimelineSection confirmation={confirmation} />
 
         <hr className="border-gray-200" />
 
-        <ApprovalReviewWorkspaceSection approval={approval} />
+        <ConfirmationRecordsSection confirmation={confirmation} />
 
         <hr className="border-gray-200" />
 
-        <ApprovalReadinessSection approval={approval} />
+        <ConfirmationStatusSection confirmation={confirmation} />
 
         <hr className="border-gray-200" />
 
-        <ApprovalMetadataSection approval={approval} />
+        <ConfirmationMetadataSection confirmation={confirmation} />
 
         <hr className="border-gray-200" />
 
