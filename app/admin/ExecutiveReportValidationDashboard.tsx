@@ -5,10 +5,10 @@ import Link             from "next/link";
 import { logoutAction } from "./actions";
 import type { AlertSeverity } from "@/app/lib/operations/OperationsAlertTypes";
 import type {
-  ExecutiveReportAcknowledgement,
-  ExecutiveReportAcknowledgementEntry,
-  ExecutiveReportAcknowledgementState,
-} from "@/app/lib/operations/ExecutiveReportAcknowledgementTypes";
+  ExecutiveReportValidation,
+  ExecutiveReportValidationEntry,
+  ExecutiveReportValidationState,
+} from "@/app/lib/operations/ExecutiveReportValidationTypes";
 
 // ── UI helpers ────────────────────────────────────────────────────────────────
 
@@ -61,54 +61,54 @@ const SEVERITY_LABELS: Record<AlertSeverity, string> = {
   "low":      "Low",
 };
 
-const ACKNOWLEDGEMENT_STATE_STYLES: Record<ExecutiveReportAcknowledgementState, string> = {
-  "acknowledging": "border-gray-200  bg-gray-100  text-gray-500",
-  "acknowledged":  "border-green-200 bg-green-50  text-green-700",
+const VALIDATION_STATE_STYLES: Record<ExecutiveReportValidationState, string> = {
+  "validating": "border-gray-200  bg-gray-100  text-gray-500",
+  "validated":  "border-green-200 bg-green-50  text-green-700",
 };
 
-const ACKNOWLEDGEMENT_STATE_LABELS: Record<ExecutiveReportAcknowledgementState, string> = {
-  "acknowledging": "Acknowledging",
-  "acknowledged":  "Acknowledged",
+const VALIDATION_STATE_LABELS: Record<ExecutiveReportValidationState, string> = {
+  "validating": "Validating",
+  "validated":  "Validated",
 };
 
-// ── Section 1: Acknowledgement Workspace Overview ─────────────────────────────
+// ── Section 1: Validation Overview ───────────────────────────────────────────
 
-function AcknowledgementWorkspaceOverviewSection({ acknowledgement }: { acknowledgement: ExecutiveReportAcknowledgement }) {
+function ValidationOverviewSection({ validation }: { validation: ExecutiveReportValidation }) {
   return (
     <section>
-      <SectionLabel>Executive Report Acknowledgement Center</SectionLabel>
-      <SectionHeading>Acknowledgement Workspace Overview</SectionHeading>
+      <SectionLabel>Executive Report Validation</SectionLabel>
+      <SectionHeading>Validation Overview</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Aggregate view of the executive report acknowledgement workspace. Refreshed on every page load.
+        Aggregate view of the executive report validation pipeline. Refreshed on every page load.
       </p>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <Card>
           <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Total Records</p>
-          <p className="mt-2 text-3xl font-black text-[#4f4a52]">{acknowledgement.records.length}</p>
+          <p className="mt-2 text-3xl font-black text-[#4f4a52]">{validation.records.length}</p>
         </Card>
         <Card>
-          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Acknowledgement Generated</p>
-          <p className="mt-2 text-sm font-bold text-[#4f4a52]">{fmtDate(acknowledgement.generatedAt)}</p>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Validation Generated</p>
+          <p className="mt-2 text-sm font-bold text-[#4f4a52]">{fmtDate(validation.generatedAt)}</p>
         </Card>
       </div>
     </section>
   );
 }
 
-// ── Section 2: Executive Acknowledgement Workspace ────────────────────────────
+// ── Section 2: Validation Timeline ───────────────────────────────────────────
 
-function ExecutiveAcknowledgementWorkspaceSection({ acknowledgement }: { acknowledgement: ExecutiveReportAcknowledgement }) {
-  if (acknowledgement.records.length === 0) {
+function ValidationTimelineSection({ validation }: { validation: ExecutiveReportValidation }) {
+  if (validation.records.length === 0) {
     return (
       <section>
-        <SectionLabel>Workspace</SectionLabel>
-        <SectionHeading>Executive Acknowledgement Workspace</SectionHeading>
+        <SectionLabel>Timeline</SectionLabel>
+        <SectionHeading>Validation Timeline</SectionHeading>
         <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-          Full acknowledgement workspace for executive review.
+          Chronological view of validation records.
         </p>
         <Card>
-          <p className="text-sm text-[#7b7480]">No acknowledgement records available.</p>
+          <p className="text-sm text-[#7b7480]">No validation records available.</p>
         </Card>
       </section>
     );
@@ -116,30 +116,30 @@ function ExecutiveAcknowledgementWorkspaceSection({ acknowledgement }: { acknowl
 
   return (
     <section>
-      <SectionLabel>Workspace</SectionLabel>
-      <SectionHeading>Executive Acknowledgement Workspace</SectionHeading>
+      <SectionLabel>Timeline</SectionLabel>
+      <SectionHeading>Validation Timeline</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        {acknowledgement.records.length} record{acknowledgement.records.length === 1 ? "" : "s"} in the acknowledgement workspace.
+        {validation.records.length} record{validation.records.length === 1 ? "" : "s"} in the validation timeline.
       </p>
 
       <Card>
         <div className="divide-y divide-gray-100">
-          {acknowledgement.records.map((entry, i) => (
+          {validation.records.map((entry, i) => (
             <div key={i} className="py-4 first:pt-0 last:pb-0">
               <div className="mb-2 flex items-center gap-2">
-                <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${ACKNOWLEDGEMENT_STATE_STYLES[entry.state]}`}>
-                  {ACKNOWLEDGEMENT_STATE_LABELS[entry.state]}
+                <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${VALIDATION_STATE_STYLES[entry.state]}`}>
+                  {VALIDATION_STATE_LABELS[entry.state]}
                 </span>
                 <span className="ml-auto text-[10px] text-[#a09aa6]">{fmtDate(entry.generatedAt)}</span>
               </div>
               <p className="text-sm font-bold text-[#4f4a52]">
-                {entry.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.headline.text}
+                {entry.verification.confirmation.receipt.acknowledgement.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.headline.text}
               </p>
               <p className="mt-1 text-[10px] text-[#a09aa6]">
-                Previous: {entry.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.previous?.headline.text ?? "—"}
+                Previous: {entry.verification.confirmation.receipt.acknowledgement.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.previous?.headline.text ?? "—"}
               </p>
               <p className="mt-2 text-sm leading-relaxed text-[#7b7480]">
-                {entry.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.executiveSummary}
+                {entry.verification.confirmation.receipt.acknowledgement.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.executiveSummary}
               </p>
             </div>
           ))}
@@ -149,46 +149,46 @@ function ExecutiveAcknowledgementWorkspaceSection({ acknowledgement }: { acknowl
   );
 }
 
-// ── Section 3: Acknowledgement Review Workspace ───────────────────────────────
+// ── Section 3: Validation Records ────────────────────────────────────────────
 
-function AcknowledgementWorkspaceCard({ entry }: { entry: ExecutiveReportAcknowledgementEntry }) {
+function ValidationRecordCard({ entry }: { entry: ExecutiveReportValidationEntry }) {
   return (
     <Card>
       <div className="mb-3 flex flex-wrap items-center gap-2">
-        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${ACKNOWLEDGEMENT_STATE_STYLES[entry.state]}`}>
-          {ACKNOWLEDGEMENT_STATE_LABELS[entry.state]}
+        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${VALIDATION_STATE_STYLES[entry.state]}`}>
+          {VALIDATION_STATE_LABELS[entry.state]}
         </span>
-        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${SEVERITY_STYLES[entry.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.overallStatus]}`}>
-          {SEVERITY_LABELS[entry.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.overallStatus]}
+        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${SEVERITY_STYLES[entry.verification.confirmation.receipt.acknowledgement.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.overallStatus]}`}>
+          {SEVERITY_LABELS[entry.verification.confirmation.receipt.acknowledgement.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.overallStatus]}
         </span>
         <span className="ml-auto text-[10px] text-[#a09aa6]">{fmtDate(entry.generatedAt)}</span>
       </div>
       <p className="text-sm font-bold text-[#4f4a52]">
-        {entry.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.headline.text}
+        {entry.verification.confirmation.receipt.acknowledgement.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.headline.text}
       </p>
       <div className="my-3 h-px bg-gray-100" />
       <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Previous Headline</p>
       <p className="mt-1 text-sm text-[#7b7480]">
-        {entry.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.previous?.headline.text ?? "—"}
+        {entry.verification.confirmation.receipt.acknowledgement.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.previous?.headline.text ?? "—"}
       </p>
       <p className="mt-3 text-sm leading-relaxed text-[#7b7480]">
-        {entry.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.executiveSummary}
+        {entry.verification.confirmation.receipt.acknowledgement.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.executiveSummary}
       </p>
     </Card>
   );
 }
 
-function AcknowledgementReviewWorkspaceSection({ acknowledgement }: { acknowledgement: ExecutiveReportAcknowledgement }) {
-  if (acknowledgement.records.length === 0) {
+function ValidationRecordsSection({ validation }: { validation: ExecutiveReportValidation }) {
+  if (validation.records.length === 0) {
     return (
       <section>
-        <SectionLabel>Review</SectionLabel>
-        <SectionHeading>Acknowledgement Review Workspace</SectionHeading>
+        <SectionLabel>Records</SectionLabel>
+        <SectionHeading>Validation Records</SectionHeading>
         <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-          Detailed review cards for every acknowledgement record.
+          Detailed record cards for every validation entry.
         </p>
         <Card>
-          <p className="text-sm text-[#7b7480]">No acknowledgement records available.</p>
+          <p className="text-sm text-[#7b7480]">No validation records available.</p>
         </Card>
       </section>
     );
@@ -196,41 +196,41 @@ function AcknowledgementReviewWorkspaceSection({ acknowledgement }: { acknowledg
 
   return (
     <section>
-      <SectionLabel>Review</SectionLabel>
-      <SectionHeading>Acknowledgement Review Workspace</SectionHeading>
+      <SectionLabel>Records</SectionLabel>
+      <SectionHeading>Validation Records</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        {acknowledgement.records.length} record{acknowledgement.records.length === 1 ? "" : "s"} in acknowledgement review.
-        Displayed exactly as received.
+        {validation.records.length} record{validation.records.length === 1 ? "" : "s"} in validation.
+        Displayed exactly as validated.
       </p>
 
       <div className="space-y-4">
-        {acknowledgement.records.map((entry, i) => (
-          <AcknowledgementWorkspaceCard key={i} entry={entry} />
+        {validation.records.map((entry, i) => (
+          <ValidationRecordCard key={i} entry={entry} />
         ))}
       </div>
     </section>
   );
 }
 
-// ── Section 4: Acknowledgement Readiness ──────────────────────────────────────
+// ── Section 4: Validation Status ─────────────────────────────────────────────
 
-function AcknowledgementReadinessSection({ acknowledgement }: { acknowledgement: ExecutiveReportAcknowledgement }) {
-  const latestGeneratedAt = acknowledgement.records.length > 0
-    ? acknowledgement.records[acknowledgement.records.length - 1].generatedAt
+function ValidationStatusSection({ validation }: { validation: ExecutiveReportValidation }) {
+  const latestGeneratedAt = validation.records.length > 0
+    ? validation.records[validation.records.length - 1].generatedAt
     : null;
 
   return (
     <section>
-      <SectionLabel>Readiness</SectionLabel>
-      <SectionHeading>Acknowledgement Readiness</SectionHeading>
+      <SectionLabel>Status</SectionLabel>
+      <SectionHeading>Validation Status</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Acknowledgement readiness indicators at generation time.
+        Validation status indicators at generation time.
       </p>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <Card>
-          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Total Acknowledgement Records</p>
-          <p className="mt-3 text-3xl font-black text-[#4f4a52]">{acknowledgement.records.length}</p>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Total Validation Records</p>
+          <p className="mt-3 text-3xl font-black text-[#4f4a52]">{validation.records.length}</p>
         </Card>
         <Card>
           <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Latest Generated At</p>
@@ -243,15 +243,15 @@ function AcknowledgementReadinessSection({ acknowledgement }: { acknowledgement:
   );
 }
 
-// ── Section 5: Acknowledgement Metadata ───────────────────────────────────────
+// ── Section 5: Validation Metadata ───────────────────────────────────────────
 
-function AcknowledgementMetadataSection({ acknowledgement }: { acknowledgement: ExecutiveReportAcknowledgement }) {
+function ValidationMetadataSection({ validation }: { validation: ExecutiveReportValidation }) {
   return (
     <section>
       <SectionLabel>Metadata</SectionLabel>
-      <SectionHeading>Acknowledgement Metadata</SectionHeading>
+      <SectionHeading>Validation Metadata</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Acknowledgement center generation metadata. No data is stored or persisted.
+        Validation generation metadata. No data is stored or persisted.
       </p>
 
       <Card>
@@ -259,11 +259,11 @@ function AcknowledgementMetadataSection({ acknowledgement }: { acknowledgement: 
           <tbody className="divide-y divide-gray-100">
             <tr>
               <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Generated At</td>
-              <td className="py-3 text-right text-[#4f4a52]">{fmtDate(acknowledgement.generatedAt)}</td>
+              <td className="py-3 text-right text-[#4f4a52]">{fmtDate(validation.generatedAt)}</td>
             </tr>
             <tr>
-              <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Acknowledgement Records</td>
-              <td className="py-3 text-right text-[#4f4a52]">{acknowledgement.records.length}</td>
+              <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Validation Records</td>
+              <td className="py-3 text-right text-[#4f4a52]">{validation.records.length}</td>
             </tr>
           </tbody>
         </table>
@@ -320,6 +320,10 @@ const QUICK_NAV_LINKS = [
   { href: "/admin/executive-report-delivery-center",             label: "Executive Report Delivery Center" },
   { href: "/admin/executive-report-acknowledgement",             label: "Executive Report Acknowledgement" },
   { href: "/admin/executive-report-acknowledgement-center",      label: "Executive Report Acknowledgement Center" },
+  { href: "/admin/executive-report-receipt",                     label: "Executive Report Receipt" },
+  { href: "/admin/executive-report-receipt-center",              label: "Executive Report Receipt Center" },
+  { href: "/admin/executive-report-confirmation",                label: "Executive Report Confirmation" },
+  { href: "/admin/executive-report-confirmation-center",         label: "Executive Report Confirmation Center" },
 ] as const;
 
 function QuickNavigationSection() {
@@ -349,12 +353,12 @@ function QuickNavigationSection() {
 // ── Props ─────────────────────────────────────────────────────────────────────
 
 interface Props {
-  acknowledgement: ExecutiveReportAcknowledgement;
+  validation: ExecutiveReportValidation;
 }
 
 // ── Main export ───────────────────────────────────────────────────────────────
 
-export default function ExecutiveReportAcknowledgementCenter({ acknowledgement }: Props) {
+export default function ExecutiveReportValidationDashboard({ validation }: Props) {
   return (
     <div className="min-h-screen bg-[#f5f1eb]">
 
@@ -513,7 +517,9 @@ export default function ExecutiveReportAcknowledgementCenter({ acknowledgement }
             <Link href="/admin/executive-report-acknowledgement" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Acknowledgement
             </Link>
-            <span className="text-xs font-bold text-white">Executive Report Acknowledgement Center</span>
+            <Link href="/admin/executive-report-acknowledgement-center" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report Acknowledgement Center
+            </Link>
             <Link href="/admin/executive-report-receipt" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Receipt
             </Link>
@@ -526,9 +532,7 @@ export default function ExecutiveReportAcknowledgementCenter({ acknowledgement }
             <Link href="/admin/executive-report-confirmation-center" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Confirmation Center
             </Link>
-            <Link href="/admin/executive-report-validation" className="text-xs text-white/60 transition hover:text-white">
-              Executive Report Validation
-            </Link>
+            <span className="text-xs font-bold text-white">Executive Report Validation</span>
           </nav>
         </div>
         <form action={logoutAction}>
@@ -541,23 +545,23 @@ export default function ExecutiveReportAcknowledgementCenter({ acknowledgement }
       {/* ── Content ── */}
       <div className="mx-auto w-full max-w-[780px] space-y-14 px-6 py-12">
 
-        <AcknowledgementWorkspaceOverviewSection acknowledgement={acknowledgement} />
+        <ValidationOverviewSection validation={validation} />
 
         <hr className="border-gray-200" />
 
-        <ExecutiveAcknowledgementWorkspaceSection acknowledgement={acknowledgement} />
+        <ValidationTimelineSection validation={validation} />
 
         <hr className="border-gray-200" />
 
-        <AcknowledgementReviewWorkspaceSection acknowledgement={acknowledgement} />
+        <ValidationRecordsSection validation={validation} />
 
         <hr className="border-gray-200" />
 
-        <AcknowledgementReadinessSection acknowledgement={acknowledgement} />
+        <ValidationStatusSection validation={validation} />
 
         <hr className="border-gray-200" />
 
-        <AcknowledgementMetadataSection acknowledgement={acknowledgement} />
+        <ValidationMetadataSection validation={validation} />
 
         <hr className="border-gray-200" />
 
