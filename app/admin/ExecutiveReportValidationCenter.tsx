@@ -1,14 +1,14 @@
-﻿"use client";
+"use client";
 
 import React            from "react";
 import Link             from "next/link";
 import { logoutAction } from "./actions";
 import type { AlertSeverity } from "@/app/lib/operations/OperationsAlertTypes";
 import type {
-  ExecutiveReportDelta,
-  ExecutiveReportDeltaEntry,
-  ExecutiveReportDeltaState,
-} from "@/app/lib/operations/ExecutiveReportDeltaTypes";
+  ExecutiveReportValidation,
+  ExecutiveReportValidationEntry,
+  ExecutiveReportValidationState,
+} from "@/app/lib/operations/ExecutiveReportValidationTypes";
 
 // ── UI helpers ────────────────────────────────────────────────────────────────
 
@@ -61,56 +61,83 @@ const SEVERITY_LABELS: Record<AlertSeverity, string> = {
   "low":      "Low",
 };
 
-const DELTA_STATE_STYLES: Record<ExecutiveReportDeltaState, string> = {
-  "initial":   "border-blue-200  bg-blue-50   text-blue-700",
-  "unchanged": "border-gray-200  bg-gray-100  text-gray-500",
-  "changed":   "border-amber-100 bg-amber-50  text-amber-700",
+const VALIDATION_STATE_STYLES: Record<ExecutiveReportValidationState, string> = {
+  "validating": "border-gray-200  bg-gray-100  text-gray-500",
+  "validated":  "border-green-200 bg-green-50  text-green-700",
 };
 
-const DELTA_STATE_LABELS: Record<ExecutiveReportDeltaState, string> = {
-  "initial":   "Initial",
-  "unchanged": "Unchanged",
-  "changed":   "Changed",
+const VALIDATION_STATE_LABELS: Record<ExecutiveReportValidationState, string> = {
+  "validating": "Validating",
+  "validated":  "Validated",
 };
 
-// ── Section 1: Delta Overview ─────────────────────────────────────────────────
+// ── Section 1: Validation Workspace Overview ──────────────────────────────────
 
-function DeltaOverviewSection({ delta }: { delta: ExecutiveReportDelta }) {
+function ValidationWorkspaceOverviewSection({ validation }: { validation: ExecutiveReportValidation }) {
+  const validated  = validation.records.filter(r => r.state === "validated").length;
+  const validating = validation.records.filter(r => r.state === "validating").length;
+
   return (
     <section>
-      <SectionLabel>Executive Report Delta</SectionLabel>
-      <SectionHeading>Delta Overview</SectionHeading>
+      <SectionLabel>Executive Report Validation</SectionLabel>
+      <SectionHeading>Validation Workspace Overview</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Aggregate view of the executive report delta. Refreshed on every page load.
+        Workspace-level view of the executive report validation pipeline. Refreshed on every page load.
       </p>
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
         <Card>
           <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Total Records</p>
-          <p className="mt-2 text-3xl font-black text-[#4f4a52]">{delta.records.length}</p>
+          <p className="mt-2 text-3xl font-black text-[#4f4a52]">{validation.records.length}</p>
         </Card>
         <Card>
-          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Delta Generated</p>
-          <p className="mt-2 text-sm font-bold text-[#4f4a52]">{fmtDate(delta.generatedAt)}</p>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Validated</p>
+          <p className="mt-2 text-3xl font-black text-green-700">{validated}</p>
+        </Card>
+        <Card>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Validating</p>
+          <p className="mt-2 text-3xl font-black text-[#a09aa6]">{validating}</p>
         </Card>
       </div>
     </section>
   );
 }
 
-// ── Section 2: Delta Timeline ─────────────────────────────────────────────────
+// ── Section 2: Executive Validation Workspace ─────────────────────────────────
 
-function DeltaTimelineSection({ delta }: { delta: ExecutiveReportDelta }) {
-  if (delta.records.length === 0) {
+function ExecutiveValidationWorkspaceCard({ entry }: { entry: ExecutiveReportValidationEntry }) {
+  return (
+    <Card>
+      <div className="mb-3 flex flex-wrap items-center gap-2">
+        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${VALIDATION_STATE_STYLES[entry.state]}`}>
+          {VALIDATION_STATE_LABELS[entry.state]}
+        </span>
+        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${SEVERITY_STYLES[entry.verification.confirmation.receipt.acknowledgement.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.overallStatus]}`}>
+          {SEVERITY_LABELS[entry.verification.confirmation.receipt.acknowledgement.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.overallStatus]}
+        </span>
+        <span className="ml-auto text-[10px] text-[#a09aa6]">{fmtDate(entry.generatedAt)}</span>
+      </div>
+      <p className="text-sm font-bold text-[#4f4a52]">
+        {entry.verification.confirmation.receipt.acknowledgement.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.headline.text}
+      </p>
+      <p className="mt-2 text-sm leading-relaxed text-[#7b7480]">
+        {entry.verification.confirmation.receipt.acknowledgement.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.executiveSummary}
+      </p>
+    </Card>
+  );
+}
+
+function ExecutiveValidationWorkspaceSection({ validation }: { validation: ExecutiveReportValidation }) {
+  if (validation.records.length === 0) {
     return (
       <section>
-        <SectionLabel>Timeline</SectionLabel>
-        <SectionHeading>Delta Timeline</SectionHeading>
+        <SectionLabel>Workspace</SectionLabel>
+        <SectionHeading>Executive Validation Workspace</SectionHeading>
         <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-          Chronological record of all delta entries.
+          Operational workspace view of all validation entries.
         </p>
         <Card>
-          <p className="text-sm text-[#7b7480]">No delta records available.</p>
+          <p className="text-sm text-[#7b7480]">No validation entries available.</p>
         </Card>
       </section>
     );
@@ -118,28 +145,65 @@ function DeltaTimelineSection({ delta }: { delta: ExecutiveReportDelta }) {
 
   return (
     <section>
-      <SectionLabel>Timeline</SectionLabel>
-      <SectionHeading>Delta Timeline</SectionHeading>
+      <SectionLabel>Workspace</SectionLabel>
+      <SectionHeading>Executive Validation Workspace</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        {delta.records.length} record{delta.records.length === 1 ? "" : "s"}. Displayed as received.
+        {validation.records.length} validation {validation.records.length === 1 ? "entry" : "entries"} in the executive workspace.
+      </p>
+
+      <div className="space-y-4">
+        {validation.records.map((entry, i) => (
+          <ExecutiveValidationWorkspaceCard key={i} entry={entry} />
+        ))}
+      </div>
+    </section>
+  );
+}
+
+// ── Section 3: Validation Review Workspace ────────────────────────────────────
+
+function ValidationReviewWorkspaceSection({ validation }: { validation: ExecutiveReportValidation }) {
+  if (validation.records.length === 0) {
+    return (
+      <section>
+        <SectionLabel>Review</SectionLabel>
+        <SectionHeading>Validation Review Workspace</SectionHeading>
+        <p className="mt-2 mb-5 text-sm text-[#7b7480]">
+          Review workspace for validation entry comparison.
+        </p>
+        <Card>
+          <p className="text-sm text-[#7b7480]">No validation entries to review.</p>
+        </Card>
+      </section>
+    );
+  }
+
+  return (
+    <section>
+      <SectionLabel>Review</SectionLabel>
+      <SectionHeading>Validation Review Workspace</SectionHeading>
+      <p className="mt-2 mb-5 text-sm text-[#7b7480]">
+        Current and previous headline comparison across all validation entries.
       </p>
 
       <Card>
         <div className="divide-y divide-gray-100">
-          {delta.records.map((entry, i) => (
-            <div key={i} className="flex items-start gap-3 py-3 first:pt-0 last:pb-0">
-              <span className="mt-0.5 w-5 shrink-0 text-center text-[10px] font-bold text-[#a09aa6]">
-                {i + 1}
-              </span>
-              <div className="min-w-0 flex-1">
-                <p className="text-sm font-semibold text-[#4f4a52]">
-                  {entry.comparison.current.headline.text}
-                </p>
-                <p className="mt-0.5 text-[10px] text-[#7b7480]">{fmtDate(entry.generatedAt)}</p>
+          {validation.records.map((entry, i) => (
+            <div key={i} className="py-4 first:pt-0 last:pb-0">
+              <div className="mb-2 flex items-center gap-2">
+                <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${VALIDATION_STATE_STYLES[entry.state]}`}>
+                  {VALIDATION_STATE_LABELS[entry.state]}
+                </span>
+                <span className="ml-auto text-[10px] text-[#a09aa6]">{fmtDate(entry.generatedAt)}</span>
               </div>
-              <span className={`shrink-0 rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${DELTA_STATE_STYLES[entry.state]}`}>
-                {DELTA_STATE_LABELS[entry.state]}
-              </span>
+              <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Current</p>
+              <p className="mt-1 text-sm font-bold text-[#4f4a52]">
+                {entry.verification.confirmation.receipt.acknowledgement.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.headline.text}
+              </p>
+              <p className="mt-2 text-[10px] uppercase tracking-widest text-[#a09aa6]">Previous</p>
+              <p className="mt-1 text-sm text-[#7b7480]">
+                {entry.verification.confirmation.receipt.acknowledgement.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.previous?.headline.text ?? "—"}
+              </p>
             </div>
           ))}
         </div>
@@ -148,104 +212,47 @@ function DeltaTimelineSection({ delta }: { delta: ExecutiveReportDelta }) {
   );
 }
 
-// ── Section 3: Delta Records ──────────────────────────────────────────────────
+// ── Section 4: Validation Readiness ──────────────────────────────────────────
 
-function DeltaRecordCard({ entry }: { entry: ExecutiveReportDeltaEntry }) {
-  return (
-    <Card>
-      <div className="mb-3 flex flex-wrap items-center gap-2">
-        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${DELTA_STATE_STYLES[entry.state]}`}>
-          {DELTA_STATE_LABELS[entry.state]}
-        </span>
-        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${SEVERITY_STYLES[entry.comparison.current.overallStatus]}`}>
-          {SEVERITY_LABELS[entry.comparison.current.overallStatus]}
-        </span>
-        <span className="ml-auto text-[10px] text-[#a09aa6]">{fmtDate(entry.generatedAt)}</span>
-      </div>
-      <p className="text-sm font-bold text-[#4f4a52]">{entry.comparison.current.headline.text}</p>
-      <div className="my-3 h-px bg-gray-100" />
-      <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Previous Headline</p>
-      <p className="mt-1 text-sm text-[#7b7480]">
-        {entry.comparison.previous?.headline.text ?? "—"}
-      </p>
-    </Card>
-  );
-}
-
-function DeltaRecordsSection({ delta }: { delta: ExecutiveReportDelta }) {
-  if (delta.records.length === 0) {
-    return (
-      <section>
-        <SectionLabel>Records</SectionLabel>
-        <SectionHeading>Delta Records</SectionHeading>
-        <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-          Full detail for every delta record.
-        </p>
-        <Card>
-          <p className="text-sm text-[#7b7480]">No delta records available.</p>
-        </Card>
-      </section>
-    );
-  }
+function ValidationReadinessSection({ validation }: { validation: ExecutiveReportValidation }) {
+  const validated  = validation.records.filter(r => r.state === "validated").length;
+  const validating = validation.records.filter(r => r.state === "validating").length;
+  const total      = validation.records.length;
+  const readyPct   = total > 0 ? Math.round((validated / total) * 100) : 0;
 
   return (
     <section>
-      <SectionLabel>Records</SectionLabel>
-      <SectionHeading>Delta Records</SectionHeading>
+      <SectionLabel>Readiness</SectionLabel>
+      <SectionHeading>Validation Readiness</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        {delta.records.length} record{delta.records.length === 1 ? "" : "s"} in the delta.
-        Displayed exactly as received.
-      </p>
-
-      <div className="space-y-4">
-        {delta.records.map((entry, i) => (
-          <DeltaRecordCard key={i} entry={entry} />
-        ))}
-      </div>
-    </section>
-  );
-}
-
-// ── Section 4: Delta Status ───────────────────────────────────────────────────
-
-function DeltaStatusSection({ delta }: { delta: ExecutiveReportDelta }) {
-  const latestGeneratedAt = delta.records.length > 0
-    ? delta.records[delta.records.length - 1].generatedAt
-    : null;
-
-  return (
-    <section>
-      <SectionLabel>Status</SectionLabel>
-      <SectionHeading>Delta Status</SectionHeading>
-      <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Aggregate delta status at generation time.
+        Validation readiness indicators at generation time. No data is stored or persisted.
       </p>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <Card>
-          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Total Delta Records</p>
-          <p className="mt-3 text-3xl font-black text-[#4f4a52]">{delta.records.length}</p>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Validation Readiness</p>
+          <p className="mt-2 text-3xl font-black text-[#4f4a52]">{readyPct}%</p>
+          <p className="mt-1 text-[10px] text-[#a09aa6]">{validated} of {total} validated</p>
         </Card>
         <Card>
-          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Latest Generated At</p>
-          <p className="mt-3 text-sm font-bold text-[#4f4a52]">
-            {latestGeneratedAt ? fmtDate(latestGeneratedAt) : "—"}
-          </p>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Pending Validation</p>
+          <p className="mt-2 text-3xl font-black text-[#4f4a52]">{validating}</p>
+          <p className="mt-1 text-[10px] text-[#a09aa6]">{validating === 1 ? "record" : "records"} validating</p>
         </Card>
       </div>
     </section>
   );
 }
 
-// ── Section 5: Delta Metadata ─────────────────────────────────────────────────
+// ── Section 5: Validation Metadata ────────────────────────────────────────────
 
-function DeltaMetadataSection({ delta }: { delta: ExecutiveReportDelta }) {
+function ValidationMetadataSection({ validation }: { validation: ExecutiveReportValidation }) {
   return (
     <section>
       <SectionLabel>Metadata</SectionLabel>
-      <SectionHeading>Delta Metadata</SectionHeading>
+      <SectionHeading>Validation Metadata</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Delta generation metadata. No data is stored or persisted.
+        Validation generation metadata. No data is stored or persisted.
       </p>
 
       <Card>
@@ -253,11 +260,11 @@ function DeltaMetadataSection({ delta }: { delta: ExecutiveReportDelta }) {
           <tbody className="divide-y divide-gray-100">
             <tr>
               <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Generated At</td>
-              <td className="py-3 text-right text-[#4f4a52]">{fmtDate(delta.generatedAt)}</td>
+              <td className="py-3 text-right text-[#4f4a52]">{fmtDate(validation.generatedAt)}</td>
             </tr>
             <tr>
-              <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Delta Records</td>
-              <td className="py-3 text-right text-[#4f4a52]">{delta.records.length}</td>
+              <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Validation Records</td>
+              <td className="py-3 text-right text-[#4f4a52]">{validation.records.length}</td>
             </tr>
           </tbody>
         </table>
@@ -269,22 +276,57 @@ function DeltaMetadataSection({ delta }: { delta: ExecutiveReportDelta }) {
 // ── Section 6: Quick Navigation ───────────────────────────────────────────────
 
 const QUICK_NAV_LINKS = [
-  { href: "/admin",                                   label: "Operations" },
-  { href: "/admin/operations",                        label: "Unified Operations" },
-  { href: "/admin/executive-operations",              label: "Executive Operations" },
-  { href: "/admin/alerts",                            label: "Alerts" },
-  { href: "/admin/alert-center",                      label: "Alert Center" },
-  { href: "/admin/executive-digest",                  label: "Executive Digest" },
-  { href: "/admin/executive-briefing",                label: "Executive Briefing" },
-  { href: "/admin/executive-report",                  label: "Executive Report" },
-  { href: "/admin/executive-report-center",           label: "Executive Report Center" },
-  { href: "/admin/executive-report-archive",          label: "Executive Report Archive" },
-  { href: "/admin/executive-report-archive-center",   label: "Executive Report Archive Center" },
-  { href: "/admin/executive-report-history",          label: "Executive Report History" },
-  { href: "/admin/executive-report-history-center",   label: "Executive Report History Center" },
-  { href: "/admin/executive-report-comparison",       label: "Executive Report Comparison" },
-  { href: "/admin/executive-report-comparison-center", label: "Executive Report Comparison Center" },
-  { href: "/admin/executive-report-delta",            label: "Executive Report Delta" },
+  { href: "/admin",                                              label: "Operations" },
+  { href: "/admin/operations",                                   label: "Unified Operations" },
+  { href: "/admin/executive-operations",                         label: "Executive Operations" },
+  { href: "/admin/alerts",                                       label: "Alerts" },
+  { href: "/admin/alert-center",                                 label: "Alert Center" },
+  { href: "/admin/executive-digest",                             label: "Executive Digest" },
+  { href: "/admin/executive-briefing",                           label: "Executive Briefing" },
+  { href: "/admin/executive-report",                             label: "Executive Report" },
+  { href: "/admin/executive-report-center",                      label: "Executive Report Center" },
+  { href: "/admin/executive-report-archive",                     label: "Executive Report Archive" },
+  { href: "/admin/executive-report-archive-center",              label: "Executive Report Archive Center" },
+  { href: "/admin/executive-report-history",                     label: "Executive Report History" },
+  { href: "/admin/executive-report-history-center",              label: "Executive Report History Center" },
+  { href: "/admin/executive-report-comparison",                  label: "Executive Report Comparison" },
+  { href: "/admin/executive-report-comparison-center",           label: "Executive Report Comparison Center" },
+  { href: "/admin/executive-report-delta",                       label: "Executive Report Delta" },
+  { href: "/admin/executive-report-delta-center",                label: "Executive Report Delta Center" },
+  { href: "/admin/executive-report-insight",                     label: "Executive Report Insight" },
+  { href: "/admin/executive-report-insight-center",              label: "Executive Report Insight Center" },
+  { href: "/admin/executive-report-trend",                       label: "Executive Report Trend" },
+  { href: "/admin/executive-report-trend-center",                label: "Executive Report Trend Center" },
+  { href: "/admin/executive-report-forecast",                    label: "Executive Report Forecast" },
+  { href: "/admin/executive-report-forecast-center",             label: "Executive Report Forecast Center" },
+  { href: "/admin/executive-report-outlook",                     label: "Executive Report Outlook" },
+  { href: "/admin/executive-report-outlook-center",              label: "Executive Report Outlook Center" },
+  { href: "/admin/executive-report-strategy",                    label: "Executive Report Strategy" },
+  { href: "/admin/executive-report-strategy-center",             label: "Executive Report Strategy Center" },
+  { href: "/admin/executive-report-action",                      label: "Executive Report Action" },
+  { href: "/admin/executive-report-action-center",               label: "Executive Report Action Center" },
+  { href: "/admin/executive-report-decision",                    label: "Executive Report Decision" },
+  { href: "/admin/executive-report-decision-center",             label: "Executive Report Decision Center" },
+  { href: "/admin/executive-report-approval",                    label: "Executive Report Approval" },
+  { href: "/admin/executive-report-approval-center",             label: "Executive Report Approval Center" },
+  { href: "/admin/executive-report-execution",                   label: "Executive Report Execution" },
+  { href: "/admin/executive-report-execution-center",            label: "Executive Report Execution Center" },
+  { href: "/admin/executive-report-completion",                  label: "Executive Report Completion" },
+  { href: "/admin/executive-report-completion-center",           label: "Executive Report Completion Center" },
+  { href: "/admin/executive-report-publication",                 label: "Executive Report Publication" },
+  { href: "/admin/executive-report-publication-center",          label: "Executive Report Publication Center" },
+  { href: "/admin/executive-report-distribution",                label: "Executive Report Distribution" },
+  { href: "/admin/executive-report-distribution-center",         label: "Executive Report Distribution Center" },
+  { href: "/admin/executive-report-delivery",                    label: "Executive Report Delivery" },
+  { href: "/admin/executive-report-delivery-center",             label: "Executive Report Delivery Center" },
+  { href: "/admin/executive-report-acknowledgement",             label: "Executive Report Acknowledgement" },
+  { href: "/admin/executive-report-acknowledgement-center",      label: "Executive Report Acknowledgement Center" },
+  { href: "/admin/executive-report-receipt",                     label: "Executive Report Receipt" },
+  { href: "/admin/executive-report-receipt-center",              label: "Executive Report Receipt Center" },
+  { href: "/admin/executive-report-confirmation",                label: "Executive Report Confirmation" },
+  { href: "/admin/executive-report-confirmation-center",         label: "Executive Report Confirmation Center" },
+  { href: "/admin/executive-report-validation",                  label: "Executive Report Validation" },
+  { href: "/admin/executive-report-validation-center",           label: "Executive Report Validation Center" },
 ] as const;
 
 function QuickNavigationSection() {
@@ -314,12 +356,12 @@ function QuickNavigationSection() {
 // ── Props ─────────────────────────────────────────────────────────────────────
 
 interface Props {
-  delta: ExecutiveReportDelta;
+  validation: ExecutiveReportValidation;
 }
 
 // ── Main export ───────────────────────────────────────────────────────────────
 
-export default function ExecutiveReportDeltaDashboard({ delta }: Props) {
+export default function ExecutiveReportValidationCenter({ validation }: Props) {
   return (
     <div className="min-h-screen bg-[#f5f1eb]">
 
@@ -391,7 +433,9 @@ export default function ExecutiveReportDeltaDashboard({ delta }: Props) {
             <Link href="/admin/executive-report-comparison-center" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Comparison Center
             </Link>
-            <span className="text-xs font-bold text-white">Executive Report Delta</span>
+            <Link href="/admin/executive-report-delta" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report Delta
+            </Link>
             <Link href="/admin/executive-report-delta-center" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Delta Center
             </Link>
@@ -494,9 +538,7 @@ export default function ExecutiveReportDeltaDashboard({ delta }: Props) {
             <Link href="/admin/executive-report-validation" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Validation
             </Link>
-            <Link href="/admin/executive-report-validation-center" className="text-xs text-white/60 transition hover:text-white">
-              Executive Report Validation Center
-            </Link>
+            <span className="text-xs font-bold text-white">Executive Report Validation Center</span>
           </nav>
         </div>
         <form action={logoutAction}>
@@ -509,23 +551,23 @@ export default function ExecutiveReportDeltaDashboard({ delta }: Props) {
       {/* ── Content ── */}
       <div className="mx-auto w-full max-w-[780px] space-y-14 px-6 py-12">
 
-        <DeltaOverviewSection delta={delta} />
+        <ValidationWorkspaceOverviewSection validation={validation} />
 
         <hr className="border-gray-200" />
 
-        <DeltaTimelineSection delta={delta} />
+        <ExecutiveValidationWorkspaceSection validation={validation} />
 
         <hr className="border-gray-200" />
 
-        <DeltaRecordsSection delta={delta} />
+        <ValidationReviewWorkspaceSection validation={validation} />
 
         <hr className="border-gray-200" />
 
-        <DeltaStatusSection delta={delta} />
+        <ValidationReadinessSection validation={validation} />
 
         <hr className="border-gray-200" />
 
-        <DeltaMetadataSection delta={delta} />
+        <ValidationMetadataSection validation={validation} />
 
         <hr className="border-gray-200" />
 

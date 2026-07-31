@@ -621,6 +621,9 @@ export default function CustomerIntelligenceDashboard({ behaviourReport, journey
             <Link href="/admin/executive-report-validation" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Validation
             </Link>
+            <Link href="/admin/executive-report-validation-center" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report Validation Center
+            </Link>
           </nav>
         </div>
         <form action={logoutAction}>

@@ -532,7 +532,10 @@ export default function ExecutiveReportValidationDashboard({ validation }: Props
             <Link href="/admin/executive-report-confirmation-center" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Confirmation Center
             </Link>
-            <span className="text-xs font-bold text-white">Executive Report Validation</span>
+            <Link href="/admin/executive-report-validation" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report Validation
+            </Link>
+            <span className="text-xs font-bold text-white">Executive Report Validation Center</span>
           </nav>
         </div>
         <form action={logoutAction}>
