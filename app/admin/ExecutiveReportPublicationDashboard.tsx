@@ -515,6 +515,9 @@ export default function ExecutiveReportPublicationDashboard({ publication }: Pro
             <Link href="/admin/executive-report-confirmation" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Confirmation
             </Link>
+            <Link href="/admin/executive-report-confirmation-center" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report Confirmation Center
+            </Link>
           </nav>
         </div>
         <form action={logoutAction}>
