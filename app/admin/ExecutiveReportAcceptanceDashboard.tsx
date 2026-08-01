@@ -575,7 +575,10 @@ export default function ExecutiveReportAcceptanceDashboard({ acceptance }: Props
             <Link href="/admin/executive-report-endorsement-center" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Endorsement Center
             </Link>
-            <span className="text-xs font-bold text-white">Executive Report Acceptance</span>
+            <Link href="/admin/executive-report-acceptance" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report Acceptance
+            </Link>
+            <span className="text-xs font-bold text-white">Executive Report Acceptance Center</span>
           </nav>
         </div>
         <form action={logoutAction}>

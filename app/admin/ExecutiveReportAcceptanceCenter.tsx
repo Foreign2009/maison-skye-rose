@@ -1,16 +1,16 @@
-﻿"use client";
+"use client";
 
 import React            from "react";
 import Link             from "next/link";
 import { logoutAction } from "./actions";
 import type { AlertSeverity } from "@/app/lib/operations/OperationsAlertTypes";
 import type {
-  ExecutiveReportForecast,
-  ExecutiveReportForecastEntry,
-  ExecutiveReportForecastState,
-} from "@/app/lib/operations/ExecutiveReportForecastTypes";
+  ExecutiveReportAcceptance,
+  ExecutiveReportAcceptanceEntry,
+  ExecutiveReportAcceptanceState,
+} from "@/app/lib/operations/ExecutiveReportAcceptanceTypes";
 
-// ── UI helpers ────────────────────────────────────────────────────────────────
+// -- UI helpers ---------------------------------------------------------------
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
@@ -36,7 +36,7 @@ function Card({ children, className = "" }: { children: React.ReactNode; classNa
   );
 }
 
-// ── Formatter ─────────────────────────────────────────────────────────────────
+// -- Formatter ----------------------------------------------------------------
 
 function fmtDate(iso: string): string {
   return new Date(iso).toLocaleString("en-GB", {
@@ -45,7 +45,7 @@ function fmtDate(iso: string): string {
   });
 }
 
-// ── Style maps ────────────────────────────────────────────────────────────────
+// -- Style maps ---------------------------------------------------------------
 
 const SEVERITY_STYLES: Record<AlertSeverity, string> = {
   "critical": "border-red-200    bg-red-50    text-red-700",
@@ -61,133 +61,81 @@ const SEVERITY_LABELS: Record<AlertSeverity, string> = {
   "low":      "Low",
 };
 
-const FORECAST_STATE_STYLES: Record<ExecutiveReportForecastState, string> = {
-  "watch":        "border-amber-100  bg-amber-50  text-amber-700",
-  "steady":       "border-gray-200   bg-gray-100  text-gray-500",
-  "accelerating": "border-green-200  bg-green-50  text-green-700",
+const ACCEPTANCE_STATE_STYLES: Record<ExecutiveReportAcceptanceState, string> = {
+  "accepting": "border-gray-200  bg-gray-100  text-gray-500",
+  "accepted":  "border-green-200 bg-green-50  text-green-700",
 };
 
-const FORECAST_STATE_LABELS: Record<ExecutiveReportForecastState, string> = {
-  "watch":        "Watch",
-  "steady":       "Steady",
-  "accelerating": "Accelerating",
+const ACCEPTANCE_STATE_LABELS: Record<ExecutiveReportAcceptanceState, string> = {
+  "accepting": "Accepting",
+  "accepted":  "Accepted",
 };
 
-// ── Section 1: Forecast Overview ──────────────────────────────────────────────
+// -- Section 1: Acceptance Workspace Overview ---------------------------------
 
-function ForecastOverviewSection({ forecast }: { forecast: ExecutiveReportForecast }) {
+function AcceptanceWorkspaceOverviewSection({ acceptance }: { acceptance: ExecutiveReportAcceptance }) {
+  const accepted  = acceptance.records.filter(r => r.state === "accepted").length;
+  const accepting = acceptance.records.filter(r => r.state === "accepting").length;
+
   return (
     <section>
-      <SectionLabel>Executive Report Forecast</SectionLabel>
-      <SectionHeading>Forecast Overview</SectionHeading>
+      <SectionLabel>Executive Report Acceptance</SectionLabel>
+      <SectionHeading>Acceptance Workspace Overview</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Aggregate view of the executive report forecast. Refreshed on every page load.
+        Workspace-level view of the executive report acceptance pipeline. Refreshed on every page load.
       </p>
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
         <Card>
           <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Total Records</p>
-          <p className="mt-2 text-3xl font-black text-[#4f4a52]">{forecast.records.length}</p>
+          <p className="mt-2 text-3xl font-black text-[#4f4a52]">{acceptance.records.length}</p>
         </Card>
         <Card>
-          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Forecast Generated</p>
-          <p className="mt-2 text-sm font-bold text-[#4f4a52]">{fmtDate(forecast.generatedAt)}</p>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Accepted</p>
+          <p className="mt-2 text-3xl font-black text-green-700">{accepted}</p>
+        </Card>
+        <Card>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Accepting</p>
+          <p className="mt-2 text-3xl font-black text-[#a09aa6]">{accepting}</p>
         </Card>
       </div>
     </section>
   );
 }
 
-// ── Section 2: Forecast Timeline ──────────────────────────────────────────────
+// -- Section 2: Executive Acceptance Workspace --------------------------------
 
-function ForecastTimelineSection({ forecast }: { forecast: ExecutiveReportForecast }) {
-  if (forecast.records.length === 0) {
-    return (
-      <section>
-        <SectionLabel>Timeline</SectionLabel>
-        <SectionHeading>Forecast Timeline</SectionHeading>
-        <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-          Chronological record of all forecast entries.
-        </p>
-        <Card>
-          <p className="text-sm text-[#7b7480]">No forecast records available.</p>
-        </Card>
-      </section>
-    );
-  }
+function ExecutiveAcceptanceWorkspaceCard({ entry }: { entry: ExecutiveReportAcceptanceEntry }) {
+  const current = entry.endorsement.ratification.authentication.authorization.certification.validation.verification.confirmation.receipt.acknowledgement.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current;
 
-  return (
-    <section>
-      <SectionLabel>Timeline</SectionLabel>
-      <SectionHeading>Forecast Timeline</SectionHeading>
-      <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        {forecast.records.length} record{forecast.records.length === 1 ? "" : "s"}. Displayed as received.
-      </p>
-
-      <Card>
-        <div className="divide-y divide-gray-100">
-          {forecast.records.map((entry, i) => (
-            <div key={i} className="flex items-start gap-3 py-3 first:pt-0 last:pb-0">
-              <span className="mt-0.5 w-5 shrink-0 text-center text-[10px] font-bold text-[#a09aa6]">
-                {i + 1}
-              </span>
-              <div className="min-w-0 flex-1">
-                <p className="text-sm font-semibold text-[#4f4a52]">
-                  {entry.trend.insight.delta.comparison.current.headline.text}
-                </p>
-                <p className="mt-0.5 text-[10px] text-[#7b7480]">{fmtDate(entry.generatedAt)}</p>
-              </div>
-              <span className={`shrink-0 rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${FORECAST_STATE_STYLES[entry.state]}`}>
-                {FORECAST_STATE_LABELS[entry.state]}
-              </span>
-            </div>
-          ))}
-        </div>
-      </Card>
-    </section>
-  );
-}
-
-// ── Section 3: Forecast Records ───────────────────────────────────────────────
-
-function ForecastRecordCard({ entry }: { entry: ExecutiveReportForecastEntry }) {
   return (
     <Card>
       <div className="mb-3 flex flex-wrap items-center gap-2">
-        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${FORECAST_STATE_STYLES[entry.state]}`}>
-          {FORECAST_STATE_LABELS[entry.state]}
+        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${ACCEPTANCE_STATE_STYLES[entry.state]}`}>
+          {ACCEPTANCE_STATE_LABELS[entry.state]}
         </span>
-        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${SEVERITY_STYLES[entry.trend.insight.delta.comparison.current.overallStatus]}`}>
-          {SEVERITY_LABELS[entry.trend.insight.delta.comparison.current.overallStatus]}
+        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${SEVERITY_STYLES[current.overallStatus]}`}>
+          {SEVERITY_LABELS[current.overallStatus]}
         </span>
         <span className="ml-auto text-[10px] text-[#a09aa6]">{fmtDate(entry.generatedAt)}</span>
       </div>
-      <p className="text-sm font-bold text-[#4f4a52]">
-        {entry.trend.insight.delta.comparison.current.headline.text}
-      </p>
-      <div className="my-3 h-px bg-gray-100" />
-      <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Previous Headline</p>
-      <p className="mt-1 text-sm text-[#7b7480]">
-        {entry.trend.insight.delta.comparison.previous?.headline.text ?? "—"}
-      </p>
-      <p className="mt-3 text-sm leading-relaxed text-[#7b7480]">
-        {entry.trend.insight.delta.comparison.current.executiveSummary}
-      </p>
+      <p className="text-sm font-bold text-[#4f4a52]">{current.headline.text}</p>
+      <p className="mt-2 text-sm leading-relaxed text-[#7b7480]">{current.executiveSummary}</p>
     </Card>
   );
 }
 
-function ForecastRecordsSection({ forecast }: { forecast: ExecutiveReportForecast }) {
-  if (forecast.records.length === 0) {
+function ExecutiveAcceptanceWorkspaceSection({ acceptance }: { acceptance: ExecutiveReportAcceptance }) {
+  if (acceptance.records.length === 0) {
     return (
       <section>
-        <SectionLabel>Records</SectionLabel>
-        <SectionHeading>Forecast Records</SectionHeading>
+        <SectionLabel>Workspace</SectionLabel>
+        <SectionHeading>Executive Acceptance Workspace</SectionHeading>
         <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-          Full detail for every forecast record.
+          Operational workspace view of all acceptance entries.
         </p>
         <Card>
-          <p className="text-sm text-[#7b7480]">No forecast records available.</p>
+          <p className="text-sm text-[#7b7480]">No acceptance entries available.</p>
         </Card>
       </section>
     );
@@ -195,107 +143,196 @@ function ForecastRecordsSection({ forecast }: { forecast: ExecutiveReportForecas
 
   return (
     <section>
-      <SectionLabel>Records</SectionLabel>
-      <SectionHeading>Forecast Records</SectionHeading>
+      <SectionLabel>Workspace</SectionLabel>
+      <SectionHeading>Executive Acceptance Workspace</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        {forecast.records.length} record{forecast.records.length === 1 ? "" : "s"} in the forecast.
-        Displayed exactly as received.
+        {acceptance.records.length} acceptance {acceptance.records.length === 1 ? "entry" : "entries"} in the executive workspace.
       </p>
 
       <div className="space-y-4">
-        {forecast.records.map((entry, i) => (
-          <ForecastRecordCard key={i} entry={entry} />
+        {acceptance.records.map((entry, i) => (
+          <ExecutiveAcceptanceWorkspaceCard key={i} entry={entry} />
         ))}
       </div>
     </section>
   );
 }
 
-// ── Section 4: Forecast Status ────────────────────────────────────────────────
+// -- Section 3: Acceptance Review Workspace -----------------------------------
 
-function ForecastStatusSection({ forecast }: { forecast: ExecutiveReportForecast }) {
-  const latestGeneratedAt = forecast.records.length > 0
-    ? forecast.records[forecast.records.length - 1].generatedAt
-    : null;
+function AcceptanceReviewWorkspaceSection({ acceptance }: { acceptance: ExecutiveReportAcceptance }) {
+  if (acceptance.records.length === 0) {
+    return (
+      <section>
+        <SectionLabel>Review</SectionLabel>
+        <SectionHeading>Acceptance Review Workspace</SectionHeading>
+        <p className="mt-2 mb-5 text-sm text-[#7b7480]">
+          Review workspace for acceptance entry comparison.
+        </p>
+        <Card>
+          <p className="text-sm text-[#7b7480]">No acceptance entries to review.</p>
+        </Card>
+      </section>
+    );
+  }
 
   return (
     <section>
-      <SectionLabel>Status</SectionLabel>
-      <SectionHeading>Forecast Status</SectionHeading>
+      <SectionLabel>Review</SectionLabel>
+      <SectionHeading>Acceptance Review Workspace</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Aggregate forecast status at generation time.
+        Review and comparison of {acceptance.records.length} acceptance {acceptance.records.length === 1 ? "entry" : "entries"}.
       </p>
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <Card>
-          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Total Forecast Records</p>
-          <p className="mt-3 text-3xl font-black text-[#4f4a52]">{forecast.records.length}</p>
+      <div className="space-y-3">
+        {acceptance.records.map((entry, i) => (
+          <Card key={i} className="flex items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <span className={`shrink-0 rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${ACCEPTANCE_STATE_STYLES[entry.state]}`}>
+                {ACCEPTANCE_STATE_LABELS[entry.state]}
+              </span>
+              <span className="text-sm text-[#4f4a52]">
+                {entry.endorsement.ratification.authentication.authorization.certification.validation.verification.confirmation.receipt.acknowledgement.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.headline.text}
+              </span>
+            </div>
+            <span className="shrink-0 text-[10px] text-[#a09aa6]">{fmtDate(entry.generatedAt)}</span>
+          </Card>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+// -- Section 4: Acceptance Readiness ------------------------------------------
+
+function AcceptanceReadinessSection({ acceptance }: { acceptance: ExecutiveReportAcceptance }) {
+  const total     = acceptance.records.length;
+  const accepted  = acceptance.records.filter(r => r.state === "accepted").length;
+  const accepting = acceptance.records.filter(r => r.state === "accepting").length;
+
+  return (
+    <section>
+      <SectionLabel>Readiness</SectionLabel>
+      <SectionHeading>Acceptance Readiness</SectionHeading>
+      <p className="mt-2 mb-5 text-sm text-[#7b7480]">
+        Pipeline readiness assessment for the acceptance stage.
+      </p>
+
+      <div className="space-y-3">
+        <Card className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${ACCEPTANCE_STATE_STYLES["accepted"]}`}>
+              Accepted
+            </span>
+            <span className="text-sm text-[#4f4a52]">Ready records</span>
+          </div>
+          <span className="text-sm font-black text-green-700">{accepted} / {total}</span>
         </Card>
-        <Card>
-          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Latest Generated At</p>
-          <p className="mt-3 text-sm font-bold text-[#4f4a52]">
-            {latestGeneratedAt ? fmtDate(latestGeneratedAt) : "—"}
-          </p>
+        <Card className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${ACCEPTANCE_STATE_STYLES["accepting"]}`}>
+              Accepting
+            </span>
+            <span className="text-sm text-[#4f4a52]">Pending records</span>
+          </div>
+          <span className="text-sm font-black text-[#a09aa6]">{accepting} / {total}</span>
         </Card>
       </div>
     </section>
   );
 }
 
-// ── Section 5: Forecast Metadata ──────────────────────────────────────────────
+// -- Section 5: Acceptance Metadata -------------------------------------------
 
-function ForecastMetadataSection({ forecast }: { forecast: ExecutiveReportForecast }) {
+function AcceptanceMetadataSection({ acceptance }: { acceptance: ExecutiveReportAcceptance }) {
   return (
     <section>
       <SectionLabel>Metadata</SectionLabel>
-      <SectionHeading>Forecast Metadata</SectionHeading>
+      <SectionHeading>Acceptance Metadata</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Forecast generation metadata. No data is stored or persisted.
+        Generation metadata for this acceptance workspace.
       </p>
 
-      <Card>
-        <table className="w-full text-sm">
-          <tbody className="divide-y divide-gray-100">
-            <tr>
-              <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Generated At</td>
-              <td className="py-3 text-right text-[#4f4a52]">{fmtDate(forecast.generatedAt)}</td>
-            </tr>
-            <tr>
-              <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Forecast Records</td>
-              <td className="py-3 text-right text-[#4f4a52]">{forecast.records.length}</td>
-            </tr>
-          </tbody>
-        </table>
-      </Card>
+      <div className="space-y-3">
+        <Card className="flex items-center justify-between">
+          <span className="text-sm text-[#7b7480]">Generated At</span>
+          <span className="text-sm font-medium text-[#4f4a52]">{fmtDate(acceptance.generatedAt)}</span>
+        </Card>
+        <Card className="flex items-center justify-between">
+          <span className="text-sm text-[#7b7480]">Total Records</span>
+          <span className="text-sm font-medium text-[#4f4a52]">{acceptance.records.length}</span>
+        </Card>
+      </div>
     </section>
   );
 }
 
-// ── Section 6: Quick Navigation ───────────────────────────────────────────────
+// -- Section 6: Quick Navigation ----------------------------------------------
 
 const QUICK_NAV_LINKS = [
-  { href: "/admin",                                       label: "Operations" },
-  { href: "/admin/operations",                            label: "Unified Operations" },
-  { href: "/admin/executive-operations",                  label: "Executive Operations" },
-  { href: "/admin/alerts",                                label: "Alerts" },
-  { href: "/admin/alert-center",                          label: "Alert Center" },
-  { href: "/admin/executive-digest",                      label: "Executive Digest" },
-  { href: "/admin/executive-briefing",                    label: "Executive Briefing" },
-  { href: "/admin/executive-report",                      label: "Executive Report" },
-  { href: "/admin/executive-report-center",               label: "Executive Report Center" },
-  { href: "/admin/executive-report-archive",              label: "Executive Report Archive" },
-  { href: "/admin/executive-report-archive-center",       label: "Executive Report Archive Center" },
-  { href: "/admin/executive-report-history",              label: "Executive Report History" },
-  { href: "/admin/executive-report-history-center",       label: "Executive Report History Center" },
-  { href: "/admin/executive-report-comparison",           label: "Executive Report Comparison" },
-  { href: "/admin/executive-report-comparison-center",    label: "Executive Report Comparison Center" },
-  { href: "/admin/executive-report-delta",                label: "Executive Report Delta" },
-  { href: "/admin/executive-report-delta-center",         label: "Executive Report Delta Center" },
-  { href: "/admin/executive-report-insight",              label: "Executive Report Insight" },
-  { href: "/admin/executive-report-insight-center",       label: "Executive Report Insight Center" },
-  { href: "/admin/executive-report-trend",                label: "Executive Report Trend" },
-  { href: "/admin/executive-report-trend-center",         label: "Executive Report Trend Center" },
-  { href: "/admin/executive-report-forecast",             label: "Executive Report Forecast" },
+  { href: "/admin",                                              label: "Operations" },
+  { href: "/admin/operations",                                   label: "Unified Operations" },
+  { href: "/admin/executive-operations",                         label: "Executive Operations" },
+  { href: "/admin/alerts",                                       label: "Alerts" },
+  { href: "/admin/alert-center",                                 label: "Alert Center" },
+  { href: "/admin/executive-digest",                             label: "Executive Digest" },
+  { href: "/admin/executive-briefing",                           label: "Executive Briefing" },
+  { href: "/admin/executive-report",                             label: "Executive Report" },
+  { href: "/admin/executive-report-center",                      label: "Executive Report Center" },
+  { href: "/admin/executive-report-archive",                     label: "Executive Report Archive" },
+  { href: "/admin/executive-report-archive-center",              label: "Executive Report Archive Center" },
+  { href: "/admin/executive-report-history",                     label: "Executive Report History" },
+  { href: "/admin/executive-report-history-center",              label: "Executive Report History Center" },
+  { href: "/admin/executive-report-comparison",                  label: "Executive Report Comparison" },
+  { href: "/admin/executive-report-comparison-center",           label: "Executive Report Comparison Center" },
+  { href: "/admin/executive-report-delta",                       label: "Executive Report Delta" },
+  { href: "/admin/executive-report-delta-center",                label: "Executive Report Delta Center" },
+  { href: "/admin/executive-report-insight",                     label: "Executive Report Insight" },
+  { href: "/admin/executive-report-insight-center",              label: "Executive Report Insight Center" },
+  { href: "/admin/executive-report-trend",                       label: "Executive Report Trend" },
+  { href: "/admin/executive-report-trend-center",                label: "Executive Report Trend Center" },
+  { href: "/admin/executive-report-forecast",                    label: "Executive Report Forecast" },
+  { href: "/admin/executive-report-forecast-center",             label: "Executive Report Forecast Center" },
+  { href: "/admin/executive-report-outlook",                     label: "Executive Report Outlook" },
+  { href: "/admin/executive-report-outlook-center",              label: "Executive Report Outlook Center" },
+  { href: "/admin/executive-report-strategy",                    label: "Executive Report Strategy" },
+  { href: "/admin/executive-report-strategy-center",             label: "Executive Report Strategy Center" },
+  { href: "/admin/executive-report-action",                      label: "Executive Report Action" },
+  { href: "/admin/executive-report-action-center",               label: "Executive Report Action Center" },
+  { href: "/admin/executive-report-decision",                    label: "Executive Report Decision" },
+  { href: "/admin/executive-report-decision-center",             label: "Executive Report Decision Center" },
+  { href: "/admin/executive-report-approval",                    label: "Executive Report Approval" },
+  { href: "/admin/executive-report-approval-center",             label: "Executive Report Approval Center" },
+  { href: "/admin/executive-report-execution",                   label: "Executive Report Execution" },
+  { href: "/admin/executive-report-execution-center",            label: "Executive Report Execution Center" },
+  { href: "/admin/executive-report-completion",                  label: "Executive Report Completion" },
+  { href: "/admin/executive-report-completion-center",           label: "Executive Report Completion Center" },
+  { href: "/admin/executive-report-publication",                 label: "Executive Report Publication" },
+  { href: "/admin/executive-report-publication-center",          label: "Executive Report Publication Center" },
+  { href: "/admin/executive-report-distribution",                label: "Executive Report Distribution" },
+  { href: "/admin/executive-report-distribution-center",         label: "Executive Report Distribution Center" },
+  { href: "/admin/executive-report-delivery",                    label: "Executive Report Delivery" },
+  { href: "/admin/executive-report-delivery-center",             label: "Executive Report Delivery Center" },
+  { href: "/admin/executive-report-acknowledgement",             label: "Executive Report Acknowledgement" },
+  { href: "/admin/executive-report-acknowledgement-center",      label: "Executive Report Acknowledgement Center" },
+  { href: "/admin/executive-report-receipt",                     label: "Executive Report Receipt" },
+  { href: "/admin/executive-report-receipt-center",              label: "Executive Report Receipt Center" },
+  { href: "/admin/executive-report-confirmation",                label: "Executive Report Confirmation" },
+  { href: "/admin/executive-report-confirmation-center",         label: "Executive Report Confirmation Center" },
+  { href: "/admin/executive-report-validation",                  label: "Executive Report Validation" },
+  { href: "/admin/executive-report-validation-center",           label: "Executive Report Validation Center" },
+  { href: "/admin/executive-report-certification",               label: "Executive Report Certification" },
+  { href: "/admin/executive-report-certification-center",        label: "Executive Report Certification Center" },
+  { href: "/admin/executive-report-authorization",               label: "Executive Report Authorization" },
+  { href: "/admin/executive-report-authorization-center",        label: "Executive Report Authorization Center" },
+  { href: "/admin/executive-report-authentication",              label: "Executive Report Authentication" },
+  { href: "/admin/executive-report-authentication-center",       label: "Executive Report Authentication Center" },
+  { href: "/admin/executive-report-ratification",                label: "Executive Report Ratification" },
+  { href: "/admin/executive-report-ratification-center",         label: "Executive Report Ratification Center" },
+  { href: "/admin/executive-report-endorsement",                 label: "Executive Report Endorsement" },
+  { href: "/admin/executive-report-endorsement-center",          label: "Executive Report Endorsement Center" },
+  { href: "/admin/executive-report-acceptance",                  label: "Executive Report Acceptance" },
+  { href: "/admin/executive-report-acceptance-center",           label: "Executive Report Acceptance Center" },
 ] as const;
 
 function QuickNavigationSection() {
@@ -322,19 +359,19 @@ function QuickNavigationSection() {
   );
 }
 
-// ── Props ─────────────────────────────────────────────────────────────────────
+// -- Props --------------------------------------------------------------------
 
 interface Props {
-  forecast: ExecutiveReportForecast;
+  acceptance: ExecutiveReportAcceptance;
 }
 
-// ── Main export ───────────────────────────────────────────────────────────────
+// -- Main export --------------------------------------------------------------
 
-export default function ExecutiveReportForecastDashboard({ forecast }: Props) {
+export default function ExecutiveReportAcceptanceCenter({ acceptance }: Props) {
   return (
     <div className="min-h-screen bg-[#f5f1eb]">
 
-      {/* ── Header ── */}
+      {/* -- Header -- */}
       <header className="flex items-center justify-between bg-[#4f4a52] px-6 py-4 print:hidden">
         <div className="flex items-center gap-6">
           <div>
@@ -420,7 +457,9 @@ export default function ExecutiveReportForecastDashboard({ forecast }: Props) {
             <Link href="/admin/executive-report-trend-center" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Trend Center
             </Link>
-            <span className="text-xs font-bold text-white">Executive Report Forecast</span>
+            <Link href="/admin/executive-report-forecast" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report Forecast
+            </Link>
             <Link href="/admin/executive-report-forecast-center" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Forecast Center
             </Link>
@@ -541,9 +580,7 @@ export default function ExecutiveReportForecastDashboard({ forecast }: Props) {
             <Link href="/admin/executive-report-acceptance" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Acceptance
             </Link>
-            <Link href="/admin/executive-report-acceptance-center" className="text-xs text-white/60 transition hover:text-white">
-              Executive Report Acceptance Center
-            </Link>
+            <span className="text-xs font-bold text-white">Executive Report Acceptance Center</span>
           </nav>
         </div>
         <form action={logoutAction}>
@@ -553,26 +590,26 @@ export default function ExecutiveReportForecastDashboard({ forecast }: Props) {
         </form>
       </header>
 
-      {/* ── Content ── */}
+      {/* -- Content -- */}
       <div className="mx-auto w-full max-w-[780px] space-y-14 px-6 py-12">
 
-        <ForecastOverviewSection forecast={forecast} />
+        <AcceptanceWorkspaceOverviewSection acceptance={acceptance} />
 
         <hr className="border-gray-200" />
 
-        <ForecastTimelineSection forecast={forecast} />
+        <ExecutiveAcceptanceWorkspaceSection acceptance={acceptance} />
 
         <hr className="border-gray-200" />
 
-        <ForecastRecordsSection forecast={forecast} />
+        <AcceptanceReviewWorkspaceSection acceptance={acceptance} />
 
         <hr className="border-gray-200" />
 
-        <ForecastStatusSection forecast={forecast} />
+        <AcceptanceReadinessSection acceptance={acceptance} />
 
         <hr className="border-gray-200" />
 
-        <ForecastMetadataSection forecast={forecast} />
+        <AcceptanceMetadataSection acceptance={acceptance} />
 
         <hr className="border-gray-200" />
 

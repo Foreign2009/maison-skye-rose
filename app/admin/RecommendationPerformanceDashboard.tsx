@@ -1830,6 +1830,9 @@ export default function RecommendationPerformanceDashboard({ generatedAt, insigh
             <Link href="/admin/executive-report-acceptance" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Acceptance
             </Link>
+            <Link href="/admin/executive-report-acceptance-center" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report Acceptance Center
+            </Link>
           </nav>
         </div>
         <form action={logoutAction}>
