@@ -1,13 +1,14 @@
-﻿"use client";
+"use client";
 
 import React            from "react";
 import Link             from "next/link";
 import { logoutAction } from "./actions";
-import type { AlertCategory, AlertSeverity } from "@/app/lib/operations/OperationsAlertTypes";
+import type { AlertSeverity } from "@/app/lib/operations/OperationsAlertTypes";
 import type {
-  ExecutiveReportArchive,
-  ExecutiveReportArchiveEntry,
-} from "@/app/lib/operations/ExecutiveReportArchiveTypes";
+  ExecutiveReportCertification,
+  ExecutiveReportCertificationEntry,
+  ExecutiveReportCertificationState,
+} from "@/app/lib/operations/ExecutiveReportCertificationTypes";
 
 // ── UI helpers ────────────────────────────────────────────────────────────────
 
@@ -60,102 +61,83 @@ const SEVERITY_LABELS: Record<AlertSeverity, string> = {
   "low":      "Low",
 };
 
-const CATEGORY_LABELS: Record<AlertCategory, string> = {
-  "platform":       "Platform",
-  "recommendation": "Recommendation",
-  "customer":       "Customer",
-  "commerce":       "Commerce",
-  "operations":     "Operations",
+const CERTIFICATION_STATE_STYLES: Record<ExecutiveReportCertificationState, string> = {
+  "certifying": "border-gray-200  bg-gray-100  text-gray-500",
+  "certified":  "border-green-200 bg-green-50  text-green-700",
 };
 
-// ── Section 1: Archive Headline ───────────────────────────────────────────────
+const CERTIFICATION_STATE_LABELS: Record<ExecutiveReportCertificationState, string> = {
+  "certifying": "Certifying",
+  "certified":  "Certified",
+};
 
-function ArchiveHeadlineSection({ archive }: { archive: ExecutiveReportArchive }) {
+// ── Section 1: Certification Workspace Overview ───────────────────────────────
+
+function CertificationWorkspaceOverviewSection({ certification }: { certification: ExecutiveReportCertification }) {
+  const certified  = certification.records.filter(r => r.state === "certified").length;
+  const certifying = certification.records.filter(r => r.state === "certifying").length;
+
   return (
     <section>
-      <SectionLabel>Executive Report Archive</SectionLabel>
-      <SectionHeading>Archive Headline</SectionHeading>
+      <SectionLabel>Executive Report Certification</SectionLabel>
+      <SectionHeading>Certification Workspace Overview</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Authoritative executive headline derived from the platform operations report.
-        Refreshed on every page load.
+        Workspace-level view of the executive report certification pipeline. Refreshed on every page load.
       </p>
 
-      <div className="mb-4 flex flex-wrap items-center gap-3">
-        <span className={`rounded-full border px-3 py-1 text-xs font-semibold ${SEVERITY_STYLES[archive.overallStatus]}`}>
-          {SEVERITY_LABELS[archive.overallStatus]}
-        </span>
-        <span className="rounded-full border border-gray-100 bg-white px-3 py-1 text-xs text-[#7b7480]">
-          Generated: {fmtDate(archive.generatedAt)}
-        </span>
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+        <Card>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Total Records</p>
+          <p className="mt-2 text-3xl font-black text-[#4f4a52]">{certification.records.length}</p>
+        </Card>
+        <Card>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Certified</p>
+          <p className="mt-2 text-3xl font-black text-green-700">{certified}</p>
+        </Card>
+        <Card>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Certifying</p>
+          <p className="mt-2 text-3xl font-black text-[#a09aa6]">{certifying}</p>
+        </Card>
       </div>
-
-      <Card>
-        <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Platform Headline</p>
-        <p className="mt-3 text-lg font-black leading-snug text-[#4f4a52]">
-          {archive.headline.text}
-        </p>
-      </Card>
     </section>
   );
 }
 
-// ── Section 2: Executive Summary ──────────────────────────────────────────────
+// ── Section 2: Executive Certification Workspace ──────────────────────────────
 
-function ExecutiveSummarySection({ archive }: { archive: ExecutiveReportArchive }) {
-  return (
-    <section>
-      <SectionLabel>Summary</SectionLabel>
-      <SectionHeading>Executive Summary</SectionHeading>
-      <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Executive summary projected from the operations report. Displayed exactly as received.
-      </p>
-
-      <Card>
-        <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Summary</p>
-        <p className="mt-3 text-base leading-relaxed text-[#4f4a52]">{archive.executiveSummary}</p>
-      </Card>
-    </section>
-  );
-}
-
-// ── Section 3: Archive Entries ────────────────────────────────────────────────
-
-function ArchiveEntryCard({ entry }: { entry: ExecutiveReportArchiveEntry }) {
-  const num = String(entry.sequence).padStart(2, "0");
-
+function ExecutiveCertificationWorkspaceCard({ entry }: { entry: ExecutiveReportCertificationEntry }) {
   return (
     <Card>
-      <div className="mb-3 flex items-start justify-between gap-4">
-        <div className="flex items-center gap-3">
-          <span className="text-2xl font-black text-[#e8e3ef]">{num}</span>
-          <p className="text-sm font-bold uppercase tracking-wide text-[#4f4a52]">{entry.title}</p>
-        </div>
-        <div className="flex shrink-0 flex-col items-end gap-1">
-          <span className="rounded-full border border-gray-100 bg-gray-50 px-2 py-0.5 text-[9px] font-mono text-[#a09aa6]">
-            {entry.alertId}
-          </span>
-          <span className="text-[9px] uppercase tracking-wider text-[#a09aa6]">
-            {CATEGORY_LABELS[entry.category]}
-          </span>
-        </div>
+      <div className="mb-3 flex flex-wrap items-center gap-2">
+        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${CERTIFICATION_STATE_STYLES[entry.state]}`}>
+          {CERTIFICATION_STATE_LABELS[entry.state]}
+        </span>
+        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${SEVERITY_STYLES[entry.validation.verification.confirmation.receipt.acknowledgement.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.overallStatus]}`}>
+          {SEVERITY_LABELS[entry.validation.verification.confirmation.receipt.acknowledgement.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.overallStatus]}
+        </span>
+        <span className="ml-auto text-[10px] text-[#a09aa6]">{fmtDate(entry.generatedAt)}</span>
       </div>
-      <div className="h-px bg-gray-100" />
-      <p className="mt-3 text-sm leading-relaxed text-[#7b7480]">{entry.body}</p>
+      <p className="text-sm font-bold text-[#4f4a52]">
+        {entry.validation.verification.confirmation.receipt.acknowledgement.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.headline.text}
+      </p>
+      <p className="mt-2 text-sm leading-relaxed text-[#7b7480]">
+        {entry.validation.verification.confirmation.receipt.acknowledgement.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.executiveSummary}
+      </p>
     </Card>
   );
 }
 
-function ArchiveEntriesSection({ archive }: { archive: ExecutiveReportArchive }) {
-  if (archive.entries.length === 0) {
+function ExecutiveCertificationWorkspaceSection({ certification }: { certification: ExecutiveReportCertification }) {
+  if (certification.records.length === 0) {
     return (
       <section>
-        <SectionLabel>Entries</SectionLabel>
-        <SectionHeading>Archive Entries</SectionHeading>
+        <SectionLabel>Workspace</SectionLabel>
+        <SectionHeading>Executive Certification Workspace</SectionHeading>
         <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-          Archive entries projected from the executive report.
+          Operational workspace view of all certification entries.
         </p>
         <Card>
-          <p className="text-sm text-[#7b7480]">No archive entries. All alerts resolved.</p>
+          <p className="text-sm text-[#7b7480]">No certification entries available.</p>
         </Card>
       </section>
     );
@@ -163,67 +145,114 @@ function ArchiveEntriesSection({ archive }: { archive: ExecutiveReportArchive })
 
   return (
     <section>
-      <SectionLabel>Entries</SectionLabel>
-      <SectionHeading>Archive Entries</SectionHeading>
+      <SectionLabel>Workspace</SectionLabel>
+      <SectionHeading>Executive Certification Workspace</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        {archive.entries.length} entr{archive.entries.length === 1 ? "y" : "ies"} projected from the executive report.
-        Displayed exactly as received.
+        {certification.records.length} certification {certification.records.length === 1 ? "entry" : "entries"} in the executive workspace.
       </p>
 
       <div className="space-y-4">
-        {archive.entries.map((entry) => (
-          <ArchiveEntryCard key={entry.alertId} entry={entry} />
+        {certification.records.map((entry, i) => (
+          <ExecutiveCertificationWorkspaceCard key={i} entry={entry} />
         ))}
       </div>
     </section>
   );
 }
 
-// ── Section 4: Archive Status ─────────────────────────────────────────────────
+// ── Section 3: Certification Review Workspace ─────────────────────────────────
 
-function ArchiveStatusSection({ archive }: { archive: ExecutiveReportArchive }) {
+function CertificationReviewWorkspaceSection({ certification }: { certification: ExecutiveReportCertification }) {
+  if (certification.records.length === 0) {
+    return (
+      <section>
+        <SectionLabel>Review</SectionLabel>
+        <SectionHeading>Certification Review Workspace</SectionHeading>
+        <p className="mt-2 mb-5 text-sm text-[#7b7480]">
+          Review workspace for certification entry comparison.
+        </p>
+        <Card>
+          <p className="text-sm text-[#7b7480]">No certification entries to review.</p>
+        </Card>
+      </section>
+    );
+  }
+
   return (
     <section>
-      <SectionLabel>Status</SectionLabel>
-      <SectionHeading>Archive Status</SectionHeading>
+      <SectionLabel>Review</SectionLabel>
+      <SectionHeading>Certification Review Workspace</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Overall platform status and analytics connectivity at archive generation time.
+        Current and previous headline comparison across all certification entries.
+      </p>
+
+      <Card>
+        <div className="divide-y divide-gray-100">
+          {certification.records.map((entry, i) => (
+            <div key={i} className="py-4 first:pt-0 last:pb-0">
+              <div className="mb-2 flex items-center gap-2">
+                <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${CERTIFICATION_STATE_STYLES[entry.state]}`}>
+                  {CERTIFICATION_STATE_LABELS[entry.state]}
+                </span>
+                <span className="ml-auto text-[10px] text-[#a09aa6]">{fmtDate(entry.generatedAt)}</span>
+              </div>
+              <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Current</p>
+              <p className="mt-1 text-sm font-bold text-[#4f4a52]">
+                {entry.validation.verification.confirmation.receipt.acknowledgement.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.headline.text}
+              </p>
+              <p className="mt-2 text-[10px] uppercase tracking-widest text-[#a09aa6]">Previous</p>
+              <p className="mt-1 text-sm text-[#7b7480]">
+                {entry.validation.verification.confirmation.receipt.acknowledgement.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.previous?.headline.text ?? "—"}
+              </p>
+            </div>
+          ))}
+        </div>
+      </Card>
+    </section>
+  );
+}
+
+// ── Section 4: Certification Readiness ───────────────────────────────────────
+
+function CertificationReadinessSection({ certification }: { certification: ExecutiveReportCertification }) {
+  const certified  = certification.records.filter(r => r.state === "certified").length;
+  const certifying = certification.records.filter(r => r.state === "certifying").length;
+  const total      = certification.records.length;
+  const readyPct   = total > 0 ? Math.round((certified / total) * 100) : 0;
+
+  return (
+    <section>
+      <SectionLabel>Readiness</SectionLabel>
+      <SectionHeading>Certification Readiness</SectionHeading>
+      <p className="mt-2 mb-5 text-sm text-[#7b7480]">
+        Certification readiness indicators at generation time. No data is stored or persisted.
       </p>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <Card>
-          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Overall Status</p>
-          <div className="mt-3">
-            <span className={`rounded-full border px-4 py-1.5 text-xs font-bold uppercase tracking-wider ${SEVERITY_STYLES[archive.overallStatus]}`}>
-              {SEVERITY_LABELS[archive.overallStatus]}
-            </span>
-          </div>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Certification Readiness</p>
+          <p className="mt-2 text-3xl font-black text-[#4f4a52]">{readyPct}%</p>
+          <p className="mt-1 text-[10px] text-[#a09aa6]">{certified} of {total} certified</p>
         </Card>
         <Card>
-          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Analytics</p>
-          <p className="mt-3 text-sm font-bold text-[#4f4a52]">
-            {archive.analyticsAvailable ? "Connected" : "Offline"}
-          </p>
-          {!archive.analyticsAvailable && (
-            <p className="mt-1 text-[10px] text-[#7b7480]">
-              Configure PostHog environment variables to enable live intelligence.
-            </p>
-          )}
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Pending Certification</p>
+          <p className="mt-2 text-3xl font-black text-[#4f4a52]">{certifying}</p>
+          <p className="mt-1 text-[10px] text-[#a09aa6]">{certifying === 1 ? "record" : "records"} certifying</p>
         </Card>
       </div>
     </section>
   );
 }
 
-// ── Section 5: Archive Metadata ───────────────────────────────────────────────
+// ── Section 5: Certification Metadata ────────────────────────────────────────
 
-function ArchiveMetadataSection({ archive }: { archive: ExecutiveReportArchive }) {
+function CertificationMetadataSection({ certification }: { certification: ExecutiveReportCertification }) {
   return (
     <section>
       <SectionLabel>Metadata</SectionLabel>
-      <SectionHeading>Archive Metadata</SectionHeading>
+      <SectionHeading>Certification Metadata</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Archive generation metadata. No data is stored or persisted.
+        Certification generation metadata. No data is stored or persisted.
       </p>
 
       <Card>
@@ -231,15 +260,11 @@ function ArchiveMetadataSection({ archive }: { archive: ExecutiveReportArchive }
           <tbody className="divide-y divide-gray-100">
             <tr>
               <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Generated At</td>
-              <td className="py-3 text-right text-[#4f4a52]">{fmtDate(archive.generatedAt)}</td>
+              <td className="py-3 text-right text-[#4f4a52]">{fmtDate(certification.generatedAt)}</td>
             </tr>
             <tr>
-              <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Analytics Available</td>
-              <td className="py-3 text-right text-[#4f4a52]">{archive.analyticsAvailable ? "Yes" : "No"}</td>
-            </tr>
-            <tr>
-              <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Archive Entries</td>
-              <td className="py-3 text-right text-[#4f4a52]">{archive.entries.length}</td>
+              <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Certification Records</td>
+              <td className="py-3 text-right text-[#4f4a52]">{certification.records.length}</td>
             </tr>
           </tbody>
         </table>
@@ -251,16 +276,59 @@ function ArchiveMetadataSection({ archive }: { archive: ExecutiveReportArchive }
 // ── Section 6: Quick Navigation ───────────────────────────────────────────────
 
 const QUICK_NAV_LINKS = [
-  { href: "/admin",                          label: "Operations" },
-  { href: "/admin/operations",               label: "Unified Operations" },
-  { href: "/admin/executive-operations",     label: "Executive Operations" },
-  { href: "/admin/alerts",                   label: "Alerts" },
-  { href: "/admin/alert-center",             label: "Alert Center" },
-  { href: "/admin/executive-digest",         label: "Executive Digest" },
-  { href: "/admin/executive-briefing",       label: "Executive Briefing" },
-  { href: "/admin/executive-report",         label: "Executive Report" },
-  { href: "/admin/executive-report-center",  label: "Executive Report Center" },
-  { href: "/admin/executive-report-archive", label: "Executive Report Archive" },
+  { href: "/admin",                                              label: "Operations" },
+  { href: "/admin/operations",                                   label: "Unified Operations" },
+  { href: "/admin/executive-operations",                         label: "Executive Operations" },
+  { href: "/admin/alerts",                                       label: "Alerts" },
+  { href: "/admin/alert-center",                                 label: "Alert Center" },
+  { href: "/admin/executive-digest",                             label: "Executive Digest" },
+  { href: "/admin/executive-briefing",                           label: "Executive Briefing" },
+  { href: "/admin/executive-report",                             label: "Executive Report" },
+  { href: "/admin/executive-report-center",                      label: "Executive Report Center" },
+  { href: "/admin/executive-report-archive",                     label: "Executive Report Archive" },
+  { href: "/admin/executive-report-archive-center",              label: "Executive Report Archive Center" },
+  { href: "/admin/executive-report-history",                     label: "Executive Report History" },
+  { href: "/admin/executive-report-history-center",              label: "Executive Report History Center" },
+  { href: "/admin/executive-report-comparison",                  label: "Executive Report Comparison" },
+  { href: "/admin/executive-report-comparison-center",           label: "Executive Report Comparison Center" },
+  { href: "/admin/executive-report-delta",                       label: "Executive Report Delta" },
+  { href: "/admin/executive-report-delta-center",                label: "Executive Report Delta Center" },
+  { href: "/admin/executive-report-insight",                     label: "Executive Report Insight" },
+  { href: "/admin/executive-report-insight-center",              label: "Executive Report Insight Center" },
+  { href: "/admin/executive-report-trend",                       label: "Executive Report Trend" },
+  { href: "/admin/executive-report-trend-center",                label: "Executive Report Trend Center" },
+  { href: "/admin/executive-report-forecast",                    label: "Executive Report Forecast" },
+  { href: "/admin/executive-report-forecast-center",             label: "Executive Report Forecast Center" },
+  { href: "/admin/executive-report-outlook",                     label: "Executive Report Outlook" },
+  { href: "/admin/executive-report-outlook-center",              label: "Executive Report Outlook Center" },
+  { href: "/admin/executive-report-strategy",                    label: "Executive Report Strategy" },
+  { href: "/admin/executive-report-strategy-center",             label: "Executive Report Strategy Center" },
+  { href: "/admin/executive-report-action",                      label: "Executive Report Action" },
+  { href: "/admin/executive-report-action-center",               label: "Executive Report Action Center" },
+  { href: "/admin/executive-report-decision",                    label: "Executive Report Decision" },
+  { href: "/admin/executive-report-decision-center",             label: "Executive Report Decision Center" },
+  { href: "/admin/executive-report-approval",                    label: "Executive Report Approval" },
+  { href: "/admin/executive-report-approval-center",             label: "Executive Report Approval Center" },
+  { href: "/admin/executive-report-execution",                   label: "Executive Report Execution" },
+  { href: "/admin/executive-report-execution-center",            label: "Executive Report Execution Center" },
+  { href: "/admin/executive-report-completion",                  label: "Executive Report Completion" },
+  { href: "/admin/executive-report-completion-center",           label: "Executive Report Completion Center" },
+  { href: "/admin/executive-report-publication",                 label: "Executive Report Publication" },
+  { href: "/admin/executive-report-publication-center",          label: "Executive Report Publication Center" },
+  { href: "/admin/executive-report-distribution",                label: "Executive Report Distribution" },
+  { href: "/admin/executive-report-distribution-center",         label: "Executive Report Distribution Center" },
+  { href: "/admin/executive-report-delivery",                    label: "Executive Report Delivery" },
+  { href: "/admin/executive-report-delivery-center",             label: "Executive Report Delivery Center" },
+  { href: "/admin/executive-report-acknowledgement",             label: "Executive Report Acknowledgement" },
+  { href: "/admin/executive-report-acknowledgement-center",      label: "Executive Report Acknowledgement Center" },
+  { href: "/admin/executive-report-receipt",                     label: "Executive Report Receipt" },
+  { href: "/admin/executive-report-receipt-center",              label: "Executive Report Receipt Center" },
+  { href: "/admin/executive-report-confirmation",                label: "Executive Report Confirmation" },
+  { href: "/admin/executive-report-confirmation-center",         label: "Executive Report Confirmation Center" },
+  { href: "/admin/executive-report-validation",                  label: "Executive Report Validation" },
+  { href: "/admin/executive-report-validation-center",           label: "Executive Report Validation Center" },
+  { href: "/admin/executive-report-certification",               label: "Executive Report Certification" },
+  { href: "/admin/executive-report-certification-center",        label: "Executive Report Certification Center" },
 ] as const;
 
 function QuickNavigationSection() {
@@ -290,12 +358,12 @@ function QuickNavigationSection() {
 // ── Props ─────────────────────────────────────────────────────────────────────
 
 interface Props {
-  archive: ExecutiveReportArchive;
+  certification: ExecutiveReportCertification;
 }
 
 // ── Main export ───────────────────────────────────────────────────────────────
 
-export default function ExecutiveReportArchiveDashboard({ archive }: Props) {
+export default function ExecutiveReportCertificationCenter({ certification }: Props) {
   return (
     <div className="min-h-screen bg-[#f5f1eb]">
 
@@ -349,7 +417,9 @@ export default function ExecutiveReportArchiveDashboard({ archive }: Props) {
             <Link href="/admin/executive-report-center" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Center
             </Link>
-            <span className="text-xs font-bold text-white">Executive Report Archive</span>
+            <Link href="/admin/executive-report-archive" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report Archive
+            </Link>
             <Link href="/admin/executive-report-archive-center" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Archive Center
             </Link>
@@ -476,9 +546,7 @@ export default function ExecutiveReportArchiveDashboard({ archive }: Props) {
             <Link href="/admin/executive-report-certification" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Certification
             </Link>
-            <Link href="/admin/executive-report-certification-center" className="text-xs text-white/60 transition hover:text-white">
-              Executive Report Certification Center
-            </Link>
+            <span className="text-xs font-bold text-white">Executive Report Certification Center</span>
           </nav>
         </div>
         <form action={logoutAction}>
@@ -491,23 +559,23 @@ export default function ExecutiveReportArchiveDashboard({ archive }: Props) {
       {/* ── Content ── */}
       <div className="mx-auto w-full max-w-[780px] space-y-14 px-6 py-12">
 
-        <ArchiveHeadlineSection archive={archive} />
+        <CertificationWorkspaceOverviewSection certification={certification} />
 
         <hr className="border-gray-200" />
 
-        <ExecutiveSummarySection archive={archive} />
+        <ExecutiveCertificationWorkspaceSection certification={certification} />
 
         <hr className="border-gray-200" />
 
-        <ArchiveEntriesSection archive={archive} />
+        <CertificationReviewWorkspaceSection certification={certification} />
 
         <hr className="border-gray-200" />
 
-        <ArchiveStatusSection archive={archive} />
+        <CertificationReadinessSection certification={certification} />
 
         <hr className="border-gray-200" />
 
-        <ArchiveMetadataSection archive={archive} />
+        <CertificationMetadataSection certification={certification} />
 
         <hr className="border-gray-200" />
 
