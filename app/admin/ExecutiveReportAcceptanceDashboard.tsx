@@ -1,16 +1,16 @@
-﻿"use client";
+"use client";
 
 import React            from "react";
 import Link             from "next/link";
 import { logoutAction } from "./actions";
 import type { AlertSeverity } from "@/app/lib/operations/OperationsAlertTypes";
 import type {
-  ExecutiveReportTrend,
-  ExecutiveReportTrendEntry,
-  ExecutiveReportTrendState,
-} from "@/app/lib/operations/ExecutiveReportTrendTypes";
+  ExecutiveReportAcceptance,
+  ExecutiveReportAcceptanceEntry,
+  ExecutiveReportAcceptanceState,
+} from "@/app/lib/operations/ExecutiveReportAcceptanceTypes";
 
-// ── UI helpers ────────────────────────────────────────────────────────────────
+// -- UI helpers ---------------------------------------------------------------
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
@@ -36,7 +36,7 @@ function Card({ children, className = "" }: { children: React.ReactNode; classNa
   );
 }
 
-// ── Formatter ─────────────────────────────────────────────────────────────────
+// -- Formatter ----------------------------------------------------------------
 
 function fmtDate(iso: string): string {
   return new Date(iso).toLocaleString("en-GB", {
@@ -45,7 +45,7 @@ function fmtDate(iso: string): string {
   });
 }
 
-// ── Style maps ────────────────────────────────────────────────────────────────
+// -- Style maps ---------------------------------------------------------------
 
 const SEVERITY_STYLES: Record<AlertSeverity, string> = {
   "critical": "border-red-200    bg-red-50    text-red-700",
@@ -61,56 +61,61 @@ const SEVERITY_LABELS: Record<AlertSeverity, string> = {
   "low":      "Low",
 };
 
-const TREND_STATE_STYLES: Record<ExecutiveReportTrendState, string> = {
-  "emerging":  "border-blue-200  bg-blue-50  text-blue-700",
-  "stable":    "border-gray-200  bg-gray-100 text-gray-500",
-  "improving": "border-green-200 bg-green-50 text-green-700",
+const ACCEPTANCE_STATE_STYLES: Record<ExecutiveReportAcceptanceState, string> = {
+  "accepting": "border-gray-200  bg-gray-100  text-gray-500",
+  "accepted":  "border-green-200 bg-green-50  text-green-700",
 };
 
-const TREND_STATE_LABELS: Record<ExecutiveReportTrendState, string> = {
-  "emerging":  "Emerging",
-  "stable":    "Stable",
-  "improving": "Improving",
+const ACCEPTANCE_STATE_LABELS: Record<ExecutiveReportAcceptanceState, string> = {
+  "accepting": "Accepting",
+  "accepted":  "Accepted",
 };
 
-// ── Section 1: Trend Workspace Overview ───────────────────────────────────────
+// -- Section 1: Acceptance Overview -------------------------------------------
 
-function TrendWorkspaceOverviewSection({ trend }: { trend: ExecutiveReportTrend }) {
+function AcceptanceOverviewSection({ acceptance }: { acceptance: ExecutiveReportAcceptance }) {
+  const accepted  = acceptance.records.filter(r => r.state === "accepted").length;
+  const accepting = acceptance.records.filter(r => r.state === "accepting").length;
+
   return (
     <section>
-      <SectionLabel>Executive Report Trend Center</SectionLabel>
-      <SectionHeading>Trend Workspace Overview</SectionHeading>
+      <SectionLabel>Executive Report Acceptance</SectionLabel>
+      <SectionHeading>Acceptance Overview</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Aggregate view of the executive report trend workspace. Refreshed on every page load.
+        Pipeline-level view of the executive report acceptance stage. Refreshed on every page load.
       </p>
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
         <Card>
           <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Total Records</p>
-          <p className="mt-2 text-3xl font-black text-[#4f4a52]">{trend.records.length}</p>
+          <p className="mt-2 text-3xl font-black text-[#4f4a52]">{acceptance.records.length}</p>
         </Card>
         <Card>
-          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Trend Generated</p>
-          <p className="mt-2 text-sm font-bold text-[#4f4a52]">{fmtDate(trend.generatedAt)}</p>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Accepted</p>
+          <p className="mt-2 text-3xl font-black text-green-700">{accepted}</p>
+        </Card>
+        <Card>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Accepting</p>
+          <p className="mt-2 text-3xl font-black text-[#a09aa6]">{accepting}</p>
         </Card>
       </div>
     </section>
   );
 }
 
-// ── Section 2: Executive Trend Workspace ──────────────────────────────────────
+// -- Section 2: Acceptance Timeline -------------------------------------------
 
-function ExecutiveTrendWorkspaceSection({ trend }: { trend: ExecutiveReportTrend }) {
-  if (trend.records.length === 0) {
+function AcceptanceTimelineSection({ acceptance }: { acceptance: ExecutiveReportAcceptance }) {
+  if (acceptance.records.length === 0) {
     return (
       <section>
-        <SectionLabel>Workspace</SectionLabel>
-        <SectionHeading>Executive Trend Workspace</SectionHeading>
+        <SectionLabel>Timeline</SectionLabel>
+        <SectionHeading>Acceptance Timeline</SectionHeading>
         <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-          Full trend workspace for executive review.
+          Chronological acceptance event timeline.
         </p>
         <Card>
-          <p className="text-sm text-[#7b7480]">No trend records available.</p>
+          <p className="text-sm text-[#7b7480]">No acceptance entries available.</p>
         </Card>
       </section>
     );
@@ -118,186 +123,214 @@ function ExecutiveTrendWorkspaceSection({ trend }: { trend: ExecutiveReportTrend
 
   return (
     <section>
-      <SectionLabel>Workspace</SectionLabel>
-      <SectionHeading>Executive Trend Workspace</SectionHeading>
+      <SectionLabel>Timeline</SectionLabel>
+      <SectionHeading>Acceptance Timeline</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        {trend.records.length} record{trend.records.length === 1 ? "" : "s"} in the trend workspace.
+        {acceptance.records.length} acceptance {acceptance.records.length === 1 ? "entry" : "entries"} in chronological order.
       </p>
 
-      <Card>
-        <div className="divide-y divide-gray-100">
-          {trend.records.map((entry, i) => (
-            <div key={i} className="py-4 first:pt-0 last:pb-0">
-              <div className="mb-2 flex items-center gap-2">
-                <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${TREND_STATE_STYLES[entry.state]}`}>
-                  {TREND_STATE_LABELS[entry.state]}
-                </span>
-                <span className="ml-auto text-[10px] text-[#a09aa6]">{fmtDate(entry.generatedAt)}</span>
-              </div>
-              <p className="text-sm font-bold text-[#4f4a52]">
-                {entry.insight.delta.comparison.current.headline.text}
-              </p>
-              <p className="mt-1 text-[10px] text-[#a09aa6]">
-                Previous: {entry.insight.delta.comparison.previous?.headline.text ?? "—"}
-              </p>
-              <p className="mt-2 text-sm leading-relaxed text-[#7b7480]">
-                {entry.insight.delta.comparison.current.executiveSummary}
-              </p>
+      <div className="space-y-3">
+        {acceptance.records.map((entry, i) => (
+          <Card key={i} className="flex items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <span className={`shrink-0 rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${ACCEPTANCE_STATE_STYLES[entry.state]}`}>
+                {ACCEPTANCE_STATE_LABELS[entry.state]}
+              </span>
+              <span className="text-sm text-[#4f4a52]">
+                {entry.endorsement.ratification.authentication.authorization.certification.validation.verification.confirmation.receipt.acknowledgement.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.headline.text}
+              </span>
             </div>
-          ))}
-        </div>
-      </Card>
-    </section>
-  );
-}
-
-// ── Section 3: Trend Review Workspace ────────────────────────────────────────
-
-function TrendWorkspaceCard({ entry }: { entry: ExecutiveReportTrendEntry }) {
-  return (
-    <Card>
-      <div className="mb-3 flex flex-wrap items-center gap-2">
-        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${TREND_STATE_STYLES[entry.state]}`}>
-          {TREND_STATE_LABELS[entry.state]}
-        </span>
-        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${SEVERITY_STYLES[entry.insight.delta.comparison.current.overallStatus]}`}>
-          {SEVERITY_LABELS[entry.insight.delta.comparison.current.overallStatus]}
-        </span>
-        <span className="ml-auto text-[10px] text-[#a09aa6]">{fmtDate(entry.generatedAt)}</span>
-      </div>
-      <p className="text-sm font-bold text-[#4f4a52]">
-        {entry.insight.delta.comparison.current.headline.text}
-      </p>
-      <div className="my-3 h-px bg-gray-100" />
-      <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Previous Headline</p>
-      <p className="mt-1 text-sm text-[#7b7480]">
-        {entry.insight.delta.comparison.previous?.headline.text ?? "—"}
-      </p>
-      <p className="mt-3 text-sm leading-relaxed text-[#7b7480]">
-        {entry.insight.delta.comparison.current.executiveSummary}
-      </p>
-    </Card>
-  );
-}
-
-function TrendReviewWorkspaceSection({ trend }: { trend: ExecutiveReportTrend }) {
-  if (trend.records.length === 0) {
-    return (
-      <section>
-        <SectionLabel>Review</SectionLabel>
-        <SectionHeading>Trend Review Workspace</SectionHeading>
-        <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-          Detailed review cards for every trend record.
-        </p>
-        <Card>
-          <p className="text-sm text-[#7b7480]">No trend records available.</p>
-        </Card>
-      </section>
-    );
-  }
-
-  return (
-    <section>
-      <SectionLabel>Review</SectionLabel>
-      <SectionHeading>Trend Review Workspace</SectionHeading>
-      <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        {trend.records.length} record{trend.records.length === 1 ? "" : "s"} under review.
-        Displayed exactly as received.
-      </p>
-
-      <div className="space-y-4">
-        {trend.records.map((entry, i) => (
-          <TrendWorkspaceCard key={i} entry={entry} />
+            <span className="shrink-0 text-[10px] text-[#a09aa6]">{fmtDate(entry.generatedAt)}</span>
+          </Card>
         ))}
       </div>
     </section>
   );
 }
 
-// ── Section 4: Trend Readiness ────────────────────────────────────────────────
+// -- Section 3: Acceptance Records --------------------------------------------
 
-function TrendReadinessSection({ trend }: { trend: ExecutiveReportTrend }) {
-  const latestGeneratedAt = trend.records.length > 0
-    ? trend.records[trend.records.length - 1].generatedAt
-    : null;
+function AcceptanceRecordCard({ entry }: { entry: ExecutiveReportAcceptanceEntry }) {
+  const current = entry.endorsement.ratification.authentication.authorization.certification.validation.verification.confirmation.receipt.acknowledgement.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current;
+
+  return (
+    <Card>
+      <div className="mb-3 flex flex-wrap items-center gap-2">
+        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${ACCEPTANCE_STATE_STYLES[entry.state]}`}>
+          {ACCEPTANCE_STATE_LABELS[entry.state]}
+        </span>
+        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${SEVERITY_STYLES[current.overallStatus]}`}>
+          {SEVERITY_LABELS[current.overallStatus]}
+        </span>
+        <span className="ml-auto text-[10px] text-[#a09aa6]">{fmtDate(entry.generatedAt)}</span>
+      </div>
+      <p className="text-sm font-bold text-[#4f4a52]">{current.headline.text}</p>
+      <p className="mt-2 text-sm leading-relaxed text-[#7b7480]">{current.executiveSummary}</p>
+    </Card>
+  );
+}
+
+function AcceptanceRecordsSection({ acceptance }: { acceptance: ExecutiveReportAcceptance }) {
+  if (acceptance.records.length === 0) {
+    return (
+      <section>
+        <SectionLabel>Records</SectionLabel>
+        <SectionHeading>Acceptance Records</SectionHeading>
+        <p className="mt-2 mb-5 text-sm text-[#7b7480]">
+          Full acceptance record detail with deep pipeline context.
+        </p>
+        <Card>
+          <p className="text-sm text-[#7b7480]">No acceptance records available.</p>
+        </Card>
+      </section>
+    );
+  }
 
   return (
     <section>
-      <SectionLabel>Readiness</SectionLabel>
-      <SectionHeading>Trend Readiness</SectionHeading>
+      <SectionLabel>Records</SectionLabel>
+      <SectionHeading>Acceptance Records</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Trend readiness indicators at generation time.
+        {acceptance.records.length} acceptance {acceptance.records.length === 1 ? "record" : "records"} with full pipeline context.
       </p>
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <Card>
-          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Total Trend Records</p>
-          <p className="mt-3 text-3xl font-black text-[#4f4a52]">{trend.records.length}</p>
+      <div className="space-y-4">
+        {acceptance.records.map((entry, i) => (
+          <AcceptanceRecordCard key={i} entry={entry} />
+        ))}
+      </div>
+    </section>
+  );
+}
+
+// -- Section 4: Acceptance Status ---------------------------------------------
+
+function AcceptanceStatusSection({ acceptance }: { acceptance: ExecutiveReportAcceptance }) {
+  const total     = acceptance.records.length;
+  const accepted  = acceptance.records.filter(r => r.state === "accepted").length;
+  const accepting = acceptance.records.filter(r => r.state === "accepting").length;
+
+  return (
+    <section>
+      <SectionLabel>Status</SectionLabel>
+      <SectionHeading>Acceptance Status</SectionHeading>
+      <p className="mt-2 mb-5 text-sm text-[#7b7480]">
+        State distribution across the acceptance pipeline.
+      </p>
+
+      <div className="space-y-3">
+        <Card className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${ACCEPTANCE_STATE_STYLES["accepted"]}`}>
+              Accepted
+            </span>
+            <span className="text-sm text-[#4f4a52]">Accepted records</span>
+          </div>
+          <span className="text-sm font-black text-green-700">{accepted} / {total}</span>
         </Card>
-        <Card>
-          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Latest Generated At</p>
-          <p className="mt-3 text-sm font-bold text-[#4f4a52]">
-            {latestGeneratedAt ? fmtDate(latestGeneratedAt) : "—"}
-          </p>
+        <Card className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${ACCEPTANCE_STATE_STYLES["accepting"]}`}>
+              Accepting
+            </span>
+            <span className="text-sm text-[#4f4a52]">Accepting records</span>
+          </div>
+          <span className="text-sm font-black text-[#a09aa6]">{accepting} / {total}</span>
         </Card>
       </div>
     </section>
   );
 }
 
-// ── Section 5: Trend Metadata ─────────────────────────────────────────────────
+// -- Section 5: Acceptance Metadata -------------------------------------------
 
-function TrendMetadataSection({ trend }: { trend: ExecutiveReportTrend }) {
+function AcceptanceMetadataSection({ acceptance }: { acceptance: ExecutiveReportAcceptance }) {
   return (
     <section>
       <SectionLabel>Metadata</SectionLabel>
-      <SectionHeading>Trend Metadata</SectionHeading>
+      <SectionHeading>Acceptance Metadata</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Trend generation metadata. No data is stored or persisted.
+        Generation metadata for this acceptance report.
       </p>
 
-      <Card>
-        <table className="w-full text-sm">
-          <tbody className="divide-y divide-gray-100">
-            <tr>
-              <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Generated At</td>
-              <td className="py-3 text-right text-[#4f4a52]">{fmtDate(trend.generatedAt)}</td>
-            </tr>
-            <tr>
-              <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Trend Records</td>
-              <td className="py-3 text-right text-[#4f4a52]">{trend.records.length}</td>
-            </tr>
-          </tbody>
-        </table>
-      </Card>
+      <div className="space-y-3">
+        <Card className="flex items-center justify-between">
+          <span className="text-sm text-[#7b7480]">Generated At</span>
+          <span className="text-sm font-medium text-[#4f4a52]">{fmtDate(acceptance.generatedAt)}</span>
+        </Card>
+        <Card className="flex items-center justify-between">
+          <span className="text-sm text-[#7b7480]">Total Records</span>
+          <span className="text-sm font-medium text-[#4f4a52]">{acceptance.records.length}</span>
+        </Card>
+      </div>
     </section>
   );
 }
 
-// ── Section 6: Quick Navigation ───────────────────────────────────────────────
+// -- Section 6: Quick Navigation ----------------------------------------------
 
 const QUICK_NAV_LINKS = [
-  { href: "/admin",                                       label: "Operations" },
-  { href: "/admin/operations",                            label: "Unified Operations" },
-  { href: "/admin/executive-operations",                  label: "Executive Operations" },
-  { href: "/admin/alerts",                                label: "Alerts" },
-  { href: "/admin/alert-center",                          label: "Alert Center" },
-  { href: "/admin/executive-digest",                      label: "Executive Digest" },
-  { href: "/admin/executive-briefing",                    label: "Executive Briefing" },
-  { href: "/admin/executive-report",                      label: "Executive Report" },
-  { href: "/admin/executive-report-center",               label: "Executive Report Center" },
-  { href: "/admin/executive-report-archive",              label: "Executive Report Archive" },
-  { href: "/admin/executive-report-archive-center",       label: "Executive Report Archive Center" },
-  { href: "/admin/executive-report-history",              label: "Executive Report History" },
-  { href: "/admin/executive-report-history-center",       label: "Executive Report History Center" },
-  { href: "/admin/executive-report-comparison",           label: "Executive Report Comparison" },
-  { href: "/admin/executive-report-comparison-center",    label: "Executive Report Comparison Center" },
-  { href: "/admin/executive-report-delta",                label: "Executive Report Delta" },
-  { href: "/admin/executive-report-delta-center",         label: "Executive Report Delta Center" },
-  { href: "/admin/executive-report-insight",              label: "Executive Report Insight" },
-  { href: "/admin/executive-report-insight-center",       label: "Executive Report Insight Center" },
-  { href: "/admin/executive-report-trend",                label: "Executive Report Trend" },
-  { href: "/admin/executive-report-trend-center",         label: "Executive Report Trend Center" },
+  { href: "/admin",                                              label: "Operations" },
+  { href: "/admin/operations",                                   label: "Unified Operations" },
+  { href: "/admin/executive-operations",                         label: "Executive Operations" },
+  { href: "/admin/alerts",                                       label: "Alerts" },
+  { href: "/admin/alert-center",                                 label: "Alert Center" },
+  { href: "/admin/executive-digest",                             label: "Executive Digest" },
+  { href: "/admin/executive-briefing",                           label: "Executive Briefing" },
+  { href: "/admin/executive-report",                             label: "Executive Report" },
+  { href: "/admin/executive-report-center",                      label: "Executive Report Center" },
+  { href: "/admin/executive-report-archive",                     label: "Executive Report Archive" },
+  { href: "/admin/executive-report-archive-center",              label: "Executive Report Archive Center" },
+  { href: "/admin/executive-report-history",                     label: "Executive Report History" },
+  { href: "/admin/executive-report-history-center",              label: "Executive Report History Center" },
+  { href: "/admin/executive-report-comparison",                  label: "Executive Report Comparison" },
+  { href: "/admin/executive-report-comparison-center",           label: "Executive Report Comparison Center" },
+  { href: "/admin/executive-report-delta",                       label: "Executive Report Delta" },
+  { href: "/admin/executive-report-delta-center",                label: "Executive Report Delta Center" },
+  { href: "/admin/executive-report-insight",                     label: "Executive Report Insight" },
+  { href: "/admin/executive-report-insight-center",              label: "Executive Report Insight Center" },
+  { href: "/admin/executive-report-trend",                       label: "Executive Report Trend" },
+  { href: "/admin/executive-report-trend-center",                label: "Executive Report Trend Center" },
+  { href: "/admin/executive-report-forecast",                    label: "Executive Report Forecast" },
+  { href: "/admin/executive-report-forecast-center",             label: "Executive Report Forecast Center" },
+  { href: "/admin/executive-report-outlook",                     label: "Executive Report Outlook" },
+  { href: "/admin/executive-report-outlook-center",              label: "Executive Report Outlook Center" },
+  { href: "/admin/executive-report-strategy",                    label: "Executive Report Strategy" },
+  { href: "/admin/executive-report-strategy-center",             label: "Executive Report Strategy Center" },
+  { href: "/admin/executive-report-action",                      label: "Executive Report Action" },
+  { href: "/admin/executive-report-action-center",               label: "Executive Report Action Center" },
+  { href: "/admin/executive-report-decision",                    label: "Executive Report Decision" },
+  { href: "/admin/executive-report-decision-center",             label: "Executive Report Decision Center" },
+  { href: "/admin/executive-report-approval",                    label: "Executive Report Approval" },
+  { href: "/admin/executive-report-approval-center",             label: "Executive Report Approval Center" },
+  { href: "/admin/executive-report-execution",                   label: "Executive Report Execution" },
+  { href: "/admin/executive-report-execution-center",            label: "Executive Report Execution Center" },
+  { href: "/admin/executive-report-completion",                  label: "Executive Report Completion" },
+  { href: "/admin/executive-report-completion-center",           label: "Executive Report Completion Center" },
+  { href: "/admin/executive-report-publication",                 label: "Executive Report Publication" },
+  { href: "/admin/executive-report-publication-center",          label: "Executive Report Publication Center" },
+  { href: "/admin/executive-report-distribution",                label: "Executive Report Distribution" },
+  { href: "/admin/executive-report-distribution-center",         label: "Executive Report Distribution Center" },
+  { href: "/admin/executive-report-delivery",                    label: "Executive Report Delivery" },
+  { href: "/admin/executive-report-delivery-center",             label: "Executive Report Delivery Center" },
+  { href: "/admin/executive-report-acknowledgement",             label: "Executive Report Acknowledgement" },
+  { href: "/admin/executive-report-acknowledgement-center",      label: "Executive Report Acknowledgement Center" },
+  { href: "/admin/executive-report-receipt",                     label: "Executive Report Receipt" },
+  { href: "/admin/executive-report-receipt-center",              label: "Executive Report Receipt Center" },
+  { href: "/admin/executive-report-confirmation",                label: "Executive Report Confirmation" },
+  { href: "/admin/executive-report-confirmation-center",         label: "Executive Report Confirmation Center" },
+  { href: "/admin/executive-report-validation",                  label: "Executive Report Validation" },
+  { href: "/admin/executive-report-validation-center",           label: "Executive Report Validation Center" },
+  { href: "/admin/executive-report-certification",               label: "Executive Report Certification" },
+  { href: "/admin/executive-report-certification-center",        label: "Executive Report Certification Center" },
+  { href: "/admin/executive-report-authorization",               label: "Executive Report Authorization" },
+  { href: "/admin/executive-report-authorization-center",        label: "Executive Report Authorization Center" },
+  { href: "/admin/executive-report-authentication",              label: "Executive Report Authentication" },
+  { href: "/admin/executive-report-authentication-center",       label: "Executive Report Authentication Center" },
+  { href: "/admin/executive-report-ratification",                label: "Executive Report Ratification" },
+  { href: "/admin/executive-report-ratification-center",         label: "Executive Report Ratification Center" },
+  { href: "/admin/executive-report-endorsement",                 label: "Executive Report Endorsement" },
+  { href: "/admin/executive-report-endorsement-center",          label: "Executive Report Endorsement Center" },
 ] as const;
 
 function QuickNavigationSection() {
@@ -324,19 +357,19 @@ function QuickNavigationSection() {
   );
 }
 
-// ── Props ─────────────────────────────────────────────────────────────────────
+// -- Props --------------------------------------------------------------------
 
 interface Props {
-  trend: ExecutiveReportTrend;
+  acceptance: ExecutiveReportAcceptance;
 }
 
-// ── Main export ───────────────────────────────────────────────────────────────
+// -- Main export --------------------------------------------------------------
 
-export default function ExecutiveReportTrendCenter({ trend }: Props) {
+export default function ExecutiveReportAcceptanceDashboard({ acceptance }: Props) {
   return (
     <div className="min-h-screen bg-[#f5f1eb]">
 
-      {/* ── Header ── */}
+      {/* -- Header -- */}
       <header className="flex items-center justify-between bg-[#4f4a52] px-6 py-4 print:hidden">
         <div className="flex items-center gap-6">
           <div>
@@ -419,7 +452,9 @@ export default function ExecutiveReportTrendCenter({ trend }: Props) {
             <Link href="/admin/executive-report-trend" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Trend
             </Link>
-            <span className="text-xs font-bold text-white">Executive Report Trend Center</span>
+            <Link href="/admin/executive-report-trend-center" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report Trend Center
+            </Link>
             <Link href="/admin/executive-report-forecast" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Forecast
             </Link>
@@ -540,9 +575,7 @@ export default function ExecutiveReportTrendCenter({ trend }: Props) {
             <Link href="/admin/executive-report-endorsement-center" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Endorsement Center
             </Link>
-            <Link href="/admin/executive-report-acceptance" className="text-xs text-white/60 transition hover:text-white">
-              Executive Report Acceptance
-            </Link>
+            <span className="text-xs font-bold text-white">Executive Report Acceptance</span>
           </nav>
         </div>
         <form action={logoutAction}>
@@ -552,26 +585,26 @@ export default function ExecutiveReportTrendCenter({ trend }: Props) {
         </form>
       </header>
 
-      {/* ── Content ── */}
+      {/* -- Content -- */}
       <div className="mx-auto w-full max-w-[780px] space-y-14 px-6 py-12">
 
-        <TrendWorkspaceOverviewSection trend={trend} />
+        <AcceptanceOverviewSection acceptance={acceptance} />
 
         <hr className="border-gray-200" />
 
-        <ExecutiveTrendWorkspaceSection trend={trend} />
+        <AcceptanceTimelineSection acceptance={acceptance} />
 
         <hr className="border-gray-200" />
 
-        <TrendReviewWorkspaceSection trend={trend} />
+        <AcceptanceRecordsSection acceptance={acceptance} />
 
         <hr className="border-gray-200" />
 
-        <TrendReadinessSection trend={trend} />
+        <AcceptanceStatusSection acceptance={acceptance} />
 
         <hr className="border-gray-200" />
 
-        <TrendMetadataSection trend={trend} />
+        <AcceptanceMetadataSection acceptance={acceptance} />
 
         <hr className="border-gray-200" />
 
