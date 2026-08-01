@@ -562,7 +562,10 @@ export default function ExecutiveReportAuthenticationCenter({ authentication }: 
             <Link href="/admin/executive-report-authentication" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Authentication
             </Link>
-            <span className="text-xs font-bold text-white">Executive Report Authentication Center</span>
+            <Link href="/admin/executive-report-authentication-center" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report Authentication Center
+            </Link>
+            <span className="text-xs font-bold text-white">Executive Report Ratification</span>
           </nav>
         </div>
         <form action={logoutAction}>

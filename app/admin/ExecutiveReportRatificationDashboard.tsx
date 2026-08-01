@@ -1,14 +1,14 @@
-﻿"use client";
+"use client";
 
 import React            from "react";
 import Link             from "next/link";
 import { logoutAction } from "./actions";
 import type { AlertSeverity } from "@/app/lib/operations/OperationsAlertTypes";
 import type {
-  ExecutiveReportDelta,
-  ExecutiveReportDeltaEntry,
-  ExecutiveReportDeltaState,
-} from "@/app/lib/operations/ExecutiveReportDeltaTypes";
+  ExecutiveReportRatification,
+  ExecutiveReportRatificationEntry,
+  ExecutiveReportRatificationState,
+} from "@/app/lib/operations/ExecutiveReportRatificationTypes";
 
 // ── UI helpers ────────────────────────────────────────────────────────────────
 
@@ -61,56 +61,61 @@ const SEVERITY_LABELS: Record<AlertSeverity, string> = {
   "low":      "Low",
 };
 
-const DELTA_STATE_STYLES: Record<ExecutiveReportDeltaState, string> = {
-  "initial":   "border-blue-200  bg-blue-50   text-blue-700",
-  "unchanged": "border-gray-200  bg-gray-100  text-gray-500",
-  "changed":   "border-amber-100 bg-amber-50  text-amber-700",
+const RATIFICATION_STATE_STYLES: Record<ExecutiveReportRatificationState, string> = {
+  "ratifying": "border-gray-200  bg-gray-100  text-gray-500",
+  "ratified":  "border-green-200 bg-green-50  text-green-700",
 };
 
-const DELTA_STATE_LABELS: Record<ExecutiveReportDeltaState, string> = {
-  "initial":   "Initial",
-  "unchanged": "Unchanged",
-  "changed":   "Changed",
+const RATIFICATION_STATE_LABELS: Record<ExecutiveReportRatificationState, string> = {
+  "ratifying": "Ratifying",
+  "ratified":  "Ratified",
 };
 
-// ── Section 1: Delta Workspace Overview ───────────────────────────────────────
+// ── Section 1: Ratification Overview ─────────────────────────────────────────
 
-function DeltaWorkspaceOverviewSection({ delta }: { delta: ExecutiveReportDelta }) {
+function RatificationOverviewSection({ ratification }: { ratification: ExecutiveReportRatification }) {
+  const ratified  = ratification.records.filter(r => r.state === "ratified").length;
+  const ratifying = ratification.records.filter(r => r.state === "ratifying").length;
+
   return (
     <section>
-      <SectionLabel>Executive Report Delta Center</SectionLabel>
-      <SectionHeading>Delta Workspace Overview</SectionHeading>
+      <SectionLabel>Executive Report Ratification</SectionLabel>
+      <SectionHeading>Ratification Overview</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Workspace view of the executive report delta. Refreshed on every page load.
+        Pipeline-level view of the executive report ratification stage. Refreshed on every page load.
       </p>
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
         <Card>
           <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Total Records</p>
-          <p className="mt-2 text-3xl font-black text-[#4f4a52]">{delta.records.length}</p>
+          <p className="mt-2 text-3xl font-black text-[#4f4a52]">{ratification.records.length}</p>
         </Card>
         <Card>
-          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Delta Generated</p>
-          <p className="mt-2 text-sm font-bold text-[#4f4a52]">{fmtDate(delta.generatedAt)}</p>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Ratified</p>
+          <p className="mt-2 text-3xl font-black text-green-700">{ratified}</p>
+        </Card>
+        <Card>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Ratifying</p>
+          <p className="mt-2 text-3xl font-black text-[#a09aa6]">{ratifying}</p>
         </Card>
       </div>
     </section>
   );
 }
 
-// ── Section 2: Executive Delta Workspace ──────────────────────────────────────
+// ── Section 2: Ratification Timeline ─────────────────────────────────────────
 
-function ExecutiveDeltaWorkspaceSection({ delta }: { delta: ExecutiveReportDelta }) {
-  if (delta.records.length === 0) {
+function RatificationTimelineSection({ ratification }: { ratification: ExecutiveReportRatification }) {
+  if (ratification.records.length === 0) {
     return (
       <section>
-        <SectionLabel>Workspace</SectionLabel>
-        <SectionHeading>Executive Delta Workspace</SectionHeading>
+        <SectionLabel>Timeline</SectionLabel>
+        <SectionHeading>Ratification Timeline</SectionHeading>
         <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-          Delta entries for review. Displayed exactly as received.
+          Chronological view of ratification entries.
         </p>
         <Card>
-          <p className="text-sm text-[#7b7480]">No delta records available.</p>
+          <p className="text-sm text-[#7b7480]">No ratification entries available.</p>
         </Card>
       </section>
     );
@@ -118,81 +123,68 @@ function ExecutiveDeltaWorkspaceSection({ delta }: { delta: ExecutiveReportDelta
 
   return (
     <section>
-      <SectionLabel>Workspace</SectionLabel>
-      <SectionHeading>Executive Delta Workspace</SectionHeading>
+      <SectionLabel>Timeline</SectionLabel>
+      <SectionHeading>Ratification Timeline</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Delta entries for review. Displayed exactly as received. No processing applied.
+        Chronological sequence of all ratification entries at generation time.
       </p>
 
-      <div className="space-y-4">
-        {delta.records.map((entry, i) => (
-          <Card key={i}>
-            <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">
-              {entry.comparison.current.headline.text}
-            </p>
-            {entry.comparison.previous && (
-              <p className="mt-1 text-[10px] text-[#a09aa6]">
-                Previous: {entry.comparison.previous.headline.text}
-              </p>
-            )}
-            <div className="mt-2 mb-3">
-              <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${DELTA_STATE_STYLES[entry.state]}`}>
-                {DELTA_STATE_LABELS[entry.state]}
-              </span>
+      <Card>
+        <div className="divide-y divide-gray-100">
+          {ratification.records.map((entry, i) => (
+            <div key={i} className="flex items-center justify-between py-3 first:pt-0 last:pb-0">
+              <div className="flex items-center gap-3">
+                <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${RATIFICATION_STATE_STYLES[entry.state]}`}>
+                  {RATIFICATION_STATE_LABELS[entry.state]}
+                </span>
+                <span className="text-sm text-[#4f4a52]">
+                  {entry.authentication.authorization.certification.validation.verification.confirmation.receipt.acknowledgement.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.headline.text}
+                </span>
+              </div>
+              <span className="ml-4 shrink-0 text-[10px] text-[#a09aa6]">{fmtDate(entry.generatedAt)}</span>
             </div>
-            <p className="text-base leading-relaxed text-[#4f4a52]">
-              {entry.comparison.current.executiveSummary}
-            </p>
-          </Card>
-        ))}
-      </div>
+          ))}
+        </div>
+      </Card>
     </section>
   );
 }
 
-// ── Section 3: Delta Review Workspace ────────────────────────────────────────
+// ── Section 3: Ratification Records ──────────────────────────────────────────
 
-function DeltaWorkspaceCard({ entry }: { entry: ExecutiveReportDeltaEntry }) {
+function RatificationRecordCard({ entry }: { entry: ExecutiveReportRatificationEntry }) {
   return (
     <Card>
-      <div className="mb-3 flex items-start justify-between gap-4">
-        <p className="text-sm font-bold uppercase tracking-wide text-[#4f4a52]">
-          {entry.comparison.current.headline.text}
-        </p>
-        <div className="flex shrink-0 flex-col items-end gap-1">
-          <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${DELTA_STATE_STYLES[entry.state]}`}>
-            {DELTA_STATE_LABELS[entry.state]}
-          </span>
-          <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${SEVERITY_STYLES[entry.comparison.current.overallStatus]}`}>
-            {SEVERITY_LABELS[entry.comparison.current.overallStatus]}
-          </span>
-        </div>
-      </div>
-      <div className="h-px bg-gray-100" />
-      <p className="mt-3 text-sm leading-relaxed text-[#7b7480]">
-        {entry.comparison.current.executiveSummary}
-      </p>
-      <div className="mt-3 flex flex-wrap items-center gap-3">
-        <span className="text-[10px] text-[#a09aa6]">{fmtDate(entry.generatedAt)}</span>
-        <span className="text-[10px] uppercase tracking-wider text-[#a09aa6]">
-          Previous: {entry.comparison.previous?.headline.text ?? "—"}
+      <div className="mb-3 flex flex-wrap items-center gap-2">
+        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${RATIFICATION_STATE_STYLES[entry.state]}`}>
+          {RATIFICATION_STATE_LABELS[entry.state]}
         </span>
+        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${SEVERITY_STYLES[entry.authentication.authorization.certification.validation.verification.confirmation.receipt.acknowledgement.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.overallStatus]}`}>
+          {SEVERITY_LABELS[entry.authentication.authorization.certification.validation.verification.confirmation.receipt.acknowledgement.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.overallStatus]}
+        </span>
+        <span className="ml-auto text-[10px] text-[#a09aa6]">{fmtDate(entry.generatedAt)}</span>
       </div>
+      <p className="text-sm font-bold text-[#4f4a52]">
+        {entry.authentication.authorization.certification.validation.verification.confirmation.receipt.acknowledgement.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.headline.text}
+      </p>
+      <p className="mt-2 text-sm leading-relaxed text-[#7b7480]">
+        {entry.authentication.authorization.certification.validation.verification.confirmation.receipt.acknowledgement.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.executiveSummary}
+      </p>
     </Card>
   );
 }
 
-function DeltaReviewWorkspaceSection({ delta }: { delta: ExecutiveReportDelta }) {
-  if (delta.records.length === 0) {
+function RatificationRecordsSection({ ratification }: { ratification: ExecutiveReportRatification }) {
+  if (ratification.records.length === 0) {
     return (
       <section>
-        <SectionLabel>Review</SectionLabel>
-        <SectionHeading>Delta Review Workspace</SectionHeading>
+        <SectionLabel>Records</SectionLabel>
+        <SectionHeading>Ratification Records</SectionHeading>
         <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-          Delta records for executive review.
+          All ratification records at generation time.
         </p>
         <Card>
-          <p className="text-sm text-[#7b7480]">No delta records available.</p>
+          <p className="text-sm text-[#7b7480]">No ratification records available.</p>
         </Card>
       </section>
     );
@@ -200,62 +192,92 @@ function DeltaReviewWorkspaceSection({ delta }: { delta: ExecutiveReportDelta })
 
   return (
     <section>
-      <SectionLabel>Review</SectionLabel>
-      <SectionHeading>Delta Review Workspace</SectionHeading>
+      <SectionLabel>Records</SectionLabel>
+      <SectionHeading>Ratification Records</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        {delta.records.length} record{delta.records.length === 1 ? "" : "s"} for executive review.
-        Displayed exactly as received.
+        {ratification.records.length} ratification {ratification.records.length === 1 ? "record" : "records"} at generation time.
       </p>
 
       <div className="space-y-4">
-        {delta.records.map((entry, i) => (
-          <DeltaWorkspaceCard key={i} entry={entry} />
+        {ratification.records.map((entry, i) => (
+          <RatificationRecordCard key={i} entry={entry} />
         ))}
       </div>
     </section>
   );
 }
 
-// ── Section 4: Delta Readiness ────────────────────────────────────────────────
+// ── Section 4: Ratification Status ────────────────────────────────────────────
 
-function DeltaReadinessSection({ delta }: { delta: ExecutiveReportDelta }) {
-  const latestGeneratedAt = delta.records.length > 0
-    ? delta.records[delta.records.length - 1].generatedAt
-    : null;
+function RatificationStatusSection({ ratification }: { ratification: ExecutiveReportRatification }) {
+  if (ratification.records.length === 0) {
+    return (
+      <section>
+        <SectionLabel>Status</SectionLabel>
+        <SectionHeading>Ratification Status</SectionHeading>
+        <p className="mt-2 mb-5 text-sm text-[#7b7480]">
+          Status breakdown across all ratification entries.
+        </p>
+        <Card>
+          <p className="text-sm text-[#7b7480]">No ratification entries to display.</p>
+        </Card>
+      </section>
+    );
+  }
 
   return (
     <section>
-      <SectionLabel>Readiness</SectionLabel>
-      <SectionHeading>Delta Readiness</SectionHeading>
+      <SectionLabel>Status</SectionLabel>
+      <SectionHeading>Ratification Status</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Aggregate delta readiness at generation time.
+        State and severity breakdown across all ratification entries at generation time.
       </p>
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <Card>
-          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Total Delta Records</p>
-          <p className="mt-3 text-3xl font-black text-[#4f4a52]">{delta.records.length}</p>
-        </Card>
-        <Card>
-          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Latest Generated At</p>
-          <p className="mt-3 text-sm font-bold text-[#4f4a52]">
-            {latestGeneratedAt ? fmtDate(latestGeneratedAt) : "—"}
-          </p>
-        </Card>
-      </div>
+      <Card>
+        <table className="w-full text-sm">
+          <thead>
+            <tr className="border-b border-gray-100">
+              <th className="pb-3 text-left text-[10px] uppercase tracking-widest text-[#a09aa6]">State</th>
+              <th className="pb-3 text-left text-[10px] uppercase tracking-widest text-[#a09aa6]">Severity</th>
+              <th className="pb-3 text-left text-[10px] uppercase tracking-widest text-[#a09aa6]">Headline</th>
+              <th className="pb-3 text-right text-[10px] uppercase tracking-widest text-[#a09aa6]">Generated</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-gray-100">
+            {ratification.records.map((entry, i) => (
+              <tr key={i}>
+                <td className="py-3">
+                  <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${RATIFICATION_STATE_STYLES[entry.state]}`}>
+                    {RATIFICATION_STATE_LABELS[entry.state]}
+                  </span>
+                </td>
+                <td className="py-3">
+                  <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${SEVERITY_STYLES[entry.authentication.authorization.certification.validation.verification.confirmation.receipt.acknowledgement.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.overallStatus]}`}>
+                    {SEVERITY_LABELS[entry.authentication.authorization.certification.validation.verification.confirmation.receipt.acknowledgement.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.overallStatus]}
+                  </span>
+                </td>
+                <td className="py-3 text-[#4f4a52]">
+                  {entry.authentication.authorization.certification.validation.verification.confirmation.receipt.acknowledgement.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.headline.text}
+                </td>
+                <td className="py-3 text-right text-[10px] text-[#a09aa6]">{fmtDate(entry.generatedAt)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </Card>
     </section>
   );
 }
 
-// ── Section 5: Delta Metadata ─────────────────────────────────────────────────
+// ── Section 5: Ratification Metadata ─────────────────────────────────────────
 
-function DeltaMetadataSection({ delta }: { delta: ExecutiveReportDelta }) {
+function RatificationMetadataSection({ ratification }: { ratification: ExecutiveReportRatification }) {
   return (
     <section>
       <SectionLabel>Metadata</SectionLabel>
-      <SectionHeading>Delta Metadata</SectionHeading>
+      <SectionHeading>Ratification Metadata</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Delta generation metadata. No data is stored or persisted.
+        Ratification generation metadata. No data is stored or persisted.
       </p>
 
       <Card>
@@ -263,11 +285,11 @@ function DeltaMetadataSection({ delta }: { delta: ExecutiveReportDelta }) {
           <tbody className="divide-y divide-gray-100">
             <tr>
               <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Generated At</td>
-              <td className="py-3 text-right text-[#4f4a52]">{fmtDate(delta.generatedAt)}</td>
+              <td className="py-3 text-right text-[#4f4a52]">{fmtDate(ratification.generatedAt)}</td>
             </tr>
             <tr>
-              <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Delta Records</td>
-              <td className="py-3 text-right text-[#4f4a52]">{delta.records.length}</td>
+              <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Ratification Records</td>
+              <td className="py-3 text-right text-[#4f4a52]">{ratification.records.length}</td>
             </tr>
           </tbody>
         </table>
@@ -279,23 +301,63 @@ function DeltaMetadataSection({ delta }: { delta: ExecutiveReportDelta }) {
 // ── Section 6: Quick Navigation ───────────────────────────────────────────────
 
 const QUICK_NAV_LINKS = [
-  { href: "/admin",                                   label: "Operations" },
-  { href: "/admin/operations",                        label: "Unified Operations" },
-  { href: "/admin/executive-operations",              label: "Executive Operations" },
-  { href: "/admin/alerts",                            label: "Alerts" },
-  { href: "/admin/alert-center",                      label: "Alert Center" },
-  { href: "/admin/executive-digest",                  label: "Executive Digest" },
-  { href: "/admin/executive-briefing",                label: "Executive Briefing" },
-  { href: "/admin/executive-report",                  label: "Executive Report" },
-  { href: "/admin/executive-report-center",           label: "Executive Report Center" },
-  { href: "/admin/executive-report-archive",          label: "Executive Report Archive" },
-  { href: "/admin/executive-report-archive-center",   label: "Executive Report Archive Center" },
-  { href: "/admin/executive-report-history",          label: "Executive Report History" },
-  { href: "/admin/executive-report-history-center",   label: "Executive Report History Center" },
-  { href: "/admin/executive-report-comparison",       label: "Executive Report Comparison" },
-  { href: "/admin/executive-report-comparison-center", label: "Executive Report Comparison Center" },
-  { href: "/admin/executive-report-delta",            label: "Executive Report Delta" },
-  { href: "/admin/executive-report-delta-center",     label: "Executive Report Delta Center" },
+  { href: "/admin",                                              label: "Operations" },
+  { href: "/admin/operations",                                   label: "Unified Operations" },
+  { href: "/admin/executive-operations",                         label: "Executive Operations" },
+  { href: "/admin/alerts",                                       label: "Alerts" },
+  { href: "/admin/alert-center",                                 label: "Alert Center" },
+  { href: "/admin/executive-digest",                             label: "Executive Digest" },
+  { href: "/admin/executive-briefing",                           label: "Executive Briefing" },
+  { href: "/admin/executive-report",                             label: "Executive Report" },
+  { href: "/admin/executive-report-center",                      label: "Executive Report Center" },
+  { href: "/admin/executive-report-archive",                     label: "Executive Report Archive" },
+  { href: "/admin/executive-report-archive-center",              label: "Executive Report Archive Center" },
+  { href: "/admin/executive-report-history",                     label: "Executive Report History" },
+  { href: "/admin/executive-report-history-center",              label: "Executive Report History Center" },
+  { href: "/admin/executive-report-comparison",                  label: "Executive Report Comparison" },
+  { href: "/admin/executive-report-comparison-center",           label: "Executive Report Comparison Center" },
+  { href: "/admin/executive-report-delta",                       label: "Executive Report Delta" },
+  { href: "/admin/executive-report-delta-center",                label: "Executive Report Delta Center" },
+  { href: "/admin/executive-report-insight",                     label: "Executive Report Insight" },
+  { href: "/admin/executive-report-insight-center",              label: "Executive Report Insight Center" },
+  { href: "/admin/executive-report-trend",                       label: "Executive Report Trend" },
+  { href: "/admin/executive-report-trend-center",                label: "Executive Report Trend Center" },
+  { href: "/admin/executive-report-forecast",                    label: "Executive Report Forecast" },
+  { href: "/admin/executive-report-forecast-center",             label: "Executive Report Forecast Center" },
+  { href: "/admin/executive-report-outlook",                     label: "Executive Report Outlook" },
+  { href: "/admin/executive-report-outlook-center",              label: "Executive Report Outlook Center" },
+  { href: "/admin/executive-report-strategy",                    label: "Executive Report Strategy" },
+  { href: "/admin/executive-report-strategy-center",             label: "Executive Report Strategy Center" },
+  { href: "/admin/executive-report-action",                      label: "Executive Report Action" },
+  { href: "/admin/executive-report-action-center",               label: "Executive Report Action Center" },
+  { href: "/admin/executive-report-decision",                    label: "Executive Report Decision" },
+  { href: "/admin/executive-report-decision-center",             label: "Executive Report Decision Center" },
+  { href: "/admin/executive-report-approval",                    label: "Executive Report Approval" },
+  { href: "/admin/executive-report-approval-center",             label: "Executive Report Approval Center" },
+  { href: "/admin/executive-report-execution",                   label: "Executive Report Execution" },
+  { href: "/admin/executive-report-execution-center",            label: "Executive Report Execution Center" },
+  { href: "/admin/executive-report-completion",                  label: "Executive Report Completion" },
+  { href: "/admin/executive-report-completion-center",           label: "Executive Report Completion Center" },
+  { href: "/admin/executive-report-publication",                 label: "Executive Report Publication" },
+  { href: "/admin/executive-report-publication-center",          label: "Executive Report Publication Center" },
+  { href: "/admin/executive-report-distribution",                label: "Executive Report Distribution" },
+  { href: "/admin/executive-report-distribution-center",         label: "Executive Report Distribution Center" },
+  { href: "/admin/executive-report-delivery",                    label: "Executive Report Delivery" },
+  { href: "/admin/executive-report-delivery-center",             label: "Executive Report Delivery Center" },
+  { href: "/admin/executive-report-acknowledgement",             label: "Executive Report Acknowledgement" },
+  { href: "/admin/executive-report-acknowledgement-center",      label: "Executive Report Acknowledgement Center" },
+  { href: "/admin/executive-report-receipt",                     label: "Executive Report Receipt" },
+  { href: "/admin/executive-report-receipt-center",              label: "Executive Report Receipt Center" },
+  { href: "/admin/executive-report-confirmation",                label: "Executive Report Confirmation" },
+  { href: "/admin/executive-report-confirmation-center",         label: "Executive Report Confirmation Center" },
+  { href: "/admin/executive-report-validation",                  label: "Executive Report Validation" },
+  { href: "/admin/executive-report-validation-center",           label: "Executive Report Validation Center" },
+  { href: "/admin/executive-report-certification",               label: "Executive Report Certification" },
+  { href: "/admin/executive-report-certification-center",        label: "Executive Report Certification Center" },
+  { href: "/admin/executive-report-authorization",               label: "Executive Report Authorization" },
+  { href: "/admin/executive-report-authorization-center",        label: "Executive Report Authorization Center" },
+  { href: "/admin/executive-report-authentication",              label: "Executive Report Authentication" },
+  { href: "/admin/executive-report-authentication-center",       label: "Executive Report Authentication Center" },
 ] as const;
 
 function QuickNavigationSection() {
@@ -325,12 +387,12 @@ function QuickNavigationSection() {
 // ── Props ─────────────────────────────────────────────────────────────────────
 
 interface Props {
-  delta: ExecutiveReportDelta;
+  ratification: ExecutiveReportRatification;
 }
 
 // ── Main export ───────────────────────────────────────────────────────────────
 
-export default function ExecutiveReportDeltaCenter({ delta }: Props) {
+export default function ExecutiveReportRatificationDashboard({ ratification }: Props) {
   return (
     <div className="min-h-screen bg-[#f5f1eb]">
 
@@ -405,7 +467,9 @@ export default function ExecutiveReportDeltaCenter({ delta }: Props) {
             <Link href="/admin/executive-report-delta" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Delta
             </Link>
-            <span className="text-xs font-bold text-white">Executive Report Delta Center</span>
+            <Link href="/admin/executive-report-delta-center" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report Delta Center
+            </Link>
             <Link href="/admin/executive-report-insight" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Insight
             </Link>
@@ -526,9 +590,7 @@ export default function ExecutiveReportDeltaCenter({ delta }: Props) {
             <Link href="/admin/executive-report-authentication-center" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Authentication Center
             </Link>
-            <Link href="/admin/executive-report-ratification" className="text-xs text-white/60 transition hover:text-white">
-              Executive Report Ratification
-            </Link>
+            <span className="text-xs font-bold text-white">Executive Report Ratification</span>
           </nav>
         </div>
         <form action={logoutAction}>
@@ -541,23 +603,23 @@ export default function ExecutiveReportDeltaCenter({ delta }: Props) {
       {/* ── Content ── */}
       <div className="mx-auto w-full max-w-[780px] space-y-14 px-6 py-12">
 
-        <DeltaWorkspaceOverviewSection delta={delta} />
+        <RatificationOverviewSection ratification={ratification} />
 
         <hr className="border-gray-200" />
 
-        <ExecutiveDeltaWorkspaceSection delta={delta} />
+        <RatificationTimelineSection ratification={ratification} />
 
         <hr className="border-gray-200" />
 
-        <DeltaReviewWorkspaceSection delta={delta} />
+        <RatificationRecordsSection ratification={ratification} />
 
         <hr className="border-gray-200" />
 
-        <DeltaReadinessSection delta={delta} />
+        <RatificationStatusSection ratification={ratification} />
 
         <hr className="border-gray-200" />
 
-        <DeltaMetadataSection delta={delta} />
+        <RatificationMetadataSection ratification={ratification} />
 
         <hr className="border-gray-200" />
 

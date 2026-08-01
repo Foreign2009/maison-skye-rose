@@ -540,6 +540,9 @@ export default function ExecutiveReportExecutionDashboard({ execution }: Props) 
             <Link href="/admin/executive-report-authentication-center" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Authentication Center
             </Link>
+            <Link href="/admin/executive-report-ratification" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report Ratification
+            </Link>
           </nav>
         </div>
         <form action={logoutAction}>
