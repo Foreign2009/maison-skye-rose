@@ -477,6 +477,9 @@ export default function ExecutiveReportDashboard({ report }: Props) {
             <Link href="/admin/executive-report-authorization-center" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Authorization Center
             </Link>
+            <Link href="/admin/executive-report-authentication" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report Authentication
+            </Link>
           </nav>
         </div>
         <form action={logoutAction}>

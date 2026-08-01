@@ -1,13 +1,14 @@
-﻿"use client";
+"use client";
 
 import React            from "react";
 import Link             from "next/link";
 import { logoutAction } from "./actions";
-import type { AlertCategory, AlertSeverity } from "@/app/lib/operations/OperationsAlertTypes";
+import type { AlertSeverity } from "@/app/lib/operations/OperationsAlertTypes";
 import type {
-  ExecutiveReportArchive,
-  ExecutiveReportArchiveEntry,
-} from "@/app/lib/operations/ExecutiveReportArchiveTypes";
+  ExecutiveReportAuthentication,
+  ExecutiveReportAuthenticationEntry,
+  ExecutiveReportAuthenticationState,
+} from "@/app/lib/operations/ExecutiveReportAuthenticationTypes";
 
 // ── UI helpers ────────────────────────────────────────────────────────────────
 
@@ -60,102 +61,61 @@ const SEVERITY_LABELS: Record<AlertSeverity, string> = {
   "low":      "Low",
 };
 
-const CATEGORY_LABELS: Record<AlertCategory, string> = {
-  "platform":       "Platform",
-  "recommendation": "Recommendation",
-  "customer":       "Customer",
-  "commerce":       "Commerce",
-  "operations":     "Operations",
+const AUTHENTICATION_STATE_STYLES: Record<ExecutiveReportAuthenticationState, string> = {
+  "authenticating": "border-gray-200  bg-gray-100  text-gray-500",
+  "authenticated":  "border-green-200 bg-green-50  text-green-700",
 };
 
-// ── Section 1: Archive Headline ───────────────────────────────────────────────
+const AUTHENTICATION_STATE_LABELS: Record<ExecutiveReportAuthenticationState, string> = {
+  "authenticating": "Authenticating",
+  "authenticated":  "Authenticated",
+};
 
-function ArchiveHeadlineSection({ archive }: { archive: ExecutiveReportArchive }) {
+// ── Section 1: Authentication Overview ───────────────────────────────────────
+
+function AuthenticationOverviewSection({ authentication }: { authentication: ExecutiveReportAuthentication }) {
+  const authenticated  = authentication.records.filter(r => r.state === "authenticated").length;
+  const authenticating = authentication.records.filter(r => r.state === "authenticating").length;
+
   return (
     <section>
-      <SectionLabel>Executive Report Archive</SectionLabel>
-      <SectionHeading>Archive Headline</SectionHeading>
+      <SectionLabel>Executive Report Authentication</SectionLabel>
+      <SectionHeading>Authentication Overview</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Authoritative executive headline derived from the platform operations report.
-        Refreshed on every page load.
+        Authentication pipeline status at generation time. Refreshed on every page load.
       </p>
 
-      <div className="mb-4 flex flex-wrap items-center gap-3">
-        <span className={`rounded-full border px-3 py-1 text-xs font-semibold ${SEVERITY_STYLES[archive.overallStatus]}`}>
-          {SEVERITY_LABELS[archive.overallStatus]}
-        </span>
-        <span className="rounded-full border border-gray-100 bg-white px-3 py-1 text-xs text-[#7b7480]">
-          Generated: {fmtDate(archive.generatedAt)}
-        </span>
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+        <Card>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Total Records</p>
+          <p className="mt-2 text-3xl font-black text-[#4f4a52]">{authentication.records.length}</p>
+        </Card>
+        <Card>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Authenticated</p>
+          <p className="mt-2 text-3xl font-black text-green-700">{authenticated}</p>
+        </Card>
+        <Card>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Authenticating</p>
+          <p className="mt-2 text-3xl font-black text-[#a09aa6]">{authenticating}</p>
+        </Card>
       </div>
-
-      <Card>
-        <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Platform Headline</p>
-        <p className="mt-3 text-lg font-black leading-snug text-[#4f4a52]">
-          {archive.headline.text}
-        </p>
-      </Card>
     </section>
   );
 }
 
-// ── Section 2: Executive Summary ──────────────────────────────────────────────
+// ── Section 2: Authentication Timeline ───────────────────────────────────────
 
-function ExecutiveSummarySection({ archive }: { archive: ExecutiveReportArchive }) {
-  return (
-    <section>
-      <SectionLabel>Summary</SectionLabel>
-      <SectionHeading>Executive Summary</SectionHeading>
-      <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Executive summary projected from the operations report. Displayed exactly as received.
-      </p>
-
-      <Card>
-        <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Summary</p>
-        <p className="mt-3 text-base leading-relaxed text-[#4f4a52]">{archive.executiveSummary}</p>
-      </Card>
-    </section>
-  );
-}
-
-// ── Section 3: Archive Entries ────────────────────────────────────────────────
-
-function ArchiveEntryCard({ entry }: { entry: ExecutiveReportArchiveEntry }) {
-  const num = String(entry.sequence).padStart(2, "0");
-
-  return (
-    <Card>
-      <div className="mb-3 flex items-start justify-between gap-4">
-        <div className="flex items-center gap-3">
-          <span className="text-2xl font-black text-[#e8e3ef]">{num}</span>
-          <p className="text-sm font-bold uppercase tracking-wide text-[#4f4a52]">{entry.title}</p>
-        </div>
-        <div className="flex shrink-0 flex-col items-end gap-1">
-          <span className="rounded-full border border-gray-100 bg-gray-50 px-2 py-0.5 text-[9px] font-mono text-[#a09aa6]">
-            {entry.alertId}
-          </span>
-          <span className="text-[9px] uppercase tracking-wider text-[#a09aa6]">
-            {CATEGORY_LABELS[entry.category]}
-          </span>
-        </div>
-      </div>
-      <div className="h-px bg-gray-100" />
-      <p className="mt-3 text-sm leading-relaxed text-[#7b7480]">{entry.body}</p>
-    </Card>
-  );
-}
-
-function ArchiveEntriesSection({ archive }: { archive: ExecutiveReportArchive }) {
-  if (archive.entries.length === 0) {
+function AuthenticationTimelineSection({ authentication }: { authentication: ExecutiveReportAuthentication }) {
+  if (authentication.records.length === 0) {
     return (
       <section>
-        <SectionLabel>Entries</SectionLabel>
-        <SectionHeading>Archive Entries</SectionHeading>
+        <SectionLabel>Timeline</SectionLabel>
+        <SectionHeading>Authentication Timeline</SectionHeading>
         <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-          Archive entries projected from the executive report.
+          Chronological view of authentication entries.
         </p>
         <Card>
-          <p className="text-sm text-[#7b7480]">No archive entries. All alerts resolved.</p>
+          <p className="text-sm text-[#7b7480]">No authentication entries available.</p>
         </Card>
       </section>
     );
@@ -163,67 +123,131 @@ function ArchiveEntriesSection({ archive }: { archive: ExecutiveReportArchive })
 
   return (
     <section>
-      <SectionLabel>Entries</SectionLabel>
-      <SectionHeading>Archive Entries</SectionHeading>
+      <SectionLabel>Timeline</SectionLabel>
+      <SectionHeading>Authentication Timeline</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        {archive.entries.length} entr{archive.entries.length === 1 ? "y" : "ies"} projected from the executive report.
-        Displayed exactly as received.
+        {authentication.records.length} authentication {authentication.records.length === 1 ? "entry" : "entries"} in the pipeline.
+      </p>
+
+      <Card>
+        <div className="divide-y divide-gray-100">
+          {authentication.records.map((entry, i) => (
+            <div key={i} className="flex items-center justify-between py-3 first:pt-0 last:pb-0">
+              <div className="flex items-center gap-3">
+                <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${AUTHENTICATION_STATE_STYLES[entry.state]}`}>
+                  {AUTHENTICATION_STATE_LABELS[entry.state]}
+                </span>
+                <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${SEVERITY_STYLES[entry.authorization.certification.validation.verification.confirmation.receipt.acknowledgement.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.overallStatus]}`}>
+                  {SEVERITY_LABELS[entry.authorization.certification.validation.verification.confirmation.receipt.acknowledgement.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.overallStatus]}
+                </span>
+              </div>
+              <span className="text-[10px] text-[#a09aa6]">{fmtDate(entry.generatedAt)}</span>
+            </div>
+          ))}
+        </div>
+      </Card>
+    </section>
+  );
+}
+
+// ── Section 3: Authentication Records ────────────────────────────────────────
+
+function AuthenticationRecordCard({ entry }: { entry: ExecutiveReportAuthenticationEntry }) {
+  return (
+    <Card>
+      <div className="mb-3 flex flex-wrap items-center gap-2">
+        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${AUTHENTICATION_STATE_STYLES[entry.state]}`}>
+          {AUTHENTICATION_STATE_LABELS[entry.state]}
+        </span>
+        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${SEVERITY_STYLES[entry.authorization.certification.validation.verification.confirmation.receipt.acknowledgement.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.overallStatus]}`}>
+          {SEVERITY_LABELS[entry.authorization.certification.validation.verification.confirmation.receipt.acknowledgement.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.overallStatus]}
+        </span>
+        <span className="ml-auto text-[10px] text-[#a09aa6]">{fmtDate(entry.generatedAt)}</span>
+      </div>
+      <p className="text-sm font-bold text-[#4f4a52]">
+        {entry.authorization.certification.validation.verification.confirmation.receipt.acknowledgement.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.headline.text}
+      </p>
+      <p className="mt-2 text-sm leading-relaxed text-[#7b7480]">
+        {entry.authorization.certification.validation.verification.confirmation.receipt.acknowledgement.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.executiveSummary}
+      </p>
+    </Card>
+  );
+}
+
+function AuthenticationRecordsSection({ authentication }: { authentication: ExecutiveReportAuthentication }) {
+  if (authentication.records.length === 0) {
+    return (
+      <section>
+        <SectionLabel>Records</SectionLabel>
+        <SectionHeading>Authentication Records</SectionHeading>
+        <p className="mt-2 mb-5 text-sm text-[#7b7480]">
+          All authentication records in the current pipeline.
+        </p>
+        <Card>
+          <p className="text-sm text-[#7b7480]">No authentication records available.</p>
+        </Card>
+      </section>
+    );
+  }
+
+  return (
+    <section>
+      <SectionLabel>Records</SectionLabel>
+      <SectionHeading>Authentication Records</SectionHeading>
+      <p className="mt-2 mb-5 text-sm text-[#7b7480]">
+        {authentication.records.length} authentication {authentication.records.length === 1 ? "record" : "records"} generated at {fmtDate(authentication.generatedAt)}.
       </p>
 
       <div className="space-y-4">
-        {archive.entries.map((entry) => (
-          <ArchiveEntryCard key={entry.alertId} entry={entry} />
+        {authentication.records.map((entry, i) => (
+          <AuthenticationRecordCard key={i} entry={entry} />
         ))}
       </div>
     </section>
   );
 }
 
-// ── Section 4: Archive Status ─────────────────────────────────────────────────
+// ── Section 4: Authentication Status ─────────────────────────────────────────
 
-function ArchiveStatusSection({ archive }: { archive: ExecutiveReportArchive }) {
+function AuthenticationStatusSection({ authentication }: { authentication: ExecutiveReportAuthentication }) {
+  const authenticated  = authentication.records.filter(r => r.state === "authenticated").length;
+  const authenticating = authentication.records.filter(r => r.state === "authenticating").length;
+  const total          = authentication.records.length;
+  const authenticatedPct = total > 0 ? Math.round((authenticated / total) * 100) : 0;
+
   return (
     <section>
       <SectionLabel>Status</SectionLabel>
-      <SectionHeading>Archive Status</SectionHeading>
+      <SectionHeading>Authentication Status</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Overall platform status and analytics connectivity at archive generation time.
+        Authentication status indicators at generation time. No data is stored or persisted.
       </p>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <Card>
-          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Overall Status</p>
-          <div className="mt-3">
-            <span className={`rounded-full border px-4 py-1.5 text-xs font-bold uppercase tracking-wider ${SEVERITY_STYLES[archive.overallStatus]}`}>
-              {SEVERITY_LABELS[archive.overallStatus]}
-            </span>
-          </div>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Authentication Rate</p>
+          <p className="mt-2 text-3xl font-black text-[#4f4a52]">{authenticatedPct}%</p>
+          <p className="mt-1 text-[10px] text-[#a09aa6]">{authenticated} of {total} authenticated</p>
         </Card>
         <Card>
-          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Analytics</p>
-          <p className="mt-3 text-sm font-bold text-[#4f4a52]">
-            {archive.analyticsAvailable ? "Connected" : "Offline"}
-          </p>
-          {!archive.analyticsAvailable && (
-            <p className="mt-1 text-[10px] text-[#7b7480]">
-              Configure PostHog environment variables to enable live intelligence.
-            </p>
-          )}
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Pending Authentication</p>
+          <p className="mt-2 text-3xl font-black text-[#4f4a52]">{authenticating}</p>
+          <p className="mt-1 text-[10px] text-[#a09aa6]">{authenticating === 1 ? "record" : "records"} authenticating</p>
         </Card>
       </div>
     </section>
   );
 }
 
-// ── Section 5: Archive Metadata ───────────────────────────────────────────────
+// ── Section 5: Authentication Metadata ───────────────────────────────────────
 
-function ArchiveMetadataSection({ archive }: { archive: ExecutiveReportArchive }) {
+function AuthenticationMetadataSection({ authentication }: { authentication: ExecutiveReportAuthentication }) {
   return (
     <section>
       <SectionLabel>Metadata</SectionLabel>
-      <SectionHeading>Archive Metadata</SectionHeading>
+      <SectionHeading>Authentication Metadata</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Archive generation metadata. No data is stored or persisted.
+        Authentication generation metadata. No data is stored or persisted.
       </p>
 
       <Card>
@@ -231,15 +255,11 @@ function ArchiveMetadataSection({ archive }: { archive: ExecutiveReportArchive }
           <tbody className="divide-y divide-gray-100">
             <tr>
               <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Generated At</td>
-              <td className="py-3 text-right text-[#4f4a52]">{fmtDate(archive.generatedAt)}</td>
+              <td className="py-3 text-right text-[#4f4a52]">{fmtDate(authentication.generatedAt)}</td>
             </tr>
             <tr>
-              <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Analytics Available</td>
-              <td className="py-3 text-right text-[#4f4a52]">{archive.analyticsAvailable ? "Yes" : "No"}</td>
-            </tr>
-            <tr>
-              <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Archive Entries</td>
-              <td className="py-3 text-right text-[#4f4a52]">{archive.entries.length}</td>
+              <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Authentication Records</td>
+              <td className="py-3 text-right text-[#4f4a52]">{authentication.records.length}</td>
             </tr>
           </tbody>
         </table>
@@ -251,16 +271,61 @@ function ArchiveMetadataSection({ archive }: { archive: ExecutiveReportArchive }
 // ── Section 6: Quick Navigation ───────────────────────────────────────────────
 
 const QUICK_NAV_LINKS = [
-  { href: "/admin",                          label: "Operations" },
-  { href: "/admin/operations",               label: "Unified Operations" },
-  { href: "/admin/executive-operations",     label: "Executive Operations" },
-  { href: "/admin/alerts",                   label: "Alerts" },
-  { href: "/admin/alert-center",             label: "Alert Center" },
-  { href: "/admin/executive-digest",         label: "Executive Digest" },
-  { href: "/admin/executive-briefing",       label: "Executive Briefing" },
-  { href: "/admin/executive-report",         label: "Executive Report" },
-  { href: "/admin/executive-report-center",  label: "Executive Report Center" },
-  { href: "/admin/executive-report-archive", label: "Executive Report Archive" },
+  { href: "/admin",                                              label: "Operations" },
+  { href: "/admin/operations",                                   label: "Unified Operations" },
+  { href: "/admin/executive-operations",                         label: "Executive Operations" },
+  { href: "/admin/alerts",                                       label: "Alerts" },
+  { href: "/admin/alert-center",                                 label: "Alert Center" },
+  { href: "/admin/executive-digest",                             label: "Executive Digest" },
+  { href: "/admin/executive-briefing",                           label: "Executive Briefing" },
+  { href: "/admin/executive-report",                             label: "Executive Report" },
+  { href: "/admin/executive-report-center",                      label: "Executive Report Center" },
+  { href: "/admin/executive-report-archive",                     label: "Executive Report Archive" },
+  { href: "/admin/executive-report-archive-center",              label: "Executive Report Archive Center" },
+  { href: "/admin/executive-report-history",                     label: "Executive Report History" },
+  { href: "/admin/executive-report-history-center",              label: "Executive Report History Center" },
+  { href: "/admin/executive-report-comparison",                  label: "Executive Report Comparison" },
+  { href: "/admin/executive-report-comparison-center",           label: "Executive Report Comparison Center" },
+  { href: "/admin/executive-report-delta",                       label: "Executive Report Delta" },
+  { href: "/admin/executive-report-delta-center",                label: "Executive Report Delta Center" },
+  { href: "/admin/executive-report-insight",                     label: "Executive Report Insight" },
+  { href: "/admin/executive-report-insight-center",              label: "Executive Report Insight Center" },
+  { href: "/admin/executive-report-trend",                       label: "Executive Report Trend" },
+  { href: "/admin/executive-report-trend-center",                label: "Executive Report Trend Center" },
+  { href: "/admin/executive-report-forecast",                    label: "Executive Report Forecast" },
+  { href: "/admin/executive-report-forecast-center",             label: "Executive Report Forecast Center" },
+  { href: "/admin/executive-report-outlook",                     label: "Executive Report Outlook" },
+  { href: "/admin/executive-report-outlook-center",              label: "Executive Report Outlook Center" },
+  { href: "/admin/executive-report-strategy",                    label: "Executive Report Strategy" },
+  { href: "/admin/executive-report-strategy-center",             label: "Executive Report Strategy Center" },
+  { href: "/admin/executive-report-action",                      label: "Executive Report Action" },
+  { href: "/admin/executive-report-action-center",               label: "Executive Report Action Center" },
+  { href: "/admin/executive-report-decision",                    label: "Executive Report Decision" },
+  { href: "/admin/executive-report-decision-center",             label: "Executive Report Decision Center" },
+  { href: "/admin/executive-report-approval",                    label: "Executive Report Approval" },
+  { href: "/admin/executive-report-approval-center",             label: "Executive Report Approval Center" },
+  { href: "/admin/executive-report-execution",                   label: "Executive Report Execution" },
+  { href: "/admin/executive-report-execution-center",            label: "Executive Report Execution Center" },
+  { href: "/admin/executive-report-completion",                  label: "Executive Report Completion" },
+  { href: "/admin/executive-report-completion-center",           label: "Executive Report Completion Center" },
+  { href: "/admin/executive-report-publication",                 label: "Executive Report Publication" },
+  { href: "/admin/executive-report-publication-center",          label: "Executive Report Publication Center" },
+  { href: "/admin/executive-report-distribution",                label: "Executive Report Distribution" },
+  { href: "/admin/executive-report-distribution-center",         label: "Executive Report Distribution Center" },
+  { href: "/admin/executive-report-delivery",                    label: "Executive Report Delivery" },
+  { href: "/admin/executive-report-delivery-center",             label: "Executive Report Delivery Center" },
+  { href: "/admin/executive-report-acknowledgement",             label: "Executive Report Acknowledgement" },
+  { href: "/admin/executive-report-acknowledgement-center",      label: "Executive Report Acknowledgement Center" },
+  { href: "/admin/executive-report-receipt",                     label: "Executive Report Receipt" },
+  { href: "/admin/executive-report-receipt-center",              label: "Executive Report Receipt Center" },
+  { href: "/admin/executive-report-confirmation",                label: "Executive Report Confirmation" },
+  { href: "/admin/executive-report-confirmation-center",         label: "Executive Report Confirmation Center" },
+  { href: "/admin/executive-report-validation",                  label: "Executive Report Validation" },
+  { href: "/admin/executive-report-validation-center",           label: "Executive Report Validation Center" },
+  { href: "/admin/executive-report-certification",               label: "Executive Report Certification" },
+  { href: "/admin/executive-report-certification-center",        label: "Executive Report Certification Center" },
+  { href: "/admin/executive-report-authorization",               label: "Executive Report Authorization" },
+  { href: "/admin/executive-report-authorization-center",        label: "Executive Report Authorization Center" },
 ] as const;
 
 function QuickNavigationSection() {
@@ -290,12 +355,12 @@ function QuickNavigationSection() {
 // ── Props ─────────────────────────────────────────────────────────────────────
 
 interface Props {
-  archive: ExecutiveReportArchive;
+  authentication: ExecutiveReportAuthentication;
 }
 
 // ── Main export ───────────────────────────────────────────────────────────────
 
-export default function ExecutiveReportArchiveDashboard({ archive }: Props) {
+export default function ExecutiveReportAuthenticationDashboard({ authentication }: Props) {
   return (
     <div className="min-h-screen bg-[#f5f1eb]">
 
@@ -349,7 +414,9 @@ export default function ExecutiveReportArchiveDashboard({ archive }: Props) {
             <Link href="/admin/executive-report-center" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Center
             </Link>
-            <span className="text-xs font-bold text-white">Executive Report Archive</span>
+            <Link href="/admin/executive-report-archive" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report Archive
+            </Link>
             <Link href="/admin/executive-report-archive-center" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Archive Center
             </Link>
@@ -485,9 +552,7 @@ export default function ExecutiveReportArchiveDashboard({ archive }: Props) {
             <Link href="/admin/executive-report-authorization-center" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Authorization Center
             </Link>
-            <Link href="/admin/executive-report-authentication" className="text-xs text-white/60 transition hover:text-white">
-              Executive Report Authentication
-            </Link>
+            <span className="text-xs font-bold text-white">Executive Report Authentication</span>
           </nav>
         </div>
         <form action={logoutAction}>
@@ -500,23 +565,23 @@ export default function ExecutiveReportArchiveDashboard({ archive }: Props) {
       {/* ── Content ── */}
       <div className="mx-auto w-full max-w-[780px] space-y-14 px-6 py-12">
 
-        <ArchiveHeadlineSection archive={archive} />
+        <AuthenticationOverviewSection authentication={authentication} />
 
         <hr className="border-gray-200" />
 
-        <ExecutiveSummarySection archive={archive} />
+        <AuthenticationTimelineSection authentication={authentication} />
 
         <hr className="border-gray-200" />
 
-        <ArchiveEntriesSection archive={archive} />
+        <AuthenticationRecordsSection authentication={authentication} />
 
         <hr className="border-gray-200" />
 
-        <ArchiveStatusSection archive={archive} />
+        <AuthenticationStatusSection authentication={authentication} />
 
         <hr className="border-gray-200" />
 
-        <ArchiveMetadataSection archive={archive} />
+        <AuthenticationMetadataSection authentication={authentication} />
 
         <hr className="border-gray-200" />
 
