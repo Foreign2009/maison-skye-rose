@@ -549,6 +549,9 @@ export default function ExecutiveReportDistributionCenter({ distribution }: Prop
             <Link href="/admin/executive-report-ratification" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Ratification
             </Link>
+            <Link href="/admin/executive-report-ratification-center" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report Ratification Center
+            </Link>
           </nav>
         </div>
         <form action={logoutAction}>

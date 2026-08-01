@@ -1,13 +1,14 @@
-﻿"use client";
+"use client";
 
 import React            from "react";
 import Link             from "next/link";
 import { logoutAction } from "./actions";
-import type { AlertSeverity }              from "@/app/lib/operations/OperationsAlertTypes";
+import type { AlertSeverity } from "@/app/lib/operations/OperationsAlertTypes";
 import type {
-  ExecutiveDigestSection,
-  ExecutiveOperationsDigest,
-} from "@/app/lib/operations/ExecutiveOperationsDigestTypes";
+  ExecutiveReportRatification,
+  ExecutiveReportRatificationEntry,
+  ExecutiveReportRatificationState,
+} from "@/app/lib/operations/ExecutiveReportRatificationTypes";
 
 // ── UI helpers ────────────────────────────────────────────────────────────────
 
@@ -60,103 +61,83 @@ const SEVERITY_LABELS: Record<AlertSeverity, string> = {
   "low":      "Low",
 };
 
-const READINESS_LABELS: Record<AlertSeverity, string> = {
-  "critical": "Attention Required",
-  "high":     "Review Required",
-  "medium":   "Monitoring",
-  "low":      "Ready",
+const RATIFICATION_STATE_STYLES: Record<ExecutiveReportRatificationState, string> = {
+  "ratifying": "border-gray-200  bg-gray-100  text-gray-500",
+  "ratified":  "border-green-200 bg-green-50  text-green-700",
 };
 
-// ── Section 1: Executive Overview ─────────────────────────────────────────────
+const RATIFICATION_STATE_LABELS: Record<ExecutiveReportRatificationState, string> = {
+  "ratifying": "Ratifying",
+  "ratified":  "Ratified",
+};
 
-function ExecutiveOverviewSection({ digest }: { digest: ExecutiveOperationsDigest }) {
+// ── Section 1: Ratification Workspace Overview ────────────────────────────────
+
+function RatificationWorkspaceOverviewSection({ ratification }: { ratification: ExecutiveReportRatification }) {
+  const ratified  = ratification.records.filter(r => r.state === "ratified").length;
+  const ratifying = ratification.records.filter(r => r.state === "ratifying").length;
+
   return (
     <section>
-      <SectionLabel>Executive Briefing Center</SectionLabel>
-      <SectionHeading>Executive Overview</SectionHeading>
+      <SectionLabel>Executive Report Ratification</SectionLabel>
+      <SectionHeading>Ratification Workspace Overview</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Authoritative executive view of current platform operational state.
-        Refreshed on every page load.
+        Workspace-level view of the executive report ratification pipeline. Refreshed on every page load.
       </p>
 
-      <div className="mb-5 flex flex-wrap items-center gap-3">
-        <span className={`rounded-full border px-3 py-1 text-xs font-semibold ${SEVERITY_STYLES[digest.overallStatus]}`}>
-          {SEVERITY_LABELS[digest.overallStatus]}
-        </span>
-        <span className="rounded-full border border-gray-100 bg-white px-3 py-1 text-xs text-[#7b7480]">
-          {fmtDate(digest.generatedAt)}
-        </span>
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+        <Card>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Total Records</p>
+          <p className="mt-2 text-3xl font-black text-[#4f4a52]">{ratification.records.length}</p>
+        </Card>
+        <Card>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Ratified</p>
+          <p className="mt-2 text-3xl font-black text-green-700">{ratified}</p>
+        </Card>
+        <Card>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Ratifying</p>
+          <p className="mt-2 text-3xl font-black text-[#a09aa6]">{ratifying}</p>
+        </Card>
       </div>
-
-      <Card>
-        <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Executive Headline</p>
-        <p className="mt-3 text-lg font-black leading-snug text-[#4f4a52]">
-          {digest.headline.text}
-        </p>
-      </Card>
     </section>
   );
 }
 
-// ── Section 2: Strategic Summary ─────────────────────────────────────────────
+// ── Section 2: Executive Ratification Workspace ───────────────────────────────
 
-function StrategicSummarySection({ digest }: { digest: ExecutiveOperationsDigest }) {
-  return (
-    <section>
-      <SectionLabel>Strategic</SectionLabel>
-      <SectionHeading>Strategic Summary</SectionHeading>
-      <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Executive summary synthesized from the operational alert briefing.
-        No additional processing applied.
-      </p>
-
-      <Card>
-        <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Summary</p>
-        <p className="mt-3 text-base leading-relaxed text-[#4f4a52]">{digest.summary}</p>
-      </Card>
-    </section>
-  );
-}
-
-// ── Section 3: Executive Observations ────────────────────────────────────────
-
-function ObservationWorkspaceCard({
-  obs,
-  index,
-}: {
-  obs:   ExecutiveDigestSection;
-  index: number;
-}) {
-  const num = String(index + 1).padStart(2, "0");
-
+function ExecutiveRatificationWorkspaceCard({ entry }: { entry: ExecutiveReportRatificationEntry }) {
   return (
     <Card>
-      <div className="mb-3 flex items-start justify-between gap-4">
-        <div className="flex items-center gap-3">
-          <span className="text-2xl font-black text-[#e8e3ef]">{num}</span>
-          <p className="text-sm font-bold uppercase tracking-wide text-[#4f4a52]">{obs.title}</p>
-        </div>
-        <span className="shrink-0 rounded-full border border-gray-100 bg-gray-50 px-2 py-0.5 text-[9px] font-mono text-[#a09aa6]">
-          {obs.alertId}
+      <div className="mb-3 flex flex-wrap items-center gap-2">
+        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${RATIFICATION_STATE_STYLES[entry.state]}`}>
+          {RATIFICATION_STATE_LABELS[entry.state]}
         </span>
+        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${SEVERITY_STYLES[entry.authentication.authorization.certification.validation.verification.confirmation.receipt.acknowledgement.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.overallStatus]}`}>
+          {SEVERITY_LABELS[entry.authentication.authorization.certification.validation.verification.confirmation.receipt.acknowledgement.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.overallStatus]}
+        </span>
+        <span className="ml-auto text-[10px] text-[#a09aa6]">{fmtDate(entry.generatedAt)}</span>
       </div>
-      <div className="h-px bg-gray-100" />
-      <p className="mt-3 text-sm leading-relaxed text-[#7b7480]">{obs.body}</p>
+      <p className="text-sm font-bold text-[#4f4a52]">
+        {entry.authentication.authorization.certification.validation.verification.confirmation.receipt.acknowledgement.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.headline.text}
+      </p>
+      <p className="mt-2 text-sm leading-relaxed text-[#7b7480]">
+        {entry.authentication.authorization.certification.validation.verification.confirmation.receipt.acknowledgement.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.executiveSummary}
+      </p>
     </Card>
   );
 }
 
-function ExecutiveObservationsSection({ digest }: { digest: ExecutiveOperationsDigest }) {
-  if (digest.keyObservations.length === 0) {
+function ExecutiveRatificationWorkspaceSection({ ratification }: { ratification: ExecutiveReportRatification }) {
+  if (ratification.records.length === 0) {
     return (
       <section>
-        <SectionLabel>Observations</SectionLabel>
-        <SectionHeading>Executive Observations</SectionHeading>
+        <SectionLabel>Workspace</SectionLabel>
+        <SectionHeading>Executive Ratification Workspace</SectionHeading>
         <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-          Observations derived from the operational alert briefing.
+          Operational workspace view of all ratification entries.
         </p>
         <Card>
-          <p className="text-sm text-[#7b7480]">No active observations. All alerts resolved.</p>
+          <p className="text-sm text-[#7b7480]">No ratification entries available.</p>
         </Card>
       </section>
     );
@@ -164,71 +145,114 @@ function ExecutiveObservationsSection({ digest }: { digest: ExecutiveOperationsD
 
   return (
     <section>
-      <SectionLabel>Observations</SectionLabel>
-      <SectionHeading>Executive Observations</SectionHeading>
+      <SectionLabel>Workspace</SectionLabel>
+      <SectionHeading>Executive Ratification Workspace</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        {digest.keyObservations.length} observation{digest.keyObservations.length === 1 ? "" : "s"} for executive review.
-        Displayed exactly as received.
+        {ratification.records.length} ratification {ratification.records.length === 1 ? "entry" : "entries"} in the executive workspace.
       </p>
 
       <div className="space-y-4">
-        {digest.keyObservations.map((obs, i) => (
-          <ObservationWorkspaceCard key={obs.alertId} obs={obs} index={i} />
+        {ratification.records.map((entry, i) => (
+          <ExecutiveRatificationWorkspaceCard key={i} entry={entry} />
         ))}
       </div>
     </section>
   );
 }
 
-// ── Section 4: Operational Readiness ─────────────────────────────────────────
+// ── Section 3: Ratification Review Workspace ──────────────────────────────────
 
-function OperationalReadinessSection({ digest }: { digest: ExecutiveOperationsDigest }) {
+function RatificationReviewWorkspaceSection({ ratification }: { ratification: ExecutiveReportRatification }) {
+  if (ratification.records.length === 0) {
+    return (
+      <section>
+        <SectionLabel>Review</SectionLabel>
+        <SectionHeading>Ratification Review Workspace</SectionHeading>
+        <p className="mt-2 mb-5 text-sm text-[#7b7480]">
+          Review workspace for ratification entry comparison.
+        </p>
+        <Card>
+          <p className="text-sm text-[#7b7480]">No ratification entries to review.</p>
+        </Card>
+      </section>
+    );
+  }
+
+  return (
+    <section>
+      <SectionLabel>Review</SectionLabel>
+      <SectionHeading>Ratification Review Workspace</SectionHeading>
+      <p className="mt-2 mb-5 text-sm text-[#7b7480]">
+        Current and previous headline comparison across all ratification entries.
+      </p>
+
+      <Card>
+        <div className="divide-y divide-gray-100">
+          {ratification.records.map((entry, i) => (
+            <div key={i} className="py-4 first:pt-0 last:pb-0">
+              <div className="mb-2 flex items-center gap-2">
+                <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${RATIFICATION_STATE_STYLES[entry.state]}`}>
+                  {RATIFICATION_STATE_LABELS[entry.state]}
+                </span>
+                <span className="ml-auto text-[10px] text-[#a09aa6]">{fmtDate(entry.generatedAt)}</span>
+              </div>
+              <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Current</p>
+              <p className="mt-1 text-sm font-bold text-[#4f4a52]">
+                {entry.authentication.authorization.certification.validation.verification.confirmation.receipt.acknowledgement.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.headline.text}
+              </p>
+              <p className="mt-2 text-[10px] uppercase tracking-widest text-[#a09aa6]">Previous</p>
+              <p className="mt-1 text-sm text-[#7b7480]">
+                {entry.authentication.authorization.certification.validation.verification.confirmation.receipt.acknowledgement.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.previous?.headline.text ?? "—"}
+              </p>
+            </div>
+          ))}
+        </div>
+      </Card>
+    </section>
+  );
+}
+
+// ── Section 4: Ratification Readiness ────────────────────────────────────────
+
+function RatificationReadinessSection({ ratification }: { ratification: ExecutiveReportRatification }) {
+  const ratified  = ratification.records.filter(r => r.state === "ratified").length;
+  const ratifying = ratification.records.filter(r => r.state === "ratifying").length;
+  const total     = ratification.records.length;
+  const readyPct  = total > 0 ? Math.round((ratified / total) * 100) : 0;
+
   return (
     <section>
       <SectionLabel>Readiness</SectionLabel>
-      <SectionHeading>Operational Readiness</SectionHeading>
+      <SectionHeading>Ratification Readiness</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Platform readiness assessment derived from operational status and analytics availability.
+        Ratification readiness indicators at generation time. No data is stored or persisted.
       </p>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <Card>
-          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Platform Readiness</p>
-          <p className="mt-3 text-xl font-black text-[#4f4a52]">
-            {READINESS_LABELS[digest.overallStatus]}
-          </p>
-          <div className="mt-3">
-            <span className={`rounded-full border px-3 py-1 text-xs font-bold uppercase ${SEVERITY_STYLES[digest.overallStatus]}`}>
-              {SEVERITY_LABELS[digest.overallStatus]}
-            </span>
-          </div>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Ratification Readiness</p>
+          <p className="mt-2 text-3xl font-black text-[#4f4a52]">{readyPct}%</p>
+          <p className="mt-1 text-[10px] text-[#a09aa6]">{ratified} of {total} ratified</p>
         </Card>
-
         <Card>
-          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Intelligence Availability</p>
-          <p className="mt-3 text-xl font-black text-[#4f4a52]">
-            {digest.analyticsAvailable ? "Connected" : "Offline"}
-          </p>
-          <p className="mt-2 text-[10px] uppercase tracking-wider text-[#a09aa6]">
-            {digest.analyticsAvailable
-              ? "Live analytics connected"
-              : "Configure PostHog to enable"}
-          </p>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Pending Ratification</p>
+          <p className="mt-2 text-3xl font-black text-[#4f4a52]">{ratifying}</p>
+          <p className="mt-1 text-[10px] text-[#a09aa6]">{ratifying === 1 ? "record" : "records"} ratifying</p>
         </Card>
       </div>
     </section>
   );
 }
 
-// ── Section 5: Digest Metadata ────────────────────────────────────────────────
+// ── Section 5: Ratification Metadata ─────────────────────────────────────────
 
-function DigestMetadataSection({ digest }: { digest: ExecutiveOperationsDigest }) {
+function RatificationMetadataSection({ ratification }: { ratification: ExecutiveReportRatification }) {
   return (
     <section>
       <SectionLabel>Metadata</SectionLabel>
-      <SectionHeading>Digest Metadata</SectionHeading>
+      <SectionHeading>Ratification Metadata</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Digest generation metadata. No data is stored or persisted.
+        Ratification generation metadata. No data is stored or persisted.
       </p>
 
       <Card>
@@ -236,15 +260,11 @@ function DigestMetadataSection({ digest }: { digest: ExecutiveOperationsDigest }
           <tbody className="divide-y divide-gray-100">
             <tr>
               <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Generated At</td>
-              <td className="py-3 text-right text-[#4f4a52]">{fmtDate(digest.generatedAt)}</td>
+              <td className="py-3 text-right text-[#4f4a52]">{fmtDate(ratification.generatedAt)}</td>
             </tr>
             <tr>
-              <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Analytics Available</td>
-              <td className="py-3 text-right text-[#4f4a52]">{digest.analyticsAvailable ? "Yes" : "No"}</td>
-            </tr>
-            <tr>
-              <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Key Observations</td>
-              <td className="py-3 text-right text-[#4f4a52]">{digest.keyObservations.length}</td>
+              <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Ratification Records</td>
+              <td className="py-3 text-right text-[#4f4a52]">{ratification.records.length}</td>
             </tr>
           </tbody>
         </table>
@@ -256,13 +276,65 @@ function DigestMetadataSection({ digest }: { digest: ExecutiveOperationsDigest }
 // ── Section 6: Quick Navigation ───────────────────────────────────────────────
 
 const QUICK_NAV_LINKS = [
-  { href: "/admin",                        label: "Operations" },
-  { href: "/admin/operations",             label: "Unified Operations" },
-  { href: "/admin/executive-operations",   label: "Executive Operations" },
-  { href: "/admin/alerts",                 label: "Alerts" },
-  { href: "/admin/alert-center",           label: "Alert Center" },
-  { href: "/admin/executive-digest",       label: "Executive Digest" },
-  { href: "/admin/executive-briefing",     label: "Executive Briefing" },
+  { href: "/admin",                                              label: "Operations" },
+  { href: "/admin/operations",                                   label: "Unified Operations" },
+  { href: "/admin/executive-operations",                         label: "Executive Operations" },
+  { href: "/admin/alerts",                                       label: "Alerts" },
+  { href: "/admin/alert-center",                                 label: "Alert Center" },
+  { href: "/admin/executive-digest",                             label: "Executive Digest" },
+  { href: "/admin/executive-briefing",                           label: "Executive Briefing" },
+  { href: "/admin/executive-report",                             label: "Executive Report" },
+  { href: "/admin/executive-report-center",                      label: "Executive Report Center" },
+  { href: "/admin/executive-report-archive",                     label: "Executive Report Archive" },
+  { href: "/admin/executive-report-archive-center",              label: "Executive Report Archive Center" },
+  { href: "/admin/executive-report-history",                     label: "Executive Report History" },
+  { href: "/admin/executive-report-history-center",              label: "Executive Report History Center" },
+  { href: "/admin/executive-report-comparison",                  label: "Executive Report Comparison" },
+  { href: "/admin/executive-report-comparison-center",           label: "Executive Report Comparison Center" },
+  { href: "/admin/executive-report-delta",                       label: "Executive Report Delta" },
+  { href: "/admin/executive-report-delta-center",                label: "Executive Report Delta Center" },
+  { href: "/admin/executive-report-insight",                     label: "Executive Report Insight" },
+  { href: "/admin/executive-report-insight-center",              label: "Executive Report Insight Center" },
+  { href: "/admin/executive-report-trend",                       label: "Executive Report Trend" },
+  { href: "/admin/executive-report-trend-center",                label: "Executive Report Trend Center" },
+  { href: "/admin/executive-report-forecast",                    label: "Executive Report Forecast" },
+  { href: "/admin/executive-report-forecast-center",             label: "Executive Report Forecast Center" },
+  { href: "/admin/executive-report-outlook",                     label: "Executive Report Outlook" },
+  { href: "/admin/executive-report-outlook-center",              label: "Executive Report Outlook Center" },
+  { href: "/admin/executive-report-strategy",                    label: "Executive Report Strategy" },
+  { href: "/admin/executive-report-strategy-center",             label: "Executive Report Strategy Center" },
+  { href: "/admin/executive-report-action",                      label: "Executive Report Action" },
+  { href: "/admin/executive-report-action-center",               label: "Executive Report Action Center" },
+  { href: "/admin/executive-report-decision",                    label: "Executive Report Decision" },
+  { href: "/admin/executive-report-decision-center",             label: "Executive Report Decision Center" },
+  { href: "/admin/executive-report-approval",                    label: "Executive Report Approval" },
+  { href: "/admin/executive-report-approval-center",             label: "Executive Report Approval Center" },
+  { href: "/admin/executive-report-execution",                   label: "Executive Report Execution" },
+  { href: "/admin/executive-report-execution-center",            label: "Executive Report Execution Center" },
+  { href: "/admin/executive-report-completion",                  label: "Executive Report Completion" },
+  { href: "/admin/executive-report-completion-center",           label: "Executive Report Completion Center" },
+  { href: "/admin/executive-report-publication",                 label: "Executive Report Publication" },
+  { href: "/admin/executive-report-publication-center",          label: "Executive Report Publication Center" },
+  { href: "/admin/executive-report-distribution",                label: "Executive Report Distribution" },
+  { href: "/admin/executive-report-distribution-center",         label: "Executive Report Distribution Center" },
+  { href: "/admin/executive-report-delivery",                    label: "Executive Report Delivery" },
+  { href: "/admin/executive-report-delivery-center",             label: "Executive Report Delivery Center" },
+  { href: "/admin/executive-report-acknowledgement",             label: "Executive Report Acknowledgement" },
+  { href: "/admin/executive-report-acknowledgement-center",      label: "Executive Report Acknowledgement Center" },
+  { href: "/admin/executive-report-receipt",                     label: "Executive Report Receipt" },
+  { href: "/admin/executive-report-receipt-center",              label: "Executive Report Receipt Center" },
+  { href: "/admin/executive-report-confirmation",                label: "Executive Report Confirmation" },
+  { href: "/admin/executive-report-confirmation-center",         label: "Executive Report Confirmation Center" },
+  { href: "/admin/executive-report-validation",                  label: "Executive Report Validation" },
+  { href: "/admin/executive-report-validation-center",           label: "Executive Report Validation Center" },
+  { href: "/admin/executive-report-certification",               label: "Executive Report Certification" },
+  { href: "/admin/executive-report-certification-center",        label: "Executive Report Certification Center" },
+  { href: "/admin/executive-report-authorization",               label: "Executive Report Authorization" },
+  { href: "/admin/executive-report-authorization-center",        label: "Executive Report Authorization Center" },
+  { href: "/admin/executive-report-authentication",              label: "Executive Report Authentication" },
+  { href: "/admin/executive-report-authentication-center",       label: "Executive Report Authentication Center" },
+  { href: "/admin/executive-report-ratification",                label: "Executive Report Ratification" },
+  { href: "/admin/executive-report-ratification-center",         label: "Executive Report Ratification Center" },
 ] as const;
 
 function QuickNavigationSection() {
@@ -292,12 +364,12 @@ function QuickNavigationSection() {
 // ── Props ─────────────────────────────────────────────────────────────────────
 
 interface Props {
-  digest: ExecutiveOperationsDigest;
+  ratification: ExecutiveReportRatification;
 }
 
 // ── Main export ───────────────────────────────────────────────────────────────
 
-export default function ExecutiveBriefingCenter({ digest }: Props) {
+export default function ExecutiveReportRatificationCenter({ ratification }: Props) {
   return (
     <div className="min-h-screen bg-[#f5f1eb]">
 
@@ -342,7 +414,9 @@ export default function ExecutiveBriefingCenter({ digest }: Props) {
             <Link href="/admin/executive-digest" className="text-xs text-white/60 transition hover:text-white">
               Executive Digest
             </Link>
-            <span className="text-xs font-bold text-white">Executive Briefing</span>
+            <Link href="/admin/executive-briefing" className="text-xs text-white/60 transition hover:text-white">
+              Executive Briefing
+            </Link>
             <Link href="/admin/executive-report" className="text-xs text-white/60 transition hover:text-white">
               Executive Report
             </Link>
@@ -496,9 +570,7 @@ export default function ExecutiveBriefingCenter({ digest }: Props) {
             <Link href="/admin/executive-report-ratification" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Ratification
             </Link>
-            <Link href="/admin/executive-report-ratification-center" className="text-xs text-white/60 transition hover:text-white">
-              Executive Report Ratification Center
-            </Link>
+            <span className="text-xs font-bold text-white">Executive Report Ratification Center</span>
           </nav>
         </div>
         <form action={logoutAction}>
@@ -511,23 +583,23 @@ export default function ExecutiveBriefingCenter({ digest }: Props) {
       {/* ── Content ── */}
       <div className="mx-auto w-full max-w-[780px] space-y-14 px-6 py-12">
 
-        <ExecutiveOverviewSection digest={digest} />
+        <RatificationWorkspaceOverviewSection ratification={ratification} />
 
         <hr className="border-gray-200" />
 
-        <StrategicSummarySection digest={digest} />
+        <ExecutiveRatificationWorkspaceSection ratification={ratification} />
 
         <hr className="border-gray-200" />
 
-        <ExecutiveObservationsSection digest={digest} />
+        <RatificationReviewWorkspaceSection ratification={ratification} />
 
         <hr className="border-gray-200" />
 
-        <OperationalReadinessSection digest={digest} />
+        <RatificationReadinessSection ratification={ratification} />
 
         <hr className="border-gray-200" />
 
-        <DigestMetadataSection digest={digest} />
+        <RatificationMetadataSection ratification={ratification} />
 
         <hr className="border-gray-200" />
 
