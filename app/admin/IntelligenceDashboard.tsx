@@ -1279,6 +1279,9 @@ export default function IntelligenceDashboard({ data }: { data: IntelligenceData
             <Link href="/admin/executive-report-authentication" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Authentication
             </Link>
+            <Link href="/admin/executive-report-authentication-center" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report Authentication Center
+            </Link>
           </nav>
         </div>
         <form action={logoutAction}>
