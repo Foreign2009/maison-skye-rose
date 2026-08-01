@@ -544,7 +544,10 @@ export default function ExecutiveReportAuthorizationDashboard({ authorization }:
             <Link href="/admin/executive-report-certification-center" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Certification Center
             </Link>
-            <span className="text-xs font-bold text-white">Executive Report Authorization</span>
+            <Link href="/admin/executive-report-authorization" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report Authorization
+            </Link>
+            <span className="text-xs font-bold text-white">Executive Report Authorization Center</span>
           </nav>
         </div>
         <form action={logoutAction}>

@@ -1,16 +1,16 @@
-﻿"use client";
+"use client";
 
 import React            from "react";
 import Link             from "next/link";
 import { logoutAction } from "./actions";
 import type { AlertSeverity } from "@/app/lib/operations/OperationsAlertTypes";
 import type {
-  ExecutiveReportApproval,
-  ExecutiveReportApprovalEntry,
-  ExecutiveReportApprovalState,
-} from "@/app/lib/operations/ExecutiveReportApprovalTypes";
+  ExecutiveReportAuthorization,
+  ExecutiveReportAuthorizationEntry,
+  ExecutiveReportAuthorizationState,
+} from "@/app/lib/operations/ExecutiveReportAuthorizationTypes";
 
-// ── UI helpers ────────────────────────────────────────────────────────────────
+// ── UI helpers ───────��────────────────────────────────────────────────────────
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
@@ -36,7 +36,7 @@ function Card({ children, className = "" }: { children: React.ReactNode; classNa
   );
 }
 
-// ── Formatter ─────────────────────────────────────────────────────────────────
+// ── Formatter ─────────────────────────────────��───────────────────────────────
 
 function fmtDate(iso: string): string {
   return new Date(iso).toLocaleString("en-GB", {
@@ -61,56 +61,83 @@ const SEVERITY_LABELS: Record<AlertSeverity, string> = {
   "low":      "Low",
 };
 
-const APPROVAL_STATE_STYLES: Record<ExecutiveReportApprovalState, string> = {
-  "awaiting":  "border-amber-100  bg-amber-50  text-amber-700",
-  "approved":  "border-gray-200   bg-gray-100  text-gray-500",
-  "completed": "border-green-200  bg-green-50  text-green-700",
+const AUTHORIZATION_STATE_STYLES: Record<ExecutiveReportAuthorizationState, string> = {
+  "authorizing": "border-gray-200  bg-gray-100  text-gray-500",
+  "authorized":  "border-green-200 bg-green-50  text-green-700",
 };
 
-const APPROVAL_STATE_LABELS: Record<ExecutiveReportApprovalState, string> = {
-  "awaiting":  "Awaiting",
-  "approved":  "Approved",
-  "completed": "Completed",
+const AUTHORIZATION_STATE_LABELS: Record<ExecutiveReportAuthorizationState, string> = {
+  "authorizing": "Authorizing",
+  "authorized":  "Authorized",
 };
 
-// ── Section 1: Approval Overview ──────────────────────────────────────────────
+// ── Section 1: Authorization Workspace Overview ───────────────────────────────
 
-function ApprovalOverviewSection({ approval }: { approval: ExecutiveReportApproval }) {
+function AuthorizationWorkspaceOverviewSection({ authorization }: { authorization: ExecutiveReportAuthorization }) {
+  const authorized  = authorization.records.filter(r => r.state === "authorized").length;
+  const authorizing = authorization.records.filter(r => r.state === "authorizing").length;
+
   return (
     <section>
-      <SectionLabel>Executive Report Approval</SectionLabel>
-      <SectionHeading>Approval Overview</SectionHeading>
+      <SectionLabel>Executive Report Authorization</SectionLabel>
+      <SectionHeading>Authorization Workspace Overview</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Aggregate view of the executive report approval pipeline. Refreshed on every page load.
+        Workspace-level view of the executive report authorization pipeline. Refreshed on every page load.
       </p>
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
         <Card>
           <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Total Records</p>
-          <p className="mt-2 text-3xl font-black text-[#4f4a52]">{approval.records.length}</p>
+          <p className="mt-2 text-3xl font-black text-[#4f4a52]">{authorization.records.length}</p>
         </Card>
         <Card>
-          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Approval Generated</p>
-          <p className="mt-2 text-sm font-bold text-[#4f4a52]">{fmtDate(approval.generatedAt)}</p>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Authorized</p>
+          <p className="mt-2 text-3xl font-black text-green-700">{authorized}</p>
+        </Card>
+        <Card>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Authorizing</p>
+          <p className="mt-2 text-3xl font-black text-[#a09aa6]">{authorizing}</p>
         </Card>
       </div>
     </section>
   );
 }
 
-// ── Section 2: Approval Timeline ──────────────────────────────────────────────
+// ── Section 2: Executive Authorization Workspace ──────────────────────────────
 
-function ApprovalTimelineSection({ approval }: { approval: ExecutiveReportApproval }) {
-  if (approval.records.length === 0) {
+function ExecutiveAuthorizationWorkspaceCard({ entry }: { entry: ExecutiveReportAuthorizationEntry }) {
+  return (
+    <Card>
+      <div className="mb-3 flex flex-wrap items-center gap-2">
+        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${AUTHORIZATION_STATE_STYLES[entry.state]}`}>
+          {AUTHORIZATION_STATE_LABELS[entry.state]}
+        </span>
+        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${SEVERITY_STYLES[entry.certification.validation.verification.confirmation.receipt.acknowledgement.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.overallStatus]}`}>
+          {SEVERITY_LABELS[entry.certification.validation.verification.confirmation.receipt.acknowledgement.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.overallStatus]}
+        </span>
+        <span className="ml-auto text-[10px] text-[#a09aa6]">{fmtDate(entry.generatedAt)}</span>
+      </div>
+      <p className="text-sm font-bold text-[#4f4a52]">
+        {entry.certification.validation.verification.confirmation.receipt.acknowledgement.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.headline.text}
+      </p>
+      <p className="mt-2 text-sm leading-relaxed text-[#7b7480]">
+        {entry.certification.validation.verification.confirmation.receipt.acknowledgement.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.executiveSummary}
+      </p>
+    </Card>
+  );
+}
+
+function ExecutiveAuthorizationWorkspaceSection({ authorization }: { authorization: ExecutiveReportAuthorization }) {
+  if (authorization.records.length === 0) {
     return (
       <section>
-        <SectionLabel>Timeline</SectionLabel>
-        <SectionHeading>Approval Timeline</SectionHeading>
+        <SectionLabel>Workspace</SectionLabel>
+        <SectionHeading>Executive Authorization Workspace</SectionHeading>
         <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-          Chronological view of all approval records.
+          Operational workspace view of all authorization entries.
         </p>
         <Card>
-          <p className="text-sm text-[#7b7480]">No approval records available.</p>
+          <p className="text-sm text-[#7b7480]">No authorization entries available.</p>
         </Card>
       </section>
     );
@@ -118,30 +145,64 @@ function ApprovalTimelineSection({ approval }: { approval: ExecutiveReportApprov
 
   return (
     <section>
-      <SectionLabel>Timeline</SectionLabel>
-      <SectionHeading>Approval Timeline</SectionHeading>
+      <SectionLabel>Workspace</SectionLabel>
+      <SectionHeading>Executive Authorization Workspace</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        {approval.records.length} record{approval.records.length === 1 ? "" : "s"} in the approval pipeline.
+        {authorization.records.length} authorization {authorization.records.length === 1 ? "entry" : "entries"} in the executive workspace.
+      </p>
+
+      <div className="space-y-4">
+        {authorization.records.map((entry, i) => (
+          <ExecutiveAuthorizationWorkspaceCard key={i} entry={entry} />
+        ))}
+      </div>
+    </section>
+  );
+}
+
+// ── Section 3: Authorization Review Workspace ─��───────────────────────────────
+
+function AuthorizationReviewWorkspaceSection({ authorization }: { authorization: ExecutiveReportAuthorization }) {
+  if (authorization.records.length === 0) {
+    return (
+      <section>
+        <SectionLabel>Review</SectionLabel>
+        <SectionHeading>Authorization Review Workspace</SectionHeading>
+        <p className="mt-2 mb-5 text-sm text-[#7b7480]">
+          Review workspace for authorization entry comparison.
+        </p>
+        <Card>
+          <p className="text-sm text-[#7b7480]">No authorization entries to review.</p>
+        </Card>
+      </section>
+    );
+  }
+
+  return (
+    <section>
+      <SectionLabel>Review</SectionLabel>
+      <SectionHeading>Authorization Review Workspace</SectionHeading>
+      <p className="mt-2 mb-5 text-sm text-[#7b7480]">
+        Current and previous headline comparison across all authorization entries.
       </p>
 
       <Card>
         <div className="divide-y divide-gray-100">
-          {approval.records.map((entry, i) => (
+          {authorization.records.map((entry, i) => (
             <div key={i} className="py-4 first:pt-0 last:pb-0">
               <div className="mb-2 flex items-center gap-2">
-                <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${APPROVAL_STATE_STYLES[entry.state]}`}>
-                  {APPROVAL_STATE_LABELS[entry.state]}
+                <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${AUTHORIZATION_STATE_STYLES[entry.state]}`}>
+                  {AUTHORIZATION_STATE_LABELS[entry.state]}
                 </span>
                 <span className="ml-auto text-[10px] text-[#a09aa6]">{fmtDate(entry.generatedAt)}</span>
               </div>
-              <p className="text-sm font-bold text-[#4f4a52]">
-                {entry.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.headline.text}
+              <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Current</p>
+              <p className="mt-1 text-sm font-bold text-[#4f4a52]">
+                {entry.certification.validation.verification.confirmation.receipt.acknowledgement.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.headline.text}
               </p>
-              <p className="mt-1 text-[10px] text-[#a09aa6]">
-                Previous: {entry.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.previous?.headline.text ?? "—"}
-              </p>
-              <p className="mt-2 text-sm leading-relaxed text-[#7b7480]">
-                {entry.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.executiveSummary}
+              <p className="mt-2 text-[10px] uppercase tracking-widest text-[#a09aa6]">Previous</p>
+              <p className="mt-1 text-sm text-[#7b7480]">
+                {entry.certification.validation.verification.confirmation.receipt.acknowledgement.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.previous?.headline.text ?? "—"}
               </p>
             </div>
           ))}
@@ -151,109 +212,47 @@ function ApprovalTimelineSection({ approval }: { approval: ExecutiveReportApprov
   );
 }
 
-// ── Section 3: Approval Records ───────────────────────────────────────────────
+// ── Section 4: Authorization Readiness ───────────────────────────────────────
 
-function ApprovalWorkspaceCard({ entry }: { entry: ExecutiveReportApprovalEntry }) {
-  return (
-    <Card>
-      <div className="mb-3 flex flex-wrap items-center gap-2">
-        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${APPROVAL_STATE_STYLES[entry.state]}`}>
-          {APPROVAL_STATE_LABELS[entry.state]}
-        </span>
-        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${SEVERITY_STYLES[entry.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.overallStatus]}`}>
-          {SEVERITY_LABELS[entry.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.overallStatus]}
-        </span>
-        <span className="ml-auto text-[10px] text-[#a09aa6]">{fmtDate(entry.generatedAt)}</span>
-      </div>
-      <p className="text-sm font-bold text-[#4f4a52]">
-        {entry.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.headline.text}
-      </p>
-      <div className="my-3 h-px bg-gray-100" />
-      <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Previous Headline</p>
-      <p className="mt-1 text-sm text-[#7b7480]">
-        {entry.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.previous?.headline.text ?? "—"}
-      </p>
-      <p className="mt-3 text-sm leading-relaxed text-[#7b7480]">
-        {entry.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.executiveSummary}
-      </p>
-    </Card>
-  );
-}
-
-function ApprovalRecordsSection({ approval }: { approval: ExecutiveReportApproval }) {
-  if (approval.records.length === 0) {
-    return (
-      <section>
-        <SectionLabel>Records</SectionLabel>
-        <SectionHeading>Approval Records</SectionHeading>
-        <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-          Detailed review cards for every approval record.
-        </p>
-        <Card>
-          <p className="text-sm text-[#7b7480]">No approval records available.</p>
-        </Card>
-      </section>
-    );
-  }
+function AuthorizationReadinessSection({ authorization }: { authorization: ExecutiveReportAuthorization }) {
+  const authorized  = authorization.records.filter(r => r.state === "authorized").length;
+  const authorizing = authorization.records.filter(r => r.state === "authorizing").length;
+  const total       = authorization.records.length;
+  const readyPct    = total > 0 ? Math.round((authorized / total) * 100) : 0;
 
   return (
     <section>
-      <SectionLabel>Records</SectionLabel>
-      <SectionHeading>Approval Records</SectionHeading>
+      <SectionLabel>Readiness</SectionLabel>
+      <SectionHeading>Authorization Readiness</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        {approval.records.length} record{approval.records.length === 1 ? "" : "s"} under approval review.
-        Displayed exactly as received.
-      </p>
-
-      <div className="space-y-4">
-        {approval.records.map((entry, i) => (
-          <ApprovalWorkspaceCard key={i} entry={entry} />
-        ))}
-      </div>
-    </section>
-  );
-}
-
-// ── Section 4: Approval Status ────────────────────────────────────────────────
-
-function ApprovalStatusSection({ approval }: { approval: ExecutiveReportApproval }) {
-  const latestGeneratedAt = approval.records.length > 0
-    ? approval.records[approval.records.length - 1].generatedAt
-    : null;
-
-  return (
-    <section>
-      <SectionLabel>Status</SectionLabel>
-      <SectionHeading>Approval Status</SectionHeading>
-      <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Approval readiness indicators at generation time.
+        Authorization readiness indicators at generation time. No data is stored or persisted.
       </p>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <Card>
-          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Total Approval Records</p>
-          <p className="mt-3 text-3xl font-black text-[#4f4a52]">{approval.records.length}</p>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Authorization Readiness</p>
+          <p className="mt-2 text-3xl font-black text-[#4f4a52]">{readyPct}%</p>
+          <p className="mt-1 text-[10px] text-[#a09aa6]">{authorized} of {total} authorized</p>
         </Card>
         <Card>
-          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Latest Generated At</p>
-          <p className="mt-3 text-sm font-bold text-[#4f4a52]">
-            {latestGeneratedAt ? fmtDate(latestGeneratedAt) : "—"}
-          </p>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Pending Authorization</p>
+          <p className="mt-2 text-3xl font-black text-[#4f4a52]">{authorizing}</p>
+          <p className="mt-1 text-[10px] text-[#a09aa6]">{authorizing === 1 ? "record" : "records"} authorizing</p>
         </Card>
       </div>
     </section>
   );
 }
 
-// ── Section 5: Approval Metadata ──────────────────────────────────────────────
+// ── Section 5: Authorization Metadata ────────────────────────────────────────
 
-function ApprovalMetadataSection({ approval }: { approval: ExecutiveReportApproval }) {
+function AuthorizationMetadataSection({ authorization }: { authorization: ExecutiveReportAuthorization }) {
   return (
     <section>
       <SectionLabel>Metadata</SectionLabel>
-      <SectionHeading>Approval Metadata</SectionHeading>
+      <SectionHeading>Authorization Metadata</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Approval generation metadata. No data is stored or persisted.
+        Authorization generation metadata. No data is stored or persisted.
       </p>
 
       <Card>
@@ -261,11 +260,11 @@ function ApprovalMetadataSection({ approval }: { approval: ExecutiveReportApprov
           <tbody className="divide-y divide-gray-100">
             <tr>
               <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Generated At</td>
-              <td className="py-3 text-right text-[#4f4a52]">{fmtDate(approval.generatedAt)}</td>
+              <td className="py-3 text-right text-[#4f4a52]">{fmtDate(authorization.generatedAt)}</td>
             </tr>
             <tr>
-              <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Approval Records</td>
-              <td className="py-3 text-right text-[#4f4a52]">{approval.records.length}</td>
+              <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Authorization Records</td>
+              <td className="py-3 text-right text-[#4f4a52]">{authorization.records.length}</td>
             </tr>
           </tbody>
         </table>
@@ -277,37 +276,61 @@ function ApprovalMetadataSection({ approval }: { approval: ExecutiveReportApprov
 // ── Section 6: Quick Navigation ───────────────────────────────────────────────
 
 const QUICK_NAV_LINKS = [
-  { href: "/admin",                                          label: "Operations" },
-  { href: "/admin/operations",                               label: "Unified Operations" },
-  { href: "/admin/executive-operations",                     label: "Executive Operations" },
-  { href: "/admin/alerts",                                   label: "Alerts" },
-  { href: "/admin/alert-center",                             label: "Alert Center" },
-  { href: "/admin/executive-digest",                         label: "Executive Digest" },
-  { href: "/admin/executive-briefing",                       label: "Executive Briefing" },
-  { href: "/admin/executive-report",                         label: "Executive Report" },
-  { href: "/admin/executive-report-center",                  label: "Executive Report Center" },
-  { href: "/admin/executive-report-archive",                 label: "Executive Report Archive" },
-  { href: "/admin/executive-report-archive-center",          label: "Executive Report Archive Center" },
-  { href: "/admin/executive-report-history",                 label: "Executive Report History" },
-  { href: "/admin/executive-report-history-center",          label: "Executive Report History Center" },
-  { href: "/admin/executive-report-comparison",              label: "Executive Report Comparison" },
-  { href: "/admin/executive-report-comparison-center",       label: "Executive Report Comparison Center" },
-  { href: "/admin/executive-report-delta",                   label: "Executive Report Delta" },
-  { href: "/admin/executive-report-delta-center",            label: "Executive Report Delta Center" },
-  { href: "/admin/executive-report-insight",                 label: "Executive Report Insight" },
-  { href: "/admin/executive-report-insight-center",          label: "Executive Report Insight Center" },
-  { href: "/admin/executive-report-trend",                   label: "Executive Report Trend" },
-  { href: "/admin/executive-report-trend-center",            label: "Executive Report Trend Center" },
-  { href: "/admin/executive-report-forecast",                label: "Executive Report Forecast" },
-  { href: "/admin/executive-report-forecast-center",         label: "Executive Report Forecast Center" },
-  { href: "/admin/executive-report-outlook",                 label: "Executive Report Outlook" },
-  { href: "/admin/executive-report-outlook-center",          label: "Executive Report Outlook Center" },
-  { href: "/admin/executive-report-strategy",                label: "Executive Report Strategy" },
-  { href: "/admin/executive-report-strategy-center",         label: "Executive Report Strategy Center" },
-  { href: "/admin/executive-report-action",                  label: "Executive Report Action" },
-  { href: "/admin/executive-report-action-center",           label: "Executive Report Action Center" },
-  { href: "/admin/executive-report-decision",                label: "Executive Report Decision" },
-  { href: "/admin/executive-report-decision-center",         label: "Executive Report Decision Center" },
+  { href: "/admin",                                              label: "Operations" },
+  { href: "/admin/operations",                                   label: "Unified Operations" },
+  { href: "/admin/executive-operations",                         label: "Executive Operations" },
+  { href: "/admin/alerts",                                       label: "Alerts" },
+  { href: "/admin/alert-center",                                 label: "Alert Center" },
+  { href: "/admin/executive-digest",                             label: "Executive Digest" },
+  { href: "/admin/executive-briefing",                           label: "Executive Briefing" },
+  { href: "/admin/executive-report",                             label: "Executive Report" },
+  { href: "/admin/executive-report-center",                      label: "Executive Report Center" },
+  { href: "/admin/executive-report-archive",                     label: "Executive Report Archive" },
+  { href: "/admin/executive-report-archive-center",              label: "Executive Report Archive Center" },
+  { href: "/admin/executive-report-history",                     label: "Executive Report History" },
+  { href: "/admin/executive-report-history-center",              label: "Executive Report History Center" },
+  { href: "/admin/executive-report-comparison",                  label: "Executive Report Comparison" },
+  { href: "/admin/executive-report-comparison-center",           label: "Executive Report Comparison Center" },
+  { href: "/admin/executive-report-delta",                       label: "Executive Report Delta" },
+  { href: "/admin/executive-report-delta-center",                label: "Executive Report Delta Center" },
+  { href: "/admin/executive-report-insight",                     label: "Executive Report Insight" },
+  { href: "/admin/executive-report-insight-center",              label: "Executive Report Insight Center" },
+  { href: "/admin/executive-report-trend",                       label: "Executive Report Trend" },
+  { href: "/admin/executive-report-trend-center",                label: "Executive Report Trend Center" },
+  { href: "/admin/executive-report-forecast",                    label: "Executive Report Forecast" },
+  { href: "/admin/executive-report-forecast-center",             label: "Executive Report Forecast Center" },
+  { href: "/admin/executive-report-outlook",                     label: "Executive Report Outlook" },
+  { href: "/admin/executive-report-outlook-center",              label: "Executive Report Outlook Center" },
+  { href: "/admin/executive-report-strategy",                    label: "Executive Report Strategy" },
+  { href: "/admin/executive-report-strategy-center",             label: "Executive Report Strategy Center" },
+  { href: "/admin/executive-report-action",                      label: "Executive Report Action" },
+  { href: "/admin/executive-report-action-center",               label: "Executive Report Action Center" },
+  { href: "/admin/executive-report-decision",                    label: "Executive Report Decision" },
+  { href: "/admin/executive-report-decision-center",             label: "Executive Report Decision Center" },
+  { href: "/admin/executive-report-approval",                    label: "Executive Report Approval" },
+  { href: "/admin/executive-report-approval-center",             label: "Executive Report Approval Center" },
+  { href: "/admin/executive-report-execution",                   label: "Executive Report Execution" },
+  { href: "/admin/executive-report-execution-center",            label: "Executive Report Execution Center" },
+  { href: "/admin/executive-report-completion",                  label: "Executive Report Completion" },
+  { href: "/admin/executive-report-completion-center",           label: "Executive Report Completion Center" },
+  { href: "/admin/executive-report-publication",                 label: "Executive Report Publication" },
+  { href: "/admin/executive-report-publication-center",          label: "Executive Report Publication Center" },
+  { href: "/admin/executive-report-distribution",                label: "Executive Report Distribution" },
+  { href: "/admin/executive-report-distribution-center",         label: "Executive Report Distribution Center" },
+  { href: "/admin/executive-report-delivery",                    label: "Executive Report Delivery" },
+  { href: "/admin/executive-report-delivery-center",             label: "Executive Report Delivery Center" },
+  { href: "/admin/executive-report-acknowledgement",             label: "Executive Report Acknowledgement" },
+  { href: "/admin/executive-report-acknowledgement-center",      label: "Executive Report Acknowledgement Center" },
+  { href: "/admin/executive-report-receipt",                     label: "Executive Report Receipt" },
+  { href: "/admin/executive-report-receipt-center",              label: "Executive Report Receipt Center" },
+  { href: "/admin/executive-report-confirmation",                label: "Executive Report Confirmation" },
+  { href: "/admin/executive-report-confirmation-center",         label: "Executive Report Confirmation Center" },
+  { href: "/admin/executive-report-validation",                  label: "Executive Report Validation" },
+  { href: "/admin/executive-report-validation-center",           label: "Executive Report Validation Center" },
+  { href: "/admin/executive-report-certification",               label: "Executive Report Certification" },
+  { href: "/admin/executive-report-certification-center",        label: "Executive Report Certification Center" },
+  { href: "/admin/executive-report-authorization",               label: "Executive Report Authorization" },
+  { href: "/admin/executive-report-authorization-center",        label: "Executive Report Authorization Center" },
 ] as const;
 
 function QuickNavigationSection() {
@@ -334,15 +357,15 @@ function QuickNavigationSection() {
   );
 }
 
-// ── Props ─────────────────────────────────────────────────────────────────────
+// ── Props ─────────────────────────────────���───────────────────────────────────
 
 interface Props {
-  approval: ExecutiveReportApproval;
+  authorization: ExecutiveReportAuthorization;
 }
 
 // ── Main export ───────────────────────────────────────────────────────────────
 
-export default function ExecutiveReportApprovalDashboard({ approval }: Props) {
+export default function ExecutiveReportAuthorizationCenter({ authorization }: Props) {
   return (
     <div className="min-h-screen bg-[#f5f1eb]">
 
@@ -462,7 +485,9 @@ export default function ExecutiveReportApprovalDashboard({ approval }: Props) {
             <Link href="/admin/executive-report-decision-center" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Decision Center
             </Link>
-            <span className="text-xs font-bold text-white">Executive Report Approval</span>
+            <Link href="/admin/executive-report-approval" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report Approval
+            </Link>
             <Link href="/admin/executive-report-approval-center" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Approval Center
             </Link>
@@ -529,9 +554,7 @@ export default function ExecutiveReportApprovalDashboard({ approval }: Props) {
             <Link href="/admin/executive-report-authorization" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Authorization
             </Link>
-            <Link href="/admin/executive-report-authorization-center" className="text-xs text-white/60 transition hover:text-white">
-              Executive Report Authorization Center
-            </Link>
+            <span className="text-xs font-bold text-white">Executive Report Authorization Center</span>
           </nav>
         </div>
         <form action={logoutAction}>
@@ -544,23 +567,23 @@ export default function ExecutiveReportApprovalDashboard({ approval }: Props) {
       {/* ── Content ── */}
       <div className="mx-auto w-full max-w-[780px] space-y-14 px-6 py-12">
 
-        <ApprovalOverviewSection approval={approval} />
+        <AuthorizationWorkspaceOverviewSection authorization={authorization} />
 
         <hr className="border-gray-200" />
 
-        <ApprovalTimelineSection approval={approval} />
+        <ExecutiveAuthorizationWorkspaceSection authorization={authorization} />
 
         <hr className="border-gray-200" />
 
-        <ApprovalRecordsSection approval={approval} />
+        <AuthorizationReviewWorkspaceSection authorization={authorization} />
 
         <hr className="border-gray-200" />
 
-        <ApprovalStatusSection approval={approval} />
+        <AuthorizationReadinessSection authorization={authorization} />
 
         <hr className="border-gray-200" />
 
-        <ApprovalMetadataSection approval={approval} />
+        <AuthorizationMetadataSection authorization={authorization} />
 
         <hr className="border-gray-200" />
 
