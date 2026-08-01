@@ -5,12 +5,12 @@ import Link             from "next/link";
 import { logoutAction } from "./actions";
 import type { AlertSeverity } from "@/app/lib/operations/OperationsAlertTypes";
 import type {
-  ExecutiveReportAcknowledgement,
-  ExecutiveReportAcknowledgementEntry,
-  ExecutiveReportAcknowledgementState,
-} from "@/app/lib/operations/ExecutiveReportAcknowledgementTypes";
+  ExecutiveReportEndorsement,
+  ExecutiveReportEndorsementEntry,
+  ExecutiveReportEndorsementState,
+} from "@/app/lib/operations/ExecutiveReportEndorsementTypes";
 
-// ── UI helpers ────────────────────────────────────────────────────────────────
+// ── UI helpers ─────────────────────���──────────────────────────────────────────
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
@@ -36,7 +36,7 @@ function Card({ children, className = "" }: { children: React.ReactNode; classNa
   );
 }
 
-// ── Formatter ─────────────────────────────────────────────────────────────────
+// ── Formatter ─────────────────────────────────────────────────────���───────────
 
 function fmtDate(iso: string): string {
   return new Date(iso).toLocaleString("en-GB", {
@@ -45,7 +45,7 @@ function fmtDate(iso: string): string {
   });
 }
 
-// ── Style maps ────────────────────────────────────────────────────────────────
+// ── Style maps ───────────────────────────────────────────────��────────────────
 
 const SEVERITY_STYLES: Record<AlertSeverity, string> = {
   "critical": "border-red-200    bg-red-50    text-red-700",
@@ -61,54 +61,83 @@ const SEVERITY_LABELS: Record<AlertSeverity, string> = {
   "low":      "Low",
 };
 
-const ACKNOWLEDGEMENT_STATE_STYLES: Record<ExecutiveReportAcknowledgementState, string> = {
-  "acknowledging": "border-gray-200  bg-gray-100  text-gray-500",
-  "acknowledged":  "border-green-200 bg-green-50  text-green-700",
+const ENDORSEMENT_STATE_STYLES: Record<ExecutiveReportEndorsementState, string> = {
+  "endorsing": "border-gray-200  bg-gray-100  text-gray-500",
+  "endorsed":  "border-green-200 bg-green-50  text-green-700",
 };
 
-const ACKNOWLEDGEMENT_STATE_LABELS: Record<ExecutiveReportAcknowledgementState, string> = {
-  "acknowledging": "Acknowledging",
-  "acknowledged":  "Acknowledged",
+const ENDORSEMENT_STATE_LABELS: Record<ExecutiveReportEndorsementState, string> = {
+  "endorsing": "Endorsing",
+  "endorsed":  "Endorsed",
 };
 
-// ── Section 1: Acknowledgement Workspace Overview ─────────────────────────────
+// ── Section 1: Endorsement Workspace Overview ─────────────────────���───────────
 
-function AcknowledgementWorkspaceOverviewSection({ acknowledgement }: { acknowledgement: ExecutiveReportAcknowledgement }) {
+function EndorsementWorkspaceOverviewSection({ endorsement }: { endorsement: ExecutiveReportEndorsement }) {
+  const endorsed  = endorsement.records.filter(r => r.state === "endorsed").length;
+  const endorsing = endorsement.records.filter(r => r.state === "endorsing").length;
+
   return (
     <section>
-      <SectionLabel>Executive Report Acknowledgement Center</SectionLabel>
-      <SectionHeading>Acknowledgement Workspace Overview</SectionHeading>
+      <SectionLabel>Executive Report Endorsement</SectionLabel>
+      <SectionHeading>Endorsement Workspace Overview</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Aggregate view of the executive report acknowledgement workspace. Refreshed on every page load.
+        Workspace-level view of the executive report endorsement pipeline. Refreshed on every page load.
       </p>
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
         <Card>
           <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Total Records</p>
-          <p className="mt-2 text-3xl font-black text-[#4f4a52]">{acknowledgement.records.length}</p>
+          <p className="mt-2 text-3xl font-black text-[#4f4a52]">{endorsement.records.length}</p>
         </Card>
         <Card>
-          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Acknowledgement Generated</p>
-          <p className="mt-2 text-sm font-bold text-[#4f4a52]">{fmtDate(acknowledgement.generatedAt)}</p>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Endorsed</p>
+          <p className="mt-2 text-3xl font-black text-green-700">{endorsed}</p>
+        </Card>
+        <Card>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Endorsing</p>
+          <p className="mt-2 text-3xl font-black text-[#a09aa6]">{endorsing}</p>
         </Card>
       </div>
     </section>
   );
 }
 
-// ── Section 2: Executive Acknowledgement Workspace ────────────────────────────
+// ── Section 2: Executive Endorsement Workspace ──────────────────────��─────────
 
-function ExecutiveAcknowledgementWorkspaceSection({ acknowledgement }: { acknowledgement: ExecutiveReportAcknowledgement }) {
-  if (acknowledgement.records.length === 0) {
+function ExecutiveEndorsementWorkspaceCard({ entry }: { entry: ExecutiveReportEndorsementEntry }) {
+  return (
+    <Card>
+      <div className="mb-3 flex flex-wrap items-center gap-2">
+        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${ENDORSEMENT_STATE_STYLES[entry.state]}`}>
+          {ENDORSEMENT_STATE_LABELS[entry.state]}
+        </span>
+        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${SEVERITY_STYLES[entry.ratification.authentication.authorization.certification.validation.verification.confirmation.receipt.acknowledgement.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.overallStatus]}`}>
+          {SEVERITY_LABELS[entry.ratification.authentication.authorization.certification.validation.verification.confirmation.receipt.acknowledgement.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.overallStatus]}
+        </span>
+        <span className="ml-auto text-[10px] text-[#a09aa6]">{fmtDate(entry.generatedAt)}</span>
+      </div>
+      <p className="text-sm font-bold text-[#4f4a52]">
+        {entry.ratification.authentication.authorization.certification.validation.verification.confirmation.receipt.acknowledgement.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.headline.text}
+      </p>
+      <p className="mt-2 text-sm leading-relaxed text-[#7b7480]">
+        {entry.ratification.authentication.authorization.certification.validation.verification.confirmation.receipt.acknowledgement.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.executiveSummary}
+      </p>
+    </Card>
+  );
+}
+
+function ExecutiveEndorsementWorkspaceSection({ endorsement }: { endorsement: ExecutiveReportEndorsement }) {
+  if (endorsement.records.length === 0) {
     return (
       <section>
         <SectionLabel>Workspace</SectionLabel>
-        <SectionHeading>Executive Acknowledgement Workspace</SectionHeading>
+        <SectionHeading>Executive Endorsement Workspace</SectionHeading>
         <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-          Full acknowledgement workspace for executive review.
+          Operational workspace view of all endorsement entries.
         </p>
         <Card>
-          <p className="text-sm text-[#7b7480]">No acknowledgement records available.</p>
+          <p className="text-sm text-[#7b7480]">No endorsement entries available.</p>
         </Card>
       </section>
     );
@@ -117,29 +146,63 @@ function ExecutiveAcknowledgementWorkspaceSection({ acknowledgement }: { acknowl
   return (
     <section>
       <SectionLabel>Workspace</SectionLabel>
-      <SectionHeading>Executive Acknowledgement Workspace</SectionHeading>
+      <SectionHeading>Executive Endorsement Workspace</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        {acknowledgement.records.length} record{acknowledgement.records.length === 1 ? "" : "s"} in the acknowledgement workspace.
+        {endorsement.records.length} endorsement {endorsement.records.length === 1 ? "entry" : "entries"} in the executive workspace.
+      </p>
+
+      <div className="space-y-4">
+        {endorsement.records.map((entry, i) => (
+          <ExecutiveEndorsementWorkspaceCard key={i} entry={entry} />
+        ))}
+      </div>
+    </section>
+  );
+}
+
+// ── Section 3: Endorsement Review Workspace ─────────────────────���─────────────
+
+function EndorsementReviewWorkspaceSection({ endorsement }: { endorsement: ExecutiveReportEndorsement }) {
+  if (endorsement.records.length === 0) {
+    return (
+      <section>
+        <SectionLabel>Review</SectionLabel>
+        <SectionHeading>Endorsement Review Workspace</SectionHeading>
+        <p className="mt-2 mb-5 text-sm text-[#7b7480]">
+          Review workspace for endorsement entry comparison.
+        </p>
+        <Card>
+          <p className="text-sm text-[#7b7480]">No endorsement entries to review.</p>
+        </Card>
+      </section>
+    );
+  }
+
+  return (
+    <section>
+      <SectionLabel>Review</SectionLabel>
+      <SectionHeading>Endorsement Review Workspace</SectionHeading>
+      <p className="mt-2 mb-5 text-sm text-[#7b7480]">
+        Current and previous headline comparison across all endorsement entries.
       </p>
 
       <Card>
         <div className="divide-y divide-gray-100">
-          {acknowledgement.records.map((entry, i) => (
+          {endorsement.records.map((entry, i) => (
             <div key={i} className="py-4 first:pt-0 last:pb-0">
               <div className="mb-2 flex items-center gap-2">
-                <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${ACKNOWLEDGEMENT_STATE_STYLES[entry.state]}`}>
-                  {ACKNOWLEDGEMENT_STATE_LABELS[entry.state]}
+                <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${ENDORSEMENT_STATE_STYLES[entry.state]}`}>
+                  {ENDORSEMENT_STATE_LABELS[entry.state]}
                 </span>
                 <span className="ml-auto text-[10px] text-[#a09aa6]">{fmtDate(entry.generatedAt)}</span>
               </div>
-              <p className="text-sm font-bold text-[#4f4a52]">
-                {entry.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.headline.text}
+              <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Current</p>
+              <p className="mt-1 text-sm font-bold text-[#4f4a52]">
+                {entry.ratification.authentication.authorization.certification.validation.verification.confirmation.receipt.acknowledgement.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.headline.text}
               </p>
-              <p className="mt-1 text-[10px] text-[#a09aa6]">
-                Previous: {entry.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.previous?.headline.text ?? "—"}
-              </p>
-              <p className="mt-2 text-sm leading-relaxed text-[#7b7480]">
-                {entry.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.executiveSummary}
+              <p className="mt-2 text-[10px] uppercase tracking-widest text-[#a09aa6]">Previous</p>
+              <p className="mt-1 text-sm text-[#7b7480]">
+                {entry.ratification.authentication.authorization.certification.validation.verification.confirmation.receipt.acknowledgement.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.previous?.headline.text ?? "—"}
               </p>
             </div>
           ))}
@@ -149,109 +212,47 @@ function ExecutiveAcknowledgementWorkspaceSection({ acknowledgement }: { acknowl
   );
 }
 
-// ── Section 3: Acknowledgement Review Workspace ───────────────────────────────
+// ── Section 4: Endorsement Readiness ─────────────────────────────────────────
 
-function AcknowledgementWorkspaceCard({ entry }: { entry: ExecutiveReportAcknowledgementEntry }) {
-  return (
-    <Card>
-      <div className="mb-3 flex flex-wrap items-center gap-2">
-        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${ACKNOWLEDGEMENT_STATE_STYLES[entry.state]}`}>
-          {ACKNOWLEDGEMENT_STATE_LABELS[entry.state]}
-        </span>
-        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${SEVERITY_STYLES[entry.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.overallStatus]}`}>
-          {SEVERITY_LABELS[entry.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.overallStatus]}
-        </span>
-        <span className="ml-auto text-[10px] text-[#a09aa6]">{fmtDate(entry.generatedAt)}</span>
-      </div>
-      <p className="text-sm font-bold text-[#4f4a52]">
-        {entry.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.headline.text}
-      </p>
-      <div className="my-3 h-px bg-gray-100" />
-      <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Previous Headline</p>
-      <p className="mt-1 text-sm text-[#7b7480]">
-        {entry.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.previous?.headline.text ?? "—"}
-      </p>
-      <p className="mt-3 text-sm leading-relaxed text-[#7b7480]">
-        {entry.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.executiveSummary}
-      </p>
-    </Card>
-  );
-}
-
-function AcknowledgementReviewWorkspaceSection({ acknowledgement }: { acknowledgement: ExecutiveReportAcknowledgement }) {
-  if (acknowledgement.records.length === 0) {
-    return (
-      <section>
-        <SectionLabel>Review</SectionLabel>
-        <SectionHeading>Acknowledgement Review Workspace</SectionHeading>
-        <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-          Detailed review cards for every acknowledgement record.
-        </p>
-        <Card>
-          <p className="text-sm text-[#7b7480]">No acknowledgement records available.</p>
-        </Card>
-      </section>
-    );
-  }
-
-  return (
-    <section>
-      <SectionLabel>Review</SectionLabel>
-      <SectionHeading>Acknowledgement Review Workspace</SectionHeading>
-      <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        {acknowledgement.records.length} record{acknowledgement.records.length === 1 ? "" : "s"} in acknowledgement review.
-        Displayed exactly as received.
-      </p>
-
-      <div className="space-y-4">
-        {acknowledgement.records.map((entry, i) => (
-          <AcknowledgementWorkspaceCard key={i} entry={entry} />
-        ))}
-      </div>
-    </section>
-  );
-}
-
-// ── Section 4: Acknowledgement Readiness ──────────────────────────────────────
-
-function AcknowledgementReadinessSection({ acknowledgement }: { acknowledgement: ExecutiveReportAcknowledgement }) {
-  const latestGeneratedAt = acknowledgement.records.length > 0
-    ? acknowledgement.records[acknowledgement.records.length - 1].generatedAt
-    : null;
+function EndorsementReadinessSection({ endorsement }: { endorsement: ExecutiveReportEndorsement }) {
+  const endorsed  = endorsement.records.filter(r => r.state === "endorsed").length;
+  const endorsing = endorsement.records.filter(r => r.state === "endorsing").length;
+  const total     = endorsement.records.length;
+  const readyPct  = total > 0 ? Math.round((endorsed / total) * 100) : 0;
 
   return (
     <section>
       <SectionLabel>Readiness</SectionLabel>
-      <SectionHeading>Acknowledgement Readiness</SectionHeading>
+      <SectionHeading>Endorsement Readiness</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Acknowledgement readiness indicators at generation time.
+        Endorsement readiness indicators at generation time. No data is stored or persisted.
       </p>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <Card>
-          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Total Acknowledgement Records</p>
-          <p className="mt-3 text-3xl font-black text-[#4f4a52]">{acknowledgement.records.length}</p>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Endorsement Readiness</p>
+          <p className="mt-2 text-3xl font-black text-[#4f4a52]">{readyPct}%</p>
+          <p className="mt-1 text-[10px] text-[#a09aa6]">{endorsed} of {total} endorsed</p>
         </Card>
         <Card>
-          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Latest Generated At</p>
-          <p className="mt-3 text-sm font-bold text-[#4f4a52]">
-            {latestGeneratedAt ? fmtDate(latestGeneratedAt) : "—"}
-          </p>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Pending Endorsement</p>
+          <p className="mt-2 text-3xl font-black text-[#4f4a52]">{endorsing}</p>
+          <p className="mt-1 text-[10px] text-[#a09aa6]">{endorsing === 1 ? "record" : "records"} endorsing</p>
         </Card>
       </div>
     </section>
   );
 }
 
-// ── Section 5: Acknowledgement Metadata ───────────────────────────────────────
+// ── Section 5: Endorsement Metadata ────────────────────────────────────────���─
 
-function AcknowledgementMetadataSection({ acknowledgement }: { acknowledgement: ExecutiveReportAcknowledgement }) {
+function EndorsementMetadataSection({ endorsement }: { endorsement: ExecutiveReportEndorsement }) {
   return (
     <section>
       <SectionLabel>Metadata</SectionLabel>
-      <SectionHeading>Acknowledgement Metadata</SectionHeading>
+      <SectionHeading>Endorsement Metadata</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Acknowledgement center generation metadata. No data is stored or persisted.
+        Endorsement generation metadata. No data is stored or persisted.
       </p>
 
       <Card>
@@ -259,11 +260,11 @@ function AcknowledgementMetadataSection({ acknowledgement }: { acknowledgement: 
           <tbody className="divide-y divide-gray-100">
             <tr>
               <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Generated At</td>
-              <td className="py-3 text-right text-[#4f4a52]">{fmtDate(acknowledgement.generatedAt)}</td>
+              <td className="py-3 text-right text-[#4f4a52]">{fmtDate(endorsement.generatedAt)}</td>
             </tr>
             <tr>
-              <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Acknowledgement Records</td>
-              <td className="py-3 text-right text-[#4f4a52]">{acknowledgement.records.length}</td>
+              <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Endorsement Records</td>
+              <td className="py-3 text-right text-[#4f4a52]">{endorsement.records.length}</td>
             </tr>
           </tbody>
         </table>
@@ -272,7 +273,7 @@ function AcknowledgementMetadataSection({ acknowledgement }: { acknowledgement: 
   );
 }
 
-// ── Section 6: Quick Navigation ───────────────────────────────────────────────
+// ── Section 6: Quick Navigation ────────���──────────────────────────────────────
 
 const QUICK_NAV_LINKS = [
   { href: "/admin",                                              label: "Operations" },
@@ -320,6 +321,22 @@ const QUICK_NAV_LINKS = [
   { href: "/admin/executive-report-delivery-center",             label: "Executive Report Delivery Center" },
   { href: "/admin/executive-report-acknowledgement",             label: "Executive Report Acknowledgement" },
   { href: "/admin/executive-report-acknowledgement-center",      label: "Executive Report Acknowledgement Center" },
+  { href: "/admin/executive-report-receipt",                     label: "Executive Report Receipt" },
+  { href: "/admin/executive-report-receipt-center",              label: "Executive Report Receipt Center" },
+  { href: "/admin/executive-report-confirmation",                label: "Executive Report Confirmation" },
+  { href: "/admin/executive-report-confirmation-center",         label: "Executive Report Confirmation Center" },
+  { href: "/admin/executive-report-validation",                  label: "Executive Report Validation" },
+  { href: "/admin/executive-report-validation-center",           label: "Executive Report Validation Center" },
+  { href: "/admin/executive-report-certification",               label: "Executive Report Certification" },
+  { href: "/admin/executive-report-certification-center",        label: "Executive Report Certification Center" },
+  { href: "/admin/executive-report-authorization",               label: "Executive Report Authorization" },
+  { href: "/admin/executive-report-authorization-center",        label: "Executive Report Authorization Center" },
+  { href: "/admin/executive-report-authentication",              label: "Executive Report Authentication" },
+  { href: "/admin/executive-report-authentication-center",       label: "Executive Report Authentication Center" },
+  { href: "/admin/executive-report-ratification",                label: "Executive Report Ratification" },
+  { href: "/admin/executive-report-ratification-center",         label: "Executive Report Ratification Center" },
+  { href: "/admin/executive-report-endorsement",                 label: "Executive Report Endorsement" },
+  { href: "/admin/executive-report-endorsement-center",          label: "Executive Report Endorsement Center" },
 ] as const;
 
 function QuickNavigationSection() {
@@ -349,12 +366,12 @@ function QuickNavigationSection() {
 // ── Props ─────────────────────────────────────────────────────────────────────
 
 interface Props {
-  acknowledgement: ExecutiveReportAcknowledgement;
+  endorsement: ExecutiveReportEndorsement;
 }
 
-// ── Main export ───────────────────────────────────────────────────────────────
+// ── Main export ──────────────────────────────────────────��────────────────────
 
-export default function ExecutiveReportAcknowledgementCenter({ acknowledgement }: Props) {
+export default function ExecutiveReportEndorsementCenter({ endorsement }: Props) {
   return (
     <div className="min-h-screen bg-[#f5f1eb]">
 
@@ -513,7 +530,9 @@ export default function ExecutiveReportAcknowledgementCenter({ acknowledgement }
             <Link href="/admin/executive-report-acknowledgement" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Acknowledgement
             </Link>
-            <span className="text-xs font-bold text-white">Executive Report Acknowledgement Center</span>
+            <Link href="/admin/executive-report-acknowledgement-center" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report Acknowledgement Center
+            </Link>
             <Link href="/admin/executive-report-receipt" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Receipt
             </Link>
@@ -559,9 +578,7 @@ export default function ExecutiveReportAcknowledgementCenter({ acknowledgement }
             <Link href="/admin/executive-report-endorsement" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Endorsement
             </Link>
-            <Link href="/admin/executive-report-endorsement-center" className="text-xs text-white/60 transition hover:text-white">
-              Executive Report Endorsement Center
-            </Link>
+            <span className="text-xs font-bold text-white">Executive Report Endorsement Center</span>
           </nav>
         </div>
         <form action={logoutAction}>
@@ -574,23 +591,23 @@ export default function ExecutiveReportAcknowledgementCenter({ acknowledgement }
       {/* ── Content ── */}
       <div className="mx-auto w-full max-w-[780px] space-y-14 px-6 py-12">
 
-        <AcknowledgementWorkspaceOverviewSection acknowledgement={acknowledgement} />
+        <EndorsementWorkspaceOverviewSection endorsement={endorsement} />
 
         <hr className="border-gray-200" />
 
-        <ExecutiveAcknowledgementWorkspaceSection acknowledgement={acknowledgement} />
+        <ExecutiveEndorsementWorkspaceSection endorsement={endorsement} />
 
         <hr className="border-gray-200" />
 
-        <AcknowledgementReviewWorkspaceSection acknowledgement={acknowledgement} />
+        <EndorsementReviewWorkspaceSection endorsement={endorsement} />
 
         <hr className="border-gray-200" />
 
-        <AcknowledgementReadinessSection acknowledgement={acknowledgement} />
+        <EndorsementReadinessSection endorsement={endorsement} />
 
         <hr className="border-gray-200" />
 
-        <AcknowledgementMetadataSection acknowledgement={acknowledgement} />
+        <EndorsementMetadataSection endorsement={endorsement} />
 
         <hr className="border-gray-200" />
 
