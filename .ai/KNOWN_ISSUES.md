@@ -11,13 +11,6 @@ Severity: Critical (blocks launch) | High (degrades experience) | Medium (notabl
 
 ## Low
 
-### KI-14 — MiniCart Mobile Close Gesture Not Implemented
-
-**Severity:** Low
-**File:** `app/components/MiniCart.tsx`
-**Detail:** The mobile drag handle at the top of the MiniCart is a visual affordance only — there is no actual drag-to-close gesture. On mobile there is no close button (it is `hidden md:block`). Customers must use the browser back button or tap outside (if any outside click handler exists).
-**Fix:** Implement a swipe-down gesture or an explicit close button on mobile.
-
 ### KI-15 — All Products Hardcoded as InStock in JSON-LD
 
 **Severity:** Low
@@ -113,6 +106,14 @@ Severity: Critical (blocks launch) | High (degrades experience) | Medium (notabl
 **Severity:** High (at time of discovery)
 **Resolved:** 2026-08-02 — `app/components/QuickAddBundle.tsx` deleted (KI-04 cleanup)
 **Resolution:** Repository inspection confirmed that all five active add-to-cart paths (ProductDetail, ProductDetail Buy Now, QuickAddModal, MiniCart quick-add, FragranceQuickView) already used the canonical identifier `title.toLowerCase().replace(/\s+/g, "-")` via `knowledge.id` or direct formula. The only remaining inconsistency was in `QuickAddBundle`, which used `` `${fragrance.title}-5ml` `` (un-lowercased, size suffix appended). `QuickAddBundle` was confirmed to have zero imports in the entire app — a dead component never rendered in production. It was deleted rather than patched. No active cart behaviour changed.
+
+---
+
+### KI-14 — MiniCart Mobile Close Gesture Not Implemented
+
+**Severity:** Low (at time of discovery)
+**Resolved:** 2026-08-02 — commit (KI-14 Mobile MiniCart Close UX)
+**Resolution:** The mobile drag handle `<div>` in `app/components/MiniCart.tsx` was converted to a `<button>` that invokes `onClose`. The button spans the full cart width (`w-full`) with `pt-3 pb-2` padding, providing a large tap target at the top of the mobile bottom sheet. The visual appearance of the handle bar is unchanged. `md:hidden` preserves desktop behaviour. `aria-label="Close cart"` satisfies accessibility. Note: inspection also confirmed that the X close button was already visible on mobile (no `hidden md:block` class) — the KI-14 claim about a hidden button was stale.
 
 ---
 

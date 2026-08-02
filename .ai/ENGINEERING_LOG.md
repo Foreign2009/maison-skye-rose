@@ -726,4 +726,41 @@ Never edit or delete past entries.
 - `.ai/ENGINEERING_LOG.md` — this entry
 
 **Handoff:** KI-12 resolved. Remaining open issues: KI-14, KI-15, KI-16. All remaining issues are Low severity. Awaiting Engineering Lead direction for next sprint.
+
+---
+
+## 2026-08-02 — KI-14 Mobile MiniCart Close UX
+
+**Engineer:** Claude Code
+**Program:** KI-14 (MiniCart Mobile Close UX)
+
+**Inspection:** Read `app/components/MiniCart.tsx`, `app/context/CartUIContext.tsx`, `app/components/FloatingCart.tsx`, `app/layout.tsx`, `app/components/Navbar.tsx`. Key findings:
+- Line 194: drag handle is a `<div>` with no event handlers — visual only, `md:hidden`
+- Lines 239–245: X close button has no `hidden md:block` class — already visible on mobile (KI-14 claim about hidden button was stale)
+- X button touch target: `p-2` around `h-5 w-5` = 36px (below 44px WCAG minimum)
+- No backdrop overlay, no click-outside handler, no gesture library in use
+- `onClose` → `closeCart` → `setCartOpen(false)` — existing close mechanism is correct
+
+**Decision:** Convert drag handle `<div>` to `<button onClick={onClose}>`. Minimum change. Full-width tap zone. No gesture library. No new dependencies.
+
+**Implementation:** Single element change in `MiniCart.tsx` line 194:
+```tsx
+<button
+  onClick={onClose}
+  aria-label="Close cart"
+  className="w-full flex justify-center pt-3 pb-2 shrink-0 md:hidden"
+>
+  <div className="w-12 h-1.5 bg-zinc-300/60 rounded-full" />
+</button>
+```
+
+**Build Result:** Pass — zero TypeScript errors, zero warnings, 247 routes.
+
+**Files Changed:**
+- `app/components/MiniCart.tsx` — drag handle converted to close button
+- `.ai/KNOWN_ISSUES.md` — KI-14 moved to Resolved
+- `.ai/CURRENT_TASK.md` — updated last completed program
+- `.ai/ENGINEERING_LOG.md` — this entry
+
+**Handoff:** KI-14 resolved. Remaining open issues: KI-15, KI-16 (both Low severity). Awaiting Engineering Lead direction for next sprint.
 - Deferred: Mobile WhatsApp button overlay (pre-existing cosmetic issue)

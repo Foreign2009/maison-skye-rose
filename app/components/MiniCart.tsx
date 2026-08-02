@@ -190,8 +190,14 @@ A member of our team will confirm your order and delivery details shortly.`;
       }`}
     >
       
-      {/* Mobile Drag/Close Handle Area */}
-      <div className="w-12 h-1.5 bg-zinc-300/60 rounded-full mx-auto mt-3 shrink-0 md:hidden" />
+      {/* Mobile Drag/Close Handle — tap to close */}
+      <button
+        onClick={onClose}
+        aria-label="Close cart"
+        className="w-full flex justify-center pt-3 pb-2 shrink-0 md:hidden"
+      >
+        <div className="w-12 h-1.5 bg-zinc-300/60 rounded-full" />
+      </button>
 
       {/* Header Section */}
       <div className="p-6 pb-4 flex items-center justify-between">
