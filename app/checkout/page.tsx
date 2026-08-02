@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 
 import Navbar from "../components/Navbar";
 
@@ -20,7 +19,6 @@ const DELIVERY_RATES: Record<string, number> = {
 };
 
 export default function CheckoutPage() {
-  const router = useRouter();
   const { cart, clearCart } = useCart();
 
   const [name,     setName]     = useState("");
@@ -99,10 +97,35 @@ export default function CheckoutPage() {
       if (orderData.success && orderData.orderRef) {
         clearDiscoveryAttribution();
         clearRecommendationAttribution();
-        clearCart();
-        router.push(
-          `/payment-success?ref=${encodeURIComponent(orderData.orderRef)}&total=${total.toFixed(2)}`
-        );
+
+        const nameParts = name.trim().split(/\s+/);
+        const nameFirst = nameParts[0] ?? name.trim();
+        const nameLast  = nameParts.slice(1).join(" ") || nameFirst;
+
+        const payfastResponse = await fetch("/api/payfast", {
+          method:  "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            amount:       total,
+            item_name:    `Maison Skye & Rose Order ${orderData.orderRef}`,
+            name_first:   nameFirst,
+            name_last:    nameLast,
+            m_payment_id: orderData.orderRef,
+          }),
+        });
+
+        const payfastData = await payfastResponse.json() as {
+          success:     boolean;
+          paymentUrl?: string;
+          error?:      string;
+        };
+
+        if (payfastData.success && payfastData.paymentUrl) {
+          clearCart();
+          window.location.href = payfastData.paymentUrl;
+        } else {
+          setOrderError("We could not initiate payment. Please try again.");
+        }
       } else {
         setOrderError(orderData.message ?? "We could not process your order. Please try again.");
       }
