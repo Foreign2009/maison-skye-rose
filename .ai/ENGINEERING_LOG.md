@@ -633,4 +633,50 @@ Never edit or delete past entries.
 - ShopByVibe functional wiring: vibe tiles have no onClick/search injection (decorative only)
 - ShopByPersonality routing: all personality cards link to /quiz rather than /shop?q= with pre-seeded intent
 - Deferred: QuickAddModal Escape key (pre-existing UX issue)
+
+---
+
+## 2026-08-02 — KI-04 Cart Composite Key Standardization + KI-10 Open Graph Documentation Closure
+
+**Engineer:** Claude Code
+**Programs:** KI-04 (Cart Composite Key), KI-10 (Open Graph Metadata Completion)
+
+### KI-04 — Cart Composite Key Standardization
+
+**Inspection:** Read CartContext, ProductDetail, QuickAddModal, FragranceQuickView, MiniCart, knowledgeAdapter, and QuickAddBundle. Confirmed all five active add-to-cart paths already use the canonical id format `title.toLowerCase().replace(/\s+/g, "-")` via `knowledge.id` or an equivalent inline expression. QuickAddBundle used a non-canonical format (`` `${fragrance.title}-5ml` ``) but had zero imports — confirmed dead via grep of entire app.
+
+**Decision:** Delete QuickAddBundle rather than patch it. No active cart behaviour to protect.
+
+**Commit:** c8dea73 — `Resolve KI-04 by deleting dead QuickAddBundle component`
+
+**Files Changed:**
+- `app/components/QuickAddBundle.tsx` — deleted
+
+**Application code modified:** Yes (deletion only — no logic changed, no behaviour changed)
+
+### KI-10 — Open Graph Metadata Completion
+
+**Inspection:** Read `app/layout.tsx`, `app/page.tsx`, `app/shop/layout.tsx`, `app/collections/skye/layout.tsx`, `app/collections/rose/layout.tsx`, `app/collections/elite/layout.tsx`. Also grepped all layout files with metadata exports across the repository.
+
+**Finding:** KI-10 as documented was stale. All four targeted pages already have complete metadata:
+- `app/shop/layout.tsx` — full OG, Twitter, canonical `/shop`
+- `app/collections/skye/layout.tsx` — full OG, Twitter, canonical `/collections/skye`
+- `app/collections/rose/layout.tsx` — full OG, Twitter, canonical `/collections/rose`
+- `app/collections/elite/layout.tsx` — full OG, Twitter, canonical `/collections/elite`
+- Homepage: `app/page.tsx` is `"use client"` — correctly inherits root `app/layout.tsx` which has full OG/Twitter with `url: "/"` and `metadataBase`
+
+**Decision:** No application code changes authorized. Documentation update only.
+
+**Commit:** none — documentation-only change committed below
+
+**Files Changed:**
+- `.ai/KNOWN_ISSUES.md` — KI-10 removed from Medium; added to Resolved with full resolution notes
+- `.ai/CURRENT_TASK.md` — updated last completed program, added KI-10 and KI-04 entries
+- `.ai/ENGINEERING_LOG.md` — this entry
+
+**Application code modified:** No
+
+**Build Result:** Not re-run. Last verified build: 2026-08-02 — Pass. Zero TypeScript errors. Zero warnings. 247 routes. (no code changes since that build)
+
+**Handoff:** KI-04 and KI-10 both resolved. Remaining open issues: KI-11, KI-12, KI-14, KI-15, KI-16. Awaiting Engineering Lead direction for next sprint.
 - Deferred: Mobile WhatsApp button overlay (pre-existing cosmetic issue)

@@ -9,13 +9,6 @@ Severity: Critical (blocks launch) | High (degrades experience) | Medium (notabl
 
 ## Medium
 
-### KI-10 — Open Graph and Twitter Metadata Missing on Non-Product Pages
-
-**Severity:** Medium
-**Files:** `app/layout.tsx`, `app/shop/page.tsx`, collection pages
-**Detail:** Only product pages have OG metadata. The homepage, shop page, collection pages, and all static pages share the root layout fallback which has no OG image, no Twitter card, and no canonical URL.
-**Fix:** Add `generateMetadata` to homepage, shop, and collection pages.
-
 ### KI-11 — MiniCart Recommendation Scoring May Fail for Products Lacking profile/season Fields
 
 **Severity:** Medium
@@ -136,3 +129,17 @@ Severity: Critical (blocks launch) | High (degrades experience) | Medium (notabl
 **Severity:** High (at time of discovery)
 **Resolved:** 2026-08-02 — `app/components/QuickAddBundle.tsx` deleted (KI-04 cleanup)
 **Resolution:** Repository inspection confirmed that all five active add-to-cart paths (ProductDetail, ProductDetail Buy Now, QuickAddModal, MiniCart quick-add, FragranceQuickView) already used the canonical identifier `title.toLowerCase().replace(/\s+/g, "-")` via `knowledge.id` or direct formula. The only remaining inconsistency was in `QuickAddBundle`, which used `` `${fragrance.title}-5ml` `` (un-lowercased, size suffix appended). `QuickAddBundle` was confirmed to have zero imports in the entire app — a dead component never rendered in production. It was deleted rather than patched. No active cart behaviour changed.
+
+---
+
+### KI-10 — Open Graph and Twitter Metadata Missing on Non-Product Pages
+
+**Severity:** Medium (at time of discovery)
+**Resolved:** 2026-08-02 — verified by repository inspection, no commit required
+**Resolution:** Repository inspection confirmed all targeted pages already have complete OG and Twitter metadata:
+- **Shop:** `app/shop/layout.tsx` exports full `metadata` with `title`, `description`, `alternates.canonical: "/shop"`, `openGraph` (title, description, url, siteName, 1200×630 image), and `twitter`.
+- **Skye Collection:** `app/collections/skye/layout.tsx` — same pattern, canonical `/collections/skye`.
+- **Rose Collection:** `app/collections/rose/layout.tsx` — same pattern, canonical `/collections/rose`.
+- **Elite Collection:** `app/collections/elite/layout.tsx` — same pattern, canonical `/collections/elite`.
+- **Homepage:** `app/page.tsx` is `"use client"` and cannot export metadata. Root `app/layout.tsx` exports full OG and Twitter metadata with `url: "/"` and `metadataBase` set from `NEXT_PUBLIC_WEBSITE_URL`. This correctly serves as homepage metadata.
+No application code changes were required. The issue as documented was stale.
