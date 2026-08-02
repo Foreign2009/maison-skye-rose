@@ -824,3 +824,58 @@ availability:
 
 **Milestone:** All 16 tracked known issues (KI-01 through KI-16) are now resolved. KNOWN_ISSUES.md contains zero open tracked issues as of 2026-08-02.
 - Deferred: Mobile WhatsApp button overlay (pre-existing cosmetic issue)
+
+---
+
+## 2026-08-02 — EP20-P1 Concierge Intelligence Activation
+
+**Engineer:** Claude Code
+**Program:** EP20-P1 — Experience Release 2.0 / Concierge Intelligence Activation
+
+**Inspection:** Performed full LearningEngine pipeline inspection and focused EP20-P1 signal emission inspection across: `SignalInterpreter.ts`, `CustomerProfileSync.ts`, `ConciergePanel.tsx`, `ConciergeContext.tsx`, `app/api/concierge/route.ts`, `app/lib/concierge/types.ts`, `CustomerPreferenceSummary.ts`, `PreferenceScorer.ts`.
+
+**Key Findings:**
+- `ConciergeInterpreter.interpret()` was a stub returning `[]` — the only missing active interpreter (EP19.2 had activated 5 of 8)
+- No concierge signal emission existed anywhere in the codebase — `ConciergePanel.handleSend` never called any CustomerProfileSync function
+- `data.sessionUpdates.profile` (ConversationProfile) is returned by the API route after each turn and available client-side — signals must be emitted client-side since the profile is localStorage-backed
+- `family_avoidance` signals must map to `candidate(signal, "family_preference", family, false)` — `CustomerPreferenceSummary.buildCustomerPreferenceSummary` checks `(c.type === "family_preference" && !c.positive)` for avoidedFamilies, not a separate `family_avoidance` candidate type
+- Delta idempotency required to prevent artificial signal inflation across multi-turn sessions where the same preference appears in accumulated profiles for turns 1-N
+
+**Decisions Made:**
+- Emit signals client-side from `ConciergePanel.tsx` after each API response (consistent with all other signal emission sites)
+- `diffProfile()` helper computes set-difference between prior `conversationState.profile` and new `data.sessionUpdates.profile` — emits only newly expressed preferences per turn
+- `recordConciergeIntent()` receives only the delta — `new Set()` deduplication handles any within-call duplicates
+- `family_avoidance` → `positive: false` mapping validated against `CustomerPreferenceSummary` consumption
+
+**Implementation:**
+
+`app/lib/customer/sync/CustomerProfileSync.ts`:
+- Added `import type { SignalConfidence } from "../signals/SignalConfidence";`
+- Added exported `ConciergeIntent` interface (5 preference dimensions, all readonly)
+- Added exported `recordConciergeIntent(intent: ConciergeIntent): void` — fire-and-forget, errors swallowed, Set deduplication per field before emission
+
+`app/lib/customer/learning/SignalInterpreter.ts`:
+- Replaced `ConciergeInterpreter.interpret()` stub with full implementation handling: `family_preference`, `family_avoidance` (→ positive: false), `occasion_preference`, `season_preference`, `gender_preference`
+- Updated file-level JSDoc comment: ConciergeInterpreter moved from placeholder list to active list (EP20-P1)
+- Updated section divider comments
+
+`app/components/ConciergePanel.tsx`:
+- Added imports: `ConversationProfile` (from concierge types), `recordConciergeIntent` and `ConciergeIntent` (from CustomerProfileSync)
+- Added module-level `diffProfile(prev, next): ConciergeIntent` helper
+- Added `recordConciergeIntent(diffProfile(conversationState.profile, data.sessionUpdates.profile))` call immediately after `SET_SESSION_CONTEXT` dispatch
+
+**Build Result:** Pass — zero TypeScript errors, zero warnings, 247 routes.
+
+**Files Changed:**
+- `app/lib/customer/sync/CustomerProfileSync.ts` — ConciergeIntent interface + recordConciergeIntent function
+- `app/lib/customer/learning/SignalInterpreter.ts` — ConciergeInterpreter.interpret() implemented; JSDoc updated
+- `app/components/ConciergePanel.tsx` — ConversationProfile import, ConciergeIntent import, diffProfile helper, signal emission call
+- `.ai/SPRINT.md` — EP20-P1 added to Completed Programs
+- `.ai/CURRENT_TASK.md` — updated last completed program
+- `.ai/ENGINEERING_LOG.md` — this entry
+
+**LearningEngine status post-EP20-P1:**
+- Active (6/8): QuizInterpreter, FavoriteInterpreter, ViewInterpreter, SearchInterpreter, CartInterpreter, ConciergeInterpreter
+- Deferred (2/8): PurchaseInterpreter (no fragrance_purchase signals emitted), DiscoveryInterpreter (discovery_path partial)
+
+**Handoff:** EP20-P1 closed. LearningEngine ConciergeInterpreter is live. 6 of 8 interpreters active. Next program to be defined by Engineering Lead. Remaining LearningEngine work: EP20-P2 (PurchaseInterpreter — requires order confirmation signal emission) and EP20-P3 (RecommendationEngine ↔ LearningEngine bridge — M6).

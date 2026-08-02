@@ -28,6 +28,7 @@ import { getOrCreateDeviceId }              from "../identity/DeviceIdentity";
 import { mkcNameToSlug }                    from "../../mkc/catalogueLookup";
 import { buildSignal }                      from "../signals/SignalBuilder";
 import { addSignalToDevice }                from "../profile/DeviceProfile";
+import type { SignalConfidence }            from "../signals/SignalConfidence";
 
 // ── Internal helpers ──────────────────────────────────────────────────────────
 
@@ -97,6 +98,92 @@ export function recordSearch(query: string): void {
       confidence: "MEDIUM",
     }));
     manager.saveDevice(signaled);
+  } catch {
+    // localStorage unavailable or unexpected error
+  }
+}
+
+// ── Concierge intent ──────────────────────────────────────────────────────────
+
+/**
+ * Structured preference intent emitted by the AI Concierge on each turn.
+ * Built from the delta between the previous and new ConversationProfile.
+ * Consumed by ConciergeInterpreter via the LearningEngine signal pipeline.
+ */
+export interface ConciergeIntent {
+  readonly preferredFamilies?:  { readonly values: readonly string[]; readonly confidence: SignalConfidence };
+  readonly avoidedFamilies?:    { readonly values: readonly string[]; readonly confidence: SignalConfidence };
+  readonly preferredOccasions?: { readonly values: readonly string[]; readonly confidence: SignalConfidence };
+  readonly preferredSeasons?:   { readonly values: readonly string[]; readonly confidence: SignalConfidence };
+  readonly preferredGender?:    { readonly value: "male" | "female" | "unisex"; readonly confidence: SignalConfidence };
+}
+
+/**
+ * Emit concierge preference signals from an explicit customer conversation.
+ * Caller supplies only the delta — new preferences not present in the prior turn.
+ * Idempotent within the call: duplicate values in any field are deduplicated via Set.
+ * Fire-and-forget: swallows all errors, never affects UI.
+ */
+export function recordConciergeIntent(intent: ConciergeIntent): void {
+  const hasContent =
+    (intent.preferredFamilies?.values.length  ?? 0) > 0 ||
+    (intent.avoidedFamilies?.values.length    ?? 0) > 0 ||
+    (intent.preferredOccasions?.values.length ?? 0) > 0 ||
+    (intent.preferredSeasons?.values.length   ?? 0) > 0 ||
+    intent.preferredGender !== undefined;
+  if (!hasContent) return;
+
+  try {
+    const { manager, deviceId } = getManager();
+    const device  = manager.loadDevice(deviceId);
+    let   current = device;
+
+    for (const family of new Set(intent.preferredFamilies?.values ?? [])) {
+      current = addSignalToDevice(current, buildSignal({
+        source:     "concierge",
+        type:       "family_preference",
+        payload:    { family },
+        confidence: intent.preferredFamilies!.confidence,
+      }));
+    }
+
+    for (const family of new Set(intent.avoidedFamilies?.values ?? [])) {
+      current = addSignalToDevice(current, buildSignal({
+        source:     "concierge",
+        type:       "family_avoidance",
+        payload:    { family },
+        confidence: intent.avoidedFamilies!.confidence,
+      }));
+    }
+
+    for (const occasion of new Set(intent.preferredOccasions?.values ?? [])) {
+      current = addSignalToDevice(current, buildSignal({
+        source:     "concierge",
+        type:       "occasion_preference",
+        payload:    { occasion },
+        confidence: intent.preferredOccasions!.confidence,
+      }));
+    }
+
+    for (const season of new Set(intent.preferredSeasons?.values ?? [])) {
+      current = addSignalToDevice(current, buildSignal({
+        source:     "concierge",
+        type:       "season_preference",
+        payload:    { season },
+        confidence: intent.preferredSeasons!.confidence,
+      }));
+    }
+
+    if (intent.preferredGender) {
+      current = addSignalToDevice(current, buildSignal({
+        source:     "concierge",
+        type:       "gender_preference",
+        payload:    { gender: intent.preferredGender.value },
+        confidence: intent.preferredGender.confidence,
+      }));
+    }
+
+    manager.saveDevice(current);
   } catch {
     // localStorage unavailable or unexpected error
   }

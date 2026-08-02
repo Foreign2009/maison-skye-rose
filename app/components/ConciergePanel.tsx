@@ -18,9 +18,40 @@ import {
   trackAiComparisonStarted,
   trackAiConversationDepth,
 } from "../lib/analytics";
-import type { FormattedResponse } from "../lib/concierge/types";
+import type { FormattedResponse, ConversationProfile } from "../lib/concierge/types";
+import { recordConciergeIntent, type ConciergeIntent } from "../lib/customer/sync/CustomerProfileSync";
 
 const MAX_CHARS = 280;
+
+// Computes delta between two ConversationProfile snapshots.
+// Returns only preferences that are newly present in `next` vs `prev`.
+// Idempotency is enforced by recordConciergeIntent() via Set deduplication.
+function diffProfile(
+  prev: ConversationProfile | undefined,
+  next: ConversationProfile | undefined,
+): ConciergeIntent {
+  if (!next) return {};
+
+  const prevFamilies  = new Set(prev?.preferredFamilies?.value  ?? []);
+  const prevAvoided   = new Set(prev?.avoidedFamilies?.value    ?? []);
+  const prevOccasions = new Set(prev?.preferredOccasions?.value ?? []);
+  const prevSeasons   = new Set(prev?.preferredSeasons?.value   ?? []);
+
+  const newFamilies  = (next.preferredFamilies?.value  ?? []).filter((v) => !prevFamilies.has(v));
+  const newAvoided   = (next.avoidedFamilies?.value    ?? []).filter((v) => !prevAvoided.has(v));
+  const newOccasions = (next.preferredOccasions?.value ?? []).filter((v) => !prevOccasions.has(v));
+  const newSeasons   = (next.preferredSeasons?.value   ?? []).filter((v) => !prevSeasons.has(v));
+
+  return {
+    preferredFamilies:  newFamilies.length  > 0 ? { values: newFamilies,  confidence: next.preferredFamilies!.confidence  } : undefined,
+    avoidedFamilies:    newAvoided.length   > 0 ? { values: newAvoided,   confidence: next.avoidedFamilies!.confidence    } : undefined,
+    preferredOccasions: newOccasions.length > 0 ? { values: newOccasions, confidence: next.preferredOccasions!.confidence } : undefined,
+    preferredSeasons:   newSeasons.length   > 0 ? { values: newSeasons,   confidence: next.preferredSeasons!.confidence   } : undefined,
+    preferredGender: next.preferredGender && next.preferredGender.value !== prev?.preferredGender?.value
+      ? { value: next.preferredGender.value, confidence: next.preferredGender.confidence }
+      : undefined,
+  };
+}
 
 export default function ConciergePanel() {
   const { isOpen, closeConcierge, dispatch, conversationState } = useConcierge();
@@ -126,6 +157,7 @@ export default function ConciergePanel() {
 
       if (data.sessionUpdates) {
         dispatch({ type: "SET_SESSION_CONTEXT", updates: data.sessionUpdates });
+        recordConciergeIntent(diffProfile(conversationState.profile, data.sessionUpdates.profile));
       }
 
       // Analytics

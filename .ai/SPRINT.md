@@ -31,11 +31,34 @@ Each program has a defined scope, ordered task list, and a clear close condition
 
 ## Active Program
 
-None — Repository Maintenance closed 2026-08-02 (documentation synchronization complete). Awaiting Engineering Lead direction for next sprint.
+None — EP20-P1 Concierge Intelligence Activation closed 2026-08-02 (ConciergeInterpreter active, signals emitted from ConciergePanel). Awaiting Engineering Lead direction for next sprint.
 
 ---
 
 ## Completed Programs
+
+### EP20-P1 — Experience Release 2.0 / Concierge Intelligence Activation
+
+**Objective:** Activate the LearningEngine ConciergeInterpreter by wiring concierge signal emission from ConciergePanel into the existing device-profile pipeline. Establish delta-based, idempotent preference capture across all five intent dimensions.
+**Scope:** `app/lib/customer/sync/CustomerProfileSync.ts` (ConciergeIntent interface + recordConciergeIntent), `app/lib/customer/learning/SignalInterpreter.ts` (ConciergeInterpreter.interpret() implemented), `app/components/ConciergePanel.tsx` (diffProfile helper + signal emission call).
+**Lead:** Project Owner + Claude (Implementation Engineer)
+**Opened:** 2026-08-02
+**Closed:** 2026-08-02
+
+**Task List:**
+
+| # | Gate | Task | Status |
+|---|---|---|---|
+| 1 | G1 | Repository Inspection — ConciergeInterpreter stub, CustomerProfileSync, ConciergePanel handleSend, API route signal boundary | Complete |
+| 2 | G2 | Implementation Plan — 3-file scope, delta idempotency design, family_avoidance→positive:false mapping, server vs client signal emission decision | Complete |
+| 3 | G3 | Implementation — CustomerProfileSync.ts (ConciergeIntent + recordConciergeIntent), SignalInterpreter.ts (ConciergeInterpreter.interpret()), ConciergePanel.tsx (diffProfile + emission call) | Complete |
+| 4 | G4 | Build verification — Pass, TypeScript clean, 0 warnings, 247 routes | Complete |
+
+**Close Condition:** ConciergeInterpreter.interpret() returns PreferenceCandidates for all 5 signal types. recordConciergeIntent() emits signals per concierge turn delta. diffProfile() prevents duplicate signal inflation across a multi-turn session. Build passes.
+
+**Outcome:** AI Concierge is now a live LearningEngine signal source. Per-turn delta signals feed ConciergeInterpreter → PreferenceCandidate pipeline → CustomerPreferenceSummary → unified customer intelligence. family_avoidance signals map to family_preference candidates with positive:false, consistent with CustomerPreferenceSummary avoidedFamilies check. Idempotency enforced at two levels: diffProfile (cross-turn delta) + Set deduplication in recordConciergeIntent (within-call). 6 of 8 interpreters now active; PurchaseInterpreter and DiscoveryInterpreter remain deferred.
+
+---
 
 ### Repository Maintenance & Documentation Synchronization
 

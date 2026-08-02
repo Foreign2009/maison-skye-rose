@@ -3,17 +3,17 @@
  *
  * Concrete implementations of BaseInterpreter — one per SignalSource.
  *
- * Active interpreters (EP19.2):
+ * Active interpreters (EP19.2 + EP20-P1):
  *   QuizInterpreter      — maps explicit quiz payload fields to candidates (HIGH)
  *   FavoriteInterpreter  — derives fragrance attributes from saves (MEDIUM)
  *   ViewInterpreter      — derives fragrance attributes from views (LOW)
  *   SearchInterpreter    — parses query intent via parseIntent() (MEDIUM)
  *   CartInterpreter      — derives fragrance attributes from cart adds (MEDIUM)
+ *   ConciergeInterpreter — maps explicit concierge preference signals to candidates (HIGH/MEDIUM)
  *
  * Placeholder interpreters (signals not yet emitted):
  *   PurchaseInterpreter  — no fragrance_purchase signals emitted; deferred
  *   DiscoveryInterpreter — discovery_path deferred to post-EP19.1
- *   ConciergeInterpreter — concierge signals not yet written
  *
  * Metadata resolution:
  *   getSummaryForSlug() from PreferenceScorer provides the canonical
@@ -150,15 +150,46 @@ export class CartInterpreter extends BaseInterpreter {
   }
 }
 
-// ── Placeholder interpreters (signals not yet emitted) ────────────────────────
+// ── Concierge interpreter (EP20-P1) ──────────────────────────────────────────
 
 export class ConciergeInterpreter extends BaseInterpreter {
   readonly source = "concierge" as const;
-  interpret(_signal: CustomerSignal, _context: LearningContext): readonly PreferenceCandidate[] {
-    // No concierge signals currently emitted — placeholder.
-    return [];
+
+  interpret(signal: CustomerSignal, _context: LearningContext): readonly PreferenceCandidate[] {
+    const out: PreferenceCandidate[] = [];
+
+    if (signal.type === "family_preference") {
+      const family = signal.payload.family;
+      if (typeof family === "string") out.push(candidate(signal, "family_preference", family, true));
+    }
+
+    // family_avoidance signals → family_preference candidate with positive: false
+    // CustomerPreferenceSummary checks (type === "family_preference" && !positive) for avoidedFamilies
+    if (signal.type === "family_avoidance") {
+      const family = signal.payload.family;
+      if (typeof family === "string") out.push(candidate(signal, "family_preference", family, false));
+    }
+
+    if (signal.type === "occasion_preference") {
+      const occasion = signal.payload.occasion;
+      if (typeof occasion === "string") out.push(candidate(signal, "occasion_preference", occasion, true));
+    }
+
+    if (signal.type === "season_preference") {
+      const season = signal.payload.season;
+      if (typeof season === "string") out.push(candidate(signal, "season_preference", season, true));
+    }
+
+    if (signal.type === "gender_preference") {
+      const gender = signal.payload.gender;
+      if (typeof gender === "string") out.push(candidate(signal, "gender_preference", gender, true));
+    }
+
+    return out;
   }
 }
+
+// ── Placeholder interpreters (signals not yet emitted) ────────────────────────
 
 export class PurchaseInterpreter extends BaseInterpreter {
   readonly source = "purchase" as const;
