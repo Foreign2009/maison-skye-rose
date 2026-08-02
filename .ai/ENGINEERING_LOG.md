@@ -919,3 +919,75 @@ availability:
 - `.ai/ENGINEERING_LOG.md` — this entry
 
 **Handoff:** EP20-P2 closed. 7 of 8 LearningEngine interpreters now active and correctly documented. Only PurchaseInterpreter remains deferred. Next program to be defined by Engineering Lead. Remaining LearningEngine work: EP20-P3 (RecommendationEngine ↔ LearningEngine bridge — M6).
+
+---
+
+## 2026-08-02 — EP20-P3 Confidence Compositing
+
+**Engineer:** Claude Code
+**Program:** EP20-P3 — Experience Release 2.0 / Confidence Compositing
+
+**Inspection Findings:**
+
+Two gaps identified through full pipeline inspection:
+
+**Gap 1 — Max-only confidence calculator (documented deferred)**
+`ConfidenceCalculator.ts` used `createMaxConfidenceCalculator()` as default: the single strongest signal determines group confidence. Ten LOW signals for "Woody" produce confidence = LOW. `CONFIDENCE_WEIGHT` (`HIGH: 1.0, MEDIUM: 0.6, LOW: 0.3`) existed in `SignalConfidence.ts` but was never consumed. `ConfidenceCalculator.ts` and `SignalConfidence.ts` both documented compositing as "EP10.0-P5+" — stale milestone, same pattern as EP20-P2.
+
+**Gap 2 — Resolver discards accumulated confidence**
+`createPassthroughResolver()` returned `a.candidates[0]` — the raw first candidate from each group. The `AccumulatedPreference.confidence` value computed by the calculator was silently discarded. This meant the compositing calculator result, even if correct, had no effect on the final output.
+
+**RecommendationEngine status confirmed:** Architecturally decoupled. `PreferenceScorer.buildPreferenceProfile()` reads `profile.savedSlugs`, `profile.lastQuizSlugs`, `profile.recentlyViewed` — raw `UnifiedCustomerProfile` fields. It does not consume `CustomerPreferenceSummary` or any `PreferenceCandidate`. No changes required.
+
+**Implementation:**
+
+`app/lib/customer/learning/ConfidenceCalculator.ts`:
+- Added `import { CONFIDENCE_WEIGHT }` from SignalConfidence
+- Added `createCompositingCalculator()`: sums `CONFIDENCE_WEIGHT[c.confidence]` across all candidates in a group; thresholds: sum >= 1.0 → HIGH, sum >= 0.6 → MEDIUM, otherwise → LOW
+- Updated file-level JSDoc to document both implementations; removed stale EP10.0-P5+ language
+- `createMaxConfidenceCalculator()` retained as injectable alternative
+
+`app/lib/customer/learning/PreferenceResolver.ts`:
+- Added `createAccumulatedResolver()`: returns `{ ...candidates[0], confidence: a.confidence }` — spreads first candidate, overrides only the confidence field with the group-level accumulated value
+- Updated file-level JSDoc to document both implementations; removed stale passthrough-is-default framing
+- `createPassthroughResolver()` retained as injectable alternative
+
+`app/lib/customer/learning/LearningEngine.ts`:
+- Added `createAccumulatedResolver` to resolver import
+- Added `createCompositingCalculator` import from ConfidenceCalculator
+- Updated `createDefaultLearningEngine()` to explicitly build config object:
+  - `accumulator: createDefaultAccumulator(createCompositingCalculator())`
+  - `resolver: createAccumulatedResolver()`
+  - `logger: createNullLogger()`
+  - Caller config overrides honoured via `??` per field
+- Constructor defaults (passthrough/max) unchanged — `new LearningEngine(interpreters, {})` still uses safe defaults
+
+**Compositing examples (verified against implementation logic):**
+
+| Scenario | Weight sum | Result |
+|---|---|---|
+| 1× HIGH (Quiz) | 1.0 | HIGH — unchanged |
+| 1× MEDIUM (Cart/Favorite/Search) | 0.6 | MEDIUM — unchanged |
+| 1× LOW (View/Discovery) | 0.3 | LOW — unchanged |
+| 2× LOW | 0.6 | MEDIUM — compounded |
+| 4× LOW | 1.2 | HIGH — compounded |
+| 2× MEDIUM | 1.2 | HIGH — compounded |
+| 1× MEDIUM + 1× LOW | 0.9 | HIGH — compounded |
+
+**Build Result:** Pass — zero TypeScript errors, zero warnings, 247 routes.
+
+**Files Changed:**
+- `app/lib/customer/learning/ConfidenceCalculator.ts` — createCompositingCalculator() added; CONFIDENCE_WEIGHT imported; stale comments updated
+- `app/lib/customer/learning/PreferenceResolver.ts` — createAccumulatedResolver() added; stale comments updated
+- `app/lib/customer/learning/LearningEngine.ts` — createCompositingCalculator and createAccumulatedResolver imported; createDefaultLearningEngine() wired to compositing defaults
+- `.ai/SPRINT.md` — EP20-P3 added to Completed Programs
+- `.ai/CURRENT_TASK.md` — updated last completed program
+- `.ai/ENGINEERING_LOG.md` — this entry
+
+**LearningEngine status post-EP20-P3:**
+- Interpreters — Active (7/8): QuizInterpreter, FavoriteInterpreter, ViewInterpreter, SearchInterpreter, CartInterpreter, ConciergeInterpreter, DiscoveryInterpreter
+- Interpreters — Deferred (1/8): PurchaseInterpreter
+- Confidence calculator: createCompositingCalculator() (was: createMaxConfidenceCalculator())
+- Resolver: createAccumulatedResolver() (was: createPassthroughResolver())
+
+**Handoff:** EP20-P3 closed. Confidence compositing active in production. Multiple independent signals for the same dimension now compound into stronger confidence tiers. CONFIDENCE_WEIGHT constants (defined since SignalConfidence.ts was authored) consumed for the first time. RecommendationEngine unchanged. Awaiting Engineering Lead direction for next sprint.

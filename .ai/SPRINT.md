@@ -31,11 +31,34 @@ Each program has a defined scope, ordered task list, and a clear close condition
 
 ## Active Program
 
-None — EP20-P2 Discovery Intelligence Documentation Sync closed 2026-08-02 (pipeline verified operational; stale comments corrected). Awaiting Engineering Lead direction for next sprint.
+None — EP20-P3 Confidence Compositing closed 2026-08-02 (compositing calculator + accumulated resolver introduced; LearningEngine default wiring updated; build clean). Awaiting Engineering Lead direction for next sprint.
 
 ---
 
 ## Completed Programs
+
+### EP20-P3 — Experience Release 2.0 / Confidence Compositing
+
+**Objective:** Replace the max-only confidence calculator with a compositing calculator that accumulates CONFIDENCE_WEIGHT across independent signals, and fix the passthrough resolver so accumulated confidence is not silently discarded.
+**Scope:** `app/lib/customer/learning/ConfidenceCalculator.ts` (createCompositingCalculator added), `app/lib/customer/learning/PreferenceResolver.ts` (createAccumulatedResolver added), `app/lib/customer/learning/LearningEngine.ts` (default injection updated). No executable changes to any other file.
+**Lead:** Project Owner + Claude (Implementation Engineer)
+**Opened:** 2026-08-02
+**Closed:** 2026-08-02
+
+**Task List:**
+
+| # | Gate | Task | Status |
+|---|---|---|---|
+| 1 | G1 | Repository Inspection — full confidence pipeline audit: SignalConfidence, ConfidenceCalculator, PreferenceAccumulator, PreferenceResolver, CustomerPreferenceSummary, RecommendationEngine | Complete |
+| 2 | G2 | Engineering Assessment — two gaps identified: max-only calculator (documented as EP10.0-P5+ deferred); resolver discards accumulated confidence entirely | Complete |
+| 3 | G3 | Implementation — createCompositingCalculator() using CONFIDENCE_WEIGHT sum thresholds; createAccumulatedResolver() spreading candidates[0] with accumulated.confidence override; LearningEngine factory wired to new defaults | Complete |
+| 4 | G4 | Build verification — Pass, TypeScript clean, 0 warnings, 247 routes | Complete |
+
+**Close Condition:** createCompositingCalculator() active as default. createAccumulatedResolver() active as default. Two LOW signals → MEDIUM. Two MEDIUM signals → HIGH. One HIGH signal → HIGH unchanged. Resolver preserves all candidate fields except confidence. RecommendationEngine behaviour unchanged. Build passes.
+
+**Outcome:** Confidence compositing active in production. Multiple independent signals for the same preference dimension now compound: 2× MEDIUM (0.6+0.6=1.2) → HIGH, 2× LOW (0.3+0.3=0.6) → MEDIUM, 4× LOW (1.2) → HIGH. Both max calculator and passthrough resolver retained as injectable alternatives. CONFIDENCE_WEIGHT constants (already defined in SignalConfidence.ts) consumed for the first time. RecommendationEngine is architecturally decoupled and unaffected.
+
+---
 
 ### EP20-P2 — Experience Release 2.0 / Discovery Intelligence Documentation Sync
 

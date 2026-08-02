@@ -7,8 +7,11 @@
  * The resolver handles conflict resolution (same value, opposing polarity)
  * and selects a representative candidate from each group.
  *
- * createPassthroughResolver() is the safe default — it returns the first
- * candidate from each group without conflict handling.
+ * Two implementations are provided:
+ *   createPassthroughResolver()  — returns the first candidate from each group;
+ *                                  discards the accumulated confidence (safe default)
+ *   createAccumulatedResolver()  — returns the first candidate with confidence
+ *                                  replaced by the group-level accumulated value (EP20-P3)
  *
  * Integration points:
  *   LearningEngine        — calls resolve() after accumulation
@@ -34,6 +37,23 @@ export function createPassthroughResolver(): PreferenceResolverContract {
       return accumulated
         .filter((a) => a.candidates.length > 0)
         .map((a) => a.candidates[0]);
+    },
+  };
+}
+
+/**
+ * Accumulated resolver — returns the first candidate from each group with
+ * confidence replaced by the group-level accumulated confidence.
+ * All other fields (type, value, positive, signal, context) are preserved.
+ */
+export function createAccumulatedResolver(): PreferenceResolverContract {
+  return {
+    resolve(
+      accumulated: readonly AccumulatedPreference[],
+    ): readonly PreferenceCandidate[] {
+      return accumulated
+        .filter((a) => a.candidates.length > 0)
+        .map((a) => ({ ...a.candidates[0], confidence: a.confidence }));
     },
   };
 }

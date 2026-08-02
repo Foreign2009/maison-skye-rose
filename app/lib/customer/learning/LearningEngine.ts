@@ -32,8 +32,10 @@ import type { PreferenceResolverContract }   from "./PreferenceResolver";
 import type { LearningLoggerContract }       from "./LearningLogger";
 import { BaseInterpreter }                   from "./BaseInterpreter";
 import { createDefaultAccumulator }          from "./PreferenceAccumulator";
-import { createPassthroughResolver }         from "./PreferenceResolver";
+import { createPassthroughResolver,
+         createAccumulatedResolver }         from "./PreferenceResolver";
 import { createNullLogger }                  from "./LearningLogger";
+import { createCompositingCalculator }       from "./ConfidenceCalculator";
 import { buildMetrics }                      from "./LearningMetrics";
 import {
   QuizInterpreter,
@@ -140,6 +142,11 @@ export class LearningEngine {
  * Pre-wired engine with all 8 interpreters and default policies.
  * 7 active: Quiz, Concierge, Favorite, Cart, Search, View, Discovery.
  * 1 deferred: Purchase (no fragrance_purchase signals emitted yet).
+ *
+ * Default policies (EP20-P3):
+ *   accumulator — createCompositingCalculator(): multiple weak signals compound
+ *   resolver    — createAccumulatedResolver(): group confidence propagates to output
+ *
  * Inject custom policies via LearningEngineConfig if needed.
  */
 export function createDefaultLearningEngine(
@@ -156,6 +163,10 @@ export function createDefaultLearningEngine(
       new ViewInterpreter(),
       new DiscoveryInterpreter(),
     ],
-    config,
+    {
+      accumulator: config.accumulator ?? createDefaultAccumulator(createCompositingCalculator()),
+      resolver:    config.resolver    ?? createAccumulatedResolver(),
+      logger:      config.logger      ?? createNullLogger(),
+    },
   );
 }
