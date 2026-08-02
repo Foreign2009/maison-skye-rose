@@ -7,20 +7,6 @@ Severity: Critical (blocks launch) | High (degrades experience) | Medium (notabl
 
 ## High
 
-### KI-04 — Cart Composite Key Inconsistency Across Add-to-Cart Sources
-
-**Severity:** High
-**Files:** `app/components/ProductDetail.tsx`, `app/components/QuickAddModal.tsx`, `app/components/MiniCart.tsx`
-**Detail:** The cart `id` field is set differently depending on which component adds the product:
-- ProductDetail: URL slug (`"black-orchid-noir"`)
-- QuickAddModal: `"${title}-${selectedSize}"` (`"Black Orchid Noir-10ml"`)
-- MiniCart recommendations: `fragrance.title` (`"Black Orchid Noir"`)
-
-The composite key check is `id + size`. Same product added via different flows will appear as separate line items because the `id` differs.
-**Fix:** Standardize on one `id` format across all add-to-cart paths. Recommended: URL slug (consistent with PDP routing).
-
----
-
 ## Medium
 
 ### KI-10 — Open Graph and Twitter Metadata Missing on Non-Product Pages
@@ -142,3 +128,11 @@ The composite key check is `id + size`. Same product added via different flows w
 **Severity:** Low (at time of discovery)
 **Resolved:** EP6-P4 — `app/components/MiniCart.tsx` modified as part of Commerce Instrumentation
 **Resolution:** Quantity increment/decrement buttons updated to `h-11 w-11` = 44px, meeting the WCAG 2.1 minimum touch target size.
+
+---
+
+### KI-04 — Cart Composite Key Inconsistency Across Add-to-Cart Sources
+
+**Severity:** High (at time of discovery)
+**Resolved:** 2026-08-02 — `app/components/QuickAddBundle.tsx` deleted (KI-04 cleanup)
+**Resolution:** Repository inspection confirmed that all five active add-to-cart paths (ProductDetail, ProductDetail Buy Now, QuickAddModal, MiniCart quick-add, FragranceQuickView) already used the canonical identifier `title.toLowerCase().replace(/\s+/g, "-")` via `knowledge.id` or direct formula. The only remaining inconsistency was in `QuickAddBundle`, which used `` `${fragrance.title}-5ml` `` (un-lowercased, size suffix appended). `QuickAddBundle` was confirmed to have zero imports in the entire app — a dead component never rendered in production. It was deleted rather than patched. No active cart behaviour changed.
