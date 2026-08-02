@@ -558,6 +558,9 @@ export default function ExecutiveReportApprovalCenter({ approval }: Props) {
             <Link href="/admin/executive-report-acceptance-center" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Acceptance Center
             </Link>
+            <Link href="/admin/executive-report-adoption" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report Adoption
+            </Link>
           </nav>
         </div>
         <form action={logoutAction}>
