@@ -19,7 +19,7 @@ At the start of a new Claude Code session:
 ## Current Task
 
 **Status:** No active task
-**Program:** None — KI-10 Documentation Closure closed 2026-08-02 (verified resolved by inspection)
+**Program:** None — KI-11 Documentation Closure closed 2026-08-02 (verified resolved by inspection)
 
 **Goal:**
 _No active task. Awaiting Engineering Lead direction for next sprint._
@@ -50,9 +50,10 @@ _None active._
 
 ## Context Notes
 
-**Last completed:** KI-10 Documentation Closure (2026-08-02)
+**Last completed:** KI-11 Documentation Closure (2026-08-02)
 
 Recent completed programs (newest first):
+- KI-11 Documentation Closure (2026-08-02) — verified resolved by inspection; no code changes; KI-11 moved to Resolved in KNOWN_ISSUES.md
 - KI-10 Documentation Closure (2026-08-02) — verified resolved by inspection; no code changes; KI-10 moved to Resolved in KNOWN_ISSUES.md
 - KI-04 Cart Composite Key (2026-08-02) — commit c8dea73 — dead QuickAddBundle.tsx deleted; all active paths already canonical
 - Repository Maintenance (2026-08-02) — 9 known issues marked Resolved; SPRINT.md, ENGINEERING_LOG.md, CURRENT_TASK.md updated; 5 validation scripts deleted

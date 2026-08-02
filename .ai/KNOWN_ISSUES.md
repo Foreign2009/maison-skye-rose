@@ -9,13 +9,6 @@ Severity: Critical (blocks launch) | High (degrades experience) | Medium (notabl
 
 ## Medium
 
-### KI-11 — MiniCart Recommendation Scoring May Fail for Products Lacking profile/season Fields
-
-**Severity:** Medium
-**File:** `app/components/MiniCart.tsx`
-**Detail:** `collectionRecommendations` scores fragrances by `f.collection`, `f.profile`, and `f.season`. If any product in the catalogue lacks these fields, the comparison silently fails (returns undefined, score 0). The recommendation still works but is less accurate.
-**Fix:** Validate that all catalogue entries have collection, profile, and season populated.
-
 ### KI-12 — instagramUrl Is Incomplete in brand.ts
 
 **Severity:** Medium
@@ -129,6 +122,14 @@ Severity: Critical (blocks launch) | High (degrades experience) | Medium (notabl
 **Severity:** High (at time of discovery)
 **Resolved:** 2026-08-02 — `app/components/QuickAddBundle.tsx` deleted (KI-04 cleanup)
 **Resolution:** Repository inspection confirmed that all five active add-to-cart paths (ProductDetail, ProductDetail Buy Now, QuickAddModal, MiniCart quick-add, FragranceQuickView) already used the canonical identifier `title.toLowerCase().replace(/\s+/g, "-")` via `knowledge.id` or direct formula. The only remaining inconsistency was in `QuickAddBundle`, which used `` `${fragrance.title}-5ml` `` (un-lowercased, size suffix appended). `QuickAddBundle` was confirmed to have zero imports in the entire app — a dead component never rendered in production. It was deleted rather than patched. No active cart behaviour changed.
+
+---
+
+### KI-11 — MiniCart Recommendation Scoring May Fail for Products Lacking profile/season Fields
+
+**Severity:** Medium (at time of discovery)
+**Resolved:** 2026-08-02 — verified by repository inspection, no commit required
+**Resolution:** Repository inspection confirmed that `collectionRecommendations` — the score-based function that directly accessed `f.collection`, `f.profile`, and `f.season` on display objects — no longer exists in the live implementation. `app/components/MiniCart.tsx` uses `getCartRecommendations` from `app/lib/customer/sync/CartRecommendationStrategy.ts`, which routes through `RecommendationEngine.ts` and the MKC catalogue (`mkcCatalogue`). The engine operates on `FragranceKnowledge` records where `collection`, `profile`, and `season` are non-optional TypeScript type fields. `app/lib/mkc/validator.ts` enforces `PROFILE_REQUIRED` and `SEASON_REQUIRED` as errors. Any catalogue record missing these fields would fail the TypeScript build. The failure mode described in the issue — silent score degradation from undefined fields — cannot occur in the current architecture.
 
 ---
 

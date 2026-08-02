@@ -679,4 +679,28 @@ Never edit or delete past entries.
 **Build Result:** Not re-run. Last verified build: 2026-08-02 — Pass. Zero TypeScript errors. Zero warnings. 247 routes. (no code changes since that build)
 
 **Handoff:** KI-04 and KI-10 both resolved. Remaining open issues: KI-11, KI-12, KI-14, KI-15, KI-16. Awaiting Engineering Lead direction for next sprint.
+
+---
+
+## 2026-08-02 — KI-11 MiniCart Recommendation Validation
+
+**Engineer:** Claude Code
+**Program:** KI-11 (MiniCart Recommendation Scoring Validation)
+
+**Inspection:** Read `app/components/MiniCart.tsx`, `app/lib/customer/sync/CartRecommendationStrategy.ts`, `app/lib/customer/recommendations/RecommendationEngine.ts`, `app/lib/mkc/types.ts`, `app/lib/mkc/validator.ts`, `app/lib/mkc/catalogue.ts`, `app/lib/knowledgeAdapter.ts`, and a sample native record (`sauvage-inspired.ts`). Grep confirmed `collectionRecommendations` exists only in documentation files — not in any source file.
+
+**Finding:** KI-11 as documented is stale. The `collectionRecommendations` function that scored `f.collection`, `f.profile`, and `f.season` directly on display objects does not exist. MiniCart uses `getCartRecommendations` from `CartRecommendationStrategy.ts`, which routes through `RecommendationEngine` using `mkcCatalogue` (`FragranceKnowledge[]`). `FragranceKnowledge` type requires `collection`, `profile`, and `season` as non-optional fields. `validator.ts` enforces `PROFILE_REQUIRED` and `SEASON_REQUIRED` at error severity. Any missing field would fail the TypeScript build. The failure mode — silent score degradation from undefined fields — cannot occur in the current architecture.
+
+**Decision:** No application code changes authorized. Documentation update only.
+
+**Files Changed:**
+- `.ai/KNOWN_ISSUES.md` — KI-11 removed from Medium; added to Resolved with full resolution notes
+- `.ai/CURRENT_TASK.md` — updated last completed program, added KI-11 entry
+- `.ai/ENGINEERING_LOG.md` — this entry
+
+**Application code modified:** No
+
+**Build Result:** Not re-run. Last verified build: 2026-08-02 — Pass. Zero TypeScript errors. Zero warnings. 247 routes. No code changes since that build.
+
+**Handoff:** KI-04, KI-10, and KI-11 all resolved by inspection — implementations already correct. Remaining open issues: KI-12, KI-14, KI-15, KI-16. Awaiting Engineering Lead direction for next sprint.
 - Deferred: Mobile WhatsApp button overlay (pre-existing cosmetic issue)
