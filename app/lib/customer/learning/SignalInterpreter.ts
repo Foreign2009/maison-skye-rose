@@ -3,17 +3,17 @@
  *
  * Concrete implementations of BaseInterpreter — one per SignalSource.
  *
- * Active interpreters (EP19.2 + EP20-P1):
+ * Active interpreters (EP19.2 + EP20-P1 + EP20-P2):
  *   QuizInterpreter      — maps explicit quiz payload fields to candidates (HIGH)
  *   FavoriteInterpreter  — derives fragrance attributes from saves (MEDIUM)
  *   ViewInterpreter      — derives fragrance attributes from views (LOW)
  *   SearchInterpreter    — parses query intent via parseIntent() (MEDIUM)
  *   CartInterpreter      — derives fragrance attributes from cart adds (MEDIUM)
  *   ConciergeInterpreter — maps explicit concierge preference signals to candidates (HIGH/MEDIUM)
+ *   DiscoveryInterpreter — maps discovery_path families/occasions/seasons to candidates (LOW)
  *
  * Placeholder interpreters (signals not yet emitted):
  *   PurchaseInterpreter  — no fragrance_purchase signals emitted; deferred
- *   DiscoveryInterpreter — discovery_path deferred to post-EP19.1
  *
  * Metadata resolution:
  *   getSummaryForSlug() from PreferenceScorer provides the canonical

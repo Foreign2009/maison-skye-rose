@@ -19,7 +19,7 @@ At the start of a new Claude Code session:
 ## Current Task
 
 **Status:** No active task
-**Program:** None — EP20-P1 Concierge Intelligence Activation closed 2026-08-02
+**Program:** None — EP20-P2 Discovery Intelligence Documentation Sync closed 2026-08-02
 
 **Goal:**
 _No active task. Awaiting Engineering Lead direction for next sprint._
@@ -50,9 +50,10 @@ _None active._
 
 ## Context Notes
 
-**Last completed:** EP20-P1 Concierge Intelligence Activation (2026-08-02)
+**Last completed:** EP20-P2 Discovery Intelligence Documentation Sync (2026-08-02)
 
 Recent completed programs (newest first):
+- EP20-P2 Discovery Intelligence Documentation Sync (2026-08-02) — Pipeline verified fully operational; stale comments corrected in 3 files; no runtime changes; build passes; 247 routes
 - EP20-P1 Concierge Intelligence Activation (2026-08-02) — ConciergeInterpreter active; signals emitted from ConciergePanel; build passes; 247 routes
 - KI-16 Sort Behaviour Consistency (2026-08-02) — Best Sellers/New Arrivals removed from sort; filter controls unchanged; build passes; 247 routes
 - KI-15 Product JSON-LD Availability (2026-08-02) — JSON-LD availability now derived from knowledge.status; build passes; 247 routes
@@ -77,7 +78,7 @@ _N/A_
 
 ## Build Result
 
-**Last build:** 2026-08-02 — Pass. Zero TypeScript errors. Zero warnings. 247 routes. (Repository Maintenance)
+**Last build:** 2026-08-02 — Pass. Zero TypeScript errors. Zero warnings. 247 routes. (EP20-P2)
 
 ---
 

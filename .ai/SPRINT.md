@@ -31,11 +31,34 @@ Each program has a defined scope, ordered task list, and a clear close condition
 
 ## Active Program
 
-None — EP20-P1 Concierge Intelligence Activation closed 2026-08-02 (ConciergeInterpreter active, signals emitted from ConciergePanel). Awaiting Engineering Lead direction for next sprint.
+None — EP20-P2 Discovery Intelligence Documentation Sync closed 2026-08-02 (pipeline verified operational; stale comments corrected). Awaiting Engineering Lead direction for next sprint.
 
 ---
 
 ## Completed Programs
+
+### EP20-P2 — Experience Release 2.0 / Discovery Intelligence Documentation Sync
+
+**Objective:** Verify the Discovery Intelligence pipeline is fully operational and correct all stale engineering comments that misrepresented DiscoveryInterpreter as deferred or placeholder.
+**Scope:** Comment-only changes in `SignalInterpreter.ts`, `LearningEngine.ts`, `CustomerIntelligenceEngine.ts`. No executable code modified.
+**Lead:** Project Owner + Claude (Implementation Engineer)
+**Opened:** 2026-08-02
+**Closed:** 2026-08-02
+
+**Task List:**
+
+| # | Gate | Task | Status |
+|---|---|---|---|
+| 1 | G1 | Repository Inspection — full Discovery pipeline audit: DiscoveryAttributionSetter, recordDiscoveryFilter, DiscoveryInterpreter, LearningEngine routing, PreferenceAccumulator, CustomerPreferenceSummary | Complete |
+| 2 | G2 | Engineering Assessment — pipeline verified end-to-end; DiscoveryInterpreter confirmed functional; 3 stale comment locations identified | Complete |
+| 3 | G3 | Implementation — 6 comment edits across 3 files; no executable code changed | Complete |
+| 4 | G4 | Build verification — Pass, TypeScript clean, 0 warnings, 247 routes | Complete |
+
+**Close Condition:** DiscoveryInterpreter described as active in all documentation. No stale EP10.0-P5+ or "deferred" claims remain. Build passes.
+
+**Outcome:** Repository inspection confirmed the Discovery Intelligence pipeline was already fully operational: `/discover/[id]` visits emit `discovery_path` signals → `DiscoveryInterpreter` extracts families/occasions/seasons → `PreferenceAccumulator` groups candidates → `CustomerPreferenceSummary` surfaces `preferredFamilies[]`, `preferredOccasions[]`, `preferredSeasons[]`. EP20-P2 was a documentation synchronisation episode. 7 of 8 LearningEngine interpreters now documented as active; PurchaseInterpreter remains the sole deferred placeholder.
+
+---
 
 ### EP20-P1 — Experience Release 2.0 / Concierge Intelligence Activation
 

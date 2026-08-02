@@ -18,13 +18,13 @@
  *   getCustomerAffinity         — dominant source / type
  *   getCustomerJourney          — journey stage + profile flags
  *   getCustomerConfidence       — confidence distribution
- *   getCustomerPreferenceSummary — learned preferences (empty until EP10.0-P5+)
+ *   getCustomerPreferenceSummary — learned preferences from all active interpreters
  *   getCustomerIntelligence     — medium-weight: summary + journey + affinity
  *   getCustomerInsights         — full aggregate including synthesised insights
  *
  * Integration points:
  *   UnifiedCustomerProfile — sole input to all public functions
- *   LearningEngine         — run() wired for preference extraction (candidates empty until P5+)
+ *   LearningEngine         — run() produces candidates from 7 active interpreters
  *   CustomerLookup         — deriveCustomerId used on every call
  */
 
@@ -191,7 +191,7 @@ export function getCustomerInsights(
   const journey    = buildCustomerJourney(customerId, profile, stats, now);
   const confidence = buildCustomerConfidence(customerId, stats, now);
 
-  // Preference learning — candidates empty until EP10.0-P5+ interpreter rules are added
+  // Preference learning — 7 active interpreters (Quiz, Concierge, Favorite, Cart, Search, View, Discovery)
   const candidates  = runPreferenceLearning(profile, now);
   const preferences = buildCustomerPreferenceSummary(customerId, candidates, now);
 

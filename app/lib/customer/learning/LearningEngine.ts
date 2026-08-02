@@ -137,9 +137,10 @@ export class LearningEngine {
 // ── Default engine factory ────────────────────────────────────────────────────
 
 /**
- * Pre-wired engine with all 8 placeholder interpreters and default policies.
- * Replace individual interpreters or inject custom policies via LearningEngineConfig
- * as concrete rule implementations are added in EP10.0-P5+.
+ * Pre-wired engine with all 8 interpreters and default policies.
+ * 7 active: Quiz, Concierge, Favorite, Cart, Search, View, Discovery.
+ * 1 deferred: Purchase (no fragrance_purchase signals emitted yet).
+ * Inject custom policies via LearningEngineConfig if needed.
  */
 export function createDefaultLearningEngine(
   config: LearningEngineConfig = {},

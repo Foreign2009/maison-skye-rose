@@ -878,4 +878,44 @@ availability:
 - Active (6/8): QuizInterpreter, FavoriteInterpreter, ViewInterpreter, SearchInterpreter, CartInterpreter, ConciergeInterpreter
 - Deferred (2/8): PurchaseInterpreter (no fragrance_purchase signals emitted), DiscoveryInterpreter (discovery_path partial)
 
-**Handoff:** EP20-P1 closed. LearningEngine ConciergeInterpreter is live. 6 of 8 interpreters active. Next program to be defined by Engineering Lead. Remaining LearningEngine work: EP20-P2 (PurchaseInterpreter — requires order confirmation signal emission) and EP20-P3 (RecommendationEngine ↔ LearningEngine bridge — M6).
+**Handoff:** EP20-P1 closed. LearningEngine ConciergeInterpreter is live. 6 of 8 interpreters active (per documentation at close of EP20-P1 — EP20-P2 inspection subsequently confirmed 7 of 8 are active; see EP20-P2 entry below).
+
+---
+
+## 2026-08-02 — EP20-P2 Discovery Intelligence Documentation Sync
+
+**Engineer:** Claude Code
+**Program:** EP20-P2 — Experience Release 2.0 / Discovery Intelligence Documentation Sync
+
+**Inspection Findings:**
+- `DiscoveryInterpreter.interpret()` was found to be a **full working implementation** — NOT a stub. It handles `discovery_path` signals and produces `family_preference`, `occasion_preference`, and `season_preference` candidates for all three dimensions emitted by `recordDiscoveryFilter()`.
+- `DiscoveryAttributionSetter.tsx` correctly calls `recordDiscoveryFilter()` on mount for every `/discover/[id]` page — both editorial and standard collection branches.
+- The full pipeline from page visit → signal emission → interpretation → accumulation → `CustomerPreferenceSummary` is end-to-end functional.
+- Three stale comment locations were identified that incorrectly described the discovery pipeline as deferred or empty.
+
+**Stale comments found:**
+1. `SignalInterpreter.ts` header: `DiscoveryInterpreter — discovery_path deferred to post-EP19.1` — implementation was active
+2. `LearningEngine.ts` factory JSDoc: "Pre-wired engine with all 8 placeholder interpreters" — 7 are active
+3. `CustomerIntelligenceEngine.ts` lines 21, 27, 194: "candidates empty until EP10.0-P5+" — interpreters have been producing candidates since EP19.2
+
+**Implementation:** 6 comment-only edits across 3 files. Zero executable code changes.
+
+- `SignalInterpreter.ts`: Moved DiscoveryInterpreter from "Placeholder" to "Active" list; updated version tag to EP20-P2.
+- `LearningEngine.ts`: Updated factory comment — 7 active, 1 deferred (PurchaseInterpreter).
+- `CustomerIntelligenceEngine.ts`: Removed 3 instances of stale EP10.0-P5+ language.
+
+**Build Result:** Pass — zero TypeScript errors, zero warnings, 247 routes.
+
+**LearningEngine status post-EP20-P2:**
+- Active (7/8): QuizInterpreter, FavoriteInterpreter, ViewInterpreter, SearchInterpreter, CartInterpreter, ConciergeInterpreter, DiscoveryInterpreter
+- Deferred (1/8): PurchaseInterpreter (no fragrance_purchase signals emitted)
+
+**Files Changed:**
+- `app/lib/customer/learning/SignalInterpreter.ts` — comment update (DiscoveryInterpreter → active)
+- `app/lib/customer/learning/LearningEngine.ts` — factory JSDoc corrected
+- `app/lib/customer/intelligence/CustomerIntelligenceEngine.ts` — 3 stale EP10.0-P5+ comments removed
+- `.ai/SPRINT.md` — EP20-P2 added to Completed Programs
+- `.ai/CURRENT_TASK.md` — updated last completed program
+- `.ai/ENGINEERING_LOG.md` — this entry
+
+**Handoff:** EP20-P2 closed. 7 of 8 LearningEngine interpreters now active and correctly documented. Only PurchaseInterpreter remains deferred. Next program to be defined by Engineering Lead. Remaining LearningEngine work: EP20-P3 (RecommendationEngine ↔ LearningEngine bridge — M6).
