@@ -8,6 +8,7 @@ import { Copy, Check, MessageCircle } from "lucide-react";
 
 import Navbar from "../components/Navbar";
 import { trackPaymentReturnSuccess } from "../lib/analytics";
+import { recordPurchase } from "../lib/customer/sync/CustomerProfileSync";
 import { brand } from "../data/brand";
 
 const BANKING_DETAILS = {
@@ -58,6 +59,17 @@ function EFTConfirmationContent() {
     sessionStorage.setItem(PAYMENT_TRACKED_KEY, "1");
     trackPaymentReturnSuccess({});
   }, []);
+
+  useEffect(() => {
+    if (!orderRef || orderRef === "—") return;
+    try {
+      const raw = localStorage.getItem(`msr_purchase_pending_${orderRef}`);
+      if (!raw) return;
+      const slugs = JSON.parse(raw) as string[];
+      recordPurchase(orderRef, slugs);
+      localStorage.removeItem(`msr_purchase_pending_${orderRef}`);
+    } catch { /* localStorage unavailable */ }
+  }, [orderRef]);
 
   const whatsappMessage = encodeURIComponent(
     `Hi Maison Skye & Rose! 🌸\n\nI've placed an order and am sending proof of payment.\n\nOrder Reference: ${orderRef}\nAmount: ${totalDisplay}\n\nPlease find my proof of payment attached. Thank you!`

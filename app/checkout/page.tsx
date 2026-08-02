@@ -121,6 +121,12 @@ export default function CheckoutPage() {
         };
 
         if (payfastData.success && payfastData.paymentUrl) {
+          try {
+            localStorage.setItem(
+              `msr_purchase_pending_${orderData.orderRef}`,
+              JSON.stringify(cart.map((item) => item.id)),
+            );
+          } catch { /* localStorage unavailable */ }
           clearCart();
           window.location.href = payfastData.paymentUrl;
         } else {

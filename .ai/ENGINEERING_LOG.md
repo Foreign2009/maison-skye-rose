@@ -39,6 +39,40 @@ Never edit or delete past entries.
 
 ## Log
 
+### 2026-08-02 — EP30-P1 — Program Implementation
+
+**Participants:** Project Owner / Claude (Implementation Engineer)
+**Program:** EP30-P1 — Experience Release 3.0 / Purchase Intelligence Bridge
+
+**Decisions Made:**
+- localStorage bridge pattern selected for slug handoff (sessionStorage ruled out for cross-redirect reliability): checkout saves slugs keyed by orderRef before clearCart(); payment-success reads and consumes on landing
+- Deduplication via persistent localStorage `msr_purchase_recorded_orders` array (survives browser restarts, prevents duplicate signal emission on page refresh)
+- PurchaseInterpreter replaced inline in SignalInterpreter.ts — separate file not created (no re-export overhead; all other interpreters co-located in same module)
+- No LearningEngine wiring changes needed — PurchaseInterpreter already registered in createDefaultLearningEngine() from prior work
+- checkout.tsx minimal addition justified by repository evidence: cart cleared before PayFast redirect; item slugs unavailable on payment-success page without handoff
+
+**Tasks Completed:**
+- Repository inspection (checkout, payment-success, CustomerProfileSync, SignalInterpreter, signal type registry, LearningEngine)
+- Implementation: checkout.tsx slug persistence, CustomerProfileSync.recordPurchase(), PurchaseInterpreter stub replacement, payment-success useEffect
+- Build verification: Pass, TypeScript clean, 0 warnings, 247 routes
+
+**Tasks Started:**
+- None — EP30-P1 closed
+
+**Build Result:** Pass — compiled 12.5s, TypeScript clean, 0 warnings, 247 routes
+
+**Files Changed:**
+- `app/checkout/page.tsx` — save purchased slugs to localStorage before clearCart() + PayFast redirect
+- `app/lib/customer/sync/CustomerProfileSync.ts` — add recordPurchase() with orderRef deduplication
+- `app/lib/customer/learning/SignalInterpreter.ts` — replace PurchaseInterpreter stub; update header comment
+- `app/payment-success/page.tsx` — import recordPurchase, add useEffect to read/consume/clean pending purchase
+- `.ai/SPRINT.md`, `.ai/CURRENT_TASK.md`, `.ai/ENGINEERING_LOG.md` — documentation sync
+
+**Notes:**
+EP30-P1 closes the purchase learning gap. Confirmed purchases now produce HIGH-confidence fragrance_purchase signals that flow through the LearningEngine → RecommendationEngine pipeline. The bridge is client-side only (localStorage), consistent with the existing customer intelligence model and the constraint against server-side customer persistence.
+
+---
+
 ### 2026-06-29 — AIOS-001 — Program Implementation
 
 **Participants:** Project Owner / Claude (Implementation Engineer) / ChatGPT (Engineering Lead)

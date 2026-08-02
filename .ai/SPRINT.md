@@ -31,7 +31,7 @@ Each program has a defined scope, ordered task list, and a clear close condition
 
 ## Active Program
 
-None — EP20-P4 Recommendation Bridge closed 2026-08-02 (LearningEngine integrated at RecommendationEngine orchestration layer; concierge, search, and discovery preferences now influence scoring and reason text; pipeline unchanged; build clean). Awaiting Engineering Lead direction for next sprint.
+None — EP30-P1 Purchase Intelligence Bridge closed 2026-08-02 (fragrance_purchase signals now emitted from payment-success page; PurchaseInterpreter implemented; purchase intelligence flows into recommendation scoring). Awaiting Engineering Lead direction for next sprint.
 
 ---
 
@@ -57,6 +57,29 @@ None — EP20-P4 Recommendation Bridge closed 2026-08-02 (LearningEngine integra
 **Close Condition:** LearningEngine runs exactly once per recommend() call. LearnedPreferences flows through pipeline to both scorer and reason builder via RecommendationContext. Cold-start behaviour unchanged. No circular dependency. RecommendationPipeline and WeightedRecommendationScorer require no changes. Build passes.
 
 **Outcome:** Recommendation Bridge complete. Customers whose preferences are known only through concierge conversations, search queries, or discovery page visits now receive correctly personalised recommendations — those signals no longer go to waste. The integration point is RecommendationEngine.recommend(): it enriches the context with computed learned preferences before pool construction and pipeline execution, so both WeightedRecommendationScorer (profile dimension) and RecommendationReasonBuilder (family_match, occasion_match, season_match reasons) benefit automatically. Existing slug-based preferences are preserved and unioned with learned preferences.
+
+---
+
+### EP30-P1 — Experience Release 3.0 / Purchase Intelligence Bridge
+
+**Objective:** Emit `fragrance_purchase` signals on confirmed orders so that the LearningEngine derives preference candidates from purchase history, which then flows into recommendation scoring and reason derivation.
+**Scope:** `app/checkout/page.tsx` (persist purchased slugs to localStorage before clearCart + PayFast redirect), `app/lib/customer/sync/CustomerProfileSync.ts` (add `recordPurchase()`), `app/lib/customer/learning/SignalInterpreter.ts` (replace PurchaseInterpreter stub with real implementation), `app/payment-success/page.tsx` (read persisted slugs, call recordPurchase(), clean up).
+**Lead:** Project Owner + Claude (Implementation Engineer)
+**Opened:** 2026-08-02
+**Closed:** 2026-08-02
+
+**Task List:**
+
+| # | Gate | Task | Status |
+|---|---|---|---|
+| 1 | G1 | Repository Inspection — checkout flow, payment-success, CustomerProfileSync, SignalInterpreter, signal type registry, LearningEngine wiring | Complete |
+| 2 | G2 | Engineering Assessment — slug availability gap confirmed: cart cleared before PayFast redirect, payment-success only receives orderRef + total; localStorage bridge pattern selected | Complete |
+| 3 | G3 | Implementation — localStorage slug persistence in checkout, recordPurchase() with orderRef-keyed deduplication, PurchaseInterpreter stub replaced, payment-success useEffect | Complete |
+| 4 | G4 | Build verification — Pass, TypeScript clean, 0 warnings, 247 routes | Complete |
+
+**Close Condition:** fragrance_purchase signals emitted once per confirmed order. PurchaseInterpreter derives family/occasion/season/gender candidates at HIGH confidence. Signals reach LearningEngine via existing pipeline registration. Duplicate prevention using localStorage recorded-orders list. Checkout flow and payment flow unchanged.
+
+**Outcome:** Purchase Intelligence Bridge complete. Confirmed purchases now produce HIGH-confidence preference signals that flow through the LearningEngine pipeline into RecommendationEngine scoring. The bridge uses a two-step localStorage handoff: checkout saves purchased slugs before navigating to PayFast; payment-success page reads, records, and cleans up the handoff on landing. No server-side customer persistence introduced — client-side localStorage model preserved.
 
 ---
 

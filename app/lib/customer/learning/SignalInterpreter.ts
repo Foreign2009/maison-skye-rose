@@ -12,8 +12,8 @@
  *   ConciergeInterpreter — maps explicit concierge preference signals to candidates (HIGH/MEDIUM)
  *   DiscoveryInterpreter — maps discovery_path families/occasions/seasons to candidates (LOW)
  *
- * Placeholder interpreters (signals not yet emitted):
- *   PurchaseInterpreter  — no fragrance_purchase signals emitted; deferred
+ * Active from EP30-P1:
+ *   PurchaseInterpreter  — derives fragrance attributes from confirmed purchases (HIGH)
  *
  * Metadata resolution:
  *   getSummaryForSlug() from PreferenceScorer provides the canonical
@@ -189,13 +189,13 @@ export class ConciergeInterpreter extends BaseInterpreter {
   }
 }
 
-// ── Placeholder interpreters (signals not yet emitted) ────────────────────────
-
 export class PurchaseInterpreter extends BaseInterpreter {
   readonly source = "purchase" as const;
-  interpret(_signal: CustomerSignal, _context: LearningContext): readonly PreferenceCandidate[] {
-    // No fragrance_purchase signals currently emitted — placeholder.
-    return [];
+
+  interpret(signal: CustomerSignal, _context: LearningContext): readonly PreferenceCandidate[] {
+    if (signal.type !== "fragrance_purchase") return [];
+    const slug = signal.payload.slug;
+    return typeof slug === "string" ? fragranceCandidates(slug, signal, true) : [];
   }
 }
 

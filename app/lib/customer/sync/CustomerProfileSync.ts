@@ -235,3 +235,42 @@ export function recordCart(slugOrTitle: string): void {
     // localStorage unavailable or unexpected error
   }
 }
+
+const PURCHASE_RECORDED_ORDERS_KEY = "msr_purchase_recorded_orders";
+
+/**
+ * Emit fragrance_purchase signals for every fragrance slug purchased in an order.
+ * Idempotent: orderRef is recorded in localStorage on first call; subsequent calls
+ * with the same orderRef return immediately without emitting duplicate signals.
+ * Fire-and-forget: swallows all errors, never affects UI.
+ */
+export function recordPurchase(orderRef: string, slugs: readonly string[]): void {
+  if (!orderRef || slugs.length === 0) return;
+  try {
+    const recorded: string[] = JSON.parse(
+      localStorage.getItem(PURCHASE_RECORDED_ORDERS_KEY) ?? "[]",
+    );
+    if (recorded.includes(orderRef)) return;
+
+    const { manager, deviceId } = getManager();
+    const device = manager.loadDevice(deviceId);
+    let current = device;
+
+    for (const slugOrTitle of slugs) {
+      const slug = resolveSlug(slugOrTitle);
+      current = addSignalToDevice(current, buildSignal({
+        source:     "purchase",
+        type:       "fragrance_purchase",
+        payload:    { slug, orderRef },
+        confidence: "HIGH",
+      }));
+    }
+
+    manager.saveDevice(current);
+
+    recorded.push(orderRef);
+    localStorage.setItem(PURCHASE_RECORDED_ORDERS_KEY, JSON.stringify(recorded));
+  } catch {
+    // localStorage unavailable or unexpected error
+  }
+}
