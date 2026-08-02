@@ -31,11 +31,139 @@ Each program has a defined scope, ordered task list, and a clear close condition
 
 ## Active Program
 
-None — EP8-P1 closed 2026-07-01 (foundation cleanup complete). Awaiting Engineering Lead direction for EP8-P2 or next sprint.
+None — Repository Maintenance closed 2026-08-02 (documentation synchronization complete). Awaiting Engineering Lead direction for next sprint.
 
 ---
 
 ## Completed Programs
+
+### Repository Maintenance & Documentation Synchronization
+
+**Objective:** Synchronize repository documentation with the current implementation state — mark resolved known issues, update program records, and remove untracked obsolete validation scripts.
+**Scope:** `.ai/KNOWN_ISSUES.md`, `.ai/SPRINT.md`, `.ai/CURRENT_TASK.md`, `.ai/ENGINEERING_LOG.md`. Five untracked validation scripts deleted. No application code changes.
+**Lead:** Project Owner + Claude (Implementation Engineer)
+**Opened:** 2026-08-02
+**Closed:** 2026-08-02
+
+**Task List:**
+
+| # | Gate | Task | Status |
+|---|---|---|---|
+| 1 | G1 | Repository Inspection — KNOWN_ISSUES.md, SPRINT.md, CURRENT_TASK.md, ENGINEERING_LOG.md, untracked validation scripts | Complete |
+| 2 | G2 | Implementation — 4 documentation files updated; 5 validation scripts deleted | Complete |
+| 3 | G3 | Build verification — Pass, TypeScript clean, 0 warnings, 247 routes | Complete |
+
+**Close Condition:** 9 resolved known issues marked Resolved with commit references. SPRINT.md, CURRENT_TASK.md, and ENGINEERING_LOG.md reflect programs since EP8-P1. 5 obsolete validation scripts removed. Build passes.
+
+**Outcome:** KI-01, KI-02, KI-03, KI-05, KI-06, KI-07 moved to Resolved with commit 9f9f7f5 / 74c8789 references. KI-08, KI-09, KI-13 moved to Resolved with prior-session references. SPRINT.md updated with Executive Report Pipeline, FloatingCart, PayFast, and Delivery programs. CURRENT_TASK.md refreshed. ENGINEERING_LOG.md appended. Validation scripts validate-ep4p1b.mjs, validate-ep6p1.mjs, validate-ep6p2.mjs, validate-ep6p3.mjs, validate-ep6p4.mjs deleted.
+
+---
+
+### Delivery Pricing Reconciliation — KI-07
+
+**Objective:** Reconcile the delivery price discrepancy between MiniCart and Checkout by completing the "Calculated at checkout" approach (D10 Option c). Eliminate the hidden R100 assumption in the MiniCart total.
+**Scope:** `app/components/MiniCart.tsx` only. Checkout province-based DELIVERY_RATES unchanged.
+**Lead:** Project Owner + Claude (Implementation Engineer)
+**Opened:** 2026-08-02
+**Closed:** 2026-08-02
+
+**Task List:**
+
+| # | Gate | Task | Status |
+|---|---|---|---|
+| 1 | G1 | Repository Inspection — MiniCart.tsx, checkout/page.tsx, DECISIONS.md D10 | Complete |
+| 2 | G2 | Implementation — total label/amount when delivery non-free; WhatsApp message delivery display | Complete |
+| 3 | G3 | Build verification — Pass, TypeScript clean, 0 warnings, 247 routes | Complete |
+
+**Close Condition:** MiniCart total shows subtotal (not subtotal + R100) when delivery is non-free. Delivery line continues to show "Calculated at checkout". WhatsApp message consistent with UI. Checkout pricing unchanged. Build passes.
+
+**Outcome:** D10 Option (c) implemented. MiniCart total label switches to "Subtotal" with pre-delivery amount when delivery is non-free. WhatsApp checkout shows "Calculated at checkout" for delivery and "SUBTOTAL" label. Free delivery and wholesale behaviour unchanged. Commit 74c8789.
+
+---
+
+### PayFast Production Hardening — KI-01/02/03/05/06
+
+**Objective:** Harden the PayFast payment integration for production launch — configurable URL, MD5 signature, server-only env vars, real customer data, ITN webhook, and wired checkout-to-PayFast flow.
+**Scope:** `app/api/payfast/route.ts` (rewritten), `app/api/payfast/itn/route.ts` (new), `app/checkout/page.tsx` (PayFast integration added).
+**Lead:** Project Owner + Claude (Implementation Engineer)
+**Opened:** 2026-08-02
+**Closed:** 2026-08-02
+
+**Task List:**
+
+| # | Gate | Task | Status |
+|---|---|---|---|
+| 1 | G1 | Repository Inspection — payfast/route.ts, checkout/page.tsx, orderStatus.ts, KNOWN_ISSUES.md | Complete |
+| 2 | G2 | Implementation — KI-01 configurable URL; KI-03 MD5 signature; KI-05 server-only env vars; KI-06 real customer data; KI-02 ITN webhook; checkout PayFast redirect | Complete |
+| 3 | G3 | Build verification — Pass, TypeScript clean, 0 warnings, 247 routes | Complete |
+
+**Close Condition:** PayFast URL controlled by PAYFAST_ENV. MD5 signature computed. Passphrase server-only. Real customer name passed. ITN verifies signature and updates Supabase. Checkout creates order then redirects through PayFast. Build passes.
+
+**Outcome:** KI-01, KI-02, KI-03, KI-05, KI-06 resolved. Payment flow: order created → /api/payfast called → redirect to PayFast → ITN updates payment_status → PayFast redirects to /payment-success. Required env vars: PAYFAST_MERCHANT_ID, PAYFAST_MERCHANT_KEY, PAYFAST_PASSPHRASE, PAYFAST_ENV, NEXT_PUBLIC_WEBSITE_URL. Commit 9f9f7f5.
+
+---
+
+### FloatingCart Integration
+
+**Objective:** Integrate the FloatingCart mobile component (previously untracked) into the root layout with accessibility and MiniCart conflict prevention.
+**Scope:** `app/components/FloatingCart.tsx` (cartOpen guard + aria-label), `app/layout.tsx` (import + render inside CartUIProvider).
+**Lead:** Project Owner + Claude (Implementation Engineer)
+**Opened:** 2026-08-02
+**Closed:** 2026-08-02
+
+**Task List:**
+
+| # | Gate | Task | Status |
+|---|---|---|---|
+| 1 | G1 | Repository Inspection — FloatingCart.tsx, layout.tsx, CartUIContext | Complete |
+| 2 | G2 | Implementation — cartOpen guard on AnimatePresence; aria-label on button; layout integration | Complete |
+| 3 | G3 | Build verification — Pass, TypeScript clean, 0 warnings, 247 routes | Complete |
+
+**Close Condition:** FloatingCart renders in layout inside CartUIProvider scope. Suppressed when MiniCart is already open. Accessible via aria-label. Build passes.
+
+**Outcome:** FloatingCart integrated. Animated spring pill suppresses automatically when cartOpen is true. aria-label="View cart" added. FloatingCart renders after CartSuccessToast in layout.tsx. Commit 4356d35.
+
+---
+
+### Executive Report Pipeline
+
+**Objective:** Implement the full Executive Report admin intelligence pipeline — a multi-stage authority escalation system delivering operational intelligence across the admin dashboard. Architecture extension proposal assessed and terminated at Commitment.
+**Scope:** New admin pages under `/admin/executive-report-*`. Approximately 30 stages implemented, each with Foundation + Dashboard + Center pages. Pipeline terminates at Commitment by approved architecture decision.
+**Lead:** Project Owner + Claude (Implementation Engineer)
+**Opened:** 2026-07-01
+**Closed:** 2026-08-02
+
+**Stages Implemented:**
+
+| Stage | Status |
+|---|---|
+| Commitment (Center, Dashboard, Foundation) | Complete — commits a5a64ff, e98de29, cc6370c |
+| Adoption (Center, Dashboard, Foundation) | Complete — commits a262908, 5da3fc6, cb8092b |
+| Acceptance (Center, Dashboard, Foundation) | Complete — commits 6e888f5, f34c65b, 8df2990 |
+| Endorsement (Center, Dashboard, Foundation) | Complete — commits ebd33ee, 8b7b205, fab3729 |
+| Ratification (Center, Dashboard, Foundation) | Complete — commits a1c213d, bd80c4f, 6025e79 |
+| Authentication (Center, Dashboard, Foundation) | Complete — commits 0af54af, b35193c, 6eb1b10 |
+| Authorization (Center, Dashboard, Foundation) | Complete — commits d80cfba, bcdd93d, 20db39c |
+| Certification (Center, Dashboard, Foundation) | Complete — commits 9c29d2b, 2a47e51, 82a3ae3 |
+| Validation (Center, Dashboard, Foundation) | Complete — commits d7d47d6, 28f8a63, 3ceb864 |
+| Confirmation / Verification (Center, Dashboard, Foundation) | Complete — commits 73e35d0, e85a8dd, 1d5a7bc, cf5f5fe |
+| Receipt (Center, Dashboard, Foundation) | Complete — commits 621a125, d008c7e, c0f3e7a |
+| Acknowledgement (Center, Dashboard, Foundation) | Complete — commits 43e82cc, 5f66ec9, c6e0fd1 |
+| Delivery (Center, Dashboard, Foundation) | Complete — commits 2667caf, cc8bf71, db41b39 |
+| Distribution (Center, Dashboard, Foundation) | Complete — commits 008df11, 8904484, 3d9c7b5 |
+| Publication (Center, Dashboard, Foundation) | Complete — commits dd1db7d, 6e0a37e, 175fa46 |
+| Completion (Center, Dashboard, Foundation) | Complete — commits b5ca98a, ac828ee, b6628ea |
+| Execution (Center, Dashboard, Foundation) | Complete — commits 764006f, b0e5984, d8ed397 |
+| Approval (Center, Dashboard, Foundation) | Complete — commits 5250dc0, 0ff6f0f, f560dc2 |
+| Decision and earlier stages | Complete — see git log from afdf97a |
+
+**Architecture Extension Proposal:** Three candidate next stages (Resolution, Governance, Accountability) were assessed. Approved decision: pipeline terminates at Commitment. No further Executive Report stages.
+
+**Close Condition:** All stages through Commitment implemented. Architecture extension proposal concluded. Build passes at each stage.
+
+**Outcome:** Executive Report Pipeline complete at ~30 stages. All admin pages are dynamic server components protected by SHA256 session authentication. Pipeline provides full operational intelligence from initial decision through final commitment. Architecture terminated by approved extension proposal.
+
+---
 
 ### EP8-P1 — Recommendation Intelligence Implementation / Foundation Cleanup
 
