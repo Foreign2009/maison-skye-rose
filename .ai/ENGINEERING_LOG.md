@@ -763,4 +763,33 @@ Never edit or delete past entries.
 - `.ai/ENGINEERING_LOG.md` — this entry
 
 **Handoff:** KI-14 resolved. Remaining open issues: KI-15, KI-16 (both Low severity). Awaiting Engineering Lead direction for next sprint.
+
+---
+
+## 2026-08-02 — KI-15 Product JSON-LD Availability Accuracy
+
+**Engineer:** Claude Code
+**Program:** KI-15 (Product JSON-LD Availability)
+
+**Inspection:** Read `app/product/[slug]/page.tsx`. Found `availability: "https://schema.org/InStock"` hardcoded at line 129. Grepped all MKC native records, `FragranceKnowledge` type, and `app/data/*.ts` for stock/inventory fields — none found. Found `status?: string` in `FragranceKnowledge` type with `"active"` or `"discontinued"` values enforced by validator. Grepped all 93 native records for `"discontinued"` — zero results. All records are `status: "active"`.
+
+**Finding:** No inventory system exists. Current `InStock` is accurate for all 93 products. The `status` field is the only lifecycle signal available. Using `status === "discontinued"` to conditionally emit `https://schema.org/Discontinued` is the minimal repository-backed fix — uses existing data, has zero effect on current output, and auto-corrects when any record is eventually discontinued.
+
+**Implementation:** Single ternary expression replacing hardcoded string in `app/product/[slug]/page.tsx` line 129:
+```typescript
+availability:
+  knowledge.status === "discontinued"
+    ? "https://schema.org/Discontinued"
+    : "https://schema.org/InStock",
+```
+
+**Build Result:** Pass — zero TypeScript errors, zero warnings, 247 routes.
+
+**Files Changed:**
+- `app/product/[slug]/page.tsx` — availability derived from knowledge.status
+- `.ai/KNOWN_ISSUES.md` — KI-15 moved to Resolved
+- `.ai/CURRENT_TASK.md` — updated last completed program
+- `.ai/ENGINEERING_LOG.md` — this entry
+
+**Handoff:** KI-15 resolved. One remaining open issue: KI-16 (Low severity). Awaiting Engineering Lead direction for next sprint.
 - Deferred: Mobile WhatsApp button overlay (pre-existing cosmetic issue)

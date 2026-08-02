@@ -126,7 +126,10 @@ export default async function ProductPage({
       name: size,
       price,
       priceCurrency: "ZAR",
-      availability: "https://schema.org/InStock",
+      availability:
+        knowledge.status === "discontinued"
+          ? "https://schema.org/Discontinued"
+          : "https://schema.org/InStock",
     })),
   };
 

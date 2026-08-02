@@ -19,7 +19,7 @@ At the start of a new Claude Code session:
 ## Current Task
 
 **Status:** No active task
-**Program:** None — KI-14 Mobile MiniCart Close UX closed 2026-08-02
+**Program:** None — KI-15 Product JSON-LD Availability closed 2026-08-02
 
 **Goal:**
 _No active task. Awaiting Engineering Lead direction for next sprint._
@@ -50,9 +50,10 @@ _None active._
 
 ## Context Notes
 
-**Last completed:** KI-14 Mobile MiniCart Close UX (2026-08-02)
+**Last completed:** KI-15 Product JSON-LD Availability (2026-08-02)
 
 Recent completed programs (newest first):
+- KI-15 Product JSON-LD Availability (2026-08-02) — JSON-LD availability now derived from knowledge.status; build passes; 247 routes
 - KI-14 Mobile MiniCart Close UX (2026-08-02) — drag handle converted to button calling onClose; build passes; 247 routes
 - KI-12 Instagram URL Completion (2026-08-02) — brand.ts instagramUrl set to https://instagram.com/maisonskyeandrose; build passes
 - KI-11 Documentation Closure (2026-08-02) — verified resolved by inspection; no code changes; KI-11 moved to Resolved in KNOWN_ISSUES.md

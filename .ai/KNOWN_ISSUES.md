@@ -11,13 +11,6 @@ Severity: Critical (blocks launch) | High (degrades experience) | Medium (notabl
 
 ## Low
 
-### KI-15 — All Products Hardcoded as InStock in JSON-LD
-
-**Severity:** Low
-**File:** `app/product/[slug]/page.tsx`
-**Detail:** The Product JSON-LD `availability` field is hardcoded to `"https://schema.org/InStock"` for all products. There is no inventory system, so this is always true — but it will be incorrect if any product sells out.
-**Fix:** Requires inventory tracking implementation before this is meaningful.
-
 ### KI-16 — Sort Options "Best Sellers" and "New Arrivals" Act as Filters
 
 **Severity:** Low
@@ -106,6 +99,14 @@ Severity: Critical (blocks launch) | High (degrades experience) | Medium (notabl
 **Severity:** High (at time of discovery)
 **Resolved:** 2026-08-02 — `app/components/QuickAddBundle.tsx` deleted (KI-04 cleanup)
 **Resolution:** Repository inspection confirmed that all five active add-to-cart paths (ProductDetail, ProductDetail Buy Now, QuickAddModal, MiniCart quick-add, FragranceQuickView) already used the canonical identifier `title.toLowerCase().replace(/\s+/g, "-")` via `knowledge.id` or direct formula. The only remaining inconsistency was in `QuickAddBundle`, which used `` `${fragrance.title}-5ml` `` (un-lowercased, size suffix appended). `QuickAddBundle` was confirmed to have zero imports in the entire app — a dead component never rendered in production. It was deleted rather than patched. No active cart behaviour changed.
+
+---
+
+### KI-15 — All Products Hardcoded as InStock in JSON-LD
+
+**Severity:** Low (at time of discovery)
+**Resolved:** 2026-08-02 — commit (KI-15 Product JSON-LD Availability)
+**Resolution:** `availability` in the Product JSON-LD Offer objects now derives from `knowledge.status`. Products with `status: "active"` (all 93 current records) emit `https://schema.org/InStock` — output is identical to before. Products with `status: "discontinued"` will emit `https://schema.org/Discontinued` automatically, without requiring an inventory system. No new fields or data were introduced. Change is a single ternary in `app/product/[slug]/page.tsx`.
 
 ---
 
