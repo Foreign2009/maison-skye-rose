@@ -573,6 +573,9 @@ export default function ExecutiveReportDeliveryDashboard({ delivery }: Props) {
             <Link href="/admin/executive-report-commitment" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Commitment
             </Link>
+            <Link href="/admin/executive-report-commitment-center" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report Commitment Center
+            </Link>
           </nav>
         </div>
         <form action={logoutAction}>
