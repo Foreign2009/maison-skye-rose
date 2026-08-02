@@ -9,15 +9,6 @@ Severity: Critical (blocks launch) | High (degrades experience) | Medium (notabl
 
 ## Medium
 
-### KI-12 — instagramUrl Is Incomplete in brand.ts
-
-**Severity:** Medium
-**File:** `app/data/brand.ts`
-**Detail:** `instagramUrl` is set to `"https://instagram.com/"` — no handle. Any component linking to the Instagram profile will link to the Instagram homepage.
-**Fix:** Set the correct Instagram handle in `brand.ts`.
-
----
-
 ## Low
 
 ### KI-14 — MiniCart Mobile Close Gesture Not Implemented
@@ -122,6 +113,14 @@ Severity: Critical (blocks launch) | High (degrades experience) | Medium (notabl
 **Severity:** High (at time of discovery)
 **Resolved:** 2026-08-02 — `app/components/QuickAddBundle.tsx` deleted (KI-04 cleanup)
 **Resolution:** Repository inspection confirmed that all five active add-to-cart paths (ProductDetail, ProductDetail Buy Now, QuickAddModal, MiniCart quick-add, FragranceQuickView) already used the canonical identifier `title.toLowerCase().replace(/\s+/g, "-")` via `knowledge.id` or direct formula. The only remaining inconsistency was in `QuickAddBundle`, which used `` `${fragrance.title}-5ml` `` (un-lowercased, size suffix appended). `QuickAddBundle` was confirmed to have zero imports in the entire app — a dead component never rendered in production. It was deleted rather than patched. No active cart behaviour changed.
+
+---
+
+### KI-12 — instagramUrl Is Incomplete in brand.ts
+
+**Severity:** Medium (at time of discovery)
+**Resolved:** 2026-08-02 — commit (KI-12 Instagram URL Completion)
+**Resolution:** `instagramUrl` in `app/data/brand.ts` updated from `"https://instagram.com/"` to `"https://instagram.com/maisonskyeandrose"`. `InstagramCTA.tsx` already read from `brand.social.instagramUrl` — no component changes required. The "Follow On Instagram" button now links directly to the official brand profile.
 
 ---
 

@@ -703,4 +703,27 @@ Never edit or delete past entries.
 **Build Result:** Not re-run. Last verified build: 2026-08-02 — Pass. Zero TypeScript errors. Zero warnings. 247 routes. No code changes since that build.
 
 **Handoff:** KI-04, KI-10, and KI-11 all resolved by inspection — implementations already correct. Remaining open issues: KI-12, KI-14, KI-15, KI-16. Awaiting Engineering Lead direction for next sprint.
+
+---
+
+## 2026-08-02 — KI-12 Instagram URL Completion
+
+**Engineer:** Claude Code
+**Program:** KI-12 (Instagram URL Completion)
+
+**Inspection:** Read `app/data/brand.ts`. Grepped all source files, documentation, and env files for the official Instagram handle. Found `instagramUrl: "https://instagram.com/"` — no handle. One consumer: `app/components/InstagramCTA.tsx` reads `brand.social.instagramUrl` for the "Follow On Instagram" button `href`. No handle existed anywhere in the repository. Implementation blocked pending business input.
+
+**Business input received:** Official profile is `https://instagram.com/maisonskyeandrose`.
+
+**Implementation:** Single-line change in `app/data/brand.ts` line 22. No component changes required — `InstagramCTA.tsx` already reads from `brand.social.instagramUrl`.
+
+**Build Result:** Pass — zero TypeScript errors, zero warnings, 247 routes.
+
+**Files Changed:**
+- `app/data/brand.ts` — `instagramUrl` set to `https://instagram.com/maisonskyeandrose`
+- `.ai/KNOWN_ISSUES.md` — KI-12 moved to Resolved
+- `.ai/CURRENT_TASK.md` — updated last completed program
+- `.ai/ENGINEERING_LOG.md` — this entry
+
+**Handoff:** KI-12 resolved. Remaining open issues: KI-14, KI-15, KI-16. All remaining issues are Low severity. Awaiting Engineering Lead direction for next sprint.
 - Deferred: Mobile WhatsApp button overlay (pre-existing cosmetic issue)
