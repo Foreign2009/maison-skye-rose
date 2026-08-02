@@ -157,8 +157,8 @@ ${wholesaleActive ? "WHOLESALE ORDER\n\n" : ""}ORDER SUMMARY
 ${orderLines}
 ${rewardMessage ? `🎁 REWARDS UNLOCKED\n${rewardMessage}\n` : ""}
 Subtotal: R${subtotal.toFixed(2)}
-Delivery: ${delivery === 0 ? "FREE" : `R${delivery.toFixed(2)}`}
-TOTAL: R${total.toFixed(2)}
+Delivery: ${delivery === 0 ? "FREE" : "Calculated at checkout"}
+${delivery === 0 ? `TOTAL: R${total.toFixed(2)}` : `SUBTOTAL: R${subtotal.toFixed(2)}`}
 
 CUSTOMER DETAILS
 Name:
@@ -356,11 +356,11 @@ A member of our team will confirm your order and delivery details shortly.`;
 
         <div className="mt-6 flex justify-between border-t border-[#e9e3dc] pt-6">
           <span className="text-2xl font-black uppercase">
-            Total
+            {delivery === 0 ? "Total" : "Subtotal"}
           </span>
 
           <span className="text-2xl font-black">
-            R{total.toFixed(2)}
+            R{(delivery === 0 ? total : subtotal).toFixed(2)}
           </span>
         </div>
 
