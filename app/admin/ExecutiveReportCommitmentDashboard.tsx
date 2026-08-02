@@ -1,16 +1,16 @@
-﻿"use client";
+"use client";
 
 import React            from "react";
 import Link             from "next/link";
 import { logoutAction } from "./actions";
 import type { AlertSeverity } from "@/app/lib/operations/OperationsAlertTypes";
 import type {
-  ExecutiveReportOutlook,
-  ExecutiveReportOutlookEntry,
-  ExecutiveReportOutlookState,
-} from "@/app/lib/operations/ExecutiveReportOutlookTypes";
+  ExecutiveReportCommitment,
+  ExecutiveReportCommitmentEntry,
+  ExecutiveReportCommitmentState,
+} from "@/app/lib/operations/ExecutiveReportCommitmentTypes";
 
-// ── UI helpers ────────────────────────────────────────────────────────────────
+// -- UI helpers ---------------------------------------------------------------
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
@@ -36,7 +36,7 @@ function Card({ children, className = "" }: { children: React.ReactNode; classNa
   );
 }
 
-// ── Formatter ─────────────────────────────────────────────────────────────────
+// -- Formatter ----------------------------------------------------------------
 
 function fmtDate(iso: string): string {
   return new Date(iso).toLocaleString("en-GB", {
@@ -45,7 +45,7 @@ function fmtDate(iso: string): string {
   });
 }
 
-// ── Style maps ────────────────────────────────────────────────────────────────
+// -- Style maps ---------------------------------------------------------------
 
 const SEVERITY_STYLES: Record<AlertSeverity, string> = {
   "critical": "border-red-200    bg-red-50    text-red-700",
@@ -61,56 +61,81 @@ const SEVERITY_LABELS: Record<AlertSeverity, string> = {
   "low":      "Low",
 };
 
-const OUTLOOK_STATE_STYLES: Record<ExecutiveReportOutlookState, string> = {
-  "monitor":   "border-amber-100  bg-amber-50  text-amber-700",
-  "healthy":   "border-gray-200   bg-gray-100  text-gray-500",
-  "expanding": "border-green-200  bg-green-50  text-green-700",
+const COMMITMENT_STATE_STYLES: Record<ExecutiveReportCommitmentState, string> = {
+  "committing": "border-gray-200  bg-gray-100  text-gray-500",
+  "committed":  "border-green-200 bg-green-50  text-green-700",
 };
 
-const OUTLOOK_STATE_LABELS: Record<ExecutiveReportOutlookState, string> = {
-  "monitor":   "Monitor",
-  "healthy":   "Healthy",
-  "expanding": "Expanding",
+const COMMITMENT_STATE_LABELS: Record<ExecutiveReportCommitmentState, string> = {
+  "committing": "Committing",
+  "committed":  "Committed",
 };
 
-// ── Section 1: Outlook Overview ───────────────────────────────────────────────
+// -- Section 1: Commitment Overview -------------------------------------------
 
-function OutlookOverviewSection({ outlook }: { outlook: ExecutiveReportOutlook }) {
+function CommitmentOverviewSection({ commitment }: { commitment: ExecutiveReportCommitment }) {
+  const committed  = commitment.records.filter(r => r.state === "committed").length;
+  const committing = commitment.records.filter(r => r.state === "committing").length;
+
   return (
     <section>
-      <SectionLabel>Executive Report Outlook</SectionLabel>
-      <SectionHeading>Outlook Overview</SectionHeading>
+      <SectionLabel>Executive Report Commitment</SectionLabel>
+      <SectionHeading>Commitment Overview</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Aggregate view of the executive report outlook. Refreshed on every page load.
+        Overview of the executive report commitment pipeline. Refreshed on every page load.
       </p>
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
         <Card>
           <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Total Records</p>
-          <p className="mt-2 text-3xl font-black text-[#4f4a52]">{outlook.records.length}</p>
+          <p className="mt-2 text-3xl font-black text-[#4f4a52]">{commitment.records.length}</p>
         </Card>
         <Card>
-          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Outlook Generated</p>
-          <p className="mt-2 text-sm font-bold text-[#4f4a52]">{fmtDate(outlook.generatedAt)}</p>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Committed</p>
+          <p className="mt-2 text-3xl font-black text-green-700">{committed}</p>
+        </Card>
+        <Card>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Committing</p>
+          <p className="mt-2 text-3xl font-black text-[#a09aa6]">{committing}</p>
         </Card>
       </div>
     </section>
   );
 }
 
-// ── Section 2: Outlook Timeline ───────────────────────────────────────────────
+// -- Section 2: Commitment Timeline -------------------------------------------
 
-function OutlookTimelineSection({ outlook }: { outlook: ExecutiveReportOutlook }) {
-  if (outlook.records.length === 0) {
+function CommitmentTimelineCard({ entry }: { entry: ExecutiveReportCommitmentEntry }) {
+  const current = entry.adoption.acceptance.endorsement.ratification.authentication.authorization.certification.validation.verification.confirmation.receipt.acknowledgement.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current;
+
+  return (
+    <Card>
+      <div className="mb-3 flex flex-wrap items-center gap-2">
+        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${COMMITMENT_STATE_STYLES[entry.state]}`}>
+          {COMMITMENT_STATE_LABELS[entry.state]}
+        </span>
+        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${SEVERITY_STYLES[current.overallStatus]}`}>
+          {SEVERITY_LABELS[current.overallStatus]}
+        </span>
+        <span className="ml-auto text-[10px] text-[#a09aa6]">{fmtDate(entry.generatedAt)}</span>
+      </div>
+      <p className="text-sm font-bold text-[#4f4a52]">{current.headline.text}</p>
+      <p className="mt-2 text-sm leading-relaxed text-[#7b7480]">{current.executiveSummary}</p>
+    </Card>
+  );
+}
+
+function CommitmentTimelineSection({ commitment }: { commitment: ExecutiveReportCommitment }) {
+  if (commitment.records.length === 0) {
     return (
       <section>
         <SectionLabel>Timeline</SectionLabel>
-        <SectionHeading>Outlook Timeline</SectionHeading>
+        <SectionHeading>Commitment Timeline</SectionHeading>
         <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-          Chronological record of all outlook entries.
+          Chronological view of all commitment entries.
         </p>
         <Card>
-          <p className="text-sm text-[#7b7480]">No outlook records available.</p>
+          <p className="text-sm text-[#7b7480]">No commitment entries available.</p>
         </Card>
       </section>
     );
@@ -119,75 +144,33 @@ function OutlookTimelineSection({ outlook }: { outlook: ExecutiveReportOutlook }
   return (
     <section>
       <SectionLabel>Timeline</SectionLabel>
-      <SectionHeading>Outlook Timeline</SectionHeading>
+      <SectionHeading>Commitment Timeline</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        {outlook.records.length} record{outlook.records.length === 1 ? "" : "s"}. Displayed as received.
+        {commitment.records.length} commitment {commitment.records.length === 1 ? "entry" : "entries"} in the commitment timeline.
       </p>
 
-      <Card>
-        <div className="divide-y divide-gray-100">
-          {outlook.records.map((entry, i) => (
-            <div key={i} className="flex items-start gap-3 py-3 first:pt-0 last:pb-0">
-              <span className="mt-0.5 w-5 shrink-0 text-center text-[10px] font-bold text-[#a09aa6]">
-                {i + 1}
-              </span>
-              <div className="min-w-0 flex-1">
-                <p className="text-sm font-semibold text-[#4f4a52]">
-                  {entry.forecast.trend.insight.delta.comparison.current.headline.text}
-                </p>
-                <p className="mt-0.5 text-[10px] text-[#7b7480]">{fmtDate(entry.generatedAt)}</p>
-              </div>
-              <span className={`shrink-0 rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${OUTLOOK_STATE_STYLES[entry.state]}`}>
-                {OUTLOOK_STATE_LABELS[entry.state]}
-              </span>
-            </div>
-          ))}
-        </div>
-      </Card>
+      <div className="space-y-4">
+        {commitment.records.map((entry, i) => (
+          <CommitmentTimelineCard key={i} entry={entry} />
+        ))}
+      </div>
     </section>
   );
 }
 
-// ── Section 3: Outlook Records ────────────────────────────────────────────────
+// -- Section 3: Commitment Records --------------------------------------------
 
-function OutlookRecordCard({ entry }: { entry: ExecutiveReportOutlookEntry }) {
-  return (
-    <Card>
-      <div className="mb-3 flex flex-wrap items-center gap-2">
-        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${OUTLOOK_STATE_STYLES[entry.state]}`}>
-          {OUTLOOK_STATE_LABELS[entry.state]}
-        </span>
-        <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${SEVERITY_STYLES[entry.forecast.trend.insight.delta.comparison.current.overallStatus]}`}>
-          {SEVERITY_LABELS[entry.forecast.trend.insight.delta.comparison.current.overallStatus]}
-        </span>
-        <span className="ml-auto text-[10px] text-[#a09aa6]">{fmtDate(entry.generatedAt)}</span>
-      </div>
-      <p className="text-sm font-bold text-[#4f4a52]">
-        {entry.forecast.trend.insight.delta.comparison.current.headline.text}
-      </p>
-      <div className="my-3 h-px bg-gray-100" />
-      <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Previous Headline</p>
-      <p className="mt-1 text-sm text-[#7b7480]">
-        {entry.forecast.trend.insight.delta.comparison.previous?.headline.text ?? "—"}
-      </p>
-      <p className="mt-3 text-sm leading-relaxed text-[#7b7480]">
-        {entry.forecast.trend.insight.delta.comparison.current.executiveSummary}
-      </p>
-    </Card>
-  );
-}
-
-function OutlookRecordsSection({ outlook }: { outlook: ExecutiveReportOutlook }) {
-  if (outlook.records.length === 0) {
+function CommitmentRecordsSection({ commitment }: { commitment: ExecutiveReportCommitment }) {
+  if (commitment.records.length === 0) {
     return (
       <section>
         <SectionLabel>Records</SectionLabel>
-        <SectionHeading>Outlook Records</SectionHeading>
+        <SectionHeading>Commitment Records</SectionHeading>
         <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-          Full detail for every outlook record.
+          All commitment records in the pipeline.
         </p>
         <Card>
-          <p className="text-sm text-[#7b7480]">No outlook records available.</p>
+          <p className="text-sm text-[#7b7480]">No commitment records available.</p>
         </Card>
       </section>
     );
@@ -196,108 +179,162 @@ function OutlookRecordsSection({ outlook }: { outlook: ExecutiveReportOutlook })
   return (
     <section>
       <SectionLabel>Records</SectionLabel>
-      <SectionHeading>Outlook Records</SectionHeading>
+      <SectionHeading>Commitment Records</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        {outlook.records.length} record{outlook.records.length === 1 ? "" : "s"} in the outlook.
-        Displayed exactly as received.
+        {commitment.records.length} commitment {commitment.records.length === 1 ? "record" : "records"} in the pipeline.
       </p>
 
-      <div className="space-y-4">
-        {outlook.records.map((entry, i) => (
-          <OutlookRecordCard key={i} entry={entry} />
+      <div className="space-y-3">
+        {commitment.records.map((entry, i) => (
+          <Card key={i} className="flex items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <span className={`shrink-0 rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${COMMITMENT_STATE_STYLES[entry.state]}`}>
+                {COMMITMENT_STATE_LABELS[entry.state]}
+              </span>
+              <span className="text-sm text-[#4f4a52]">
+                {entry.adoption.acceptance.endorsement.ratification.authentication.authorization.certification.validation.verification.confirmation.receipt.acknowledgement.delivery.distribution.publication.completion.execution.approval.decision.action.strategy.outlook.forecast.trend.insight.delta.comparison.current.headline.text}
+              </span>
+            </div>
+            <span className="shrink-0 text-[10px] text-[#a09aa6]">{fmtDate(entry.generatedAt)}</span>
+          </Card>
         ))}
       </div>
     </section>
   );
 }
 
-// ── Section 4: Outlook Status ─────────────────────────────────────────────────
+// -- Section 4: Commitment Status ---------------------------------------------
 
-function OutlookStatusSection({ outlook }: { outlook: ExecutiveReportOutlook }) {
-  const latestGeneratedAt = outlook.records.length > 0
-    ? outlook.records[outlook.records.length - 1].generatedAt
-    : null;
+function CommitmentStatusSection({ commitment }: { commitment: ExecutiveReportCommitment }) {
+  const total      = commitment.records.length;
+  const committed  = commitment.records.filter(r => r.state === "committed").length;
+  const committing = commitment.records.filter(r => r.state === "committing").length;
 
   return (
     <section>
       <SectionLabel>Status</SectionLabel>
-      <SectionHeading>Outlook Status</SectionHeading>
+      <SectionHeading>Commitment Status</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Aggregate outlook status at generation time.
+        Pipeline status assessment for the commitment stage.
       </p>
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <Card>
-          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Total Outlook Records</p>
-          <p className="mt-3 text-3xl font-black text-[#4f4a52]">{outlook.records.length}</p>
+      <div className="space-y-3">
+        <Card className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${COMMITMENT_STATE_STYLES["committed"]}`}>
+              Committed
+            </span>
+            <span className="text-sm text-[#4f4a52]">Ready records</span>
+          </div>
+          <span className="text-sm font-black text-green-700">{committed} / {total}</span>
         </Card>
-        <Card>
-          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Latest Generated At</p>
-          <p className="mt-3 text-sm font-bold text-[#4f4a52]">
-            {latestGeneratedAt ? fmtDate(latestGeneratedAt) : "—"}
-          </p>
+        <Card className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${COMMITMENT_STATE_STYLES["committing"]}`}>
+              Committing
+            </span>
+            <span className="text-sm text-[#4f4a52]">Pending records</span>
+          </div>
+          <span className="text-sm font-black text-[#a09aa6]">{committing} / {total}</span>
         </Card>
       </div>
     </section>
   );
 }
 
-// ── Section 5: Outlook Metadata ───────────────────────────────────────────────
+// -- Section 5: Commitment Metadata -------------------------------------------
 
-function OutlookMetadataSection({ outlook }: { outlook: ExecutiveReportOutlook }) {
+function CommitmentMetadataSection({ commitment }: { commitment: ExecutiveReportCommitment }) {
   return (
     <section>
       <SectionLabel>Metadata</SectionLabel>
-      <SectionHeading>Outlook Metadata</SectionHeading>
+      <SectionHeading>Commitment Metadata</SectionHeading>
       <p className="mt-2 mb-5 text-sm text-[#7b7480]">
-        Outlook generation metadata. No data is stored or persisted.
+        Generation metadata for this commitment pipeline.
       </p>
 
-      <Card>
-        <table className="w-full text-sm">
-          <tbody className="divide-y divide-gray-100">
-            <tr>
-              <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Generated At</td>
-              <td className="py-3 text-right text-[#4f4a52]">{fmtDate(outlook.generatedAt)}</td>
-            </tr>
-            <tr>
-              <td className="py-3 text-[10px] uppercase tracking-widest text-[#a09aa6]">Outlook Records</td>
-              <td className="py-3 text-right text-[#4f4a52]">{outlook.records.length}</td>
-            </tr>
-          </tbody>
-        </table>
-      </Card>
+      <div className="space-y-3">
+        <Card className="flex items-center justify-between">
+          <span className="text-sm text-[#7b7480]">Generated At</span>
+          <span className="text-sm font-medium text-[#4f4a52]">{fmtDate(commitment.generatedAt)}</span>
+        </Card>
+        <Card className="flex items-center justify-between">
+          <span className="text-sm text-[#7b7480]">Total Records</span>
+          <span className="text-sm font-medium text-[#4f4a52]">{commitment.records.length}</span>
+        </Card>
+      </div>
     </section>
   );
 }
 
-// ── Section 6: Quick Navigation ───────────────────────────────────────────────
+// -- Section 6: Quick Navigation ----------------------------------------------
 
 const QUICK_NAV_LINKS = [
-  { href: "/admin",                                          label: "Operations" },
-  { href: "/admin/operations",                               label: "Unified Operations" },
-  { href: "/admin/executive-operations",                     label: "Executive Operations" },
-  { href: "/admin/alerts",                                   label: "Alerts" },
-  { href: "/admin/alert-center",                             label: "Alert Center" },
-  { href: "/admin/executive-digest",                         label: "Executive Digest" },
-  { href: "/admin/executive-briefing",                       label: "Executive Briefing" },
-  { href: "/admin/executive-report",                         label: "Executive Report" },
-  { href: "/admin/executive-report-center",                  label: "Executive Report Center" },
-  { href: "/admin/executive-report-archive",                 label: "Executive Report Archive" },
-  { href: "/admin/executive-report-archive-center",          label: "Executive Report Archive Center" },
-  { href: "/admin/executive-report-history",                 label: "Executive Report History" },
-  { href: "/admin/executive-report-history-center",          label: "Executive Report History Center" },
-  { href: "/admin/executive-report-comparison",              label: "Executive Report Comparison" },
-  { href: "/admin/executive-report-comparison-center",       label: "Executive Report Comparison Center" },
-  { href: "/admin/executive-report-delta",                   label: "Executive Report Delta" },
-  { href: "/admin/executive-report-delta-center",            label: "Executive Report Delta Center" },
-  { href: "/admin/executive-report-insight",                 label: "Executive Report Insight" },
-  { href: "/admin/executive-report-insight-center",          label: "Executive Report Insight Center" },
-  { href: "/admin/executive-report-trend",                   label: "Executive Report Trend" },
-  { href: "/admin/executive-report-trend-center",            label: "Executive Report Trend Center" },
-  { href: "/admin/executive-report-forecast",                label: "Executive Report Forecast" },
-  { href: "/admin/executive-report-forecast-center",         label: "Executive Report Forecast Center" },
-  { href: "/admin/executive-report-outlook",                 label: "Executive Report Outlook" },
+  { href: "/admin",                                              label: "Operations" },
+  { href: "/admin/operations",                                   label: "Unified Operations" },
+  { href: "/admin/executive-operations",                         label: "Executive Operations" },
+  { href: "/admin/alerts",                                       label: "Alerts" },
+  { href: "/admin/alert-center",                                 label: "Alert Center" },
+  { href: "/admin/executive-digest",                             label: "Executive Digest" },
+  { href: "/admin/executive-briefing",                           label: "Executive Briefing" },
+  { href: "/admin/executive-report",                             label: "Executive Report" },
+  { href: "/admin/executive-report-center",                      label: "Executive Report Center" },
+  { href: "/admin/executive-report-archive",                     label: "Executive Report Archive" },
+  { href: "/admin/executive-report-archive-center",              label: "Executive Report Archive Center" },
+  { href: "/admin/executive-report-history",                     label: "Executive Report History" },
+  { href: "/admin/executive-report-history-center",              label: "Executive Report History Center" },
+  { href: "/admin/executive-report-comparison",                  label: "Executive Report Comparison" },
+  { href: "/admin/executive-report-comparison-center",           label: "Executive Report Comparison Center" },
+  { href: "/admin/executive-report-delta",                       label: "Executive Report Delta" },
+  { href: "/admin/executive-report-delta-center",                label: "Executive Report Delta Center" },
+  { href: "/admin/executive-report-insight",                     label: "Executive Report Insight" },
+  { href: "/admin/executive-report-insight-center",              label: "Executive Report Insight Center" },
+  { href: "/admin/executive-report-trend",                       label: "Executive Report Trend" },
+  { href: "/admin/executive-report-trend-center",                label: "Executive Report Trend Center" },
+  { href: "/admin/executive-report-forecast",                    label: "Executive Report Forecast" },
+  { href: "/admin/executive-report-forecast-center",             label: "Executive Report Forecast Center" },
+  { href: "/admin/executive-report-outlook",                     label: "Executive Report Outlook" },
+  { href: "/admin/executive-report-outlook-center",              label: "Executive Report Outlook Center" },
+  { href: "/admin/executive-report-strategy",                    label: "Executive Report Strategy" },
+  { href: "/admin/executive-report-strategy-center",             label: "Executive Report Strategy Center" },
+  { href: "/admin/executive-report-action",                      label: "Executive Report Action" },
+  { href: "/admin/executive-report-action-center",               label: "Executive Report Action Center" },
+  { href: "/admin/executive-report-decision",                    label: "Executive Report Decision" },
+  { href: "/admin/executive-report-decision-center",             label: "Executive Report Decision Center" },
+  { href: "/admin/executive-report-approval",                    label: "Executive Report Approval" },
+  { href: "/admin/executive-report-approval-center",             label: "Executive Report Approval Center" },
+  { href: "/admin/executive-report-execution",                   label: "Executive Report Execution" },
+  { href: "/admin/executive-report-execution-center",            label: "Executive Report Execution Center" },
+  { href: "/admin/executive-report-completion",                  label: "Executive Report Completion" },
+  { href: "/admin/executive-report-completion-center",           label: "Executive Report Completion Center" },
+  { href: "/admin/executive-report-publication",                 label: "Executive Report Publication" },
+  { href: "/admin/executive-report-publication-center",          label: "Executive Report Publication Center" },
+  { href: "/admin/executive-report-distribution",                label: "Executive Report Distribution" },
+  { href: "/admin/executive-report-distribution-center",         label: "Executive Report Distribution Center" },
+  { href: "/admin/executive-report-delivery",                    label: "Executive Report Delivery" },
+  { href: "/admin/executive-report-delivery-center",             label: "Executive Report Delivery Center" },
+  { href: "/admin/executive-report-acknowledgement",             label: "Executive Report Acknowledgement" },
+  { href: "/admin/executive-report-acknowledgement-center",      label: "Executive Report Acknowledgement Center" },
+  { href: "/admin/executive-report-receipt",                     label: "Executive Report Receipt" },
+  { href: "/admin/executive-report-receipt-center",              label: "Executive Report Receipt Center" },
+  { href: "/admin/executive-report-confirmation",                label: "Executive Report Confirmation" },
+  { href: "/admin/executive-report-confirmation-center",         label: "Executive Report Confirmation Center" },
+  { href: "/admin/executive-report-validation",                  label: "Executive Report Validation" },
+  { href: "/admin/executive-report-validation-center",           label: "Executive Report Validation Center" },
+  { href: "/admin/executive-report-certification",               label: "Executive Report Certification" },
+  { href: "/admin/executive-report-certification-center",        label: "Executive Report Certification Center" },
+  { href: "/admin/executive-report-authorization",               label: "Executive Report Authorization" },
+  { href: "/admin/executive-report-authorization-center",        label: "Executive Report Authorization Center" },
+  { href: "/admin/executive-report-authentication",              label: "Executive Report Authentication" },
+  { href: "/admin/executive-report-authentication-center",       label: "Executive Report Authentication Center" },
+  { href: "/admin/executive-report-ratification",                label: "Executive Report Ratification" },
+  { href: "/admin/executive-report-ratification-center",         label: "Executive Report Ratification Center" },
+  { href: "/admin/executive-report-endorsement",                 label: "Executive Report Endorsement" },
+  { href: "/admin/executive-report-endorsement-center",          label: "Executive Report Endorsement Center" },
+  { href: "/admin/executive-report-acceptance",                  label: "Executive Report Acceptance" },
+  { href: "/admin/executive-report-acceptance-center",           label: "Executive Report Acceptance Center" },
+  { href: "/admin/executive-report-adoption",                    label: "Executive Report Adoption" },
+  { href: "/admin/executive-report-adoption-center",             label: "Executive Report Adoption Center" },
 ] as const;
 
 function QuickNavigationSection() {
@@ -324,19 +361,19 @@ function QuickNavigationSection() {
   );
 }
 
-// ── Props ─────────────────────────────────────────────────────────────────────
+// -- Props --------------------------------------------------------------------
 
 interface Props {
-  outlook: ExecutiveReportOutlook;
+  commitment: ExecutiveReportCommitment;
 }
 
-// ── Main export ───────────────────────────────────────────────────────────────
+// -- Main export --------------------------------------------------------------
 
-export default function ExecutiveReportOutlookDashboard({ outlook }: Props) {
+export default function ExecutiveReportCommitmentDashboard({ commitment }: Props) {
   return (
     <div className="min-h-screen bg-[#f5f1eb]">
 
-      {/* ── Header ── */}
+      {/* -- Header -- */}
       <header className="flex items-center justify-between bg-[#4f4a52] px-6 py-4 print:hidden">
         <div className="flex items-center gap-6">
           <div>
@@ -428,7 +465,9 @@ export default function ExecutiveReportOutlookDashboard({ outlook }: Props) {
             <Link href="/admin/executive-report-forecast-center" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Forecast Center
             </Link>
-            <span className="text-xs font-bold text-white">Executive Report Outlook</span>
+            <Link href="/admin/executive-report-outlook" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report Outlook
+            </Link>
             <Link href="/admin/executive-report-outlook-center" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Outlook Center
             </Link>
@@ -552,9 +591,7 @@ export default function ExecutiveReportOutlookDashboard({ outlook }: Props) {
             <Link href="/admin/executive-report-adoption-center" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Adoption Center
             </Link>
-            <Link href="/admin/executive-report-commitment" className="text-xs text-white/60 transition hover:text-white">
-              Executive Report Commitment
-            </Link>
+            <span className="text-xs font-bold text-white">Executive Report Commitment</span>
           </nav>
         </div>
         <form action={logoutAction}>
@@ -564,26 +601,26 @@ export default function ExecutiveReportOutlookDashboard({ outlook }: Props) {
         </form>
       </header>
 
-      {/* ── Content ── */}
+      {/* -- Content -- */}
       <div className="mx-auto w-full max-w-[780px] space-y-14 px-6 py-12">
 
-        <OutlookOverviewSection outlook={outlook} />
+        <CommitmentOverviewSection commitment={commitment} />
 
         <hr className="border-gray-200" />
 
-        <OutlookTimelineSection outlook={outlook} />
+        <CommitmentTimelineSection commitment={commitment} />
 
         <hr className="border-gray-200" />
 
-        <OutlookRecordsSection outlook={outlook} />
+        <CommitmentRecordsSection commitment={commitment} />
 
         <hr className="border-gray-200" />
 
-        <OutlookStatusSection outlook={outlook} />
+        <CommitmentStatusSection commitment={commitment} />
 
         <hr className="border-gray-200" />
 
-        <OutlookMetadataSection outlook={outlook} />
+        <CommitmentMetadataSection commitment={commitment} />
 
         <hr className="border-gray-200" />
 

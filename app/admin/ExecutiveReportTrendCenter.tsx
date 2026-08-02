@@ -552,6 +552,9 @@ export default function ExecutiveReportTrendCenter({ trend }: Props) {
             <Link href="/admin/executive-report-adoption-center" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Adoption Center
             </Link>
+            <Link href="/admin/executive-report-commitment" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report Commitment
+            </Link>
           </nav>
         </div>
         <form action={logoutAction}>
