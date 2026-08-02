@@ -45,7 +45,8 @@ import {
   getRelationshipSummary,
 }                                    from "../../mkc/graph";
 import type { UnifiedCustomerProfile } from "../profile/UnifiedCustomerProfile";
-import type { RecommendationContext }  from "./RecommendationContext";
+import type { RecommendationContext,
+              LearnedPreferences }   from "./RecommendationContext";
 import type { RecommendationResult }   from "./RecommendationResult";
 import type { RecommendationCandidate } from "./RecommendationCandidate";
 import { createContext }               from "./RecommendationContext";
@@ -53,6 +54,8 @@ import { createZeroScore }             from "./RecommendationScore";
 import { buildMetrics, createEmptyMetrics } from "./RecommendationMetrics";
 import { createDefaultPipeline }       from "./RecommendationPipeline";
 import { DEFAULT_RECOMMENDATION_LIMIT } from "./RecommendationStrategy";
+import { createDefaultLearningEngine } from "../learning/LearningEngine";
+import { buildCustomerPreferenceSummary } from "../intelligence/CustomerPreferenceSummary";
 
 // ── Module-level precomputed state ────────────────────────────────────────────
 
@@ -74,6 +77,35 @@ const CANDIDATE_POOL: readonly RecommendationCandidate[] = Object.freeze(
     reasons: [] as const,
   })),
 );
+
+// ── Learning bridge ───────────────────────────────────────────────────────────
+
+/**
+ * Run the LearningEngine on profile.signals and convert the result into the
+ * LearnedPreferences shape consumed by buildPreferenceProfile().
+ * Returns undefined when the customer has no signal history or the engine
+ * produces no candidates — cold-start behaviour is unchanged in that case.
+ * Called exactly once per recommend() invocation. (EP20-P4)
+ */
+function computeLearnedPreferences(
+  profile: UnifiedCustomerProfile,
+): LearnedPreferences | undefined {
+  if (profile.signals.length === 0) return undefined;
+  const engine = createDefaultLearningEngine();
+  const result = engine.run(profile.signals, {
+    batchSignals: profile.signals,
+    runAt:        Date.now(),
+  });
+  if (!result.success || result.candidates.length === 0) return undefined;
+  const summary = buildCustomerPreferenceSummary("", result.candidates, Date.now());
+  if (!summary.hasPreferences) return undefined;
+  return {
+    preferredFamilies:  summary.preferredFamilies,
+    preferredOccasions: summary.preferredOccasions,
+    preferredSeasons:   summary.preferredSeasons,
+    dominantGender:     summary.dominantGender,
+  };
+}
 
 // ── Internal helpers ───────────────────────────────────────────────────────────
 
@@ -121,16 +153,26 @@ function buildPool(context: RecommendationContext): readonly RecommendationCandi
 export function recommend(context: RecommendationContext): RecommendationResult {
   const startTime = Date.now();
 
+  // Enrich context with LearningEngine-derived preferences exactly once.
+  // learnedPreferences flows through the pipeline into buildPreferenceProfile()
+  // so both WeightedRecommendationScorer and RecommendationReasonBuilder benefit.
+  // If the caller already supplied learnedPreferences, their value is preserved.
+  const enrichedContext: RecommendationContext = {
+    ...context,
+    learnedPreferences:
+      context.learnedPreferences ?? computeLearnedPreferences(context.profile),
+  };
+
   try {
-    const pool      = buildPool(context);
+    const pool      = buildPool(enrichedContext);
     const pipeline  = createDefaultPipeline();
-    const { recommendations, runMetrics } = pipeline.run(pool, context);
+    const { recommendations, runMetrics } = pipeline.run(pool, enrichedContext);
 
     return {
       success:         true,
       recommendations,
       metrics: buildMetrics(
-        context.strategy,
+        enrichedContext.strategy,
         startTime,
         runMetrics.poolSize,
         runMetrics.filteredSize,

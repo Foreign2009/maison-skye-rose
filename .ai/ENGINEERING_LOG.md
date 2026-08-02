@@ -991,3 +991,65 @@ Two gaps identified through full pipeline inspection:
 - Resolver: createAccumulatedResolver() (was: createPassthroughResolver())
 
 **Handoff:** EP20-P3 closed. Confidence compositing active in production. Multiple independent signals for the same dimension now compound into stronger confidence tiers. CONFIDENCE_WEIGHT constants (defined since SignalConfidence.ts was authored) consumed for the first time. RecommendationEngine unchanged. Awaiting Engineering Lead direction for next sprint.
+
+---
+
+## 2026-08-02 — EP20-P4 Recommendation Bridge
+
+**Engineer:** Claude Code
+**Program:** EP20-P4 — Experience Release 2.0 / Recommendation Bridge
+
+**Inspection Findings:**
+
+Full signal flow audit across RecommendationEngine, WeightedRecommendationScorer, PreferenceScorer, RecommendationReasonBuilder, RecommendationContext, and UnifiedCustomerProfile confirmed:
+
+**Gap:** `buildPreferenceProfile(context)` in `PreferenceScorer.ts` reads only `profile.savedSlugs`, `profile.lastQuizSlugs`, and `profile.recentlyViewed` — slug arrays that are looked up in `SUMMARY_MAP` to derive families/occasions/seasons. It does NOT read `profile.signals`. Concierge, search, and discovery signals produce entries only in `profile.signals`, not in any slug array. These signals were therefore invisible to recommendation scoring.
+
+**Circular dependency constraint:** `SignalInterpreter.ts` imports `getSummaryForSlug` from `PreferenceScorer.ts`. `LearningEngine.ts` imports `SignalInterpreter`. Therefore `PreferenceScorer.ts` cannot import from `LearningEngine.ts` — this would create a cycle: `PreferenceScorer → LearningEngine → SignalInterpreter → PreferenceScorer`. This eliminated the most obvious integration point.
+
+**Selected integration pattern:** Context enrichment at `RecommendationEngine.recommend()` level. The engine runs `createDefaultLearningEngine()` once per `recommend()` call, converts the result to a `LearnedPreferences` shape, and injects it into the context before pool construction. Both `WeightedRecommendationScorer` (via `buildPreferenceProfile`) and `RecommendationReasonBuilder` (also via `buildPreferenceProfile`) benefit automatically without any changes to either scorer.
+
+**No circular dependency:** `RecommendationEngine → LearningEngine → SignalInterpreter → PreferenceScorer`. `PreferenceScorer` does not import from `RecommendationEngine`. Chain is unidirectional. ✓
+
+**Implementation:**
+
+`app/lib/customer/recommendations/RecommendationContext.ts`:
+- Added exported `LearnedPreferences` interface: `{ preferredFamilies, preferredOccasions, preferredSeasons, dominantGender }`
+- Added optional `learnedPreferences?: LearnedPreferences` field to `RecommendationContext`
+- `createContext()` unchanged — field is optional, all callers unaffected
+
+`app/lib/customer/recommendations/RecommendationEngine.ts`:
+- Added imports: `createDefaultLearningEngine` from `../learning/LearningEngine`; `buildCustomerPreferenceSummary` from `../intelligence/CustomerPreferenceSummary`; `LearnedPreferences` type from `./RecommendationContext`
+- Added private `computeLearnedPreferences(profile)` helper: guards `profile.signals.length === 0`; runs LearningEngine; returns `undefined` if no candidates or no preferences (cold-start path unchanged)
+- Modified `recommend()`: builds `enrichedContext` using `context.learnedPreferences ?? computeLearnedPreferences(context.profile)` before `buildPool()` and pipeline execution; callers that pre-supply `learnedPreferences` preserve their value
+
+`app/lib/customer/recommendations/PreferenceScorer.ts`:
+- `buildPreferenceProfile()` refactored: slug-derived sets now mutable (`let` + `Set` variables) for merge; after slug derivation, unions `context.learnedPreferences.preferredFamilies/Occasions/Seasons` into respective sets; learned `dominantGender` used only when slug-derived gender is null; `hasSignals` extended: true if learnedPreferences produced any preferences (concierge-only customers now have `hasSignals: true`)
+- `scoreProfile()` unchanged
+- `SUMMARY_MAP` and all slug-collection helpers unchanged
+
+**Pipeline, scorer, and reason builder preserved:**
+- `RecommendationPipeline.ts` — not touched
+- `WeightedRecommendationScorer.ts` — not touched; benefits automatically via `buildPreferenceProfile(context)`
+- `RecommendationReasonBuilder.ts` — not touched; benefits automatically via `buildPreferenceProfile(context)` (family_match, occasion_match, season_match reasons now fire for concierge/search/discovery-derived preferences)
+- `DiscoveryScorer.ts`, `RelationshipScorer.ts` — not touched
+
+**Build Result:** Pass — zero TypeScript errors, zero warnings, 247 routes.
+
+**Files Changed:**
+- `app/lib/customer/recommendations/RecommendationContext.ts` — LearnedPreferences interface; optional field on RecommendationContext
+- `app/lib/customer/recommendations/RecommendationEngine.ts` — computeLearnedPreferences helper; context enrichment in recommend()
+- `app/lib/customer/recommendations/PreferenceScorer.ts` — learnedPreferences merge in buildPreferenceProfile()
+- `.ai/SPRINT.md` — EP20-P4 added to Completed Programs
+- `.ai/CURRENT_TASK.md` — updated last completed program
+- `.ai/ENGINEERING_LOG.md` — this entry
+
+**Example — concierge-only customer:**
+
+Before EP20-P4: Customer who told the AI Concierge "I love woody fragrances" (HIGH confidence → `family_preference:Woody`) but has no saved slugs, no quiz slugs, no viewed slugs. `buildPreferenceProfile()` returns `hasSignals: false`. `scoreProfile()` returns 0 for every candidate. All Woody fragrances score identically to cold-start recommendations.
+
+After EP20-P4: `computeLearnedPreferences()` runs the LearningEngine on `profile.signals`, extracts `preferredFamilies: ["Woody"]` from the candidate set, injects into `enrichedContext.learnedPreferences`. `buildPreferenceProfile()` unions `"Woody"` into `preferredFamilies`, sets `hasSignals: true`. `scoreProfile()` awards `+0.20` profile dimension score for each Woody family fragrance (capped at 0.45 for 2+ family matches). With personalised strategy weight of 0.50, this produces a total score contribution of up to `0.225`. Woody fragrances surface at the top of recommendations. `RecommendationReasonBuilder` fires `family_match` reason: "Matches your interest in Woody fragrances."
+
+**LearningEngine status post-EP20-P4:** All 7 active interpreters (Quiz, Concierge, Favorite, Cart, Search, View, Discovery) now contribute to recommendation scoring. Signals from all sources reach the profile dimension scorer for the first time.
+
+**Handoff:** EP20-P4 closed. Recommendation Bridge is live. The complete EP20 intelligence stack is now active: signals emitted → LearningEngine interprets with compositing confidence → CustomerPreferenceSummary for admin/profile dashboards AND recommendation scoring. Awaiting Engineering Lead direction for next sprint.

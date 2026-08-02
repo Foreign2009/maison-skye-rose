@@ -97,17 +97,37 @@ export function buildPreferenceProfile(context: RecommendationContext): Preferen
   const { profile } = context;
 
   // Intent signals: saves + quiz results carry stronger preference intent
-  const intentSlugs    = [...profile.savedSlugs, ...profile.lastQuizSlugs];
+  const intentSlugs = [...profile.savedSlugs, ...profile.lastQuizSlugs];
   // Broad signals: viewed slugs supplement family coverage
-  const broadSlugs     = [...intentSlugs, ...profile.recentlyViewed];
+  const broadSlugs  = [...intentSlugs, ...profile.recentlyViewed];
 
-  const hasSignals = broadSlugs.length > 0;
+  // Slug-derived preference sets
+  const preferredFamilies  = collectFamilies(broadSlugs);
+  const preferredOccasions = collectOccasions(intentSlugs);
+  const preferredSeasons   = collectSeasons(intentSlugs);
+  let   dominantGender     = deriveDominantGender(intentSlugs);
+
+  // Merge LearningEngine-derived preferences (EP20-P4).
+  // Concierge, search, and discovery signals do not produce slug list entries,
+  // so their preferences are invisible to slug-based derivation above.
+  // learnedPreferences carries those signals via recommend() → context enrichment.
+  if (context.learnedPreferences) {
+    const lp = context.learnedPreferences;
+    for (const f of lp.preferredFamilies)  preferredFamilies.add(f);
+    for (const o of lp.preferredOccasions) preferredOccasions.add(o);
+    for (const s of lp.preferredSeasons)   preferredSeasons.add(s);
+    if (!dominantGender && lp.dominantGender) dominantGender = lp.dominantGender;
+  }
+
+  const hasSignals = broadSlugs.length > 0 || (context.learnedPreferences !== undefined && (
+    preferredFamilies.size > 0 || preferredOccasions.size > 0 || preferredSeasons.size > 0
+  ));
 
   return {
-    preferredFamilies:  collectFamilies(broadSlugs),
-    preferredOccasions: collectOccasions(intentSlugs),
-    preferredSeasons:   collectSeasons(intentSlugs),
-    dominantGender:     deriveDominantGender(intentSlugs),
+    preferredFamilies,
+    preferredOccasions,
+    preferredSeasons,
+    dominantGender,
     hasSignals,
   };
 }

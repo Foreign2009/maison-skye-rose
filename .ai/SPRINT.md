@@ -31,11 +31,34 @@ Each program has a defined scope, ordered task list, and a clear close condition
 
 ## Active Program
 
-None — EP20-P3 Confidence Compositing closed 2026-08-02 (compositing calculator + accumulated resolver introduced; LearningEngine default wiring updated; build clean). Awaiting Engineering Lead direction for next sprint.
+None — EP20-P4 Recommendation Bridge closed 2026-08-02 (LearningEngine integrated at RecommendationEngine orchestration layer; concierge, search, and discovery preferences now influence scoring and reason text; pipeline unchanged; build clean). Awaiting Engineering Lead direction for next sprint.
 
 ---
 
 ## Completed Programs
+
+### EP20-P4 — Experience Release 2.0 / Recommendation Bridge
+
+**Objective:** Connect the LearningEngine to the RecommendationEngine so that learned customer preferences from concierge, search, and discovery signals influence recommendation scoring and reason derivation.
+**Scope:** `app/lib/customer/recommendations/RecommendationContext.ts` (LearnedPreferences interface + optional field), `app/lib/customer/recommendations/RecommendationEngine.ts` (computeLearnedPreferences helper + context enrichment in recommend()), `app/lib/customer/recommendations/PreferenceScorer.ts` (merge learnedPreferences into buildPreferenceProfile()). No other application files modified.
+**Lead:** Project Owner + Claude (Implementation Engineer)
+**Opened:** 2026-08-02
+**Closed:** 2026-08-02
+
+**Task List:**
+
+| # | Gate | Task | Status |
+|---|---|---|---|
+| 1 | G1 | Repository Inspection — full signal flow audit: RecommendationEngine, WeightedRecommendationScorer, PreferenceScorer, RecommendationReasonBuilder, RecommendationContext, UnifiedCustomerProfile, LearningEngine integration point | Complete |
+| 2 | G2 | Engineering Assessment — gap confirmed: concierge/search/discovery signals in profile.signals not reaching scoring; circular dependency constraint identified (PreferenceScorer cannot import LearningEngine); context enrichment pattern selected | Complete |
+| 3 | G3 | Implementation — LearnedPreferences interface + optional RecommendationContext field; computeLearnedPreferences() in RecommendationEngine; merge in buildPreferenceProfile(); RecommendationPipeline/WeightedRecommendationScorer/RecommendationReasonBuilder untouched | Complete |
+| 4 | G4 | Build verification — Pass, TypeScript clean, 0 warnings, 247 routes | Complete |
+
+**Close Condition:** LearningEngine runs exactly once per recommend() call. LearnedPreferences flows through pipeline to both scorer and reason builder via RecommendationContext. Cold-start behaviour unchanged. No circular dependency. RecommendationPipeline and WeightedRecommendationScorer require no changes. Build passes.
+
+**Outcome:** Recommendation Bridge complete. Customers whose preferences are known only through concierge conversations, search queries, or discovery page visits now receive correctly personalised recommendations — those signals no longer go to waste. The integration point is RecommendationEngine.recommend(): it enriches the context with computed learned preferences before pool construction and pipeline execution, so both WeightedRecommendationScorer (profile dimension) and RecommendationReasonBuilder (family_match, occasion_match, season_match reasons) benefit automatically. Existing slug-based preferences are preserved and unioned with learned preferences.
+
+---
 
 ### EP20-P3 — Experience Release 2.0 / Confidence Compositing
 
