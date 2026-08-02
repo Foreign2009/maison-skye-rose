@@ -557,6 +557,9 @@ export default function ExecutiveReportActionCenter({ action }: Props) {
             <Link href="/admin/executive-report-adoption" className="text-xs text-white/60 transition hover:text-white">
               Executive Report Adoption
             </Link>
+            <Link href="/admin/executive-report-adoption-center" className="text-xs text-white/60 transition hover:text-white">
+              Executive Report Adoption Center
+            </Link>
           </nav>
         </div>
         <form action={logoutAction}>
