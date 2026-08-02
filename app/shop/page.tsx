@@ -204,13 +204,6 @@ export default function ShopPage() {
     if (sortBy === "Price High → Low") {
       items.sort((a, b) => b.prices["5ml"] - a.prices["5ml"]);
     }
-    if (sortBy === "Best Sellers") {
-      items = items.filter((f) => f.bestSeller);
-    }
-    if (sortBy === "New Arrivals") {
-      items = items.filter((f) => f.newArrival);
-    }
-
     return items;
   }, [dimensionFiltered, sortBy]);
 
@@ -348,8 +341,6 @@ export default function ShopPage() {
             <option>Featured</option>
             <option>Price Low → High</option>
             <option>Price High → Low</option>
-            <option>Best Sellers</option>
-            <option>New Arrivals</option>
           </select>
         </div>
       </div>
@@ -686,7 +677,7 @@ export default function ShopPage() {
             <div className="py-4 border-t border-zinc-100">
               <label className="block text-xs font-bold uppercase text-zinc-400 tracking-wider mb-2">Sort By</label>
               <div className="flex flex-col gap-1.5">
-                {["Featured", "Price Low → High", "Price High → Low", "Best Sellers", "New Arrivals"].map((option) => (
+                {["Featured", "Price Low → High", "Price High → Low"].map((option) => (
                   <button
                     key={option}
                     onClick={() => {

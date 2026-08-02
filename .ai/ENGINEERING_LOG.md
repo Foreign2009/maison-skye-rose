@@ -792,4 +792,35 @@ availability:
 - `.ai/ENGINEERING_LOG.md` — this entry
 
 **Handoff:** KI-15 resolved. One remaining open issue: KI-16 (Low severity). Awaiting Engineering Lead direction for next sprint.
+
+---
+
+## 2026-08-02 — KI-16 Sort Behaviour Consistency
+
+**Engineer:** Claude Code
+**Program:** KI-16 (Sort Behaviour Consistency)
+
+**Inspection:** Read `app/shop/page.tsx` in full. Found:
+- Sort `<select>` (desktop) contained "Best Sellers" and "New Arrivals" as options
+- `displayItems` useMemo handled these via `items = items.filter(...)` — filtering, not sorting
+- Desktop tab bar already had "Best Sellers" and "New Arrivals" as correct `currentFilter` buttons (`hidden md:inline-flex`)
+- Mobile drawer already had them under "Special Segments" as correct `currentFilter` buttons
+- Mobile drawer "Sort By" section duplicated them under the wrong category
+
+**Decision:** Remove from sort interface (both desktop select and mobile drawer sort list). Remove dead filter branches from `displayItems`. Filter tabs untouched.
+
+**Implementation:** Three targeted edits to `app/shop/page.tsx`:
+1. Desktop `<select>` — removed `<option>Best Sellers</option>` and `<option>New Arrivals</option>`
+2. Mobile drawer Sort By array — removed "Best Sellers" and "New Arrivals"
+3. `displayItems` useMemo — removed two unreachable `items.filter()` branches
+
+**Build Result:** Pass — zero TypeScript errors, zero warnings, 247 routes.
+
+**Files Changed:**
+- `app/shop/page.tsx` — sort controls corrected; dead branches removed
+- `.ai/KNOWN_ISSUES.md` — KI-16 moved to Resolved; zero open issues notice added
+- `.ai/CURRENT_TASK.md` — updated last completed program
+- `.ai/ENGINEERING_LOG.md` — this entry
+
+**Milestone:** All 16 tracked known issues (KI-01 through KI-16) are now resolved. KNOWN_ISSUES.md contains zero open tracked issues as of 2026-08-02.
 - Deferred: Mobile WhatsApp button overlay (pre-existing cosmetic issue)

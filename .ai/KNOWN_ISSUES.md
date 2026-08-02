@@ -5,20 +5,17 @@ Severity: Critical (blocks launch) | High (degrades experience) | Medium (notabl
 
 ---
 
+> **Status: Zero open tracked issues — 2026-08-02**
+> All 16 tracked known issues (KI-01 through KI-16) have been resolved.
+> New issues should be added here as discovered.
+
+---
+
 ## High
 
 ## Medium
 
 ## Low
-
-### KI-16 — Sort Options "Best Sellers" and "New Arrivals" Act as Filters
-
-**Severity:** Low
-**File:** `app/shop/page.tsx`
-**Detail:** In the sort dropdown, selecting "Best Sellers" or "New Arrivals" filters the list (removes non-matching items) rather than sorting it. This is semantically misleading — a sort option should reorder, not filter.
-**Fix:** Either move these to the filter tabs (where they belong) or change the label to "Show Best Sellers Only".
-
----
 
 ## Resolved
 
@@ -99,6 +96,14 @@ Severity: Critical (blocks launch) | High (degrades experience) | Medium (notabl
 **Severity:** High (at time of discovery)
 **Resolved:** 2026-08-02 — `app/components/QuickAddBundle.tsx` deleted (KI-04 cleanup)
 **Resolution:** Repository inspection confirmed that all five active add-to-cart paths (ProductDetail, ProductDetail Buy Now, QuickAddModal, MiniCart quick-add, FragranceQuickView) already used the canonical identifier `title.toLowerCase().replace(/\s+/g, "-")` via `knowledge.id` or direct formula. The only remaining inconsistency was in `QuickAddBundle`, which used `` `${fragrance.title}-5ml` `` (un-lowercased, size suffix appended). `QuickAddBundle` was confirmed to have zero imports in the entire app — a dead component never rendered in production. It was deleted rather than patched. No active cart behaviour changed.
+
+---
+
+### KI-16 — Sort Options "Best Sellers" and "New Arrivals" Act as Filters
+
+**Severity:** Low (at time of discovery)
+**Resolved:** 2026-08-02 — commit (KI-16 Sort Behaviour Consistency)
+**Resolution:** "Best Sellers" and "New Arrivals" were removed from the sort dropdown (`<select>`) and from the mobile drawer "Sort By" list in `app/shop/page.tsx`. The two unreachable filter branches in `displayItems` were also removed. Both options already existed as correct filter controls: as desktop tab bar buttons (`currentFilter`) and as mobile drawer "Special Segments" buttons. Sort controls now contain only true sort operations: Featured, Price Low → High, Price High → Low.
 
 ---
 
