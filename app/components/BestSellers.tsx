@@ -1,20 +1,37 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useRef, useEffect } from "react";
 import Link from "next/link";
 import ProductCard from "./ProductCard";
 import { getCollection } from "../lib/discovery";
 import { toDisplayFragrance } from "../lib/mkc/displayAdapter";
+import { trackRecommendationShown } from "../lib/analytics";
 
 interface BestSellersProps {
   onQuickAdd: (fragrance: ReturnType<typeof toDisplayFragrance>) => void;
 }
 
 export default function BestSellers({ onQuickAdd }: BestSellersProps) {
-  const displayedProducts = useMemo(
-    () => getCollection("trending").map(toDisplayFragrance),
-    []
-  );
+  const { displayedProducts, slugs } = useMemo(() => {
+    const catalogue = getCollection("trending");
+    return {
+      displayedProducts: catalogue.map(toDisplayFragrance),
+      slugs:             catalogue.map((f) => f.slug),
+    };
+  }, []);
+
+  const impressionFiredRef = useRef(false);
+  useEffect(() => {
+    if (impressionFiredRef.current || displayedProducts.length === 0) return;
+    impressionFiredRef.current = true;
+    trackRecommendationShown({
+      strategy:       "trending",
+      surface:        "homepage-trending",
+      count:          displayedProducts.length,
+      slugs,
+      isPersonalised: false,
+    });
+  }, [displayedProducts.length, slugs]);
 
   return (
     <section className="mx-auto max-w-7xl px-4 md:px-6 py-16 md:py-24">

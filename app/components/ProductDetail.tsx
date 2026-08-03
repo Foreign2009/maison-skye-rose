@@ -305,6 +305,49 @@ export default function ProductDetail({
 
     return result;
   }, [knowledge, relationshipSummary, similarFragrances]);
+
+  // Journey impression — fires once when "Continue Your Journey" section resolves
+  const journeyFiredRef = useRef(false);
+  useEffect(() => {
+    if (journeyFiredRef.current || journeyFragrances.length === 0) return;
+    journeyFiredRef.current = true;
+    trackRecommendationShown({
+      strategy:       "complementary",
+      surface:        "pdp-journey",
+      count:          journeyFragrances.length,
+      slugs:          journeyFragrances.map((f) => f.slug),
+      isPersonalised: false,
+    });
+  }, [journeyFragrances]);
+
+  // ── You May Also Like — same-collection, best-seller ranked ───────────────
+  const collectionFragrances = useMemo(
+    () =>
+      mkcCatalogue
+        .filter((k) => k.collection === knowledge.collection && k.id !== knowledge.id)
+        .sort((a, b) => {
+          if (a.bestSeller && !b.bestSeller) return -1;
+          if (!a.bestSeller && b.bestSeller) return 1;
+          return b.popularity - a.popularity;
+        })
+        .slice(0, 4),
+    [knowledge.collection, knowledge.id],
+  );
+
+  // Collection impression — fires once when "You May Also Like" section resolves
+  const collectionFiredRef = useRef(false);
+  useEffect(() => {
+    if (collectionFiredRef.current || collectionFragrances.length === 0) return;
+    collectionFiredRef.current = true;
+    trackRecommendationShown({
+      strategy:       "similar",
+      surface:        "pdp-collection",
+      count:          collectionFragrances.length,
+      slugs:          collectionFragrances.map((f) => f.slug),
+      isPersonalised: false,
+    });
+  }, [collectionFragrances]);
+
   // ── Render ─────────────────────────────────────────────────────────────────
 
   return (
@@ -1055,15 +1098,7 @@ export default function ProductDetail({
             You May Also Like
           </h2>
           <div className="grid grid-cols-2 gap-3 md:gap-6 md:grid-cols-4">
-            {mkcCatalogue
-              .filter((k) => k.collection === knowledge.collection && k.id !== knowledge.id)
-              .sort((a, b) => {
-                if (a.bestSeller && !b.bestSeller) return -1;
-                if (!a.bestSeller && b.bestSeller) return 1;
-                return b.popularity - a.popularity;
-              })
-              .slice(0, 4)
-              .map((item, index) => (
+            {collectionFragrances.map((item, index) => (
                 <Link
                   key={item.name}
                   href={`/product/${item.slug}`}

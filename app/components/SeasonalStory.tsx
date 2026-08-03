@@ -1,11 +1,13 @@
 "use client";
 
+import { useRef, useEffect } from "react";
 import Link from "next/link";
 import ProductCard from "./ProductCard";
 import MomentConciergeButton from "./MomentConciergeButton";
 import { getSeasonalAcademyTeasers } from "../lib/editorial/seasonConfig";
 import type { SeasonConfig } from "../lib/editorial/seasonConfig";
 import type { DisplayFragrance } from "../lib/knowledgeAdapter";
+import { trackRecommendationShown } from "../lib/analytics";
 
 interface SeasonalStoryProps {
   config:     SeasonConfig;
@@ -15,6 +17,19 @@ interface SeasonalStoryProps {
 
 export default function SeasonalStory({ config, fragrances, onQuickAdd }: SeasonalStoryProps) {
   const articles = getSeasonalAcademyTeasers(config).slice(0, 2);
+
+  const impressionFiredRef = useRef(false);
+  useEffect(() => {
+    if (impressionFiredRef.current || fragrances.length === 0) return;
+    impressionFiredRef.current = true;
+    trackRecommendationShown({
+      strategy:       "discovery",
+      surface:        "homepage-seasonal",
+      count:          fragrances.length,
+      slugs:          fragrances.map((f) => f.title.toLowerCase().replace(/\s+/g, "-")),
+      isPersonalised: false,
+    });
+  }, [fragrances.length]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <>

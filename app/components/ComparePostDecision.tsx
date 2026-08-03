@@ -1,12 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { Sparkles } from "lucide-react";
 import QuickAddModal from "./QuickAddModal";
 import DiscoverCollectionGrid from "./DiscoverCollectionGrid";
 import { useConcierge } from "../context/ConciergeContext";
-import { trackAiChatStarted } from "../lib/analytics";
+import { trackAiChatStarted, trackRecommendationShown } from "../lib/analytics";
 
 export type PurchaseItem = {
   slug:   string;
@@ -48,6 +48,19 @@ export default function ComparePostDecision({
     openConcierge();
     trackAiChatStarted({ trigger: "discover", sessionId: conversationState.sessionId });
   }
+
+  const impressionFiredRef = useRef(false);
+  useEffect(() => {
+    if (impressionFiredRef.current || relatedFragrances.length === 0) return;
+    impressionFiredRef.current = true;
+    trackRecommendationShown({
+      strategy:       "similar",
+      surface:        "compare-related",
+      count:          relatedFragrances.length,
+      slugs:          relatedFragrances.map((f) => f.title.toLowerCase().replace(/\s+/g, "-")),
+      isPersonalised: false,
+    });
+  }, [relatedFragrances.length]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <>

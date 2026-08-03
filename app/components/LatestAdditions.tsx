@@ -1,24 +1,39 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useRef, useEffect } from "react";
 import ProductCard from "./ProductCard";
 import QuickAddModal from "./QuickAddModal";
 import { mkcCatalogue } from "../lib/mkc/catalogue";
 import { toDisplayFragrance } from "../lib/mkc/displayAdapter";
+import { trackRecommendationShown } from "../lib/analytics";
 
 export default function LatestAdditions() {
   const [selectedFragrance, setSelectedFragrance] = useState<ReturnType<typeof toDisplayFragrance> | null>(null);
   const [quickOpen, setQuickOpen] = useState(false);
 
-  const latestAdditions = useMemo(
-    () =>
-      mkcCatalogue
-        .filter((k) => k.newArrival)
-        .sort((a, b) => b.popularity - a.popularity)
-        .slice(0, 8)
-        .map(toDisplayFragrance),
-    []
-  );
+  const { latestAdditions, slugs } = useMemo(() => {
+    const items = mkcCatalogue
+      .filter((k) => k.newArrival)
+      .sort((a, b) => b.popularity - a.popularity)
+      .slice(0, 8);
+    return {
+      latestAdditions: items.map(toDisplayFragrance),
+      slugs:           items.map((f) => f.slug),
+    };
+  }, []);
+
+  const impressionFiredRef = useRef(false);
+  useEffect(() => {
+    if (impressionFiredRef.current || latestAdditions.length === 0) return;
+    impressionFiredRef.current = true;
+    trackRecommendationShown({
+      strategy:       "discovery",
+      surface:        "homepage-new-arrivals",
+      count:          latestAdditions.length,
+      slugs,
+      isPersonalised: false,
+    });
+  }, [latestAdditions.length, slugs]);
 
   if (latestAdditions.length === 0) return null;
 

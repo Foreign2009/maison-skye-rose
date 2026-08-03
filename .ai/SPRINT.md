@@ -31,11 +31,34 @@ Each program has a defined scope, ordered task list, and a clear close condition
 
 ## Active Program
 
-None — EP50-P1 Explainable MiniCart Recommendations closed 2026-08-03 (CartCollectionItem type preserves recReason through resolveComplementary mapping; MiniCart Complete Your Collection now surfaces recommendation explanation text beneath each fragrance title; RecommendationEngine, RecommendationReasonBuilder, and LearningEngine untouched; commerce behaviour unchanged). Awaiting Engineering Lead direction for next sprint.
+None — EP60-P2 Complete Recommendation Impression Coverage closed 2026-08-03 (six recommendation surfaces now emit recommendation_set_shown impression events; CTR, save rate, and ATC rate now computable for all strategies in admin intelligence dashboard; RecommendationEngine, LearningEngine, CustomerProfileSync, and commerce untouched). Awaiting Engineering Lead direction for next sprint.
 
 ---
 
 ## Completed Programs
+
+### EP60-P2 — Experience Release 6.0 / Complete Recommendation Impression Coverage
+
+**Objective:** Add impression tracking to six recommendation surfaces (BestSellers, LatestAdditions, SeasonalStory, ProductDetail pdp-journey, ProductDetail pdp-collection, ComparePostDecision compare-related) that previously had click and ATC analytics but no impression anchor, preventing CTR/save rate/ATC rate computation for several strategies.
+**Scope:** `app/components/BestSellers.tsx` (useRef/useEffect + useMemo restructure), `app/components/LatestAdditions.tsx` (same pattern), `app/components/SeasonalStory.tsx` (useRef/useEffect + slug derivation), `app/components/ProductDetail.tsx` (two impression effects + collectionFragrances useMemo extraction), `app/components/ComparePostDecision.tsx` (useRef/useEffect + slug derivation). No engine files modified.
+**Lead:** Project Owner + Claude (Implementation Engineer)
+**Opened:** 2026-08-03
+**Closed:** 2026-08-03
+
+**Task List:**
+
+| # | Gate | Task | Status |
+|---|---|---|---|
+| 1 | G1 | Repository Inspection — full recommendation feedback loop audit; identified six surfaces missing impression events; analytics.ts, recommendationAnalytics.ts, RecommendationQuality.ts, all surface components inspected | Complete |
+| 2 | G2 | Engineering Assessment — confirmed gap: six surfaces have click/ATC analytics but no impression denominator; confirmed existing useRef/useEffect guard pattern; confirmed strategy assignments per SURFACE_PRIMARY_STRATEGY | Complete |
+| 3 | G3 | Implementation — five files modified; six impression events added; collectionFragrances extracted from inline JSX; declaration order error caught and fixed at build | Complete |
+| 4 | G4 | Build verification — Pass, TypeScript clean, 0 warnings, 247 routes | Complete |
+
+**Close Condition:** All six affected surfaces fire `recommendation_set_shown` exactly once on first render. Impression counts now populate for trending, homepage-seasonal, homepage-new-arrivals, pdp-journey, pdp-collection, and compare-related strategies. RecommendationEngine, LearningEngine, CustomerProfileSync, and commerce behaviour unchanged. Build passes.
+
+**Outcome:** Recommendation analytics now have complete impression coverage across all implemented recommendation surfaces. The HogQL queries in `recommendationAnalytics.ts` can now compute CTR, save rate, and ATC rate for all 20 tracked surfaces. No recommendation logic was changed — this was a pure analytics completeness programme. Implementation used the repository's established useRef/useEffect guard pattern throughout.
+
+---
 
 ### EP50-P1 — Experience Release 5.0 / Explainable MiniCart Recommendations
 

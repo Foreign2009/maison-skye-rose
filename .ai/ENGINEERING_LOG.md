@@ -39,6 +39,46 @@ Never edit or delete past entries.
 
 ## Log
 
+### 2026-08-03 — EP60-P2 — Program Implementation
+
+**Participants:** Project Owner / Claude (Implementation Engineer)
+**Program:** EP60-P2 — Experience Release 6.0 / Complete Recommendation Impression Coverage
+
+**Decisions Made:**
+- `trackRecommendationShown` selected over `trackExperienceIntelligenceShown` for static surfaces — static surfaces are not EI-backed and don't have strategy/profileType/seeded metadata; `trackRecommendationShown` is the correct impression event for non-EI recommendation sets (consistent with ProductDetail's existing pattern for the similarity section)
+- `useRef`/`useEffect` guard pattern applied consistently — same pattern already in use across all EI-backed surfaces; fires exactly once on first render regardless of re-renders
+- `collectionFragrances` extracted from inline JSX in ProductDetail — required to reference the array in a `useEffect` dependency; extraction also improves readability; computation is pure and memoized on `knowledge.collection` and `knowledge.id`
+- Impression effects placed after their respective `useMemo` declarations — TypeScript block-scoped variable constraint; journey effect caught at build and moved to correct position after `journeyFragrances` useMemo
+- Slug derivation from title for surfaces without slug fields — `SeasonalStory` receives `DisplayFragrance[]` (no slug field); `ComparePostDecision` receives `RelatedGridItem[]` (no slug field); `title.toLowerCase().replace(/\s+/g, "-")` is consistent with ProductCard's own fallback slug derivation
+
+**Tasks Completed:**
+- Repository inspection — full recommendation feedback loop audit; analytics.ts, recommendationAnalytics.ts, RecommendationQuality.ts, all 20 surface components inspected; six surfaces identified as missing impression events; strategy assignments confirmed per SURFACE_PRIMARY_STRATEGY
+- Implementation — five files modified; six impression events added; collectionFragrances useMemo extracted; declaration order error caught at first build and corrected
+- Build verification — Pass, TypeScript clean, 0 warnings, 247 routes
+- Documentation — CURRENT_TASK.md, SPRINT.md, ENGINEERING_LOG.md updated
+
+**Tasks Started:**
+- None — EP60-P2 closed
+
+**Build Result:** Pass — TypeScript clean, 0 warnings, 247 routes
+
+**Files Changed:**
+- `app/components/BestSellers.tsx` — `useRef`, `useEffect`, `trackRecommendationShown` added; `useMemo` restructured to expose `slugs` alongside `displayedProducts`; impression effect fires once for `homepage-trending`
+- `app/components/LatestAdditions.tsx` — same pattern; `useMemo` restructured; impression effect fires once for `homepage-new-arrivals`
+- `app/components/SeasonalStory.tsx` — `useRef`, `useEffect`, `trackRecommendationShown` added; slugs derived from `f.title.toLowerCase().replace(/\s+/g, "-")`; impression effect fires once for `homepage-seasonal`
+- `app/components/ProductDetail.tsx` — `journeyFiredRef` + `useEffect` for `pdp-journey` (complementary, placed after `journeyFragrances` useMemo); `collectionFragrances` useMemo extracted; `collectionFiredRef` + `useEffect` for `pdp-collection` (similar)
+- `app/components/ComparePostDecision.tsx` — `useRef`, `useEffect`, `trackRecommendationShown` added; impression effect fires once for `compare-related` when `relatedFragrances.length > 0`
+
+**Handoff:**
+- EP60-P2 complete. All 20 tracked recommendation surfaces now emit impression events.
+- Impression coverage: Homepage Curated ✅ Trending ✅ New Arrivals ✅ Seasonal ✅ Moment ✅ Shop ✅ PDP EI ✅ PDP Similar ✅ PDP Journey ✅ PDP Collection ✅ Compare EI ✅ Compare Related ✅ MiniCart ✅ Discover ✅ Academy ✅ Best Sellers page ✅ New Arrivals page ✅ Favorites page ✅ Recently Viewed page ✅ Quiz ✅ Collections ✅ Profile ✅ Character Journey ✅
+- PostHog can now compute CTR, save rate, and ATC rate for all strategies including trending, discovery (static), complementary (pdp-journey), and similar (pdp-collection, compare-related).
+
+**Open Questions Carried Forward:**
+- None.
+
+---
+
 ### 2026-08-03 — EP50-P1 — Program Implementation
 
 **Participants:** Project Owner / Claude (Implementation Engineer)
