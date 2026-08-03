@@ -66,10 +66,12 @@ export interface CartRecommendationInput {
   readonly profile?:      UnifiedCustomerProfile | null;
 }
 
+export type CartCollectionItem = DisplayFragrance & { readonly recReason: string | null };
+
 export interface CartRecommendations {
   readonly fromFavorites:          readonly DisplayFragrance[];
   readonly recentlyViewed:         readonly DisplayFragrance[];
-  readonly completeYourCollection: readonly DisplayFragrance[];
+  readonly completeYourCollection: readonly CartCollectionItem[];
 }
 
 // ── Strategy ──────────────────────────────────────────────────────────────────
@@ -111,7 +113,7 @@ function resolveComplementary(
   cartSlugs: readonly string[],
   limit:     number,
   profile?:  UnifiedCustomerProfile | null,
-): DisplayFragrance[] {
+): CartCollectionItem[] {
   const pivotSlug = cartSlugs[0];
   if (!pivotSlug) return [];
 
@@ -127,9 +129,11 @@ function resolveComplementary(
       }),
     );
     if (!result.success) return [];
-    return result.recommendations
-      .map((r) => slugToDisplay(r.slug))
-      .filter((f): f is DisplayFragrance => f !== null);
+    return result.recommendations.flatMap((r) => {
+      const display = slugToDisplay(r.slug);
+      if (!display) return [];
+      return [{ ...display, recReason: r.reasons[0]?.description ?? null }];
+    });
   } catch {
     return [];
   }

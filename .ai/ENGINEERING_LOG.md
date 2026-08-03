@@ -39,6 +39,42 @@ Never edit or delete past entries.
 
 ## Log
 
+### 2026-08-03 — EP50-P1 — Program Implementation
+
+**Participants:** Project Owner / Claude (Implementation Engineer)
+**Program:** EP50-P1 — Experience Release 5.0 / Explainable MiniCart Recommendations
+
+**Decisions Made:**
+- `CartCollectionItem = DisplayFragrance & { recReason: string | null }` extension pattern selected — avoids modifying engine types; preserves full DisplayFragrance contract for existing MiniCart render logic
+- `flatMap` used instead of `.map().filter()` — TypeScript cannot narrow `(CartCollectionItem | null)[]` to `CartCollectionItem[]` via user-defined type guard when the mapper returns a complex union; `flatMap` with `[] / [item]` eliminates the null at inference time
+- `recReason` rendered only when non-null (conditional branch) — `fragrance.profile` fallback preserved; no blank lines introduced when reason is absent
+- Italic, truncated, secondary colour (`text-zinc-400`) chosen for reason text — consistent with luxury minimal aesthetic; reason is informational not primary
+
+**Tasks Completed:**
+- Repository inspection — CartRecommendationStrategy, MiniCart, RecommendationReason, RecommendationReasonBuilder, ExplanationTemplate, ProductCard, AcademyIntelligenceSection, CuratedForYou, IntelligenceSection, DiscoveryIntelligenceSection audited; recReason discard confirmed at slugToDisplay() mapping step
+- Implementation — CartCollectionItem type exported; completeYourCollection return type updated; resolveComplementary uses flatMap to preserve reasons[0].description; MiniCart renders recReason beneath title with fragrance.profile fallback
+- Build verification — Pass, TypeScript clean, 0 warnings, 247 routes
+- Documentation — CURRENT_TASK.md, SPRINT.md, ENGINEERING_LOG.md updated
+
+**Tasks Started:**
+- None — EP50-P1 closed
+
+**Build Result:** Pass — TypeScript clean, 0 warnings, 247 routes
+
+**Files Changed:**
+- `app/lib/customer/sync/CartRecommendationStrategy.ts` — `CartCollectionItem` type exported; `CartRecommendations.completeYourCollection` type updated; `resolveComplementary` return type changed to `CartCollectionItem[]`; `flatMap` maps `Recommendation` to `CartCollectionItem` preserving `r.reasons[0]?.description ?? null` as `recReason`
+- `app/components/MiniCart.tsx` — completeYourCollection section renders `recReason` (italic, truncated, `text-zinc-400`) when non-null; falls back to `fragrance.profile` when null; `min-w-0` added to text container for truncation support
+
+**Handoff:**
+- EP50-P1 complete. Experience Release 5.0 is now partially implemented — MiniCart recommendation explanations active.
+- MiniCart Complete Your Collection now shows the highest-weighted reason for each complementary recommendation beneath the fragrance title.
+- Reasons surface from the full Customer Intelligence pipeline: quiz answers, concierge signals, purchase history, discovery filters, saved fragrances, view patterns.
+
+**Open Questions Carried Forward:**
+- None.
+
+---
+
 ### 2026-08-03 — EP40-P2 — Program Implementation
 
 **Participants:** Project Owner / Claude (Implementation Engineer)

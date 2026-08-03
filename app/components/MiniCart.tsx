@@ -548,14 +548,20 @@ A member of our team will confirm your order and delivery details shortly.`;
                         key={fragrance.title}
                         className="flex items-center justify-between gap-3 bg-white border border-black/5 rounded-2xl p-2.5 shadow-sm"
                       >
-                        <div>
-                          <h4 className="text-xs font-black uppercase text-[#4f4a52]">
+                        <div className="min-w-0">
+                          <h4 className="text-xs font-black uppercase text-[#4f4a52] truncate">
                             {fragrance.title}
                           </h4>
 
-                          <p className="text-[10px] text-zinc-400">
-                            {fragrance.profile}
-                          </p>
+                          {fragrance.recReason ? (
+                            <p className="text-[10px] italic leading-4 text-zinc-400 truncate">
+                              {fragrance.recReason}
+                            </p>
+                          ) : (
+                            <p className="text-[10px] text-zinc-400">
+                              {fragrance.profile}
+                            </p>
+                          )}
                         </div>
 
                         <button
