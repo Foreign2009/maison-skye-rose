@@ -31,11 +31,34 @@ Each program has a defined scope, ordered task list, and a clear close condition
 
 ## Active Program
 
-None — EP60-P2 Complete Recommendation Impression Coverage closed 2026-08-03 (six recommendation surfaces now emit recommendation_set_shown impression events; CTR, save rate, and ATC rate now computable for all strategies in admin intelligence dashboard; RecommendationEngine, LearningEngine, CustomerProfileSync, and commerce untouched). Awaiting Engineering Lead direction for next sprint.
+None — EP70-P1 Negative Preference Scoring closed 2026-08-03 (avoidedFamilies now propagates through LearnedPreferences into PreferenceProfile; scoreProfile() applies a bounded avoidance penalty; RecommendationEngine, LearningEngine, RecommendationReasonBuilder, and commerce untouched; build passes). Awaiting Engineering Lead direction for next sprint.
 
 ---
 
 ## Completed Programs
+
+### EP70-P1 — Experience Release 7.0 / Negative Preference Scoring
+
+**Objective:** Activate negative preference scoring so that family avoidance preferences (captured via the Concierge and stored by LearningEngine) reduce the profile dimension score for avoided-family candidates during recommendation ranking.
+**Scope:** `RecommendationContext.ts` (add `avoidedFamilies` to `LearnedPreferences`), `RecommendationEngine.ts` (populate `avoidedFamilies` in `computeLearnedPreferences()`), `PreferenceScorer.ts` (add `avoidedFamilies` to `PreferenceProfile`; populate in `buildPreferenceProfile()`; apply bounded −0.30/match penalty in `scoreProfile()`). No engine, pipeline, or commerce files modified.
+**Lead:** Project Owner + Claude (Implementation Engineer)
+**Opened:** 2026-08-03
+**Closed:** 2026-08-03
+
+**Task List:**
+
+| # | Gate | Task | Status |
+|---|---|---|---|
+| 1 | G1 | Repository Inspection — complete negative-preference pipeline traced from ConciergeInterpreter through PreferenceAccumulator, PreferenceResolver, CustomerPreferenceSummary, computeLearnedPreferences, PreferenceProfile, scoreProfile; missing link identified at computeLearnedPreferences() return | Complete |
+| 2 | G2 | Engineering Assessment — confirmed avoidedFamilies is correctly populated by CustomerPreferenceSummary; confirmed LearnedPreferences has no avoidedFamilies field; confirmed scoreProfile() has no penalty mechanism; confirmed RecommendationScore uses plain number type (no range constraint) | Complete |
+| 3 | G3 | Implementation — three files modified; avoidedFamilies field added to LearnedPreferences; computeLearnedPreferences() now maps summary.avoidedFamilies; PreferenceProfile extended with avoidedFamilies; buildPreferenceProfile() populates the set; scoreProfile() applies bounded penalty (−0.30/match, max −0.45, clamped to [0,1]) | Complete |
+| 4 | G4 | Build verification — Pass, TypeScript clean, 0 warnings, 247 routes | Complete |
+
+**Close Condition:** family_avoidance signals from the Concierge now reduce the profile dimension score for candidates from avoided families. Customers without avoidance signals are unaffected. Cold-start behaviour unchanged. RecommendationEngine, LearningEngine, RecommendationReasonBuilder, and commerce behaviour unchanged. Build passes.
+
+**Outcome:** Negative preference scoring is now active. A customer who states "I dislike Gourmand" via the Concierge will have their Concierge signals interpreted by ConciergeInterpreter, accumulated and resolved by the LearningEngine, summarised into avoidedFamilies by CustomerPreferenceSummary, carried through LearnedPreferences (now extended) into PreferenceProfile (now extended), and penalised by scoreProfile() (−0.30 per avoided family match, clamped to [0,1]). Gourmand candidates rank lower; non-Gourmand alternatives naturally rank higher. Strongly graph-connected or best-seller candidates may still appear if no better alternative exists.
+
+---
 
 ### EP60-P2 — Experience Release 6.0 / Complete Recommendation Impression Coverage
 

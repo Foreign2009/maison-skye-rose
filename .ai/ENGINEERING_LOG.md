@@ -39,6 +39,44 @@ Never edit or delete past entries.
 
 ## Log
 
+### 2026-08-03 — EP70-P1 — Program Implementation
+
+**Participants:** Project Owner / Claude (Implementation Engineer)
+**Program:** EP70-P1 — Experience Release 7.0 / Negative Preference Scoring
+
+**Decisions Made:**
+- `avoidedFamilies` propagated through `LearnedPreferences` rather than via a new filter stage — the scoring path is the correct intervention point; avoidance should reduce ranking weight, not eliminate candidates entirely (a strongly-relevant avoided candidate can still appear if no better alternative exists; hard exclusion is a separate, more aggressive product decision not requested here)
+- Penalty magnitude set at −0.30 per avoided family match, max −0.45 — mirrors the positive family scoring weight (+0.20/match, max +0.45); symmetric weighting means a single-family avoidance negates a single-family preference match, which is the correct relative magnitude
+- Profile score clamped to [0, 1] — specification requirement; score does not go negative; avoidance brings the profile dimension to zero at most, not below; catalog, relation, and discovery dimensions are unaffected and can still produce a positive total for an avoided candidate via weighted composition
+- No changes to `RecommendationReasonBuilder` — avoidance is a scoring concern, not an explanation concern; no customer-facing avoidance copy is appropriate (customers should not see "not recommended because you dislike Gourmand")
+- No changes to `WeightedRecommendationScorer` — penalty is applied inside `scoreProfile()` which already produces the `profileDim` value consumed by `composeScore()`; the scoring architecture absorbs the change without any structural modification
+
+**Tasks Completed:**
+- Repository inspection (EP70-P1) — complete pipeline traced from ConciergeInterpreter through LearningEngine, CustomerPreferenceSummary, computeLearnedPreferences, LearnedPreferences, PreferenceProfile, scoreProfile; missing link confirmed at computeLearnedPreferences() return; all 9 pipeline stages documented with exact file and line references
+- Implementation — three files modified; `avoidedFamilies: readonly string[]` added to `LearnedPreferences`; `computeLearnedPreferences()` now maps `summary.avoidedFamilies`; `PreferenceProfile` extended with `avoidedFamilies: ReadonlySet<string>`; `buildPreferenceProfile()` populates from `learnedPreferences.avoidedFamilies`; `scoreProfile()` applies bounded penalty
+- Build verification — Pass, TypeScript clean, 0 warnings, 247 routes
+
+**Tasks Started:**
+- None
+
+**Build Result:** Pass — TypeScript clean, 0 warnings, 247 routes (unchanged)
+
+**Files Changed:**
+- `app/lib/customer/recommendations/RecommendationContext.ts` — `avoidedFamilies: readonly string[]` added to `LearnedPreferences` interface
+- `app/lib/customer/recommendations/RecommendationEngine.ts` — `avoidedFamilies: summary.avoidedFamilies` added to `computeLearnedPreferences()` return object
+- `app/lib/customer/recommendations/PreferenceScorer.ts` — `avoidedFamilies: ReadonlySet<string>` added to `PreferenceProfile`; populated in `buildPreferenceProfile()`; bounded penalty applied in `scoreProfile()` (−0.30/match, max −0.45, clamped to [0,1])
+
+**Handoff:**
+- EP70-P1 complete. Negative preference scoring is now active end-to-end.
+- Awaiting Engineering Lead direction for next programme.
+
+**Open Questions Carried Forward:**
+- PR1-P2 (MiniCart Learning Signal Gap) — `quickAddFromSection` still missing `recordCart()` call; identified in PR1-P1 audit; not in scope for EP70-P1
+- PR1-P3 (Signal Calibration Accuracy) — `fragrance_purchase` still marked dead in `SignalCalibration.ts`; stale since EP30-P1; documentation fix pending
+- PR1-P4 (RecommendationEngine Module Consolidation) — duplicate `buildIndex` and `buildKnowledgeSummary` calls; low priority; pending
+
+---
+
 ### 2026-08-03 — EP60-P2 — Program Implementation
 
 **Participants:** Project Owner / Claude (Implementation Engineer)

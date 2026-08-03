@@ -19,44 +19,49 @@ At the start of a new Claude Code session:
 ## Current Task
 
 **Status:** Complete
-**Program:** EP60-P2 — Experience Release 6.0 / Complete Recommendation Impression Coverage
+**Program:** EP70-P1 — Experience Release 7.0 / Negative Preference Scoring
 
 **Goal:**
-Add impression tracking to six recommendation surfaces that previously emitted click and ATC analytics but no impression event, preventing CTR, save rate, and ATC rate computation for the trending, discovery (static), complementary (pdp-journey), and similar (pdp-collection, compare-related) strategies in the admin intelligence dashboard.
+Activate negative preference scoring so that family avoidance preferences (captured via the Concierge, learned by LearningEngine, and summarised by CustomerPreferenceSummary) now reduce the profile dimension score for candidates from avoided fragrance families during recommendation ranking.
 
 **Acceptance Criteria:**
-- [x] `BestSellers.tsx` fires `recommendation_set_shown` for `homepage-trending` on first render
-- [x] `LatestAdditions.tsx` fires `recommendation_set_shown` for `homepage-new-arrivals` on first render
-- [x] `SeasonalStory.tsx` fires `recommendation_set_shown` for `homepage-seasonal` on first render
-- [x] `ProductDetail.tsx` fires `recommendation_set_shown` for `pdp-journey` on first render
-- [x] `ProductDetail.tsx` fires `recommendation_set_shown` for `pdp-collection` on first render
-- [x] `ComparePostDecision.tsx` fires `recommendation_set_shown` for `compare-related` on first render
-- [x] All existing click tracking, ATC attribution, checkout attribution unchanged
-- [x] RecommendationEngine, LearningEngine, CustomerProfileSync unchanged
-- [x] Commerce behaviour unchanged
+- [x] `avoidedFamilies: readonly string[]` added to `LearnedPreferences` interface
+- [x] `computeLearnedPreferences()` populates `avoidedFamilies` from `CustomerPreferenceSummary`
+- [x] `PreferenceProfile` carries `avoidedFamilies: ReadonlySet<string>`
+- [x] `buildPreferenceProfile()` populates the set from `learnedPreferences.avoidedFamilies`
+- [x] `scoreProfile()` applies bounded avoidance penalty (−0.30/match, max −0.45, clamped [0,1])
+- [x] Customers without avoidance signals produce identical recommendations (empty set → no penalty)
+- [x] Cold-start behaviour unchanged (learnedPreferences undefined → no penalty)
+- [x] Preferred family scoring unchanged
+- [x] RecommendationEngine, LearningEngine, RecommendationReasonBuilder unchanged
+- [x] WeightedRecommendationScorer, RecommendationPipeline unchanged
+- [x] CustomerProfileSync, commerce behaviour unchanged
 - [x] Build passes — TypeScript clean, 0 warnings, 247 routes
 
 **Why This Task:**
-Six recommendation surfaces had complete click and ATC analytics but no impression anchor. Without impressions, the HogQL queries in `recommendationAnalytics.ts` return null for CTR, save rate, and ATC rate for affected strategies. This is an analytics completeness programme — no recommendation logic was changed.
+Repository inspection (PR1-P1 audit) identified that family_avoidance signals flow correctly through ConciergeInterpreter, LearningEngine, and CustomerPreferenceSummary but are dropped at computeLearnedPreferences() in RecommendationEngine.ts because LearnedPreferences had no avoidedFamilies field. The pipeline was 95% complete — only the data propagation and penalty were missing.
 
 ---
 
 ## Files Involved
 
 **Files modified:**
-- `app/components/BestSellers.tsx` — useRef/useEffect impression guard; useMemo restructured to expose slugs; trackRecommendationShown added
-- `app/components/LatestAdditions.tsx` — same pattern; useMemo restructured to expose slugs
-- `app/components/SeasonalStory.tsx` — useRef/useEffect impression guard; slugs derived from title
-- `app/components/ProductDetail.tsx` — two impression effects added (pdp-journey, pdp-collection); collectionFragrances useMemo extracted from inline JSX
-- `app/components/ComparePostDecision.tsx` — useRef/useEffect impression guard; slugs derived from title
+- `app/lib/customer/recommendations/RecommendationContext.ts` — `avoidedFamilies: readonly string[]` added to `LearnedPreferences`
+- `app/lib/customer/recommendations/RecommendationEngine.ts` — `avoidedFamilies: summary.avoidedFamilies` added to `computeLearnedPreferences()` return
+- `app/lib/customer/recommendations/PreferenceScorer.ts` — `avoidedFamilies: ReadonlySet<string>` added to `PreferenceProfile`; populated in `buildPreferenceProfile()`; bounded penalty applied in `scoreProfile()`
 
 **Files NOT modified:**
-- `app/lib/customer/recommendations/RecommendationEngine.ts` — not touched
-- `app/lib/customer/learning/LearningEngine.ts` — not touched
-- `app/lib/intelligence/ExperienceIntelligence.ts` — not touched
-- `app/lib/customer/sync/CustomerProfileSync.ts` — not touched
-- `app/lib/recommendationAttribution.ts` — not touched
-- `app/context/CartContext.tsx` — not touched
+- `app/lib/customer/learning/SignalInterpreter.ts` — ConciergeInterpreter already correct
+- `app/lib/customer/sync/CustomerProfileSync.ts` — recordConciergeIntent already correct
+- `app/lib/customer/learning/PreferenceCandidate.ts` — positive: boolean already correct
+- `app/lib/customer/learning/PreferenceAccumulator.ts` — polarity preserved in group key
+- `app/lib/customer/learning/PreferenceResolver.ts` — positive field preserved through resolution
+- `app/lib/customer/intelligence/CustomerPreferenceSummary.ts` — avoidedFamilies already populated
+- `app/lib/customer/learning/LearningEngine.ts` — unchanged
+- `app/lib/customer/recommendations/WeightedRecommendationScorer.ts` — unchanged
+- `app/lib/customer/recommendations/RecommendationReasonBuilder.ts` — unchanged
+- `app/lib/customer/recommendations/RecommendationPipeline.ts` — unchanged
+- `app/lib/customer/recommendations/RecommendationScore.ts` — unchanged
 
 ---
 
@@ -71,6 +76,8 @@ _Task closed._
 **Last completed:** EP60-P2 Complete Recommendation Impression Coverage (2026-08-03)
 
 Recent completed programs (newest first):
+- EP70-P1 Negative Preference Scoring (2026-08-03) — avoidedFamilies now propagates through LearnedPreferences into PreferenceProfile; scoreProfile() applies bounded avoidance penalty (−0.30/match, clamped [0,1]); RecommendationEngine/LearningEngine/RecommendationReasonBuilder/commerce untouched; build passes; 247 routes
+- EP60-P2 Complete Recommendation Impression Coverage (2026-08-03) — six surfaces now emit recommendation_set_shown; CTR/save rate/ATC rate computable for all strategies; build passes; 247 routes
 - EP50-P1 Explainable MiniCart Recommendations (2026-08-03) — CartCollectionItem type preserves recReason through mapping; MiniCart Complete Your Collection now displays recommendation explanations; RecommendationEngine/RecommendationReasonBuilder/LearningEngine untouched; build passes; 247 routes
 - EP40-P2 Personalized MiniCart Recommendations (2026-08-03) — MiniCart "Complete Your Collection" now uses UnifiedCustomerProfile; CartRecommendationInput extended with optional profile; anonymousProfile() retained as fallback; RecommendationEngine/LearningEngine/commerce untouched; build passes; 247 routes
 - EP40-P1 Personalized Recommendation Experience (2026-08-03) — product page routed through "product" experience (similar strategy); compare page routed through "compare" experience (complementary strategy); 2 files, 2 lines; RecommendationEngine/ExperienceIntelligence/LearningEngine untouched; build passes; 247 routes
@@ -102,7 +109,7 @@ _N/A_
 
 ## Build Result
 
-**Last build:** 2026-08-03 — Pass. Zero TypeScript errors. Zero warnings. 247 routes. (EP60-P2)
+**Last build:** 2026-08-03 — Pass. Zero TypeScript errors. Zero warnings. 247 routes. (EP70-P1)
 
 ---
 

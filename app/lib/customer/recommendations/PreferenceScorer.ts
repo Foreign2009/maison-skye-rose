@@ -17,6 +17,10 @@
  *   season overlap   — +0.05 per match, max 0.10
  *   total max:         1.0 (clamped)
  *
+ * Avoidance penalty (EP70-P1):
+ *   avoided family   — −0.30 per match, max −0.45 (mirrors positive family weight)
+ *   score is clamped to [0, 1] — profile dimension remains non-negative
+ *
  * PreferenceProfile is computed once per recommend() call by WeightedRecommendationScorer
  * and passed to scoreProfile() for each candidate — no redundant derivation.
  *
@@ -89,6 +93,7 @@ export interface PreferenceProfile {
   readonly preferredSeasons:   ReadonlySet<string>;
   readonly dominantGender:     string | null;
   readonly hasSignals:         boolean;
+  readonly avoidedFamilies:    ReadonlySet<string>;
 }
 
 // ── Public API ────────────────────────────────────────────────────────────────
@@ -111,12 +116,15 @@ export function buildPreferenceProfile(context: RecommendationContext): Preferen
   // Concierge, search, and discovery signals do not produce slug list entries,
   // so their preferences are invisible to slug-based derivation above.
   // learnedPreferences carries those signals via recommend() → context enrichment.
+  const avoidedFamilies = new Set<string>();
   if (context.learnedPreferences) {
     const lp = context.learnedPreferences;
     for (const f of lp.preferredFamilies)  preferredFamilies.add(f);
     for (const o of lp.preferredOccasions) preferredOccasions.add(o);
     for (const s of lp.preferredSeasons)   preferredSeasons.add(s);
     if (!dominantGender && lp.dominantGender) dominantGender = lp.dominantGender;
+    // Avoidance signals from the Concierge — propagated via EP70-P1.
+    for (const f of lp.avoidedFamilies) avoidedFamilies.add(f);
   }
 
   const hasSignals = broadSlugs.length > 0 || (context.learnedPreferences !== undefined && (
@@ -129,6 +137,7 @@ export function buildPreferenceProfile(context: RecommendationContext): Preferen
     preferredSeasons,
     dominantGender,
     hasSignals,
+    avoidedFamilies,
   };
 }
 
@@ -160,7 +169,15 @@ export function scoreProfile(
   const seasonMatches = summary.seasons.filter((s) => prefProfile.preferredSeasons.has(s)).length;
   score += Math.min(seasonMatches * 0.05, 0.10);
 
-  return Math.min(score, 1.0);
+  // Family avoidance penalty (EP70-P1) — mirrors positive family weight.
+  // Concierge avoidance signals reach here via learnedPreferences.avoidedFamilies.
+  // Score is clamped to [0, 1] — profile dimension remains non-negative.
+  const avoidedMatches = summary.family.filter((f) => prefProfile.avoidedFamilies.has(f)).length;
+  if (avoidedMatches > 0) {
+    score -= Math.min(avoidedMatches * 0.30, 0.45);
+  }
+
+  return Math.max(0, Math.min(score, 1.0));
 }
 
 // ── Summary map accessor (used by RecommendationReasonBuilder) ────────────────

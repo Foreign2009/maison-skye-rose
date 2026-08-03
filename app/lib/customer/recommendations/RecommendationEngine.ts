@@ -104,6 +104,7 @@ function computeLearnedPreferences(
     preferredOccasions: summary.preferredOccasions,
     preferredSeasons:   summary.preferredSeasons,
     dominantGender:     summary.dominantGender,
+    avoidedFamilies:    summary.avoidedFamilies,
   };
 }
 

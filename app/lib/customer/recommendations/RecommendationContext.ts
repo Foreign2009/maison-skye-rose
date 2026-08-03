@@ -34,6 +34,7 @@ export interface LearnedPreferences {
   readonly preferredOccasions: readonly string[];
   readonly preferredSeasons:   readonly string[];
   readonly dominantGender:     string | null;
+  readonly avoidedFamilies:    readonly string[];
 }
 
 export interface RecommendationContext {
