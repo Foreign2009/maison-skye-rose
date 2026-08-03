@@ -41,6 +41,7 @@ import { createExclusionFilter }   from "./RecommendationFilter";
 import { createScoreRanker }       from "./RecommendationRanking";
 import { createWeightedScorer }    from "./WeightedRecommendationScorer";
 import { createReasonBuilder }     from "./RecommendationReasonBuilder";
+import { calculateConfidence }     from "./RecommendationConfidence";
 
 // ── Pipeline config ────────────────────────────────────────────────────────────
 
@@ -101,11 +102,12 @@ export class RecommendationPipeline {
     const recommendations: Recommendation[] = ranked
       .slice(0, context.limit)
       .map((candidate, index) => ({
-        rank:    index + 1,
-        slug:    candidate.slug,
-        summary: candidate.summary,
-        score:   candidate.score,
-        reasons: this.explainer.explain(candidate, context),
+        rank:       index + 1,
+        slug:       candidate.slug,
+        summary:    candidate.summary,
+        score:      candidate.score,
+        reasons:    this.explainer.explain(candidate, context),
+        confidence: calculateConfidence(candidate, context),
       }));
 
     return {

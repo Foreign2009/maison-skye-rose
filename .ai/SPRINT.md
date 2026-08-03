@@ -31,11 +31,33 @@ Each program has a defined scope, ordered task list, and a clear close condition
 
 ## Active Program
 
-None — EP70-P1 Negative Preference Scoring closed 2026-08-03 (avoidedFamilies now propagates through LearnedPreferences into PreferenceProfile; scoreProfile() applies a bounded avoidance penalty; RecommendationEngine, LearningEngine, RecommendationReasonBuilder, and commerce untouched; build passes). Awaiting Engineering Lead direction for next sprint.
+None — EP80-P1 Recommendation Confidence closed 2026-08-03 (Recommendation now carries readonly confidence: RecommendationConfidence; RecommendationPipeline calls calculateConfidence() during assign stage; RecommendationEngine, LearningEngine, RecommendationReasonBuilder, commerce, and all UI untouched; build passes). Awaiting Engineering Lead direction for next sprint.
 
 ---
 
 ## Completed Programs
+
+### EP80-P1 — Experience Release 8.0 / Recommendation Confidence
+
+**Objective:** Promote `RecommendationConfidence` into the production recommendation output model. Every `Recommendation` produced by the pipeline now carries a first-class `confidence` field.
+**Scope:** `Recommendation.ts` (add `readonly confidence: RecommendationConfidence`), `RecommendationPipeline.ts` (import and call `calculateConfidence()` in assign stage). No engine, pipeline architecture, learning, or UI files modified.
+**Lead:** Project Owner + Claude (Implementation Engineer)
+**Opened:** 2026-08-03
+**Closed:** 2026-08-03
+
+**Task List:**
+
+| # | Gate | Task | Status |
+|---|---|---|---|
+| 1 | G1 | Repository Inspection — confidence pipeline traced through RecommendationConfidence.ts, RecommendationReasonBuilder.ts, admin/intelligence/page.tsx, Recommendation.ts, RecommendationPipeline.ts, IntelligenceSection.tsx, CuratedForYou.tsx; confirmed calculateConfidence() is fully implemented but never called during production pipeline run; Recommendation has no confidence field | Complete |
+| 2 | G2 | Implementation — two files modified; `readonly confidence: RecommendationConfidence` added to Recommendation interface; calculateConfidence(candidate, context) called in RecommendationPipeline assign stage | Complete |
+| 3 | G3 | Build verification — Pass, TypeScript clean, 0 warnings, 247 routes | Complete |
+
+**Close Condition:** Every `Recommendation` returned by the production pipeline carries `confidence: RecommendationConfidence`. Recommendation ordering, scores, and explanations are unchanged. Customer-facing UI is unchanged. Admin observatory continues functioning via the existing `buildExplanation()` path.
+
+**Outcome:** Recommendation confidence is now a first-class property of every production recommendation. Cold-start customers receive LOW confidence; customers with moderate signal history receive MEDIUM; rich profiles receive HIGH. Future programmes (confidence-adaptive UI copy, confidence-weighted analytics) can now read `rec.confidence` without any further structural work.
+
+---
 
 ### EP70-P1 — Experience Release 7.0 / Negative Preference Scoring
 

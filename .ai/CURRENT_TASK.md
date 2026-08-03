@@ -19,49 +19,49 @@ At the start of a new Claude Code session:
 ## Current Task
 
 **Status:** Complete
-**Program:** EP70-P1 — Experience Release 7.0 / Negative Preference Scoring
+**Program:** EP80-P1 — Experience Release 8.0 / Recommendation Confidence
 
 **Goal:**
-Activate negative preference scoring so that family avoidance preferences (captured via the Concierge, learned by LearningEngine, and summarised by CustomerPreferenceSummary) now reduce the profile dimension score for candidates from avoided fragrance families during recommendation ranking.
+Promote `RecommendationConfidence` into the production recommendation output model. Every `Recommendation` produced by the pipeline now carries a first-class `confidence` field computed by `calculateConfidence()`. No customer-facing UI was changed.
 
 **Acceptance Criteria:**
-- [x] `avoidedFamilies: readonly string[]` added to `LearnedPreferences` interface
-- [x] `computeLearnedPreferences()` populates `avoidedFamilies` from `CustomerPreferenceSummary`
-- [x] `PreferenceProfile` carries `avoidedFamilies: ReadonlySet<string>`
-- [x] `buildPreferenceProfile()` populates the set from `learnedPreferences.avoidedFamilies`
-- [x] `scoreProfile()` applies bounded avoidance penalty (−0.30/match, max −0.45, clamped [0,1])
-- [x] Customers without avoidance signals produce identical recommendations (empty set → no penalty)
-- [x] Cold-start behaviour unchanged (learnedPreferences undefined → no penalty)
-- [x] Preferred family scoring unchanged
+- [x] `Recommendation` interface carries `readonly confidence: RecommendationConfidence`
+- [x] `RecommendationPipeline` imports `calculateConfidence` and calls it during the assign stage
+- [x] Confidence computed once per recommendation, using the same candidate and context already in scope
+- [x] Recommendation ordering unchanged
+- [x] Recommendation scores unchanged
+- [x] Recommendation explanations unchanged
+- [x] Cold-start recommendations carry LOW confidence internally
+- [x] Rich customer profiles carry MEDIUM/HIGH confidence internally
+- [x] Customer-facing UI unchanged (no consumer reads `rec.confidence` yet)
+- [x] Admin observatory continues functioning (`buildExplanation()` path untouched)
 - [x] RecommendationEngine, LearningEngine, RecommendationReasonBuilder unchanged
-- [x] WeightedRecommendationScorer, RecommendationPipeline unchanged
-- [x] CustomerProfileSync, commerce behaviour unchanged
+- [x] RecommendationConfidence.ts unchanged
 - [x] Build passes — TypeScript clean, 0 warnings, 247 routes
 
 **Why This Task:**
-Repository inspection (PR1-P1 audit) identified that family_avoidance signals flow correctly through ConciergeInterpreter, LearningEngine, and CustomerPreferenceSummary but are dropped at computeLearnedPreferences() in RecommendationEngine.ts because LearnedPreferences had no avoidedFamilies field. The pipeline was 95% complete — only the data propagation and penalty were missing.
+Repository inspection (EP80-P1) confirmed that `calculateConfidence()` is fully implemented and already used in the admin observatory, but never called during the production pipeline run. `Recommendation` had no confidence field, making the signal invisible to all downstream consumers. This programme promotes confidence from an admin-only diagnostic into the production recommendation model so that future programmes (confidence-adaptive UI, confidence-weighted analytics) can build on it without further structural work.
 
 ---
 
 ## Files Involved
 
 **Files modified:**
-- `app/lib/customer/recommendations/RecommendationContext.ts` — `avoidedFamilies: readonly string[]` added to `LearnedPreferences`
-- `app/lib/customer/recommendations/RecommendationEngine.ts` — `avoidedFamilies: summary.avoidedFamilies` added to `computeLearnedPreferences()` return
-- `app/lib/customer/recommendations/PreferenceScorer.ts` — `avoidedFamilies: ReadonlySet<string>` added to `PreferenceProfile`; populated in `buildPreferenceProfile()`; bounded penalty applied in `scoreProfile()`
+- `app/lib/customer/recommendations/Recommendation.ts` — `readonly confidence: RecommendationConfidence` added to `Recommendation` interface; `RecommendationConfidence` imported
+- `app/lib/customer/recommendations/RecommendationPipeline.ts` — `calculateConfidence` imported from `./RecommendationConfidence`; `confidence: calculateConfidence(candidate, context)` added to assign step
 
 **Files NOT modified:**
-- `app/lib/customer/learning/SignalInterpreter.ts` — ConciergeInterpreter already correct
-- `app/lib/customer/sync/CustomerProfileSync.ts` — recordConciergeIntent already correct
-- `app/lib/customer/learning/PreferenceCandidate.ts` — positive: boolean already correct
-- `app/lib/customer/learning/PreferenceAccumulator.ts` — polarity preserved in group key
-- `app/lib/customer/learning/PreferenceResolver.ts` — positive field preserved through resolution
-- `app/lib/customer/intelligence/CustomerPreferenceSummary.ts` — avoidedFamilies already populated
-- `app/lib/customer/learning/LearningEngine.ts` — unchanged
+- `app/lib/customer/recommendations/RecommendationConfidence.ts` — function signature and logic correct; no change
+- `app/lib/customer/recommendations/RecommendationContext.ts` — `profile: UnifiedCustomerProfile` with `signals[]` already available; no change
+- `app/lib/customer/recommendations/RecommendationEngine.ts` — unchanged
+- `app/lib/customer/recommendations/RecommendationReasonBuilder.ts` — `buildExplanation()` continues computing confidence via its own call; no change
+- `app/lib/customer/recommendations/RecommendationResult.ts` — `recommendations: readonly Recommendation[]` inherits the new field automatically; no change
 - `app/lib/customer/recommendations/WeightedRecommendationScorer.ts` — unchanged
-- `app/lib/customer/recommendations/RecommendationReasonBuilder.ts` — unchanged
-- `app/lib/customer/recommendations/RecommendationPipeline.ts` — unchanged
+- `app/lib/customer/learning/LearningEngine.ts` — unchanged
 - `app/lib/customer/recommendations/RecommendationScore.ts` — unchanged
+- All UI components — unchanged
+- All analytics components — unchanged
+- Commerce platform — unchanged
 
 ---
 
@@ -73,9 +73,10 @@ _Task closed._
 
 ## Context Notes
 
-**Last completed:** EP60-P2 Complete Recommendation Impression Coverage (2026-08-03)
+**Last completed:** EP80-P1 Recommendation Confidence (2026-08-03)
 
 Recent completed programs (newest first):
+- EP80-P1 Recommendation Confidence (2026-08-03) — Recommendation now carries readonly confidence: RecommendationConfidence; RecommendationPipeline calls calculateConfidence() during assign stage; RecommendationEngine/LearningEngine/RecommendationReasonBuilder/commerce/UI untouched; build passes; 247 routes
 - EP70-P1 Negative Preference Scoring (2026-08-03) — avoidedFamilies now propagates through LearnedPreferences into PreferenceProfile; scoreProfile() applies bounded avoidance penalty (−0.30/match, clamped [0,1]); RecommendationEngine/LearningEngine/RecommendationReasonBuilder/commerce untouched; build passes; 247 routes
 - EP60-P2 Complete Recommendation Impression Coverage (2026-08-03) — six surfaces now emit recommendation_set_shown; CTR/save rate/ATC rate computable for all strategies; build passes; 247 routes
 - EP50-P1 Explainable MiniCart Recommendations (2026-08-03) — CartCollectionItem type preserves recReason through mapping; MiniCart Complete Your Collection now displays recommendation explanations; RecommendationEngine/RecommendationReasonBuilder/LearningEngine untouched; build passes; 247 routes
@@ -109,7 +110,7 @@ _N/A_
 
 ## Build Result
 
-**Last build:** 2026-08-03 — Pass. Zero TypeScript errors. Zero warnings. 247 routes. (EP70-P1)
+**Last build:** 2026-08-03 — Pass. Zero TypeScript errors. Zero warnings. 247 routes. (EP80-P1)
 
 ---
 

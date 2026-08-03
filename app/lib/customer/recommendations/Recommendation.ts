@@ -18,14 +18,16 @@
  *   Experience surfaces   — primary consumption target (product cards, etc.)
  */
 
-import type { KnowledgeSummary }    from "../../intelligence/KnowledgeSummary";
-import type { RecommendationScore } from "./RecommendationScore";
-import type { RecommendationReason } from "./RecommendationReason";
+import type { KnowledgeSummary }          from "../../intelligence/KnowledgeSummary";
+import type { RecommendationScore }        from "./RecommendationScore";
+import type { RecommendationReason }       from "./RecommendationReason";
+import type { RecommendationConfidence }   from "./RecommendationConfidence";
 
 export interface Recommendation {
-  readonly rank:    number;
-  readonly slug:    string;
-  readonly summary: KnowledgeSummary;
-  readonly score:   RecommendationScore;
-  readonly reasons: readonly RecommendationReason[];
+  readonly rank:       number;
+  readonly slug:       string;
+  readonly summary:    KnowledgeSummary;
+  readonly score:      RecommendationScore;
+  readonly reasons:    readonly RecommendationReason[];
+  readonly confidence: RecommendationConfidence;
 }

@@ -39,6 +39,42 @@ Never edit or delete past entries.
 
 ## Log
 
+### 2026-08-03 — EP80-P1 — Program Implementation
+
+**Participants:** Project Owner / Claude (Implementation Engineer)
+**Program:** EP80-P1 — Experience Release 8.0 / Recommendation Confidence
+
+**Decisions Made:**
+- `confidence` added as a required field on `Recommendation` rather than as an optional supplement — confidence is a first-class property of the pipeline output, not a diagnostic addon; making it required forces every construction site to supply it and guarantees it is always present for consumers
+- `calculateConfidence()` called in the pipeline assign stage rather than introducing a new pipeline contract — the function signature `calculateConfidence(candidate, context)` takes exactly the inputs already in scope at that point; no architectural change is required; the existing four-stage pipeline structure is preserved
+- `RecommendationReasonBuilder.buildExplanation()` left unchanged — it continues to call `calculateConfidence()` internally; the result is identical (same inputs → same output); the admin observatory path continues working without modification; eliminating the duplicate call is a minor optimisation deferred to a future housekeeping pass
+- Customer-facing UI left unchanged — confidence is now available on every `Recommendation` object, but no UI component reads it yet; confidence-adaptive UI is a separate design decision scoped to a future programme
+
+**Tasks Completed:**
+- Repository inspection (EP80-P1) — confidence pipeline traced across 13 files: `RecommendationConfidence.ts`, `RecommendationTrace.ts`, `RecommendationExplanation.ts`, `Recommendation.ts`, `RecommendationResult.ts`, `RecommendationPipeline.ts`, `RecommendationContext.ts`, `UnifiedCustomerProfile.ts`, `IntelligenceSection.tsx`, `CuratedForYou.tsx`, `IntelligenceDashboard.tsx`, `admin/intelligence/page.tsx`, `index.ts`; confirmed three gaps: (1) `Recommendation` has no confidence field, (2) pipeline assign stage never calls `calculateConfidence()`, (3) no customer-facing UI displays confidence
+- Implementation — two files modified; `readonly confidence: RecommendationConfidence` added to `Recommendation` interface; `calculateConfidence(candidate, context)` added to `RecommendationPipeline` assign stage
+- Build verification — Pass, TypeScript clean, 0 warnings, 247 routes
+
+**Tasks Started:**
+- None — EP80-P1 closed
+
+**Build Result:** Pass — TypeScript clean, 0 warnings, 247 routes (unchanged)
+
+**Files Changed:**
+- `app/lib/customer/recommendations/Recommendation.ts` — `readonly confidence: RecommendationConfidence` added; `RecommendationConfidence` imported
+- `app/lib/customer/recommendations/RecommendationPipeline.ts` — `calculateConfidence` imported; `confidence: calculateConfidence(candidate, context)` added to assign stage
+
+**Handoff:**
+- EP80-P1 complete. Recommendation confidence is now a first-class property of every production recommendation.
+- Awaiting Engineering Lead direction for next programme.
+
+**Open Questions Carried Forward:**
+- PR1-P2 (MiniCart Learning Signal Gap) — `quickAddFromSection` still missing `recordCart()` call; identified in PR1-P1 audit; not addressed
+- PR1-P3 (Signal Calibration Accuracy) — `fragrance_purchase` still marked dead in `SignalCalibration.ts`; stale since EP30-P1; not addressed
+- PR1-P4 (RecommendationEngine Module Consolidation) — duplicate `buildIndex` and `buildKnowledgeSummary` calls; low priority; not addressed
+
+---
+
 ### 2026-08-03 — EP70-P1 — Program Implementation
 
 **Participants:** Project Owner / Claude (Implementation Engineer)
