@@ -31,11 +31,34 @@ Each program has a defined scope, ordered task list, and a clear close condition
 
 ## Active Program
 
-None — EP40-P1 Personalized Recommendation Experience closed 2026-08-03 (product page and compare page recommendation routing corrected; "product" and "compare" experience types now correctly invoked; similar and complementary strategies active). Awaiting Engineering Lead direction for next sprint.
+None — EP40-P2 Personalized MiniCart Recommendations closed 2026-08-03 (MiniCart "Complete Your Collection" now uses UnifiedCustomerProfile; anonymousProfile() retained as pre-hydration fallback; commerce behaviour unchanged). Awaiting Engineering Lead direction for next sprint.
 
 ---
 
 ## Completed Programs
+
+### EP40-P2 — Experience Release 4.0 / Personalized MiniCart Recommendations
+
+**Objective:** Thread `UnifiedCustomerProfile` into `CartRecommendationStrategy.resolveComplementary()` to replace the hardcoded `anonymousProfile()`. MiniCart "Complete Your Collection" now scores using all accumulated Customer Intelligence signals.
+**Scope:** `app/lib/customer/sync/CartRecommendationStrategy.ts` (`CartRecommendationInput` extended with optional `profile`; `resolveComplementary` accepts profile and uses `profile ?? anonymousProfile()`), `app/components/MiniCart.tsx` (`useUnifiedCustomerProfile` imported and called; `profile` passed to `getCartRecommendations`). No engine files modified.
+**Lead:** Project Owner + Claude (Implementation Engineer)
+**Opened:** 2026-08-03
+**Closed:** 2026-08-03
+
+**Task List:**
+
+| # | Gate | Task | Status |
+|---|---|---|---|
+| 1 | G1 | Repository Inspection — MiniCart, CartRecommendationStrategy, useUnifiedCustomerProfile, RecommendationContext, CartContext | Complete |
+| 2 | G2 | Engineering Assessment — anonymousProfile() hardcoded in resolveComplementary() confirmed; CartRecommendationInput has no profile field; MiniCart does not call useUnifiedCustomerProfile; RecommendationContext already accepts real profiles | Complete |
+| 3 | G3 | Implementation — CartRecommendationInput.profile added; resolveComplementary threaded; MiniCart calls hook and passes profile | Complete |
+| 4 | G4 | Build verification — Pass, TypeScript clean, 0 warnings, 247 routes | Complete |
+
+**Close Condition:** MiniCart "Complete Your Collection" uses `profile ?? anonymousProfile()`. Real profile used when available. Anonymous fallback preserved before hydration. Commerce behaviour unchanged. RecommendationEngine, LearningEngine, ExperienceIntelligence untouched. Build passes.
+
+**Outcome:** Every recommendation surface in the customer journey now uses Customer Intelligence. MiniCart was the last surface using an anonymous profile. Quiz, concierge, purchase, view, favorite, search, and cart signals now influence complementary recommendations at the point of purchase — the highest-value moment in the customer journey. Implementation required 2 files and 4 targeted edits; no engine changes.
+
+---
 
 ### EP40-P1 — Experience Release 4.0 / Personalized Recommendation Experience
 

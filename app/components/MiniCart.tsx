@@ -8,6 +8,7 @@ import { setRecommendationAttribution, getRecommendationAttribution } from "../l
 import { useMemo, useState, useRef, useEffect } from "react";
 import { brand } from "../data/brand";
 import { getCartRecommendations } from "../lib/customer/sync/CartRecommendationStrategy";
+import { useUnifiedCustomerProfile } from "../lib/customer/hooks/useUnifiedCustomerProfile";
 import type { DisplayFragrance } from "../lib/knowledgeAdapter";
 
 interface MiniCartProps {
@@ -29,6 +30,7 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
   } = useCart();
 
   const { favorites } = useFavorites();
+  const { profile } = useUnifiedCustomerProfile();
   const [showRecommendations, setShowRecommendations] = useState(false);
 
   const { fromFavorites, recentlyViewed: recentRecs, completeYourCollection } = useMemo(() => {
@@ -50,8 +52,9 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
       savedTitles:  favorites.map((f) => f.title),
       recentTitles,
       limit: 3,
+      profile,
     });
-  }, [cart, favorites]);
+  }, [cart, favorites, profile]);
 
   const impressionFired = useRef(false);
   useEffect(() => {

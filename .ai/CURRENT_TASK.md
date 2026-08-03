@@ -19,35 +19,41 @@ At the start of a new Claude Code session:
 ## Current Task
 
 **Status:** Complete
-**Program:** EP40-P1 — Experience Release 4.0 / Personalized Recommendation Experience
+**Program:** EP40-P2 — Experience Release 4.0 / Personalized MiniCart Recommendations
 
 **Goal:**
-Correct product page and compare page recommendation routing. Both surfaces were calling `getContextualRecommendations("shop", profile)` instead of their contextually correct experience types. ExperienceIntelligence already had full "product" (similar) and "compare" (complementary) strategy support — only the call sites required correction.
+Thread `UnifiedCustomerProfile` from `useUnifiedCustomerProfile` into `CartRecommendationStrategy.resolveComplementary()`, replacing the hardcoded `anonymousProfile()`. MiniCart's "Complete Your Collection" section now scores using all accumulated Customer Intelligence signals. Anonymous profile retained as fallback before hydration.
 
 **Acceptance Criteria:**
-- [x] Product page routes through `"product"` experience → similar strategy
-- [x] Compare page routes through `"compare"` experience → complementary strategy
+- [x] MiniCart calls `useUnifiedCustomerProfile` and passes `profile` to `getCartRecommendations`
+- [x] `CartRecommendationInput` accepts optional `profile` field
+- [x] `resolveComplementary` uses `profile ?? anonymousProfile()`
+- [x] fromFavorites and recentlyViewed sections unchanged
+- [x] Anonymous fallback preserved before hydration
 - [x] RecommendationEngine unchanged
-- [x] ExperienceIntelligence unchanged
 - [x] LearningEngine unchanged
+- [x] Commerce behaviour unchanged
 - [x] Build passes — TypeScript clean, 0 warnings, 247 routes
 
 **Why This Task:**
-Repository inspection confirmed two UI surfaces bypassing the correct ExperienceIntelligence routing. Product page was showing generic personalised/discovery output identical to the shop page. Compare page was showing the same instead of complementary recommendations. Both `currentSlug` and `excludeSlugs` were already available at the call sites.
+`CartRecommendationStrategy.resolveComplementary()` hardcoded `anonymousProfile()` into `createContext()`. All Customer Intelligence signals (quiz, concierge, purchase, favorites, views, search) were discarded before reaching the RecommendationEngine. `RecommendationContext` already accepted `UnifiedCustomerProfile` — only the call site required correction.
 
 ---
 
 ## Files Involved
 
 **Files modified:**
-- `app/components/ProductIntelligenceSection.tsx` — line 27: `"shop"` → `"product"` with `{ currentSlug }`
-- `app/components/CompareIntelligenceSection.tsx` — line 27: `"shop"` → `"compare"` with `{ currentSlug: excludeSlugs[0] }`
+- `app/lib/customer/sync/CartRecommendationStrategy.ts` — `CartRecommendationInput` extended with optional `profile`; `resolveComplementary` accepts and uses `profile ?? anonymousProfile()`
+- `app/components/MiniCart.tsx` — `useUnifiedCustomerProfile` imported and called; `profile` passed to `getCartRecommendations`; added to `useMemo` deps
 
 **Files NOT modified:**
-- `app/lib/intelligence/ExperienceIntelligence.ts` — already correct
-- `app/components/ProductDetail.tsx` — already passes currentSlug correctly
-- `app/compare/page.tsx` — already passes excludeSlugs correctly
-- All RecommendationEngine, LearningEngine, CustomerProfileSync files
+- `app/lib/customer/recommendations/RecommendationEngine.ts` — already correct
+- `app/lib/customer/recommendations/RecommendationContext.ts` — already accepts real profiles
+- `app/lib/intelligence/ExperienceIntelligence.ts` — not used by MiniCart
+- `app/lib/customer/learning/LearningEngine.ts` — not touched
+- `app/lib/customer/sync/CustomerProfileSync.ts` — not touched
+- `app/context/CartContext.tsx` — commerce platform untouched
+- `app/context/FavoritesContext.tsx` — not touched
 
 ---
 
@@ -59,9 +65,10 @@ _Task closed._
 
 ## Context Notes
 
-**Last completed:** EP40-P1 Personalized Recommendation Experience (2026-08-03)
+**Last completed:** EP40-P2 Personalized MiniCart Recommendations (2026-08-03)
 
 Recent completed programs (newest first):
+- EP40-P2 Personalized MiniCart Recommendations (2026-08-03) — MiniCart "Complete Your Collection" now uses UnifiedCustomerProfile; CartRecommendationInput extended with optional profile; anonymousProfile() retained as fallback; RecommendationEngine/LearningEngine/commerce untouched; build passes; 247 routes
 - EP40-P1 Personalized Recommendation Experience (2026-08-03) — product page routed through "product" experience (similar strategy); compare page routed through "compare" experience (complementary strategy); 2 files, 2 lines; RecommendationEngine/ExperienceIntelligence/LearningEngine untouched; build passes; 247 routes
 - EP30-P1 Purchase Intelligence Bridge (2026-08-02) — fragrance_purchase signals emitted on confirmed orders; PurchaseInterpreter implemented; purchase intelligence flows into recommendation scoring; build passes; 247 routes
 - EP20-P4 Recommendation Bridge (2026-08-02) — LearningEngine integrated at RecommendationEngine orchestration layer; concierge/search/discovery preferences now influence scoring; pipeline unchanged; build passes; 247 routes
@@ -91,7 +98,7 @@ _N/A_
 
 ## Build Result
 
-**Last build:** 2026-08-03 — Pass. Zero TypeScript errors. Zero warnings. 247 routes. (EP40-P1)
+**Last build:** 2026-08-03 — Pass. Zero TypeScript errors. Zero warnings. 247 routes. (EP40-P2)
 
 ---
 

@@ -63,6 +63,7 @@ export interface CartRecommendationInput {
   readonly savedTitles:   readonly string[];
   readonly recentTitles:  readonly string[];
   readonly limit:         number;
+  readonly profile?:      UnifiedCustomerProfile | null;
 }
 
 export interface CartRecommendations {
@@ -85,7 +86,7 @@ export function getCartRecommendations(
   return {
     fromFavorites:          resolveSection(input.savedTitles,  cartSlugSet, input.limit),
     recentlyViewed:         resolveSection(input.recentTitles, cartSlugSet, input.limit),
-    completeYourCollection: resolveComplementary(cartSlugs, input.limit),
+    completeYourCollection: resolveComplementary(cartSlugs, input.limit, input.profile),
   };
 }
 
@@ -109,6 +110,7 @@ function resolveSection(
 function resolveComplementary(
   cartSlugs: readonly string[],
   limit:     number,
+  profile?:  UnifiedCustomerProfile | null,
 ): DisplayFragrance[] {
   const pivotSlug = cartSlugs[0];
   if (!pivotSlug) return [];
@@ -118,7 +120,7 @@ function resolveComplementary(
       surfaceId: "minicart-complete-collection",
     }).strategy;
     const result = recommend(
-      createContext(anonymousProfile(), strategy, {
+      createContext(profile ?? anonymousProfile(), strategy, {
         limit,
         currentSlug:  pivotSlug,
         excludeSlugs: cartSlugs,

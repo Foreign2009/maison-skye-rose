@@ -39,6 +39,40 @@ Never edit or delete past entries.
 
 ## Log
 
+### 2026-08-03 — EP40-P2 — Program Implementation
+
+**Participants:** Project Owner / Claude (Implementation Engineer)
+**Program:** EP40-P2 — Experience Release 4.0 / Personalized MiniCart Recommendations
+
+**Decisions Made:**
+- Profile passed from MiniCart into CartRecommendationStrategy as optional field — pure function design preserved; hook cannot be called inside CartRecommendationStrategy (not a React component/hook)
+- `profile ?? anonymousProfile()` pattern selected — identical to null-coalescence pattern used across all other recommendation surfaces; pre-hydration behaviour identical to current behaviour
+- `fromFavorites` and `recentlyViewed` sections intentionally left unchanged — they use raw title filtering (no RE), no profile involvement needed
+
+**Tasks Completed:**
+- Repository inspection — MiniCart, CartRecommendationStrategy, useUnifiedCustomerProfile, RecommendationContext, CartContext audited; anonymousProfile() break point confirmed at resolveComplementary() line 121
+- Implementation — CartRecommendationInput.profile added; resolveComplementary signature extended; MiniCart imports hook, retrieves profile, passes to getCartRecommendations, adds to useMemo deps
+- Build verification — Pass, TypeScript clean, 0 warnings, 247 routes
+- Documentation — CURRENT_TASK.md, SPRINT.md, ENGINEERING_LOG.md updated
+
+**Tasks Started:**
+- None — EP40-P2 closed
+
+**Build Result:** Pass — TypeScript clean, 0 warnings, 247 routes
+
+**Files Changed:**
+- `app/lib/customer/sync/CartRecommendationStrategy.ts` — `CartRecommendationInput` extended with `profile?: UnifiedCustomerProfile | null`; `resolveComplementary` signature extended; `anonymousProfile()` replaced with `profile ?? anonymousProfile()`
+- `app/components/MiniCart.tsx` — `useUnifiedCustomerProfile` imported; hook called; `profile` passed to `getCartRecommendations`; added to `useMemo` dependency array
+
+**Handoff:**
+- EP40-P2 complete. Experience Release 4.0 is now fully implemented. All recommendation surfaces across the customer journey use Customer Intelligence.
+- Complete journey coverage: Home ✅ Shop ✅ Best Sellers ✅ New Arrivals ✅ Collections ✅ Product Page ✅ Compare ✅ Favorites ✅ Recently Viewed ✅ Fragrance Profile ✅ Quiz ✅ Academy ✅ Discover ✅ MiniCart ✅
+
+**Open Questions Carried Forward:**
+- None.
+
+---
+
 ### 2026-08-03 — EP40-P1 — Program Implementation
 
 **Participants:** Project Owner / Claude (Implementation Engineer)
