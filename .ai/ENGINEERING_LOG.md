@@ -39,6 +39,44 @@ Never edit or delete past entries.
 
 ## Log
 
+### 2026-08-03 — EP90-P2 — Program Implementation
+
+**Participants:** Project Owner / Claude (Implementation Engineer)
+**Program:** EP90-P2 — Experience Release 9.0 / Adaptive Experience Messaging
+
+**Decisions Made:**
+- Two targeted prop-string changes only — no component logic, no routing, no engine changes; the binary `isPersonalised` switch in `IntelligenceSection` and `CuratedForYou` already correctly controls which copy variant is shown; only the copy strings themselves were misaligned
+- `recently_viewed` discovery body: "introduction" removed and replaced with "extend your exploration" — the recently-viewed page is only reachable by a customer who has already browsed; "introduction" implies a first visit which is structurally impossible on this page; the new wording acknowledges prior exploration without implying personalised routing
+- `fragrance_profile` discovery label/heading: "A Maison Introduction" / "Begin Your Discovery" replaced with "Continue Exploring" / "Discover What Awaits" — the fragrance-profile page displays the customer's explored and saved items in grids above the IntelligenceSection; "Introduction" and "Begin" directly contradict the visible evidence of prior exploration shown on the same page; the new wording is consistent with the discovery vocabulary used by `CuratedForYou` ("Discover Something New") and `recently_viewed` ("Discover What Awaits")
+- `discoveryBody` on fragrance-profile page left unchanged — "A curated selection from across the Maison collection — each piece worth exploring." is neutral and accurate for both passive customers and for cold visitors who navigate directly to their profile page
+
+**Tasks Completed:**
+- Repository inspection (EP90-P2) — all recommendation surfaces audited; three gaps identified; two are UX copy gaps affecting passive customers after EP90-P1 routing change; one is a minor analytics data quality gap in `DiscoveryIntelligenceSection` (deferred)
+- Implementation — two prop strings updated across two page files; no component logic changes
+- Build verification — Pass, TypeScript clean, 0 warnings, 247 routes
+
+**Tasks Started:**
+- None — EP90-P2 closed
+
+**Build Result:** Pass — TypeScript clean, 0 warnings, 247 routes (unchanged)
+
+**Files Changed:**
+- `app/recently-viewed/page.tsx` — `discoveryBody` prop to `IntelligenceSection` updated
+- `app/fragrance-profile/page.tsx` — `discoveryLabel` and `discoveryHeading` props to `IntelligenceSection` updated
+
+**Handoff:**
+- EP90-P2 complete. Discovery copy on `recently_viewed` and `fragrance_profile` pages now aligned with EP90-P1 routing. Passive customers see contextually accurate messaging across all adaptive surfaces.
+- Awaiting Engineering Lead direction for next programme.
+
+**Open Questions Carried Forward:**
+- PR1-P2 (MiniCart Learning Signal Gap) — `quickAddFromSection` still missing `recordCart()` call; not addressed
+- PR1-P3 (Signal Calibration Accuracy) — `fragrance_purchase` still marked dead in `SignalCalibration.ts`; stale since EP30-P1; not addressed
+- PR1-P4 (RecommendationEngine Module Consolidation) — duplicate `buildIndex` and `buildKnowledgeSummary` calls; low priority; not addressed
+- EP80-P3 (analyzeResult() deduplication) — `admin/intelligence/page.tsx` still calls `buildExplanation()` per recommendation (30 redundant calls); not addressed
+- EP90-P2 analytics gap — `DiscoveryIntelligenceSection` still uses `hasMeaningfulProfile()` for analytics `profileType`; passive customers on discover pages logged as "personalised" profileType; data quality issue, not a UX issue; deferred
+
+---
+
 ### 2026-08-03 — EP90-P1 — Program Implementation
 
 **Participants:** Project Owner / Claude (Implementation Engineer)

@@ -19,49 +19,46 @@ At the start of a new Claude Code session:
 ## Current Task
 
 **Status:** Complete
-**Program:** EP90-P1 — Experience Release 9.0 / Adaptive Recommendation Strategy
+**Program:** EP90-P2 — Experience Release 9.0 / Adaptive Experience Messaging
 
 **Goal:**
-Introduce `ProfileRichness` as a 4-tier customer profile classification and replace the binary `hasMeaningfulProfile()` routing gate in `ExperienceIntelligence` with a richness-aware routing decision. Passive-browsing customers (recentlyViewed-only) now route to discovery. Customers with explicit intent (quiz, saves, learning signals) continue to route to personalised.
+Align customer-facing discovery copy on the `recently_viewed` and `fragrance_profile` pages with the EP90-P1 routing change. Two prop strings implied first-visit context on pages where prior exploration is already visible. No component logic, routing, or engine changes.
 
 **Acceptance Criteria:**
-- [x] `ProfileRichness` type exported from `profileUtils.ts` with 4 tiers: "cold" | "passive" | "emerging" | "rich"
-- [x] `getProfileRichness()` implemented using `profile.signals.length`, `savedSlugs`, `lastQuizSlugs`, `recentlyViewed`
-- [x] Tier boundary for "rich" at `signals >= 5` — aligns with HIGH confidence base in `RecommendationConfidence`
-- [x] Cold-start customers route to discovery
-- [x] Recently-viewed-only (passive) customers route to discovery
-- [x] Customers with favourites (savedSlugs > 0) route to personalised
-- [x] Customers with quiz history (lastQuizSlugs > 0) route to personalised
-- [x] Customers with learning signals (signals >= 1) route to personalised
-- [x] Product ("similar") routing unchanged
-- [x] Compare ("complementary") routing unchanged
-- [x] Discover surface routing unchanged (always discovery)
-- [x] `hasMeaningfulProfile()` preserved — still used by `buildSeededProfile()` and `buildRecommendationContext()`
-- [x] Recommendation scoring, confidence, and explanations unchanged
-- [x] RecommendationEngine, RecommendationPipeline, LearningEngine, commerce unchanged
+- [x] `recently_viewed` page discovery body no longer says "introduction" — updated to acknowledge prior exploration
+- [x] `fragrance_profile` page discovery label no longer says "A Maison Introduction"
+- [x] `fragrance_profile` page discovery heading no longer says "Begin Your Discovery"
+- [x] Cold customer messaging unchanged
+- [x] Emerging customer messaging unchanged
+- [x] Rich customer messaging unchanged
+- [x] Recommendation routing unchanged
+- [x] Recommendation scoring unchanged
+- [x] Recommendation confidence unchanged
+- [x] Recommendation explanations unchanged
 - [x] Build passes — TypeScript clean, 0 warnings, 247 routes
 
 **Why This Task:**
-Inspection (EP90-P1) confirmed that `hasMeaningfulProfile()` is a binary gate — any customer with a single viewed product is routed to personalised strategy identically to a customer with 50 learning signals. Passive customers (recentlyViewed-only) have only partial family preferences (no occasion, season, or gender data) from their viewed items. The personalised strategy's 0.50 profile weight is wasteful at this richness level. Discovery's 0.40 exploration weight produces more appropriate, diverse results for customers still in browsing mode.
+EP90-P1 correctly routes passive customers (recentlyViewed-only) to discovery strategy. The `IntelligenceSection` binary switch shows the `discoveryLabel/Heading/Body` props for these customers. Two page files had discovery copy designed for cold-start visitors ("A curated introduction", "Begin Your Discovery") that is factually inaccurate on pages that display the customer's exploration history.
 
 ---
 
 ## Files Involved
 
 **Files modified:**
-- `app/lib/customer/profile/profileUtils.ts` — `ProfileRichness` type exported; `getProfileRichness()` implemented; `hasMeaningfulProfile()` preserved unchanged
-- `app/lib/intelligence/ExperienceIntelligence.ts` — `getProfileRichness` added to import; `resolveStrategy()` updated: `getProfileRichness(profile)` replaces both `hasMeaningfulProfile()` routing calls; `intentStrategy` local variable derives "personalised" or "discovery" from richness tier
+- `app/recently-viewed/page.tsx` — `discoveryBody` prop to `IntelligenceSection`: "introduction" → "extend your exploration"
+- `app/fragrance-profile/page.tsx` — `discoveryLabel`: "A Maison Introduction" → "Continue Exploring"; `discoveryHeading`: "Begin Your Discovery" → "Discover What Awaits"
 
 **Files NOT modified:**
+- `app/components/IntelligenceSection.tsx` — component logic unchanged
+- `app/components/CuratedForYou.tsx` — unchanged
+- `app/components/ProductIntelligenceSection.tsx` — unchanged
+- `app/components/discover/DiscoveryIntelligenceSection.tsx` — unchanged
+- `app/lib/intelligence/ExperienceIntelligence.ts` — unchanged
 - `app/lib/customer/recommendations/RecommendationEngine.ts` — unchanged
 - `app/lib/customer/recommendations/RecommendationPipeline.ts` — unchanged
 - `app/lib/customer/recommendations/RecommendationConfidence.ts` — unchanged
-- `app/lib/customer/recommendations/RecommendationContext.ts` — unchanged
-- `app/lib/customer/recommendations/WeightedRecommendationScorer.ts` — unchanged
 - `app/lib/customer/learning/LearningEngine.ts` — unchanged
-- `app/lib/customer/recommendations/RecommendationReasonBuilder.ts` — unchanged
 - All analytics components — unchanged
-- All UI components — unchanged
 - Commerce platform — unchanged
 
 ---
@@ -74,9 +71,10 @@ _Task closed._
 
 ## Context Notes
 
-**Last completed:** EP90-P1 Adaptive Recommendation Strategy (2026-08-03)
+**Last completed:** EP90-P2 Adaptive Experience Messaging (2026-08-03)
 
 Recent completed programs (newest first):
+- EP90-P2 Adaptive Experience Messaging (2026-08-03) — discovery copy on recently-viewed and fragrance-profile pages aligned with EP90-P1 routing; two prop-string changes; no component or engine changes; build passes; 247 routes
 - EP90-P1 Adaptive Recommendation Strategy (2026-08-03) — ProfileRichness type introduced; getProfileRichness() replaces hasMeaningfulProfile() in ExperienceIntelligence routing; passive customers route to discovery; emerging/rich customers route to personalised; RecommendationEngine/RecommendationPipeline/RecommendationConfidence/LearningEngine/commerce/UI untouched; build passes; 247 routes
 - EP80-P1 Recommendation Confidence (2026-08-03) — Recommendation now carries readonly confidence: RecommendationConfidence; RecommendationPipeline calls calculateConfidence() during assign stage; RecommendationEngine/LearningEngine/RecommendationReasonBuilder/commerce/UI untouched; build passes; 247 routes
 - EP70-P1 Negative Preference Scoring (2026-08-03) — avoidedFamilies now propagates through LearnedPreferences into PreferenceProfile; scoreProfile() applies bounded avoidance penalty (−0.30/match, clamped [0,1]); RecommendationEngine/LearningEngine/RecommendationReasonBuilder/commerce untouched; build passes; 247 routes

@@ -115,7 +115,7 @@ export default function RecentlyViewedPage() {
         personalisedBody="Selected from across the Maison Skye & Rose collection to continue the exploration you have already begun."
         discoveryLabel="Continue Exploring"
         discoveryHeading="Discover What Awaits"
-        discoveryBody="A curated introduction to the Maison Skye & Rose collection — fragrances worth exploring next."
+        discoveryBody="A curated selection chosen to extend your exploration of the Maison Skye & Rose collection."
         source="recently-viewed-recommendation"
       />
 

@@ -31,11 +31,33 @@ Each program has a defined scope, ordered task list, and a clear close condition
 
 ## Active Program
 
-None — EP90-P1 Adaptive Recommendation Strategy closed 2026-08-03 (ProfileRichness type introduced; getProfileRichness() replaces hasMeaningfulProfile() in ExperienceIntelligence routing; passive customers (recentlyViewed-only) now route to discovery; emerging/rich customers continue to route to personalised; RecommendationEngine, RecommendationPipeline, RecommendationConfidence, LearningEngine, commerce, and all UI untouched; build passes). Awaiting Engineering Lead direction for next sprint.
+None — EP90-P2 Adaptive Experience Messaging closed 2026-08-03 (discovery copy on recently-viewed and fragrance-profile pages aligned with EP90-P1 routing; two prop-string changes, no component logic, no engine changes; build passes). Awaiting Engineering Lead direction for next sprint.
 
 ---
 
 ## Completed Programs
+
+### EP90-P2 — Experience Release 9.0 / Adaptive Experience Messaging
+
+**Objective:** Align customer-facing discovery copy on the `recently_viewed` and `fragrance_profile` pages with the EP90-P1 routing change. Passive customers now see contextually accurate messaging — copy no longer implies a first visit on pages that display prior exploration history.
+**Scope:** `recently-viewed/page.tsx` (`discoveryBody` prop), `fragrance-profile/page.tsx` (`discoveryLabel` and `discoveryHeading` props). No component, engine, or routing changes.
+**Lead:** Project Owner + Claude (Implementation Engineer)
+**Opened:** 2026-08-03
+**Closed:** 2026-08-03
+
+**Task List:**
+
+| # | Gate | Task | Status |
+|---|---|---|---|
+| 1 | G1 | Repository Inspection — all recommendation surfaces audited; binary messaging switch confirmed correct post-EP90-P1; two discovery copy gaps identified on `recently_viewed` and `fragrance_profile` pages; analytics gap in `DiscoveryIntelligenceSection` identified and deferred | Complete |
+| 2 | G2 | Implementation — two prop strings updated; `discoveryBody` on `recently_viewed` page; `discoveryLabel` and `discoveryHeading` on `fragrance_profile` page | Complete |
+| 3 | G3 | Build verification — Pass, TypeScript clean, 0 warnings, 247 routes | Complete |
+
+**Close Condition:** Discovery copy on `recently_viewed` and `fragrance_profile` pages no longer implies first-visit context for customers who have already explored the collection. RecommendationEngine, ExperienceIntelligence, IntelligenceSection, and all other components unchanged. Build passes.
+
+**Outcome:** Passive customers now see messaging consistent with their browsing history across all adaptive surfaces. The EP90-P1 routing change (passive → discovery) is now fully reflected in the copy customers read.
+
+---
 
 ### EP90-P1 — Experience Release 9.0 / Adaptive Recommendation Strategy
 
