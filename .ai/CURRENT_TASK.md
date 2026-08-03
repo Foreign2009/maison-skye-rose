@@ -19,15 +19,19 @@ At the start of a new Claude Code session:
 ## Current Task
 
 **Status:** Complete
-**Program:** EP90-P2 — Experience Release 9.0 / Adaptive Experience Messaging
+**Program:** EP100-P2B — Platform Consolidation / Remove Terminated Executive Report Pipeline
 
 **Goal:**
-Align customer-facing discovery copy on the `recently_viewed` and `fragrance_profile` pages with the EP90-P1 routing change. Two prop strings implied first-visit context on pages where prior exploration is already visible. No component logic, routing, or engine changes.
+Remove the terminated Executive Report pipeline from the repository. Delete all 58 terminated route directories, 58 terminated dashboard components, and 60 terminated lib/operations builder and types files. Remove navigation links referencing the terminated routes from all 14 live admin components.
 
 **Acceptance Criteria:**
-- [x] `recently_viewed` page discovery body no longer says "introduction" — updated to acknowledge prior exploration
-- [x] `fragrance_profile` page discovery label no longer says "A Maison Introduction"
-- [x] `fragrance_profile` page discovery heading no longer says "Begin Your Discovery"
+- [x] All 58 terminated executive-report-* route directories deleted
+- [x] All 58 terminated dashboard components deleted
+- [x] All 60 terminated lib/operations builder and types files deleted (including orphaned Verification builder)
+- [x] All navigation links to terminated routes removed from 14 live admin components
+- [x] No live nav links reference deleted routes (verified: 0 remaining references)
+- [x] Live Executive Operations pipeline preserved (ExecutiveOperationsBuilder, ExecutiveBriefingBuilder, ExecutiveOperationsDigestBuilder, ExecutiveReportBuilder, OperationsAlertBuilder, OperationsAlertBriefingBuilder and all types preserved)
+- [x] Build passes — TypeScript clean, 0 warnings, 189 routes
 - [x] Cold customer messaging unchanged
 - [x] Emerging customer messaging unchanged
 - [x] Rich customer messaging unchanged
@@ -38,28 +42,37 @@ Align customer-facing discovery copy on the `recently_viewed` and `fragrance_pro
 - [x] Build passes — TypeScript clean, 0 warnings, 247 routes
 
 **Why This Task:**
-EP90-P1 correctly routes passive customers (recentlyViewed-only) to discovery strategy. The `IntelligenceSection` binary switch shows the `discoveryLabel/Heading/Body` props for these customers. Two page files had discovery copy designed for cold-start visitors ("A curated introduction", "Begin Your Discovery") that is factually inaccurate on pages that display the customer's exploration history.
+The Executive Report pipeline was terminated at Commitment by approved architecture decision (2026-07-01 to 2026-08-02 history per ENGINEERING_LOG). All 58 route pages, 58 dashboard components, and 60 lib/operations files were confirmed dead by EP100-P1 dependency verification — no live TypeScript import or React component reference pointed to any terminated file. Navigation links were the only remaining live dependency.
 
 ---
 
 ## Files Involved
 
-**Files modified:**
-- `app/recently-viewed/page.tsx` — `discoveryBody` prop to `IntelligenceSection`: "introduction" → "extend your exploration"
-- `app/fragrance-profile/page.tsx` — `discoveryLabel`: "A Maison Introduction" → "Continue Exploring"; `discoveryHeading`: "Begin Your Discovery" → "Discover What Awaits"
+**Files deleted (176 total):**
+- 58 route pages: `app/admin/executive-report-{archive through commitment}/page.tsx` and all `-center` variants
+- 58 dashboard components: `app/admin/ExecutiveReport{Archive through Commitment}Dashboard.tsx` and all `Center.tsx` variants
+- 60 lib/operations files: `app/lib/operations/ExecutiveReport{Archive through Commitment}Builder.ts` and all `Types.ts` variants, including orphaned `ExecutiveReportVerificationBuilder.ts` and `ExecutiveReportVerificationTypes.ts`
+
+**Files modified (14 nav components — nav link cleanup only):**
+- `app/admin/AdminConsole.tsx`
+- `app/admin/UnifiedOperationsConsole.tsx`
+- `app/admin/ExecutiveOperationsDashboard.tsx`
+- `app/admin/RecommendationPerformanceDashboard.tsx`
+- `app/admin/OperationsAlertDashboard.tsx`
+- `app/admin/BriefingDashboard.tsx`
+- `app/admin/OperationsAlertCenter.tsx`
+- `app/admin/IntelligenceDashboard.tsx`
+- `app/admin/CommerceIntelligenceDashboard.tsx`
+- `app/admin/CustomerIntelligenceDashboard.tsx`
+- `app/admin/ExecutiveBriefingCenter.tsx`
+- `app/admin/ExecutiveOperationsDigestDashboard.tsx`
+- `app/admin/ExecutiveReportDashboard.tsx`
+- `app/admin/ExecutiveReportCenter.tsx`
 
 **Files NOT modified:**
-- `app/components/IntelligenceSection.tsx` — component logic unchanged
-- `app/components/CuratedForYou.tsx` — unchanged
-- `app/components/ProductIntelligenceSection.tsx` — unchanged
-- `app/components/discover/DiscoveryIntelligenceSection.tsx` — unchanged
-- `app/lib/intelligence/ExperienceIntelligence.ts` — unchanged
-- `app/lib/customer/recommendations/RecommendationEngine.ts` — unchanged
-- `app/lib/customer/recommendations/RecommendationPipeline.ts` — unchanged
-- `app/lib/customer/recommendations/RecommendationConfidence.ts` — unchanged
-- `app/lib/customer/learning/LearningEngine.ts` — unchanged
-- All analytics components — unchanged
-- Commerce platform — unchanged
+- All live builder/types files (ExecutiveOperationsBuilder, ExecutiveBriefingBuilder, ExecutiveOperationsDigestBuilder, ExecutiveReportBuilder, OperationsAlertBuilder, OperationsAlertBriefingBuilder and their Types counterparts)
+- All live admin dashboard components (ExecutiveReportDashboard.tsx, ExecutiveReportCenter.tsx preserved)
+- RecommendationEngine, ExperienceIntelligence, LearningEngine, analytics, commerce — all unchanged
 
 ---
 
@@ -71,9 +84,10 @@ _Task closed._
 
 ## Context Notes
 
-**Last completed:** EP90-P2 Adaptive Experience Messaging (2026-08-03)
+**Last completed:** EP100-P2B Remove Terminated Executive Report Pipeline (2026-08-03)
 
 Recent completed programs (newest first):
+- EP100-P2B Remove Terminated Executive Report Pipeline (2026-08-03) — 176 terminated files deleted (58 routes + 58 components + 60 lib/operations); 14 nav components cleaned; build passes; 189 routes (was 247)
 - EP90-P2 Adaptive Experience Messaging (2026-08-03) — discovery copy on recently-viewed and fragrance-profile pages aligned with EP90-P1 routing; two prop-string changes; no component or engine changes; build passes; 247 routes
 - EP90-P1 Adaptive Recommendation Strategy (2026-08-03) — ProfileRichness type introduced; getProfileRichness() replaces hasMeaningfulProfile() in ExperienceIntelligence routing; passive customers route to discovery; emerging/rich customers route to personalised; RecommendationEngine/RecommendationPipeline/RecommendationConfidence/LearningEngine/commerce/UI untouched; build passes; 247 routes
 - EP80-P1 Recommendation Confidence (2026-08-03) — Recommendation now carries readonly confidence: RecommendationConfidence; RecommendationPipeline calls calculateConfidence() during assign stage; RecommendationEngine/LearningEngine/RecommendationReasonBuilder/commerce/UI untouched; build passes; 247 routes
@@ -110,7 +124,7 @@ _N/A_
 
 ## Build Result
 
-**Last build:** 2026-08-03 — Pass. Zero TypeScript errors. Zero warnings. 247 routes. (EP80-P1)
+**Last build:** 2026-08-03 — Pass. Zero TypeScript errors. Zero warnings. 189 routes. (EP100-P2B)
 
 ---
 

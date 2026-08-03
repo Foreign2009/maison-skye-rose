@@ -31,7 +31,21 @@ Each program has a defined scope, ordered task list, and a clear close condition
 
 ## Active Program
 
-None — EP90-P2 Adaptive Experience Messaging closed 2026-08-03 (discovery copy on recently-viewed and fragrance-profile pages aligned with EP90-P1 routing; two prop-string changes, no component logic, no engine changes; build passes). Awaiting Engineering Lead direction for next sprint.
+**Program 10.0 — Platform Consolidation**
+
+**Objective:** Remove architectural debt from the BI platform: terminated pipeline, duplicate dashboards, analytics caching, executive metrics layer.
+**Lead:** Project Owner + Claude (Implementation Engineer)
+**Opened:** 2026-08-03
+
+| # | Episode | Task | Status |
+|---|---|---|---|
+| 1 | EP100-P2A | Dependency verification — confirmed terminated pipeline self-contained; nav links identified as only live dependency | Complete |
+| 2 | EP100-P2B | Remove terminated Executive Report pipeline — 176 files deleted, 14 nav components cleaned, build passes at 189 routes | Complete |
+| 3 | EP100-P3 | Merge duplicate dashboards (alerts/alert-center, executive-digest/executive-briefing, executive-report/executive-report-center, executive-operations/operations) | Pending |
+| 4 | EP100-P4 | Analytics cache — wrap PostHog query functions with 5-minute server-side cache | Pending |
+| 5 | EP100-P5 | Executive Metrics Layer — unified Supabase + PostHog dashboard | Pending |
+
+**Close Condition:** All duplicate dashboards eliminated, analytics cached, Executive Metrics Layer live, build passes.
 
 ---
 
