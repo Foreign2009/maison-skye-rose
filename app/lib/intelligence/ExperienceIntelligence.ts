@@ -10,7 +10,7 @@
  *
  * Integration points (read-only — this module never mutates):
  *   RecommendationEngine         — RE strategy execution
- *   hasMeaningfulProfile         — personalised vs discovery resolution
+ *   getProfileRichness           — profile richness tier for strategy routing
  *   buildRecommendationContext   — contextual display copy
  *   UnifiedCustomerProfile       — customer intelligence input
  *
@@ -33,7 +33,7 @@ import {
 } from "../customer/recommendations/RecommendationEngine";
 import { createEmptyMetrics }       from "../customer/recommendations/RecommendationMetrics";
 import { DEFAULT_RECOMMENDATION_LIMIT } from "../customer/recommendations/RecommendationStrategy";
-import { hasMeaningfulProfile }     from "../customer/profile/profileUtils";
+import { hasMeaningfulProfile, getProfileRichness } from "../customer/profile/profileUtils";
 import type { UnifiedCustomerProfile }  from "../customer/profile/UnifiedCustomerProfile";
 import type { RecommendationStrategy }  from "../customer/recommendations/RecommendationStrategy";
 import type { Recommendation }          from "../customer/recommendations/Recommendation";
@@ -89,17 +89,18 @@ function resolveStrategy(
   profile:    UnifiedCustomerProfile,
   options:    ExperienceOptions,
 ): RecommendationStrategy {
+  const richness = getProfileRichness(profile);
+  // cold and passive → discovery; emerging and rich → personalised
+  const intentStrategy: RecommendationStrategy =
+    richness === "emerging" || richness === "rich" ? "personalised" : "discovery";
+
   let defaultStrategy: RecommendationStrategy;
   switch (experience) {
     case "product":   defaultStrategy = "similar"; break;
     case "compare":   defaultStrategy = "complementary"; break;
     case "discover":  defaultStrategy = "discovery"; break;
-    case "concierge": defaultStrategy = options.currentSlug
-      ? "similar"
-      : hasMeaningfulProfile(profile) ? "personalised" : "discovery";
-      break;
-    default:
-      defaultStrategy = hasMeaningfulProfile(profile) ? "personalised" : "discovery";
+    case "concierge": defaultStrategy = options.currentSlug ? "similar" : intentStrategy; break;
+    default:          defaultStrategy = intentStrategy;
   }
   return resolveRecommendationStrategy(defaultStrategy).strategy;
 }

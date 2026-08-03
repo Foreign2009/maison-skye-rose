@@ -39,6 +39,44 @@ Never edit or delete past entries.
 
 ## Log
 
+### 2026-08-03 — EP90-P1 — Program Implementation
+
+**Participants:** Project Owner / Claude (Implementation Engineer)
+**Program:** EP90-P1 — Experience Release 9.0 / Adaptive Recommendation Strategy — Profile Richness
+
+**Decisions Made:**
+- Introduced `ProfileRichness` as a 4-tier classification rather than extending the boolean `hasMeaningfulProfile()` — a type with named tiers is explicit about what each tier means; future programmes and readers can reason about "passive vs emerging" without needing to understand the underlying threshold logic each time
+- Tier boundary `rich` set at `signals >= 5` — this is the exact threshold that `calculateConfidence()` uses to assign HIGH confidence base (0.65); using the same boundary ensures the richness tier and the confidence tier agree for the common case; the boundary is derived from existing repository evidence, not from a new hardcoded constant
+- `passive` tier (recentlyViewed-only) routes to discovery — passive customers have only inferred family preferences (from viewed slugs); no occasion, season, or gender data; the personalised strategy's 0.50 profile weight is wasteful at this richness level; discovery's 0.40 exploration weight produces more appropriate, diverse results for customers still in browsing mode without expressed intent
+- `hasMeaningfulProfile()` is NOT removed — it continues to serve two different purposes: (1) `buildSeededProfile()` uses it to gate seed injection for cold-start customers on academy/discover surfaces; (2) `buildRecommendationContext()` uses it to determine whether contextual copy is available; neither of these requires the richer classification
+- No changes to engine, pipeline, confidence, scoring weights, or learning — routing is the only change; the strategy weights that execute once a strategy is chosen are still optimal and are not adjusted
+
+**Tasks Completed:**
+- Repository inspection (EP90-P1) — complete strategy routing path traced across 9 files: `profileUtils.ts`, `ExperienceIntelligence.ts`, `RecommendationStrategyResolver.ts`, `RecommendationExperiments.ts`, `RecommendationEngine.ts`, `WeightedRecommendationScorer.ts`, `CustomerPreferenceSummary.ts`, `buildRecommendationContext.ts`, `RecommendationConfidence.ts`; binary routing gap confirmed; passive customer routing to personalised on partial profile identified
+- Implementation — two application files modified; `ProfileRichness` type and `getProfileRichness()` function added to `profileUtils.ts`; `ExperienceIntelligence.resolveStrategy()` updated to use `getProfileRichness()` via `intentStrategy` local variable; both routing call-sites (default and concierge) updated in a single pass
+- Build verification — Pass, TypeScript clean, 0 warnings, 247 routes
+
+**Tasks Started:**
+- None — EP90-P1 closed
+
+**Build Result:** Pass — TypeScript clean, 0 warnings, 247 routes (unchanged)
+
+**Files Changed:**
+- `app/lib/customer/profile/profileUtils.ts` — `ProfileRichness` type exported; `getProfileRichness()` function implemented; `hasMeaningfulProfile()` preserved unchanged
+- `app/lib/intelligence/ExperienceIntelligence.ts` — `getProfileRichness` added to import; `resolveStrategy()` updated: `getProfileRichness(profile)` replaces both `hasMeaningfulProfile()` routing calls; `intentStrategy` local variable derives "personalised" or "discovery" from richness tier
+
+**Handoff:**
+- EP90-P1 complete. Profile Richness is now the routing signal for strategy selection. Cold and passive customers route to discovery. Emerging and rich customers route to personalised. RecommendationEngine, RecommendationPipeline, RecommendationConfidence, LearningEngine, and commerce are unchanged.
+- Awaiting Engineering Lead direction for next programme.
+
+**Open Questions Carried Forward:**
+- PR1-P2 (MiniCart Learning Signal Gap) — `quickAddFromSection` still missing `recordCart()` call; not addressed
+- PR1-P3 (Signal Calibration Accuracy) — `fragrance_purchase` still marked dead in `SignalCalibration.ts`; stale since EP30-P1; not addressed
+- PR1-P4 (RecommendationEngine Module Consolidation) — duplicate `buildIndex` and `buildKnowledgeSummary` calls; low priority; not addressed
+- EP80-P3 (analyzeResult() deduplication) — `admin/intelligence/page.tsx` still calls `buildExplanation()` per recommendation; 30 redundant `calculateConfidence()` calls per admin observatory load; EP80-P1 confidence fields make this redundant; not addressed
+
+---
+
 ### 2026-08-03 — EP80-P1 — Program Implementation
 
 **Participants:** Project Owner / Claude (Implementation Engineer)

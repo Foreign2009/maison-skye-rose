@@ -19,48 +19,49 @@ At the start of a new Claude Code session:
 ## Current Task
 
 **Status:** Complete
-**Program:** EP80-P1 — Experience Release 8.0 / Recommendation Confidence
+**Program:** EP90-P1 — Experience Release 9.0 / Adaptive Recommendation Strategy
 
 **Goal:**
-Promote `RecommendationConfidence` into the production recommendation output model. Every `Recommendation` produced by the pipeline now carries a first-class `confidence` field computed by `calculateConfidence()`. No customer-facing UI was changed.
+Introduce `ProfileRichness` as a 4-tier customer profile classification and replace the binary `hasMeaningfulProfile()` routing gate in `ExperienceIntelligence` with a richness-aware routing decision. Passive-browsing customers (recentlyViewed-only) now route to discovery. Customers with explicit intent (quiz, saves, learning signals) continue to route to personalised.
 
 **Acceptance Criteria:**
-- [x] `Recommendation` interface carries `readonly confidence: RecommendationConfidence`
-- [x] `RecommendationPipeline` imports `calculateConfidence` and calls it during the assign stage
-- [x] Confidence computed once per recommendation, using the same candidate and context already in scope
-- [x] Recommendation ordering unchanged
-- [x] Recommendation scores unchanged
-- [x] Recommendation explanations unchanged
-- [x] Cold-start recommendations carry LOW confidence internally
-- [x] Rich customer profiles carry MEDIUM/HIGH confidence internally
-- [x] Customer-facing UI unchanged (no consumer reads `rec.confidence` yet)
-- [x] Admin observatory continues functioning (`buildExplanation()` path untouched)
-- [x] RecommendationEngine, LearningEngine, RecommendationReasonBuilder unchanged
-- [x] RecommendationConfidence.ts unchanged
+- [x] `ProfileRichness` type exported from `profileUtils.ts` with 4 tiers: "cold" | "passive" | "emerging" | "rich"
+- [x] `getProfileRichness()` implemented using `profile.signals.length`, `savedSlugs`, `lastQuizSlugs`, `recentlyViewed`
+- [x] Tier boundary for "rich" at `signals >= 5` — aligns with HIGH confidence base in `RecommendationConfidence`
+- [x] Cold-start customers route to discovery
+- [x] Recently-viewed-only (passive) customers route to discovery
+- [x] Customers with favourites (savedSlugs > 0) route to personalised
+- [x] Customers with quiz history (lastQuizSlugs > 0) route to personalised
+- [x] Customers with learning signals (signals >= 1) route to personalised
+- [x] Product ("similar") routing unchanged
+- [x] Compare ("complementary") routing unchanged
+- [x] Discover surface routing unchanged (always discovery)
+- [x] `hasMeaningfulProfile()` preserved — still used by `buildSeededProfile()` and `buildRecommendationContext()`
+- [x] Recommendation scoring, confidence, and explanations unchanged
+- [x] RecommendationEngine, RecommendationPipeline, LearningEngine, commerce unchanged
 - [x] Build passes — TypeScript clean, 0 warnings, 247 routes
 
 **Why This Task:**
-Repository inspection (EP80-P1) confirmed that `calculateConfidence()` is fully implemented and already used in the admin observatory, but never called during the production pipeline run. `Recommendation` had no confidence field, making the signal invisible to all downstream consumers. This programme promotes confidence from an admin-only diagnostic into the production recommendation model so that future programmes (confidence-adaptive UI, confidence-weighted analytics) can build on it without further structural work.
+Inspection (EP90-P1) confirmed that `hasMeaningfulProfile()` is a binary gate — any customer with a single viewed product is routed to personalised strategy identically to a customer with 50 learning signals. Passive customers (recentlyViewed-only) have only partial family preferences (no occasion, season, or gender data) from their viewed items. The personalised strategy's 0.50 profile weight is wasteful at this richness level. Discovery's 0.40 exploration weight produces more appropriate, diverse results for customers still in browsing mode.
 
 ---
 
 ## Files Involved
 
 **Files modified:**
-- `app/lib/customer/recommendations/Recommendation.ts` — `readonly confidence: RecommendationConfidence` added to `Recommendation` interface; `RecommendationConfidence` imported
-- `app/lib/customer/recommendations/RecommendationPipeline.ts` — `calculateConfidence` imported from `./RecommendationConfidence`; `confidence: calculateConfidence(candidate, context)` added to assign step
+- `app/lib/customer/profile/profileUtils.ts` — `ProfileRichness` type exported; `getProfileRichness()` implemented; `hasMeaningfulProfile()` preserved unchanged
+- `app/lib/intelligence/ExperienceIntelligence.ts` — `getProfileRichness` added to import; `resolveStrategy()` updated: `getProfileRichness(profile)` replaces both `hasMeaningfulProfile()` routing calls; `intentStrategy` local variable derives "personalised" or "discovery" from richness tier
 
 **Files NOT modified:**
-- `app/lib/customer/recommendations/RecommendationConfidence.ts` — function signature and logic correct; no change
-- `app/lib/customer/recommendations/RecommendationContext.ts` — `profile: UnifiedCustomerProfile` with `signals[]` already available; no change
 - `app/lib/customer/recommendations/RecommendationEngine.ts` — unchanged
-- `app/lib/customer/recommendations/RecommendationReasonBuilder.ts` — `buildExplanation()` continues computing confidence via its own call; no change
-- `app/lib/customer/recommendations/RecommendationResult.ts` — `recommendations: readonly Recommendation[]` inherits the new field automatically; no change
+- `app/lib/customer/recommendations/RecommendationPipeline.ts` — unchanged
+- `app/lib/customer/recommendations/RecommendationConfidence.ts` — unchanged
+- `app/lib/customer/recommendations/RecommendationContext.ts` — unchanged
 - `app/lib/customer/recommendations/WeightedRecommendationScorer.ts` — unchanged
 - `app/lib/customer/learning/LearningEngine.ts` — unchanged
-- `app/lib/customer/recommendations/RecommendationScore.ts` — unchanged
-- All UI components — unchanged
+- `app/lib/customer/recommendations/RecommendationReasonBuilder.ts` — unchanged
 - All analytics components — unchanged
+- All UI components — unchanged
 - Commerce platform — unchanged
 
 ---
@@ -73,9 +74,10 @@ _Task closed._
 
 ## Context Notes
 
-**Last completed:** EP80-P1 Recommendation Confidence (2026-08-03)
+**Last completed:** EP90-P1 Adaptive Recommendation Strategy (2026-08-03)
 
 Recent completed programs (newest first):
+- EP90-P1 Adaptive Recommendation Strategy (2026-08-03) — ProfileRichness type introduced; getProfileRichness() replaces hasMeaningfulProfile() in ExperienceIntelligence routing; passive customers route to discovery; emerging/rich customers route to personalised; RecommendationEngine/RecommendationPipeline/RecommendationConfidence/LearningEngine/commerce/UI untouched; build passes; 247 routes
 - EP80-P1 Recommendation Confidence (2026-08-03) — Recommendation now carries readonly confidence: RecommendationConfidence; RecommendationPipeline calls calculateConfidence() during assign stage; RecommendationEngine/LearningEngine/RecommendationReasonBuilder/commerce/UI untouched; build passes; 247 routes
 - EP70-P1 Negative Preference Scoring (2026-08-03) — avoidedFamilies now propagates through LearnedPreferences into PreferenceProfile; scoreProfile() applies bounded avoidance penalty (−0.30/match, clamped [0,1]); RecommendationEngine/LearningEngine/RecommendationReasonBuilder/commerce untouched; build passes; 247 routes
 - EP60-P2 Complete Recommendation Impression Coverage (2026-08-03) — six surfaces now emit recommendation_set_shown; CTR/save rate/ATC rate computable for all strategies; build passes; 247 routes

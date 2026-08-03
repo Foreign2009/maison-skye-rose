@@ -31,11 +31,33 @@ Each program has a defined scope, ordered task list, and a clear close condition
 
 ## Active Program
 
-None — EP80-P1 Recommendation Confidence closed 2026-08-03 (Recommendation now carries readonly confidence: RecommendationConfidence; RecommendationPipeline calls calculateConfidence() during assign stage; RecommendationEngine, LearningEngine, RecommendationReasonBuilder, commerce, and all UI untouched; build passes). Awaiting Engineering Lead direction for next sprint.
+None — EP90-P1 Adaptive Recommendation Strategy closed 2026-08-03 (ProfileRichness type introduced; getProfileRichness() replaces hasMeaningfulProfile() in ExperienceIntelligence routing; passive customers (recentlyViewed-only) now route to discovery; emerging/rich customers continue to route to personalised; RecommendationEngine, RecommendationPipeline, RecommendationConfidence, LearningEngine, commerce, and all UI untouched; build passes). Awaiting Engineering Lead direction for next sprint.
 
 ---
 
 ## Completed Programs
+
+### EP90-P1 — Experience Release 9.0 / Adaptive Recommendation Strategy
+
+**Objective:** Introduce `ProfileRichness` as a 4-tier customer profile classification and replace the binary `hasMeaningfulProfile()` routing gate in `ExperienceIntelligence` with a richness-aware routing decision. Passive-browsing customers now route to discovery strategy; customers with explicit intent (quiz, saves, learning signals) continue to route to personalised.
+**Scope:** `profileUtils.ts` (add `ProfileRichness` type and `getProfileRichness()` function), `ExperienceIntelligence.ts` (import `getProfileRichness`; update `resolveStrategy()` default and concierge cases). No engine, pipeline, confidence, learning, or UI files modified.
+**Lead:** Project Owner + Claude (Implementation Engineer)
+**Opened:** 2026-08-03
+**Closed:** 2026-08-03
+
+**Task List:**
+
+| # | Gate | Task | Status |
+|---|---|---|---|
+| 1 | G1 | Repository Inspection — strategy routing traced through 9 files; binary `hasMeaningfulProfile()` gate confirmed; passive customer routing gap identified; `calculateConfidence()` tier boundaries (signals >= 5) identified as natural richness anchor | Complete |
+| 2 | G2 | Implementation — `ProfileRichness` type and `getProfileRichness()` added to `profileUtils.ts`; `ExperienceIntelligence.resolveStrategy()` updated to derive `intentStrategy` from `getProfileRichness()`; both routing call-sites updated | Complete |
+| 3 | G3 | Build verification — Pass, TypeScript clean, 0 warnings, 247 routes | Complete |
+
+**Close Condition:** Cold and passive customers route to discovery. Emerging and rich customers route to personalised. Recommendation scoring, confidence, explanations, and ordering are unchanged. RecommendationEngine, RecommendationPipeline, RecommendationConfidence, LearningEngine, and commerce behaviour unchanged. Build passes.
+
+**Outcome:** Strategy routing now reflects the quality of customer intelligence rather than a binary presence/absence check. A customer who has only browsed (passive) receives exploration-weighted discovery recommendations. A customer who has expressed intent via quiz, saves, or learned signals (emerging/rich) continues to receive profile-weighted personalised recommendations. `ProfileRichness` is now available as a reusable type for future confidence-adaptive UI and analytics programmes.
+
+---
 
 ### EP80-P1 — Experience Release 8.0 / Recommendation Confidence
 
