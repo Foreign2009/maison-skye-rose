@@ -31,11 +31,34 @@ Each program has a defined scope, ordered task list, and a clear close condition
 
 ## Active Program
 
-None — EP30-P1 Purchase Intelligence Bridge closed 2026-08-02 (fragrance_purchase signals now emitted from payment-success page; PurchaseInterpreter implemented; purchase intelligence flows into recommendation scoring). Awaiting Engineering Lead direction for next sprint.
+None — EP40-P1 Personalized Recommendation Experience closed 2026-08-03 (product page and compare page recommendation routing corrected; "product" and "compare" experience types now correctly invoked; similar and complementary strategies active). Awaiting Engineering Lead direction for next sprint.
 
 ---
 
 ## Completed Programs
+
+### EP40-P1 — Experience Release 4.0 / Personalized Recommendation Experience
+
+**Objective:** Correct product page and compare page recommendation routing so that each surface invokes the contextually appropriate ExperienceIntelligence strategy instead of the generic "shop" fallback.
+**Scope:** `app/components/ProductIntelligenceSection.tsx` (line 27: "shop" → "product" with currentSlug), `app/components/CompareIntelligenceSection.tsx` (line 27: "shop" → "compare" with currentSlug: excludeSlugs[0]). No engine files modified.
+**Lead:** Project Owner + Claude (Implementation Engineer)
+**Opened:** 2026-08-03
+**Closed:** 2026-08-03
+
+**Task List:**
+
+| # | Gate | Task | Status |
+|---|---|---|---|
+| 1 | G1 | Repository Inspection — full surface audit: all getContextualRecommendations call sites, ExperienceIntelligence strategy routing, ProductIntelligenceSection, CompareIntelligenceSection, CartRecommendationStrategy | Complete |
+| 2 | G2 | Engineering Assessment — two routing gaps confirmed; product page using "shop" instead of "product"; compare page using "shop" instead of "compare"; currentSlug and excludeSlugs already available at call sites | Complete |
+| 3 | G3 | Implementation — 2 files, 2 lines; routing corrected; no engine changes | Complete |
+| 4 | G4 | Build verification — Pass, TypeScript clean, 0 warnings, 247 routes | Complete |
+
+**Close Condition:** Product page routes through "product" experience (similar strategy, seeded by currentSlug). Compare page routes through "compare" experience (complementary strategy, seeded by excludeSlugs[0]). ExperienceIntelligence, RecommendationEngine, and LearningEngine untouched. Build passes.
+
+**Outcome:** Product page now shows fragrances similar to the one being viewed, not a repeat of the shop page. Compare post-decision section now shows fragrances that complement the primary candidate being evaluated. Analytics now correctly report "similar" and "complementary" strategies for these surfaces. All other recommendation surfaces unchanged. 2 lines of code, maximum strategic impact.
+
+---
 
 ### EP20-P4 — Experience Release 2.0 / Recommendation Bridge
 

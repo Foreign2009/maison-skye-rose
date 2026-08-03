@@ -39,6 +39,40 @@ Never edit or delete past entries.
 
 ## Log
 
+### 2026-08-03 — EP40-P1 — Program Implementation
+
+**Participants:** Project Owner / Claude (Implementation Engineer)
+**Program:** EP40-P1 — Experience Release 4.0 / Personalized Recommendation Experience
+
+**Decisions Made:**
+- Routing correction only — no engine changes. ExperienceIntelligence already had full "product" (similar) and "compare" (complementary) strategy implementations; only the component call sites were wrong.
+- `excludeSlugs[0]` selected as currentSlug seed for compare experience — first compared fragrance is the primary candidate; reasonable heuristic with no downside vs. leaving the strategy unwired.
+- MiniCart gap (anonymous profile in CartRecommendationStrategy) deferred to a separate episode — separate pipeline architecture, separate scope.
+
+**Tasks Completed:**
+- Repository inspection — all getContextualRecommendations call sites audited; 13 surfaces confirmed correctly wired; 2 routing gaps identified; 1 deferred gap (MiniCart)
+- Implementation — ProductIntelligenceSection.tsx line 27 and CompareIntelligenceSection.tsx line 27 corrected
+- Build verification — Pass, TypeScript clean, 0 warnings, 247 routes
+- Documentation — CURRENT_TASK.md, SPRINT.md, ENGINEERING_LOG.md updated
+
+**Tasks Started:**
+- None — EP40-P1 closed
+
+**Build Result:** Pass — TypeScript clean, 0 warnings, 247 routes
+
+**Files Changed:**
+- `app/components/ProductIntelligenceSection.tsx` — line 27: `"shop"` → `"product"` with `{ currentSlug }`
+- `app/components/CompareIntelligenceSection.tsx` — line 27: `"shop"` → `"compare"` with `{ currentSlug: excludeSlugs[0] }`
+
+**Handoff:**
+- EP40-P1 complete. Customer journey now correctly routes each surface through its intended ExperienceIntelligence strategy. Product page shows similar fragrances; compare page shows complementary fragrances.
+- Next candidate: EP40-P2 — MiniCart Customer Intelligence (thread real profile through CartRecommendationStrategy).
+
+**Open Questions Carried Forward:**
+- MiniCart: completeYourCollection currently uses anonymousProfile() — deferred to EP40-P2.
+
+---
+
 ### 2026-08-02 — EP30-P1 — Program Implementation
 
 **Participants:** Project Owner / Claude (Implementation Engineer)

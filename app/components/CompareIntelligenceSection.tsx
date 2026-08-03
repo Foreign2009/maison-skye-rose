@@ -24,7 +24,7 @@ export default function CompareIntelligenceSection({ excludeSlugs }: CompareInte
     };
     if (!profile) return empty;
 
-    const result = getContextualRecommendations("shop", profile);
+    const result = getContextualRecommendations("compare", profile, { currentSlug: excludeSlugs[0] });
     if (!result.success || result.recommendations.length === 0) return empty;
 
     const excluded = new Set(excludeSlugs);

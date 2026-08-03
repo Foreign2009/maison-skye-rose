@@ -18,41 +18,51 @@ At the start of a new Claude Code session:
 
 ## Current Task
 
-**Status:** No active task
-**Program:** None — EP30-P1 Purchase Intelligence Bridge closed 2026-08-02
+**Status:** Complete
+**Program:** EP40-P1 — Experience Release 4.0 / Personalized Recommendation Experience
 
 **Goal:**
-_No active task. Awaiting Engineering Lead direction for next sprint._
+Correct product page and compare page recommendation routing. Both surfaces were calling `getContextualRecommendations("shop", profile)` instead of their contextually correct experience types. ExperienceIntelligence already had full "product" (similar) and "compare" (complementary) strategy support — only the call sites required correction.
 
 **Acceptance Criteria:**
-- [ ] _To be defined when next task is opened_
+- [x] Product page routes through `"product"` experience → similar strategy
+- [x] Compare page routes through `"compare"` experience → complementary strategy
+- [x] RecommendationEngine unchanged
+- [x] ExperienceIntelligence unchanged
+- [x] LearningEngine unchanged
+- [x] Build passes — TypeScript clean, 0 warnings, 247 routes
 
 **Why This Task:**
-_N/A_
+Repository inspection confirmed two UI surfaces bypassing the correct ExperienceIntelligence routing. Product page was showing generic personalised/discovery output identical to the shop page. Compare page was showing the same instead of complementary recommendations. Both `currentSlug` and `excludeSlugs` were already available at the call sites.
 
 ---
 
 ## Files Involved
 
-**Files to modify (approved):**
-- _None — no active task_
+**Files modified:**
+- `app/components/ProductIntelligenceSection.tsx` — line 27: `"shop"` → `"product"` with `{ currentSlug }`
+- `app/components/CompareIntelligenceSection.tsx` — line 27: `"shop"` → `"compare"` with `{ currentSlug: excludeSlugs[0] }`
 
-**Files NOT to modify:**
-- _N/A_
+**Files NOT modified:**
+- `app/lib/intelligence/ExperienceIntelligence.ts` — already correct
+- `app/components/ProductDetail.tsx` — already passes currentSlug correctly
+- `app/compare/page.tsx` — already passes excludeSlugs correctly
+- All RecommendationEngine, LearningEngine, CustomerProfileSync files
 
 ---
 
 ## Constraints
 
-_None active._
+_Task closed._
 
 ---
 
 ## Context Notes
 
-**Last completed:** EP30-P1 Purchase Intelligence Bridge (2026-08-02)
+**Last completed:** EP40-P1 Personalized Recommendation Experience (2026-08-03)
 
 Recent completed programs (newest first):
+- EP40-P1 Personalized Recommendation Experience (2026-08-03) — product page routed through "product" experience (similar strategy); compare page routed through "compare" experience (complementary strategy); 2 files, 2 lines; RecommendationEngine/ExperienceIntelligence/LearningEngine untouched; build passes; 247 routes
 - EP30-P1 Purchase Intelligence Bridge (2026-08-02) — fragrance_purchase signals emitted on confirmed orders; PurchaseInterpreter implemented; purchase intelligence flows into recommendation scoring; build passes; 247 routes
 - EP20-P4 Recommendation Bridge (2026-08-02) — LearningEngine integrated at RecommendationEngine orchestration layer; concierge/search/discovery preferences now influence scoring; pipeline unchanged; build passes; 247 routes
 - EP20-P3 Confidence Compositing (2026-08-02) — createCompositingCalculator + createAccumulatedResolver introduced; LearningEngine default wiring updated; build passes; 247 routes
@@ -81,7 +91,7 @@ _N/A_
 
 ## Build Result
 
-**Last build:** 2026-08-02 — Pass. Zero TypeScript errors. Zero warnings. 247 routes. (EP30-P1)
+**Last build:** 2026-08-03 — Pass. Zero TypeScript errors. Zero warnings. 247 routes. (EP40-P1)
 
 ---
 
