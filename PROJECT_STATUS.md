@@ -56,11 +56,13 @@ Verify: `npm run build`
 | EP0 | EP0-P1 | The Founder's Letter & The Skye & Rose Covenant | Complete — 2026-08-04 |
 | EP0 | EP0-P2 | The Constitution of Maison Skye & Rose | Complete — 2026-08-04 |
 | EP0 | EP0-P3 | The Skye & Rose Stewardship & Architecture Charter | Complete — 2026-08-04 |
+| EP1 | EP1-P1 | The Skye & Rose Experience Blueprint | Complete — 2026-08-04 |
 
 `FOUNDATIONS/00_FOUNDERS_LETTER.md` — The permanent founder's letter to Skye, Rose, future employees, and future stewards. *Why we began.*
 `FOUNDATIONS/01_SKYE_AND_ROSE_COVENANT.md` — The institutional promise: to customers, products, technology, and future generations. *What we promise.*
 `FOUNDATIONS/02_CONSTITUTION.md` — Twelve articles of permanent institutional belief, from The Institution to Legacy; closes with The Golden Rule. *What we believe.*
 `FOUNDATIONS/03_STEWARDSHIP_AND_ARCHITECTURE_CHARTER.md` — The operational expression of the Constitution: Builder's Oath, ten Principles, the Skye & Rose Standard, Engineering Doctrine, AI Stewardship Principles, and the Definition of Done. *How we build everything.*
+`FOUNDATIONS/04_EXPERIENCE_BLUEPRINT.md` — The emotional operating system of the institution: who our guest is, the ten-stage emotional journey, every touchpoint, brand personality, voice, language principles, AI experience, luxury and confidence philosophies, and the Closing Promise. *How every guest should feel.*
 
 ---
 

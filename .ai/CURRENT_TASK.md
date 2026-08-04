@@ -19,26 +19,31 @@ At the start of a new Claude Code session:
 ## Current Task
 
 **Status:** Complete
-**Program:** EP0-P3 — Foundation Programme / The Skye & Rose Stewardship & Architecture Charter
+**Program:** EP1-P1 — Experience Programme / The Skye & Rose Experience Blueprint
 
 **Goal:**
-Establish the operational expression of the Constitution: a Charter that translates institutional beliefs into building practice for every future engineer, designer, perfumer, packaging designer, customer experience designer, operations team, AI system, and generation of steward.
+Establish the emotional operating system of Maison Skye & Rose: a permanent Blueprint that ensures every guest, in every touchpoint, category, and generation, feels welcomed, confident, and belonging.
 
 **Acceptance Criteria:**
-- [x] `FOUNDATIONS/03_STEWARDSHIP_AND_ARCHITECTURE_CHARTER.md` created
-- [x] Builder's Oath written — takes personal responsibility for trust, customer experience, institutional reputation, and the standard of the names
-- [x] Ten Principles written — each traceable to Constitutional Articles; applicable across all builder disciplines
-- [x] Skye & Rose Standard written — six questions; "No" returns the work for refinement
-- [x] Engineering Doctrine written — Foundation Alignment, Repository Before Assumption, Plan Before Build, Evidence Before Implementation, Knowledge-First Architecture, Explainable Systems, Maintainability Over Cleverness, Prefer Reversibility, Build Verification
-- [x] AI Stewardship Principles written — ten permanent principles; no manipulation, no pretended certainty, explainability as deployment requirement
-- [x] Definition of Done written — six criteria in order; technical excellence last
-- [x] Closing Commitment written — Charter most necessary when building is hardest
-- [x] All three previous foundational documents NOT modified
-- [x] PROJECT_STATUS.md updated with EP0-P3 entry
-- [x] Self-review performed against all six quality criteria; all pass
+- [x] `FOUNDATIONS/04_EXPERIENCE_BLUEPRINT.md` created
+- [x] "Guest" established as the primary concept, replacing "customer" — with philosophical grounding
+- [x] Ten-stage emotional journey written: Curiosity → Welcome → Discovery → Understanding → Confidence → Belonging → Trust → Loyalty → Pride → Sharing
+- [x] Touchpoint experience written for every guest contact point: Discovery through Long-term Relationship
+- [x] Brand Personality established — seven permanent traits; five things the institution never feels
+- [x] Brand Voice and Language Principles written — preferred concepts, words/patterns to avoid, six specific language principles
+- [x] Luxury Philosophy written — luxury defined by care and craftsmanship, not price
+- [x] Confidence Philosophy written — confidence as the institution's primary product; fragrance as one expression
+- [x] Belonging section written — the emotional resolution of Accessible Luxury
+- [x] Knowledge Experience written — education as gift, not sales tool
+- [x] AI Experience written — AI as host, not salesperson; five things AI must do, five things AI must never do
+- [x] Digital, Retail, and Packaging experiences written
+- [x] Future Product Experience and Institution Growth written for permanence across category expansion
+- [x] Closing Promise returns to the Founder's Letter's origin moment
+- [x] All four previous foundational documents NOT modified
+- [x] Self-review performed against all eight quality criteria; all pass
 
 **Why This Task:**
-The Constitution states what the institution believes. Without a Charter, those beliefs remain abstract — inspiring but not actionable. The Charter bridges belief and practice, giving every builder — in any discipline, in any generation — a permanent operational standard they can apply to their work.
+An institution can have perfect products and perfect values and still fail its guests if it does not know how it wants them to feel. The Experience Blueprint is the translator between what the institution believes and what guests experience. Without it, the philosophical standards of the Foundation Programme cannot be consistently expressed in practice.
 
 ---
 

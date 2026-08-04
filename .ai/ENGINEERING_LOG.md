@@ -39,6 +39,47 @@ Never edit or delete past entries.
 
 ## Log
 
+### 2026-08-04 — EP1-P1 — Experience Programme / The Skye & Rose Experience Blueprint
+
+**Participants:** Project Owner / Claude (Implementation Engineer)
+**Program:** EP1-P1 — Experience Programme / Experience Blueprint
+
+**Decisions Made:**
+- "Guest" adopted as the permanent primary term for people who interact with the institution — not "customer." A guest is welcomed, cared for, educated, and becomes part of the journey. A customer completes a transaction. The philosophical distinction shapes every section of the document.
+- Ten-stage emotional journey established: Curiosity → Welcome → Discovery → Understanding → Confidence → Belonging → Trust → Loyalty → Pride → Sharing. Each stage describes the guest's emotional state, not an interface state.
+- Brand Personality written as seven permanent traits the institution always feels, and five things it never feels. Both sides are necessary — defining what the institution is not is as important as defining what it is.
+- Luxury Philosophy operationalises Article V (Accessible Luxury) in guest experience terms: luxury defined by care and craftsmanship, not price. Premium tiers expand experience without reducing accessibility.
+- Confidence Philosophy operationalises Article IV (Confidence): confidence is the institution's primary product; fragrance, knowledge, service, and technology are all expressions of it.
+- AI Experience written as "host, not salesperson" — five things AI must do (welcome, understand, teach, guide, celebrate), five things it must never do (manufacture urgency, pretend certainty, exploit preferences, make guests feel sold to, present recommendations without reasoning).
+- Closing Promise returns to the Founder's Letter's origin moment: "one person noticed that confidence was being priced out of reach, and decided that it shouldn't be."
+- All four previous foundational documents unmodified.
+- Self-review performed against all eight quality criteria; all passed.
+
+**Tasks Completed:**
+- Created `FOUNDATIONS/04_EXPERIENCE_BLUEPRINT.md`
+- Updated `PROJECT_STATUS.md` — EP1-P1 added; FOUNDATIONS section updated with five-document description
+- Updated `.ai/CURRENT_TASK.md` — EP1-P1 reflected
+- Updated `.ai/ENGINEERING_LOG.md`
+
+**Tasks Started:**
+- None
+
+**Build Result:** N/A — no source code modified
+
+**Files Changed:**
+- `FOUNDATIONS/04_EXPERIENCE_BLUEPRINT.md` (created)
+- `PROJECT_STATUS.md` (modified)
+- `.ai/CURRENT_TASK.md` (modified)
+- `.ai/ENGINEERING_LOG.md` (modified)
+
+**Handoff:**
+- EP1-P1 complete. Experience Programme opened. Five foundational documents now exist in permanent form at `FOUNDATIONS/`. The sequence — Letter → Covenant → Constitution → Charter → Blueprint — is complete.
+
+**Open Questions Carried Forward:**
+- None
+
+---
+
 ### 2026-08-04 — EP0-P3 — Foundation Programme / The Skye & Rose Stewardship & Architecture Charter
 
 **Participants:** Project Owner / Claude (Implementation Engineer)
