@@ -19,20 +19,22 @@ At the start of a new Claude Code session:
 ## Current Task
 
 **Status:** Complete
-**Program:** EP0-P1 — Foundation Programme / The Founder's Letter & The Skye & Rose Covenant
+**Program:** EP0-P2 — Foundation Programme / The Constitution of Maison Skye & Rose
 
 **Goal:**
-Create the permanent philosophical foundation of Maison Skye & Rose: a founder's letter and an institutional covenant.
+Establish the permanent beliefs of Maison Skye & Rose in constitutional form — the philosophical compass that every future engineering programme, product, AI capability, and generation of leadership will inherit.
 
 **Acceptance Criteria:**
-- [x] `FOUNDATIONS/` directory created
-- [x] `FOUNDATIONS/00_FOUNDERS_LETTER.md` — Personal letter from the founder to Skye, Rose, future employees, and future stewards; covers origin, purpose, the meaning of the names, stewardship, and trust
-- [x] `FOUNDATIONS/01_SKYE_AND_ROSE_COVENANT.md` — Institutional promise covering customers, products, technology, future stewards, and the standard of the names
-- [x] PROJECT_STATUS.md updated with Foundation Programme section
+- [x] `FOUNDATIONS/02_CONSTITUTION.md` created
+- [x] 12 articles written — Preamble, Articles I–XII, Closing Declaration, The Golden Rule
+- [x] Constitution extends the Founder's Letter and reinforces the Covenant without duplicating either
+- [x] Every article passes the 30-year test, the stewardship test, and the engineering decision traceability test
+- [x] `FOUNDATIONS/00_FOUNDERS_LETTER.md` and `FOUNDATIONS/01_SKYE_AND_ROSE_COVENANT.md` NOT modified
+- [x] PROJECT_STATUS.md updated with EP0-P2 entry
 - [x] No architecture, business logic, or software modified
 
 **Why This Task:**
-Every engineering decision, product decision, and customer experience decision made at Maison Skye & Rose will eventually be tested against values. These documents establish what those values are, in permanent form, before the institution grows too large to define them.
+The Founder's Letter explains why the institution began. The Covenant states what it promises. The Constitution states what it believes — the permanent convictions that make the origin and the promises coherent. Without it, the values of the institution remain implicit; with it, they are stated clearly enough to survive every future change in product, technology, and leadership.
 
 ---
 

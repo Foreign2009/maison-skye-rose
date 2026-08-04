@@ -39,6 +39,45 @@ Never edit or delete past entries.
 
 ## Log
 
+### 2026-08-04 — EP0-P2 — Foundation Programme / The Constitution of Maison Skye & Rose
+
+**Participants:** Project Owner / Claude (Implementation Engineer)
+**Program:** EP0-P2 — Foundation Programme / Constitution of Maison Skye & Rose
+
+**Decisions Made:**
+- Constitution placed as the third foundational document, completing the trilogy: Letter (why we began) → Covenant (what we promise) → Constitution (what we believe)
+- Twelve articles chosen to cover the full range of institutional belief: The Institution, The Names, The Customer, Confidence, Accessible Luxury, Craftsmanship, Knowledge, Technology, Stewardship, Growth, Decisions, Legacy
+- Article XI (Decisions) explicitly codifies the value-first decision order specified in the engineering brief — five questions that must be answered before commercial or technical considerations
+- Article VII (Knowledge) codifies "knowledge precedes intelligence, truth precedes automation" — the belief governing all future AI and data model work
+- The Golden Rule was placed as a standalone closing clause: "No opportunity is valuable enough to justify weakening the trust placed in the Skye & Rose name."
+- Self-review performed against all five quality criteria before committing; all criteria passed
+- `00_FOUNDERS_LETTER.md` and `01_SKYE_AND_ROSE_COVENANT.md` not modified
+
+**Tasks Completed:**
+- Created `FOUNDATIONS/02_CONSTITUTION.md` — Preamble + Articles I–XII + Closing Declaration + The Golden Rule
+- Updated `PROJECT_STATUS.md` — EP0-P2 added to Foundation Programme table; FOUNDATIONS section updated with three-document descriptions
+- Updated `.ai/CURRENT_TASK.md` — EP0-P2 reflected
+- Updated `.ai/ENGINEERING_LOG.md`
+
+**Tasks Started:**
+- None
+
+**Build Result:** N/A — no source code modified
+
+**Files Changed:**
+- `FOUNDATIONS/02_CONSTITUTION.md` (created)
+- `PROJECT_STATUS.md` (modified — EP0-P2 added to Foundation Programme section)
+- `.ai/CURRENT_TASK.md` (modified)
+- `.ai/ENGINEERING_LOG.md` (modified)
+
+**Handoff:**
+- Foundation Programme EP0-P2 complete. The three foundational documents are established in permanent form. No further action required unless the Project Owner extends the Foundation Programme.
+
+**Open Questions Carried Forward:**
+- None
+
+---
+
 ### 2026-08-04 — EP0-P1 — Foundation Programme / The Founder's Letter & The Skye & Rose Covenant
 
 **Participants:** Project Owner / Claude (Implementation Engineer)
