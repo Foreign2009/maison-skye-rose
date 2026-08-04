@@ -39,6 +39,47 @@ Never edit or delete past entries.
 
 ## Log
 
+### 2026-08-04 — EP0-P3 — Foundation Programme / The Skye & Rose Stewardship & Architecture Charter
+
+**Participants:** Project Owner / Claude (Implementation Engineer)
+**Program:** EP0-P3 — Foundation Programme / Stewardship & Architecture Charter
+
+**Decisions Made:**
+- Charter positioned as the operational expression of the Constitution — the fourth and final document of the Foundation Programme's sequence: Letter (why) → Covenant (promise) → Constitution (belief) → Charter (practice)
+- "Builder" defined broadly: anyone who leaves the institution different from how they found it — engineers, perfumers, packaging designers, warehouse teams, AI systems, future generations
+- Ten Principles written with explicit Constitutional Article lineage — each principle translates a constitutional belief into building guidance
+- Foundation Alignment format introduced: every engineering programme to open with a statement of which Constitutional Articles it supports (Article III, VII, VIII, etc.)
+- AI Stewardship Principles placed in Part V — ten permanent principles; closing with "explainability is a deployment requirement, not a feature"
+- Definition of Done places technical excellence last, deliberately — not least important, but the final requirement after values-based criteria are met
+- Closing Commitment addresses the hardest condition: the Charter is most necessary when following it is hardest
+- All three previous foundational documents unmodified
+- Self-review performed against all six quality criteria before writing documentation; all criteria passed
+
+**Tasks Completed:**
+- Created `FOUNDATIONS/03_STEWARDSHIP_AND_ARCHITECTURE_CHARTER.md`
+- Updated `PROJECT_STATUS.md` — EP0-P3 added; FOUNDATIONS section now lists all four documents with descriptions
+- Updated `.ai/CURRENT_TASK.md` — EP0-P3 reflected
+- Updated `.ai/ENGINEERING_LOG.md`
+
+**Tasks Started:**
+- None
+
+**Build Result:** N/A — no source code modified
+
+**Files Changed:**
+- `FOUNDATIONS/03_STEWARDSHIP_AND_ARCHITECTURE_CHARTER.md` (created)
+- `PROJECT_STATUS.md` (modified — EP0-P3 added to Foundation Programme section)
+- `.ai/CURRENT_TASK.md` (modified)
+- `.ai/ENGINEERING_LOG.md` (modified)
+
+**Handoff:**
+- Foundation Programme complete. All four foundational documents are established in permanent form at `FOUNDATIONS/`. The programme is closed.
+
+**Open Questions Carried Forward:**
+- None
+
+---
+
 ### 2026-08-04 — EP0-P2 — Foundation Programme / The Constitution of Maison Skye & Rose
 
 **Participants:** Project Owner / Claude (Implementation Engineer)

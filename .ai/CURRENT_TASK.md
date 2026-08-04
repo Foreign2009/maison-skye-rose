@@ -19,22 +19,26 @@ At the start of a new Claude Code session:
 ## Current Task
 
 **Status:** Complete
-**Program:** EP0-P2 — Foundation Programme / The Constitution of Maison Skye & Rose
+**Program:** EP0-P3 — Foundation Programme / The Skye & Rose Stewardship & Architecture Charter
 
 **Goal:**
-Establish the permanent beliefs of Maison Skye & Rose in constitutional form — the philosophical compass that every future engineering programme, product, AI capability, and generation of leadership will inherit.
+Establish the operational expression of the Constitution: a Charter that translates institutional beliefs into building practice for every future engineer, designer, perfumer, packaging designer, customer experience designer, operations team, AI system, and generation of steward.
 
 **Acceptance Criteria:**
-- [x] `FOUNDATIONS/02_CONSTITUTION.md` created
-- [x] 12 articles written — Preamble, Articles I–XII, Closing Declaration, The Golden Rule
-- [x] Constitution extends the Founder's Letter and reinforces the Covenant without duplicating either
-- [x] Every article passes the 30-year test, the stewardship test, and the engineering decision traceability test
-- [x] `FOUNDATIONS/00_FOUNDERS_LETTER.md` and `FOUNDATIONS/01_SKYE_AND_ROSE_COVENANT.md` NOT modified
-- [x] PROJECT_STATUS.md updated with EP0-P2 entry
-- [x] No architecture, business logic, or software modified
+- [x] `FOUNDATIONS/03_STEWARDSHIP_AND_ARCHITECTURE_CHARTER.md` created
+- [x] Builder's Oath written — takes personal responsibility for trust, customer experience, institutional reputation, and the standard of the names
+- [x] Ten Principles written — each traceable to Constitutional Articles; applicable across all builder disciplines
+- [x] Skye & Rose Standard written — six questions; "No" returns the work for refinement
+- [x] Engineering Doctrine written — Foundation Alignment, Repository Before Assumption, Plan Before Build, Evidence Before Implementation, Knowledge-First Architecture, Explainable Systems, Maintainability Over Cleverness, Prefer Reversibility, Build Verification
+- [x] AI Stewardship Principles written — ten permanent principles; no manipulation, no pretended certainty, explainability as deployment requirement
+- [x] Definition of Done written — six criteria in order; technical excellence last
+- [x] Closing Commitment written — Charter most necessary when building is hardest
+- [x] All three previous foundational documents NOT modified
+- [x] PROJECT_STATUS.md updated with EP0-P3 entry
+- [x] Self-review performed against all six quality criteria; all pass
 
 **Why This Task:**
-The Founder's Letter explains why the institution began. The Covenant states what it promises. The Constitution states what it believes — the permanent convictions that make the origin and the promises coherent. Without it, the values of the institution remain implicit; with it, they are stated clearly enough to survive every future change in product, technology, and leadership.
+The Constitution states what the institution believes. Without a Charter, those beliefs remain abstract — inspiring but not actionable. The Charter bridges belief and practice, giving every builder — in any discipline, in any generation — a permanent operational standard they can apply to their work.
 
 ---
 
