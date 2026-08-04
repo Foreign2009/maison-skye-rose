@@ -252,7 +252,6 @@ const QUICK_NAV_LINKS = [
   { href: "/admin/alerts",               label: "Alerts" },
   { href: "/admin/alert-center",         label: "Alert Center" },
   { href: "/admin/executive-digest",     label: "Executive Digest" },
-  { href: "/admin/executive-briefing",   label: "Executive Briefing" },
   { href: "/admin/executive-report",     label: "Executive Report" },
 ] as const;
 

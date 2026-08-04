@@ -19,23 +19,21 @@ At the start of a new Claude Code session:
 ## Current Task
 
 **Status:** Complete
-**Program:** EP100-P3A — Platform Consolidation / Extract Shared AdminNavigation Component
+**Program:** EP100-P3C — Platform Consolidation / Dashboard Consolidation Implementation
 
 **Goal:**
-Extract the identical nav block duplicated across 14 admin dashboard components into a single reusable `AdminNavigation` component. Replace all 14 inline nav blocks with `<AdminNavigation />`. Use `usePathname()` for active-state detection to eliminate per-component hardcoded active items.
+Remove confirmed duplicate dashboards identified in EP100-P3B. Migrate unique data (READINESS_LABELS) to surviving components, delete duplicate route directories and components, clean navigation references.
 
 **Acceptance Criteria:**
-- [x] `app/admin/components/AdminNavigation.tsx` created — `usePathname()`-driven, 14 nav items, correct active/inactive styles
-- [x] All 14 admin dashboard components updated — inline nav block replaced with `<AdminNavigation />`
-- [x] `import Link from "next/link"` removed from components where Link is no longer used directly
-- [x] `import Link from "next/link"` preserved in components that still use Link outside the nav
-- [x] `import AdminNavigation from "./components/AdminNavigation"` added to all 14 components
-- [x] No nav routes, labels, or ordering changed
-- [x] Active-state behaviour preserved (pathname-exact match)
-- [x] Build passes — TypeScript clean, 0 warnings, 189 routes
+- [x] READINESS_LABELS migrated from ExecutiveBriefingCenter into ExecutiveOperationsDigestDashboard; OperationalStatusSection updated to "Platform Readiness" + readiness text + severity badge
+- [x] `app/admin/executive-briefing/page.tsx` + `ExecutiveBriefingCenter.tsx` deleted
+- [x] `app/admin/executive-report-center/page.tsx` + `ExecutiveReportCenter.tsx` deleted
+- [x] AdminNavigation.tsx trimmed from 14 to 12 items — Executive Briefing + Executive Report Center removed
+- [x] ExecutiveReportDashboard.tsx QUICK_NAV_LINKS cleaned — `/admin/executive-briefing` removed
+- [x] Build passes — TypeScript clean, 0 warnings, 187 routes (was 189)
 
 **Why This Task:**
-All 14 admin dashboard components maintained identical ~30-line nav blocks with only the active item differing per component. The duplication created synchronisation risk — any future nav change required 14 identical edits. EP100-P3A extracts this into a single data-driven component as a prerequisite to EP100-P3 (dashboard merge) where components will be deleted rather than individually updated.
+EP100-P3B inspection confirmed `/admin/executive-briefing` and `/admin/executive-report-center` are data-identical duplicates of `/admin/executive-digest` and `/admin/executive-report` respectively. Retaining them created ongoing maintenance surface — any change to the digest or report pipeline required updating two dashboards.
 
 ---
 

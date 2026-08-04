@@ -61,6 +61,13 @@ const SEVERITY_LABELS: Record<AlertSeverity, string> = {
   "low":      "Low",
 };
 
+const READINESS_LABELS: Record<AlertSeverity, string> = {
+  "critical": "Attention Required",
+  "high":     "Review Required",
+  "medium":   "Monitoring",
+  "low":      "Ready",
+};
+
 // ── Section 1: Executive Headline ─────────────────────────────────────────────
 
 function ExecutiveHeadlineSection({ digest }: { digest: ExecutiveOperationsDigest }) {
@@ -160,23 +167,26 @@ function OperationalStatusSection({ digest }: { digest: ExecutiveOperationsDiges
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <Card>
-          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Overall Status</p>
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Platform Readiness</p>
+          <p className="mt-3 text-xl font-black text-[#4f4a52]">
+            {READINESS_LABELS[digest.overallStatus]}
+          </p>
           <div className="mt-3">
-            <span className={`rounded-full border px-4 py-1.5 text-xs font-bold uppercase tracking-wider ${SEVERITY_STYLES[digest.overallStatus]}`}>
+            <span className={`rounded-full border px-3 py-1 text-xs font-bold uppercase tracking-wider ${SEVERITY_STYLES[digest.overallStatus]}`}>
               {SEVERITY_LABELS[digest.overallStatus]}
             </span>
           </div>
         </Card>
         <Card>
-          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Analytics</p>
-          <p className="mt-3 text-sm font-bold text-[#4f4a52]">
+          <p className="text-[10px] uppercase tracking-widest text-[#a09aa6]">Intelligence Availability</p>
+          <p className="mt-3 text-xl font-black text-[#4f4a52]">
             {digest.analyticsAvailable ? "Connected" : "Offline"}
           </p>
-          {!digest.analyticsAvailable && (
-            <p className="mt-1 text-[10px] text-[#7b7480]">
-              Configure PostHog environment variables to enable live intelligence.
-            </p>
-          )}
+          <p className="mt-2 text-[10px] uppercase tracking-wider text-[#a09aa6]">
+            {digest.analyticsAvailable
+              ? "Live analytics connected"
+              : "Configure PostHog to enable"}
+          </p>
         </Card>
       </div>
     </section>
