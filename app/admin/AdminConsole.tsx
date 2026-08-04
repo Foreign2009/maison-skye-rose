@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useMemo, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ChevronRight, MessageCircle, Copy, Check, Printer } from "lucide-react";
 import {
@@ -12,6 +11,7 @@ import {
   type StatusHistoryEntry,
 } from "@/app/lib/orderStatus";
 import { logoutAction, updateStatusAction, updateNotesAction } from "./actions";
+import AdminNavigation from "./components/AdminNavigation";
 import type { DiscoveryAttribution } from "@/app/lib/discoveryAttribution";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
@@ -960,48 +960,7 @@ export default function AdminConsole({ initialOrders }: { initialOrders: OrderRo
                 Maison Operations
               </h1>
             </div>
-            <nav className="flex items-center gap-4">
-              <span className="text-xs font-bold text-white">Operations</span>
-              <Link href="/admin/briefing" className="text-xs text-white/60 transition hover:text-white">
-                Briefing
-              </Link>
-              <Link href="/admin/intelligence" className="text-xs text-white/60 transition hover:text-white">
-                Intelligence
-              </Link>
-              <Link href="/admin/recommendation-performance" className="text-xs text-white/60 transition hover:text-white">
-                Performance
-              </Link>
-              <Link href="/admin/customer-intelligence" className="text-xs text-white/60 transition hover:text-white">
-                Customer Intelligence
-              </Link>
-              <Link href="/admin/commerce-intelligence" className="text-xs text-white/60 transition hover:text-white">
-                Commerce Intelligence
-              </Link>
-              <Link href="/admin/executive-operations" className="text-xs text-white/60 transition hover:text-white">
-                Executive Operations
-              </Link>
-              <Link href="/admin/operations" className="text-xs text-white/60 transition hover:text-white">
-                Unified Operations
-              </Link>
-              <Link href="/admin/alerts" className="text-xs text-white/60 transition hover:text-white">
-                Alerts
-              </Link>
-              <Link href="/admin/alert-center" className="text-xs text-white/60 transition hover:text-white">
-                Alert Center
-              </Link>
-              <Link href="/admin/executive-digest" className="text-xs text-white/60 transition hover:text-white">
-                Executive Digest
-              </Link>
-              <Link href="/admin/executive-briefing" className="text-xs text-white/60 transition hover:text-white">
-                Executive Briefing
-              </Link>
-              <Link href="/admin/executive-report" className="text-xs text-white/60 transition hover:text-white">
-                Executive Report
-              </Link>
-              <Link href="/admin/executive-report-center" className="text-xs text-white/60 transition hover:text-white">
-                Executive Report Center
-              </Link>
-            </nav>
+            <AdminNavigation />
           </div>
           <form action={logoutAction}>
             <button type="submit" className="text-xs text-white/60 transition hover:text-white">

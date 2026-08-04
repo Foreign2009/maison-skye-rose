@@ -19,60 +19,51 @@ At the start of a new Claude Code session:
 ## Current Task
 
 **Status:** Complete
-**Program:** EP100-P2B — Platform Consolidation / Remove Terminated Executive Report Pipeline
+**Program:** EP100-P3A — Platform Consolidation / Extract Shared AdminNavigation Component
 
 **Goal:**
-Remove the terminated Executive Report pipeline from the repository. Delete all 58 terminated route directories, 58 terminated dashboard components, and 60 terminated lib/operations builder and types files. Remove navigation links referencing the terminated routes from all 14 live admin components.
+Extract the identical nav block duplicated across 14 admin dashboard components into a single reusable `AdminNavigation` component. Replace all 14 inline nav blocks with `<AdminNavigation />`. Use `usePathname()` for active-state detection to eliminate per-component hardcoded active items.
 
 **Acceptance Criteria:**
-- [x] All 58 terminated executive-report-* route directories deleted
-- [x] All 58 terminated dashboard components deleted
-- [x] All 60 terminated lib/operations builder and types files deleted (including orphaned Verification builder)
-- [x] All navigation links to terminated routes removed from 14 live admin components
-- [x] No live nav links reference deleted routes (verified: 0 remaining references)
-- [x] Live Executive Operations pipeline preserved (ExecutiveOperationsBuilder, ExecutiveBriefingBuilder, ExecutiveOperationsDigestBuilder, ExecutiveReportBuilder, OperationsAlertBuilder, OperationsAlertBriefingBuilder and all types preserved)
+- [x] `app/admin/components/AdminNavigation.tsx` created — `usePathname()`-driven, 14 nav items, correct active/inactive styles
+- [x] All 14 admin dashboard components updated — inline nav block replaced with `<AdminNavigation />`
+- [x] `import Link from "next/link"` removed from components where Link is no longer used directly
+- [x] `import Link from "next/link"` preserved in components that still use Link outside the nav
+- [x] `import AdminNavigation from "./components/AdminNavigation"` added to all 14 components
+- [x] No nav routes, labels, or ordering changed
+- [x] Active-state behaviour preserved (pathname-exact match)
 - [x] Build passes — TypeScript clean, 0 warnings, 189 routes
-- [x] Cold customer messaging unchanged
-- [x] Emerging customer messaging unchanged
-- [x] Rich customer messaging unchanged
-- [x] Recommendation routing unchanged
-- [x] Recommendation scoring unchanged
-- [x] Recommendation confidence unchanged
-- [x] Recommendation explanations unchanged
-- [x] Build passes — TypeScript clean, 0 warnings, 247 routes
 
 **Why This Task:**
-The Executive Report pipeline was terminated at Commitment by approved architecture decision (2026-07-01 to 2026-08-02 history per ENGINEERING_LOG). All 58 route pages, 58 dashboard components, and 60 lib/operations files were confirmed dead by EP100-P1 dependency verification — no live TypeScript import or React component reference pointed to any terminated file. Navigation links were the only remaining live dependency.
+All 14 admin dashboard components maintained identical ~30-line nav blocks with only the active item differing per component. The duplication created synchronisation risk — any future nav change required 14 identical edits. EP100-P3A extracts this into a single data-driven component as a prerequisite to EP100-P3 (dashboard merge) where components will be deleted rather than individually updated.
 
 ---
 
 ## Files Involved
 
-**Files deleted (176 total):**
-- 58 route pages: `app/admin/executive-report-{archive through commitment}/page.tsx` and all `-center` variants
-- 58 dashboard components: `app/admin/ExecutiveReport{Archive through Commitment}Dashboard.tsx` and all `Center.tsx` variants
-- 60 lib/operations files: `app/lib/operations/ExecutiveReport{Archive through Commitment}Builder.ts` and all `Types.ts` variants, including orphaned `ExecutiveReportVerificationBuilder.ts` and `ExecutiveReportVerificationTypes.ts`
+**Files created (1):**
+- `app/admin/components/AdminNavigation.tsx` — shared nav component; `usePathname()` active-state; 14 nav items data-driven; `"use client"`
 
-**Files modified (14 nav components — nav link cleanup only):**
+**Files modified (14 admin dashboard components — nav extraction only):**
 - `app/admin/AdminConsole.tsx`
-- `app/admin/UnifiedOperationsConsole.tsx`
-- `app/admin/ExecutiveOperationsDashboard.tsx`
-- `app/admin/RecommendationPerformanceDashboard.tsx`
-- `app/admin/OperationsAlertDashboard.tsx`
 - `app/admin/BriefingDashboard.tsx`
-- `app/admin/OperationsAlertCenter.tsx`
-- `app/admin/IntelligenceDashboard.tsx`
 - `app/admin/CommerceIntelligenceDashboard.tsx`
 - `app/admin/CustomerIntelligenceDashboard.tsx`
 - `app/admin/ExecutiveBriefingCenter.tsx`
+- `app/admin/ExecutiveOperationsDashboard.tsx`
 - `app/admin/ExecutiveOperationsDigestDashboard.tsx`
-- `app/admin/ExecutiveReportDashboard.tsx`
 - `app/admin/ExecutiveReportCenter.tsx`
+- `app/admin/ExecutiveReportDashboard.tsx`
+- `app/admin/IntelligenceDashboard.tsx`
+- `app/admin/OperationsAlertCenter.tsx`
+- `app/admin/OperationsAlertDashboard.tsx`
+- `app/admin/RecommendationPerformanceDashboard.tsx`
+- `app/admin/UnifiedOperationsConsole.tsx`
 
 **Files NOT modified:**
-- All live builder/types files (ExecutiveOperationsBuilder, ExecutiveBriefingBuilder, ExecutiveOperationsDigestBuilder, ExecutiveReportBuilder, OperationsAlertBuilder, OperationsAlertBriefingBuilder and their Types counterparts)
-- All live admin dashboard components (ExecutiveReportDashboard.tsx, ExecutiveReportCenter.tsx preserved)
-- RecommendationEngine, ExperienceIntelligence, LearningEngine, analytics, commerce — all unchanged
+- All admin route pages (`app/admin/*/page.tsx`) — unchanged
+- All lib/operations builders and types — unchanged
+- RecommendationEngine, ExperienceIntelligence, LearningEngine, analytics, commerce — unchanged
 
 ---
 
@@ -84,9 +75,10 @@ _Task closed._
 
 ## Context Notes
 
-**Last completed:** EP100-P2B Remove Terminated Executive Report Pipeline (2026-08-03)
+**Last completed:** EP100-P3A Extract Shared AdminNavigation Component (2026-08-04)
 
 Recent completed programs (newest first):
+- EP100-P3A Extract Shared AdminNavigation Component (2026-08-04) — 1 component created; 14 dashboards updated; Link import audited (7 preserved for body Link usage); build passes; 189 routes
 - EP100-P2B Remove Terminated Executive Report Pipeline (2026-08-03) — 176 terminated files deleted (58 routes + 58 components + 60 lib/operations); 14 nav components cleaned; build passes; 189 routes (was 247)
 - EP90-P2 Adaptive Experience Messaging (2026-08-03) — discovery copy on recently-viewed and fragrance-profile pages aligned with EP90-P1 routing; two prop-string changes; no component or engine changes; build passes; 247 routes
 - EP90-P1 Adaptive Recommendation Strategy (2026-08-03) — ProfileRichness type introduced; getProfileRichness() replaces hasMeaningfulProfile() in ExperienceIntelligence routing; passive customers route to discovery; emerging/rich customers route to personalised; RecommendationEngine/RecommendationPipeline/RecommendationConfidence/LearningEngine/commerce/UI untouched; build passes; 247 routes
@@ -124,7 +116,7 @@ _N/A_
 
 ## Build Result
 
-**Last build:** 2026-08-03 — Pass. Zero TypeScript errors. Zero warnings. 189 routes. (EP100-P2B)
+**Last build:** 2026-08-04 — Pass. Zero TypeScript errors. Zero warnings. 189 routes. (EP100-P3A)
 
 ---
 

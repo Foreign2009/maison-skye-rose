@@ -41,9 +41,10 @@ Each program has a defined scope, ordered task list, and a clear close condition
 |---|---|---|---|
 | 1 | EP100-P2A | Dependency verification — confirmed terminated pipeline self-contained; nav links identified as only live dependency | Complete |
 | 2 | EP100-P2B | Remove terminated Executive Report pipeline — 176 files deleted, 14 nav components cleaned, build passes at 189 routes | Complete |
-| 3 | EP100-P3 | Merge duplicate dashboards (alerts/alert-center, executive-digest/executive-briefing, executive-report/executive-report-center, executive-operations/operations) | Pending |
-| 4 | EP100-P4 | Analytics cache — wrap PostHog query functions with 5-minute server-side cache | Pending |
-| 5 | EP100-P5 | Executive Metrics Layer — unified Supabase + PostHog dashboard | Pending |
+| 3 | EP100-P3A | Extract shared AdminNavigation component — 1 component created, 14 dashboards updated, Link import audited, build passes at 189 routes | Complete |
+| 4 | EP100-P3 | Merge duplicate dashboards (alerts/alert-center, executive-digest/executive-briefing, executive-report/executive-report-center, executive-operations/operations) | Pending |
+| 5 | EP100-P4 | Analytics cache — wrap PostHog query functions with 5-minute server-side cache | Pending |
+| 6 | EP100-P5 | Executive Metrics Layer — unified Supabase + PostHog dashboard | Pending |
 
 **Close Condition:** All duplicate dashboards eliminated, analytics cached, Executive Metrics Layer live, build passes.
 

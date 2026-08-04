@@ -39,6 +39,51 @@ Never edit or delete past entries.
 
 ## Log
 
+### 2026-08-04 — EP100-P3A — Platform Consolidation / Extract Shared AdminNavigation
+
+**Participants:** Project Owner / Claude (Implementation Engineer)
+**Program:** EP100-P3A — Program 10.0 Platform Consolidation / Extract Shared AdminNavigation Component
+
+**Decisions Made:**
+- All 14 admin dashboard components were confirmed to render an identical ~30-line nav block with only the active item varying per component; extraction to a shared component was appropriate
+- `usePathname()` (Next.js client hook) selected for active-state detection — eliminates per-component hardcoded active items; a server component (`IntelligenceDashboard.tsx`) can render a client child without issue
+- Initial `<Link\s` grep (line mode) missed multi-line JSX Link usage (`<Link\n`) in 7 files; those files required the `import Link from "next/link"` to be preserved; discovered at build time and corrected before commit
+- `app/admin/components/` directory created as the shared component home for admin UI primitives
+
+**Tasks Completed:**
+- EP100-P3A — AdminNavigation extracted: 1 component created, 14 dashboard components updated, 7 files had Link import preserved (body Link usage confirmed), build passes at 189 routes
+
+**Tasks Started:**
+- None
+
+**Build Result:** Pass — TypeScript clean, 0 warnings, 189 routes
+
+**Files Changed:**
+- `app/admin/components/AdminNavigation.tsx` — new file; `"use client"`; `usePathname()`; 14 nav items; active = `<span>`, inactive = `<Link>`
+- `app/admin/AdminConsole.tsx` — nav block replaced with `<AdminNavigation />`, AdminNavigation import added
+- `app/admin/BriefingDashboard.tsx` — same
+- `app/admin/CommerceIntelligenceDashboard.tsx` — same; Link import removed (no body Link usage)
+- `app/admin/CustomerIntelligenceDashboard.tsx` — same; Link import removed
+- `app/admin/ExecutiveBriefingCenter.tsx` — same; Link import preserved (QUICK_NAV_LINKS body usage)
+- `app/admin/ExecutiveOperationsDashboard.tsx` — same; Link import removed
+- `app/admin/ExecutiveOperationsDigestDashboard.tsx` — same; Link import preserved
+- `app/admin/ExecutiveReportCenter.tsx` — same; Link import preserved
+- `app/admin/ExecutiveReportDashboard.tsx` — same; Link import preserved
+- `app/admin/IntelligenceDashboard.tsx` — same; Link import removed; server component — AdminNavigation renders as client child
+- `app/admin/OperationsAlertCenter.tsx` — same; Link import preserved
+- `app/admin/OperationsAlertDashboard.tsx` — same; Link import preserved
+- `app/admin/RecommendationPerformanceDashboard.tsx` — same; Link import removed
+- `app/admin/UnifiedOperationsConsole.tsx` — same; Link import preserved
+
+**Handoff:**
+- EP100-P3A complete; commit to follow
+- EP100-P3 (merge duplicate dashboards) is next — pending separate approval; AdminNavigation extraction is a prerequisite
+
+**Open Questions Carried Forward:**
+- None
+
+---
+
 ### 2026-08-03 — EP100-P2B — Platform Consolidation / Remove Terminated Pipeline
 
 **Participants:** Project Owner / Claude (Implementation Engineer)

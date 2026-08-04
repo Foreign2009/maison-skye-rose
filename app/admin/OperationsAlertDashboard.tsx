@@ -3,6 +3,7 @@
 import React            from "react";
 import Link             from "next/link";
 import { logoutAction } from "./actions";
+import AdminNavigation from "./components/AdminNavigation";
 import type {
   AlertSeverity,
   AlertStatus,
@@ -306,48 +307,7 @@ export default function OperationsAlertDashboard({ report }: Props) {
             <p className="text-[9px] uppercase tracking-[0.5em] text-[#d89ca4]">Internal</p>
             <p className="text-sm font-black uppercase tracking-widest text-white">Maison Operations</p>
           </div>
-          <nav className="flex items-center gap-4">
-            <Link href="/admin" className="text-xs text-white/60 transition hover:text-white">
-              Operations
-            </Link>
-            <Link href="/admin/briefing" className="text-xs text-white/60 transition hover:text-white">
-              Briefing
-            </Link>
-            <Link href="/admin/intelligence" className="text-xs text-white/60 transition hover:text-white">
-              Intelligence
-            </Link>
-            <Link href="/admin/recommendation-performance" className="text-xs text-white/60 transition hover:text-white">
-              Performance
-            </Link>
-            <Link href="/admin/customer-intelligence" className="text-xs text-white/60 transition hover:text-white">
-              Customer Intelligence
-            </Link>
-            <Link href="/admin/commerce-intelligence" className="text-xs text-white/60 transition hover:text-white">
-              Commerce Intelligence
-            </Link>
-            <Link href="/admin/executive-operations" className="text-xs text-white/60 transition hover:text-white">
-              Executive Operations
-            </Link>
-            <Link href="/admin/operations" className="text-xs text-white/60 transition hover:text-white">
-              Unified Operations
-            </Link>
-            <span className="text-xs font-bold text-white">Alerts</span>
-            <Link href="/admin/alert-center" className="text-xs text-white/60 transition hover:text-white">
-              Alert Center
-            </Link>
-            <Link href="/admin/executive-digest" className="text-xs text-white/60 transition hover:text-white">
-              Executive Digest
-            </Link>
-            <Link href="/admin/executive-briefing" className="text-xs text-white/60 transition hover:text-white">
-              Executive Briefing
-            </Link>
-            <Link href="/admin/executive-report" className="text-xs text-white/60 transition hover:text-white">
-              Executive Report
-            </Link>
-            <Link href="/admin/executive-report-center" className="text-xs text-white/60 transition hover:text-white">
-              Executive Report Center
-            </Link>
-          </nav>
+          <AdminNavigation />
         </div>
         <form action={logoutAction}>
           <button type="submit" className="text-xs text-white/60 transition hover:text-white">
