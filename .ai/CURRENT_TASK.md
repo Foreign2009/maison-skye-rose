@@ -19,19 +19,20 @@ At the start of a new Claude Code session:
 ## Current Task
 
 **Status:** Complete
-**Program:** EP100-P5 — Platform Consolidation / Shared Executive Operations Pipeline
+**Program:** EP0-P1 — Foundation Programme / The Founder's Letter & The Skye & Rose Covenant
 
 **Goal:**
-Extract the duplicated 7-builder cascade from 6 admin page routes into a shared `buildExecutiveOperationsBundle()` orchestrator. No new KPI calculations. No new business logic.
+Create the permanent philosophical foundation of Maison Skye & Rose: a founder's letter and an institutional covenant.
 
 **Acceptance Criteria:**
-- [x] `app/lib/operations/ExecutiveOperationsPipeline.ts` created — `ExecutiveOperationsBundle` interface + `buildExecutiveOperationsBundle()` function
-- [x] 6 cascade pages updated: executive-operations, operations, alerts, alert-center, executive-digest, executive-report
-- [x] All existing builder files, types, and dashboard components unchanged
-- [x] Build passes — TypeScript clean, 0 warnings, 187 routes
+- [x] `FOUNDATIONS/` directory created
+- [x] `FOUNDATIONS/00_FOUNDERS_LETTER.md` — Personal letter from the founder to Skye, Rose, future employees, and future stewards; covers origin, purpose, the meaning of the names, stewardship, and trust
+- [x] `FOUNDATIONS/01_SKYE_AND_ROSE_COVENANT.md` — Institutional promise covering customers, products, technology, future stewards, and the standard of the names
+- [x] PROJECT_STATUS.md updated with Foundation Programme section
+- [x] No architecture, business logic, or software modified
 
 **Why This Task:**
-The identical 7-builder cascade was copy-pasted in 6 admin page routes. Any change to the cascade sequence (e.g. adding a new builder, changing a dependency) required updating all 6 files. A single orchestrator function eliminates that maintenance surface.
+Every engineering decision, product decision, and customer experience decision made at Maison Skye & Rose will eventually be tested against values. These documents establish what those values are, in permanent form, before the institution grows too large to define them.
 
 ---
 

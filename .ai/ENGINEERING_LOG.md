@@ -39,6 +39,46 @@ Never edit or delete past entries.
 
 ## Log
 
+### 2026-08-04 — EP0-P1 — Foundation Programme / The Founder's Letter & The Skye & Rose Covenant
+
+**Participants:** Project Owner / Claude (Implementation Engineer)
+**Program:** EP0-P1 — Foundation Programme
+
+**Decisions Made:**
+- Foundation Programme established as a permanent category outside the engineering programme numbering sequence; sits at EP0 to signal it precedes all technical work in institutional order
+- Founder's Letter written as a personal letter (not a mission statement), addressed to Skye, Rose, future employees, and future stewards
+- Skye & Rose Covenant written as the permanent institutional promise — not a letter, not marketing; structured around: who we are, customers, products, technology, future stewards, and the standard of the names
+- "This Covenant is not subject to revision for convenience" included as an explicit self-binding constraint for future stewards
+- No changes to architecture, software, or business logic
+
+**Tasks Completed:**
+- Created `FOUNDATIONS/` directory
+- Created `FOUNDATIONS/00_FOUNDERS_LETTER.md`
+- Created `FOUNDATIONS/01_SKYE_AND_ROSE_COVENANT.md`
+- Updated `PROJECT_STATUS.md` — Foundation Programme section added, build status and last-updated date corrected
+- Updated `CURRENT_TASK.md` — EP0-P1 reflected
+- Updated `ENGINEERING_LOG.md`
+
+**Tasks Started:**
+- None
+
+**Build Result:** N/A — no source code modified
+
+**Files Changed:**
+- `FOUNDATIONS/00_FOUNDERS_LETTER.md` (created)
+- `FOUNDATIONS/01_SKYE_AND_ROSE_COVENANT.md` (created)
+- `PROJECT_STATUS.md` (modified — Foundation Programme section + date/build correction)
+- `.ai/CURRENT_TASK.md` (modified)
+- `.ai/ENGINEERING_LOG.md` (modified)
+
+**Handoff:**
+- Foundation Programme complete. Both documents exist in permanent form at `FOUNDATIONS/`. No further action required unless the Project Owner wishes to extend with additional foundation documents.
+
+**Open Questions Carried Forward:**
+- None
+
+---
+
 ### 2026-08-04 — EP100-P5 — Platform Consolidation / Shared Executive Operations Pipeline
 
 **Participants:** Project Owner / Claude (Implementation Engineer)

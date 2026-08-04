@@ -1,8 +1,8 @@
 # Project Status — Maison Skye & Rose
 
-**Last updated:** 2026-07-03
+**Last updated:** 2026-08-04
 **Phase:** Launch Execution
-**Build status:** PASS — 120 pages, 0 TypeScript errors, 0 warnings
+**Build status:** PASS — 187 routes, 0 TypeScript errors, 0 warnings
 
 ---
 
@@ -46,6 +46,17 @@ The Maison Fragrance Academy (EP13) is in the planning stage.
 | Last verified | 2026-07-03 |
 
 Verify: `npm run build`
+
+---
+
+## Foundation Programme
+
+| Programme | Task | Name | Status |
+|---|---|---|---|
+| EP0 | EP0-P1 | The Founder's Letter & The Skye & Rose Covenant | Complete — 2026-08-04 |
+
+`FOUNDATIONS/00_FOUNDERS_LETTER.md` — The permanent founder's letter to Skye, Rose, future employees, and future stewards.
+`FOUNDATIONS/01_SKYE_AND_ROSE_COVENANT.md` — The institutional promise: to customers, products, technology, and future generations.
 
 ---
 
