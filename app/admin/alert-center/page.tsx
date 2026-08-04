@@ -1,21 +1,12 @@
-import type { Metadata }                  from "next";
-import { cookies }                        from "next/headers";
-import { createHash }                     from "crypto";
-import { redirect }                       from "next/navigation";
-import OperationsAlertCenter              from "@/app/admin/OperationsAlertCenter";
-import { queryRecommendationAnalytics }   from "@/app/lib/analytics/recommendationAnalytics";
-import { queryCustomerAnalytics }         from "@/app/lib/analytics/customerAnalytics";
-import { queryCommerceAnalytics }         from "@/app/lib/analytics/commerceAnalytics";
-import { buildSignalCalibrationReport }   from "@/app/lib/customer/signals/SignalCalibration";
-import { buildRecommendationInsights }    from "@/app/lib/customer/recommendations/RecommendationInsights";
-import { buildCustomerBehaviourReport }   from "@/app/lib/customer/behaviour/buildCustomerBehaviourReport";
-import { buildCustomerJourneyReport }     from "@/app/lib/customer/behaviour/CustomerJourneyAnalytics";
-import { buildCustomerSegmentReport }     from "@/app/lib/customer/behaviour/CustomerSegmentation";
-import { buildCommerceBehaviourReport }   from "@/app/lib/commerce/buildCommerceBehaviourReport";
-import { buildCheckoutFunnelReport }      from "@/app/lib/commerce/CheckoutFunnelIntelligence";
-import { buildProductPerformanceReport }  from "@/app/lib/commerce/ProductPerformanceIntelligence";
-import { buildExecutiveOperationsReport } from "@/app/lib/operations/ExecutiveOperationsBuilder";
-import { buildOperationsAlertReport }     from "@/app/lib/operations/OperationsAlertBuilder";
+import type { Metadata }                   from "next";
+import { cookies }                         from "next/headers";
+import { createHash }                      from "crypto";
+import { redirect }                        from "next/navigation";
+import OperationsAlertCenter               from "@/app/admin/OperationsAlertCenter";
+import { queryRecommendationAnalytics }    from "@/app/lib/analytics/recommendationAnalytics";
+import { queryCustomerAnalytics }          from "@/app/lib/analytics/customerAnalytics";
+import { queryCommerceAnalytics }          from "@/app/lib/analytics/commerceAnalytics";
+import { buildExecutiveOperationsBundle }  from "@/app/lib/operations/ExecutiveOperationsPipeline";
 
 export const metadata: Metadata = {
   title:  "Operations Alert Center | Maison Skye & Rose",
@@ -40,26 +31,7 @@ export default async function OperationsAlertCenterPage() {
     queryCommerceAnalytics(),
   ]);
 
-  const signals           = buildSignalCalibrationReport();
-  const insightReport     = buildRecommendationInsights(recAnalytics, signals);
-  const behaviourReport   = buildCustomerBehaviourReport(custAnalytics, signals);
-  const journeyReport     = buildCustomerJourneyReport(behaviourReport);
-  const segmentReport     = buildCustomerSegmentReport(behaviourReport, journeyReport);
-  const commerceReport    = buildCommerceBehaviourReport(comAnalytics);
-  const funnelReport      = buildCheckoutFunnelReport(commerceReport);
-  const performanceReport = buildProductPerformanceReport(commerceReport, funnelReport);
+  const bundle = buildExecutiveOperationsBundle(recAnalytics, custAnalytics, comAnalytics);
 
-  const operations = buildExecutiveOperationsReport(
-    insightReport,
-    behaviourReport,
-    journeyReport,
-    segmentReport,
-    commerceReport,
-    funnelReport,
-    performanceReport,
-  );
-
-  const report = buildOperationsAlertReport(operations);
-
-  return <OperationsAlertCenter report={report} />;
+  return <OperationsAlertCenter report={bundle.alertReport} />;
 }

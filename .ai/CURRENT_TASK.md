@@ -19,21 +19,19 @@ At the start of a new Claude Code session:
 ## Current Task
 
 **Status:** Complete
-**Program:** EP100-P3C — Platform Consolidation / Dashboard Consolidation Implementation
+**Program:** EP100-P5 — Platform Consolidation / Shared Executive Operations Pipeline
 
 **Goal:**
-Remove confirmed duplicate dashboards identified in EP100-P3B. Migrate unique data (READINESS_LABELS) to surviving components, delete duplicate route directories and components, clean navigation references.
+Extract the duplicated 7-builder cascade from 6 admin page routes into a shared `buildExecutiveOperationsBundle()` orchestrator. No new KPI calculations. No new business logic.
 
 **Acceptance Criteria:**
-- [x] READINESS_LABELS migrated from ExecutiveBriefingCenter into ExecutiveOperationsDigestDashboard; OperationalStatusSection updated to "Platform Readiness" + readiness text + severity badge
-- [x] `app/admin/executive-briefing/page.tsx` + `ExecutiveBriefingCenter.tsx` deleted
-- [x] `app/admin/executive-report-center/page.tsx` + `ExecutiveReportCenter.tsx` deleted
-- [x] AdminNavigation.tsx trimmed from 14 to 12 items — Executive Briefing + Executive Report Center removed
-- [x] ExecutiveReportDashboard.tsx QUICK_NAV_LINKS cleaned — `/admin/executive-briefing` removed
-- [x] Build passes — TypeScript clean, 0 warnings, 187 routes (was 189)
+- [x] `app/lib/operations/ExecutiveOperationsPipeline.ts` created — `ExecutiveOperationsBundle` interface + `buildExecutiveOperationsBundle()` function
+- [x] 6 cascade pages updated: executive-operations, operations, alerts, alert-center, executive-digest, executive-report
+- [x] All existing builder files, types, and dashboard components unchanged
+- [x] Build passes — TypeScript clean, 0 warnings, 187 routes
 
 **Why This Task:**
-EP100-P3B inspection confirmed `/admin/executive-briefing` and `/admin/executive-report-center` are data-identical duplicates of `/admin/executive-digest` and `/admin/executive-report` respectively. Retaining them created ongoing maintenance surface — any change to the digest or report pipeline required updating two dashboards.
+The identical 7-builder cascade was copy-pasted in 6 admin page routes. Any change to the cascade sequence (e.g. adding a new builder, changing a dependency) required updating all 6 files. A single orchestrator function eliminates that maintenance surface.
 
 ---
 

@@ -39,6 +39,49 @@ Never edit or delete past entries.
 
 ## Log
 
+### 2026-08-04 — EP100-P5 — Platform Consolidation / Shared Executive Operations Pipeline
+
+**Participants:** Project Owner / Claude (Implementation Engineer)
+**Program:** EP100-P5 — Program 10.0 Platform Consolidation / Shared Executive Operations Pipeline
+
+**Decisions Made:**
+- The 7-builder cascade pattern was copy-pasted identically in 6 admin page routes; correct fix is a thin orchestrator function, not a merged type model
+- `ExecutiveReport` is a pure field-rename of `ExecutiveOperationsDigest` — identified but left to future scope; EP100-P5 addresses only cascade duplication
+- `buildExecutiveOperationsBundle()` introduced in `ExecutiveOperationsPipeline.ts`; all existing builder files, types, and dashboard components left unchanged
+- `execBriefing` added to bundle (used by `/admin/operations`); named distinctly from `briefing` (internal `AlertBriefing` variable) to avoid shadowing
+
+**Tasks Completed:**
+- Created `app/lib/operations/ExecutiveOperationsPipeline.ts` — `ExecutiveOperationsBundle` interface + `buildExecutiveOperationsBundle()` function
+- Updated 6 cascade pages to replace 10–15 builder import lines + cascade body with single pipeline import and bundle call:
+  - `app/admin/executive-operations/page.tsx` — consumes `bundle.operations`
+  - `app/admin/operations/page.tsx` — consumes `bundle.operations` + `bundle.execBriefing`
+  - `app/admin/alerts/page.tsx` — consumes `bundle.alertReport`
+  - `app/admin/alert-center/page.tsx` — consumes `bundle.alertReport`
+  - `app/admin/executive-digest/page.tsx` — consumes `bundle.digest`
+  - `app/admin/executive-report/page.tsx` — consumes `bundle.report`
+
+**Tasks Started:**
+- None
+
+**Build Result:** Pass — TypeScript clean, 0 warnings, 187 routes
+
+**Files Changed:**
+- `app/lib/operations/ExecutiveOperationsPipeline.ts` (created)
+- `app/admin/executive-operations/page.tsx` (modified)
+- `app/admin/operations/page.tsx` (modified)
+- `app/admin/alerts/page.tsx` (modified)
+- `app/admin/alert-center/page.tsx` (modified)
+- `app/admin/executive-digest/page.tsx` (modified)
+- `app/admin/executive-report/page.tsx` (modified)
+
+**Handoff:**
+- EP100-P5 complete; EP100-P4 (analytics cache) and any remaining EP100 scope as defined by Project Owner
+
+**Open Questions Carried Forward:**
+- `ExecutiveReport` structural identity (pure field-rename of `ExecutiveOperationsDigest`) — out of scope for EP100-P5; revisit in future consolidation
+
+---
+
 ### 2026-08-04 — EP100-P3C — Platform Consolidation / Dashboard Consolidation Implementation
 
 **Participants:** Project Owner / Claude (Implementation Engineer)

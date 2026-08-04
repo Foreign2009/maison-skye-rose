@@ -44,7 +44,7 @@ Each program has a defined scope, ordered task list, and a clear close condition
 | 3 | EP100-P3A | Extract shared AdminNavigation component — 1 component created, 14 dashboards updated, Link import audited, build passes at 189 routes | Complete |
 | 4 | EP100-P3 | Merge duplicate dashboards — EP100-P3B inspection confirmed 2 safe removals (executive-briefing, executive-report-center); EP100-P3C deleted them, migrated READINESS_LABELS, cleaned nav; build passes at 187 routes | Complete |
 | 5 | EP100-P4 | Analytics cache — wrap PostHog query functions with 5-minute server-side cache | Pending |
-| 6 | EP100-P5 | Executive Metrics Layer — unified Supabase + PostHog dashboard | Pending |
+| 6 | EP100-P5 | Shared Executive Operations Pipeline — extract duplicated 7-builder cascade into `buildExecutiveOperationsBundle()`; update 6 cascade pages; build passes at 187 routes | Complete |
 
 **Close Condition:** All duplicate dashboards eliminated, analytics cached, Executive Metrics Layer live, build passes.
 
