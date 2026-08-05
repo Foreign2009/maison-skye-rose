@@ -101,19 +101,45 @@ function EFTConfirmationContent() {
         <p className="text-xs uppercase tracking-[0.45em] text-[#7bb78a]">
           Order Confirmed
         </p>
-        <h1 className="mt-4 text-4xl font-black uppercase leading-tight tracking-[-0.05em] text-[#4f4a52] md:text-5xl">
-          Complete Your<br />Payment
+        <h1 className="mt-4 text-4xl font-black leading-tight tracking-[-0.05em] text-[#4f4a52] md:text-5xl">
+          Your Order<br />Is Confirmed
         </h1>
-        <p className="mx-auto mt-5 max-w-md text-base leading-7 text-[#7b7480]">
-          Your order has been reserved. Complete your EFT below and send proof of payment via WhatsApp.
+        <p className="mx-auto mt-5 max-w-md text-base leading-relaxed text-[#7b7480]">
+          We&apos;re grateful for your trust. Your order is now in our care — complete the payment details below and send us proof via WhatsApp, and we&apos;ll take care of everything from there.
         </p>
+      </motion.div>
+
+      {/* What Happens Next */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.1 }}
+        className="mt-10"
+      >
+        <p className="text-[10px] font-semibold uppercase tracking-[0.45em] text-[#7bb78a]">
+          What Happens Next
+        </p>
+        <div className="mt-5 space-y-4">
+          {([
+            "Complete your EFT using the banking details below.",
+            "Send us proof of payment via WhatsApp — the button is ready for you.",
+            "We confirm your payment and arrange delivery with care.",
+          ] as const).map((step, i) => (
+            <div key={i} className="flex items-start gap-4">
+              <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#dff6e4] text-xs font-bold text-[#7bb78a]">
+                {i + 1}
+              </span>
+              <p className="pt-0.5 text-sm leading-relaxed text-[#7b7480]">{step}</p>
+            </div>
+          ))}
+        </div>
       </motion.div>
 
       {/* Order Summary */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.1 }}
+        transition={{ duration: 0.5, delay: 0.2 }}
         className="mt-10 rounded-[28px] bg-white p-7 shadow-[0_8px_40px_rgba(0,0,0,0.06)]"
       >
         <p className="text-[10px] font-semibold uppercase tracking-[0.45em] text-[#d89ca4]">
@@ -139,7 +165,7 @@ function EFTConfirmationContent() {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.2 }}
+        transition={{ duration: 0.5, delay: 0.3 }}
         className="mt-5 rounded-[28px] bg-white p-7 shadow-[0_8px_40px_rgba(0,0,0,0.06)]"
       >
         <p className="text-[10px] font-semibold uppercase tracking-[0.45em] text-[#d89ca4]">
@@ -172,7 +198,7 @@ function EFTConfirmationContent() {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.3 }}
+        transition={{ duration: 0.5, delay: 0.4 }}
         className="mt-8 space-y-4"
       >
         <a
@@ -196,10 +222,10 @@ function EFTConfirmationContent() {
       <motion.p
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 0.5, delay: 0.4 }}
-        className="mt-8 text-center text-xs leading-5 text-[#9b9298]"
+        transition={{ duration: 0.5, delay: 0.5 }}
+        className="mt-8 text-center text-xs leading-relaxed text-[#9b9298]"
       >
-        Your order is reserved for 24 hours. Once payment is confirmed, we'll be in touch to arrange delivery.
+        Please complete your payment within 24 hours to secure your order. Once confirmed, we&apos;ll be in touch to arrange delivery.
       </motion.p>
 
     </section>
