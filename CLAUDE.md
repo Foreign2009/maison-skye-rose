@@ -289,6 +289,37 @@ End with:
 
 ---
 
+# INSTITUTIONAL PURPOSE STATEMENTS
+
+Every significant page carries a permanent Institutional Purpose Statement.
+
+Before beginning any programme that modifies a significant page, read its Institutional Purpose from `.ai/INSTITUTIONAL_PURPOSES.md` and evaluate every proposed change against it.
+
+An implementation that achieves its Technical Outcome but weakens the Institutional Purpose has failed.
+
+---
+
+# PROGRAMME OBJECTIVES
+
+Every programme must begin with three objectives, stated in this order:
+
+**Institutional Objective**
+What does this programme strengthen in the institution?
+
+**Guest Outcome**
+What will guests understand or feel differently after this programme?
+
+**Technical Outcome**
+What is the technical implementation?
+
+The Institutional Objective is stated first.
+
+The Technical Outcome is stated last.
+
+If no Institutional Objective can be identified, question whether the programme should exist.
+
+---
+
 # IMPLEMENTATION RULES
 
 Modify only approved files.
@@ -330,6 +361,33 @@ magic numbers
 deep nesting
 
 Extract helpers where duplication appears.
+
+---
+
+# TIMELESS CONTENT PRINCIPLE
+
+Institutional pages express beliefs and values that remain true for decades.
+
+Avoid on institutional pages:
+
+* Catalogue counts ("93 fragrances", "465+ products")
+* Follower counts
+* Temporary milestones
+* Marketing superlatives
+
+Prefer timeless language:
+
+* "Our carefully chosen collection"
+* "Our fragrance catalogue continues to grow"
+* "Guests across South Africa"
+
+If a number must appear, a plan must exist to maintain its accuracy.
+
+Transient facts on institutional pages create trust debt: when they become stale, they undermine credibility.
+
+This principle applies to: homepage hero, About, and any surface that communicates values, beliefs, or institutional identity.
+
+Commerce surfaces (trust bars, product listings, pricing) may use accurate counts. Accuracy must be maintained.
 
 ---
 
@@ -625,6 +683,8 @@ When implementing:
 
 Summary
 
+Institutional Impact
+
 Build Results
 
 Files Changed
@@ -686,6 +746,24 @@ Claude responsibilities:
 * commits
 
 Together they form one development workflow.
+
+---
+
+# EXPERIENCE-FIRST ENGINEERING
+
+Before any programme that touches a guest-facing surface, answer these three questions:
+
+What should guests understand after this experience?
+
+What should guests feel after this experience?
+
+How does this strengthen trust?
+
+Only after honest answers to these questions should technical implementation be determined.
+
+Technical decisions execute values-led experience decisions — they follow, they do not lead.
+
+If no clear answer exists to any of these three questions, the programme is not ready for implementation.
 
 ---
 

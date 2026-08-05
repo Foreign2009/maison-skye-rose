@@ -29,7 +29,7 @@ export default function AIHeroSection() {
           {/* Editorial copy */}
           <div className="max-w-xl animate-fade-in-up">
             <p className="text-[10px] font-semibold uppercase tracking-[0.55em] text-[#d89ca4]">
-              A Digital Fragrance House
+              Begin your confidence journey
             </p>
 
             <h1 className="mt-5 text-[2rem] font-black leading-[1.05] tracking-[-0.04em] text-[#4f4a52] md:text-[3.5rem] lg:text-[2.75rem] xl:text-[4rem]">
@@ -39,8 +39,8 @@ export default function AIHeroSection() {
 
             <p className="mt-6 max-w-[460px] text-base leading-relaxed text-[#7b7480] md:text-lg">
               Not a catalogue — a curated fragrance experience. Your personal
-              Concierge guides you through 93 carefully chosen scents to build
-              a collection that&apos;s unmistakably yours.
+              Concierge guides you through our carefully chosen collection to
+              build a fragrance wardrobe that&apos;s unmistakably yours.
             </p>
 
             <div className="mt-10 flex flex-wrap gap-4">

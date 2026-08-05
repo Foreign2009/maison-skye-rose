@@ -5,7 +5,7 @@ export default function LuxuryConfidenceBar() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
           <div>
             <p className="text-sm font-black text-[#4f4a52]">93 Fragrances</p>
-            <p className="text-[11px] text-[#7b7480]">Thoughtfully curated</p>
+            <p className="text-[11px] text-[#7b7480]">Each one chosen with care</p>
           </div>
           <div>
             <p className="text-sm font-black text-[#4f4a52]">Begin with 5ml</p>

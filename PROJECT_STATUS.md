@@ -60,6 +60,7 @@ Verify: `npm run build`
 | EP2 | EP2-P1 | Digital Flagship Experience Audit | Complete — 2026-08-05 |
 | EP2 | EP2-P2 | Digital Flagship Maturity Model | Complete — 2026-08-05 |
 | EP2 | EP2-P3 | About Page Foundation Alignment | Complete — 2026-08-05 |
+| EP2 | EP2-P4 | Engineering Governance Evolution & Homepage Foundation Alignment | Complete — 2026-08-05 |
 
 `FOUNDATIONS/00_FOUNDERS_LETTER.md` — The permanent founder's letter to Skye, Rose, future employees, and future stewards. *Why we began.*
 `FOUNDATIONS/01_SKYE_AND_ROSE_COVENANT.md` — The institutional promise: to customers, products, technology, and future generations. *What we promise.*
@@ -70,6 +71,8 @@ Verify: `npm run build`
 **EP2-P1 Audit Findings (2026-08-05):** Overall institutional alignment score 7.1/10. Intelligence layer (Fragrance Profile, MaisonCompanion, Concierge, Shop, Quiz) rated Aligned. Critical gaps: About page (3/10 — fails Foundation narrative standard), catalogue count inconsistency (93 vs 465+), "Loyal Customer" terminology, post-purchase experience absent, checkout UX cold. Recommended sequence: EP2-P2 (About page rewrite) → EP2-P3 (checkout + post-purchase) → EP2-P4 (testimonials) → EP2-P5 (concierge voice) → EP2-P6 (language pass).
 
 **EP2-P3 About Page Foundation Alignment (2026-08-05):** `app/about/page.tsx` rewritten from 4 generic paragraphs to 9 Foundation-aligned sections: Opening, A Compliment Changed Everything, Why Skye & Rose, What We Believe, Confidence Is What We Are Here to Deliver, Knowledge Before Recommendation, Accessible Luxury, Growing Together, Our Promise, An Invitation. Count inconsistency removed (465+ → timeless language). OG and Twitter metadata added. Architecture preserved. Build passes: 187 routes, 0 TypeScript errors, 0 warnings.
+
+**EP2-P4 Engineering Governance Evolution & Homepage Foundation Alignment (2026-08-05):** CLAUDE.md extended with five permanent governance concepts: Institutional Purpose Statements, Programme Objectives, Timeless Content Principle, Experience-First Engineering, and Institutional Impact in the Post Implementation Report. `.ai/INSTITUTIONAL_PURPOSES.md` created — permanent per-page purpose record for 9 significant pages. Homepage hero eyebrow changed from "A Digital Fragrance House" to "Begin your confidence journey." Hero body copy: "93 carefully chosen scents" → "our carefully chosen collection" (Timeless Content Principle); "a collection" → "a fragrance wardrobe" (connects to Maison Method below). LuxuryConfidenceBar: "Thoughtfully curated" → "Each one chosen with care." Build passes: 187 routes, 0 TypeScript errors, 0 warnings.
 
 **EP2-P2 Digital Flagship Maturity Model (2026-08-05):** Permanent institutional framework for measuring how faithfully the digital flagship expresses the institution. `FOUNDATIONS/05_DIGITAL_FLAGSHIP_MATURITY_MODEL.md` established. 20 categories across 3 tiers (Foundation Pillars ×2, Guest-Facing Experience ×1.5, Operational & Future ×1). 5 maturity levels (Functional through Enduring Institution). Weighted scoring (290 points max) with minimum level gates. Quarterly review and annual institutional review processes. Executive Dashboard format. Inaugural assessment record included: Level 3 — Institutional at 63.4% (2026-08-05).
 
