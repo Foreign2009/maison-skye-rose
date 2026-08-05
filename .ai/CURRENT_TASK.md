@@ -19,36 +19,34 @@ At the start of a new Claude Code session:
 ## Current Task
 
 **Status:** Complete
-**Program:** EP2-P2 — Platform Experience Programme / Digital Flagship Maturity Model
+**Program:** EP2-P3 — Platform Experience Programme / About Page Foundation Alignment
 
 **Goal:**
-Design the permanent Digital Flagship Maturity Model for Maison Skye & Rose — the institutional framework used repeatedly to measure how faithfully the digital flagship expresses the institution.
+Transform the About page from 4 generic paragraphs into the first public expression of the Maison Skye & Rose institution — aligned with all five Foundation documents.
 
 **Acceptance Criteria:**
-- [x] `FOUNDATIONS/05_DIGITAL_FLAGSHIP_MATURITY_MODEL.md` created
-- [x] Purpose and role of the framework defined
-- [x] Constitutional Foundation tracing for the framework itself
-- [x] Assessment Methodology defined (6-step process, frequency, who may conduct)
-- [x] 5 Maturity Levels defined with characteristic indicators (Functional through Enduring Institution)
-- [x] Scoring Framework defined: 20 categories, 3 tiers, weighted formula, 290-point maximum
-- [x] Minimum Level Gates defined (prevents gaming with peripheral category scores)
-- [x] All 20 Category Definitions written (Purpose, Foundation Tracing, Evidence Sources, Assessment Criteria, Score Guidance 0/3/5/7/10)
-- [x] Evidence Requirements defined (valid evidence, impermissible evidence, evidence preservation)
-- [x] Reporting Standard defined (full Assessment Report format)
-- [x] Improvement Planning defined (priority order, programme sizing guidance)
-- [x] Quarterly Review Process defined (5-step process)
-- [x] Annual Institutional Review defined
-- [x] Executive Dashboard Format defined
-- [x] Maturity History Format defined
-- [x] Inaugural Assessment Record included (2026-08-05, Level 3 — Institutional, 63.4%)
-- [x] Amendment Process defined (permissible and impermissible amendments)
-- [x] `PROJECT_STATUS.md` updated (EP2-P2 added)
+- [x] About page rewritten with 9 Foundation-aligned sections
+- [x] Founding story told authentically (compliment, curiosity, price discovery, conviction)
+- [x] Names Skye & Rose explained with genuine context (daughters, not branding)
+- [x] Confidence as the true product expressed clearly
+- [x] Knowledge before recommendation philosophy expressed
+- [x] AI introduced as servant of hospitality, not the headline
+- [x] Accessible Luxury philosophy expressed as permanent conviction
+- [x] Growing Together communicates future expansion without announcing products
+- [x] Our Promise section added (care, craftsmanship, integrity)
+- [x] An Invitation closes the page without a conventional thank-you
+- [x] No fixed catalogue numbers — timeless language throughout
+- [x] OG and Twitter metadata added
+- [x] Description updated to reflect founding story
+- [x] Architecture preserved (Navbar, Footer, max-w-5xl container, bg-[#faf7f5])
+- [x] No new components, no new imports
+- [x] Build passes: 187 routes, 0 TypeScript errors, 0 warnings
+- [x] `PROJECT_STATUS.md` updated
 - [x] `.ai/CURRENT_TASK.md` updated
 - [x] `.ai/ENGINEERING_LOG.md` updated
-- [x] No source code modified
 
 **Why This Task:**
-The EP2-P1 audit produced a one-time snapshot. Without a permanent measurement framework, future assessments have no consistent standard — scores become subjective, trends cannot be tracked, and institutional drift cannot be detected. The Maturity Model gives every future assessment a repeatable, evidence-based methodology that serves the institution regardless of which products, technologies, or people are involved.
+The EP2-P1 audit scored the About page 3/10 — the lowest-scoring page on the site and the most significant trust failure, because it is the page most likely to be consulted by a trust-evaluating guest. It contained no founding story, no genuine context for the names, and a count inconsistency. This programme closes that gap.
 
 ---
 
@@ -88,7 +86,7 @@ _Task closed._
 
 ## Context Notes
 
-**Last completed:** EP2-P2 Digital Flagship Maturity Model (2026-08-05)
+**Last completed:** EP2-P3 About Page Foundation Alignment (2026-08-05)
 
 Recent completed programs (newest first):
 - EP100-P3A Extract Shared AdminNavigation Component (2026-08-04) — 1 component created; 14 dashboards updated; Link import audited (7 preserved for body Link usage); build passes; 189 routes

@@ -39,6 +39,57 @@ Never edit or delete past entries.
 
 ## Log
 
+### 2026-08-05 — EP2-P3 — Platform Experience Programme / About Page Foundation Alignment
+
+**Participants:** Project Owner / Claude (Implementation Engineer)
+**Program:** EP2-P3 — Platform Experience Programme / About Page Foundation Alignment
+
+**Decisions Made:**
+- About page rewritten from 4 generic paragraphs to 9 Foundation-aligned sections. Architecture preserved — same Navbar, Footer, bg-[#faf7f5], max-w-5xl container, and typography system. Content only was replaced.
+- No fixed catalogue numbers used anywhere on the page. Timeless language ("Our collection continues to grow") replaces the count inconsistency (465+ was previously wrong against the 93-entry MKC). The About page will remain accurate regardless of catalogue growth.
+- AI introduced in the "How We Build" section as one expression of the knowledge philosophy — not the headline. Technology appears as the servant of hospitality.
+- "Our Promise" section added after "Growing Together" per programme specification: care, craftsmanship, and integrity named explicitly.
+- "An Invitation" closes the page with "This is only the beginning of our story. We would be honoured if it became part of yours." — no conventional thank-you.
+- OG and Twitter metadata added. Description updated from generic ("5ml, 10ml and 30ml") to Foundation-aligned ("why should confidence only belong to people who can afford luxury pricing?").
+- All seven self-review criteria passed before committing.
+- Programme designated EP2-P3 in the Foundation Programme table (EP2-P2 was the Maturity Model established in the prior session).
+
+**Foundation Alignment:**
+- Opening → Covenant (Who We Are)
+- A Compliment Changed Everything → Founder's Letter
+- Why Skye & Rose → Constitution Art. II, Founder's Letter
+- What We Believe → Art. IV (Confidence), Art. IX (Stewardship), Art. XII (Legacy)
+- Knowledge Before Recommendation → Art. VII (Knowledge), Art. VIII (Technology), Charter Part V (AI Stewardship)
+- Accessible Luxury → Art. V (Accessible Luxury), Covenant (Our Promise to Customers)
+- Growing Together → Art. X (Growth), Founder's Letter (expansion section)
+- Our Promise → Covenant (Promise to Customers, Promise to Future Stewards)
+- An Invitation → Blueprint (Welcome stage)
+
+**Tasks Completed:**
+- Rewrote `app/about/page.tsx` — 9 Foundation-aligned sections, timeless language, OG/Twitter metadata
+- Updated `PROJECT_STATUS.md` — EP2-P3 added to Foundation Programme table; summary paragraph added
+- Updated `.ai/CURRENT_TASK.md` — EP2-P3 reflected as complete
+- Updated `.ai/ENGINEERING_LOG.md`
+
+**Tasks Started:**
+- None
+
+**Build Result:** Pass — 187 routes, 0 TypeScript errors, 0 warnings. `/about` statically generated.
+
+**Files Changed:**
+- `app/about/page.tsx` (modified — full content rewrite, metadata updated)
+- `PROJECT_STATUS.md` (modified)
+- `.ai/CURRENT_TASK.md` (modified)
+- `.ai/ENGINEERING_LOG.md` (modified)
+
+**Handoff:**
+- EP2-P3 complete. The About page is now the first public expression of the Maison Skye & Rose institution. Foundation Alignment and Trust Building categories in the Maturity Model should improve significantly on next assessment — the primary evidence gap for both has been closed. Maturity Model next priorities: Commerce Experience (4/10), Language & Voice terminology ("Loyal Customer" → "Loyal Guest" one-line fix), Hospitality consistency at checkout.
+
+**Open Questions Carried Forward:**
+- None
+
+---
+
 ### 2026-08-05 — EP2-P2 — Platform Experience Programme / Digital Flagship Maturity Model
 
 **Participants:** Project Owner / Claude (Implementation Engineer)
