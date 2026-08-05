@@ -19,31 +19,36 @@ At the start of a new Claude Code session:
 ## Current Task
 
 **Status:** Complete
-**Program:** EP1-P1 — Experience Programme / The Skye & Rose Experience Blueprint
+**Program:** EP2-P2 — Platform Experience Programme / Digital Flagship Maturity Model
 
 **Goal:**
-Establish the emotional operating system of Maison Skye & Rose: a permanent Blueprint that ensures every guest, in every touchpoint, category, and generation, feels welcomed, confident, and belonging.
+Design the permanent Digital Flagship Maturity Model for Maison Skye & Rose — the institutional framework used repeatedly to measure how faithfully the digital flagship expresses the institution.
 
 **Acceptance Criteria:**
-- [x] `FOUNDATIONS/04_EXPERIENCE_BLUEPRINT.md` created
-- [x] "Guest" established as the primary concept, replacing "customer" — with philosophical grounding
-- [x] Ten-stage emotional journey written: Curiosity → Welcome → Discovery → Understanding → Confidence → Belonging → Trust → Loyalty → Pride → Sharing
-- [x] Touchpoint experience written for every guest contact point: Discovery through Long-term Relationship
-- [x] Brand Personality established — seven permanent traits; five things the institution never feels
-- [x] Brand Voice and Language Principles written — preferred concepts, words/patterns to avoid, six specific language principles
-- [x] Luxury Philosophy written — luxury defined by care and craftsmanship, not price
-- [x] Confidence Philosophy written — confidence as the institution's primary product; fragrance as one expression
-- [x] Belonging section written — the emotional resolution of Accessible Luxury
-- [x] Knowledge Experience written — education as gift, not sales tool
-- [x] AI Experience written — AI as host, not salesperson; five things AI must do, five things AI must never do
-- [x] Digital, Retail, and Packaging experiences written
-- [x] Future Product Experience and Institution Growth written for permanence across category expansion
-- [x] Closing Promise returns to the Founder's Letter's origin moment
-- [x] All four previous foundational documents NOT modified
-- [x] Self-review performed against all eight quality criteria; all pass
+- [x] `FOUNDATIONS/05_DIGITAL_FLAGSHIP_MATURITY_MODEL.md` created
+- [x] Purpose and role of the framework defined
+- [x] Constitutional Foundation tracing for the framework itself
+- [x] Assessment Methodology defined (6-step process, frequency, who may conduct)
+- [x] 5 Maturity Levels defined with characteristic indicators (Functional through Enduring Institution)
+- [x] Scoring Framework defined: 20 categories, 3 tiers, weighted formula, 290-point maximum
+- [x] Minimum Level Gates defined (prevents gaming with peripheral category scores)
+- [x] All 20 Category Definitions written (Purpose, Foundation Tracing, Evidence Sources, Assessment Criteria, Score Guidance 0/3/5/7/10)
+- [x] Evidence Requirements defined (valid evidence, impermissible evidence, evidence preservation)
+- [x] Reporting Standard defined (full Assessment Report format)
+- [x] Improvement Planning defined (priority order, programme sizing guidance)
+- [x] Quarterly Review Process defined (5-step process)
+- [x] Annual Institutional Review defined
+- [x] Executive Dashboard Format defined
+- [x] Maturity History Format defined
+- [x] Inaugural Assessment Record included (2026-08-05, Level 3 — Institutional, 63.4%)
+- [x] Amendment Process defined (permissible and impermissible amendments)
+- [x] `PROJECT_STATUS.md` updated (EP2-P2 added)
+- [x] `.ai/CURRENT_TASK.md` updated
+- [x] `.ai/ENGINEERING_LOG.md` updated
+- [x] No source code modified
 
 **Why This Task:**
-An institution can have perfect products and perfect values and still fail its guests if it does not know how it wants them to feel. The Experience Blueprint is the translator between what the institution believes and what guests experience. Without it, the philosophical standards of the Foundation Programme cannot be consistently expressed in practice.
+The EP2-P1 audit produced a one-time snapshot. Without a permanent measurement framework, future assessments have no consistent standard — scores become subjective, trends cannot be tracked, and institutional drift cannot be detected. The Maturity Model gives every future assessment a repeatable, evidence-based methodology that serves the institution regardless of which products, technologies, or people are involved.
 
 ---
 
@@ -83,7 +88,7 @@ _Task closed._
 
 ## Context Notes
 
-**Last completed:** EP100-P3A Extract Shared AdminNavigation Component (2026-08-04)
+**Last completed:** EP2-P2 Digital Flagship Maturity Model (2026-08-05)
 
 Recent completed programs (newest first):
 - EP100-P3A Extract Shared AdminNavigation Component (2026-08-04) — 1 component created; 14 dashboards updated; Link import audited (7 preserved for body Link usage); build passes; 189 routes

@@ -39,6 +39,48 @@ Never edit or delete past entries.
 
 ## Log
 
+### 2026-08-05 — EP2-P2 — Platform Experience Programme / Digital Flagship Maturity Model
+
+**Participants:** Project Owner / Claude (Implementation Engineer)
+**Program:** EP2-P2 — Platform Experience Programme / Digital Flagship Maturity Model
+
+**Decisions Made:**
+- Maturity Model designed as a permanent institutional instrument, not a one-time audit. Designed to remain relevant across product categories, technologies, countries, and generations.
+- 20 assessment categories organised into three weighted tiers: Foundation Pillars (×2.0), Guest-Facing Experience (×1.5), Operational & Future (×1.0). Weighting reflects the primacy of the institution's core commitments.
+- Minimum Level Gates introduced to prevent gaming by peripheral category scores — a platform cannot achieve Level 3 if any Tier 1 category scores below 5, regardless of overall weighted score.
+- Scoring anchors at 0, 3, 5, 7, and 10 per category, with descriptive guidance at each anchor. Assessors may assign intermediate scores with evidence.
+- Evidence requirement is absolute: no score may be assigned without specific repository evidence (file paths, copy samples, observed behaviour). Assumptions, intent, and prior knowledge without verification are impermissible.
+- Inaugural assessment record included in the document itself, establishing the baseline as Level 3 — Institutional at 63.4% (2026-08-05), consistent with EP2-P1 findings.
+- Amendment process defined: the framework may be extended as the institution grows; it may never be weakened.
+- Quarterly Review process and Annual Institutional Review process defined with explicit step-by-step sequences.
+- Executive Dashboard format designed for leadership and future steward reporting.
+- Foundation Tracing for the framework itself maps to Articles I, III, IV, V, VI, VII, VIII, IX, X, XI, XII plus all five Foundation documents.
+
+**Tasks Completed:**
+- Created `FOUNDATIONS/05_DIGITAL_FLAGSHIP_MATURITY_MODEL.md`
+- Updated `PROJECT_STATUS.md` — EP2-P2 added to Foundation Programme table; summary paragraph added
+- Updated `.ai/CURRENT_TASK.md` — EP2-P2 reflected as complete
+- Updated `.ai/ENGINEERING_LOG.md`
+
+**Tasks Started:**
+- None
+
+**Build Result:** N/A — no source code modified
+
+**Files Changed:**
+- `FOUNDATIONS/05_DIGITAL_FLAGSHIP_MATURITY_MODEL.md` (created)
+- `PROJECT_STATUS.md` (modified)
+- `.ai/CURRENT_TASK.md` (modified)
+- `.ai/ENGINEERING_LOG.md` (modified)
+
+**Handoff:**
+- EP2-P2 complete. The Digital Flagship Maturity Model is established as the sixth document of the Foundation Programme. The model produces a weighted score (290 points maximum) and a declared Maturity Level (1–5) supported by repository evidence. Inaugural score: Level 3 — Institutional at 63.4%. Next priorities per the model's own Priority Order: Commerce Experience (4/10, Tier 2), Foundation Alignment at About page (5/10 improvement path), Language & Voice terminology cleanup (6/10 → 7/10 possible with one line fix + About page).
+
+**Open Questions Carried Forward:**
+- None
+
+---
+
 ### 2026-08-04 — EP1-P1 — Experience Programme / The Skye & Rose Experience Blueprint
 
 **Participants:** Project Owner / Claude (Implementation Engineer)
