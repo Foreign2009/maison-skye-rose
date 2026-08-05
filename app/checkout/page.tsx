@@ -149,9 +149,20 @@ export default function CheckoutPage() {
 
       <section className="mx-auto max-w-4xl px-6 pt-32 md:pt-36 pb-20">
 
-        <h1 className="text-5xl font-black uppercase">Checkout</h1>
+        <p className="text-[10px] font-semibold uppercase tracking-[0.55em] text-[#d89ca4]">
+          Your Maison Order
+        </p>
+        <h1 className="mt-4 text-5xl font-black tracking-[-0.05em] text-[#4f4a52]">
+          Complete Your Order
+        </h1>
+        <p className="mt-5 max-w-xl text-base leading-relaxed text-[#7b7480]">
+          Enter your details below. We&apos;ll handle your order with care and be in touch to confirm.
+        </p>
 
-        <div className="mt-10 space-y-5">
+        <div className="mt-12 space-y-5">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.45em] text-[#9b9298]">
+            Delivery Details
+          </p>
 
           <div className="space-y-1.5">
             <label htmlFor="checkout-name" className="block text-sm font-semibold text-[#4f4a52]">
@@ -220,7 +231,11 @@ export default function CheckoutPage() {
 
         <div className="mt-10 rounded-3xl bg-white p-8 shadow-xl">
 
-          <div className="flex justify-between">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.45em] text-[#d89ca4]">
+            Order Summary
+          </p>
+
+          <div className="mt-6 flex justify-between">
             <span>Subtotal</span>
             <span>R{subtotal.toFixed(2)}</span>
           </div>
@@ -248,6 +263,10 @@ export default function CheckoutPage() {
           >
             {loading ? "Placing Order..." : "Place Order"}
           </button>
+
+          <p className="mt-5 text-center text-xs leading-relaxed text-[#9b9298]">
+            Your order is confirmed the moment it&apos;s placed. We&apos;ll be in touch to confirm and arrange delivery with care.
+          </p>
 
         </div>
 
