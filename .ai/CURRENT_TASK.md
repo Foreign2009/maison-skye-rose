@@ -19,7 +19,7 @@ At the start of a new Claude Code session:
 ## Current Task
 
 **Status:** Complete
-**Program:** EP2-P6B — Institutional Voice Alignment
+**Program:** EP2-P7B — Online Collection Truth Alignment
 
 **Goal:**
 Transform the About page from 4 generic paragraphs into the first public expression of the Maison Skye & Rose institution — aligned with all five Foundation documents.

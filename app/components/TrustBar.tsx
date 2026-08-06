@@ -1,6 +1,6 @@
 export default function TrustBar() {
   const items = [
-    "465+ Fragrances Available",
+    "Carefully Curated Collection",
     "Nationwide Delivery",
     "Collection Available",
     "Secure Ordering",

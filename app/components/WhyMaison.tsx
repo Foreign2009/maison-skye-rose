@@ -6,8 +6,8 @@ export default function WhyMaison() {
   const features = [
     {
       icon: <Sparkles className="h-6 w-6 text-[#d89ca4]" />,
-      title: "465+ Fragrances",
-      description: "An extensive library of premium scents.",
+      title: "Curated With Care",
+      description: "A growing fragrance collection chosen to support confident discovery.",
     },
     {
       icon: <Package className="h-6 w-6 text-[#d89ca4]" />,

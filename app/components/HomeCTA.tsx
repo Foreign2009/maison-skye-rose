@@ -8,8 +8,7 @@ export default function HomeCTA() {
         </h2>
 
         <p className="mt-6 text-zinc-300">
-          Explore 90+ featured fragrances and
-          access over 465 luxury-inspired scents.
+          Explore our carefully curated online collection, or ask us about a fragrance you cannot find.
         </p>
 
         <div className="mt-10 flex flex-wrap justify-center gap-4">

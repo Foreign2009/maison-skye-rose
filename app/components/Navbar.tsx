@@ -18,7 +18,7 @@ const ANNOUNCEMENTS = [
   "Mix & Match Wholesale From 10 Bottles",
   "5ml R48 • 10ml R77 • 30ml R180",
   "WhatsApp Orders Welcome",
-  "465+ Signature Fragrances Available",
+  "A Fragrance for Every Confidence Journey",
   "Your personal Concierge is ready — start your fragrance journey",
 ];
 

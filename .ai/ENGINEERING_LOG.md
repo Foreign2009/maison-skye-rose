@@ -39,6 +39,49 @@ Never edit or delete past entries.
 
 ## Log
 
+### 2026-08-06 — EP2-P7B — Platform Experience Programme / Online Collection Truth Alignment
+
+**Participants:** Project Owner / Claude (Implementation Engineer)
+**Program:** EP2-P7B — Online Collection Truth Alignment
+
+**Decisions Made:**
+- Replace all unqualified 465+ claims on institutional and trust surfaces with truthful, timeless language.
+- Sourcing-specific surfaces (RequestFragrance, FAQ, Contact sourcing section, WhyChooseUs body) explicitly preserved — their 465 usage remains appropriate because sourcing context is established.
+- No sourcing architecture introduced in this episode. No catalogStats.ts changes. Count verification remains a founder prerequisite for future episodes.
+
+**Tasks Completed:**
+- Navbar: "465+ Signature Fragrances Available" → "A Fragrance for Every Confidence Journey"
+- TrustBar: "465+ Fragrances Available" → "Carefully Curated Collection"
+- WhyMaison: title "465+ Fragrances" / description "An extensive library of premium scents." → "Curated With Care" / "A growing fragrance collection chosen to support confident discovery."
+- HomeCTA: "Explore 90+ featured fragrances and access over 465 luxury-inspired scents." → "Explore our carefully curated online collection, or ask us about a fragrance you cannot find."
+- Fragrance Profile cold-start: "Browse 465+ signature fragrances. Every piece you explore is remembered here." → "Explore our fragrance collection. Every fragrance you discover helps shape your profile."
+- PROJECT_STATUS.md updated with EP2-P7 and EP2-P7B entries.
+- .ai/CURRENT_TASK.md updated.
+- .ai/ENGINEERING_LOG.md updated.
+
+**Build Result:** Pass — 187 routes, 0 TypeScript errors, 0 warnings.
+
+**Files Changed:**
+- `app/components/Navbar.tsx` — announcement text only
+- `app/components/TrustBar.tsx` — trust badge text only
+- `app/components/WhyMaison.tsx` — feature card title and description only
+- `app/components/HomeCTA.tsx` — body paragraph only
+- `app/fragrance-profile/page.tsx` — cold-start card body text only
+- `PROJECT_STATUS.md` — EP2-P7 and EP2-P7B entries added
+- `.ai/CURRENT_TASK.md` — updated
+- `.ai/ENGINEERING_LOG.md` — this entry
+
+**Handoff:**
+- EP2-P7C (Contact Details card + WhyChooseUs title + ProductDetail trust badge) awaits approval.
+- EP2-P7A (founder verification of 465 against actual supplier catalogue) is a prerequisite for any future sourcing count changes.
+- EP2-P7D (data model — availabilityStatus + category fields) awaits approval for future episode.
+
+**Open Questions Carried Forward:**
+- Is 465 the current accurate sourcing catalogue count? Founder must verify.
+- Which naming option (A–E from EP2-P7 audit) should be adopted for the curated online collection and sourcing service public names?
+
+---
+
 ### 2026-08-06 — EP2-P6B — Platform Experience Programme / Institutional Voice Alignment
 
 **Participants:** Project Owner / Claude (Implementation Engineer)

@@ -470,7 +470,7 @@ export default function FragranceProfilePage() {
                   Begin Your Discovery
                 </h2>
                 <p className="mt-2 text-sm leading-relaxed text-[#7b7480]">
-                  Browse 465+ signature fragrances. Every piece you explore is remembered here.
+                  Explore our fragrance collection. Every fragrance you discover helps shape your profile.
                 </p>
                 <Link
                   href="/shop"
