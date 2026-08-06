@@ -8,7 +8,7 @@
 
 ## Current Engineering Program
 
-**Program:** EP3-P5B — Scaffold Resolution Foundation (Complete)
+**Program:** EP3-P7 — Factory Integrity Hardening (Complete)
 **Sprint:** EP3
 **Gate:** Complete
 **Objective:** Make scaffold selection registry-driven. ScaffoldRegistry introduced with one registered fragrance scaffolder. Orchestrator resolves the scaffolder by intake category — no direct scaffold() call in the pipeline runner. Both ScaffoldRegistry and ProducerRegistry resolve from the same authoritative intake category.
@@ -77,6 +77,8 @@ Verify: `npm run build`
 | EP3 | EP3-P4 | Multi-Category Factory Intake Architecture Audit | Complete — 2026-08-06 |
 | EP3 | EP3-P5A | Category-Bearing Factory Intake | Complete — 2026-08-06 |
 | EP3 | EP3-P5B | Scaffold Resolution Foundation | Complete — 2026-08-06 |
+| EP3 | EP3-P6 | Registry-Driven Factory Stability Audit | Complete — 2026-08-06 |
+| EP3 | EP3-P7 | Factory Integrity Hardening | Complete — 2026-08-06 |
 
 `FOUNDATIONS/00_FOUNDERS_LETTER.md` — The permanent founder's letter to Skye, Rose, future employees, and future stewards. *Why we began.*
 `FOUNDATIONS/01_SKYE_AND_ROSE_COVENANT.md` — The institutional promise: to customers, products, technology, and future generations. *What we promise.*

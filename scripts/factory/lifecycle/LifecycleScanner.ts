@@ -23,6 +23,7 @@ import { getAllRecords }               from "../review/ReviewRegistry";
 import { getAllPromotionRecords }      from "../promotion/PromotionRegistry";
 import { PromptRegistry }             from "../core/PromptRegistry";
 import { deriveSlug }                 from "../intake";
+import { FACTORY_VERSION }            from "../version";
 
 import { fragrances }                 from "../../../app/data/fragrances";
 import { nativeFragrances }           from "../../../app/lib/mkc/native/index";
@@ -33,9 +34,8 @@ import { SEVERITY_ORDER, STALE_REASONS, FAILED_REASONS, REJECTED_REASONS } from 
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 
-const CURRENT_FACTORY_VERSION = "0.5.0";
-const DRAFT_DIR   = path.join(process.cwd(), "scripts", "factory", "drafts");
-const PROMPT_DIR  = path.join(process.cwd(), "scripts", "factory", "prompts");
+const DRAFT_DIR  = path.join(process.cwd(), "scripts", "factory", "drafts");
+const PROMPT_DIR = path.join(process.cwd(), "scripts", "factory", "prompts");
 
 // ── Scan input ────────────────────────────────────────────────────────────────
 
@@ -121,7 +121,7 @@ export function scanLifecycle(input: ScanInput = {}): ScanResult {
     const jobs = applyAllRules({
       slug, name, collection, isNative, draftExists, draftContent,
       factoryEntry, reviewRecord, promotionRecord,
-      latestPromptVersions, currentFactoryVersion: CURRENT_FACTORY_VERSION,
+      latestPromptVersions, currentFactoryVersion: FACTORY_VERSION,
     });
 
     for (const job of jobs) {

@@ -26,6 +26,9 @@ export class ProducerRegistry {
   private readonly sets = new Map<ProductCategory, ProducerSet>();
 
   register(set: ProducerSet): this {
+    if (this.sets.has(set.category)) {
+      throw new Error(`ProducerSet already registered for category: ${set.category}`);
+    }
     this.sets.set(set.category, set);
     return this;
   }

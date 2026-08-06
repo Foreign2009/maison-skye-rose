@@ -39,6 +39,47 @@ Never edit or delete past entries.
 
 ## Log
 
+### 2026-08-06 — EP3-P7 — Knowledge Platform Evolution / Factory Integrity Hardening
+
+**Participants:** Project Owner / Claude (Implementation Engineer)
+**Program:** EP3-P7 — Factory Integrity Hardening
+
+**Decisions Made:**
+- `ProducerRegistry.register()` now throws on duplicate category registration, matching the established contracts of `CatalogueRegistry` and `ScaffoldRegistry`. Error: `"ProducerSet already registered for category: {category}"`.
+- `scripts/factory/version.ts` created as the single authoritative source for `FACTORY_VERSION = "0.5.0"`. `orchestrator.ts` imports and re-exports it to preserve `BatchFactory.ts`'s existing import path.
+- `scripts/factory/core/deriveSlug.ts` created as the single authoritative source for `deriveSlug()`. `intake.ts` imports and re-exports it to preserve `BatchQueue.ts` and `LifecycleScanner.ts`'s existing import paths. `DashboardService.ts` local duplicate removed.
+- No third-party imports changed. No factory output changed. No guest-facing changes.
+
+**Tasks Completed:**
+- EP3-P6 findings 1, 2, 3 resolved.
+- 2 new files created: `version.ts`, `core/deriveSlug.ts`.
+- 5 files modified: `ProducerRegistry.ts`, `orchestrator.ts`, `intake.ts`, `LifecycleScanner.ts`, `DashboardService.ts`.
+- Governance updated: `PROJECT_STATUS.md`, `.ai/CURRENT_TASK.md`, `.ai/ENGINEERING_LOG.md`.
+
+**Tasks Started:**
+- None.
+
+**Build Result:** Pass — 187 routes, 0 TypeScript errors, 0 warnings.
+
+**Files Changed:**
+- `scripts/factory/version.ts` — Created. `export const FACTORY_VERSION = "0.5.0"`.
+- `scripts/factory/core/deriveSlug.ts` — Created. `export function deriveSlug()`.
+- `scripts/factory/core/ProducerRegistry.ts` — `register()` throws on duplicate category.
+- `scripts/factory/orchestrator.ts` — Imports `FACTORY_VERSION` from `./version`; re-exports.
+- `scripts/factory/intake.ts` — Imports `deriveSlug` from `./core/deriveSlug`; re-exports.
+- `scripts/factory/lifecycle/LifecycleScanner.ts` — Imports `FACTORY_VERSION` from `../version`; removes `CURRENT_FACTORY_VERSION` constant.
+- `scripts/factory/dashboard/DashboardService.ts` — Imports `FACTORY_VERSION` + `deriveSlug` from canonical modules; removes `FACTORY_VER` constant and local `deriveSlug` function.
+
+**Handoff:**
+- All three EP3-P6 required-fix findings resolved.
+- EP3-P6 deferred finding (BatchQueue multi-category enumeration) remains deferred — gated on second catalogue existing.
+- Next: EP3-P8 or owner direction. No active gate.
+
+**Open Questions Carried Forward:**
+- None.
+
+---
+
 ### 2026-08-06 — EP3-P5B — Knowledge Platform Evolution / Scaffold Resolution Foundation
 
 **Participants:** Project Owner / Claude (Implementation Engineer)

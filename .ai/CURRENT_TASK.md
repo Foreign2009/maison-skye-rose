@@ -19,52 +19,57 @@ At the start of a new Claude Code session:
 ## Current Task
 
 **Status:** Complete
-**Program:** EP3-P5B — Scaffold Resolution Foundation
+**Program:** EP3-P7 — Factory Integrity Hardening
 
 **Goal:**
-Make scaffold selection registry-driven. Introduce ScaffoldRegistry with one registered fragrance scaffolder. The orchestrator resolves scaffolders by intake category rather than directly calling scaffold(). Both ScaffoldRegistry and ProducerRegistry resolve from the same authoritative intake category.
+Resolve three small integrity inconsistencies identified in the EP3-P6 audit before a second product category is introduced:
+1. ProducerRegistry silently overwrote duplicate category registrations.
+2. FACTORY_VERSION was duplicated across orchestrator, LifecycleScanner, and DashboardService.
+3. DashboardService maintained a local duplicate of the canonical deriveSlug() function.
 
 **Acceptance Criteria:**
-- [x] `ScaffoldRegistry` created in `scripts/factory/core/ScaffoldRegistry.ts`
-- [x] `CategoryScaffolder = (intake: ProductIntake) => ScaffoldResult` — fully type-safe with current union
-- [x] One fragrance scaffolder registered via `defaultScaffoldRegistry` in `orchestrator.ts`
-- [x] Registered fragrance scaffolder calls existing `scaffold()` — behaviour unchanged
-- [x] `defaultScaffoldRegistry.getScaffolder(resolvedCategory)` replaces direct `scaffold(result.intake!)` in pipeline
-- [x] ScaffoldRegistry and ProducerRegistry both resolve from `resolvedCategory` (same authoritative source)
-- [x] Promotion decision: Option A — `promotionManager.ts` stays calling `scaffold()` directly (fragrance-only)
-- [x] Duplicate category registration throws clearly
-- [x] Missing scaffolder throws clearly before any AI generation
-- [x] No new categories, no new scaffolders
-- [x] All 5 producers unchanged
-- [x] `PipelineInput`, CLI, BatchRunner unchanged
+- [x] `ProducerRegistry.register()` throws on duplicate category registration
+- [x] Error message matches the style of CatalogueRegistry and ScaffoldRegistry
+- [x] `scripts/factory/version.ts` created with `export const FACTORY_VERSION = "0.5.0"`
+- [x] `orchestrator.ts` imports FACTORY_VERSION from `./version` and re-exports it
+- [x] `LifecycleScanner.ts` imports FACTORY_VERSION from `../version`
+- [x] `DashboardService.ts` imports FACTORY_VERSION from `../version`
+- [x] No stale FACTORY_VER or CURRENT_FACTORY_VERSION literals remain
+- [x] `scripts/factory/core/deriveSlug.ts` created with canonical implementation
+- [x] `intake.ts` imports from `./core/deriveSlug` and re-exports (preserving BatchQueue + LifecycleScanner callers)
+- [x] `DashboardService.ts` imports deriveSlug from `../core/deriveSlug`; local function removed
+- [x] No duplicate `function deriveSlug` definition exists anywhere in factory scripts
+- [x] `BatchFactory.ts` import of FACTORY_VERSION from `../orchestrator` remains valid
+- [x] `BatchQueue.ts` import of deriveSlug from `../intake` remains valid
+- [x] `LifecycleScanner.ts` import of deriveSlug from `../intake` remains valid
 - [x] Build passes: 187 routes, 0 TypeScript errors, 0 warnings
 - [x] `PROJECT_STATUS.md` updated
 - [x] `.ai/CURRENT_TASK.md` updated
 - [x] `.ai/ENGINEERING_LOG.md` updated
 
 **Why This Task:**
-EP3-P5A made category explicit at intake. EP3-P5B completes the registry-driven orchestration path — the pipeline runner now resolves scaffold, producer set, AND catalogue all by category, with no hardcoded fragrance-specific logic inside `run()`.
+Three small integrity gaps identified in EP3-P6 were confirmed by repository inspection. All three were safe to fix before a second product category is registered, preventing silent configuration drift, version staleness, and slug-derivation divergence.
 
 ---
 
 ## Files Involved
 
-**Files created (1):**
-- `scripts/factory/core/ScaffoldRegistry.ts` — `CategoryScaffolder` type, `ScaffoldRegistry` class
+**Files created (2):**
+- `scripts/factory/version.ts` — Single FACTORY_VERSION export
+- `scripts/factory/core/deriveSlug.ts` — Single deriveSlug() export
 
-**Files modified (1):**
-- `scripts/factory/orchestrator.ts` — `ScaffoldRegistry` imported; `defaultScaffoldRegistry` exported with fragrance scaffolder registration; `scaffold(result.intake!)` replaced by `scaffolder(result.intake!)`
+**Files modified (5):**
+- `scripts/factory/core/ProducerRegistry.ts` — Duplicate guard added to register()
+- `scripts/factory/orchestrator.ts` — Imports FACTORY_VERSION from ./version; re-exports it
+- `scripts/factory/intake.ts` — Imports deriveSlug from ./core/deriveSlug; re-exports it
+- `scripts/factory/lifecycle/LifecycleScanner.ts` — Imports FACTORY_VERSION from ../version
+- `scripts/factory/dashboard/DashboardService.ts` — Imports FACTORY_VERSION and deriveSlug from canonical sources
 
 **Files NOT modified:**
-- `scripts/factory/scaffold.ts` — unchanged; called through the registered scaffolder
-- `scripts/factory/types.ts` — unchanged
-- `scripts/factory/intake.ts` — unchanged
-- `scripts/factory/promotion/promotionManager.ts` — unchanged (Option A: stays calling scaffold() directly)
-- `scripts/factory/draftBuilder.ts` — unchanged
-- `scripts/factory/merger.ts` — unchanged
-- `scripts/factory/review/` — unchanged
-- `scripts/factory/batch/` — unchanged
+- `scripts/factory/batch/BatchQueue.ts` — imports deriveSlug from ../intake (preserved via re-export)
+- `scripts/factory/batch/BatchFactory.ts` — imports FACTORY_VERSION from ../orchestrator (preserved via re-export)
 - All 5 producers — unchanged
+- All promotion, review, batch runner files — unchanged
 - All application code — unchanged
 - All 93 native MKC records — unchanged
 
@@ -78,36 +83,13 @@ _Task closed._
 
 ## Context Notes
 
-**Last completed:** EP3-P5B Scaffold Resolution Foundation (2026-08-06)
+**Last completed:** EP3-P7 Factory Integrity Hardening (2026-08-06)
 
 Recent completed programs (newest first):
-- EP100-P3A Extract Shared AdminNavigation Component (2026-08-04) — 1 component created; 14 dashboards updated; Link import audited (7 preserved for body Link usage); build passes; 189 routes
-- EP100-P2B Remove Terminated Executive Report Pipeline (2026-08-03) — 176 terminated files deleted (58 routes + 58 components + 60 lib/operations); 14 nav components cleaned; build passes; 189 routes (was 247)
-- EP90-P2 Adaptive Experience Messaging (2026-08-03) — discovery copy on recently-viewed and fragrance-profile pages aligned with EP90-P1 routing; two prop-string changes; no component or engine changes; build passes; 247 routes
-- EP90-P1 Adaptive Recommendation Strategy (2026-08-03) — ProfileRichness type introduced; getProfileRichness() replaces hasMeaningfulProfile() in ExperienceIntelligence routing; passive customers route to discovery; emerging/rich customers route to personalised; RecommendationEngine/RecommendationPipeline/RecommendationConfidence/LearningEngine/commerce/UI untouched; build passes; 247 routes
-- EP80-P1 Recommendation Confidence (2026-08-03) — Recommendation now carries readonly confidence: RecommendationConfidence; RecommendationPipeline calls calculateConfidence() during assign stage; RecommendationEngine/LearningEngine/RecommendationReasonBuilder/commerce/UI untouched; build passes; 247 routes
-- EP70-P1 Negative Preference Scoring (2026-08-03) — avoidedFamilies now propagates through LearnedPreferences into PreferenceProfile; scoreProfile() applies bounded avoidance penalty (−0.30/match, clamped [0,1]); RecommendationEngine/LearningEngine/RecommendationReasonBuilder/commerce untouched; build passes; 247 routes
-- EP60-P2 Complete Recommendation Impression Coverage (2026-08-03) — six surfaces now emit recommendation_set_shown; CTR/save rate/ATC rate computable for all strategies; build passes; 247 routes
-- EP50-P1 Explainable MiniCart Recommendations (2026-08-03) — CartCollectionItem type preserves recReason through mapping; MiniCart Complete Your Collection now displays recommendation explanations; RecommendationEngine/RecommendationReasonBuilder/LearningEngine untouched; build passes; 247 routes
-- EP40-P2 Personalized MiniCart Recommendations (2026-08-03) — MiniCart "Complete Your Collection" now uses UnifiedCustomerProfile; CartRecommendationInput extended with optional profile; anonymousProfile() retained as fallback; RecommendationEngine/LearningEngine/commerce untouched; build passes; 247 routes
-- EP40-P1 Personalized Recommendation Experience (2026-08-03) — product page routed through "product" experience (similar strategy); compare page routed through "compare" experience (complementary strategy); 2 files, 2 lines; RecommendationEngine/ExperienceIntelligence/LearningEngine untouched; build passes; 247 routes
-- EP30-P1 Purchase Intelligence Bridge (2026-08-02) — fragrance_purchase signals emitted on confirmed orders; PurchaseInterpreter implemented; purchase intelligence flows into recommendation scoring; build passes; 247 routes
-- EP20-P4 Recommendation Bridge (2026-08-02) — LearningEngine integrated at RecommendationEngine orchestration layer; concierge/search/discovery preferences now influence scoring; pipeline unchanged; build passes; 247 routes
-- EP20-P3 Confidence Compositing (2026-08-02) — createCompositingCalculator + createAccumulatedResolver introduced; LearningEngine default wiring updated; build passes; 247 routes
-- EP20-P2 Discovery Intelligence Documentation Sync (2026-08-02) — Pipeline verified fully operational; stale comments corrected in 3 files; no runtime changes; build passes; 247 routes
-- EP20-P1 Concierge Intelligence Activation (2026-08-02) — ConciergeInterpreter active; signals emitted from ConciergePanel; build passes; 247 routes
-- KI-16 Sort Behaviour Consistency (2026-08-02) — Best Sellers/New Arrivals removed from sort; filter controls unchanged; build passes; 247 routes
-- KI-15 Product JSON-LD Availability (2026-08-02) — JSON-LD availability now derived from knowledge.status; build passes; 247 routes
-- KI-14 Mobile MiniCart Close UX (2026-08-02) — drag handle converted to button calling onClose; build passes; 247 routes
-- KI-12 Instagram URL Completion (2026-08-02) — brand.ts instagramUrl set to https://instagram.com/maisonskyeandrose; build passes
-- KI-11 Documentation Closure (2026-08-02) — verified resolved by inspection; no code changes; KI-11 moved to Resolved in KNOWN_ISSUES.md
-- KI-10 Documentation Closure (2026-08-02) — verified resolved by inspection; no code changes; KI-10 moved to Resolved in KNOWN_ISSUES.md
-- KI-04 Cart Composite Key (2026-08-02) — commit c8dea73 — dead QuickAddBundle.tsx deleted; all active paths already canonical
-- Repository Maintenance (2026-08-02) — 9 known issues marked Resolved; SPRINT.md, ENGINEERING_LOG.md, CURRENT_TASK.md updated; 5 validation scripts deleted
-- Delivery Pricing Reconciliation KI-07 (2026-08-02) — commit 74c8789 — D10 Option (c) implemented in MiniCart.tsx
-- PayFast Production Hardening KI-01/02/03/05/06 (2026-08-02) — commit 9f9f7f5 — payfast/route.ts rewritten, itn/route.ts created, checkout wired to PayFast
-- FloatingCart Integration (2026-08-02) — commit 4356d35 — FloatingCart added to layout.tsx with cartOpen guard and aria-label
-- Executive Report Pipeline (2026-07-01 → 2026-08-02) — ~30 stages implemented, pipeline terminated at Commitment by approved architecture decision
+- EP3-P6 Registry-Driven Factory Stability Audit (2026-08-06) — 20-deliverable read-only audit; confirmed stability; identified 3 required fixes
+- EP3-P5B Scaffold Resolution Foundation (2026-08-06) — ScaffoldRegistry created; orchestrator fully registry-driven
+- EP3-P5A Category-Bearing Factory Intake (2026-08-06) — ProductIntake, CatalogueRegistry, IntakeResult.intake introduced
+- EP3-P4 Multi-Category Factory Intake Architecture Audit (2026-08-06) — 20-deliverable read-only audit
 
 ---
 
@@ -119,7 +101,7 @@ _N/A_
 
 ## Build Result
 
-**Last build:** 2026-08-06 — Pass. Zero TypeScript errors. Zero warnings. 187 routes. (EP3-P3)
+**Last build:** 2026-08-06 — Pass. Zero TypeScript errors. Zero warnings. 187 routes. (EP3-P7)
 
 ---
 

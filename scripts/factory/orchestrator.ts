@@ -18,6 +18,7 @@
  */
 
 import path from "path";
+import { FACTORY_VERSION }    from "./version";
 import { intake }              from "./intake";
 import { scaffold }            from "./scaffold";
 import { merge }               from "./merger";
@@ -39,7 +40,7 @@ import type { PipelineInput, PipelineResult, PipelineState, StageEntry } from ".
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 
-export const FACTORY_VERSION = "0.5.0";
+export { FACTORY_VERSION };
 
 // ── Producer Registry ─────────────────────────────────────────────────────────
 

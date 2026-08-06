@@ -18,13 +18,12 @@ import type { DisplayFragrance } from "../../app/lib/knowledgeAdapter";
 import { nativeFragrances }      from "../../app/lib/mkc/native/index";
 import { fragrances }            from "../../app/data/fragrances";
 import { CatalogueRegistry }     from "./core/CatalogueRegistry";
+import { deriveSlug }            from "./core/deriveSlug";
 import type { IntakeInput, IntakeResult, FragranceIntake } from "./types";
 
 // ── Slug derivation ───────────────────────────────────────────────────────────
 
-export function deriveSlug(name: string): string {
-  return name.toLowerCase().replace(/\s+/g, "-");
-}
+export { deriveSlug };
 
 // ── Const name derivation ─────────────────────────────────────────────────────
 // Produces a valid JavaScript identifier from a slug.

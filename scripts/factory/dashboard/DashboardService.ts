@@ -23,6 +23,8 @@ import { getAllRecords }                       from "../review/ReviewRegistry";
 import { getAllPromotionRecords }              from "../promotion/PromotionRegistry";
 import { getHistory }                         from "../promotion/PromotionHistory";
 import { getByStatus as reviewByStatus }      from "../review/ReviewRegistry";
+import { FACTORY_VERSION }                    from "../version";
+import { deriveSlug }                         from "../core/deriveSlug";
 
 import { nativeFragrances }                   from "../../../app/lib/mkc/native/index";
 import { skyeFragrances }                     from "../../../app/data/skye";
@@ -44,8 +46,7 @@ import type {
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 
-const DRAFT_DIR     = path.join(process.cwd(), "scripts", "factory", "drafts");
-const FACTORY_VER   = "0.5.0";
+const DRAFT_DIR      = path.join(process.cwd(), "scripts", "factory", "drafts");
 const PRODUCER_NAMES = ["composition", "editorial", "relationships", "education", "discovery"];
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
@@ -55,10 +56,6 @@ function countDrafts(): number {
   try {
     return readdirSync(DRAFT_DIR).filter(f => f.endsWith(".ts")).length;
   } catch { return 0; }
-}
-
-function deriveSlug(title: string): string {
-  return title.toLowerCase().replace(/\s+/g, "-");
 }
 
 // ── Section builders ──────────────────────────────────────────────────────────
@@ -83,7 +80,7 @@ function buildFactoryMetrics(): FactoryMetrics {
     : 0;
 
   return {
-    factoryVersion:    FACTORY_VER,
+    factoryVersion:    FACTORY_VERSION,
     producerStack:     PRODUCER_NAMES,
     lastRunAt:         latest?.completedAt   ?? null,
     lastRunSlug:       latest?.slug          ?? null,
