@@ -27,6 +27,7 @@ import { ContextBuilder }        from "./core/ContextBuilder";
 import { GenerationEngine }      from "./core/GenerationEngine";
 import { ClaudeProvider }        from "./core/providers/ClaudeProvider";
 import { ProducerRegistry }      from "./core/ProducerRegistry";
+import { ScaffoldRegistry }      from "./core/ScaffoldRegistry";
 import { CompositionProducer }   from "./producers/CompositionProducer";
 import { EditorialProducer }     from "./producers/EditorialProducer";
 import { RelationshipProducer }  from "./producers/RelationshipProducer";
@@ -55,6 +56,11 @@ export const FRAGRANCE_PRODUCER_SET = {
 
 export const defaultRegistry = new ProducerRegistry();
 defaultRegistry.register(FRAGRANCE_PRODUCER_SET);
+
+// ── Scaffold Registry ─────────────────────────────────────────────────────────
+
+export const defaultScaffoldRegistry = new ScaffoldRegistry();
+defaultScaffoldRegistry.register("fragrance", (intake) => scaffold(intake));
 
 const ROOT      = process.cwd();
 const DRAFT_DIR = path.join(ROOT, "scripts", "factory", "drafts");
@@ -153,8 +159,9 @@ export async function run(input: PipelineInput): Promise<PipelineResult> {
     stage("intake", "pass", ms);
 
     // ── Stage 2: Scaffold ───────────────────────────────────────────────────
-    const t1 = Date.now();
-    const { record: scaffolded, degraded } = scaffold(result.intake!);
+    const t1        = Date.now();
+    const scaffolder = defaultScaffoldRegistry.getScaffolder(resolvedCategory);
+    const { record: scaffolded, degraded } = scaffolder(result.intake!);
     const ms1 = Date.now() - t1;
 
     stage("scaffold", degraded ? "degraded" : "pass", ms1, degraded ? "knowledgeAdapter fallback used" : undefined);

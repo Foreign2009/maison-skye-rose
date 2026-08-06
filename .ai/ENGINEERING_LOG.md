@@ -39,6 +39,46 @@ Never edit or delete past entries.
 
 ## Log
 
+### 2026-08-06 — EP3-P5B — Knowledge Platform Evolution / Scaffold Resolution Foundation
+
+**Participants:** Project Owner / Claude (Implementation Engineer)
+**Program:** EP3-P5B — Scaffold Resolution Foundation
+
+**Decisions Made:**
+- `ScaffoldRegistry` mirrors `ProducerRegistry` and `CatalogueRegistry` exactly: `register / getScaffolder`, one per category, duplicate throws, missing throws.
+- `CategoryScaffolder = (intake: ProductIntake) => ScaffoldResult`. With `ProductIntake = FragranceIntake` (one-member union), this is equivalent to a fragrance-typed contract. When a second category is added to the union, TypeScript will surface any scaffolder that cannot safely handle the new intake type — the type system guides the update.
+- The fragrance scaffolder lambda `(intake) => scaffold(intake)` is registered at `orchestrator.ts` module level alongside `FRAGRANCE_PRODUCER_SET` and `defaultRegistry`. The pipeline runner `run()` no longer directly calls `scaffold()` as a hardcoded fragrance decision.
+- Promotion decision: **Option A** — `promotionManager.ts` stays calling `scaffold(intakeResult.intake)` directly. Promotion is entirely fragrance-specific; using the registry would require importing from `orchestrator.ts` or extracting the instance to a separate file, adding complexity without architectural benefit at this stage.
+- Both registries (`defaultScaffoldRegistry` and `defaultRegistry`) resolve from the same `resolvedCategory`, which is `result.intake!.category`. Single authoritative source.
+
+**Tasks Completed:**
+- `scripts/factory/core/ScaffoldRegistry.ts` — new file.
+- `scripts/factory/orchestrator.ts` — `ScaffoldRegistry` imported; `defaultScaffoldRegistry` exported; `scaffold(result.intake!)` replaced by `scaffolder(result.intake!)` in `run()`.
+- `PROJECT_STATUS.md` updated with EP3-P5B entry.
+- `.ai/CURRENT_TASK.md` updated.
+
+**Tasks Started:**
+- None.
+
+**Build Result:** Pass — 187 routes, 0 TypeScript errors, 0 warnings. All existing fragrance workflows behaviorally identical.
+
+**Files Changed:**
+- `scripts/factory/core/ScaffoldRegistry.ts` — created
+- `scripts/factory/orchestrator.ts` — modified (scaffold registry wiring)
+- `PROJECT_STATUS.md` — updated
+- `.ai/CURRENT_TASK.md` — updated
+- `.ai/ENGINEERING_LOG.md` — updated
+
+**Handoff:**
+- EP3-P5B complete. The factory orchestration path is now fully registry-driven from intake through producer selection: CatalogueRegistry → ProductIntake → ScaffoldRegistry → FragranceKnowledge → ProducerRegistry → producer loop.
+- The orchestrator's `run()` function contains zero hardcoded category-specific logic. All category routing is handled through registries with explicit, fail-fast error behaviour.
+- Next: EP3-P6 — First Non-Fragrance Intake (gate: owner has a real body-care product with defined data).
+
+**Open Questions Carried Forward:**
+- EP2-P7A: Founder must verify actual sourcing catalogue count against supplier before catalogStats.ts can be updated.
+
+---
+
 ### 2026-08-06 — EP3-P4 + EP3-P5A — Knowledge Platform Evolution / Category-Bearing Factory Intake
 
 **Participants:** Project Owner / Claude (Implementation Engineer)
