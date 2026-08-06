@@ -19,18 +19,19 @@ At the start of a new Claude Code session:
 ## Current Task
 
 **Status:** Complete
-**Program:** EP3-P2 — Producer Registry Foundation
+**Program:** EP3-P3 — Category-Aware Factory Orchestrator
 
 **Goal:**
-Replace hardcoded producer sequence in Knowledge Factory orchestrator with an explicit ProducerRegistry and ProducerSet abstraction.
+Make the factory orchestrator category-aware by resolving ProductCategory from the scaffolded record before producer execution, routing through the ProducerRegistry rather than hardcoding "fragrance".
 
 **Acceptance Criteria:**
-- [x] `scripts/factory/core/ProducerRegistry.ts` created — `ProducerSet` type and `ProducerRegistry` class
-- [x] `FRAGRANCE_PRODUCER_SET` and `defaultRegistry` exported from orchestrator
-- [x] Orchestrator resolves producers from registry rather than hardcoding them
-- [x] Same 5 producers in same order — behaviour unchanged
-- [x] Stage log names identical (composition, editorial, relationships, education, discovery)
-- [x] `toStageName()` helper handles RelationshipProducer → "relationships" pluralisation
+- [x] `getProductCategory(scaffolded)` resolves category from scaffolded record
+- [x] `defaultRegistry.getProducerSet(resolvedCategory)` replaces `getProducerSet("fragrance")`
+- [x] All current workflows resolve to "fragrance" automatically (category absent on scaffold → default)
+- [x] `getProductCategory` imported from `app/lib/mkc/productDefaults` — no logic duplication
+- [x] Category resolved before any AI producer execution
+- [x] Valid but unregistered category fails clearly via ProducerRegistry before AI generation
+- [x] No changes to PipelineInput, CLI entry, BatchRunner, BatchFactory, or any caller
 - [x] No producer files modified
 - [x] No application files modified
 - [x] Build passes: 187 routes, 0 TypeScript errors, 0 warnings
@@ -39,22 +40,23 @@ Replace hardcoded producer sequence in Knowledge Factory orchestrator with an ex
 - [x] `.ai/ENGINEERING_LOG.md` updated
 
 **Why This Task:**
-The orchestrator hardcoded 5 producers in sequence. As the Knowledge Factory evolves to support additional product categories (body-care, home-fragrance, etc.), each category will require its own producer set. EP3-P2 introduces the registry abstraction that makes this possible without future refactoring.
+EP3-P2 registered the fragrance ProducerSet. The orchestrator still hardcoded the string "fragrance" at the `getProducerSet()` call site. EP3-P3 resolves the category from the knowledge record so future categories route through the same orchestration path without touching the loop.
 
 ---
 
 ## Files Involved
 
-**Files created (1):**
-- `scripts/factory/core/ProducerRegistry.ts` — `ProducerSet` type and `ProducerRegistry` class; pure abstraction layer, no concrete producers
+**Files created:** None
 
 **Files modified (1):**
-- `scripts/factory/orchestrator.ts` — added `ProducerRegistry` import; added `FRAGRANCE_PRODUCER_SET` and `defaultRegistry` exports; replaced 5 hardcoded producer blocks with registry-resolved loop; added `toStageName()` helper
+- `scripts/factory/orchestrator.ts` — added `getProductCategory` import; added `resolvedCategory` and `producerSet` resolution after scaffold; removed hardcoded `getProducerSet("fragrance")` from producer loop setup
 
 **Files NOT modified:**
-- All 5 producers (CompositionProducer, EditorialProducer, RelationshipProducer, EducationProducer, DiscoveryProducer) — unchanged
-- `scripts/factory/core/BaseProducer.ts` — unchanged
-- All other factory files (merger, scaffold, intake, promotion) — unchanged
+- `scripts/factory/types.ts` — PipelineInput unchanged; zero caller changes required
+- `scripts/factory/index.ts` — CLI unchanged
+- `scripts/factory/batch/BatchRunner.ts` — unchanged
+- `scripts/factory/core/ProducerRegistry.ts` — unchanged
+- All 5 producers — unchanged
 - All application code — unchanged
 
 ---
@@ -67,7 +69,7 @@ _Task closed._
 
 ## Context Notes
 
-**Last completed:** EP3-P2 Producer Registry Foundation (2026-08-06)
+**Last completed:** EP3-P3 Category-Aware Factory Orchestrator (2026-08-06)
 
 Recent completed programs (newest first):
 - EP100-P3A Extract Shared AdminNavigation Component (2026-08-04) — 1 component created; 14 dashboards updated; Link import audited (7 preserved for body Link usage); build passes; 189 routes
@@ -108,7 +110,7 @@ _N/A_
 
 ## Build Result
 
-**Last build:** 2026-08-06 — Pass. Zero TypeScript errors. Zero warnings. 187 routes. (EP3-P2)
+**Last build:** 2026-08-06 — Pass. Zero TypeScript errors. Zero warnings. 187 routes. (EP3-P3)
 
 ---
 

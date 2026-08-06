@@ -39,6 +39,47 @@ Never edit or delete past entries.
 
 ## Log
 
+### 2026-08-06 — EP3-P3 — Knowledge Platform Evolution / Category-Aware Factory Orchestrator
+
+**Participants:** Project Owner / Claude (Implementation Engineer)
+**Program:** EP3-P3 — Category-Aware Factory Orchestrator
+
+**Decisions Made:**
+- Category resolved from the scaffolded `FragranceKnowledge` record using `getProductCategory(scaffolded)` from `productDefaults.ts`. This is the governed single-source of the "fragrance" default — no duplication.
+- Resolution point: after scaffold (stage 2), before producer execution (stages 3+). The scaffolded record already carries `category?: ProductCategory` from EP2-P7D; absent value → "fragrance".
+- `PipelineInput` unchanged — zero changes to CLI, BatchRunner, BatchFactory, or any caller. The "Do not make existing callers pass 'fragrance' explicitly" principle was the deciding factor.
+- No dedicated resolver file justified — resolution is one line using existing infrastructure.
+- Invalid/unregistered category fails clearly via `ProducerRegistry.getProducerSet()` before any AI generation begins.
+
+**Tasks Completed:**
+- `scripts/factory/orchestrator.ts` — `getProductCategory` imported from `app/lib/mkc/productDefaults`; `resolvedCategory` + `producerSet` resolved after scaffold; hardcoded `getProducerSet("fragrance")` string removed from producer loop setup.
+- `PROJECT_STATUS.md` updated with EP3-P3 entry.
+- `.ai/CURRENT_TASK.md` updated.
+- `.ai/ENGINEERING_LOG.md` updated.
+
+**Tasks Started:**
+- None.
+
+**Build Result:** Pass — 187 routes, 0 TypeScript errors, 0 warnings. All existing factory workflows resolve to "fragrance" automatically. Producer loop unchanged.
+
+**Files Changed:**
+- `scripts/factory/orchestrator.ts` — modified (category resolution wiring)
+- `PROJECT_STATUS.md` — updated
+- `.ai/CURRENT_TASK.md` — updated
+- `.ai/ENGINEERING_LOG.md` — updated
+
+**Handoff:**
+- EP3-P3 complete. Category is now a first-class orchestration concern.
+- Future: a body-care producer set registered in `defaultRegistry` will automatically route when `scaffolded.category === "body-care"`. No orchestrator changes required.
+- Deferred: EP3-P4 — first non-fragrance producer set (when a non-fragrance product is ready to author).
+- Deferred: EP2-P7F — ProductRecord / FragranceProfile structural separation (when first non-fragrance product ready).
+- Deferred: EP2-P7A — Founder count verification → EP2-P7E SourcingRegistry.
+
+**Open Questions Carried Forward:**
+- EP2-P7A: Founder must verify actual sourcing catalogue count against supplier before catalogStats.ts can be updated.
+
+---
+
 ### 2026-08-06 — EP3-P1 + EP3-P2 — Knowledge Platform Evolution / Producer Registry Foundation
 
 **Participants:** Project Owner / Claude (Implementation Engineer)

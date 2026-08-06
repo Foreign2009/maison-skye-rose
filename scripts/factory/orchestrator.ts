@@ -33,6 +33,7 @@ import { RelationshipProducer }  from "./producers/RelationshipProducer";
 import { EducationProducer }     from "./producers/EducationProducer";
 import { DiscoveryProducer }     from "./producers/DiscoveryProducer";
 import { validateKnowledgeRecord } from "../../app/lib/mkc/validator";
+import { getProductCategory }       from "../../app/lib/mkc/productDefaults";
 import type { FactoryConfig, ProducerResult } from "./core/types";
 import type { PipelineInput, PipelineResult, PipelineState, StageEntry } from "./types";
 
@@ -155,6 +156,14 @@ export async function run(input: PipelineInput): Promise<PipelineResult> {
 
     stage("scaffold", degraded ? "degraded" : "pass", ms1, degraded ? "knowledgeAdapter fallback used" : undefined);
 
+    // ── Category resolution ─────────────────────────────────────────────────
+    // Resolved from the scaffolded record using the governed default resolver.
+    // All current records omit category → "fragrance". A future record with an
+    // explicit category will route to the matching ProducerSet automatically.
+    // A valid but unregistered category fails here before any AI generation begins.
+    const resolvedCategory = getProductCategory(scaffolded);
+    const producerSet      = defaultRegistry.getProducerSet(resolvedCategory);
+
     // ── Stages 3–7: AI Producers (registry-resolved) ────────────────────────
     const hasApiKey    = Boolean(process.env.ANTHROPIC_API_KEY);
     const factoryConfig: FactoryConfig = { ...DEFAULT_FACTORY_CONFIG, dryRun: input.dryRun || !hasApiKey };
@@ -167,7 +176,6 @@ export async function run(input: PipelineInput): Promise<PipelineResult> {
     if (hasApiKey) engine.registerProvider(new ClaudeProvider());
 
     const producerResults: ProducerResult[] = [];
-    const producerSet = defaultRegistry.getProducerSet("fragrance");
     let   currentCtx  = ctx0;
 
     for (const producer of producerSet.producers) {

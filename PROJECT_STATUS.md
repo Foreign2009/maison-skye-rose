@@ -8,10 +8,10 @@
 
 ## Current Engineering Program
 
-**Program:** EP3-P2 — Producer Registry Foundation (Complete)
+**Program:** EP3-P3 — Category-Aware Factory Orchestrator (Complete)
 **Sprint:** EP3
 **Gate:** Complete
-**Objective:** Replace hardcoded producer sequence in Knowledge Factory with an explicit ProducerRegistry and ProducerSet abstraction.
+**Objective:** Make the factory orchestrator category-aware by resolving ProductCategory from the scaffolded record and routing to the registered ProducerSet.
 
 ---
 
@@ -73,6 +73,7 @@ Verify: `npm run build`
 | EP2 | EP2-P7D | Multi-Category Type Foundation | Complete — 2026-08-06 |
 | EP3 | EP3-P1 | Product Creation Pipeline Audit | Complete — 2026-08-06 |
 | EP3 | EP3-P2 | Producer Registry Foundation | Complete — 2026-08-06 |
+| EP3 | EP3-P3 | Category-Aware Factory Orchestrator | Complete — 2026-08-06 |
 
 `FOUNDATIONS/00_FOUNDERS_LETTER.md` — The permanent founder's letter to Skye, Rose, future employees, and future stewards. *Why we began.*
 `FOUNDATIONS/01_SKYE_AND_ROSE_COVENANT.md` — The institutional promise: to customers, products, technology, and future generations. *What we promise.*
