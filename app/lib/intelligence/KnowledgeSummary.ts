@@ -15,36 +15,40 @@
  *   Merchandising       — lifestyle bullet points
  */
 
-import type { FragranceKnowledge } from "../mkc/types";
+import type { FragranceKnowledge, ProductCategory, GuestAvailabilityStatus } from "../mkc/types";
 import type { KnowledgeQualityTier } from "../mkc/knowledgeQuality";
 import { getKnowledgeQuality } from "../mkc/knowledgeQuality";
 import { generateWhyYoullLikeIt } from "../mkc/merchandising";
+import { getProductCategory, getGuestAvailabilityStatus } from "../mkc/productDefaults";
 
 // ── Public types ──────────────────────────────────────────────────────────────
 
 export interface KnowledgeSummary {
-  readonly slug:             string;
-  readonly name:             string;
-  readonly collection:       "Skye" | "Rose" | "Elite";
-  readonly subtitle:         string | null;
-  readonly description:      string | null;
-  readonly scentCharacter:   string;
-  readonly projection:       "soft" | "moderate" | "strong";
-  readonly family:           readonly string[];
-  readonly occasions:        readonly string[];
-  readonly seasons:          readonly string[];
-  readonly vibe:             readonly string[];
-  readonly gender:           "male" | "female" | "unisex";
-  readonly bestSeller:       boolean;
-  readonly newArrival:       boolean;
-  readonly featured:         boolean;
-  readonly isNative:         boolean;
-  readonly qualityTier:      KnowledgeQualityTier | null;
+  readonly slug:               string;
+  readonly name:               string;
+  readonly collection:         "Skye" | "Rose" | "Elite";
+  readonly subtitle:           string | null;
+  readonly description:        string | null;
+  readonly scentCharacter:     string;
+  readonly projection:         "soft" | "moderate" | "strong";
+  readonly family:             readonly string[];
+  readonly occasions:          readonly string[];
+  readonly seasons:            readonly string[];
+  readonly vibe:               readonly string[];
+  readonly gender:             "male" | "female" | "unisex";
+  readonly bestSeller:         boolean;
+  readonly newArrival:         boolean;
+  readonly featured:           boolean;
+  readonly isNative:           boolean;
+  readonly qualityTier:        KnowledgeQualityTier | null;
   readonly discoveryReadiness: number;
-  readonly hasRelationships: boolean;
-  readonly prices:           Readonly<{ "5ml": number; "10ml": number; "30ml": number }>;
-  readonly images:           Readonly<{ "5ml": string; "10ml": string; "30ml": string }>;
-  readonly whyYoullLikeIt:  readonly [string, string, string];
+  readonly hasRelationships:   boolean;
+  readonly prices:             Readonly<{ "5ml": number; "10ml": number; "30ml": number }>;
+  readonly images:             Readonly<{ "5ml": string; "10ml": string; "30ml": string }>;
+  readonly whyYoullLikeIt:    readonly [string, string, string];
+  // ── Multi-category foundation (EP2-P7D) ──────────────────────────────────────
+  readonly category:           ProductCategory;
+  readonly availabilityStatus: GuestAvailabilityStatus;
 }
 
 // ── Factory ───────────────────────────────────────────────────────────────────
@@ -74,5 +78,7 @@ export function buildKnowledgeSummary(record: FragranceKnowledge): KnowledgeSumm
     prices:             record.prices,
     images:             record.images,
     whyYoullLikeIt:     generateWhyYoullLikeIt(record),
+    category:           getProductCategory(record),
+    availabilityStatus: getGuestAvailabilityStatus(record),
   };
 }

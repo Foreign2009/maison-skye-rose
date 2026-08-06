@@ -4,7 +4,50 @@
  * FragranceKnowledge is the single source of truth for all fragrance data.
  * Existing consumer models (DisplayFragrance, Fragrance) are projected from
  * this interface via the adapters in displayAdapter.ts and recommendationAdapter.ts.
+ *
+ * Multi-category foundation (EP2-P7D):
+ *   ProductCategory and GuestAvailabilityStatus establish the type vocabulary
+ *   for future non-fragrance product categories. Both fields are optional on
+ *   FragranceKnowledge — existing records default via productDefaults.ts.
+ *   The full ProductRecord / FragranceProfile separation (Option B) is deferred
+ *   to EP2-P7F when the first non-fragrance product is ready to author.
  */
+
+// ── Multi-category foundation ─────────────────────────────────────────────────
+
+/**
+ * Governed product category registry.
+ * Extend this union when a new category is formally introduced.
+ * Do not add a value until a concrete product record requires it.
+ */
+export type ProductCategory =
+  | "fragrance"
+  | "body-care"
+  | "personal-care"
+  | "home-fragrance"
+  | "bottles-packaging"
+  | "accessories"
+  | "lifestyle";
+
+/**
+ * Guest-facing availability status.
+ * Describes what a guest can do with a product right now.
+ * Intentionally separate from internal lifecycle (status field).
+ *
+ *   online       — in the browsable collection, purchasable immediately
+ *   on-request   — sourced via WhatsApp; not in the browsable collection
+ *   coming-soon  — announced but not yet available
+ *   seasonal     — available only within a defined seasonal window
+ *   limited      — purchasable but quantity-constrained (honest scarcity only)
+ */
+export type GuestAvailabilityStatus =
+  | "online"
+  | "on-request"
+  | "coming-soon"
+  | "seasonal"
+  | "limited";
+
+// ── Fragrance Knowledge record ────────────────────────────────────────────────
 
 export type FragranceKnowledge = {
 
@@ -16,6 +59,12 @@ export type FragranceKnowledge = {
   collection: "Skye" | "Rose" | "Elite";
   catalogVersion?: string;
   status?: string;
+
+  // ── Multi-category foundation (EP2-P7D) ───────────────────────────────────────
+  // Optional on existing records. Defaults resolved via productDefaults.ts.
+  // Absence implies "fragrance" for category and "online" for availabilityStatus.
+  category?:           ProductCategory;
+  availabilityStatus?: GuestAvailabilityStatus;
 
   // ── Classification ────────────────────────────────────────────────────────────
   gender: "male" | "female" | "unisex";

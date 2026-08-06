@@ -7,8 +7,28 @@
  * NOT imported by the Next.js application. Development and CI use only.
  */
 
-import type { FragranceKnowledge } from "./types";
+import type { FragranceKnowledge, ProductCategory, GuestAvailabilityStatus } from "./types";
 import { fragranceFamilies } from "../../data/fragranceFamilies";
+
+// ── Governed vocabularies for EP2-P7D fields ─────────────────────────────────
+
+const VALID_PRODUCT_CATEGORIES: readonly ProductCategory[] = [
+  "fragrance",
+  "body-care",
+  "personal-care",
+  "home-fragrance",
+  "bottles-packaging",
+  "accessories",
+  "lifestyle",
+];
+
+const VALID_AVAILABILITY_STATUSES: readonly GuestAvailabilityStatus[] = [
+  "online",
+  "on-request",
+  "coming-soon",
+  "seasonal",
+  "limited",
+];
 
 // ── Public types ──────────────────────────────────────────────────────────────
 
@@ -95,6 +115,24 @@ function checkIdentity(k: FragranceKnowledge): ValidationIssue[] {
   if (!k.catalogVersion?.trim()) {
     issues.push(w("CATALOG_VERSION_MISSING", g, "catalogVersion",
       `catalogVersion not set — use "1.0" for initial native records`));
+  }
+
+  // ── EP2-P7D: multi-category foundation fields ─────────────────────────────
+  // Absence is valid — existing records default to "fragrance" / "online".
+  // An explicit value must be from the governed vocabulary.
+
+  if (k.category !== undefined) {
+    if (!(VALID_PRODUCT_CATEGORIES as readonly string[]).includes(k.category)) {
+      issues.push(e("CATEGORY_INVALID", g, "category",
+        `category "${k.category}" is not a recognised ProductCategory value`));
+    }
+  }
+
+  if (k.availabilityStatus !== undefined) {
+    if (!(VALID_AVAILABILITY_STATUSES as readonly string[]).includes(k.availabilityStatus)) {
+      issues.push(e("AVAILABILITY_STATUS_INVALID", g, "availabilityStatus",
+        `availabilityStatus "${k.availabilityStatus}" is not a recognised GuestAvailabilityStatus value`));
+    }
   }
 
   return issues;

@@ -1,6 +1,6 @@
 # Project Status — Maison Skye & Rose
 
-**Last updated:** 2026-08-04
+**Last updated:** 2026-08-06
 **Phase:** Launch Execution
 **Build status:** PASS — 187 routes, 0 TypeScript errors, 0 warnings
 
@@ -70,6 +70,7 @@ Verify: `npm run build`
 | EP2 | EP2-P7 | Collection & Sourcing Architecture Audit | Complete — 2026-08-06 |
 | EP2 | EP2-P7B | Online Collection Truth Alignment | Complete — 2026-08-06 |
 | EP2 | EP2-P7C | Commerce and Contact Truth Alignment | Complete — 2026-08-06 |
+| EP2 | EP2-P7D | Multi-Category Type Foundation | Complete — 2026-08-06 |
 
 `FOUNDATIONS/00_FOUNDERS_LETTER.md` — The permanent founder's letter to Skye, Rose, future employees, and future stewards. *Why we began.*
 `FOUNDATIONS/01_SKYE_AND_ROSE_COVENANT.md` — The institutional promise: to customers, products, technology, and future generations. *What we promise.*
@@ -80,6 +81,8 @@ Verify: `npm run build`
 **EP2-P1 Audit Findings (2026-08-05):** Overall institutional alignment score 7.1/10. Intelligence layer (Fragrance Profile, MaisonCompanion, Concierge, Shop, Quiz) rated Aligned. Critical gaps: About page (3/10 — fails Foundation narrative standard), catalogue count inconsistency (93 vs 465+), "Loyal Customer" terminology, post-purchase experience absent, checkout UX cold. Recommended sequence: EP2-P2 (About page rewrite) → EP2-P3 (checkout + post-purchase) → EP2-P4 (testimonials) → EP2-P5 (concierge voice) → EP2-P6 (language pass).
 
 **EP2-P3 About Page Foundation Alignment (2026-08-05):** `app/about/page.tsx` rewritten from 4 generic paragraphs to 9 Foundation-aligned sections: Opening, A Compliment Changed Everything, Why Skye & Rose, What We Believe, Confidence Is What We Are Here to Deliver, Knowledge Before Recommendation, Accessible Luxury, Growing Together, Our Promise, An Invitation. Count inconsistency removed (465+ → timeless language). OG and Twitter metadata added. Architecture preserved. Build passes: 187 routes, 0 TypeScript errors, 0 warnings.
+
+**EP2-P7D Multi-Category Type Foundation (2026-08-06):** Smallest additive and reversible type foundation for future multi-category product growth. `ProductCategory` type introduced: "fragrance" | "body-care" | "personal-care" | "home-fragrance" | "bottles-packaging" | "accessories" | "lifestyle". `GuestAvailabilityStatus` type introduced: "online" | "on-request" | "coming-soon" | "seasonal" | "limited" — intentionally separate from internal lifecycle (status field). Both added as optional fields to `FragranceKnowledge`. `app/lib/mkc/productDefaults.ts` created with central resolver helpers `getProductCategory()` and `getGuestAvailabilityStatus()` — defaults defined in one place only ("fragrance" and "online"). `app/lib/mkc/validator.ts` updated to validate explicit values against governed vocabularies; absence remains valid (existing records unaffected). `KnowledgeSummary` interface and factory updated to expose resolved `category` and `availabilityStatus` via central helpers. All 93 native records unchanged. mkcCatalogue, all adapters, all URLs, all recommendations, all commerce behaviour unchanged. Selected long-term direction: Option B (Product Base + Category Knowledge Extensions); ProductRecord / FragranceProfile structural separation deferred to EP2-P7F. Build passes: 187 routes, 0 TypeScript errors, 0 warnings.
 
 **EP2-P7C Commerce and Contact Truth Alignment (2026-08-06):** Three remaining misleading 465+ claims removed from trust-sensitive commerce and contact surfaces. Contact Details card "Catalogue: 465+ Luxury-Inspired Fragrances" row removed — the dedicated "Request Any Fragrance" section below already communicates the sourcing capability with full context; a bare count beside a phone number and location had none. WhyChooseUs feature card title "465+ Fragrances Available" → "Available by Request" — the supporting description ("Can't find your fragrance online? We can source it from our extended catalogue.") was preserved; the title now accurately names the access model. ProductDetail trust badge "✓ 465+ Signature Fragrances Available" → "✓ Carefully Curated Collection" — on the highest-trust surface in the commerce flow, guests deserved a signal about what they are actually buying into, not a sourcing count. All sourcing-specific copy on the Contact page, FAQ, and RequestFragrance component left intact. No application behaviour changes. Build passes: 187 routes, 0 TypeScript errors, 0 warnings.
 

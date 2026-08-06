@@ -39,6 +39,52 @@ Never edit or delete past entries.
 
 ## Log
 
+### 2026-08-06 — EP2-P7D — Platform Evolution Programme / Multi-Category Type Foundation
+
+**Participants:** Project Owner / Claude (Implementation Engineer)
+**Program:** EP2-P7D — Multi-Category Type Foundation
+
+**Decisions Made:**
+- Selected long-term architecture direction: Option B — Product Base + Category Knowledge Extensions. ProductRecord / FragranceProfile structural separation is deferred to EP2-P7F; this episode establishes only the type vocabulary.
+- `ProductCategory` values: "fragrance", "body-care", "personal-care", "home-fragrance", "bottles-packaging", "accessories", "lifestyle". No value added until a concrete product requires it.
+- `GuestAvailabilityStatus` values: "online", "on-request", "coming-soon", "seasonal", "limited". Intentionally separate from internal lifecycle states (status: "active" | "discontinued").
+- Central resolver helpers placed in `app/lib/mkc/productDefaults.ts` — single source of default logic; no `??` duplication across consumers.
+- Validator updated to validate explicit values but treat absence as valid — all 93 existing records unchanged.
+
+**Tasks Completed:**
+- `app/lib/mkc/productDefaults.ts` — new file; `getProductCategory()` and `getGuestAvailabilityStatus()` central resolvers; minimal input shapes, no `any`, no coupling to full FragranceKnowledge.
+- `app/lib/mkc/types.ts` — `ProductCategory` and `GuestAvailabilityStatus` type definitions added; `category?` and `availabilityStatus?` optional fields added to `FragranceKnowledge`; module-level documentation updated.
+- `app/lib/mkc/validator.ts` — `ProductCategory` and `GuestAvailabilityStatus` imported; governed vocabulary arrays added; `checkIdentity()` extended with `CATEGORY_INVALID` and `AVAILABILITY_STATUS_INVALID` error checks (absence-safe).
+- `app/lib/intelligence/KnowledgeSummary.ts` — `ProductCategory`, `GuestAvailabilityStatus` types imported; central helpers imported; `KnowledgeSummary` interface gains `category: ProductCategory` and `availabilityStatus: GuestAvailabilityStatus`; `buildKnowledgeSummary()` factory updated to resolve values via helpers.
+- `PROJECT_STATUS.md` updated with EP2-P7D entry.
+- `.ai/CURRENT_TASK.md` updated.
+- `.ai/ENGINEERING_LOG.md` updated.
+
+**Tasks Started:**
+- None.
+
+**Build Result:** Pass — 187 routes, 0 TypeScript errors, 0 warnings. All 93 native records compile without modification. mkcCatalogue, displayAdapter, recommendationAdapter, all commerce systems, all discovery systems, all recommendation systems unchanged.
+
+**Files Changed:**
+- `app/lib/mkc/productDefaults.ts` — created
+- `app/lib/mkc/types.ts` — modified (two new types; two optional fields on FragranceKnowledge)
+- `app/lib/mkc/validator.ts` — modified (EP2-P7D vocabulary validation in checkIdentity)
+- `app/lib/intelligence/KnowledgeSummary.ts` — modified (category + availabilityStatus in interface and factory)
+- `PROJECT_STATUS.md` — updated
+- `.ai/CURRENT_TASK.md` — updated
+- `.ai/ENGINEERING_LOG.md` — updated
+
+**Handoff:**
+- EP2-P7D complete. Multi-category type foundation established.
+- Deferred: EP2-P7F — ProductRecord / FragranceProfile structural separation (Option B, Phase 2).
+- Deferred: EP2-P7E — SourcingRegistry (requires EP2-P7A founder count verification first).
+- Deferred: EP2-P7G — availability status guest-facing surfaces (filter, badge, label).
+
+**Open Questions Carried Forward:**
+- EP2-P7A: Founder must verify the actual sourcing catalogue count against supplier before catalogStats.ts can be updated.
+
+---
+
 ### 2026-08-06 — EP2-P7C — Platform Experience Programme / Commerce and Contact Truth Alignment
 
 **Participants:** Project Owner / Claude (Implementation Engineer)
