@@ -39,6 +39,59 @@ Never edit or delete past entries.
 
 ## Log
 
+### 2026-08-06 — EP2-P5C — Platform Experience Programme / Payment Recovery Foundation Alignment
+
+**Participants:** Project Owner / Claude (Implementation Engineer)
+**Program:** EP2-P5C — Platform Experience Programme / Payment Recovery Foundation Alignment
+
+**Decisions Made:**
+- Rotating ✕ icon removed — perpetual `animate` loop on the icon created ongoing alarm on a page that required calm. Replaced with a static `✦` icon in a warm neutral circle. The four-pointed star reads as elegant and welcoming; it says "we're still here," not "this failed."
+- `motion.div` (icon) converted to a plain `div` — the card's existing entry animation already provides the page-load transition. An additional nested animation on the icon was redundant.
+- H1 "CHECKOUT CANCELLED" (uppercase, punitive, massive) replaced with "Take Your Time" — directly addresses the anxiety of cancellation. Communicates patience, no urgency, no consequence. `uppercase` className removed.
+- Eyebrow "Payment Cancelled" (failure-first) replaced with "We're Glad You're Here" — the institution leads with welcome, not with the problem state.
+- Body paragraph rewritten from technical ("Your payment was not completed") to warm and practical: assures the guest that their cart is intact, that there is no pressure, and that the institution is here whenever they return.
+- "What Happened" calm note added — one short sentence, factual, non-dwelling. Acknowledges the interruption without magnifying it.
+- "Continue Your Order" replaces "Return To Checkout" — invitation, not instruction.
+- "Explore Our Collection" replaces "Continue Shopping" — warmer, more institutional.
+- Secondary button styled to `border border-[#4f4a52]/20` (transparent background) — softer than the previous opaque blue `bg-[#eef3f8]`, consistent with EP2-P5A and EP2-P5B secondary button treatment.
+- "Need Help?" line added at card base — links to `/contact`. No new imports; `Link` already imported.
+- Both glow animations preserved — ambient background motion, not alarm-producing.
+- Analytics `useEffect` preserved — untouched.
+
+**Foundation Alignment:**
+- Blueprint (Brand Personality: Calm): "unbothered by urgency that is not real"
+- Blueprint (Brand Personality: Never Pushy): "No urgency that is not real. No pressure toward a decision before the guest is ready."
+- Covenant (Promise to Customers): "When something goes wrong — and it will — we will say so plainly and fix it."
+- Founder's Letter: "A customer who trusts us [...] will give us the benefit of the doubt when something goes wrong, because they have learned that something going wrong is not who we are."
+- Blueprint (Language Principles): "Express urgency only when it is genuine."
+
+**Tasks Completed:**
+- Rewrote guest-facing content in `app/payment-cancel/page.tsx` — copy and framing only; zero payment/commerce logic changes
+- Resolved ExD-03: Payment Recovery: Technical. Cold. Failure-oriented.
+- Updated `PROJECT_STATUS.md` — EP2-P5C added to Foundation Programme table; summary paragraph added
+- Updated `.ai/CURRENT_TASK.md` — EP2-P5C reflected as complete
+- Updated `.ai/ENGINEERING_LOG.md`
+
+**Tasks Started:**
+- None
+
+**Build Result:** Pass — 187 routes, 0 TypeScript errors, 0 warnings. `/payment-cancel` statically generated.
+
+**Files Changed:**
+- `app/payment-cancel/page.tsx` (modified — copy and framing only)
+- `PROJECT_STATUS.md` (modified)
+- `.ai/CURRENT_TASK.md` (modified)
+- `.ai/ENGINEERING_LOG.md` (modified)
+
+**Handoff:**
+- EP2-P5C complete. Commerce confidence journey (EP2-P5A → EP2-P5B → EP2-P5C) is now complete. The three commerce transition pages — Checkout, Payment Confirmation, Payment Recovery — all express the institution's warmth and hospitality. Experience Debts ExD-01, ExD-02, and ExD-03 are resolved.
+- Next programmes (not yet approved): EP2-P6A (Contact & FAQ count inconsistency — ExD-04/05), EP2-P6B (Fragrance Profile "Loyal Customer" → "Loyal Guest" — ExD-06), EP2-P7 (Testimonials strategy — ExD-07), EP2-P8 (Post-purchase care signal — ExD-08).
+
+**Open Questions Carried Forward:**
+- Contact page "465+" vs "93" catalogue count distinction (accessible browsable vs on-request sourcing) — institution must decide policy before EP2-P6A is implemented.
+
+---
+
 ### 2026-08-05 — EP2-P3 — Platform Experience Programme / About Page Foundation Alignment
 
 **Participants:** Project Owner / Claude (Implementation Engineer)

@@ -69,87 +69,59 @@ export default function PaymentCancelPage() {
         >
 
           {/* ICON */}
-          <motion.div
-            animate={{
-              rotate: [0, 5, -5, 0],
-            }}
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-            }}
-            className="mx-auto flex h-28 w-28 items-center justify-center rounded-full bg-[#fde7ea]"
-          >
-
-            <span className="text-5xl">
-              ✕
-            </span>
-
-          </motion.div>
+          <div className="mx-auto flex h-24 w-24 items-center justify-center rounded-full bg-[#fdf5f6]">
+            <span className="text-4xl text-[#d89ca4]" aria-hidden="true">✦</span>
+          </div>
 
           {/* TEXT */}
-          <p className="mt-10 text-xs uppercase tracking-[0.45em] text-[#d89ca4]">
-
-            Payment Cancelled
-
+          <p className="mt-8 text-[10px] font-semibold uppercase tracking-[0.55em] text-[#d89ca4]">
+            We&apos;re Glad You&apos;re Here
           </p>
 
-          <h1 className="mt-6 text-5xl font-black uppercase leading-[0.9] tracking-[-0.06em] text-[#4f4a52] md:text-7xl">
-
-            Checkout
-            <br />
-            Cancelled
-
+          <h1 className="mt-5 text-5xl font-black leading-[0.9] tracking-[-0.05em] text-[#4f4a52] md:text-6xl">
+            Take Your<br />Time
           </h1>
 
-          <p className="mx-auto mt-8 max-w-2xl text-lg leading-9 text-[#7b7480]">
+          <p className="mx-auto mt-7 max-w-lg text-base leading-relaxed text-[#7b7480]">
+            Your cart is still here, exactly as you left it. There&apos;s no pressure and no deadline — whenever you&apos;re ready, we&apos;ll be here.
+          </p>
 
-            Your payment was not completed. Your cart is still available
-            and you can continue your Maison Skye & Rose shopping experience anytime.
-
+          <p className="mx-auto mt-5 max-w-md text-sm leading-relaxed text-[#9b9298]">
+            The payment step wasn&apos;t completed. This can happen for many reasons, and nothing has been lost.
           </p>
 
           {/* BUTTONS */}
-          <div className="mt-12 flex flex-wrap justify-center gap-4">
+          <div className="mt-10 flex flex-wrap justify-center gap-4">
 
             <Link href="/checkout">
-
               <motion.button
-                whileHover={{
-                  scale: 1.04,
-                  y: -2,
-                }}
-                whileTap={{
-                  scale: 0.98,
-                }}
-                className="rounded-full bg-[#d89ca4] px-8 py-5 text-xs uppercase tracking-[0.35em] text-white shadow-[0_20px_60px_rgba(216,156,164,0.22)]"
+                whileHover={{ scale: 1.04, y: -2 }}
+                whileTap={{ scale: 0.98 }}
+                className="rounded-full bg-[#d89ca4] px-8 py-5 text-xs font-semibold uppercase tracking-[0.35em] text-white shadow-[0_20px_60px_rgba(216,156,164,0.22)]"
               >
-
-                Return To Checkout
-
+                Continue Your Order
               </motion.button>
-
             </Link>
 
             <Link href="/">
-
               <motion.button
-                whileHover={{
-                  scale: 1.04,
-                  y: -2,
-                }}
-                whileTap={{
-                  scale: 0.98,
-                }}
-                className="rounded-full bg-[#eef3f8] px-8 py-5 text-xs uppercase tracking-[0.35em] text-[#7a92af]"
+                whileHover={{ scale: 1.04, y: -2 }}
+                whileTap={{ scale: 0.98 }}
+                className="rounded-full border border-[#4f4a52]/20 px-8 py-5 text-xs font-semibold uppercase tracking-[0.35em] text-[#4f4a52]"
               >
-
-                Continue Shopping
-
+                Explore Our Collection
               </motion.button>
-
             </Link>
 
           </div>
+
+          <p className="mt-8 text-xs leading-relaxed text-[#9b9298]">
+            Need help?{" "}
+            <Link href="/contact" className="text-[#d89ca4] underline-offset-2 hover:underline">
+              Visit our contact page
+            </Link>
+            {" "}— we&apos;re happy to assist.
+          </p>
 
         </motion.div>
 
