@@ -42,8 +42,7 @@ export default function ContactPage() {
             </h2>
 
             <p className="mt-4 text-zinc-600 leading-7">
-              Place orders, request fragrances, and get support
-              directly through WhatsApp.
+              Place orders, request fragrances, and ask us anything — directly through WhatsApp.
             </p>
 
             <a

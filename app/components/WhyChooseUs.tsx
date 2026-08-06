@@ -38,7 +38,7 @@ const features = [
     icon: MessageCircle,
     title: "WhatsApp Ordering",
     description:
-      "Simple ordering and support directly through WhatsApp.",
+      "Order and connect directly through WhatsApp.",
   },
   {
     icon: Search,
@@ -54,7 +54,7 @@ export default function WhyChooseUs() {
       <div className="mx-auto max-w-7xl px-6">
         <div className="mb-14 text-center">
           <p className="text-[11px] uppercase tracking-[0.45em] text-[#d89ca4]">
-            Why Choose Us
+            The Maison Difference
           </p>
 
           <h2 className="mt-4 text-5xl font-black tracking-[-0.05em] text-[#4f4a52]">

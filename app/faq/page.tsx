@@ -65,7 +65,7 @@ export default function FAQPage() {
         </p>
 
         <h1 className="mt-4 text-6xl font-black tracking-[-0.05em] text-[#4f4a52]">
-          FAQ
+          Your Questions,<br />Answered
         </h1>
 
         <p className="mt-8 max-w-2xl text-lg leading-8 text-zinc-600">

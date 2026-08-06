@@ -39,6 +39,62 @@ Never edit or delete past entries.
 
 ## Log
 
+### 2026-08-06 — EP2-P6B — Platform Experience Programme / Institutional Voice Alignment
+
+**Participants:** Project Owner / Claude (Implementation Engineer)
+**Program:** EP2-P6B — Platform Experience Programme / Institutional Voice Alignment
+
+**Decisions Made:**
+- "WhatsApp Support" renamed to "WhatsApp Ordering" in TrustBar. WhatsApp in this platform is not a support channel — it is the primary order and conversation channel. The rename makes the trust badge accurate, not just softer.
+- "Why Choose Us" eyebrow replaced with "The Maison Difference" in WhyChooseUs. "Why Choose Us" is competitive/defensive. Maison Skye & Rose describes itself; it does not audition. "The Maison Difference" retains the institutional specificity ("Maison") without requiring the guest to evaluate a competitor comparison.
+- FAQ H1 changed from "FAQ" (an internal categorisation acronym) to "Your Questions, Answered" (a direct personal address). The eyebrow "Frequently Asked Questions" preserved — the two levels read naturally: the eyebrow categorises, the H1 speaks.
+- The `<br />` tag added to the FAQ H1 ("Your Questions,\nAnswered") to control line break on larger viewports — this maintains the typographic quality of the existing 6xl heading size on desktop.
+- "Join Now" replaced with "Join the Community" in Newsletter. "Join Now" is urgency language with no information value. "Join the Community" names what the guest is joining, which is more honest and consistent with the Newsletter section's own H2.
+- All WhatsApp "support" language updated: contact page ("ask us anything"), WhyChooseUs ("Order and connect"), WhyMaison ("Direct conversation and ordering"). Each replacement removes the help-desk framing and positions WhatsApp as a direct human connection.
+
+**Foundation Alignment:**
+- Blueprint (Brand Voice): "The voice sounds like: someone who has spent years learning something beautiful and is sharing it with care."
+- Blueprint (Brand Personality: Never Pushy): "Join Now" carries implicit urgency; "Join the Community" does not.
+- Blueprint (Brand Personality: Welcoming): WhatsApp is the institution's most personal touchpoint — its description should reflect that.
+- Blueprint (Language Principles): "Write for a person who is intelligent and capable of their own decisions."
+
+**Tasks Completed:**
+- `app/contact/page.tsx` — WhatsApp description: "get support" → "ask us anything"
+- `app/components/WhyChooseUs.tsx` — WhatsApp description: "Simple ordering and support" → "Order and connect"
+- `app/components/WhyChooseUs.tsx` — Eyebrow: "Why Choose Us" → "The Maison Difference"
+- `app/components/WhyMaison.tsx` — WhatsApp description: "Quick and easy support" → "Direct conversation and ordering"
+- `app/components/TrustBar.tsx` — Trust badge: "WhatsApp Support" → "WhatsApp Ordering"
+- `app/faq/page.tsx` — H1: "FAQ" → "Your Questions, Answered" (eyebrow preserved)
+- `app/components/Newsletter.tsx` — Button: "Join Now" → "Join the Community"
+- Updated `PROJECT_STATUS.md`, `.ai/CURRENT_TASK.md`, `.ai/ENGINEERING_LOG.md`
+
+**Tasks Started:**
+- None
+
+**Build Result:** Pass — 187 routes, 0 TypeScript errors, 0 warnings.
+
+**Files Changed:**
+- `app/contact/page.tsx` (modified — 1 line)
+- `app/components/WhyChooseUs.tsx` (modified — 2 lines)
+- `app/components/WhyMaison.tsx` (modified — 1 line)
+- `app/components/TrustBar.tsx` (modified — 1 line)
+- `app/faq/page.tsx` (modified — 2 lines)
+- `app/components/Newsletter.tsx` (modified — 1 line)
+- `PROJECT_STATUS.md` (modified)
+- `.ai/CURRENT_TASK.md` (modified)
+- `.ai/ENGINEERING_LOG.md` (modified)
+
+**Handoff:**
+- EP2-P6B complete. Voice findings M-01, M-02, M-03, M-05 resolved.
+- EP2-P6 audit is now complete: EP2-P6A (C-01 through C-04) + EP2-P6B (M-01, M-02, M-03, M-05).
+- Remaining audit findings from EP2-P6 that were not approved for implementation: H-01 (Contact page catalogue row), H-03 (HomeCTA counts), H-04 (WhyChooseUs/WhyMaison counts), H-06 (Fragrance Profile empty state count). These belong to future approved programmes.
+- EP2 Foundation Alignment Programme is substantially complete. Suggested next programmes: EP2-P7 (Testimonials — ExD-07) and EP2-P8 (Post-purchase care signal — ExD-08).
+
+**Open Questions Carried Forward:**
+- None
+
+---
+
 ### 2026-08-06 — EP2-P6A — Platform Experience Programme / Institutional Identity Alignment
 
 **Participants:** Project Owner / Claude (Implementation Engineer)

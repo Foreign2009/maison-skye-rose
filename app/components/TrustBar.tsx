@@ -4,7 +4,7 @@ export default function TrustBar() {
     "Nationwide Delivery",
     "Collection Available",
     "Secure Ordering",
-    "WhatsApp Support",
+    "WhatsApp Ordering",
   ];
 
   return (

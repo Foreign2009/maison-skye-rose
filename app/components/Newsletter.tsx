@@ -59,7 +59,7 @@ export default function Newsletter() {
               text-white
             "
           >
-            Join Now
+            Join the Community
           </button>
 
         </div>

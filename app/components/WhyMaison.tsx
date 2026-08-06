@@ -27,7 +27,7 @@ export default function WhyMaison() {
     {
       icon: <MessageCircle className="h-6 w-6 text-[#d89ca4]" />,
       title: "WhatsApp Ordering",
-      description: "Quick and easy support via WhatsApp.",
+      description: "Direct conversation and ordering via WhatsApp.",
     },
   ];
 
