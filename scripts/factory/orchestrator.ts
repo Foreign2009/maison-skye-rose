@@ -26,6 +26,7 @@ import { logRun }              from "./metrics/factoryLogger";
 import { ContextBuilder }        from "./core/ContextBuilder";
 import { GenerationEngine }      from "./core/GenerationEngine";
 import { ClaudeProvider }        from "./core/providers/ClaudeProvider";
+import { ProducerRegistry }      from "./core/ProducerRegistry";
 import { CompositionProducer }   from "./producers/CompositionProducer";
 import { EditorialProducer }     from "./producers/EditorialProducer";
 import { RelationshipProducer }  from "./producers/RelationshipProducer";
@@ -38,6 +39,22 @@ import type { PipelineInput, PipelineResult, PipelineState, StageEntry } from ".
 // ── Constants ─────────────────────────────────────────────────────────────────
 
 export const FACTORY_VERSION = "0.5.0";
+
+// ── Producer Registry ─────────────────────────────────────────────────────────
+
+export const FRAGRANCE_PRODUCER_SET = {
+  category:  "fragrance" as const,
+  producers: [
+    new CompositionProducer(),
+    new EditorialProducer(),
+    new RelationshipProducer(),
+    new EducationProducer(),
+    new DiscoveryProducer(),
+  ],
+} as const;
+
+export const defaultRegistry = new ProducerRegistry();
+defaultRegistry.register(FRAGRANCE_PRODUCER_SET);
 
 const ROOT      = process.cwd();
 const DRAFT_DIR = path.join(ROOT, "scripts", "factory", "drafts");
@@ -138,7 +155,7 @@ export async function run(input: PipelineInput): Promise<PipelineResult> {
 
     stage("scaffold", degraded ? "degraded" : "pass", ms1, degraded ? "knowledgeAdapter fallback used" : undefined);
 
-    // ── Stage 3: Composition Producer ──────────────────────────────────────
+    // ── Stages 3–7: AI Producers (registry-resolved) ────────────────────────
     const hasApiKey    = Boolean(process.env.ANTHROPIC_API_KEY);
     const factoryConfig: FactoryConfig = { ...DEFAULT_FACTORY_CONFIG, dryRun: input.dryRun || !hasApiKey };
 
@@ -150,90 +167,31 @@ export async function run(input: PipelineInput): Promise<PipelineResult> {
     if (hasApiKey) engine.registerProvider(new ClaudeProvider());
 
     const producerResults: ProducerResult[] = [];
+    const producerSet = defaultRegistry.getProducerSet("fragrance");
+    let   currentCtx  = ctx0;
 
-    const tComp      = Date.now();
-    const compResult = await new CompositionProducer().run(ctx0, engine);
-    producerResults.push(compResult);
-    stage(
-      "composition",
-      compResult.status === "success" ? "pass" : compResult.status === "degraded" ? "degraded" : compResult.status === "skipped" ? "skip" : "fail",
-      Date.now() - tComp,
-      compResult.status === "skipped"
-        ? compResult.skippedReason
-        : `${compResult.metrics.totalTokens} tokens  conf:${compResult.confidence.toFixed(2)}`,
-    );
+    for (const producer of producerSet.producers) {
+      const tProducer      = Date.now();
+      const producerResult = await producer.run(currentCtx, engine);
+      producerResults.push(producerResult);
 
-    // Update context so EditorialProducer sees the composition output
-    const ctxAfterComp = compResult.status !== "failed" && compResult.status !== "skipped"
-      ? ContextBuilder.withMergedRecord(ctx0, merge(scaffolded, compResult))
-      : ctx0;
+      stage(
+        toStageName(producer.name),
+        producerResult.status === "success"  ? "pass"
+          : producerResult.status === "degraded" ? "degraded"
+          : producerResult.status === "skipped"  ? "skip"
+          : "fail",
+        Date.now() - tProducer,
+        producerResult.status === "skipped"
+          ? producerResult.skippedReason
+          : `${producerResult.metrics.totalTokens} tokens  conf:${producerResult.confidence.toFixed(2)}`,
+      );
 
-    // ── Stage 4: Editorial Producer ─────────────────────────────────────────
-    const tEdit      = Date.now();
-    const editResult = await new EditorialProducer().run(ctxAfterComp, engine);
-    producerResults.push(editResult);
-    stage(
-      "editorial",
-      editResult.status === "success" ? "pass" : editResult.status === "degraded" ? "degraded" : editResult.status === "skipped" ? "skip" : "fail",
-      Date.now() - tEdit,
-      editResult.status === "skipped"
-        ? editResult.skippedReason
-        : `${editResult.metrics.totalTokens} tokens  conf:${editResult.confidence.toFixed(2)}`,
-    );
-
-    // Update context so RelationshipProducer sees the full editorial output
-    const ctxAfterEdit = editResult.status !== "failed" && editResult.status !== "skipped"
-      ? ContextBuilder.withMergedRecord(ctxAfterComp, merge(scaffolded, compResult, editResult))
-      : ctxAfterComp;
-
-    // ── Stage 5: Relationship Producer ──────────────────────────────────────
-    const tRel      = Date.now();
-    const relResult = await new RelationshipProducer().run(ctxAfterEdit, engine);
-    producerResults.push(relResult);
-    stage(
-      "relationships",
-      relResult.status === "success" ? "pass" : relResult.status === "degraded" ? "degraded" : relResult.status === "skipped" ? "skip" : "fail",
-      Date.now() - tRel,
-      relResult.status === "skipped"
-        ? relResult.skippedReason
-        : `${relResult.metrics.totalTokens} tokens  conf:${relResult.confidence.toFixed(2)}`,
-    );
-
-    // Update context so EducationProducer sees relationships
-    const ctxAfterRel = relResult.status !== "failed" && relResult.status !== "skipped"
-      ? ContextBuilder.withMergedRecord(ctxAfterEdit, merge(scaffolded, compResult, editResult, relResult))
-      : ctxAfterEdit;
-
-    // ── Stage 6: Education Producer ──────────────────────────────────────────
-    const tEdu      = Date.now();
-    const eduResult = await new EducationProducer().run(ctxAfterRel, engine);
-    producerResults.push(eduResult);
-    stage(
-      "education",
-      eduResult.status === "success" ? "pass" : eduResult.status === "degraded" ? "degraded" : eduResult.status === "skipped" ? "skip" : "fail",
-      Date.now() - tEdu,
-      eduResult.status === "skipped"
-        ? eduResult.skippedReason
-        : `${eduResult.metrics.totalTokens} tokens  conf:${eduResult.confidence.toFixed(2)}`,
-    );
-
-    // Update context so DiscoveryProducer sees the full enriched record
-    const ctxAfterEdu = eduResult.status !== "failed" && eduResult.status !== "skipped"
-      ? ContextBuilder.withMergedRecord(ctxAfterRel, merge(scaffolded, compResult, editResult, relResult, eduResult))
-      : ctxAfterRel;
-
-    // ── Stage 7: Discovery Producer ──────────────────────────────────────────
-    const tDisc      = Date.now();
-    const discResult = await new DiscoveryProducer().run(ctxAfterEdu, engine);
-    producerResults.push(discResult);
-    stage(
-      "discovery",
-      discResult.status === "success" ? "pass" : discResult.status === "degraded" ? "degraded" : discResult.status === "skipped" ? "skip" : "fail",
-      Date.now() - tDisc,
-      discResult.status === "skipped"
-        ? discResult.skippedReason
-        : `${discResult.metrics.totalTokens} tokens  conf:${discResult.confidence.toFixed(2)}`,
-    );
+      // Update context so each subsequent producer sees all accumulated fields
+      if (producerResult.status !== "failed" && producerResult.status !== "skipped") {
+        currentCtx = ContextBuilder.withMergedRecord(currentCtx, merge(scaffolded, ...producerResults));
+      }
+    }
 
     // ── Stage 8: Merge ───────────────────────────────────────────────────────
     const t2     = Date.now();
@@ -311,4 +269,16 @@ export async function run(input: PipelineInput): Promise<PipelineResult> {
       durationMs: totalMs,
     };
   }
+}
+
+// ── Module helpers ─────────────────────────────────────────────────────────────
+
+/**
+ * Derives the stage log name from a producer class name.
+ * Convention: strip "Producer" suffix and lowercase.
+ * Exception: RelationshipProducer → "relationships" (established plural form).
+ */
+function toStageName(producerName: string): string {
+  const base = producerName.replace(/Producer$/, "").toLowerCase();
+  return base === "relationship" ? "relationships" : base;
 }

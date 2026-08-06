@@ -19,62 +19,43 @@ At the start of a new Claude Code session:
 ## Current Task
 
 **Status:** Complete
-**Program:** EP2-P7D — Multi-Category Type Foundation
+**Program:** EP3-P2 — Producer Registry Foundation
 
 **Goal:**
-Transform the About page from 4 generic paragraphs into the first public expression of the Maison Skye & Rose institution — aligned with all five Foundation documents.
+Replace hardcoded producer sequence in Knowledge Factory orchestrator with an explicit ProducerRegistry and ProducerSet abstraction.
 
 **Acceptance Criteria:**
-- [x] About page rewritten with 9 Foundation-aligned sections
-- [x] Founding story told authentically (compliment, curiosity, price discovery, conviction)
-- [x] Names Skye & Rose explained with genuine context (daughters, not branding)
-- [x] Confidence as the true product expressed clearly
-- [x] Knowledge before recommendation philosophy expressed
-- [x] AI introduced as servant of hospitality, not the headline
-- [x] Accessible Luxury philosophy expressed as permanent conviction
-- [x] Growing Together communicates future expansion without announcing products
-- [x] Our Promise section added (care, craftsmanship, integrity)
-- [x] An Invitation closes the page without a conventional thank-you
-- [x] No fixed catalogue numbers — timeless language throughout
-- [x] OG and Twitter metadata added
-- [x] Description updated to reflect founding story
-- [x] Architecture preserved (Navbar, Footer, max-w-5xl container, bg-[#faf7f5])
-- [x] No new components, no new imports
+- [x] `scripts/factory/core/ProducerRegistry.ts` created — `ProducerSet` type and `ProducerRegistry` class
+- [x] `FRAGRANCE_PRODUCER_SET` and `defaultRegistry` exported from orchestrator
+- [x] Orchestrator resolves producers from registry rather than hardcoding them
+- [x] Same 5 producers in same order — behaviour unchanged
+- [x] Stage log names identical (composition, editorial, relationships, education, discovery)
+- [x] `toStageName()` helper handles RelationshipProducer → "relationships" pluralisation
+- [x] No producer files modified
+- [x] No application files modified
 - [x] Build passes: 187 routes, 0 TypeScript errors, 0 warnings
 - [x] `PROJECT_STATUS.md` updated
 - [x] `.ai/CURRENT_TASK.md` updated
 - [x] `.ai/ENGINEERING_LOG.md` updated
 
 **Why This Task:**
-The EP2-P1 audit scored the About page 3/10 — the lowest-scoring page on the site and the most significant trust failure, because it is the page most likely to be consulted by a trust-evaluating guest. It contained no founding story, no genuine context for the names, and a count inconsistency. This programme closes that gap.
+The orchestrator hardcoded 5 producers in sequence. As the Knowledge Factory evolves to support additional product categories (body-care, home-fragrance, etc.), each category will require its own producer set. EP3-P2 introduces the registry abstraction that makes this possible without future refactoring.
 
 ---
 
 ## Files Involved
 
 **Files created (1):**
-- `app/admin/components/AdminNavigation.tsx` — shared nav component; `usePathname()` active-state; 14 nav items data-driven; `"use client"`
+- `scripts/factory/core/ProducerRegistry.ts` — `ProducerSet` type and `ProducerRegistry` class; pure abstraction layer, no concrete producers
 
-**Files modified (14 admin dashboard components — nav extraction only):**
-- `app/admin/AdminConsole.tsx`
-- `app/admin/BriefingDashboard.tsx`
-- `app/admin/CommerceIntelligenceDashboard.tsx`
-- `app/admin/CustomerIntelligenceDashboard.tsx`
-- `app/admin/ExecutiveBriefingCenter.tsx`
-- `app/admin/ExecutiveOperationsDashboard.tsx`
-- `app/admin/ExecutiveOperationsDigestDashboard.tsx`
-- `app/admin/ExecutiveReportCenter.tsx`
-- `app/admin/ExecutiveReportDashboard.tsx`
-- `app/admin/IntelligenceDashboard.tsx`
-- `app/admin/OperationsAlertCenter.tsx`
-- `app/admin/OperationsAlertDashboard.tsx`
-- `app/admin/RecommendationPerformanceDashboard.tsx`
-- `app/admin/UnifiedOperationsConsole.tsx`
+**Files modified (1):**
+- `scripts/factory/orchestrator.ts` — added `ProducerRegistry` import; added `FRAGRANCE_PRODUCER_SET` and `defaultRegistry` exports; replaced 5 hardcoded producer blocks with registry-resolved loop; added `toStageName()` helper
 
 **Files NOT modified:**
-- All admin route pages (`app/admin/*/page.tsx`) — unchanged
-- All lib/operations builders and types — unchanged
-- RecommendationEngine, ExperienceIntelligence, LearningEngine, analytics, commerce — unchanged
+- All 5 producers (CompositionProducer, EditorialProducer, RelationshipProducer, EducationProducer, DiscoveryProducer) — unchanged
+- `scripts/factory/core/BaseProducer.ts` — unchanged
+- All other factory files (merger, scaffold, intake, promotion) — unchanged
+- All application code — unchanged
 
 ---
 
@@ -86,7 +67,7 @@ _Task closed._
 
 ## Context Notes
 
-**Last completed:** EP2-P3 About Page Foundation Alignment (2026-08-05)
+**Last completed:** EP3-P2 Producer Registry Foundation (2026-08-06)
 
 Recent completed programs (newest first):
 - EP100-P3A Extract Shared AdminNavigation Component (2026-08-04) — 1 component created; 14 dashboards updated; Link import audited (7 preserved for body Link usage); build passes; 189 routes
@@ -127,7 +108,7 @@ _N/A_
 
 ## Build Result
 
-**Last build:** 2026-08-04 — Pass. Zero TypeScript errors. Zero warnings. 189 routes. (EP100-P3A)
+**Last build:** 2026-08-06 — Pass. Zero TypeScript errors. Zero warnings. 187 routes. (EP3-P2)
 
 ---
 

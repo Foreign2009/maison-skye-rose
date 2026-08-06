@@ -39,6 +39,49 @@ Never edit or delete past entries.
 
 ## Log
 
+### 2026-08-06 — EP3-P1 + EP3-P2 — Knowledge Platform Evolution / Producer Registry Foundation
+
+**Participants:** Project Owner / Claude (Implementation Engineer)
+**Program:** EP3-P1 (Product Creation Pipeline Audit) + EP3-P2 (Producer Registry Foundation)
+
+**Decisions Made:**
+- EP3-P1 is a read-only audit — no code changes. Established that the Knowledge Factory (11-stage AI pipeline) is the strategic platform for all future product publishing. Identified 15 fragrance-specific stages and 11 already-agnostic stages.
+- EP3-P2 implementation approach: `ProducerRegistry` class and `ProducerSet` type in `scripts/factory/core/ProducerRegistry.ts` (pure abstraction); `FRAGRANCE_PRODUCER_SET` and `defaultRegistry` instantiated in `orchestrator.ts` (concrete wiring). This keeps `core/` free of concrete producer imports.
+- `toStageName()` private helper in orchestrator handles producer-name-to-stage-name derivation, including the `RelationshipProducer` → `"relationships"` plural exception.
+- `BaseProducer` and all 5 concrete producers left unchanged — no new abstract properties required.
+
+**Tasks Completed:**
+- EP3-P1 audit delivered: full product lifecycle diagram, 14 questions answered, 14 deliverables produced, 8 risks identified, recommended EP3 programme sequence documented.
+- `scripts/factory/core/ProducerRegistry.ts` — created; `ProducerSet` type (category + ordered producers); `ProducerRegistry` class with `register()` and `getProducerSet()`.
+- `scripts/factory/orchestrator.ts` — `ProducerRegistry` import added; `FRAGRANCE_PRODUCER_SET` and `defaultRegistry` exported constants added; 5 hardcoded producer blocks replaced with registry-resolved `for...of` loop; `toStageName()` helper added.
+- `PROJECT_STATUS.md` updated with EP3-P1 and EP3-P2 entries.
+- `.ai/CURRENT_TASK.md` updated.
+- `.ai/ENGINEERING_LOG.md` updated.
+
+**Tasks Started:**
+- None.
+
+**Build Result:** Pass — 187 routes, 0 TypeScript errors, 0 warnings. Factory behaviour identical to before: same 5 producers, same order, same stage log names, same cumulative context threading.
+
+**Files Changed:**
+- `scripts/factory/core/ProducerRegistry.ts` — created
+- `scripts/factory/orchestrator.ts` — modified (registry wiring + loop)
+- `PROJECT_STATUS.md` — updated
+- `.ai/CURRENT_TASK.md` — updated
+- `.ai/ENGINEERING_LOG.md` — updated
+
+**Handoff:**
+- EP3-P2 complete. ProducerRegistry foundation established. One ProducerSet registered: "fragrance".
+- Future categories (body-care, home-fragrance, etc.) add a new ProducerSet to `defaultRegistry.register()` — orchestrator loop requires no changes.
+- Deferred: EP3-P3 (first non-fragrance ProducerSet) — when first non-fragrance product is ready to author.
+- Deferred: EP2-P7F (ProductRecord / FragranceProfile structural separation) — when first non-fragrance product is ready to author.
+- Deferred: EP2-P7A (founder count verification) — unblocks EP2-P7E SourcingRegistry.
+
+**Open Questions Carried Forward:**
+- EP2-P7A: Founder must verify actual sourcing catalogue count against supplier before catalogStats.ts can be updated.
+
+---
+
 ### 2026-08-06 — EP2-P7D — Platform Evolution Programme / Multi-Category Type Foundation
 
 **Participants:** Project Owner / Claude (Implementation Engineer)
