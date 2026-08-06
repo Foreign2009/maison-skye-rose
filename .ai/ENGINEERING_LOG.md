@@ -39,6 +39,47 @@ Never edit or delete past entries.
 
 ## Log
 
+### 2026-08-06 — EP2-P7C — Platform Experience Programme / Commerce and Contact Truth Alignment
+
+**Participants:** Project Owner / Claude (Implementation Engineer)
+**Program:** EP2-P7C — Commerce and Contact Truth Alignment
+
+**Decisions Made:**
+- Remove Contact Details "Catalogue:" row — bare count beside contact information had no sourcing context; the dedicated "Request Any Fragrance" section below communicates the sourcing capability correctly.
+- Rename WhyChooseUs sourcing feature title "465+ Fragrances Available" → "Available by Request" — the description was already sourcing-aware; the title now matches it.
+- Replace ProductDetail trust badge "✓ 465+ Signature Fragrances Available" → "✓ Carefully Curated Collection" — the PDP is the highest-trust surface in the commerce flow; guests there are evaluating a purchase, not a sourcing capability.
+- WhyChooseUs section intro paragraph ("a growing catalogue of over 465 fragrances available on request") preserved — sourcing context is explicit.
+- All other sourcing-context copy (RequestFragrance, FAQ, Contact sourcing section) preserved.
+
+**Tasks Completed:**
+- `app/contact/page.tsx` — "Catalogue: 465+ Luxury-Inspired Fragrances" row removed from Contact Details card.
+- `app/components/WhyChooseUs.tsx` — Feature card title "465+ Fragrances Available" → "Available by Request".
+- `app/components/ProductDetail.tsx` — Trust badge "✓ 465+ Signature Fragrances Available" → "✓ Carefully Curated Collection".
+- `PROJECT_STATUS.md` updated with EP2-P7C entry.
+- `.ai/CURRENT_TASK.md` updated.
+- `.ai/ENGINEERING_LOG.md` updated.
+
+**Build Result:** Pass — 187 routes, 0 TypeScript errors, 0 warnings.
+
+**Files Changed:**
+- `app/contact/page.tsx` — Catalogue row removed
+- `app/components/WhyChooseUs.tsx` — Feature card title only
+- `app/components/ProductDetail.tsx` — Trust badge text only
+- `PROJECT_STATUS.md` — EP2-P7C entry added
+- `.ai/CURRENT_TASK.md` — updated
+- `.ai/ENGINEERING_LOG.md` — this entry
+
+**Handoff:**
+- EP2-P7A (founder verification of sourcing catalogue count against actual supplier) remains a prerequisite before sourcing counts are reused or governed.
+- EP2-P7D (data model — availabilityStatus + category fields) awaits approval.
+- The EP2-P7 catalogue truth programme is now complete across all identified surfaces. No further 465+ claims exist on institutional or trust surfaces without explicit sourcing context.
+
+**Open Questions Carried Forward:**
+- Is 465 the current accurate sourcing catalogue count? Founder must verify before EP2-P7D.
+- Which naming option (A–E from EP2-P7 audit) should be adopted for public-facing collection and sourcing service names?
+
+---
+
 ### 2026-08-06 — EP2-P7B — Platform Experience Programme / Online Collection Truth Alignment
 
 **Participants:** Project Owner / Claude (Implementation Engineer)

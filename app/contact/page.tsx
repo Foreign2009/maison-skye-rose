@@ -78,14 +78,6 @@ export default function ContactPage() {
                 Cape Town, South Africa
               </p>
 
-              <p>
-                <span className="font-semibold text-[#4f4a52]">
-                  Catalogue:
-                </span>
-                <br />
-                465+ Luxury-Inspired Fragrances
-              </p>
-
             </div>
           </div>
 

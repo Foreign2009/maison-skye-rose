@@ -42,7 +42,7 @@ const features = [
   },
   {
     icon: Search,
-    title: "465+ Fragrances Available",
+    title: "Available by Request",
     description:
       "Can't find your fragrance online? We can source it from our extended catalogue.",
   },

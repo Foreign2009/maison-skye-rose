@@ -508,7 +508,7 @@ export default function ProductDetail({
               {/* Trust signals */}
               <div className="mt-4 space-y-2 text-sm text-zinc-600">
                 <p>✓ Nationwide South African Delivery</p>
-                <p>✓ 465+ Signature Fragrances Available</p>
+                <p>✓ Carefully Curated Collection</p>
                 <p>✓ Secure Checkout</p>
                 <p>✓ Luxury Inspired Fragrance Collection</p>
               </div>
