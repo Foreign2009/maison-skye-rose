@@ -21,7 +21,6 @@ import path from "path";
 import { FACTORY_VERSION }         from "./version";
 import { intake }                   from "./intake";
 import { scaffold }                 from "./scaffold";
-import { scaffoldHomeFragrance }    from "./homeFragranceScaffold";
 import { merge }               from "./merger";
 import { buildDraft }          from "./draftBuilder";
 import { logRun }              from "./metrics/factoryLogger";
@@ -37,7 +36,7 @@ import { EducationProducer }     from "./producers/EducationProducer";
 import { DiscoveryProducer }     from "./producers/DiscoveryProducer";
 import { validateKnowledgeRecord } from "../../app/lib/mkc/validator";
 import type { FactoryConfig, ProducerResult } from "./core/types";
-import type { PipelineInput, PipelineResult, PipelineState, StageEntry, FragranceIntake, HomeFragranceIntake } from "./types";
+import type { PipelineInput, PipelineResult, PipelineState, StageEntry } from "./types";
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 
@@ -62,10 +61,28 @@ defaultRegistry.register(FRAGRANCE_PRODUCER_SET);
 // ── Scaffold Registry ─────────────────────────────────────────────────────────
 
 export const defaultScaffoldRegistry = new ScaffoldRegistry();
-// Registry invariant: the scaffolder for "fragrance" is only called when intake.category === "fragrance".
-// The cast is safe; the registry resolves scaffolders by category before dispatch.
-defaultScaffoldRegistry.register("fragrance", (intake) => scaffold(intake as FragranceIntake));
-defaultScaffoldRegistry.register("home-fragrance", (intake) => scaffoldHomeFragrance(intake as HomeFragranceIntake));
+defaultScaffoldRegistry.register("fragrance", (intake) => {
+  if (intake.category !== "fragrance") {
+    throw new Error(`Fragrance scaffolder received unexpected category: ${intake.category}`);
+  }
+  // intake is now narrowed to FragranceIntake by TypeScript control-flow analysis.
+  // FragranceIntake is structurally assignable to DisplayFragrance (what scaffold() accepts).
+  return scaffold(intake);
+});
+defaultScaffoldRegistry.register("home-fragrance", (intake) => {
+  if (intake.category !== "home-fragrance") {
+    throw new Error(`Home fragrance scaffolder received unexpected category: ${intake.category}`);
+  }
+  // HomeFragranceScaffoldOutput is the truthful output type for this category.
+  // ScaffoldResult.record requires FragranceKnowledge, which cannot represent home
+  // fragrance without fabricated fields (collection, gender, projection, 5ml prices).
+  // EP4-P3 will introduce HomeFragranceKnowledge and resolve this boundary.
+  // Use scaffoldHomeFragrance() directly for the truthful HomeFragranceScaffoldOutput.
+  throw new Error(
+    "Home Fragrance knowledge record type not yet defined. " +
+    "EP4-P3 will introduce the HomeFragranceKnowledge type.",
+  );
+});
 
 const ROOT      = process.cwd();
 const DRAFT_DIR = path.join(ROOT, "scripts", "factory", "drafts");
@@ -176,12 +193,28 @@ export async function run(input: PipelineInput): Promise<PipelineResult> {
     // before any AI generation begins.
     const producerSet = defaultRegistry.getProducerSet(resolvedCategory);
 
+    // The AI producer pipeline requires a DisplayFragrance context.
+    // Today only fragrance has a registered ProducerSet, so getProducerSet()
+    // above throws for any other category before reaching this point.
+    // The guard below narrows the intake type without a type assertion.
+    const productIntake = result.intake!;
+    if (productIntake.category !== "fragrance") {
+      // Unreachable today: getProducerSet() throws first for categories without a set.
+      // This guard ensures TypeScript narrows productIntake to FragranceIntake,
+      // and makes the constraint explicit for when a future category adds a ProducerSet.
+      throw new Error(
+        `Producer context (DisplayFragrance) not implemented for category: ${productIntake.category}. ` +
+        `Add context handling alongside the ProducerSet registration for this category.`,
+      );
+    }
+    // productIntake is now FragranceIntake (narrowed by TypeScript control-flow analysis).
+
     // ── Stages 3–7: AI Producers (registry-resolved) ────────────────────────
     const hasApiKey    = Boolean(process.env.ANTHROPIC_API_KEY);
     const factoryConfig: FactoryConfig = { ...DEFAULT_FACTORY_CONFIG, dryRun: input.dryRun || !hasApiKey };
 
     const ctx0   = ContextBuilder.build(
-      { slug, displayFrag: result.intake! as FragranceIntake, record: scaffolded, validationResult: null, stageLog, factoryVersion: FACTORY_VERSION },
+      { slug, displayFrag: productIntake, record: scaffolded, validationResult: null, stageLog, factoryVersion: FACTORY_VERSION },
       factoryConfig,
     );
     const engine = new GenerationEngine(factoryConfig);
@@ -237,7 +270,7 @@ export async function run(input: PipelineInput): Promise<PipelineResult> {
     // ── Build PipelineState ─────────────────────────────────────────────────
     const state: PipelineState = {
       slug,
-      displayFrag:      result.intake! as FragranceIntake,
+      displayFrag:      productIntake,
       record,
       validationResult,
       stageLog,

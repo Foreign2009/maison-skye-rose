@@ -23,7 +23,8 @@
     "mkc:dashboard": "npx tsx scripts/factory/dashboard/index.ts",
     "mkc:dashboard:json": "npx tsx scripts/factory/dashboard/index.ts --json",
     "mkc:lifecycle": "npx tsx scripts/factory/lifecycle/index.ts",
-    "mkc:lifecycle:json": "npx tsx scripts/factory/lifecycle/index.ts --json"
+    "mkc:lifecycle:json": "npx tsx scripts/factory/lifecycle/index.ts --json",
+    "mkc:validate:home-fragrance": "npx tsx scripts/factory/validate-home-fragrance.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.110.0",

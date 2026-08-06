@@ -19,21 +19,25 @@ At the start of a new Claude Code session:
 ## Current Task
 
 **Status:** Complete
-**Program:** EP4-P2 — Home Fragrance Foundation
+**Program:** EP4-P2R — Correct Home Fragrance Foundation
 
 **Goal:**
-Introduce Home Fragrance as the factory's first real second category at the foundation level.
-After this episode the factory recognises home-fragrance, resolves intake, resolves scaffold,
-and blocks cleanly at producer resolution with a clear error.
+Correct three architectural defects from EP4-P2:
+1. Remove all unchecked `as FragranceIntake` / `as HomeFragranceIntake` type assertions
+2. Replace fabricated `FragranceKnowledge` values in the home fragrance scaffolder with
+   a truthful `HomeFragranceScaffoldOutput` type containing only genuinely derivable fields
+3. Prove the home-fragrance registry wiring with a deterministic validation script
 
 **Acceptance Criteria:**
-- [x] `HomeFragranceIntake` defined in `scripts/factory/types.ts`
-- [x] `ProductIntake` expanded to `FragranceIntake | HomeFragranceIntake` (proper discriminated union)
-- [x] Home fragrance catalogue loader registered in `defaultCatalogueRegistry` (empty — returns null)
-- [x] `scripts/factory/homeFragranceScaffold.ts` created
-- [x] Home fragrance scaffolder registered in `defaultScaffoldRegistry`
-- [x] No producer set registered for home-fragrance (intentional)
-- [x] Factory throws "No ProducerSet registered for category: home-fragrance" before AI generation
+- [x] All `as FragranceIntake` / `as HomeFragranceIntake` assertions removed from orchestrator.ts
+- [x] All `as FragranceIntake` assertion removed from promotionManager.ts
+- [x] `HomeFragranceScaffoldOutput` interface defined — no `collection`, `gender`, `projection`, no fragrance size keys
+- [x] `scaffoldHomeFragrance()` returns `HomeFragranceScaffoldOutput` — all fields derived truthfully from intake
+- [x] Fragrance scaffolder registration uses discriminant narrowing (`intake.category !== "fragrance"`)
+- [x] Home fragrance scaffolder registration uses discriminant narrowing + throws "knowledge record type not yet defined"
+- [x] Promotion manager uses explicit category guard + returns `rejected` for non-fragrance
+- [x] `scripts/factory/validate-home-fragrance.ts` created — 15 deterministic proofs, no AI, no writes
+- [x] `npm run mkc:validate:home-fragrance` — all 15 proofs pass
 - [x] Fragrance pipeline unchanged
 - [x] No guest-facing behaviour changes
 - [x] No native MKC records modified
@@ -43,31 +47,28 @@ and blocks cleanly at producer resolution with a clear error.
 - [x] `.ai/ENGINEERING_LOG.md` updated
 
 **Why This Task:**
-EP4-P1 identified Home Fragrance as the optimal first second category — maximum producer
-reuse, shared olfactory vocabulary, lowest intake complexity, natural fit for the Maison brand.
-EP4-P2 establishes the foundation so EP4-P3 can introduce prompt calibration and the first
-home fragrance draft generation.
+EP4-P2 introduced three defects: unchecked type assertions, fabricated `FragranceKnowledge`
+values in the home fragrance scaffolder (collection: "Elite", gender: "unisex", prices: 5ml/0),
+and no runtime proof of the registry wiring. EP4-P2R corrects all three.
 
 ---
 
 ## Files Involved
 
 **Files created (1):**
-- `scripts/factory/homeFragranceScaffold.ts` — Home fragrance scaffolder
+- `scripts/factory/validate-home-fragrance.ts` — Deterministic foundation proof script
 
-**Files modified (4):**
-- `scripts/factory/types.ts` — HomeFragranceIntake added; ProductIntake union expanded
-- `scripts/factory/intake.ts` — Home fragrance loader registered; intake() discriminates for non-fragrance collection/source
-- `scripts/factory/orchestrator.ts` — Home fragrance scaffolder registered; fragrance scaffolder cast updated
-- `scripts/factory/promotion/promotionManager.ts` — Type cast added for scaffold() call (union expansion cascade fix)
+**Files modified (3):**
+- `scripts/factory/homeFragranceScaffold.ts` — Complete rewrite: `HomeFragranceScaffoldOutput` type; truthful scaffolder; no `FragranceKnowledge` import
+- `scripts/factory/orchestrator.ts` — Discriminant narrowing in both scaffolder registrations; `productIntake` narrowing replaces both `as FragranceIntake` casts; `scaffoldHomeFragrance` import removed
+- `scripts/factory/promotion/promotionManager.ts` — Explicit category guard; `productIntake` narrowing replaces `as FragranceIntake` cast; `FragranceIntake` import removed
 
 **Files NOT modified:**
+- `scripts/factory/types.ts` — `HomeFragranceIntake`, `ProductIntake` union unchanged
+- `scripts/factory/intake.ts` — Catalogue registration unchanged
 - `scripts/factory/scaffold.ts` — Fragrance scaffold logic unchanged
-- `scripts/factory/core/CatalogueRegistry.ts` — Generic registry, unchanged
-- `scripts/factory/core/ScaffoldRegistry.ts` — Generic registry, unchanged
-- `scripts/factory/core/ProducerRegistry.ts` — No producer registered for home-fragrance (by design)
+- All registries — unchanged
 - All 5 producers — unchanged
-- `app/lib/mkc/types.ts` — ProductCategory already contained "home-fragrance"
 - All application code — unchanged
 - All 93 native MKC records — unchanged
 
@@ -81,13 +82,13 @@ _Task closed._
 
 ## Context Notes
 
-**Last completed:** EP4-P2 Home Fragrance Foundation (2026-08-06)
+**Last completed:** EP4-P2R — Correct Home Fragrance Foundation (2026-08-06)
 
 Recent completed programs (newest first):
+- EP4-P2R Correct Home Fragrance Foundation (2026-08-06) — Removed unsafe casts; introduced HomeFragranceScaffoldOutput; added validation script
+- EP4-P2 Home Fragrance Foundation (2026-08-06) — HomeFragranceIntake; union expansion; registry wiring (defects corrected in EP4-P2R)
 - EP4-P1 First Multi-Category Product Strategy Audit (2026-08-06) — 20-deliverable strategic audit; Home Fragrance selected as first second category
 - EP3-P7 Factory Integrity Hardening (2026-08-06) — ProducerRegistry duplicate guard; single FACTORY_VERSION; single deriveSlug
-- EP3-P6 Registry-Driven Factory Stability Audit (2026-08-06) — 20-deliverable read-only audit; confirmed stability; 3 required fixes identified
-- EP3-P5B Scaffold Resolution Foundation (2026-08-06) — ScaffoldRegistry created; orchestrator fully registry-driven
 
 ---
 
@@ -99,7 +100,7 @@ _N/A_
 
 ## Build Result
 
-**Last build:** 2026-08-06 — Pass. Zero TypeScript errors. Zero warnings. 187 routes. (EP4-P2)
+**Last build:** 2026-08-06 — Pass. Zero TypeScript errors. Zero warnings. 187 routes. (EP4-P2R)
 
 ---
 

@@ -8,10 +8,10 @@
 
 ## Current Engineering Program
 
-**Program:** EP4-P2 — Home Fragrance Foundation (Complete)
-**Sprint:** EP3
+**Program:** EP4-P2R — Correct Home Fragrance Foundation (Complete)
+**Sprint:** EP4
 **Gate:** Complete
-**Objective:** Make scaffold selection registry-driven. ScaffoldRegistry introduced with one registered fragrance scaffolder. Orchestrator resolves the scaffolder by intake category — no direct scaffold() call in the pipeline runner. Both ScaffoldRegistry and ProducerRegistry resolve from the same authoritative intake category.
+**Objective:** Remove all unchecked type assertions introduced in EP4-P2. Replace fabricated `FragranceKnowledge` home fragrance scaffold values with a truthful `HomeFragranceScaffoldOutput` type. Add a deterministic validation script that proves registry wiring with 15 independent proofs.
 
 ---
 

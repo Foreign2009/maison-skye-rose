@@ -39,6 +39,50 @@ Never edit or delete past entries.
 
 ## Log
 
+### 2026-08-06 — EP4-P2R — Knowledge Platform Evolution / Correct Home Fragrance Foundation
+
+**Participants:** Project Owner / Claude (Implementation Engineer)
+**Program:** EP4-P2R — Correct Home Fragrance Foundation
+
+**Decisions Made:**
+- `HomeFragranceScaffoldOutput` introduced as the truthful architectural boundary for home fragrance scaffold data. `FragranceKnowledge` cannot represent home fragrance without fabrication — it requires `collection: "Skye" | "Rose" | "Elite"`, `gender`, `projection`, `scentCharacter`, and prices/images keyed by fragrance sizes. `HomeFragranceScaffoldOutput` contains only fields derivable from `HomeFragranceIntake` with no invented values.
+- The `CategoryScaffolder` wrapper for home-fragrance in `defaultScaffoldRegistry` throws "Home Fragrance knowledge record type not yet defined" rather than returning a fabricated `FragranceKnowledge`. A function that always throws has return type `never`, which TypeScript accepts as assignable to `ScaffoldResult`.
+- Both scaffolder registrations (fragrance and home-fragrance) use explicit discriminant narrowing (`if (intake.category !== "fragrance") throw`) so TypeScript control-flow analysis narrows the union type without assertions.
+- A `productIntake` local variable is declared after `getProducerSet()` in the orchestrator and narrowed to `FragranceIntake` via discriminant guard. Both `displayFrag` usages use `productIntake` directly — no `as FragranceIntake` assertions.
+- `promotionManager.ts` adds an explicit category guard that returns `{ status: "rejected", ... }` for non-fragrance categories before calling `scaffold()`. The guard narrows `productIntake` to `FragranceIntake`, eliminating the need for a cast.
+- `scripts/factory/validate-home-fragrance.ts` uses fresh `CatalogueRegistry` instances for intake-level proofs and the production registries for scaffolder/producer-level proofs. 15 independent proofs run without AI, drafts, or writes.
+
+**Tasks Completed:**
+- `homeFragranceScaffold.ts` completely rewritten. `HomeFragranceScaffoldOutput` interface defined. `scaffoldHomeFragrance()` returns truthful output. No `FragranceKnowledge` import.
+- `orchestrator.ts`: `scaffoldHomeFragrance` import removed; `FragranceIntake`/`HomeFragranceIntake` type imports removed; both scaffolder registrations use discriminant narrowing; `productIntake` narrowing replaces both `as FragranceIntake` casts on `displayFrag`.
+- `promotionManager.ts`: `FragranceIntake` type import removed; explicit category guard added; `productIntake` narrowing replaces `as FragranceIntake` cast.
+- `scripts/factory/validate-home-fragrance.ts` created — 15 proofs, all pass.
+- `package.json`: `mkc:validate:home-fragrance` script added.
+- Governance updated: `PROJECT_STATUS.md`, `.ai/CURRENT_TASK.md`, `.ai/ENGINEERING_LOG.md`.
+
+**Tasks Started:**
+- None.
+
+**Build Result:** Pass — 187 routes, 0 TypeScript errors, 0 warnings.
+
+**Files Changed:**
+- `scripts/factory/homeFragranceScaffold.ts` — Complete rewrite. `HomeFragranceScaffoldOutput` type. Truthful scaffolder.
+- `scripts/factory/orchestrator.ts` — Discriminant narrowing in scaffolder registrations; `productIntake` narrowing for `displayFrag`; removed 3 unsafe assertions and 2 unused imports.
+- `scripts/factory/promotion/promotionManager.ts` — Explicit category guard; removed `as FragranceIntake` cast; removed `FragranceIntake` import.
+- `scripts/factory/validate-home-fragrance.ts` — Created. 15 deterministic proofs.
+- `package.json` — `mkc:validate:home-fragrance` script added.
+
+**Handoff:**
+- Factory architecture is type-safe. No `as FragranceIntake` or `as HomeFragranceIntake` assertions remain in factory code.
+- Home fragrance foundation is proven: `npm run mkc:validate:home-fragrance` shows all 15 proofs pass.
+- `HomeFragranceScaffoldOutput` is the architectural boundary until `HomeFragranceKnowledge` is introduced.
+- Next: EP4-P3 — Home Fragrance Producer Wiring. Gate: owner direction.
+
+**Open Questions Carried Forward:**
+- `HomeFragranceKnowledge` is not yet defined. EP4-P3 will introduce it, enabling the scaffolder wrapper to return a real `ScaffoldResult` and the producer pipeline to run.
+
+---
+
 ### 2026-08-06 — EP4-P2 — Knowledge Platform Evolution / Home Fragrance Foundation
 
 **Participants:** Project Owner / Claude (Implementation Engineer)
