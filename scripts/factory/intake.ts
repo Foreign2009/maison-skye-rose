@@ -1,11 +1,15 @@
 /**
  * Knowledge Factory — Intake
  *
- * Reads the supplier catalogue and returns the DisplayFragrance for a given slug.
+ * Reads the supplier catalogue and returns the ProductIntake for a given slug.
  * Validates that the record exists and is eligible for factory processing.
  *
  * Ownership: All supplier catalogue reads go through this module.
  * No other factory module reads from app/data/ directly.
+ *
+ * Category is explicit at the intake boundary: every successful intake carries
+ * a typed, discriminated ProductIntake with category: "fragrance" (or the
+ * category of the matching catalogue when additional categories are registered).
  */
 
 import { existsSync } from "fs";
@@ -13,7 +17,8 @@ import path from "path";
 import type { DisplayFragrance } from "../../app/lib/knowledgeAdapter";
 import { nativeFragrances }      from "../../app/lib/mkc/native/index";
 import { fragrances }            from "../../app/data/fragrances";
-import type { IntakeInput, IntakeResult } from "./types";
+import { CatalogueRegistry }     from "./core/CatalogueRegistry";
+import type { IntakeInput, IntakeResult, FragranceIntake } from "./types";
 
 // ── Slug derivation ───────────────────────────────────────────────────────────
 
@@ -40,6 +45,26 @@ export function deriveConstName(slug: string): string {
   return base + camelRest.join("");
 }
 
+// ── Fragrance intake conversion ───────────────────────────────────────────────
+// Adds the explicit category discriminant to a DisplayFragrance record.
+// This is the only place in the factory where a DisplayFragrance becomes a
+// typed FragranceIntake — preserving all existing values unchanged.
+
+export function toFragranceIntake(f: DisplayFragrance): FragranceIntake {
+  return { ...f, category: "fragrance" as const };
+}
+
+// ── Catalogue registry ─────────────────────────────────────────────────────────
+// One loader registered per category. The fragrance loader searches the
+// combined fragrances catalogue. Additional categories register additional loaders.
+
+export const defaultCatalogueRegistry = new CatalogueRegistry();
+defaultCatalogueRegistry.register("fragrance", (slug) => {
+  const allFragrances = fragrances as DisplayFragrance[];
+  const match = allFragrances.find(f => deriveSlug(f.title) === slug);
+  return match ? toFragranceIntake(match) : null;
+});
+
 // ── Intake ────────────────────────────────────────────────────────────────────
 
 const ROOT      = process.cwd();
@@ -51,7 +76,7 @@ export function intake(input: IntakeInput): IntakeResult {
   // Guard: already in the native registry?
   if (nativeFragrances.has(slug)) {
     if (!force) {
-      return { status: "already_native", displayFrag: null, collection: null, source: null };
+      return { status: "already_native", intake: null, collection: null, source: null };
     }
     // --force continues past this guard
   }
@@ -59,17 +84,18 @@ export function intake(input: IntakeInput): IntakeResult {
   // Guard: draft already exists?
   const draftPath = path.join(DRAFT_DIR, `${slug}.ts`);
   if (existsSync(draftPath) && !force) {
-    return { status: "already_drafted", displayFrag: null, collection: null, source: null };
+    return { status: "already_drafted", intake: null, collection: null, source: null };
   }
 
-  // Search the full catalogue for a matching slug
-  const allFragrances = fragrances as DisplayFragrance[];
-  const match = allFragrances.find(f => deriveSlug(f.title) === slug);
+  // Resolve via registry — enforces global slug uniqueness across all catalogues
+  const productIntake = defaultCatalogueRegistry.find(slug);
 
-  if (!match) {
-    return { status: "not_found", displayFrag: null, collection: null, source: null };
+  if (!productIntake) {
+    return { status: "not_found", intake: null, collection: null, source: null };
   }
 
+  // collection / source are fragrance-specific metadata kept for downstream compatibility.
+  // When ProductIntake expands to a union, these will be null for non-fragrance categories.
   const sourceMap: Record<string, "skye" | "rose" | "elite"> = {
     Skye:  "skye",
     Rose:  "rose",
@@ -77,9 +103,9 @@ export function intake(input: IntakeInput): IntakeResult {
   };
 
   return {
-    status:      "found",
-    displayFrag: match,
-    collection:  match.collection,
-    source:      sourceMap[match.collection] ?? "skye",
+    status:     "found",
+    intake:     productIntake,
+    collection: productIntake.collection,
+    source:     sourceMap[productIntake.collection] ?? "skye",
   };
 }

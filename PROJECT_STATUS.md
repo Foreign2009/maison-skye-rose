@@ -8,10 +8,10 @@
 
 ## Current Engineering Program
 
-**Program:** EP3-P3 — Category-Aware Factory Orchestrator (Complete)
+**Program:** EP3-P5A — Category-Bearing Factory Intake (Complete)
 **Sprint:** EP3
 **Gate:** Complete
-**Objective:** Make the factory orchestrator category-aware by resolving ProductCategory from the scaffolded record and routing to the registered ProducerSet.
+**Objective:** Establish category as explicit at the intake boundary. ProductIntakeBase, FragranceIntake, ProductIntake, and CatalogueRegistry introduced. IntakeResult.displayFrag replaced by intake: ProductIntake. Category resolved from intake before scaffold and producer selection.
 
 ---
 
@@ -74,6 +74,8 @@ Verify: `npm run build`
 | EP3 | EP3-P1 | Product Creation Pipeline Audit | Complete — 2026-08-06 |
 | EP3 | EP3-P2 | Producer Registry Foundation | Complete — 2026-08-06 |
 | EP3 | EP3-P3 | Category-Aware Factory Orchestrator | Complete — 2026-08-06 |
+| EP3 | EP3-P4 | Multi-Category Factory Intake Architecture Audit | Complete — 2026-08-06 |
+| EP3 | EP3-P5A | Category-Bearing Factory Intake | Complete — 2026-08-06 |
 
 `FOUNDATIONS/00_FOUNDERS_LETTER.md` — The permanent founder's letter to Skye, Rose, future employees, and future stewards. *Why we began.*
 `FOUNDATIONS/01_SKYE_AND_ROSE_COVENANT.md` — The institutional promise: to customers, products, technology, and future generations. *What we promise.*

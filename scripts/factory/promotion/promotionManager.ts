@@ -71,7 +71,7 @@ export async function promote(input: PromotionInput): Promise<PromotionResult> {
   // This is correct for P1 where drafts contain only deterministic fields.
   // P2 will replace this with dynamic import of the authored draft content.
   const intakeResult = intake({ slug, force: true });
-  if (intakeResult.status === "not_found" || !intakeResult.displayFrag) {
+  if (intakeResult.status === "not_found" || !intakeResult.intake) {
     return {
       status:     "rejected",
       nativePath: null,
@@ -80,7 +80,7 @@ export async function promote(input: PromotionInput): Promise<PromotionResult> {
     };
   }
 
-  const { record } = scaffold(intakeResult.displayFrag);
+  const { record } = scaffold(intakeResult.intake);
 
   // ── 3. Full cross-record validation ─────────────────────────────────────────
   // allRecords includes the current native registry (cross-record relationship checks)

@@ -5,10 +5,34 @@
  * Core framework types (producer, engine, context) live in ./core/types.ts.
  */
 
-import type { FragranceKnowledge } from "../../app/lib/mkc/types";
-import type { DisplayFragrance }   from "../../app/lib/knowledgeAdapter";
-import type { ValidationResult }   from "../../app/lib/mkc/validator";
-import type { ProducerResult }     from "./core/types";
+import type { FragranceKnowledge, ProductCategory } from "../../app/lib/mkc/types";
+import type { DisplayFragrance }                    from "../../app/lib/knowledgeAdapter";
+import type { ValidationResult }                    from "../../app/lib/mkc/validator";
+import type { ProducerResult }                      from "./core/types";
+
+// ── Product intake types ───────────────────────────────────────────────────────
+
+export interface ProductIntakeBase {
+  readonly category:   ProductCategory;
+  readonly title:      string;
+  readonly bestSeller: boolean;
+  readonly newArrival: boolean;
+}
+
+export interface FragranceIntake extends ProductIntakeBase {
+  readonly category:   "fragrance";
+  readonly collection: "Skye" | "Rose" | "Elite";
+  readonly subtitle:   string;
+  readonly mood:       string;
+  readonly profile:    string;
+  readonly season:     string;
+  readonly notes:      string[];
+  readonly prices:     { "5ml": number; "10ml": number; "30ml": number };
+  readonly images:     { "5ml": string; "10ml": string; "30ml": string };
+}
+
+// One-member discriminated union. Extended only when a second-category product contract exists.
+export type ProductIntake = FragranceIntake;
 
 // ── Intake ────────────────────────────────────────────────────────────────────
 
@@ -18,10 +42,10 @@ export interface IntakeInput {
 }
 
 export interface IntakeResult {
-  status:      "found" | "not_found" | "already_native" | "already_drafted";
-  displayFrag: DisplayFragrance | null;
-  collection:  "Skye" | "Rose" | "Elite" | null;
-  source:      "skye" | "rose" | "elite" | null;
+  status:     "found" | "not_found" | "already_native" | "already_drafted";
+  intake:     ProductIntake | null;
+  collection: "Skye" | "Rose" | "Elite" | null;
+  source:     "skye" | "rose" | "elite" | null;
 }
 
 // ── Scaffold ──────────────────────────────────────────────────────────────────

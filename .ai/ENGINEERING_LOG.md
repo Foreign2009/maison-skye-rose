@@ -39,6 +39,56 @@ Never edit or delete past entries.
 
 ## Log
 
+### 2026-08-06 — EP3-P4 + EP3-P5A — Knowledge Platform Evolution / Category-Bearing Factory Intake
+
+**Participants:** Project Owner / Claude (Implementation Engineer)
+**Program:** EP3-P4 (Multi-Category Factory Intake Architecture Audit) + EP3-P5A (Category-Bearing Factory Intake)
+
+**Decisions Made:**
+- EP3-P4 is a read-only audit. All 20 deliverables produced. Key finding: category must enter the pipeline at the intake boundary — currently `DisplayFragrance` has no `category` field, causing category to be derived too late (after scaffold in EP3-P3).
+- `ProductIntakeBase` is the minimal universal intake contract: `category`, `title`, `bestSeller`, `newArrival`. Pricing and image structures are category-specific and remain in `FragranceIntake`.
+- `FragranceIntake` structurally extends `DisplayFragrance` (identical field types) plus `category: "fragrance"` discriminant. This makes it directly assignable to `DisplayFragrance` — `scaffold()` and `PipelineState.displayFrag` require no changes. No unsafe cast.
+- `CatalogueRegistry` pattern mirrors `ProducerRegistry` — same `register / find` design. One loader registered. Slug uniqueness enforced: a slug found in multiple catalogues throws rather than silently selecting one.
+- `IntakeResult.displayFrag` replaced by `intake: ProductIntake | null`. Both consumers (`orchestrator.ts`, `promotionManager.ts`) migrated atomically. No alias kept.
+- Category resolution moved from post-scaffold (`getProductCategory(scaffolded)` — EP3-P3) to post-intake (`result.intake!.category`). `getProductCategory` import removed from orchestrator.
+- `PipelineState.displayFrag: DisplayFragrance` kept for `ContextBuilder` / producer compatibility. All 5 producers receive `FactoryContext.displayFrag` unchanged.
+- `BodyCareIntake` and all non-fragrance intake types deferred until a real product exists.
+
+**Tasks Completed:**
+- EP3-P4: Full architecture audit — 20 deliverables including type proposal, intake/scaffold/draft/promotion constraints, migration strategy, risk register, episode sequence, deferred list.
+- EP3-P5A: `scripts/factory/core/CatalogueRegistry.ts` — new file.
+- EP3-P5A: `scripts/factory/types.ts` — `ProductIntakeBase`, `FragranceIntake`, `ProductIntake`; `IntakeResult` updated.
+- EP3-P5A: `scripts/factory/intake.ts` — `toFragranceIntake()`, `defaultCatalogueRegistry`, registry-backed `intake()`.
+- EP3-P5A: `scripts/factory/orchestrator.ts` — category from `result.intake!.category`; `getProductCategory` removed.
+- EP3-P5A: `scripts/factory/promotion/promotionManager.ts` — `displayFrag` → `intake`.
+- `PROJECT_STATUS.md` updated with EP3-P4 and EP3-P5A entries.
+- `.ai/CURRENT_TASK.md` updated.
+
+**Tasks Started:**
+- None.
+
+**Build Result:** Pass — 187 routes, 0 TypeScript errors, 0 warnings. All existing fragrance workflows behaviorally identical.
+
+**Files Changed:**
+- `scripts/factory/core/CatalogueRegistry.ts` — created
+- `scripts/factory/types.ts` — modified (intake types, IntakeResult)
+- `scripts/factory/intake.ts` — modified (registry, toFragranceIntake, updated intake())
+- `scripts/factory/orchestrator.ts` — modified (category from intake, getProductCategory removed)
+- `scripts/factory/promotion/promotionManager.ts` — modified (displayFrag → intake)
+- `PROJECT_STATUS.md` — updated
+- `.ai/CURRENT_TASK.md` — updated
+- `.ai/ENGINEERING_LOG.md` — updated
+
+**Handoff:**
+- EP3-P5A complete. Category is now established at the intake boundary for all current fragrance workflows.
+- The pipeline sequence is: CatalogueRegistry → FragranceIntake (category: "fragrance") → scaffold → ProducerRegistry → producer loop. Category never inferred from scaffold output.
+- Next: EP3-P6 — First Non-Fragrance Intake (gate: owner has a real body-care product with defined data).
+
+**Open Questions Carried Forward:**
+- EP2-P7A: Founder must verify actual sourcing catalogue count against supplier before catalogStats.ts can be updated.
+
+---
+
 ### 2026-08-06 — EP3-P3 — Knowledge Platform Evolution / Category-Aware Factory Orchestrator
 
 **Participants:** Project Owner / Claude (Implementation Engineer)

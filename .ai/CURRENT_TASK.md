@@ -19,45 +19,57 @@ At the start of a new Claude Code session:
 ## Current Task
 
 **Status:** Complete
-**Program:** EP3-P3 — Category-Aware Factory Orchestrator
+**Program:** EP3-P5A — Category-Bearing Factory Intake
 
 **Goal:**
-Make the factory orchestrator category-aware by resolving ProductCategory from the scaffolded record before producer execution, routing through the ProducerRegistry rather than hardcoding "fragrance".
+Establish category as explicit at the intake boundary. Introduce ProductIntakeBase, FragranceIntake, ProductIntake discriminated union, and CatalogueRegistry. Replace IntakeResult.displayFrag with intake: ProductIntake. Resolve category from intake before scaffold and producer selection.
 
 **Acceptance Criteria:**
-- [x] `getProductCategory(scaffolded)` resolves category from scaffolded record
-- [x] `defaultRegistry.getProducerSet(resolvedCategory)` replaces `getProducerSet("fragrance")`
-- [x] All current workflows resolve to "fragrance" automatically (category absent on scaffold → default)
-- [x] `getProductCategory` imported from `app/lib/mkc/productDefaults` — no logic duplication
-- [x] Category resolved before any AI producer execution
-- [x] Valid but unregistered category fails clearly via ProducerRegistry before AI generation
-- [x] No changes to PipelineInput, CLI entry, BatchRunner, BatchFactory, or any caller
-- [x] No producer files modified
-- [x] No application files modified
+- [x] `ProductIntakeBase` defined in `scripts/factory/types.ts`
+- [x] `FragranceIntake` extends `ProductIntakeBase` with `category: "fragrance"`
+- [x] `ProductIntake = FragranceIntake` one-member discriminated union
+- [x] `CatalogueRegistry` created in `scripts/factory/core/CatalogueRegistry.ts`
+- [x] One fragrance loader registered via `defaultCatalogueRegistry` in `intake.ts`
+- [x] `IntakeResult.displayFrag` replaced by `intake: ProductIntake | null` — no alias kept
+- [x] `toFragranceIntake(DisplayFragrance): FragranceIntake` conversion in `intake.ts`
+- [x] `intake()` uses registry; slug uniqueness enforced across all catalogues
+- [x] Orchestrator category from `result.intake!.category` before scaffold — `getProductCategory` removed
+- [x] `promotionManager.ts` migrated: `intakeResult.displayFrag` → `intakeResult.intake`
+- [x] `DisplayFragrance` unchanged — no app-layer changes
+- [x] All 5 producers unchanged
+- [x] `PipelineInput`, CLI, BatchRunner, BatchQueue unchanged
 - [x] Build passes: 187 routes, 0 TypeScript errors, 0 warnings
 - [x] `PROJECT_STATUS.md` updated
 - [x] `.ai/CURRENT_TASK.md` updated
 - [x] `.ai/ENGINEERING_LOG.md` updated
 
 **Why This Task:**
-EP3-P2 registered the fragrance ProducerSet. The orchestrator still hardcoded the string "fragrance" at the `getProducerSet()` call site. EP3-P3 resolves the category from the knowledge record so future categories route through the same orchestration path without touching the loop.
+EP3-P4 audit established that category must be explicit at the intake boundary, not derived from the scaffold stage. EP3-P5A moves category to its correct architectural home: the typed ProductIntake record returned by the CatalogueRegistry.
 
 ---
 
 ## Files Involved
 
-**Files created:** None
+**Files created (1):**
+- `scripts/factory/core/CatalogueRegistry.ts` — `CatalogueLoader` type, `CatalogueRegistry` class
 
-**Files modified (1):**
-- `scripts/factory/orchestrator.ts` — added `getProductCategory` import; added `resolvedCategory` and `producerSet` resolution after scaffold; removed hardcoded `getProducerSet("fragrance")` from producer loop setup
+**Files modified (4):**
+- `scripts/factory/types.ts` — added `ProductIntakeBase`, `FragranceIntake`, `ProductIntake`; updated `IntakeResult.displayFrag` → `intake: ProductIntake | null`; added `ProductCategory` import
+- `scripts/factory/intake.ts` — added `toFragranceIntake()`, `defaultCatalogueRegistry` with fragrance loader; updated `intake()` to use registry
+- `scripts/factory/orchestrator.ts` — category from `result.intake!.category` (before scaffold); removed `getProductCategory` import; `result.displayFrag!` → `result.intake!` throughout
+- `scripts/factory/promotion/promotionManager.ts` — `intakeResult.displayFrag` → `intakeResult.intake`
 
 **Files NOT modified:**
-- `scripts/factory/types.ts` — PipelineInput unchanged; zero caller changes required
-- `scripts/factory/index.ts` — CLI unchanged
-- `scripts/factory/batch/BatchRunner.ts` — unchanged
-- `scripts/factory/core/ProducerRegistry.ts` — unchanged
+- `scripts/factory/scaffold.ts` — unchanged; `FragranceIntake` is structurally assignable to `DisplayFragrance`
+- `scripts/factory/draftBuilder.ts` — unchanged
+- `scripts/factory/merger.ts` — unchanged
+- `scripts/factory/review/` — unchanged
+- `scripts/factory/batch/` — unchanged
+- `scripts/factory/core/ContextBuilder.ts` — unchanged; `PipelineState.displayFrag: DisplayFragrance` kept
+- `scripts/factory/core/types.ts` — unchanged
 - All 5 producers — unchanged
 - All application code — unchanged
+- All 93 native MKC records — unchanged
 
 ---
 
@@ -69,7 +81,7 @@ _Task closed._
 
 ## Context Notes
 
-**Last completed:** EP3-P3 Category-Aware Factory Orchestrator (2026-08-06)
+**Last completed:** EP3-P5A Category-Bearing Factory Intake (2026-08-06)
 
 Recent completed programs (newest first):
 - EP100-P3A Extract Shared AdminNavigation Component (2026-08-04) — 1 component created; 14 dashboards updated; Link import audited (7 preserved for body Link usage); build passes; 189 routes
