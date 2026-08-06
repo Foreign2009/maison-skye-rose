@@ -63,6 +63,9 @@ defaultCatalogueRegistry.register("fragrance", (slug) => {
   const match = allFragrances.find(f => deriveSlug(f.title) === slug);
   return match ? toFragranceIntake(match) : null;
 });
+// Home fragrance catalogue is empty until supplier data is defined.
+// The loader is registered so the architecture resolves correctly for this category.
+defaultCatalogueRegistry.register("home-fragrance", (_slug) => null);
 
 // ── Intake ────────────────────────────────────────────────────────────────────
 
@@ -94,17 +97,25 @@ export function intake(input: IntakeInput): IntakeResult {
   }
 
   // collection / source are fragrance-specific metadata kept for downstream compatibility.
-  // When ProductIntake expands to a union, these will be null for non-fragrance categories.
-  const sourceMap: Record<string, "skye" | "rose" | "elite"> = {
-    Skye:  "skye",
-    Rose:  "rose",
-    Elite: "elite",
-  };
+  // Null for non-fragrance categories.
+  if (productIntake.category === "fragrance") {
+    const sourceMap: Record<string, "skye" | "rose" | "elite"> = {
+      Skye:  "skye",
+      Rose:  "rose",
+      Elite: "elite",
+    };
+    return {
+      status:     "found",
+      intake:     productIntake,
+      collection: productIntake.collection,
+      source:     sourceMap[productIntake.collection] ?? "skye",
+    };
+  }
 
   return {
     status:     "found",
     intake:     productIntake,
-    collection: productIntake.collection,
-    source:     sourceMap[productIntake.collection] ?? "skye",
+    collection: null,
+    source:     null,
   };
 }

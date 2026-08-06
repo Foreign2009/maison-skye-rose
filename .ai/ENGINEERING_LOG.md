@@ -39,6 +39,52 @@ Never edit or delete past entries.
 
 ## Log
 
+### 2026-08-06 — EP4-P2 — Knowledge Platform Evolution / Home Fragrance Foundation
+
+**Participants:** Project Owner / Claude (Implementation Engineer)
+**Program:** EP4-P2 — Home Fragrance Foundation
+
+**Decisions Made:**
+- `HomeFragranceIntake` fields: `category: "home-fragrance"`, `productType: "candle" | "diffuser" | "room-spray"`, `range`, `subtitle`, `mood`, `profile`, `season`, `notes`, `prices: Record<string, number>`, `images: Record<string, string>`. Prices and images use `Record<string, number/string>` rather than the fragrance-specific `{ "5ml", "10ml", "30ml" }` shape, accommodating home fragrance size labels (e.g., "150g", "100ml") without pre-specifying them.
+- `ProductIntake = FragranceIntake | HomeFragranceIntake` — proper two-member discriminated union. Comment updated from "extended only when…" to factual declaration.
+- Home fragrance catalogue loader returns null for all slugs (no supplier catalogue yet). Architecture validates correctly — registration is what matters for EP4-P2.
+- `homeFragranceScaffold.ts` uses `collection: "Elite"` as a placeholder (required by `FragranceKnowledge` type, home fragrance ranges formally named in EP4-P3). Prices seeded as `{ "5ml": 0, "10ml": 0, "30ml": 0 }` to satisfy the type constraint without a cast.
+- Fragrance scaffolder in `orchestrator.ts` updated to cast `intake as FragranceIntake` — safe because registry dispatch guarantees category alignment at the call site.
+- `promotionManager.ts` required a minimal cast fix (`intakeResult.intake as FragranceIntake`) because it calls `scaffold()` directly (not via registry). Comment added explaining the invariant.
+- No producer set registered for home-fragrance — intentional. EP4-P3 begins producer wiring.
+
+**Tasks Completed:**
+- `HomeFragranceIntake` defined. `ProductIntake` union expanded.
+- `defaultCatalogueRegistry` has home fragrance loader.
+- `scripts/factory/homeFragranceScaffold.ts` created.
+- `defaultScaffoldRegistry` has home fragrance scaffolder.
+- `intake()` discriminates on category for fragrance-specific collection/source fields.
+- Type cast fixes applied in `orchestrator.ts` (2 usages of `displayFrag: result.intake!`) and `promotionManager.ts`.
+- Governance updated: `PROJECT_STATUS.md`, `.ai/CURRENT_TASK.md`, `.ai/ENGINEERING_LOG.md`.
+
+**Tasks Started:**
+- None.
+
+**Build Result:** Pass — 187 routes, 0 TypeScript errors, 0 warnings.
+
+**Files Changed:**
+- `scripts/factory/types.ts` — `HomeFragranceIntake` added; `ProductIntake` union expanded.
+- `scripts/factory/intake.ts` — Home fragrance loader registered; `intake()` collection/source path discriminates by category.
+- `scripts/factory/homeFragranceScaffold.ts` — Created. `scaffoldHomeFragrance(intake: HomeFragranceIntake): ScaffoldResult`.
+- `scripts/factory/orchestrator.ts` — `scaffoldHomeFragrance` imported; home fragrance scaffolder registered; fragrance scaffolder and `displayFrag` usages cast to `FragranceIntake`.
+- `scripts/factory/promotion/promotionManager.ts` — `FragranceIntake` imported; `scaffold()` call cast (cascade fix from union expansion).
+
+**Handoff:**
+- Factory now understands two categories. Only fragrance is executable.
+- Home fragrance resolves intake → scaffold → throws at producer resolution (correct EP4-P2 behaviour).
+- Next: EP4-P3 — Home Fragrance Producer Wiring (register `defaultRegistry` producer set for home-fragrance and calibrate prompts). Gate: owner direction.
+
+**Open Questions Carried Forward:**
+- `FragranceKnowledge.collection: "Skye" | "Rose" | "Elite"` is used as a placeholder `"Elite"` in home fragrance scaffold. Formal home fragrance range naming deferred to EP4-P3.
+- Home fragrance `prices`/`images` shape deferred: `FragranceKnowledge` type currently mandates the fragrance size labels. Will be resolved when `HomeFragranceKnowledge` is introduced or `FragranceKnowledge` is extended.
+
+---
+
 ### 2026-08-06 — EP3-P7 — Knowledge Platform Evolution / Factory Integrity Hardening
 
 **Participants:** Project Owner / Claude (Implementation Engineer)

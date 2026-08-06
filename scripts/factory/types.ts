@@ -31,8 +31,22 @@ export interface FragranceIntake extends ProductIntakeBase {
   readonly images:     { "5ml": string; "10ml": string; "30ml": string };
 }
 
-// One-member discriminated union. Extended only when a second-category product contract exists.
-export type ProductIntake = FragranceIntake;
+export interface HomeFragranceIntake extends ProductIntakeBase {
+  readonly category:    "home-fragrance";
+  readonly productType: "candle" | "diffuser" | "room-spray";
+  readonly range:       string;
+  readonly subtitle:    string;
+  readonly mood:        string;
+  readonly profile:     string;
+  readonly season:      string;
+  readonly notes:       string[];
+  readonly prices:      Record<string, number>;
+  readonly images:      Record<string, string>;
+}
+
+// Discriminated union of all supported product intake contracts.
+// Add a new member here when a new category has a concrete product record and supplier catalogue.
+export type ProductIntake = FragranceIntake | HomeFragranceIntake;
 
 // ── Intake ────────────────────────────────────────────────────────────────────
 

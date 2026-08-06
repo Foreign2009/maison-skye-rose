@@ -24,6 +24,7 @@ import { existsSync, readFileSync, writeFileSync, copyFileSync, unlinkSync } fro
 import path from "path";
 import { intake }                from "../intake";
 import { scaffold }              from "../scaffold";
+import type { FragranceIntake }  from "../types";
 import { validateKnowledgeRecord } from "../../../app/lib/mkc/validator";
 import { nativeFragrances }        from "../../../app/lib/mkc/native/index";
 import { markPromoted }            from "../metrics/factoryLogger";
@@ -80,7 +81,9 @@ export async function promote(input: PromotionInput): Promise<PromotionResult> {
     };
   }
 
-  const { record } = scaffold(intakeResult.intake);
+  // Cast is safe: only fragrance slugs can have drafts today.
+  // Home fragrance has no producer set, so no drafts can be created for it.
+  const { record } = scaffold(intakeResult.intake as FragranceIntake);
 
   // ── 3. Full cross-record validation ─────────────────────────────────────────
   // allRecords includes the current native registry (cross-record relationship checks)

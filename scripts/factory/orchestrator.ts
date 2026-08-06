@@ -18,9 +18,10 @@
  */
 
 import path from "path";
-import { FACTORY_VERSION }    from "./version";
-import { intake }              from "./intake";
-import { scaffold }            from "./scaffold";
+import { FACTORY_VERSION }         from "./version";
+import { intake }                   from "./intake";
+import { scaffold }                 from "./scaffold";
+import { scaffoldHomeFragrance }    from "./homeFragranceScaffold";
 import { merge }               from "./merger";
 import { buildDraft }          from "./draftBuilder";
 import { logRun }              from "./metrics/factoryLogger";
@@ -36,7 +37,7 @@ import { EducationProducer }     from "./producers/EducationProducer";
 import { DiscoveryProducer }     from "./producers/DiscoveryProducer";
 import { validateKnowledgeRecord } from "../../app/lib/mkc/validator";
 import type { FactoryConfig, ProducerResult } from "./core/types";
-import type { PipelineInput, PipelineResult, PipelineState, StageEntry } from "./types";
+import type { PipelineInput, PipelineResult, PipelineState, StageEntry, FragranceIntake, HomeFragranceIntake } from "./types";
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 
@@ -61,7 +62,10 @@ defaultRegistry.register(FRAGRANCE_PRODUCER_SET);
 // ── Scaffold Registry ─────────────────────────────────────────────────────────
 
 export const defaultScaffoldRegistry = new ScaffoldRegistry();
-defaultScaffoldRegistry.register("fragrance", (intake) => scaffold(intake));
+// Registry invariant: the scaffolder for "fragrance" is only called when intake.category === "fragrance".
+// The cast is safe; the registry resolves scaffolders by category before dispatch.
+defaultScaffoldRegistry.register("fragrance", (intake) => scaffold(intake as FragranceIntake));
+defaultScaffoldRegistry.register("home-fragrance", (intake) => scaffoldHomeFragrance(intake as HomeFragranceIntake));
 
 const ROOT      = process.cwd();
 const DRAFT_DIR = path.join(ROOT, "scripts", "factory", "drafts");
@@ -177,7 +181,7 @@ export async function run(input: PipelineInput): Promise<PipelineResult> {
     const factoryConfig: FactoryConfig = { ...DEFAULT_FACTORY_CONFIG, dryRun: input.dryRun || !hasApiKey };
 
     const ctx0   = ContextBuilder.build(
-      { slug, displayFrag: result.intake!, record: scaffolded, validationResult: null, stageLog, factoryVersion: FACTORY_VERSION },
+      { slug, displayFrag: result.intake! as FragranceIntake, record: scaffolded, validationResult: null, stageLog, factoryVersion: FACTORY_VERSION },
       factoryConfig,
     );
     const engine = new GenerationEngine(factoryConfig);
@@ -233,7 +237,7 @@ export async function run(input: PipelineInput): Promise<PipelineResult> {
     // ── Build PipelineState ─────────────────────────────────────────────────
     const state: PipelineState = {
       slug,
-      displayFrag:      result.intake!,
+      displayFrag:      result.intake! as FragranceIntake,
       record,
       validationResult,
       stageLog,
