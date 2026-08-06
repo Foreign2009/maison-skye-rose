@@ -163,7 +163,7 @@ Subtotal: R${subtotal.toFixed(2)}
 Delivery: ${delivery === 0 ? "FREE" : "Calculated at checkout"}
 ${delivery === 0 ? `TOTAL: R${total.toFixed(2)}` : `SUBTOTAL: R${subtotal.toFixed(2)}`}
 
-CUSTOMER DETAILS
+YOUR DETAILS
 Name:
 Contact Number:
 Delivery Area:

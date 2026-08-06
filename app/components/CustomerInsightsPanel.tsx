@@ -16,7 +16,7 @@ const STAGE_META: Record<
   new:        { label: "New Explorer",    description: "Start discovering your fragrance style.",             color: "#7b7480" },
   exploring:  { label: "Exploring",       description: "You are actively browsing and building your taste.",  color: "#7a8fa3" },
   engaged:    { label: "Engaged",         description: "You have expressed clear fragrance preferences.",     color: "#6aaa8a" },
-  converting: { label: "Loyal Customer",  description: "Your fragrance journey is well underway.",           color: "#d89ca4" },
+  converting: { label: "Loyal Guest",    description: "Your fragrance journey is well underway.",           color: "#d89ca4" },
 };
 
 // ── Component ──────────────────────────────────────────────────────────────────

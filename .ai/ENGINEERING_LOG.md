@@ -39,6 +39,55 @@ Never edit or delete past entries.
 
 ## Log
 
+### 2026-08-06 — EP2-P6A — Platform Experience Programme / Institutional Identity Alignment
+
+**Participants:** Project Owner / Claude (Implementation Engineer)
+**Program:** EP2-P6A — Platform Experience Programme / Institutional Identity Alignment
+
+**Decisions Made:**
+- Only C-01 through C-04 from the EP2-P6 audit were implemented. No count changes, no voice consistency changes, no architecture changes — as specified in the programme approval.
+- "Loyal Guest" is now the permanent vocabulary at both sites where the `converting` journey stage is presented to a guest: `fragrance-profile/page.tsx` (STAGE_LABELS) and `CustomerInsightsPanel.tsx` (STAGE_META). Internal identifiers (`CustomerJourneyStage`, `converting` key) are unchanged — only the rendered label changed.
+- "Maison favourites" replaces "customer favourites" in InstagramCTA. Consistent with the "Maison community" / "Maison favourites" vocabulary already established in BestSellers.tsx.
+- "YOUR DETAILS" replaces "CUSTOMER DETAILS" in the MiniCart WhatsApp template. The message is guest-visible before sending — this is the final touch of institutional voice before a guest leaves the platform to complete their order via WhatsApp.
+- "loved by our guests" replaces "loved by our customers" in best-sellers/layout.tsx metadata (description, OG description, Twitter description). Public-facing — appears in search results, social previews, and link unfurls.
+
+**Foundation Alignment:**
+- Experience Blueprint: "Maison Skye & Rose does not serve customers. It welcomes guests."
+- Constitution Article I (The Institution): the institution's vocabulary is itself an institutional statement.
+- Covenant (Promise to Customers / Our Guests): renaming the covenant's beneficiary in the product is a material expression of institutional respect.
+
+**Tasks Completed:**
+- `app/fragrance-profile/page.tsx` — STAGE_LABELS `converting: "Loyal Customer"` → `"Loyal Guest"`
+- `app/components/CustomerInsightsPanel.tsx` — STAGE_META `converting: { label: "Loyal Customer" }` → `"Loyal Guest"`
+- `app/components/InstagramCTA.tsx` — "customer favourites" → "Maison favourites"
+- `app/components/MiniCart.tsx` — "CUSTOMER DETAILS" → "YOUR DETAILS" in WhatsApp template
+- `app/best-sellers/layout.tsx` — "loved by our customers" → "loved by our guests" (3 occurrences, metadata only)
+- Updated `PROJECT_STATUS.md`, `.ai/CURRENT_TASK.md`, `.ai/ENGINEERING_LOG.md`
+
+**Tasks Started:**
+- None
+
+**Build Result:** Pass — 187 routes, 0 TypeScript errors, 0 warnings.
+
+**Files Changed:**
+- `app/fragrance-profile/page.tsx` (modified — 1 line)
+- `app/components/CustomerInsightsPanel.tsx` (modified — 1 line)
+- `app/components/InstagramCTA.tsx` (modified — 1 line)
+- `app/components/MiniCart.tsx` (modified — 1 line)
+- `app/best-sellers/layout.tsx` (modified — 3 lines)
+- `PROJECT_STATUS.md` (modified)
+- `.ai/CURRENT_TASK.md` (modified)
+- `.ai/ENGINEERING_LOG.md` (modified)
+
+**Handoff:**
+- EP2-P6A complete. ExD-06 resolved. Identity vocabulary is now consistent at all guest-facing surfaces where "customer" appeared.
+- Remaining approved audit items: EP2-P6B (count accuracy — H-01, H-03, H-04, H-06), EP2-P6C (voice consistency — M-01, M-02, M-03, M-05).
+
+**Open Questions Carried Forward:**
+- None
+
+---
+
 ### 2026-08-06 — EP2-P5C — Platform Experience Programme / Payment Recovery Foundation Alignment
 
 **Participants:** Project Owner / Claude (Implementation Engineer)

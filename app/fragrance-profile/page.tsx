@@ -34,7 +34,7 @@ const STAGE_LABELS: Record<CustomerJourneyStage, string> = {
   new:        "New Explorer",
   exploring:  "Exploring",
   engaged:    "Engaged",
-  converting: "Loyal Customer",
+  converting: "Loyal Guest",
 };
 
 const STAGE_PRESENTATION: Record<

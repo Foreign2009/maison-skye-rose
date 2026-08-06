@@ -12,7 +12,7 @@ export default function InstagramCTA() {
       </h2>
 
       <p className="mx-auto mt-6 max-w-2xl text-[#7b7480]">
-        Discover new arrivals, fragrance recommendations and customer favourites.
+        Discover new arrivals, fragrance recommendations and Maison favourites.
       </p>
 
       <a
