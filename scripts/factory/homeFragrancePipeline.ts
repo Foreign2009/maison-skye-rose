@@ -75,10 +75,17 @@ export async function runHomeFragrancePipeline(
     const result = await producer.run(ctx, engine);
     producerResults.push(result);
 
-    if (result.status !== "failed" && result.status !== "skipped") {
+    if (result.status === "success") {
+      // Merge clean output and update context for the next producer.
       const merged = mergeHomeFragrance(scaffoldRecord, ...producerResults);
       ctx = HomeFragranceContextBuilder.withMergedRecord(ctx, merged);
+    } else if (result.status === "failed" || result.status === "degraded") {
+      // Invalid output must not propagate. Stop the producer chain so that
+      // downstream producers never receive composition fields that failed
+      // Composition validation. The final merge will skip this result.
+      break;
     }
+    // status === "skipped": continue without merging (preCheck declined the run).
   }
 
   const record           = mergeHomeFragrance(scaffoldRecord, ...producerResults);

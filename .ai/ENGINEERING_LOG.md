@@ -88,6 +88,50 @@ Never edit or delete past entries.
 
 ---
 
+### 2026-08-07 — EP4-P3CR — Knowledge Platform Evolution / Home Fragrance Producer Safety Hardening
+
+**Participants:** Project Owner / Claude (Implementation Engineer)
+**Program:** EP4-P3CR — Home Fragrance Producer Safety Hardening (Corrective — required before EP4-P3D)
+
+**Decisions Made:**
+- Cross-tier duplicate notes promoted from warning to error. A note appearing in both top and heart (or any two tiers) is invalid composition output — not a quality nuance but a structural defect. `degraded` is the correct result; `success` with a warning would allow invalid data to reach downstream producers and the final record.
+- Missing JSON tier (`top`/`heart`/`base` absent from AI response) is a structural parse failure, not a validation error. `parseStringArray()` throws on undefined/null → `HomeFragranceBaseProducer.generate()` catches the exception and returns `failed`. This is the correct distinction: "well-formed JSON with insufficient values" is `degraded`; "malformed schema" is `failed`.
+- Pipeline stop on `degraded` added. The existing policy only stopped on `failed`. A `degraded` Composition result (e.g. cross-tier duplicate) must also prevent Editorial from running — Editorial needs valid composition notes. Allowing Editorial to proceed on degraded composition data would produce editorial copy for a record whose composition is already invalid.
+- Merger updated to skip `degraded` alongside `failed`. A degraded result must not contribute fields to the final record, even though its `fields` object is populated. The `status` field is the gate — not the presence of field values.
+- `HomeFragranceProducerRegistry` is a parallel class to `ProducerRegistry`, typed to `HomeFragranceBaseProducer[]`. It cannot register a `BaseProducer[]` set, and `ProducerRegistry` cannot register a `HomeFragranceBaseProducer[]` set. TypeScript enforces this at compile time. The registry is never registered in `defaultRegistry` — proof 23 (defaultRegistry rejects "home-fragrance") is preserved as a permanent production gate.
+
+**Tasks Completed:**
+- `scripts/factory/core/HomeFragranceProducerRegistry.ts` — Created. Type-safe registry for `HomeFragranceProducerSet`. Not registered in production `defaultRegistry`.
+- `scripts/factory/producers/HomeFragranceCompositionProducer.ts` — Rewritten. `parse()` validates root type and all three tier fields before constructing `notes`. `parseStringArray()` helper throws for missing, non-array, or non-string-element tiers. `validate()` adds max-4 checks per tier and promotes cross-tier duplicate to error.
+- `scripts/factory/producers/HomeFragranceEditorialProducer.ts` — Rewritten. `parse()` validates root type, checks `description` and `subtitle` field types before constructing partial. Wrong type throws (→ `failed`); absent key is valid (→ `degraded` via `validate()`).
+- `scripts/factory/homeFragrancePipeline.ts` — Pipeline loop updated. `success` → merge + context update + continue. `failed`/`degraded` → break. `skipped` → continue without merge.
+- `scripts/factory/homeFragranceMerger.ts` — Skip condition updated from `failed` to `failed || degraded`.
+- `scripts/factory/validate-home-fragrance.ts` — Proof 104 updated (missing tier → `failed` not `degraded`). Proof 105 updated (cross-tier → `degraded`/error not `success`/warning). Proofs 110–123 added: registry proofs (110–113), max-notes proofs (114–116), Composition parse structural failures (117–119), Editorial parse structural failures (120–121), pipeline stop proofs (122–123).
+
+**Tasks Started:**
+- None (EP4-P3D — First Real AI Generation — is next)
+
+**Build Result:** Pass — 187 routes, 0 TypeScript errors, 0 warnings
+
+**Files Changed:**
+- `scripts/factory/core/HomeFragranceProducerRegistry.ts` — Created
+- `scripts/factory/producers/HomeFragranceCompositionProducer.ts` — Rewritten (parse + validate)
+- `scripts/factory/producers/HomeFragranceEditorialProducer.ts` — Rewritten (parse)
+- `scripts/factory/homeFragrancePipeline.ts` — Pipeline stop policy hardened
+- `scripts/factory/homeFragranceMerger.ts` — Degraded skip added
+- `scripts/factory/validate-home-fragrance.ts` — Extended (109 → 123 proofs)
+- `PROJECT_STATUS.md` — EP4-P3CR entry added
+- `.ai/CURRENT_TASK.md` — Updated
+- `.ai/ENGINEERING_LOG.md` — This entry
+
+**Handoff:**
+- EP4-P3D: Wire `runHomeFragrancePipeline` into the orchestrator CLI. First real Claude AI call for Home Fragrance. All safety constraints established in EP4-P3CR are now enforced at the producer level — the pipeline will correctly handle degraded or failed AI output.
+
+**Open Questions Carried Forward:**
+- None
+
+---
+
 ### 2026-08-07 — EP4-P3BR — Knowledge Platform Evolution / Correct Home Fragrance Quality Boundary
 
 **Participants:** Project Owner / Claude (Implementation Engineer)

@@ -2,7 +2,14 @@
  * Knowledge Factory — Home Fragrance Merger
  *
  * Consolidates HomeFragranceProducerResult outputs onto the scaffold record.
- * Failed producer results are skipped. All other statuses contribute their fields.
+ * Only "success" producer results contribute their fields.
+ * Failed and degraded results are both skipped (EP4-P3CR).
+ *
+ * Policy (EP4-P3CR):
+ *   success  → contributes fields
+ *   skipped  → contributes nothing (fields are always {})
+ *   failed   → skipped — invalid output must not enter the record
+ *   degraded → skipped — validation errors disqualify the result
  *
  * Mirrors the fragrance merger.ts pattern, typed for HomeFragranceKnowledge.
  *
@@ -21,7 +28,7 @@ export function mergeHomeFragrance(
 ): HomeFragranceKnowledge {
   let accumulated: Partial<HomeFragranceKnowledge> = {};
   for (const result of producerResults) {
-    if (result.status === "failed") continue;
+    if (result.status === "failed" || result.status === "degraded") continue;
     accumulated = { ...accumulated, ...result.fields };
   }
   return Object.assign({ ...scaffold }, accumulated);

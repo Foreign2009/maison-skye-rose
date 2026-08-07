@@ -162,12 +162,38 @@
  *
  *   Failure proofs
  *    103. Malformed composition JSON → failed status
- *    104. Composition missing tiers → degraded status with errors
- *    105. Composition cross-tier duplicate → success status with warning
+ *    104. Composition missing required tier → failed status (EP4-P3CR: parser throws for absent tier)
+ *    105. Composition cross-tier duplicate → degraded with error (EP4-P3CR: was success/warning)
  *    106. Editorial malformed JSON → failed status
  *    107. Editorial neither description nor subtitle → degraded status
  *    108. Provider error response → failed status
- *    109. Failed composition does not pollute merge (fields remain empty)
+ *    109. Failed composition does not pollute merge (fields remain scaffold values)
+ *
+ *   EP4-P3CR — Producer Safety Hardening
+ *
+ *   HomeFragranceProducerRegistry
+ *    110. Fresh HomeFragranceProducerRegistry registers HOME_FRAGRANCE_PRODUCER_SET
+ *    111. Registry resolves "home-fragrance" → producers in correct order (Composition, Editorial)
+ *    112. Duplicate registration throws clearly
+ *    113. FRAGRANCE_PRODUCER_SET.category is "fragrance" — runtime family boundary proof
+ *
+ *   Max-notes enforcement (2–4 per tier)
+ *    114. top > 4 notes → degraded with HF_COMP_NOTES_TOP_MAX error
+ *    115. heart > 4 notes → degraded with HF_COMP_NOTES_HEART_MAX error
+ *    116. base > 4 notes → degraded with HF_COMP_NOTES_BASE_MAX error
+ *
+ *   Composition parse structural failures
+ *    117. Composition root is array → failed
+ *    118. top is string not array → failed (HF_COMP_PARSE_TIER_NOT_ARRAY)
+ *    119. top contains non-string element → failed (HF_COMP_PARSE_TIER_NON_STRING)
+ *
+ *   Editorial parse structural failures
+ *    120. Editorial description is number → failed (HF_EDIT_PARSE_DESCRIPTION_TYPE)
+ *    121. Editorial subtitle is array → failed (HF_EDIT_PARSE_SUBTITLE_TYPE)
+ *
+ *   Pipeline stop policy proofs
+ *    122. Degraded Composition → Editorial does NOT execute (producerResults.length === 1)
+ *    123. Failed Composition → Editorial does NOT execute; invalid fields not in final record
  *
  * No AI. No file writes. No factory log. No native records. No persistent state.
  */
@@ -176,9 +202,10 @@ import { existsSync }                        from "fs";
 import path                                  from "path";
 import { CatalogueRegistry }                 from "./core/CatalogueRegistry";
 import { defaultCatalogueRegistry }          from "./intake";
-import { defaultRegistry }                   from "./orchestrator";
+import { defaultRegistry, FRAGRANCE_PRODUCER_SET } from "./orchestrator";
 import { scaffoldHomeFragrance }             from "./homeFragranceScaffold";
 import { HomeFragranceContextBuilder }       from "./core/HomeFragranceContextBuilder";
+import { HomeFragranceProducerRegistry }     from "./core/HomeFragranceProducerRegistry";
 import { validateHomeFragranceRecord }       from "../../app/lib/mkc/homeFragranceValidator";
 import { mergeHomeFragrance }                from "./homeFragranceMerger";
 import { buildHomeFragranceDraft }           from "./HomeFragranceDraftBuilder";
@@ -1288,28 +1315,29 @@ async function main(): Promise<void> {
     pass("failure — malformed composition JSON → failed status with errors");
   }
 
-  // 104. Composition missing tiers → degraded status with errors
+  // 104. Composition missing required tier → failed (EP4-P3CR: parser treats absent tier as structural failure)
+  //      Policy: top/heart/base are all required schema fields. A missing key throws in parse() → failed.
   {
     const missingTierEngine = makeMockEngine(
       makeInlineProvider(
         "HomeFragranceCompositionProducer",
-        JSON.stringify({ top: ["Rose", "Bergamot"], heart: ["Oud"] }),
-        // missing "base" → base = [] → HF_COMP_NOTES_HEART_MIN (heart length 1) + HF_COMP_NOTES_BASE_MIN
-        // Actually heart has 1 note → HF_COMP_NOTES_HEART_MIN + HF_COMP_NOTES_BASE_MIN
+        JSON.stringify({ top: ["Rose", "Bergamot"], heart: ["Oud", "Geranium"] }),
+        // "base" key is absent — parse() throws HF_COMP_PARSE_TIER_MISSING → failed
       ),
     );
     const result = await compositionProducer.run(failureCtx, missingTierEngine);
-    if (result.status !== "degraded") {
-      throw new Error(`FAIL [missing tier]: expected "degraded", got "${result.status}"`);
+    if (result.status !== "failed") {
+      throw new Error(`FAIL [missing tier]: expected "failed" (parse throws for absent tier), got "${result.status}"`);
     }
-    const hasMinError = result.errors.some(e => e.includes("HF_COMP_NOTES"));
-    if (!hasMinError) {
-      throw new Error("FAIL [missing tier]: expected HF_COMP_NOTES_* errors");
+    const hasParseError = result.errors.some(e => e.includes("HF_COMP_PARSE_TIER_MISSING") || e.includes("parse:"));
+    if (!hasParseError) {
+      throw new Error("FAIL [missing tier]: expected parse error in errors array");
     }
-    pass("failure — composition missing tier → degraded status with HF_COMP_NOTES errors");
+    pass("failure — composition missing required tier → failed (parser throws for absent tier)");
   }
 
-  // 105. Composition cross-tier duplicate → success status with warning
+  // 105. Composition cross-tier duplicate → degraded with error (EP4-P3CR: promoted from warning to error)
+  //      A note appearing in multiple tiers is invalid. Do not silently remove or accept.
   {
     const crossDupeEngine = makeMockEngine(
       makeInlineProvider(
@@ -1319,17 +1347,21 @@ async function main(): Promise<void> {
           heart: ["Oud", "Geranium"],
           base:  ["Sandalwood", "Amber"],
         }),
+        // "Oud" appears in both top and heart — cross-tier duplicate → validation error → degraded
       ),
     );
     const result = await compositionProducer.run(failureCtx, crossDupeEngine);
-    if (result.status !== "success") {
-      throw new Error(`FAIL [cross-tier dupe]: expected "success", got "${result.status}"`);
+    if (result.status !== "degraded") {
+      throw new Error(`FAIL [cross-tier dupe]: expected "degraded" (error), got "${result.status}"`);
     }
-    const hasCrossDupeWarn = result.warnings.some(w => w.includes("HF_COMP_CROSS_TIER_DUPLICATE"));
-    if (!hasCrossDupeWarn) {
-      throw new Error("FAIL [cross-tier dupe]: expected HF_COMP_CROSS_TIER_DUPLICATE warning");
+    const hasCrossDupeError = result.errors.some(e => e.includes("HF_COMP_CROSS_TIER_DUPLICATE"));
+    if (!hasCrossDupeError) {
+      throw new Error("FAIL [cross-tier dupe]: expected HF_COMP_CROSS_TIER_DUPLICATE in errors (not warnings)");
     }
-    pass("failure — composition cross-tier duplicate → success with HF_COMP_CROSS_TIER_DUPLICATE warning");
+    if (result.warnings.some(w => w.includes("HF_COMP_CROSS_TIER_DUPLICATE"))) {
+      throw new Error("FAIL [cross-tier dupe]: HF_COMP_CROSS_TIER_DUPLICATE must be an error, not a warning");
+    }
+    pass("failure — composition cross-tier duplicate → degraded with HF_COMP_CROSS_TIER_DUPLICATE error");
   }
 
   // 106. Editorial malformed JSON → failed status
@@ -1410,7 +1442,342 @@ async function main(): Promise<void> {
     pass("failure — failed composition result does not pollute merge (scaffold notes preserved)");
   }
 
-  console.log("\n  All 109 proofs passed.\n");
+  // ── EP4-P3CR — Producer Safety Hardening ─────────────────────────────────────
+
+  // 110. Fresh HomeFragranceProducerRegistry registers HOME_FRAGRANCE_PRODUCER_SET
+  {
+    const hfReg = new HomeFragranceProducerRegistry();
+    hfReg.register(HOME_FRAGRANCE_PRODUCER_SET);
+    const resolved = hfReg.getProducerSet("home-fragrance");
+    if (resolved !== HOME_FRAGRANCE_PRODUCER_SET) {
+      throw new Error("FAIL [HF registry register]: resolved set !== HOME_FRAGRANCE_PRODUCER_SET");
+    }
+    pass("registry — HomeFragranceProducerRegistry registers and resolves HOME_FRAGRANCE_PRODUCER_SET");
+  }
+
+  // 111. Registry resolves "home-fragrance" → producers in correct order (Composition, Editorial)
+  {
+    const hfReg2 = new HomeFragranceProducerRegistry();
+    hfReg2.register(HOME_FRAGRANCE_PRODUCER_SET);
+    const resolved = hfReg2.getProducerSet("home-fragrance");
+    if (resolved.producers.length !== 2) {
+      throw new Error(`FAIL [HF registry order]: expected 2 producers, got ${resolved.producers.length}`);
+    }
+    if (resolved.producers[0].name !== "HomeFragranceCompositionProducer") {
+      throw new Error(`FAIL [HF registry order]: producers[0] is "${resolved.producers[0].name}", not "HomeFragranceCompositionProducer"`);
+    }
+    if (resolved.producers[1].name !== "HomeFragranceEditorialProducer") {
+      throw new Error(`FAIL [HF registry order]: producers[1] is "${resolved.producers[1].name}", not "HomeFragranceEditorialProducer"`);
+    }
+    pass("registry — resolved set has Composition first, Editorial second");
+  }
+
+  // 112. Duplicate registration throws clearly
+  {
+    const hfReg3 = new HomeFragranceProducerRegistry();
+    hfReg3.register(HOME_FRAGRANCE_PRODUCER_SET);
+    let threw = false;
+    try {
+      hfReg3.register(HOME_FRAGRANCE_PRODUCER_SET);
+    } catch (e) {
+      threw = true;
+      const msg = e instanceof Error ? e.message : String(e);
+      if (!msg.toLowerCase().includes("already registered")) {
+        throw new Error(`FAIL [HF registry duplicate]: expected "already registered" in error, got: "${msg}"`);
+      }
+    }
+    if (!threw) {
+      throw new Error("FAIL [HF registry duplicate]: expected duplicate registration to throw");
+    }
+    pass("registry — duplicate HomeFragranceProducerSet registration throws clearly");
+  }
+
+  // 113. FRAGRANCE_PRODUCER_SET.category is "fragrance" — runtime family boundary proof
+  //      TypeScript prevents substitution at compile time; this proof catches runtime regression.
+  {
+    if (FRAGRANCE_PRODUCER_SET.category !== "fragrance") {
+      throw new Error(
+        `FAIL [family boundary]: FRAGRANCE_PRODUCER_SET.category is "${FRAGRANCE_PRODUCER_SET.category}", not "fragrance"`,
+      );
+    }
+    if (HOME_FRAGRANCE_PRODUCER_SET.category !== "home-fragrance") {
+      throw new Error(
+        `FAIL [family boundary]: HOME_FRAGRANCE_PRODUCER_SET.category is "${HOME_FRAGRANCE_PRODUCER_SET.category}", not "home-fragrance"`,
+      );
+    }
+    pass("registry — FRAGRANCE_PRODUCER_SET and HOME_FRAGRANCE_PRODUCER_SET carry distinct runtime category values");
+  }
+
+  // 114. top > 4 notes → degraded with HF_COMP_NOTES_TOP_MAX error
+  {
+    const topMaxEngine = makeMockEngine(
+      makeInlineProvider(
+        "HomeFragranceCompositionProducer",
+        JSON.stringify({
+          top:   ["Rose", "Bergamot", "Lemon", "Neroli", "Grapefruit"],
+          heart: ["Oud", "Geranium"],
+          base:  ["Sandalwood", "Amber"],
+        }),
+        // top has 5 notes — exceeds maximum of 4
+      ),
+    );
+    const result = await compositionProducer.run(failureCtx, topMaxEngine);
+    if (result.status !== "degraded") {
+      throw new Error(`FAIL [top max]: expected "degraded", got "${result.status}"`);
+    }
+    const hasTopMaxError = result.errors.some(e => e.includes("HF_COMP_NOTES_TOP_MAX"));
+    if (!hasTopMaxError) {
+      throw new Error("FAIL [top max]: expected HF_COMP_NOTES_TOP_MAX in errors");
+    }
+    pass("validation — top > 4 notes → degraded with HF_COMP_NOTES_TOP_MAX error");
+  }
+
+  // 115. heart > 4 notes → degraded with HF_COMP_NOTES_HEART_MAX error
+  {
+    const heartMaxEngine = makeMockEngine(
+      makeInlineProvider(
+        "HomeFragranceCompositionProducer",
+        JSON.stringify({
+          top:   ["Rose", "Bergamot"],
+          heart: ["Oud", "Geranium", "Jasmine", "Violet", "Iris"],
+          base:  ["Sandalwood", "Amber"],
+        }),
+        // heart has 5 notes — exceeds maximum of 4
+      ),
+    );
+    const result = await compositionProducer.run(failureCtx, heartMaxEngine);
+    if (result.status !== "degraded") {
+      throw new Error(`FAIL [heart max]: expected "degraded", got "${result.status}"`);
+    }
+    const hasHeartMaxError = result.errors.some(e => e.includes("HF_COMP_NOTES_HEART_MAX"));
+    if (!hasHeartMaxError) {
+      throw new Error("FAIL [heart max]: expected HF_COMP_NOTES_HEART_MAX in errors");
+    }
+    pass("validation — heart > 4 notes → degraded with HF_COMP_NOTES_HEART_MAX error");
+  }
+
+  // 116. base > 4 notes → degraded with HF_COMP_NOTES_BASE_MAX error
+  {
+    const baseMaxEngine = makeMockEngine(
+      makeInlineProvider(
+        "HomeFragranceCompositionProducer",
+        JSON.stringify({
+          top:   ["Rose", "Bergamot"],
+          heart: ["Oud", "Geranium"],
+          base:  ["Sandalwood", "Amber", "Musk", "Vetiver", "Cedar"],
+        }),
+        // base has 5 notes — exceeds maximum of 4
+      ),
+    );
+    const result = await compositionProducer.run(failureCtx, baseMaxEngine);
+    if (result.status !== "degraded") {
+      throw new Error(`FAIL [base max]: expected "degraded", got "${result.status}"`);
+    }
+    const hasBaseMaxError = result.errors.some(e => e.includes("HF_COMP_NOTES_BASE_MAX"));
+    if (!hasBaseMaxError) {
+      throw new Error("FAIL [base max]: expected HF_COMP_NOTES_BASE_MAX in errors");
+    }
+    pass("validation — base > 4 notes → degraded with HF_COMP_NOTES_BASE_MAX error");
+  }
+
+  // 117. Composition root is array → failed (HF_COMP_PARSE_INVALID_ROOT)
+  {
+    const rootArrayEngine = makeMockEngine(
+      makeInlineProvider(
+        "HomeFragranceCompositionProducer",
+        JSON.stringify([
+          { top: ["Rose", "Bergamot"], heart: ["Oud", "Geranium"], base: ["Sandalwood", "Amber"] },
+        ]),
+        // Response root is an array, not an object → parse() throws
+      ),
+    );
+    const result = await compositionProducer.run(failureCtx, rootArrayEngine);
+    if (result.status !== "failed") {
+      throw new Error(`FAIL [root array]: expected "failed", got "${result.status}"`);
+    }
+    const hasRootError = result.errors.some(e => e.includes("HF_COMP_PARSE_INVALID_ROOT") || e.includes("parse:"));
+    if (!hasRootError) {
+      throw new Error("FAIL [root array]: expected parse error in errors");
+    }
+    pass("parse safety — composition root is array → failed (HF_COMP_PARSE_INVALID_ROOT)");
+  }
+
+  // 118. top is string not array → failed (HF_COMP_PARSE_TIER_NOT_ARRAY)
+  {
+    const topStringEngine = makeMockEngine(
+      makeInlineProvider(
+        "HomeFragranceCompositionProducer",
+        JSON.stringify({
+          top:   "Rose, Bergamot",
+          heart: ["Oud", "Geranium"],
+          base:  ["Sandalwood", "Amber"],
+        }),
+        // "top" is a comma-separated string, not an array → parse() throws
+      ),
+    );
+    const result = await compositionProducer.run(failureCtx, topStringEngine);
+    if (result.status !== "failed") {
+      throw new Error(`FAIL [top not array]: expected "failed", got "${result.status}"`);
+    }
+    const hasNotArrayError = result.errors.some(e => e.includes("HF_COMP_PARSE_TIER_NOT_ARRAY") || e.includes("parse:"));
+    if (!hasNotArrayError) {
+      throw new Error("FAIL [top not array]: expected HF_COMP_PARSE_TIER_NOT_ARRAY in errors");
+    }
+    pass("parse safety — top is string not array → failed (HF_COMP_PARSE_TIER_NOT_ARRAY)");
+  }
+
+  // 119. top contains non-string element → failed (HF_COMP_PARSE_TIER_NON_STRING)
+  {
+    const topNonStringEngine = makeMockEngine(
+      makeInlineProvider(
+        "HomeFragranceCompositionProducer",
+        JSON.stringify({
+          top:   ["Rose", 42, "Bergamot"],
+          heart: ["Oud", "Geranium"],
+          base:  ["Sandalwood", "Amber"],
+        }),
+        // top[1] is a number, not a string → parse() throws
+      ),
+    );
+    const result = await compositionProducer.run(failureCtx, topNonStringEngine);
+    if (result.status !== "failed") {
+      throw new Error(`FAIL [top non-string]: expected "failed", got "${result.status}"`);
+    }
+    const hasNonStringError = result.errors.some(e => e.includes("HF_COMP_PARSE_TIER_NON_STRING") || e.includes("parse:"));
+    if (!hasNonStringError) {
+      throw new Error("FAIL [top non-string]: expected HF_COMP_PARSE_TIER_NON_STRING in errors");
+    }
+    pass("parse safety — top contains non-string element → failed (HF_COMP_PARSE_TIER_NON_STRING)");
+  }
+
+  // 120. Editorial description is number → failed (HF_EDIT_PARSE_DESCRIPTION_TYPE)
+  {
+    const descNumberEngine = makeMockEngine(
+      makeInlineProvider(
+        "HomeFragranceEditorialProducer",
+        JSON.stringify({
+          description: 42,
+          subtitle:    "Warm Ritual",
+        }),
+        // description is a number → parse() throws
+      ),
+    );
+    const result = await editorialProducer.run(postCompCtx, descNumberEngine);
+    if (result.status !== "failed") {
+      throw new Error(`FAIL [desc number]: expected "failed", got "${result.status}"`);
+    }
+    const hasDescTypeError = result.errors.some(e => e.includes("HF_EDIT_PARSE_DESCRIPTION_TYPE") || e.includes("parse:"));
+    if (!hasDescTypeError) {
+      throw new Error("FAIL [desc number]: expected HF_EDIT_PARSE_DESCRIPTION_TYPE in errors");
+    }
+    pass("parse safety — editorial description is number → failed (HF_EDIT_PARSE_DESCRIPTION_TYPE)");
+  }
+
+  // 121. Editorial subtitle is array → failed (HF_EDIT_PARSE_SUBTITLE_TYPE)
+  {
+    const subtitleArrayEngine = makeMockEngine(
+      makeInlineProvider(
+        "HomeFragranceEditorialProducer",
+        JSON.stringify({
+          description: "A warm, intimate fragrance that fills the room with soft rose and oud accord, perfect for evening ambiance and moments of quiet contemplation.",
+          subtitle:    ["Warm", "Ritual"],
+        }),
+        // subtitle is an array → parse() throws
+      ),
+    );
+    const result = await editorialProducer.run(postCompCtx, subtitleArrayEngine);
+    if (result.status !== "failed") {
+      throw new Error(`FAIL [subtitle array]: expected "failed", got "${result.status}"`);
+    }
+    const hasSubtitleTypeError = result.errors.some(e => e.includes("HF_EDIT_PARSE_SUBTITLE_TYPE") || e.includes("parse:"));
+    if (!hasSubtitleTypeError) {
+      throw new Error("FAIL [subtitle array]: expected HF_EDIT_PARSE_SUBTITLE_TYPE in errors");
+    }
+    pass("parse safety — editorial subtitle is array → failed (HF_EDIT_PARSE_SUBTITLE_TYPE)");
+  }
+
+  // 122. Degraded Composition → Editorial does NOT execute (pipeline stops; producerResults.length === 1)
+  //      Policy: degraded output must not propagate. Editorial must not run on invalid composition data.
+  {
+    const crossDupePipelineEngine = makeMockEngine(
+      makeInlineProvider(
+        "HomeFragranceCompositionProducer",
+        JSON.stringify({
+          top:   ["Rose", "Oud"],
+          heart: ["Oud", "Geranium"],
+          base:  ["Sandalwood", "Amber"],
+        }),
+        // "Oud" in both top and heart → cross-tier duplicate → degraded → pipeline break
+      ),
+    );
+    const pipelineState: HomeFragrancePipelineState = {
+      slug:           record.slug,
+      record,
+      stageLog:       [],
+      factoryVersion: "ep4-p3cr-proof-122",
+    };
+    const degradedResult = await runHomeFragrancePipeline(
+      pipelineState,
+      HOME_FRAGRANCE_PRODUCER_SET,
+      crossDupePipelineEngine,
+      MOCK_PRODUCER_CONFIG,
+    );
+    if (degradedResult.producerResults.length !== 1) {
+      throw new Error(
+        `FAIL [degraded stop]: expected 1 producer result (Editorial must not run), got ${degradedResult.producerResults.length}`,
+      );
+    }
+    if (degradedResult.producerResults[0].status !== "degraded") {
+      throw new Error(
+        `FAIL [degraded stop]: expected Composition to be "degraded", got "${degradedResult.producerResults[0].status}"`,
+      );
+    }
+    pass("pipeline stop — degraded Composition → Editorial does NOT execute (producerResults.length === 1)");
+  }
+
+  // 123. Failed Composition → Editorial does NOT execute; fabricated fields not in final record
+  //      Policy: failed output must not propagate. Editorial must not run on incomplete composition data.
+  {
+    const failedPipelineEngine = makeMockEngine(
+      makeInlineProvider(
+        "HomeFragranceCompositionProducer",
+        "{ broken json for pipeline test",
+        // malformed JSON → parse() throws → Composition failed → pipeline breaks immediately
+      ),
+    );
+    const pipelineState2: HomeFragrancePipelineState = {
+      slug:           record.slug,
+      record,
+      stageLog:       [],
+      factoryVersion: "ep4-p3cr-proof-123",
+    };
+    const failedResult = await runHomeFragrancePipeline(
+      pipelineState2,
+      HOME_FRAGRANCE_PRODUCER_SET,
+      failedPipelineEngine,
+      MOCK_PRODUCER_CONFIG,
+    );
+    if (failedResult.producerResults.length !== 1) {
+      throw new Error(
+        `FAIL [failed stop]: expected 1 producer result (Editorial must not run), got ${failedResult.producerResults.length}`,
+      );
+    }
+    if (failedResult.producerResults[0].status !== "failed") {
+      throw new Error(
+        `FAIL [failed stop]: expected Composition to be "failed", got "${failedResult.producerResults[0].status}"`,
+      );
+    }
+    // Fabricated fields must not appear in the final merged record
+    const finalNotes = failedResult.record.notes;
+    if (JSON.stringify(finalNotes) !== JSON.stringify(record.notes)) {
+      throw new Error(
+        "FAIL [failed stop]: failed composition polluted the final record's notes",
+      );
+    }
+    pass("pipeline stop — failed Composition → Editorial does NOT execute; fabricated fields not in final record");
+  }
+
+  console.log("\n  All 123 proofs passed.\n");
 }
 
 main().catch((err: unknown) => {

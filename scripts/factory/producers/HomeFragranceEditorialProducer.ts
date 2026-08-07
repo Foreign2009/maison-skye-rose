@@ -20,6 +20,26 @@
  *   HF_EDIT_SUBTITLE_MISSING      — subtitle not returned (warning — scaffold retained)
  *   HF_EDIT_SUBTITLE_TOO_LONG     — maximum 60 characters (warning)
  *   HF_EDIT_FORBIDDEN_TERM        — luxury vocabulary violation (error)
+ *
+ * Runtime JSON parsing (EP4-P3CR):
+ *   parse() validates the AI response structurally before constructing fields.
+ *   Structural violations throw, causing HomeFragranceBaseProducer to return
+ *   status "failed".
+ *
+ *   Root is not a non-null object:
+ *     → HF_EDIT_PARSE_INVALID_ROOT — throw (failed)
+ *   description key exists but is not a string:
+ *     → HF_EDIT_PARSE_DESCRIPTION_TYPE — throw (failed)
+ *   subtitle key exists but is not a string:
+ *     → HF_EDIT_PARSE_SUBTITLE_TYPE — throw (failed)
+ *
+ *   Unknown extra root keys are ignored.
+ *
+ *   An empty object {} parses successfully (description and subtitle both absent).
+ *   In that case validate() reports HF_EDIT_DESCRIPTION_REQUIRED → degraded.
+ *   This preserves the distinction:
+ *     Malformed JSON or invalid type → failed
+ *     Structurally valid but insufficient content → degraded
  */
 
 import path from "path";
@@ -115,13 +135,33 @@ export class HomeFragranceEditorialProducer extends HomeFragranceBaseProducer {
     response: GenerationResponse,
     _ctx:     HomeFragranceFactoryContext,
   ): Partial<HomeFragranceKnowledge> {
-    const data = JSON.parse(response.content) as {
-      description?: unknown;
-      subtitle?:    unknown;
-    };
+    // AI output is an untrusted runtime boundary.
+    // Validate structure before constructing any producer fields.
+    const rawData: unknown = JSON.parse(response.content);
 
-    const description = typeof data.description === "string" ? data.description.trim() : "";
-    const subtitle    = typeof data.subtitle    === "string" ? data.subtitle.trim()    : "";
+    if (rawData === null || typeof rawData !== "object" || Array.isArray(rawData)) {
+      throw new Error(
+        "HF_EDIT_PARSE_INVALID_ROOT — editorial response root must be a non-null, non-array object",
+      );
+    }
+
+    const obj = rawData as Record<string, unknown>;
+
+    // description and subtitle are optional — absent is valid (validate() reports degraded).
+    // But if a key is present, it must be a string. A number or array is a structural failure.
+    if (obj["description"] !== undefined && typeof obj["description"] !== "string") {
+      throw new Error(
+        `HF_EDIT_PARSE_DESCRIPTION_TYPE — "description" must be a string (got ${typeof obj["description"]})`,
+      );
+    }
+    if (obj["subtitle"] !== undefined && typeof obj["subtitle"] !== "string") {
+      throw new Error(
+        `HF_EDIT_PARSE_SUBTITLE_TYPE — "subtitle" must be a string (got ${typeof obj["subtitle"]})`,
+      );
+    }
+
+    const description = typeof obj["description"] === "string" ? (obj["description"] as string).trim() : "";
+    const subtitle    = typeof obj["subtitle"]    === "string" ? (obj["subtitle"]    as string).trim() : "";
 
     const result: Partial<HomeFragranceKnowledge> = {};
     if (description) result.description = description;

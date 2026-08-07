@@ -16,12 +16,32 @@
  * Producer validation (pre-merge, not a duplicate of the MKC validator):
  *   HF_COMP_NOTES_MISSING        — notes object absent (error)
  *   HF_COMP_NOTES_TOP_MIN        — top requires ≥ 2 (error)
+ *   HF_COMP_NOTES_TOP_MAX        — top requires ≤ 4 (error) [EP4-P3CR]
  *   HF_COMP_NOTES_HEART_MIN      — heart requires ≥ 2 (error)
+ *   HF_COMP_NOTES_HEART_MAX      — heart requires ≤ 4 (error) [EP4-P3CR]
  *   HF_COMP_NOTES_BASE_MIN       — base requires ≥ 2 (error)
+ *   HF_COMP_NOTES_BASE_MAX       — base requires ≤ 4 (error) [EP4-P3CR]
  *   HF_COMP_EMPTY_NOTE           — empty string in any tier (error)
  *   HF_COMP_INTRA_TIER_DUPLICATE — duplicate within same tier (error)
- *   HF_COMP_CROSS_TIER_DUPLICATE — note appears in multiple tiers (warning)
+ *   HF_COMP_CROSS_TIER_DUPLICATE — note appears in multiple tiers (error) [EP4-P3CR: promoted from warning]
  *   HF_COMP_CAPITALISATION        — note not Title Case (warning)
+ *
+ * Runtime JSON parsing (EP4-P3CR):
+ *   parse() validates the AI response structurally before constructing fields.
+ *   Structural violations throw, causing HomeFragranceBaseProducer to return
+ *   status "failed" — not silently accepted or auto-corrected.
+ *
+ *   Missing tier (top/heart/base absent from root):
+ *     → HF_COMP_PARSE_TIER_MISSING — throw (failed)
+ *   Tier is not an array:
+ *     → HF_COMP_PARSE_TIER_NOT_ARRAY — throw (failed)
+ *   Array element is not a string:
+ *     → HF_COMP_PARSE_TIER_NON_STRING — throw (failed)
+ *   Root is not a non-null object:
+ *     → HF_COMP_PARSE_INVALID_ROOT — throw (failed)
+ *
+ *   Unknown extra root keys are ignored.
+ *   AI output is never silently corrected.
  */
 
 import path from "path";
@@ -93,17 +113,23 @@ export class HomeFragranceCompositionProducer extends HomeFragranceBaseProducer 
     response: GenerationResponse,
     _ctx:     HomeFragranceFactoryContext,
   ): Partial<HomeFragranceKnowledge> {
-    const data = JSON.parse(response.content) as {
-      top?: unknown;
-      heart?: unknown;
-      base?: unknown;
-    };
+    // AI output is an untrusted runtime boundary.
+    // Validate structure before constructing any producer fields.
+    const rawData: unknown = JSON.parse(response.content);
+
+    if (rawData === null || typeof rawData !== "object" || Array.isArray(rawData)) {
+      throw new Error(
+        "HF_COMP_PARSE_INVALID_ROOT — composition response root must be a non-null, non-array object",
+      );
+    }
+
+    const obj = rawData as Record<string, unknown>;
 
     return {
       notes: {
-        top:   toNotes(data.top),
-        heart: toNotes(data.heart),
-        base:  toNotes(data.base),
+        top:   parseStringArray(obj["top"],   "top"),
+        heart: parseStringArray(obj["heart"], "heart"),
+        base:  parseStringArray(obj["base"],  "base"),
       },
     };
   }
@@ -121,16 +147,24 @@ export class HomeFragranceCompositionProducer extends HomeFragranceBaseProducer 
       return { errors, warnings };
     }
 
+    // ── Minimum notes per tier ───────────────────────────────────────────────
     if (notes.top.length   < 2) errors.push(`HF_COMP_NOTES_TOP_MIN   — top notes require ≥ 2 (got ${notes.top.length})`);
     if (notes.heart.length < 2) errors.push(`HF_COMP_NOTES_HEART_MIN — heart notes require ≥ 2 (got ${notes.heart.length})`);
     if (notes.base.length  < 2) errors.push(`HF_COMP_NOTES_BASE_MIN  — base notes require ≥ 2 (got ${notes.base.length})`);
 
+    // ── Maximum notes per tier (prompt specifies 2–4) ────────────────────────
+    if (notes.top.length   > 4) errors.push(`HF_COMP_NOTES_TOP_MAX   — top notes require ≤ 4 (got ${notes.top.length})`);
+    if (notes.heart.length > 4) errors.push(`HF_COMP_NOTES_HEART_MAX — heart notes require ≤ 4 (got ${notes.heart.length})`);
+    if (notes.base.length  > 4) errors.push(`HF_COMP_NOTES_BASE_MAX  — base notes require ≤ 4 (got ${notes.base.length})`);
+
+    // ── Empty note values ────────────────────────────────────────────────────
     const all   = [...notes.top, ...notes.heart, ...notes.base];
     const empty = all.filter(n => !n.trim());
     if (empty.length > 0) {
       errors.push(`HF_COMP_EMPTY_NOTE — ${empty.length} empty note value(s) found`);
     }
 
+    // ── Intra-tier duplicates ────────────────────────────────────────────────
     for (const [tier, tNotes] of [
       ["top",   notes.top],
       ["heart", notes.heart],
@@ -140,11 +174,15 @@ export class HomeFragranceCompositionProducer extends HomeFragranceBaseProducer 
       if (d.length > 0) errors.push(`HF_COMP_INTRA_TIER_DUPLICATE — duplicate in ${tier}: ${d.join(", ")}`);
     }
 
+    // ── Cross-tier duplicates (EP4-P3CR: promoted from warning to error) ─────
+    // A note appearing in multiple tiers is invalid composition output.
+    // Do not silently remove duplicates — report the defect truthfully.
     const crossDupes = crossTierDuplicates(notes.top, notes.heart, notes.base);
     if (crossDupes.length > 0) {
-      warnings.push(`HF_COMP_CROSS_TIER_DUPLICATE — note(s) appear in multiple tiers: ${crossDupes.join(", ")}`);
+      errors.push(`HF_COMP_CROSS_TIER_DUPLICATE — note(s) appear in multiple tiers: ${crossDupes.join(", ")}`);
     }
 
+    // ── Capitalisation quality ───────────────────────────────────────────────
     const lowercase = all.filter(n => n.length > 0 && /^[a-z]/.test(n));
     if (lowercase.length > 0) {
       warnings.push(`HF_COMP_CAPITALISATION — notes should be Title Case: ${lowercase.join(", ")}`);
@@ -156,12 +194,37 @@ export class HomeFragranceCompositionProducer extends HomeFragranceBaseProducer 
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
-function toNotes(value: unknown): string[] {
-  if (!Array.isArray(value)) return [];
-  return value
-    .filter((v): v is string => typeof v === "string")
-    .map(n => n.trim())
-    .filter(Boolean);
+/**
+ * Validates and extracts a string array from an untrusted parsed JSON value.
+ *
+ * Policy (EP4-P3CR preferred conservative policy):
+ *   - Missing key (undefined/null): structural failure → throws.
+ *     All three tiers are required fields in the approved schema.
+ *   - Non-array value: structural failure → throws.
+ *   - Non-string array element: structural failure → throws.
+ *   - Valid array of strings: trims and filters empty values.
+ *
+ * Unknown extra root keys on the parent object are ignored by the caller.
+ */
+function parseStringArray(value: unknown, tierName: string): string[] {
+  if (value === undefined || value === null) {
+    throw new Error(
+      `HF_COMP_PARSE_TIER_MISSING — required tier "${tierName}" is absent in AI response`,
+    );
+  }
+  if (!Array.isArray(value)) {
+    throw new Error(
+      `HF_COMP_PARSE_TIER_NOT_ARRAY — "${tierName}" must be an array (got ${typeof value})`,
+    );
+  }
+  for (let i = 0; i < value.length; i++) {
+    if (typeof value[i] !== "string") {
+      throw new Error(
+        `HF_COMP_PARSE_TIER_NON_STRING — "${tierName}[${i}]" must be a string (got ${typeof value[i]})`,
+      );
+    }
+  }
+  return (value as string[]).map(n => n.trim()).filter(Boolean);
 }
 
 function withinTierDuplicates(notes: string[]): string[] {
