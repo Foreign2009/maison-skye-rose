@@ -8,10 +8,10 @@
 
 ## Current Engineering Program
 
-**Program:** EP4-P3BR — Home Fragrance Quality Boundary Integrity Correction (Complete)
+**Program:** EP4-P3C — Home Fragrance Producer Foundation (Complete)
 **Sprint:** EP4
 **Gate:** Complete
-**Objective:** Three integrity corrections to EP4-P3B: (1) merger type assertion removed, (2) draft builder no longer fabricates absent catalogVersion/status, (3) validator slug derivation restored to canonical `deriveSlug`. 61 deterministic proofs pass.
+**Objective:** First two Home Fragrance AI producers (Composition + Editorial) proving the complete producer chain with deterministic mock generation only. No paid AI calls. No draft writes. 109 proofs pass.
 
 ---
 
@@ -86,6 +86,7 @@ Verify: `npm run build`
 | EP4 | EP4-P3A | Home Fragrance Production Type Foundation | Complete — 2026-08-07 |
 | EP4 | EP4-P3B | Home Fragrance Draft & Validation Foundation | Complete — 2026-08-07 |
 | EP4 | EP4-P3BR | Correct Home Fragrance Quality Boundary | Complete — 2026-08-07 |
+| EP4 | EP4-P3C | Home Fragrance Producer Foundation | Complete — 2026-08-07 |
 
 `FOUNDATIONS/00_FOUNDERS_LETTER.md` — The permanent founder's letter to Skye, Rose, future employees, and future stewards. *Why we began.*
 `FOUNDATIONS/01_SKYE_AND_ROSE_COVENANT.md` — The institutional promise: to customers, products, technology, and future generations. *What we promise.*

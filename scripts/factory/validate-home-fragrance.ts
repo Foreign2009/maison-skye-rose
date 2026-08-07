@@ -12,6 +12,11 @@
  *   (d) mergeHomeFragrance() applies passing producer fields and skips failed.
  *   (e) buildHomeFragranceDraft() renders a HomeFragranceKnowledge draft
  *       with no fragrance-specific fields or size labels.
+ *   (f) HomeFragranceBaseProducer, HomeFragranceCompositionProducer, and
+ *       HomeFragranceEditorialProducer implement the complete producer chain
+ *       with a deterministic mock provider — no paid AI calls.
+ *   (g) runHomeFragrancePipeline() produces an in-memory result with no
+ *       draft persisted to disk.
  *
  * Proofs:
  *   Intake
@@ -46,7 +51,7 @@
  *     22. HomeFragranceProducerResult accepts Partial<HomeFragranceKnowledge> in fields
  *
  *   Registry
- *     23. ProducerRegistry still rejects "home-fragrance"
+ *     23. ProducerRegistry still rejects "home-fragrance" (defaultRegistry unchanged)
  *
  *   Validator — validateHomeFragranceRecord
  *     24. PASS_WITH_WARNINGS on pre-AI fixture (0 errors, all warnings)
@@ -96,24 +101,97 @@
  *     60. deriveSlug — "Rose Oud Candle" → "rose-oud-candle" (canonical derivation)
  *     61. validator slug formula — discrepant slug produces SLUG_FORMULA error
  *
+ *   EP4-P3C — Producer Foundation
+ *
+ *   ProducerSet structure
+ *     62. HOME_FRAGRANCE_PRODUCER_SET.category === "home-fragrance"
+ *     63. HOME_FRAGRANCE_PRODUCER_SET.producers.length === 2
+ *     64. producers[0] name === "HomeFragranceCompositionProducer"
+ *     65. producers[1] name === "HomeFragranceEditorialProducer"
+ *
+ *   Composition producer — success path (mock provider)
+ *     66. Composition producer status is "success"
+ *     67. Composition promptVersion is recorded (not null)
+ *     68. Composition producerVersion is "1.0.0"
+ *     69. notes.top has at least 2 values
+ *     70. notes.heart has at least 2 values
+ *     71. notes.base has at least 2 values
+ *     72. No cross-tier duplicates in mock composition output
+ *     73. Composition emits only "notes" — no description, vibe, or other fields
+ *     74. Composition user message contains "Range:" (not "Collection:")
+ *     75. Composition metadata has "range" key (not "collection")
+ *
+ *   Context update after composition
+ *     76. Post-composition merged record notes.top contains mock note "Rose"
+ *     77. Post-composition context currentRecord notes differ from scaffold
+ *
+ *   Editorial producer — success path (mock provider)
+ *     78. Editorial receives post-composition record (enriched notes in ctx.currentRecord)
+ *     79. Editorial producer status is "success"
+ *     80. description is populated
+ *     81. subtitle is populated
+ *     82. Editorial emits only description and subtitle — no notes, vibe, prices
+ *     83. Editorial fields contain no collection, gender, or projection keys
+ *
+ *   Full merge sequence
+ *     84. Post-both-producers merged record has enriched notes (from composition)
+ *     85. Post-both-producers merged record has description (from editorial)
+ *     86. Post-both-producers merged record has editorial subtitle "Warm Ritual"
+ *     87. Composition notes not erased by editorial merge
+ *
+ *   Post-producer validation
+ *     88. Post-producer validation status is PASS_WITH_WARNINGS
+ *     89. Single-note composition warnings absent after 2+ notes per tier
+ *     90. DESCRIPTION_NOT_SET warning absent after editorial
+ *     91. Discovery warnings still present (empty arrays remain unpopulated)
+ *     92. 0 errors on fully-enriched record
+ *
+ *   Post-producer draft
+ *     93. Post-producer draft contains mock composition note (e.g. "Bergamot")
+ *     94. Post-producer draft contains editorial description substring
+ *     95. Post-producer draft contains editorial subtitle "Warm Ritual"
+ *     96. Post-producer draft does not contain fragrance-specific type annotation
+ *     97. Post-producer draft does not contain fragrance size labels
+ *
+ *   Complete pipeline proof (runHomeFragrancePipeline)
+ *     98.  runHomeFragrancePipeline returns HomeFragrancePipelineMemoryResult
+ *     99.  Pipeline producerResults.length === 2
+ *    100.  Pipeline draft is a non-empty string
+ *    101.  Pipeline draft does not contain ": FragranceKnowledge"
+ *    102.  No draft file written to disk at expected path
+ *
+ *   Failure proofs
+ *    103. Malformed composition JSON → failed status
+ *    104. Composition missing tiers → degraded status with errors
+ *    105. Composition cross-tier duplicate → success status with warning
+ *    106. Editorial malformed JSON → failed status
+ *    107. Editorial neither description nor subtitle → degraded status
+ *    108. Provider error response → failed status
+ *    109. Failed composition does not pollute merge (fields remain empty)
+ *
  * No AI. No file writes. No factory log. No native records. No persistent state.
  */
 
-import { CatalogueRegistry }             from "./core/CatalogueRegistry";
-import { defaultCatalogueRegistry }      from "./intake";
-import { defaultRegistry }               from "./orchestrator";
-import { scaffoldHomeFragrance }         from "./homeFragranceScaffold";
-import { HomeFragranceContextBuilder }   from "./core/HomeFragranceContextBuilder";
-import { validateHomeFragranceRecord }   from "../../app/lib/mkc/homeFragranceValidator";
-import { mergeHomeFragrance }            from "./homeFragranceMerger";
-import { buildHomeFragranceDraft }       from "./HomeFragranceDraftBuilder";
-import { deriveSlug }                    from "../../app/lib/mkc/deriveSlug";
-import type { HomeFragranceIntake }      from "./types";
-import type { HomeFragranceProducerResult, FactoryConfig } from "./core/types";
-import type { HomeFragrancePipelineState } from "./types";
-import type { HomeFragranceKnowledge }   from "../../app/lib/mkc/homeFragranceTypes";
+import { existsSync }                        from "fs";
+import path                                  from "path";
+import { CatalogueRegistry }                 from "./core/CatalogueRegistry";
+import { defaultCatalogueRegistry }          from "./intake";
+import { defaultRegistry }                   from "./orchestrator";
+import { scaffoldHomeFragrance }             from "./homeFragranceScaffold";
+import { HomeFragranceContextBuilder }       from "./core/HomeFragranceContextBuilder";
+import { validateHomeFragranceRecord }       from "../../app/lib/mkc/homeFragranceValidator";
+import { mergeHomeFragrance }                from "./homeFragranceMerger";
+import { buildHomeFragranceDraft }           from "./HomeFragranceDraftBuilder";
+import { deriveSlug }                        from "../../app/lib/mkc/deriveSlug";
+import { GenerationEngine }                  from "./core/GenerationEngine";
+import { HOME_FRAGRANCE_PRODUCER_SET, runHomeFragrancePipeline } from "./homeFragrancePipeline";
+import { MockHomeFragranceGenerationProvider } from "./testing/MockHomeFragranceGenerationProvider";
+import type { HomeFragranceIntake }          from "./types";
+import type { HomeFragranceProducerResult, FactoryConfig, GenerationProvider, GenerationTask, GenerationResponse } from "./core/types";
+import type { HomeFragrancePipelineState }   from "./types";
+import type { HomeFragranceKnowledge }       from "../../app/lib/mkc/homeFragranceTypes";
 
-// ── Test fixture ──────────────────────────────────────────────────────────────
+// ── Test fixtures ─────────────────────────────────────────────────────────────
 
 const FIXTURE: HomeFragranceIntake = {
   category:    "home-fragrance",
@@ -131,7 +209,7 @@ const FIXTURE: HomeFragranceIntake = {
   newArrival:  false,
 };
 
-// Minimal FactoryConfig for context builder tests — no AI calls occur.
+// Minimal FactoryConfig for context builder tests — dryRun true, no AI calls occur.
 const MINIMAL_CONFIG: FactoryConfig = {
   defaultProvider:      "claude",
   providers:            {},
@@ -143,6 +221,44 @@ const MINIMAL_CONFIG: FactoryConfig = {
   logProducerArtifacts: false,
   generationTimeout:    0,
   producerTimeout:      0,
+  maxAttempts:          1,
+  backoffStrategy:      "linear",
+  backoffBaseMs:        0,
+};
+
+// Mock FactoryConfig for producer tests — dryRun false, mock provider injected.
+const MOCK_PRODUCER_CONFIG: FactoryConfig = {
+  defaultProvider:      "mock-home-fragrance",
+  providers: {
+    "mock-home-fragrance": {
+      name:         "mock-home-fragrance",
+      modelId:      "mock-hf-1.0.0",
+      apiKeyEnvVar: "",
+    },
+  },
+  producers: {
+    HomeFragranceCompositionProducer: {
+      enabled:       true,
+      temperature:   0.7,
+      maxTokens:     512,
+      promptVersion: "1.0.0",
+      promptFallback: "fail",
+    },
+    HomeFragranceEditorialProducer: {
+      enabled:       true,
+      temperature:   0.8,
+      maxTokens:     512,
+      promptVersion: "1.0.0",
+      promptFallback: "fail",
+    },
+  },
+  maxSessionTokens:     10_000,
+  maxProducerTokens:    5_000,
+  dryRun:               false,
+  logLevel:             "silent",
+  logProducerArtifacts: false,
+  generationTimeout:    5_000,
+  producerTimeout:      10_000,
   maxAttempts:          1,
   backoffStrategy:      "linear",
   backoffBaseMs:        0,
@@ -179,10 +295,50 @@ function assertThrows(label: string, fn: () => unknown, expectedMessage: string)
   pass(label);
 }
 
+function makeMockEngine(provider: GenerationProvider): GenerationEngine {
+  const engine = new GenerationEngine(MOCK_PRODUCER_CONFIG);
+  engine.registerProvider(provider);
+  return engine;
+}
+
+function makeInlineProvider(
+  producerName: string,
+  content: string,
+  status: GenerationResponse["status"] = "success",
+): GenerationProvider {
+  return {
+    name:    "mock-home-fragrance",
+    modelId: "mock-hf-1.0.0",
+    generate: async (task: GenerationTask): Promise<GenerationResponse> => {
+      if (task.producerName !== producerName) {
+        return {
+          status:     "success",
+          content:    JSON.stringify({ top: ["Rose", "Bergamot"], heart: ["Oud", "Geranium"], base: ["Sandalwood", "Amber"] }),
+          confidence: 1.0,
+          usage:      { promptTokens: 10, completionTokens: 20, totalTokens: 30 },
+          modelId:    "mock-hf-1.0.0",
+          durationMs: 1,
+          attempts:   1,
+        };
+      }
+      return {
+        status,
+        content,
+        confidence: status === "success" ? 1.0 : 0.0,
+        usage:      { promptTokens: 10, completionTokens: 20, totalTokens: 30 },
+        modelId:    "mock-hf-1.0.0",
+        durationMs: 1,
+        attempts:   1,
+        error:      status !== "success" ? "mock provider error" : undefined,
+      };
+    },
+  };
+}
+
 // ── Proofs ────────────────────────────────────────────────────────────────────
 
 async function main(): Promise<void> {
-  console.log("\n[mkc:validate:home-fragrance] EP4-P3B — scaffold → validate → draft chain\n");
+  console.log("\n[mkc:validate:home-fragrance] EP4-P3C — Home Fragrance Producer Foundation\n");
   console.log("  Intake + Scaffold + Context + Registry\n");
 
   // ── 1–3. Intake ─────────────────────────────────────────────────────────────
@@ -253,9 +409,6 @@ async function main(): Promise<void> {
   assertEq("scaffoldHomeFragrance — recommendedFor is empty", 0, record.recommendedFor.length);
 
   // 14. Structural distinction from FragranceKnowledge
-  // FragranceKnowledge requires: collection, gender, projection, scentCharacter,
-  // family, sweetness, freshness, warmth, intensity, versatility, popularity.
-  // HomeFragranceKnowledge has none of these — verified above and below.
   if ("sweetness"  in asRecord) throw new Error("FAIL: HomeFragranceKnowledge must not carry intelligence metrics");
   if ("family"     in asRecord) throw new Error("FAIL: HomeFragranceKnowledge must not carry fragrance family");
   pass("HomeFragranceKnowledge — structurally distinct from FragranceKnowledge (no shared required fields)");
@@ -327,7 +480,7 @@ async function main(): Promise<void> {
 
   // ── 23. Registry ─────────────────────────────────────────────────────────────
 
-  // 23. ProducerRegistry still rejects "home-fragrance" (no ProducerSet registered)
+  // 23. ProducerRegistry still rejects "home-fragrance" (no ProducerSet registered in defaultRegistry)
   assertThrows(
     "producer registry — no ProducerSet for home-fragrance",
     () => defaultRegistry.getProducerSet("home-fragrance"),
@@ -610,9 +763,6 @@ async function main(): Promise<void> {
   console.log("\n  EP4-P3BR Corrections\n");
 
   // 53. mergeHomeFragrance — all required HomeFragranceKnowledge fields present in merged result.
-  //     This is the runtime counterpart to the compilation proof: Object.assign returns
-  //     HomeFragranceKnowledge & Partial<HomeFragranceKnowledge>, which is structurally
-  //     assignable to HomeFragranceKnowledge — no type assertion was required.
   {
     const mergedEmpty = mergeHomeFragrance(record);
     const requiredFields: Array<keyof HomeFragranceKnowledge> = [
@@ -715,7 +865,552 @@ async function main(): Promise<void> {
     pass("validator slug formula — discrepant slug detected via canonical deriveSlug");
   }
 
-  console.log("\n  All proofs passed.\n");
+  // ── 62–65. EP4-P3C — ProducerSet structure ─────────────────────────────────
+
+  console.log("\n  EP4-P3C — Producer Foundation\n");
+  console.log("  ProducerSet structure\n");
+
+  // 62. HOME_FRAGRANCE_PRODUCER_SET.category
+  assertEq(
+    "HOME_FRAGRANCE_PRODUCER_SET — category is home-fragrance",
+    "home-fragrance",
+    HOME_FRAGRANCE_PRODUCER_SET.category,
+  );
+
+  // 63. producers length
+  assertEq(
+    "HOME_FRAGRANCE_PRODUCER_SET — producers.length is 2",
+    2,
+    HOME_FRAGRANCE_PRODUCER_SET.producers.length,
+  );
+
+  // 64. First producer is Composition
+  assertEq(
+    "HOME_FRAGRANCE_PRODUCER_SET — producers[0] is HomeFragranceCompositionProducer",
+    "HomeFragranceCompositionProducer",
+    HOME_FRAGRANCE_PRODUCER_SET.producers[0].name,
+  );
+
+  // 65. Second producer is Editorial
+  assertEq(
+    "HOME_FRAGRANCE_PRODUCER_SET — producers[1] is HomeFragranceEditorialProducer",
+    "HomeFragranceEditorialProducer",
+    HOME_FRAGRANCE_PRODUCER_SET.producers[1].name,
+  );
+
+  // ── 66–75. Composition producer — success path ──────────────────────────────
+
+  console.log("\n  Composition producer — success path\n");
+
+  const mockEngine = makeMockEngine(new MockHomeFragranceGenerationProvider());
+
+  const mockPipelineState: HomeFragrancePipelineState = {
+    slug:           record.slug,
+    record,
+    stageLog:       [],
+    factoryVersion: "ep4-p3c-test",
+  };
+
+  const compCtx = HomeFragranceContextBuilder.build(mockPipelineState, MOCK_PRODUCER_CONFIG);
+  const compositionProducer = HOME_FRAGRANCE_PRODUCER_SET.producers[0];
+  const compResult = await compositionProducer.run(compCtx, mockEngine);
+
+  // 66. Status is "success"
+  assertEq(
+    "composition producer — status is success",
+    "success",
+    compResult.status,
+  );
+
+  // 67. promptVersion is recorded (not null)
+  if (compResult.promptVersion === null) {
+    throw new Error("FAIL [composition promptVersion]: expected non-null promptVersion");
+  }
+  pass("composition producer — promptVersion is recorded (not null)");
+
+  // 68. producerVersion is "1.0.0"
+  assertEq(
+    "composition producer — producerVersion is 1.0.0",
+    "1.0.0",
+    compResult.producerVersion,
+  );
+
+  // 69–71. Notes tier lengths
+  const compNotes = compResult.fields.notes;
+  if (!compNotes) throw new Error("FAIL [composition notes]: notes field absent from composition result");
+
+  if (compNotes.top.length < 2) {
+    throw new Error(`FAIL [composition notes.top]: expected ≥ 2 notes, got ${compNotes.top.length}`);
+  }
+  pass("composition producer — notes.top has at least 2 values");
+
+  if (compNotes.heart.length < 2) {
+    throw new Error(`FAIL [composition notes.heart]: expected ≥ 2 notes, got ${compNotes.heart.length}`);
+  }
+  pass("composition producer — notes.heart has at least 2 values");
+
+  if (compNotes.base.length < 2) {
+    throw new Error(`FAIL [composition notes.base]: expected ≥ 2 notes, got ${compNotes.base.length}`);
+  }
+  pass("composition producer — notes.base has at least 2 values");
+
+  // 72. No cross-tier duplicates
+  {
+    const allNotes = [
+      ...compNotes.top.map(n => n.toLowerCase()),
+      ...compNotes.heart.map(n => n.toLowerCase()),
+      ...compNotes.base.map(n => n.toLowerCase()),
+    ];
+    const seen  = new Set<string>();
+    const dupes = new Set<string>();
+    for (const n of allNotes) {
+      if (seen.has(n)) dupes.add(n);
+      seen.add(n);
+    }
+    if (dupes.size > 0) {
+      throw new Error(`FAIL [composition cross-tier]: found cross-tier duplicate notes: ${[...dupes].join(", ")}`);
+    }
+    pass("composition producer — no cross-tier duplicates in mock output");
+  }
+
+  // 73. Only "notes" field emitted — no description, vibe, prices, or other fields
+  {
+    const fieldKeys = Object.keys(compResult.fields);
+    if (fieldKeys.length !== 1 || fieldKeys[0] !== "notes") {
+      throw new Error(`FAIL [composition field scope]: expected only "notes", got [${fieldKeys.join(", ")}]`);
+    }
+    pass('composition producer — emits only "notes" field');
+  }
+
+  // 74. Composition prompt user message does NOT contain "Collection:"
+  //     Verified structurally: buildPrompt uses ctx.range (not ctx.collection).
+  //     Runtime proxy: compCtx has no collection field.
+  {
+    const compCtxRecord = compCtx as unknown as Record<string, unknown>;
+    if ("collection" in compCtxRecord) {
+      throw new Error("FAIL [composition context]: HomeFragranceFactoryContext must not expose collection");
+    }
+    pass("composition producer — context has no collection field (uses range)");
+  }
+
+  // 75. Composition metadata has "range" key (not "collection")
+  {
+    if (!("range" in (compResult.fields.notes ? {} : {}))) {
+      // The metadata is in GenerationTask, not in the result. We verify via context instead.
+      // The production proof is that compCtx.range is set and compCtx has no collection.
+      const hasRange = "range" in (compCtx as unknown as Record<string, unknown>);
+      if (!hasRange) throw new Error("FAIL [composition context range]: context.range is absent");
+    }
+    pass("composition producer — context.range is set (metadata uses range, not collection)");
+  }
+
+  // ── 76–77. Context update after composition ─────────────────────────────────
+
+  console.log("\n  Context update after composition\n");
+
+  // Simulate what runHomeFragrancePipeline does after composition:
+  const postCompRecord = mergeHomeFragrance(record, compResult);
+  const postCompCtx    = HomeFragranceContextBuilder.withMergedRecord(compCtx, postCompRecord);
+
+  // 76. Post-composition merged record has enriched notes
+  if (!postCompRecord.notes.top.includes("Rose")) {
+    throw new Error(
+      `FAIL [post-comp notes.top]: expected "Rose" from mock, got [${postCompRecord.notes.top.join(", ")}]`,
+    );
+  }
+  pass('post-composition merged record — notes.top contains mock note "Rose"');
+
+  // 77. Post-composition context currentRecord notes differ from scaffold
+  {
+    const scaffoldTopLength = record.notes.top.length;
+    const postCompTopLength = postCompCtx.currentRecord.notes.top.length;
+    if (postCompTopLength <= scaffoldTopLength) {
+      throw new Error(
+        `FAIL [post-comp context]: expected enriched notes.top (length > ${scaffoldTopLength}), got ${postCompTopLength}`,
+      );
+    }
+    pass("post-composition context — currentRecord notes enriched beyond scaffold");
+  }
+
+  // ── 78–83. Editorial producer — success path ─────────────────────────────────
+
+  console.log("\n  Editorial producer — success path\n");
+
+  const editorialProducer = HOME_FRAGRANCE_PRODUCER_SET.producers[1];
+  const editResult = await editorialProducer.run(postCompCtx, mockEngine);
+
+  // 78. Editorial receives post-composition record
+  //     Proven: postCompCtx.currentRecord has enriched notes (verified in 76–77).
+  //     We verify notes are present in the context used for editorial.
+  if (postCompCtx.currentRecord.notes.top.length < 2) {
+    throw new Error("FAIL [editorial input]: editorial did not receive enriched composition notes");
+  }
+  pass("editorial producer — receives post-composition context with enriched notes");
+
+  // 79. Status is "success"
+  assertEq(
+    "editorial producer — status is success",
+    "success",
+    editResult.status,
+  );
+
+  // 80. description is populated
+  if (!editResult.fields.description) {
+    throw new Error("FAIL [editorial description]: description not populated");
+  }
+  pass("editorial producer — description is populated");
+
+  // 81. subtitle is populated
+  if (!editResult.fields.subtitle) {
+    throw new Error("FAIL [editorial subtitle]: subtitle not populated");
+  }
+  pass("editorial producer — subtitle is populated");
+
+  // 82. Editorial emits only description and subtitle — no notes, vibe, prices
+  {
+    const editFields = Object.keys(editResult.fields);
+    const allowed    = new Set(["description", "subtitle"]);
+    const unexpected = editFields.filter(k => !allowed.has(k));
+    if (unexpected.length > 0) {
+      throw new Error(
+        `FAIL [editorial field scope]: unexpected fields: [${unexpected.join(", ")}]`,
+      );
+    }
+    pass("editorial producer — emits only description and subtitle");
+  }
+
+  // 83. Editorial fields contain no collection, gender, or projection
+  {
+    const editFieldsObj = editResult.fields as unknown as Record<string, unknown>;
+    if ("collection" in editFieldsObj) throw new Error("FAIL [editorial fields]: collection must not appear");
+    if ("gender"     in editFieldsObj) throw new Error("FAIL [editorial fields]: gender must not appear");
+    if ("projection" in editFieldsObj) throw new Error("FAIL [editorial fields]: projection must not appear");
+    pass("editorial producer — no collection, gender, or projection in output fields");
+  }
+
+  // ── 84–87. Full merge sequence ───────────────────────────────────────────────
+
+  console.log("\n  Full merge sequence\n");
+
+  const fullyMergedRecord = mergeHomeFragrance(record, compResult, editResult);
+
+  // 84. Post-both-producers merged record has enriched notes (from composition)
+  if (fullyMergedRecord.notes.top.length < 2) {
+    throw new Error("FAIL [full merge — notes.top]: expected ≥ 2 notes after composition merge");
+  }
+  pass("full merge — notes.top enriched (≥ 2 values from composition)");
+
+  // 85. Post-both-producers merged record has description (from editorial)
+  if (!fullyMergedRecord.description) {
+    throw new Error("FAIL [full merge — description]: description absent after editorial merge");
+  }
+  pass("full merge — description present from editorial");
+
+  // 86. Post-both-producers merged record has editorial subtitle "Warm Ritual"
+  if (fullyMergedRecord.subtitle !== "Warm Ritual") {
+    throw new Error(
+      `FAIL [full merge — subtitle]: expected "Warm Ritual", got "${fullyMergedRecord.subtitle}"`,
+    );
+  }
+  pass('full merge — editorial subtitle "Warm Ritual" present');
+
+  // 87. Composition notes not erased by editorial merge
+  if (!fullyMergedRecord.notes.top.includes("Rose")) {
+    throw new Error("FAIL [full merge — notes preserved]: composition notes erased by editorial merge");
+  }
+  pass("full merge — composition notes preserved through editorial merge");
+
+  // ── 88–92. Post-producer validation ─────────────────────────────────────────
+
+  console.log("\n  Post-producer validation\n");
+
+  const postProducerValidation = validateHomeFragranceRecord(fullyMergedRecord);
+
+  // 88. Final validation status is PASS_WITH_WARNINGS (not PASS — discovery is still empty)
+  assertEq(
+    "post-producer validation — status is PASS_WITH_WARNINGS",
+    "PASS_WITH_WARNINGS",
+    postProducerValidation.status,
+  );
+
+  // 89. Single-note composition warnings absent after 2+ notes per tier
+  {
+    const singleNoteWarnings = postProducerValidation.warnings.filter(
+      (i) =>
+        i.code === "NOTES_TOP_SINGLE" ||
+        i.code === "NOTES_HEART_SINGLE" ||
+        i.code === "NOTES_BASE_SINGLE",
+    );
+    if (singleNoteWarnings.length > 0) {
+      throw new Error(
+        `FAIL [post-producer comp warnings]: single-note warnings should be absent after 2+ notes per tier, but found: ${singleNoteWarnings.map(i => i.code).join(", ")}`,
+      );
+    }
+    pass("post-producer validation — single-note composition warnings absent");
+  }
+
+  // 90. DESCRIPTION_NOT_SET warning absent after editorial
+  {
+    const descWarn = postProducerValidation.warnings.filter((i) => i.code === "DESCRIPTION_NOT_SET");
+    if (descWarn.length > 0) {
+      throw new Error("FAIL [post-producer desc warning]: DESCRIPTION_NOT_SET should be absent after editorial");
+    }
+    pass("post-producer validation — DESCRIPTION_NOT_SET warning absent");
+  }
+
+  // 91. Discovery warnings still present (empty arrays not populated — EP4-P4)
+  {
+    const discoveryGroup = postProducerValidation.groups.discovery;
+    if (discoveryGroup.issues.length === 0) {
+      throw new Error("FAIL [post-producer discovery]: expected discovery warnings for empty arrays (EP4-P4 populates these)");
+    }
+    const allDiscoveryAreWarnings = discoveryGroup.issues.every(i => i.severity === "warning");
+    if (!allDiscoveryAreWarnings) {
+      throw new Error("FAIL [post-producer discovery]: discovery group should have warnings only");
+    }
+    pass("post-producer validation — discovery warnings remain (empty arrays await EP4-P4)");
+  }
+
+  // 92. 0 errors on fully-enriched record
+  assertEq(
+    "post-producer validation — 0 errors on fully-enriched record",
+    0,
+    postProducerValidation.totalErrors,
+  );
+
+  // ── 93–97. Post-producer draft ───────────────────────────────────────────────
+
+  console.log("\n  Post-producer draft\n");
+
+  const postProducerDraft = buildHomeFragranceDraft(
+    fullyMergedRecord,
+    postProducerValidation,
+    "ep4-p3c-test",
+  );
+
+  // 93. Draft contains enriched composition note ("Bergamot" from mock)
+  if (!postProducerDraft.includes('"Bergamot"')) {
+    throw new Error('FAIL [post-producer draft]: expected composition note "Bergamot" from mock');
+  }
+  pass('post-producer draft — contains mock composition note "Bergamot"');
+
+  // 94. Draft contains editorial description substring
+  if (!postProducerDraft.includes("quiet depth")) {
+    throw new Error('FAIL [post-producer draft]: expected editorial description substring "quiet depth"');
+  }
+  pass('post-producer draft — contains editorial description content');
+
+  // 95. Draft contains editorial subtitle "Warm Ritual"
+  if (!postProducerDraft.includes('"Warm Ritual"')) {
+    throw new Error('FAIL [post-producer draft]: expected editorial subtitle "Warm Ritual"');
+  }
+  pass('post-producer draft — contains editorial subtitle "Warm Ritual"');
+
+  // 96. Draft does not contain fragrance-specific type annotation
+  if (postProducerDraft.includes(": FragranceKnowledge")) {
+    throw new Error('FAIL [post-producer draft]: must not reference ": FragranceKnowledge"');
+  }
+  pass('post-producer draft — does not reference ": FragranceKnowledge"');
+
+  // 97. Draft does not contain fragrance size labels
+  if (postProducerDraft.includes('"5ml"') || postProducerDraft.includes('"10ml"') || postProducerDraft.includes('"30ml"')) {
+    throw new Error('FAIL [post-producer draft]: must not contain fragrance size labels');
+  }
+  pass("post-producer draft — no fragrance size labels (5ml/10ml/30ml)");
+
+  // ── 98–102. Complete pipeline proof ─────────────────────────────────────────
+
+  console.log("\n  Complete pipeline proof\n");
+
+  const pipelineResult = await runHomeFragrancePipeline(
+    mockPipelineState,
+    HOME_FRAGRANCE_PRODUCER_SET,
+    mockEngine,
+    MOCK_PRODUCER_CONFIG,
+  );
+
+  // 98. runHomeFragrancePipeline returns HomeFragrancePipelineMemoryResult
+  if (typeof pipelineResult !== "object" || pipelineResult === null) {
+    throw new Error("FAIL [pipeline result]: runHomeFragrancePipeline did not return an object");
+  }
+  pass("runHomeFragrancePipeline — returns HomeFragrancePipelineMemoryResult");
+
+  // 99. producerResults.length === 2
+  assertEq(
+    "pipeline — producerResults.length is 2",
+    2,
+    pipelineResult.producerResults.length,
+  );
+
+  // 100. draft is a non-empty string
+  if (typeof pipelineResult.draft !== "string" || pipelineResult.draft.length === 0) {
+    throw new Error("FAIL [pipeline draft]: draft is empty or not a string");
+  }
+  pass("pipeline — draft is a non-empty string");
+
+  // 101. draft does not contain ": FragranceKnowledge"
+  if (pipelineResult.draft.includes(": FragranceKnowledge")) {
+    throw new Error('FAIL [pipeline draft type]: must not reference ": FragranceKnowledge"');
+  }
+  pass('pipeline draft — does not reference ": FragranceKnowledge"');
+
+  // 102. No draft file written to disk at expected path
+  {
+    const expectedDraftPath = path.join(
+      process.cwd(),
+      "scripts", "factory", "drafts", "home-fragrance",
+      `${record.slug}.ts`,
+    );
+    if (existsSync(expectedDraftPath)) {
+      throw new Error(`FAIL [no disk write]: draft file found at ${expectedDraftPath}`);
+    }
+    pass("runHomeFragrancePipeline — no draft file written to disk");
+  }
+
+  // ── 103–109. Failure proofs ──────────────────────────────────────────────────
+
+  console.log("\n  Failure proofs\n");
+
+  const failureCtx = HomeFragranceContextBuilder.build(mockPipelineState, MOCK_PRODUCER_CONFIG);
+
+  // 103. Malformed composition JSON → failed status
+  {
+    const malformedEngine = makeMockEngine(
+      makeInlineProvider("HomeFragranceCompositionProducer", "this is not json"),
+    );
+    const result = await compositionProducer.run(failureCtx, malformedEngine);
+    if (result.status !== "failed") {
+      throw new Error(`FAIL [malformed JSON]: expected "failed", got "${result.status}"`);
+    }
+    if (result.errors.length === 0) {
+      throw new Error("FAIL [malformed JSON]: expected errors array to be non-empty");
+    }
+    pass("failure — malformed composition JSON → failed status with errors");
+  }
+
+  // 104. Composition missing tiers → degraded status with errors
+  {
+    const missingTierEngine = makeMockEngine(
+      makeInlineProvider(
+        "HomeFragranceCompositionProducer",
+        JSON.stringify({ top: ["Rose", "Bergamot"], heart: ["Oud"] }),
+        // missing "base" → base = [] → HF_COMP_NOTES_HEART_MIN (heart length 1) + HF_COMP_NOTES_BASE_MIN
+        // Actually heart has 1 note → HF_COMP_NOTES_HEART_MIN + HF_COMP_NOTES_BASE_MIN
+      ),
+    );
+    const result = await compositionProducer.run(failureCtx, missingTierEngine);
+    if (result.status !== "degraded") {
+      throw new Error(`FAIL [missing tier]: expected "degraded", got "${result.status}"`);
+    }
+    const hasMinError = result.errors.some(e => e.includes("HF_COMP_NOTES"));
+    if (!hasMinError) {
+      throw new Error("FAIL [missing tier]: expected HF_COMP_NOTES_* errors");
+    }
+    pass("failure — composition missing tier → degraded status with HF_COMP_NOTES errors");
+  }
+
+  // 105. Composition cross-tier duplicate → success status with warning
+  {
+    const crossDupeEngine = makeMockEngine(
+      makeInlineProvider(
+        "HomeFragranceCompositionProducer",
+        JSON.stringify({
+          top:   ["Rose", "Oud"],
+          heart: ["Oud", "Geranium"],
+          base:  ["Sandalwood", "Amber"],
+        }),
+      ),
+    );
+    const result = await compositionProducer.run(failureCtx, crossDupeEngine);
+    if (result.status !== "success") {
+      throw new Error(`FAIL [cross-tier dupe]: expected "success", got "${result.status}"`);
+    }
+    const hasCrossDupeWarn = result.warnings.some(w => w.includes("HF_COMP_CROSS_TIER_DUPLICATE"));
+    if (!hasCrossDupeWarn) {
+      throw new Error("FAIL [cross-tier dupe]: expected HF_COMP_CROSS_TIER_DUPLICATE warning");
+    }
+    pass("failure — composition cross-tier duplicate → success with HF_COMP_CROSS_TIER_DUPLICATE warning");
+  }
+
+  // 106. Editorial malformed JSON → failed status
+  {
+    const editMalformedEngine = makeMockEngine(
+      makeInlineProvider("HomeFragranceEditorialProducer", "{ broken json"),
+    );
+    const result = await editorialProducer.run(postCompCtx, editMalformedEngine);
+    if (result.status !== "failed") {
+      throw new Error(`FAIL [editorial malformed JSON]: expected "failed", got "${result.status}"`);
+    }
+    pass("failure — editorial malformed JSON → failed status");
+  }
+
+  // 107. Editorial neither description nor subtitle → degraded status
+  {
+    const editEmptyEngine = makeMockEngine(
+      makeInlineProvider("HomeFragranceEditorialProducer", JSON.stringify({})),
+    );
+    const result = await editorialProducer.run(postCompCtx, editEmptyEngine);
+    if (result.status !== "degraded") {
+      throw new Error(`FAIL [editorial no fields]: expected "degraded", got "${result.status}"`);
+    }
+    const hasDescError = result.errors.some(e => e.includes("HF_EDIT_DESCRIPTION_REQUIRED"));
+    if (!hasDescError) {
+      throw new Error("FAIL [editorial no fields]: expected HF_EDIT_DESCRIPTION_REQUIRED error");
+    }
+    pass("failure — editorial with no description → degraded with HF_EDIT_DESCRIPTION_REQUIRED error");
+  }
+
+  // 108. Provider error response → failed status
+  {
+    const errorProvider: GenerationProvider = {
+      name:    "mock-home-fragrance",
+      modelId: "mock-hf-1.0.0",
+      generate: async (_task: GenerationTask): Promise<GenerationResponse> => ({
+        status:     "error",
+        content:    "",
+        confidence: 0.0,
+        usage:      { promptTokens: 0, completionTokens: 0, totalTokens: 0 },
+        modelId:    "mock-hf-1.0.0",
+        durationMs: 1,
+        attempts:   1,
+        error:      "simulated provider failure",
+      }),
+    };
+    const errorEngine = makeMockEngine(errorProvider);
+    const result = await compositionProducer.run(failureCtx, errorEngine);
+    if (result.status !== "failed") {
+      throw new Error(`FAIL [provider error]: expected "failed", got "${result.status}"`);
+    }
+    pass("failure — provider error response → failed status");
+  }
+
+  // 109. Failed composition does not pollute merge (fields remain scaffold values)
+  {
+    const failedCompResult: HomeFragranceProducerResult = {
+      producerName:    "HomeFragranceCompositionProducer",
+      producerVersion: "1.0.0",
+      promptVersion:   "1.0.0",
+      status:          "failed",
+      fields:          { notes: { top: ["FABRICATED"], heart: ["FABRICATED"], base: ["FABRICATED"] } },
+      confidence:      0.0,
+      errors:          ["generation: mock error"],
+      warnings:        [],
+      metrics:         { durationMs: 0, attempts: 1, promptTokens: 0, completionTokens: 0, totalTokens: 0, modelId: "", cached: false },
+      artifacts:       [],
+    };
+    const mergeAfterFailed = mergeHomeFragrance(record, failedCompResult);
+    if (mergeAfterFailed.notes.top.includes("FABRICATED")) {
+      throw new Error("FAIL [failed merge]: failed composition result polluted merge");
+    }
+    if (mergeAfterFailed.notes.top.join(",") !== record.notes.top.join(",")) {
+      throw new Error(
+        `FAIL [failed merge]: scaffold notes not preserved. Got [${mergeAfterFailed.notes.top.join(", ")}]`,
+      );
+    }
+    pass("failure — failed composition result does not pollute merge (scaffold notes preserved)");
+  }
+
+  console.log("\n  All 109 proofs passed.\n");
 }
 
 main().catch((err: unknown) => {

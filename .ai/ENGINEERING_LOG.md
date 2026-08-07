@@ -39,6 +39,55 @@ Never edit or delete past entries.
 
 ## Log
 
+### 2026-08-07 — EP4-P3C — Knowledge Platform Evolution / Home Fragrance Producer Foundation
+
+**Participants:** Project Owner / Claude (Implementation Engineer)
+**Program:** EP4-P3C — Home Fragrance Producer Foundation
+
+**Decisions Made:**
+- `HomeFragranceBaseProducer` is a parallel abstract class — does NOT extend `BaseProducer`. `BaseProducer` is typed around `FragranceFactoryContext`, `Partial<Knowledge>`, and `ProducerResult`; extending it would require unsafe casts or structural violations. The parallel class hierarchy is the correct architecture for a type-safe multi-category factory.
+- `HomeFragranceProducerSet` is a separate type (`{ category: "home-fragrance"; producers: readonly HomeFragranceBaseProducer[] }`). It is never registered in `ProducerRegistry` (which requires `BaseProducer[]`) — proof 23 (defaultRegistry rejects "home-fragrance") is preserved.
+- `HOME_FRAGRANCE_PRODUCER_SET` is exported from `homeFragrancePipeline.ts` only. The orchestrator's home fragrance branch remains early-returning — normal `mkc:factory` CLI cannot accidentally trigger a paid Home Fragrance AI call.
+- `runHomeFragrancePipeline()` accepts injected `producerSet`, `engine`, and `config` — no hardwired provider. This is the canonical pattern for all future EP4 pipeline tests.
+- `MOCK_PRODUCER_CONFIG` uses `maxSessionTokens: 10_000` and `dryRun: false`. `MINIMAL_CONFIG.maxSessionTokens: 0` would cause `GenerationEngine` to report context_exceeded immediately (`0 >= 0` is true). The two configs serve distinct purposes: MINIMAL_CONFIG for context tests (no generation), MOCK_PRODUCER_CONFIG for producer tests (deterministic generation).
+- Producer order: Composition → Editorial (intentional). Editorial must receive the enriched composition notes before generating descriptive copy.
+
+**Tasks Completed:**
+- `scripts/factory/core/HomeFragranceBaseProducer.ts` — Parallel abstract class with full 7-step lifecycle (preCheck → buildPrompt → generate → parse → validate → measure → assemble). Exports `HomeFragranceProducerSet` type.
+- `scripts/factory/producers/HomeFragranceCompositionProducer.ts` — Generates notes pyramid using home fragrance ambient semantics. No skin/wearer/drydown/personal language. Emits only `notes` field.
+- `scripts/factory/producers/HomeFragranceEditorialProducer.ts` — Generates description and subtitle using space/room/atmosphere semantics. Emits only `description` and `subtitle` fields.
+- `scripts/factory/prompts/home-fragrance/composition/v1.0.0.md` — Versioned composition prompt. Defines ambient diffusion tiers (opening impression / sustained character / lingering character). Bans personal-fragrance language explicitly.
+- `scripts/factory/prompts/home-fragrance/editorial/v1.0.0.md` — Versioned editorial prompt. References space/room/atmosphere. Same forbidden-terms policy as fragrance editorial. Output: `{"description":"...","subtitle":"..."}`.
+- `scripts/factory/testing/MockHomeFragranceGenerationProvider.ts` — Deterministic provider. Routes by `task.producerName`. Returns fixed composition JSON (Rose/Bergamot/Oud/Geranium/Sandalwood/Amber) and editorial JSON (subtitle "Warm Ritual", 3-sentence description). No API key. No network.
+- `scripts/factory/homeFragrancePipeline.ts` — Exports `HOME_FRAGRANCE_PRODUCER_SET` and `runHomeFragrancePipeline()`. Pipeline iterates producers, merges after each passing result, validates final record, renders draft string. Writes nothing to disk.
+- `scripts/factory/validate-home-fragrance.ts` — Extended from 61 to 109 proofs covering: ProducerSet structure, Composition success path, context update after composition, Editorial success path, full merge sequence, post-producer validation, post-producer draft, complete pipeline proof via `runHomeFragrancePipeline`, and 7 failure proofs (malformed JSON, missing tiers, cross-tier duplicate, editorial empty, provider error, failed producer merge isolation).
+
+**Tasks Started:**
+- None (EP4-P3D — Orchestrator wiring — is the next episode)
+
+**Build Result:** Pass — 187 routes, 0 TypeScript errors, 0 warnings
+
+**Files Changed:**
+- `scripts/factory/core/HomeFragranceBaseProducer.ts` — Created
+- `scripts/factory/producers/HomeFragranceCompositionProducer.ts` — Created
+- `scripts/factory/producers/HomeFragranceEditorialProducer.ts` — Created
+- `scripts/factory/prompts/home-fragrance/composition/v1.0.0.md` — Created
+- `scripts/factory/prompts/home-fragrance/editorial/v1.0.0.md` — Created
+- `scripts/factory/testing/MockHomeFragranceGenerationProvider.ts` — Created
+- `scripts/factory/homeFragrancePipeline.ts` — Created
+- `scripts/factory/validate-home-fragrance.ts` — Extended (61 → 109 proofs)
+- `PROJECT_STATUS.md` — EP4-P3C entry added
+- `.ai/CURRENT_TASK.md` — Updated
+- `.ai/ENGINEERING_LOG.md` — This entry
+
+**Handoff:**
+- EP4-P3D: Wire `runHomeFragrancePipeline` into the orchestrator CLI so `mkc:factory -- <home-fragrance-slug>` executes the real pipeline with the Claude provider.
+
+**Open Questions Carried Forward:**
+- None
+
+---
+
 ### 2026-08-07 — EP4-P3BR — Knowledge Platform Evolution / Correct Home Fragrance Quality Boundary
 
 **Participants:** Project Owner / Claude (Implementation Engineer)
