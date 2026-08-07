@@ -88,6 +88,100 @@ Never edit or delete past entries.
 
 ---
 
+### 2026-08-07 — EP5-P1 — Maison Identity Platform Foundation
+
+**Participants:** Project Owner / Claude (Implementation Engineer)
+**Program:** EP5-P1 — Establish Maison Identity Platform Foundation
+
+**Institutional Principle Established:** IDENTITY PRECEDES KNOWLEDGE.
+The institution must know what something is before attempting to explain it.
+Supplier terminology, canonical identity, Maison editorial identity, aliases, evidence,
+and confidence are related but distinct forms of identity information.
+
+**Decisions Made:**
+- `app/lib/identity/` established as the application-shared Identity Platform library.
+  Future consumers include Knowledge Factory, Search, Concierge, Recommendations, Admin.
+  Not under `scripts/` — this is platform-level, not factory-only.
+- `IDENTITY_PLATFORM_VERSION = "0.1.0"` — separate from `FACTORY_VERSION = "0.5.0"`.
+  The Identity Platform has its own schema lifecycle.
+- Identity ID format: `MIP-NNNNNN` — opaque, stable, validated by regex `^MIP-\d{6}$`.
+  Not derived from canonical name. Stable when names, brands, aliases change.
+- `CanonicalIdentity` holds `category: ProductCategory` as the single authoritative location.
+  `IdentityRecord` does NOT duplicate category.
+- `supplierCategory` preserved verbatim (e.g., "L", "M", "UNISEX") — NOT automatically
+  mapped to canonical gender or product category. That belongs to future resolution logic.
+- Six-state `IdentityStatus` covers both lifecycle and verification:
+  candidate → pending-review → verified / disputed / deprecated / rejected.
+  No separate `VerificationStatus` needed — status cleanly encodes the verification lifecycle.
+- Confidence and status are INDEPENDENT. confidence=95 + status="disputed" is valid.
+- Alias collision protection: throws `IdentityAliasCollisionError` at registration time.
+  Never silently resolved to the first match.
+- Canonical duplicate invariant: `normalize(brand)::normalize(name)::category`.
+  Only enforced when `canonicalBrand` is present. Incomplete candidates are not
+  treated as duplicates until brand is confirmed.
+- Persistence: loader-only in EP5-P1. `identity-registry.json` is empty and valid.
+  No write/save function — mutation workflow deferred.
+- History is append-oriented: `appendHistory()` only. No method rewrites existing entries.
+
+**Tasks Completed:**
+- `app/lib/identity/version.ts` — `IDENTITY_PLATFORM_VERSION = "0.1.0"`
+- `app/lib/identity/types.ts` — `IdentityId`, `IdentityStatus`, `SupplierIdentity`,
+  `CanonicalIdentity`, `MarketedGender`, `AliasType`, `IdentityAlias`,
+  `EvidenceSourceType`, `IdentityEvidence`, `IdentityConfidence`,
+  `IdentityHistoryEventType`, `IdentityHistoryEntry`, `IdentityRecord`,
+  `IdentityAliasCollisionError`, `IdentityDuplicateIdError`, `IdentityDuplicateCanonicalError`
+- `app/lib/identity/normalizer.ts` — `normalizeIdentityString()`, `buildCanonicalKey()`
+- `app/lib/identity/validator.ts` — `validateIdentityRecord()` (lifecycle-aware)
+- `app/lib/identity/IdentityRegistry.ts` — full read + bounded mutation APIs
+- `app/lib/identity/persistence.ts` — `IdentityRegistryData` type + `loadIdentityRegistry()`
+- `app/lib/identity/data/identity-registry.json` — empty `{ "version": "0.1.0", "identities": [] }`
+- `scripts/identity/validate-identity-foundation.ts` — 69 deterministic proofs, 9 sections
+- `package.json` — `mip:validate` script added
+
+**Tasks Not Started:**
+- EP5-P2 — Identity Resolver (AI-powered canonical identity proposals from supplier names)
+- MKC integration (identityId references on FragranceKnowledge records)
+- Admin Identity Center (EP5-P3)
+- Supplier data import (26 researched new arrivals)
+
+**Proof Results:** 69/69 proofs pass across 9 sections:
+  Section 1: Platform Version (1 proof)
+  Section 2: Identity ID Contract (9 proofs)
+  Section 3: Normalizer (9 proofs)
+  Section 4: Lifecycle-Aware Validator (18 proofs)
+  Section 5: Identity Registry (16 proofs)
+  Section 6: Registry Mutations (6 proofs)
+  Section 7: Domain Separation (4 proofs)
+  Section 8: Persistence Foundation (2 proofs)
+  Section 9: Platform Isolation (4 proofs)
+
+**Build Result:** Pass — 187 routes, 0 TypeScript errors, 0 warnings
+
+**Files Changed:**
+- `app/lib/identity/version.ts` — Created
+- `app/lib/identity/types.ts` — Created
+- `app/lib/identity/normalizer.ts` — Created
+- `app/lib/identity/validator.ts` — Created
+- `app/lib/identity/IdentityRegistry.ts` — Created
+- `app/lib/identity/persistence.ts` — Created
+- `app/lib/identity/data/identity-registry.json` — Created
+- `scripts/identity/validate-identity-foundation.ts` — Created
+- `package.json` — `mip:validate` script added
+- `PROJECT_STATUS.md` — EP5-P1 entry added
+- `.ai/CURRENT_TASK.md` — Updated
+- `.ai/ENGINEERING_LOG.md` — This entry
+
+**Handoff:**
+- No human action required immediately. EP5-P2 specification to follow.
+- EP4-P3D gate remains open: `APPROVED_INTAKE = null` in
+  `scripts/factory/run-home-fragrance-controlled.ts`. Awaiting founder product spec.
+
+**Open Questions Carried Forward:**
+- What is the EP5-P2 Identity Resolver scope? (AI-powered canonical resolution from supplier names)
+- When will the 26 researched new arrivals be ingested as identity candidates?
+
+---
+
 ### 2026-08-07 — EP4-P3D — Knowledge Platform Evolution / Controlled Home Fragrance Generation
 
 **Participants:** Project Owner / Claude (Implementation Engineer)

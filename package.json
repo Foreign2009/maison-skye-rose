@@ -25,7 +25,8 @@
     "mkc:lifecycle": "npx tsx scripts/factory/lifecycle/index.ts",
     "mkc:lifecycle:json": "npx tsx scripts/factory/lifecycle/index.ts --json",
     "mkc:validate:home-fragrance": "npx tsx scripts/factory/validate-home-fragrance.ts",
-    "mkc:home-fragrance:controlled": "npx tsx scripts/factory/run-home-fragrance-controlled.ts"
+    "mkc:home-fragrance:controlled": "npx tsx scripts/factory/run-home-fragrance-controlled.ts",
+    "mip:validate": "npx tsx scripts/identity/validate-identity-foundation.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.110.0",
