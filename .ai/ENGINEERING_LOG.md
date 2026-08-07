@@ -2775,3 +2775,74 @@ After EP20-P4: `computeLearnedPreferences()` runs the LearningEngine on `profile
 **LearningEngine status post-EP20-P4:** All 7 active interpreters (Quiz, Concierge, Favorite, Cart, Search, View, Discovery) now contribute to recommendation scoring. Signals from all sources reach the profile dimension scorer for the first time.
 
 **Handoff:** EP20-P4 closed. Recommendation Bridge is live. The complete EP20 intelligence stack is now active: signals emitted → LearningEngine interprets with compositing confidence → CustomerPreferenceSummary for admin/profile dashboards AND recommendation scoring. Awaiting Engineering Lead direction for next sprint.
+
+---
+
+### 2026-08-07 — EP5-P2B — Maison Identity Platform / Deterministic Identity Resolver
+
+**Participants:** Project Owner / Claude (Implementation Engineer)
+**Program:** EP5-P2B — Establish Deterministic Identity Resolver
+
+**Architectural Principle:** The Resolver reads, scores, and explains. It does NOT create, modify, persist, call AI, change MKC, or change factory state. IDENTITY PRECEDES KNOWLEDGE — the Resolver is the bridge between supplier names and institutional identity.
+
+**Decisions Made:**
+- Four architectural corrections from EP5-P2A audit applied before implementation:
+  1. TRUE PURITY: No `resolvedAt` or any live timestamp in `ResolutionResult`. Deterministic contract: identical input + identical registry state = identical output. `new Date()`, `Date.now()`, `Math.random()` not present anywhere in the resolver.
+  2. IDENTITY STATUS ELIGIBILITY: Only `"verified"` identities may produce `status: "resolved"`. `candidate`, `pending-review`, `disputed`, `deprecated` all produce `status: "candidate"` with full explanation. `"rejected"` is excluded from the eligible pool entirely — no alias, no canonical, no token match against it.
+  3. SAFE SUFFIX STRIPPING: Only `" Inspired"` and `" Inspired By"` stripped. Extrait, Le Parfum, Parfum, EDP, EDT, Elixir, Intense, Blush, Profondo, and all other flanker/concentration markers NEVER stripped. Stripping a flanker qualifier collapses distinct identities — a data integrity failure.
+  4. CATEGORY HARD BOUNDARY: `category: ProductCategory` required on `ResolutionInput`. Stage 0 filters the entire eligible universe to same-category records. Cross-category alias hits fall through silently (not surfaced as candidates). Cross-category canonical hits are structurally impossible (wrong pool).
+- `IdentityProjection` (safe read-only snapshot) returned in `CandidateMatch` — never the full `IdentityRecord`. Resolver does not expose mutable registry internals.
+- Resolver match score (0–100) is entirely distinct from `IdentityConfidence.score` (evidential certainty). They measure different things. The resolver score measures how well the supplier name matches the canonical identity name.
+- Digit conflict = hard block on auto-resolution (not a −30 penalty that might survive threshold). If digit token sets differ, `hasDigitConflict = true` → `canAutoResolve = false` regardless of score.
+- `hasMeaningfulMismatch` (any token present on one side but not the other) blocks auto-resolution — protects against flanker conflation: "Libre" ≠ "Libre Intense" even with Jaccard = 0.5.
+- `isShortQuery` (≤1 meaningful token after stop-word removal) blocks Stage 4 auto-resolution. Short names are legitimately ambiguous; the resolver must not guess.
+- Ambiguity margin: if top and runner-up are within 15 points of each other in Stage 4, result is `"ambiguous"` rather than returning the top candidate as a winner.
+- Stable sort: score desc, then identityId asc. Deterministic tie-breaking independent of registry insertion order.
+- Conservative stop words: linguistic connectors + "inspired" only. Flanker qualifiers (elixir, intense, extrait, parfum, etc.) are never stop words.
+
+**Tasks Completed:**
+- `app/lib/identity/resolver/types.ts` — All type contracts
+- `app/lib/identity/resolver/tokenizer.ts` — Conservative STOP_WORDS + `tokenize()`
+- `app/lib/identity/resolver/suffixStripper.ts` — `strip()` for " Inspired" / " Inspired By" only
+- `app/lib/identity/resolver/tokenScorer.ts` — `scoreTokens()` three-component scorer; `buildTokenSet()`
+- `app/lib/identity/resolver/DeterministicIdentityResolver.ts` — Full 5-stage pipeline
+- `app/lib/identity/resolver/index.ts` — Barrel export
+- `scripts/identity/validate-identity-resolver.ts` — 85 deterministic proofs, 9 sections
+- `package.json` — `mip:validate:resolver` script added
+
+**Proof Results:** 85/85 proofs pass across 9 sections:
+  Section 1: Resolver Contract — purity, non-mutation, empty registry, result shape (12 proofs)
+  Section 2: Stage 1 Exact Alias — verified + all non-verified lifecycle statuses (10 proofs)
+  Section 3: Stage 2 Canonical Name — exact match, case/whitespace normalization, ambiguity, brand disambiguation (10 proofs)
+  Section 4: Stage 3 Suffix Strip — attribution strip only, flanker markers preserved (10 proofs)
+  Section 5: Stage 4 Token Scoring — signals, stop words, short-name protection, Jaccard, score cap (8 proofs)
+  Section 6: Flanker Invariants — Sauvage/Elixir, Libre/Intense/Le Parfum, BR540/Extrait, Good Girl/Blush (8 proofs)
+  Section 7: Digit Protection — match, mismatch, score penalty, hard block (7 proofs)
+  Section 8: Category and Status Invariants — cross-category, rejected, deprecated, disputed, supplierCategory (8 proofs)
+  Section 9: Edge Cases — empty input, stop-word-only, long input, accent mismatch, apostrophe mismatch, brand abbreviation, stable sort, suffix stripper guards (12 proofs)
+
+**EP5-P1 Regression:** 69/69 proofs pass (no regression)
+
+**Build Result:** Pass — 187 routes, 0 TypeScript errors, 0 warnings
+
+**Files Changed:**
+- `app/lib/identity/resolver/types.ts` — Created
+- `app/lib/identity/resolver/tokenizer.ts` — Created
+- `app/lib/identity/resolver/suffixStripper.ts` — Created
+- `app/lib/identity/resolver/tokenScorer.ts` — Created
+- `app/lib/identity/resolver/DeterministicIdentityResolver.ts` — Created
+- `app/lib/identity/resolver/index.ts` — Created
+- `scripts/identity/validate-identity-resolver.ts` — Created (85 proofs)
+- `package.json` — `mip:validate:resolver` script added
+- `PROJECT_STATUS.md` — EP5-P2A and EP5-P2B rows added
+- `.ai/CURRENT_TASK.md` — Updated (EP5-P2B complete, awaiting EP5-P2C)
+- `.ai/ENGINEERING_LOG.md` — This entry
+
+**Handoff:**
+- EP5-P2B complete. Resolver is proven, deterministic, and ready to consume real supplier data.
+- EP5-P2C: Wire resolver against the 26 researched 2026 new arrivals to produce editorial resolution candidates for human review. Requires separate specification and approval.
+- EP4-P3D gate remains open: `APPROVED_INTAKE = null` in `scripts/factory/run-home-fragrance-controlled.ts`. Awaiting founder product spec.
+
+**Open Questions Carried Forward:**
+- What is the EP5-P2C scope? (Supplier intake pipeline — routing the 26 new arrivals through the resolver)
+- When will the 26 researched new arrivals be ingested as identity candidates?
