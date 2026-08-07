@@ -8,10 +8,10 @@
 
 ## Current Engineering Program
 
-**Program:** EP4-P3CR — Home Fragrance Producer Safety Hardening (Complete)
+**Program:** EP4-P3D — Prepare Controlled Home Fragrance Generation (Complete)
 **Sprint:** EP4
-**Gate:** Complete
-**Objective:** Four production safety defects resolved before real AI generation: cross-tier duplicate notes promoted from warning to error; max-notes-per-tier boundary enforced; untrusted AI JSON structurally validated at runtime (no `as {...}` assertions); degraded/failed producer output stops the pipeline and is skipped in the merger. HomeFragranceProducerRegistry added. Validate script extended from 109 to 123 proofs.
+**Gate:** STOPPED — awaiting founder-approved product specification
+**Objective:** Create the controlled-generation entry point (`scripts/factory/run-home-fragrance-controlled.ts`). Verify that the infrastructure correctly stops when no founder-approved product specification exists. No AI call made. No product invented. 123 deterministic proofs pass. Build: 187 routes, 0 TypeScript errors, 0 warnings.
 
 ---
 
@@ -88,6 +88,7 @@ Verify: `npm run build`
 | EP4 | EP4-P3BR | Correct Home Fragrance Quality Boundary | Complete — 2026-08-07 |
 | EP4 | EP4-P3C | Home Fragrance Producer Foundation | Complete — 2026-08-07 |
 | EP4 | EP4-P3CR | Home Fragrance Producer Safety Hardening | Complete — 2026-08-07 |
+| EP4 | EP4-P3D  | Prepare Controlled Home Fragrance Generation | Complete — 2026-08-07 |
 
 `FOUNDATIONS/00_FOUNDERS_LETTER.md` — The permanent founder's letter to Skye, Rose, future employees, and future stewards. *Why we began.*
 `FOUNDATIONS/01_SKYE_AND_ROSE_COVENANT.md` — The institutional promise: to customers, products, technology, and future generations. *What we promise.*
@@ -98,6 +99,8 @@ Verify: `npm run build`
 **EP2-P1 Audit Findings (2026-08-05):** Overall institutional alignment score 7.1/10. Intelligence layer (Fragrance Profile, MaisonCompanion, Concierge, Shop, Quiz) rated Aligned. Critical gaps: About page (3/10 — fails Foundation narrative standard), catalogue count inconsistency (93 vs 465+), "Loyal Customer" terminology, post-purchase experience absent, checkout UX cold. Recommended sequence: EP2-P2 (About page rewrite) → EP2-P3 (checkout + post-purchase) → EP2-P4 (testimonials) → EP2-P5 (concierge voice) → EP2-P6 (language pass).
 
 **EP2-P3 About Page Foundation Alignment (2026-08-05):** `app/about/page.tsx` rewritten from 4 generic paragraphs to 9 Foundation-aligned sections: Opening, A Compliment Changed Everything, Why Skye & Rose, What We Believe, Confidence Is What We Are Here to Deliver, Knowledge Before Recommendation, Accessible Luxury, Growing Together, Our Promise, An Invitation. Count inconsistency removed (465+ → timeless language). OG and Twitter metadata added. Architecture preserved. Build passes: 187 routes, 0 TypeScript errors, 0 warnings.
+
+**EP4-P3D Prepare Controlled Home Fragrance Generation (2026-08-07):** Controlled-generation infrastructure established for the first real Home Fragrance AI draft. `scripts/factory/run-home-fragrance-controlled.ts` created — the explicit single-product entry point for EP4-P3D. Safety constraints enforced: exactly one product per invocation; no batch mode; `ANTHROPIC_API_KEY` required; Composition + Editorial only; no promotion; no native write; absolute stop after draft write; human review report printed. `APPROVED_INTAKE` constant is currently `null` — no AI call has been made, no cost incurred. `scripts/factory/drafts/home-fragrance/` directory created as the category-specific draft location. `HomeFragranceDraftBuilder.buildHomeFragranceDraft()` updated with optional `importBase` parameter (backward-compatible default preserves all 123 proofs). `npm run mkc:home-fragrance:controlled` added to package.json. Next gate: founder provides approved `HomeFragranceIntake` to populate `APPROVED_INTAKE`.
 
 **EP4-P3CR Home Fragrance Producer Safety Hardening (2026-08-07):** Four production safety issues resolved before EP4-P3D real AI generation. (1) Cross-tier duplicate notes promoted from warning to error in `HomeFragranceCompositionProducer.validate()` — `HF_COMP_CROSS_TIER_DUPLICATE` now produces `degraded`, not `success`. (2) Max-notes-per-tier boundary enforced: `HF_COMP_NOTES_TOP_MAX`, `HF_COMP_NOTES_HEART_MAX`, `HF_COMP_NOTES_BASE_MAX` errors added. (3) Runtime JSON structural validation added to `parse()` in both Composition and Editorial producers: missing tier, non-array tier, non-string element, or wrong field type all throw, producing `failed` status (not silent `as {...}` coercion). (4) Pipeline stop policy hardened: `degraded` and `failed` results now break the producer chain; only `success` triggers context update and merge. Merger policy updated: both `failed` and `degraded` results are skipped (was `failed` only). `HomeFragranceProducerRegistry` created as a type-safe parallel to `ProducerRegistry`, typed exclusively to `HomeFragranceProducerSet` — never registered in the production `defaultRegistry`. Validate script extended from 109 to 123 proofs. Build: 187 routes, 0 TypeScript errors, 0 warnings.
 

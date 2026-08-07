@@ -247,6 +247,7 @@ export function buildHomeFragranceDraft(
   record:           HomeFragranceKnowledge,
   validationResult: ValidationResult,
   factoryVersion    = "ep4-p3b",
+  importBase        = "../../../app/lib/mkc",
 ): string {
   const slug      = record.slug;
   const constName = deriveConstName(slug);
@@ -256,7 +257,7 @@ export function buildHomeFragranceDraft(
   const sections = [
     renderHeader(slug, factoryVersion, validationResult),
     ``,
-    `import type { HomeFragranceKnowledge } from "../../../app/lib/mkc/homeFragranceTypes";`,
+    `import type { HomeFragranceKnowledge } from "${importBase}/homeFragranceTypes";`,
     ``,
     `export const ${constName}: HomeFragranceKnowledge = {`,
     renderIdentity(record, ann),

@@ -88,6 +88,49 @@ Never edit or delete past entries.
 
 ---
 
+### 2026-08-07 — EP4-P3D — Knowledge Platform Evolution / Controlled Home Fragrance Generation
+
+**Participants:** Project Owner / Claude (Implementation Engineer)
+**Program:** EP4-P3D — First Controlled Home Fragrance AI Draft
+
+**Decisions Made:**
+- CRITICAL STOP CONDITION met: No founder-approved Home Fragrance product specification exists in the repository. The `app/data/` directory has no home fragrance files. The `defaultCatalogueRegistry` returns null for all home-fragrance slugs. No `HomeFragranceIntake` is defined outside of test fixtures. No AI call was made. No cost incurred.
+- Controlled-generation infrastructure created per the "SUCCESS CRITERIA — IF NO PRODUCT EXISTS" clause of EP4-P3D. The infrastructure is ready to accept a future approved product spec without further engineering.
+- `scripts/factory/drafts/home-fragrance/` established as the category-specific draft directory, separate from `scripts/factory/drafts/` (fragrance drafts). TypeScript import path adjusted for the deeper directory level (4 levels to root vs. 3 for fragrance drafts).
+- `HomeFragranceDraftBuilder.buildHomeFragranceDraft()` extended with optional `importBase` parameter (default `"../../../app/lib/mkc"` — preserves all 123 existing proofs unchanged). The controlled runner passes `"../../../../app/lib/mkc"` for the home-fragrance subdirectory.
+- `APPROVED_INTAKE: HomeFragranceIntake | null = null` is the explicit product gate in the controlled runner. The runner stops cleanly and prints the complete required field specification when null.
+
+**Tasks Completed:**
+- `scripts/factory/run-home-fragrance-controlled.ts` — controlled generation entry point. Enforces: single product only, no batch mode, ANTHROPIC_API_KEY required, Composition + Editorial only, no promotion, no native write, absolute stop after draft write, human review report. Contains `APPROVED_INTAKE = null`.
+- `scripts/factory/drafts/home-fragrance/.gitkeep` — category-specific draft directory created.
+- `scripts/factory/HomeFragranceDraftBuilder.ts` — optional `importBase` parameter added (backward-compatible; all 123 proofs preserved).
+- `package.json` — `mkc:home-fragrance:controlled` script added.
+- `npm run mkc:home-fragrance:controlled` executed and confirmed: stops cleanly with no-product report, no AI call, no cost.
+- 123 deterministic proofs confirmed passing before implementation.
+- Build confirmed: 187 routes, 0 TypeScript errors, 0 warnings.
+
+**Tasks Started:**
+- None (EP4-P3D real generation awaits founder product specification).
+
+**Build Result:** Pass — 187 routes, 0 TypeScript errors, 0 warnings
+
+**Files Changed:**
+- `scripts/factory/run-home-fragrance-controlled.ts` — Created (controlled entry point)
+- `scripts/factory/drafts/home-fragrance/.gitkeep` — Created (directory marker)
+- `scripts/factory/HomeFragranceDraftBuilder.ts` — `importBase` parameter added
+- `package.json` — `mkc:home-fragrance:controlled` script added
+- `PROJECT_STATUS.md` — EP4-P3D entry added
+- `.ai/CURRENT_TASK.md` — Updated (STOPPED status)
+- `.ai/ENGINEERING_LOG.md` — This entry
+
+**Handoff:**
+- FOUNDER ACTION REQUIRED: Provide the approved HomeFragranceIntake. Open `scripts/factory/run-home-fragrance-controlled.ts`, set `APPROVED_INTAKE`, re-run `npm run mkc:home-fragrance:controlled`. No engineering work is blocked — the pipeline is fully prepared.
+
+**Open Questions Carried Forward:**
+- What is the first founder-approved Home Fragrance product? (Required before EP4-P3D generation can run)
+
+---
+
 ### 2026-08-07 — EP4-P3CR — Knowledge Platform Evolution / Home Fragrance Producer Safety Hardening
 
 **Participants:** Project Owner / Claude (Implementation Engineer)
