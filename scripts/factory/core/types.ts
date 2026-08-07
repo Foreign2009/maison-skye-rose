@@ -7,11 +7,12 @@
  * Producers import only from here — never from app/ directly.
  */
 
-import type { FragranceKnowledge } from "../../../app/lib/mkc/types";
-import type { DisplayFragrance }   from "../../../app/lib/knowledgeAdapter";
+import type { FragranceKnowledge }      from "../../../app/lib/mkc/types";
+import type { HomeFragranceKnowledge }  from "../../../app/lib/mkc/homeFragranceTypes";
+import type { DisplayFragrance }        from "../../../app/lib/knowledgeAdapter";
 
 // Re-export for producers — keeps app/ imports out of producer files
-export type { FragranceKnowledge, DisplayFragrance };
+export type { FragranceKnowledge, HomeFragranceKnowledge, DisplayFragrance };
 
 // ── Provider + config ─────────────────────────────────────────────────────────
 
@@ -171,4 +172,52 @@ export interface PreCheckResult {
 export interface ProducerValidation {
   errors:   string[];
   warnings: string[];
+}
+
+// ── Home Fragrance context ────────────────────────────────────────────────────
+//
+// HomeFragranceFactoryContext is the parallel to FactoryContext for home
+// fragrance producers. It deliberately omits:
+//   collection   — fragrance-only; home fragrance uses "range"
+//   displayFrag  — DisplayFragrance adapter is personal-fragrance-typed
+//   nativeFragrances — no home fragrance native registry yet (EP4-P5)
+//
+// HomeFragranceFactoryContext and FactoryContext are structurally distinct
+// by design and must not be conflated.
+
+export interface HomeFragranceFactoryContext {
+  readonly runId:          string;
+  readonly factoryVersion: string;
+  readonly startedAt:      Date;
+  readonly slug:           string;
+  readonly name:           string;
+  readonly category:       "home-fragrance";
+  readonly productType:    "candle" | "diffuser" | "room-spray";
+  readonly range:          string;
+  readonly scaffoldRecord: Readonly<HomeFragranceKnowledge>;
+  readonly currentRecord:  Readonly<HomeFragranceKnowledge>;
+  readonly config:         Readonly<FactoryConfig>;
+}
+
+// ── Home Fragrance producer result ────────────────────────────────────────────
+//
+// HomeFragranceProducerResult is the parallel to ProducerResult for home
+// fragrance producers. The key difference:
+//   fields: Partial<HomeFragranceKnowledge>  (not Partial<FragranceKnowledge>)
+//
+// Shared lifecycle metadata types (ProducerStatus, ProducerMetrics,
+// ProducerArtifact) are reused because they are category-neutral.
+
+export interface HomeFragranceProducerResult {
+  producerName:    string;
+  producerVersion: string;
+  promptVersion:   string | null;
+  status:          ProducerStatus;
+  fields:          Partial<HomeFragranceKnowledge>;
+  confidence:      number;
+  errors:          string[];
+  warnings:        string[];
+  metrics:         ProducerMetrics;
+  artifacts:       ProducerArtifact[];
+  skippedReason?:  string;
 }

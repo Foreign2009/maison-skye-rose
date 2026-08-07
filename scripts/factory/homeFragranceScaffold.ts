@@ -2,55 +2,32 @@
  * Knowledge Factory — Home Fragrance Scaffold
  *
  * Derives all truthful deterministic fields from a HomeFragranceIntake.
- * Returns a HomeFragranceScaffoldOutput — a type containing only fields
- * that are genuinely derivable from home fragrance supplier data.
+ * Returns a HomeFragranceScaffoldResult whose record is a fully typed
+ * HomeFragranceKnowledge — the canonical boundary for home fragrance records.
  *
- * Architectural boundary (EP4-P2R):
+ * Architectural boundary (EP4-P2R / EP4-P3A):
  *   FragranceKnowledge cannot honestly represent home fragrance because it
  *   carries fragrance-specific required fields (collection, gender, projection,
  *   scentCharacter, prices/images keyed "5ml"/"10ml"/"30ml") that have no
  *   truthful home fragrance equivalents.
  *
- *   HomeFragranceScaffoldOutput is the honest boundary. EP4-P3 will introduce
- *   HomeFragranceKnowledge and enable AI producer enrichment.
+ *   HomeFragranceKnowledge is the honest boundary. Discovery arrays (vibe,
+ *   seasons, signatureStyle, recommendedFor) are initialised empty here and
+ *   enriched by HomeFragranceDiscoveryProducer in EP4-P4.
  *
  * No AI generation occurs in this scaffolder.
  */
 
-import type { HomeFragranceIntake } from "./types";
-import { deriveSlug }               from "./core/deriveSlug";
+import type { HomeFragranceIntake }        from "./types";
+import type { HomeFragranceScaffoldResult } from "./types";
+import type { HomeFragranceKnowledge }     from "../../app/lib/mkc/homeFragranceTypes";
+import { deriveSlug }                      from "./core/deriveSlug";
 
-// ── Output type ───────────────────────────────────────────────────────────────
-
-export interface HomeFragranceScaffoldOutput {
-  readonly id:          string;
-  readonly slug:        string;
-  readonly brand:       string;
-  readonly name:        string;
-  readonly category:    "home-fragrance";
-  readonly productType: "candle" | "diffuser" | "room-spray";
-  readonly range:       string;
-  readonly subtitle:    string;
-  readonly profile:     string;
-  readonly season:      string;
-  readonly mood:        string;
-  readonly notes: {
-    readonly top:   string[];
-    readonly heart: string[];
-    readonly base:  string[];
-  };
-  readonly prices:   Record<string, number>;
-  readonly images:   Record<string, string>;
-  readonly bestSeller: boolean;
-  readonly newArrival: boolean;
-}
-
-// ── Scaffolder ────────────────────────────────────────────────────────────────
-
-export function scaffoldHomeFragrance(intake: HomeFragranceIntake): HomeFragranceScaffoldOutput {
+export function scaffoldHomeFragrance(intake: HomeFragranceIntake): HomeFragranceScaffoldResult {
   const slug = deriveSlug(intake.title);
 
-  return {
+  const record: HomeFragranceKnowledge = {
+    // ── Identity ──────────────────────────────────────────────────────────────
     id:          slug,
     slug,
     brand:       "Maison Skye & Rose",
@@ -58,18 +35,36 @@ export function scaffoldHomeFragrance(intake: HomeFragranceIntake): HomeFragranc
     category:    "home-fragrance",
     productType: intake.productType,
     range:       intake.range,
-    subtitle:    intake.subtitle,
-    profile:     intake.profile,
-    season:      intake.season,
-    mood:        intake.mood,
+
+    // ── Composition ───────────────────────────────────────────────────────────
+    profile: intake.profile,
+    season:  intake.season,
+    mood:    intake.mood,
     notes: {
+      // Seed the pyramid from intake notes.
+      // CompositionProducer (EP4-P3C) enriches to ≥ 2 per tier.
       top:   intake.notes.slice(0, 1),
       heart: intake.notes.slice(1, 2),
       base:  intake.notes.slice(2),
     },
+
+    // ── Editorial ─────────────────────────────────────────────────────────────
+    subtitle: intake.subtitle,
+    // description: absent until EditorialProducer runs (EP4-P3C)
+
+    // ── Discovery ─────────────────────────────────────────────────────────────
+    // Initialised empty. HomeFragranceDiscoveryProducer populates in EP4-P4.
+    vibe:           [],
+    seasons:        [],
+    signatureStyle: [],
+    recommendedFor: [],
+
+    // ── Merchandising ─────────────────────────────────────────────────────────
     prices:     intake.prices,
     images:     intake.images,
     bestSeller: intake.bestSeller,
     newArrival: intake.newArrival,
   };
+
+  return { record, degraded: false };
 }

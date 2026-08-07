@@ -39,6 +39,59 @@ Never edit or delete past entries.
 
 ## Log
 
+### 2026-08-07 — EP4-P3A — Knowledge Platform Evolution / Home Fragrance Production Type Foundation
+
+**Participants:** Project Owner / Claude (Implementation Engineer)
+**Program:** EP4-P3A — Home Fragrance Production Type Foundation
+
+**Decisions Made:**
+- `HomeFragranceKnowledge` established as a permanently separate type from `FragranceKnowledge`. The two types share no structural relationship — by TypeScript's structural type system, `HomeFragranceKnowledge` is NOT assignable to `FragranceKnowledge` because it lacks the required fields `collection`, `gender`, `projection`, and `scentCharacter`. This is the foundational invariant of the home fragrance pipeline.
+- `HomeFragranceScaffoldResult` introduced as the truthful scaffold result for home fragrance — not forced through `ScaffoldResult.record: FragranceKnowledge`.
+- `HomeFragrancePipelineState` introduced as the home fragrance parallel to `PipelineState`. Omits `displayFrag` (personal-fragrance adapter type) and `validationResult` (home fragrance validator not yet implemented).
+- `HomeFragranceFactoryContext` deliberately omits `collection: "Skye" | "Rose" | "Elite"`, `displayFrag: DisplayFragrance`, and `nativeFragrances` — all three are personal-fragrance-specific and have no honest home fragrance equivalents at this stage.
+- `HomeFragranceProducerResult.fields: Partial<HomeFragranceKnowledge>` is explicitly separate from `ProducerResult.fields: Partial<FragranceKnowledge>`. Not generalised — parallel typing preserves type safety across both pipelines.
+- Shared lifecycle primitives (`ProducerStatus`, `ProducerMetrics`, `ProducerArtifact`) are reused in `HomeFragranceProducerResult` because they are category-neutral.
+- `HomeFragranceContextBuilder` does not import from or wrap the fragrance `ContextBuilder`. It must never access `nativeFragrances` or `DisplayFragrance`.
+- Orchestrator branches for home-fragrance BEFORE ScaffoldRegistry. The `ScaffoldRegistry` is used for fragrance only; home fragrance calls `scaffoldHomeFragrance()` directly. The ScaffoldRegistry home-fragrance registration was removed (was dead code from EP4-P2R — the orchestrator never reached it because the scaffolder threw first).
+- Discovery arrays (`vibe`, `seasons`, `signatureStyle`, `recommendedFor`) are initialised as empty arrays in the scaffold. They will be populated by `HomeFragranceDiscoveryProducer` in EP4-P4. `occasions` is deliberately absent — home fragrance will use `roomContexts` (separate vocabulary, separate field, EP4-P4).
+- `HomeFragranceScaffoldOutput` interface removed from `homeFragranceScaffold.ts` — replaced by `HomeFragranceKnowledge` as the canonical type. No backwards-compatibility alias created.
+- Orchestrator home-fragrance branch returns a clean `"failed"` PipelineResult (not a thrown exception) with a message that names the missing ProducerSet registration. This is the intended gate until EP4-P3C.
+
+**Tasks Completed:**
+- `app/lib/mkc/homeFragranceTypes.ts` created — `HomeFragranceKnowledge` type with 20 fields; no fragrance-specific fields.
+- `scripts/factory/core/types.ts` updated — `HomeFragranceKnowledge` imported and re-exported; `HomeFragranceFactoryContext` and `HomeFragranceProducerResult` defined.
+- `scripts/factory/types.ts` updated — `HomeFragranceScaffoldResult` and `HomeFragrancePipelineState` defined; `HomeFragranceKnowledge` and `HomeFragranceProducerResult` imported.
+- `scripts/factory/core/HomeFragranceContextBuilder.ts` created — `HomeFragranceContextBuilder.build()` and `withMergedRecord()` methods.
+- `scripts/factory/homeFragranceScaffold.ts` rewritten — returns `HomeFragranceScaffoldResult`; discovery arrays empty; `HomeFragranceScaffoldOutput` removed.
+- `scripts/factory/orchestrator.ts` updated — `scaffoldHomeFragrance` re-imported; home-fragrance branch added; ScaffoldRegistry home-fragrance registration removed.
+- `scripts/factory/validate-home-fragrance.ts` extended — 27 proofs (was 15); new proofs cover `HomeFragranceKnowledge`, `HomeFragranceFactoryContext`, `HomeFragranceProducerResult`, structural separation.
+- Governance updated: `PROJECT_STATUS.md`, `.ai/CURRENT_TASK.md`, `.ai/ENGINEERING_LOG.md`.
+
+**Tasks Started:**
+- None.
+
+**Build Result:** Pass — 187 routes, 0 TypeScript errors, 0 warnings.
+
+**Files Changed:**
+- `app/lib/mkc/homeFragranceTypes.ts` — Created. `HomeFragranceKnowledge` type.
+- `scripts/factory/core/HomeFragranceContextBuilder.ts` — Created. `HomeFragranceContextBuilder`.
+- `scripts/factory/core/types.ts` — Added `HomeFragranceFactoryContext`, `HomeFragranceProducerResult`; added import.
+- `scripts/factory/types.ts` — Added `HomeFragranceScaffoldResult`, `HomeFragrancePipelineState`; added imports.
+- `scripts/factory/homeFragranceScaffold.ts` — Rewritten. Returns `HomeFragranceScaffoldResult`. Discovery arrays empty.
+- `scripts/factory/orchestrator.ts` — Home-fragrance branch added; `scaffoldHomeFragrance` re-imported; ScaffoldRegistry home-fragrance registration removed.
+- `scripts/factory/validate-home-fragrance.ts` — Extended from 15 to 27 proofs.
+
+**Handoff:**
+- `HomeFragranceKnowledge` is the canonical type. Any future home fragrance work uses it directly — not `FragranceKnowledge`, not `HomeFragranceScaffoldOutput`.
+- `HomeFragranceContextBuilder` is ready. Producers import from `./core/types` to get `HomeFragranceFactoryContext`.
+- The orchestrator home-fragrance path scaffolds successfully and returns `"failed"` cleanly. Registering a ProducerSet for "home-fragrance" in a future episode will allow the pipeline to proceed.
+- Next: EP4-P3C — Home Fragrance Producers (HomeFragranceBaseProducer, HomeFragranceCompositionProducer, HomeFragranceEditorialProducer, home fragrance prompts, homeFragranceMerger, HomeFragranceDraftBuilder, validateHomeFragranceRecord). Gate: owner direction.
+
+**Open Questions Carried Forward:**
+- None.
+
+---
+
 ### 2026-08-06 — EP4-P2R — Knowledge Platform Evolution / Correct Home Fragrance Foundation
 
 **Participants:** Project Owner / Claude (Implementation Engineer)

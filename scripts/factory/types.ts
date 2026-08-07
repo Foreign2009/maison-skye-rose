@@ -6,9 +6,10 @@
  */
 
 import type { FragranceKnowledge, ProductCategory } from "../../app/lib/mkc/types";
+import type { HomeFragranceKnowledge }              from "../../app/lib/mkc/homeFragranceTypes";
 import type { DisplayFragrance }                    from "../../app/lib/knowledgeAdapter";
 import type { ValidationResult }                    from "../../app/lib/mkc/validator";
-import type { ProducerResult }                      from "./core/types";
+import type { ProducerResult, HomeFragranceProducerResult } from "./core/types";
 
 // ── Product intake types ───────────────────────────────────────────────────────
 
@@ -69,6 +70,14 @@ export interface ScaffoldResult {
   degraded: boolean;
 }
 
+// Truthful scaffold result for home fragrance.
+// Not forced through ScaffoldResult.record: FragranceKnowledge — that type
+// cannot represent home fragrance without fabricated fields (EP4-P2R).
+export interface HomeFragranceScaffoldResult {
+  record:   HomeFragranceKnowledge;
+  degraded: boolean;
+}
+
 // ── Pipeline state ────────────────────────────────────────────────────────────
 
 export interface StageEntry {
@@ -86,6 +95,24 @@ export interface PipelineState {
   stageLog:         StageEntry[];
   factoryVersion:   string;
   producerResults?: ProducerResult[];
+}
+
+// ── Home Fragrance Pipeline state ─────────────────────────────────────────────
+//
+// Parallel to PipelineState for the home fragrance pipeline path.
+// Omits fields that cannot truthfully represent home fragrance:
+//   displayFrag  — DisplayFragrance is personal-fragrance-typed
+//   validationResult — home fragrance validator is not yet implemented (EP4-P3C)
+//
+// producerResults uses HomeFragranceProducerResult (not ProducerResult)
+// because fields must be Partial<HomeFragranceKnowledge>.
+
+export interface HomeFragrancePipelineState {
+  slug:            string;
+  record:          HomeFragranceKnowledge;
+  stageLog:        StageEntry[];
+  factoryVersion:  string;
+  producerResults?: HomeFragranceProducerResult[];
 }
 
 // ── Draft builder ─────────────────────────────────────────────────────────────

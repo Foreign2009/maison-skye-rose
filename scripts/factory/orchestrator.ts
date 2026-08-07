@@ -18,22 +18,23 @@
  */
 
 import path from "path";
-import { FACTORY_VERSION }         from "./version";
-import { intake }                   from "./intake";
-import { scaffold }                 from "./scaffold";
-import { merge }               from "./merger";
-import { buildDraft }          from "./draftBuilder";
-import { logRun }              from "./metrics/factoryLogger";
-import { ContextBuilder }        from "./core/ContextBuilder";
-import { GenerationEngine }      from "./core/GenerationEngine";
-import { ClaudeProvider }        from "./core/providers/ClaudeProvider";
-import { ProducerRegistry }      from "./core/ProducerRegistry";
-import { ScaffoldRegistry }      from "./core/ScaffoldRegistry";
-import { CompositionProducer }   from "./producers/CompositionProducer";
-import { EditorialProducer }     from "./producers/EditorialProducer";
-import { RelationshipProducer }  from "./producers/RelationshipProducer";
-import { EducationProducer }     from "./producers/EducationProducer";
-import { DiscoveryProducer }     from "./producers/DiscoveryProducer";
+import { FACTORY_VERSION }           from "./version";
+import { intake }                     from "./intake";
+import { scaffold }                   from "./scaffold";
+import { scaffoldHomeFragrance }      from "./homeFragranceScaffold";
+import { merge }                 from "./merger";
+import { buildDraft }            from "./draftBuilder";
+import { logRun }                from "./metrics/factoryLogger";
+import { ContextBuilder }          from "./core/ContextBuilder";
+import { GenerationEngine }        from "./core/GenerationEngine";
+import { ClaudeProvider }          from "./core/providers/ClaudeProvider";
+import { ProducerRegistry }        from "./core/ProducerRegistry";
+import { ScaffoldRegistry }        from "./core/ScaffoldRegistry";
+import { CompositionProducer }     from "./producers/CompositionProducer";
+import { EditorialProducer }       from "./producers/EditorialProducer";
+import { RelationshipProducer }    from "./producers/RelationshipProducer";
+import { EducationProducer }       from "./producers/EducationProducer";
+import { DiscoveryProducer }       from "./producers/DiscoveryProducer";
 import { validateKnowledgeRecord } from "../../app/lib/mkc/validator";
 import type { FactoryConfig, ProducerResult } from "./core/types";
 import type { PipelineInput, PipelineResult, PipelineState, StageEntry } from "./types";
@@ -60,6 +61,10 @@ defaultRegistry.register(FRAGRANCE_PRODUCER_SET);
 
 // ── Scaffold Registry ─────────────────────────────────────────────────────────
 
+// ScaffoldRegistry is used by the fragrance pipeline path only.
+// Home fragrance scaffolding uses scaffoldHomeFragrance() directly in run() below
+// because ScaffoldResult.record: FragranceKnowledge cannot represent home fragrance
+// without fabricated fields (EP4-P2R / EP4-P3A).
 export const defaultScaffoldRegistry = new ScaffoldRegistry();
 defaultScaffoldRegistry.register("fragrance", (intake) => {
   if (intake.category !== "fragrance") {
@@ -68,20 +73,6 @@ defaultScaffoldRegistry.register("fragrance", (intake) => {
   // intake is now narrowed to FragranceIntake by TypeScript control-flow analysis.
   // FragranceIntake is structurally assignable to DisplayFragrance (what scaffold() accepts).
   return scaffold(intake);
-});
-defaultScaffoldRegistry.register("home-fragrance", (intake) => {
-  if (intake.category !== "home-fragrance") {
-    throw new Error(`Home fragrance scaffolder received unexpected category: ${intake.category}`);
-  }
-  // HomeFragranceScaffoldOutput is the truthful output type for this category.
-  // ScaffoldResult.record requires FragranceKnowledge, which cannot represent home
-  // fragrance without fabricated fields (collection, gender, projection, 5ml prices).
-  // EP4-P3 will introduce HomeFragranceKnowledge and resolve this boundary.
-  // Use scaffoldHomeFragrance() directly for the truthful HomeFragranceScaffoldOutput.
-  throw new Error(
-    "Home Fragrance knowledge record type not yet defined. " +
-    "EP4-P3 will introduce the HomeFragranceKnowledge type.",
-  );
 });
 
 const ROOT      = process.cwd();
@@ -179,6 +170,36 @@ export async function run(input: PipelineInput): Promise<PipelineResult> {
     const resolvedCategory = result.intake!.category;
 
     stage("intake", "pass", ms);
+
+    // ── Home Fragrance Pipeline (EP4-P3A separate path) ────────────────────
+    // Home fragrance uses HomeFragranceScaffoldResult, not ScaffoldResult.
+    // ScaffoldResult.record: FragranceKnowledge cannot represent home fragrance
+    // without fabricated fields (EP4-P2R). The pipeline stops at ProducerRegistry
+    // until EP4-P3C registers a home fragrance ProducerSet.
+    if (resolvedCategory === "home-fragrance") {
+      const productIntake = result.intake!;
+      if (productIntake.category !== "home-fragrance") {
+        // Unreachable: resolvedCategory already confirmed "home-fragrance".
+        throw new Error("impossible: intake category mismatch after home-fragrance check");
+      }
+      // productIntake is now HomeFragranceIntake (narrowed by TypeScript control-flow analysis).
+
+      const t1hf = Date.now();
+      const hfScaffold = scaffoldHomeFragrance(productIntake);
+      stage("scaffold", hfScaffold.degraded ? "degraded" : "pass", Date.now() - t1hf);
+
+      // No ProducerSet registered for "home-fragrance" yet (EP4-P3C).
+      // Return a clean failure rather than throwing — the pipeline gate is intentional.
+      return {
+        status:     "failed",
+        slug,
+        draftPath:  null,
+        state:      null,
+        message:    `Home Fragrance producer pipeline not yet available. ` +
+                    `Register a ProducerSet for category: ${resolvedCategory}.`,
+        durationMs: Date.now() - startedAt,
+      };
+    }
 
     // ── Stage 2: Scaffold ───────────────────────────────────────────────────
     const t1        = Date.now();
