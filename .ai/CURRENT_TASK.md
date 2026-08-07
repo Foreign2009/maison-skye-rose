@@ -19,72 +19,82 @@ At the start of a new Claude Code session:
 ## Current Task
 
 **Status:** Complete
-**Program:** EP4-P3A — Home Fragrance Production Type Foundation
+**Program:** EP4-P3B — Home Fragrance Draft & Validation Foundation
 
 **Goal:**
-Introduce the truthful typed production contracts for Home Fragrance knowledge
-without building any producers, prompts, or AI generation capability.
+Establish the scaffold → validate → draft chain for Home Fragrance knowledge:
+`validateHomeFragranceRecord()`, `mergeHomeFragrance()`, and
+`buildHomeFragranceDraft()` (pure string render). No AI. No producers.
+No ProducerSet. No promotion. No orchestrator extension beyond current gate.
 
 **Acceptance Criteria:**
-- [x] `HomeFragranceKnowledge` defined in `app/lib/mkc/homeFragranceTypes.ts`
-- [x] `HomeFragranceKnowledge` has no collection, gender, projection, scentCharacter, occasions, intelligence metrics, or fragrance size contracts
-- [x] `HomeFragranceKnowledge` is NOT structurally assignable to `FragranceKnowledge`
-- [x] `HomeFragranceScaffoldResult` defined in `scripts/factory/types.ts`
-- [x] `HomeFragrancePipelineState` defined in `scripts/factory/types.ts`
-- [x] `HomeFragranceFactoryContext` defined in `scripts/factory/core/types.ts` (no collection, displayFrag, nativeFragrances)
-- [x] `HomeFragranceProducerResult` defined in `scripts/factory/core/types.ts` (fields: Partial<HomeFragranceKnowledge>)
-- [x] `HomeFragranceContextBuilder` created — builds context from pipeline state
-- [x] `scaffoldHomeFragrance()` returns `HomeFragranceScaffoldResult` (not `HomeFragranceScaffoldOutput`)
-- [x] Discovery arrays initialised empty in scaffold (vibe, seasons, signatureStyle, recommendedFor)
-- [x] Orchestrator branches for home-fragrance before ScaffoldRegistry — calls `scaffoldHomeFragrance()` directly
-- [x] Orchestrator returns clean `"failed"` for home-fragrance (no ProducerSet registered message)
-- [x] ScaffoldRegistry home-fragrance registration removed (was dead code)
-- [x] No HomeFragranceBaseProducer created
-- [x] No producers, prompts, or AI generation created
-- [x] No draft builder created
-- [x] No promotion capability created
-- [x] Fragrance pipeline structurally and behaviourally unchanged
-- [x] Deterministic validation: 27 proofs pass (`npm run mkc:validate:home-fragrance`)
+- [x] `validateHomeFragranceRecord(record: HomeFragranceKnowledge): ValidationResult` created
+- [x] Reuses `ValidationIssue`, `ValidationResult` types (category-neutral)
+- [x] Groups applied: identity, composition, editorial, discovery, commerce
+- [x] Groups returned as PASS: classification, intelligence, relationships
+- [x] Foundation quality: 0 notes = error, 1 note = warning, 2+ = pass
+- [x] Discovery arrays empty = warnings (not errors) at scaffold stage
+- [x] Missing description = warning (not error)
+- [x] `mergeHomeFragrance(scaffold, ...results): HomeFragranceKnowledge` created
+- [x] Failed producer results skipped in merge
+- [x] `buildHomeFragranceDraft(record, validationResult): string` created — pure render, no file writes
+- [x] Dynamic variant key iteration for prices/images (no hardcoded "5ml"/"10ml"/"30ml")
+- [x] Draft imports `HomeFragranceKnowledge`, not `FragranceKnowledge`
+- [x] Draft has no collection, gender, projection, scentCharacter, sweetness fields
+- [x] Home Fragrance-specific review checklist in draft header
+- [x] Validation script extended from 27 to 52 proofs (scaffold → validate → draft chain)
+- [x] 52 proofs pass (`npm run mkc:validate:home-fragrance`)
 - [x] Build passes: 187 routes, 0 TypeScript errors, 0 warnings
 - [x] `PROJECT_STATUS.md` updated
 - [x] `.ai/CURRENT_TASK.md` updated
 - [x] `.ai/ENGINEERING_LOG.md` updated
 
 **Why This Task:**
-EP4-P3 audit established that Home Fragrance cannot safely enter the existing
-fragrance production stack because `FactoryContext`, `ProducerResult.fields`,
-`merger.ts`, and `draftBuilder.ts` are materially fragrance-specific.
-EP4-P3A introduces the truthful typed boundary from which home fragrance AI
-generation can later be built safely (EP4-P3C onwards).
+EP4-P3A established the typed contracts. EP4-P3B establishes the quality gates
+and the pure rendering contract. These are the two things required before any
+Home Fragrance AI producer (EP4-P3C onwards) can run: a validator to assess
+the merged record, and a draft builder to render the author review file.
 
 ---
 
 ## Files Involved
 
-**Files created (2):**
-- `app/lib/mkc/homeFragranceTypes.ts` — `HomeFragranceKnowledge` type
-- `scripts/factory/core/HomeFragranceContextBuilder.ts` — `HomeFragranceContextBuilder`
+**Files created (3):**
+- `app/lib/mkc/homeFragranceValidator.ts` — `validateHomeFragranceRecord()`
+- `scripts/factory/homeFragranceMerger.ts` — `mergeHomeFragrance()`
+- `scripts/factory/HomeFragranceDraftBuilder.ts` — `buildHomeFragranceDraft()`
 
-**Files modified (5):**
-- `scripts/factory/core/types.ts` — Added `HomeFragranceFactoryContext`, `HomeFragranceProducerResult`; imported `HomeFragranceKnowledge`
-- `scripts/factory/types.ts` — Added `HomeFragranceScaffoldResult`, `HomeFragrancePipelineState`; imported `HomeFragranceKnowledge`, `HomeFragranceProducerResult`
-- `scripts/factory/homeFragranceScaffold.ts` — Returns `HomeFragranceScaffoldResult`; discovery arrays initialised empty; removed `HomeFragranceScaffoldOutput` interface
-- `scripts/factory/orchestrator.ts` — Home-fragrance branch added before ScaffoldRegistry; `scaffoldHomeFragrance` re-imported; ScaffoldRegistry home-fragrance registration removed
-- `scripts/factory/validate-home-fragrance.ts` — Extended from 15 to 27 proofs
+**Files modified (2):**
+- `scripts/factory/validate-home-fragrance.ts` — Extended from 27 to 52 proofs
+- `PROJECT_STATUS.md` — EP4-P3B entry added
 
 **Files NOT modified:**
+- `app/lib/mkc/homeFragranceTypes.ts` — `HomeFragranceKnowledge` unchanged
 - `app/lib/mkc/types.ts` — `FragranceKnowledge` unchanged
-- `scripts/factory/scaffold.ts` — Fragrance scaffold unchanged
+- `app/lib/mkc/validator.ts` — Fragrance validator unchanged
+- `scripts/factory/homeFragranceScaffold.ts` — Unchanged
 - `scripts/factory/merger.ts` — Fragrance merger unchanged
 - `scripts/factory/draftBuilder.ts` — Fragrance draft builder unchanged
-- `scripts/factory/core/BaseProducer.ts` — Unchanged
-- `scripts/factory/core/ContextBuilder.ts` — Unchanged
-- `scripts/factory/core/ProducerRegistry.ts` — Unchanged
-- `scripts/factory/core/ScaffoldRegistry.ts` — Unchanged
+- `scripts/factory/orchestrator.ts` — Unchanged
+- `scripts/factory/core/types.ts` — Unchanged
+- `scripts/factory/core/HomeFragranceContextBuilder.ts` — Unchanged
 - All 5 fragrance producers — Unchanged
 - All fragrance prompts — Unchanged
 - All 93 native MKC records — Unchanged
 - All application code — Unchanged
+
+---
+
+## Context Notes
+
+**Last completed:** EP4-P3B — Home Fragrance Draft & Validation Foundation (2026-08-07)
+
+Recent completed programs (newest first):
+- EP4-P3B Home Fragrance Draft & Validation Foundation (2026-08-07) — validator, merger, draft builder; 52 proofs pass
+- EP4-P3A Home Fragrance Production Type Foundation (2026-08-07) — Type contracts for HomeFragranceKnowledge, context, producer result; 27 proofs pass
+- EP4-P3 Home Fragrance Producer Strategy Audit (2026-08-07) — 22-deliverable audit; recommended Option B (Composition + Editorial) for first ProducerSet
+- EP4-P2R Correct Home Fragrance Foundation (2026-08-06) — Removed unsafe casts; introduced HomeFragranceScaffoldOutput; added validation script
+- EP4-P2 Home Fragrance Foundation (2026-08-06) — HomeFragranceIntake; union expansion; registry wiring (defects corrected in EP4-P2R)
 
 ---
 

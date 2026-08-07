@@ -8,10 +8,10 @@
 
 ## Current Engineering Program
 
-**Program:** EP4-P3A — Home Fragrance Production Type Foundation (Complete)
+**Program:** EP4-P3B — Home Fragrance Draft & Validation Foundation (Complete)
 **Sprint:** EP4
 **Gate:** Complete
-**Objective:** Introduce the truthful typed production contracts for Home Fragrance knowledge. `HomeFragranceKnowledge`, `HomeFragranceFactoryContext`, `HomeFragranceProducerResult`, `HomeFragranceScaffoldResult`, `HomeFragrancePipelineState`, and `HomeFragranceContextBuilder` are now established. Fragrance pipeline unchanged. 27 deterministic proofs pass.
+**Objective:** Establish the scaffold → validate → draft chain for Home Fragrance knowledge. `validateHomeFragranceRecord()` and `mergeHomeFragrance()` implemented. `buildHomeFragranceDraft()` produces pure string output with dynamic variant keys. 52 deterministic proofs pass. Fragrance pipeline unchanged.
 
 ---
 
@@ -84,6 +84,7 @@ Verify: `npm run build`
 | EP4 | EP4-P2R | Correct Home Fragrance Foundation | Complete — 2026-08-06 |
 | EP4 | EP4-P3 | Home Fragrance Producer Strategy Audit | Complete — 2026-08-07 |
 | EP4 | EP4-P3A | Home Fragrance Production Type Foundation | Complete — 2026-08-07 |
+| EP4 | EP4-P3B | Home Fragrance Draft & Validation Foundation | Complete — 2026-08-07 |
 
 `FOUNDATIONS/00_FOUNDERS_LETTER.md` — The permanent founder's letter to Skye, Rose, future employees, and future stewards. *Why we began.*
 `FOUNDATIONS/01_SKYE_AND_ROSE_COVENANT.md` — The institutional promise: to customers, products, technology, and future generations. *What we promise.*
@@ -94,6 +95,8 @@ Verify: `npm run build`
 **EP2-P1 Audit Findings (2026-08-05):** Overall institutional alignment score 7.1/10. Intelligence layer (Fragrance Profile, MaisonCompanion, Concierge, Shop, Quiz) rated Aligned. Critical gaps: About page (3/10 — fails Foundation narrative standard), catalogue count inconsistency (93 vs 465+), "Loyal Customer" terminology, post-purchase experience absent, checkout UX cold. Recommended sequence: EP2-P2 (About page rewrite) → EP2-P3 (checkout + post-purchase) → EP2-P4 (testimonials) → EP2-P5 (concierge voice) → EP2-P6 (language pass).
 
 **EP2-P3 About Page Foundation Alignment (2026-08-05):** `app/about/page.tsx` rewritten from 4 generic paragraphs to 9 Foundation-aligned sections: Opening, A Compliment Changed Everything, Why Skye & Rose, What We Believe, Confidence Is What We Are Here to Deliver, Knowledge Before Recommendation, Accessible Luxury, Growing Together, Our Promise, An Invitation. Count inconsistency removed (465+ → timeless language). OG and Twitter metadata added. Architecture preserved. Build passes: 187 routes, 0 TypeScript errors, 0 warnings.
+
+**EP4-P3B Home Fragrance Draft & Validation Foundation (2026-08-07):** Scaffold → validate → draft chain established for Home Fragrance knowledge. `validateHomeFragranceRecord(record: HomeFragranceKnowledge): ValidationResult` created in `app/lib/mkc/homeFragranceValidator.ts` — reuses category-neutral `ValidationResult`/`ValidationIssue` types; applies five groups (identity, composition, editorial, discovery, commerce); classification/intelligence/relationships returned as PASS with empty issues. Foundation vs AI-enriched quality distinction: 0 notes per tier = error, 1 note = warning, 2+ = pass. Discovery arrays empty at scaffold stage = warnings only (populated in EP4-P4). `mergeHomeFragrance(scaffold, ...results): HomeFragranceKnowledge` created in `scripts/factory/homeFragranceMerger.ts` — mirrors fragrance merger pattern, skips failed producers. `buildHomeFragranceDraft(record, validationResult): string` created in `scripts/factory/HomeFragranceDraftBuilder.ts` — pure render function, no file writes; dynamic variant key iteration for prices and images (never hardcodes "5ml"/"10ml"/"30ml"); imports `HomeFragranceKnowledge` not `FragranceKnowledge`. Validation script extended from 27 to 52 proofs covering validator positive and negative cases, merger behaviour, and 16 draft content checks. Fragrance pipeline unchanged. Build passes: 187 routes, 0 TypeScript errors, 0 warnings.
 
 **EP4-P3A Home Fragrance Production Type Foundation (2026-08-07):** Truthful typed production contracts established for Home Fragrance knowledge. `HomeFragranceKnowledge` defined in `app/lib/mkc/homeFragranceTypes.ts` — structurally distinct from `FragranceKnowledge` by design; lacks `collection`, `gender`, `projection`, `scentCharacter`, `occasions`, fragrance intelligence metrics, and fragrance size contracts. `HomeFragranceScaffoldResult`, `HomeFragrancePipelineState` added to `scripts/factory/types.ts`. `HomeFragranceFactoryContext`, `HomeFragranceProducerResult` added to `scripts/factory/core/types.ts`. `HomeFragranceContextBuilder` created in `scripts/factory/core/HomeFragranceContextBuilder.ts`. `scaffoldHomeFragrance()` now returns `HomeFragranceScaffoldResult` (was `HomeFragranceScaffoldOutput`), populating discovery arrays as empty (AI-enriched in EP4-P4). Orchestrator updated: home-fragrance path branches before `ScaffoldRegistry`, calls `scaffoldHomeFragrance()` directly, then returns `"failed"` cleanly (no ProducerSet registered yet). ScaffoldRegistry home-fragrance registration removed (was dead code — the orchestrator never reached it). Validation script updated from 15 to 27 proofs including context, producer result, and structural separation proofs. Fragrance pipeline unchanged. Build passes: 187 routes, 0 TypeScript errors, 0 warnings.
 

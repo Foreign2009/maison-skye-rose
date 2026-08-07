@@ -39,6 +39,52 @@ Never edit or delete past entries.
 
 ## Log
 
+### 2026-08-07 — EP4-P3B — Knowledge Platform Evolution / Home Fragrance Draft & Validation Foundation
+
+**Participants:** Project Owner / Claude (Implementation Engineer)
+**Program:** EP4-P3B — Home Fragrance Draft & Validation Foundation
+
+**Decisions Made:**
+- `validateHomeFragranceRecord()` returns the category-neutral `ValidationResult` type. The groups "classification", "intelligence", and "relationships" are returned as PASS with empty issues — they are truthfully inapplicable to home fragrance, not silently skipped.
+- Foundation vs AI-enriched quality threshold: 0 notes per tier = error (structural requirement); 1 note = warning (pre-AI quality signal accepted at scaffold stage); 2+ notes = pass. This allows the scaffold fixture (1 note per tier) to produce `PASS_WITH_WARNINGS` with 0 errors — the correct pre-AI gate.
+- Discovery arrays empty at scaffold stage = warnings only (populated by Discovery Producer in EP4-P4). This is explicitly different from the fragrance validator which treats empty discovery arrays as errors.
+- Missing description = warning (not error). Description is populated by the Editorial Producer in EP4-P4; requiring it at scaffold would make the pre-AI gate impossible to pass.
+- `mergeHomeFragrance()` mirrors the fragrance `merge()` pattern exactly. Failed producer results are skipped. All other statuses (success, degraded, skipped) contribute their fields.
+- `buildHomeFragranceDraft()` is a pure function returning string — does not write to disk. File write responsibility is delegated to the orchestrator when the full home fragrance pipeline is wired (EP4-P3C+). This keeps the draft builder testable without filesystem access.
+- Draft builder iterates dynamic variant keys for prices and images (`Object.entries(r.prices)`). Never hardcodes "5ml", "10ml", "30ml" — home fragrance uses weight-based keys ("150g", "300g", etc.).
+- Draft builder imports `HomeFragranceKnowledge` from `homeFragranceTypes`, not `FragranceKnowledge` from `types`. This is verified by a proof in the validation script.
+
+**Tasks Completed:**
+- `app/lib/mkc/homeFragranceValidator.ts` created — `validateHomeFragranceRecord()` with 5 group validators.
+- `scripts/factory/homeFragranceMerger.ts` created — `mergeHomeFragrance()`.
+- `scripts/factory/HomeFragranceDraftBuilder.ts` created — pure `buildHomeFragranceDraft()` returning string.
+- `scripts/factory/validate-home-fragrance.ts` extended — 52 proofs (was 27); added validator, merger, draft positive and negative sections.
+- Governance updated: `PROJECT_STATUS.md`, `.ai/CURRENT_TASK.md`, `.ai/ENGINEERING_LOG.md`.
+
+**Tasks Started:**
+- None.
+
+**Build Result:** Pass — 187 routes, 0 TypeScript errors, 0 warnings.
+
+**Files Changed:**
+- `app/lib/mkc/homeFragranceValidator.ts` — Created. `validateHomeFragranceRecord()`.
+- `scripts/factory/homeFragranceMerger.ts` — Created. `mergeHomeFragrance()`.
+- `scripts/factory/HomeFragranceDraftBuilder.ts` — Created. Pure `buildHomeFragranceDraft()` returning string.
+- `scripts/factory/validate-home-fragrance.ts` — Extended from 27 to 52 proofs.
+- `PROJECT_STATUS.md` — EP4-P3B entry added.
+- `.ai/CURRENT_TASK.md` — Updated to EP4-P3B.
+- `.ai/ENGINEERING_LOG.md` — This entry.
+
+**Handoff:**
+- The scaffold → validate → draft chain for Home Fragrance is complete. `validateHomeFragranceRecord()` accepts `HomeFragranceKnowledge` and returns `ValidationResult`. `mergeHomeFragrance()` consolidates producer outputs. `buildHomeFragranceDraft()` renders a type-correct draft string.
+- The next programme (EP4-P3C) can register a `HomeFragranceProducerSet` in the orchestrator, wire the full home fragrance pipeline, and call `mergeHomeFragrance()` → `validateHomeFragranceRecord()` → `buildHomeFragranceDraft()` → write to disk.
+- Fragrance pipeline and all 93 native records are unchanged.
+
+**Open Questions Carried Forward:**
+- None.
+
+---
+
 ### 2026-08-07 — EP4-P3A — Knowledge Platform Evolution / Home Fragrance Production Type Foundation
 
 **Participants:** Project Owner / Claude (Implementation Engineer)

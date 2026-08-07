@@ -7,6 +7,11 @@
  *   (b) HomeFragranceKnowledge, HomeFragranceFactoryContext, and
  *       HomeFragranceProducerResult are correctly typed and structurally
  *       distinct from their fragrance equivalents.
+ *   (c) validateHomeFragranceRecord() correctly gates quality at the
+ *       scaffold → validate → draft chain.
+ *   (d) mergeHomeFragrance() applies passing producer fields and skips failed.
+ *   (e) buildHomeFragranceDraft() renders a HomeFragranceKnowledge draft
+ *       with no fragrance-specific fields or size labels.
  *
  * Proofs:
  *   Intake
@@ -43,7 +48,44 @@
  *   Registry
  *     23. ProducerRegistry still rejects "home-fragrance"
  *
- * No AI. No draft. No factory log. No native records. No persistent writes.
+ *   Validator — validateHomeFragranceRecord
+ *     24. PASS_WITH_WARNINGS on pre-AI fixture (0 errors, all warnings)
+ *     25. 0 errors on pre-AI fixture
+ *     26. composition group has single-note quality warnings
+ *     27. editorial group has DESCRIPTION_NOT_SET warning
+ *     28. discovery group has warnings-only for empty arrays
+ *
+ *   Merger — mergeHomeFragrance
+ *     29. merged fields from passing producer appear in result
+ *     30. failed producer fields are not applied
+ *
+ *   Draft — buildHomeFragranceDraft (pure string render)
+ *     31. draft contains "HomeFragranceKnowledge"
+ *     32. draft contains category value "home-fragrance"
+ *     33. draft contains productType value "candle"
+ *     34. draft contains range value "Maison Home"
+ *     35. draft contains price key "150g"
+ *     36. draft contains notes section
+ *     37. draft contains subtitle "Warm & Intimate"
+ *     38. draft does NOT contain ": FragranceKnowledge"
+ *     39. draft does NOT contain "collection:"
+ *     40. draft does NOT contain "gender:"
+ *     41. draft does NOT contain "projection:"
+ *     42. draft does NOT contain "scentCharacter:"
+ *     43. draft does NOT contain "sweetness:"
+ *     44. draft does NOT contain '"5ml":' price key
+ *     45. draft does NOT contain '"10ml":' price key
+ *     46. draft does NOT contain '"30ml":' price key
+ *
+ *   Negative validator cases
+ *     47. empty top notes → NOTES_TOP_REQUIRED error
+ *     48. zero price → PRICE_INVALID error
+ *     49. empty image → IMAGE_MISSING error
+ *     50. missing description → DESCRIPTION_NOT_SET warning (not error)
+ *     51. empty range → RANGE_REQUIRED error
+ *     52. invalid category → CATEGORY_INVALID error
+ *
+ * No AI. No file writes. No factory log. No native records. No persistent state.
  */
 
 import { CatalogueRegistry }             from "./core/CatalogueRegistry";
@@ -51,6 +93,9 @@ import { defaultCatalogueRegistry }      from "./intake";
 import { defaultRegistry }               from "./orchestrator";
 import { scaffoldHomeFragrance }         from "./homeFragranceScaffold";
 import { HomeFragranceContextBuilder }   from "./core/HomeFragranceContextBuilder";
+import { validateHomeFragranceRecord }   from "../../app/lib/mkc/homeFragranceValidator";
+import { mergeHomeFragrance }            from "./homeFragranceMerger";
+import { buildHomeFragranceDraft }       from "./HomeFragranceDraftBuilder";
 import type { HomeFragranceIntake }      from "./types";
 import type { HomeFragranceProducerResult, FactoryConfig } from "./core/types";
 import type { HomeFragrancePipelineState } from "./types";
@@ -124,7 +169,8 @@ function assertThrows(label: string, fn: () => unknown, expectedMessage: string)
 // ── Proofs ────────────────────────────────────────────────────────────────────
 
 async function main(): Promise<void> {
-  console.log("\n[mkc:validate:home-fragrance] Foundation proof\n");
+  console.log("\n[mkc:validate:home-fragrance] EP4-P3B — scaffold → validate → draft chain\n");
+  console.log("  Intake + Scaffold + Context + Registry\n");
 
   // ── 1–3. Intake ─────────────────────────────────────────────────────────────
 
@@ -274,6 +320,277 @@ async function main(): Promise<void> {
     () => defaultRegistry.getProducerSet("home-fragrance"),
     "No ProducerSet registered for category: home-fragrance",
   );
+
+  // ── 24–28. Validator — validateHomeFragranceRecord ─────────────────────────
+
+  console.log("\n  Validator\n");
+
+  const validationResult = validateHomeFragranceRecord(record);
+
+  // 24. Status
+  assertEq(
+    "validateHomeFragranceRecord — status is PASS_WITH_WARNINGS",
+    "PASS_WITH_WARNINGS",
+    validationResult.status,
+  );
+
+  // 25. Zero errors on pre-AI fixture
+  assertEq(
+    "validateHomeFragranceRecord — 0 errors on pre-AI fixture",
+    0,
+    validationResult.totalErrors,
+  );
+
+  // 26. Composition group has single-note quality warnings
+  {
+    const g = validationResult.groups.composition;
+    const hasSingleNoteWarn = g.issues.some(
+      (i) =>
+        (i.code === "NOTES_TOP_SINGLE" ||
+         i.code === "NOTES_HEART_SINGLE" ||
+         i.code === "NOTES_BASE_SINGLE") &&
+        i.severity === "warning",
+    );
+    if (!hasSingleNoteWarn) {
+      throw new Error(
+        "FAIL [composition quality warnings]: expected NOTES_*_SINGLE warnings in composition group",
+      );
+    }
+    pass("validateHomeFragranceRecord — composition group has single-note quality warnings");
+  }
+
+  // 27. Editorial group has DESCRIPTION_NOT_SET warning
+  {
+    const g = validationResult.groups.editorial;
+    const hasDescWarn = g.issues.some((i) => i.code === "DESCRIPTION_NOT_SET");
+    if (!hasDescWarn) {
+      throw new Error(
+        "FAIL [editorial description warning]: DESCRIPTION_NOT_SET not found in editorial group",
+      );
+    }
+    pass("validateHomeFragranceRecord — editorial group has DESCRIPTION_NOT_SET warning");
+  }
+
+  // 28. Discovery group has warnings-only (empty arrays at scaffold stage)
+  {
+    const g = validationResult.groups.discovery;
+    const allWarnings = g.issues.length > 0 && g.issues.every((i) => i.severity === "warning");
+    if (!allWarnings) {
+      throw new Error(
+        "FAIL [discovery warnings]: expected warnings-only for empty discovery arrays",
+      );
+    }
+    pass("validateHomeFragranceRecord — discovery group has warnings-only for empty arrays");
+  }
+
+  // ── 29–30. Merger — mergeHomeFragrance ─────────────────────────────────────
+
+  console.log("\n  Merger\n");
+
+  const mockPassingResult: HomeFragranceProducerResult = {
+    producerName:    "MockEditorialProducer",
+    producerVersion: "0.0.0",
+    promptVersion:   null,
+    status:          "success",
+    fields: {
+      description: "A luxurious candle with warm rose and oud.",
+      vibe:        ["Warm", "Intimate", "Grounding"],
+    },
+    confidence:   0.9,
+    errors:       [],
+    warnings:     [],
+    metrics: {
+      durationMs:       0,
+      attempts:         1,
+      promptTokens:     0,
+      completionTokens: 0,
+      totalTokens:      0,
+      modelId:          "",
+      cached:           false,
+    },
+    artifacts: [],
+  };
+
+  // 29. Passing producer fields appear in merged record
+  const merged = mergeHomeFragrance(record, mockPassingResult);
+  if (merged.description !== "A luxurious candle with warm rose and oud.") {
+    throw new Error(
+      `FAIL [mergeHomeFragrance — description]: expected merged description, got "${merged.description ?? "(undefined)"}"`
+    );
+  }
+  pass("mergeHomeFragrance — description field merged from passing producer");
+
+  // 30. Failed producer fields are not applied
+  const mockFailedResult: HomeFragranceProducerResult = {
+    ...mockPassingResult,
+    producerName: "MockFailedProducer",
+    status:       "failed",
+    fields:       { description: "SHOULD NOT APPEAR" },
+  };
+  const mergedWithFailed = mergeHomeFragrance(record, mockPassingResult, mockFailedResult);
+  if (mergedWithFailed.description !== "A luxurious candle with warm rose and oud.") {
+    throw new Error(
+      `FAIL [mergeHomeFragrance — failed skip]: description was overwritten by failed producer`,
+    );
+  }
+  pass("mergeHomeFragrance — failed producer fields are not applied");
+
+  // ── 31–46. Draft — buildHomeFragranceDraft ─────────────────────────────────
+
+  console.log("\n  Draft\n");
+
+  const draft = buildHomeFragranceDraft(record, validationResult, "ep4-p3b-test");
+
+  // 31–37. Positive content checks
+
+  if (!draft.includes("HomeFragranceKnowledge")) {
+    throw new Error('FAIL [draft]: missing "HomeFragranceKnowledge"');
+  }
+  pass('draft — contains "HomeFragranceKnowledge"');
+
+  if (!draft.includes('"home-fragrance"')) {
+    throw new Error('FAIL [draft]: missing category value "home-fragrance"');
+  }
+  pass('draft — contains category value "home-fragrance"');
+
+  if (!draft.includes('"candle"')) {
+    throw new Error('FAIL [draft]: missing productType value "candle"');
+  }
+  pass('draft — contains productType value "candle"');
+
+  if (!draft.includes('"Maison Home"')) {
+    throw new Error('FAIL [draft]: missing range value "Maison Home"');
+  }
+  pass('draft — contains range value "Maison Home"');
+
+  if (!draft.includes('"150g"')) {
+    throw new Error('FAIL [draft]: missing price key "150g"');
+  }
+  pass('draft — contains home fragrance price key "150g"');
+
+  if (!draft.includes("notes: {")) {
+    throw new Error('FAIL [draft]: missing notes section');
+  }
+  pass('draft — contains notes section');
+
+  if (!draft.includes('"Warm & Intimate"')) {
+    throw new Error('FAIL [draft]: missing subtitle "Warm & Intimate"');
+  }
+  pass('draft — contains subtitle "Warm & Intimate"');
+
+  // 38–46. Negative content checks
+
+  if (draft.includes(": FragranceKnowledge")) {
+    throw new Error('FAIL [draft]: must not reference ": FragranceKnowledge" (use HomeFragranceKnowledge)');
+  }
+  pass('draft — does not reference ": FragranceKnowledge"');
+
+  if (draft.includes("collection:")) {
+    throw new Error('FAIL [draft]: must not contain "collection:"');
+  }
+  pass('draft — does not contain "collection:"');
+
+  if (draft.includes("gender:")) {
+    throw new Error('FAIL [draft]: must not contain "gender:"');
+  }
+  pass('draft — does not contain "gender:"');
+
+  if (draft.includes("projection:")) {
+    throw new Error('FAIL [draft]: must not contain "projection:"');
+  }
+  pass('draft — does not contain "projection:"');
+
+  if (draft.includes("scentCharacter:")) {
+    throw new Error('FAIL [draft]: must not contain "scentCharacter:"');
+  }
+  pass('draft — does not contain "scentCharacter:"');
+
+  if (draft.includes("sweetness:")) {
+    throw new Error('FAIL [draft]: must not contain "sweetness:"');
+  }
+  pass('draft — does not contain "sweetness:"');
+
+  if (draft.includes('"5ml":')) {
+    throw new Error('FAIL [draft]: must not contain fragrance price key "5ml"');
+  }
+  pass('draft — does not contain fragrance price key "5ml"');
+
+  if (draft.includes('"10ml":')) {
+    throw new Error('FAIL [draft]: must not contain fragrance price key "10ml"');
+  }
+  pass('draft — does not contain fragrance price key "10ml"');
+
+  if (draft.includes('"30ml":')) {
+    throw new Error('FAIL [draft]: must not contain fragrance price key "30ml"');
+  }
+  pass('draft — does not contain fragrance price key "30ml"');
+
+  // ── 47–52. Negative validator cases ────────────────────────────────────────
+
+  console.log("\n  Negative cases\n");
+
+  // 47. Empty top notes → error (not warning)
+  {
+    const r = { ...record, notes: { top: [], heart: record.notes.heart, base: record.notes.base } };
+    const result = validateHomeFragranceRecord(r);
+    if (!result.errors.some((i) => i.code === "NOTES_TOP_REQUIRED")) {
+      throw new Error("FAIL [negative — empty top notes]: expected NOTES_TOP_REQUIRED error");
+    }
+    pass("validateHomeFragranceRecord — empty top notes → NOTES_TOP_REQUIRED error");
+  }
+
+  // 48. Zero price → error
+  {
+    const r = { ...record, prices: { "150g": 0 } };
+    const result = validateHomeFragranceRecord(r);
+    if (!result.errors.some((i) => i.code === "PRICE_INVALID")) {
+      throw new Error("FAIL [negative — zero price]: expected PRICE_INVALID error");
+    }
+    pass("validateHomeFragranceRecord — zero price → PRICE_INVALID error");
+  }
+
+  // 49. Empty image path → error
+  {
+    const r = { ...record, images: { "150g": "" } };
+    const result = validateHomeFragranceRecord(r);
+    if (!result.errors.some((i) => i.code === "IMAGE_MISSING")) {
+      throw new Error("FAIL [negative — empty image]: expected IMAGE_MISSING error");
+    }
+    pass("validateHomeFragranceRecord — empty image path → IMAGE_MISSING error");
+  }
+
+  // 50. Missing description → warning, not error
+  {
+    const descErrors   = validationResult.errors.filter((i) => i.code === "DESCRIPTION_NOT_SET");
+    const descWarnings = validationResult.warnings.filter((i) => i.code === "DESCRIPTION_NOT_SET");
+    if (descErrors.length > 0) {
+      throw new Error("FAIL [negative — description severity]: DESCRIPTION_NOT_SET must be a warning, not an error");
+    }
+    if (descWarnings.length === 0) {
+      throw new Error("FAIL [negative — description severity]: DESCRIPTION_NOT_SET warning not found");
+    }
+    pass("validateHomeFragranceRecord — missing description is a warning (not an error)");
+  }
+
+  // 51. Empty range → error
+  {
+    const r = { ...record, range: "" };
+    const result = validateHomeFragranceRecord(r);
+    if (!result.errors.some((i) => i.code === "RANGE_REQUIRED")) {
+      throw new Error("FAIL [negative — empty range]: expected RANGE_REQUIRED error");
+    }
+    pass("validateHomeFragranceRecord — empty range → RANGE_REQUIRED error");
+  }
+
+  // 52. Invalid category → error
+  {
+    const r = { ...record, category: "fragrance" } as unknown as typeof record;
+    const result = validateHomeFragranceRecord(r);
+    if (!result.errors.some((i) => i.code === "CATEGORY_INVALID")) {
+      throw new Error("FAIL [negative — invalid category]: expected CATEGORY_INVALID error");
+    }
+    pass("validateHomeFragranceRecord — invalid category → CATEGORY_INVALID error");
+  }
 
   console.log("\n  All proofs passed.\n");
 }
