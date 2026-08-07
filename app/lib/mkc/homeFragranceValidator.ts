@@ -17,6 +17,7 @@
  * Description not set at scaffold stage    → warning only  (populated by Editorial Producer).
  */
 
+import { deriveSlug } from "./deriveSlug";
 import type { HomeFragranceKnowledge } from "./homeFragranceTypes";
 import type {
   ValidationGroup,
@@ -59,7 +60,7 @@ function checkIdentity(k: HomeFragranceKnowledge): ValidationIssue[] {
   }
 
   if (k.name && k.slug) {
-    const derived = k.name.toLowerCase().replace(/\s+/g, "-");
+    const derived = deriveSlug(k.name);
     if (k.slug !== derived) {
       issues.push(e("SLUG_FORMULA", g, "slug",
         `slug "${k.slug}" should be "${derived}" (derived from name "${k.name}")`));

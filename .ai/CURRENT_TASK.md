@@ -19,7 +19,7 @@ At the start of a new Claude Code session:
 ## Current Task
 
 **Status:** Complete
-**Program:** EP4-P3B — Home Fragrance Draft & Validation Foundation
+**Program:** EP4-P3BR — Correct Home Fragrance Quality Boundary
 
 **Goal:**
 Establish the scaffold → validate → draft chain for Home Fragrance knowledge:

@@ -73,20 +73,48 @@ function deriveConstName(slug: string): string {
 }
 
 // ── Section: Identity ─────────────────────────────────────────────────────────
+// catalogVersion and status are optional on HomeFragranceKnowledge.
+// When absent: rendered as a comment so the author can confirm values before promotion.
+// When present: rendered as a property preserving the exact supplied value.
+// The validator emits CATALOG_VERSION_MISSING / STATUS_NOT_SET warnings regardless.
 
 function renderIdentity(r: HomeFragranceKnowledge, ann: AnnotationMap): string {
-  return [
+  const lines: string[] = [
     `  // ── Identity ──────────────────────────────────────────────────────────────────`,
-    fieldLine("id",             renderStr(r.id),                      trailingAnnotation(ann, "id")),
-    fieldLine("slug",           renderStr(r.slug),                    trailingAnnotation(ann, "slug")),
-    fieldLine("brand",          renderStr(r.brand),                   trailingAnnotation(ann, "brand")),
-    fieldLine("name",           renderStr(r.name),                    trailingAnnotation(ann, "name")),
-    fieldLine("category",       renderStr(r.category),                trailingAnnotation(ann, "category")),
-    fieldLine("productType",    renderStr(r.productType),             trailingAnnotation(ann, "productType")),
-    fieldLine("range",          renderStr(r.range),                   trailingAnnotation(ann, "range")),
-    fieldLine("catalogVersion", renderStr(r.catalogVersion ?? "1.0"), trailingAnnotation(ann, "catalogVersion")),
-    fieldLine("status",         renderStr(r.status ?? "active"),      trailingAnnotation(ann, "status")),
-  ].join("\n");
+    fieldLine("id",          renderStr(r.id),          trailingAnnotation(ann, "id")),
+    fieldLine("slug",        renderStr(r.slug),        trailingAnnotation(ann, "slug")),
+    fieldLine("brand",       renderStr(r.brand),       trailingAnnotation(ann, "brand")),
+    fieldLine("name",        renderStr(r.name),        trailingAnnotation(ann, "name")),
+    fieldLine("category",    renderStr(r.category),    trailingAnnotation(ann, "category")),
+    fieldLine("productType", renderStr(r.productType), trailingAnnotation(ann, "productType")),
+    fieldLine("range",       renderStr(r.range),       trailingAnnotation(ann, "range")),
+  ];
+
+  if (r.catalogVersion !== undefined) {
+    lines.push(fieldLine("catalogVersion", renderStr(r.catalogVersion), trailingAnnotation(ann, "catalogVersion")));
+  } else {
+    const catVerAnn = ann.get("catalogVersion");
+    if (catVerAnn) {
+      lines.push(`  // catalogVersion: (not set — confirm before promotion)`);
+      lines.push(`  //   ${catVerAnn.join("\n  //   ")}`);
+    } else {
+      lines.push(`  // catalogVersion: (not set — confirm before promotion)`);
+    }
+  }
+
+  if (r.status !== undefined) {
+    lines.push(fieldLine("status", renderStr(r.status), trailingAnnotation(ann, "status")));
+  } else {
+    const statusAnn = ann.get("status");
+    if (statusAnn) {
+      lines.push(`  // status:         (not set — confirm "active" or "discontinued" before promotion)`);
+      lines.push(`  //   ${statusAnn.join("\n  //   ")}`);
+    } else {
+      lines.push(`  // status:         (not set — confirm "active" or "discontinued" before promotion)`);
+    }
+  }
+
+  return lines.join("\n");
 }
 
 // ── Section: Composition ──────────────────────────────────────────────────────

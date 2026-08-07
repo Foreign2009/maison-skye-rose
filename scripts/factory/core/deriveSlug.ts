@@ -1,14 +1,14 @@
 /**
- * Knowledge Factory — Slug Derivation
+ * Knowledge Factory — Slug Derivation (re-export)
  *
- * Single authoritative slug-derivation helper for the Knowledge Factory.
- * Used by intake catalogue matching, dashboard coverage calculations,
- * and any other factory module that maps a product title to a URL-safe slug.
+ * The canonical implementation now lives in app/lib/mkc/deriveSlug.ts so that
+ * both the factory pipeline and app/lib/mkc validators resolve from one source.
+ *
+ * All existing factory imports (intake, scaffold, DashboardService, BatchQueue,
+ * LifecycleScanner, index) continue to work unchanged through this re-export.
  *
  * Algorithm: lowercase + collapse whitespace to hyphens.
  * Do not change without verifying all derived slugs remain identical.
  */
 
-export function deriveSlug(name: string): string {
-  return name.toLowerCase().replace(/\s+/g, "-");
-}
+export { deriveSlug } from "../../../app/lib/mkc/deriveSlug";

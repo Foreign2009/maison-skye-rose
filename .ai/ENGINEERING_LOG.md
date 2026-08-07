@@ -39,6 +39,53 @@ Never edit or delete past entries.
 
 ## Log
 
+### 2026-08-07 — EP4-P3BR — Knowledge Platform Evolution / Correct Home Fragrance Quality Boundary
+
+**Participants:** Project Owner / Claude (Implementation Engineer)
+**Program:** EP4-P3BR — Home Fragrance Quality Boundary Integrity Correction
+
+**Decisions Made:**
+- Canonical slug implementation moved to `app/lib/mkc/deriveSlug.ts`. This is the correct location because `scripts/factory/` already imports from `app/lib/mkc/` (types, validator) — placing the canonical implementation in `app/lib/mkc/` allows both consumers to resolve it without inverting architecture. `scripts/factory/core/deriveSlug.ts` becomes a thin re-export; all existing factory consumers are unchanged. `app/lib/` → `scripts/` imports remain strictly prohibited and were not introduced.
+- `homeFragranceMerger.ts` type assertion removed. The pattern `{ ...record, ...result.fields } as HomeFragranceKnowledge` was replaced by: accumulate overrides as `Partial<HomeFragranceKnowledge>`, then `Object.assign({ ...scaffold }, accumulated)`. `Object.assign<T, U>(target: T, source: U): T & U` returns `HomeFragranceKnowledge & Partial<HomeFragranceKnowledge>`, which is a structural subtype of `HomeFragranceKnowledge` — TypeScript accepts it as the return value without an unchecked assertion. The fragrance `merger.ts` still uses its own pattern (not changed here — out of scope).
+- `HomeFragranceDraftBuilder.ts` truthfulness restored. `catalogVersion` and `status` are optional fields on `HomeFragranceKnowledge`. Rendering `?? "1.0"` or `?? "active"` would write fabricated values into the draft, which an author might inadvertently accept as real. The fix: absent fields render as comment lines (`// catalogVersion: (not set — confirm before promotion)`); present fields render the exact supplied value. The validator continues emitting `CATALOG_VERSION_MISSING` / `STATUS_NOT_SET` warnings — the distinction between validator (recommends) and draft builder (preserves) is now clean and intentional.
+- `scripts/mkc-coverage.ts` has a local `deriveSlug` function that was not changed. It is a standalone coverage analysis script, not part of the factory's production path, and was not listed as a required canonical consumer in EP4-P3BR.
+
+**Tasks Completed:**
+- `app/lib/mkc/deriveSlug.ts` created — canonical implementation.
+- `scripts/factory/core/deriveSlug.ts` updated to re-export from canonical location.
+- `app/lib/mkc/homeFragranceValidator.ts` updated to import and use `deriveSlug()`.
+- `scripts/factory/homeFragranceMerger.ts` rewritten — no type assertions; `Object.assign` pattern.
+- `scripts/factory/HomeFragranceDraftBuilder.ts` updated — `renderIdentity` renders absent `catalogVersion`/`status` as comments.
+- `scripts/factory/validate-home-fragrance.ts` extended from 52 to 61 proofs.
+- Governance updated: `PROJECT_STATUS.md`, `.ai/CURRENT_TASK.md`, `.ai/ENGINEERING_LOG.md`.
+
+**Tasks Started:**
+- None.
+
+**Build Result:** Pass — 187 routes, 0 TypeScript errors, 0 warnings.
+
+**Files Changed:**
+- `app/lib/mkc/deriveSlug.ts` — Created. Canonical slug implementation.
+- `scripts/factory/core/deriveSlug.ts` — Updated to re-export from canonical location.
+- `app/lib/mkc/homeFragranceValidator.ts` — Imports `deriveSlug`; removed inline algorithm.
+- `scripts/factory/homeFragranceMerger.ts` — Rewritten; no type assertions.
+- `scripts/factory/HomeFragranceDraftBuilder.ts` — `renderIdentity` truthfulness correction.
+- `scripts/factory/validate-home-fragrance.ts` — Extended from 52 to 61 proofs.
+- `PROJECT_STATUS.md` — EP4-P3BR entry added.
+- `.ai/CURRENT_TASK.md` — Updated to EP4-P3BR.
+- `.ai/ENGINEERING_LOG.md` — This entry.
+
+**Handoff:**
+- There is now exactly one implementation of the slug algorithm at `app/lib/mkc/deriveSlug.ts`. EP3-P7's single-source-of-truth guarantee holds.
+- `mergeHomeFragrance()` contains zero unchecked assertions.
+- `buildHomeFragranceDraft()` preserves absent metadata as absent.
+- The Home Fragrance quality boundary is completely trustworthy. EP4-P3C (first AI producer) may begin.
+
+**Open Questions Carried Forward:**
+- None.
+
+---
+
 ### 2026-08-07 — EP4-P3B — Knowledge Platform Evolution / Home Fragrance Draft & Validation Foundation
 
 **Participants:** Project Owner / Claude (Implementation Engineer)

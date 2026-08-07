@@ -85,6 +85,17 @@
  *     51. empty range → RANGE_REQUIRED error
  *     52. invalid category → CATEGORY_INVALID error
  *
+ *   EP4-P3BR corrections
+ *     53. mergeHomeFragrance — merged result has all required HomeFragranceKnowledge fields
+ *     54. draft WITHOUT catalogVersion — absent catalogVersion rendered as comment (not property)
+ *     55. draft WITHOUT status — absent status rendered as comment (not property)
+ *     56. draft WITH catalogVersion "1.0" — value rendered as property
+ *     57. draft WITH status "active" — value rendered as property
+ *     58. validator — CATALOG_VERSION_MISSING warning present in identity group
+ *     59. validator — STATUS_NOT_SET warning present in identity group
+ *     60. deriveSlug — "Rose Oud Candle" → "rose-oud-candle" (canonical derivation)
+ *     61. validator slug formula — discrepant slug produces SLUG_FORMULA error
+ *
  * No AI. No file writes. No factory log. No native records. No persistent state.
  */
 
@@ -96,9 +107,11 @@ import { HomeFragranceContextBuilder }   from "./core/HomeFragranceContextBuilde
 import { validateHomeFragranceRecord }   from "../../app/lib/mkc/homeFragranceValidator";
 import { mergeHomeFragrance }            from "./homeFragranceMerger";
 import { buildHomeFragranceDraft }       from "./HomeFragranceDraftBuilder";
+import { deriveSlug }                    from "../../app/lib/mkc/deriveSlug";
 import type { HomeFragranceIntake }      from "./types";
 import type { HomeFragranceProducerResult, FactoryConfig } from "./core/types";
 import type { HomeFragrancePipelineState } from "./types";
+import type { HomeFragranceKnowledge }   from "../../app/lib/mkc/homeFragranceTypes";
 
 // ── Test fixture ──────────────────────────────────────────────────────────────
 
@@ -590,6 +603,116 @@ async function main(): Promise<void> {
       throw new Error("FAIL [negative — invalid category]: expected CATEGORY_INVALID error");
     }
     pass("validateHomeFragranceRecord — invalid category → CATEGORY_INVALID error");
+  }
+
+  // ── 53–61. EP4-P3BR Corrections ────────────────────────────────────────────
+
+  console.log("\n  EP4-P3BR Corrections\n");
+
+  // 53. mergeHomeFragrance — all required HomeFragranceKnowledge fields present in merged result.
+  //     This is the runtime counterpart to the compilation proof: Object.assign returns
+  //     HomeFragranceKnowledge & Partial<HomeFragranceKnowledge>, which is structurally
+  //     assignable to HomeFragranceKnowledge — no type assertion was required.
+  {
+    const mergedEmpty = mergeHomeFragrance(record);
+    const requiredFields: Array<keyof HomeFragranceKnowledge> = [
+      "id", "slug", "brand", "name", "category", "productType", "range",
+      "profile", "season", "mood", "notes", "subtitle",
+      "vibe", "seasons", "signatureStyle", "recommendedFor",
+      "prices", "images", "bestSeller", "newArrival",
+    ];
+    for (const field of requiredFields) {
+      if (!(field in mergedEmpty)) {
+        throw new Error(`FAIL [merger structural integrity]: merged result missing required field "${field}"`);
+      }
+    }
+    pass("mergeHomeFragrance — merged result has all required HomeFragranceKnowledge fields");
+  }
+
+  // 54. Draft WITHOUT catalogVersion — absent catalogVersion rendered as comment, not property.
+  //     FIXTURE record has catalogVersion: undefined (not set by scaffold).
+  if (!draft.includes("// catalogVersion:")) {
+    throw new Error('FAIL [draft absent catalogVersion]: expected "// catalogVersion:" comment for absent field');
+  }
+  if (draft.includes('catalogVersion: "')) {
+    throw new Error('FAIL [draft absent catalogVersion]: must not render absent catalogVersion as a property value');
+  }
+  pass("draft — absent catalogVersion rendered as comment (not fabricated property)");
+
+  // 55. Draft WITHOUT status — absent status rendered as comment, not property.
+  //     FIXTURE record has status: undefined (not set by scaffold).
+  if (!draft.includes("// status:")) {
+    throw new Error('FAIL [draft absent status]: expected "// status:" comment for absent field');
+  }
+  if (draft.includes('catalogVersion: "') || draft.includes('status        : "')) {
+    throw new Error('FAIL [draft absent status]: must not render absent status as a property value');
+  }
+  pass("draft — absent status rendered as comment (not fabricated property)");
+
+  // 56–57. Draft WITH catalogVersion and status — renders the supplied exact values.
+  {
+    const recordWithMeta = { ...record, catalogVersion: "1.0", status: "active" };
+    const validWithMeta  = validateHomeFragranceRecord(recordWithMeta);
+    const draftWithMeta  = buildHomeFragranceDraft(recordWithMeta, validWithMeta, "ep4-p3br-test");
+
+    // 56. catalogVersion "1.0" rendered as property (no fabrication — this IS the record value)
+    if (!draftWithMeta.includes('catalogVersion: "1.0"')) {
+      throw new Error('FAIL [draft with catalogVersion]: expected catalogVersion: "1.0" in draft');
+    }
+    if (draftWithMeta.includes("// catalogVersion:")) {
+      throw new Error('FAIL [draft with catalogVersion]: must not render present catalogVersion as comment');
+    }
+    pass('draft — supplied catalogVersion "1.0" rendered as property');
+
+    // 57. status "active" rendered as property.
+    //     fieldLine pads "status" to 14 chars, producing `  status        : "active",`.
+    if (!draftWithMeta.includes('"active"')) {
+      throw new Error('FAIL [draft with status]: expected status value "active" in draft');
+    }
+    if (draftWithMeta.includes("// status:")) {
+      throw new Error('FAIL [draft with status]: must not render present status as comment');
+    }
+    pass('draft — supplied status "active" rendered as property');
+  }
+
+  // 58. Validator — CATALOG_VERSION_MISSING warning in identity group.
+  {
+    const hasCatVerWarn = validationResult.groups.identity.issues.some(
+      (i) => i.code === "CATALOG_VERSION_MISSING" && i.severity === "warning",
+    );
+    if (!hasCatVerWarn) {
+      throw new Error("FAIL [validator identity]: CATALOG_VERSION_MISSING warning not found");
+    }
+    pass("validator — CATALOG_VERSION_MISSING warning in identity group");
+  }
+
+  // 59. Validator — STATUS_NOT_SET warning in identity group.
+  {
+    const hasStatusWarn = validationResult.groups.identity.issues.some(
+      (i) => i.code === "STATUS_NOT_SET" && i.severity === "warning",
+    );
+    if (!hasStatusWarn) {
+      throw new Error("FAIL [validator identity]: STATUS_NOT_SET warning not found");
+    }
+    pass("validator — STATUS_NOT_SET warning in identity group");
+  }
+
+  // 60. Canonical slug derivation: "Rose Oud Candle" → "rose-oud-candle".
+  assertEq(
+    "deriveSlug('Rose Oud Candle') → 'rose-oud-candle'",
+    "rose-oud-candle",
+    deriveSlug("Rose Oud Candle"),
+  );
+
+  // 61. Validator slug formula uses canonical deriveSlug behaviour:
+  //     a record with a discrepant slug must produce SLUG_FORMULA error.
+  {
+    const wrongSlugRecord: HomeFragranceKnowledge = { ...record, slug: "wrong-slug", id: "wrong-slug" };
+    const wrongSlugResult = validateHomeFragranceRecord(wrongSlugRecord);
+    if (!wrongSlugResult.errors.some((i) => i.code === "SLUG_FORMULA")) {
+      throw new Error("FAIL [validator slug formula]: expected SLUG_FORMULA error for discrepant slug");
+    }
+    pass("validator slug formula — discrepant slug detected via canonical deriveSlug");
   }
 
   console.log("\n  All proofs passed.\n");
