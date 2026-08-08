@@ -1,0 +1,41 @@
+{
+  "batchId": "mid-year-2026",
+  "researchedBy": "Gemini",
+  "researchDate": "2026-08-08",
+  "_schema": {
+    "_comment": "POPULATE THIS FILE with one entry per unique supplierName from mid-year-2026-supplier.json.",
+    "_supplierName": "REQUIRED. Must match the supplierName in mid-year-2026-supplier.json exactly (case-insensitive trimmed match).",
+    "_canonicalName": "REQUIRED. Research-proposed canonical name. If unknown, leave as empty string — the ingestion script will use supplierName as provisional.",
+    "_brand": "REQUIRED. Research-proposed canonical brand. If unknown, leave as empty string.",
+    "_launchYear": "OPTIONAL. Year the fragrance was launched. Integer.",
+    "_marketedGender": "OPTIONAL. One of: 'female', 'male', 'unisex', 'shared'.",
+    "_sourceConfidence": "REQUIRED. One of: 'high', 'medium', 'low'. Reflects Gemini's certainty about the canonical identity.",
+    "_sourceNotes": "OPTIONAL. Free-text notes from Gemini research.",
+    "_possibleNameIssue": "REQUIRED boolean. true if the supplier name differs from the canonical name in a way that needs editorial review.",
+    "_nameIssueExplanation": "OPTIONAL. Required when possibleNameIssue is true. Explain the discrepancy.",
+    "_knowledgeFields": "fragranceFamily, topNotes, heartNotes, baseNotes, mainAccords, perfumer are preserved here for future Knowledge Factory use. They are NOT ingested into the IdentityRecord.",
+    "_confidenceGuide": {
+      "high": "Research is certain: canonical name, brand, and launch year all verified from multiple sources.",
+      "medium": "Plausible canonical proposal but one detail is uncertain or sources conflict.",
+      "low": "Research could not verify the exact fragrance — supplier terminology may be ambiguous."
+    },
+    "_example": {
+      "supplierName": "Hermes 24 Faubourg",
+      "canonicalName": "24 Faubourg",
+      "brand": "Hermès",
+      "launchYear": 1995,
+      "marketedGender": "female",
+      "fragranceFamily": "Floral",
+      "topNotes": ["Mandarin", "Aldehydes", "Hyacinth"],
+      "heartNotes": ["Ylang-ylang", "Iris", "White Cedar"],
+      "baseNotes": ["Sandalwood", "Amber", "Musk"],
+      "mainAccords": ["floral", "powdery", "musky"],
+      "perfumer": "Maurice Roucel",
+      "sourceConfidence": "high",
+      "sourceNotes": "Iconic Hermès floral; canonical name confirmed across Fragrantica and brand website.",
+      "possibleNameIssue": true,
+      "nameIssueExplanation": "Supplier lists brand in the name ('Hermes 24 Faubourg') but canonical name is '24 Faubourg' without the brand prefix."
+    }
+  },
+  "entries": []
+}

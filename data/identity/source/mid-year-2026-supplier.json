@@ -1,0 +1,18 @@
+{
+  "batchId": "mid-year-2026",
+  "description": "Maison Skye & Rose Mid-Year 2026 Supplier New Arrivals",
+  "sourceReference": "mid-year-2026-supplier-list",
+  "_schema": {
+    "_comment": "POPULATE THIS FILE with the 26 unique fragrance rows from the Mid-Year 2026 supplier list.",
+    "_supplierName": "REQUIRED. Verbatim from the supplier catalogue. Never corrected, never normalised.",
+    "_supplierCategory": "OPTIONAL. Verbatim — 'L' (Ladies), 'M' (Men), 'UNISEX'. Preserve exact casing.",
+    "_sourceReference": "OPTIONAL. Row reference, e.g. 'Mid-Year 2026 Supplier List, Row 14'.",
+    "_duplicateHandling": "If the same fragrance appears under L AND M, include both rows with the same supplierName. The ingestion script collapses them into one identity with two SupplierIdentity entries.",
+    "_example": {
+      "supplierName": "Hermes 24 Faubourg",
+      "supplierCategory": "L",
+      "sourceReference": "Mid-Year 2026 Supplier List, Row 1"
+    }
+  },
+  "entries": []
+}
