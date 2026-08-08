@@ -31,7 +31,8 @@
     "mip:ingest:2026:dry": "npx tsx scripts/identity/ingest-2026-new-arrivals.ts --dry-run",
     "mip:ingest:2026": "npx tsx scripts/identity/ingest-2026-new-arrivals.ts",
     "mip:validate:source:2026": "npx tsx scripts/identity/validate-2026-identity-source.ts",
-    "mip:validate:editorial": "npx tsx scripts/identity/validate-identity-editorial.ts"
+    "mip:validate:editorial": "npx tsx scripts/identity/validate-identity-editorial.ts",
+    "mip:validate:admin": "npx tsx scripts/identity/validate-identity-editorial-admin.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.110.0",

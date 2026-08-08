@@ -16,14 +16,22 @@ const NAV_ITEMS = [
   { href: "/admin/alert-center",               label: "Alert Center"            },
   { href: "/admin/executive-digest",           label: "Executive Digest"        },
   { href: "/admin/executive-report",           label: "Executive Report"        },
+  { href: "/admin/identity",                   label: "Identity Review"         },
 ] as const;
+
+// /admin is the only root item — matched exactly to avoid active-for-all-sub-routes.
+// All other items use startsWith so /admin/identity/[id] shows Identity Review as active.
+function isActive(href: string, pathname: string): boolean {
+  if (href === "/admin") return pathname === "/admin";
+  return pathname === href || pathname.startsWith(href + "/");
+}
 
 export default function AdminNavigation() {
   const pathname = usePathname();
   return (
     <nav className="flex items-center gap-4">
       {NAV_ITEMS.map(({ href, label }) =>
-        pathname === href ? (
+        isActive(href, pathname) ? (
           <span key={href} className="text-xs font-bold text-white">
             {label}
           </span>

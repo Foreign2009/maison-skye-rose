@@ -1,17 +1,17 @@
 # Project Status — Maison Skye & Rose
 
-**Last updated:** 2026-08-08
+**Last updated:** 2026-08-09
 **Phase:** Launch Execution
-**Build status:** PASS — 187 routes, 0 TypeScript errors, 0 warnings
+**Build status:** PASS — 188 routes, 0 TypeScript errors, 0 warnings
 
 ---
 
 ## Current Engineering Program
 
-**Program:** EP5-P3B — Establish Identity Editorial Transaction Service — COMPLETE
+**Program:** EP5-P3C — Establish Identity Review Admin Interface — COMPLETE
 **Sprint:** EP5
-**Gate:** EP5-P3C — Identity Review Admin Interface. Transaction service ready. Next: review queue page, identity detail page, Server Actions wiring to IdentityEditorialService.
-**Objective:** Human governance domain established. 7-action editorial transaction service (verify, correct-canonical, confirm-alias, request-more-research, elevate, reject, dispute) with injected clock, repository abstraction, optimistic concurrency, and canonical collision guard. 100/100 proofs pass. 0 verified identities yet — editorial review has not yet been performed on the 26 candidate registry. Knowledge Factory gate blocked until first verified identity exists.
+**Gate:** EP5-P4 — Knowledge Factory Identity Integration. Admin interface ready. Next: connect verified identities to Knowledge Factory eligibility gate.
+**Objective:** Human governance admin interface established. Review queue page (`/admin/identity`) and identity detail page (`/admin/identity/[id]`) with 7 Server Actions wired to `IdentityEditorialService`. Auth boundary enforced at both page level (redirect) and Server Action level (assertAuth). Browser never reads registry directly. 54/54 proofs pass. Registry unchanged: 26/10/16/0.
 
 ---
 
@@ -39,11 +39,11 @@ The Maison Fragrance Academy (EP13) is in the planning stage.
 | Build result | PASS |
 | TypeScript errors | 0 |
 | Warnings | 0 |
-| Total pages | 187 |
+| Total pages | 188 |
 | Product pages (SSG) | 93 |
 | Static pages | 25 |
-| Dynamic routes | 12 |
-| Last verified | 2026-08-08 |
+| Dynamic routes | 14 |
+| Last verified | 2026-08-09 |
 
 Verify: `npm run build`
 
@@ -97,6 +97,7 @@ Verify: `npm run build`
 | EP5 | EP5-P2C  | Ingest Mid-Year 2026 Identity Candidates | Complete — 2026-08-08 |
 | EP5 | EP5-P3A  | Identity Editorial Review Architecture Audit | Complete — 2026-08-08 |
 | EP5 | EP5-P3B  | Establish Identity Editorial Transaction Service | Complete — 2026-08-08 |
+| EP5 | EP5-P3C  | Establish Identity Review Admin Interface | Complete — 2026-08-09 |
 
 `FOUNDATIONS/00_FOUNDERS_LETTER.md` — The permanent founder's letter to Skye, Rose, future employees, and future stewards. *Why we began.*
 `FOUNDATIONS/01_SKYE_AND_ROSE_COVENANT.md` — The institutional promise: to customers, products, technology, and future generations. *What we promise.*
@@ -107,6 +108,8 @@ Verify: `npm run build`
 **EP2-P1 Audit Findings (2026-08-05):** Overall institutional alignment score 7.1/10. Intelligence layer (Fragrance Profile, MaisonCompanion, Concierge, Shop, Quiz) rated Aligned. Critical gaps: About page (3/10 — fails Foundation narrative standard), catalogue count inconsistency (93 vs 465+), "Loyal Customer" terminology, post-purchase experience absent, checkout UX cold. Recommended sequence: EP2-P2 (About page rewrite) → EP2-P3 (checkout + post-purchase) → EP2-P4 (testimonials) → EP2-P5 (concierge voice) → EP2-P6 (language pass).
 
 **EP2-P3 About Page Foundation Alignment (2026-08-05):** `app/about/page.tsx` rewritten from 4 generic paragraphs to 9 Foundation-aligned sections: Opening, A Compliment Changed Everything, Why Skye & Rose, What We Believe, Confidence Is What We Are Here to Deliver, Knowledge Before Recommendation, Accessible Luxury, Growing Together, Our Promise, An Invitation. Count inconsistency removed (465+ → timeless language). OG and Twitter metadata added. Architecture preserved. Build passes: 187 routes, 0 TypeScript errors, 0 warnings.
+
+**EP5-P3C Establish Identity Review Admin Interface (2026-08-09):** Human governance admin interface established. Two new Next.js 16 App Router routes: `/admin/identity` (review queue) and `/admin/identity/[id]` (identity detail). Architecture enforces a strict browser→Server Component→Server Action→auth boundary→IdentityEditorialService→repository→persistence chain. Browser never reads or writes `identity-registry.json` directly. All 7 Server Actions in `app/admin/identity/actions.ts` call `await assertAuth()` as the first statement (independent of page-level auth); `computeSessionToken()` not exported (avoids `"use server"` async-only export constraint). Client components: `IdentityReviewList.tsx` (queue with 4 filter dimensions: status, recommendedAction, researchConfidence, possibleNameIssue) and `IdentityReviewDetail.tsx` (full detail with 8 read sections and 7 action panels, using `useTransition` for pending state, `router.refresh()` after success, and stale detection via `isStale` state). Server Components: queue page redirects if unauthenticated; detail page awaits `params` (Next.js 16 Promise pattern), calls `notFound()` for unknown IDs, uses `key={detail.record.updatedAt}` to remount client component after each successful mutation (resets all local state). Canonical correction: three-state field handling for `launchYear`/`marketedGender` (absent=keep, null=clear, number=set) using spread objects — no unsafe type assertions. Alias confirmation explicit — supplierName never auto-converted. Correction does not auto-verify. Rejection and dispute both require reason. Actor is a free-text audit label. AdminNavigation extended to 13 items with `isActive()` helper using `startsWith` for sub-routes without breaking `/admin` root exact match. `scripts/identity/validate-identity-editorial-admin.ts`: 54 deterministic proofs across 5 sections (AUTH/BOUNDARY, QUEUE, DETAIL, ACTIONS, SAFETY). `assert` function uses `asserts condition` return type for TypeScript type narrowing. Validation: 54/54 ✓. Regression: 69/69, 85/85, 39/39, 100/100 ✓. Registry SHA-256: `a955e1303ab53ae194a9af33bd47f9b36aff3e84d59bc574a9eb12ef0394d41f` — unchanged. Registry state: 26/10/16/0 — unchanged. Build: 188 routes, 0 TypeScript errors, 0 warnings. 0 AI calls. 0 real editorial decisions. 0 registry writes.
 
 **EP5-P3B Establish Identity Editorial Transaction Service (2026-08-08):** Human governance domain and transaction service established. `app/lib/identity/editorial/` created as the editorial domain. Architecture: injected clock (`IdentityEditorialClock`) ensures all timestamps are deterministic in tests; repository abstraction (`IdentityEditorialRepository`) isolates tests from real filesystem; `_transact()` private core enforces load → stale check → mutate → validate → collision → save on every mutation; optimistic concurrency via `expectedUpdatedAt` on every input. Seven actions: `verifyIdentity` (pending-review | disputed → verified; requires clean canonical name, canonicalBrand, actor; clean-name gate rejects " / ", "(Note:", "(unverified)"), `correctCanonical` (any status; no-op guard; launchYear/marketedGender settable or clearable via null), `confirmAlias` (any status; cross-record collision detected), `requestMoreResearch` (pending-review → candidate; reason required), `elevate` (candidate → pending-review; reason required), `rejectIdentity` (candidate | pending-review | disputed → rejected; verified blocked — must dispute first), `disputeIdentity` (verified → disputed; reason required). Two read projections: `getReviewQueue()` (filtered, ordered: pending-review → candidate → disputed → id asc; campaign enrichment optional) and `getIdentityReview()` (full detail + verification eligibility gate + canonical collision warning). Three new `IdentityHistoryEventType` values: `rejected`, `candidate-promoted`, `candidate-demoted`. `isIdentityKnowledgeEligible()` pure function: returns true only for `verified` status (not integrated into factory — EP5-P4). `editorial/index.ts` exports `PRODUCTION_CLOCK` and `createProductionRepository()` for future Server Actions. `isCleanCanonicalProposal` inlined in service (not imported from scripts/) — server boundary preserved. Evidence immutability: all spread-reconstruct operations explicitly preserve `evidence: record.evidence`. Confidence independence: no mutation modifies confidence.score/basis/lastEvaluatedAt. `validate-identity-editorial.ts`: 100 proofs across 16 sections. Real registry hash verified before/after — byte-identical. `mip:validate:editorial` script added. Validation: 69/69 (foundation), 85/85 (resolver), 39/39 (source), 100/100 (editorial). Build: 187 routes, 0 TypeScript errors, 0 warnings. 0 AI calls. 0 real registry writes. 0 UI/route changes.
 

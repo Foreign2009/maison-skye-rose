@@ -39,6 +39,56 @@ Never edit or delete past entries.
 
 ## Log
 
+### 2026-08-09 — EP5-P3C — Establish Identity Review Admin Interface
+
+**Participants:** Project Owner / Claude (Implementation Engineer)
+**Program:** EP5-P3C — Human governance admin interface for the Maison Identity Platform. Two new admin routes and 7 Server Actions wired to IdentityEditorialService.
+
+**Decisions Made:**
+- `computeSessionToken()` NOT exported from `actions.ts`. Under `"use server"`, all module-level exports must be async. `computeSessionToken` is synchronous. Keeping it unexported avoids the constraint and is the correct security posture — no external caller needs access to the session token computation.
+- `assert(condition, message): asserts condition` — TypeScript assertion function return type used to enable type narrowing after `assert(result.success === true, ...)` in the validation script, avoiding unsafe type casts. This is a pure compile-time annotation; runtime behavior is identical.
+- Proof 409 (stale-review) was written to use `assertThrows`, but `_transact` returns `{ success: false, kind: "stale-review" }` rather than throwing `StaleReviewError`. Fixed proof to check the returned result. The `catchStale` function in `actions.ts` is therefore dead code (the service never throws for stale), but it is harmless and architecturally defensive.
+- Test record IDs required exactly 6 decimal digits (`^MIP-\d{6}$`). Two earlier replace_all passes produced 5-digit IDs ("MIP-90001"–"MIP-90009") and T-prefixed IDs ("MIP-T00010"–"MIP-T00013"). A third pass corrected all to valid 6-digit numeric IDs ("MIP-999001"–"MIP-999013"). This was a validation script maintenance action — no production records or application code affected.
+- `key={detail.record.updatedAt}` on IdentityReviewDetail in the Server Component causes React to remount the client component after each successful mutation. This resets `activeAction`, `isStale`, `feedback`, and all form state cleanly without requiring explicit reset logic in the client.
+- `isActive()` helper in AdminNavigation: `/admin` uses exact match; all other nav items use `startsWith(href + "/")` to correctly highlight the active item for sub-routes like `/admin/identity/MIP-000001`.
+
+**Tasks Completed:**
+- `app/admin/identity/actions.ts` — 7 Server Actions (assertAuth on every action). NEW.
+- `app/admin/identity/IdentityReviewList.tsx` — queue client component with 4 filter dimensions. NEW.
+- `app/admin/identity/page.tsx` — queue Server Component with auth redirect. NEW.
+- `app/admin/identity/IdentityReviewDetail.tsx` — detail client component with 8 read sections and 7 action panels. NEW.
+- `app/admin/identity/[id]/page.tsx` — detail Server Component (await params, notFound). NEW.
+- `app/admin/components/AdminNavigation.tsx` — 13th nav item + isActive() helper. MODIFIED.
+- `scripts/identity/validate-identity-editorial-admin.ts` — 54-proof admin validation suite. NEW.
+- `package.json` — `mip:validate:admin` script added. MODIFIED.
+
+**Tasks Started:**
+- None. EP5-P3C is complete.
+
+**Build Result:** Pass — 188 routes, 0 TypeScript errors, 0 warnings.
+
+**Files Changed:**
+- `app/admin/identity/actions.ts` (NEW)
+- `app/admin/identity/IdentityReviewList.tsx` (NEW)
+- `app/admin/identity/page.tsx` (NEW)
+- `app/admin/identity/IdentityReviewDetail.tsx` (NEW)
+- `app/admin/identity/[id]/page.tsx` (NEW)
+- `app/admin/components/AdminNavigation.tsx` (MODIFIED)
+- `scripts/identity/validate-identity-editorial-admin.ts` (NEW)
+- `package.json` (MODIFIED)
+- `PROJECT_STATUS.md` (MODIFIED)
+- `.ai/CURRENT_TASK.md` (MODIFIED)
+- `.ai/ENGINEERING_LOG.md` (MODIFIED)
+
+**Handoff:**
+- EP5-P3C complete. Registry unchanged: 26/10/16/0. SHA-256: a955e1303ab53ae194a9af33bd47f9b36aff3e84d59bc574a9eb12ef0394d41f.
+- Next: first editorial session using the admin interface to verify identities. Once at least one verified identity exists, EP5-P4 (Knowledge Factory Identity Integration) can proceed.
+
+**Open Questions Carried Forward:**
+- None.
+
+---
+
 ### 2026-08-08 — EP5-P2C — Ingest Mid-Year 2026 Identity Candidates
 
 **Participants:** Project Owner / Claude (Implementation Engineer)
