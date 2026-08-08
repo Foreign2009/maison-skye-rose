@@ -738,17 +738,21 @@ proof("704: canonical identity holds no Maison product reference — separation 
 
 console.log("  [Section 8] Persistence Foundation\n");
 
-proof("801: empty identity-registry.json loads successfully", () => {
+proof("801: identity-registry.json loads successfully with correct version", () => {
   const data = loadIdentityRegistry();
   assert(data.version === "0.1.0", `Expected version 0.1.0, got "${data.version}"`);
   assert(Array.isArray(data.identities), "identities should be an array");
-  assert(data.identities.length === 0, "identities should be empty in EP5-P1");
+  // EP5-P2C complete: 26 candidate identities persisted by mid-year-2026 campaign
+  assert(data.identities.length === 26, `Expected 26 identities after EP5-P2C, found ${data.identities.length}`);
 });
 
-proof("802: no supplier identities persisted in EP5-P1", () => {
+proof("802: 26 candidate identities persisted by EP5-P2C mid-year-2026 campaign", () => {
   const data = loadIdentityRegistry();
-  assert(data.identities.length === 0,
-    `Expected 0 persisted identities in EP5-P1, found ${data.identities.length}`);
+  assert(data.identities.length === 26,
+    `Expected 26 persisted identities after EP5-P2C, found ${data.identities.length}`);
+  // All persisted records must be candidate or pending-review (none verified)
+  const verified = data.identities.filter(r => r.status === "verified");
+  assert(verified.length === 0, `Expected 0 verified identities, found ${verified.length}`);
 });
 
 // ══════════════════════════════════════════════════════════════════════════════

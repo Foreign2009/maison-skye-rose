@@ -39,6 +39,60 @@ Never edit or delete past entries.
 
 ## Log
 
+### 2026-08-08 — EP5-P2C — Ingest Mid-Year 2026 Identity Candidates
+
+**Participants:** Project Owner / Claude (Implementation Engineer)
+**Program:** EP5-P2C — First real population of the Maison Identity Platform registry. 26 Mid-Year 2026 candidate fragrance identities written.
+
+**Decisions Made:**
+- Proof assertions 801/802 in `validate-identity-foundation.ts` were written during EP5-P1 to assert the registry was empty. After the real write, these proofs correctly failed. Updated to assert the EP5-P2C completion state (26 records, 0 verified). This is a proof maintenance action — not a regression.
+- Proof 602 in `validate-2026-identity-source.ts` asserted "registry remains empty." Updated to "registry holds exactly 26 EP5-P2C identities" — the invariant this proof actually guards (the validation script does not modify the registry) remains enforced; only the expected count changed.
+- The resolver post-write proof verified via the 85/85 resolver validation suite (which already includes lifecycle invariant proofs 207, 208, 801 confirming that only "verified" identities resolve). The inline TSX resolver test had ESM/CJS module resolution issues in inline mode; the full validation suite is definitive.
+- Idempotency confirmed: a second dry run immediately after the real write correctly detected all 26 records as already-ingested and exited without proposing new IDs or creating a second batch.
+- `.bak` file (`identity-registry.json.bak`) created by `saveIdentityRegistry()`. Not committed — operational rollback artifact per repository policy.
+
+**Tasks Completed:**
+- `npm run mip:ingest:2026` — real write executed once. 26 identities written atomically.
+- `app/lib/identity/data/identity-registry.json` — 26 IdentityRecords, MIP-000001–MIP-000026.
+- `app/lib/identity/data/campaigns/mid-year-2026-campaign.json` — campaign report.
+- `app/lib/identity/data/campaigns/mid-year-2026-editorial.json` — editorial review batch.
+- `scripts/identity/validate-identity-foundation.ts` — proofs 801/802 updated to EP5-P2C state.
+- `scripts/identity/validate-2026-identity-source.ts` — proof 602 updated to EP5-P2C state.
+- `PROJECT_STATUS.md` — EP5-P2C, EP5-P2C-R, EP5-P2CR entries added to Foundation Programme table.
+- `.ai/CURRENT_TASK.md` — Updated to EP5-P2C completion status.
+- `.ai/ENGINEERING_LOG.md` — This entry.
+
+**Tasks Started:**
+- None. EP5-P2C complete. Next gate: EP5-P3 Identity Editorial Review.
+
+**Build Result:** Pass — 187 routes, 0 TypeScript errors, 0 warnings
+- `npm run mip:validate` → 69/69 (after proof update)
+- `npm run mip:validate:resolver` → 85/85
+- `npm run mip:validate:source:2026` → 39/39 (after proof update)
+- `npm run mip:ingest:2026:dry` (idempotency) → 26/26 already-ingested, no new records
+
+**Files Changed:**
+- `app/lib/identity/data/identity-registry.json` (26 records written)
+- `app/lib/identity/data/campaigns/mid-year-2026-campaign.json` (NEW)
+- `app/lib/identity/data/campaigns/mid-year-2026-editorial.json` (NEW)
+- `scripts/identity/validate-identity-foundation.ts` (proofs 801/802)
+- `scripts/identity/validate-2026-identity-source.ts` (proof 602)
+- `PROJECT_STATUS.md`
+- `.ai/CURRENT_TASK.md`
+- `.ai/ENGINEERING_LOG.md`
+
+**Handoff:**
+- Registry is live. 26 candidates are ready for editorial review.
+- `app/lib/identity/data/campaigns/mid-year-2026-editorial.json` contains the 26 entries with both provisional canonical names and preserved research proposals for each.
+- The 4 provisional records (MIP-000005, MIP-000010, MIP-000021, MIP-000022) require human canonical resolution before they can advance to `verified`.
+- The 7 Category A records (MIP-000001, 000006, 000008, 000009, 000012, 000013, 000024) have high-confidence proposals ready for editorial confirmation.
+- No Knowledge Factory (MKC generation) may run for these 26 until editorial verification.
+
+**Open Questions Carried Forward:**
+- None. The identity ingestion pipeline is fully operational and the first registry population is complete.
+
+---
+
 ### 2026-08-08 — EP5-P2C-R — Protect Candidate Canonical Identity
 
 **Participants:** Project Owner / Claude (Implementation Engineer)

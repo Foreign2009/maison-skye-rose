@@ -1,4 +1,1471 @@
 {
   "version": "0.1.0",
-  "identities": []
+  "identities": [
+    {
+      "id": "MIP-000001",
+      "supplierIdentities": [
+        {
+          "supplierName": "Hermes 24 Faubourg",
+          "supplierCategory": "L",
+          "sourceReference": "mid-year-2026::hermes 24 faubourg"
+        }
+      ],
+      "canonicalIdentity": {
+        "canonicalName": "24 Faubourg",
+        "canonicalBrand": "Hermès",
+        "launchYear": 1995,
+        "marketedGender": "female",
+        "category": "fragrance"
+      },
+      "aliases": [],
+      "evidence": [
+        {
+          "evidenceId": "MIP-000001-ev-sup",
+          "type": "supplier-catalogue",
+          "sourceName": "Mid-Year 2026 Supplier List",
+          "sourceReference": "mid-year-2026::hermes 24 faubourg",
+          "observedValue": "Hermes 24 Faubourg",
+          "notes": "Supplier group(s): L.",
+          "createdAt": "2026-08-08T00:00:00.000Z"
+        },
+        {
+          "evidenceId": "MIP-000001-ev-res",
+          "type": "research",
+          "sourceName": "Gemini Research — Mid-Year 2026",
+          "sourceReference": "mid-year-2026-research",
+          "observedValue": "24 Faubourg",
+          "notes": "Research confidence: high. Canonical name verified as 24 Faubourg by Hermès.",
+          "createdAt": "2026-08-08T00:00:00.000Z"
+        }
+      ],
+      "confidence": {
+        "score": 70,
+        "basis": "Candidate ingestion (mid-year-2026): research confidence high, no name issue. Proposed: \"24 Faubourg\" by \"Hermès\". Ready for editorial verification."
+      },
+      "status": "pending-review",
+      "history": [
+        {
+          "timestamp": "2026-08-08T00:00:00.000Z",
+          "event": "created",
+          "summary": "Candidate identity created by EP5-P2C controlled ingestion (mid-year-2026 campaign). Category A: pending-review.",
+          "actor": "EP5-P2C:mid-year-2026"
+        }
+      ],
+      "createdAt": "2026-08-08T00:00:00.000Z",
+      "updatedAt": "2026-08-08T00:00:00.000Z"
+    },
+    {
+      "id": "MIP-000002",
+      "supplierIdentities": [
+        {
+          "supplierName": "YSL Libre Berry Crush",
+          "supplierCategory": "L",
+          "sourceReference": "mid-year-2026::ysl libre berry crush"
+        }
+      ],
+      "canonicalIdentity": {
+        "canonicalName": "YSL Libre Berry Crush",
+        "category": "fragrance"
+      },
+      "aliases": [],
+      "evidence": [
+        {
+          "evidenceId": "MIP-000002-ev-sup",
+          "type": "supplier-catalogue",
+          "sourceName": "Mid-Year 2026 Supplier List",
+          "sourceReference": "mid-year-2026::ysl libre berry crush",
+          "observedValue": "YSL Libre Berry Crush",
+          "notes": "Supplier group(s): L.",
+          "createdAt": "2026-08-08T00:00:00.000Z"
+        },
+        {
+          "evidenceId": "MIP-000002-ev-res",
+          "type": "research",
+          "sourceName": "Gemini Research — Mid-Year 2026",
+          "sourceReference": "mid-year-2026-research",
+          "observedValue": "(none proposed)",
+          "notes": "Research confidence: low. No canonical name proposed — supplier terminology used as provisional. No official or verifiable release under the name 'Libre Berry Crush' exists as an official YSL flanker.",
+          "createdAt": "2026-08-08T00:00:00.000Z"
+        },
+        {
+          "evidenceId": "MIP-000002-ev-prov",
+          "type": "editorial",
+          "sourceName": "EP5-P2C Ingestion Engine",
+          "notes": "Canonical identity unresolved — supplier terminology temporarily preserved as candidate display identity pending additional research.",
+          "createdAt": "2026-08-08T00:00:00.000Z"
+        }
+      ],
+      "confidence": {
+        "score": 20,
+        "basis": "Candidate ingestion (mid-year-2026): no canonical research proposal available. Supplier terminology preserved as provisional canonical name. Requires additional research."
+      },
+      "status": "candidate",
+      "history": [
+        {
+          "timestamp": "2026-08-08T00:00:00.000Z",
+          "event": "created",
+          "summary": "Candidate identity created by EP5-P2C controlled ingestion (mid-year-2026 campaign). Category C: candidate.",
+          "actor": "EP5-P2C:mid-year-2026"
+        }
+      ],
+      "createdAt": "2026-08-08T00:00:00.000Z",
+      "updatedAt": "2026-08-08T00:00:00.000Z"
+    },
+    {
+      "id": "MIP-000003",
+      "supplierIdentities": [
+        {
+          "supplierName": "Kayali Eden Plush Pear 23",
+          "supplierCategory": "L",
+          "sourceReference": "mid-year-2026::kayali eden plush pear 23"
+        }
+      ],
+      "canonicalIdentity": {
+        "canonicalName": "Kayali Eden Plush Pear 23",
+        "category": "fragrance"
+      },
+      "aliases": [],
+      "evidence": [
+        {
+          "evidenceId": "MIP-000003-ev-sup",
+          "type": "supplier-catalogue",
+          "sourceName": "Mid-Year 2026 Supplier List",
+          "sourceReference": "mid-year-2026::kayali eden plush pear 23",
+          "observedValue": "Kayali Eden Plush Pear 23",
+          "notes": "Supplier group(s): L.",
+          "createdAt": "2026-08-08T00:00:00.000Z"
+        },
+        {
+          "evidenceId": "MIP-000003-ev-res",
+          "type": "research",
+          "sourceName": "Gemini Research — Mid-Year 2026",
+          "sourceReference": "mid-year-2026-research",
+          "observedValue": "(none proposed)",
+          "notes": "Research confidence: low. No canonical name proposed — supplier terminology used as provisional. Existing Kayali Eden fragrance is Eden Juicy Apple | 01; 'Eden Plush Pear 23' is unverified.",
+          "createdAt": "2026-08-08T00:00:00.000Z"
+        },
+        {
+          "evidenceId": "MIP-000003-ev-prov",
+          "type": "editorial",
+          "sourceName": "EP5-P2C Ingestion Engine",
+          "notes": "Canonical identity unresolved — supplier terminology temporarily preserved as candidate display identity pending additional research.",
+          "createdAt": "2026-08-08T00:00:00.000Z"
+        }
+      ],
+      "confidence": {
+        "score": 20,
+        "basis": "Candidate ingestion (mid-year-2026): no canonical research proposal available. Supplier terminology preserved as provisional canonical name. Requires additional research."
+      },
+      "status": "candidate",
+      "history": [
+        {
+          "timestamp": "2026-08-08T00:00:00.000Z",
+          "event": "created",
+          "summary": "Candidate identity created by EP5-P2C controlled ingestion (mid-year-2026 campaign). Category C: candidate.",
+          "actor": "EP5-P2C:mid-year-2026"
+        }
+      ],
+      "createdAt": "2026-08-08T00:00:00.000Z",
+      "updatedAt": "2026-08-08T00:00:00.000Z"
+    },
+    {
+      "id": "MIP-000004",
+      "supplierIdentities": [
+        {
+          "supplierName": "Kayali Eden Sweet Peach 35",
+          "supplierCategory": "L",
+          "sourceReference": "mid-year-2026::kayali eden sweet peach 35"
+        }
+      ],
+      "canonicalIdentity": {
+        "canonicalName": "Kayali Eden Sweet Peach 35",
+        "category": "fragrance"
+      },
+      "aliases": [],
+      "evidence": [
+        {
+          "evidenceId": "MIP-000004-ev-sup",
+          "type": "supplier-catalogue",
+          "sourceName": "Mid-Year 2026 Supplier List",
+          "sourceReference": "mid-year-2026::kayali eden sweet peach 35",
+          "observedValue": "Kayali Eden Sweet Peach 35",
+          "notes": "Supplier group(s): L.",
+          "createdAt": "2026-08-08T00:00:00.000Z"
+        },
+        {
+          "evidenceId": "MIP-000004-ev-res",
+          "type": "research",
+          "sourceName": "Gemini Research — Mid-Year 2026",
+          "sourceReference": "mid-year-2026-research",
+          "observedValue": "(none proposed)",
+          "notes": "Research confidence: low. No canonical name proposed — supplier terminology used as provisional. No official Kayali release found under the name 'Eden Sweet Peach 35'.",
+          "createdAt": "2026-08-08T00:00:00.000Z"
+        },
+        {
+          "evidenceId": "MIP-000004-ev-prov",
+          "type": "editorial",
+          "sourceName": "EP5-P2C Ingestion Engine",
+          "notes": "Canonical identity unresolved — supplier terminology temporarily preserved as candidate display identity pending additional research.",
+          "createdAt": "2026-08-08T00:00:00.000Z"
+        }
+      ],
+      "confidence": {
+        "score": 20,
+        "basis": "Candidate ingestion (mid-year-2026): no canonical research proposal available. Supplier terminology preserved as provisional canonical name. Requires additional research."
+      },
+      "status": "candidate",
+      "history": [
+        {
+          "timestamp": "2026-08-08T00:00:00.000Z",
+          "event": "created",
+          "summary": "Candidate identity created by EP5-P2C controlled ingestion (mid-year-2026 campaign). Category C: candidate.",
+          "actor": "EP5-P2C:mid-year-2026"
+        }
+      ],
+      "createdAt": "2026-08-08T00:00:00.000Z",
+      "updatedAt": "2026-08-08T00:00:00.000Z"
+    },
+    {
+      "id": "MIP-000005",
+      "supplierIdentities": [
+        {
+          "supplierName": "DKNY Red Delicious Apple",
+          "supplierCategory": "L",
+          "sourceReference": "mid-year-2026::dkny red delicious apple"
+        }
+      ],
+      "canonicalIdentity": {
+        "canonicalName": "DKNY Red Delicious Apple",
+        "canonicalBrand": "DKNY",
+        "launchYear": 2006,
+        "marketedGender": "female",
+        "category": "fragrance"
+      },
+      "aliases": [],
+      "evidence": [
+        {
+          "evidenceId": "MIP-000005-ev-sup",
+          "type": "supplier-catalogue",
+          "sourceName": "Mid-Year 2026 Supplier List",
+          "sourceReference": "mid-year-2026::dkny red delicious apple",
+          "observedValue": "DKNY Red Delicious Apple",
+          "notes": "Supplier group(s): L.",
+          "createdAt": "2026-08-08T00:00:00.000Z"
+        },
+        {
+          "evidenceId": "MIP-000005-ev-res",
+          "type": "research",
+          "sourceName": "Gemini Research — Mid-Year 2026",
+          "sourceReference": "mid-year-2026-research",
+          "observedValue": "DKNY Delicious Night / DKNY Red Delicious",
+          "notes": "Research confidence: medium. Research proposed ambiguous multi-option canonical — supplier name used as provisional pending human resolution. DKNY released 'DKNY Red Delicious' (for women, with raspberry and patchouli) and 'DKNY Delicious Night', but 'Red Delicious Apple' is a supplier composite name.",
+          "createdAt": "2026-08-08T00:00:00.000Z"
+        }
+      ],
+      "confidence": {
+        "score": 45,
+        "basis": "Candidate ingestion (mid-year-2026): research confidence medium. Name issue: Exact name 'Red Delicious Apple' is a supplier variation of DKNY Red Delicious."
+      },
+      "status": "pending-review",
+      "history": [
+        {
+          "timestamp": "2026-08-08T00:00:00.000Z",
+          "event": "created",
+          "summary": "Candidate identity created by EP5-P2C controlled ingestion (mid-year-2026 campaign). Category B: pending-review.",
+          "actor": "EP5-P2C:mid-year-2026"
+        }
+      ],
+      "createdAt": "2026-08-08T00:00:00.000Z",
+      "updatedAt": "2026-08-08T00:00:00.000Z"
+    },
+    {
+      "id": "MIP-000006",
+      "supplierIdentities": [
+        {
+          "supplierName": "MFK A La Rose",
+          "supplierCategory": "L",
+          "sourceReference": "mid-year-2026::mfk a la rose"
+        }
+      ],
+      "canonicalIdentity": {
+        "canonicalName": "À la rose",
+        "canonicalBrand": "Maison Francis Kurkdjian",
+        "launchYear": 2014,
+        "marketedGender": "female",
+        "category": "fragrance"
+      },
+      "aliases": [],
+      "evidence": [
+        {
+          "evidenceId": "MIP-000006-ev-sup",
+          "type": "supplier-catalogue",
+          "sourceName": "Mid-Year 2026 Supplier List",
+          "sourceReference": "mid-year-2026::mfk a la rose",
+          "observedValue": "MFK A La Rose",
+          "notes": "Supplier group(s): L.",
+          "createdAt": "2026-08-08T00:00:00.000Z"
+        },
+        {
+          "evidenceId": "MIP-000006-ev-res",
+          "type": "research",
+          "sourceName": "Gemini Research — Mid-Year 2026",
+          "sourceReference": "mid-year-2026-research",
+          "observedValue": "À la rose",
+          "notes": "Research confidence: high. Canonical name verified as À la rose by Maison Francis Kurkdjian.",
+          "createdAt": "2026-08-08T00:00:00.000Z"
+        }
+      ],
+      "confidence": {
+        "score": 70,
+        "basis": "Candidate ingestion (mid-year-2026): research confidence high, no name issue. Proposed: \"À la rose\" by \"Maison Francis Kurkdjian\". Ready for editorial verification."
+      },
+      "status": "pending-review",
+      "history": [
+        {
+          "timestamp": "2026-08-08T00:00:00.000Z",
+          "event": "created",
+          "summary": "Candidate identity created by EP5-P2C controlled ingestion (mid-year-2026 campaign). Category A: pending-review.",
+          "actor": "EP5-P2C:mid-year-2026"
+        }
+      ],
+      "createdAt": "2026-08-08T00:00:00.000Z",
+      "updatedAt": "2026-08-08T00:00:00.000Z"
+    },
+    {
+      "id": "MIP-000007",
+      "supplierIdentities": [
+        {
+          "supplierName": "Lancome Idôle Peach 'n Roses",
+          "supplierCategory": "L",
+          "sourceReference": "mid-year-2026::lancome idôle peach 'n roses"
+        }
+      ],
+      "canonicalIdentity": {
+        "canonicalName": "Lancome Idôle Peach 'n Roses",
+        "category": "fragrance"
+      },
+      "aliases": [],
+      "evidence": [
+        {
+          "evidenceId": "MIP-000007-ev-sup",
+          "type": "supplier-catalogue",
+          "sourceName": "Mid-Year 2026 Supplier List",
+          "sourceReference": "mid-year-2026::lancome idôle peach 'n roses",
+          "observedValue": "Lancome Idôle Peach 'n Roses",
+          "notes": "Supplier group(s): L.",
+          "createdAt": "2026-08-08T00:00:00.000Z"
+        },
+        {
+          "evidenceId": "MIP-000007-ev-res",
+          "type": "research",
+          "sourceName": "Gemini Research — Mid-Year 2026",
+          "sourceReference": "mid-year-2026-research",
+          "observedValue": "(none proposed)",
+          "notes": "Research confidence: low. No canonical name proposed — supplier terminology used as provisional. No official Lancôme Idôle flanker named 'Peach 'n Roses' verified.",
+          "createdAt": "2026-08-08T00:00:00.000Z"
+        },
+        {
+          "evidenceId": "MIP-000007-ev-prov",
+          "type": "editorial",
+          "sourceName": "EP5-P2C Ingestion Engine",
+          "notes": "Canonical identity unresolved — supplier terminology temporarily preserved as candidate display identity pending additional research.",
+          "createdAt": "2026-08-08T00:00:00.000Z"
+        }
+      ],
+      "confidence": {
+        "score": 20,
+        "basis": "Candidate ingestion (mid-year-2026): no canonical research proposal available. Supplier terminology preserved as provisional canonical name. Requires additional research."
+      },
+      "status": "candidate",
+      "history": [
+        {
+          "timestamp": "2026-08-08T00:00:00.000Z",
+          "event": "created",
+          "summary": "Candidate identity created by EP5-P2C controlled ingestion (mid-year-2026 campaign). Category C: candidate.",
+          "actor": "EP5-P2C:mid-year-2026"
+        }
+      ],
+      "createdAt": "2026-08-08T00:00:00.000Z",
+      "updatedAt": "2026-08-08T00:00:00.000Z"
+    },
+    {
+      "id": "MIP-000008",
+      "supplierIdentities": [
+        {
+          "supplierName": "Victoria's Secret Coconut Passion",
+          "supplierCategory": "L",
+          "sourceReference": "mid-year-2026::victoria's secret coconut passion"
+        }
+      ],
+      "canonicalIdentity": {
+        "canonicalName": "Coconut Passion",
+        "canonicalBrand": "Victoria's Secret",
+        "marketedGender": "female",
+        "category": "fragrance"
+      },
+      "aliases": [],
+      "evidence": [
+        {
+          "evidenceId": "MIP-000008-ev-sup",
+          "type": "supplier-catalogue",
+          "sourceName": "Mid-Year 2026 Supplier List",
+          "sourceReference": "mid-year-2026::victoria's secret coconut passion",
+          "observedValue": "Victoria's Secret Coconut Passion",
+          "notes": "Supplier group(s): L.",
+          "createdAt": "2026-08-08T00:00:00.000Z"
+        },
+        {
+          "evidenceId": "MIP-000008-ev-res",
+          "type": "research",
+          "sourceName": "Gemini Research — Mid-Year 2026",
+          "sourceReference": "mid-year-2026-research",
+          "observedValue": "Coconut Passion",
+          "notes": "Research confidence: high. Well-known body mist / fragrance line by Victoria's Secret.",
+          "createdAt": "2026-08-08T00:00:00.000Z"
+        }
+      ],
+      "confidence": {
+        "score": 70,
+        "basis": "Candidate ingestion (mid-year-2026): research confidence high, no name issue. Proposed: \"Coconut Passion\" by \"Victoria's Secret\". Ready for editorial verification."
+      },
+      "status": "pending-review",
+      "history": [
+        {
+          "timestamp": "2026-08-08T00:00:00.000Z",
+          "event": "created",
+          "summary": "Candidate identity created by EP5-P2C controlled ingestion (mid-year-2026 campaign). Category A: pending-review.",
+          "actor": "EP5-P2C:mid-year-2026"
+        }
+      ],
+      "createdAt": "2026-08-08T00:00:00.000Z",
+      "updatedAt": "2026-08-08T00:00:00.000Z"
+    },
+    {
+      "id": "MIP-000009",
+      "supplierIdentities": [
+        {
+          "supplierName": "Kayali Capri In a Bottle Lemon Sugar 14",
+          "supplierCategory": "L",
+          "sourceReference": "mid-year-2026::kayali capri in a bottle lemon sugar 14"
+        }
+      ],
+      "canonicalIdentity": {
+        "canonicalName": "Capri In a Bottle Lemon Sugar | 14",
+        "canonicalBrand": "Kayali",
+        "launchYear": 2024,
+        "marketedGender": "unisex",
+        "category": "fragrance"
+      },
+      "aliases": [],
+      "evidence": [
+        {
+          "evidenceId": "MIP-000009-ev-sup",
+          "type": "supplier-catalogue",
+          "sourceName": "Mid-Year 2026 Supplier List",
+          "sourceReference": "mid-year-2026::kayali capri in a bottle lemon sugar 14",
+          "observedValue": "Kayali Capri In a Bottle Lemon Sugar 14",
+          "notes": "Supplier group(s): L.",
+          "createdAt": "2026-08-08T00:00:00.000Z"
+        },
+        {
+          "evidenceId": "MIP-000009-ev-res",
+          "type": "research",
+          "sourceName": "Gemini Research — Mid-Year 2026",
+          "sourceReference": "mid-year-2026-research",
+          "observedValue": "Capri In a Bottle Lemon Sugar | 14",
+          "notes": "Research confidence: high. Part of Kayali's Vacay in a Bottle collection released in 2024.",
+          "createdAt": "2026-08-08T00:00:00.000Z"
+        }
+      ],
+      "confidence": {
+        "score": 70,
+        "basis": "Candidate ingestion (mid-year-2026): research confidence high, no name issue. Proposed: \"Capri In a Bottle Lemon Sugar | 14\" by \"Kayali\". Ready for editorial verification."
+      },
+      "status": "pending-review",
+      "history": [
+        {
+          "timestamp": "2026-08-08T00:00:00.000Z",
+          "event": "created",
+          "summary": "Candidate identity created by EP5-P2C controlled ingestion (mid-year-2026 campaign). Category A: pending-review.",
+          "actor": "EP5-P2C:mid-year-2026"
+        }
+      ],
+      "createdAt": "2026-08-08T00:00:00.000Z",
+      "updatedAt": "2026-08-08T00:00:00.000Z"
+    },
+    {
+      "id": "MIP-000010",
+      "supplierIdentities": [
+        {
+          "supplierName": "212 Carolina Herrera Good Girl Jasmine Absolute",
+          "supplierCategory": "L",
+          "sourceReference": "mid-year-2026::212 carolina herrera good girl jasmine absolute"
+        }
+      ],
+      "canonicalIdentity": {
+        "canonicalName": "212 Carolina Herrera Good Girl Jasmine Absolute",
+        "category": "fragrance"
+      },
+      "aliases": [],
+      "evidence": [
+        {
+          "evidenceId": "MIP-000010-ev-sup",
+          "type": "supplier-catalogue",
+          "sourceName": "Mid-Year 2026 Supplier List",
+          "sourceReference": "mid-year-2026::212 carolina herrera good girl jasmine absolute",
+          "observedValue": "212 Carolina Herrera Good Girl Jasmine Absolute",
+          "notes": "Supplier group(s): L.",
+          "createdAt": "2026-08-08T00:00:00.000Z"
+        },
+        {
+          "evidenceId": "MIP-000010-ev-res",
+          "type": "research",
+          "sourceName": "Gemini Research — Mid-Year 2026",
+          "sourceReference": "mid-year-2026-research",
+          "observedValue": "Good Girl Légère / Good Girl Supreme (Note: Good Girl Jasmine Absolute does not exist as an official Carolina Herrera release)",
+          "notes": "Research confidence: low. Research proposed ambiguous multi-option canonical — supplier name used as provisional pending human resolution. Carolina Herrera has a line called 'Good Girl', and a fragrance line called 'Herrera Confidential' which includes 'Jasmine Absolute', but they are distinct products. No official 'Good Girl Jasmine Absolute' exists.",
+          "createdAt": "2026-08-08T00:00:00.000Z"
+        },
+        {
+          "evidenceId": "MIP-000010-ev-prov",
+          "type": "editorial",
+          "sourceName": "EP5-P2C Ingestion Engine",
+          "notes": "Canonical identity ambiguous — research proposed multiple possible identities. Supplier terminology preserved as provisional pending human resolution.",
+          "createdAt": "2026-08-08T00:00:00.000Z"
+        }
+      ],
+      "confidence": {
+        "score": 25,
+        "basis": "Candidate ingestion (mid-year-2026): research confidence low. Carolina Herrera has a line called 'Good Girl', and a fragrance line called 'Herrera Confidential' which includes 'Jasmine Absolute', but they are distinct products. No official 'Good Girl Jasmine Absolute' exists."
+      },
+      "status": "candidate",
+      "history": [
+        {
+          "timestamp": "2026-08-08T00:00:00.000Z",
+          "event": "created",
+          "summary": "Candidate identity created by EP5-P2C controlled ingestion (mid-year-2026 campaign). Category C: candidate.",
+          "actor": "EP5-P2C:mid-year-2026"
+        }
+      ],
+      "createdAt": "2026-08-08T00:00:00.000Z",
+      "updatedAt": "2026-08-08T00:00:00.000Z"
+    },
+    {
+      "id": "MIP-000011",
+      "supplierIdentities": [
+        {
+          "supplierName": "Sospiro Vibranna",
+          "supplierCategory": "L",
+          "sourceReference": "mid-year-2026::sospiro vibranna"
+        }
+      ],
+      "canonicalIdentity": {
+        "canonicalName": "Vibrato",
+        "canonicalBrand": "Sospiro Perfumes",
+        "launchYear": 2022,
+        "marketedGender": "unisex",
+        "category": "fragrance"
+      },
+      "aliases": [],
+      "evidence": [
+        {
+          "evidenceId": "MIP-000011-ev-sup",
+          "type": "supplier-catalogue",
+          "sourceName": "Mid-Year 2026 Supplier List",
+          "sourceReference": "mid-year-2026::sospiro vibranna",
+          "observedValue": "Sospiro Vibranna",
+          "notes": "Supplier group(s): L.",
+          "createdAt": "2026-08-08T00:00:00.000Z"
+        },
+        {
+          "evidenceId": "MIP-000011-ev-res",
+          "type": "research",
+          "sourceName": "Gemini Research — Mid-Year 2026",
+          "sourceReference": "mid-year-2026-research",
+          "observedValue": "Vibrato",
+          "notes": "Research confidence: medium. Possible name issue: Supplier name 'Vibranna' is likely a corruption of Sospiro 'Vibrato'. Likely a supplier misspelling or variation of Sospiro 'Vibrato'. No official 'Vibranna' exists.",
+          "createdAt": "2026-08-08T00:00:00.000Z"
+        }
+      ],
+      "confidence": {
+        "score": 45,
+        "basis": "Candidate ingestion (mid-year-2026): research confidence medium. Name issue: Supplier name 'Vibranna' is likely a corruption of Sospiro 'Vibrato'."
+      },
+      "status": "pending-review",
+      "history": [
+        {
+          "timestamp": "2026-08-08T00:00:00.000Z",
+          "event": "created",
+          "summary": "Candidate identity created by EP5-P2C controlled ingestion (mid-year-2026 campaign). Category B: pending-review.",
+          "actor": "EP5-P2C:mid-year-2026"
+        }
+      ],
+      "createdAt": "2026-08-08T00:00:00.000Z",
+      "updatedAt": "2026-08-08T00:00:00.000Z"
+    },
+    {
+      "id": "MIP-000012",
+      "supplierIdentities": [
+        {
+          "supplierName": "Alien Goddess/ Thierry Mugler",
+          "supplierCategory": "L",
+          "sourceReference": "mid-year-2026::alien goddess/ thierry mugler"
+        }
+      ],
+      "canonicalIdentity": {
+        "canonicalName": "Alien Goddess",
+        "canonicalBrand": "Mugler",
+        "launchYear": 2021,
+        "marketedGender": "female",
+        "category": "fragrance"
+      },
+      "aliases": [],
+      "evidence": [
+        {
+          "evidenceId": "MIP-000012-ev-sup",
+          "type": "supplier-catalogue",
+          "sourceName": "Mid-Year 2026 Supplier List",
+          "sourceReference": "mid-year-2026::alien goddess/ thierry mugler",
+          "observedValue": "Alien Goddess/ Thierry Mugler",
+          "notes": "Supplier group(s): L.",
+          "createdAt": "2026-08-08T00:00:00.000Z"
+        },
+        {
+          "evidenceId": "MIP-000012-ev-res",
+          "type": "research",
+          "sourceName": "Gemini Research — Mid-Year 2026",
+          "sourceReference": "mid-year-2026-research",
+          "observedValue": "Alien Goddess",
+          "notes": "Research confidence: high. Canonical name is Mugler Alien Goddess (formerly credited under Thierry Mugler).",
+          "createdAt": "2026-08-08T00:00:00.000Z"
+        }
+      ],
+      "confidence": {
+        "score": 70,
+        "basis": "Candidate ingestion (mid-year-2026): research confidence high, no name issue. Proposed: \"Alien Goddess\" by \"Mugler\". Ready for editorial verification."
+      },
+      "status": "pending-review",
+      "history": [
+        {
+          "timestamp": "2026-08-08T00:00:00.000Z",
+          "event": "created",
+          "summary": "Candidate identity created by EP5-P2C controlled ingestion (mid-year-2026 campaign). Category A: pending-review.",
+          "actor": "EP5-P2C:mid-year-2026"
+        }
+      ],
+      "createdAt": "2026-08-08T00:00:00.000Z",
+      "updatedAt": "2026-08-08T00:00:00.000Z"
+    },
+    {
+      "id": "MIP-000013",
+      "supplierIdentities": [
+        {
+          "supplierName": "Hugo Boss - Boss Nuit Pour Femme",
+          "supplierCategory": "L",
+          "sourceReference": "mid-year-2026::hugo boss - boss nuit pour femme"
+        }
+      ],
+      "canonicalIdentity": {
+        "canonicalName": "Boss Nuit Pour Femme",
+        "canonicalBrand": "Hugo Boss",
+        "launchYear": 2012,
+        "marketedGender": "female",
+        "category": "fragrance"
+      },
+      "aliases": [],
+      "evidence": [
+        {
+          "evidenceId": "MIP-000013-ev-sup",
+          "type": "supplier-catalogue",
+          "sourceName": "Mid-Year 2026 Supplier List",
+          "sourceReference": "mid-year-2026::hugo boss - boss nuit pour femme",
+          "observedValue": "Hugo Boss - Boss Nuit Pour Femme",
+          "notes": "Supplier group(s): L.",
+          "createdAt": "2026-08-08T00:00:00.000Z"
+        },
+        {
+          "evidenceId": "MIP-000013-ev-res",
+          "type": "research",
+          "sourceName": "Gemini Research — Mid-Year 2026",
+          "sourceReference": "mid-year-2026-research",
+          "observedValue": "Boss Nuit Pour Femme",
+          "notes": "Research confidence: high. Verified Hugo Boss fragrance.",
+          "createdAt": "2026-08-08T00:00:00.000Z"
+        }
+      ],
+      "confidence": {
+        "score": 70,
+        "basis": "Candidate ingestion (mid-year-2026): research confidence high, no name issue. Proposed: \"Boss Nuit Pour Femme\" by \"Hugo Boss\". Ready for editorial verification."
+      },
+      "status": "pending-review",
+      "history": [
+        {
+          "timestamp": "2026-08-08T00:00:00.000Z",
+          "event": "created",
+          "summary": "Candidate identity created by EP5-P2C controlled ingestion (mid-year-2026 campaign). Category A: pending-review.",
+          "actor": "EP5-P2C:mid-year-2026"
+        }
+      ],
+      "createdAt": "2026-08-08T00:00:00.000Z",
+      "updatedAt": "2026-08-08T00:00:00.000Z"
+    },
+    {
+      "id": "MIP-000014",
+      "supplierIdentities": [
+        {
+          "supplierName": "Narciso Rodriquez Pure Musc Blanc EDP Intense",
+          "supplierCategory": "L",
+          "sourceReference": "mid-year-2026::narciso rodriquez pure musc blanc edp intense"
+        }
+      ],
+      "canonicalIdentity": {
+        "canonicalName": "For Her Pure Musc",
+        "canonicalBrand": "Narciso Rodriguez",
+        "launchYear": 2019,
+        "marketedGender": "female",
+        "category": "fragrance"
+      },
+      "aliases": [],
+      "evidence": [
+        {
+          "evidenceId": "MIP-000014-ev-sup",
+          "type": "supplier-catalogue",
+          "sourceName": "Mid-Year 2026 Supplier List",
+          "sourceReference": "mid-year-2026::narciso rodriquez pure musc blanc edp intense",
+          "observedValue": "Narciso Rodriquez Pure Musc Blanc EDP Intense",
+          "notes": "Supplier group(s): L.",
+          "createdAt": "2026-08-08T00:00:00.000Z"
+        },
+        {
+          "evidenceId": "MIP-000014-ev-res",
+          "type": "research",
+          "sourceName": "Gemini Research — Mid-Year 2026",
+          "sourceReference": "mid-year-2026-research",
+          "observedValue": "For Her Pure Musc",
+          "notes": "Research confidence: medium. Possible name issue: Supplier name includes extra modifiers ('Blanc EDP Intense') not part of the official title. Supplier adds 'Blanc EDP Intense' to Narciso Rodriguez For Her Pure Musc.",
+          "createdAt": "2026-08-08T00:00:00.000Z"
+        }
+      ],
+      "confidence": {
+        "score": 45,
+        "basis": "Candidate ingestion (mid-year-2026): research confidence medium. Name issue: Supplier name includes extra modifiers ('Blanc EDP Intense') not part of the official title."
+      },
+      "status": "pending-review",
+      "history": [
+        {
+          "timestamp": "2026-08-08T00:00:00.000Z",
+          "event": "created",
+          "summary": "Candidate identity created by EP5-P2C controlled ingestion (mid-year-2026 campaign). Category B: pending-review.",
+          "actor": "EP5-P2C:mid-year-2026"
+        }
+      ],
+      "createdAt": "2026-08-08T00:00:00.000Z",
+      "updatedAt": "2026-08-08T00:00:00.000Z"
+    },
+    {
+      "id": "MIP-000015",
+      "supplierIdentities": [
+        {
+          "supplierName": "Armani Power Of You",
+          "supplierCategory": "L",
+          "sourceReference": "mid-year-2026::armani power of you"
+        }
+      ],
+      "canonicalIdentity": {
+        "canonicalName": "Armani Power Of You",
+        "category": "fragrance"
+      },
+      "aliases": [],
+      "evidence": [
+        {
+          "evidenceId": "MIP-000015-ev-sup",
+          "type": "supplier-catalogue",
+          "sourceName": "Mid-Year 2026 Supplier List",
+          "sourceReference": "mid-year-2026::armani power of you",
+          "observedValue": "Armani Power Of You",
+          "notes": "Supplier group(s): L.",
+          "createdAt": "2026-08-08T00:00:00.000Z"
+        },
+        {
+          "evidenceId": "MIP-000015-ev-res",
+          "type": "research",
+          "sourceName": "Gemini Research — Mid-Year 2026",
+          "sourceReference": "mid-year-2026-research",
+          "observedValue": "(none proposed)",
+          "notes": "Research confidence: low. No canonical name proposed — supplier terminology used as provisional. No official Giorgio Armani fragrance named 'Power Of You' exists.",
+          "createdAt": "2026-08-08T00:00:00.000Z"
+        },
+        {
+          "evidenceId": "MIP-000015-ev-prov",
+          "type": "editorial",
+          "sourceName": "EP5-P2C Ingestion Engine",
+          "notes": "Canonical identity unresolved — supplier terminology temporarily preserved as candidate display identity pending additional research.",
+          "createdAt": "2026-08-08T00:00:00.000Z"
+        }
+      ],
+      "confidence": {
+        "score": 20,
+        "basis": "Candidate ingestion (mid-year-2026): no canonical research proposal available. Supplier terminology preserved as provisional canonical name. Requires additional research."
+      },
+      "status": "candidate",
+      "history": [
+        {
+          "timestamp": "2026-08-08T00:00:00.000Z",
+          "event": "created",
+          "summary": "Candidate identity created by EP5-P2C controlled ingestion (mid-year-2026 campaign). Category C: candidate.",
+          "actor": "EP5-P2C:mid-year-2026"
+        }
+      ],
+      "createdAt": "2026-08-08T00:00:00.000Z",
+      "updatedAt": "2026-08-08T00:00:00.000Z"
+    },
+    {
+      "id": "MIP-000016",
+      "supplierIdentities": [
+        {
+          "supplierName": "Parfums De Marly Athenais EDP",
+          "supplierCategory": "L",
+          "sourceReference": "mid-year-2026::parfums de marly athenais edp"
+        }
+      ],
+      "canonicalIdentity": {
+        "canonicalName": "Parfums De Marly Athenais EDP",
+        "category": "fragrance"
+      },
+      "aliases": [],
+      "evidence": [
+        {
+          "evidenceId": "MIP-000016-ev-sup",
+          "type": "supplier-catalogue",
+          "sourceName": "Mid-Year 2026 Supplier List",
+          "sourceReference": "mid-year-2026::parfums de marly athenais edp",
+          "observedValue": "Parfums De Marly Athenais EDP",
+          "notes": "Supplier group(s): L.",
+          "createdAt": "2026-08-08T00:00:00.000Z"
+        },
+        {
+          "evidenceId": "MIP-000016-ev-res",
+          "type": "research",
+          "sourceName": "Gemini Research — Mid-Year 2026",
+          "sourceReference": "mid-year-2026-research",
+          "observedValue": "(none proposed)",
+          "notes": "Research confidence: low. No canonical name proposed — supplier terminology used as provisional. No official Parfums de Marly fragrance named 'Athenais' exists.",
+          "createdAt": "2026-08-08T00:00:00.000Z"
+        },
+        {
+          "evidenceId": "MIP-000016-ev-prov",
+          "type": "editorial",
+          "sourceName": "EP5-P2C Ingestion Engine",
+          "notes": "Canonical identity unresolved — supplier terminology temporarily preserved as candidate display identity pending additional research.",
+          "createdAt": "2026-08-08T00:00:00.000Z"
+        }
+      ],
+      "confidence": {
+        "score": 20,
+        "basis": "Candidate ingestion (mid-year-2026): no canonical research proposal available. Supplier terminology preserved as provisional canonical name. Requires additional research."
+      },
+      "status": "candidate",
+      "history": [
+        {
+          "timestamp": "2026-08-08T00:00:00.000Z",
+          "event": "created",
+          "summary": "Candidate identity created by EP5-P2C controlled ingestion (mid-year-2026 campaign). Category C: candidate.",
+          "actor": "EP5-P2C:mid-year-2026"
+        }
+      ],
+      "createdAt": "2026-08-08T00:00:00.000Z",
+      "updatedAt": "2026-08-08T00:00:00.000Z"
+    },
+    {
+      "id": "MIP-000017",
+      "supplierIdentities": [
+        {
+          "supplierName": "Kayali Freedom Musk Santal 34",
+          "supplierCategory": "L",
+          "sourceReference": "mid-year-2026::kayali freedom musk santal 34"
+        },
+        {
+          "supplierName": "Kayali Freedom Musk Santal 34",
+          "supplierCategory": "M",
+          "sourceReference": "mid-year-2026::kayali freedom musk santal 34"
+        }
+      ],
+      "canonicalIdentity": {
+        "canonicalName": "Kayali Freedom Musk Santal 34",
+        "category": "fragrance"
+      },
+      "aliases": [],
+      "evidence": [
+        {
+          "evidenceId": "MIP-000017-ev-sup",
+          "type": "supplier-catalogue",
+          "sourceName": "Mid-Year 2026 Supplier List",
+          "sourceReference": "mid-year-2026::kayali freedom musk santal 34",
+          "observedValue": "Kayali Freedom Musk Santal 34 / Kayali Freedom Musk Santal 34",
+          "notes": "Supplier group(s): L, M.",
+          "createdAt": "2026-08-08T00:00:00.000Z"
+        },
+        {
+          "evidenceId": "MIP-000017-ev-res",
+          "type": "research",
+          "sourceName": "Gemini Research — Mid-Year 2026",
+          "sourceReference": "mid-year-2026-research",
+          "observedValue": "(none proposed)",
+          "notes": "Research confidence: low. No canonical name proposed — supplier terminology used as provisional. No official Kayali release named 'Freedom Musk Santal 34' exists (resembles a mashup of Le Labo Santal 33/34 nomenclature and a fictitious Kayali line).",
+          "createdAt": "2026-08-08T00:00:00.000Z"
+        },
+        {
+          "evidenceId": "MIP-000017-ev-prov",
+          "type": "editorial",
+          "sourceName": "EP5-P2C Ingestion Engine",
+          "notes": "Canonical identity unresolved — supplier terminology temporarily preserved as candidate display identity pending additional research.",
+          "createdAt": "2026-08-08T00:00:00.000Z"
+        }
+      ],
+      "confidence": {
+        "score": 20,
+        "basis": "Candidate ingestion (mid-year-2026): no canonical research proposal available. Supplier terminology preserved as provisional canonical name. Requires additional research."
+      },
+      "status": "candidate",
+      "history": [
+        {
+          "timestamp": "2026-08-08T00:00:00.000Z",
+          "event": "created",
+          "summary": "Candidate identity created by EP5-P2C controlled ingestion (mid-year-2026 campaign). Category C: candidate.",
+          "actor": "EP5-P2C:mid-year-2026"
+        }
+      ],
+      "createdAt": "2026-08-08T00:00:00.000Z",
+      "updatedAt": "2026-08-08T00:00:00.000Z"
+    },
+    {
+      "id": "MIP-000018",
+      "supplierIdentities": [
+        {
+          "supplierName": "Kayali Freedom Musk Latte 41",
+          "supplierCategory": "L",
+          "sourceReference": "mid-year-2026::kayali freedom musk latte 41"
+        },
+        {
+          "supplierName": "Kayali Freedom Musk Latte 41",
+          "supplierCategory": "M",
+          "sourceReference": "mid-year-2026::kayali freedom musk latte 41"
+        }
+      ],
+      "canonicalIdentity": {
+        "canonicalName": "Kayali Freedom Musk Latte 41",
+        "category": "fragrance"
+      },
+      "aliases": [],
+      "evidence": [
+        {
+          "evidenceId": "MIP-000018-ev-sup",
+          "type": "supplier-catalogue",
+          "sourceName": "Mid-Year 2026 Supplier List",
+          "sourceReference": "mid-year-2026::kayali freedom musk latte 41",
+          "observedValue": "Kayali Freedom Musk Latte 41 / Kayali Freedom Musk Latte 41",
+          "notes": "Supplier group(s): L, M.",
+          "createdAt": "2026-08-08T00:00:00.000Z"
+        },
+        {
+          "evidenceId": "MIP-000018-ev-res",
+          "type": "research",
+          "sourceName": "Gemini Research — Mid-Year 2026",
+          "sourceReference": "mid-year-2026-research",
+          "observedValue": "(none proposed)",
+          "notes": "Research confidence: low. No canonical name proposed — supplier terminology used as provisional. No official Kayali release named 'Freedom Musk Latte 41' exists.",
+          "createdAt": "2026-08-08T00:00:00.000Z"
+        },
+        {
+          "evidenceId": "MIP-000018-ev-prov",
+          "type": "editorial",
+          "sourceName": "EP5-P2C Ingestion Engine",
+          "notes": "Canonical identity unresolved — supplier terminology temporarily preserved as candidate display identity pending additional research.",
+          "createdAt": "2026-08-08T00:00:00.000Z"
+        }
+      ],
+      "confidence": {
+        "score": 20,
+        "basis": "Candidate ingestion (mid-year-2026): no canonical research proposal available. Supplier terminology preserved as provisional canonical name. Requires additional research."
+      },
+      "status": "candidate",
+      "history": [
+        {
+          "timestamp": "2026-08-08T00:00:00.000Z",
+          "event": "created",
+          "summary": "Candidate identity created by EP5-P2C controlled ingestion (mid-year-2026 campaign). Category C: candidate.",
+          "actor": "EP5-P2C:mid-year-2026"
+        }
+      ],
+      "createdAt": "2026-08-08T00:00:00.000Z",
+      "updatedAt": "2026-08-08T00:00:00.000Z"
+    },
+    {
+      "id": "MIP-000019",
+      "supplierIdentities": [
+        {
+          "supplierName": "Dolce & Gabbana Velvet Passion Oud",
+          "supplierCategory": "L",
+          "sourceReference": "mid-year-2026::dolce & gabbana velvet passion oud"
+        },
+        {
+          "supplierName": "Dolce & Gabbana Velvet Passion Oud",
+          "supplierCategory": "M",
+          "sourceReference": "mid-year-2026::dolce & gabbana velvet passion oud"
+        }
+      ],
+      "canonicalIdentity": {
+        "canonicalName": "Dolce & Gabbana Velvet Passion Oud",
+        "category": "fragrance"
+      },
+      "aliases": [],
+      "evidence": [
+        {
+          "evidenceId": "MIP-000019-ev-sup",
+          "type": "supplier-catalogue",
+          "sourceName": "Mid-Year 2026 Supplier List",
+          "sourceReference": "mid-year-2026::dolce & gabbana velvet passion oud",
+          "observedValue": "Dolce & Gabbana Velvet Passion Oud / Dolce & Gabbana Velvet Passion Oud",
+          "notes": "Supplier group(s): L, M.",
+          "createdAt": "2026-08-08T00:00:00.000Z"
+        },
+        {
+          "evidenceId": "MIP-000019-ev-res",
+          "type": "research",
+          "sourceName": "Gemini Research — Mid-Year 2026",
+          "sourceReference": "mid-year-2026-research",
+          "observedValue": "(none proposed)",
+          "notes": "Research confidence: low. No canonical name proposed — supplier terminology used as provisional. D&G Velvet collection features Velvet Desert Oud, Velvet Tender Oud, and Velvet Incense, but no official 'Velvet Passion Oud'.",
+          "createdAt": "2026-08-08T00:00:00.000Z"
+        },
+        {
+          "evidenceId": "MIP-000019-ev-prov",
+          "type": "editorial",
+          "sourceName": "EP5-P2C Ingestion Engine",
+          "notes": "Canonical identity unresolved — supplier terminology temporarily preserved as candidate display identity pending additional research.",
+          "createdAt": "2026-08-08T00:00:00.000Z"
+        }
+      ],
+      "confidence": {
+        "score": 20,
+        "basis": "Candidate ingestion (mid-year-2026): no canonical research proposal available. Supplier terminology preserved as provisional canonical name. Requires additional research."
+      },
+      "status": "candidate",
+      "history": [
+        {
+          "timestamp": "2026-08-08T00:00:00.000Z",
+          "event": "created",
+          "summary": "Candidate identity created by EP5-P2C controlled ingestion (mid-year-2026 campaign). Category C: candidate.",
+          "actor": "EP5-P2C:mid-year-2026"
+        }
+      ],
+      "createdAt": "2026-08-08T00:00:00.000Z",
+      "updatedAt": "2026-08-08T00:00:00.000Z"
+    },
+    {
+      "id": "MIP-000020",
+      "supplierIdentities": [
+        {
+          "supplierName": "Kayali Freedom Musk Matcha 45",
+          "supplierCategory": "L",
+          "sourceReference": "mid-year-2026::kayali freedom musk matcha 45"
+        },
+        {
+          "supplierName": "Kayali Freedom Musk Matcha 45",
+          "supplierCategory": "M",
+          "sourceReference": "mid-year-2026::kayali freedom musk matcha 45"
+        }
+      ],
+      "canonicalIdentity": {
+        "canonicalName": "Kayali Freedom Musk Matcha 45",
+        "category": "fragrance"
+      },
+      "aliases": [],
+      "evidence": [
+        {
+          "evidenceId": "MIP-000020-ev-sup",
+          "type": "supplier-catalogue",
+          "sourceName": "Mid-Year 2026 Supplier List",
+          "sourceReference": "mid-year-2026::kayali freedom musk matcha 45",
+          "observedValue": "Kayali Freedom Musk Matcha 45 / Kayali Freedom Musk Matcha 45",
+          "notes": "Supplier group(s): L, M.",
+          "createdAt": "2026-08-08T00:00:00.000Z"
+        },
+        {
+          "evidenceId": "MIP-000020-ev-res",
+          "type": "research",
+          "sourceName": "Gemini Research — Mid-Year 2026",
+          "sourceReference": "mid-year-2026-research",
+          "observedValue": "(none proposed)",
+          "notes": "Research confidence: low. No canonical name proposed — supplier terminology used as provisional. No official Kayali release named 'Freedom Musk Matcha 45' exists.",
+          "createdAt": "2026-08-08T00:00:00.000Z"
+        },
+        {
+          "evidenceId": "MIP-000020-ev-prov",
+          "type": "editorial",
+          "sourceName": "EP5-P2C Ingestion Engine",
+          "notes": "Canonical identity unresolved — supplier terminology temporarily preserved as candidate display identity pending additional research.",
+          "createdAt": "2026-08-08T00:00:00.000Z"
+        }
+      ],
+      "confidence": {
+        "score": 20,
+        "basis": "Candidate ingestion (mid-year-2026): no canonical research proposal available. Supplier terminology preserved as provisional canonical name. Requires additional research."
+      },
+      "status": "candidate",
+      "history": [
+        {
+          "timestamp": "2026-08-08T00:00:00.000Z",
+          "event": "created",
+          "summary": "Candidate identity created by EP5-P2C controlled ingestion (mid-year-2026 campaign). Category C: candidate.",
+          "actor": "EP5-P2C:mid-year-2026"
+        }
+      ],
+      "createdAt": "2026-08-08T00:00:00.000Z",
+      "updatedAt": "2026-08-08T00:00:00.000Z"
+    },
+    {
+      "id": "MIP-000021",
+      "supplierIdentities": [
+        {
+          "supplierName": "Armani Prive Oud Nacre",
+          "supplierCategory": "L",
+          "sourceReference": "mid-year-2026::armani prive oud nacre"
+        },
+        {
+          "supplierName": "Armani Prive Oud Nacre",
+          "supplierCategory": "M",
+          "sourceReference": "mid-year-2026::armani prive oud nacre"
+        }
+      ],
+      "canonicalIdentity": {
+        "canonicalName": "Armani Prive Oud Nacre",
+        "category": "fragrance"
+      },
+      "aliases": [],
+      "evidence": [
+        {
+          "evidenceId": "MIP-000021-ev-sup",
+          "type": "supplier-catalogue",
+          "sourceName": "Mid-Year 2026 Supplier List",
+          "sourceReference": "mid-year-2026::armani prive oud nacre",
+          "observedValue": "Armani Prive Oud Nacre / Armani Prive Oud Nacre",
+          "notes": "Supplier group(s): L, M.",
+          "createdAt": "2026-08-08T00:00:00.000Z"
+        },
+        {
+          "evidenceId": "MIP-000021-ev-res",
+          "type": "research",
+          "sourceName": "Gemini Research — Mid-Year 2026",
+          "sourceReference": "mid-year-2026-research",
+          "observedValue": "Oud Royal / Armani Privé collection (Oud Nacre unverified)",
+          "notes": "Research confidence: low. Research proposed ambiguous multi-option canonical — supplier name used as provisional pending human resolution. While Armani Privé features several ouds (Oud Royal), 'Oud Nacre' is not a standard widely-verified retail release under that exact title.",
+          "createdAt": "2026-08-08T00:00:00.000Z"
+        },
+        {
+          "evidenceId": "MIP-000021-ev-prov",
+          "type": "editorial",
+          "sourceName": "EP5-P2C Ingestion Engine",
+          "notes": "Canonical identity ambiguous — research proposed multiple possible identities. Supplier terminology preserved as provisional pending human resolution.",
+          "createdAt": "2026-08-08T00:00:00.000Z"
+        }
+      ],
+      "confidence": {
+        "score": 25,
+        "basis": "Candidate ingestion (mid-year-2026): research confidence low. While Armani Privé features several ouds (Oud Royal), 'Oud Nacre' is not a standard widely-verified retail release under that exact title."
+      },
+      "status": "candidate",
+      "history": [
+        {
+          "timestamp": "2026-08-08T00:00:00.000Z",
+          "event": "created",
+          "summary": "Candidate identity created by EP5-P2C controlled ingestion (mid-year-2026 campaign). Category C: candidate.",
+          "actor": "EP5-P2C:mid-year-2026"
+        }
+      ],
+      "createdAt": "2026-08-08T00:00:00.000Z",
+      "updatedAt": "2026-08-08T00:00:00.000Z"
+    },
+    {
+      "id": "MIP-000022",
+      "supplierIdentities": [
+        {
+          "supplierName": "Armani Stronger With You Powerfully",
+          "supplierCategory": "M",
+          "sourceReference": "mid-year-2026::armani stronger with you powerfully"
+        }
+      ],
+      "canonicalIdentity": {
+        "canonicalName": "Armani Stronger With You Powerfully",
+        "category": "fragrance"
+      },
+      "aliases": [],
+      "evidence": [
+        {
+          "evidenceId": "MIP-000022-ev-sup",
+          "type": "supplier-catalogue",
+          "sourceName": "Mid-Year 2026 Supplier List",
+          "sourceReference": "mid-year-2026::armani stronger with you powerfully",
+          "observedValue": "Armani Stronger With You Powerfully",
+          "notes": "Supplier group(s): M.",
+          "createdAt": "2026-08-08T00:00:00.000Z"
+        },
+        {
+          "evidenceId": "MIP-000022-ev-res",
+          "type": "research",
+          "sourceName": "Gemini Research — Mid-Year 2026",
+          "sourceReference": "mid-year-2026-research",
+          "observedValue": "Stronger With You / Stronger With You Absolutely",
+          "notes": "Research confidence: low. Research proposed ambiguous multi-option canonical — supplier name used as provisional pending human resolution. No official Armani flanker named 'Stronger With You Powerfully' exists (likely a translation or supplier variation of Absolutely or Intensely).",
+          "createdAt": "2026-08-08T00:00:00.000Z"
+        },
+        {
+          "evidenceId": "MIP-000022-ev-prov",
+          "type": "editorial",
+          "sourceName": "EP5-P2C Ingestion Engine",
+          "notes": "Canonical identity ambiguous — research proposed multiple possible identities. Supplier terminology preserved as provisional pending human resolution.",
+          "createdAt": "2026-08-08T00:00:00.000Z"
+        }
+      ],
+      "confidence": {
+        "score": 25,
+        "basis": "Candidate ingestion (mid-year-2026): research confidence low. No official Armani flanker named 'Stronger With You Powerfully' exists (likely a translation or supplier variation of Absolutely or Intensely)."
+      },
+      "status": "candidate",
+      "history": [
+        {
+          "timestamp": "2026-08-08T00:00:00.000Z",
+          "event": "created",
+          "summary": "Candidate identity created by EP5-P2C controlled ingestion (mid-year-2026 campaign). Category C: candidate.",
+          "actor": "EP5-P2C:mid-year-2026"
+        }
+      ],
+      "createdAt": "2026-08-08T00:00:00.000Z",
+      "updatedAt": "2026-08-08T00:00:00.000Z"
+    },
+    {
+      "id": "MIP-000023",
+      "supplierIdentities": [
+        {
+          "supplierName": "Valentino Uomo Born In Roma Purple Melancholia",
+          "supplierCategory": "M",
+          "sourceReference": "mid-year-2026::valentino uomo born in roma purple melancholia"
+        }
+      ],
+      "canonicalIdentity": {
+        "canonicalName": "Valentino Uomo Born In Roma Purple Melancholia",
+        "category": "fragrance"
+      },
+      "aliases": [],
+      "evidence": [
+        {
+          "evidenceId": "MIP-000023-ev-sup",
+          "type": "supplier-catalogue",
+          "sourceName": "Mid-Year 2026 Supplier List",
+          "sourceReference": "mid-year-2026::valentino uomo born in roma purple melancholia",
+          "observedValue": "Valentino Uomo Born In Roma Purple Melancholia",
+          "notes": "Supplier group(s): M.",
+          "createdAt": "2026-08-08T00:00:00.000Z"
+        },
+        {
+          "evidenceId": "MIP-000023-ev-res",
+          "type": "research",
+          "sourceName": "Gemini Research — Mid-Year 2026",
+          "sourceReference": "mid-year-2026-research",
+          "observedValue": "(none proposed)",
+          "notes": "Research confidence: low. No canonical name proposed — supplier terminology used as provisional. No official Valentino Born in Roma flanker named 'Purple Melancholia' exists.",
+          "createdAt": "2026-08-08T00:00:00.000Z"
+        },
+        {
+          "evidenceId": "MIP-000023-ev-prov",
+          "type": "editorial",
+          "sourceName": "EP5-P2C Ingestion Engine",
+          "notes": "Canonical identity unresolved — supplier terminology temporarily preserved as candidate display identity pending additional research.",
+          "createdAt": "2026-08-08T00:00:00.000Z"
+        }
+      ],
+      "confidence": {
+        "score": 20,
+        "basis": "Candidate ingestion (mid-year-2026): no canonical research proposal available. Supplier terminology preserved as provisional canonical name. Requires additional research."
+      },
+      "status": "candidate",
+      "history": [
+        {
+          "timestamp": "2026-08-08T00:00:00.000Z",
+          "event": "created",
+          "summary": "Candidate identity created by EP5-P2C controlled ingestion (mid-year-2026 campaign). Category C: candidate.",
+          "actor": "EP5-P2C:mid-year-2026"
+        }
+      ],
+      "createdAt": "2026-08-08T00:00:00.000Z",
+      "updatedAt": "2026-08-08T00:00:00.000Z"
+    },
+    {
+      "id": "MIP-000024",
+      "supplierIdentities": [
+        {
+          "supplierName": "Azzaro Wanted By Night",
+          "supplierCategory": "M",
+          "sourceReference": "mid-year-2026::azzaro wanted by night"
+        }
+      ],
+      "canonicalIdentity": {
+        "canonicalName": "Wanted by Night",
+        "canonicalBrand": "Azzaro",
+        "launchYear": 2018,
+        "marketedGender": "male",
+        "category": "fragrance"
+      },
+      "aliases": [],
+      "evidence": [
+        {
+          "evidenceId": "MIP-000024-ev-sup",
+          "type": "supplier-catalogue",
+          "sourceName": "Mid-Year 2026 Supplier List",
+          "sourceReference": "mid-year-2026::azzaro wanted by night",
+          "observedValue": "Azzaro Wanted By Night",
+          "notes": "Supplier group(s): M.",
+          "createdAt": "2026-08-08T00:00:00.000Z"
+        },
+        {
+          "evidenceId": "MIP-000024-ev-res",
+          "type": "research",
+          "sourceName": "Gemini Research — Mid-Year 2026",
+          "sourceReference": "mid-year-2026-research",
+          "observedValue": "Wanted by Night",
+          "notes": "Research confidence: high. Verified Azzaro fragrance.",
+          "createdAt": "2026-08-08T00:00:00.000Z"
+        }
+      ],
+      "confidence": {
+        "score": 70,
+        "basis": "Candidate ingestion (mid-year-2026): research confidence high, no name issue. Proposed: \"Wanted by Night\" by \"Azzaro\". Ready for editorial verification."
+      },
+      "status": "pending-review",
+      "history": [
+        {
+          "timestamp": "2026-08-08T00:00:00.000Z",
+          "event": "created",
+          "summary": "Candidate identity created by EP5-P2C controlled ingestion (mid-year-2026 campaign). Category A: pending-review.",
+          "actor": "EP5-P2C:mid-year-2026"
+        }
+      ],
+      "createdAt": "2026-08-08T00:00:00.000Z",
+      "updatedAt": "2026-08-08T00:00:00.000Z"
+    },
+    {
+      "id": "MIP-000025",
+      "supplierIdentities": [
+        {
+          "supplierName": "Azzaro Forever Wanted Absolu",
+          "supplierCategory": "M",
+          "sourceReference": "mid-year-2026::azzaro forever wanted absolu"
+        }
+      ],
+      "canonicalIdentity": {
+        "canonicalName": "Azzaro Forever Wanted Absolu",
+        "category": "fragrance"
+      },
+      "aliases": [],
+      "evidence": [
+        {
+          "evidenceId": "MIP-000025-ev-sup",
+          "type": "supplier-catalogue",
+          "sourceName": "Mid-Year 2026 Supplier List",
+          "sourceReference": "mid-year-2026::azzaro forever wanted absolu",
+          "observedValue": "Azzaro Forever Wanted Absolu",
+          "notes": "Supplier group(s): M.",
+          "createdAt": "2026-08-08T00:00:00.000Z"
+        },
+        {
+          "evidenceId": "MIP-000025-ev-res",
+          "type": "research",
+          "sourceName": "Gemini Research — Mid-Year 2026",
+          "sourceReference": "mid-year-2026-research",
+          "observedValue": "(none proposed)",
+          "notes": "Research confidence: low. No canonical name proposed — supplier terminology used as provisional. No official Azzaro fragrance named 'Forever Wanted Absolu' exists.",
+          "createdAt": "2026-08-08T00:00:00.000Z"
+        },
+        {
+          "evidenceId": "MIP-000025-ev-prov",
+          "type": "editorial",
+          "sourceName": "EP5-P2C Ingestion Engine",
+          "notes": "Canonical identity unresolved — supplier terminology temporarily preserved as candidate display identity pending additional research.",
+          "createdAt": "2026-08-08T00:00:00.000Z"
+        }
+      ],
+      "confidence": {
+        "score": 20,
+        "basis": "Candidate ingestion (mid-year-2026): no canonical research proposal available. Supplier terminology preserved as provisional canonical name. Requires additional research."
+      },
+      "status": "candidate",
+      "history": [
+        {
+          "timestamp": "2026-08-08T00:00:00.000Z",
+          "event": "created",
+          "summary": "Candidate identity created by EP5-P2C controlled ingestion (mid-year-2026 campaign). Category C: candidate.",
+          "actor": "EP5-P2C:mid-year-2026"
+        }
+      ],
+      "createdAt": "2026-08-08T00:00:00.000Z",
+      "updatedAt": "2026-08-08T00:00:00.000Z"
+    },
+    {
+      "id": "MIP-000026",
+      "supplierIdentities": [
+        {
+          "supplierName": "Viktor & Rolf Spicebomb Metallic Musk",
+          "supplierCategory": "M",
+          "sourceReference": "mid-year-2026::viktor & rolf spicebomb metallic musk"
+        }
+      ],
+      "canonicalIdentity": {
+        "canonicalName": "Viktor & Rolf Spicebomb Metallic Musk",
+        "category": "fragrance"
+      },
+      "aliases": [],
+      "evidence": [
+        {
+          "evidenceId": "MIP-000026-ev-sup",
+          "type": "supplier-catalogue",
+          "sourceName": "Mid-Year 2026 Supplier List",
+          "sourceReference": "mid-year-2026::viktor & rolf spicebomb metallic musk",
+          "observedValue": "Viktor & Rolf Spicebomb Metallic Musk",
+          "notes": "Supplier group(s): M.",
+          "createdAt": "2026-08-08T00:00:00.000Z"
+        },
+        {
+          "evidenceId": "MIP-000026-ev-res",
+          "type": "research",
+          "sourceName": "Gemini Research — Mid-Year 2026",
+          "sourceReference": "mid-year-2026-research",
+          "observedValue": "(none proposed)",
+          "notes": "Research confidence: low. No canonical name proposed — supplier terminology used as provisional. No official Viktor&Rolf Spicebomb flanker named 'Metallic Musk' exists.",
+          "createdAt": "2026-08-08T00:00:00.000Z"
+        },
+        {
+          "evidenceId": "MIP-000026-ev-prov",
+          "type": "editorial",
+          "sourceName": "EP5-P2C Ingestion Engine",
+          "notes": "Canonical identity unresolved — supplier terminology temporarily preserved as candidate display identity pending additional research.",
+          "createdAt": "2026-08-08T00:00:00.000Z"
+        }
+      ],
+      "confidence": {
+        "score": 20,
+        "basis": "Candidate ingestion (mid-year-2026): no canonical research proposal available. Supplier terminology preserved as provisional canonical name. Requires additional research."
+      },
+      "status": "candidate",
+      "history": [
+        {
+          "timestamp": "2026-08-08T00:00:00.000Z",
+          "event": "created",
+          "summary": "Candidate identity created by EP5-P2C controlled ingestion (mid-year-2026 campaign). Category C: candidate.",
+          "actor": "EP5-P2C:mid-year-2026"
+        }
+      ],
+      "createdAt": "2026-08-08T00:00:00.000Z",
+      "updatedAt": "2026-08-08T00:00:00.000Z"
+    }
+  ]
 }

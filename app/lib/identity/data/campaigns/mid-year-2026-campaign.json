@@ -1,0 +1,433 @@
+{
+  "batchId": "mid-year-2026",
+  "campaignTimestamp": "2026-08-08T00:00:00.000Z",
+  "sourceSupplierRowCount": 31,
+  "uniqueSupplierCount": 26,
+  "duplicateRowsCollapsed": 5,
+  "preResolvedCount": 0,
+  "candidateCreatedCount": 26,
+  "pendingReviewCount": 10,
+  "candidateCount": 16,
+  "unresolvedCount": 0,
+  "skippedCount": 0,
+  "records": [
+    {
+      "supplierName": "Hermes 24 Faubourg",
+      "supplierGroups": [
+        "L"
+      ],
+      "ingestionCategory": "A",
+      "identityId": "MIP-000001",
+      "proposedCanonicalName": "24 Faubourg",
+      "proposedCanonicalBrand": "Hermès",
+      "researchCanonicalProposal": "24 Faubourg",
+      "researchConfidence": "high",
+      "possibleNameIssue": false,
+      "resolutionBeforeIngestion": "no-match",
+      "status": "pending-review",
+      "recommendedAction": "verify",
+      "reason": "High-confidence proposal: \"24 Faubourg\" by \"Hermès\"."
+    },
+    {
+      "supplierName": "YSL Libre Berry Crush",
+      "supplierGroups": [
+        "L"
+      ],
+      "ingestionCategory": "C",
+      "identityId": "MIP-000002",
+      "proposedCanonicalName": "YSL Libre Berry Crush",
+      "researchConfidence": "low",
+      "possibleNameIssue": true,
+      "resolutionBeforeIngestion": "no-match",
+      "status": "candidate",
+      "recommendedAction": "research-more",
+      "reason": "Research provided no canonical name — supplier terminology used as provisional."
+    },
+    {
+      "supplierName": "Kayali Eden Plush Pear 23",
+      "supplierGroups": [
+        "L"
+      ],
+      "ingestionCategory": "C",
+      "identityId": "MIP-000003",
+      "proposedCanonicalName": "Kayali Eden Plush Pear 23",
+      "researchConfidence": "low",
+      "possibleNameIssue": true,
+      "resolutionBeforeIngestion": "no-match",
+      "status": "candidate",
+      "recommendedAction": "research-more",
+      "reason": "Research provided no canonical name — supplier terminology used as provisional."
+    },
+    {
+      "supplierName": "Kayali Eden Sweet Peach 35",
+      "supplierGroups": [
+        "L"
+      ],
+      "ingestionCategory": "C",
+      "identityId": "MIP-000004",
+      "proposedCanonicalName": "Kayali Eden Sweet Peach 35",
+      "researchConfidence": "low",
+      "possibleNameIssue": true,
+      "resolutionBeforeIngestion": "no-match",
+      "status": "candidate",
+      "recommendedAction": "research-more",
+      "reason": "Research provided no canonical name — supplier terminology used as provisional."
+    },
+    {
+      "supplierName": "DKNY Red Delicious Apple",
+      "supplierGroups": [
+        "L"
+      ],
+      "ingestionCategory": "B",
+      "identityId": "MIP-000005",
+      "proposedCanonicalName": "DKNY Red Delicious Apple",
+      "proposedCanonicalBrand": "DKNY",
+      "researchCanonicalProposal": "DKNY Delicious Night / DKNY Red Delicious",
+      "researchConfidence": "medium",
+      "possibleNameIssue": true,
+      "resolutionBeforeIngestion": "no-match",
+      "status": "pending-review",
+      "recommendedAction": "correct-canonical",
+      "reason": "Research proposed ambiguous multi-option canonical: \"DKNY Delicious Night / DKNY Red Delicious\" — supplier name used as provisional pending human resolution."
+    },
+    {
+      "supplierName": "MFK A La Rose",
+      "supplierGroups": [
+        "L"
+      ],
+      "ingestionCategory": "A",
+      "identityId": "MIP-000006",
+      "proposedCanonicalName": "À la rose",
+      "proposedCanonicalBrand": "Maison Francis Kurkdjian",
+      "researchCanonicalProposal": "À la rose",
+      "researchConfidence": "high",
+      "possibleNameIssue": false,
+      "resolutionBeforeIngestion": "no-match",
+      "status": "pending-review",
+      "recommendedAction": "verify",
+      "reason": "High-confidence proposal: \"À la rose\" by \"Maison Francis Kurkdjian\"."
+    },
+    {
+      "supplierName": "Lancome Idôle Peach 'n Roses",
+      "supplierGroups": [
+        "L"
+      ],
+      "ingestionCategory": "C",
+      "identityId": "MIP-000007",
+      "proposedCanonicalName": "Lancome Idôle Peach 'n Roses",
+      "researchConfidence": "low",
+      "possibleNameIssue": true,
+      "resolutionBeforeIngestion": "no-match",
+      "status": "candidate",
+      "recommendedAction": "research-more",
+      "reason": "Research provided no canonical name — supplier terminology used as provisional."
+    },
+    {
+      "supplierName": "Victoria's Secret Coconut Passion",
+      "supplierGroups": [
+        "L"
+      ],
+      "ingestionCategory": "A",
+      "identityId": "MIP-000008",
+      "proposedCanonicalName": "Coconut Passion",
+      "proposedCanonicalBrand": "Victoria's Secret",
+      "researchCanonicalProposal": "Coconut Passion",
+      "researchConfidence": "high",
+      "possibleNameIssue": false,
+      "resolutionBeforeIngestion": "no-match",
+      "status": "pending-review",
+      "recommendedAction": "verify",
+      "reason": "High-confidence proposal: \"Coconut Passion\" by \"Victoria's Secret\"."
+    },
+    {
+      "supplierName": "Kayali Capri In a Bottle Lemon Sugar 14",
+      "supplierGroups": [
+        "L"
+      ],
+      "ingestionCategory": "A",
+      "identityId": "MIP-000009",
+      "proposedCanonicalName": "Capri In a Bottle Lemon Sugar | 14",
+      "proposedCanonicalBrand": "Kayali",
+      "researchCanonicalProposal": "Capri In a Bottle Lemon Sugar | 14",
+      "researchConfidence": "high",
+      "possibleNameIssue": false,
+      "resolutionBeforeIngestion": "no-match",
+      "status": "pending-review",
+      "recommendedAction": "verify",
+      "reason": "High-confidence proposal: \"Capri In a Bottle Lemon Sugar | 14\" by \"Kayali\"."
+    },
+    {
+      "supplierName": "212 Carolina Herrera Good Girl Jasmine Absolute",
+      "supplierGroups": [
+        "L"
+      ],
+      "ingestionCategory": "C",
+      "identityId": "MIP-000010",
+      "proposedCanonicalName": "212 Carolina Herrera Good Girl Jasmine Absolute",
+      "researchCanonicalProposal": "Good Girl Légère / Good Girl Supreme (Note: Good Girl Jasmine Absolute does not exist as an official Carolina Herrera release)",
+      "researchConfidence": "low",
+      "possibleNameIssue": true,
+      "resolutionBeforeIngestion": "no-match",
+      "status": "candidate",
+      "recommendedAction": "research-more",
+      "reason": "Research proposed ambiguous multi-option canonical: \"Good Girl Légère / Good Girl Supreme (Note: Good Girl Jasmine Absolute does not exist as an official Carolina Herrera release)\" — supplier name used as provisional pending human resolution."
+    },
+    {
+      "supplierName": "Sospiro Vibranna",
+      "supplierGroups": [
+        "L"
+      ],
+      "ingestionCategory": "B",
+      "identityId": "MIP-000011",
+      "proposedCanonicalName": "Vibrato",
+      "proposedCanonicalBrand": "Sospiro Perfumes",
+      "researchCanonicalProposal": "Vibrato",
+      "researchConfidence": "medium",
+      "possibleNameIssue": true,
+      "resolutionBeforeIngestion": "no-match",
+      "status": "pending-review",
+      "recommendedAction": "correct-canonical",
+      "reason": "Name issue: Supplier name 'Vibranna' is likely a corruption of Sospiro 'Vibrato'."
+    },
+    {
+      "supplierName": "Alien Goddess/ Thierry Mugler",
+      "supplierGroups": [
+        "L"
+      ],
+      "ingestionCategory": "A",
+      "identityId": "MIP-000012",
+      "proposedCanonicalName": "Alien Goddess",
+      "proposedCanonicalBrand": "Mugler",
+      "researchCanonicalProposal": "Alien Goddess",
+      "researchConfidence": "high",
+      "possibleNameIssue": false,
+      "resolutionBeforeIngestion": "no-match",
+      "status": "pending-review",
+      "recommendedAction": "verify",
+      "reason": "High-confidence proposal: \"Alien Goddess\" by \"Mugler\"."
+    },
+    {
+      "supplierName": "Hugo Boss - Boss Nuit Pour Femme",
+      "supplierGroups": [
+        "L"
+      ],
+      "ingestionCategory": "A",
+      "identityId": "MIP-000013",
+      "proposedCanonicalName": "Boss Nuit Pour Femme",
+      "proposedCanonicalBrand": "Hugo Boss",
+      "researchCanonicalProposal": "Boss Nuit Pour Femme",
+      "researchConfidence": "high",
+      "possibleNameIssue": false,
+      "resolutionBeforeIngestion": "no-match",
+      "status": "pending-review",
+      "recommendedAction": "verify",
+      "reason": "High-confidence proposal: \"Boss Nuit Pour Femme\" by \"Hugo Boss\"."
+    },
+    {
+      "supplierName": "Narciso Rodriquez Pure Musc Blanc EDP Intense",
+      "supplierGroups": [
+        "L"
+      ],
+      "ingestionCategory": "B",
+      "identityId": "MIP-000014",
+      "proposedCanonicalName": "For Her Pure Musc",
+      "proposedCanonicalBrand": "Narciso Rodriguez",
+      "researchCanonicalProposal": "For Her Pure Musc",
+      "researchConfidence": "medium",
+      "possibleNameIssue": true,
+      "resolutionBeforeIngestion": "no-match",
+      "status": "pending-review",
+      "recommendedAction": "correct-canonical",
+      "reason": "Name issue: Supplier name includes extra modifiers ('Blanc EDP Intense') not part of the official title."
+    },
+    {
+      "supplierName": "Armani Power Of You",
+      "supplierGroups": [
+        "L"
+      ],
+      "ingestionCategory": "C",
+      "identityId": "MIP-000015",
+      "proposedCanonicalName": "Armani Power Of You",
+      "researchConfidence": "low",
+      "possibleNameIssue": true,
+      "resolutionBeforeIngestion": "no-match",
+      "status": "candidate",
+      "recommendedAction": "research-more",
+      "reason": "Research provided no canonical name — supplier terminology used as provisional."
+    },
+    {
+      "supplierName": "Parfums De Marly Athenais EDP",
+      "supplierGroups": [
+        "L"
+      ],
+      "ingestionCategory": "C",
+      "identityId": "MIP-000016",
+      "proposedCanonicalName": "Parfums De Marly Athenais EDP",
+      "researchConfidence": "low",
+      "possibleNameIssue": true,
+      "resolutionBeforeIngestion": "no-match",
+      "status": "candidate",
+      "recommendedAction": "research-more",
+      "reason": "Research provided no canonical name — supplier terminology used as provisional."
+    },
+    {
+      "supplierName": "Kayali Freedom Musk Santal 34",
+      "supplierGroups": [
+        "L",
+        "M"
+      ],
+      "ingestionCategory": "C",
+      "identityId": "MIP-000017",
+      "proposedCanonicalName": "Kayali Freedom Musk Santal 34",
+      "researchConfidence": "low",
+      "possibleNameIssue": true,
+      "resolutionBeforeIngestion": "no-match",
+      "status": "candidate",
+      "recommendedAction": "research-more",
+      "reason": "Research provided no canonical name — supplier terminology used as provisional."
+    },
+    {
+      "supplierName": "Kayali Freedom Musk Latte 41",
+      "supplierGroups": [
+        "L",
+        "M"
+      ],
+      "ingestionCategory": "C",
+      "identityId": "MIP-000018",
+      "proposedCanonicalName": "Kayali Freedom Musk Latte 41",
+      "researchConfidence": "low",
+      "possibleNameIssue": true,
+      "resolutionBeforeIngestion": "no-match",
+      "status": "candidate",
+      "recommendedAction": "research-more",
+      "reason": "Research provided no canonical name — supplier terminology used as provisional."
+    },
+    {
+      "supplierName": "Dolce & Gabbana Velvet Passion Oud",
+      "supplierGroups": [
+        "L",
+        "M"
+      ],
+      "ingestionCategory": "C",
+      "identityId": "MIP-000019",
+      "proposedCanonicalName": "Dolce & Gabbana Velvet Passion Oud",
+      "researchConfidence": "low",
+      "possibleNameIssue": true,
+      "resolutionBeforeIngestion": "no-match",
+      "status": "candidate",
+      "recommendedAction": "research-more",
+      "reason": "Research provided no canonical name — supplier terminology used as provisional."
+    },
+    {
+      "supplierName": "Kayali Freedom Musk Matcha 45",
+      "supplierGroups": [
+        "L",
+        "M"
+      ],
+      "ingestionCategory": "C",
+      "identityId": "MIP-000020",
+      "proposedCanonicalName": "Kayali Freedom Musk Matcha 45",
+      "researchConfidence": "low",
+      "possibleNameIssue": true,
+      "resolutionBeforeIngestion": "no-match",
+      "status": "candidate",
+      "recommendedAction": "research-more",
+      "reason": "Research provided no canonical name — supplier terminology used as provisional."
+    },
+    {
+      "supplierName": "Armani Prive Oud Nacre",
+      "supplierGroups": [
+        "L",
+        "M"
+      ],
+      "ingestionCategory": "C",
+      "identityId": "MIP-000021",
+      "proposedCanonicalName": "Armani Prive Oud Nacre",
+      "researchCanonicalProposal": "Oud Royal / Armani Privé collection (Oud Nacre unverified)",
+      "researchConfidence": "low",
+      "possibleNameIssue": true,
+      "resolutionBeforeIngestion": "no-match",
+      "status": "candidate",
+      "recommendedAction": "research-more",
+      "reason": "Research proposed ambiguous multi-option canonical: \"Oud Royal / Armani Privé collection (Oud Nacre unverified)\" — supplier name used as provisional pending human resolution."
+    },
+    {
+      "supplierName": "Armani Stronger With You Powerfully",
+      "supplierGroups": [
+        "M"
+      ],
+      "ingestionCategory": "C",
+      "identityId": "MIP-000022",
+      "proposedCanonicalName": "Armani Stronger With You Powerfully",
+      "researchCanonicalProposal": "Stronger With You / Stronger With You Absolutely",
+      "researchConfidence": "low",
+      "possibleNameIssue": true,
+      "resolutionBeforeIngestion": "no-match",
+      "status": "candidate",
+      "recommendedAction": "research-more",
+      "reason": "Research proposed ambiguous multi-option canonical: \"Stronger With You / Stronger With You Absolutely\" — supplier name used as provisional pending human resolution."
+    },
+    {
+      "supplierName": "Valentino Uomo Born In Roma Purple Melancholia",
+      "supplierGroups": [
+        "M"
+      ],
+      "ingestionCategory": "C",
+      "identityId": "MIP-000023",
+      "proposedCanonicalName": "Valentino Uomo Born In Roma Purple Melancholia",
+      "researchConfidence": "low",
+      "possibleNameIssue": true,
+      "resolutionBeforeIngestion": "no-match",
+      "status": "candidate",
+      "recommendedAction": "research-more",
+      "reason": "Research provided no canonical name — supplier terminology used as provisional."
+    },
+    {
+      "supplierName": "Azzaro Wanted By Night",
+      "supplierGroups": [
+        "M"
+      ],
+      "ingestionCategory": "A",
+      "identityId": "MIP-000024",
+      "proposedCanonicalName": "Wanted by Night",
+      "proposedCanonicalBrand": "Azzaro",
+      "researchCanonicalProposal": "Wanted by Night",
+      "researchConfidence": "high",
+      "possibleNameIssue": false,
+      "resolutionBeforeIngestion": "no-match",
+      "status": "pending-review",
+      "recommendedAction": "verify",
+      "reason": "High-confidence proposal: \"Wanted by Night\" by \"Azzaro\"."
+    },
+    {
+      "supplierName": "Azzaro Forever Wanted Absolu",
+      "supplierGroups": [
+        "M"
+      ],
+      "ingestionCategory": "C",
+      "identityId": "MIP-000025",
+      "proposedCanonicalName": "Azzaro Forever Wanted Absolu",
+      "researchConfidence": "low",
+      "possibleNameIssue": true,
+      "resolutionBeforeIngestion": "no-match",
+      "status": "candidate",
+      "recommendedAction": "research-more",
+      "reason": "Research provided no canonical name — supplier terminology used as provisional."
+    },
+    {
+      "supplierName": "Viktor & Rolf Spicebomb Metallic Musk",
+      "supplierGroups": [
+        "M"
+      ],
+      "ingestionCategory": "C",
+      "identityId": "MIP-000026",
+      "proposedCanonicalName": "Viktor & Rolf Spicebomb Metallic Musk",
+      "researchConfidence": "low",
+      "possibleNameIssue": true,
+      "resolutionBeforeIngestion": "no-match",
+      "status": "candidate",
+      "recommendedAction": "research-more",
+      "reason": "Research provided no canonical name — supplier terminology used as provisional."
+    }
+  ]
+}

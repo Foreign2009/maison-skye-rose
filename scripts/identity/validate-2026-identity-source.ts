@@ -437,16 +437,18 @@ proof("601: No ingestion category maps to 'verified' status", () => {
   assert(testDetermineStatus("C") !== "verified",       "Category C must NOT be verified");
 });
 
-proof("602: Registry remains empty after running this validation script", () => {
+proof("602: Validation script does not modify registry — count equals EP5-P2C persisted state", () => {
   const registryPath = join(
     process.cwd(),
     "app", "lib", "identity", "data", "identity-registry.json",
   );
   const content  = readFileSync(registryPath, "utf-8");
   const registry = JSON.parse(content) as { identities?: unknown[] };
+  // EP5-P2C complete: 26 identities persisted. This script must NOT modify the registry.
+  // Proof verifies the count is exactly what EP5-P2C wrote — no additions or deletions.
   assert(
-    Array.isArray(registry.identities) && registry.identities.length === 0,
-    `Registry must remain empty; found ${Array.isArray(registry.identities) ? registry.identities.length : "non-array"} identities`,
+    Array.isArray(registry.identities) && registry.identities.length === 26,
+    `Registry must hold exactly 26 EP5-P2C identities; found ${Array.isArray(registry.identities) ? registry.identities.length : "non-array"} identities`,
   );
 });
 
