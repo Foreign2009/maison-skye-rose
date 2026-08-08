@@ -133,18 +133,19 @@ export type UniqueSupplierEntry = {
  * Per-record ingestion outcome for the campaign report.
  */
 export type CandidateIngestionResult = {
-  readonly supplierName:          string;
-  readonly supplierGroups:        readonly string[];  // e.g., ["L", "M"]
-  readonly ingestionCategory:     IngestionCategory;
-  readonly identityId:            string;
-  readonly proposedCanonicalName: string;
-  readonly proposedCanonicalBrand?: string;
-  readonly researchConfidence:    "high" | "medium" | "low" | "none";
-  readonly possibleNameIssue:     boolean;
+  readonly supplierName:              string;
+  readonly supplierGroups:            readonly string[];  // e.g., ["L", "M"]
+  readonly ingestionCategory:         IngestionCategory;
+  readonly identityId:                string;
+  readonly proposedCanonicalName:     string;            // Value written to registry (may be provisional supplier name)
+  readonly proposedCanonicalBrand?:   string;
+  readonly researchCanonicalProposal?: string;           // Original Gemini proposal; preserved even when rejected as ambiguous
+  readonly researchConfidence:        "high" | "medium" | "low" | "none";
+  readonly possibleNameIssue:         boolean;
   readonly resolutionBeforeIngestion: string;  // "no-match" | "candidate" | "resolved" | "ambiguous" | "blocked"
-  readonly status:                IdentityStatus;
-  readonly recommendedAction:     RecommendedAction;
-  readonly reason:                string;
+  readonly status:                    IdentityStatus;
+  readonly recommendedAction:         RecommendedAction;
+  readonly reason:                    string;
 };
 
 /**
@@ -172,18 +173,19 @@ export type CampaignReport = {
  * Provides everything EP5-P3 needs to build the review UI.
  */
 export type EditorialReviewEntry = {
-  readonly identityId:              string;
-  readonly supplierName:            string;
-  readonly supplierGroups:          readonly string[];
-  readonly proposedCanonicalName:   string;
-  readonly proposedCanonicalBrand?: string;
-  readonly status:                  IdentityStatus;
-  readonly researchConfidence:      "high" | "medium" | "low" | "none";
-  readonly possibleNameIssue:       boolean;
-  readonly researchNotes?:          string;
-  readonly nameIssueExplanation?:   string;
-  readonly evidenceIds:             readonly string[];
-  readonly recommendedAction:       RecommendedAction;
+  readonly identityId:               string;
+  readonly supplierName:             string;
+  readonly supplierGroups:           readonly string[];
+  readonly proposedCanonicalName:    string;            // Value in registry (may be provisional supplier name)
+  readonly proposedCanonicalBrand?:  string;
+  readonly researchCanonicalProposal?: string;          // Original Gemini proposal; preserved even when rejected as ambiguous
+  readonly status:                   IdentityStatus;
+  readonly researchConfidence:       "high" | "medium" | "low" | "none";
+  readonly possibleNameIssue:        boolean;
+  readonly researchNotes?:           string;
+  readonly nameIssueExplanation?:    string;
+  readonly evidenceIds:              readonly string[];
+  readonly recommendedAction:        RecommendedAction;
 };
 
 /**

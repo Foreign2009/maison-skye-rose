@@ -7,86 +7,86 @@
 
 ## Current Task
 
-**Status:** INFRASTRUCTURE HARDENED — STOP (awaiting source data)
-**Program:** EP5-P2CR — Harden Identity Ingestion Source Contracts
+**Status:** CANONICAL SAFETY HARDENED — STOP (awaiting real ingestion authorisation)
+**Program:** EP5-P2C-R — Protect Candidate Canonical Identity
 
 **Goal:**
-Correct three source-contract issues in the EP5-P2C ingestion infrastructure before real
-source data is populated. No ingestion. No registry population. No AI.
+Before the first registry write, harden the ingestion engine so that ambiguous/multi-option
+research proposals are never written to `CanonicalIdentity.canonicalName`. Instead fall back
+to the supplier name as provisional. Preserve original research proposals in evidence and
+editorial output.
 
-**Corrections delivered (EP5-P2CR):**
+**Corrections delivered (EP5-P2C-R):**
 
-1. **Source row count** — `EXPECTED_SOURCE_ROW_COUNT = 31` added (was missing).
-   Validation suite expanded to 17 checks (was 16). Check #1 now asserts 31 source rows.
+1. **Source files populated** — Both Mid-Year 2026 source files populated with founder-supplied
+   evidence: 31 supplier rows (26 unique + 5 L/M pairs) and 26 Gemini research entries.
 
-2. **Gemini array fields** — `fragranceFamily` and `perfumer` changed from scalar `string`
-   to `readonly string[]` in `ResearchSourceEntry`. Source file example corrected.
+2. **isCleanCanonicalProposal()** — New deterministic guard in `sourceValidation.ts`. Rejects
+   `" / "` (multi-option separator), `"(Note:"` (research annotation), and parentheticals
+   containing `\bunverified\b`. Permits apostrophes, hyphens, pipes, numbers, accented chars.
 
-3. **ResearchMarketedGender** — new source-level type adds `"unknown"` to the canonical
-   `MarketedGender`. `"unknown"` → omit from `CanonicalIdentity.marketedGender` (NOT "unisex").
-   `launchYear: null` → omit from `CanonicalIdentity.launchYear`.
+3. **Provisional canonical name** — When research proposal is absent OR rejected as ambiguous,
+   `primaryEntry.supplierName` is used as the provisional `canonicalName`.
 
-4. **Runtime source validation** — `parseSupplierSourceFile` and `parseResearchSourceFile`
-   replace unsafe `JSON.parse(...) as SupplierSourceFile` casts. All fields validated.
+4. **researchCanonicalProposal field** — New field on `CandidateIngestionResult` and
+   `EditorialReviewEntry`. Carries the original Gemini proposal even when rejected, enabling
+   editorial reviewers to see both the registry value and the raw research string.
 
-5. **Source/research correspondence** — `verifySourceCorrespondence` added: duplicate
-   research entries, missing matches, and orphan entries all produce STOP errors.
+5. **Evidence preservation** — `observedValue` captures `research.canonicalName` verbatim.
+   Rejected proposals add an `ambiguousNote` to the evidence `notes` field.
 
-6. **Partial-state detection** — ingestion now detects and refuses partial campaign state
-   (skippedCount > 0 && toProcess > 0) with a clear recovery instruction.
+6. **39-proof validation suite** — `validate-2026-identity-source.ts` extended from 26 to 39
+   proofs. Section 7 (proofs 701–713) covers all isCleanCanonicalProposal contract cases.
 
-7. **Atomic write ordering** — registry written FIRST (atomic), then campaign/editorial.
-   Prior order (campaign → editorial → registry) was reversed.
-
-8. **Validation proof suite** — `scripts/identity/validate-2026-identity-source.ts`
-   with 26 deterministic proofs across 6 sections. All 26 pass.
+**Four previously risky records — canonical names after correction:**
+- DKNY Red Delicious Apple → `"DKNY Red Delicious Apple"` (provisional, Category B retained)
+- 212 Carolina Herrera Good Girl Jasmine Absolute → `"212 Carolina Herrera Good Girl Jasmine Absolute"` (provisional)
+- Armani Prive Oud Nacre → `"Armani Prive Oud Nacre"` (provisional)
+- Armani Stronger With You Powerfully → `"Armani Stronger With You Powerfully"` (provisional)
 
 **New/modified files:**
-- `scripts/identity/ingestion/types.ts` — ResearchMarketedGender, array fields, null launchYear
-- `scripts/identity/ingestion/sourceValidation.ts` — NEW: runtime parsing, dedup, correspondence
-- `scripts/identity/ingest-2026-new-arrivals.ts` — all EP5-P2CR corrections applied
-- `scripts/identity/validate-2026-identity-source.ts` — NEW: 26-proof source contract suite
-- `data/identity/source/mid-year-2026-supplier.json` — _schema updated: 31 rows documented
-- `data/identity/source/mid-year-2026-research.json` — _schema updated: arrays, null, unknown
-- `package.json` — `mip:validate:source:2026` script added
+- `scripts/identity/ingestion/sourceValidation.ts` — `isCleanCanonicalProposal` added
+- `scripts/identity/ingestion/types.ts` — `researchCanonicalProposal` field added
+- `scripts/identity/ingest-2026-new-arrivals.ts` — canonical resolution + evidence updated
+- `scripts/identity/validate-2026-identity-source.ts` — Section 7 (proofs 701–713) added
+- `data/identity/source/mid-year-2026-supplier.json` — POPULATED with 31 rows
+- `data/identity/source/mid-year-2026-research.json` — POPULATED with 26 research entries
 
 **Validation:**
 - `npm run mip:validate` → 69/69 ✓
 - `npm run mip:validate:resolver` → 85/85 ✓
-- `npm run mip:validate:source:2026` → 26/26 ✓
+- `npm run mip:validate:source:2026` → 39/39 ✓
+- `npm run mip:ingest:2026:dry` → 17/17 validations passed ✓
 - `npm run build` → 187 routes, 0 TypeScript errors, 0 warnings ✓
-- Dry-run halts cleanly with "31 fragrance supplier rows" message ✓
-- NO AI called. NO registry populated. ZERO routes added.
+- Registry: 0 identities (dry run confirmed — no writes occurred) ✓
+- NO AI called. NO registry populated.
 
 ---
 
 ## Next Human Action
 
-Populate the two source files with real data:
+Authorise the real ingestion:
 
-1. `data/identity/source/mid-year-2026-supplier.json`
-   Add the **31 supplier rows** (26 unique + 5 L/M pairs) from the Mid-Year 2026 list.
-   See the `_schema` field for the required format.
+   npm run mip:ingest:2026
 
-2. `data/identity/source/mid-year-2026-research.json`
-   Add **26 Gemini research entries** — one per unique supplier identity.
-   See the `_schema` field for the required format.
-   - `fragranceFamily` and `perfumer` must be arrays of strings
-   - `launchYear` may be a number or `null`
-   - `marketedGender` may include `"unknown"` for unresolved identities
+This will write 26 identity candidates to the registry (10 pending-review, 16 candidate).
 
-Then run:
-   npm run mip:ingest:2026:dry     # validates all 17 checks, no write
-   npm run mip:ingest:2026         # real write after dry-run passes
+**Prerequisite:** Review the four provisional canonical records in the editorial batch before
+authorising. These require human resolution before they can be verified:
+- DKNY Red Delicious Apple (Category B, pending-review)
+- 212 Carolina Herrera Good Girl Jasmine Absolute (Category C, candidate)
+- Armani Prive Oud Nacre (Category C, candidate)
+- Armani Stronger With You Powerfully (Category C, candidate)
 
 ---
 
 ## Context Notes
 
-**Last completed:** EP5-P2CR — Harden Identity Ingestion Source Contracts (2026-08-08)
-**Preceded by:**    EP5-P2C Infrastructure — Controlled Ingestion Pipeline (2026-08-08)
+**Last completed:** EP5-P2C-R — Protect Candidate Canonical Identity (2026-08-08)
+**Preceded by:**    EP5-P2CR — Harden Identity Ingestion Source Contracts (2026-08-08)
 
 Recent completed programs (newest first):
+- EP5-P2C-R Canonical Safety Correction (2026-08-08) — 39 proofs, 0 AI, 0 registry writes
 - EP5-P2CR Source Contract Hardening (2026-08-08) — 26 proofs, 0 AI, 0 registry writes
 - EP5-P2C Ingestion Infrastructure (2026-08-08) — infrastructure only, source data absent, NO write
 - EP5-P2B Deterministic Identity Resolver (2026-08-07) — 85 proofs, 0 AI, 0 factory changes
@@ -97,4 +97,4 @@ Recent completed programs (newest first):
 
 ## Build Result
 
-**Last build:** 2026-08-08 — Pass. Zero TypeScript errors. Zero warnings. 187 routes. (EP5-P2CR)
+**Last build:** 2026-08-08 — Pass. Zero TypeScript errors. Zero warnings. 187 routes. (EP5-P2C-R)

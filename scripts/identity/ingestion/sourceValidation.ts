@@ -30,6 +30,32 @@ export const CAMPAIGN_UNIQUE_COUNT = 26;
 /** Number of fragrances that appear under both L and M in the supplier list. */
 export const CAMPAIGN_DUPLICATE_COUNT = 5;
 
+// ── Canonical proposal safety ─────────────────────────────────────────────────
+
+/**
+ * Returns true when a research canonical name represents one clean, unambiguous
+ * identity proposal that is safe to use as CanonicalIdentity.canonicalName.
+ *
+ * Rejects:
+ *   " / "           — multi-option separator (two possible products, e.g. "A / B")
+ *   "(Note:"        — research annotation text embedded in the name field
+ *   parentheticals containing "unverified" — uncertainty markers
+ *
+ * Permits: apostrophes, hyphens, "|" pipes (e.g., "Capri In a Bottle | 14"),
+ * numbers, accented characters, and parentheses in legitimate official titles.
+ *
+ * Does NOT inspect sourceConfidence or possibleNameIssue — those are handled
+ * by classifyEntry(). This function guards canonical NAME QUALITY only.
+ */
+export function isCleanCanonicalProposal(name: string): boolean {
+  const trimmed = name.trim();
+  if (!trimmed) return false;
+  if (trimmed.includes(" / ")) return false;
+  if (trimmed.includes("(Note:")) return false;
+  if (/\([^)]*\bunverified\b[^)]*\)/i.test(trimmed)) return false;
+  return true;
+}
+
 // ── Internal type guards ──────────────────────────────────────────────────────
 
 function isObject(v: unknown): v is Record<string, unknown> {

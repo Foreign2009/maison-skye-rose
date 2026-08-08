@@ -2,17 +2,161 @@
   "batchId": "mid-year-2026",
   "description": "Maison Skye & Rose Mid-Year 2026 Supplier New Arrivals",
   "sourceReference": "mid-year-2026-supplier-list",
-  "_schema": {
-    "_comment": "POPULATE THIS FILE with the 31 supplier rows from the Mid-Year 2026 list. Five unisex fragrances appear under both L and M — include both rows for each. The ingestion script collapses the 31 rows to 26 unique identities.",
-    "_supplierName": "REQUIRED. Verbatim from the supplier catalogue. Never corrected, never normalised.",
-    "_supplierCategory": "OPTIONAL. Verbatim — 'L' (Ladies), 'M' (Men), 'UNISEX'. Preserve exact casing.",
-    "_sourceReference": "OPTIONAL. Row reference, e.g. 'Mid-Year 2026 Supplier List, Row 14'.",
-    "_duplicateHandling": "If the same fragrance appears under L AND M, include both rows with the same supplierName. The ingestion script collapses them into one identity with two SupplierIdentity entries.",
-    "_example": {
+  "entries": [
+    {
       "supplierName": "Hermes 24 Faubourg",
       "supplierCategory": "L",
       "sourceReference": "Mid-Year 2026 Supplier List, Row 1"
+    },
+    {
+      "supplierName": "YSL Libre Berry Crush",
+      "supplierCategory": "L",
+      "sourceReference": "Mid-Year 2026 Supplier List, Row 2"
+    },
+    {
+      "supplierName": "Kayali Eden Plush Pear 23",
+      "supplierCategory": "L",
+      "sourceReference": "Mid-Year 2026 Supplier List, Row 3"
+    },
+    {
+      "supplierName": "Kayali Eden Sweet Peach 35",
+      "supplierCategory": "L",
+      "sourceReference": "Mid-Year 2026 Supplier List, Row 4"
+    },
+    {
+      "supplierName": "DKNY Red Delicious Apple",
+      "supplierCategory": "L",
+      "sourceReference": "Mid-Year 2026 Supplier List, Row 5"
+    },
+    {
+      "supplierName": "MFK A La Rose",
+      "supplierCategory": "L",
+      "sourceReference": "Mid-Year 2026 Supplier List, Row 6"
+    },
+    {
+      "supplierName": "Lancome Idôle Peach 'n Roses",
+      "supplierCategory": "L",
+      "sourceReference": "Mid-Year 2026 Supplier List, Row 7"
+    },
+    {
+      "supplierName": "Victoria's Secret Coconut Passion",
+      "supplierCategory": "L",
+      "sourceReference": "Mid-Year 2026 Supplier List, Row 8"
+    },
+    {
+      "supplierName": "Kayali Capri In a Bottle Lemon Sugar 14",
+      "supplierCategory": "L",
+      "sourceReference": "Mid-Year 2026 Supplier List, Row 9"
+    },
+    {
+      "supplierName": "212 Carolina Herrera Good Girl Jasmine Absolute",
+      "supplierCategory": "L",
+      "sourceReference": "Mid-Year 2026 Supplier List, Row 10"
+    },
+    {
+      "supplierName": "Sospiro Vibranna",
+      "supplierCategory": "L",
+      "sourceReference": "Mid-Year 2026 Supplier List, Row 11"
+    },
+    {
+      "supplierName": "Alien Goddess/ Thierry Mugler",
+      "supplierCategory": "L",
+      "sourceReference": "Mid-Year 2026 Supplier List, Row 12"
+    },
+    {
+      "supplierName": "Hugo Boss - Boss Nuit Pour Femme",
+      "supplierCategory": "L",
+      "sourceReference": "Mid-Year 2026 Supplier List, Row 13"
+    },
+    {
+      "supplierName": "Narciso Rodriquez Pure Musc Blanc EDP Intense",
+      "supplierCategory": "L",
+      "sourceReference": "Mid-Year 2026 Supplier List, Row 14"
+    },
+    {
+      "supplierName": "Armani Power Of You",
+      "supplierCategory": "L",
+      "sourceReference": "Mid-Year 2026 Supplier List, Row 15"
+    },
+    {
+      "supplierName": "Parfums De Marly Athenais EDP",
+      "supplierCategory": "L",
+      "sourceReference": "Mid-Year 2026 Supplier List, Row 16"
+    },
+    {
+      "supplierName": "Kayali Freedom Musk Santal 34",
+      "supplierCategory": "L",
+      "sourceReference": "Mid-Year 2026 Supplier List, Row 17"
+    },
+    {
+      "supplierName": "Kayali Freedom Musk Latte 41",
+      "supplierCategory": "L",
+      "sourceReference": "Mid-Year 2026 Supplier List, Row 18"
+    },
+    {
+      "supplierName": "Dolce & Gabbana Velvet Passion Oud",
+      "supplierCategory": "L",
+      "sourceReference": "Mid-Year 2026 Supplier List, Row 19"
+    },
+    {
+      "supplierName": "Kayali Freedom Musk Matcha 45",
+      "supplierCategory": "L",
+      "sourceReference": "Mid-Year 2026 Supplier List, Row 20"
+    },
+    {
+      "supplierName": "Armani Prive Oud Nacre",
+      "supplierCategory": "L",
+      "sourceReference": "Mid-Year 2026 Supplier List, Row 21"
+    },
+    {
+      "supplierName": "Armani Stronger With You Powerfully",
+      "supplierCategory": "M",
+      "sourceReference": "Mid-Year 2026 Supplier List, Row 22"
+    },
+    {
+      "supplierName": "Valentino Uomo Born In Roma Purple Melancholia",
+      "supplierCategory": "M",
+      "sourceReference": "Mid-Year 2026 Supplier List, Row 23"
+    },
+    {
+      "supplierName": "Azzaro Wanted By Night",
+      "supplierCategory": "M",
+      "sourceReference": "Mid-Year 2026 Supplier List, Row 24"
+    },
+    {
+      "supplierName": "Azzaro Forever Wanted Absolu",
+      "supplierCategory": "M",
+      "sourceReference": "Mid-Year 2026 Supplier List, Row 25"
+    },
+    {
+      "supplierName": "Viktor & Rolf Spicebomb Metallic Musk",
+      "supplierCategory": "M",
+      "sourceReference": "Mid-Year 2026 Supplier List, Row 26"
+    },
+    {
+      "supplierName": "Armani Prive Oud Nacre",
+      "supplierCategory": "M",
+      "sourceReference": "Mid-Year 2026 Supplier List, Row 27"
+    },
+    {
+      "supplierName": "Kayali Freedom Musk Santal 34",
+      "supplierCategory": "M",
+      "sourceReference": "Mid-Year 2026 Supplier List, Row 28"
+    },
+    {
+      "supplierName": "Kayali Freedom Musk Latte 41",
+      "supplierCategory": "M",
+      "sourceReference": "Mid-Year 2026 Supplier List, Row 29"
+    },
+    {
+      "supplierName": "Kayali Freedom Musk Matcha 45",
+      "supplierCategory": "M",
+      "sourceReference": "Mid-Year 2026 Supplier List, Row 30"
+    },
+    {
+      "supplierName": "Dolce & Gabbana Velvet Passion Oud",
+      "supplierCategory": "M",
+      "sourceReference": "Mid-Year 2026 Supplier List, Row 31"
     }
-  },
-  "entries": []
+  ]
 }

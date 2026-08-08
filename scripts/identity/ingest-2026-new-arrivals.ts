@@ -36,6 +36,7 @@ import {
   deduplicateSupplierRows,
   matchResearch,
   verifySourceCorrespondence,
+  isCleanCanonicalProposal,
   CAMPAIGN_SOURCE_ROW_COUNT,
   CAMPAIGN_UNIQUE_COUNT,
 } from "./ingestion/sourceValidation";
@@ -164,10 +165,14 @@ function buildReasonNote(
   category: IngestionCategory,
   research: ResearchSourceEntry | null,
 ): string {
-  if (research === null)               return "No research entry found for this supplier name.";
-  if (!research.canonicalName?.trim()) return "Research provided no canonical name — supplier terminology used as provisional.";
-  if (category === "A")                return `High-confidence proposal: "${research.canonicalName}" by "${research.brand}".`;
-  if (research.possibleNameIssue)      return `Name issue: ${research.nameIssueExplanation ?? "supplier and canonical names differ."}`;
+  if (research === null) return "No research entry found for this supplier name.";
+  const proposal = research.canonicalName?.trim() ?? "";
+  if (!proposal) return "Research provided no canonical name — supplier terminology used as provisional.";
+  if (!isCleanCanonicalProposal(proposal)) {
+    return `Research proposed ambiguous multi-option canonical: "${proposal}" — supplier name used as provisional pending human resolution.`;
+  }
+  if (category === "A") return `High-confidence proposal: "${research.canonicalName}" by "${research.brand}".`;
+  if (research.possibleNameIssue) return `Name issue: ${research.nameIssueExplanation ?? "supplier and canonical names differ."}`;
   return `Medium-confidence proposal: "${research.canonicalName}".`;
 }
 
@@ -227,10 +232,12 @@ function buildIdentityRecord(
     sourceReference: idempotencyKey,
   }));
 
-  // Canonical name: use research proposal for A/B; fall back to supplier name for C
-  const canonicalName = research?.canonicalName?.trim()
-    ? research.canonicalName.trim()
-    : primaryEntry.supplierName;
+  // Canonical name: use research proposal only when it is a clean, single-identity proposal.
+  // Ambiguous multi-option proposals (e.g. "A / B", "(Note:...)") are rejected and the
+  // supplier name is used as provisional. The original research proposal is preserved in evidence.
+  const researchProposal   = research?.canonicalName?.trim() ?? "";
+  const usedProvisionalName = !researchProposal || !isCleanCanonicalProposal(researchProposal);
+  const canonicalName      = !usedProvisionalName ? researchProposal : primaryEntry.supplierName;
 
   // Canonical brand: Category C receives no assumed brand
   const canonicalBrand: string | undefined =
@@ -263,10 +270,13 @@ function buildIdentityRecord(
   });
 
   if (research !== null) {
-    const noCanonicalNote = !research.canonicalName?.trim()
+    const noCanonicalNote = !researchProposal
       ? " No canonical name proposed — supplier terminology used as provisional."
       : "";
-    const nameIssueNote = research.possibleNameIssue
+    const ambiguousNote = researchProposal && !isCleanCanonicalProposal(researchProposal)
+      ? " Research proposed ambiguous multi-option canonical — supplier name used as provisional pending human resolution."
+      : "";
+    const nameIssueNote = !ambiguousNote && !noCanonicalNote && research.possibleNameIssue
       ? ` Possible name issue: ${research.nameIssueExplanation ?? "supplier and canonical names differ."}`
       : "";
 
@@ -276,17 +286,20 @@ function buildIdentityRecord(
       sourceName:      "Gemini Research — Mid-Year 2026",
       sourceReference: `${BATCH_ID}-research`,
       observedValue:   research.canonicalName || "(none proposed)",
-      notes:           `Research confidence: ${research.sourceConfidence}.${noCanonicalNote}${nameIssueNote}${research.sourceNotes ? " " + research.sourceNotes : ""}`,
+      notes:           `Research confidence: ${research.sourceConfidence}.${noCanonicalNote}${ambiguousNote}${nameIssueNote}${research.sourceNotes ? " " + research.sourceNotes : ""}`,
       createdAt:       CAMPAIGN_TIMESTAMP,
     });
   }
 
-  if (category === "C" && !research?.canonicalName?.trim()) {
+  if (category === "C" && usedProvisionalName) {
+    const provNote = !researchProposal
+      ? "Canonical identity unresolved — supplier terminology temporarily preserved as candidate display identity pending additional research."
+      : "Canonical identity ambiguous — research proposed multiple possible identities. Supplier terminology preserved as provisional pending human resolution.";
     evidence.push({
       evidenceId: `${id}-ev-prov`,
       type:       "editorial",
       sourceName: "EP5-P2C Ingestion Engine",
-      notes:      "Canonical identity unresolved — supplier terminology temporarily preserved as candidate display identity pending additional research.",
+      notes:      provNote,
       createdAt:  CAMPAIGN_TIMESTAMP,
     });
   }
@@ -545,19 +558,21 @@ function buildCampaignReport(
     const entry    = uniqueEntries[idx];
     const research = entry?.researchEntry ?? null;
     const category = classifyEntry(research);
+    const rawProposal = research?.canonicalName?.trim() ?? "";
     return {
-      supplierName:              entry?.supplierEntries[0]?.supplierName ?? record.id,
-      supplierGroups:            entry?.supplierEntries.map(se => se.supplierCategory ?? "unspecified") ?? [],
-      ingestionCategory:         category,
-      identityId:                record.id,
-      proposedCanonicalName:     record.canonicalIdentity.canonicalName,
-      proposedCanonicalBrand:    record.canonicalIdentity.canonicalBrand,
-      researchConfidence:        research ? research.sourceConfidence : "none",
-      possibleNameIssue:         research?.possibleNameIssue ?? false,
-      resolutionBeforeIngestion: resolverResults.get(entry?.normalizedKey ?? "") ?? "no-match",
-      status:                    record.status,
-      recommendedAction:         recommendAction(category, research),
-      reason:                    buildReasonNote(category, research),
+      supplierName:               entry?.supplierEntries[0]?.supplierName ?? record.id,
+      supplierGroups:             entry?.supplierEntries.map(se => se.supplierCategory ?? "unspecified") ?? [],
+      ingestionCategory:          category,
+      identityId:                 record.id,
+      proposedCanonicalName:      record.canonicalIdentity.canonicalName,
+      proposedCanonicalBrand:     record.canonicalIdentity.canonicalBrand,
+      researchCanonicalProposal:  rawProposal || undefined,
+      researchConfidence:         research ? research.sourceConfidence : "none",
+      possibleNameIssue:          research?.possibleNameIssue ?? false,
+      resolutionBeforeIngestion:  resolverResults.get(entry?.normalizedKey ?? "") ?? "no-match",
+      status:                     record.status,
+      recommendedAction:          recommendAction(category, research),
+      reason:                     buildReasonNote(category, research),
     };
   });
 
@@ -589,19 +604,21 @@ function buildEditorialReviewBatch(
     const entry    = uniqueEntries[idx];
     const research = entry?.researchEntry ?? null;
     const category = classifyEntry(research);
+    const rawProposal = research?.canonicalName?.trim() ?? "";
     return {
-      identityId:             record.id,
-      supplierName:           entry?.supplierEntries[0]?.supplierName ?? record.id,
-      supplierGroups:         entry?.supplierEntries.map(se => se.supplierCategory ?? "unspecified") ?? [],
-      proposedCanonicalName:  record.canonicalIdentity.canonicalName,
-      proposedCanonicalBrand: record.canonicalIdentity.canonicalBrand,
-      status:                 record.status,
-      researchConfidence:     research ? research.sourceConfidence : "none",
-      possibleNameIssue:      research?.possibleNameIssue ?? false,
-      researchNotes:          research?.sourceNotes,
-      nameIssueExplanation:   research?.nameIssueExplanation,
-      evidenceIds:            record.evidence.map(e => e.evidenceId),
-      recommendedAction:      recommendAction(category, research),
+      identityId:                record.id,
+      supplierName:              entry?.supplierEntries[0]?.supplierName ?? record.id,
+      supplierGroups:            entry?.supplierEntries.map(se => se.supplierCategory ?? "unspecified") ?? [],
+      proposedCanonicalName:     record.canonicalIdentity.canonicalName,
+      proposedCanonicalBrand:    record.canonicalIdentity.canonicalBrand,
+      researchCanonicalProposal: rawProposal || undefined,
+      status:                    record.status,
+      researchConfidence:        research ? research.sourceConfidence : "none",
+      possibleNameIssue:         research?.possibleNameIssue ?? false,
+      researchNotes:             research?.sourceNotes,
+      nameIssueExplanation:      research?.nameIssueExplanation,
+      evidenceIds:               record.evidence.map(e => e.evidenceId),
+      recommendedAction:         recommendAction(category, research),
     };
   });
 

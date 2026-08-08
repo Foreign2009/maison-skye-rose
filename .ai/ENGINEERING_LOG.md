@@ -39,6 +39,60 @@ Never edit or delete past entries.
 
 ## Log
 
+### 2026-08-08 — EP5-P2C-R — Protect Candidate Canonical Identity
+
+**Participants:** Project Owner / Claude (Implementation Engineer)
+**Program:** EP5-P2C-R — Canonical safety correction before first registry write. Source files populated with founder-supplied evidence. Ingestion engine hardened so ambiguous research proposals are never written to `CanonicalIdentity.canonicalName`.
+
+**Decisions Made:**
+- `isCleanCanonicalProposal(name)` is a deterministic function, not a heuristic. It rejects exactly three patterns: `" / "` (multi-option separator), `"(Note:"` (research annotation), and `\([^)]*\bunverified\b[^)]*\)` (uncertainty marker). All other punctuation (apostrophes, hyphens, pipes, parentheses in official titles) is permitted. No broad punctuation ban.
+- When a research proposal is absent OR rejected as ambiguous, `primaryEntry.supplierName` is used as the provisional `canonicalName`. This is not canonical truth — it is a temporary display identity pending human resolution.
+- The original research proposal is preserved verbatim in two places: the `observedValue` of the research evidence entry (always), and a new `researchCanonicalProposal` field on both `CandidateIngestionResult` and `EditorialReviewEntry`. Editorial reviewers see both values.
+- Rejected proposals add an `ambiguousNote` to evidence `notes`. The `usedProvisionalName` flag is internal — it controls both canonical resolution and provisional evidence note, but it is NOT written to the registry. The registry only sees the resolved `canonicalName`.
+- DKNY Red Delicious Apple (Category B) retains `canonicalBrand: "DKNY"` and `status: "pending-review"`. The brand is unambiguous even though the product identity is ambiguous. Classification is NOT changed to hide the canonical issue — the name is corrected, the classification stays truthful.
+- DO NOT change `classifyEntry()` logic to accommodate ambiguous proposals. `sourceConfidence` and `possibleNameIssue` classify the research quality — they are independent of canonical name cleanliness.
+- Source files are committed with real data. They are never modified by the ingestion engine and remain the permanent evidence source.
+- Validation proof count: 39 (was 26 after EP5-P2CR). Section 7 (proofs 701–713) covers the full `isCleanCanonicalProposal` contract.
+
+**Tasks Completed:**
+- `data/identity/source/mid-year-2026-supplier.json` — POPULATED: 31 rows (26 unique + 5 L/M pairs). All `supplierCategory` and `sourceReference` fields present.
+- `data/identity/source/mid-year-2026-research.json` — POPULATED: 26 Gemini research entries. All fields correct (arrays for fragranceFamily/perfumer, null for unresolved launchYear, "unknown" for unresolved marketedGender).
+- `scripts/identity/ingestion/sourceValidation.ts` — `isCleanCanonicalProposal()` added after campaign constants.
+- `scripts/identity/ingestion/types.ts` — `researchCanonicalProposal?: string` added to both `CandidateIngestionResult` and `EditorialReviewEntry`.
+- `scripts/identity/ingest-2026-new-arrivals.ts` — `isCleanCanonicalProposal` imported; `buildReasonNote` updated to detect ambiguous proposals; `buildIdentityRecord` canonical resolution updated; evidence `ambiguousNote` added; `researchCanonicalProposal` written to campaign report and editorial batch.
+- `scripts/identity/validate-2026-identity-source.ts` — `isCleanCanonicalProposal` imported; `resolveCanonicalNameForProof` helper added; Section 7 with 13 proofs (701–713) added.
+- `.ai/CURRENT_TASK.md` — Updated to EP5-P2C-R completion status.
+- `.ai/ENGINEERING_LOG.md` — This entry.
+
+**Tasks Started:**
+- None. EP5-P2C-R complete. Real ingestion requires founder authorisation.
+
+**Build Result:** Pass — 187 routes, 0 TypeScript errors, 0 warnings
+- `npm run mip:validate` → 69/69
+- `npm run mip:validate:resolver` → 85/85
+- `npm run mip:validate:source:2026` → 39/39
+- `npm run mip:ingest:2026:dry` → 17/17 validations passed, registry 0 identities
+
+**Files Changed:**
+- `data/identity/source/mid-year-2026-supplier.json` (populated)
+- `data/identity/source/mid-year-2026-research.json` (populated)
+- `scripts/identity/ingestion/sourceValidation.ts`
+- `scripts/identity/ingestion/types.ts`
+- `scripts/identity/ingest-2026-new-arrivals.ts`
+- `scripts/identity/validate-2026-identity-source.ts`
+- `.ai/CURRENT_TASK.md`
+- `.ai/ENGINEERING_LOG.md`
+
+**Handoff:**
+- Registry is empty. Source files are populated. Canonical safety is enforced.
+- Four records carry provisional canonical names and require human resolution before they can be verified: DKNY Red Delicious Apple (B), 212 Carolina Herrera Good Girl Jasmine Absolute (C), Armani Prive Oud Nacre (C), Armani Stronger With You Powerfully (C).
+- After founder review: run `npm run mip:ingest:2026` to perform the real registry write.
+
+**Open Questions Carried Forward:**
+- None. All canonical safety constraints are enforced. Real ingestion awaits founder authorisation.
+
+---
+
 ### 2026-08-08 — EP5-P2CR — Harden Identity Ingestion Source Contracts
 
 **Participants:** Project Owner / Claude (Implementation Engineer)

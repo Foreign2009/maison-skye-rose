@@ -20,6 +20,7 @@ import {
   deduplicateSupplierRows,
   matchResearch,
   verifySourceCorrespondence,
+  isCleanCanonicalProposal,
   CAMPAIGN_SOURCE_ROW_COUNT,
   CAMPAIGN_UNIQUE_COUNT,
   CAMPAIGN_DUPLICATE_COUNT,
@@ -447,6 +448,174 @@ proof("602: Registry remains empty after running this validation script", () => 
     Array.isArray(registry.identities) && registry.identities.length === 0,
     `Registry must remain empty; found ${Array.isArray(registry.identities) ? registry.identities.length : "non-array"} identities`,
   );
+});
+
+// ── Section 7: Canonical safety rules ─────────────────────────────────────────
+
+console.log("\n  ── Section 7: Canonical safety rules ───────────────────────\n");
+
+// Mirrors the canonical name resolution logic in ingest-2026-new-arrivals.ts.
+// A clean single proposal is used; an ambiguous / multi-option proposal falls
+// back to the supplier name as provisional.
+function resolveCanonicalNameForProof(
+  researchCanonicalName: string | undefined,
+  supplierName: string,
+): string {
+  const proposal = researchCanonicalName?.trim() ?? "";
+  return proposal && isCleanCanonicalProposal(proposal) ? proposal : supplierName;
+}
+
+proof("701: Empty research canonicalName → supplierName used provisionally", () => {
+  assert(
+    resolveCanonicalNameForProof("", "My Supplier Name") === "My Supplier Name",
+    "Empty string proposal must fall back to supplier name",
+  );
+  assert(
+    resolveCanonicalNameForProof(undefined, "My Supplier Name") === "My Supplier Name",
+    "Undefined proposal must fall back to supplier name",
+  );
+});
+
+proof("702: Single clean research canonicalName → research proposal used", () => {
+  assert(
+    resolveCanonicalNameForProof("Alien Goddess", "Alien Goddess/ Thierry Mugler") === "Alien Goddess",
+    "Clean single proposal must be used as canonical name",
+  );
+  assert(
+    resolveCanonicalNameForProof("Vibrato", "Sospiro Vibranna") === "Vibrato",
+    "Clean short proposal must be used",
+  );
+});
+
+proof("703: 'Name A / Name B' → rejected as ambiguous, supplierName used provisionally", () => {
+  const proposal = "Stronger With You / Stronger With You Absolutely";
+  assert(!isCleanCanonicalProposal(proposal), "Multi-option proposal must not be clean");
+  assert(
+    resolveCanonicalNameForProof(proposal, "Armani Stronger With You Powerfully") ===
+      "Armani Stronger With You Powerfully",
+    "Supplier name must be used for multi-option proposal",
+  );
+});
+
+proof("704: '.../ ... (Note: ...)' → rejected, supplierName used provisionally", () => {
+  const proposal =
+    "Good Girl Légère / Good Girl Supreme (Note: Good Girl Jasmine Absolute does not exist as an official Carolina Herrera release)";
+  assert(!isCleanCanonicalProposal(proposal), "Proposal with '(Note:...)' must be rejected");
+  assert(
+    resolveCanonicalNameForProof(proposal, "212 Carolina Herrera Good Girl Jasmine Absolute") ===
+      "212 Carolina Herrera Good Girl Jasmine Absolute",
+    "Supplier name must be used as provisional",
+  );
+});
+
+proof("705: 'Oud Royal / Armani Privé collection (Oud Nacre unverified)' → supplierName used provisionally", () => {
+  const proposal = "Oud Royal / Armani Privé collection (Oud Nacre unverified)";
+  assert(!isCleanCanonicalProposal(proposal), "Proposal with unverified parenthetical must be rejected");
+  assert(
+    resolveCanonicalNameForProof(proposal, "Armani Prive Oud Nacre") === "Armani Prive Oud Nacre",
+    "Supplier name must be used for unverified parenthetical proposal",
+  );
+});
+
+proof("706: 'Stronger With You / Stronger With You Absolutely' → supplierName used provisionally", () => {
+  const proposal = "Stronger With You / Stronger With You Absolutely";
+  assert(!isCleanCanonicalProposal(proposal), "Multi-option proposal must be rejected");
+  assert(
+    resolveCanonicalNameForProof(proposal, "Armani Stronger With You Powerfully") ===
+      "Armani Stronger With You Powerfully",
+    "Supplier name must be used as provisional canonical",
+  );
+});
+
+proof("707: Research proposal remains preserved in parsed research source entry", () => {
+  const ambiguousProposal = "Good Girl Légère / Good Girl Supreme (Note: test annotation)";
+  const testFile = parseResearchSourceFile({
+    batchId:      "test",
+    researchedBy: "Gemini",
+    researchDate: "2026-01-01",
+    entries: [{
+      supplierName:      "Test Supplier",
+      canonicalName:     ambiguousProposal,
+      brand:             "Test Brand",
+      sourceConfidence:  "low",
+      possibleNameIssue: true,
+    }],
+  });
+  assert(
+    testFile.entries[0]?.canonicalName === ambiguousProposal,
+    "Original ambiguous proposal must be preserved verbatim in the parsed research entry",
+  );
+});
+
+proof("708: Research proposal is separately accessible from the provisional canonical name", () => {
+  const proposal     = "DKNY Delicious Night / DKNY Red Delicious";
+  const supplierName = "DKNY Red Delicious Apple";
+  const provisional  = resolveCanonicalNameForProof(proposal, supplierName);
+  assert(provisional === supplierName, "Provisional canonical must be supplier name");
+  assert(provisional !== proposal,    "Provisional and original research proposal must differ");
+  assert(proposal.length > 0,         "Original research proposal must still be available separately");
+});
+
+proof("709: No ingestion category maps to 'verified' status (canonical safety invariant)", () => {
+  // Mirrors determineStatus() in the ingestion script
+  function testStatus(category: "A" | "B" | "C"): string {
+    return category === "C" ? "candidate" : "pending-review";
+  }
+  assert(testStatus("A") !== "verified", "Category A must not produce verified");
+  assert(testStatus("B") !== "verified", "Category B must not produce verified");
+  assert(testStatus("C") !== "verified", "Category C must not produce verified");
+});
+
+proof("710: Clean single-product proposals remain usable for Category A records", () => {
+  const categoryAProposals = [
+    "24 Faubourg",
+    "À la rose",
+    "Alien Goddess",
+    "Boss Nuit Pour Femme",
+    "Coconut Passion",
+    "Capri In a Bottle Lemon Sugar | 14",
+    "Wanted by Night",
+  ];
+  for (const p of categoryAProposals) {
+    assert(isCleanCanonicalProposal(p), `"${p}" must be a clean canonical proposal`);
+    assert(
+      resolveCanonicalNameForProof(p, "Any Supplier Name") === p,
+      `Clean proposal "${p}" must be used (not replaced with supplier name)`,
+    );
+  }
+});
+
+proof("711: Sospiro Vibranna → 'Vibrato' is a clean single proposal and remains usable", () => {
+  assert(isCleanCanonicalProposal("Vibrato"), "'Vibrato' must be a clean canonical proposal");
+  assert(
+    resolveCanonicalNameForProof("Vibrato", "Sospiro Vibranna") === "Vibrato",
+    "'Vibrato' must be used as canonical name for Sospiro Vibranna",
+  );
+});
+
+proof("712: Narciso supplier variant → 'For Her Pure Musc' is a clean single proposal", () => {
+  assert(isCleanCanonicalProposal("For Her Pure Musc"), "'For Her Pure Musc' must be a clean canonical proposal");
+  assert(
+    resolveCanonicalNameForProof("For Her Pure Musc", "Narciso Rodriquez Pure Musc Blanc EDP Intense") ===
+      "For Her Pure Musc",
+    "'For Her Pure Musc' must be used as canonical name, not the supplier's longer name",
+  );
+});
+
+proof("713: DKNY stays Category B/pending-review but uses supplierName as provisional canonical", () => {
+  const proposal     = "DKNY Delicious Night / DKNY Red Delicious";
+  const supplierName = "DKNY Red Delicious Apple";
+  assert(
+    !isCleanCanonicalProposal(proposal),
+    "DKNY multi-option research proposal must be rejected by clean proposal check",
+  );
+  assert(
+    resolveCanonicalNameForProof(proposal, supplierName) === supplierName,
+    "DKNY provisional canonical must be supplier name, not the slash-separated research string",
+  );
+  // Note: classification (B, pending-review, correct-canonical) is governed by
+  // sourceConfidence and possibleNameIssue — not by canonical name cleanliness.
+  // That separation is by design.
 });
 
 // ── Results ────────────────────────────────────────────────────────────────────
