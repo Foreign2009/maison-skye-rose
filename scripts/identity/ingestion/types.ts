@@ -38,6 +38,16 @@ export type SupplierSourceFile = {
 };
 
 /**
+ * Source-level marketed gender — extends the canonical MarketedGender with "unknown"
+ * for entries where research could not determine the gender.
+ *
+ * RULE: "unknown" must NEVER be copied to CanonicalIdentity.marketedGender.
+ *       Unknown research information is represented as absence of canonical truth.
+ *       Do not convert "unknown" to "unisex".
+ */
+export type ResearchMarketedGender = "female" | "male" | "unisex" | "shared" | "unknown";
+
+/**
  * One row from the Gemini research source.
  *
  * Fields are split into:
@@ -53,8 +63,8 @@ export type ResearchSourceEntry = {
   // ── Identity-relevant fields (consumed by EP5-P2C) ────────────────────────
   readonly canonicalName:         string;   // Research-proposed canonical name; may be empty
   readonly brand:                 string;   // Research-proposed canonical brand; may be empty
-  readonly launchYear?:           number;
-  readonly marketedGender?:       "female" | "male" | "unisex" | "shared";
+  readonly launchYear?:           number | null;
+  readonly marketedGender?:       ResearchMarketedGender;
   readonly sourceConfidence:      "high" | "medium" | "low";
   readonly sourceNotes?:          string;
   readonly possibleNameIssue:     boolean;
@@ -62,12 +72,12 @@ export type ResearchSourceEntry = {
 
   // ── Knowledge-only fields (preserved here for future Knowledge Factory use) ──
   // These are NOT moved into IdentityRecord canonical identity or evidence.
-  readonly fragranceFamily?: string;
+  readonly fragranceFamily?: readonly string[];
   readonly topNotes?:        readonly string[];
   readonly heartNotes?:      readonly string[];
   readonly baseNotes?:       readonly string[];
   readonly mainAccords?:     readonly string[];
-  readonly perfumer?:        string;
+  readonly perfumer?:        readonly string[];
 };
 
 /**

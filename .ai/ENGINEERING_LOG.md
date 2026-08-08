@@ -39,6 +39,58 @@ Never edit or delete past entries.
 
 ## Log
 
+### 2026-08-08 — EP5-P2CR — Harden Identity Ingestion Source Contracts
+
+**Participants:** Project Owner / Claude (Implementation Engineer)
+**Program:** EP5-P2CR — Corrective hardening of EP5-P2C ingestion infrastructure before source data is populated.
+
+**Decisions Made:**
+- `ResearchMarketedGender` is a source-level type (superset of canonical `MarketedGender`). It adds `"unknown"` to represent unresolved gender from Gemini research. `"unknown"` is NEVER copied to `CanonicalIdentity` — it is represented as absence. This prevents false "unisex" assignments for genuinely unresolved fragrances.
+- `launchYear: null` in research source means "Gemini could not determine the year." It is NEVER written to `CanonicalIdentity.launchYear`. Absence of canonical truth ≠ no launch year.
+- Source validation functions (`parseSupplierSourceFile`, `parseResearchSourceFile`) extracted to `scripts/identity/ingestion/sourceValidation.ts` for testability. Ingestion script and validation proof suite both import from there.
+- Atomic write order is: registry first (source of truth), then campaign report, then editorial batch. If campaign/editorial fail after registry succeeds, registry is correct and files can be regenerated.
+- Partial campaign state (some records ingested, some not) is explicitly refused with a recovery instruction rather than producing misleading "Expected 26, got 16" errors.
+- `verifySourceCorrespondence` runs BEFORE idempotency check — validates 1:1 match between unique suppliers and research entries before any processing.
+- VALIDATION_COUNT increased from 16 to 17 — check #1 now explicitly asserts source row count = 31.
+
+**Tasks Completed:**
+- `scripts/identity/ingestion/types.ts` — `ResearchMarketedGender` type added; `fragranceFamily` and `perfumer` corrected to `readonly string[]`; `launchYear` to `number | null`.
+- `scripts/identity/ingestion/sourceValidation.ts` — NEW. Runtime JSON validation for both source files; `deduplicateSupplierRows`, `matchResearch` extracted here; `verifySourceCorrespondence` added. Campaign constants exported: `CAMPAIGN_SOURCE_ROW_COUNT = 31`, `CAMPAIGN_UNIQUE_COUNT = 26`, `CAMPAIGN_DUPLICATE_COUNT = 5`.
+- `scripts/identity/ingest-2026-new-arrivals.ts` — All EP5-P2CR corrections: imports from sourceValidation, runtime loaders, partial-state guard, correspondence check, fixed `buildIdentityRecord` (unknown/null handling), reversed write order, 17-check validation suite.
+- `scripts/identity/validate-2026-identity-source.ts` — NEW. 26 deterministic proofs across 6 sections. All pass.
+- `data/identity/source/mid-year-2026-supplier.json` — `_schema` updated: "31 rows → 26 unique" documented.
+- `data/identity/source/mid-year-2026-research.json` — `_schema` updated: arrays for fragranceFamily/perfumer, null launchYear, unknown marketedGender.
+- `package.json` — `mip:validate:source:2026` script added.
+
+**Tasks Started:**
+- None. EP5-P2CR complete. Awaiting founder to populate source files before EP5-P2C ingestion proceeds.
+
+**Build Result:** Pass — 187 routes, 0 TypeScript errors, 0 warnings
+- `npm run mip:validate` → 69/69
+- `npm run mip:validate:resolver` → 85/85
+- `npm run mip:validate:source:2026` → 26/26
+
+**Files Changed:**
+- `scripts/identity/ingestion/types.ts`
+- `scripts/identity/ingestion/sourceValidation.ts` (NEW)
+- `scripts/identity/ingest-2026-new-arrivals.ts`
+- `scripts/identity/validate-2026-identity-source.ts` (NEW)
+- `data/identity/source/mid-year-2026-supplier.json`
+- `data/identity/source/mid-year-2026-research.json`
+- `package.json`
+- `.ai/CURRENT_TASK.md`
+- `.ai/ENGINEERING_LOG.md`
+
+**Handoff:**
+- Founder must populate `data/identity/source/mid-year-2026-supplier.json` with 31 supplier rows (26 unique + 5 L/M pairs).
+- Founder must populate `data/identity/source/mid-year-2026-research.json` with 26 Gemini research entries. Use array format for `fragranceFamily` and `perfumer`. Use `null` for unresolved `launchYear`. Use `"unknown"` for unresolved `marketedGender`.
+- Then run: `npm run mip:ingest:2026:dry` → `npm run mip:ingest:2026`
+
+**Open Questions Carried Forward:**
+- None. Source contracts are fully hardened and documented.
+
+---
+
 ### 2026-08-07 — EP4-P3C — Knowledge Platform Evolution / Home Fragrance Producer Foundation
 
 **Participants:** Project Owner / Claude (Implementation Engineer)

@@ -1,5 +1,6 @@
 /**
  * EP5-P2C — Controlled 2026 Identity Candidate Ingestion
+ * EP5-P2CR — Hardened source contracts, runtime validation, write ordering
  *
  * Deterministic, idempotent ingestion of the Mid-Year 2026 supplier new arrivals
  * into the Maison Identity Platform.
@@ -9,10 +10,10 @@
  *   npx tsx scripts/identity/ingest-2026-new-arrivals.ts              # real write
  *
  * Required source files:
- *   data/identity/source/mid-year-2026-supplier.json
- *   data/identity/source/mid-year-2026-research.json
+ *   data/identity/source/mid-year-2026-supplier.json  (31 rows — 26 unique + 5 L/M pairs)
+ *   data/identity/source/mid-year-2026-research.json  (26 entries — one per unique identity)
  *
- * HARD CONSTRAINTS (verbatim from EP5-P2C approval):
+ * HARD CONSTRAINTS (verbatim from EP5-P2C and EP5-P2CR approvals):
  *   NO AI — no Gemini, Claude, OpenAI, web search, or external service calls.
  *   NO PERSISTENCE POPULATION until all validations pass.
  *   NONE may be verified — all output records must be "candidate" or "pending-review".
@@ -23,12 +24,21 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "fs";
 import { dirname, join }                                        from "path";
 
-import { IdentityRegistry }               from "../../app/lib/identity/IdentityRegistry";
-import { DeterministicIdentityResolver }  from "../../app/lib/identity/resolver/index";
-import { validateIdentityRecord }         from "../../app/lib/identity/validator";
+import { IdentityRegistry }              from "../../app/lib/identity/IdentityRegistry";
+import { DeterministicIdentityResolver } from "../../app/lib/identity/resolver/index";
+import { validateIdentityRecord }        from "../../app/lib/identity/validator";
 import { loadIdentityRegistry, saveIdentityRegistry } from "../../app/lib/identity/persistence";
-import { normalizeIdentityString }        from "../../app/lib/identity/normalizer";
-import { IDENTITY_PLATFORM_VERSION }      from "../../app/lib/identity/version";
+import { IDENTITY_PLATFORM_VERSION }     from "../../app/lib/identity/version";
+
+import {
+  parseSupplierSourceFile,
+  parseResearchSourceFile,
+  deduplicateSupplierRows,
+  matchResearch,
+  verifySourceCorrespondence,
+  CAMPAIGN_SOURCE_ROW_COUNT,
+  CAMPAIGN_UNIQUE_COUNT,
+} from "./ingestion/sourceValidation";
 
 import type {
   IdentityRecord,
@@ -42,7 +52,6 @@ import type {
 
 import type {
   SupplierSourceFile,
-  SupplierSourceEntry,
   ResearchSourceFile,
   ResearchSourceEntry,
   UniqueSupplierEntry,
@@ -56,11 +65,12 @@ import type {
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 
-const BATCH_ID               = "mid-year-2026";
-const CAMPAIGN_TIMESTAMP     = "2026-08-08T00:00:00.000Z";
-const PRODUCT_CATEGORY       = "fragrance" as ProductCategory;
-const EXPECTED_UNIQUE_COUNT  = 26;
-const VALIDATION_COUNT       = 16;
+const BATCH_ID                  = "mid-year-2026";
+const CAMPAIGN_TIMESTAMP        = "2026-08-08T00:00:00.000Z";
+const PRODUCT_CATEGORY          = "fragrance" as ProductCategory;
+const EXPECTED_SOURCE_ROW_COUNT = CAMPAIGN_SOURCE_ROW_COUNT; // 31
+const EXPECTED_UNIQUE_COUNT     = CAMPAIGN_UNIQUE_COUNT;      // 26
+const VALIDATION_COUNT          = 17;
 
 const SUPPLIER_SOURCE_PATH = join(process.cwd(), "data", "identity", "source", "mid-year-2026-supplier.json");
 const RESEARCH_SOURCE_PATH = join(process.cwd(), "data", "identity", "source", "mid-year-2026-research.json");
@@ -74,11 +84,12 @@ function loadSupplierSource(): SupplierSourceFile {
     throw new Error(
       `MISSING SOURCE FILE\n` +
       `  Path: ${SUPPLIER_SOURCE_PATH}\n` +
-      `  Populate with the 26 supplier entries from the Mid-Year 2026 list.\n` +
+      `  Populate with the 31 supplier rows from the Mid-Year 2026 list.\n` +
       `  See the _schema field in the file for the required JSON format.`,
     );
   }
-  return JSON.parse(readFileSync(SUPPLIER_SOURCE_PATH, "utf-8")) as SupplierSourceFile;
+  const raw: unknown = JSON.parse(readFileSync(SUPPLIER_SOURCE_PATH, "utf-8"));
+  return parseSupplierSourceFile(raw);
 }
 
 function loadResearchSource(): ResearchSourceFile {
@@ -86,49 +97,12 @@ function loadResearchSource(): ResearchSourceFile {
     throw new Error(
       `MISSING SOURCE FILE\n` +
       `  Path: ${RESEARCH_SOURCE_PATH}\n` +
-      `  Populate with Gemini research entries for each supplier entry.\n` +
+      `  Populate with 26 Gemini research entries — one per unique supplier identity.\n` +
       `  See the _schema field in the file for the required JSON format.`,
     );
   }
-  return JSON.parse(readFileSync(RESEARCH_SOURCE_PATH, "utf-8")) as ResearchSourceFile;
-}
-
-// ── Deduplication ─────────────────────────────────────────────────────────────
-
-function deduplicateSupplierRows(
-  entries: readonly SupplierSourceEntry[],
-): UniqueSupplierEntry[] {
-  const seen = new Map<string, SupplierSourceEntry[]>();
-
-  for (const entry of entries) {
-    const key = normalizeIdentityString(entry.supplierName);
-    const existing = seen.get(key);
-    if (existing) {
-      existing.push(entry);
-    } else {
-      seen.set(key, [entry]);
-    }
-  }
-
-  return Array.from(seen.entries()).map(([normalizedKey, supplierEntries]) => ({
-    normalizedKey,
-    supplierEntries,
-    researchEntry: null as ResearchSourceEntry | null,
-  }));
-}
-
-function matchResearch(
-  uniqueEntries: UniqueSupplierEntry[],
-  researchEntries: readonly ResearchSourceEntry[],
-): UniqueSupplierEntry[] {
-  const researchByKey = new Map<string, ResearchSourceEntry>();
-  for (const re of researchEntries) {
-    researchByKey.set(normalizeIdentityString(re.supplierName), re);
-  }
-  return uniqueEntries.map(entry => ({
-    ...entry,
-    researchEntry: researchByKey.get(entry.normalizedKey) ?? null,
-  }));
+  const raw: unknown = JSON.parse(readFileSync(RESEARCH_SOURCE_PATH, "utf-8"));
+  return parseResearchSourceFile(raw);
 }
 
 // ── Idempotency ───────────────────────────────────────────────────────────────
@@ -165,9 +139,9 @@ function allocateIds(registry: IdentityRegistry, count: number): string[] {
 // ── Classification ────────────────────────────────────────────────────────────
 
 function classifyEntry(research: ResearchSourceEntry | null): IngestionCategory {
-  if (research === null)                                          return "C";
-  if (!research.canonicalName?.trim())                           return "C";
-  if (research.sourceConfidence === "low")                       return "C";
+  if (research === null)                                                    return "C";
+  if (!research.canonicalName?.trim())                                      return "C";
+  if (research.sourceConfidence === "low")                                  return "C";
   if (research.sourceConfidence === "high" && !research.possibleNameIssue) return "A";
   return "B"; // medium OR high + name issue
 }
@@ -180,9 +154,9 @@ function recommendAction(
   category: IngestionCategory,
   research: ResearchSourceEntry | null,
 ): RecommendedAction {
-  if (category === "C")              return "research-more";
-  if (category === "A")              return "verify";
-  if (research?.possibleNameIssue)   return "correct-canonical";
+  if (category === "C")            return "research-more";
+  if (category === "A")            return "verify";
+  if (research?.possibleNameIssue) return "correct-canonical";
   return "confirm-alias";
 }
 
@@ -190,10 +164,10 @@ function buildReasonNote(
   category: IngestionCategory,
   research: ResearchSourceEntry | null,
 ): string {
-  if (research === null)                   return "No research entry found for this supplier name.";
-  if (!research.canonicalName?.trim())     return "Research provided no canonical name — supplier terminology used as provisional.";
-  if (category === "A")                    return `High-confidence proposal: "${research.canonicalName}" by "${research.brand}".`;
-  if (research.possibleNameIssue)          return `Name issue: ${research.nameIssueExplanation ?? "supplier and canonical names differ."}`;
+  if (research === null)               return "No research entry found for this supplier name.";
+  if (!research.canonicalName?.trim()) return "Research provided no canonical name — supplier terminology used as provisional.";
+  if (category === "A")                return `High-confidence proposal: "${research.canonicalName}" by "${research.brand}".`;
+  if (research.possibleNameIssue)      return `Name issue: ${research.nameIssueExplanation ?? "supplier and canonical names differ."}`;
   return `Medium-confidence proposal: "${research.canonicalName}".`;
 }
 
@@ -230,7 +204,6 @@ function buildConfidence(
       basis: `Candidate ingestion (${BATCH_ID}): research confidence medium.${nameNote}`,
     };
   }
-  // low
   return {
     score: 25,
     basis: `Candidate ingestion (${BATCH_ID}): research confidence low. ${research.sourceNotes ?? "Additional research required."}`,
@@ -244,55 +217,51 @@ function buildIdentityRecord(
   entry: UniqueSupplierEntry,
   category: IngestionCategory,
 ): IdentityRecord {
-  const research = entry.researchEntry;
-  const primaryEntry = entry.supplierEntries[0];
+  const research       = entry.researchEntry;
+  const primaryEntry   = entry.supplierEntries[0];
   const idempotencyKey = buildIdempotencyKey(entry.normalizedKey);
 
-  // Supplier identities — one per unique L/M/UNISEX group row
   const supplierIdentities: SupplierIdentity[] = entry.supplierEntries.map(se => ({
-    supplierName:     se.supplierName,
+    supplierName:    se.supplierName,
     ...(se.supplierCategory !== undefined ? { supplierCategory: se.supplierCategory } : {}),
-    sourceReference:  idempotencyKey,
+    sourceReference: idempotencyKey,
   }));
 
-  // Canonical name:
-  //   Category A/B: use research canonical name
-  //   Category C or empty research name: use supplier name as provisional
+  // Canonical name: use research proposal for A/B; fall back to supplier name for C
   const canonicalName = research?.canonicalName?.trim()
     ? research.canonicalName.trim()
     : primaryEntry.supplierName;
 
-  // Canonical brand:
-  //   Category C: omit — no brand assumed for unverified candidates
-  //   Category A/B: include research brand if available
+  // Canonical brand: Category C receives no assumed brand
   const canonicalBrand: string | undefined =
     category !== "C" && research?.brand?.trim()
       ? research.brand.trim()
       : undefined;
 
+  // launchYear: null in source means unresolved — omit from canonical (absence ≠ no launch year)
+  // marketedGender: "unknown" in source means unresolved — omit from canonical (absence ≠ unisex)
   const canonicalIdentity: CanonicalIdentity = {
     canonicalName,
     ...(canonicalBrand !== undefined ? { canonicalBrand } : {}),
-    ...(research?.launchYear !== undefined ? { launchYear: research.launchYear } : {}),
-    ...(research?.marketedGender !== undefined ? { marketedGender: research.marketedGender } : {}),
+    ...(research?.launchYear != null ? { launchYear: research.launchYear } : {}),
+    ...(research?.marketedGender !== undefined && research.marketedGender !== "unknown"
+      ? { marketedGender: research.marketedGender }
+      : {}),
     category: PRODUCT_CATEGORY,
   };
 
-  // Evidence
   const evidence: IdentityEvidence[] = [];
 
-  // Supplier catalogue evidence — always present
   evidence.push({
-    evidenceId:       `${id}-ev-sup`,
-    type:             "supplier-catalogue",
-    sourceName:       "Mid-Year 2026 Supplier List",
-    sourceReference:  idempotencyKey,
-    observedValue:    entry.supplierEntries.map(se => se.supplierName).join(" / "),
-    notes:            `Supplier group(s): ${entry.supplierEntries.map(se => se.supplierCategory ?? "unspecified").join(", ")}.`,
-    createdAt:        CAMPAIGN_TIMESTAMP,
+    evidenceId:      `${id}-ev-sup`,
+    type:            "supplier-catalogue",
+    sourceName:      "Mid-Year 2026 Supplier List",
+    sourceReference: idempotencyKey,
+    observedValue:   entry.supplierEntries.map(se => se.supplierName).join(" / "),
+    notes:           `Supplier group(s): ${entry.supplierEntries.map(se => se.supplierCategory ?? "unspecified").join(", ")}.`,
+    createdAt:       CAMPAIGN_TIMESTAMP,
   });
 
-  // Research evidence — present when research match was found
   if (research !== null) {
     const noCanonicalNote = !research.canonicalName?.trim()
       ? " No canonical name proposed — supplier terminology used as provisional."
@@ -302,28 +271,26 @@ function buildIdentityRecord(
       : "";
 
     evidence.push({
-      evidenceId:       `${id}-ev-res`,
-      type:             "research",
-      sourceName:       "Gemini Research — Mid-Year 2026",
-      sourceReference:  `${BATCH_ID}-research`,
-      observedValue:    research.canonicalName || "(none proposed)",
-      notes:            `Research confidence: ${research.sourceConfidence}.${noCanonicalNote}${nameIssueNote}${research.sourceNotes ? " " + research.sourceNotes : ""}`,
-      createdAt:        CAMPAIGN_TIMESTAMP,
+      evidenceId:      `${id}-ev-res`,
+      type:            "research",
+      sourceName:      "Gemini Research — Mid-Year 2026",
+      sourceReference: `${BATCH_ID}-research`,
+      observedValue:   research.canonicalName || "(none proposed)",
+      notes:           `Research confidence: ${research.sourceConfidence}.${noCanonicalNote}${nameIssueNote}${research.sourceNotes ? " " + research.sourceNotes : ""}`,
+      createdAt:       CAMPAIGN_TIMESTAMP,
     });
   }
 
-  // Provenance note for Category C records where canonical name is provisional
   if (category === "C" && !research?.canonicalName?.trim()) {
     evidence.push({
-      evidenceId:   `${id}-ev-prov`,
-      type:         "editorial",
-      sourceName:   "EP5-P2C Ingestion Engine",
-      notes:        "Canonical identity unresolved — supplier terminology temporarily preserved as candidate display identity pending additional research.",
-      createdAt:    CAMPAIGN_TIMESTAMP,
+      evidenceId: `${id}-ev-prov`,
+      type:       "editorial",
+      sourceName: "EP5-P2C Ingestion Engine",
+      notes:      "Canonical identity unresolved — supplier terminology temporarily preserved as candidate display identity pending additional research.",
+      createdAt:  CAMPAIGN_TIMESTAMP,
     });
   }
 
-  // History
   const history: IdentityHistoryEntry[] = [
     {
       timestamp: CAMPAIGN_TIMESTAMP,
@@ -367,14 +334,25 @@ function runValidations(
     }
   }
 
-  // 1. Unique supplier count matches expected
-  check(`${EXPECTED_UNIQUE_COUNT} unique supplier identities after deduplication`, () => {
-    if (records.length !== EXPECTED_UNIQUE_COUNT) {
-      throw new Error(`Expected ${EXPECTED_UNIQUE_COUNT} unique identities, got ${records.length}`);
+  // 1. Source file has the expected row count for this campaign
+  check(`Source file has ${EXPECTED_SOURCE_ROW_COUNT} supplier rows (campaign invariant)`, () => {
+    if (supplierFile.entries.length !== EXPECTED_SOURCE_ROW_COUNT) {
+      throw new Error(
+        `Expected ${EXPECTED_SOURCE_ROW_COUNT} source rows, got ${supplierFile.entries.length}`,
+      );
     }
   });
 
-  // 2. L/M rows collapsed — records with multiple supplier rows produce multiple SupplierIdentity entries
+  // 2. Unique supplier count matches expected
+  check(`${EXPECTED_UNIQUE_COUNT} unique supplier identities after deduplication`, () => {
+    if (records.length !== EXPECTED_UNIQUE_COUNT) {
+      throw new Error(
+        `Expected ${EXPECTED_UNIQUE_COUNT} unique identities, got ${records.length}`,
+      );
+    }
+  });
+
+  // 3. L/M rows collapsed correctly
   check("Duplicate L/M rows collapsed correctly into single IdentityRecord per identity", () => {
     const collapsed = uniqueEntries.filter(e => e.supplierEntries.length > 1);
     for (const c of collapsed) {
@@ -394,21 +372,21 @@ function runValidations(
     }
   });
 
-  // 3. Supplier names preserved verbatim (no normalisation applied to the stored names)
+  // 4. Supplier names preserved verbatim
   check("All supplier names preserved verbatim in SupplierIdentity entries", () => {
     const allOriginalNames = new Set(supplierFile.entries.map(e => e.supplierName));
     for (const record of records) {
       for (const si of record.supplierIdentities) {
         if (!allOriginalNames.has(si.supplierName)) {
           throw new Error(
-            `SupplierIdentity name "${si.supplierName}" does not match any original source entry — may have been modified`,
+            `SupplierIdentity name "${si.supplierName}" does not match any original source entry`,
           );
         }
       }
     }
   });
 
-  // 4. NONE may be verified — all status must be "candidate" or "pending-review"
+  // 5. NONE may be verified
   check("NONE verified — all status values are 'candidate' or 'pending-review'", () => {
     for (const record of records) {
       if (record.status === "verified") {
@@ -420,7 +398,7 @@ function runValidations(
     }
   });
 
-  // 5. All identity IDs match MIP-NNNNNN format
+  // 6. All identity IDs match MIP-NNNNNN format
   check("All identity IDs match MIP-NNNNNN format", () => {
     for (const record of records) {
       if (!/^MIP-\d{6}$/.test(record.id)) {
@@ -429,24 +407,26 @@ function runValidations(
     }
   });
 
-  // 6. All identity IDs unique within this batch
+  // 7. All identity IDs unique within batch
   check("All identity IDs unique within batch", () => {
     const ids = records.map(r => r.id);
     if (new Set(ids).size !== ids.length) {
-      throw new Error(`Duplicate IDs detected in batch`);
+      throw new Error("Duplicate IDs detected in batch");
     }
   });
 
-  // 7. All records use category = "fragrance"
+  // 8. All records use category = "fragrance"
   check("All records have canonicalIdentity.category = 'fragrance'", () => {
     for (const record of records) {
       if (record.canonicalIdentity.category !== "fragrance") {
-        throw new Error(`${record.id} has category "${String(record.canonicalIdentity.category)}" instead of "fragrance"`);
+        throw new Error(
+          `${record.id} has category "${String(record.canonicalIdentity.category)}" instead of "fragrance"`,
+        );
       }
     }
   });
 
-  // 8. All confidence scores are valid (0–100)
+  // 9. All confidence scores are valid (0–100)
   check("All confidence scores are numbers in range 0–100", () => {
     for (const record of records) {
       const { score } = record.confidence;
@@ -456,7 +436,7 @@ function runValidations(
     }
   });
 
-  // 9. All records pass validateIdentityRecord() — no FAIL
+  // 10. All records pass validateIdentityRecord()
   check("All records pass validateIdentityRecord() — zero FAIL status", () => {
     for (const record of records) {
       const result = validateIdentityRecord(record);
@@ -467,15 +447,15 @@ function runValidations(
     }
   });
 
-  // 10. No canonical collision — all records can be registered together in a fresh registry
+  // 11. No canonical collision
   check("No canonical identity collisions — all records register cleanly together", () => {
     const testReg = new IdentityRegistry();
     for (const record of records) {
-      testReg.register(record); // throws IdentityDuplicateCanonicalError if collision
+      testReg.register(record);
     }
   });
 
-  // 11. All evidence IDs unique within each record
+  // 12. All evidence IDs unique within each record
   check("All evidence IDs unique within each record", () => {
     for (const record of records) {
       const ids = record.evidence.map(e => e.evidenceId);
@@ -485,7 +465,7 @@ function runValidations(
     }
   });
 
-  // 12. All records carry at least one supplier-catalogue evidence entry
+  // 13. All records carry at least one supplier-catalogue evidence entry
   check("All records have at least one supplier-catalogue evidence entry", () => {
     for (const record of records) {
       if (!record.evidence.some(e => e.type === "supplier-catalogue")) {
@@ -494,11 +474,11 @@ function runValidations(
     }
   });
 
-  // 13. Records with a research match carry at least one research evidence entry
+  // 14. Records with a research match carry at least one research evidence entry
   check("Records with research match carry at least one research evidence entry", () => {
     for (let i = 0; i < records.length; i++) {
       const record = records[i];
-      const entry  = uniqueEntries[i]; // parallel arrays — same order
+      const entry  = uniqueEntries[i];
       if (entry !== undefined && entry.researchEntry !== null) {
         if (!record.evidence.some(e => e.type === "research")) {
           throw new Error(`${record.id} has research match but no research evidence entry`);
@@ -507,19 +487,18 @@ function runValidations(
     }
   });
 
-  // 14. Category C records ("candidate") do not carry canonicalBrand
+  // 15. Category C records do not carry canonicalBrand
   check("Category C (candidate) records do not carry an assumed canonicalBrand", () => {
     for (const record of records) {
       if (record.status === "candidate" && record.canonicalIdentity.canonicalBrand !== undefined) {
         throw new Error(
-          `${record.id} is "candidate" but has canonicalBrand "${record.canonicalIdentity.canonicalBrand}" — ` +
-          `Category C records must not carry an assumed brand`,
+          `${record.id} is "candidate" but has canonicalBrand "${record.canonicalIdentity.canonicalBrand}"`,
         );
       }
     }
   });
 
-  // 15. All records have non-empty canonicalName (EP5-P1 validator requires this always)
+  // 16. All records have non-empty canonicalName
   check("All records have a non-empty canonicalName", () => {
     for (const record of records) {
       if (!record.canonicalIdentity.canonicalName?.trim()) {
@@ -528,7 +507,7 @@ function runValidations(
     }
   });
 
-  // 16. Idempotency keys unique across records — one per unique logical identity
+  // 17. Idempotency keys unique across records
   check("Idempotency keys unique across all records (one per identity)", () => {
     const seen = new Set<string>();
     for (const record of records) {
@@ -537,9 +516,11 @@ function runValidations(
         .filter(k => k.startsWith(`${BATCH_ID}::`));
       const uniqueForRecord = new Set(batchKeys);
       if (uniqueForRecord.size !== 1) {
-        throw new Error(`${record.id} has ${uniqueForRecord.size} distinct idempotency keys — expected exactly 1`);
+        throw new Error(
+          `${record.id} has ${uniqueForRecord.size} distinct idempotency keys — expected exactly 1`,
+        );
       }
-      const key = [...uniqueForRecord][0];
+      const key = [...uniqueForRecord][0]!;
       if (seen.has(key)) {
         throw new Error(`Idempotency key collision: "${key}" used by two records`);
       }
@@ -565,18 +546,18 @@ function buildCampaignReport(
     const research = entry?.researchEntry ?? null;
     const category = classifyEntry(research);
     return {
-      supplierName:               entry?.supplierEntries[0]?.supplierName ?? record.id,
-      supplierGroups:             entry?.supplierEntries.map(se => se.supplierCategory ?? "unspecified") ?? [],
-      ingestionCategory:          category,
-      identityId:                 record.id,
-      proposedCanonicalName:      record.canonicalIdentity.canonicalName,
-      proposedCanonicalBrand:     record.canonicalIdentity.canonicalBrand,
-      researchConfidence:         research ? research.sourceConfidence : "none",
-      possibleNameIssue:          research?.possibleNameIssue ?? false,
-      resolutionBeforeIngestion:  resolverResults.get(entry?.normalizedKey ?? "") ?? "no-match",
-      status:                     record.status,
-      recommendedAction:          recommendAction(category, research),
-      reason:                     buildReasonNote(category, research),
+      supplierName:              entry?.supplierEntries[0]?.supplierName ?? record.id,
+      supplierGroups:            entry?.supplierEntries.map(se => se.supplierCategory ?? "unspecified") ?? [],
+      ingestionCategory:         category,
+      identityId:                record.id,
+      proposedCanonicalName:     record.canonicalIdentity.canonicalName,
+      proposedCanonicalBrand:    record.canonicalIdentity.canonicalBrand,
+      researchConfidence:        research ? research.sourceConfidence : "none",
+      possibleNameIssue:         research?.possibleNameIssue ?? false,
+      resolutionBeforeIngestion: resolverResults.get(entry?.normalizedKey ?? "") ?? "no-match",
+      status:                    record.status,
+      recommendedAction:         recommendAction(category, research),
+      reason:                    buildReasonNote(category, research),
     };
   });
 
@@ -662,16 +643,18 @@ function printSummary(
 
   console.log(`  VALIDATION  (${passed}/${VALIDATION_COUNT} passed)`);
   for (const v of validationResults) {
-    const icon = v.passed ? "  ✓" : "  ✗";
-    console.log(`  ${icon}  ${v.label}`);
+    const icon = v.passed ? "✓" : "✗";
+    console.log(`    ${icon}  ${v.label}`);
     if (!v.passed && v.detail) {
-      console.log(`         Detail: ${v.detail}`);
+      console.log(`       Detail: ${v.detail}`);
     }
   }
   console.log();
 
   if (failed > 0) {
-    console.log(`  ✗ INGESTION BLOCKED — ${failed} validation(s) failed. Fix before running real ingestion.\n`);
+    console.log(
+      `  ✗ INGESTION BLOCKED — ${failed} validation(s) failed. Fix before running real ingestion.\n`,
+    );
   } else if (isDryRun) {
     console.log("  ✓ DRY RUN COMPLETE — all validations passed.");
     console.log(`  Ready for real run: npm run mip:ingest:2026\n`);
@@ -703,7 +686,7 @@ function main(): void {
   if (supplierFile.entries.length === 0) {
     console.error(
       `\n  SOURCE FILE EMPTY: ${SUPPLIER_SOURCE_PATH}\n` +
-      `  Populate the "entries" array with the 26 fragrance supplier entries.\n` +
+      `  Populate the "entries" array with the 31 fragrance supplier rows.\n` +
       `  See the _schema field in the file for the required format.\n`,
     );
     process.exit(1);
@@ -712,7 +695,7 @@ function main(): void {
   if (researchFile.entries.length === 0) {
     console.error(
       `\n  SOURCE FILE EMPTY: ${RESEARCH_SOURCE_PATH}\n` +
-      `  Populate the "entries" array with Gemini research for each supplier entry.\n` +
+      `  Populate the "entries" array with Gemini research for each unique supplier identity.\n` +
       `  See the _schema field in the file for the required format.\n`,
     );
     process.exit(1);
@@ -721,7 +704,7 @@ function main(): void {
   console.log(`  Supplier rows loaded:    ${supplierFile.entries.length}`);
   console.log(`  Research entries loaded: ${researchFile.entries.length}`);
 
-  // Load existing registry and build in-memory registry for resolver
+  // Load existing registry
   const registryData = loadIdentityRegistry();
   const registry     = new IdentityRegistry();
   for (const record of registryData.identities) {
@@ -729,12 +712,24 @@ function main(): void {
   }
   console.log(`  Existing registry size:  ${registry.list().length}`);
 
-  // Deduplicate supplier rows and match research
+  // Deduplicate and match research
   let uniqueEntries = deduplicateSupplierRows(supplierFile.entries);
   uniqueEntries     = matchResearch(uniqueEntries, researchFile.entries);
   console.log(`  Unique identities after deduplication: ${uniqueEntries.length}`);
 
-  // Idempotency check — skip entries already in registry
+  // Source/research correspondence — must pass before any further processing
+  console.log(`  Verifying source/research correspondence...`);
+  try {
+    verifySourceCorrespondence(uniqueEntries, researchFile.entries);
+  } catch (err) {
+    console.error(`\n  CORRESPONDENCE ERROR\n  ${String(err)}\n`);
+    process.exit(1);
+  }
+  console.log(
+    `  Correspondence verified: ${uniqueEntries.length} suppliers ↔ ${researchFile.entries.length} research entries.`,
+  );
+
+  // Idempotency check
   const toProcess: UniqueSupplierEntry[] = [];
   let skippedCount = 0;
 
@@ -753,9 +748,27 @@ function main(): void {
     process.exit(0);
   }
 
-  // Pre-ingestion resolver check against the EXISTING persisted registry
-  const resolver         = new DeterministicIdentityResolver(registry);
-  const resolverResults  = new Map<string, string>();
+  // Partial-state guard — refuse partial campaign state to avoid misleading errors
+  if (skippedCount > 0 && toProcess.length > 0) {
+    console.error(
+      `\n  PARTIAL CAMPAIGN STATE DETECTED\n` +
+      `  ${skippedCount} of ${EXPECTED_UNIQUE_COUNT} identities already present in registry.\n` +
+      `  ${toProcess.length} remain unprocessed.\n` +
+      `\n` +
+      `  This episode does not support incremental resume. To proceed:\n` +
+      `    A. If the ${skippedCount} ingested records are correct, contact the platform\n` +
+      `       engineer to resolve the partial state manually.\n` +
+      `    B. To restart from scratch, restore the registry backup:\n` +
+      `         cp app/lib/identity/data/identity-registry.json.bak \\\n` +
+      `            app/lib/identity/data/identity-registry.json\n` +
+      `       Then re-run: npm run mip:ingest:2026:dry\n`,
+    );
+    process.exit(1);
+  }
+
+  // Pre-ingestion resolver check against existing persisted registry
+  const resolver        = new DeterministicIdentityResolver(registry);
+  const resolverResults = new Map<string, string>();
 
   console.log(`\n  Pre-ingestion resolver check (${toProcess.length} entries)...`);
   for (const entry of toProcess) {
@@ -775,24 +788,21 @@ function main(): void {
   }
   console.log(`  Pre-ingestion resolver check passed.`);
 
-  // Allocate MIP IDs
+  // Allocate IDs and build records
   const ids = allocateIds(registry, toProcess.length);
-
-  // Build IdentityRecord objects
   const records: IdentityRecord[] = toProcess.map((entry, idx) => {
     const category = classifyEntry(entry.researchEntry);
-    return buildIdentityRecord(ids[idx], entry, category);
+    return buildIdentityRecord(ids[idx]!, entry, category);
   });
 
-  // Run validations
+  // Run 17-point validation suite
   console.log(`\n  Running ${VALIDATION_COUNT} pre-ingestion validation checks...`);
   const { results: validationResults, allPassed } = runValidations(records, toProcess, supplierFile);
 
-  // Build campaign report and editorial review batch
-  const campaignReport  = buildCampaignReport(records, toProcess, supplierFile, skippedCount, resolverResults);
-  const editorialBatch  = buildEditorialReviewBatch(records, toProcess);
+  // Build operational output files
+  const campaignReport = buildCampaignReport(records, toProcess, supplierFile, skippedCount, resolverResults);
+  const editorialBatch = buildEditorialReviewBatch(records, toProcess);
 
-  // Print summary
   printSummary(campaignReport, validationResults, isDryRun);
 
   if (!allPassed) {
@@ -801,26 +811,28 @@ function main(): void {
 
   if (isDryRun) {
     console.log("  [DRY RUN] Files that would be written:");
+    console.log(`    app/lib/identity/data/identity-registry.json (${records.length} new records — written FIRST)`);
     console.log(`    ${CAMPAIGN_REPORT_PATH}`);
-    console.log(`    ${EDITORIAL_PATH}`);
-    console.log(`    app/lib/identity/data/identity-registry.json (${records.length} new records)\n`);
+    console.log(`    ${EDITORIAL_PATH}\n`);
     process.exit(0);
   }
 
-  // Real run — atomic writes
+  // Real run: registry is written FIRST (source of truth).
+  // Campaign and editorial files are written after. If either fails after registry
+  // succeeds, the registry remains correct and files can be regenerated.
+  console.log("  Writing identity registry (atomic, first)...");
+  const updatedIdentities = [...registryData.identities, ...records];
+  saveIdentityRegistry({
+    version:    IDENTITY_PLATFORM_VERSION,
+    identities: updatedIdentities,
+  });
+
   console.log("  Writing campaign report...");
   mkdirSync(dirname(CAMPAIGN_REPORT_PATH), { recursive: true });
   writeFileSync(CAMPAIGN_REPORT_PATH, JSON.stringify(campaignReport, null, 2), "utf-8");
 
   console.log("  Writing editorial review batch...");
   writeFileSync(EDITORIAL_PATH, JSON.stringify(editorialBatch, null, 2), "utf-8");
-
-  console.log("  Writing identity registry (atomic)...");
-  const updatedIdentities = [...registryData.identities, ...records];
-  saveIdentityRegistry({
-    version:    IDENTITY_PLATFORM_VERSION,
-    identities: updatedIdentities,
-  });
 
   console.log(`\n  ✓ ${records.length} candidate identities written to registry.\n`);
 }

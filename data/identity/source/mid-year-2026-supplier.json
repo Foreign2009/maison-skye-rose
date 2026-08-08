@@ -3,7 +3,7 @@
   "description": "Maison Skye & Rose Mid-Year 2026 Supplier New Arrivals",
   "sourceReference": "mid-year-2026-supplier-list",
   "_schema": {
-    "_comment": "POPULATE THIS FILE with the 26 unique fragrance rows from the Mid-Year 2026 supplier list.",
+    "_comment": "POPULATE THIS FILE with the 31 supplier rows from the Mid-Year 2026 list. Five unisex fragrances appear under both L and M — include both rows for each. The ingestion script collapses the 31 rows to 26 unique identities.",
     "_supplierName": "REQUIRED. Verbatim from the supplier catalogue. Never corrected, never normalised.",
     "_supplierCategory": "OPTIONAL. Verbatim — 'L' (Ladies), 'M' (Men), 'UNISEX'. Preserve exact casing.",
     "_sourceReference": "OPTIONAL. Row reference, e.g. 'Mid-Year 2026 Supplier List, Row 14'.",
