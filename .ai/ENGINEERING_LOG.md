@@ -2846,3 +2846,77 @@ After EP20-P4: `computeLearnedPreferences()` runs the LearningEngine on `profile
 **Open Questions Carried Forward:**
 - What is the EP5-P2C scope? (Supplier intake pipeline — routing the 26 new arrivals through the resolver)
 - When will the 26 researched new arrivals be ingested as identity candidates?
+
+---
+
+### 2026-08-08 — EP5-P2C — Maison Identity Platform / Controlled 2026 Identity Candidate Ingestion (Infrastructure Phase)
+
+**Participants:** Project Owner / Claude (Implementation Engineer)
+**Program:** EP5-P2C — Controlled 2026 Identity Candidate Ingestion
+
+**Conditional Clause Applied:** Source data files not present in repository (`data/**/*` glob empty, `identity-registry.json` confirmed empty). Per approval: "If they are NOT present: DO NOT invent the research. Instead create the controlled ingestion infrastructure and STOP, reporting the exact repository source files required." Infrastructure built. Execution stopped. Source file formats reported to founder.
+
+**Decisions Made:**
+- Classification policy: Category A (high confidence, no name issue) → pending-review, score 70. Category B (medium OR high + name issue) → pending-review, score 45–55. Category C (low / no canonical name) → candidate, score 20–25.
+- Canonical name for Category C with no research proposal: use supplier name as provisional (documented in editorial evidence entry). Validator requires non-empty canonicalName on all statuses — no way to omit it.
+- Canonical brand: omitted for Category C (no assumed brand); included from research for Category A/B.
+- L/M duplicate rows: collapsed into one IdentityRecord with multiple SupplierIdentity entries. Deduplication key: `normalizeIdentityString(supplierName)`.
+- Idempotency key: `mid-year-2026::<normalizeIdentityString(supplierName)>`. Stored as `SupplierIdentity.sourceReference`. Idempotency check scans all registry records for matching sourceReference before ingesting any entry.
+- Fixed campaign timestamp `"2026-08-08T00:00:00.000Z"` — deterministic, not `new Date()`.
+- Campaign output location: `app/lib/identity/data/campaigns/` — operational provenance data, separate from canonical registry.
+- Atomic write: validate → write temp → round-trip verify → backup existing → rename temp to live.
+- `saveIdentityRegistry()` added to `persistence.ts` — all registry mutations must go through this function.
+
+**Tasks Completed:**
+- `scripts/identity/ingestion/types.ts` — Created. Full type contracts: SupplierSourceFile, ResearchSourceFile, UniqueSupplierEntry, IngestionCategory, RecommendedAction, CandidateIngestionResult, CampaignReport, EditorialReviewEntry, EditorialReviewBatch.
+- `data/identity/source/mid-year-2026-supplier.json` — Schema placeholder created with embedded `_schema` documentation.
+- `data/identity/source/mid-year-2026-research.json` — Schema placeholder created with embedded `_schema` documentation.
+- `app/lib/identity/data/campaigns/.gitkeep` — Campaign output directory created.
+- `app/lib/identity/persistence.ts` — `saveIdentityRegistry()` atomic writer added. Imports extended: copyFileSync, existsSync, renameSync, unlinkSync, writeFileSync.
+- `scripts/identity/ingest-2026-new-arrivals.ts` — Complete ingestion script. Handles: source file loading with clear empty-file guards, deduplication by normalised supplier name, research matching, idempotency check, pre-ingestion resolver check (blocks if "resolved"), ID allocation, IdentityRecord construction, 16-point validation suite, campaign report generation, editorial review batch generation, dry-run mode (no writes), real run (atomic write). 
+- `package.json` — `mip:ingest:2026:dry` and `mip:ingest:2026` scripts added.
+- `PROJECT_STATUS.md` — EP5-P2C row and narrative added.
+- `.ai/CURRENT_TASK.md` — Updated (EP5-P2C infrastructure complete, awaiting source data).
+- `.ai/ENGINEERING_LOG.md` — This entry.
+
+**Validation Suite (16 checks — run before any real write):**
+1. 26 unique supplier identities after deduplication
+2. Duplicate L/M rows collapsed correctly
+3. All supplier names preserved verbatim
+4. NONE verified — all status "candidate" or "pending-review"
+5. All IDs match MIP-NNNNNN format
+6. All IDs unique within batch
+7. All records have category = "fragrance"
+8. All confidence scores valid (0–100)
+9. All records pass validateIdentityRecord() — no FAIL
+10. No canonical collision — all register cleanly in fresh test registry
+11. All evidence IDs unique within each record
+12. All records have supplier-catalogue evidence
+13. Records with research match have research evidence
+14. Category C (candidate) records do not carry canonicalBrand
+15. All records have non-empty canonicalName
+16. Idempotency keys unique across all records
+
+**Build Result:** Pass — 187 routes, 0 TypeScript errors, 0 warnings (2026-08-08)
+
+**Files Changed:**
+- `scripts/identity/ingestion/types.ts` — Created (source data type contracts)
+- `scripts/identity/ingest-2026-new-arrivals.ts` — Created (ingestion pipeline)
+- `data/identity/source/mid-year-2026-supplier.json` — Created (schema placeholder)
+- `data/identity/source/mid-year-2026-research.json` — Created (schema placeholder)
+- `app/lib/identity/data/campaigns/.gitkeep` — Created (campaign output directory)
+- `app/lib/identity/persistence.ts` — Modified (saveIdentityRegistry added)
+- `package.json` — Modified (mip:ingest:2026:dry, mip:ingest:2026 scripts added)
+- `PROJECT_STATUS.md` — Updated
+- `.ai/CURRENT_TASK.md` — Updated
+- `.ai/ENGINEERING_LOG.md` — This entry
+
+**Handoff:**
+- EP5-P2C infrastructure complete. Ingestion is gated on source data.
+- Founder must populate `data/identity/source/mid-year-2026-supplier.json` (26 supplier rows) and `data/identity/source/mid-year-2026-research.json` (26 Gemini research entries).
+- After source files are populated: `npm run mip:ingest:2026:dry` (validate all 16 checks, no write) → inspect output → `npm run mip:ingest:2026` (real write).
+- EP4-P3D gate remains open: `APPROVED_INTAKE = null` in `scripts/factory/run-home-fragrance-controlled.ts`. Awaiting founder product spec.
+
+**Open Questions Carried Forward:**
+- When will the founder provide the 26 supplier rows and Gemini research data?
+- EP5-P3 scope: what does the editorial review workflow look like?

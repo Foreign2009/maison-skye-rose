@@ -1,6 +1,6 @@
 # Project Status — Maison Skye & Rose
 
-**Last updated:** 2026-08-07
+**Last updated:** 2026-08-08
 **Phase:** Launch Execution
 **Build status:** PASS — 187 routes, 0 TypeScript errors, 0 warnings
 
@@ -8,9 +8,9 @@
 
 ## Current Engineering Program
 
-**Program:** EP5-P2B — Establish Deterministic Identity Resolver (Complete)
+**Program:** EP5-P2C — Controlled 2026 Identity Candidate Ingestion (Infrastructure Phase — STOP)
 **Sprint:** EP5
-**Gate:** Resolver foundation complete. No AI, no UI, no MKC migration, no factory integration, no persistence population. Awaiting EP5-P2C specification.
+**Gate:** Ingestion infrastructure complete. Source data files NOT present in repository. Awaiting founder to populate `data/identity/source/mid-year-2026-supplier.json` and `data/identity/source/mid-year-2026-research.json` with the 26 fragrance entries before dry-run and real ingestion can proceed.
 **Objective:** Build the deterministic, explainable Identity Resolver — a 5-stage pipeline that reads, scores, and explains resolution of supplier names against the Identity Registry. The Resolver reads and scores only; it does not create, modify, or persist identity records. Architectural corrections from EP5-P2A audit applied: true purity (no timestamps), identity status eligibility (only "verified" → "resolved"), safe suffix stripping (only " Inspired" / " Inspired By"), category hard boundary (cross-category = hard exclusion). 85 deterministic proofs across 9 sections. Build: 187 routes, 0 TypeScript errors, 0 warnings.
 
 ---
@@ -92,6 +92,7 @@ Verify: `npm run build`
 | EP5 | EP5-P1   | Establish Maison Identity Platform Foundation | Complete — 2026-08-07 |
 | EP5 | EP5-P2A  | Identity Resolution Architecture Audit | Complete — 2026-08-07 |
 | EP5 | EP5-P2B  | Establish Deterministic Identity Resolver | Complete — 2026-08-07 |
+| EP5 | EP5-P2C  | Controlled 2026 Identity Candidate Ingestion | Infrastructure complete — 2026-08-08. Awaiting source data. |
 
 `FOUNDATIONS/00_FOUNDERS_LETTER.md` — The permanent founder's letter to Skye, Rose, future employees, and future stewards. *Why we began.*
 `FOUNDATIONS/01_SKYE_AND_ROSE_COVENANT.md` — The institutional promise: to customers, products, technology, and future generations. *What we promise.*
@@ -102,6 +103,8 @@ Verify: `npm run build`
 **EP2-P1 Audit Findings (2026-08-05):** Overall institutional alignment score 7.1/10. Intelligence layer (Fragrance Profile, MaisonCompanion, Concierge, Shop, Quiz) rated Aligned. Critical gaps: About page (3/10 — fails Foundation narrative standard), catalogue count inconsistency (93 vs 465+), "Loyal Customer" terminology, post-purchase experience absent, checkout UX cold. Recommended sequence: EP2-P2 (About page rewrite) → EP2-P3 (checkout + post-purchase) → EP2-P4 (testimonials) → EP2-P5 (concierge voice) → EP2-P6 (language pass).
 
 **EP2-P3 About Page Foundation Alignment (2026-08-05):** `app/about/page.tsx` rewritten from 4 generic paragraphs to 9 Foundation-aligned sections: Opening, A Compliment Changed Everything, Why Skye & Rose, What We Believe, Confidence Is What We Are Here to Deliver, Knowledge Before Recommendation, Accessible Luxury, Growing Together, Our Promise, An Invitation. Count inconsistency removed (465+ → timeless language). OG and Twitter metadata added. Architecture preserved. Build passes: 187 routes, 0 TypeScript errors, 0 warnings.
+
+**EP5-P2C Controlled 2026 Identity Candidate Ingestion — Infrastructure Phase (2026-08-08):** Ingestion infrastructure established for the Mid-Year 2026 supplier new arrivals. Source data files confirmed absent from repository; per approval conditional clause, infrastructure was built and execution has stopped. Delivered: `scripts/identity/ingestion/types.ts` — full type contracts for `SupplierSourceFile`, `ResearchSourceFile`, `CampaignReport`, `EditorialReviewBatch`, and all pipeline types. `scripts/identity/ingest-2026-new-arrivals.ts` — deterministic, idempotent ingestion script with `--dry-run` flag, 16-point pre-ingestion validation suite (unique count, L/M collapse, verbatim names, no verified, ID format, uniqueness, fragrance category, confidence range, validateIdentityRecord, canonical collision, evidence ID uniqueness, supplier evidence, research evidence, Category C brand exclusion, non-empty canonical name, idempotency keys), atomic registry write via `saveIdentityRegistry()`, campaign report output, editorial review batch output. `data/identity/source/mid-year-2026-supplier.json` and `mid-year-2026-research.json` — schema placeholder files with embedded `_schema` documentation. `app/lib/identity/data/campaigns/` — campaign output directory for campaign report and editorial review batch. `app/lib/identity/persistence.ts` extended with `saveIdentityRegistry()` — atomic write: validate → temp file → round-trip verify → backup → rename. `mip:ingest:2026:dry` and `mip:ingest:2026` npm scripts added. Build: 187 routes, 0 TypeScript errors, 0 warnings. NO AI called. NO registry populated. ZERO routes added. Next gate: founder populates source files → `npm run mip:ingest:2026:dry` → inspect → `npm run mip:ingest:2026`.
 
 **EP5-P2B Establish Deterministic Identity Resolver (2026-08-07):** Five-stage deterministic resolver established as `app/lib/identity/resolver/`. The resolver reads, scores, and explains — it does NOT create, modify, persist, or call AI. Architectural invariants enforced: (1) Purity — no `resolvedAt`, no timestamps, no randomness; identical input always produces identical `ResolutionResult`. (2) Status eligibility — only `"verified"` identities may produce `status: "resolved"`; candidate/pending-review/disputed/deprecated yield `"candidate"` with explanation. (3) Safe suffix stripping — only `" Inspired"` and `" Inspired By"` stripped; Extrait/Le Parfum/Parfum/EDP/EDT/Elixir/Intense are NEVER stripped (flanker integrity hard invariant). (4) Category hard boundary — `category: ProductCategory` required on `ResolutionInput`; cross-category aliases and canonical names are hard exclusions from the eligible pool, not scoring penalties. Pipeline: Stage 0 (eligible universe: category + rejected exclusion) → Stage 1 (exact alias, O(1)) → Stage 2 (canonical name exact, with brand disambiguation on ties) → Stage 3 (suffix strip + retry Stages 1–2) → Stage 4 (Jaccard token scoring + brand alignment + digit conflict guard). Token scorer: Jaccard name overlap (max 60), brand alignment (max 20), digit conflict penalty (−30), clamped 0–80. Flanker protection: `hasMeaningfulMismatch` flag blocks auto-resolve when any token differs between query and candidate name. Short-name protection: `isShortQuery` (≤1 meaningful token) blocks Stage 4 auto-resolve. Ambiguity margin: top and runner-up within 15 points → `"ambiguous"`. Stable sort: score desc, then identityId asc for deterministic tie-breaking. Score thresholds: CANDIDATE_THRESHOLD=35, TOKEN_RESOLVE_THRESHOLD=55. Confidence values: alias-exact=95, canonical-exact=90, strip-suffix=85 for verified; 85/80/75 for non-verified candidates. `mip:validate:resolver` added to package.json. 85/85 proofs pass. EP5-P1 regression: 69/69. Build: 187 routes, 0 TypeScript errors, 0 warnings.
 
