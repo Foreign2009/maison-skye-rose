@@ -244,8 +244,8 @@ console.log("\n[200s] QUEUE PROJECTIONS (production repository — read-only)\n"
 const prodService = new IdentityEditorialService(createProductionRepository(), PRODUCTION_CLOCK);
 const fullQueue   = prodService.getReviewQueue(undefined, campaignEntries);
 
-proof("201: queue returns 26 records (all registry identities)", () => {
-  assert(fullQueue.length === 26, `Expected 26, got ${fullQueue.length}`);
+proof("201: queue returns 19 records (pending-review + candidate; verified excluded from default queue)", () => {
+  assert(fullQueue.length === 19, `Expected 19, got ${fullQueue.length}`);
 });
 
 proof("202: default ordering puts pending-review before candidates", () => {
@@ -256,9 +256,9 @@ proof("202: default ordering puts pending-review before candidates", () => {
   assert(firstPending < firstCandidate, "pending-review should precede candidate in default order");
 });
 
-proof("203: status filter pending-review returns exactly 10", () => {
+proof("203: status filter pending-review returns exactly 3 (7 verified after EP5-P3D)", () => {
   const filtered = prodService.getReviewQueue({ status: ["pending-review"] }, campaignEntries);
-  assert(filtered.length === 10, `Expected 10 pending-review, got ${filtered.length}`);
+  assert(filtered.length === 3, `Expected 3 pending-review, got ${filtered.length}`);
 });
 
 proof("204: status filter candidate returns exactly 16", () => {
@@ -266,21 +266,21 @@ proof("204: status filter candidate returns exactly 16", () => {
   assert(filtered.length === 16, `Expected 16 candidates, got ${filtered.length}`);
 });
 
-proof("205: verified count in queue is 0", () => {
+proof("205: verified count in queue is 7 after EP5-P3D editorial session", () => {
   const filtered = prodService.getReviewQueue({ status: ["verified"] }, campaignEntries);
-  assert(filtered.length === 0, `Expected 0 verified, got ${filtered.length}`);
+  assert(filtered.length === 7, `Expected 7 verified, got ${filtered.length}`);
 });
 
-proof("206: recommended-action filter 'verify' returns non-empty subset", () => {
-  const filtered = prodService.getReviewQueue({ recommendedAction: ["verify"] }, campaignEntries);
-  assert(filtered.length > 0, "Expected at least 1 identity with recommendedAction=verify");
-  assert(filtered.every(r => r.recommendedAction === "verify"), "All filtered items must have recommendedAction=verify");
+proof("206: recommended-action filter 'correct-canonical' returns non-empty subset (3 remaining pending-review)", () => {
+  const filtered = prodService.getReviewQueue({ recommendedAction: ["correct-canonical"] }, campaignEntries);
+  assert(filtered.length > 0, "Expected at least 1 identity with recommendedAction=correct-canonical");
+  assert(filtered.every(r => r.recommendedAction === "correct-canonical"), "All filtered items must have recommendedAction=correct-canonical");
 });
 
-proof("207: research-confidence filter 'high' returns non-empty subset", () => {
-  const filtered = prodService.getReviewQueue({ researchConfidence: "high" }, campaignEntries);
-  assert(filtered.length > 0, "Expected at least 1 high-confidence identity");
-  assert(filtered.every(r => r.researchConfidence === "high"), "All filtered must have confidence=high");
+proof("207: research-confidence filter 'medium' returns non-empty subset (remaining pending-review are medium)", () => {
+  const filtered = prodService.getReviewQueue({ researchConfidence: "medium" }, campaignEntries);
+  assert(filtered.length > 0, "Expected at least 1 medium-confidence identity");
+  assert(filtered.every(r => r.researchConfidence === "medium"), "All filtered must have confidence=medium");
 });
 
 proof("208: name-issue filter 'true' returns non-empty subset", () => {
@@ -550,9 +550,9 @@ proof("502: production registry still contains exactly 26 identities", () => {
   assert(registryRaw.identities.length === 26, `Expected 26, got ${registryRaw.identities.length}`);
 });
 
-proof("503: pending-review count remains 10", () => {
+proof("503: pending-review count is 3 after EP5-P3D editorial verification", () => {
   const count = registryRaw.identities.filter(r => r.status === "pending-review").length;
-  assert(count === 10, `Expected 10 pending-review, got ${count}`);
+  assert(count === 3, `Expected 3 pending-review, got ${count}`);
 });
 
 proof("504: candidate count remains 16", () => {
@@ -560,9 +560,9 @@ proof("504: candidate count remains 16", () => {
   assert(count === 16, `Expected 16 candidate, got ${count}`);
 });
 
-proof("505: verified count remains 0", () => {
+proof("505: verified count is 7 after EP5-P3D editorial session (actor: Awf)", () => {
   const count = registryRaw.identities.filter(r => r.status === "verified").length;
-  assert(count === 0, `Expected 0 verified, got ${count}`);
+  assert(count === 7, `Expected 7 verified, got ${count}`);
 });
 
 proof("506: editorial campaign JSON is unchanged", () => {

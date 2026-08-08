@@ -42,17 +42,25 @@
         "score": 70,
         "basis": "Candidate ingestion (mid-year-2026): research confidence high, no name issue. Proposed: \"24 Faubourg\" by \"Hermès\". Ready for editorial verification."
       },
-      "status": "pending-review",
+      "status": "verified",
       "history": [
         {
           "timestamp": "2026-08-08T00:00:00.000Z",
           "event": "created",
           "summary": "Candidate identity created by EP5-P2C controlled ingestion (mid-year-2026 campaign). Category A: pending-review.",
           "actor": "EP5-P2C:mid-year-2026"
+        },
+        {
+          "timestamp": "2026-08-08T22:47:16.132Z",
+          "event": "verified",
+          "summary": "Identity verified.",
+          "actor": "Awf",
+          "previousValue": "\"pending-review\"",
+          "nextValue": "\"verified\""
         }
       ],
       "createdAt": "2026-08-08T00:00:00.000Z",
-      "updatedAt": "2026-08-08T00:00:00.000Z"
+      "updatedAt": "2026-08-08T22:47:16.132Z"
     },
     {
       "id": "MIP-000002",
@@ -319,17 +327,25 @@
         "score": 70,
         "basis": "Candidate ingestion (mid-year-2026): research confidence high, no name issue. Proposed: \"À la rose\" by \"Maison Francis Kurkdjian\". Ready for editorial verification."
       },
-      "status": "pending-review",
+      "status": "verified",
       "history": [
         {
           "timestamp": "2026-08-08T00:00:00.000Z",
           "event": "created",
           "summary": "Candidate identity created by EP5-P2C controlled ingestion (mid-year-2026 campaign). Category A: pending-review.",
           "actor": "EP5-P2C:mid-year-2026"
+        },
+        {
+          "timestamp": "2026-08-08T22:49:00.096Z",
+          "event": "verified",
+          "summary": "Identity verified.",
+          "actor": "Awf",
+          "previousValue": "\"pending-review\"",
+          "nextValue": "\"verified\""
         }
       ],
       "createdAt": "2026-08-08T00:00:00.000Z",
-      "updatedAt": "2026-08-08T00:00:00.000Z"
+      "updatedAt": "2026-08-08T22:49:00.096Z"
     },
     {
       "id": "MIP-000007",
@@ -428,17 +444,25 @@
         "score": 70,
         "basis": "Candidate ingestion (mid-year-2026): research confidence high, no name issue. Proposed: \"Coconut Passion\" by \"Victoria's Secret\". Ready for editorial verification."
       },
-      "status": "pending-review",
+      "status": "verified",
       "history": [
         {
           "timestamp": "2026-08-08T00:00:00.000Z",
           "event": "created",
           "summary": "Candidate identity created by EP5-P2C controlled ingestion (mid-year-2026 campaign). Category A: pending-review.",
           "actor": "EP5-P2C:mid-year-2026"
+        },
+        {
+          "timestamp": "2026-08-08T22:49:44.259Z",
+          "event": "verified",
+          "summary": "Identity verified.",
+          "actor": "Awf",
+          "previousValue": "\"pending-review\"",
+          "nextValue": "\"verified\""
         }
       ],
       "createdAt": "2026-08-08T00:00:00.000Z",
-      "updatedAt": "2026-08-08T00:00:00.000Z"
+      "updatedAt": "2026-08-08T22:49:44.259Z"
     },
     {
       "id": "MIP-000009",
@@ -481,17 +505,25 @@
         "score": 70,
         "basis": "Candidate ingestion (mid-year-2026): research confidence high, no name issue. Proposed: \"Capri In a Bottle Lemon Sugar | 14\" by \"Kayali\". Ready for editorial verification."
       },
-      "status": "pending-review",
+      "status": "verified",
       "history": [
         {
           "timestamp": "2026-08-08T00:00:00.000Z",
           "event": "created",
           "summary": "Candidate identity created by EP5-P2C controlled ingestion (mid-year-2026 campaign). Category A: pending-review.",
           "actor": "EP5-P2C:mid-year-2026"
+        },
+        {
+          "timestamp": "2026-08-08T22:50:08.987Z",
+          "event": "verified",
+          "summary": "Identity verified.",
+          "actor": "Awf",
+          "previousValue": "\"pending-review\"",
+          "nextValue": "\"verified\""
         }
       ],
       "createdAt": "2026-08-08T00:00:00.000Z",
-      "updatedAt": "2026-08-08T00:00:00.000Z"
+      "updatedAt": "2026-08-08T22:50:08.987Z"
     },
     {
       "id": "MIP-000010",
@@ -644,17 +676,25 @@
         "score": 70,
         "basis": "Candidate ingestion (mid-year-2026): research confidence high, no name issue. Proposed: \"Alien Goddess\" by \"Mugler\". Ready for editorial verification."
       },
-      "status": "pending-review",
+      "status": "verified",
       "history": [
         {
           "timestamp": "2026-08-08T00:00:00.000Z",
           "event": "created",
           "summary": "Candidate identity created by EP5-P2C controlled ingestion (mid-year-2026 campaign). Category A: pending-review.",
           "actor": "EP5-P2C:mid-year-2026"
+        },
+        {
+          "timestamp": "2026-08-08T22:50:41.010Z",
+          "event": "verified",
+          "summary": "Identity verified.",
+          "actor": "Awf",
+          "previousValue": "\"pending-review\"",
+          "nextValue": "\"verified\""
         }
       ],
       "createdAt": "2026-08-08T00:00:00.000Z",
-      "updatedAt": "2026-08-08T00:00:00.000Z"
+      "updatedAt": "2026-08-08T22:50:41.010Z"
     },
     {
       "id": "MIP-000013",
@@ -697,17 +737,25 @@
         "score": 70,
         "basis": "Candidate ingestion (mid-year-2026): research confidence high, no name issue. Proposed: \"Boss Nuit Pour Femme\" by \"Hugo Boss\". Ready for editorial verification."
       },
-      "status": "pending-review",
+      "status": "verified",
       "history": [
         {
           "timestamp": "2026-08-08T00:00:00.000Z",
           "event": "created",
           "summary": "Candidate identity created by EP5-P2C controlled ingestion (mid-year-2026 campaign). Category A: pending-review.",
           "actor": "EP5-P2C:mid-year-2026"
+        },
+        {
+          "timestamp": "2026-08-08T22:51:15.495Z",
+          "event": "verified",
+          "summary": "Identity verified.",
+          "actor": "Awf",
+          "previousValue": "\"pending-review\"",
+          "nextValue": "\"verified\""
         }
       ],
       "createdAt": "2026-08-08T00:00:00.000Z",
-      "updatedAt": "2026-08-08T00:00:00.000Z"
+      "updatedAt": "2026-08-08T22:51:15.495Z"
     },
     {
       "id": "MIP-000014",
@@ -1341,17 +1389,25 @@
         "score": 70,
         "basis": "Candidate ingestion (mid-year-2026): research confidence high, no name issue. Proposed: \"Wanted by Night\" by \"Azzaro\". Ready for editorial verification."
       },
-      "status": "pending-review",
+      "status": "verified",
       "history": [
         {
           "timestamp": "2026-08-08T00:00:00.000Z",
           "event": "created",
           "summary": "Candidate identity created by EP5-P2C controlled ingestion (mid-year-2026 campaign). Category A: pending-review.",
           "actor": "EP5-P2C:mid-year-2026"
+        },
+        {
+          "timestamp": "2026-08-08T22:51:42.554Z",
+          "event": "verified",
+          "summary": "Identity verified.",
+          "actor": "Awf",
+          "previousValue": "\"pending-review\"",
+          "nextValue": "\"verified\""
         }
       ],
       "createdAt": "2026-08-08T00:00:00.000Z",
-      "updatedAt": "2026-08-08T00:00:00.000Z"
+      "updatedAt": "2026-08-08T22:51:42.554Z"
     },
     {
       "id": "MIP-000025",

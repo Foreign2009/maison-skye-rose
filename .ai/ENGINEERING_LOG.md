@@ -39,6 +39,51 @@ Never edit or delete past entries.
 
 ## Log
 
+### 2026-08-09 — EP5-P3D — First Editorial Identity Verification Campaign
+
+**Participants:** Project Owner (actor: "Awf", editorial decisions) / Claude (read-only preparation and post-review audit)
+**Program:** EP5-P3D — First human editorial review of the Maison Identity Platform. Founder reviewed and verified 7 Category A identities through the `/admin/identity` governance interface.
+
+**Decisions Made:**
+- HUMANS APPROVE INSTITUTIONAL TRUTH: Claude's role was strictly read-only preparation (checklist, URLs, canonical safety audit). All 7 verifications were performed by the founder through the admin interface. Claude made zero editorial decisions, wrote zero registry entries, called zero mutation methods.
+- 8 proof assertions updated post-review to reflect legitimate registry state change. These are maintenance actions, not regressions: the proofs were testing pre-EP5-P3D counts (0 verified, 10 pending-review) which are no longer accurate after the editorial session.
+- Proof 206 reconfigured from `recommendedAction: ["verify"]` (now returns 0 — all high-confidence records verified) to `recommendedAction: ["correct-canonical"]` (the 3 remaining pending-review all require canonical correction before they can be verified).
+- Proof 207 reconfigured from `researchConfidence: "high"` (now returns 0 — high-confidence records are all verified) to `researchConfidence: "medium"` (the 3 remaining pending-review are all medium confidence).
+- Build not re-run: EP5-P3D changed only the JSON registry file (written by the founder through the admin interface) and proof assertions in validation scripts (not compiled by Next.js). Last known build state — 188 routes, 0 errors — is unaffected.
+
+**Tasks Completed:**
+- Read-only preparation: registry gate verification, eligibility table, canonical safety check, evidence summary, review checklist, local admin URLs.
+- Post-review audit: confirmed 7 verified records in registry (actor: "Awf", timestamps 2026-08-08T22:47–51Z), computed new SHA-256.
+- Updated `scripts/identity/validate-identity-foundation.ts` proof 802 — reflects EP5-P3D state.
+- Updated `scripts/identity/validate-identity-editorial-admin.ts` proofs 201, 203, 205, 206, 207, 503, 505 — reflects EP5-P3D state.
+- All 5 suites confirmed passing: 69/69, 54/54, 85/85, 39/39, 100/100.
+- Governance docs updated: PROJECT_STATUS.md, CURRENT_TASK.md, ENGINEERING_LOG.md.
+- Committed.
+
+**Tasks Started:**
+- None. EP5-P3D is complete.
+
+**Build Result:** N/A — no source code changes. Last build: 188 routes, 0 TypeScript errors, 0 warnings (EP5-P3C, 2026-08-09).
+
+**Files Changed:**
+- `app/lib/identity/data/identity-registry.json` (MODIFIED by founder through admin interface — 7 records promoted to verified)
+- `scripts/identity/validate-identity-foundation.ts` (MODIFIED — proof 802 updated)
+- `scripts/identity/validate-identity-editorial-admin.ts` (MODIFIED — proofs 201, 203, 205, 206, 207, 503, 505 updated)
+- `PROJECT_STATUS.md` (MODIFIED)
+- `.ai/CURRENT_TASK.md` (MODIFIED)
+- `.ai/ENGINEERING_LOG.md` (MODIFIED)
+
+**Handoff:**
+- EP5-P3D complete. Registry: 26 total / 7 verified / 3 pending-review / 16 candidate.
+- SHA-256: c75f74b56d4c2064b4f00e422c26e454343defc6a8c61df288e4fe8c2c650a1d
+- 3 remaining pending-review require canonical correction: MIP-000005 (DKNY), MIP-000011 (Sospiro Vibranna), MIP-000014 (Narciso Rodriguez).
+- EP5-P4 (Knowledge Factory Identity Integration) can now proceed — `isIdentityKnowledgeEligible()` gate has 7 verified records to work with.
+
+**Open Questions Carried Forward:**
+- None.
+
+---
+
 ### 2026-08-09 — EP5-P3C — Establish Identity Review Admin Interface
 
 **Participants:** Project Owner / Claude (Implementation Engineer)

@@ -746,13 +746,16 @@ proof("801: identity-registry.json loads successfully with correct version", () 
   assert(data.identities.length === 26, `Expected 26 identities after EP5-P2C, found ${data.identities.length}`);
 });
 
-proof("802: 26 candidate identities persisted by EP5-P2C mid-year-2026 campaign", () => {
+proof("802: registry reflects EP5-P2C ingestion (26 total) and EP5-P3D editorial verification (7 verified)", () => {
   const data = loadIdentityRegistry();
   assert(data.identities.length === 26,
-    `Expected 26 persisted identities after EP5-P2C, found ${data.identities.length}`);
-  // All persisted records must be candidate or pending-review (none verified)
-  const verified = data.identities.filter(r => r.status === "verified");
-  assert(verified.length === 0, `Expected 0 verified identities, found ${verified.length}`);
+    `Expected 26 persisted identities, found ${data.identities.length}`);
+  const verified     = data.identities.filter(r => r.status === "verified");
+  const pendingReview = data.identities.filter(r => r.status === "pending-review");
+  const candidate    = data.identities.filter(r => r.status === "candidate");
+  assert(verified.length === 7,      `Expected 7 verified (EP5-P3D), found ${verified.length}`);
+  assert(pendingReview.length === 3, `Expected 3 pending-review, found ${pendingReview.length}`);
+  assert(candidate.length === 16,    `Expected 16 candidate, found ${candidate.length}`);
 });
 
 // ══════════════════════════════════════════════════════════════════════════════
