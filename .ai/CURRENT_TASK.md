@@ -8,59 +8,93 @@
 ## Current Task
 
 **Status:** COMPLETE — STOP
-**Program:** EP5-P3D — First Editorial Identity Verification Campaign
+**Program:** EP5-P4A — Identity-Aware Factory Intake Foundation
 
 **Outcome:**
-First human editorial review completed. Founder (actor: "Awf") verified 7 Category A
-identities through the `/admin/identity` governance interface. Registry advanced from
-26/10/16/0 to 26/7 verified/3 pending-review/16 candidate. HUMANS APPROVE INSTITUTIONAL
-TRUTH — zero AI editorial decisions, zero registry writes by Claude.
+Standalone identity eligibility gate established as the first factory-side integration
+boundary for the Maison Identity Platform.
 
-**Claude's role in EP5-P3D:**
-Read-only preparation only: verified registry gate, produced review checklist, confirmed
-canonical safety, provided exact admin URLs. Then stopped. All editorial decisions were
-made by the founder through the admin interface.
+`scripts/factory/identity/FactoryIdentityGate.ts` created.
 
-**Post-review audit actions (read-only):**
-- Confirmed 7 verifications in registry (actor: "Awf", timestamps 2026-08-08T22:47–51Z)
-- New SHA-256: c75f74b56d4c2064b4f00e422c26e454343defc6a8c61df288e4fe8c2c650a1d
-- Updated 8 proof assertions across 2 suites to reflect legitimate registry state change
-- All 5 validation suites pass: 69/69, 54/54, 85/85, 39/39, 100/100
-- Build not re-run (no source code changes; proof scripts not compiled by Next.js)
+Critical architectural finding confirmed and reported: no programmatic link exists
+between a MIP IdentityId and a Maison supplier catalogue slug. The bridge between
+`IdentityId → Maison product` is missing and explicitly deferred to EP5-P4B.
+Per founder correction: an `IdentityAwareRunInput` type carrying both identityId
+and slug was removed from scope — it would imply a governed association that does
+not yet exist. IDENTITY PRECEDES KNOWLEDGE.
 
-**Verified identities (actor: Awf, 2026-08-09):**
-- MIP-000001: 24 Faubourg / Hermès
-- MIP-000006: À la rose / Maison Francis Kurkdjian
-- MIP-000008: Coconut Passion / Victoria's Secret
-- MIP-000009: Capri In a Bottle Lemon Sugar | 14 / Kayali
-- MIP-000012: Alien Goddess / Mugler
-- MIP-000013: Boss Nuit Pour Femme / Hugo Boss
-- MIP-000024: Wanted by Night / Azzaro
+**Gate contract:**
+- `resolveIdentityEligibility(registry, identityId)` — pure, injected registry, testable
+- `checkIdentityEligibility(identityId)` — production wrapper, reads from disk, read-only
+- `IdentityGateResult` — typed discriminated union
+- `IdentityGateFailureReason` — 3 distinct paths: invalid-identity-id / identity-not-found / identity-not-eligible
+- Eligibility always delegated to `isIdentityKnowledgeEligible()` — never direct status comparison
+- No scaffold / producer / GenerationProvider / draftBuilder / promotionManager / CatalogueRegistry imports
 
-**Remaining pending-review (canonical correction required before verify):**
-- MIP-000005: DKNY Red Delicious Apple (recommendedAction: correct-canonical)
-- MIP-000011: Sospiro Vibranna (recommendedAction: correct-canonical)
-- MIP-000014: Narciso Rodriguez Pure Musc Blanc EDP Intense (recommendedAction: correct-canonical)
+**Validation:**
+- `scripts/identity/validate-factory-identity-integration.ts` — 28 proofs, 5 sections
+- `npm run mip:validate:factory` script added
+
+**Files created:**
+- `scripts/factory/identity/FactoryIdentityGate.ts` (NEW)
+- `scripts/identity/validate-factory-identity-integration.ts` (NEW)
+
+**Files modified:**
+- `package.json` — added `mip:validate:factory` script
+
+**Files explicitly unchanged:**
+- `scripts/factory/types.ts` — NO identityId added to PipelineInput
+- `app/lib/mkc/types.ts` — NO identityId on FragranceKnowledge
+- `app/lib/identity/data/identity-registry.json` — byte-identical
+- `app/lib/mkc/native/` — 94 files, all unchanged
+- All MKC catalogue entries (skye.ts, rose.ts, elite.ts, fragrances.ts)
+- All factory modules (orchestrator, intake, scaffold, merger, draftBuilder)
+- All admin/UI/route files
+
+**All 6 suites pass:**
+- mip:validate:factory — 28/28 ✓ (NEW)
+- mip:validate — 69/69 ✓
+- mip:validate:admin — 54/54 ✓
+- mip:validate:resolver — 85/85 ✓
+- mip:validate:source:2026 — 39/39 ✓
+- mip:validate:editorial — 100/100 ✓
+
+**Registry SHA-256 (unchanged):**
+c75f74b56d4c2064b4f00e422c26e454343defc6a8c61df288e4fe8c2c650a1d
+
+**Registry state (unchanged):**
+26 total / 7 verified / 3 pending-review / 16 candidate
+
+**Build:** 188 routes, 0 TypeScript errors, 0 warnings ✓
+
+**AI/API calls:** 0 Claude / 0 Gemini / 0 OpenAI / 0 GenerationProvider
 
 ---
 
 ## Next Human Action
 
-**EP5-P4 — Knowledge Factory Identity Integration**
+**EP5-P4B — Establish Governed IdentityId → Maison Product Association**
 
-7 verified identities are now in the registry. The prerequisite for EP5-P4 is met:
-1. `isIdentityKnowledgeEligible()` gate function exists in `app/lib/identity/eligibility.ts`
-2. Registry now has 7 verified identities — eligibility gate will return true for these
-3. Knowledge Factory can now use `isIdentityKnowledgeEligible()` to gate product enrichment
+The missing bridge must be established before any identity-aware factory invocation
+can carry both an IdentityId and a Maison product reference.
+
+The association must be:
+- Deterministic and explicit (no fuzzy matching, no AI inference, no brand similarity)
+- Founder-reviewable before becoming authoritative
+- Stored in a governed location (not derived from canonical names or supplier names)
+
+Only after the bridge exists may an `IdentityAwareRunInput` safely carry both
+an IdentityId and a Maison product slug.
 
 ---
 
 ## Context Notes
 
-**Last completed:** EP5-P3D — First Editorial Identity Verification Campaign (2026-08-09)
-**Preceded by:**    EP5-P3C — Identity Review Admin Interface (2026-08-09)
+**Last completed:** EP5-P4A — Identity-Aware Factory Intake Foundation (2026-08-09)
+**Preceded by:**    EP5-P3D — First Editorial Identity Verification Campaign (2026-08-09)
 
 Recent completed programs (newest first):
+- EP5-P4A Identity-Aware Factory Intake Foundation (2026-08-09) — gate only, missing bridge reported
 - EP5-P3D First Editorial Identity Verification Campaign (2026-08-09) — 7 verified by founder, 0 AI decisions
 - EP5-P3C Identity Review Admin Interface (2026-08-09) — 54 proofs, 0 AI, 0 registry writes
 - EP5-P3B Editorial Transaction Service (2026-08-08) — 100 proofs, 0 AI, 0 registry writes
@@ -73,5 +107,4 @@ Recent completed programs (newest first):
 
 ## Build Result
 
-**Last build:** 2026-08-09 — Pass. Zero TypeScript errors. Zero warnings. 188 routes. (EP5-P3C)
-**EP5-P3D:** No source code changes — build not re-run. Last known build state: 188 routes, 0 errors. ✓
+**Last build:** 2026-08-09 — Pass. Zero TypeScript errors. Zero warnings. 188 routes. (EP5-P4A)

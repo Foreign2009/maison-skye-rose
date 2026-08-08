@@ -39,6 +39,53 @@ Never edit or delete past entries.
 
 ## Log
 
+### 2026-08-09 — EP5-P4A — Identity-Aware Factory Intake Foundation
+
+**Participants:** Project Owner (approval and architectural correction) / Claude (implementation)
+**Program:** EP5-P4A — Establish a standalone identity eligibility gate as the first factory-side integration boundary for the Maison Identity Platform.
+
+**Decisions Made:**
+- Founder architectural correction: `IdentityAwareRunInput` (carrying both `identityId` and `slug`) removed from EP5-P4A scope. An input type implying an IdentityId-to-Maison-product relationship cannot exist before that relationship is governed and proven. The association is deferred to EP5-P4B.
+- Critical architectural finding confirmed: no programmatic link exists between a MIP `IdentityId` and a Maison supplier catalogue slug. `deriveSlug(supplierName)` ≠ `deriveSlug(maisonTitle)`. The bridge is structurally absent in EP5-P4A. Reported in the implementation plan and documented here.
+- `scripts/factory/types.ts` explicitly NOT modified — `PipelineInput` unchanged; `ProductIntakeBase` unchanged; `FragranceKnowledge` unchanged.
+- Eligibility decision always delegates to `isIdentityKnowledgeEligible(record)` — the gate never compares `record.status` directly. This enforces the single authoritative eligibility source.
+- `checkIdentityEligibility()` (production) calls `loadIdentityRegistry()` (read-only) and never `saveIdentityRegistry()`. Registry immutability is a hard contract of the gate.
+- Three structurally distinct failure reasons: `invalid-identity-id`, `identity-not-found`, `identity-not-eligible`. They must not be collapsed.
+- Proof structure: in-memory `IdentityRegistry` fixtures used for Sections 100–400 (no production writes); production registry (read-only) used for Section 500 proofs 501–507.
+- FACTORY_VERSION and IDENTITY_PLATFORM_VERSION not bumped — gate is additive; no persisted document format or registry schema changed.
+
+**Tasks Completed:**
+- Created `scripts/factory/identity/FactoryIdentityGate.ts`: `resolveIdentityEligibility()` (pure), `checkIdentityEligibility()` (production), typed `IdentityGateResult` and `IdentityGateFailureReason`.
+- Created `scripts/identity/validate-factory-identity-integration.ts`: 28 deterministic proofs across 5 sections (gate contract, all 6 eligibility states, isolation invariants, legacy factory compatibility, production registry safety).
+- Added `mip:validate:factory` to package.json.
+- mip:validate:factory: 28/28 ✓
+- Regression suites: 69/69, 54/54, 85/85, 39/39, 100/100 — all unchanged.
+- Build: 188 routes, 0 TypeScript errors, 0 warnings ✓.
+- Registry SHA-256 confirmed byte-identical: `c75f74b56d4c2064b4f00e422c26e454343defc6a8c61df288e4fe8c2c650a1d`.
+- MKC native record count confirmed: 94 files — unchanged.
+- Governance docs updated: PROJECT_STATUS.md, CURRENT_TASK.md, ENGINEERING_LOG.md.
+
+**Tasks Started:**
+- None.
+
+**Build Result:** Pass — 188 routes, 0 TypeScript errors, 0 warnings.
+
+**Files Changed:**
+- `scripts/factory/identity/FactoryIdentityGate.ts` — CREATED
+- `scripts/identity/validate-factory-identity-integration.ts` — CREATED
+- `package.json` — mip:validate:factory script added
+
+**Handoff:**
+- EP5-P4B must establish the governed `IdentityId → Maison catalogue product` association before any identity-aware factory invocation can carry both an IdentityId and a slug.
+- The association must be deterministic, explicit, and founder-reviewable. No fuzzy matching. No AI inference. No derived slug. No brand similarity.
+- The `FactoryIdentityGate` is ready for production use: pass a known `IdentityId` to `checkIdentityEligibility()` and receive a typed result before any factory operation.
+
+**Open Questions Carried Forward:**
+- Where should the `IdentityId → Maison product slug` mapping live? Options include: (a) `identityId?` field on Maison catalogue entries (skye.ts, rose.ts, elite.ts); (b) a separate mapping table (e.g., `app/lib/identity/data/product-associations.json`); (c) both. The founder must review and approve all associations before they become authoritative.
+- Of the 7 verified identities, which have a corresponding Maison inspired product in the supplier catalogue? Several do not (MIP-000001, MIP-000006, MIP-000008, MIP-000009, MIP-000013 had no match found; MIP-000024 maps to a different Azzaro product than the Maison catalogue entry).
+
+---
+
 ### 2026-08-09 — EP5-P3D — First Editorial Identity Verification Campaign
 
 **Participants:** Project Owner (actor: "Awf", editorial decisions) / Claude (read-only preparation and post-review audit)
