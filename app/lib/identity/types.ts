@@ -219,6 +219,9 @@ export type IdentityHistoryEventType =
   | "verified"
   | "disputed"
   | "deprecated"
+  | "rejected"            // EP5-P3B: identity rejected as non-entity or unresolvable
+  | "candidate-promoted"  // EP5-P3B: candidate elevated to pending-review
+  | "candidate-demoted"   // EP5-P3B: pending-review returned to candidate
   | "merged"   // placeholder — behaviour deferred to future episode
   | "split";   // placeholder — behaviour deferred to future episode
 

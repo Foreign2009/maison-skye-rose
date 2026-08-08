@@ -8,10 +8,10 @@
 
 ## Current Engineering Program
 
-**Program:** EP5-P2C — Controlled 2026 Identity Candidate Ingestion — COMPLETE
+**Program:** EP5-P3B — Establish Identity Editorial Transaction Service — COMPLETE
 **Sprint:** EP5
-**Gate:** EP5-P3 — Identity Editorial Review Center. 26 candidate identities now in registry. 10 pending-review (editorial verification ready). 16 candidate (additional research required). 0 verified. No Knowledge Factory generation until editorial verification completes.
-**Objective:** First real population of the Maison Identity Platform registry. 26 Mid-Year 2026 candidate fragrance identities ingested from founder-supplied evidence. Canonical safety enforced: 4 ambiguous research proposals blocked from registry; supplier names used as provisional. All 26 records have supplier + research evidence. Campaign report and editorial review batch written. 0 AI calls. 0 Knowledge Factory operations. Resolver lifecycle invariant preserved: no candidate auto-resolves.
+**Gate:** EP5-P3C — Identity Review Admin Interface. Transaction service ready. Next: review queue page, identity detail page, Server Actions wiring to IdentityEditorialService.
+**Objective:** Human governance domain established. 7-action editorial transaction service (verify, correct-canonical, confirm-alias, request-more-research, elevate, reject, dispute) with injected clock, repository abstraction, optimistic concurrency, and canonical collision guard. 100/100 proofs pass. 0 verified identities yet — editorial review has not yet been performed on the 26 candidate registry. Knowledge Factory gate blocked until first verified identity exists.
 
 ---
 
@@ -39,11 +39,11 @@ The Maison Fragrance Academy (EP13) is in the planning stage.
 | Build result | PASS |
 | TypeScript errors | 0 |
 | Warnings | 0 |
-| Total pages | 120 |
+| Total pages | 187 |
 | Product pages (SSG) | 93 |
 | Static pages | 25 |
-| Dynamic routes | 2 |
-| Last verified | 2026-07-03 |
+| Dynamic routes | 12 |
+| Last verified | 2026-08-08 |
 
 Verify: `npm run build`
 
@@ -95,6 +95,8 @@ Verify: `npm run build`
 | EP5 | EP5-P2CR | Harden Identity Ingestion Source Contracts | Complete — 2026-08-08 |
 | EP5 | EP5-P2C-R| Protect Candidate Canonical Identity | Complete — 2026-08-08 |
 | EP5 | EP5-P2C  | Ingest Mid-Year 2026 Identity Candidates | Complete — 2026-08-08 |
+| EP5 | EP5-P3A  | Identity Editorial Review Architecture Audit | Complete — 2026-08-08 |
+| EP5 | EP5-P3B  | Establish Identity Editorial Transaction Service | Complete — 2026-08-08 |
 
 `FOUNDATIONS/00_FOUNDERS_LETTER.md` — The permanent founder's letter to Skye, Rose, future employees, and future stewards. *Why we began.*
 `FOUNDATIONS/01_SKYE_AND_ROSE_COVENANT.md` — The institutional promise: to customers, products, technology, and future generations. *What we promise.*
@@ -105,6 +107,8 @@ Verify: `npm run build`
 **EP2-P1 Audit Findings (2026-08-05):** Overall institutional alignment score 7.1/10. Intelligence layer (Fragrance Profile, MaisonCompanion, Concierge, Shop, Quiz) rated Aligned. Critical gaps: About page (3/10 — fails Foundation narrative standard), catalogue count inconsistency (93 vs 465+), "Loyal Customer" terminology, post-purchase experience absent, checkout UX cold. Recommended sequence: EP2-P2 (About page rewrite) → EP2-P3 (checkout + post-purchase) → EP2-P4 (testimonials) → EP2-P5 (concierge voice) → EP2-P6 (language pass).
 
 **EP2-P3 About Page Foundation Alignment (2026-08-05):** `app/about/page.tsx` rewritten from 4 generic paragraphs to 9 Foundation-aligned sections: Opening, A Compliment Changed Everything, Why Skye & Rose, What We Believe, Confidence Is What We Are Here to Deliver, Knowledge Before Recommendation, Accessible Luxury, Growing Together, Our Promise, An Invitation. Count inconsistency removed (465+ → timeless language). OG and Twitter metadata added. Architecture preserved. Build passes: 187 routes, 0 TypeScript errors, 0 warnings.
+
+**EP5-P3B Establish Identity Editorial Transaction Service (2026-08-08):** Human governance domain and transaction service established. `app/lib/identity/editorial/` created as the editorial domain. Architecture: injected clock (`IdentityEditorialClock`) ensures all timestamps are deterministic in tests; repository abstraction (`IdentityEditorialRepository`) isolates tests from real filesystem; `_transact()` private core enforces load → stale check → mutate → validate → collision → save on every mutation; optimistic concurrency via `expectedUpdatedAt` on every input. Seven actions: `verifyIdentity` (pending-review | disputed → verified; requires clean canonical name, canonicalBrand, actor; clean-name gate rejects " / ", "(Note:", "(unverified)"), `correctCanonical` (any status; no-op guard; launchYear/marketedGender settable or clearable via null), `confirmAlias` (any status; cross-record collision detected), `requestMoreResearch` (pending-review → candidate; reason required), `elevate` (candidate → pending-review; reason required), `rejectIdentity` (candidate | pending-review | disputed → rejected; verified blocked — must dispute first), `disputeIdentity` (verified → disputed; reason required). Two read projections: `getReviewQueue()` (filtered, ordered: pending-review → candidate → disputed → id asc; campaign enrichment optional) and `getIdentityReview()` (full detail + verification eligibility gate + canonical collision warning). Three new `IdentityHistoryEventType` values: `rejected`, `candidate-promoted`, `candidate-demoted`. `isIdentityKnowledgeEligible()` pure function: returns true only for `verified` status (not integrated into factory — EP5-P4). `editorial/index.ts` exports `PRODUCTION_CLOCK` and `createProductionRepository()` for future Server Actions. `isCleanCanonicalProposal` inlined in service (not imported from scripts/) — server boundary preserved. Evidence immutability: all spread-reconstruct operations explicitly preserve `evidence: record.evidence`. Confidence independence: no mutation modifies confidence.score/basis/lastEvaluatedAt. `validate-identity-editorial.ts`: 100 proofs across 16 sections. Real registry hash verified before/after — byte-identical. `mip:validate:editorial` script added. Validation: 69/69 (foundation), 85/85 (resolver), 39/39 (source), 100/100 (editorial). Build: 187 routes, 0 TypeScript errors, 0 warnings. 0 AI calls. 0 real registry writes. 0 UI/route changes.
 
 **EP5-P2C Ingest Mid-Year 2026 Identity Candidates (2026-08-08):** First real population of the Maison Identity Platform registry. 31 supplier rows (26 unique + 5 L/M pairs) and 26 Gemini research entries ingested. Registry: 26 IdentityRecords (MIP-000001–MIP-000026); 10 pending-review (Category A/B); 16 candidate (Category C); 0 verified. Canonical safety enforced by `isCleanCanonicalProposal()`: 4 ambiguous multi-option research proposals blocked (DKNY Red Delicious Apple, 212 Carolina Herrera Good Girl Jasmine Absolute, Armani Prive Oud Nacre, Armani Stronger With You Powerfully) — supplier names used as provisional canonicals; original Gemini proposals preserved in evidence and `researchCanonicalProposal` field. All 26 records carry supplier-catalogue + research evidence. 5 L/M duplicate pairs preserved as dual `supplierIdentities` in single IdentityRecord. Campaign report: `app/lib/identity/data/campaigns/mid-year-2026-campaign.json`. Editorial review batch: `app/lib/identity/data/campaigns/mid-year-2026-editorial.json`. Resolver lifecycle invariant confirmed: no candidate or pending-review identity auto-resolves. Idempotency confirmed: second dry run correctly skips all 26 (no new MIP-IDs proposed). Validation suite proofs updated for EP5-P2C state: 69/69, 85/85, 39/39. Build: 187 routes, 0 TypeScript errors, 0 warnings. 0 AI calls. 0 Knowledge Factory operations. 0 UI/route changes.
 

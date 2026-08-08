@@ -3080,3 +3080,75 @@ After EP20-P4: `computeLearnedPreferences()` runs the LearningEngine on `profile
 **Open Questions Carried Forward:**
 - When will the founder provide the 26 supplier rows and Gemini research data?
 - EP5-P3 scope: what does the editorial review workflow look like?
+
+
+---
+
+### [2026-08-08] — EP5-P3A/P3B — Architecture Audit + Editorial Transaction Service
+
+**Participants:** Owner / Claude Code
+**Program:** EP5-P3A — Identity Editorial Review Architecture Audit (design only); EP5-P3B — Establish Identity Editorial Transaction Service (implementation)
+
+**Decisions Made:**
+- Editorial service must NOT import from `scripts/` into `app/` — `isCleanCanonicalProposal` inlined in service with comment documenting the boundary.
+- `IdentityEditorialService` uses private `_transact()` core to enforce all invariants on every mutation: load → stale check → mutate → validate → collision → save.
+- Repository abstraction (`IdentityEditorialRepository`) chosen over direct persistence.ts calls — enables pure in-memory tests with zero filesystem access.
+- Injected clock (`IdentityEditorialClock`) chosen over scattered `new Date()` — all timestamps deterministic in tests.
+- Optimistic concurrency: `expectedUpdatedAt` required on all 7 mutations — stale-review error surfaced as `EditorialResult`, not thrown.
+- `verifyIdentity` blocked from `verified` status (identity already verified — idempotent re-verify would corrupt history).
+- `rejectIdentity` blocked from `verified` status — must go through `disputeIdentity` first (mandatory reflection step for verified institutional assertions).
+- `disputeIdentity` restricted to `verified → disputed` only — candidates and pending-review cannot be disputed (they have no verified institutional assertion to challenge).
+- Confidence independence: confirmed no mutation may touch `confidence.score`, `confidence.basis`, or `confidence.lastEvaluatedAt`.
+- Evidence immutability: all spread-reconstruct operations include `evidence: record.evidence` explicitly as enforcement commentary.
+- `isIdentityKnowledgeEligible()` designed as pure function returning `record.status === "verified"` only — NOT integrated into Knowledge Factory (EP5-P4 gate).
+- `correctCanonical` no-op detection: compare each new field value against old after trim/null resolution — return `kind: "no-op"` if no field changed.
+- Canonical collision guard rebuilt on every write: fresh `IdentityRegistry` populated with all other records, then updated record registered — exercises `_guardDuplicateCanonical` and `_guardAliasCollisions`.
+- `launchYear: null` and `marketedGender: null` semantics: null = clear the field; absent from input = keep current value. Uses `"field" in input` check.
+- Production infrastructure exported from `editorial/index.ts`: `PRODUCTION_CLOCK` and `createProductionRepository()` — ready for EP5-P3C Server Actions.
+- 3 new `IdentityHistoryEventType` values added to `types.ts`: `rejected`, `candidate-promoted`, `candidate-demoted`.
+
+**Tasks Completed (EP5-P3A — Architecture Audit):**
+- Read all 20 specified files (types, validator, registry, persistence, normalizer, version, resolver, admin, campaign data, proof pattern).
+- Produced 40-deliverable architectural design document covering editorial domain design.
+
+**Tasks Completed (EP5-P3B — Implementation):**
+- `app/lib/identity/types.ts` — Modified: added `rejected`, `candidate-promoted`, `candidate-demoted` to `IdentityHistoryEventType`.
+- `app/lib/identity/eligibility.ts` — Created: `isIdentityKnowledgeEligible(record): boolean` pure function.
+- `app/lib/identity/editorial/types.ts` — Created: all editorial types (7 action inputs, EditorialResult, EditorialErrorKind, StaleReviewError, CollisionDetail, IdentityEditorialClock, IdentityEditorialRepository, ReviewQueueFilter, IdentityReviewSummary, IdentityReviewDetail, CampaignEntry, RecommendedAction).
+- `app/lib/identity/editorial/IdentityEditorialService.ts` — Created: full transaction service. 7 mutations, 2 read projections, private `_transact()` core.
+- `app/lib/identity/editorial/index.ts` — Created: public API re-exports + PRODUCTION_CLOCK + createProductionRepository().
+- `scripts/identity/validate-identity-editorial.ts` — Created: 100 proofs across 16 sections.
+- `package.json` — Modified: `mip:validate:editorial` script added.
+- `PROJECT_STATUS.md` — Updated: EP5-P3A and EP5-P3B rows, build table, narrative.
+- `.ai/CURRENT_TASK.md` — Updated: EP5-P3B complete, EP5-P3C next action.
+- `.ai/ENGINEERING_LOG.md` — This entry.
+
+**Validation Results:**
+- `npm run mip:validate` → 69/69 ✓ (no regression)
+- `npm run mip:validate:resolver` → 85/85 ✓ (no regression)
+- `npm run mip:validate:source:2026` → 39/39 ✓ (no regression)
+- `npm run mip:validate:editorial` → 100/100 ✓ (new)
+
+**Build Result:** Pass — 187 routes, 0 TypeScript errors, 0 warnings (2026-08-08)
+
+**Files Changed:**
+- `app/lib/identity/types.ts` — Modified (3 new IdentityHistoryEventType values)
+- `app/lib/identity/eligibility.ts` — Created (isIdentityKnowledgeEligible)
+- `app/lib/identity/editorial/types.ts` — Created (all editorial domain types)
+- `app/lib/identity/editorial/IdentityEditorialService.ts` — Created (transaction service)
+- `app/lib/identity/editorial/index.ts` — Created (public API, PRODUCTION_CLOCK, createProductionRepository)
+- `scripts/identity/validate-identity-editorial.ts` — Created (100-proof suite)
+- `package.json` — Modified (mip:validate:editorial added)
+- `PROJECT_STATUS.md` — Updated
+- `.ai/CURRENT_TASK.md` — Updated
+- `.ai/ENGINEERING_LOG.md` — This entry
+
+**Handoff:**
+- EP5-P3C: Identity Review Admin Interface — admin navigation "Identity Review" entry, review queue page (list view), identity detail page, Server Actions wiring `IdentityEditorialService` via `createProductionRepository()` and `PRODUCTION_CLOCK`.
+- Real registry unchanged: 26 records, 0 verified, 10 pending-review, 16 candidate.
+- No editorial actions have been performed on any real identity yet — service is ready and tested but human review has not begun.
+
+**Open Questions Carried Forward:**
+- EP5-P3C: What is the scope and design of the admin identity review UI?
+- When will the founder begin reviewing the 10 pending-review identities?
+- Which of the 4 provisional canonical records (DKNY Red Delicious Apple, 212 Carolina Herrera Good Girl Jasmine Absolute, Armani Prive Oud Nacre, Armani Stronger With You Powerfully) will be resolved first?
