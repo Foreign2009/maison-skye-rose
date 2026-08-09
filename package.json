@@ -37,6 +37,7 @@
     "mip:validate:mapping": "npx tsx scripts/identity/validate-identity-product-mapping.ts",
     "mip:validate:qualified-factory": "npx tsx scripts/identity/validate-identity-qualified-factory.ts",
     "mip:validate:qualified-audit": "npx tsx scripts/identity/validate-identity-qualified-audit.ts",
+    "mip:validate:reconciliation": "npx tsx scripts/identity/validate-alien-goddess-reconciliation.ts",
     "mkc:identity-qualified:controlled": "npx tsx scripts/factory/run-identity-qualified-controlled.ts"
   },
   "dependencies": {

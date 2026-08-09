@@ -39,6 +39,58 @@ Never edit or delete past entries.
 
 ## Log
 
+### 2026-08-10 — EP5-P4F Phase 2 — R2 Governance Gap Closure + R3 Authoritative Research Preparation
+
+**Participants:** Project Owner (founder authorisation) / Claude (implementation and execution)
+**Program:** EP5-P4F Phase 2 — Durable documentation of legacy Alien Goddess knowledge governance gaps and creation of structured R3 authoritative research contract. No guest-facing changes. No AI generation. No historical artifact modification.
+
+**Decisions Made:**
+- Draft (`scripts/factory/drafts/alien-goddess-inspired.ts`) must NOT be annotated with "legacy — pre-MIP" or similar. The draft is historical generation evidence and must be preserved exactly. Governance status is documented in the reconciliation record only.
+- Reconciliation record created at `app/lib/identity/data/reconciliation/` — new governed evidence subdirectory. This is the correct location alongside other identity evidence rather than under `data/identity/` which holds ingestion sources.
+- Research request created at `data/identity/research-requests/` — new directory for structured research specifications. The results will go to `data/identity/research-results/` when R3 is executed.
+- 6 material issues are classified as CONTRADICTED (not "wrong" — "DISPUTED / CONTRADICTED BY CURRENT INTERNAL RESEARCH"). Neither factory AI notes nor Gemini research notes are authoritative without external verification.
+- TypeScript narrowing: `assert(x !== undefined, msg)` → `if (!x) throw new Error(msg)` applied again in new validation script (same pattern as EP5-P4E-A fix). The assert() function must be used only for boolean conditions, not undefined guards.
+
+**Tasks Completed:**
+- Created `app/lib/identity/data/reconciliation/MIP-000012-alien-goddess-reconciliation.json` — durable reconciliation record documenting: legacy provenance gap (promotedAt: null, draftReviewStatus: unreviewed), 6 material CONTRADICTED issues with full field/value/classification/risk data, MIPRUN-DZOn_xTBLM5h linkage, hold-pending-authoritative-research disposition, R3 recommendation
+- Created `data/identity/research-requests/alien-goddess-authoritative-research.json` — structured R3 research specification with: 10 primary research questions (4 critical), 3-tier source hierarchy, evidence capture contract schema (6 required fields), conflict preservation policy, AI substitution exclusion
+- Created `scripts/identity/validate-alien-goddess-reconciliation.ts` — 40 deterministic proofs across § 100 Reconciliation / § 200 Issues / § 300 Research Contract / § 400 Immutability
+- Added `mip:validate:reconciliation` to `package.json`
+- Fixed TypeScript narrowing in proofs 202–207 (`.find()` returns) and proof 407 (registry lookup)
+- Validated: 40/40 new + 516/516 existing = 556/556 total proofs pass
+- Build: 188 routes, 0 TypeScript errors, 0 warnings
+
+**Tasks Started:**
+- None.
+
+**Build Result:** Pass — 188 routes, 0 TypeScript errors, 0 warnings.
+
+**Files Changed:**
+- `app/lib/identity/data/reconciliation/MIP-000012-alien-goddess-reconciliation.json` — CREATED
+- `data/identity/research-requests/alien-goddess-authoritative-research.json` — CREATED
+- `scripts/identity/validate-alien-goddess-reconciliation.ts` — CREATED (40 proofs; TS narrowing fixes applied)
+- `package.json` — `mip:validate:reconciliation` script added (additive only)
+
+**Files Explicitly Unchanged (SHA-256 verified by proof § 400):**
+- `app/lib/mkc/native/alien-goddess-inspired.ts` — SHA: de22896a3c5c0534a4729369a51d435686e14a89ddd081ed88e473bd0d5858e4
+- `scripts/factory/drafts/alien-goddess-inspired.ts` — SHA: 700593b7fd98cf8339491b74a7f2c6732badb2581ac268636a59c471b7e1cee7
+- `scripts/factory/factory-log.json` — SHA: bd825643a2cafdd1adb4a82bfebd4e48465844315e78d039811950820570e33e
+- `app/lib/identity/data/identity-registry.json` — SHA: c75f74b56d4c2064b4f00e422c26e454343defc6a8c61df288e4fe8c2c650a1d
+- `app/lib/identity/data/identity-product-registry.json` — SHA: 6d064d2b471bb0ff8da58e2cb5dd27d69bf70980e19ddd3041298e2eb8a5af0b
+- `scripts/factory/identity/identity-qualified-run-audit.json` — SHA: bd3e1f227a35f5929e0474516bafd3d5a7e9d460b923659f2fdf27be0a817353
+
+**Handoff:**
+- The legacy Alien Goddess composition dispute is durably documented without modifying any historical artifact.
+- Next human action: R3 research execution — founder commissions authoritative external research per `data/identity/research-requests/alien-goddess-authoritative-research.json`. Claude Code does not execute this research.
+- After R3: founder reviews findings, decides R2 (targeted corrections) or R4 (governed regeneration with verified evidence).
+- Controlled runner remains DISARMED: `APPROVED_IDENTITY_ID = null`, `FORCE = false`.
+
+**Open Questions Carried Forward:**
+- R3 research timing: when does the founder commission authoritative external research?
+- Relationships REVIEW comment: `app/lib/mkc/native/alien-goddess-inspired.ts` still has an open `// REVIEW:` obligation on the relationships field — blocked on R3 research.
+
+---
+
 ### 2026-08-09 — EP5-P4E-A — First Production Identity-Qualified Governance Run
 
 **Participants:** Project Owner (founder authorisation) / Claude (implementation and execution)

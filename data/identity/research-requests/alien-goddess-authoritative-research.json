@@ -1,0 +1,198 @@
+{
+  "version": "1.0.0",
+  "requestId": "RR-MIP-000012-001",
+  "requestStatus": "pending",
+  "requestedAt": "2026-08-09T00:00:00.000Z",
+  "requestedBy": "EP5-P4F",
+  "identityId": "MIP-000012",
+  "canonicalName": "Alien Goddess",
+  "canonicalBrand": "Mugler",
+  "maisonSlug": "alien-goddess-inspired",
+  "reconciliationRecord": "app/lib/identity/data/reconciliation/MIP-000012-alien-goddess-reconciliation.json",
+
+  "purpose": "Resolve composition knowledge dispute between legacy factory AI notes and MIP Gemini research notes. Neither source is currently authoritative — both are AI-generated. Authoritative external verification is required before any guest-facing composition knowledge changes.",
+
+  "sourceHierarchy": {
+    "tier1": {
+      "label": "PRIMARY — Use first. Treat as authoritative.",
+      "examples": [
+        "Official Mugler product page (mugler.com)",
+        "Official Mugler press kit or brand documentation",
+        "L'Oréal Group / Mugler official brand records",
+        "Official launch materials or fragrance brief"
+      ],
+      "policy": "Findings from Tier 1 sources are treated as authoritative unless two Tier 1 sources explicitly contradict each other — in which case record both and classify as official-disagreement."
+    },
+    "tier2": {
+      "label": "STRONG SECONDARY — Use when Tier 1 is unavailable or incomplete.",
+      "examples": [
+        "Fragrantica database (fragrantica.com) — widely referenced fragrance database",
+        "Basenotes database (basenotes.net) — established fragrance community reference",
+        "Established fragrance publications and industry databases",
+        "Perfumer attribution documentation from recognized sources"
+      ],
+      "policy": "Tier 2 findings are NOT equivalent to Tier 1. If Tier 1 and Tier 2 conflict, record both — do not silently resolve. Classify as database-disagreement or official-disagreement."
+    },
+    "tier3": {
+      "label": "SUPPORTING ONLY — Do not treat as authoritative.",
+      "examples": [
+        "Retailer product descriptions (Sephora, Boots, Woolworths Beauty, etc.)",
+        "Community fragrance reviews and ratings",
+        "Influencer or editorial descriptions"
+      ],
+      "policy": "Tier 3 findings are contextual only. Record them if they corroborate higher-tier findings, but do not rely on them to resolve conflicts between Tier 1/2 sources."
+    }
+  },
+
+  "researchQuestions": [
+    {
+      "id": "RQ-001",
+      "priority": "critical",
+      "field": "family",
+      "question": "What is the official fragrance family classification of Alien Goddess by Mugler?",
+      "currentConflict": {
+        "legacyFactoryValue": ["Vanilla", "Floral"],
+        "mipResearchValue": ["Amber", "Floral"],
+        "conflictNote": "Both are AI-generated. 'Vanilla' vs 'Amber' represent different fragrance family classifications in the Maison vocabulary. This conflict drives the MKC profile field and academy article linkages."
+      }
+    },
+    {
+      "id": "RQ-002",
+      "priority": "critical",
+      "field": "notes.top",
+      "question": "What are the official top notes of Alien Goddess by Mugler?",
+      "currentConflict": {
+        "legacyFactoryValue": ["Coconut Milk", "Yuzu"],
+        "mipResearchValue": ["Coconut Water", "Bergamot"],
+        "conflictNote": "Coconut Milk vs Coconut Water is a form divergence. Yuzu vs Bergamot is a complete material substitution — different citrus ingredients."
+      }
+    },
+    {
+      "id": "RQ-003",
+      "priority": "critical",
+      "field": "notes.heart",
+      "question": "What are the official heart notes of Alien Goddess by Mugler?",
+      "currentConflict": {
+        "legacyFactoryValue": ["Jasmine Sambac", "Tuberose"],
+        "mipResearchValue": ["Jasmine", "Heliotrope"],
+        "conflictNote": "Jasmine Sambac vs Jasmine is a specificity divergence. Tuberose vs Heliotrope is a complete material substitution — fundamentally different heart characters."
+      }
+    },
+    {
+      "id": "RQ-004",
+      "priority": "critical",
+      "field": "notes.base",
+      "question": "What are the official base notes of Alien Goddess by Mugler?",
+      "currentConflict": {
+        "legacyFactoryValue": ["Vanilla Absolute", "Sandalwood"],
+        "mipResearchValue": ["Bourbon Vanilla", "Cashmeran"],
+        "conflictNote": "Vanilla Absolute vs Bourbon Vanilla is a form/variety divergence. Sandalwood vs Cashmeran is a complete material substitution — natural wood vs synthetic amber-musky molecule."
+      }
+    },
+    {
+      "id": "RQ-005",
+      "priority": "high",
+      "field": "launchYear",
+      "question": "What is the official launch year of Alien Goddess by Mugler?",
+      "currentMIPValue": 2021,
+      "note": "Confirm via official source; do not assume. MIP research is classified as high-confidence for this field."
+    },
+    {
+      "id": "RQ-006",
+      "priority": "high",
+      "field": "marketedGender",
+      "question": "What is the officially marketed gender positioning of Alien Goddess by Mugler?",
+      "currentMIPValue": "female",
+      "note": "Confirm via official source."
+    },
+    {
+      "id": "RQ-007",
+      "priority": "medium",
+      "field": "perfumer",
+      "question": "Who are the official perfumer(s) credited for Alien Goddess by Mugler?",
+      "currentMIPResearchValue": ["Nathalie Lorson", "Marie Salamagne"],
+      "note": "MKC schema does not include a perfumer field. This is institutional knowledge only — for future reference and provenance. Verify attribution accuracy."
+    },
+    {
+      "id": "RQ-008",
+      "priority": "medium",
+      "field": "family (official wording)",
+      "question": "What is the official brand/house wording for the fragrance family or accord family of Alien Goddess?",
+      "note": "Record the exact wording used by official sources before normalization. Do not map to Maison vocabulary prematurely — the founder will decide the Maison classification after reviewing authoritative source wording."
+    },
+    {
+      "id": "RQ-009",
+      "priority": "medium",
+      "field": "brand naming",
+      "question": "What is the current official brand name: 'Mugler' or 'Thierry Mugler'?",
+      "currentMIPValue": "Mugler",
+      "note": "The brand was rebranded from 'Thierry Mugler' to 'Mugler'. Confirm current official usage for canonical record accuracy."
+    },
+    {
+      "id": "RQ-010",
+      "priority": "medium",
+      "field": "notes (terminology variations)",
+      "question": "Are there known regional, marketing, reformulation, or database-specific variations in the note terminology for Alien Goddess?",
+      "note": "Record all variations observed. Do not silently choose one. Classify the type of variation (regional-naming-difference, reformulation-variant, database-disagreement, researcher-interpretation). This question is specifically about differences between authoritative sources — not just AI-generated variations."
+    }
+  ],
+
+  "secondaryResearchQuestions": [
+    {
+      "id": "SRQ-001",
+      "priority": "low",
+      "field": "relationships.alternatives",
+      "question": "Is Delina by Parfums de Marly a recognized alternative or comparison to Alien Goddess by Mugler in fragrance reference sources?",
+      "currentLegacyValue": "delina-inspired listed as alternative in MKC record",
+      "note": "Secondary priority only. Do not allow relationship verification to delay core composition research."
+    },
+    {
+      "id": "SRQ-002",
+      "priority": "low",
+      "field": "relationships.wardrobePartners",
+      "question": "Is Baccarat Rouge 540 by MFK a recognized wardrobe partner to Alien Goddess by Mugler?",
+      "currentLegacyValue": "baccarat-rouge-540-inspired listed as wardrobePartner in MKC record",
+      "note": "Secondary priority only."
+    }
+  ],
+
+  "evidenceCaptureContract": {
+    "description": "Each external finding must be recorded using this schema. Do not record only a final merged answer. Preserve each source finding separately. Record conflicting sources without silently resolving them. The founder reviews all recorded conflicts before any knowledge decision is made.",
+    "schemaVersion": "1.0.0",
+    "requiredFields": ["sourceType", "sourceName", "sourceReference", "accessedAt", "field", "observedValue", "confidence"],
+    "optionalFields": ["notes"],
+    "fieldDefinitions": {
+      "sourceType": "string — one of: official-brand | strong-secondary | supporting-only",
+      "sourceName": "string — human-readable name of the source (e.g. 'Mugler official product page', 'Fragrantica')",
+      "sourceReference": "string — URL, page number, document name, or other specific locator",
+      "accessedAt": "string — ISO 8601 date when the source was consulted (e.g. '2026-08-10')",
+      "field": "string — which research question this answers (e.g. 'notes.top', 'family', 'launchYear')",
+      "observedValue": "string or array — verbatim value as observed in the source; do not normalize or translate",
+      "confidence": "string — one of: authoritative | high | medium | low",
+      "notes": "string — optional qualifying information: regional variants, marketing vs. technical terminology, conflict description, reformulation note"
+    },
+    "conflictPolicy": {
+      "instruction": "If two sources disagree, record both entries. Do not silently choose one.",
+      "conflictTypes": [
+        "official-disagreement — two official brand sources list different values",
+        "regional-naming-difference — same ingredient named differently in different markets",
+        "database-disagreement — reference databases list different values",
+        "researcher-interpretation — analyst or writer interprets source differently",
+        "reformulation-variant — fragrance was reformulated; older and newer versions have different notes"
+      ],
+      "resolution": "The founder makes the final resolution decision after reviewing all recorded conflicts. Claude Code does not resolve conflicts autonomously."
+    }
+  },
+
+  "exclusions": {
+    "performanceClaims": "Do not attempt to convert external longevity, sillage, or intensity claims into institutional guest-facing promises. If researching performance, treat findings as contextual evidence only. Maison policy: no longevity or intensity promises.",
+    "editorialFields": "Do not research: subtitle (Radiant Bloom), vibe classifications (Sensual, Romantic, Confident, Elegant, Sophisticated), signatureStyle, or recommendedFor persona language. These are Maison editorial classifications — not external fact claims — and are not subject to authoritative research.",
+    "aiSubstitution": "The following are not acceptable substitutes for authoritative source research: Claude generation, Gemini generation, OpenAI generation, AI inference from general fragrance knowledge. The purpose of this research request is to replace AI-generated composition with externally-verified composition."
+  },
+
+  "resultsLocation": {
+    "targetFile": "data/identity/research-results/MIP-000012-alien-goddess-authoritative-results.json",
+    "note": "This file does not yet exist. It will be created when the founder authorises and executes R3 research. The results file should follow the evidenceCaptureContract schema above.",
+    "nextStep": "Founder authorises R3 research execution. Research is conducted via authoritative external sources. Findings are recorded in the results file. Founder reviews findings. Founder decides: R2 (targeted field corrections) or R4 (governed AI regeneration with verified evidence)."
+  }
+}
