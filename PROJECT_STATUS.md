@@ -8,10 +8,10 @@
 
 ## Current Engineering Program
 
-**Program:** EP5-P4B — Governed Identity-to-Product Bridge — COMPLETE
+**Program:** EP5-P4C — Identity-Qualified Factory Invocation — COMPLETE
 **Sprint:** EP5
-**Gate:** EP5-P4C — Wire FactoryIdentityGate + IdentityProductResolver into factory intake pipeline. `IdentityAwareRunInput` type (carrying both `identityId` and `maisonSlug`) may now be introduced — the governed bridge exists.
-**Objective:** Cross-domain bridge established between the Maison Identity Platform and the Maison Product / Knowledge Catalogue. `app/lib/identity/data/identity-product-registry.json` created (version 1.0.0, 1 mapping: MIP-000012 → `alien-goddess-inspired`). `app/lib/identity/productMapping.ts` read API: `getMappingsForIdentity()` (1:many — one identity may have multiple products), `getIdentityForMaisonSlug()` (invariant: 1:1 slug→identity). `scripts/factory/identity/IdentityProductResolver.ts`: `resolveIdentityProduct()` returning typed `IdentityProductResolution`. 29-proof deterministic validation suite (`validate-identity-product-mapping.ts`). All 7 suites pass: 29/29 mapping, 28/28 factory, 69/69 foundation, 54/54 admin, 85/85 resolver, 39/39 source, 100/100 editorial (404 total). Registry SHA-256 unchanged: `c75f74b56d4c2064b4f00e422c26e454343defc6a8c61df288e4fe8c2c650a1d`. MKC native files: 94 — unchanged. Build: 188 routes, 0 TypeScript errors, 0 warnings.
+**Gate:** EP5-P4D (optional) — Identity-Qualified Run Audit Log. Or first real factory invocation via `runIdentityQualifiedPipeline({ identityId: "MIP-000012" })`.
+**Objective:** Governed factory entry point established. `scripts/factory/identity/runIdentityQualifiedPipeline.ts` is the sole identity-qualified factory entry point. Legacy `run()`, batch, and promotion systems are unchanged. 7-step governance sequence enforced: format → eligibility → mapping → multi-mapping selection → catalogue validation → category check → run(). 8 typed failure reasons. Pure/production split. 51-proof deterministic validation suite (`validate-identity-qualified-factory.ts`). All 8 suites pass: 51/51 qualified-factory, 29/29 mapping, 28/28 factory, 69/69 foundation, 54/54 admin, 85/85 resolver, 39/39 source, 100/100 editorial (455 total). Registry SHA-256 unchanged: `c75f74b56d4c2064b4f00e422c26e454343defc6a8c61df288e4fe8c2c650a1d`. MKC native records: 93 — unchanged. Build: 188 routes, 0 TypeScript errors, 0 warnings.
 
 ---
 

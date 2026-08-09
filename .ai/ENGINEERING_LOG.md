@@ -79,6 +79,53 @@ Never edit or delete past entries.
 
 ---
 
+### 2026-08-09 — EP5-P4C — Identity-Qualified Factory Invocation
+
+**Participants:** Project Owner (approval) / Claude (implementation)
+**Program:** EP5-P4C — Wire the governed identity-product bridge into a new factory entry point. IDENTITY PRECEDES KNOWLEDGE. IDENTITY-QUALIFIED GENERATION MUST FAIL CLOSED.
+
+**Decisions Made:**
+- Standalone wrapper architecture selected (not modification of legacy run()). Legacy PipelineInput, run(), orchestrator, BatchRunner, BatchFactory, BatchQueue, and promotionManager are unchanged.
+- Pure/production split: `resolveIdentityQualifiedTarget()` (pure, injected registries, deterministically testable) + `runIdentityQualifiedPipeline()` (production, loads registries from disk, calls run()). Mirrors FactoryIdentityGate pattern.
+- 7-step governance sequence is a preserved invariant: format → gate → existence → mapping → multi-mapping selection → catalogue validation → category compatibility → run().
+- 8 typed failure reasons — never collapsed into generic strings.
+- dryRun isolation: suite calls resolveIdentityQualifiedTarget() only — never crosses the AI boundary. The pure function guarantees zero API calls from within the governance resolver.
+- Multi-mapping policy: 0 mappings → unmapped. 1 mapping → automatic. 2+ mappings → require explicit governed maisonSlug; arbitrary caller-supplied slugs are rejected with invalid-product-selection.
+- FACTORY_VERSION remains "0.5.0" — unchanged.
+
+**Tasks Completed:**
+- Created `scripts/factory/identity/runIdentityQualifiedPipeline.ts` (4 types, 2 functions, 7-step governance)
+- Created `scripts/identity/validate-identity-qualified-factory.ts` (51 proofs, 8 sections: §100–§800)
+- Added `mip:validate:qualified-factory` to `package.json`
+- Validated: 51/51 new proofs pass; 404/404 existing proofs unchanged; build: 188 routes, 0 TypeScript errors, 0 warnings
+- Committed: `91ce157 EP5-P4C — Establish Identity-Qualified Factory Invocation`
+
+**Build Result:** Pass — 188 routes, 0 TypeScript errors, 0 warnings.
+
+**Files Changed:**
+- `scripts/factory/identity/runIdentityQualifiedPipeline.ts` (NEW)
+- `scripts/identity/validate-identity-qualified-factory.ts` (NEW)
+- `package.json` (modified — additive only)
+
+**Files Explicitly Unchanged:**
+- `scripts/factory/types.ts` — PipelineInput has no identityId (unchanged)
+- `scripts/factory/orchestrator.ts` — run() contract unchanged
+- `scripts/factory/batch/BatchRunner.ts`, `BatchFactory.ts`, `BatchQueue.ts` — unchanged
+- `scripts/factory/promotion/promotionManager.ts` — unchanged
+- `app/lib/identity/data/identity-registry.json` — SHA-256 unchanged
+- `app/lib/identity/data/identity-product-registry.json` — 1 mapping, unchanged
+- All product data files, admin routes, UI components
+
+**Handoff:**
+- The governed factory entry point exists. MIP-000012 can now invoke the factory with full governance.
+- EP5-P4D (if approved) may introduce IdentityQualifiedRunLog or surface identity provenance in factory output for downstream audit use.
+
+**Open Questions Carried Forward:**
+- Should the runIdentityQualifiedPipeline() result be persisted to an audit log? Currently the result is returned to the caller with full provenance (identityId + resolvedMaisonSlug) but not written to disk.
+- When should the 6 currently unmapped verified identities gain Maison products (catalogue expansion decisions)?
+
+---
+
 ### 2026-08-09 — EP5-P4A — Identity-Aware Factory Intake Foundation
 
 **Participants:** Project Owner (approval and architectural correction) / Claude (implementation)
