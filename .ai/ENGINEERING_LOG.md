@@ -39,6 +39,65 @@ Never edit or delete past entries.
 
 ## Log
 
+### 2026-08-09 — EP5-P4E-A — First Production Identity-Qualified Governance Run
+
+**Participants:** Project Owner (founder authorisation) / Claude (implementation and execution)
+**Program:** EP5-P4E-A — First real controlled invocation of `runIdentityQualifiedPipeline`. FORCE=false (Option A: skipped path). Proves end-to-end EP5 governance and audit chain without AI generation.
+
+**Decisions Made:**
+- Option A approved (FORCE=false): first real production governance invocation. `alien-goddess-inspired` already has a native MKC record (legacy factory run, 2026-07-13 — before EP5 was established). Pipeline returns `"skipped"` as expected. 0 AI calls, 0 draft mutations, 0 native mutations.
+- MIP-000012 identity confirmed: **Alien Goddess / Mugler** (not "Good Girl"). The incorrect label appeared only in a conversational Task Summary, not in any repository governance file. All existing governance files correctly identified MIP-000012.
+- Controlled runner disarmed after authorised invocation: `APPROVED_IDENTITY_ID` returned to `null`. The permanent `MIPRUN-DZOn_xTBLM5h` audit record pair proves the invocation occurred. The executable control surface requires fresh founder authorisation for any future invocation.
+- Factory log path confirmed as `scripts/factory/factory-log.json` (not `scripts/factory/identity/factory-log.json`). The skipped run correctly did NOT write to the factory log — `logRun()` is only called on full pipeline completion, not on skipped returns.
+- Proofs 1202 and 1203 updated from empty-store assertions to first-real-production-run structural invariants verifying MIP-000012 governance-passed + skipped pair. No proofs removed; 61 total preserved.
+- TypeScript narrowing fix: `assert(attempt !== undefined, ...)` replaced with `if (!attempt) throw new Error(...)` so TS control flow correctly narrows the type after the null check.
+
+**Tasks Completed:**
+- Created `scripts/factory/run-identity-qualified-controlled.ts` — EP5-P4E controlled activation wrapper (committed disarmed: `APPROVED_IDENTITY_ID = null`, `FORCE = false`)
+- Added `mkc:identity-qualified:controlled` to `package.json`
+- Executed single authorised production invocation: MIP-000012 / alien-goddess-inspired / FORCE=false → `pipelineStatus: skipped`, `auditStatus: complete`
+- Production audit confirmed: `MIPRUN-DZOn_xTBLM5h` pair written — `governance-attempt` + `pipeline-outcome` (2 records, version 1.0.0)
+- Disarmed controlled runner: `APPROVED_IDENTITY_ID` returned to `null` immediately after authorised run
+- Null-guard proof confirmed: re-run after disarm exits cleanly — 0 AI calls, 0 audit appends, 0 cost
+- Updated proofs 1202/1203 in `scripts/identity/validate-identity-qualified-audit.ts`
+- Fixed TypeScript narrowing error in proof 1202
+- Validated: 516/516 proofs pass across all 9 suites
+- Build: 188 routes, 0 TypeScript errors, 0 warnings
+- Committed: `EP5-P4E-A — Record First Identity-Qualified Governance Run` (see PROJECT_STATUS for hash)
+- Governance docs updated: PROJECT_STATUS.md, CURRENT_TASK.md, ENGINEERING_LOG.md
+
+**Tasks Started:**
+- None.
+
+**Build Result:** Pass — 188 routes, 0 TypeScript errors, 0 warnings.
+
+**Files Changed:**
+- `scripts/factory/run-identity-qualified-controlled.ts` — CREATED (disarmed: `APPROVED_IDENTITY_ID=null`, `FORCE=false`)
+- `scripts/factory/identity/identity-qualified-run-audit.json` — POPULATED (2 records: `MIPRUN-DZOn_xTBLM5h` governance-attempt + pipeline-outcome)
+- `scripts/identity/validate-identity-qualified-audit.ts` — MODIFIED (proofs 1202/1203 updated to post-EP5-P4E-A institutional state; TS narrowing fix)
+- `package.json` — `mkc:identity-qualified:controlled` script added (additive only)
+
+**Files Explicitly Unchanged:**
+- `app/lib/mkc/native/alien-goddess-inspired.ts` — byte-identical (no regeneration; FORCE=false)
+- `scripts/factory/drafts/alien-goddess-inspired.ts` — byte-identical (no draft mutation)
+- `scripts/factory/factory-log.json` — unchanged (skipped path does not call `logRun()`)
+- `app/lib/identity/data/identity-registry.json` — SHA-256 unchanged: `c75f74b56d4c2064b4f00e422c26e454343defc6a8c61df288e4fe8c2c650a1d`
+- `app/lib/identity/data/identity-product-registry.json` — 1 mapping, unchanged
+- `scripts/factory/types.ts`, `orchestrator.ts`, `intake.ts`, `factoryLogger.ts`
+- All producers, batch, promotion, `app/lib/identity/types.ts`, `app/lib/mkc/types.ts`, `app/data/*`
+
+**Handoff:**
+- The EP5 governance and audit chain is fully exercised against a real production identity for the first time.
+- `MIPRUN-DZOn_xTBLM5h` is the first permanent identity governance record — append-only, never modified.
+- Controlled runner is DISARMED. Fresh founder authorisation required for any future invocation.
+- Next gate: Legacy Alien Goddess Knowledge Reconciliation Review — assess whether the existing legacy `alien-goddess-inspired` MKC native record (generated 2026-07-13 via legacy factory, no MIP provenance) meets institutional knowledge standards, or whether re-generation under EP5 governance (FORCE=true) is warranted.
+
+**Open Questions Carried Forward:**
+- Should the legacy `alien-goddess-inspired` native MKC record be regenerated under EP5 identity governance (FORCE=true, Option B)? The existing record carries no MIP provenance and was generated before EP5 was established.
+- When should the remaining 6 verified but unmapped identities gain Maison products (catalogue expansion decisions)?
+
+---
+
 ### 2026-08-09 — EP5-P4B — Governed Identity-to-Product Bridge
 
 **Participants:** Project Owner (approval and architectural corrections) / Claude (implementation)

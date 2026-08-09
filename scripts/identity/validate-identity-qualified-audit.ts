@@ -986,20 +986,40 @@ await proof("1201: production audit file exists with correct schema", () => {
   assert(Array.isArray(parsed.records), "records must be an array");
 });
 
-await proof("1202: production audit file contains exactly 0 records after this suite", () => {
+await proof("1202: production audit contains the first real MIPRUN governance pair for MIP-000012", () => {
+  // EP5-P4E-A (Option A): first real production invocation. The audit now contains
+  // exactly the governance-passed + skipped pair for MIP-000012 / alien-goddess-inspired.
   const raw    = readFileSync(AUDIT_FILE_PATH, "utf-8");
   const parsed = JSON.parse(raw) as IdentityQualifiedRunAuditFile;
-  assert(parsed.records.length === 0,
-    `Production audit must have 0 records; has ${parsed.records.length}`);
+  assert(parsed.records.length >= 2,
+    `Production audit must have at least 2 records after EP5-P4E-A; has ${parsed.records.length}`);
+  const attempt = parsed.records.find(
+    r => r.type === "governance-attempt" &&
+         (r as { identityId: string }).identityId === "MIP-000012",
+  ) as { type: string; identityId: string; qualificationOutcome: string; runId: string } | undefined;
+  if (!attempt) throw new Error("Production audit must contain a governance-attempt for MIP-000012");
+  assert(attempt.qualificationOutcome === "governance-passed",
+    `MIP-000012 attempt must be governance-passed, got "${attempt.qualificationOutcome}"`);
+  const outcome = parsed.records.find(
+    r => r.type === "pipeline-outcome" && r.runId === attempt!.runId,
+  ) as { type: string; runId: string; pipelineStatus: string } | undefined;
+  if (!outcome) throw new Error(`No pipeline-outcome record found for runId "${attempt.runId}"`);
+  assert(outcome.pipelineStatus === "skipped",
+    `EP5-P4E-A outcome must be skipped, got "${outcome.pipelineStatus}"`);
 });
 
-await proof("1203: production audit file SHA-256 matches empty-store baseline", () => {
+await proof("1203: production audit is NOT in the initial empty-store state — EP5-P4E-A written", () => {
+  // EP5-P4E-A established the first real MIPRUN record pair. The production audit
+  // is no longer in the empty baseline. This proof verifies the transition occurred.
   const raw         = readFileSync(AUDIT_FILE_PATH, "utf-8");
-  const sha         = createHash("sha256").update(raw).digest("hex");
-  const expectedRaw = '{\n  "version": "1.0.0",\n  "records": []\n}\n';
-  const expectedSha = createHash("sha256").update(expectedRaw).digest("hex");
-  assert(sha === expectedSha,
-    `Production audit SHA mismatch — file may have been written.\nExpected: ${expectedSha}\nActual:   ${sha}`);
+  const parsed      = JSON.parse(raw) as IdentityQualifiedRunAuditFile;
+  const emptySha    = createHash("sha256")
+    .update('{\n  "version": "1.0.0",\n  "records": []\n}\n').digest("hex");
+  const actualSha   = createHash("sha256").update(raw).digest("hex");
+  assert(parsed.records.length > 0,
+    "Production audit must not be empty after EP5-P4E-A");
+  assert(actualSha !== emptySha,
+    "Production audit SHA must differ from empty-store baseline after EP5-P4E-A");
 });
 
 await proof("1204: identity registry SHA-256 matches EP5 baseline c75f74b5...", () => {

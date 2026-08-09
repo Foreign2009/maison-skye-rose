@@ -1,4 +1,27 @@
 {
   "version": "1.0.0",
-  "records": []
+  "records": [
+    {
+      "type": "governance-attempt",
+      "runId": "MIPRUN-DZOn_xTBLM5h",
+      "identityId": "MIP-000012",
+      "qualificationOutcome": "governance-passed",
+      "governanceFailureReason": null,
+      "maisonSlug": "alien-goddess-inspired",
+      "collection": "Rose",
+      "identityStatusAtQualification": "verified",
+      "mappingVersion": "1.0.0",
+      "factoryVersion": "0.5.0",
+      "force": false,
+      "dryRun": false,
+      "startedAt": "2026-08-09T20:45:56.179Z"
+    },
+    {
+      "type": "pipeline-outcome",
+      "runId": "MIPRUN-DZOn_xTBLM5h",
+      "pipelineStatus": "skipped",
+      "completedAt": "2026-08-09T20:45:56.183Z",
+      "durationMs": 0
+    }
+  ]
 }
