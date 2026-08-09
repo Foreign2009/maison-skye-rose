@@ -8,48 +8,56 @@
 ## Current Task
 
 **Status:** COMPLETE — STOP
-**Program:** EP5-P4C — Identity-Qualified Factory Invocation
+**Program:** EP5-P4D — Identity-Qualified Factory Run Audit
 
 **Outcome:**
-The governed identity-qualified factory entry point is established.
-`scripts/factory/identity/runIdentityQualifiedPipeline.ts` is the SOLE
-identity-qualified entry. Legacy `run()` and all batch/promotion systems
-are structurally unchanged.
+Durable append-only audit trail established for every identity-qualified
+factory invocation. The governed entry point (`runIdentityQualifiedPipeline`)
+now writes a two-record pair per invocation: a governance-attempt record
+(before run()) and a pipeline-outcome record (after run()), linked by runId.
+Fail-closed and fail-visible audit semantics enforced. Production audit file
+remains at 0 records after all 61 proofs.
 
 **Architecture:**
-- `IdentityQualifiedPipelineInput`: `{ identityId, maisonSlug?, force?, dryRun? }` — no slug field
-- `IdentityQualifiedFailureReason`: 8 typed failure strings (never collapsed to generic)
-- `IdentityQualifiedTarget`: discriminated union (resolved: true | false)
-- `IdentityQualifiedPipelineResult`: discriminated union (governance-failed | complete | degraded | skipped | pipeline-failed)
-- `resolveIdentityQualifiedTarget()`: pure function, injected registries, no I/O, deterministic
-- `runIdentityQualifiedPipeline()`: production entry, loads registries from disk, calls run()
+- `IdentityQualifiedRunLogger.ts`: owns audit record types, file schema, injectable `IdentityQualifiedAuditRepository` interface, production + in-memory implementations, read API
+- `IdentityQualifiedAttemptRecord`: type "governance-attempt" — written after governance resolves, before pipeline runs
+- `IdentityQualifiedOutcomeRecord`: type "pipeline-outcome" — written after pipeline completes
+- Both records share runId — duplicate guard is same-type only (intentional pairing allowed)
+- Fail-closed: governance-passed pre-run write failure → `{ status: "audit-store-unavailable" }`, pipeline NOT called
+- Fail-visible: governance-rejected audit failure → `auditStatus: "failed"` (separate from `governanceFailure`)
+- Post-run audit failure → `auditStatus: "incomplete"` in returned result
+- Atomic write: writeFileSync(TMP) → renameSync(TMP, LOG) — never partially-written
+- `MIPRUN-{nanoid(12)}` run ID format
+- `FACTORY_VERSION = "0.5.0"` in attempt records (not `IDENTITY_QUALIFIED_AUDIT_VERSION`)
 
-**Governance sequence (invariant — must never be reordered):**
-1. Validate IdentityId format
-2. Check identity existence and eligibility via FactoryIdentityGate
-3. Resolve governed product mappings from bridge registry
-4. Handle multi-mapping selection (0 → unmapped, 1 → auto, 2+ → require explicit maisonSlug)
-5. Validate resolved slug exists in supplier catalogue via intake()
-6. Validate product category is fragrance
-7. Invoke legacy run()
+**Governance mandates (permanent invariants):**
+- Tests NEVER touch `identity-qualified-run-audit.json` — always inject in-memory repo
+- `createFailingIdentityQualifiedAuditRepository(failOn)` for error simulation only
+- Corrupt audit file → throw (NEVER reset to empty — history must not be destroyed)
+- `GovernanceFailureReason` defined locally in logger (circular import avoidance)
 
 **Files created:**
-- `scripts/factory/identity/runIdentityQualifiedPipeline.ts` (NEW)
-- `scripts/identity/validate-identity-qualified-factory.ts` (NEW — 51 proofs, 8 sections)
+- `scripts/factory/identity/IdentityQualifiedRunLogger.ts` (NEW)
+- `scripts/factory/identity/identity-qualified-run-audit.json` (NEW — initial empty store)
+- `scripts/identity/validate-identity-qualified-audit.ts` (NEW — 61 proofs, 12 sections)
 
 **Files modified:**
-- `package.json` — added `mip:validate:qualified-factory` script (additive only)
+- `scripts/factory/identity/runIdentityQualifiedPipeline.ts` — audit integration (3-variant result type, injectable deps, fail-closed + fail-visible logic)
+- `package.json` — added `mip:validate:qualified-audit` script (additive only)
 
 **Files explicitly unchanged:**
-- `scripts/factory/types.ts` — PipelineInput has no identityId
-- `scripts/factory/orchestrator.ts` — run() contract unchanged
-- `scripts/factory/batch/BatchRunner.ts`, `BatchFactory.ts`, `BatchQueue.ts` — unchanged
-- `scripts/factory/promotion/promotionManager.ts` — unchanged
+- `scripts/factory/types.ts`
+- `scripts/factory/orchestrator.ts`
+- `scripts/factory/batch/*`, `scripts/factory/promotion/*`
+- `app/lib/identity/types.ts`
 - `app/lib/identity/data/identity-registry.json` — SHA-256 unchanged
 - `app/lib/identity/data/identity-product-registry.json` — 1 mapping, unchanged
+- All producers, `scripts/factory/intake.ts`, `scripts/factory/factoryLogger.ts`
+- `scripts/factory/factory-log.json`
 
 **Validation results:**
-- mip:validate:qualified-factory — 51/51 (NEW)
+- mip:validate:qualified-audit — 61/61 (NEW)
+- mip:validate:qualified-factory — 51/51
 - mip:validate:mapping — 29/29
 - mip:validate:factory — 28/28
 - mip:validate — 69/69
@@ -57,10 +65,13 @@ are structurally unchanged.
 - mip:validate:resolver — 85/85
 - mip:validate:source:2026 — 39/39
 - mip:validate:editorial — 100/100
-- **Total: 455/455 proofs passing**
+- **Total: 516/516 proofs passing**
 
 **Registry SHA-256 (unchanged):**
 c75f74b56d4c2064b4f00e422c26e454343defc6a8c61df288e4fe8c2c650a1d
+
+**Production audit file (unchanged — 0 records):**
+`scripts/factory/identity/identity-qualified-run-audit.json` → `{"version": "1.0.0", "records": []}`
 
 **Registry state (unchanged):**
 26 total / 7 verified / 3 pending-review / 16 candidate
@@ -71,33 +82,37 @@ c75f74b56d4c2064b4f00e422c26e454343defc6a8c61df288e4fe8c2c650a1d
 
 **AI/API calls:** 0 Claude / 0 Gemini / 0 OpenAI / 0 GenerationProvider
 
-**Commit:** 91ce157
+**Commit:** 1af3026
 
 ---
 
 ## Next Human Action
 
-**EP5-P4D — Identity-Qualified Run Audit Log (potential)**
+**First real identity-qualified factory invocation:**
 
-The governed entry point exists and carries full identity provenance
-(identityId + resolvedMaisonSlug) in every result. If the founder wishes,
-EP5-P4D may introduce a durable audit log: each successful identity-qualified
-invocation writes a structured record (identityId, resolvedMaisonSlug,
-timestamp, pipelineStatus) for operational review.
+```
+runIdentityQualifiedPipeline({ identityId: "MIP-000012" })
+```
 
-Alternatively the next gate is the first real factory run via
-`runIdentityQualifiedPipeline({ identityId: "MIP-000012" })` — which will
-invoke AI generation for `alien-goddess-inspired` with full institutional
-identity context.
+MIP-000012 (Alien Goddess / Mugler) → `alien-goddess-inspired` (Rose collection)
+is the only verified, mapped identity. This will invoke the full 7-step governance
+sequence and, if `dryRun: false`, call the AI generation pipeline for
+`alien-goddess-inspired`.
+
+The production audit log will record the first real `MIPRUN-*` entry on this run.
+
+Requires founder approval and explicit `npm run mkc:factory -- alien-goddess-inspired`
+invocation (or a dedicated EP5-P4E entry point).
 
 ---
 
 ## Context Notes
 
-**Last completed:** EP5-P4C — Identity-Qualified Factory Invocation (2026-08-09)
-**Preceded by:**    EP5-P4B — Governed Identity-to-Product Bridge (2026-08-09)
+**Last completed:** EP5-P4D — Identity-Qualified Factory Run Audit (2026-08-09)
+**Preceded by:**    EP5-P4C — Identity-Qualified Factory Invocation (2026-08-09)
 
 Recent completed programs (newest first):
+- EP5-P4D Identity-Qualified Factory Run Audit (2026-08-09) — 61 proofs, 0 AI, 0 registry writes
 - EP5-P4C Identity-Qualified Factory Invocation (2026-08-09) — 51 proofs, 0 AI, 0 registry writes
 - EP5-P4B Governed Identity-to-Product Bridge (2026-08-09) — 1 mapping, 6 absent, 29 proofs
 - EP5-P4A Identity-Aware Factory Intake Foundation (2026-08-09) — gate only, missing bridge reported
@@ -105,10 +120,9 @@ Recent completed programs (newest first):
 - EP5-P3C Establish Identity Review Admin Interface (2026-08-09) — 54 proofs, 0 AI, 0 registry writes
 - EP5-P3B Editorial Transaction Service (2026-08-08) — 100 proofs, 0 AI, 0 registry writes
 - EP5-P3A Editorial Review Architecture Audit (2026-08-08) — design audit only
-- EP5-P2C Registry Write (2026-08-08) — 26 identities, 0 AI, 0 factory operations
 
 ---
 
 ## Build Result
 
-**Last build:** 2026-08-09 — Pass. Zero TypeScript errors. Zero warnings. 188 routes. (EP5-P4C)
+**Last build:** 2026-08-09 — Pass. Zero TypeScript errors. Zero warnings. 188 routes. (EP5-P4D)

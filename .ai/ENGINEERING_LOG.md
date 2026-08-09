@@ -126,6 +126,65 @@ Never edit or delete past entries.
 
 ---
 
+### 2026-08-09 — EP5-P4D — Identity-Qualified Factory Run Audit
+
+**Participants:** Project Owner (approval and three architectural corrections) / Claude (implementation)
+**Program:** EP5-P4D — Establish a durable append-only operational audit trail for every identity-qualified factory invocation.
+
+**Decisions Made:**
+- Correction 1 (Injectable repository): Audit persistence must be injectable via `IdentityQualifiedAuditRepository` interface. Tests use `createInMemoryIdentityQualifiedAuditRepository()` exclusively — NEVER write to the production audit file. Production uses `createProductionIdentityQualifiedAuditRepository()` (atomic write: write .tmp → renameSync).
+- Correction 2 (Governance audit failure visibility): Governance audit writes must NOT fail silently. For governance-rejected invocations, if the audit append fails, the caller receives an explicit `auditStatus: "failed"` with `auditFailure` message. AUDIT STORAGE FAILURE IS NOT THE SAME THING AS IDENTITY GOVERNANCE FAILURE. Separate `governanceFailure` and `auditFailure` fields.
+- Correction 3 (Post-run audit failure in result): Post-run outcome write failure must appear in the returned result (not just console.warn). The result exposes both pipeline outcome AND audit completion state via `auditStatus: "complete" | "incomplete"`.
+- Fail-closed invariant: For governance-passed invocations, the pre-run attempt record MUST be durably written before pipelineRunner executes. If write fails → `{ status: "audit-store-unavailable" }`, pipeline NOT called.
+- Duplicate guard: Same-type only. Rejects two attempt records or two outcome records for the same runId. A governance-attempt + pipeline-outcome with the same runId is the INTENDED two-record model — never rejected.
+- Circular import avoidance: `GovernanceFailureReason` defined locally in the logger (mirrors `IdentityQualifiedFailureReason` in the wrapper). Import direction: wrapper → logger only.
+- `FACTORY_VERSION` (not `IDENTITY_QUALIFIED_AUDIT_VERSION`) used in attempt record `factoryVersion` field. These are two distinct versions: `"0.5.0"` (factory operational) vs `"1.0.0"` (audit file schema).
+- Corruption policy: a malformed audit file is NEVER reset to empty. Corrupt → throw. History must not be destroyed.
+- Production audit file must remain at 0 records after all 61 proofs run. Verified by proof §1203 SHA check.
+
+**Tasks Completed:**
+- Created `scripts/factory/identity/IdentityQualifiedRunLogger.ts` (full audit infrastructure: types, schema, production repo, in-memory repo, failing repo, read API, re-exported FACTORY_VERSION)
+- Created `scripts/factory/identity/identity-qualified-run-audit.json` (initial empty store: `{"version": "1.0.0", "records": []}`)
+- Modified `scripts/factory/identity/runIdentityQualifiedPipeline.ts` — audit integration: injectable `IdentityQualifiedPipelineDependencies`, three-variant `IdentityQualifiedPipelineResult` with `auditStatus`/`auditFailure` fields, `appendGovernanceRejected()` helper for fail-visible rejection paths, fail-closed pre-run write, fail-visible post-run write
+- Created `scripts/identity/validate-identity-qualified-audit.ts` (61 proofs, 12 sections: §100–§1200)
+- Added `mip:validate:qualified-audit` to `package.json`
+- Fixed 5 implementation errors during validation: (1) top-level await → async IIFE, (2) duplicate runId cross-type rejection → same-type guard only, (3) proof 1206 self-referential false positive → concatenation split, (4) TypeScript `asserts` predicate for `assertDefined<T>`, (5) `IDENTITY_QUALIFIED_AUDIT_VERSION` → `FACTORY_VERSION` in attempt records
+- Validated: 61/61 new proofs pass; 455/455 prior proofs unchanged; build: 188 routes, 0 TypeScript errors, 0 warnings
+- Committed: `1af3026 EP5-P4D — Establish Identity-Qualified Factory Run Audit`
+- Governance docs updated: PROJECT_STATUS.md, CURRENT_TASK.md, ENGINEERING_LOG.md
+
+**Tasks Started:**
+- None. EP5-P4D is complete.
+
+**Build Result:** Pass — 188 routes, 0 TypeScript errors, 0 warnings.
+
+**Files Changed:**
+- `scripts/factory/identity/IdentityQualifiedRunLogger.ts` — CREATED
+- `scripts/factory/identity/identity-qualified-run-audit.json` — CREATED (empty store)
+- `scripts/factory/identity/runIdentityQualifiedPipeline.ts` — MODIFIED (audit integration)
+- `scripts/identity/validate-identity-qualified-audit.ts` — CREATED (61 proofs)
+- `package.json` — `mip:validate:qualified-audit` script added (additive only)
+
+**Files Explicitly Unchanged:**
+- `scripts/factory/types.ts`, `orchestrator.ts`, `intake.ts`, `factoryLogger.ts`, `factory-log.json`
+- `scripts/factory/batch/*`, `scripts/factory/promotion/*`
+- All producers (HomeFragrance, Fragrance, all others)
+- `app/lib/identity/types.ts`
+- `app/lib/identity/data/identity-registry.json` — SHA-256 unchanged
+- `app/lib/identity/data/identity-product-registry.json` — 1 mapping, unchanged
+- `app/lib/mkc/types.ts`, `app/data/*`
+
+**Handoff:**
+- The identity-qualified factory infrastructure is now complete: gate (P4A) → bridge (P4B) → governed entry point (P4C) → audit trail (P4D).
+- The next gate is the first real factory invocation: `runIdentityQualifiedPipeline({ identityId: "MIP-000012" })`. This will invoke full governance, write the first real audit record, and execute AI generation for `alien-goddess-inspired`.
+- Requires explicit founder approval before any AI calls are made.
+
+**Open Questions Carried Forward:**
+- When should the 6 currently unmapped verified identities gain Maison products (catalogue expansion decisions)?
+- Should the governed invocation entry point have a dedicated CLI wrapper (EP5-P4E) so the founder can invoke `runIdentityQualifiedPipeline` from the terminal without writing an inline script?
+
+---
+
 ### 2026-08-09 — EP5-P4A — Identity-Aware Factory Intake Foundation
 
 **Participants:** Project Owner (approval and architectural correction) / Claude (implementation)
