@@ -39,6 +39,46 @@ Never edit or delete past entries.
 
 ## Log
 
+### 2026-08-09 — EP5-P4B — Governed Identity-to-Product Bridge
+
+**Participants:** Project Owner (approval and architectural corrections) / Claude (implementation)
+**Program:** EP5-P4B — Establish the first governed cross-domain bridge between the Maison Identity Platform and the Maison Product / Knowledge Catalogue.
+
+**Decisions Made:**
+- Founder Correction 1 (Domain Ownership): the identity-product mapping is a CROSS-DOMAIN BRIDGE, not core MIP identity truth. Governance docs and code comments updated to reflect this. `identity-product-registry.json` stores references only — no canonical data is duplicated.
+- Founder Correction 2 (Cardinality): one IdentityId → zero, one, or multiple Maison product slugs is architecturally allowed (e.g. fragrance + body product from the same identity). One Maison product slug → at most one IdentityId is the mandatory invariant. Proof 301 ("No duplicate identityId") removed; proof 303 added (in-memory fixture demonstrates 1:many is valid); proof 302 enforces slug uniqueness. API surface: `getMappingsForIdentity()` returns a readonly array rather than a single value.
+- Seven verified identity association audit completed. Only MIP-000012 (Alien Goddess / Mugler) has a confirmed Maison product ("Alien Goddess Inspired", Rose). Explicit documentation that MIP-000024 (Wanted by Night) ≠ "Azzaro Most Wanted Inspired" (different product, different release year) and MIP-000009 (Capri In a Bottle) ≠ Kayali Vanilla 28 products (different Kayali releases).
+- `IdentityAwareRunInput` deferred to EP5-P4C. The bridge now exists; the wiring into factory intake is the EP5-P4C scope.
+
+**Tasks Completed:**
+- Created `app/lib/identity/data/identity-product-registry.json` (version 1.0.0, 1 mapping)
+- Created `app/lib/identity/productMapping.ts` (typed read API, zero writes)
+- Created `scripts/factory/identity/IdentityProductResolver.ts` (factory-side resolver)
+- Created `scripts/identity/validate-identity-product-mapping.ts` (29 proofs, 5 sections)
+- Added `mip:validate:mapping` to `package.json`
+- Updated `PROJECT_STATUS.md`, `.ai/CURRENT_TASK.md`, `.ai/ENGINEERING_LOG.md`
+- Committed: `6e68044 EP5-P4B — Establish Governed Identity-to-Product Bridge`
+
+**Build Result:** Pass — 188 routes, 0 TypeScript errors, 0 warnings.
+
+**Files Changed:**
+- `app/lib/identity/data/identity-product-registry.json` (NEW)
+- `app/lib/identity/productMapping.ts` (NEW)
+- `scripts/factory/identity/IdentityProductResolver.ts` (NEW)
+- `scripts/identity/validate-identity-product-mapping.ts` (NEW)
+- `package.json` (modified — additive)
+
+**Handoff:**
+- The bridge is established. MIP-000012 → `alien-goddess-inspired` is the first and only approved association.
+- 6 verified identities correctly have no Maison product mapping.
+- EP5-P4C requires founder approval before any factory pipeline wiring begins.
+
+**Open Questions Carried Forward:**
+- When should Boss Nuit Pour Femme (MIP-000013), À la rose (MIP-000006), Coconut Passion (MIP-000008), 24 Faubourg (MIP-000001), and Capri In a Bottle (MIP-000009) gain Maison products? These are catalogue expansion decisions, not engineering decisions.
+- Wanted by Night (MIP-000024): a "Wanted by Night Inspired" product would need to be added to the Maison catalogue before a mapping can be created. The existing "Azzaro Most Wanted Inspired" is a different identity.
+
+---
+
 ### 2026-08-09 — EP5-P4A — Identity-Aware Factory Intake Foundation
 
 **Participants:** Project Owner (approval and architectural correction) / Claude (implementation)
