@@ -33,7 +33,8 @@
     "mip:validate:source:2026": "npx tsx scripts/identity/validate-2026-identity-source.ts",
     "mip:validate:editorial": "npx tsx scripts/identity/validate-identity-editorial.ts",
     "mip:validate:admin": "npx tsx scripts/identity/validate-identity-editorial-admin.ts",
-    "mip:validate:factory": "npx tsx scripts/identity/validate-factory-identity-integration.ts"
+    "mip:validate:factory": "npx tsx scripts/identity/validate-factory-identity-integration.ts",
+    "mip:validate:mapping": "npx tsx scripts/identity/validate-identity-product-mapping.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.110.0",
