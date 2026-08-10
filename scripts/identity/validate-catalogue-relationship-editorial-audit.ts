@@ -1,5 +1,5 @@
 /**
- * EP6-P4/P4R — Catalogue Relationship Editorial Audit Validation Suite
+ * EP6-P4/P4R/P5A — Catalogue Relationship Editorial Audit Validation Suite
  *
  * Independently proves the relationship editorial audit rather than
  * merely trusting the generated JSON. Derives expected values from the
@@ -11,6 +11,12 @@
  *   - Proof 308: rewritten to independently verify DEFECT_WARDROBE_PARTNER_NOT_RECIPROCAL
  *   - Proof 309: added to assert DEFECT_EVOLUTION_NOT_RECIPROCAL === 0
  *   - Proof 608: corrected to compare against hard-coded d115726 baseline fingerprint
+ *
+ * EP6-P5A corrections applied (founder-authorised repair of two stale edges):
+ *   - Proof 301: updated to assert structuralDefectCount === 0
+ *   - Proof 307: updated to assert 0 non-reciprocal alternatives (repair complete)
+ *   - Proof 308: updated to assert 0 non-reciprocal wardrobePartners (repair complete)
+ *   - Proof 608: updated to assert post-P5A fingerprint (graph intentionally changed)
  *
  * Sections:
  *   § 100 — Artifact Existence & Schema     (proofs 101–110)
@@ -52,8 +58,14 @@ const PRODUCT_REG_SHA256      = "6d064d2b471bb0ff8da58e2cb5dd27d69bf70980e19ddd3
 const MIPRUN_AUDIT_SHA256     = "bd3e1f227a35f5929e0474516bafd3d5a7e9d460b923659f2fdf27be0a817353";
 const RESEARCH_RESULTS_SHA256 = "741787b194abb320609ab3fd83ed4c15daead2fe11c8bf760364ae60d033a5e4";
 
-// d115726 relationship graph baseline — git diff d115726 HEAD -- app/lib/mkc/native/ = empty (zero native changes since baseline)
+// PRE-P5A (d115726) relationship graph baseline — 338 edges; two reciprocity defects
+// git diff d115726 HEAD~1 -- app/lib/mkc/native/ = empty at time of EP6-P4R commit 81c654b
 const D115726_RELATIONSHIP_FINGERPRINT = "1da34fad81a5e40e23f50d5d79e9f992952da36196782cc5490cec61f180514b";
+
+// POST-P5A relationship graph baseline — 336 edges; 0 structural defects
+// Two founder-authorised edges removed: delina→alien-goddess (alternatives),
+// baccarat-rouge-540→alien-goddess (wardrobePartners)
+const POST_P5A_RELATIONSHIP_FINGERPRINT = "478fd478d930137fe21d058470797c324649156d615b60d3b9d3a9108f73b8e2";
 
 // ── Paths ──────────────────────────────────────────────────────────────────────
 
@@ -279,9 +291,9 @@ results.push(proof("210: audit edges by type match live catalogue counts", () =>
 // § 300 — Structural Integrity (8 proofs)
 // ─────────────────────────────────────────────────────────────────────────────
 
-results.push(proof("301: 2 structural defects in audit (DEFECT_ALTERNATIVE_NOT_RECIPROCAL + DEFECT_WARDROBE_PARTNER_NOT_RECIPROCAL)", () => {
+results.push(proof("301: 0 structural defects in audit (EP6-P5A repair complete)", () => {
   const defectCount = audit?.summary?.structuralDefectCount ?? -1;
-  assert(defectCount === 2, `expected 2 structural defects; got ${defectCount}`);
+  assert(defectCount === 0, `expected 0 structural defects after P5A repair; got ${defectCount}`);
 }));
 
 results.push(proof("302: 0 blank target slug edges", () => {
@@ -328,7 +340,7 @@ results.push(proof("306: all evolutionOf edges have corresponding evolutions edg
   }
 }));
 
-results.push(proof("307: exactly 1 DEFECT_ALTERNATIVE_NOT_RECIPROCAL edge: delina-inspired→alien-goddess-inspired", () => {
+results.push(proof("307: 0 non-reciprocal alternatives edges (EP6-P5A repair complete)", () => {
   // Independently compute non-reciprocal alternatives from live catalogue.
   const recordMap = new Map(mkcCatalogue.map(r => [r.slug, r]));
   const nonReciprocal: Array<{ source: string; target: string }> = [];
@@ -341,30 +353,22 @@ results.push(proof("307: exactly 1 DEFECT_ALTERNATIVE_NOT_RECIPROCAL edge: delin
       }
     }
   }
-  assert(nonReciprocal.length === 1,
-    `expected 1 non-reciprocal alternatives edge in live catalogue; found ${nonReciprocal.length}: ` +
+  assert(nonReciprocal.length === 0,
+    `expected 0 non-reciprocal alternatives edges after P5A repair; found ${nonReciprocal.length}: ` +
     nonReciprocal.map(e => `${e.source}→${e.target}`).join(", "));
-  assert(
-    nonReciprocal[0].source === "delina-inspired" && nonReciprocal[0].target === "alien-goddess-inspired",
-    `expected delina-inspired→alien-goddess-inspired; got ${nonReciprocal[0].source}→${nonReciprocal[0].target}`,
-  );
-  // Assert the audit reports exactly 1 edge with DEFECT_ALTERNATIVE_NOT_RECIPROCAL.
+  // Assert the audit agrees: 0 edges with DEFECT_ALTERNATIVE_NOT_RECIPROCAL.
   const defects = (audit?.edges ?? []).filter(
     (e: { structuralState: string }) => e.structuralState === "DEFECT_ALTERNATIVE_NOT_RECIPROCAL",
-  ) as Array<{ sourceSlug: string; targetSlug: string }>;
-  assert(defects.length === 1,
-    `expected 1 audit edge with DEFECT_ALTERNATIVE_NOT_RECIPROCAL; got ${defects.length}`);
-  assert(
-    defects[0].sourceSlug === "delina-inspired" && defects[0].targetSlug === "alien-goddess-inspired",
-    `expected defect on delina-inspired→alien-goddess-inspired; got ${defects[0].sourceSlug}→${defects[0].targetSlug}`,
-  );
+  ).length;
+  assert(defects === 0,
+    `expected 0 audit edges with DEFECT_ALTERNATIVE_NOT_RECIPROCAL; got ${defects}`);
   // Assert audit summary counts match.
   const summaryCount = (audit?.summary?.edgesByStructuralState as Record<string, number>)?.DEFECT_ALTERNATIVE_NOT_RECIPROCAL ?? -1;
-  assert(summaryCount === 1,
-    `audit summary DEFECT_ALTERNATIVE_NOT_RECIPROCAL: expected 1; got ${summaryCount}`);
+  assert(summaryCount === 0,
+    `audit summary DEFECT_ALTERNATIVE_NOT_RECIPROCAL: expected 0; got ${summaryCount}`);
 }));
 
-results.push(proof("308: exactly 1 DEFECT_WARDROBE_PARTNER_NOT_RECIPROCAL edge: baccarat-rouge-540-inspired→alien-goddess-inspired", () => {
+results.push(proof("308: 0 non-reciprocal wardrobePartners edges (EP6-P5A repair complete)", () => {
   // Independently compute non-reciprocal wardrobePartners from live catalogue.
   const recordMap = new Map(mkcCatalogue.map(r => [r.slug, r]));
   const nonReciprocal: Array<{ source: string; target: string }> = [];
@@ -377,27 +381,19 @@ results.push(proof("308: exactly 1 DEFECT_WARDROBE_PARTNER_NOT_RECIPROCAL edge: 
       }
     }
   }
-  assert(nonReciprocal.length === 1,
-    `expected 1 non-reciprocal wardrobePartners edge in live catalogue; found ${nonReciprocal.length}: ` +
+  assert(nonReciprocal.length === 0,
+    `expected 0 non-reciprocal wardrobePartners edges after P5A repair; found ${nonReciprocal.length}: ` +
     nonReciprocal.map(e => `${e.source}→${e.target}`).join(", "));
-  assert(
-    nonReciprocal[0].source === "baccarat-rouge-540-inspired" && nonReciprocal[0].target === "alien-goddess-inspired",
-    `expected baccarat-rouge-540-inspired→alien-goddess-inspired; got ${nonReciprocal[0].source}→${nonReciprocal[0].target}`,
-  );
-  // Assert the audit reports exactly 1 edge with DEFECT_WARDROBE_PARTNER_NOT_RECIPROCAL.
+  // Assert the audit agrees: 0 edges with DEFECT_WARDROBE_PARTNER_NOT_RECIPROCAL.
   const defects = (audit?.edges ?? []).filter(
     (e: { structuralState: string }) => e.structuralState === "DEFECT_WARDROBE_PARTNER_NOT_RECIPROCAL",
-  ) as Array<{ sourceSlug: string; targetSlug: string }>;
-  assert(defects.length === 1,
-    `expected 1 audit edge with DEFECT_WARDROBE_PARTNER_NOT_RECIPROCAL; got ${defects.length}`);
-  assert(
-    defects[0].sourceSlug === "baccarat-rouge-540-inspired" && defects[0].targetSlug === "alien-goddess-inspired",
-    `expected defect on baccarat-rouge-540-inspired→alien-goddess-inspired; got ${defects[0].sourceSlug}→${defects[0].targetSlug}`,
-  );
+  ).length;
+  assert(defects === 0,
+    `expected 0 audit edges with DEFECT_WARDROBE_PARTNER_NOT_RECIPROCAL; got ${defects}`);
   // Assert audit summary counts match.
   const summaryCount = (audit?.summary?.edgesByStructuralState as Record<string, number>)?.DEFECT_WARDROBE_PARTNER_NOT_RECIPROCAL ?? -1;
-  assert(summaryCount === 1,
-    `audit summary DEFECT_WARDROBE_PARTNER_NOT_RECIPROCAL: expected 1; got ${summaryCount}`);
+  assert(summaryCount === 0,
+    `audit summary DEFECT_WARDROBE_PARTNER_NOT_RECIPROCAL: expected 0; got ${summaryCount}`);
 }));
 
 results.push(proof("309: 0 DEFECT_EVOLUTION_NOT_RECIPROCAL edges (all evolution relationships are reciprocal)", () => {
@@ -592,15 +588,16 @@ results.push(proof("607: authoritative research results SHA unchanged (research 
   assert(sha256(RESEARCH) === RESEARCH_RESULTS_SHA256, `SHA mismatch: ${sha256(RESEARCH)}`);
 }));
 
-results.push(proof("608: relationship graph fingerprint matches d115726 baseline (no relationship mutations)", () => {
-  // Compare live catalogue fingerprint against the hard-coded d115726 baseline.
-  // git diff d115726 HEAD -- app/lib/mkc/native/ = empty (zero native file changes since baseline).
-  // This proves the relationship graph has not been mutated since the baseline was established.
+results.push(proof("608: relationship graph fingerprint matches post-P5A baseline (336 edges, 0 structural defects)", () => {
+  // EP6-P5A intentionally mutated the graph by removing two stale edges (founder Option A).
+  // The current baseline is POST_P5A_RELATIONSHIP_FINGERPRINT (336 edges).
+  // D115726_RELATIONSHIP_FINGERPRINT (338 edges, 2 defects) is preserved for historical reference.
   const currentFingerprint = buildRelationshipFingerprint();
-  assert(currentFingerprint === D115726_RELATIONSHIP_FINGERPRINT,
-    `Relationship graph fingerprint does not match d115726 baseline — relationship data was mutated\n` +
-    `  Baseline: ${D115726_RELATIONSHIP_FINGERPRINT}\n` +
-    `  Current:  ${currentFingerprint}`);
+  assert(currentFingerprint === POST_P5A_RELATIONSHIP_FINGERPRINT,
+    `Relationship graph fingerprint does not match post-P5A baseline\n` +
+    `  PRE-P5A (d115726, 338 edges):  ${D115726_RELATIONSHIP_FINGERPRINT}\n` +
+    `  POST-P5A (336 edges, expected): ${POST_P5A_RELATIONSHIP_FINGERPRINT}\n` +
+    `  Current:                        ${currentFingerprint}`);
 }));
 
 // ─────────────────────────────────────────────────────────────────────────────

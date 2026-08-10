@@ -8,16 +8,19 @@
 ## Current Task
 
 **Status:** COMPLETE
-**Program:** EP6-P4R — Relationship Audit Structural Integrity Correction
+**Program:** EP6-P5A — Structural Relationship Reciprocity Remediation
 
 **Objective:**
-Correct the EP6-P4 audit so that canonical reciprocity rules are represented
-in the structural model. Two known non-reciprocal edges (delina-inspired→alien-goddess-inspired
-and baccarat-rouge-540-inspired→alien-goddess-inspired) must be reported as structural
-defects — not as "documented findings" that cause the validator to pass.
-Zero relationship arrays changed. Zero native MKC records changed. Zero AI calls.
+Repair exactly two stale reciprocal edges left by EP5-P4H:
+1. Remove `alien-goddess-inspired` from `delina-inspired.relationships.alternatives`
+2. Remove `alien-goddess-inspired` from `baccarat-rouge-540-inspired.relationships.wardrobePartners`
+
+Founder selected Option A: remove the stale incoming references.
+Alien Goddess relationship block was NOT restored.
+Zero AI calls. Zero external research. Zero other relationship changes.
 
 **Completed:** 2026-08-10
+**Preceded by:** EP6-P4R — Relationship Audit Structural Integrity Correction (2026-08-10, commit 81c654b)
 
 ---
 

@@ -2,16 +2,16 @@
 
 **Last updated:** 2026-08-10
 **Phase:** Launch Execution
-**Build status:** PASS — 188 routes, 0 TypeScript errors, 0 warnings (EP6-P4R)
+**Build status:** PASS — 188 routes, 0 TypeScript errors, 0 warnings (EP6-P5A)
 
 ---
 
 ## Current Engineering Program
 
-**Program:** EP6-P4R — Relationship Audit Structural Integrity Correction — COMPLETE
+**Program:** EP6-P5A — Structural Relationship Reciprocity Remediation — COMPLETE
 **Sprint:** EP6
-**Gate:** None — EP6-P4R is complete. Next programme at founder's direction.
-**Outcome:** Corrective episode for EP6-P4. The audit now truthfully reports 2 structural defects (DEFECT_ALTERNATIVE_NOT_RECIPROCAL: delina-inspired→alien-goddess-inspired; DEFECT_WARDROBE_PARTNER_NOT_RECIPROCAL: baccarat-rouge-540-inspired→alien-goddess-inspired). Validation suite corrected and expanded: 55 proofs (up from 54). Proof 608 corrected from circular self-comparison to hard-coded d115726 baseline fingerprint. Zero relationship arrays changed. Zero native MKC records changed. Zero AI calls. Build: 188 routes, 0 TypeScript errors, 0 warnings.
+**Gate:** None — EP6-P5A is complete. Next programme at founder's direction.
+**Outcome:** Canonical relationship graph fully repaired. Two stale edges removed (founder Option A): `delina-inspired` no longer lists `alien-goddess-inspired` as an alternative; `baccarat-rouge-540-inspired` no longer lists `alien-goddess-inspired` as a wardrobe partner. Graph: 336 edges, 0 structural defects. Post-P5A fingerprint: `478fd478d930137fe21d058470797c324649156d615b60d3b9d3a9108f73b8e2`. EP6-P4 audit regenerated. Dedicated P5A validator: 48 proofs. Build: 188 routes, 0 TypeScript errors, 0 warnings.
 
 ---
 
@@ -112,6 +112,7 @@ Verify: `npm run build`
 | EP6 | EP6-P3   | Catalogue Performance-Claim Remediation | Complete — 2026-08-10 |
 | EP6 | EP6-P4   | Catalogue Relationship Editorial Audit | Complete — 2026-08-10 |
 | EP6 | EP6-P4R  | Relationship Audit Structural Integrity Correction | Complete — 2026-08-10 |
+| EP6 | EP6-P5A  | Structural Relationship Reciprocity Remediation | Complete — 2026-08-10 |
 
 `FOUNDATIONS/00_FOUNDERS_LETTER.md` — The permanent founder's letter to Skye, Rose, future employees, and future stewards. *Why we began.*
 `FOUNDATIONS/01_SKYE_AND_ROSE_COVENANT.md` — The institutional promise: to customers, products, technology, and future generations. *What we promise.*
@@ -122,6 +123,8 @@ Verify: `npm run build`
 **EP2-P1 Audit Findings (2026-08-05):** Overall institutional alignment score 7.1/10. Intelligence layer (Fragrance Profile, MaisonCompanion, Concierge, Shop, Quiz) rated Aligned. Critical gaps: About page (3/10 — fails Foundation narrative standard), catalogue count inconsistency (93 vs 465+), "Loyal Customer" terminology, post-purchase experience absent, checkout UX cold. Recommended sequence: EP2-P2 (About page rewrite) → EP2-P3 (checkout + post-purchase) → EP2-P4 (testimonials) → EP2-P5 (concierge voice) → EP2-P6 (language pass).
 
 **EP2-P3 About Page Foundation Alignment (2026-08-05):** `app/about/page.tsx` rewritten from 4 generic paragraphs to 9 Foundation-aligned sections: Opening, A Compliment Changed Everything, Why Skye & Rose, What We Believe, Confidence Is What We Are Here to Deliver, Knowledge Before Recommendation, Accessible Luxury, Growing Together, Our Promise, An Invitation. Count inconsistency removed (465+ → timeless language). OG and Twitter metadata added. Architecture preserved. Build passes: 187 routes, 0 TypeScript errors, 0 warnings.
+
+**EP6-P5A Structural Relationship Reciprocity Remediation (2026-08-10):** Founder-authorised repair of two stale reciprocal edges. EP5-P4H removed Alien Goddess's entire `relationships` block ("removed entirely — unverified AI inferences") but did not update the incoming references in `delina-inspired` (alternatives) and `baccarat-rouge-540-inspired` (wardrobePartners). EP6-P5A removes those stale incoming references (Option A). This does NOT assert that these fragrance relationships are invalid — it removes an AI-generated canonical recommendation that lacked reciprocal backing after EP5-P4H. Governance: zero AI calls, zero external research, zero composition changes, zero registry mutations. Graph state after repair: 336 edges (−2 from 338), 0 structural defects, 182 alternatives, 142 wardrobePartners, 12 evolution edges — all fully reciprocal. Post-P5A fingerprint: `478fd478d930137fe21d058470797c324649156d615b60d3b9d3a9108f73b8e2`. EP6-P4 audit regenerated (336 edges, 324 FOUNDER_EDITORIAL_DECISION_REQUIRED). EP6-P1/P2/P3 artifacts: unchanged (per-record audits, relationship presence unchanged). Dedicated P5A validation suite: 48 proofs across 7 sections (Mutation Scope, Graph Delta, Reciprocity, Catalogue Integrity, Knowledge Preservation, Governance, Control). All 7 protected SHAs unchanged including alien-goddess native SHA. Build: 188 routes, 0 TypeScript errors, 0 warnings.
 
 **EP6-P4R Relationship Audit Structural Integrity Correction (2026-08-10):** Corrective episode for EP6-P4. Root cause: EP6-P4 validator proofs 307/308 converted structural defects into "documented findings" that caused the suite to pass while reporting `structuralDefectCount: 0` — a contradiction. EP6-P4R corrects this. Three new StructuralState values added to the structural model: `DEFECT_ALTERNATIVE_NOT_RECIPROCAL`, `DEFECT_WARDROBE_PARTNER_NOT_RECIPROCAL`, `DEFECT_EVOLUTION_NOT_RECIPROCAL`. `checkStructuralState()` updated to detect reciprocity violations using a live recordMap. Structural vs editorial separation established: severe defects wipe editorial classification to INSUFFICIENT_EVIDENCE; reciprocity defects preserve FOUNDER_EDITORIAL_DECISION_REQUIRED but override action to RELATIONSHIP_REVIEW. EvidenceLimitation renamed from `AI_GENERATED_PROVENANCE_UNCONFIRMED` to `HUMAN_APPROVAL_NOT_CONFIRMED` (corrects contradictory semantics — AI_GENERATED describes origin method; human approval is a separate unconfirmed state). Audit regenerated: now correctly reports `structuralDefectCount: 2`, `edgesByStructuralState: { VALID: 336, DEFECT_ALTERNATIVE_NOT_RECIPROCAL: 1, DEFECT_WARDROBE_PARTNER_NOT_RECIPROCAL: 1 }`. Validation suite corrected: proof 301 updated to assert `=== 2`; proofs 307/308 rewritten with independent live-catalogue reciprocity computation; proof 309 added (evolution reciprocity = 0); proof 608 corrected from circular self-comparison to hard-coded d115726 baseline fingerprint `1da34fad81a5e40e23f50d5d79e9f992952da36196782cc5490cec61f180514b`. Total proofs: 55 (up from 54). Zero relationship arrays changed. Zero native MKC records changed. Zero AI calls. APPROVED_IDENTITY_ID=null. FORCE=false. All 7 protected SHAs unchanged. Build: 188 routes, 0 TypeScript errors, 0 warnings.
 
