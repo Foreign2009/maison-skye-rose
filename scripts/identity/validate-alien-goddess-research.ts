@@ -66,6 +66,7 @@ function sha256(filePath: string): string {
 
 // ── Type shapes ────────────────────────────────────────────────────────────────
 interface FindingShape {
+  sourceId?: string;
   field: string;
   sourceType: string;
   sourceName: string;
@@ -79,6 +80,14 @@ interface SourceShape {
   sourceId: string;
   sourceType: string;
   tier: number;
+  accessMethod?: string;
+  directAccessResult?: string;
+}
+
+interface DirectAccessAttempt {
+  domain: string;
+  result: string;
+  note?: string;
 }
 
 interface ThreeWayShape {
@@ -103,11 +112,14 @@ interface ResultsShape {
   requestId: string;
   requestStatus: string;
   executedBy: string;
+  amendedBy?: string;
   identityId: string;
   canonicalName: string;
   canonicalBrand: string;
   maisonSlug: string;
   researchDisposition: string;
+  accessNotes?: string;
+  directAccessAttempts?: DirectAccessAttempt[];
   flankerExclusionConfirmed: boolean;
   sourcesConsulted: SourceShape[];
   findings: FindingShape[];
@@ -454,10 +466,169 @@ proof("411: controlled runner has FORCE = false", () => {
 });
 
 // ═══════════════════════════════════════════════════════════════════════════════
+// § 500 — Evidence Integrity (EP5-P4G-R hardening)
+// ═══════════════════════════════════════════════════════════════════════════════
+console.log("\n§ 500 — Evidence Integrity");
+
+proof("501: every source in sourcesConsulted has an accessMethod field", () => {
+  results.sourcesConsulted.forEach((s, i) => {
+    assert(
+      typeof s.accessMethod === "string" && s.accessMethod.length > 0,
+      `sourcesConsulted[${i}] (${s.sourceId}) missing accessMethod field`,
+    );
+  });
+});
+
+proof("502: every source in sourcesConsulted has a directAccessResult field", () => {
+  results.sourcesConsulted.forEach((s, i) => {
+    assert(
+      typeof s.directAccessResult === "string" && s.directAccessResult.length > 0,
+      `sourcesConsulted[${i}] (${s.sourceId}) missing directAccessResult field`,
+    );
+  });
+});
+
+proof("503: S-001 directAccessResult indicates blocked access", () => {
+  const s001 = results.sourcesConsulted.find(s => s.sourceId === "S-001");
+  if (!s001) throw new Error("S-001 not found in sourcesConsulted");
+  assert(
+    s001.directAccessResult === "blocked-403",
+    `Expected S-001 directAccessResult=blocked-403, got: ${s001.directAccessResult}`,
+  );
+});
+
+proof("504: S-002 directAccessResult indicates blocked access", () => {
+  const s002 = results.sourcesConsulted.find(s => s.sourceId === "S-002");
+  if (!s002) throw new Error("S-002 not found in sourcesConsulted");
+  assert(
+    s002.directAccessResult === "blocked-403",
+    `Expected S-002 directAccessResult=blocked-403, got: ${s002.directAccessResult}`,
+  );
+});
+
+proof("505: S-003 directAccessResult indicates blocked access", () => {
+  const s003 = results.sourcesConsulted.find(s => s.sourceId === "S-003");
+  if (!s003) throw new Error("S-003 not found in sourcesConsulted");
+  assert(
+    s003.directAccessResult === "blocked-403",
+    `Expected S-003 directAccessResult=blocked-403, got: ${s003.directAccessResult}`,
+  );
+});
+
+proof("506: S-006 directAccessResult indicates successful access (only directly-fetched source)", () => {
+  const s006 = results.sourcesConsulted.find(s => s.sourceId === "S-006");
+  if (!s006) throw new Error("S-006 not found in sourcesConsulted");
+  assert(
+    s006.directAccessResult === "successful",
+    `Expected S-006 directAccessResult=successful, got: ${s006.directAccessResult}`,
+  );
+});
+
+proof("507: no Tier 1 source has directAccessResult 'successful' (all official Mugler sources blocked)", () => {
+  const tier1Direct = results.sourcesConsulted.filter(
+    s => s.tier === 1 && s.directAccessResult === "successful",
+  );
+  assert(
+    tier1Direct.length === 0,
+    `${tier1Direct.length} Tier 1 source(s) unexpectedly show directAccessResult='successful': ${tier1Direct.map(s => s.sourceId).join(", ")}`,
+  );
+});
+
+proof("508: no finding from S-001 has confidence 'authoritative'", () => {
+  const violations = results.findings.filter(
+    f => f.sourceId === "S-001" && f.confidence === "authoritative",
+  );
+  assert(
+    violations.length === 0,
+    `${violations.length} finding(s) from S-001 still rated 'authoritative': ${violations.map(f => f.field).join(", ")}`,
+  );
+});
+
+proof("509: no finding from S-002 has confidence 'authoritative'", () => {
+  const violations = results.findings.filter(
+    f => f.sourceId === "S-002" && f.confidence === "authoritative",
+  );
+  assert(
+    violations.length === 0,
+    `${violations.length} finding(s) from S-002 still rated 'authoritative': ${violations.map(f => f.field).join(", ")}`,
+  );
+});
+
+proof("510: no finding from a snippet-accessed source has confidence 'authoritative'", () => {
+  const snippetSourceIds = results.sourcesConsulted
+    .filter(s => s.directAccessResult !== "successful")
+    .map(s => s.sourceId);
+  const violations = results.findings.filter(
+    f => f.sourceId !== undefined && snippetSourceIds.includes(f.sourceId) && f.confidence === "authoritative",
+  );
+  assert(
+    violations.length === 0,
+    `${violations.length} finding(s) from snippet-accessed sources still rated 'authoritative': ${violations.map(f => `${f.field}/${f.sourceId}`).join(", ")}`,
+  );
+});
+
+proof("511: at least one finding from S-001 has confidence 'high' (evidence preserved at correct level)", () => {
+  const s001High = results.findings.filter(
+    f => f.sourceId === "S-001" && f.confidence === "high",
+  );
+  assert(
+    s001High.length > 0,
+    "No S-001 findings rated 'high' — evidence may have been discarded rather than reclassified",
+  );
+});
+
+proof("512: accessNotes acknowledges that direct access to official Mugler pages was blocked", () => {
+  if (!results.accessNotes || results.accessNotes.length === 0) throw new Error("accessNotes field is missing or empty");
+  const lc = results.accessNotes.toLowerCase();
+  assert(
+    lc.includes("403") || lc.includes("blocked") || lc.includes("forbidden"),
+    "accessNotes must acknowledge that direct HTTP access was blocked (expected '403', 'blocked', or 'forbidden')",
+  );
+});
+
+proof("513: research record includes amendedBy = 'EP5-P4G-R' (integrity repair documented)", () => {
+  assert(
+    results.amendedBy === "EP5-P4G-R",
+    `Expected amendedBy='EP5-P4G-R', got: ${results.amendedBy}`,
+  );
+});
+
+proof("514: directAccessAttempts includes an entry for inter.mugler.com", () => {
+  if (!Array.isArray(results.directAccessAttempts) || results.directAccessAttempts.length === 0) throw new Error("directAccessAttempts must be a non-empty array");
+  const interMugler = results.directAccessAttempts.find(a => a.domain === "inter.mugler.com");
+  if (!interMugler) throw new Error("No entry for inter.mugler.com in directAccessAttempts — EP5-P4G-R access attempt must be documented");
+  assert(
+    interMugler.result === "blocked-403",
+    `Expected inter.mugler.com result='blocked-403', got: ${interMugler.result}`,
+  );
+});
+
+proof("515: fieldDecisionMatrix entry for 'family' has confidence !== 'authoritative'", () => {
+  const entry = results.fieldDecisionMatrix.find(e => e.field === "family");
+  if (!entry) throw new Error("No fieldDecisionMatrix entry for 'family'");
+  const conf = (entry as unknown as Record<string, unknown>)["confidence"] as string;
+  assert(conf !== "authoritative", `fieldDecisionMatrix 'family' confidence must not be 'authoritative' — got: ${conf}`);
+});
+
+proof("516: fieldDecisionMatrix entry for 'notes.top' has confidence !== 'authoritative'", () => {
+  const entry = results.fieldDecisionMatrix.find(e => e.field === "notes.top");
+  if (!entry) throw new Error("No fieldDecisionMatrix entry for 'notes.top'");
+  const conf = (entry as unknown as Record<string, unknown>)["confidence"] as string;
+  assert(conf !== "authoritative", `fieldDecisionMatrix 'notes.top' confidence must not be 'authoritative' — got: ${conf}`);
+});
+
+proof("517: resolutionRecommendation.classification is still 'R2' (evidence reclassification does not alter recommendation)", () => {
+  assert(
+    results.resolutionRecommendation.classification === "R2",
+    `Expected R2, got: ${results.resolutionRecommendation.classification}`,
+  );
+});
+
+// ═══════════════════════════════════════════════════════════════════════════════
 // Final report
 // ═══════════════════════════════════════════════════════════════════════════════
 console.log(`\n${"─".repeat(60)}`);
-console.log(`  EP5-P4G validation: ${passed} passed, ${failed} failed`);
+console.log(`  EP5-P4G-R validation: ${passed} passed, ${failed} failed`);
 console.log(`${"─".repeat(60)}\n`);
 
 if (failed > 0) {

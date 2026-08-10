@@ -39,6 +39,64 @@ Never edit or delete past entries.
 
 ## Log
 
+### 2026-08-10 — EP5-P4G-R — Authoritative Research Evidence Integrity Repair
+
+**Participants:** Project Owner (founder authorisation) / Claude (implementation and execution)
+**Program:** EP5-P4G-R — Evidence integrity repair for the EP5-P4G research artifact. Reclassify snippet-accessed official Mugler source evidence from `confidence: "authoritative"` to `confidence: "high"`. Document inter.mugler.com direct access attempt (also 403 Forbidden). Add 17 hardened evidence-integrity proofs. Fix admin suite stale summary string. No factual direction change — R2 recommendation stands.
+
+**Decisions Made:**
+- inter.mugler.com (international Mugler domain) also returned HTTP 403 Forbidden. No Mugler official domain was directly accessible in either EP5-P4G or EP5-P4G-R. Documented in `directAccessAttempts` array.
+- All S-001/S-002 findings reclassified from `confidence: "authoritative"` to `"high"`. Source labels (`sourceType: "official-brand"`) are preserved — the reclassification reflects access method, not source reliability.
+- `researchDisposition` changed from `"authoritative-evidence-obtained"` to `"high-confidence-evidence-obtained-direct-access-blocked"` — more accurate.
+- `scentCharacter` valid MKC vocabulary inspected from `app/lib/mkc/types.ts`: four options only — `"Fresh & Light"`, `"Balanced Signature"`, `"Rich & Long Wearing"`, `"Deep & Intense"`. "Solar Amber Floral" was listed in the EP5-P4G recommendation — removed as it is not a valid MKC term. Updated to recommend "Balanced Signature" or "Deep & Intense" for founder decision.
+- Admin suite `mip:validate:admin` was printing stale hardcoded summary "10 pending-review / 0 verified" in its final console.log. This was a cosmetic bug (proofs 203/204/205/503/504/505 test the correct values). Fixed by replacing with dynamic counts from `registryRaw`. Now correctly prints "3 pending-review / 16 candidate / 7 verified".
+- TypeScript narrowing: `accessNotes?` and `directAccessAttempts?` are optional in `ResultsShape`, so they cannot be accessed after `assert()`. Fixed with `if (!x) throw new Error()` guard pattern — consistent with established project narrowing convention.
+- R2 direction remains unchanged. Evidence reclassification does not alter the conclusion that Legacy factory AI values are incorrect and MIP research values are confirmed by multiple independent sources.
+
+**Tasks Completed:**
+- Attempted direct access to inter.mugler.com — blocked (403 Forbidden)
+- Repaired `data/identity/research-results/MIP-000012-alien-goddess-authoritative-results.json`:
+  - Added `amendedBy`, `amendedAt`, `amendmentReason`; updated `researchDisposition`, `accessNotes`
+  - Added `directAccessAttempts` array (5 entries)
+  - Added `directAccessResult` to all 6 `sourcesConsulted` entries
+  - Reclassified 9 findings: `confidence: "authoritative"` → `"high"` with `confidenceNote`
+  - Updated 7 `fieldDecisionMatrix` entries: `"authoritative"` → `"high"`
+  - Fixed `scentCharacter` `recommendedNextAction` — valid MKC vocabulary listed; "Solar Amber Floral" removed
+- Updated `scripts/identity/validate-alien-goddess-research.ts`:
+  - Updated `FindingShape`, `SourceShape`, `ResultsShape` interfaces
+  - Added `DirectAccessAttempt` interface
+  - Added § 500 — Evidence Integrity (17 proofs: 501–517)
+  - Fixed 2 TypeScript narrowing issues (guard pattern)
+- Fixed `scripts/identity/validate-identity-editorial-admin.ts` stale summary string → dynamic
+- Validated: 75/75 research suite (17 new) + 556 existing = 631/631 total proofs pass
+- Build: 188 routes, 0 TypeScript errors, 0 warnings
+
+**Tasks Started:**
+- None — EP5-P4G-R complete. Awaiting founder R2 approval.
+
+**Build Result:** Pass — 188 routes, 0 TypeScript errors, 0 warnings.
+
+**Files Changed:**
+- `data/identity/research-results/MIP-000012-alien-goddess-authoritative-results.json` (evidence integrity repair)
+- `scripts/identity/validate-alien-goddess-research.ts` (§ 500 added, interfaces updated, label updated)
+- `scripts/identity/validate-identity-editorial-admin.ts` (stale summary string fixed)
+- `.ai/CURRENT_TASK.md` (updated)
+- `.ai/ENGINEERING_LOG.md` (this entry prepended)
+- `PROJECT_STATUS.md` (updated)
+
+**Handoff:**
+- Founder reviews hardened research findings at `data/identity/research-results/MIP-000012-alien-goddess-authoritative-results.json`
+- Founder approves R2 correction plan with: (1) Jasmine variety preference, (2) scentCharacter replacement
+- Claude Code implements R2 corrections in separate episode (EP5-P4H or similar)
+
+**Open Questions Carried Forward:**
+- Jasmine Grandiflorum vs Jasmine — founder vocabulary preference
+- scentCharacter: "Balanced Signature" or "Deep & Intense" (or policy exemption for "Rich & Long Wearing")
+- Relationships (delina-inspired, baccarat-rouge-540-inspired) — separate investigation or removal
+- academyArticleIds — vanilla-and-amber-the-warm-base continued appropriateness
+
+---
+
 ### 2026-08-10 — EP5-P4G — Alien Goddess Authoritative Research Execution
 
 **Participants:** Project Owner (founder authorisation) / Claude (research execution and implementation)

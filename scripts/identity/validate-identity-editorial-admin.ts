@@ -624,6 +624,9 @@ if (failures.length > 0) {
 } else {
   console.log("\nAll EP5-P3C integration proofs passed.");
   console.log(`Registry SHA-256: ${registryHashBefore}`);
-  console.log(`Registry state:   26 total / 10 pending-review / 16 candidate / 0 verified`);
+  const verifiedCount  = registryRaw.identities.filter(r => r.status === "verified").length;
+  const pendingCount   = registryRaw.identities.filter(r => r.status === "pending-review").length;
+  const candidateCount = registryRaw.identities.filter(r => r.status === "candidate").length;
+  console.log(`Registry state:   ${registryRaw.identities.length} total / ${pendingCount} pending-review / ${candidateCount} candidate / ${verifiedCount} verified`);
   process.exit(0);
 }

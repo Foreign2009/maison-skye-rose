@@ -8,10 +8,10 @@
 
 ## Current Engineering Program
 
-**Program:** EP5-P4G — Alien Goddess Authoritative Research Execution — COMPLETE
+**Program:** EP5-P4G-R — Authoritative Research Evidence Integrity Repair — COMPLETE
 **Sprint:** EP5
-**Gate:** R2 Targeted Deterministic Correction — founder reviews research results at `data/identity/research-results/MIP-000012-alien-goddess-authoritative-results.json`, approves the R2 correction plan (with preferred Jasmine variety and scentCharacter replacement), then Claude Code implements targeted MKC corrections.
-**Outcome:** Authoritative external research executed. Official Mugler sources and Fragrantica/Basenotes (strong secondary) confirm MIP Gemini research values for all 4 critical composition fields. Legacy factory AI values refuted by all sources. Research results persisted with 16 findings, 3 identified conflicts, 13-entry three-way comparison, 14-entry field decision matrix. Recommended classification: R2. 58 new proofs (614/614 total). All historical artifacts SHA-verified unchanged. 0 Knowledge Factory AI calls. 0 guest-facing changes. Build: 188 routes, 0 TypeScript errors, 0 warnings.
+**Gate:** R2 Targeted Deterministic Correction — founder reviews hardened research results at `data/identity/research-results/MIP-000012-alien-goddess-authoritative-results.json`, approves the R2 correction plan (with preferred Jasmine variety and scentCharacter replacement from valid MKC vocabulary), then Claude Code implements targeted MKC corrections.
+**Outcome:** Evidence integrity repair executed. All snippet-accessed Mugler source findings reclassified from "authoritative" to "high". inter.mugler.com also blocked (403). directAccessResult documented for all 6 sources. 17 hardened evidence-integrity proofs added (§ 500). Admin suite stale summary fixed. scentCharacter vocabulary corrected (valid options: "Balanced Signature", "Deep & Intense", or policy exemption). R2 direction unchanged. 75/75 research proofs + 556 existing = 631/631 total. Build: 188 routes, 0 TypeScript errors, 0 warnings.
 
 ---
 
