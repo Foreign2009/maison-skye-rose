@@ -39,6 +39,55 @@ Never edit or delete past entries.
 
 ## Log
 
+### 2026-08-10 — EP6-P4R — Relationship Audit Structural Integrity Correction
+
+**Participants:** Project Owner (founder authorisation) / Claude (implementation and execution)
+**Program:** EP6-P4R — Correct the EP6-P4 audit so canonical reciprocity rules are represented in the structural model. Two non-reciprocal edges (delina-inspired→alien-goddess-inspired and baccarat-rouge-540-inspired→alien-goddess-inspired) must be reported as structural defects. Zero relationship arrays changed. Zero native MKC records changed. Zero AI calls.
+
+**Decisions Made:**
+- StructuralState type extended with three reciprocity defect values: `DEFECT_ALTERNATIVE_NOT_RECIPROCAL`, `DEFECT_WARDROBE_PARTNER_NOT_RECIPROCAL`, `DEFECT_EVOLUTION_NOT_RECIPROCAL`.
+- Structural vs editorial separation: severe defects (BLANK_TARGET, SELF_REFERENCE, DANGLING_TARGET, DUPLICATE_IN_ARRAY) wipe editorial classification to INSUFFICIENT_EVIDENCE. Reciprocity defects preserve editorial classification (FOUNDER_EDITORIAL_DECISION_REQUIRED) but override action to RELATIONSHIP_REVIEW.
+- EvidenceLimitation renamed from `AI_GENERATED_PROVENANCE_UNCONFIRMED` (contradictory — conflated origin method with human approval status) to `HUMAN_APPROVAL_NOT_CONFIRMED` (truthful — AI_GENERATED describes origin; human approval is separately unconfirmed).
+- Proof 608 corrected: circular self-comparison removed. Hard-coded d115726 baseline fingerprint `1da34fad81a5e40e23f50d5d79e9f992952da36196782cc5490cec61f180514b` established. Proven valid because `git diff d115726 HEAD -- app/lib/mkc/native/` = empty (zero native file changes since baseline).
+- Proofs 307/308 corrected: "documented finding" approach removed. Independent live catalogue reciprocity computation added. Proofs now assert the specific defective edges exist in both the live catalogue and the audit artifact.
+- Proof 301 corrected: `structuralDefectCount === 0` → `=== 2`.
+- Proof 309 added: asserts `DEFECT_EVOLUTION_NOT_RECIPROCAL === 0` (all evolution relationships correctly paired).
+
+**Tasks Completed:**
+- Modified `scripts/identity/catalogueRelationshipEditorialAudit.ts`: 8 changes — extended StructuralState type, renamed EvidenceLimitation, updated `checkStructuralState()` to accept recordMap and check reciprocity, restructured `classify()` to separate severe/reciprocity defects, updated call site, updated `edgesByStructural` initializer, updated `provenanceSummary` text, updated `computeEvidenceLimitations()`.
+- Regenerated `app/lib/identity/data/audits/catalogue-relationship-editorial-audit.json`: now correctly reports `structuralDefectCount: 2`, `edgesByStructuralState: { VALID: 336, DEFECT_ALTERNATIVE_NOT_RECIPROCAL: 1, DEFECT_WARDROBE_PARTNER_NOT_RECIPROCAL: 1 }`. Editorial classifications unchanged: 12 EXTERNAL_RESEARCH_REQUIRED, 326 FOUNDER_EDITORIAL_DECISION_REQUIRED.
+- Modified `scripts/identity/validate-catalogue-relationship-editorial-audit.ts`: updated header (EP6-P4/P4R), added D115726_RELATIONSHIP_FINGERPRINT constant, fixed proof 301, rewrote proofs 307/308 with independent reciprocity computation, added proof 309, fixed proof 608, updated console output titles. Total proofs: 54 → 55.
+- Ran mip:validate:catalogue-relationships: 55/55 proofs passing.
+- Ran EP6-P1/P2/P3 regression validators: 73/73 + 75/75 + 56/56 = all passing.
+- Ran all core MIP validators (mip:validate, mip:validate:resolver, mip:validate:editorial, mip:validate:factory): all passing.
+- Ran npm run build: PASS — 188 routes, 0 TypeScript errors, 0 warnings.
+- All 7 protected SHAs verified unchanged (proofs 601–607).
+- Relationship graph fingerprint verified against d115726 baseline (proof 608).
+
+**Tasks Started:**
+- None — EP6-P4R is complete.
+
+**Build Result:** PASS — 188 routes, 0 TypeScript errors, 0 warnings.
+
+**Files Changed:**
+- `scripts/identity/catalogueRelationshipEditorialAudit.ts` — MODIFIED (structural reciprocity model added)
+- `app/lib/identity/data/audits/catalogue-relationship-editorial-audit.json` — REGENERATED (2 structural defects now correctly reported)
+- `scripts/identity/validate-catalogue-relationship-editorial-audit.ts` — MODIFIED (proofs 301/307/308/608 corrected; proof 309 added; 55 proofs total)
+- `.ai/CURRENT_TASK.md` — MODIFIED (status: COMPLETE)
+
+**Handoff:**
+- EP6-P4R is complete. The EP6-P4 audit now truthfully reports 2 structural defects.
+- The two defective edges (delina-inspired→alien-goddess-inspired, baccarat-rouge-540-inspired→alien-goddess-inspired) are classified as FOUNDER_EDITORIAL_DECISION_REQUIRED with action RELATIONSHIP_REVIEW.
+- DO NOT repair these relationships in EP6-P5. Relationship repair requires a dedicated founder-authorised programme.
+- EP6-P5 is not currently authorised.
+- Do not begin any new programme automatically. Await founder direction.
+
+**Open Questions Carried Forward:**
+- Will the founder authorise repair of the two non-reciprocal relationship edges (delina→alien-goddess and baccarat-rouge→alien-goddess)?
+- Repair options: (a) remove delina-inspired's alien-goddess alternative entry, or (b) restore alien-goddess's relationships block with founder-verified values.
+
+---
+
 ### 2026-08-10 — EP6-P2 — Catalogue Remediation Queue
 
 **Participants:** Project Owner (founder authorisation) / Claude (implementation and execution)

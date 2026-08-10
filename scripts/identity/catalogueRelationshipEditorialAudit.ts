@@ -58,13 +58,16 @@ export type RelationshipProvenance =
   | "GOVERNED"
   | "UNKNOWN";
 
-/** Structural state of the edge as independently verified by EP6-P4. */
+/** Structural state of the edge as independently verified by EP6-P4/P4R. */
 export type StructuralState =
   | "VALID"
   | "DEFECT_SELF_REFERENCE"
   | "DEFECT_DANGLING_TARGET"
   | "DEFECT_BLANK_TARGET"
-  | "DEFECT_DUPLICATE_IN_ARRAY";
+  | "DEFECT_DUPLICATE_IN_ARRAY"
+  | "DEFECT_ALTERNATIVE_NOT_RECIPROCAL"
+  | "DEFECT_WARDROBE_PARTNER_NOT_RECIPROCAL"
+  | "DEFECT_EVOLUTION_NOT_RECIPROCAL";
 
 /** Controlled action vocabulary. No automatic mutation actions. */
 export type RecommendedAction =
@@ -115,7 +118,7 @@ export type EvidenceLimitation =
   | "NO_THIRD_PARTY_DATABASE_CONFIRMATION"
   | "NO_HUMAN_EDITORIAL_APPROVAL_RECORD"
   | "NO_CONSUMER_REVIEW_EVIDENCE"
-  | "AI_GENERATED_PROVENANCE_UNCONFIRMED"
+  | "HUMAN_APPROVAL_NOT_CONFIRMED"
   | "NAME_RELATIONSHIP_MAY_NOT_IMPLY_EVOLUTION"
   | "METADATA_SIMILARITY_NOT_SEMANTIC_PROOF"
   | "WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT";
@@ -356,8 +359,9 @@ function checkStructuralState(
   sourceSlug: string,
   targetSlug: string,
   relType:    RelationshipType,
-  arraySlug:  string[],               // the full array this edge belongs to
+  arraySlug:  string[],
   allSlugs:   ReadonlySet<string>,
+  recordMap:  ReadonlyMap<string, FragranceKnowledge>,
 ): StructuralState {
   if (!targetSlug || !targetSlug.trim()) return "DEFECT_BLANK_TARGET";
   if (targetSlug === sourceSlug)         return "DEFECT_SELF_REFERENCE";
@@ -367,6 +371,32 @@ function checkStructuralState(
   if (relType !== "evolutionOf") {
     const occurrences = arraySlug.filter(s => s === targetSlug).length;
     if (occurrences > 1) return "DEFECT_DUPLICATE_IN_ARRAY";
+  }
+
+  // Reciprocity check — mirrors the canonical validator.ts invariants.
+  // RELATIONSHIP_ALTERNATIVES_NOT_RECIPROCAL / RELATIONSHIP_WARDROBE_PARTNERS_NOT_RECIPROCAL /
+  // RELATIONSHIP_EVOLUTION_NOT_RECIPROCAL are errors in the MKC canonical validator.
+  const target = recordMap.get(targetSlug);
+  switch (relType) {
+    case "alternatives": {
+      const reciprocal = target?.relationships?.alternatives ?? [];
+      if (!reciprocal.includes(sourceSlug)) return "DEFECT_ALTERNATIVE_NOT_RECIPROCAL";
+      break;
+    }
+    case "wardrobePartners": {
+      const reciprocal = target?.relationships?.wardrobePartners ?? [];
+      if (!reciprocal.includes(sourceSlug)) return "DEFECT_WARDROBE_PARTNER_NOT_RECIPROCAL";
+      break;
+    }
+    case "evolutionOf": {
+      const evolutions = target?.relationships?.evolutions ?? [];
+      if (!evolutions.includes(sourceSlug)) return "DEFECT_EVOLUTION_NOT_RECIPROCAL";
+      break;
+    }
+    case "evolutions": {
+      if (target?.relationships?.evolutionOf !== sourceSlug) return "DEFECT_EVOLUTION_NOT_RECIPROCAL";
+      break;
+    }
   }
 
   return "VALID";
@@ -399,19 +429,28 @@ function checkStructuralState(
  *   as editorial reasoning. No algorithmic rule can substitute for Maison's
  *   intentional pairing decision.
  */
-function classify(
-  relType: RelationshipType,
-  evidence: RepositoryEvidence,
-  structuralState: StructuralState,
-): {
+type EditorialResult = {
   classification: EditorialClassification;
   requiresExternalResearch: boolean;
   requiresFounderDecision: boolean;
   action: RecommendedAction;
   blockingReason: string;
-} {
-  // Structural defects override classification
-  if (structuralState !== "VALID") {
+};
+
+function classify(
+  relType: RelationshipType,
+  evidence: RepositoryEvidence,
+  structuralState: StructuralState,
+): EditorialResult {
+  // Severe structural defects (no valid target data) prevent reliable editorial assessment.
+  // These conditions mean we cannot even determine what the relationship points to.
+  const isSevereDefect =
+    structuralState === "DEFECT_BLANK_TARGET"    ||
+    structuralState === "DEFECT_SELF_REFERENCE"  ||
+    structuralState === "DEFECT_DANGLING_TARGET" ||
+    structuralState === "DEFECT_DUPLICATE_IN_ARRAY";
+
+  if (isSevereDefect) {
     return {
       classification: "INSUFFICIENT_EVIDENCE",
       requiresExternalResearch: false,
@@ -421,44 +460,70 @@ function classify(
     };
   }
 
+  // Reciprocity defects are structural but do not prevent editorial classification.
+  // The relationship type still determines the editorial question (founder vs research).
+  // We compute the editorial result normally, then override the action to RELATIONSHIP_REVIEW
+  // to signal that structural repair takes priority before editorial resolution.
+  const isReciprocityDefect =
+    structuralState === "DEFECT_ALTERNATIVE_NOT_RECIPROCAL"       ||
+    structuralState === "DEFECT_WARDROBE_PARTNER_NOT_RECIPROCAL"  ||
+    structuralState === "DEFECT_EVOLUTION_NOT_RECIPROCAL";
+
+  let result: EditorialResult;
+
   switch (relType) {
     case "evolutionOf":
     case "evolutions": {
       const nameSupportNote = evidence.namePrefixRelationship === true
         ? `Name-prefix relationship detected (${evidence.namePrefixNote}). Repository evidence supports the hypothesis but cannot confirm official line lineage.`
         : `No clear name-prefix relationship found. Lineage claim requires authoritative external confirmation.`;
-      return {
+      result = {
         classification: "EXTERNAL_RESEARCH_REQUIRED",
         requiresExternalResearch: true,
         requiresFounderDecision: false,
         action: "AUTHORITATIVE_RESEARCH",
         blockingReason: `Whether one fragrance is a confirmed line evolution of another requires authoritative fragrance industry knowledge. ${nameSupportNote}`,
       };
+      break;
     }
 
     case "alternatives": {
       const overlapNote = evidence.familyOverlap.length > 0
         ? `Repository evidence: ${evidence.familyOverlap.length} shared family/families (${evidence.familyOverlap.join(", ")}), scentCharacter ${evidence.scentCharacterMatch ? "matches" : "differs"}.`
         : `Repository evidence: no shared fragrance family. Substitutability claim is weakly supported by repository data alone.`;
-      return {
+      result = {
         classification: "FOUNDER_EDITORIAL_DECISION_REQUIRED",
         requiresExternalResearch: false,
         requiresFounderDecision: true,
         action: "FOUNDER_EDITORIAL_REVIEW",
         blockingReason: `"Comparable alternatives in a similar register" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. ${overlapNote} AI-generated without confirmed human editorial approval.`,
       };
+      break;
     }
 
     case "wardrobePartners": {
-      return {
+      result = {
         classification: "FOUNDER_EDITORIAL_DECISION_REQUIRED",
         requiresExternalResearch: false,
         requiresFounderDecision: true,
         action: "FOUNDER_EDITORIAL_REVIEW",
         blockingReason: `"Recommended to own alongside" is a Maison editorial wardrobe curation decision. The authoring guide identifies wardrobePartners as editorial reasoning. No algorithmic rule can substitute for intentional pairing. AI-generated without confirmed human editorial approval.`,
       };
+      break;
     }
   }
+
+  // For reciprocity defects, the editorial dimension is still assessable (the relationship type
+  // is clear), but the action must be RELATIONSHIP_REVIEW because structural repair takes priority.
+  if (isReciprocityDefect) {
+    return {
+      ...result!,
+      action: "RELATIONSHIP_REVIEW",
+      blockingReason: `[STRUCTURAL DEFECT: ${structuralState}] ${result!.blockingReason}`,
+    };
+  }
+
+  return result!;
 }
 
 // ── Evidence limitations per type ──────────────────────────────────────────────
@@ -466,7 +531,7 @@ function classify(
 function computeEvidenceLimitations(relType: RelationshipType): readonly EvidenceLimitation[] {
   const base: EvidenceLimitation[] = [
     "NO_HUMAN_EDITORIAL_APPROVAL_RECORD",
-    "AI_GENERATED_PROVENANCE_UNCONFIRMED",
+    "HUMAN_APPROVAL_NOT_CONFIRMED",
     "METADATA_SIMILARITY_NOT_SEMANTIC_PROOF",
   ];
 
@@ -607,6 +672,7 @@ export function runCatalogueRelationshipEditorialAudit(
           type,
           slugs,
           allSlugs,
+          recordMap,
         );
 
         const target = recordMap.get(targetSlug);
@@ -707,6 +773,9 @@ export function runCatalogueRelationshipEditorialAudit(
     DEFECT_DANGLING_TARGET: 0,
     DEFECT_BLANK_TARGET: 0,
     DEFECT_DUPLICATE_IN_ARRAY: 0,
+    DEFECT_ALTERNATIVE_NOT_RECIPROCAL: 0,
+    DEFECT_WARDROBE_PARTNER_NOT_RECIPROCAL: 0,
+    DEFECT_EVOLUTION_NOT_RECIPROCAL: 0,
   };
 
   let structuralDefectCount = 0;
@@ -746,9 +815,10 @@ export function runCatalogueRelationshipEditorialAudit(
     recordsWithoutRelationshipsList: recordsWithoutRelationships.sort(),
     provenanceSummary:
       `All ${allEdges.length} relationship edges were generated by RelationshipProducer ` +
-      `(Anthropic Claude Haiku API, confidence threshold 0.6). No confirmed human editorial ` +
-      `approval records exist for any edge in the current governance system. ` +
-      `Provenance classification: AI_GENERATED for all edges.`,
+      `(Anthropic Claude Haiku API, confidence threshold 0.6). ` +
+      `Provenance classification: AI_GENERATED for all edges — this confirms origin method. ` +
+      `AI_GENERATED provenance does NOT imply human editorial approval, which is unconfirmed ` +
+      `for every edge in the current governance system.`,
   };
 
   return {
