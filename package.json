@@ -39,6 +39,7 @@
     "mip:validate:qualified-audit": "npx tsx scripts/identity/validate-identity-qualified-audit.ts",
     "mip:validate:reconciliation": "npx tsx scripts/identity/validate-alien-goddess-reconciliation.ts",
     "mip:validate:research": "npx tsx scripts/identity/validate-alien-goddess-research.ts",
+    "mip:validate:r2": "npx tsx scripts/identity/validate-alien-goddess-r2-correction.ts",
     "mkc:identity-qualified:controlled": "npx tsx scripts/factory/run-identity-qualified-controlled.ts"
   },
   "dependencies": {

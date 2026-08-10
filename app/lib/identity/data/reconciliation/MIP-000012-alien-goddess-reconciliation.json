@@ -5,11 +5,13 @@
   "canonicalBrand": "Mugler",
   "maisonSlug": "alien-goddess-inspired",
   "collection": "Rose",
-  "reviewStatus": "hold-pending-authoritative-research",
+  "reviewStatus": "r2-correction-applied",
   "reviewedAt": "2026-08-09T00:00:00.000Z",
   "governanceActor": "EP5-P4F",
-  "knowledgeDisposition": "hold-pending-authoritative-research",
-  "recommendedClassification": "R3",
+  "r2ImplementedAt": "2026-08-10T00:00:00.000Z",
+  "r2ImplementationActor": "EP5-P4H",
+  "knowledgeDisposition": "r2-correction-applied",
+  "recommendedClassification": "R2",
 
   "legacyProvenance": {
     "factoryRunStartedAt": "2026-07-13T18:29:46.610Z",
@@ -54,7 +56,7 @@
       "researchSource": "data/identity/source/mid-year-2026-research.json",
       "classification": "CONTRADICTED",
       "risk": "HIGH",
-      "resolutionStatus": "pending-authoritative-research",
+      "resolutionStatus": "resolved-r2-ep5-p4h",
       "note": "Both values are AI-generated. Legacy value from factory AI inference (2026-07-13). Research value from Gemini AI research (2026-08-08). Neither is authoritative."
     },
     {
@@ -64,7 +66,7 @@
       "researchSource": "data/identity/source/mid-year-2026-research.json",
       "classification": "CONTRADICTED",
       "risk": "MEDIUM",
-      "resolutionStatus": "pending-authoritative-research",
+      "resolutionStatus": "resolved-r2-ep5-p4h",
       "note": "Profile is directly derived from family; if family divergence is resolved, profile must be updated accordingly."
     },
     {
@@ -74,7 +76,7 @@
       "researchSource": "data/identity/source/mid-year-2026-research.json",
       "classification": "CONTRADICTED",
       "risk": "HIGH",
-      "resolutionStatus": "pending-authoritative-research",
+      "resolutionStatus": "resolved-r2-ep5-p4h",
       "note": "Two distinct divergences: (1) Coconut Milk vs Coconut Water — different ingredient forms with different olfactory weight; (2) Yuzu vs Bergamot — completely different citrus materials with different olfactory character."
     },
     {
@@ -84,7 +86,7 @@
       "researchSource": "data/identity/source/mid-year-2026-research.json",
       "classification": "CONTRADICTED",
       "risk": "HIGH",
-      "resolutionStatus": "pending-authoritative-research",
+      "resolutionStatus": "resolved-r2-ep5-p4h",
       "note": "Two distinct divergences: (1) Jasmine Sambac vs Jasmine — specificity difference (Sambac is a variety of Jasmine); (2) Tuberose vs Heliotrope — completely different heart materials with different character (Tuberose: rich/creamy white floral; Heliotrope: powdery/almond)."
     },
     {
@@ -94,7 +96,7 @@
       "researchSource": "data/identity/source/mid-year-2026-research.json",
       "classification": "CONTRADICTED",
       "risk": "HIGH",
-      "resolutionStatus": "pending-authoritative-research",
+      "resolutionStatus": "resolved-r2-ep5-p4h",
       "note": "Two distinct divergences: (1) Vanilla Absolute vs Bourbon Vanilla — different extraction/variety forms; (2) Sandalwood vs Cashmeran — completely different materials (Sandalwood: natural creamy wood; Cashmeran: synthetic amber-musky molecule)."
     },
     {
@@ -104,7 +106,7 @@
       "researchSource": "data/identity/source/mid-year-2026-research.json",
       "classification": "CONTRADICTED (DERIVATIVELY)",
       "risk": "HIGH",
-      "resolutionStatus": "pending-authoritative-research",
+      "resolutionStatus": "resolved-r2-ep5-p4h",
       "note": "The description is Maison editorial writing, not a direct fact claim. However, it names specific ingredients that are disputed. If the composition notes are corrected, the description must be rewritten. The description itself is otherwise well-authored and appropriate to the Maison voice."
     }
   ],
@@ -114,14 +116,18 @@
       "id": "OGO-001",
       "obligation": "Relationships REVIEW comment",
       "detail": "app/lib/mkc/native/alien-goddess-inspired.ts contains a // REVIEW: Verify each suggestion and update the counterpart record symmetrically. comment on the relationships field. This was not addressed during the original factory run. The alternatives (delina-inspired) and wardrobePartners (baccarat-rouge-540-inspired) are unverified.",
-      "status": "open",
+      "status": "resolved",
+      "resolvedAt": "2026-08-10T00:00:00.000Z",
+      "resolvedNote": "Relationships field removed entirely — unverified AI-inferred entries eliminated per EP5-P4H approved correction.",
       "blockedBy": "pending-authoritative-research"
     },
     {
       "id": "OGO-002",
       "obligation": "Native vs draft education divergence",
       "detail": "The native record was manually edited post-factory to add academyArticleIds and learningPath entries. This edit has no factory log record. The expansion includes vanilla-and-amber-the-warm-base — if family is corrected from Vanilla to Amber, this article linkage should be reviewed for continued appropriateness.",
-      "status": "open",
+      "status": "resolved",
+      "resolvedAt": "2026-08-10T00:00:00.000Z",
+      "resolvedNote": "vanilla-and-amber-the-warm-base article confirmed appropriate — Amber family now confirmed by EP5-P4G authoritative research; Bourbon Vanilla remains in base notes.",
       "blockedBy": "pending-authoritative-research"
     }
   ]

@@ -13,7 +13,7 @@ const ROOT = join(__dirname, "../..");
 
 // ── SHA-256 baselines (established in EP5-P4F Phase 2) ────────────────────────
 const NATIVE_ALIEN_GODDESS_SHA256 =
-  "de22896a3c5c0534a4729369a51d435686e14a89ddd081ed88e473bd0d5858e4";
+  "6799eb768a6a5e9166244be866316b802e7009719dd123d27ea8bf73a89be8bd";
 const DRAFT_ALIEN_GODDESS_SHA256 =
   "700593b7fd98cf8339491b74a7f2c6732badb2581ac268636a59c471b7e1cee7";
 const FACTORY_LOG_SHA256 =
@@ -408,7 +408,7 @@ proof("317: fieldsConfirmedCorrect includes gender", () => {
 // ═══════════════════════════════════════════════════════════════════════════════
 console.log("\n§ 400 — No Knowledge Mutations");
 
-proof("401: native alien-goddess-inspired.ts is byte-identical to EP5-P4F baseline", () => {
+proof("401: native alien-goddess-inspired.ts matches EP5-P4H R2 correction baseline", () => {
   const actual = sha256(NATIVE_PATH);
   assert(actual === NATIVE_ALIEN_GODDESS_SHA256, `SHA mismatch — native file was modified. Expected ${NATIVE_ALIEN_GODDESS_SHA256}, got ${actual}`);
 });

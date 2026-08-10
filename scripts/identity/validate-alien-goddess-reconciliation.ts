@@ -18,7 +18,7 @@ import { join }         from "path";
 // ── SHA-256 baselines for all protected historical artifacts ───────────────────
 
 const NATIVE_ALIEN_GODDESS_SHA256 =
-  "de22896a3c5c0534a4729369a51d435686e14a89ddd081ed88e473bd0d5858e4";
+  "6799eb768a6a5e9166244be866316b802e7009719dd123d27ea8bf73a89be8bd";
 const DRAFT_ALIEN_GODDESS_SHA256  =
   "700593b7fd98cf8339491b74a7f2c6732badb2581ac268636a59c471b7e1cee7";
 const FACTORY_LOG_SHA256          =
@@ -57,8 +57,8 @@ const EXPECTED_CANONICAL_NAME   = "Alien Goddess";
 const EXPECTED_CANONICAL_BRAND  = "Mugler";
 const EXPECTED_SLUG             = "alien-goddess-inspired";
 const EXPECTED_COLLECTION       = "Rose";
-const EXPECTED_DISPOSITION      = "hold-pending-authoritative-research";
-const EXPECTED_CLASSIFICATION   = "R3";
+const EXPECTED_DISPOSITION      = "r2-correction-applied";
+const EXPECTED_CLASSIFICATION   = "R2";
 const EXPECTED_FACTORY_VERSION  = "0.5.0";
 const EXPECTED_PROMOTION_STATUS = "unresolved";
 const EXPECTED_DRAFT_REVIEW     = "unreviewed";
@@ -372,7 +372,7 @@ proof("310: primary research questions cover all 4 critical composition fields",
 
 console.log("\n§ 400 — Historical Artifact Immutability");
 
-proof("401: native alien-goddess-inspired.ts is byte-identical to EP5-P4F baseline", () => {
+proof("401: native alien-goddess-inspired.ts matches EP5-P4H R2 correction baseline", () => {
   const actual = sha256(NATIVE_PATH);
   assert(actual === NATIVE_ALIEN_GODDESS_SHA256,
     `Native MKC record SHA changed!\n     expected: ${NATIVE_ALIEN_GODDESS_SHA256}\n       actual: ${actual}`);

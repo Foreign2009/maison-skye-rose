@@ -39,6 +39,73 @@ Never edit or delete past entries.
 
 ## Log
 
+### 2026-08-10 — EP5-P4H — Alien Goddess Targeted Deterministic Knowledge Correction
+
+**Participants:** Project Owner (founder authorisation) / Claude (implementation and execution)
+**Program:** EP5-P4H — R2 targeted deterministic correction of the Alien Goddess MKC native record. Six composition fields corrected using evidence persisted in the repository from EP5-P4G-R. No AI generation. No Knowledge Factory invocation. No registry mutation. Reconciliation record lifecycle fields updated. 30 new R2 validation proofs added.
+
+**Decisions Made:**
+- "Amber" confirmed valid in `fragranceFamilies` data (line 7). `["Amber", "Floral"]` is a legal MKC family array.
+- Reconciliation validation suite proofs 106/107 assert `knowledgeDisposition` and `recommendedClassification` respectively. Both fields were updated in the JSON AND the proof constants were updated to match. This is correct: the correction is founder-approved and the proofs should reflect current state, not a stale pre-correction state.
+- `resolutionStatus` on each reconciliation material issue and `status` on each open governance obligation have no proof constraints — updated safely without touching proofs.
+- Proof 401 in both the research and reconciliation validation suites asserted the pre-R2 native SHA. Both updated to the new EP5-P4H SHA as the founder explicitly authorised the native correction. The old baseline is documented in CURRENT_TASK.md.
+- Founder decision (Jasmine variety): "Jasmine Grandiflorum" — used in notes.heart array and in the description prose (as "jasmine grandiflorum", lowercase, following description prose convention).
+- Founder decision (scentCharacter): "Balanced Signature" — valid MKC closed union value.
+- `relationships` field removed entirely — both `alternatives: ["delina-inspired"]` and `wardrobePartners: ["baccarat-rouge-540-inspired"]` were unverified AI inferences with no research support. The `// REVIEW:` comment is also removed. OGO-001 resolved.
+- `vanilla-and-amber-the-warm-base` academy article kept — Amber family is now confirmed by EP5-P4G authoritative research; Bourbon Vanilla remains in base notes. OGO-002 resolved.
+- `recommendedFor` corrections: (1) removed "long-wearing" (policy violation — longevity claims unsupported by research); (2) "vanilla florals" → "warm amber florals" (family correction); (3) "tuberose and jasmine" → "jasmine and heliotrope" (contradicted ingredient removed).
+- `educationTags` corrections: removed "tuberose", "sandalwood", "long-wearing"; added "amber", "heliotrope", "bergamot", "cashmeran".
+- Description rewrite: all 6 legacy ingredient names removed; 6 correct names introduced. Maison voice preserved (same three-clause structure: top opens → heart develops → base anchors).
+- R2 validation suite proof 109 uses `.toLowerCase()` on the source string because "Coconut water" begins a sentence with a capital C. Proof 108 (negative checks for incorrect ingredients) checks both capitalised and lowercase forms.
+
+**Tasks Completed:**
+- Read fragranceFamilies.ts — confirmed "Amber" valid
+- Read reconciliation validation suite — identified proof constraints on 106/107/401
+- Applied 6 composition field corrections to `app/lib/mkc/native/alien-goddess-inspired.ts`
+- Applied description rewrite, recommendedFor corrections, educationTags corrections
+- Removed relationships field entirely
+- Updated `app/lib/identity/data/reconciliation/MIP-000012-alien-goddess-reconciliation.json`:
+  - knowledgeDisposition, recommendedClassification, reviewStatus → r2 states
+  - r2ImplementedAt, r2ImplementationActor added
+  - All 6 materialIssues resolutionStatus → "resolved-r2-ep5-p4h"
+  - OGO-001, OGO-002 status → "resolved" with resolvedAt, resolvedNote
+- Updated proof 401 in `validate-alien-goddess-reconciliation.ts` (label + SHA)
+- Updated proof 401 in `validate-alien-goddess-research.ts` (label + SHA)
+- Updated EXPECTED_DISPOSITION and EXPECTED_CLASSIFICATION in reconciliation suite (proofs 106/107)
+- Created `scripts/identity/validate-alien-goddess-r2-correction.ts` — 30 proofs
+- Added `mip:validate:r2` to `package.json`
+- All 12 suites pass: 661/661 proofs
+- Build: 188 routes, 0 TypeScript errors, 0 warnings
+
+**Tasks Started:**
+- None — EP5-P4H complete. Awaiting next programme direction.
+
+**Build Result:** Pass — 188 routes, 0 TypeScript errors, 0 warnings.
+
+**Files Changed:**
+- `app/lib/mkc/native/alien-goddess-inspired.ts` (R2 composition correction)
+- `app/lib/identity/data/reconciliation/MIP-000012-alien-goddess-reconciliation.json` (lifecycle update)
+- `scripts/identity/validate-alien-goddess-reconciliation.ts` (proofs 106/107/401 updated)
+- `scripts/identity/validate-alien-goddess-research.ts` (proof 401 updated)
+- `scripts/identity/validate-alien-goddess-r2-correction.ts` (created — 30 proofs)
+- `package.json` (mip:validate:r2 script added)
+- `.ai/CURRENT_TASK.md` (updated)
+- `.ai/ENGINEERING_LOG.md` (this entry prepended)
+- `PROJECT_STATUS.md` (updated)
+
+**Handoff:**
+- EP5 (Alien Goddess knowledge governance) is complete through R2 correction
+- Native MKC record now reflects the research-confirmed composition
+- Reconciliation record reflects R2 implemented state
+- 661 proofs protect all key invariants
+- Next: founder determines next programme priority
+
+**Open Questions Carried Forward:**
+- None from EP5-P4H (all material issues resolved)
+- Future: other MKC native records may need similar R2 treatment if factory-generated without MIP access
+
+---
+
 ### 2026-08-10 — EP5-P4G-R — Authoritative Research Evidence Integrity Repair
 
 **Participants:** Project Owner (founder authorisation) / Claude (implementation and execution)

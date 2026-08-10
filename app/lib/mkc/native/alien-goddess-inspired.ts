@@ -12,17 +12,17 @@ export const alienGoddessInspired: FragranceKnowledge = {
 
   // ── Classification ────────────────────────────────────────────────────────────
   gender        : "female",
-  family        : ["Vanilla", "Floral"],
-  scentCharacter: "Rich & Long Wearing",
+  family        : ["Amber", "Floral"],
+  scentCharacter: "Balanced Signature",
   projection    : "moderate",
 
   // ── Composition ─────────────────────────────────────────────────────────────
-  profile       : "Vanilla Floral",
+  profile       : "Amber Floral",
   season        : "Summer",
   notes: {
-    top:   ["Coconut Milk", "Yuzu"],
-    heart: ["Jasmine Sambac", "Tuberose"],
-    base:  ["Vanilla Absolute", "Sandalwood"],
+    top:   ["Coconut Water", "Bergamot"],
+    heart: ["Jasmine Grandiflorum", "Heliotrope"],
+    base:  ["Bourbon Vanilla", "Cashmeran"],
   },
   mood          : "Radiant and uplifting.",
 
@@ -45,10 +45,10 @@ export const alienGoddessInspired: FragranceKnowledge = {
   seasons       : ["Summer"],
   signatureStyle: ["Golden Glow", "Luminous Floral", "Tropical Luxury", "Creamy Radiance"],
   recommendedFor: [
-    "Women seeking a radiant, long-wearing signature that celebrates golden hour glamour and luminous florals",
-    "Those who love creamy vanilla florals with tropical brightness and want a fragrance that blooms louder as the day progresses",
+    "Women seeking a radiant signature that celebrates golden hour glamour and luminous florals",
+    "Those who love warm amber florals with tropical brightness and want a fragrance that blooms louder as the day progresses",
     "Anyone looking for a summer essential that transitions effortlessly from beach days to evening occasions without feeling seasonal",
-    "Fragrance collectors drawn to opulent tuberose and jasmine compositions that feel luxurious yet wearable",
+    "Fragrance collectors drawn to opulent jasmine and heliotrope compositions that feel luxurious yet wearable",
   ],
 
   // ── Merchandising ───────────────────────────────────────────────────────────
@@ -67,7 +67,7 @@ export const alienGoddessInspired: FragranceKnowledge = {
 
   // ── Education ───────────────────────────────────────────────────────────────
   subtitle      : "Radiant Bloom",
-  description   : "Coconut milk and yuzu open with sun-drenched clarity, yielding to a luminous heart of jasmine sambac and tuberose that blooms without apology. Vanilla absolute and sandalwood anchor the composition in warm, creamy depth—a fragrance that radiates from within.",
+  description   : "Coconut water and bergamot open with luminous clarity, yielding to a radiant heart of jasmine grandiflorum and heliotrope that blooms with quiet authority. Bourbon vanilla and cashmeran anchor the composition in warm, amber depth—a fragrance that glows from within.",
   academyArticleIds: [
     "the-note-pyramid-explained",
     "guide-to-fragrance-families",
@@ -81,13 +81,14 @@ export const alienGoddessInspired: FragranceKnowledge = {
     "vanilla",
     "floral",
     "jasmine",
-    "tuberose",
     "coconut",
-    "sandalwood",
     "summer",
-    "long-wearing",
     "layering",
     "tropical",
+    "amber",
+    "heliotrope",
+    "bergamot",
+    "cashmeran",
   ],
   learningPath  : [
     "the-note-pyramid-explained",
@@ -105,11 +106,4 @@ export const alienGoddessInspired: FragranceKnowledge = {
   intensity     : 2,
   versatility   : 3,
   popularity    : 5,
-
-  // ── Relationships ────────────────────────────────────────────────────────────
-  // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
-  relationships: {
-    alternatives:     ["delina-inspired"],
-    wardrobePartners: ["baccarat-rouge-540-inspired"],
-  },
 };
