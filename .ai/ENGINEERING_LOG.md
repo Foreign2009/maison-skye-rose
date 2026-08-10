@@ -39,6 +39,55 @@ Never edit or delete past entries.
 
 ## Log
 
+### 2026-08-10 — EP6-P2 — Catalogue Remediation Queue
+
+**Participants:** Project Owner (founder authorisation) / Claude (implementation and execution)
+**Program:** EP6-P2 — Turn the EP6-P1 audit snapshot into a governed remediation queue. Apply P0–P5 priority model. Assess scentCharacter vocabulary as a separate governance dimension. Perform relationship structural audit. No knowledge records modified. No AI generation.
+
+**Decisions Made:**
+- Priority model P0–P5: P0 (HIGH free-text policy violations, deterministic correction), P1 (relationship structural defects), P2 (MEDIUM policy, editorial judgment required), P3 (AI relationships, no structural defects), P4 (ungoverned, no higher-priority issue), P5 (fully governed, NO_ACTION).
+- scentCharacter vocabulary policy: "Fresh & Light", "Balanced Signature", "Deep & Intense" → SAFE. "Rich & Long Wearing" → REVIEW (contains longevity language "Long Wearing"; schema-governed label, not editorial copy; requires founder disposition before any record-level correction).
+- Provenance debt classification: class A → DOCUMENTATION_ONLY (fully governed). class D → DOCUMENTATION_ONLY (factory origin traceable in factory-log.json). class E → CONTENT_ACTION_REQUIRED (no provenance evidence; content reliability requires research).
+- Structural validation: uses validateKnowledgeRecord() from app/lib/mkc/validator.ts, filtered to RELATIONSHIP_SLUG_NOT_FOUND, RELATIONSHIP_SELF_REFERENCE, RELATIONSHIP_DUPLICATE_SLUG codes. Result: 0 structural defects across all 89 records with relationships — clean graph.
+- Per-record vocabularyPolicyFindings populated for records with "Rich & Long Wearing" scentCharacter (47 records). Does not independently elevate priority tier — vocabulary concern is a schema-level decision, not per-record content action.
+- EDITORIAL_REVIEW count = 4 (not 3): burberry-goddess-inspired is P0 but also has a MEDIUM finding ("lasts all day" matches both HIGH pattern "lasts all day" and MEDIUM pattern "all-day" in the same excerpt).
+- requiresFounderDecision = 49: 47 (Rich & Long Wearing) + 4 (MEDIUM policy) − 2 (overlap) = 49.
+
+**Tasks Completed:**
+- Read: validator.ts (structural codes), RelationshipProducer.ts (confirmed all 89 relationships AI-generated), mkc-authoring-guide.md (Performance Claim Policy + scentCharacter vocabulary definitions), catalogue-knowledge-integrity-audit.json.
+- Created `scripts/identity/catalogueRemediationQueue.ts` — pure service: types, structural finder, vocabulary finder, provenance debt classifier, priority tier classifier, issue category builder, recommended actions, main runCatalogueRemediationQueue function.
+- Created `scripts/identity/run-catalogue-remediation-queue.ts` — runner (APPROVED_IDENTITY_ID=null, FORCE=false). Reads EP6-P1 JSON + mkcCatalogue, writes catalogue-remediation-queue.json.
+- Created `app/lib/identity/data/audits/catalogue-remediation-queue.json` — queue output: 93 items, P0=23, P1=0, P2=3, P3=65, P4=1, P5=1.
+- Created `scripts/identity/validate-catalogue-remediation-queue.ts` — 75-proof validation suite (§§ 100–900).
+- Added `mip:audit:catalogue-remediation` and `mip:validate:catalogue-remediation` to package.json.
+- Ran mip:validate:catalogue-remediation: 75/75 proofs passing.
+- Ran mip:validate:catalogue-integrity (EP6-P1 regression): 73/73 passing.
+- Ran all 12 existing regression suites: 661/661 passing.
+- Grand total: 809/809 proofs passing (734 existing + 75 new).
+
+**Tasks Started:**
+- None — EP6-P2 is complete.
+
+**Build Result:** PASS — 188 routes, 0 TypeScript errors, 0 warnings.
+
+**Files Changed:**
+- `scripts/identity/catalogueRemediationQueue.ts` — CREATED (remediation queue service)
+- `scripts/identity/run-catalogue-remediation-queue.ts` — CREATED (runner)
+- `scripts/identity/validate-catalogue-remediation-queue.ts` — CREATED (75-proof validation suite)
+- `app/lib/identity/data/audits/catalogue-remediation-queue.json` — CREATED (queue output)
+- `package.json` — mip:audit:catalogue-remediation and mip:validate:catalogue-remediation scripts added
+
+**Handoff:**
+- EP6-P2 is complete. Queue is at `app/lib/identity/data/audits/catalogue-remediation-queue.json`.
+- Key findings: 23 P0 records with deterministic HIGH policy corrections (longevity claims in educationTags/editorial fields). "Rich & Long Wearing" scentCharacter affects 47/93 records — founder disposition required before any schema-level correction. 0 structural relationship defects. 37 class E records have CONTENT_ACTION_REQUIRED provenance debt.
+- Do not start EP6-P3 automatically. Await founder direction.
+
+**Open Questions Carried Forward:**
+- Should "Rich & Long Wearing" be retained with a formal policy exception, or replaced with a longevity-neutral vocabulary value?
+- Which P0 records should be corrected first in EP6-P3?
+
+---
+
 ### 2026-08-10 — EP6-P1 — Catalogue Knowledge Integrity Audit
 
 **Participants:** Project Owner (founder authorisation) / Claude (implementation and execution)

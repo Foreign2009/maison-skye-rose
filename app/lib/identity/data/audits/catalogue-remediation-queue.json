@@ -1,0 +1,3828 @@
+{
+  "version": "1.0.0",
+  "generatedAt": "2026-08-10T10:54:37.160Z",
+  "generatedBy": "EP6-P2 — Catalogue Remediation Queue",
+  "auditVersion": "1.0.0",
+  "auditGeneratedAt": "2026-08-10T10:23:12.631Z",
+  "safetyInvariants": {
+    "noKnowledgeModified": true,
+    "noAiGeneration": true,
+    "noResearchCampaign": true,
+    "noPromotion": true,
+    "noIdentityMutation": true,
+    "approvedIdentityId": null,
+    "force": false
+  },
+  "summary": {
+    "totalRecords": 93,
+    "byPriorityTier": {
+      "P0": 23,
+      "P2": 3,
+      "P3": 65,
+      "P4": 1,
+      "P5": 1
+    },
+    "byIssueCategory": {
+      "DETERMINISTIC_POLICY_CORRECTION": 23,
+      "SCHEMA_POLICY_REVIEW": 47,
+      "RELATIONSHIP_EDITORIAL_REVIEW": 89,
+      "MIP_IDENTITY_ONBOARDING": 92,
+      "EDITORIAL_REVIEW": 4,
+      "NO_ACTION": 1
+    },
+    "totalStructuralFindings": 0,
+    "recordsWithStructuralFindings": 0,
+    "recordsRequiringFounderDecision": 49,
+    "recordsCanCorrectDeterministically": 23,
+    "vocabularyAssessment": {
+      "scentCharacter": [
+        {
+          "value": "Fresh & Light",
+          "usageCount": 12,
+          "policyClassification": "SAFE",
+          "reason": "Describes olfactive character and sillage weight. Contains no longevity or measurable performance language.",
+          "recommendedDisposition": "RETAIN — no vocabulary action required."
+        },
+        {
+          "value": "Balanced Signature",
+          "usageCount": 28,
+          "policyClassification": "SAFE",
+          "reason": "Describes olfactive balance and occasion weight. Contains no longevity or measurable performance language.",
+          "recommendedDisposition": "RETAIN — no vocabulary action required."
+        },
+        {
+          "value": "Rich & Long Wearing",
+          "usageCount": 47,
+          "policyClassification": "REVIEW",
+          "reason": "Contains 'Long Wearing' — longevity language. Per the Performance Claim Policy (docs/mkc-authoring-guide.md § Performance Claim Policy), measurable performance claims are prohibited. As a schema-governed vocabulary value this is not free-text editorial copy, but a founder disposition is required: either (a) a formal policy exception documenting that schema vocabulary values are excluded from the Performance Claim Policy, or (b) replacement with a longevity-neutral label that preserves the olfactive weight classification.",
+          "recommendedDisposition": "SCHEMA_GOVERNANCE_REVIEW — Founder decision required before any record-level correction: (a) retain with a formal policy exception noting that 'Rich & Long Wearing' describes olfactive weight and occasion appropriateness, not a measurable performance guarantee, or (b) replace with a longevity-neutral vocabulary value across all affected records."
+        },
+        {
+          "value": "Deep & Intense",
+          "usageCount": 6,
+          "policyClassification": "SAFE",
+          "reason": "Describes olfactive depth and intensity character. Contains no longevity or measurable performance language.",
+          "recommendedDisposition": "RETAIN — no vocabulary action required."
+        }
+      ]
+    }
+  },
+  "items": [
+    {
+      "slug": "althair-inspired",
+      "name": "Althair Inspired",
+      "collection": "Skye",
+      "provenanceClass": "D",
+      "generationProvenance": "legacy-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "HIGH",
+      "priorityTier": "P0",
+      "issueCategories": [
+        "DETERMINISTIC_POLICY_CORRECTION",
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [
+        {
+          "field": "educationTags",
+          "pattern": "long-wearing",
+          "excerpt": "long-wearing",
+          "severity": "HIGH"
+        }
+      ],
+      "vocabularyPolicyFindings": [
+        {
+          "field": "scentCharacter",
+          "value": "Rich & Long Wearing",
+          "policyClassification": "REVIEW",
+          "reason": "Contains 'Long Wearing' — longevity language. Per the Performance Claim Policy (docs/mkc-authoring-guide.md § Performance Claim Policy), measurable performance claims are prohibited. As a schema-governed vocabulary value this is not free-text editorial copy, but a founder disposition is required: either (a) a formal policy exception documenting that schema vocabulary values are excluded from the Performance Claim Policy, or (b) replacement with a longevity-neutral label that preserves the olfactive weight classification."
+        }
+      ],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 4,
+      "provenanceDebt": {
+        "classification": "DOCUMENTATION_ONLY",
+        "generationProvenance": "legacy-factory",
+        "governanceState": "no-mip-governance",
+        "note": "AI generation origin documented in scripts/factory/factory-log.json (factory v0.5.0, 2026-07-13). Content origin is traceable via factory audit trail. Formal MIP identity governance and R2 reconciliation absent."
+      },
+      "recommendedActions": [
+        "DETERMINISTIC_POLICY_CORRECTION",
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": true,
+      "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "armani-si-inspired",
+      "name": "Armani Si Inspired",
+      "collection": "Rose",
+      "provenanceClass": "D",
+      "generationProvenance": "legacy-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "HIGH",
+      "priorityTier": "P0",
+      "issueCategories": [
+        "DETERMINISTIC_POLICY_CORRECTION",
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [
+        {
+          "field": "educationTags",
+          "pattern": "long-wearing",
+          "excerpt": "long-wearing",
+          "severity": "HIGH"
+        }
+      ],
+      "vocabularyPolicyFindings": [
+        {
+          "field": "scentCharacter",
+          "value": "Rich & Long Wearing",
+          "policyClassification": "REVIEW",
+          "reason": "Contains 'Long Wearing' — longevity language. Per the Performance Claim Policy (docs/mkc-authoring-guide.md § Performance Claim Policy), measurable performance claims are prohibited. As a schema-governed vocabulary value this is not free-text editorial copy, but a founder disposition is required: either (a) a formal policy exception documenting that schema vocabulary values are excluded from the Performance Claim Policy, or (b) replacement with a longevity-neutral label that preserves the olfactive weight classification."
+        }
+      ],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 3,
+      "provenanceDebt": {
+        "classification": "DOCUMENTATION_ONLY",
+        "generationProvenance": "legacy-factory",
+        "governanceState": "no-mip-governance",
+        "note": "AI generation origin documented in scripts/factory/factory-log.json (factory v0.5.0, 2026-07-13). Content origin is traceable via factory audit trail. Formal MIP identity governance and R2 reconciliation absent."
+      },
+      "recommendedActions": [
+        "DETERMINISTIC_POLICY_CORRECTION",
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": true,
+      "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "baccarat-rouge-540-extrait-inspired",
+      "name": "Baccarat Rouge 540 Extrait Inspired",
+      "collection": "Rose",
+      "provenanceClass": "D",
+      "generationProvenance": "legacy-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "HIGH",
+      "priorityTier": "P0",
+      "issueCategories": [
+        "DETERMINISTIC_POLICY_CORRECTION",
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [
+        {
+          "field": "educationTags",
+          "pattern": "long-wearing",
+          "excerpt": "long-wearing",
+          "severity": "HIGH"
+        }
+      ],
+      "vocabularyPolicyFindings": [
+        {
+          "field": "scentCharacter",
+          "value": "Rich & Long Wearing",
+          "policyClassification": "REVIEW",
+          "reason": "Contains 'Long Wearing' — longevity language. Per the Performance Claim Policy (docs/mkc-authoring-guide.md § Performance Claim Policy), measurable performance claims are prohibited. As a schema-governed vocabulary value this is not free-text editorial copy, but a founder disposition is required: either (a) a formal policy exception documenting that schema vocabulary values are excluded from the Performance Claim Policy, or (b) replacement with a longevity-neutral label that preserves the olfactive weight classification."
+        }
+      ],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 3,
+      "provenanceDebt": {
+        "classification": "DOCUMENTATION_ONLY",
+        "generationProvenance": "legacy-factory",
+        "governanceState": "no-mip-governance",
+        "note": "AI generation origin documented in scripts/factory/factory-log.json (factory v0.5.0, 2026-07-13). Content origin is traceable via factory audit trail. Formal MIP identity governance and R2 reconciliation absent."
+      },
+      "recommendedActions": [
+        "DETERMINISTIC_POLICY_CORRECTION",
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": true,
+      "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "black-opium-inspired",
+      "name": "Black Opium Inspired",
+      "collection": "Rose",
+      "provenanceClass": "D",
+      "generationProvenance": "legacy-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "HIGH",
+      "priorityTier": "P0",
+      "issueCategories": [
+        "DETERMINISTIC_POLICY_CORRECTION",
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [
+        {
+          "field": "educationTags",
+          "pattern": "long-wearing",
+          "excerpt": "long-wearing",
+          "severity": "HIGH"
+        }
+      ],
+      "vocabularyPolicyFindings": [
+        {
+          "field": "scentCharacter",
+          "value": "Rich & Long Wearing",
+          "policyClassification": "REVIEW",
+          "reason": "Contains 'Long Wearing' — longevity language. Per the Performance Claim Policy (docs/mkc-authoring-guide.md § Performance Claim Policy), measurable performance claims are prohibited. As a schema-governed vocabulary value this is not free-text editorial copy, but a founder disposition is required: either (a) a formal policy exception documenting that schema vocabulary values are excluded from the Performance Claim Policy, or (b) replacement with a longevity-neutral label that preserves the olfactive weight classification."
+        }
+      ],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 5,
+      "provenanceDebt": {
+        "classification": "DOCUMENTATION_ONLY",
+        "generationProvenance": "legacy-factory",
+        "governanceState": "no-mip-governance",
+        "note": "AI generation origin documented in scripts/factory/factory-log.json (factory v0.5.0, 2026-07-13). Content origin is traceable via factory audit trail. Formal MIP identity governance and R2 reconciliation absent."
+      },
+      "recommendedActions": [
+        "DETERMINISTIC_POLICY_CORRECTION",
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": true,
+      "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "blanche-bete-inspired",
+      "name": "Blanche Bete Inspired",
+      "collection": "Rose",
+      "provenanceClass": "D",
+      "generationProvenance": "legacy-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "HIGH",
+      "priorityTier": "P0",
+      "issueCategories": [
+        "DETERMINISTIC_POLICY_CORRECTION",
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [
+        {
+          "field": "recommendedFor",
+          "pattern": "long-wearing",
+          "excerpt": "Anyone building a winter collection who values intimate, long-wearing scents over bold projection",
+          "severity": "HIGH"
+        },
+        {
+          "field": "educationTags",
+          "pattern": "long-wearing",
+          "excerpt": "long-wearing",
+          "severity": "HIGH"
+        }
+      ],
+      "vocabularyPolicyFindings": [
+        {
+          "field": "scentCharacter",
+          "value": "Rich & Long Wearing",
+          "policyClassification": "REVIEW",
+          "reason": "Contains 'Long Wearing' — longevity language. Per the Performance Claim Policy (docs/mkc-authoring-guide.md § Performance Claim Policy), measurable performance claims are prohibited. As a schema-governed vocabulary value this is not free-text editorial copy, but a founder disposition is required: either (a) a formal policy exception documenting that schema vocabulary values are excluded from the Performance Claim Policy, or (b) replacement with a longevity-neutral label that preserves the olfactive weight classification."
+        }
+      ],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 2,
+      "provenanceDebt": {
+        "classification": "DOCUMENTATION_ONLY",
+        "generationProvenance": "legacy-factory",
+        "governanceState": "no-mip-governance",
+        "note": "AI generation origin documented in scripts/factory/factory-log.json (factory v0.5.0, 2026-07-13). Content origin is traceable via factory audit trail. Formal MIP identity governance and R2 reconciliation absent."
+      },
+      "recommendedActions": [
+        "DETERMINISTIC_POLICY_CORRECTION",
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": true,
+      "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "burberry-goddess-inspired",
+      "name": "Burberry Goddess Inspired",
+      "collection": "Rose",
+      "provenanceClass": "D",
+      "generationProvenance": "legacy-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "HIGH",
+      "priorityTier": "P0",
+      "issueCategories": [
+        "DETERMINISTIC_POLICY_CORRECTION",
+        "EDITORIAL_REVIEW",
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [
+        {
+          "field": "recommendedFor",
+          "pattern": "lasts all day",
+          "excerpt": "Those who love rose and vanilla but prefer elegance over sweetness, with depth that lasts all day.",
+          "severity": "HIGH"
+        },
+        {
+          "field": "recommendedFor",
+          "pattern": "all-day",
+          "excerpt": "Those who love rose and vanilla but prefer elegance over sweetness, with depth that lasts all day.",
+          "severity": "MEDIUM"
+        }
+      ],
+      "vocabularyPolicyFindings": [
+        {
+          "field": "scentCharacter",
+          "value": "Rich & Long Wearing",
+          "policyClassification": "REVIEW",
+          "reason": "Contains 'Long Wearing' — longevity language. Per the Performance Claim Policy (docs/mkc-authoring-guide.md § Performance Claim Policy), measurable performance claims are prohibited. As a schema-governed vocabulary value this is not free-text editorial copy, but a founder disposition is required: either (a) a formal policy exception documenting that schema vocabulary values are excluded from the Performance Claim Policy, or (b) replacement with a longevity-neutral label that preserves the olfactive weight classification."
+        }
+      ],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 2,
+      "provenanceDebt": {
+        "classification": "DOCUMENTATION_ONLY",
+        "generationProvenance": "legacy-factory",
+        "governanceState": "no-mip-governance",
+        "note": "AI generation origin documented in scripts/factory/factory-log.json (factory v0.5.0, 2026-07-13). Content origin is traceable via factory audit trail. Formal MIP identity governance and R2 reconciliation absent."
+      },
+      "recommendedActions": [
+        "DETERMINISTIC_POLICY_CORRECTION",
+        "EDITORIAL_REVIEW",
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": true,
+      "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "burberry-her-inspired",
+      "name": "Burberry Her Inspired",
+      "collection": "Rose",
+      "provenanceClass": "D",
+      "generationProvenance": "legacy-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "HIGH",
+      "priorityTier": "P0",
+      "issueCategories": [
+        "DETERMINISTIC_POLICY_CORRECTION",
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [
+        {
+          "field": "educationTags",
+          "pattern": "long-wearing",
+          "excerpt": "long-wearing",
+          "severity": "HIGH"
+        }
+      ],
+      "vocabularyPolicyFindings": [
+        {
+          "field": "scentCharacter",
+          "value": "Rich & Long Wearing",
+          "policyClassification": "REVIEW",
+          "reason": "Contains 'Long Wearing' — longevity language. Per the Performance Claim Policy (docs/mkc-authoring-guide.md § Performance Claim Policy), measurable performance claims are prohibited. As a schema-governed vocabulary value this is not free-text editorial copy, but a founder disposition is required: either (a) a formal policy exception documenting that schema vocabulary values are excluded from the Performance Claim Policy, or (b) replacement with a longevity-neutral label that preserves the olfactive weight classification."
+        }
+      ],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 1,
+      "provenanceDebt": {
+        "classification": "DOCUMENTATION_ONLY",
+        "generationProvenance": "legacy-factory",
+        "governanceState": "no-mip-governance",
+        "note": "AI generation origin documented in scripts/factory/factory-log.json (factory v0.5.0, 2026-07-13). Content origin is traceable via factory audit trail. Formal MIP identity governance and R2 reconciliation absent."
+      },
+      "recommendedActions": [
+        "DETERMINISTIC_POLICY_CORRECTION",
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": true,
+      "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "carlisle-inspired",
+      "name": "Carlisle Inspired",
+      "collection": "Skye",
+      "provenanceClass": "D",
+      "generationProvenance": "legacy-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "HIGH",
+      "priorityTier": "P0",
+      "issueCategories": [
+        "DETERMINISTIC_POLICY_CORRECTION",
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [
+        {
+          "field": "educationTags",
+          "pattern": "long-wearing",
+          "excerpt": "long-wearing",
+          "severity": "HIGH"
+        }
+      ],
+      "vocabularyPolicyFindings": [
+        {
+          "field": "scentCharacter",
+          "value": "Rich & Long Wearing",
+          "policyClassification": "REVIEW",
+          "reason": "Contains 'Long Wearing' — longevity language. Per the Performance Claim Policy (docs/mkc-authoring-guide.md § Performance Claim Policy), measurable performance claims are prohibited. As a schema-governed vocabulary value this is not free-text editorial copy, but a founder disposition is required: either (a) a formal policy exception documenting that schema vocabulary values are excluded from the Performance Claim Policy, or (b) replacement with a longevity-neutral label that preserves the olfactive weight classification."
+        }
+      ],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 4,
+      "provenanceDebt": {
+        "classification": "DOCUMENTATION_ONLY",
+        "generationProvenance": "legacy-factory",
+        "governanceState": "no-mip-governance",
+        "note": "AI generation origin documented in scripts/factory/factory-log.json (factory v0.5.0, 2026-07-13). Content origin is traceable via factory audit trail. Formal MIP identity governance and R2 reconciliation absent."
+      },
+      "recommendedActions": [
+        "DETERMINISTIC_POLICY_CORRECTION",
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": true,
+      "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "crystal-noir-inspired",
+      "name": "Crystal Noir Inspired",
+      "collection": "Rose",
+      "provenanceClass": "D",
+      "generationProvenance": "legacy-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "HIGH",
+      "priorityTier": "P0",
+      "issueCategories": [
+        "DETERMINISTIC_POLICY_CORRECTION",
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [
+        {
+          "field": "educationTags",
+          "pattern": "long-wearing",
+          "excerpt": "long-wearing",
+          "severity": "HIGH"
+        }
+      ],
+      "vocabularyPolicyFindings": [
+        {
+          "field": "scentCharacter",
+          "value": "Rich & Long Wearing",
+          "policyClassification": "REVIEW",
+          "reason": "Contains 'Long Wearing' — longevity language. Per the Performance Claim Policy (docs/mkc-authoring-guide.md § Performance Claim Policy), measurable performance claims are prohibited. As a schema-governed vocabulary value this is not free-text editorial copy, but a founder disposition is required: either (a) a formal policy exception documenting that schema vocabulary values are excluded from the Performance Claim Policy, or (b) replacement with a longevity-neutral label that preserves the olfactive weight classification."
+        }
+      ],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 3,
+      "provenanceDebt": {
+        "classification": "DOCUMENTATION_ONLY",
+        "generationProvenance": "legacy-factory",
+        "governanceState": "no-mip-governance",
+        "note": "AI generation origin documented in scripts/factory/factory-log.json (factory v0.5.0, 2026-07-13). Content origin is traceable via factory audit trail. Formal MIP identity governance and R2 reconciliation absent."
+      },
+      "recommendedActions": [
+        "DETERMINISTIC_POLICY_CORRECTION",
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": true,
+      "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "delina-exclusif-inspired",
+      "name": "Delina Exclusif Inspired",
+      "collection": "Rose",
+      "provenanceClass": "D",
+      "generationProvenance": "legacy-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "HIGH",
+      "priorityTier": "P0",
+      "issueCategories": [
+        "DETERMINISTIC_POLICY_CORRECTION",
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [
+        {
+          "field": "educationTags",
+          "pattern": "long-wearing",
+          "excerpt": "long-wearing",
+          "severity": "HIGH"
+        }
+      ],
+      "vocabularyPolicyFindings": [
+        {
+          "field": "scentCharacter",
+          "value": "Rich & Long Wearing",
+          "policyClassification": "REVIEW",
+          "reason": "Contains 'Long Wearing' — longevity language. Per the Performance Claim Policy (docs/mkc-authoring-guide.md § Performance Claim Policy), measurable performance claims are prohibited. As a schema-governed vocabulary value this is not free-text editorial copy, but a founder disposition is required: either (a) a formal policy exception documenting that schema vocabulary values are excluded from the Performance Claim Policy, or (b) replacement with a longevity-neutral label that preserves the olfactive weight classification."
+        }
+      ],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 4,
+      "provenanceDebt": {
+        "classification": "DOCUMENTATION_ONLY",
+        "generationProvenance": "legacy-factory",
+        "governanceState": "no-mip-governance",
+        "note": "AI generation origin documented in scripts/factory/factory-log.json (factory v0.5.0, 2026-07-13). Content origin is traceable via factory audit trail. Formal MIP identity governance and R2 reconciliation absent."
+      },
+      "recommendedActions": [
+        "DETERMINISTIC_POLICY_CORRECTION",
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": true,
+      "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "flowerbomb-inspired",
+      "name": "Flowerbomb Inspired",
+      "collection": "Rose",
+      "provenanceClass": "D",
+      "generationProvenance": "legacy-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "HIGH",
+      "priorityTier": "P0",
+      "issueCategories": [
+        "DETERMINISTIC_POLICY_CORRECTION",
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [
+        {
+          "field": "recommendedFor",
+          "pattern": "long-wearing",
+          "excerpt": "Anyone looking for a long-wearing fragrance that makes a sensual statement without overwhelming the senses.",
+          "severity": "HIGH"
+        }
+      ],
+      "vocabularyPolicyFindings": [
+        {
+          "field": "scentCharacter",
+          "value": "Rich & Long Wearing",
+          "policyClassification": "REVIEW",
+          "reason": "Contains 'Long Wearing' — longevity language. Per the Performance Claim Policy (docs/mkc-authoring-guide.md § Performance Claim Policy), measurable performance claims are prohibited. As a schema-governed vocabulary value this is not free-text editorial copy, but a founder disposition is required: either (a) a formal policy exception documenting that schema vocabulary values are excluded from the Performance Claim Policy, or (b) replacement with a longevity-neutral label that preserves the olfactive weight classification."
+        }
+      ],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 2,
+      "provenanceDebt": {
+        "classification": "DOCUMENTATION_ONLY",
+        "generationProvenance": "legacy-factory",
+        "governanceState": "no-mip-governance",
+        "note": "AI generation origin documented in scripts/factory/factory-log.json (factory v0.5.0, 2026-07-13). Content origin is traceable via factory audit trail. Formal MIP identity governance and R2 reconciliation absent."
+      },
+      "recommendedActions": [
+        "DETERMINISTIC_POLICY_CORRECTION",
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": true,
+      "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "gentle-fluidity-gold-inspired",
+      "name": "Gentle Fluidity Gold Inspired",
+      "collection": "Rose",
+      "provenanceClass": "D",
+      "generationProvenance": "legacy-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "HIGH",
+      "priorityTier": "P0",
+      "issueCategories": [
+        "DETERMINISTIC_POLICY_CORRECTION",
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [
+        {
+          "field": "educationTags",
+          "pattern": "long-wearing",
+          "excerpt": "long-wearing",
+          "severity": "HIGH"
+        }
+      ],
+      "vocabularyPolicyFindings": [
+        {
+          "field": "scentCharacter",
+          "value": "Rich & Long Wearing",
+          "policyClassification": "REVIEW",
+          "reason": "Contains 'Long Wearing' — longevity language. Per the Performance Claim Policy (docs/mkc-authoring-guide.md § Performance Claim Policy), measurable performance claims are prohibited. As a schema-governed vocabulary value this is not free-text editorial copy, but a founder disposition is required: either (a) a formal policy exception documenting that schema vocabulary values are excluded from the Performance Claim Policy, or (b) replacement with a longevity-neutral label that preserves the olfactive weight classification."
+        }
+      ],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 1,
+      "provenanceDebt": {
+        "classification": "DOCUMENTATION_ONLY",
+        "generationProvenance": "legacy-factory",
+        "governanceState": "no-mip-governance",
+        "note": "AI generation origin documented in scripts/factory/factory-log.json (factory v0.5.0, 2026-07-13). Content origin is traceable via factory audit trail. Formal MIP identity governance and R2 reconciliation absent."
+      },
+      "recommendedActions": [
+        "DETERMINISTIC_POLICY_CORRECTION",
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": true,
+      "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "good-girl-inspired",
+      "name": "Good Girl Inspired",
+      "collection": "Rose",
+      "provenanceClass": "D",
+      "generationProvenance": "legacy-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "HIGH",
+      "priorityTier": "P0",
+      "issueCategories": [
+        "DETERMINISTIC_POLICY_CORRECTION",
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [
+        {
+          "field": "educationTags",
+          "pattern": "long-wearing",
+          "excerpt": "long-wearing",
+          "severity": "HIGH"
+        }
+      ],
+      "vocabularyPolicyFindings": [
+        {
+          "field": "scentCharacter",
+          "value": "Rich & Long Wearing",
+          "policyClassification": "REVIEW",
+          "reason": "Contains 'Long Wearing' — longevity language. Per the Performance Claim Policy (docs/mkc-authoring-guide.md § Performance Claim Policy), measurable performance claims are prohibited. As a schema-governed vocabulary value this is not free-text editorial copy, but a founder disposition is required: either (a) a formal policy exception documenting that schema vocabulary values are excluded from the Performance Claim Policy, or (b) replacement with a longevity-neutral label that preserves the olfactive weight classification."
+        }
+      ],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 3,
+      "provenanceDebt": {
+        "classification": "DOCUMENTATION_ONLY",
+        "generationProvenance": "legacy-factory",
+        "governanceState": "no-mip-governance",
+        "note": "AI generation origin documented in scripts/factory/factory-log.json (factory v0.5.0, 2026-07-13). Content origin is traceable via factory audit trail. Formal MIP identity governance and R2 reconciliation absent."
+      },
+      "recommendedActions": [
+        "DETERMINISTIC_POLICY_CORRECTION",
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": true,
+      "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "guidance-inspired",
+      "name": "Guidance Inspired",
+      "collection": "Rose",
+      "provenanceClass": "D",
+      "generationProvenance": "legacy-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "HIGH",
+      "priorityTier": "P0",
+      "issueCategories": [
+        "DETERMINISTIC_POLICY_CORRECTION",
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [
+        {
+          "field": "educationTags",
+          "pattern": "long-wearing",
+          "excerpt": "long-wearing",
+          "severity": "HIGH"
+        }
+      ],
+      "vocabularyPolicyFindings": [
+        {
+          "field": "scentCharacter",
+          "value": "Rich & Long Wearing",
+          "policyClassification": "REVIEW",
+          "reason": "Contains 'Long Wearing' — longevity language. Per the Performance Claim Policy (docs/mkc-authoring-guide.md § Performance Claim Policy), measurable performance claims are prohibited. As a schema-governed vocabulary value this is not free-text editorial copy, but a founder disposition is required: either (a) a formal policy exception documenting that schema vocabulary values are excluded from the Performance Claim Policy, or (b) replacement with a longevity-neutral label that preserves the olfactive weight classification."
+        }
+      ],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 1,
+      "provenanceDebt": {
+        "classification": "DOCUMENTATION_ONLY",
+        "generationProvenance": "legacy-factory",
+        "governanceState": "no-mip-governance",
+        "note": "AI generation origin documented in scripts/factory/factory-log.json (factory v0.5.0, 2026-07-13). Content origin is traceable via factory audit trail. Formal MIP identity governance and R2 reconciliation absent."
+      },
+      "recommendedActions": [
+        "DETERMINISTIC_POLICY_CORRECTION",
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": true,
+      "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "kayali-vanilla-28-inspired",
+      "name": "Kayali Vanilla 28 Inspired",
+      "collection": "Rose",
+      "provenanceClass": "D",
+      "generationProvenance": "legacy-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "HIGH",
+      "priorityTier": "P0",
+      "issueCategories": [
+        "DETERMINISTIC_POLICY_CORRECTION",
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [
+        {
+          "field": "recommendedFor",
+          "pattern": "long-wearing",
+          "excerpt": "Women who want a sensual, long-wearing fragrance for date nights and intimate winter occasions",
+          "severity": "HIGH"
+        }
+      ],
+      "vocabularyPolicyFindings": [
+        {
+          "field": "scentCharacter",
+          "value": "Rich & Long Wearing",
+          "policyClassification": "REVIEW",
+          "reason": "Contains 'Long Wearing' — longevity language. Per the Performance Claim Policy (docs/mkc-authoring-guide.md § Performance Claim Policy), measurable performance claims are prohibited. As a schema-governed vocabulary value this is not free-text editorial copy, but a founder disposition is required: either (a) a formal policy exception documenting that schema vocabulary values are excluded from the Performance Claim Policy, or (b) replacement with a longevity-neutral label that preserves the olfactive weight classification."
+        }
+      ],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 4,
+      "provenanceDebt": {
+        "classification": "DOCUMENTATION_ONLY",
+        "generationProvenance": "legacy-factory",
+        "governanceState": "no-mip-governance",
+        "note": "AI generation origin documented in scripts/factory/factory-log.json (factory v0.5.0, 2026-07-13). Content origin is traceable via factory audit trail. Formal MIP identity governance and R2 reconciliation absent."
+      },
+      "recommendedActions": [
+        "DETERMINISTIC_POLICY_CORRECTION",
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": true,
+      "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "la-vie-est-belle-inspired",
+      "name": "La Vie Est Belle Inspired",
+      "collection": "Rose",
+      "provenanceClass": "D",
+      "generationProvenance": "legacy-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "HIGH",
+      "priorityTier": "P0",
+      "issueCategories": [
+        "DETERMINISTIC_POLICY_CORRECTION",
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [
+        {
+          "field": "recommendedFor",
+          "pattern": "long-wearing",
+          "excerpt": "Anyone looking for a long-wearing fragrance that feels intimate and powdered—intimate enough for close encounters, ra...",
+          "severity": "HIGH"
+        },
+        {
+          "field": "educationTags",
+          "pattern": "long-wearing",
+          "excerpt": "long-wearing",
+          "severity": "HIGH"
+        }
+      ],
+      "vocabularyPolicyFindings": [
+        {
+          "field": "scentCharacter",
+          "value": "Rich & Long Wearing",
+          "policyClassification": "REVIEW",
+          "reason": "Contains 'Long Wearing' — longevity language. Per the Performance Claim Policy (docs/mkc-authoring-guide.md § Performance Claim Policy), measurable performance claims are prohibited. As a schema-governed vocabulary value this is not free-text editorial copy, but a founder disposition is required: either (a) a formal policy exception documenting that schema vocabulary values are excluded from the Performance Claim Policy, or (b) replacement with a longevity-neutral label that preserves the olfactive weight classification."
+        }
+      ],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 6,
+      "provenanceDebt": {
+        "classification": "DOCUMENTATION_ONLY",
+        "generationProvenance": "legacy-factory",
+        "governanceState": "no-mip-governance",
+        "note": "AI generation origin documented in scripts/factory/factory-log.json (factory v0.5.0, 2026-07-13). Content origin is traceable via factory audit trail. Formal MIP identity governance and R2 reconciliation absent."
+      },
+      "recommendedActions": [
+        "DETERMINISTIC_POLICY_CORRECTION",
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": true,
+      "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "libre-inspired",
+      "name": "Libre Inspired",
+      "collection": "Rose",
+      "provenanceClass": "D",
+      "generationProvenance": "legacy-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "HIGH",
+      "priorityTier": "P0",
+      "issueCategories": [
+        "DETERMINISTIC_POLICY_CORRECTION",
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [
+        {
+          "field": "recommendedFor",
+          "pattern": "long-wearing",
+          "excerpt": "Anyone looking for a rich, long-wearing floral that evolves throughout the day without fading into the background.",
+          "severity": "HIGH"
+        },
+        {
+          "field": "educationTags",
+          "pattern": "long-wearing",
+          "excerpt": "long-wearing",
+          "severity": "HIGH"
+        }
+      ],
+      "vocabularyPolicyFindings": [
+        {
+          "field": "scentCharacter",
+          "value": "Rich & Long Wearing",
+          "policyClassification": "REVIEW",
+          "reason": "Contains 'Long Wearing' — longevity language. Per the Performance Claim Policy (docs/mkc-authoring-guide.md § Performance Claim Policy), measurable performance claims are prohibited. As a schema-governed vocabulary value this is not free-text editorial copy, but a founder disposition is required: either (a) a formal policy exception documenting that schema vocabulary values are excluded from the Performance Claim Policy, or (b) replacement with a longevity-neutral label that preserves the olfactive weight classification."
+        }
+      ],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 2,
+      "provenanceDebt": {
+        "classification": "DOCUMENTATION_ONLY",
+        "generationProvenance": "legacy-factory",
+        "governanceState": "no-mip-governance",
+        "note": "AI generation origin documented in scripts/factory/factory-log.json (factory v0.5.0, 2026-07-13). Content origin is traceable via factory audit trail. Formal MIP identity governance and R2 reconciliation absent."
+      },
+      "recommendedActions": [
+        "DETERMINISTIC_POLICY_CORRECTION",
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": true,
+      "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "libre-intense-inspired",
+      "name": "Libre Intense Inspired",
+      "collection": "Rose",
+      "provenanceClass": "D",
+      "generationProvenance": "legacy-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "HIGH",
+      "priorityTier": "P0",
+      "issueCategories": [
+        "DETERMINISTIC_POLICY_CORRECTION",
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [
+        {
+          "field": "educationTags",
+          "pattern": "long-wearing",
+          "excerpt": "long-wearing",
+          "severity": "HIGH"
+        }
+      ],
+      "vocabularyPolicyFindings": [
+        {
+          "field": "scentCharacter",
+          "value": "Rich & Long Wearing",
+          "policyClassification": "REVIEW",
+          "reason": "Contains 'Long Wearing' — longevity language. Per the Performance Claim Policy (docs/mkc-authoring-guide.md § Performance Claim Policy), measurable performance claims are prohibited. As a schema-governed vocabulary value this is not free-text editorial copy, but a founder disposition is required: either (a) a formal policy exception documenting that schema vocabulary values are excluded from the Performance Claim Policy, or (b) replacement with a longevity-neutral label that preserves the olfactive weight classification."
+        }
+      ],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 3,
+      "provenanceDebt": {
+        "classification": "DOCUMENTATION_ONLY",
+        "generationProvenance": "legacy-factory",
+        "governanceState": "no-mip-governance",
+        "note": "AI generation origin documented in scripts/factory/factory-log.json (factory v0.5.0, 2026-07-13). Content origin is traceable via factory audit trail. Formal MIP identity governance and R2 reconciliation absent."
+      },
+      "recommendedActions": [
+        "DETERMINISTIC_POLICY_CORRECTION",
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": true,
+      "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "libre-le-parfum-inspired",
+      "name": "Libre Le Parfum Inspired",
+      "collection": "Rose",
+      "provenanceClass": "D",
+      "generationProvenance": "legacy-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "HIGH",
+      "priorityTier": "P0",
+      "issueCategories": [
+        "DETERMINISTIC_POLICY_CORRECTION",
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [
+        {
+          "field": "recommendedFor",
+          "pattern": "long-wearing",
+          "excerpt": "Anyone looking for a long-wearing fragrance with moderate projection that feels both luxurious and effortlessly power...",
+          "severity": "HIGH"
+        },
+        {
+          "field": "educationTags",
+          "pattern": "long-wearing",
+          "excerpt": "long-wearing",
+          "severity": "HIGH"
+        }
+      ],
+      "vocabularyPolicyFindings": [
+        {
+          "field": "scentCharacter",
+          "value": "Rich & Long Wearing",
+          "policyClassification": "REVIEW",
+          "reason": "Contains 'Long Wearing' — longevity language. Per the Performance Claim Policy (docs/mkc-authoring-guide.md § Performance Claim Policy), measurable performance claims are prohibited. As a schema-governed vocabulary value this is not free-text editorial copy, but a founder disposition is required: either (a) a formal policy exception documenting that schema vocabulary values are excluded from the Performance Claim Policy, or (b) replacement with a longevity-neutral label that preserves the olfactive weight classification."
+        }
+      ],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 1,
+      "provenanceDebt": {
+        "classification": "DOCUMENTATION_ONLY",
+        "generationProvenance": "legacy-factory",
+        "governanceState": "no-mip-governance",
+        "note": "AI generation origin documented in scripts/factory/factory-log.json (factory v0.5.0, 2026-07-13). Content origin is traceable via factory audit trail. Formal MIP identity governance and R2 reconciliation absent."
+      },
+      "recommendedActions": [
+        "DETERMINISTIC_POLICY_CORRECTION",
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": true,
+      "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "love-don't-be-shy-inspired",
+      "name": "Love Don't Be Shy Inspired",
+      "collection": "Rose",
+      "provenanceClass": "D",
+      "generationProvenance": "legacy-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "HIGH",
+      "priorityTier": "P0",
+      "issueCategories": [
+        "DETERMINISTIC_POLICY_CORRECTION",
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [
+        {
+          "field": "educationTags",
+          "pattern": "long-wearing",
+          "excerpt": "long-wearing",
+          "severity": "HIGH"
+        }
+      ],
+      "vocabularyPolicyFindings": [
+        {
+          "field": "scentCharacter",
+          "value": "Rich & Long Wearing",
+          "policyClassification": "REVIEW",
+          "reason": "Contains 'Long Wearing' — longevity language. Per the Performance Claim Policy (docs/mkc-authoring-guide.md § Performance Claim Policy), measurable performance claims are prohibited. As a schema-governed vocabulary value this is not free-text editorial copy, but a founder disposition is required: either (a) a formal policy exception documenting that schema vocabulary values are excluded from the Performance Claim Policy, or (b) replacement with a longevity-neutral label that preserves the olfactive weight classification."
+        }
+      ],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 4,
+      "provenanceDebt": {
+        "classification": "DOCUMENTATION_ONLY",
+        "generationProvenance": "legacy-factory",
+        "governanceState": "no-mip-governance",
+        "note": "AI generation origin documented in scripts/factory/factory-log.json (factory v0.5.0, 2026-07-13). Content origin is traceable via factory audit trail. Formal MIP identity governance and R2 reconciliation absent."
+      },
+      "recommendedActions": [
+        "DETERMINISTIC_POLICY_CORRECTION",
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": true,
+      "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "rolling-in-love-inspired",
+      "name": "Rolling In Love Inspired",
+      "collection": "Rose",
+      "provenanceClass": "D",
+      "generationProvenance": "legacy-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "HIGH",
+      "priorityTier": "P0",
+      "issueCategories": [
+        "DETERMINISTIC_POLICY_CORRECTION",
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [
+        {
+          "field": "recommendedFor",
+          "pattern": "long-wearing",
+          "excerpt": "Those who love rose and almond together and want a long-wearing fragrance that feels both luxurious and approachable.",
+          "severity": "HIGH"
+        }
+      ],
+      "vocabularyPolicyFindings": [
+        {
+          "field": "scentCharacter",
+          "value": "Rich & Long Wearing",
+          "policyClassification": "REVIEW",
+          "reason": "Contains 'Long Wearing' — longevity language. Per the Performance Claim Policy (docs/mkc-authoring-guide.md § Performance Claim Policy), measurable performance claims are prohibited. As a schema-governed vocabulary value this is not free-text editorial copy, but a founder disposition is required: either (a) a formal policy exception documenting that schema vocabulary values are excluded from the Performance Claim Policy, or (b) replacement with a longevity-neutral label that preserves the olfactive weight classification."
+        }
+      ],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 2,
+      "provenanceDebt": {
+        "classification": "DOCUMENTATION_ONLY",
+        "generationProvenance": "legacy-factory",
+        "governanceState": "no-mip-governance",
+        "note": "AI generation origin documented in scripts/factory/factory-log.json (factory v0.5.0, 2026-07-13). Content origin is traceable via factory audit trail. Formal MIP identity governance and R2 reconciliation absent."
+      },
+      "recommendedActions": [
+        "DETERMINISTIC_POLICY_CORRECTION",
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": true,
+      "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "valentino-donna-born-in-roma-inspired",
+      "name": "Valentino Donna Born In Roma Inspired",
+      "collection": "Rose",
+      "provenanceClass": "D",
+      "generationProvenance": "legacy-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "HIGH",
+      "priorityTier": "P0",
+      "issueCategories": [
+        "DETERMINISTIC_POLICY_CORRECTION",
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [
+        {
+          "field": "recommendedFor",
+          "pattern": "long-wearing",
+          "excerpt": "Anyone building a refined collection who values long-wearing elegance that evolves beautifully from morning to evening.",
+          "severity": "HIGH"
+        },
+        {
+          "field": "educationTags",
+          "pattern": "long-wearing",
+          "excerpt": "long-wearing",
+          "severity": "HIGH"
+        }
+      ],
+      "vocabularyPolicyFindings": [
+        {
+          "field": "scentCharacter",
+          "value": "Rich & Long Wearing",
+          "policyClassification": "REVIEW",
+          "reason": "Contains 'Long Wearing' — longevity language. Per the Performance Claim Policy (docs/mkc-authoring-guide.md § Performance Claim Policy), measurable performance claims are prohibited. As a schema-governed vocabulary value this is not free-text editorial copy, but a founder disposition is required: either (a) a formal policy exception documenting that schema vocabulary values are excluded from the Performance Claim Policy, or (b) replacement with a longevity-neutral label that preserves the olfactive weight classification."
+        }
+      ],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 2,
+      "provenanceDebt": {
+        "classification": "DOCUMENTATION_ONLY",
+        "generationProvenance": "legacy-factory",
+        "governanceState": "no-mip-governance",
+        "note": "AI generation origin documented in scripts/factory/factory-log.json (factory v0.5.0, 2026-07-13). Content origin is traceable via factory audit trail. Formal MIP identity governance and R2 reconciliation absent."
+      },
+      "recommendedActions": [
+        "DETERMINISTIC_POLICY_CORRECTION",
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": true,
+      "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "vanilla-28-inspired",
+      "name": "Vanilla 28 Inspired",
+      "collection": "Rose",
+      "provenanceClass": "D",
+      "generationProvenance": "legacy-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "HIGH",
+      "priorityTier": "P0",
+      "issueCategories": [
+        "DETERMINISTIC_POLICY_CORRECTION",
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [
+        {
+          "field": "educationTags",
+          "pattern": "long-wearing",
+          "excerpt": "long-wearing",
+          "severity": "HIGH"
+        }
+      ],
+      "vocabularyPolicyFindings": [
+        {
+          "field": "scentCharacter",
+          "value": "Rich & Long Wearing",
+          "policyClassification": "REVIEW",
+          "reason": "Contains 'Long Wearing' — longevity language. Per the Performance Claim Policy (docs/mkc-authoring-guide.md § Performance Claim Policy), measurable performance claims are prohibited. As a schema-governed vocabulary value this is not free-text editorial copy, but a founder disposition is required: either (a) a formal policy exception documenting that schema vocabulary values are excluded from the Performance Claim Policy, or (b) replacement with a longevity-neutral label that preserves the olfactive weight classification."
+        }
+      ],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 3,
+      "provenanceDebt": {
+        "classification": "DOCUMENTATION_ONLY",
+        "generationProvenance": "legacy-factory",
+        "governanceState": "no-mip-governance",
+        "note": "AI generation origin documented in scripts/factory/factory-log.json (factory v0.5.0, 2026-07-13). Content origin is traceable via factory audit trail. Formal MIP identity governance and R2 reconciliation absent."
+      },
+      "recommendedActions": [
+        "DETERMINISTIC_POLICY_CORRECTION",
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": true,
+      "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "armani-code-parfum-inspired",
+      "name": "Armani Code Parfum Inspired",
+      "collection": "Skye",
+      "provenanceClass": "E",
+      "generationProvenance": "native-pre-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "MEDIUM",
+      "priorityTier": "P2",
+      "issueCategories": [
+        "EDITORIAL_REVIEW",
+        "SCHEMA_POLICY_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [
+        {
+          "field": "recommendedFor",
+          "pattern": "all-day",
+          "excerpt": "Customers deciding between Code Parfum and Y EDP Inspired — both are warm woody aromatics at warmth:4, but Y EDP proj...",
+          "severity": "MEDIUM"
+        }
+      ],
+      "vocabularyPolicyFindings": [
+        {
+          "field": "scentCharacter",
+          "value": "Rich & Long Wearing",
+          "policyClassification": "REVIEW",
+          "reason": "Contains 'Long Wearing' — longevity language. Per the Performance Claim Policy (docs/mkc-authoring-guide.md § Performance Claim Policy), measurable performance claims are prohibited. As a schema-governed vocabulary value this is not free-text editorial copy, but a founder disposition is required: either (a) a formal policy exception documenting that schema vocabulary values are excluded from the Performance Claim Policy, or (b) replacement with a longevity-neutral label that preserves the olfactive weight classification."
+        }
+      ],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": false,
+      "relationshipEntryCount": 0,
+      "provenanceDebt": {
+        "classification": "CONTENT_ACTION_REQUIRED",
+        "generationProvenance": "native-pre-factory",
+        "governanceState": "no-mip-governance",
+        "note": "No factory log entry — knowledge predates the factory process. Content origin cannot be established and content reliability cannot be assessed without authoritative research. MIP identity governance is required to establish provenance before content can be trusted."
+      },
+      "recommendedActions": [
+        "EDITORIAL_REVIEW",
+        "SCHEMA_POLICY_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": false,
+      "requiresExternalResearch": true,
+      "requiresFounderDecision": true,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "eros-inspired",
+      "name": "Eros Inspired",
+      "collection": "Skye",
+      "provenanceClass": "E",
+      "generationProvenance": "native-pre-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "MEDIUM",
+      "priorityTier": "P2",
+      "issueCategories": [
+        "EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [
+        {
+          "field": "mood",
+          "pattern": "all-day",
+          "excerpt": "Bold, confident and magnetic — night-out energy in an all-day package.",
+          "severity": "MEDIUM"
+        }
+      ],
+      "vocabularyPolicyFindings": [],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": false,
+      "relationshipEntryCount": 0,
+      "provenanceDebt": {
+        "classification": "CONTENT_ACTION_REQUIRED",
+        "generationProvenance": "native-pre-factory",
+        "governanceState": "no-mip-governance",
+        "note": "No factory log entry — knowledge predates the factory process. Content origin cannot be established and content reliability cannot be assessed without authoritative research. MIP identity governance is required to establish provenance before content can be trusted."
+      },
+      "recommendedActions": [
+        "EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": false,
+      "requiresExternalResearch": true,
+      "requiresFounderDecision": true,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "y-edp-inspired",
+      "name": "Y EDP Inspired",
+      "collection": "Skye",
+      "provenanceClass": "E",
+      "generationProvenance": "native-pre-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "MEDIUM",
+      "priorityTier": "P2",
+      "issueCategories": [
+        "EDITORIAL_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [
+        {
+          "field": "signatureStyle",
+          "pattern": "all-day",
+          "excerpt": "All-Day Signature",
+          "severity": "MEDIUM"
+        }
+      ],
+      "vocabularyPolicyFindings": [],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 1,
+      "provenanceDebt": {
+        "classification": "CONTENT_ACTION_REQUIRED",
+        "generationProvenance": "native-pre-factory",
+        "governanceState": "no-mip-governance",
+        "note": "No factory log entry — knowledge predates the factory process. Content origin cannot be established and content reliability cannot be assessed without authoritative research. MIP identity governance is required to establish provenance before content can be trusted."
+      },
+      "recommendedActions": [
+        "EDITORIAL_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": false,
+      "requiresExternalResearch": true,
+      "requiresFounderDecision": true,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "1-million-inspired",
+      "name": "1 Million Inspired",
+      "collection": "Skye",
+      "provenanceClass": "E",
+      "generationProvenance": "native-pre-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "MEDIUM",
+      "priorityTier": "P3",
+      "issueCategories": [
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [],
+      "vocabularyPolicyFindings": [
+        {
+          "field": "scentCharacter",
+          "value": "Rich & Long Wearing",
+          "policyClassification": "REVIEW",
+          "reason": "Contains 'Long Wearing' — longevity language. Per the Performance Claim Policy (docs/mkc-authoring-guide.md § Performance Claim Policy), measurable performance claims are prohibited. As a schema-governed vocabulary value this is not free-text editorial copy, but a founder disposition is required: either (a) a formal policy exception documenting that schema vocabulary values are excluded from the Performance Claim Policy, or (b) replacement with a longevity-neutral label that preserves the olfactive weight classification."
+        }
+      ],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 1,
+      "provenanceDebt": {
+        "classification": "CONTENT_ACTION_REQUIRED",
+        "generationProvenance": "native-pre-factory",
+        "governanceState": "no-mip-governance",
+        "note": "No factory log entry — knowledge predates the factory process. Content origin cannot be established and content reliability cannot be assessed without authoritative research. MIP identity governance is required to establish provenance before content can be trusted."
+      },
+      "recommendedActions": [
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": false,
+      "requiresExternalResearch": true,
+      "requiresFounderDecision": true,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "9pm-inspired",
+      "name": "9PM Inspired",
+      "collection": "Skye",
+      "provenanceClass": "E",
+      "generationProvenance": "native-pre-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "MEDIUM",
+      "priorityTier": "P3",
+      "issueCategories": [
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [],
+      "vocabularyPolicyFindings": [
+        {
+          "field": "scentCharacter",
+          "value": "Rich & Long Wearing",
+          "policyClassification": "REVIEW",
+          "reason": "Contains 'Long Wearing' — longevity language. Per the Performance Claim Policy (docs/mkc-authoring-guide.md § Performance Claim Policy), measurable performance claims are prohibited. As a schema-governed vocabulary value this is not free-text editorial copy, but a founder disposition is required: either (a) a formal policy exception documenting that schema vocabulary values are excluded from the Performance Claim Policy, or (b) replacement with a longevity-neutral label that preserves the olfactive weight classification."
+        }
+      ],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 2,
+      "provenanceDebt": {
+        "classification": "CONTENT_ACTION_REQUIRED",
+        "generationProvenance": "native-pre-factory",
+        "governanceState": "no-mip-governance",
+        "note": "No factory log entry — knowledge predates the factory process. Content origin cannot be established and content reliability cannot be assessed without authoritative research. MIP identity governance is required to establish provenance before content can be trusted."
+      },
+      "recommendedActions": [
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": false,
+      "requiresExternalResearch": true,
+      "requiresFounderDecision": true,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "acqua-di-gio-parfum-inspired",
+      "name": "Acqua Di Gio Parfum Inspired",
+      "collection": "Skye",
+      "provenanceClass": "E",
+      "generationProvenance": "native-pre-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "MEDIUM",
+      "priorityTier": "P3",
+      "issueCategories": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [],
+      "vocabularyPolicyFindings": [],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 2,
+      "provenanceDebt": {
+        "classification": "CONTENT_ACTION_REQUIRED",
+        "generationProvenance": "native-pre-factory",
+        "governanceState": "no-mip-governance",
+        "note": "No factory log entry — knowledge predates the factory process. Content origin cannot be established and content reliability cannot be assessed without authoritative research. MIP identity governance is required to establish provenance before content can be trusted."
+      },
+      "recommendedActions": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": false,
+      "requiresExternalResearch": true,
+      "requiresFounderDecision": false,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "acqua-di-gio-profondo-inspired",
+      "name": "Acqua Di Gio Profondo Inspired",
+      "collection": "Skye",
+      "provenanceClass": "E",
+      "generationProvenance": "native-pre-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "MEDIUM",
+      "priorityTier": "P3",
+      "issueCategories": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [],
+      "vocabularyPolicyFindings": [],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 2,
+      "provenanceDebt": {
+        "classification": "CONTENT_ACTION_REQUIRED",
+        "generationProvenance": "native-pre-factory",
+        "governanceState": "no-mip-governance",
+        "note": "No factory log entry — knowledge predates the factory process. Content origin cannot be established and content reliability cannot be assessed without authoritative research. MIP identity governance is required to establish provenance before content can be trusted."
+      },
+      "recommendedActions": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": false,
+      "requiresExternalResearch": true,
+      "requiresFounderDecision": false,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "afternoon-swim-inspired",
+      "name": "Afternoon Swim Inspired",
+      "collection": "Skye",
+      "provenanceClass": "D",
+      "generationProvenance": "legacy-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "MEDIUM",
+      "priorityTier": "P3",
+      "issueCategories": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [],
+      "vocabularyPolicyFindings": [],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 5,
+      "provenanceDebt": {
+        "classification": "DOCUMENTATION_ONLY",
+        "generationProvenance": "legacy-factory",
+        "governanceState": "no-mip-governance",
+        "note": "AI generation origin documented in scripts/factory/factory-log.json (factory v0.5.0, 2026-07-13). Content origin is traceable via factory audit trail. Formal MIP identity governance and R2 reconciliation absent."
+      },
+      "recommendedActions": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": false,
+      "requiresExternalResearch": false,
+      "requiresFounderDecision": false,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "alien-inspired",
+      "name": "Alien Inspired",
+      "collection": "Rose",
+      "provenanceClass": "D",
+      "generationProvenance": "legacy-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "MEDIUM",
+      "priorityTier": "P3",
+      "issueCategories": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [],
+      "vocabularyPolicyFindings": [],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 1,
+      "provenanceDebt": {
+        "classification": "DOCUMENTATION_ONLY",
+        "generationProvenance": "legacy-factory",
+        "governanceState": "no-mip-governance",
+        "note": "AI generation origin documented in scripts/factory/factory-log.json (factory v0.5.0, 2026-07-13). Content origin is traceable via factory audit trail. Formal MIP identity governance and R2 reconciliation absent."
+      },
+      "recommendedActions": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": false,
+      "requiresExternalResearch": false,
+      "requiresFounderDecision": false,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "ani-inspired",
+      "name": "Ani Inspired",
+      "collection": "Skye",
+      "provenanceClass": "D",
+      "generationProvenance": "legacy-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "MEDIUM",
+      "priorityTier": "P3",
+      "issueCategories": [
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [],
+      "vocabularyPolicyFindings": [
+        {
+          "field": "scentCharacter",
+          "value": "Rich & Long Wearing",
+          "policyClassification": "REVIEW",
+          "reason": "Contains 'Long Wearing' — longevity language. Per the Performance Claim Policy (docs/mkc-authoring-guide.md § Performance Claim Policy), measurable performance claims are prohibited. As a schema-governed vocabulary value this is not free-text editorial copy, but a founder disposition is required: either (a) a formal policy exception documenting that schema vocabulary values are excluded from the Performance Claim Policy, or (b) replacement with a longevity-neutral label that preserves the olfactive weight classification."
+        }
+      ],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 4,
+      "provenanceDebt": {
+        "classification": "DOCUMENTATION_ONLY",
+        "generationProvenance": "legacy-factory",
+        "governanceState": "no-mip-governance",
+        "note": "AI generation origin documented in scripts/factory/factory-log.json (factory v0.5.0, 2026-07-13). Content origin is traceable via factory audit trail. Formal MIP identity governance and R2 reconciliation absent."
+      },
+      "recommendedActions": [
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": false,
+      "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "aqua-di-gio-inspired",
+      "name": "Aqua Di Gio Inspired",
+      "collection": "Skye",
+      "provenanceClass": "E",
+      "generationProvenance": "native-pre-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "MEDIUM",
+      "priorityTier": "P3",
+      "issueCategories": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [],
+      "vocabularyPolicyFindings": [],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 8,
+      "provenanceDebt": {
+        "classification": "CONTENT_ACTION_REQUIRED",
+        "generationProvenance": "native-pre-factory",
+        "governanceState": "no-mip-governance",
+        "note": "No factory log entry — knowledge predates the factory process. Content origin cannot be established and content reliability cannot be assessed without authoritative research. MIP identity governance is required to establish provenance before content can be trusted."
+      },
+      "recommendedActions": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": false,
+      "requiresExternalResearch": true,
+      "requiresFounderDecision": false,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "arabians-tonka-inspired",
+      "name": "Arabians Tonka Inspired",
+      "collection": "Skye",
+      "provenanceClass": "D",
+      "generationProvenance": "legacy-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "MEDIUM",
+      "priorityTier": "P3",
+      "issueCategories": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [],
+      "vocabularyPolicyFindings": [],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 3,
+      "provenanceDebt": {
+        "classification": "DOCUMENTATION_ONLY",
+        "generationProvenance": "legacy-factory",
+        "governanceState": "no-mip-governance",
+        "note": "AI generation origin documented in scripts/factory/factory-log.json (factory v0.5.0, 2026-07-13). Content origin is traceable via factory audit trail. Formal MIP identity governance and R2 reconciliation absent."
+      },
+      "recommendedActions": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": false,
+      "requiresExternalResearch": false,
+      "requiresFounderDecision": false,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "aventus-inspired",
+      "name": "Aventus Inspired",
+      "collection": "Skye",
+      "provenanceClass": "E",
+      "generationProvenance": "native-pre-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "MEDIUM",
+      "priorityTier": "P3",
+      "issueCategories": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [],
+      "vocabularyPolicyFindings": [],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 7,
+      "provenanceDebt": {
+        "classification": "CONTENT_ACTION_REQUIRED",
+        "generationProvenance": "native-pre-factory",
+        "governanceState": "no-mip-governance",
+        "note": "No factory log entry — knowledge predates the factory process. Content origin cannot be established and content reliability cannot be assessed without authoritative research. MIP identity governance is required to establish provenance before content can be trusted."
+      },
+      "recommendedActions": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": false,
+      "requiresExternalResearch": true,
+      "requiresFounderDecision": false,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "azzaro-most-wanted-inspired",
+      "name": "Azzaro Most Wanted Inspired",
+      "collection": "Skye",
+      "provenanceClass": "E",
+      "generationProvenance": "native-pre-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "MEDIUM",
+      "priorityTier": "P3",
+      "issueCategories": [
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [],
+      "vocabularyPolicyFindings": [
+        {
+          "field": "scentCharacter",
+          "value": "Rich & Long Wearing",
+          "policyClassification": "REVIEW",
+          "reason": "Contains 'Long Wearing' — longevity language. Per the Performance Claim Policy (docs/mkc-authoring-guide.md § Performance Claim Policy), measurable performance claims are prohibited. As a schema-governed vocabulary value this is not free-text editorial copy, but a founder disposition is required: either (a) a formal policy exception documenting that schema vocabulary values are excluded from the Performance Claim Policy, or (b) replacement with a longevity-neutral label that preserves the olfactive weight classification."
+        }
+      ],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 2,
+      "provenanceDebt": {
+        "classification": "CONTENT_ACTION_REQUIRED",
+        "generationProvenance": "native-pre-factory",
+        "governanceState": "no-mip-governance",
+        "note": "No factory log entry — knowledge predates the factory process. Content origin cannot be established and content reliability cannot be assessed without authoritative research. MIP identity governance is required to establish provenance before content can be trusted."
+      },
+      "recommendedActions": [
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": false,
+      "requiresExternalResearch": true,
+      "requiresFounderDecision": true,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "baccarat-rouge-540-inspired",
+      "name": "Baccarat Rouge 540 Inspired",
+      "collection": "Rose",
+      "provenanceClass": "E",
+      "generationProvenance": "native-pre-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "MEDIUM",
+      "priorityTier": "P3",
+      "issueCategories": [
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [],
+      "vocabularyPolicyFindings": [
+        {
+          "field": "scentCharacter",
+          "value": "Rich & Long Wearing",
+          "policyClassification": "REVIEW",
+          "reason": "Contains 'Long Wearing' — longevity language. Per the Performance Claim Policy (docs/mkc-authoring-guide.md § Performance Claim Policy), measurable performance claims are prohibited. As a schema-governed vocabulary value this is not free-text editorial copy, but a founder disposition is required: either (a) a formal policy exception documenting that schema vocabulary values are excluded from the Performance Claim Policy, or (b) replacement with a longevity-neutral label that preserves the olfactive weight classification."
+        }
+      ],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 22,
+      "provenanceDebt": {
+        "classification": "CONTENT_ACTION_REQUIRED",
+        "generationProvenance": "native-pre-factory",
+        "governanceState": "no-mip-governance",
+        "note": "No factory log entry — knowledge predates the factory process. Content origin cannot be established and content reliability cannot be assessed without authoritative research. MIP identity governance is required to establish provenance before content can be trusted."
+      },
+      "recommendedActions": [
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": false,
+      "requiresExternalResearch": true,
+      "requiresFounderDecision": true,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "bianco-latte-inspired",
+      "name": "Bianco Latte Inspired",
+      "collection": "Rose",
+      "provenanceClass": "D",
+      "generationProvenance": "legacy-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "MEDIUM",
+      "priorityTier": "P3",
+      "issueCategories": [
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [],
+      "vocabularyPolicyFindings": [
+        {
+          "field": "scentCharacter",
+          "value": "Rich & Long Wearing",
+          "policyClassification": "REVIEW",
+          "reason": "Contains 'Long Wearing' — longevity language. Per the Performance Claim Policy (docs/mkc-authoring-guide.md § Performance Claim Policy), measurable performance claims are prohibited. As a schema-governed vocabulary value this is not free-text editorial copy, but a founder disposition is required: either (a) a formal policy exception documenting that schema vocabulary values are excluded from the Performance Claim Policy, or (b) replacement with a longevity-neutral label that preserves the olfactive weight classification."
+        }
+      ],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 5,
+      "provenanceDebt": {
+        "classification": "DOCUMENTATION_ONLY",
+        "generationProvenance": "legacy-factory",
+        "governanceState": "no-mip-governance",
+        "note": "AI generation origin documented in scripts/factory/factory-log.json (factory v0.5.0, 2026-07-13). Content origin is traceable via factory audit trail. Formal MIP identity governance and R2 reconciliation absent."
+      },
+      "recommendedActions": [
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": false,
+      "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "bleu-de-chanel-inspired",
+      "name": "Bleu de Chanel Inspired",
+      "collection": "Skye",
+      "provenanceClass": "E",
+      "generationProvenance": "native-pre-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "MEDIUM",
+      "priorityTier": "P3",
+      "issueCategories": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [],
+      "vocabularyPolicyFindings": [],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 5,
+      "provenanceDebt": {
+        "classification": "CONTENT_ACTION_REQUIRED",
+        "generationProvenance": "native-pre-factory",
+        "governanceState": "no-mip-governance",
+        "note": "No factory log entry — knowledge predates the factory process. Content origin cannot be established and content reliability cannot be assessed without authoritative research. MIP identity governance is required to establish provenance before content can be trusted."
+      },
+      "recommendedActions": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": false,
+      "requiresExternalResearch": true,
+      "requiresFounderDecision": false,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "chance-eau-fraiche-inspired",
+      "name": "Chance Eau Fraiche Inspired",
+      "collection": "Rose",
+      "provenanceClass": "D",
+      "generationProvenance": "legacy-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "MEDIUM",
+      "priorityTier": "P3",
+      "issueCategories": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [],
+      "vocabularyPolicyFindings": [],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 4,
+      "provenanceDebt": {
+        "classification": "DOCUMENTATION_ONLY",
+        "generationProvenance": "legacy-factory",
+        "governanceState": "no-mip-governance",
+        "note": "AI generation origin documented in scripts/factory/factory-log.json (factory v0.5.0, 2026-07-13). Content origin is traceable via factory audit trail. Formal MIP identity governance and R2 reconciliation absent."
+      },
+      "recommendedActions": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": false,
+      "requiresExternalResearch": false,
+      "requiresFounderDecision": false,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "chance-eau-tendre-inspired",
+      "name": "Chance Eau Tendre Inspired",
+      "collection": "Rose",
+      "provenanceClass": "D",
+      "generationProvenance": "legacy-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "MEDIUM",
+      "priorityTier": "P3",
+      "issueCategories": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [],
+      "vocabularyPolicyFindings": [],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 4,
+      "provenanceDebt": {
+        "classification": "DOCUMENTATION_ONLY",
+        "generationProvenance": "legacy-factory",
+        "governanceState": "no-mip-governance",
+        "note": "AI generation origin documented in scripts/factory/factory-log.json (factory v0.5.0, 2026-07-13). Content origin is traceable via factory audit trail. Formal MIP identity governance and R2 reconciliation absent."
+      },
+      "recommendedActions": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": false,
+      "requiresExternalResearch": false,
+      "requiresFounderDecision": false,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "coco-mademoiselle-inspired",
+      "name": "Coco Mademoiselle Inspired",
+      "collection": "Rose",
+      "provenanceClass": "D",
+      "generationProvenance": "legacy-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "MEDIUM",
+      "priorityTier": "P3",
+      "issueCategories": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [],
+      "vocabularyPolicyFindings": [],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 3,
+      "provenanceDebt": {
+        "classification": "DOCUMENTATION_ONLY",
+        "generationProvenance": "legacy-factory",
+        "governanceState": "no-mip-governance",
+        "note": "AI generation origin documented in scripts/factory/factory-log.json (factory v0.5.0, 2026-07-13). Content origin is traceable via factory audit trail. Formal MIP identity governance and R2 reconciliation absent."
+      },
+      "recommendedActions": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": false,
+      "requiresExternalResearch": false,
+      "requiresFounderDecision": false,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "creed-green-irish-tweed-inspired",
+      "name": "Creed Green Irish Tweed Inspired",
+      "collection": "Skye",
+      "provenanceClass": "D",
+      "generationProvenance": "legacy-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "MEDIUM",
+      "priorityTier": "P3",
+      "issueCategories": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [],
+      "vocabularyPolicyFindings": [],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 3,
+      "provenanceDebt": {
+        "classification": "DOCUMENTATION_ONLY",
+        "generationProvenance": "legacy-factory",
+        "governanceState": "no-mip-governance",
+        "note": "AI generation origin documented in scripts/factory/factory-log.json (factory v0.5.0, 2026-07-13). Content origin is traceable via factory audit trail. Formal MIP identity governance and R2 reconciliation absent."
+      },
+      "recommendedActions": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": false,
+      "requiresExternalResearch": false,
+      "requiresFounderDecision": false,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "delina-inspired",
+      "name": "Delina Inspired",
+      "collection": "Rose",
+      "provenanceClass": "E",
+      "generationProvenance": "native-pre-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "MEDIUM",
+      "priorityTier": "P3",
+      "issueCategories": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [],
+      "vocabularyPolicyFindings": [],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 26,
+      "provenanceDebt": {
+        "classification": "CONTENT_ACTION_REQUIRED",
+        "generationProvenance": "native-pre-factory",
+        "governanceState": "no-mip-governance",
+        "note": "No factory log entry — knowledge predates the factory process. Content origin cannot be established and content reliability cannot be assessed without authoritative research. MIP identity governance is required to establish provenance before content can be trusted."
+      },
+      "recommendedActions": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": false,
+      "requiresExternalResearch": true,
+      "requiresFounderDecision": false,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "devotion-inspired",
+      "name": "Devotion Inspired",
+      "collection": "Rose",
+      "provenanceClass": "D",
+      "generationProvenance": "legacy-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "MEDIUM",
+      "priorityTier": "P3",
+      "issueCategories": [
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [],
+      "vocabularyPolicyFindings": [
+        {
+          "field": "scentCharacter",
+          "value": "Rich & Long Wearing",
+          "policyClassification": "REVIEW",
+          "reason": "Contains 'Long Wearing' — longevity language. Per the Performance Claim Policy (docs/mkc-authoring-guide.md § Performance Claim Policy), measurable performance claims are prohibited. As a schema-governed vocabulary value this is not free-text editorial copy, but a founder disposition is required: either (a) a formal policy exception documenting that schema vocabulary values are excluded from the Performance Claim Policy, or (b) replacement with a longevity-neutral label that preserves the olfactive weight classification."
+        }
+      ],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 4,
+      "provenanceDebt": {
+        "classification": "DOCUMENTATION_ONLY",
+        "generationProvenance": "legacy-factory",
+        "governanceState": "no-mip-governance",
+        "note": "AI generation origin documented in scripts/factory/factory-log.json (factory v0.5.0, 2026-07-13). Content origin is traceable via factory audit trail. Formal MIP identity governance and R2 reconciliation absent."
+      },
+      "recommendedActions": [
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": false,
+      "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "erba-pura-inspired",
+      "name": "Erba Pura Inspired",
+      "collection": "Skye",
+      "provenanceClass": "D",
+      "generationProvenance": "legacy-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "MEDIUM",
+      "priorityTier": "P3",
+      "issueCategories": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [],
+      "vocabularyPolicyFindings": [],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 5,
+      "provenanceDebt": {
+        "classification": "DOCUMENTATION_ONLY",
+        "generationProvenance": "legacy-factory",
+        "governanceState": "no-mip-governance",
+        "note": "AI generation origin documented in scripts/factory/factory-log.json (factory v0.5.0, 2026-07-13). Content origin is traceable via factory audit trail. Formal MIP identity governance and R2 reconciliation absent."
+      },
+      "recommendedActions": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": false,
+      "requiresExternalResearch": false,
+      "requiresFounderDecision": false,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "god-of-fire-inspired",
+      "name": "God Of Fire Inspired",
+      "collection": "Skye",
+      "provenanceClass": "E",
+      "generationProvenance": "native-pre-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "MEDIUM",
+      "priorityTier": "P3",
+      "issueCategories": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [],
+      "vocabularyPolicyFindings": [],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 2,
+      "provenanceDebt": {
+        "classification": "CONTENT_ACTION_REQUIRED",
+        "generationProvenance": "native-pre-factory",
+        "governanceState": "no-mip-governance",
+        "note": "No factory log entry — knowledge predates the factory process. Content origin cannot be established and content reliability cannot be assessed without authoritative research. MIP identity governance is required to establish provenance before content can be trusted."
+      },
+      "recommendedActions": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": false,
+      "requiresExternalResearch": true,
+      "requiresFounderDecision": false,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "good-girl-blush-inspired",
+      "name": "Good Girl Blush Inspired",
+      "collection": "Rose",
+      "provenanceClass": "D",
+      "generationProvenance": "legacy-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "MEDIUM",
+      "priorityTier": "P3",
+      "issueCategories": [
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [],
+      "vocabularyPolicyFindings": [
+        {
+          "field": "scentCharacter",
+          "value": "Rich & Long Wearing",
+          "policyClassification": "REVIEW",
+          "reason": "Contains 'Long Wearing' — longevity language. Per the Performance Claim Policy (docs/mkc-authoring-guide.md § Performance Claim Policy), measurable performance claims are prohibited. As a schema-governed vocabulary value this is not free-text editorial copy, but a founder disposition is required: either (a) a formal policy exception documenting that schema vocabulary values are excluded from the Performance Claim Policy, or (b) replacement with a longevity-neutral label that preserves the olfactive weight classification."
+        }
+      ],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 2,
+      "provenanceDebt": {
+        "classification": "DOCUMENTATION_ONLY",
+        "generationProvenance": "legacy-factory",
+        "governanceState": "no-mip-governance",
+        "note": "AI generation origin documented in scripts/factory/factory-log.json (factory v0.5.0, 2026-07-13). Content origin is traceable via factory audit trail. Formal MIP identity governance and R2 reconciliation absent."
+      },
+      "recommendedActions": [
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": false,
+      "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "gris-charnel-inspired",
+      "name": "Gris Charnel Inspired",
+      "collection": "Elite",
+      "provenanceClass": "D",
+      "generationProvenance": "legacy-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "MEDIUM",
+      "priorityTier": "P3",
+      "issueCategories": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [],
+      "vocabularyPolicyFindings": [],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 4,
+      "provenanceDebt": {
+        "classification": "DOCUMENTATION_ONLY",
+        "generationProvenance": "legacy-factory",
+        "governanceState": "no-mip-governance",
+        "note": "AI generation origin documented in scripts/factory/factory-log.json (factory v0.5.0, 2026-07-13). Content origin is traceable via factory audit trail. Formal MIP identity governance and R2 reconciliation absent."
+      },
+      "recommendedActions": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": false,
+      "requiresExternalResearch": false,
+      "requiresFounderDecision": false,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "hacivat-inspired",
+      "name": "Hacivat Inspired",
+      "collection": "Skye",
+      "provenanceClass": "E",
+      "generationProvenance": "native-pre-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "MEDIUM",
+      "priorityTier": "P3",
+      "issueCategories": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [],
+      "vocabularyPolicyFindings": [],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 1,
+      "provenanceDebt": {
+        "classification": "CONTENT_ACTION_REQUIRED",
+        "generationProvenance": "native-pre-factory",
+        "governanceState": "no-mip-governance",
+        "note": "No factory log entry — knowledge predates the factory process. Content origin cannot be established and content reliability cannot be assessed without authoritative research. MIP identity governance is required to establish provenance before content can be trusted."
+      },
+      "recommendedActions": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": false,
+      "requiresExternalResearch": true,
+      "requiresFounderDecision": false,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "haltane-inspired",
+      "name": "Haltane Inspired",
+      "collection": "Elite",
+      "provenanceClass": "D",
+      "generationProvenance": "legacy-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "MEDIUM",
+      "priorityTier": "P3",
+      "issueCategories": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [],
+      "vocabularyPolicyFindings": [],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 2,
+      "provenanceDebt": {
+        "classification": "DOCUMENTATION_ONLY",
+        "generationProvenance": "legacy-factory",
+        "governanceState": "no-mip-governance",
+        "note": "AI generation origin documented in scripts/factory/factory-log.json (factory v0.5.0, 2026-07-13). Content origin is traceable via factory audit trail. Formal MIP identity governance and R2 reconciliation absent."
+      },
+      "recommendedActions": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": false,
+      "requiresExternalResearch": false,
+      "requiresFounderDecision": false,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "hawas-inspired",
+      "name": "Hawas Inspired",
+      "collection": "Skye",
+      "provenanceClass": "E",
+      "generationProvenance": "native-pre-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "MEDIUM",
+      "priorityTier": "P3",
+      "issueCategories": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [],
+      "vocabularyPolicyFindings": [],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 2,
+      "provenanceDebt": {
+        "classification": "CONTENT_ACTION_REQUIRED",
+        "generationProvenance": "native-pre-factory",
+        "governanceState": "no-mip-governance",
+        "note": "No factory log entry — knowledge predates the factory process. Content origin cannot be established and content reliability cannot be assessed without authoritative research. MIP identity governance is required to establish provenance before content can be trusted."
+      },
+      "recommendedActions": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": false,
+      "requiresExternalResearch": true,
+      "requiresFounderDecision": false,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "hibiscus-mahajad-inspired",
+      "name": "Hibiscus Mahajad Inspired",
+      "collection": "Elite",
+      "provenanceClass": "D",
+      "generationProvenance": "legacy-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "MEDIUM",
+      "priorityTier": "P3",
+      "issueCategories": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [],
+      "vocabularyPolicyFindings": [],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 1,
+      "provenanceDebt": {
+        "classification": "DOCUMENTATION_ONLY",
+        "generationProvenance": "legacy-factory",
+        "governanceState": "no-mip-governance",
+        "note": "AI generation origin documented in scripts/factory/factory-log.json (factory v0.5.0, 2026-07-13). Content origin is traceable via factory audit trail. Formal MIP identity governance and R2 reconciliation absent."
+      },
+      "recommendedActions": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": false,
+      "requiresExternalResearch": false,
+      "requiresFounderDecision": false,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "hypnotic-poison-inspired",
+      "name": "Hypnotic Poison Inspired",
+      "collection": "Rose",
+      "provenanceClass": "D",
+      "generationProvenance": "legacy-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "MEDIUM",
+      "priorityTier": "P3",
+      "issueCategories": [
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [],
+      "vocabularyPolicyFindings": [
+        {
+          "field": "scentCharacter",
+          "value": "Rich & Long Wearing",
+          "policyClassification": "REVIEW",
+          "reason": "Contains 'Long Wearing' — longevity language. Per the Performance Claim Policy (docs/mkc-authoring-guide.md § Performance Claim Policy), measurable performance claims are prohibited. As a schema-governed vocabulary value this is not free-text editorial copy, but a founder disposition is required: either (a) a formal policy exception documenting that schema vocabulary values are excluded from the Performance Claim Policy, or (b) replacement with a longevity-neutral label that preserves the olfactive weight classification."
+        }
+      ],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 8,
+      "provenanceDebt": {
+        "classification": "DOCUMENTATION_ONLY",
+        "generationProvenance": "legacy-factory",
+        "governanceState": "no-mip-governance",
+        "note": "AI generation origin documented in scripts/factory/factory-log.json (factory v0.5.0, 2026-07-13). Content origin is traceable via factory audit trail. Formal MIP identity governance and R2 reconciliation absent."
+      },
+      "recommendedActions": [
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": false,
+      "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "imagination-inspired",
+      "name": "Imagination Inspired",
+      "collection": "Skye",
+      "provenanceClass": "E",
+      "generationProvenance": "native-pre-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "MEDIUM",
+      "priorityTier": "P3",
+      "issueCategories": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [],
+      "vocabularyPolicyFindings": [],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 5,
+      "provenanceDebt": {
+        "classification": "CONTENT_ACTION_REQUIRED",
+        "generationProvenance": "native-pre-factory",
+        "governanceState": "no-mip-governance",
+        "note": "No factory log entry — knowledge predates the factory process. Content origin cannot be established and content reliability cannot be assessed without authoritative research. MIP identity governance is required to establish provenance before content can be trusted."
+      },
+      "recommendedActions": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": false,
+      "requiresExternalResearch": true,
+      "requiresFounderDecision": false,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "invictus-inspired",
+      "name": "Invictus Inspired",
+      "collection": "Skye",
+      "provenanceClass": "E",
+      "generationProvenance": "native-pre-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "MEDIUM",
+      "priorityTier": "P3",
+      "issueCategories": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [],
+      "vocabularyPolicyFindings": [],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 4,
+      "provenanceDebt": {
+        "classification": "CONTENT_ACTION_REQUIRED",
+        "generationProvenance": "native-pre-factory",
+        "governanceState": "no-mip-governance",
+        "note": "No factory log entry — knowledge predates the factory process. Content origin cannot be established and content reliability cannot be assessed without authoritative research. MIP identity governance is required to establish provenance before content can be trusted."
+      },
+      "recommendedActions": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": false,
+      "requiresExternalResearch": true,
+      "requiresFounderDecision": false,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "invictus-victory-inspired",
+      "name": "Invictus Victory Inspired",
+      "collection": "Skye",
+      "provenanceClass": "E",
+      "generationProvenance": "native-pre-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "MEDIUM",
+      "priorityTier": "P3",
+      "issueCategories": [
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [],
+      "vocabularyPolicyFindings": [
+        {
+          "field": "scentCharacter",
+          "value": "Rich & Long Wearing",
+          "policyClassification": "REVIEW",
+          "reason": "Contains 'Long Wearing' — longevity language. Per the Performance Claim Policy (docs/mkc-authoring-guide.md § Performance Claim Policy), measurable performance claims are prohibited. As a schema-governed vocabulary value this is not free-text editorial copy, but a founder disposition is required: either (a) a formal policy exception documenting that schema vocabulary values are excluded from the Performance Claim Policy, or (b) replacement with a longevity-neutral label that preserves the olfactive weight classification."
+        }
+      ],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 2,
+      "provenanceDebt": {
+        "classification": "CONTENT_ACTION_REQUIRED",
+        "generationProvenance": "native-pre-factory",
+        "governanceState": "no-mip-governance",
+        "note": "No factory log entry — knowledge predates the factory process. Content origin cannot be established and content reliability cannot be assessed without authoritative research. MIP identity governance is required to establish provenance before content can be trusted."
+      },
+      "recommendedActions": [
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": false,
+      "requiresExternalResearch": true,
+      "requiresFounderDecision": true,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "j'adore-inspired",
+      "name": "J'adore Inspired",
+      "collection": "Rose",
+      "provenanceClass": "D",
+      "generationProvenance": "legacy-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "MEDIUM",
+      "priorityTier": "P3",
+      "issueCategories": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [],
+      "vocabularyPolicyFindings": [],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 2,
+      "provenanceDebt": {
+        "classification": "DOCUMENTATION_ONLY",
+        "generationProvenance": "legacy-factory",
+        "governanceState": "no-mip-governance",
+        "note": "AI generation origin documented in scripts/factory/factory-log.json (factory v0.5.0, 2026-07-13). Content origin is traceable via factory audit trail. Formal MIP identity governance and R2 reconciliation absent."
+      },
+      "recommendedActions": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": false,
+      "requiresExternalResearch": false,
+      "requiresFounderDecision": false,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "kirke-overdose-inspired",
+      "name": "Kirke Overdose Inspired",
+      "collection": "Elite",
+      "provenanceClass": "D",
+      "generationProvenance": "legacy-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "MEDIUM",
+      "priorityTier": "P3",
+      "issueCategories": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [],
+      "vocabularyPolicyFindings": [],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 3,
+      "provenanceDebt": {
+        "classification": "DOCUMENTATION_ONLY",
+        "generationProvenance": "legacy-factory",
+        "governanceState": "no-mip-governance",
+        "note": "AI generation origin documented in scripts/factory/factory-log.json (factory v0.5.0, 2026-07-13). Content origin is traceable via factory audit trail. Formal MIP identity governance and R2 reconciliation absent."
+      },
+      "recommendedActions": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": false,
+      "requiresExternalResearch": false,
+      "requiresFounderDecision": false,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "l'immensite-inspired",
+      "name": "L'immensite Inspired",
+      "collection": "Skye",
+      "provenanceClass": "D",
+      "generationProvenance": "legacy-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "MEDIUM",
+      "priorityTier": "P3",
+      "issueCategories": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [],
+      "vocabularyPolicyFindings": [],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 5,
+      "provenanceDebt": {
+        "classification": "DOCUMENTATION_ONLY",
+        "generationProvenance": "legacy-factory",
+        "governanceState": "no-mip-governance",
+        "note": "AI generation origin documented in scripts/factory/factory-log.json (factory v0.5.0, 2026-07-13). Content origin is traceable via factory audit trail. Formal MIP identity governance and R2 reconciliation absent."
+      },
+      "recommendedActions": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": false,
+      "requiresExternalResearch": false,
+      "requiresFounderDecision": false,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "layton-inspired",
+      "name": "Layton Inspired",
+      "collection": "Skye",
+      "provenanceClass": "E",
+      "generationProvenance": "native-pre-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "MEDIUM",
+      "priorityTier": "P3",
+      "issueCategories": [
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [],
+      "vocabularyPolicyFindings": [
+        {
+          "field": "scentCharacter",
+          "value": "Rich & Long Wearing",
+          "policyClassification": "REVIEW",
+          "reason": "Contains 'Long Wearing' — longevity language. Per the Performance Claim Policy (docs/mkc-authoring-guide.md § Performance Claim Policy), measurable performance claims are prohibited. As a schema-governed vocabulary value this is not free-text editorial copy, but a founder disposition is required: either (a) a formal policy exception documenting that schema vocabulary values are excluded from the Performance Claim Policy, or (b) replacement with a longevity-neutral label that preserves the olfactive weight classification."
+        }
+      ],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 8,
+      "provenanceDebt": {
+        "classification": "CONTENT_ACTION_REQUIRED",
+        "generationProvenance": "native-pre-factory",
+        "governanceState": "no-mip-governance",
+        "note": "No factory log entry — knowledge predates the factory process. Content origin cannot be established and content reliability cannot be assessed without authoritative research. MIP identity governance is required to establish provenance before content can be trusted."
+      },
+      "recommendedActions": [
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": false,
+      "requiresExternalResearch": true,
+      "requiresFounderDecision": true,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "le-beau-paradise-garden-inspired",
+      "name": "Le Beau Paradise Garden Inspired",
+      "collection": "Skye",
+      "provenanceClass": "E",
+      "generationProvenance": "native-pre-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "MEDIUM",
+      "priorityTier": "P3",
+      "issueCategories": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [],
+      "vocabularyPolicyFindings": [],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 1,
+      "provenanceDebt": {
+        "classification": "CONTENT_ACTION_REQUIRED",
+        "generationProvenance": "native-pre-factory",
+        "governanceState": "no-mip-governance",
+        "note": "No factory log entry — knowledge predates the factory process. Content origin cannot be established and content reliability cannot be assessed without authoritative research. MIP identity governance is required to establish provenance before content can be trusted."
+      },
+      "recommendedActions": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": false,
+      "requiresExternalResearch": true,
+      "requiresFounderDecision": false,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "le-male-elixir-inspired",
+      "name": "Le Male Elixir Inspired",
+      "collection": "Skye",
+      "provenanceClass": "E",
+      "generationProvenance": "native-pre-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "MEDIUM",
+      "priorityTier": "P3",
+      "issueCategories": [
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [],
+      "vocabularyPolicyFindings": [
+        {
+          "field": "scentCharacter",
+          "value": "Rich & Long Wearing",
+          "policyClassification": "REVIEW",
+          "reason": "Contains 'Long Wearing' — longevity language. Per the Performance Claim Policy (docs/mkc-authoring-guide.md § Performance Claim Policy), measurable performance claims are prohibited. As a schema-governed vocabulary value this is not free-text editorial copy, but a founder disposition is required: either (a) a formal policy exception documenting that schema vocabulary values are excluded from the Performance Claim Policy, or (b) replacement with a longevity-neutral label that preserves the olfactive weight classification."
+        }
+      ],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 2,
+      "provenanceDebt": {
+        "classification": "CONTENT_ACTION_REQUIRED",
+        "generationProvenance": "native-pre-factory",
+        "governanceState": "no-mip-governance",
+        "note": "No factory log entry — knowledge predates the factory process. Content origin cannot be established and content reliability cannot be assessed without authoritative research. MIP identity governance is required to establish provenance before content can be trusted."
+      },
+      "recommendedActions": [
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": false,
+      "requiresExternalResearch": true,
+      "requiresFounderDecision": true,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "miss-dior-inspired",
+      "name": "Miss Dior Inspired",
+      "collection": "Rose",
+      "provenanceClass": "D",
+      "generationProvenance": "legacy-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "MEDIUM",
+      "priorityTier": "P3",
+      "issueCategories": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [],
+      "vocabularyPolicyFindings": [],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 3,
+      "provenanceDebt": {
+        "classification": "DOCUMENTATION_ONLY",
+        "generationProvenance": "legacy-factory",
+        "governanceState": "no-mip-governance",
+        "note": "AI generation origin documented in scripts/factory/factory-log.json (factory v0.5.0, 2026-07-13). Content origin is traceable via factory audit trail. Formal MIP identity governance and R2 reconciliation absent."
+      },
+      "recommendedActions": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": false,
+      "requiresExternalResearch": false,
+      "requiresFounderDecision": false,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "mon-paris-inspired",
+      "name": "Mon Paris Inspired",
+      "collection": "Rose",
+      "provenanceClass": "D",
+      "generationProvenance": "legacy-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "MEDIUM",
+      "priorityTier": "P3",
+      "issueCategories": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [],
+      "vocabularyPolicyFindings": [],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 2,
+      "provenanceDebt": {
+        "classification": "DOCUMENTATION_ONLY",
+        "generationProvenance": "legacy-factory",
+        "governanceState": "no-mip-governance",
+        "note": "AI generation origin documented in scripts/factory/factory-log.json (factory v0.5.0, 2026-07-13). Content origin is traceable via factory audit trail. Formal MIP identity governance and R2 reconciliation absent."
+      },
+      "recommendedActions": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": false,
+      "requiresExternalResearch": false,
+      "requiresFounderDecision": false,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "my-way-inspired",
+      "name": "My Way Inspired",
+      "collection": "Rose",
+      "provenanceClass": "D",
+      "generationProvenance": "legacy-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "MEDIUM",
+      "priorityTier": "P3",
+      "issueCategories": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [],
+      "vocabularyPolicyFindings": [],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 2,
+      "provenanceDebt": {
+        "classification": "DOCUMENTATION_ONLY",
+        "generationProvenance": "legacy-factory",
+        "governanceState": "no-mip-governance",
+        "note": "AI generation origin documented in scripts/factory/factory-log.json (factory v0.5.0, 2026-07-13). Content origin is traceable via factory audit trail. Formal MIP identity governance and R2 reconciliation absent."
+      },
+      "recommendedActions": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": false,
+      "requiresExternalResearch": false,
+      "requiresFounderDecision": false,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "myslf-inspired",
+      "name": "MYSLF Inspired",
+      "collection": "Skye",
+      "provenanceClass": "E",
+      "generationProvenance": "native-pre-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "MEDIUM",
+      "priorityTier": "P3",
+      "issueCategories": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [],
+      "vocabularyPolicyFindings": [],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 1,
+      "provenanceDebt": {
+        "classification": "CONTENT_ACTION_REQUIRED",
+        "generationProvenance": "native-pre-factory",
+        "governanceState": "no-mip-governance",
+        "note": "No factory log entry — knowledge predates the factory process. Content origin cannot be established and content reliability cannot be assessed without authoritative research. MIP identity governance is required to establish provenance before content can be trusted."
+      },
+      "recommendedActions": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": false,
+      "requiresExternalResearch": true,
+      "requiresFounderDecision": false,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "naxos-inspired",
+      "name": "Naxos Inspired",
+      "collection": "Skye",
+      "provenanceClass": "E",
+      "generationProvenance": "native-pre-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "MEDIUM",
+      "priorityTier": "P3",
+      "issueCategories": [
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [],
+      "vocabularyPolicyFindings": [
+        {
+          "field": "scentCharacter",
+          "value": "Rich & Long Wearing",
+          "policyClassification": "REVIEW",
+          "reason": "Contains 'Long Wearing' — longevity language. Per the Performance Claim Policy (docs/mkc-authoring-guide.md § Performance Claim Policy), measurable performance claims are prohibited. As a schema-governed vocabulary value this is not free-text editorial copy, but a founder disposition is required: either (a) a formal policy exception documenting that schema vocabulary values are excluded from the Performance Claim Policy, or (b) replacement with a longevity-neutral label that preserves the olfactive weight classification."
+        }
+      ],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 2,
+      "provenanceDebt": {
+        "classification": "CONTENT_ACTION_REQUIRED",
+        "generationProvenance": "native-pre-factory",
+        "governanceState": "no-mip-governance",
+        "note": "No factory log entry — knowledge predates the factory process. Content origin cannot be established and content reliability cannot be assessed without authoritative research. MIP identity governance is required to establish provenance before content can be trusted."
+      },
+      "recommendedActions": [
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": false,
+      "requiresExternalResearch": true,
+      "requiresFounderDecision": true,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "ombre-nomade-inspired",
+      "name": "Ombre Nomade Inspired",
+      "collection": "Skye",
+      "provenanceClass": "D",
+      "generationProvenance": "legacy-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "MEDIUM",
+      "priorityTier": "P3",
+      "issueCategories": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [],
+      "vocabularyPolicyFindings": [],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 3,
+      "provenanceDebt": {
+        "classification": "DOCUMENTATION_ONLY",
+        "generationProvenance": "legacy-factory",
+        "governanceState": "no-mip-governance",
+        "note": "AI generation origin documented in scripts/factory/factory-log.json (factory v0.5.0, 2026-07-13). Content origin is traceable via factory audit trail. Formal MIP identity governance and R2 reconciliation absent."
+      },
+      "recommendedActions": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": false,
+      "requiresExternalResearch": false,
+      "requiresFounderDecision": false,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "oud-for-greatness-inspired",
+      "name": "Oud For Greatness Inspired",
+      "collection": "Skye",
+      "provenanceClass": "D",
+      "generationProvenance": "legacy-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "MEDIUM",
+      "priorityTier": "P3",
+      "issueCategories": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [],
+      "vocabularyPolicyFindings": [],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 3,
+      "provenanceDebt": {
+        "classification": "DOCUMENTATION_ONLY",
+        "generationProvenance": "legacy-factory",
+        "governanceState": "no-mip-governance",
+        "note": "AI generation origin documented in scripts/factory/factory-log.json (factory v0.5.0, 2026-07-13). Content origin is traceable via factory audit trail. Formal MIP identity governance and R2 reconciliation absent."
+      },
+      "recommendedActions": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": false,
+      "requiresExternalResearch": false,
+      "requiresFounderDecision": false,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "oud-mood-inspired",
+      "name": "Oud Mood Inspired",
+      "collection": "Elite",
+      "provenanceClass": "D",
+      "generationProvenance": "legacy-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "MEDIUM",
+      "priorityTier": "P3",
+      "issueCategories": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [],
+      "vocabularyPolicyFindings": [],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 2,
+      "provenanceDebt": {
+        "classification": "DOCUMENTATION_ONLY",
+        "generationProvenance": "legacy-factory",
+        "governanceState": "no-mip-governance",
+        "note": "AI generation origin documented in scripts/factory/factory-log.json (factory v0.5.0, 2026-07-13). Content origin is traceable via factory audit trail. Formal MIP identity governance and R2 reconciliation absent."
+      },
+      "recommendedActions": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": false,
+      "requiresExternalResearch": false,
+      "requiresFounderDecision": false,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "oud-wood-inspired",
+      "name": "Oud Wood Inspired",
+      "collection": "Skye",
+      "provenanceClass": "E",
+      "generationProvenance": "native-pre-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "MEDIUM",
+      "priorityTier": "P3",
+      "issueCategories": [
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [],
+      "vocabularyPolicyFindings": [
+        {
+          "field": "scentCharacter",
+          "value": "Rich & Long Wearing",
+          "policyClassification": "REVIEW",
+          "reason": "Contains 'Long Wearing' — longevity language. Per the Performance Claim Policy (docs/mkc-authoring-guide.md § Performance Claim Policy), measurable performance claims are prohibited. As a schema-governed vocabulary value this is not free-text editorial copy, but a founder disposition is required: either (a) a formal policy exception documenting that schema vocabulary values are excluded from the Performance Claim Policy, or (b) replacement with a longevity-neutral label that preserves the olfactive weight classification."
+        }
+      ],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 7,
+      "provenanceDebt": {
+        "classification": "CONTENT_ACTION_REQUIRED",
+        "generationProvenance": "native-pre-factory",
+        "governanceState": "no-mip-governance",
+        "note": "No factory log entry — knowledge predates the factory process. Content origin cannot be established and content reliability cannot be assessed without authoritative research. MIP identity governance is required to establish provenance before content can be trusted."
+      },
+      "recommendedActions": [
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": false,
+      "requiresExternalResearch": true,
+      "requiresFounderDecision": true,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "pacific-chill-inspired",
+      "name": "Pacific Chill Inspired",
+      "collection": "Skye",
+      "provenanceClass": "D",
+      "generationProvenance": "legacy-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "MEDIUM",
+      "priorityTier": "P3",
+      "issueCategories": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [],
+      "vocabularyPolicyFindings": [],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 3,
+      "provenanceDebt": {
+        "classification": "DOCUMENTATION_ONLY",
+        "generationProvenance": "legacy-factory",
+        "governanceState": "no-mip-governance",
+        "note": "AI generation origin documented in scripts/factory/factory-log.json (factory v0.5.0, 2026-07-13). Content origin is traceable via factory audit trail. Formal MIP identity governance and R2 reconciliation absent."
+      },
+      "recommendedActions": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": false,
+      "requiresExternalResearch": false,
+      "requiresFounderDecision": false,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "poison-girl-inspired",
+      "name": "Poison Girl Inspired",
+      "collection": "Rose",
+      "provenanceClass": "D",
+      "generationProvenance": "legacy-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "MEDIUM",
+      "priorityTier": "P3",
+      "issueCategories": [
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [],
+      "vocabularyPolicyFindings": [
+        {
+          "field": "scentCharacter",
+          "value": "Rich & Long Wearing",
+          "policyClassification": "REVIEW",
+          "reason": "Contains 'Long Wearing' — longevity language. Per the Performance Claim Policy (docs/mkc-authoring-guide.md § Performance Claim Policy), measurable performance claims are prohibited. As a schema-governed vocabulary value this is not free-text editorial copy, but a founder disposition is required: either (a) a formal policy exception documenting that schema vocabulary values are excluded from the Performance Claim Policy, or (b) replacement with a longevity-neutral label that preserves the olfactive weight classification."
+        }
+      ],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 3,
+      "provenanceDebt": {
+        "classification": "DOCUMENTATION_ONLY",
+        "generationProvenance": "legacy-factory",
+        "governanceState": "no-mip-governance",
+        "note": "AI generation origin documented in scripts/factory/factory-log.json (factory v0.5.0, 2026-07-13). Content origin is traceable via factory audit trail. Formal MIP identity governance and R2 reconciliation absent."
+      },
+      "recommendedActions": [
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": false,
+      "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "prada-l'homme-inspired",
+      "name": "Prada L'Homme Inspired",
+      "collection": "Skye",
+      "provenanceClass": "E",
+      "generationProvenance": "native-pre-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "MEDIUM",
+      "priorityTier": "P3",
+      "issueCategories": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [],
+      "vocabularyPolicyFindings": [],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 4,
+      "provenanceDebt": {
+        "classification": "CONTENT_ACTION_REQUIRED",
+        "generationProvenance": "native-pre-factory",
+        "governanceState": "no-mip-governance",
+        "note": "No factory log entry — knowledge predates the factory process. Content origin cannot be established and content reliability cannot be assessed without authoritative research. MIP identity governance is required to establish provenance before content can be trusted."
+      },
+      "recommendedActions": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": false,
+      "requiresExternalResearch": true,
+      "requiresFounderDecision": false,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "prada-luna-rossa-carbon-inspired",
+      "name": "Prada Luna Rossa Carbon Inspired",
+      "collection": "Skye",
+      "provenanceClass": "E",
+      "generationProvenance": "native-pre-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "MEDIUM",
+      "priorityTier": "P3",
+      "issueCategories": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [],
+      "vocabularyPolicyFindings": [],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 1,
+      "provenanceDebt": {
+        "classification": "CONTENT_ACTION_REQUIRED",
+        "generationProvenance": "native-pre-factory",
+        "governanceState": "no-mip-governance",
+        "note": "No factory log entry — knowledge predates the factory process. Content origin cannot be established and content reliability cannot be assessed without authoritative research. MIP identity governance is required to establish provenance before content can be trusted."
+      },
+      "recommendedActions": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": false,
+      "requiresExternalResearch": true,
+      "requiresFounderDecision": false,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "prada-paradoxe-inspired",
+      "name": "Prada Paradoxe Inspired",
+      "collection": "Rose",
+      "provenanceClass": "D",
+      "generationProvenance": "legacy-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "MEDIUM",
+      "priorityTier": "P3",
+      "issueCategories": [
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [],
+      "vocabularyPolicyFindings": [
+        {
+          "field": "scentCharacter",
+          "value": "Rich & Long Wearing",
+          "policyClassification": "REVIEW",
+          "reason": "Contains 'Long Wearing' — longevity language. Per the Performance Claim Policy (docs/mkc-authoring-guide.md § Performance Claim Policy), measurable performance claims are prohibited. As a schema-governed vocabulary value this is not free-text editorial copy, but a founder disposition is required: either (a) a formal policy exception documenting that schema vocabulary values are excluded from the Performance Claim Policy, or (b) replacement with a longevity-neutral label that preserves the olfactive weight classification."
+        }
+      ],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 3,
+      "provenanceDebt": {
+        "classification": "DOCUMENTATION_ONLY",
+        "generationProvenance": "legacy-factory",
+        "governanceState": "no-mip-governance",
+        "note": "AI generation origin documented in scripts/factory/factory-log.json (factory v0.5.0, 2026-07-13). Content origin is traceable via factory audit trail. Formal MIP identity governance and R2 reconciliation absent."
+      },
+      "recommendedActions": [
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": false,
+      "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "sauvage-elixir-inspired",
+      "name": "Sauvage Elixir Inspired",
+      "collection": "Skye",
+      "provenanceClass": "E",
+      "generationProvenance": "native-pre-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "MEDIUM",
+      "priorityTier": "P3",
+      "issueCategories": [
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [],
+      "vocabularyPolicyFindings": [
+        {
+          "field": "scentCharacter",
+          "value": "Rich & Long Wearing",
+          "policyClassification": "REVIEW",
+          "reason": "Contains 'Long Wearing' — longevity language. Per the Performance Claim Policy (docs/mkc-authoring-guide.md § Performance Claim Policy), measurable performance claims are prohibited. As a schema-governed vocabulary value this is not free-text editorial copy, but a founder disposition is required: either (a) a formal policy exception documenting that schema vocabulary values are excluded from the Performance Claim Policy, or (b) replacement with a longevity-neutral label that preserves the olfactive weight classification."
+        }
+      ],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 7,
+      "provenanceDebt": {
+        "classification": "CONTENT_ACTION_REQUIRED",
+        "generationProvenance": "native-pre-factory",
+        "governanceState": "no-mip-governance",
+        "note": "No factory log entry — knowledge predates the factory process. Content origin cannot be established and content reliability cannot be assessed without authoritative research. MIP identity governance is required to establish provenance before content can be trusted."
+      },
+      "recommendedActions": [
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": false,
+      "requiresExternalResearch": true,
+      "requiresFounderDecision": true,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "sauvage-inspired",
+      "name": "Sauvage Inspired",
+      "collection": "Skye",
+      "provenanceClass": "E",
+      "generationProvenance": "native-pre-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "MEDIUM",
+      "priorityTier": "P3",
+      "issueCategories": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [],
+      "vocabularyPolicyFindings": [],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 17,
+      "provenanceDebt": {
+        "classification": "CONTENT_ACTION_REQUIRED",
+        "generationProvenance": "native-pre-factory",
+        "governanceState": "no-mip-governance",
+        "note": "No factory log entry — knowledge predates the factory process. Content origin cannot be established and content reliability cannot be assessed without authoritative research. MIP identity governance is required to establish provenance before content can be trusted."
+      },
+      "recommendedActions": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": false,
+      "requiresExternalResearch": true,
+      "requiresFounderDecision": false,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "silver-mountain-water-inspired",
+      "name": "Silver Mountain Water Inspired",
+      "collection": "Skye",
+      "provenanceClass": "D",
+      "generationProvenance": "legacy-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "MEDIUM",
+      "priorityTier": "P3",
+      "issueCategories": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [],
+      "vocabularyPolicyFindings": [],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 4,
+      "provenanceDebt": {
+        "classification": "DOCUMENTATION_ONLY",
+        "generationProvenance": "legacy-factory",
+        "governanceState": "no-mip-governance",
+        "note": "AI generation origin documented in scripts/factory/factory-log.json (factory v0.5.0, 2026-07-13). Content origin is traceable via factory audit trail. Formal MIP identity governance and R2 reconciliation absent."
+      },
+      "recommendedActions": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": false,
+      "requiresExternalResearch": false,
+      "requiresFounderDecision": false,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "spicebomb-extreme-inspired",
+      "name": "Spicebomb Extreme Inspired",
+      "collection": "Skye",
+      "provenanceClass": "E",
+      "generationProvenance": "native-pre-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "MEDIUM",
+      "priorityTier": "P3",
+      "issueCategories": [
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [],
+      "vocabularyPolicyFindings": [
+        {
+          "field": "scentCharacter",
+          "value": "Rich & Long Wearing",
+          "policyClassification": "REVIEW",
+          "reason": "Contains 'Long Wearing' — longevity language. Per the Performance Claim Policy (docs/mkc-authoring-guide.md § Performance Claim Policy), measurable performance claims are prohibited. As a schema-governed vocabulary value this is not free-text editorial copy, but a founder disposition is required: either (a) a formal policy exception documenting that schema vocabulary values are excluded from the Performance Claim Policy, or (b) replacement with a longevity-neutral label that preserves the olfactive weight classification."
+        }
+      ],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 10,
+      "provenanceDebt": {
+        "classification": "CONTENT_ACTION_REQUIRED",
+        "generationProvenance": "native-pre-factory",
+        "governanceState": "no-mip-governance",
+        "note": "No factory log entry — knowledge predates the factory process. Content origin cannot be established and content reliability cannot be assessed without authoritative research. MIP identity governance is required to establish provenance before content can be trusted."
+      },
+      "recommendedActions": [
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": false,
+      "requiresExternalResearch": true,
+      "requiresFounderDecision": true,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "stronger-with-you-inspired",
+      "name": "Stronger With You Inspired",
+      "collection": "Skye",
+      "provenanceClass": "E",
+      "generationProvenance": "native-pre-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "MEDIUM",
+      "priorityTier": "P3",
+      "issueCategories": [
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [],
+      "vocabularyPolicyFindings": [
+        {
+          "field": "scentCharacter",
+          "value": "Rich & Long Wearing",
+          "policyClassification": "REVIEW",
+          "reason": "Contains 'Long Wearing' — longevity language. Per the Performance Claim Policy (docs/mkc-authoring-guide.md § Performance Claim Policy), measurable performance claims are prohibited. As a schema-governed vocabulary value this is not free-text editorial copy, but a founder disposition is required: either (a) a formal policy exception documenting that schema vocabulary values are excluded from the Performance Claim Policy, or (b) replacement with a longevity-neutral label that preserves the olfactive weight classification."
+        }
+      ],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 3,
+      "provenanceDebt": {
+        "classification": "CONTENT_ACTION_REQUIRED",
+        "generationProvenance": "native-pre-factory",
+        "governanceState": "no-mip-governance",
+        "note": "No factory log entry — knowledge predates the factory process. Content origin cannot be established and content reliability cannot be assessed without authoritative research. MIP identity governance is required to establish provenance before content can be trusted."
+      },
+      "recommendedActions": [
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": false,
+      "requiresExternalResearch": true,
+      "requiresFounderDecision": true,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "stronger-with-you-intensely-inspired",
+      "name": "Stronger With You Intensely Inspired",
+      "collection": "Skye",
+      "provenanceClass": "E",
+      "generationProvenance": "native-pre-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "MEDIUM",
+      "priorityTier": "P3",
+      "issueCategories": [
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [],
+      "vocabularyPolicyFindings": [
+        {
+          "field": "scentCharacter",
+          "value": "Rich & Long Wearing",
+          "policyClassification": "REVIEW",
+          "reason": "Contains 'Long Wearing' — longevity language. Per the Performance Claim Policy (docs/mkc-authoring-guide.md § Performance Claim Policy), measurable performance claims are prohibited. As a schema-governed vocabulary value this is not free-text editorial copy, but a founder disposition is required: either (a) a formal policy exception documenting that schema vocabulary values are excluded from the Performance Claim Policy, or (b) replacement with a longevity-neutral label that preserves the olfactive weight classification."
+        }
+      ],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 2,
+      "provenanceDebt": {
+        "classification": "CONTENT_ACTION_REQUIRED",
+        "generationProvenance": "native-pre-factory",
+        "governanceState": "no-mip-governance",
+        "note": "No factory log entry — knowledge predates the factory process. Content origin cannot be established and content reliability cannot be assessed without authoritative research. MIP identity governance is required to establish provenance before content can be trusted."
+      },
+      "recommendedActions": [
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": false,
+      "requiresExternalResearch": true,
+      "requiresFounderDecision": true,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "terre-d'hermes-inspired",
+      "name": "Terre d'Hermes Inspired",
+      "collection": "Skye",
+      "provenanceClass": "E",
+      "generationProvenance": "native-pre-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "MEDIUM",
+      "priorityTier": "P3",
+      "issueCategories": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [],
+      "vocabularyPolicyFindings": [],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 1,
+      "provenanceDebt": {
+        "classification": "CONTENT_ACTION_REQUIRED",
+        "generationProvenance": "native-pre-factory",
+        "governanceState": "no-mip-governance",
+        "note": "No factory log entry — knowledge predates the factory process. Content origin cannot be established and content reliability cannot be assessed without authoritative research. MIP identity governance is required to establish provenance before content can be trusted."
+      },
+      "recommendedActions": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": false,
+      "requiresExternalResearch": true,
+      "requiresFounderDecision": false,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "torino21-inspired",
+      "name": "Torino21 Inspired",
+      "collection": "Skye",
+      "provenanceClass": "D",
+      "generationProvenance": "legacy-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "MEDIUM",
+      "priorityTier": "P3",
+      "issueCategories": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [],
+      "vocabularyPolicyFindings": [],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 4,
+      "provenanceDebt": {
+        "classification": "DOCUMENTATION_ONLY",
+        "generationProvenance": "legacy-factory",
+        "governanceState": "no-mip-governance",
+        "note": "AI generation origin documented in scripts/factory/factory-log.json (factory v0.5.0, 2026-07-13). Content origin is traceable via factory audit trail. Formal MIP identity governance and R2 reconciliation absent."
+      },
+      "recommendedActions": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": false,
+      "requiresExternalResearch": false,
+      "requiresFounderDecision": false,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "ultra-male-inspired",
+      "name": "Ultra Male Inspired",
+      "collection": "Skye",
+      "provenanceClass": "E",
+      "generationProvenance": "native-pre-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "MEDIUM",
+      "priorityTier": "P3",
+      "issueCategories": [
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [],
+      "vocabularyPolicyFindings": [
+        {
+          "field": "scentCharacter",
+          "value": "Rich & Long Wearing",
+          "policyClassification": "REVIEW",
+          "reason": "Contains 'Long Wearing' — longevity language. Per the Performance Claim Policy (docs/mkc-authoring-guide.md § Performance Claim Policy), measurable performance claims are prohibited. As a schema-governed vocabulary value this is not free-text editorial copy, but a founder disposition is required: either (a) a formal policy exception documenting that schema vocabulary values are excluded from the Performance Claim Policy, or (b) replacement with a longevity-neutral label that preserves the olfactive weight classification."
+        }
+      ],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 3,
+      "provenanceDebt": {
+        "classification": "CONTENT_ACTION_REQUIRED",
+        "generationProvenance": "native-pre-factory",
+        "governanceState": "no-mip-governance",
+        "note": "No factory log entry — knowledge predates the factory process. Content origin cannot be established and content reliability cannot be assessed without authoritative research. MIP identity governance is required to establish provenance before content can be trusted."
+      },
+      "recommendedActions": [
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": false,
+      "requiresExternalResearch": true,
+      "requiresFounderDecision": true,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "valentino-uomo-born-in-roma-inspired",
+      "name": "Valentino Uomo Born In Roma Inspired",
+      "collection": "Skye",
+      "provenanceClass": "E",
+      "generationProvenance": "native-pre-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "MEDIUM",
+      "priorityTier": "P3",
+      "issueCategories": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [],
+      "vocabularyPolicyFindings": [],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 2,
+      "provenanceDebt": {
+        "classification": "CONTENT_ACTION_REQUIRED",
+        "generationProvenance": "native-pre-factory",
+        "governanceState": "no-mip-governance",
+        "note": "No factory log entry — knowledge predates the factory process. Content origin cannot be established and content reliability cannot be assessed without authoritative research. MIP identity governance is required to establish provenance before content can be trusted."
+      },
+      "recommendedActions": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": false,
+      "requiresExternalResearch": true,
+      "requiresFounderDecision": false,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "very-good-girl-inspired",
+      "name": "Very Good Girl Inspired",
+      "collection": "Rose",
+      "provenanceClass": "D",
+      "generationProvenance": "legacy-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "MEDIUM",
+      "priorityTier": "P3",
+      "issueCategories": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [],
+      "vocabularyPolicyFindings": [],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 3,
+      "provenanceDebt": {
+        "classification": "DOCUMENTATION_ONLY",
+        "generationProvenance": "legacy-factory",
+        "governanceState": "no-mip-governance",
+        "note": "AI generation origin documented in scripts/factory/factory-log.json (factory v0.5.0, 2026-07-13). Content origin is traceable via factory audit trail. Formal MIP identity governance and R2 reconciliation absent."
+      },
+      "recommendedActions": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": false,
+      "requiresExternalResearch": false,
+      "requiresFounderDecision": false,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "wedding-silk-santal-inspired",
+      "name": "Wedding Silk Santal Inspired",
+      "collection": "Rose",
+      "provenanceClass": "D",
+      "generationProvenance": "legacy-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "MEDIUM",
+      "priorityTier": "P3",
+      "issueCategories": [
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [],
+      "vocabularyPolicyFindings": [
+        {
+          "field": "scentCharacter",
+          "value": "Rich & Long Wearing",
+          "policyClassification": "REVIEW",
+          "reason": "Contains 'Long Wearing' — longevity language. Per the Performance Claim Policy (docs/mkc-authoring-guide.md § Performance Claim Policy), measurable performance claims are prohibited. As a schema-governed vocabulary value this is not free-text editorial copy, but a founder disposition is required: either (a) a formal policy exception documenting that schema vocabulary values are excluded from the Performance Claim Policy, or (b) replacement with a longevity-neutral label that preserves the olfactive weight classification."
+        }
+      ],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 3,
+      "provenanceDebt": {
+        "classification": "DOCUMENTATION_ONLY",
+        "generationProvenance": "legacy-factory",
+        "governanceState": "no-mip-governance",
+        "note": "AI generation origin documented in scripts/factory/factory-log.json (factory v0.5.0, 2026-07-13). Content origin is traceable via factory audit trail. Formal MIP identity governance and R2 reconciliation absent."
+      },
+      "recommendedActions": [
+        "SCHEMA_POLICY_REVIEW",
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": false,
+      "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "y-inspired",
+      "name": "Y Inspired",
+      "collection": "Skye",
+      "provenanceClass": "E",
+      "generationProvenance": "native-pre-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "MEDIUM",
+      "priorityTier": "P3",
+      "issueCategories": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [],
+      "vocabularyPolicyFindings": [],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": true,
+      "relationshipEntryCount": 2,
+      "provenanceDebt": {
+        "classification": "CONTENT_ACTION_REQUIRED",
+        "generationProvenance": "native-pre-factory",
+        "governanceState": "no-mip-governance",
+        "note": "No factory log entry — knowledge predates the factory process. Content origin cannot be established and content reliability cannot be assessed without authoritative research. MIP identity governance is required to establish provenance before content can be trusted."
+      },
+      "recommendedActions": [
+        "RELATIONSHIP_EDITORIAL_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": false,
+      "requiresExternalResearch": true,
+      "requiresFounderDecision": false,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "side-effect-inspired",
+      "name": "Side Effect Inspired",
+      "collection": "Skye",
+      "provenanceClass": "E",
+      "generationProvenance": "native-pre-factory",
+      "governanceState": "no-mip-governance",
+      "currentRiskLevel": "MEDIUM",
+      "priorityTier": "P4",
+      "issueCategories": [
+        "SCHEMA_POLICY_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "policyFindings": [],
+      "vocabularyPolicyFindings": [
+        {
+          "field": "scentCharacter",
+          "value": "Rich & Long Wearing",
+          "policyClassification": "REVIEW",
+          "reason": "Contains 'Long Wearing' — longevity language. Per the Performance Claim Policy (docs/mkc-authoring-guide.md § Performance Claim Policy), measurable performance claims are prohibited. As a schema-governed vocabulary value this is not free-text editorial copy, but a founder disposition is required: either (a) a formal policy exception documenting that schema vocabulary values are excluded from the Performance Claim Policy, or (b) replacement with a longevity-neutral label that preserves the olfactive weight classification."
+        }
+      ],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": false,
+      "relationshipEntryCount": 0,
+      "provenanceDebt": {
+        "classification": "CONTENT_ACTION_REQUIRED",
+        "generationProvenance": "native-pre-factory",
+        "governanceState": "no-mip-governance",
+        "note": "No factory log entry — knowledge predates the factory process. Content origin cannot be established and content reliability cannot be assessed without authoritative research. MIP identity governance is required to establish provenance before content can be trusted."
+      },
+      "recommendedActions": [
+        "SCHEMA_POLICY_REVIEW",
+        "MIP_IDENTITY_ONBOARDING"
+      ],
+      "canCorrectDeterministically": false,
+      "requiresExternalResearch": true,
+      "requiresFounderDecision": true,
+      "blockingPrerequisite": null
+    },
+    {
+      "slug": "alien-goddess-inspired",
+      "name": "Alien Goddess Inspired",
+      "collection": "Rose",
+      "provenanceClass": "A",
+      "generationProvenance": "legacy-factory",
+      "governanceState": "reconciled-r2",
+      "currentRiskLevel": "LOW",
+      "priorityTier": "P5",
+      "issueCategories": [
+        "NO_ACTION"
+      ],
+      "policyFindings": [],
+      "vocabularyPolicyFindings": [],
+      "relationshipStructuralFindings": [],
+      "hasRelationships": false,
+      "relationshipEntryCount": 0,
+      "provenanceDebt": {
+        "classification": "DOCUMENTATION_ONLY",
+        "generationProvenance": "legacy-factory",
+        "governanceState": "reconciled-r2",
+        "note": "Provenance fully governed — EP5-P4H R2 correction applied to all composition fields against authoritative MIP-000012 research. No further provenance action required."
+      },
+      "recommendedActions": [
+        "NO_ACTION"
+      ],
+      "canCorrectDeterministically": false,
+      "requiresExternalResearch": false,
+      "requiresFounderDecision": false,
+      "blockingPrerequisite": null
+    }
+  ]
+}

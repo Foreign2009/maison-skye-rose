@@ -8,82 +8,93 @@
 ## Current Task
 
 **Status:** COMPLETE — STOP
-**Program:** EP6-P1 — Catalogue Knowledge Integrity Audit
+**Program:** EP6-P2 — Catalogue Remediation Queue
 
 **Outcome:**
-Deterministic read-only audit of all 93 native fragrance knowledge records implemented.
-10 governance questions answered per record. 3 implementation files created, 1 audit output JSON
-generated. 73 new validation proofs. 734/734 total proofs passing. Build clean:
+EP6-P1 audit snapshot turned into a governed, prioritized remediation worklist.
+P0–P5 priority model applied. scentCharacter vocabulary assessed as a separate governance
+dimension. Relationship structural audit performed (0 structural defects found — clean
+relationship graph). 75 new validation proofs. 809/809 total proofs passing. Build clean:
 188 routes, 0 TypeScript errors, 0 warnings. No knowledge records modified.
 
 **What was done:**
-1. Read all mandatory files: MKC types (FragranceKnowledge, relationships type), catalogue.ts
-   (mkcCatalogue array), factory-log.json (56 runs, slug extraction), identity-product-registry.json
-   (1 mapping: MIP-000012 → alien-goddess-inspired), identity-qualified-run-audit.json
-   (1 MIPRUN: MIPRUN-DZOn_xTBLM5h, governance-attempt + pipeline-outcome records), reconciliation
-   directory (1 file: MIP-000012-alien-goddess-reconciliation.json), productMapping.ts
-   (read-only bridge API), representative native records (sauvage-inspired has relationships;
-   eros-inspired, side-effect-inspired, armani-code-parfum-inspired have no relationships).
+1. Read all required files: validator.ts (checkRelationships structural codes), RelationshipProducer.ts
+   (confirmed all 89 relationships are AI-generated), mkc-authoring-guide.md (Performance Claim
+   Policy and scentCharacter vocabulary definitions), catalogue-knowledge-integrity-audit.json.
 
-2. Designed audit system:
-   - Two-axis provenance model: generationProvenance × governanceState
-   - Provenance classes A (identity-qualified + reconciled-r2), D (legacy-factory, ungoverned),
-     E (native-pre-factory, ungoverned), F (unknown — unused)
-   - Policy scanner excluding scentCharacter (governed vocabulary); HIGH patterns: long-wearing,
-     long-lasting, lasts all day, all day long, beast mode; MEDIUM: all-day
-   - Risk model: HIGH (any HIGH policy finding) > LOW (class A, no findings) > MEDIUM (all else)
+2. Designed remediation queue system:
+   - Priority model P0–P5:
+     P0 = DETERMINISTIC_POLICY_CORRECTION (HIGH free-text policy violations)
+     P1 = RELATIONSHIP_STRUCTURAL_CORRECTION (dangling slug, self-reference, duplicate)
+     P2 = EDITORIAL_REVIEW (MEDIUM-severity policy violations)
+     P3 = RELATIONSHIP_EDITORIAL_REVIEW (AI relationships, no structural defect)
+     P4 = MIP_IDENTITY_ONBOARDING (ungoverned, no higher-priority issue)
+     P5 = NO_ACTION (fully governed, no outstanding issues)
+   - scentCharacter vocabulary: "Fresh & Light" SAFE, "Balanced Signature" SAFE,
+     "Rich & Long Wearing" REVIEW (longevity language in schema-governed label),
+     "Deep & Intense" SAFE
+   - Provenance debt: class A → DOCUMENTATION_ONLY, class D → DOCUMENTATION_ONLY
+     (factory origin traceable), class E → CONTENT_ACTION_REQUIRED (origin unknown)
+   - Structural validation uses validateKnowledgeRecord() from mkc/validator.ts,
+     filtered to RELATIONSHIP_SLUG_NOT_FOUND, RELATIONSHIP_SELF_REFERENCE,
+     RELATIONSHIP_DUPLICATE_SLUG codes only
 
-3. Created `scripts/identity/catalogueKnowledgeIntegrityAudit.ts`:
-   - Pure function audit service — no I/O
-   - Types: GenerationProvenance, GovernanceState, ProvenanceClass, RiskLevel, PolicyFinding,
-     RecordAuditResult, AuditSummary, CatalogueAuditReport, AuditInput
-   - Functions: scanPolicyFindings, countRelationshipEntries, classifyProvenance, computeRisk,
-     computeRecommendedActions, computeAuditNotes, runCatalogueKnowledgeIntegrityAudit
+3. Created `scripts/identity/catalogueRemediationQueue.ts` — pure service:
+   - Types: PriorityTier, IssueCategory, RemediationAction, RelationshipStructuralFinding,
+     VocabularyPolicyFinding, ProvenanceDebt, RemediationItem, ScentCharacterVocabAssessment,
+     RemediationSummary, CatalogueRemediationQueue, RemediationInput
+   - Functions: computeStructuralFindings, computeVocabularyFindings, computeProvenanceDebt,
+     computePriorityTier, computeIssueCategories, computeRecommendedActions,
+     runCatalogueRemediationQueue
 
-4. Created `scripts/identity/run-catalogue-knowledge-integrity-audit.ts`:
+4. Created `scripts/identity/run-catalogue-remediation-queue.ts`:
    - APPROVED_IDENTITY_ID = null, FORCE = false (governance disarm)
-   - Reads: factory-log.json, identity-product-registry.json, identity-qualified-run-audit.json,
-     reconciliation/*.json, mkcCatalogue (TypeScript import)
-   - Writes: app/lib/identity/data/audits/catalogue-knowledge-integrity-audit.json
-   - Creates audits/ directory with mkdirSync + recursive
+   - Reads: catalogue-knowledge-integrity-audit.json (EP6-P1 snapshot)
+   - Imports: mkcCatalogue (for structural validation and vocabulary counts)
+   - Writes: app/lib/identity/data/audits/catalogue-remediation-queue.json
 
-5. Ran `mip:audit:catalogue-integrity` — 93 records audited:
-   - legacy-factory: 56 | native-pre-factory: 37
-   - Class A: 1 | Class D: 55 | Class E: 37
-   - no-mip-governance: 92 | reconciled-r2: 1
-   - HIGH risk: 23 | MEDIUM: 69 | LOW: 1 (alien-goddess-inspired)
-   - With relationships: 89 | Policy findings: 32 across 26 records
+5. Ran `mip:audit:catalogue-remediation` — 93 records processed:
+   - P0: 23 (HIGH policy corrections)
+   - P1: 0 (0 structural relationship defects — clean graph)
+   - P2: 3 (armani-code-parfum-inspired, eros-inspired, y-edp-inspired)
+   - P3: 65 (AI relationships, no policy/structural issues)
+   - P4: 1 (side-effect-inspired: ungoverned, no relationships)
+   - P5: 1 (alien-goddess-inspired: fully governed, NO_ACTION)
+   - totalStructuralFindings: 0
+   - recordsCanCorrectDeterministically: 23
+   - recordsRequiringFounderDecision: 49
+   - scentCharacter vocabulary: "Rich & Long Wearing" REVIEW, 47/93 records
 
-6. Created `scripts/identity/validate-catalogue-knowledge-integrity-audit.ts`:
-   - 73 proofs across 9 sections:
-   - § 100: 12 proofs — Audit Coverage
+6. Created `scripts/identity/validate-catalogue-remediation-queue.ts` — 75-proof suite:
+   - § 100: 10 proofs — Queue Coverage
    - § 200: 6 proofs — Safety Invariants
-   - § 300: 12 proofs — Alien Goddess Classification
-   - § 400: 6 proofs — Relationship Detection
-   - § 500: 10 proofs — Policy Detection
-   - § 600: 8 proofs — Risk Ordering
-   - § 700: 5 proofs — Summary Integrity
-   - § 800: 7 proofs — Protected Artifact Immutability
-   - § 900: 7 proofs — Factory Provenance
+   - § 300: 12 proofs — Priority Tier Distribution
+   - § 400: 8 proofs — P5 Alien Goddess Invariants
+   - § 500: 8 proofs — P0 Policy Correction
+   - § 600: 6 proofs — Structural Integrity
+   - § 700: 10 proofs — Vocabulary Assessment
+   - § 800: 8 proofs — Provenance Debt Classification
+   - § 900: 7 proofs — Protected Artifact Immutability
 
 7. Added scripts to package.json:
-   - `mip:audit:catalogue-integrity`
-   - `mip:validate:catalogue-integrity`
+   - `mip:audit:catalogue-remediation`
+   - `mip:validate:catalogue-remediation`
 
-8. Ran `mip:validate:catalogue-integrity` — 73/73 proofs passing
-9. Ran all 12 existing regression suites — 661/661 proofs passing
-10. Grand total: 734/734 proofs passing
+8. Ran `mip:validate:catalogue-remediation` — 75/75 proofs passing
+9. Ran `mip:validate:catalogue-integrity` (EP6-P1 regression) — 73/73 passing
+10. Ran all 12 existing regression suites — 661/661 passing
+11. Grand total: 809/809 proofs passing (734 existing + 75 new)
 
 **Files Created:**
-- `scripts/identity/catalogueKnowledgeIntegrityAudit.ts` — audit service (pure functions)
-- `scripts/identity/run-catalogue-knowledge-integrity-audit.ts` — runner
-- `scripts/identity/validate-catalogue-knowledge-integrity-audit.ts` — 73-proof validation suite
-- `app/lib/identity/data/audits/catalogue-knowledge-integrity-audit.json` — audit output
+- `scripts/identity/catalogueRemediationQueue.ts` — remediation queue service (pure functions)
+- `scripts/identity/run-catalogue-remediation-queue.ts` — runner
+- `scripts/identity/validate-catalogue-remediation-queue.ts` — 75-proof validation suite
+- `app/lib/identity/data/audits/catalogue-remediation-queue.json` — queue output
 
 **Files Modified:**
 - `package.json` — two new scripts added
 
-**Protected Artifact SHAs (unchanged — verified by § 800):**
+**Protected Artifact SHAs (unchanged — verified by § 900):**
 - `app/lib/mkc/native/alien-goddess-inspired.ts` — SHA: 6799eb768a6a5e9166244be866316b802e7009719dd123d27ea8bf73a89be8bd
 - `scripts/factory/drafts/alien-goddess-inspired.ts` — SHA: 700593b7fd98cf8339491b74a7f2c6732badb2581ac268636a59c471b7e1cee7
 - `scripts/factory/factory-log.json` — SHA: bd825643a2cafdd1adb4a82bfebd4e48465844315e78d039811950820570e33e
@@ -102,7 +113,8 @@ generated. 73 new validation proofs. 734/734 total proofs passing. Build clean:
 - 0 research campaigns
 
 **Validation Results:**
-- mip:validate:catalogue-integrity — 73/73 (new)
+- mip:validate:catalogue-remediation — 75/75 (new)
+- mip:validate:catalogue-integrity — 73/73
 - mip:validate:r2 — 30/30
 - mip:validate:research — 75/75
 - mip:validate:reconciliation — 40/40
@@ -115,7 +127,7 @@ generated. 73 new validation proofs. 734/734 total proofs passing. Build clean:
 - mip:validate:resolver — 85/85
 - mip:validate:source:2026 — 39/39
 - mip:validate:editorial — 100/100
-- **Total: 734/734 proofs passing (661 existing + 73 new)**
+- **Total: 809/809 proofs passing (734 existing + 75 new)**
 
 **Build:** 188 routes, 0 TypeScript errors, 0 warnings
 
@@ -123,11 +135,11 @@ generated. 73 new validation proofs. 734/734 total proofs passing. Build clean:
 
 ## Context Notes
 
-**Last completed:** EP6-P1 — Catalogue Knowledge Integrity Audit (2026-08-10)
-**Preceded by:**    EP5-P4H — Alien Goddess Targeted Deterministic Knowledge Correction (2026-08-10)
+**Last completed:** EP6-P2 — Catalogue Remediation Queue (2026-08-10)
+**Preceded by:**    EP6-P1 — Catalogue Knowledge Integrity Audit (2026-08-10)
 
 ---
 
 ## Build Result
 
-**Last build:** 2026-08-10 — Pass. Zero TypeScript errors. Zero warnings. 188 routes. (EP6-P1)
+**Last build:** 2026-08-10 — Pass. Zero TypeScript errors. Zero warnings. 188 routes. (EP6-P2)

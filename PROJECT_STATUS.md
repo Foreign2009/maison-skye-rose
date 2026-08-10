@@ -8,10 +8,10 @@
 
 ## Current Engineering Program
 
-**Program:** EP6-P1 — Catalogue Knowledge Integrity Audit — COMPLETE
+**Program:** EP6-P2 — Catalogue Remediation Queue — COMPLETE
 **Sprint:** EP6
-**Gate:** None — EP6-P1 is complete. Next programme at founder's direction.
-**Outcome:** Deterministic read-only audit of all 93 active native fragrance knowledge records implemented. Answers 10 governance questions per record. 23 HIGH-risk records identified (policy violations), 69 MEDIUM-risk, 1 LOW-risk (alien-goddess, class A). 89/93 records carry AI-generated relationship entries. 73 new catalogue integrity proofs added. 734/734 total proofs passing. Build: 188 routes, 0 TypeScript errors, 0 warnings. No knowledge records modified.
+**Gate:** None — EP6-P2 is complete. Next programme at founder's direction.
+**Outcome:** EP6-P1 audit snapshot turned into a governed, prioritized remediation worklist. P0–P5 priority model applied across all 93 records. 23 P0 records (deterministic HIGH policy corrections). 0 P1 structural defects (clean relationship graph). 3 P2 editorial reviews. 65 P3 relationship reviews. scentCharacter vocabulary assessed: "Rich & Long Wearing" classified REVIEW (47/93 records), requires founder disposition. 75 new proofs. 809/809 total proofs passing. Build: 188 routes, 0 TypeScript errors, 0 warnings. No knowledge records modified.
 
 ---
 
