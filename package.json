@@ -40,7 +40,9 @@
     "mip:validate:reconciliation": "npx tsx scripts/identity/validate-alien-goddess-reconciliation.ts",
     "mip:validate:research": "npx tsx scripts/identity/validate-alien-goddess-research.ts",
     "mip:validate:r2": "npx tsx scripts/identity/validate-alien-goddess-r2-correction.ts",
-    "mkc:identity-qualified:controlled": "npx tsx scripts/factory/run-identity-qualified-controlled.ts"
+    "mkc:identity-qualified:controlled": "npx tsx scripts/factory/run-identity-qualified-controlled.ts",
+    "mip:audit:catalogue-integrity": "npx tsx scripts/identity/run-catalogue-knowledge-integrity-audit.ts",
+    "mip:validate:catalogue-integrity": "npx tsx scripts/identity/validate-catalogue-knowledge-integrity-audit.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.110.0",
