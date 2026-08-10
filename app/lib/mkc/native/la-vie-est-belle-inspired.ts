@@ -13,7 +13,7 @@ export const laVieEstBelleInspired: FragranceKnowledge = {
   // ── Classification ────────────────────────────────────────────────────────────
   gender        : "female",
   family        : ["Floral", "Sweet"],
-  scentCharacter: "Rich & Long Wearing",
+  scentCharacter: "Rich & Full-Bodied",
   projection    : "moderate",
 
   // ── Composition ─────────────────────────────────────────────────────────────
@@ -41,7 +41,7 @@ export const laVieEstBelleInspired: FragranceKnowledge = {
   recommendedFor: [
     "Women seeking an elegant, comforting signature that bridges sweetness and sophistication for winter evenings and special occasions",
     "Those who love rose and vanilla but want luminous floral depth rather than pure gourmand sweetness",
-    "Anyone looking for a long-wearing fragrance that feels intimate and powdered—intimate enough for close encounters, radiant enough for formal events",
+    "Anyone looking for a rich fragrance that feels intimate and powdered—intimate enough for close encounters, radiant enough for formal events",
   ],
 
   // ── Merchandising ───────────────────────────────────────────────────────────
@@ -80,7 +80,6 @@ export const laVieEstBelleInspired: FragranceKnowledge = {
     "winter",
     "date-night",
     "elegant",
-    "long-wearing",
   ],
   learningPath  : [
     "the-note-pyramid-explained",

@@ -7,7 +7,7 @@ export type IntentSignals = {
   occasion?: string;
   vibe?: string;
   family?: string;
-  character?: "Fresh & Light" | "Balanced Signature" | "Rich & Long Wearing" | "Deep & Intense";
+  character?: "Fresh & Light" | "Balanced Signature" | "Rich & Full-Bodied" | "Deep & Intense";
 };
 
 // Sorted by length descending so multi-word entries ("White Floral", "Old Money") match
@@ -34,13 +34,13 @@ const GENDER_GROUPS: GenderGroup[] = [
 
 type CharacterRule = {
   keywords: string[];
-  character: "Fresh & Light" | "Deep & Intense" | "Rich & Long Wearing";
+  character: "Fresh & Light" | "Deep & Intense" | "Rich & Full-Bodied";
 };
 
 const CHARACTER_RULES: CharacterRule[] = [
   { keywords: ["light", "fresh", "airy", "clean"], character: "Fresh & Light" },
   { keywords: ["deep", "intense", "dark", "heavy", "bold"], character: "Deep & Intense" },
-  { keywords: ["rich", "long lasting", "long-lasting", "lasting", "strong"], character: "Rich & Long Wearing" },
+  { keywords: ["rich", "long lasting", "long-lasting", "lasting", "strong"], character: "Rich & Full-Bodied" },
 ];
 
 function matchFirst(query: string, vocabulary: string[]): string | undefined {

@@ -15,7 +15,7 @@ export const biancoLatteInspired: FragranceKnowledge = {
   // ── Classification ───────────────────────────────────────────────────────────
   gender:         "female",
   family:         ["Gourmand", "Floral"],
-  scentCharacter: "Rich & Long Wearing",
+  scentCharacter: "Rich & Full-Bodied",
   projection:     "moderate",
 
   // ── Composition ──────────────────────────────────────────────────────────────

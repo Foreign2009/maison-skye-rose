@@ -40,7 +40,7 @@ const displayByTitle = new Map<string, DisplayFragrance>(
 const CHARACTER_ACCENTS: Record<string, string> = {
   "Fresh & Light":       "#7a8fa3",
   "Balanced Signature":  "#6aaa8a",
-  "Rich & Long Wearing": "#c4935a",
+  "Rich & Full-Bodied": "#c4935a",
   "Deep & Intense":      "#9b7ce0",
 };
 
@@ -104,7 +104,7 @@ const questions = [
     options: [
       "Fresh & Light",
       "Balanced Signature",
-      "Rich & Long Wearing",
+      "Rich & Full-Bodied",
       "Deep & Intense",
     ],
   },

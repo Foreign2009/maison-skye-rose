@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-08-10T10:23:12.631Z",
+  "generatedAt": "2026-08-10T13:34:19.266Z",
   "generatedBy": "EP6-P1 — Catalogue Knowledge Integrity Audit",
   "auditPurpose": "Read-only deterministic audit of all 93 active native fragrance knowledge records. Answers 10 governance questions per record: factory provenance, identity mapping, MIPRUN existence, reconciliation status, disposition, relationship presence, policy compliance, provenance class, governance state, and recommended next action. No knowledge records are modified. No AI generation. No research campaign.",
   "safetyInvariants": {
@@ -28,13 +28,12 @@
       "reconciled-r2": 1
     },
     "byRiskLevel": {
-      "MEDIUM": 69,
-      "LOW": 1,
-      "HIGH": 23
+      "MEDIUM": 92,
+      "LOW": 1
     },
     "recordsWithRelationships": 89,
-    "recordsWithPolicyFindings": 26,
-    "totalPolicyFindings": 32,
+    "recordsWithPolicyFindings": 0,
+    "totalPolicyFindings": 0,
     "recordsFullyGoverned": 1
   },
   "records": [
@@ -265,22 +264,13 @@
       "reconciliationDisposition": null,
       "hasRelationships": true,
       "relationshipEntryCount": 4,
-      "policyFindings": [
-        {
-          "field": "educationTags",
-          "pattern": "long-wearing",
-          "excerpt": "long-wearing",
-          "severity": "HIGH"
-        }
-      ],
-      "riskLevel": "HIGH",
+      "policyFindings": [],
+      "riskLevel": "MEDIUM",
       "riskFactors": [
-        "1 HIGH-severity policy finding(s)",
         "AI-generated relationship entries present (unverified)",
         "legacy-factory: AI-generated, no MIP governance"
       ],
       "recommendedActions": [
-        "POLICY_CORRECTION",
         "RELATIONSHIP_REVIEW",
         "MIP_GOVERNANCE"
       ],
@@ -394,21 +384,12 @@
       "reconciliationDisposition": null,
       "hasRelationships": false,
       "relationshipEntryCount": 0,
-      "policyFindings": [
-        {
-          "field": "recommendedFor",
-          "pattern": "all-day",
-          "excerpt": "Customers deciding between Code Parfum and Y EDP Inspired — both are warm woody aromatics at warmth:4, but Y EDP proj...",
-          "severity": "MEDIUM"
-        }
-      ],
+      "policyFindings": [],
       "riskLevel": "MEDIUM",
       "riskFactors": [
-        "1 MEDIUM-severity policy finding(s)",
         "native-pre-factory: no factory provenance, no MIP governance"
       ],
       "recommendedActions": [
-        "POLICY_REVIEW",
         "MIP_GOVERNANCE"
       ],
       "auditNotes": []
@@ -431,22 +412,13 @@
       "reconciliationDisposition": null,
       "hasRelationships": true,
       "relationshipEntryCount": 3,
-      "policyFindings": [
-        {
-          "field": "educationTags",
-          "pattern": "long-wearing",
-          "excerpt": "long-wearing",
-          "severity": "HIGH"
-        }
-      ],
-      "riskLevel": "HIGH",
+      "policyFindings": [],
+      "riskLevel": "MEDIUM",
       "riskFactors": [
-        "1 HIGH-severity policy finding(s)",
         "AI-generated relationship entries present (unverified)",
         "legacy-factory: AI-generated, no MIP governance"
       ],
       "recommendedActions": [
-        "POLICY_CORRECTION",
         "RELATIONSHIP_REVIEW",
         "MIP_GOVERNANCE"
       ],
@@ -530,22 +502,13 @@
       "reconciliationDisposition": null,
       "hasRelationships": true,
       "relationshipEntryCount": 3,
-      "policyFindings": [
-        {
-          "field": "educationTags",
-          "pattern": "long-wearing",
-          "excerpt": "long-wearing",
-          "severity": "HIGH"
-        }
-      ],
-      "riskLevel": "HIGH",
+      "policyFindings": [],
+      "riskLevel": "MEDIUM",
       "riskFactors": [
-        "1 HIGH-severity policy finding(s)",
         "AI-generated relationship entries present (unverified)",
         "legacy-factory: AI-generated, no MIP governance"
       ],
       "recommendedActions": [
-        "POLICY_CORRECTION",
         "RELATIONSHIP_REVIEW",
         "MIP_GOVERNANCE"
       ],
@@ -629,22 +592,13 @@
       "reconciliationDisposition": null,
       "hasRelationships": true,
       "relationshipEntryCount": 5,
-      "policyFindings": [
-        {
-          "field": "educationTags",
-          "pattern": "long-wearing",
-          "excerpt": "long-wearing",
-          "severity": "HIGH"
-        }
-      ],
-      "riskLevel": "HIGH",
+      "policyFindings": [],
+      "riskLevel": "MEDIUM",
       "riskFactors": [
-        "1 HIGH-severity policy finding(s)",
         "AI-generated relationship entries present (unverified)",
         "legacy-factory: AI-generated, no MIP governance"
       ],
       "recommendedActions": [
-        "POLICY_CORRECTION",
         "RELATIONSHIP_REVIEW",
         "MIP_GOVERNANCE"
       ],
@@ -668,28 +622,13 @@
       "reconciliationDisposition": null,
       "hasRelationships": true,
       "relationshipEntryCount": 2,
-      "policyFindings": [
-        {
-          "field": "recommendedFor",
-          "pattern": "long-wearing",
-          "excerpt": "Anyone building a winter collection who values intimate, long-wearing scents over bold projection",
-          "severity": "HIGH"
-        },
-        {
-          "field": "educationTags",
-          "pattern": "long-wearing",
-          "excerpt": "long-wearing",
-          "severity": "HIGH"
-        }
-      ],
-      "riskLevel": "HIGH",
+      "policyFindings": [],
+      "riskLevel": "MEDIUM",
       "riskFactors": [
-        "2 HIGH-severity policy finding(s)",
         "AI-generated relationship entries present (unverified)",
         "legacy-factory: AI-generated, no MIP governance"
       ],
       "recommendedActions": [
-        "POLICY_CORRECTION",
         "RELATIONSHIP_REVIEW",
         "MIP_GOVERNANCE"
       ],
@@ -743,30 +682,13 @@
       "reconciliationDisposition": null,
       "hasRelationships": true,
       "relationshipEntryCount": 2,
-      "policyFindings": [
-        {
-          "field": "recommendedFor",
-          "pattern": "lasts all day",
-          "excerpt": "Those who love rose and vanilla but prefer elegance over sweetness, with depth that lasts all day.",
-          "severity": "HIGH"
-        },
-        {
-          "field": "recommendedFor",
-          "pattern": "all-day",
-          "excerpt": "Those who love rose and vanilla but prefer elegance over sweetness, with depth that lasts all day.",
-          "severity": "MEDIUM"
-        }
-      ],
-      "riskLevel": "HIGH",
+      "policyFindings": [],
+      "riskLevel": "MEDIUM",
       "riskFactors": [
-        "1 HIGH-severity policy finding(s)",
-        "1 MEDIUM-severity policy finding(s)",
         "AI-generated relationship entries present (unverified)",
         "legacy-factory: AI-generated, no MIP governance"
       ],
       "recommendedActions": [
-        "POLICY_CORRECTION",
-        "POLICY_REVIEW",
         "RELATIONSHIP_REVIEW",
         "MIP_GOVERNANCE"
       ],
@@ -790,22 +712,13 @@
       "reconciliationDisposition": null,
       "hasRelationships": true,
       "relationshipEntryCount": 1,
-      "policyFindings": [
-        {
-          "field": "educationTags",
-          "pattern": "long-wearing",
-          "excerpt": "long-wearing",
-          "severity": "HIGH"
-        }
-      ],
-      "riskLevel": "HIGH",
+      "policyFindings": [],
+      "riskLevel": "MEDIUM",
       "riskFactors": [
-        "1 HIGH-severity policy finding(s)",
         "AI-generated relationship entries present (unverified)",
         "legacy-factory: AI-generated, no MIP governance"
       ],
       "recommendedActions": [
-        "POLICY_CORRECTION",
         "RELATIONSHIP_REVIEW",
         "MIP_GOVERNANCE"
       ],
@@ -829,22 +742,13 @@
       "reconciliationDisposition": null,
       "hasRelationships": true,
       "relationshipEntryCount": 4,
-      "policyFindings": [
-        {
-          "field": "educationTags",
-          "pattern": "long-wearing",
-          "excerpt": "long-wearing",
-          "severity": "HIGH"
-        }
-      ],
-      "riskLevel": "HIGH",
+      "policyFindings": [],
+      "riskLevel": "MEDIUM",
       "riskFactors": [
-        "1 HIGH-severity policy finding(s)",
         "AI-generated relationship entries present (unverified)",
         "legacy-factory: AI-generated, no MIP governance"
       ],
       "recommendedActions": [
-        "POLICY_CORRECTION",
         "RELATIONSHIP_REVIEW",
         "MIP_GOVERNANCE"
       ],
@@ -988,22 +892,13 @@
       "reconciliationDisposition": null,
       "hasRelationships": true,
       "relationshipEntryCount": 3,
-      "policyFindings": [
-        {
-          "field": "educationTags",
-          "pattern": "long-wearing",
-          "excerpt": "long-wearing",
-          "severity": "HIGH"
-        }
-      ],
-      "riskLevel": "HIGH",
+      "policyFindings": [],
+      "riskLevel": "MEDIUM",
       "riskFactors": [
-        "1 HIGH-severity policy finding(s)",
         "AI-generated relationship entries present (unverified)",
         "legacy-factory: AI-generated, no MIP governance"
       ],
       "recommendedActions": [
-        "POLICY_CORRECTION",
         "RELATIONSHIP_REVIEW",
         "MIP_GOVERNANCE"
       ],
@@ -1027,22 +922,13 @@
       "reconciliationDisposition": null,
       "hasRelationships": true,
       "relationshipEntryCount": 4,
-      "policyFindings": [
-        {
-          "field": "educationTags",
-          "pattern": "long-wearing",
-          "excerpt": "long-wearing",
-          "severity": "HIGH"
-        }
-      ],
-      "riskLevel": "HIGH",
+      "policyFindings": [],
+      "riskLevel": "MEDIUM",
       "riskFactors": [
-        "1 HIGH-severity policy finding(s)",
         "AI-generated relationship entries present (unverified)",
         "legacy-factory: AI-generated, no MIP governance"
       ],
       "recommendedActions": [
-        "POLICY_CORRECTION",
         "RELATIONSHIP_REVIEW",
         "MIP_GOVERNANCE"
       ],
@@ -1156,21 +1042,12 @@
       "reconciliationDisposition": null,
       "hasRelationships": false,
       "relationshipEntryCount": 0,
-      "policyFindings": [
-        {
-          "field": "mood",
-          "pattern": "all-day",
-          "excerpt": "Bold, confident and magnetic — night-out energy in an all-day package.",
-          "severity": "MEDIUM"
-        }
-      ],
+      "policyFindings": [],
       "riskLevel": "MEDIUM",
       "riskFactors": [
-        "1 MEDIUM-severity policy finding(s)",
         "native-pre-factory: no factory provenance, no MIP governance"
       ],
       "recommendedActions": [
-        "POLICY_REVIEW",
         "MIP_GOVERNANCE"
       ],
       "auditNotes": []
@@ -1193,22 +1070,13 @@
       "reconciliationDisposition": null,
       "hasRelationships": true,
       "relationshipEntryCount": 2,
-      "policyFindings": [
-        {
-          "field": "recommendedFor",
-          "pattern": "long-wearing",
-          "excerpt": "Anyone looking for a long-wearing fragrance that makes a sensual statement without overwhelming the senses.",
-          "severity": "HIGH"
-        }
-      ],
-      "riskLevel": "HIGH",
+      "policyFindings": [],
+      "riskLevel": "MEDIUM",
       "riskFactors": [
-        "1 HIGH-severity policy finding(s)",
         "AI-generated relationship entries present (unverified)",
         "legacy-factory: AI-generated, no MIP governance"
       ],
       "recommendedActions": [
-        "POLICY_CORRECTION",
         "RELATIONSHIP_REVIEW",
         "MIP_GOVERNANCE"
       ],
@@ -1232,22 +1100,13 @@
       "reconciliationDisposition": null,
       "hasRelationships": true,
       "relationshipEntryCount": 1,
-      "policyFindings": [
-        {
-          "field": "educationTags",
-          "pattern": "long-wearing",
-          "excerpt": "long-wearing",
-          "severity": "HIGH"
-        }
-      ],
-      "riskLevel": "HIGH",
+      "policyFindings": [],
+      "riskLevel": "MEDIUM",
       "riskFactors": [
-        "1 HIGH-severity policy finding(s)",
         "AI-generated relationship entries present (unverified)",
         "legacy-factory: AI-generated, no MIP governance"
       ],
       "recommendedActions": [
-        "POLICY_CORRECTION",
         "RELATIONSHIP_REVIEW",
         "MIP_GOVERNANCE"
       ],
@@ -1331,22 +1190,13 @@
       "reconciliationDisposition": null,
       "hasRelationships": true,
       "relationshipEntryCount": 3,
-      "policyFindings": [
-        {
-          "field": "educationTags",
-          "pattern": "long-wearing",
-          "excerpt": "long-wearing",
-          "severity": "HIGH"
-        }
-      ],
-      "riskLevel": "HIGH",
+      "policyFindings": [],
+      "riskLevel": "MEDIUM",
       "riskFactors": [
-        "1 HIGH-severity policy finding(s)",
         "AI-generated relationship entries present (unverified)",
         "legacy-factory: AI-generated, no MIP governance"
       ],
       "recommendedActions": [
-        "POLICY_CORRECTION",
         "RELATIONSHIP_REVIEW",
         "MIP_GOVERNANCE"
       ],
@@ -1400,22 +1250,13 @@
       "reconciliationDisposition": null,
       "hasRelationships": true,
       "relationshipEntryCount": 1,
-      "policyFindings": [
-        {
-          "field": "educationTags",
-          "pattern": "long-wearing",
-          "excerpt": "long-wearing",
-          "severity": "HIGH"
-        }
-      ],
-      "riskLevel": "HIGH",
+      "policyFindings": [],
+      "riskLevel": "MEDIUM",
       "riskFactors": [
-        "1 HIGH-severity policy finding(s)",
         "AI-generated relationship entries present (unverified)",
         "legacy-factory: AI-generated, no MIP governance"
       ],
       "recommendedActions": [
-        "POLICY_CORRECTION",
         "RELATIONSHIP_REVIEW",
         "MIP_GOVERNANCE"
       ],
@@ -1709,22 +1550,13 @@
       "reconciliationDisposition": null,
       "hasRelationships": true,
       "relationshipEntryCount": 4,
-      "policyFindings": [
-        {
-          "field": "recommendedFor",
-          "pattern": "long-wearing",
-          "excerpt": "Women who want a sensual, long-wearing fragrance for date nights and intimate winter occasions",
-          "severity": "HIGH"
-        }
-      ],
-      "riskLevel": "HIGH",
+      "policyFindings": [],
+      "riskLevel": "MEDIUM",
       "riskFactors": [
-        "1 HIGH-severity policy finding(s)",
         "AI-generated relationship entries present (unverified)",
         "legacy-factory: AI-generated, no MIP governance"
       ],
       "recommendedActions": [
-        "POLICY_CORRECTION",
         "RELATIONSHIP_REVIEW",
         "MIP_GOVERNANCE"
       ],
@@ -1808,28 +1640,13 @@
       "reconciliationDisposition": null,
       "hasRelationships": true,
       "relationshipEntryCount": 6,
-      "policyFindings": [
-        {
-          "field": "recommendedFor",
-          "pattern": "long-wearing",
-          "excerpt": "Anyone looking for a long-wearing fragrance that feels intimate and powdered—intimate enough for close encounters, ra...",
-          "severity": "HIGH"
-        },
-        {
-          "field": "educationTags",
-          "pattern": "long-wearing",
-          "excerpt": "long-wearing",
-          "severity": "HIGH"
-        }
-      ],
-      "riskLevel": "HIGH",
+      "policyFindings": [],
+      "riskLevel": "MEDIUM",
       "riskFactors": [
-        "2 HIGH-severity policy finding(s)",
         "AI-generated relationship entries present (unverified)",
         "legacy-factory: AI-generated, no MIP governance"
       ],
       "recommendedActions": [
-        "POLICY_CORRECTION",
         "RELATIONSHIP_REVIEW",
         "MIP_GOVERNANCE"
       ],
@@ -1943,28 +1760,13 @@
       "reconciliationDisposition": null,
       "hasRelationships": true,
       "relationshipEntryCount": 2,
-      "policyFindings": [
-        {
-          "field": "recommendedFor",
-          "pattern": "long-wearing",
-          "excerpt": "Anyone looking for a rich, long-wearing floral that evolves throughout the day without fading into the background.",
-          "severity": "HIGH"
-        },
-        {
-          "field": "educationTags",
-          "pattern": "long-wearing",
-          "excerpt": "long-wearing",
-          "severity": "HIGH"
-        }
-      ],
-      "riskLevel": "HIGH",
+      "policyFindings": [],
+      "riskLevel": "MEDIUM",
       "riskFactors": [
-        "2 HIGH-severity policy finding(s)",
         "AI-generated relationship entries present (unverified)",
         "legacy-factory: AI-generated, no MIP governance"
       ],
       "recommendedActions": [
-        "POLICY_CORRECTION",
         "RELATIONSHIP_REVIEW",
         "MIP_GOVERNANCE"
       ],
@@ -1988,22 +1790,13 @@
       "reconciliationDisposition": null,
       "hasRelationships": true,
       "relationshipEntryCount": 3,
-      "policyFindings": [
-        {
-          "field": "educationTags",
-          "pattern": "long-wearing",
-          "excerpt": "long-wearing",
-          "severity": "HIGH"
-        }
-      ],
-      "riskLevel": "HIGH",
+      "policyFindings": [],
+      "riskLevel": "MEDIUM",
       "riskFactors": [
-        "1 HIGH-severity policy finding(s)",
         "AI-generated relationship entries present (unverified)",
         "legacy-factory: AI-generated, no MIP governance"
       ],
       "recommendedActions": [
-        "POLICY_CORRECTION",
         "RELATIONSHIP_REVIEW",
         "MIP_GOVERNANCE"
       ],
@@ -2027,28 +1820,13 @@
       "reconciliationDisposition": null,
       "hasRelationships": true,
       "relationshipEntryCount": 1,
-      "policyFindings": [
-        {
-          "field": "recommendedFor",
-          "pattern": "long-wearing",
-          "excerpt": "Anyone looking for a long-wearing fragrance with moderate projection that feels both luxurious and effortlessly power...",
-          "severity": "HIGH"
-        },
-        {
-          "field": "educationTags",
-          "pattern": "long-wearing",
-          "excerpt": "long-wearing",
-          "severity": "HIGH"
-        }
-      ],
-      "riskLevel": "HIGH",
+      "policyFindings": [],
+      "riskLevel": "MEDIUM",
       "riskFactors": [
-        "2 HIGH-severity policy finding(s)",
         "AI-generated relationship entries present (unverified)",
         "legacy-factory: AI-generated, no MIP governance"
       ],
       "recommendedActions": [
-        "POLICY_CORRECTION",
         "RELATIONSHIP_REVIEW",
         "MIP_GOVERNANCE"
       ],
@@ -2072,22 +1850,13 @@
       "reconciliationDisposition": null,
       "hasRelationships": true,
       "relationshipEntryCount": 4,
-      "policyFindings": [
-        {
-          "field": "educationTags",
-          "pattern": "long-wearing",
-          "excerpt": "long-wearing",
-          "severity": "HIGH"
-        }
-      ],
-      "riskLevel": "HIGH",
+      "policyFindings": [],
+      "riskLevel": "MEDIUM",
       "riskFactors": [
-        "1 HIGH-severity policy finding(s)",
         "AI-generated relationship entries present (unverified)",
         "legacy-factory: AI-generated, no MIP governance"
       ],
       "recommendedActions": [
-        "POLICY_CORRECTION",
         "RELATIONSHIP_REVIEW",
         "MIP_GOVERNANCE"
       ],
@@ -2531,22 +2300,13 @@
       "reconciliationDisposition": null,
       "hasRelationships": true,
       "relationshipEntryCount": 2,
-      "policyFindings": [
-        {
-          "field": "recommendedFor",
-          "pattern": "long-wearing",
-          "excerpt": "Those who love rose and almond together and want a long-wearing fragrance that feels both luxurious and approachable.",
-          "severity": "HIGH"
-        }
-      ],
-      "riskLevel": "HIGH",
+      "policyFindings": [],
+      "riskLevel": "MEDIUM",
       "riskFactors": [
-        "1 HIGH-severity policy finding(s)",
         "AI-generated relationship entries present (unverified)",
         "legacy-factory: AI-generated, no MIP governance"
       ],
       "recommendedActions": [
-        "POLICY_CORRECTION",
         "RELATIONSHIP_REVIEW",
         "MIP_GOVERNANCE"
       ],
@@ -2868,28 +2628,13 @@
       "reconciliationDisposition": null,
       "hasRelationships": true,
       "relationshipEntryCount": 2,
-      "policyFindings": [
-        {
-          "field": "recommendedFor",
-          "pattern": "long-wearing",
-          "excerpt": "Anyone building a refined collection who values long-wearing elegance that evolves beautifully from morning to evening.",
-          "severity": "HIGH"
-        },
-        {
-          "field": "educationTags",
-          "pattern": "long-wearing",
-          "excerpt": "long-wearing",
-          "severity": "HIGH"
-        }
-      ],
-      "riskLevel": "HIGH",
+      "policyFindings": [],
+      "riskLevel": "MEDIUM",
       "riskFactors": [
-        "2 HIGH-severity policy finding(s)",
         "AI-generated relationship entries present (unverified)",
         "legacy-factory: AI-generated, no MIP governance"
       ],
       "recommendedActions": [
-        "POLICY_CORRECTION",
         "RELATIONSHIP_REVIEW",
         "MIP_GOVERNANCE"
       ],
@@ -2943,22 +2688,13 @@
       "reconciliationDisposition": null,
       "hasRelationships": true,
       "relationshipEntryCount": 3,
-      "policyFindings": [
-        {
-          "field": "educationTags",
-          "pattern": "long-wearing",
-          "excerpt": "long-wearing",
-          "severity": "HIGH"
-        }
-      ],
-      "riskLevel": "HIGH",
+      "policyFindings": [],
+      "riskLevel": "MEDIUM",
       "riskFactors": [
-        "1 HIGH-severity policy finding(s)",
         "AI-generated relationship entries present (unverified)",
         "legacy-factory: AI-generated, no MIP governance"
       ],
       "recommendedActions": [
-        "POLICY_CORRECTION",
         "RELATIONSHIP_REVIEW",
         "MIP_GOVERNANCE"
       ],
@@ -3042,22 +2778,13 @@
       "reconciliationDisposition": null,
       "hasRelationships": true,
       "relationshipEntryCount": 1,
-      "policyFindings": [
-        {
-          "field": "signatureStyle",
-          "pattern": "all-day",
-          "excerpt": "All-Day Signature",
-          "severity": "MEDIUM"
-        }
-      ],
+      "policyFindings": [],
       "riskLevel": "MEDIUM",
       "riskFactors": [
-        "1 MEDIUM-severity policy finding(s)",
         "AI-generated relationship entries present (unverified)",
         "native-pre-factory: no factory provenance, no MIP governance"
       ],
       "recommendedActions": [
-        "POLICY_REVIEW",
         "RELATIONSHIP_REVIEW",
         "MIP_GOVERNANCE"
       ],
@@ -3095,55 +2822,46 @@
     }
   ],
   "prioritizedQueue": [
-    "althair-inspired",
-    "armani-si-inspired",
-    "baccarat-rouge-540-extrait-inspired",
-    "black-opium-inspired",
-    "blanche-bete-inspired",
-    "burberry-goddess-inspired",
-    "burberry-her-inspired",
-    "carlisle-inspired",
-    "crystal-noir-inspired",
-    "delina-exclusif-inspired",
-    "flowerbomb-inspired",
-    "gentle-fluidity-gold-inspired",
-    "good-girl-inspired",
-    "guidance-inspired",
-    "kayali-vanilla-28-inspired",
-    "la-vie-est-belle-inspired",
-    "libre-inspired",
-    "libre-intense-inspired",
-    "libre-le-parfum-inspired",
-    "love-don't-be-shy-inspired",
-    "rolling-in-love-inspired",
-    "valentino-donna-born-in-roma-inspired",
-    "vanilla-28-inspired",
     "1-million-inspired",
     "9pm-inspired",
     "acqua-di-gio-parfum-inspired",
     "acqua-di-gio-profondo-inspired",
     "afternoon-swim-inspired",
     "alien-inspired",
+    "althair-inspired",
     "ani-inspired",
     "aqua-di-gio-inspired",
     "arabians-tonka-inspired",
     "armani-code-parfum-inspired",
+    "armani-si-inspired",
     "aventus-inspired",
     "azzaro-most-wanted-inspired",
+    "baccarat-rouge-540-extrait-inspired",
     "baccarat-rouge-540-inspired",
     "bianco-latte-inspired",
+    "black-opium-inspired",
+    "blanche-bete-inspired",
     "bleu-de-chanel-inspired",
+    "burberry-goddess-inspired",
+    "burberry-her-inspired",
+    "carlisle-inspired",
     "chance-eau-fraiche-inspired",
     "chance-eau-tendre-inspired",
     "coco-mademoiselle-inspired",
     "creed-green-irish-tweed-inspired",
+    "crystal-noir-inspired",
+    "delina-exclusif-inspired",
     "delina-inspired",
     "devotion-inspired",
     "erba-pura-inspired",
     "eros-inspired",
+    "flowerbomb-inspired",
+    "gentle-fluidity-gold-inspired",
     "god-of-fire-inspired",
     "good-girl-blush-inspired",
+    "good-girl-inspired",
     "gris-charnel-inspired",
+    "guidance-inspired",
     "hacivat-inspired",
     "haltane-inspired",
     "hawas-inspired",
@@ -3153,11 +2871,17 @@
     "invictus-inspired",
     "invictus-victory-inspired",
     "j'adore-inspired",
+    "kayali-vanilla-28-inspired",
     "kirke-overdose-inspired",
     "l'immensite-inspired",
+    "la-vie-est-belle-inspired",
     "layton-inspired",
     "le-beau-paradise-garden-inspired",
     "le-male-elixir-inspired",
+    "libre-inspired",
+    "libre-intense-inspired",
+    "libre-le-parfum-inspired",
+    "love-don't-be-shy-inspired",
     "miss-dior-inspired",
     "mon-paris-inspired",
     "my-way-inspired",
@@ -3172,6 +2896,7 @@
     "prada-l'homme-inspired",
     "prada-luna-rossa-carbon-inspired",
     "prada-paradoxe-inspired",
+    "rolling-in-love-inspired",
     "sauvage-elixir-inspired",
     "sauvage-inspired",
     "side-effect-inspired",
@@ -3182,7 +2907,9 @@
     "terre-d'hermes-inspired",
     "torino21-inspired",
     "ultra-male-inspired",
+    "valentino-donna-born-in-roma-inspired",
     "valentino-uomo-born-in-roma-inspired",
+    "vanilla-28-inspired",
     "very-good-girl-inspired",
     "wedding-silk-santal-inspired",
     "y-edp-inspired",

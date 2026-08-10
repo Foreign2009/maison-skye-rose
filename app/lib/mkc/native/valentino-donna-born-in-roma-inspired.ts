@@ -13,7 +13,7 @@ export const valentinoDonnaBornInRomaInspired: FragranceKnowledge = {
   // ── Classification ────────────────────────────────────────────────────────────
   gender        : "female",
   family        : ["Floral", "Amber"],
-  scentCharacter: "Rich & Long Wearing",
+  scentCharacter: "Rich & Full-Bodied",
   projection    : "moderate",
 
   // ── Composition ─────────────────────────────────────────────────────────────
@@ -41,7 +41,7 @@ export const valentinoDonnaBornInRomaInspired: FragranceKnowledge = {
   recommendedFor: [
     "Women seeking a signature fragrance that commands attention in the office and beyond with effortless sophistication.",
     "Those who want creamy floral depth with amber warmth — not airy or delicate, but rich and unapologetically present.",
-    "Anyone building a refined collection who values long-wearing elegance that evolves beautifully from morning to evening.",
+    "Anyone building a refined collection who values rich, evolving elegance from morning to evening.",
     "Women drawn to the sensual comfort of vanilla and sandalwood wrapped in jasmine and tuberose intensity.",
   ],
 
@@ -78,7 +78,6 @@ export const valentinoDonnaBornInRomaInspired: FragranceKnowledge = {
     "vanilla",
     "sandalwood",
     "bold",
-    "long-wearing",
     "office-wear",
     "elegant",
     "layering",

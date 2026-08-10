@@ -15,7 +15,7 @@ export const spicebombExtremeInspired: FragranceKnowledge = {
   // ── Classification ───────────────────────────────────────────────────────────
   gender:         "male",
   family:         ["Spicy", "Tobacco", "Vanilla"],
-  scentCharacter: "Rich & Long Wearing",
+  scentCharacter: "Rich & Full-Bodied",
   projection:     "strong",
 
   // ── Composition ──────────────────────────────────────────────────────────────

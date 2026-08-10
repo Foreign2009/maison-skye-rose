@@ -13,7 +13,7 @@ export const libreInspired: FragranceKnowledge = {
   // ── Classification ────────────────────────────────────────────────────────────
   gender        : "female",
   family        : ["Floral", "Amber"],
-  scentCharacter: "Rich & Long Wearing",
+  scentCharacter: "Rich & Full-Bodied",
   projection    : "moderate",
 
   // ── Composition ─────────────────────────────────────────────────────────────
@@ -41,7 +41,7 @@ export const libreInspired: FragranceKnowledge = {
   recommendedFor: [
     "Women who want a signature fragrance that commands attention without apology, balancing floral beauty with amber warmth.",
     "Those seeking an all-season fragrance that works equally well in the office and at evening events, projecting quiet confidence.",
-    "Anyone looking for a rich, long-wearing floral that evolves throughout the day without fading into the background.",
+    "Anyone looking for a rich floral that evolves throughout the day without fading into the background.",
   ],
 
   // ── Merchandising ───────────────────────────────────────────────────────────
@@ -80,7 +80,6 @@ export const libreInspired: FragranceKnowledge = {
     "musk",
     "sophisticated",
     "bold",
-    "long-wearing",
   ],
   learningPath  : [
     "the-note-pyramid-explained",

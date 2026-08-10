@@ -63,7 +63,7 @@ const EXPLORATION_CHARACTER: Array<{
   },
   {
     pattern:   /\b(warmer|richer|heavier|more warm|something warmer|something richer)\b/i,
-    character: "Rich & Long Wearing",
+    character: "Rich & Full-Bodied",
   },
   {
     pattern:   /\b(more balanced|more versatile|something balanced|something versatile)\b/i,
@@ -87,7 +87,7 @@ const ROLE_OCCASION_KEYWORDS = new Set([
 const DISCOVERY_TITLES: Record<string, string> = {
   "Fresh & Light":       "Fresh Option",
   "Balanced Signature":  "Signature Option",
-  "Rich & Long Wearing": "Rich Option",
+  "Rich & Full-Bodied": "Rich Option",
   "Deep & Intense":      "Statement Option",
 };
 
@@ -105,17 +105,17 @@ const CHARACTER_SIGNALS: Array<{
   {
     pattern:  /\b(fresher|lighter|more fresh|airier|less heavy|less intense|something fresh|something lighter)\b/i,
     prefers:  "Fresh & Light",
-    replaces: ["Rich & Long Wearing", "Deep & Intense"],
+    replaces: ["Rich & Full-Bodied", "Deep & Intense"],
   },
   {
     pattern:  /\b(warmer|richer|heavier|deeper|more warm|more rich|more intense|something warmer|something richer)\b/i,
-    prefers:  "Rich & Long Wearing",
+    prefers:  "Rich & Full-Bodied",
     replaces: ["Fresh & Light"],
   },
   {
     pattern:  /\b(more balanced|more versatile|more everyday|something balanced|something versatile)\b/i,
     prefers:  "Balanced Signature",
-    replaces: ["Deep & Intense", "Rich & Long Wearing"],
+    replaces: ["Deep & Intense", "Rich & Full-Bodied"],
   },
 ];
 

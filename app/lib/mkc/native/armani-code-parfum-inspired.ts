@@ -15,7 +15,7 @@ export const armaniCodeParfumInspired: FragranceKnowledge = {
   // ── Classification ───────────────────────────────────────────────────────────
   gender:         "male",
   family:         ["Woody", "Aromatic", "Amber"],
-  scentCharacter: "Rich & Long Wearing",
+  scentCharacter: "Rich & Full-Bodied",
   projection:     "moderate",
 
   // ── Composition ──────────────────────────────────────────────────────────────
@@ -37,7 +37,7 @@ export const armaniCodeParfumInspired: FragranceKnowledge = {
     "Those seeking an evening masculine that communicates luxury through refinement rather than projection — Code Parfum operates at close range by design, its guaiac wood and iris combination understood only by those who get close enough to deserve it",
     "Men who want a genuinely premium evening fragrance without the theatricality of heavily projected amber masculines — where most winter statements announce themselves boldly, Code Parfum earns its sophistication through construction and restraint, a wardrobe choice for someone who already knows they do not need to be loud",
     "Formal evenings, dinners, and occasions where a distinctive but understated presence is the appropriate register — the Armani Code Parfum wears as a personal signature rather than a public declaration, suitable for contexts where subtlety and depth of character matter more than initial impression",
-    "Customers deciding between Code Parfum and Y EDP Inspired — both are warm woody aromatics at warmth:4, but Y EDP projects with daytime versatility across a full day's range while Code Parfum narrows to a deliberately evening-focused occasion with greater restraint; the choice depends on whether the fragrance is for all day or for the hours that count most",
+    "Customers deciding between Code Parfum and Y EDP Inspired — both are warm woody aromatics at warmth:4, but Y EDP projects with daytime versatility across a full day's range while Code Parfum narrows to a deliberately evening-focused occasion with greater restraint; the choice depends on whether the fragrance is for versatile daytime wear or for the hours that count most",
   ],
 
   // ── Merchandising ────────────────────────────────────────────────────────────

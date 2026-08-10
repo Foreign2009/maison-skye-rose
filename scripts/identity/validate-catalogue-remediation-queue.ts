@@ -182,9 +182,9 @@ results.push(proof("206: noIdentityMutation is true", () => {
 // § 300 — Priority Tier Distribution (12 proofs)
 // ─────────────────────────────────────────────────────────────────────────────
 
-results.push(proof("301: P0 count is 23", () => {
-  assert((byTier["P0"] ?? 0) === 23,
-    `expected P0=23; got ${byTier["P0"] ?? 0}`);
+results.push(proof("301: P0 count is 0 (all HIGH violations remediated by EP6-P3)", () => {
+  assert((byTier["P0"] ?? 0) === 0,
+    `expected P0=0; got ${byTier["P0"] ?? 0}`);
 }));
 
 results.push(proof("302: P1 count is 0 (no structural relationship defects)", () => {
@@ -192,19 +192,19 @@ results.push(proof("302: P1 count is 0 (no structural relationship defects)", ()
     `expected P1=0; got ${byTier["P1"] ?? 0}`);
 }));
 
-results.push(proof("303: P2 count is 3", () => {
-  assert((byTier["P2"] ?? 0) === 3,
-    `expected P2=3; got ${byTier["P2"] ?? 0}`);
+results.push(proof("303: P2 count is 0 (all MEDIUM violations remediated by EP6-P3)", () => {
+  assert((byTier["P2"] ?? 0) === 0,
+    `expected P2=0; got ${byTier["P2"] ?? 0}`);
 }));
 
-results.push(proof("304: P3 count is 65", () => {
-  assert((byTier["P3"] ?? 0) === 65,
-    `expected P3=65; got ${byTier["P3"] ?? 0}`);
+results.push(proof("304: P3 count is 89 (relationship review after EP6-P3 remediation)", () => {
+  assert((byTier["P3"] ?? 0) === 89,
+    `expected P3=89; got ${byTier["P3"] ?? 0}`);
 }));
 
-results.push(proof("305: P4 count is 1", () => {
-  assert((byTier["P4"] ?? 0) === 1,
-    `expected P4=1; got ${byTier["P4"] ?? 0}`);
+results.push(proof("305: P4 count is 3 (no relationships, no outstanding policy issues)", () => {
+  assert((byTier["P4"] ?? 0) === 3,
+    `expected P4=3; got ${byTier["P4"] ?? 0}`);
 }));
 
 results.push(proof("306: P5 count is 1", () => {
@@ -246,21 +246,19 @@ results.push(proof("310: all P3 items have hasRelationships=true and no policy f
   }
 }));
 
-results.push(proof("311: P4 item is side-effect-inspired", () => {
+results.push(proof("311: P4 items are side-effect-inspired, armani-code-parfum-inspired, eros-inspired", () => {
   const p4 = queue.items.filter(i => i.priorityTier === "P4");
-  assert(p4.length === 1, `expected 1 P4 item; got ${p4.length}`);
-  assert(p4[0].slug === "side-effect-inspired",
-    `expected P4 slug "side-effect-inspired"; got "${p4[0].slug}"`);
+  assert(p4.length === 3, `expected 3 P4 items; got ${p4.length}`);
+  const p4slugs = p4.map(i => i.slug).sort();
+  const expected = ["armani-code-parfum-inspired", "eros-inspired", "side-effect-inspired"].sort();
+  assert(JSON.stringify(p4slugs) === JSON.stringify(expected),
+    `P4 slugs mismatch: ${JSON.stringify(p4slugs)} !== ${JSON.stringify(expected)}`);
 }));
 
-results.push(proof("312: P2 items are armani-code-parfum-inspired, eros-inspired, y-edp-inspired", () => {
-  const p2slugs = queue.items
-    .filter(i => i.priorityTier === "P2")
-    .map(i => i.slug)
-    .sort();
-  const expected = ["armani-code-parfum-inspired", "eros-inspired", "y-edp-inspired"].sort();
-  assert(JSON.stringify(p2slugs) === JSON.stringify(expected),
-    `P2 slugs mismatch: ${JSON.stringify(p2slugs)} !== ${JSON.stringify(expected)}`);
+results.push(proof("312: P2 count is 0 (all MEDIUM violations remediated by EP6-P3)", () => {
+  const p2slugs = queue.items.filter(i => i.priorityTier === "P2").map(i => i.slug);
+  assert(p2slugs.length === 0,
+    `expected 0 P2 items; got ${p2slugs.length}: ${JSON.stringify(p2slugs)}`);
 }));
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -312,14 +310,14 @@ results.push(proof("408: alien-goddess hasRelationships is false", () => {
 // § 500 — P0 Policy Correction (8 proofs)
 // ─────────────────────────────────────────────────────────────────────────────
 
-results.push(proof("501: DETERMINISTIC_POLICY_CORRECTION byIssueCategory count is 23", () => {
-  assert((byCategory["DETERMINISTIC_POLICY_CORRECTION"] ?? 0) === 23,
-    `expected DETERMINISTIC_POLICY_CORRECTION=23; got ${byCategory["DETERMINISTIC_POLICY_CORRECTION"] ?? 0}`);
+results.push(proof("501: DETERMINISTIC_POLICY_CORRECTION byIssueCategory count is 0 (all corrected by EP6-P3)", () => {
+  assert((byCategory["DETERMINISTIC_POLICY_CORRECTION"] ?? 0) === 0,
+    `expected DETERMINISTIC_POLICY_CORRECTION=0; got ${byCategory["DETERMINISTIC_POLICY_CORRECTION"] ?? 0}`);
 }));
 
-results.push(proof("502: recordsCanCorrectDeterministically is 23", () => {
-  assert(queue.summary.recordsCanCorrectDeterministically === 23,
-    `expected 23; got ${queue.summary.recordsCanCorrectDeterministically}`);
+results.push(proof("502: recordsCanCorrectDeterministically is 0 (all corrected by EP6-P3)", () => {
+  assert(queue.summary.recordsCanCorrectDeterministically === 0,
+    `expected 0; got ${queue.summary.recordsCanCorrectDeterministically}`);
 }));
 
 results.push(proof("503: all P0 items have canCorrectDeterministically=true", () => {
@@ -330,29 +328,27 @@ results.push(proof("503: all P0 items have canCorrectDeterministically=true", ()
   }
 }));
 
-results.push(proof("504: althair-inspired is P0 with DETERMINISTIC_POLICY_CORRECTION", () => {
+results.push(proof("504: althair-inspired is P3 after EP6-P3 educationTag correction", () => {
   const althair = queue.items.find(i => i.slug === "althair-inspired");
   assert(althair !== undefined, "althair-inspired not found");
-  assert(althair!.priorityTier === "P0",
-    `althair-inspired priorityTier expected P0; got "${althair!.priorityTier}"`);
-  assert(althair!.issueCategories.includes("DETERMINISTIC_POLICY_CORRECTION"),
-    "althair-inspired missing DETERMINISTIC_POLICY_CORRECTION");
+  assert(althair!.priorityTier === "P3",
+    `althair-inspired priorityTier expected P3; got "${althair!.priorityTier}"`);
+  assert(althair!.policyFindings.length === 0,
+    `althair-inspired expected 0 policyFindings; got ${althair!.policyFindings.length}`);
 }));
 
-results.push(proof("505: burberry-goddess-inspired is P0 with both HIGH and MEDIUM policy findings", () => {
+results.push(proof("505: burberry-goddess-inspired is P3 with 0 policy findings after EP6-P3", () => {
   const burberry = queue.items.find(i => i.slug === "burberry-goddess-inspired");
   assert(burberry !== undefined, "burberry-goddess-inspired not found");
-  assert(burberry!.priorityTier === "P0",
-    `burberry-goddess-inspired expected P0; got "${burberry!.priorityTier}"`);
-  const hasHigh   = burberry!.policyFindings.some(f => f.severity === "HIGH");
-  const hasMedium = burberry!.policyFindings.some(f => f.severity === "MEDIUM");
-  assert(hasHigh,   "burberry-goddess-inspired missing HIGH policy finding");
-  assert(hasMedium, "burberry-goddess-inspired missing MEDIUM policy finding");
+  assert(burberry!.priorityTier === "P3",
+    `burberry-goddess-inspired expected P3; got "${burberry!.priorityTier}"`);
+  assert(burberry!.policyFindings.length === 0,
+    `burberry-goddess-inspired expected 0 policyFindings; got ${burberry!.policyFindings.length}`);
 }));
 
-results.push(proof("506: EDITORIAL_REVIEW byIssueCategory count is 4", () => {
-  assert((byCategory["EDITORIAL_REVIEW"] ?? 0) === 4,
-    `expected EDITORIAL_REVIEW=4; got ${byCategory["EDITORIAL_REVIEW"] ?? 0}`);
+results.push(proof("506: EDITORIAL_REVIEW byIssueCategory count is 0 (all MEDIUM violations remediated)", () => {
+  assert((byCategory["EDITORIAL_REVIEW"] ?? 0) === 0,
+    `expected EDITORIAL_REVIEW=0; got ${byCategory["EDITORIAL_REVIEW"] ?? 0}`);
 }));
 
 results.push(proof("507: all policyFindings have severity HIGH or MEDIUM", () => {
@@ -421,16 +417,16 @@ results.push(proof("701: scentCharacter vocabulary assessment has exactly 4 entr
 
 results.push(proof("702: all 4 expected scentCharacter values are present", () => {
   const values = new Set(scentCharVocab.map(v => v.value));
-  for (const expected of ["Fresh & Light", "Balanced Signature", "Rich & Long Wearing", "Deep & Intense"]) {
+  for (const expected of ["Fresh & Light", "Balanced Signature", "Rich & Full-Bodied", "Deep & Intense"]) {
     assert(values.has(expected), `missing vocabulary entry: "${expected}"`);
   }
 }));
 
-results.push(proof("703: Rich & Long Wearing policyClassification is REVIEW", () => {
-  const rlw = scentCharVocab.find(v => v.value === "Rich & Long Wearing");
-  assert(rlw !== undefined, "Rich & Long Wearing entry not found");
-  assert(rlw!.policyClassification === "REVIEW",
-    `expected REVIEW; got "${rlw!.policyClassification}"`);
+results.push(proof("703: Rich & Full-Bodied policyClassification is SAFE", () => {
+  const rfb = scentCharVocab.find(v => v.value === "Rich & Full-Bodied");
+  assert(rfb !== undefined, "Rich & Full-Bodied entry not found");
+  assert(rfb!.policyClassification === "SAFE",
+    `expected SAFE; got "${rfb!.policyClassification}"`);
 }));
 
 results.push(proof("704: Fresh & Light policyClassification is SAFE", () => {
@@ -454,10 +450,11 @@ results.push(proof("706: Deep & Intense policyClassification is SAFE", () => {
     `expected SAFE; got "${di!.policyClassification}"`);
 }));
 
-results.push(proof("707: Rich & Long Wearing usageCount is 47", () => {
-  const rlw = scentCharVocab.find(v => v.value === "Rich & Long Wearing");
-  assert(rlw!.usageCount === 47,
-    `expected 47; got ${rlw!.usageCount}`);
+results.push(proof("707: Rich & Full-Bodied usageCount is 47", () => {
+  const rfb = scentCharVocab.find(v => v.value === "Rich & Full-Bodied");
+  assert(rfb !== undefined, "Rich & Full-Bodied entry not found");
+  assert(rfb!.usageCount === 47,
+    `expected 47; got ${rfb!.usageCount}`);
 }));
 
 results.push(proof("708: scentCharacter usageCount sum equals 93", () => {
@@ -465,14 +462,14 @@ results.push(proof("708: scentCharacter usageCount sum equals 93", () => {
   assert(total === 93, `usageCount sum ${total} !== 93`);
 }));
 
-results.push(proof("709: exactly 1 scentCharacter value has policyClassification REVIEW", () => {
+results.push(proof("709: all 4 scentCharacter values are SAFE — no REVIEW after EP6-P3", () => {
   const reviewCount = scentCharVocab.filter(v => v.policyClassification === "REVIEW").length;
-  assert(reviewCount === 1, `expected 1 REVIEW value; got ${reviewCount}`);
+  assert(reviewCount === 0, `expected 0 REVIEW values; got ${reviewCount}`);
 }));
 
-results.push(proof("710: recordsRequiringFounderDecision is 49", () => {
-  assert(queue.summary.recordsRequiringFounderDecision === 49,
-    `expected 49; got ${queue.summary.recordsRequiringFounderDecision}`);
+results.push(proof("710: recordsRequiringFounderDecision is 0 (all violations remediated by EP6-P3)", () => {
+  assert(queue.summary.recordsRequiringFounderDecision === 0,
+    `expected 0; got ${queue.summary.recordsRequiringFounderDecision}`);
 }));
 
 // ─────────────────────────────────────────────────────────────────────────────

@@ -13,7 +13,7 @@ export const kayaliVanilla28Inspired: FragranceKnowledge = {
   // ── Classification ────────────────────────────────────────────────────────────
   gender        : "female",
   family        : ["Gourmand", "Vanilla"],
-  scentCharacter: "Rich & Long Wearing",
+  scentCharacter: "Rich & Full-Bodied",
   projection    : "moderate",
 
   // ── Composition ─────────────────────────────────────────────────────────────
@@ -42,7 +42,7 @@ export const kayaliVanilla28Inspired: FragranceKnowledge = {
     "Women seeking a luxurious vanilla fragrance that feels indulgent without being overly sweet or childish",
     "Those who love gourmand scents with a sophisticated rose and amber foundation for evening wear",
     "Anyone looking for a signature winter fragrance that combines creamy warmth with subtle spice and elegance",
-    "Women who want a sensual, long-wearing fragrance for date nights and intimate winter occasions",
+    "Women who want a sensual, rich fragrance for date nights and intimate winter occasions",
   ],
 
   // ── Merchandising ───────────────────────────────────────────────────────────

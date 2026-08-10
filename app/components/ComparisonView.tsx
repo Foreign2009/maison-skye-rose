@@ -85,7 +85,7 @@ export interface ComparisonDimensions {
 const CHARACTER_SPECTRUM = [
   "Fresh & Light",
   "Balanced Signature",
-  "Rich & Long Wearing",
+  "Rich & Full-Bodied",
   "Deep & Intense",
 ] as const;
 

@@ -13,7 +13,7 @@ export const libreLeParfumInspired: FragranceKnowledge = {
   // ── Classification ────────────────────────────────────────────────────────────
   gender        : "female",
   family        : ["Floral", "Amber"],
-  scentCharacter: "Rich & Long Wearing",
+  scentCharacter: "Rich & Full-Bodied",
   projection    : "moderate",
 
   // ── Composition ─────────────────────────────────────────────────────────────
@@ -41,7 +41,7 @@ export const libreLeParfumInspired: FragranceKnowledge = {
   recommendedFor: [
     "Women seeking a bold signature fragrance that commands attention without apology, perfect for evening wear and special occasions.",
     "Those who love rose but want it grounded in warmth and amber rather than presented fresh or romantic.",
-    "Anyone looking for a long-wearing fragrance with moderate projection that feels both luxurious and effortlessly powerful.",
+    "Anyone looking for a rich fragrance with moderate projection that feels both luxurious and effortlessly powerful.",
     "Women who dress for impact and choose fragrances that match their confident, authoritative presence.",
   ],
 
@@ -79,7 +79,6 @@ export const libreLeParfumInspired: FragranceKnowledge = {
     "sandalwood",
     "winter",
     "elegant",
-    "long-wearing",
     "date-night",
     "powerful",
   ],

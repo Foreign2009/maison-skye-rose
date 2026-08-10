@@ -13,7 +13,7 @@ export const carlisleInspired: FragranceKnowledge = {
   // ── Classification ────────────────────────────────────────────────────────────
   gender        : "male",
   family        : ["Amber", "Spicy"],
-  scentCharacter: "Rich & Long Wearing",
+  scentCharacter: "Rich & Full-Bodied",
   projection    : "moderate",
 
   // ── Composition ─────────────────────────────────────────────────────────────
@@ -82,7 +82,6 @@ export const carlisleInspired: FragranceKnowledge = {
     "winter",
     "date-night",
     "rich",
-    "long-wearing",
   ],
   learningPath  : [
     "the-note-pyramid-explained",

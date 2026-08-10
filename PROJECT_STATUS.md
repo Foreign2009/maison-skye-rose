@@ -2,16 +2,16 @@
 
 **Last updated:** 2026-08-10
 **Phase:** Launch Execution
-**Build status:** PASS — 188 routes, 0 TypeScript errors, 0 warnings
+**Build status:** PASS — 188 routes, 0 TypeScript errors, 0 warnings (EP6-P3)
 
 ---
 
 ## Current Engineering Program
 
-**Program:** EP6-P2 — Catalogue Remediation Queue — COMPLETE
+**Program:** EP6-P3 — Catalogue Performance-Claim Remediation — COMPLETE
 **Sprint:** EP6
-**Gate:** None — EP6-P2 is complete. Next programme at founder's direction.
-**Outcome:** EP6-P1 audit snapshot turned into a governed, prioritized remediation worklist. P0–P5 priority model applied across all 93 records. 23 P0 records (deterministic HIGH policy corrections). 0 P1 structural defects (clean relationship graph). 3 P2 editorial reviews. 65 P3 relationship reviews. scentCharacter vocabulary assessed: "Rich & Long Wearing" classified REVIEW (47/93 records), requires founder disposition. 75 new proofs. 809/809 total proofs passing. Build: 188 routes, 0 TypeScript errors, 0 warnings. No knowledge records modified.
+**Gate:** None — EP6-P3 is complete. Next programme at founder's direction.
+**Outcome:** All performance claims and retired vocabulary eliminated from the live catalogue and infrastructure. "Rich & Long Wearing" scentCharacter retired; "Rich & Full-Bodied" established as its replacement across all 47 affected records and 22 infrastructure files. 23 P0 HIGH policy violations corrected (educationTag removals + free-text corrections). 3 P2 MEDIUM policy violations corrected. EP6-P1 and EP6-P2 audit artifacts regenerated. EP6-P3 validation suite: 56 new proofs. 865/865 total proofs passing. Build: 188 routes, 0 TypeScript errors, 0 warnings. All 7 protected SHAs unchanged. Post-remediation queue: P0=0, P1=0, P2=0, P3=89, P4=3, P5=1.
 
 ---
 
@@ -43,7 +43,7 @@ The Maison Fragrance Academy (EP13) is in the planning stage.
 | Product pages (SSG) | 93 |
 | Static pages | 25 |
 | Dynamic routes | 14 |
-| Last verified | 2026-08-10 |
+| Last verified | 2026-08-10 (EP6-P3) |
 
 Verify: `npm run build`
 
@@ -106,6 +106,10 @@ Verify: `npm run build`
 | EP5 | EP5-P4E  | First Production Identity-Qualified Governance Run | Complete — 2026-08-09 |
 | EP5 | EP5-P4F  | Legacy Alien Goddess Knowledge Reconciliation Review (Phase 1 + Phase 2) | Complete — 2026-08-10 |
 | EP5 | EP5-P4G  | Alien Goddess Authoritative Research Execution | Complete — 2026-08-10 |
+| EP5 | EP5-P4H  | Alien Goddess R2 Deterministic Correction | Complete — 2026-08-10 |
+| EP6 | EP6-P1   | Catalogue Knowledge Integrity Audit | Complete — 2026-08-10 |
+| EP6 | EP6-P2   | Catalogue Remediation Queue | Complete — 2026-08-10 |
+| EP6 | EP6-P3   | Catalogue Performance-Claim Remediation | Complete — 2026-08-10 |
 
 `FOUNDATIONS/00_FOUNDERS_LETTER.md` — The permanent founder's letter to Skye, Rose, future employees, and future stewards. *Why we began.*
 `FOUNDATIONS/01_SKYE_AND_ROSE_COVENANT.md` — The institutional promise: to customers, products, technology, and future generations. *What we promise.*
@@ -116,6 +120,8 @@ Verify: `npm run build`
 **EP2-P1 Audit Findings (2026-08-05):** Overall institutional alignment score 7.1/10. Intelligence layer (Fragrance Profile, MaisonCompanion, Concierge, Shop, Quiz) rated Aligned. Critical gaps: About page (3/10 — fails Foundation narrative standard), catalogue count inconsistency (93 vs 465+), "Loyal Customer" terminology, post-purchase experience absent, checkout UX cold. Recommended sequence: EP2-P2 (About page rewrite) → EP2-P3 (checkout + post-purchase) → EP2-P4 (testimonials) → EP2-P5 (concierge voice) → EP2-P6 (language pass).
 
 **EP2-P3 About Page Foundation Alignment (2026-08-05):** `app/about/page.tsx` rewritten from 4 generic paragraphs to 9 Foundation-aligned sections: Opening, A Compliment Changed Everything, Why Skye & Rose, What We Believe, Confidence Is What We Are Here to Deliver, Knowledge Before Recommendation, Accessible Luxury, Growing Together, Our Promise, An Invitation. Count inconsistency removed (465+ → timeless language). OG and Twitter metadata added. Architecture preserved. Build passes: 187 routes, 0 TypeScript errors, 0 warnings.
+
+**EP6-P3 Catalogue Performance-Claim Remediation (2026-08-10):** All performance claims and retired vocabulary eliminated from the live catalogue and infrastructure. "Rich & Long Wearing" scentCharacter retired; "Rich & Full-Bodied" established as its replacement across 47 native records and 22 infrastructure/component/service files. 23 P0 HIGH policy violations corrected (19 educationTag removals + 8 free-text corrections). 3 P2 MEDIUM policy violations corrected (eros mood, armani-code-parfum recommendedFor, y-edp signatureStyle — founder-approved verbatim replacements). 3 infrastructure violations remediated (merchandising.ts, MaisonCompanion.tsx, wardrobeAnalyser.ts) + academy/catalogue.ts caption. EP6-P1 and EP6-P2 audit artifacts regenerated: post-remediation queue state P0=0, P1=0, P2=0, P3=89, P4=3 (side-effect, armani-code-parfum, eros), P5=1 (alien-goddess). EP6-P1 validator: 5 proofs updated. EP6-P2 validator: 13 proofs updated. EP6-P3 validation suite created: 56 proofs across 8 sections (Vocabulary Retirement, Performance Debt Elimination, Infrastructure Remediation, Protected Field Preservation, SHA Verification, Relationship Graph Integrity, Governance Invariants, Historical Provenance). npm script added: mip:validate:catalogue-performance-remediation. All 15 validation suites: 865/865. Build: 188 routes, 0 TypeScript errors, 0 warnings. All 7 protected SHAs verified unchanged. Factory drafts NOT modified (excluded from TypeScript compilation via tsconfig to preserve historical provenance). 0 AI calls. 0 registry mutations. 0 identity mutations. 0 factory draft modifications.
 
 **EP5-P4G Alien Goddess Authoritative Research Execution (2026-08-10):** R3 authoritative external research executed for MIP-000012 Alien Goddess by Mugler. 6 sources consulted: 3 Tier 1 (official Mugler product page, Mugler scent-family category, Mugler Mag article — all accessed via search snippets after direct HTTP blocked 403), 2 Tier 2 (Fragrantica, Basenotes — accessed via search snippets), 1 Tier 3 (REBL Scents retailer — direct fetch successful). Key findings: (1) Official Mugler family: "floral ambery woody" / site category "Ambery" / Mugler Mag article "Floral oriental woody" — three consistent amber/oriental descriptors, none vanilla. (2) Notes confirmed unanimously: Top (Italian bergamot essence, coconut water accord), Heart (jasmine grandiflorum, heliotrope accord), Base (Madagascar bourbon vanilla, cashmeran wood). (3) All 4 critical MIP Gemini research values confirmed MIP_RESEARCH_CONFIRMED. All 4 legacy factory values refuted. (4) 3 identified conflicts preserved: official-disagreement (floral ambery woody vs Floral oriental woody — internal Mugler naming variant), database-disagreement (Mugler's "floral ambery woody" vs Fragrantica's "Oriental Floral" — traditional vs modern vocabulary), researcher-interpretation (jasmine grandiflorum vs jasmine). (5) Relationships (delina-inspired, baccarat-rouge-540-inspired) — STILL_UNRESOLVED, not confirmed by research. (6) "Rich & Long Wearing" scentCharacter — potential Maison policy violation (longevity promise), flagged for policy review. Recommended classification: R2 (targeted deterministic correction). Research results persisted at `data/identity/research-results/MIP-000012-alien-goddess-authoritative-results.json`. Validation suite `scripts/identity/validate-alien-goddess-research.ts`: 58 proofs across § 100/200/300/400. All 10 existing suites: 556/556 PASS. New suite: 58/58 PASS. Total: 614/614. Build: 188 routes, 0 TypeScript errors, 0 warnings. 0 Knowledge Factory AI calls. 0 native MKC mutations. 0 registry mutations. Next gate: founder approves R2 correction plan.
 

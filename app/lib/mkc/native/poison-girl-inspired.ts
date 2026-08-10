@@ -18,7 +18,7 @@ export const poisonGirlInspired: FragranceKnowledge = {
   // the dark gourmands lack; the tonka-amber base is richer and warmer than Bianco Latte.
   gender:         "female",
   family:         ["Gourmand", "Amber", "Citrus"],
-  scentCharacter: "Rich & Long Wearing",
+  scentCharacter: "Rich & Full-Bodied",
   projection:     "strong",
 
   // ── Composition ──────────────────────────────────────────────────────────────

@@ -15,7 +15,7 @@ export const ultraMaleInspired: FragranceKnowledge = {
   // ── Classification ───────────────────────────────────────────────────────────
   gender:         "male",
   family:         ["Sweet", "Amber", "Gourmand"],
-  scentCharacter: "Rich & Long Wearing",
+  scentCharacter: "Rich & Full-Bodied",
   projection:     "strong",
 
   // ── Composition ──────────────────────────────────────────────────────────────

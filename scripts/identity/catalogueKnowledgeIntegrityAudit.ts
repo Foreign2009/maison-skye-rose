@@ -114,7 +114,7 @@ type FieldExtractor = {
   readonly extract: (r: FragranceKnowledge) => string[];
 };
 
-// scentCharacter is intentionally excluded — "Rich & Long Wearing" is governed MKC vocabulary.
+// scentCharacter is intentionally excluded — scentCharacter values are governed MKC vocabulary.
 const POLICY_FIELDS: readonly FieldExtractor[] = [
   { name: "description",    extract: r => r.description    ? [r.description]    : [] },
   { name: "subtitle",       extract: r => r.subtitle       ? [r.subtitle]       : [] },

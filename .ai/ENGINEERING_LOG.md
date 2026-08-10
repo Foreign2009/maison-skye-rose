@@ -3823,3 +3823,87 @@ After EP20-P4: `computeLearnedPreferences()` runs the LearningEngine on `profile
 - EP5-P3C: What is the scope and design of the admin identity review UI?
 - When will the founder begin reviewing the 10 pending-review identities?
 - Which of the 4 provisional canonical records (DKNY Red Delicious Apple, 212 Carolina Herrera Good Girl Jasmine Absolute, Armani Prive Oud Nacre, Armani Stronger With You Powerfully) will be resolved first?
+
+### [2026-08-10] — EP6-P3 — Catalogue Performance-Claim Remediation
+
+**Participants:** Founder (Awf) / Claude Code
+**Program:** EP6-P3 — Catalogue Performance-Claim Remediation
+
+**Decisions Made:**
+- Retire "Rich & Long Wearing" scentCharacter vocabulary — replaced with "Rich & Full-Bodied" across all live canonical artifacts (47 records + all infrastructure)
+- Four canonical scentCharacter values now: Fresh & Light, Balanced Signature, Rich & Full-Bodied, Deep & Intense — all SAFE
+- Factory drafts are protected historical artifacts — excluded from TypeScript compilation via tsconfig exclude (cannot be modified)
+- Proof 601 rewritten to check byRiskLevel["HIGH"] === 0 (field `totalStructuralRelationshipFindings` does not exist in AuditSummary — corrected)
+- Cast `scentCharacter as string` in proofs 101 and 804 — TypeScript correctly rejects overlap comparison with retired union value; cast is appropriate for runtime historical verification
+
+**Tasks Completed:**
+- Type system migration (types.ts x2, validator.ts)
+- 47 native record scentCharacter migration (PowerShell batch)
+- 19 educationTag removals
+- 12 free-text corrections (8 P0, 4 P2 including founder-approved verbatim corrections for eros, armani-code-parfum, burberry-goddess, y-edp)
+- 22 infrastructure/component/service files updated (replace_all where applicable)
+- EP6-P2 catalogueRemediationQueue.ts SCENT_CHARACTER_POLICY updated (REVIEW → SAFE)
+- EP6-P1 catalogueKnowledgeIntegrityAudit.ts comment corrected
+- EP6-P1 audit artifact regenerated (0 policy findings, 0 HIGH risk)
+- EP6-P2 audit artifact regenerated (P0=0, P2=0, P3=89, P4=3, P5=1)
+- EP6-P1 validator updated (5 proofs)
+- EP6-P2 validator updated (13 proofs)
+- EP6-P3 validation suite created (56 proofs across 8 sections)
+- npm script added: mip:validate:catalogue-performance-remediation
+- All 15 validation suites passing: 865/865
+- Build: 188 routes, 0 TypeScript errors, 0 warnings
+- All 7 protected SHAs verified unchanged
+- CURRENT_TASK.md updated
+- ENGINEERING_LOG.md appended
+- PROJECT_STATUS.md updated
+- Git commit created (EP6-P3)
+
+**Tasks Started:**
+- None
+
+**Build Result:** Pass — 188 routes, 0 TypeScript errors, 0 warnings
+
+**Files Changed:**
+- tsconfig.json
+- app/lib/mkc/types.ts
+- app/data/types.ts
+- app/lib/mkc/validator.ts
+- app/lib/mkc/merchandising.ts
+- app/lib/mkc/wardrobeEngine.ts
+- app/lib/concierge/wardrobeAnalyser.ts
+- app/components/MaisonCompanion.tsx
+- app/lib/academy/catalogue.ts
+- app/lib/intentParser.ts
+- app/lib/concierge/collectionPlanner.ts
+- app/lib/concierge/consultationTracker.ts
+- app/lib/knowledgeAdapter.ts
+- app/components/ProductCard.tsx
+- app/components/CharacterJourneyProfile.tsx
+- app/components/ComparisonView.tsx
+- app/components/FragranceWardrobe.tsx
+- app/components/discover/DiscoveryIntelligenceSection.tsx
+- app/discover/character-journey/page.tsx
+- app/discover/page.tsx
+- app/shop/page.tsx
+- app/quiz/page.tsx
+- app/lib/mkc/templates/fragrance-template.ts
+- app/lib/discovery/collectionEngine.ts
+- docs/mkc-authoring-guide.md
+- scripts/identity/catalogueRemediationQueue.ts
+- scripts/identity/catalogueKnowledgeIntegrityAudit.ts
+- app/lib/identity/data/audits/catalogue-knowledge-integrity-audit.json
+- app/lib/identity/data/audits/catalogue-remediation-queue.json
+- scripts/identity/validate-catalogue-knowledge-integrity-audit.ts
+- scripts/identity/validate-catalogue-remediation-queue.ts
+- scripts/identity/validate-catalogue-performance-remediation.ts (NEW)
+- package.json
+- 73 native records in app/lib/mkc/native/ (47 scentCharacter + 26 additional corrections)
+
+**Handoff:**
+- EP6-P3 is complete. Repository is clean. No outstanding issues.
+- Post-EP6-P3 queue state: P0=0, P1=0, P2=0, P3=89, P4=3, P5=1
+- Next programme at founder's direction.
+
+**Open Questions Carried Forward:**
+- None
+

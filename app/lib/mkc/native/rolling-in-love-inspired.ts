@@ -13,7 +13,7 @@ export const rollingInLoveInspired: FragranceKnowledge = {
   // ── Classification ────────────────────────────────────────────────────────────
   gender        : "female",
   family        : ["Gourmand", "Floral"],
-  scentCharacter: "Rich & Long Wearing",
+  scentCharacter: "Rich & Full-Bodied",
   projection    : "moderate",
 
   // ── Composition ─────────────────────────────────────────────────────────────
@@ -46,7 +46,7 @@ export const rollingInLoveInspired: FragranceKnowledge = {
   signatureStyle: ["Modern Romance", "Soft Luxury", "Almond Floral Gourmand"],
   recommendedFor: [
     "Women seeking a signature fragrance that layers soft femininity with gourmand comfort for everyday wear.",
-    "Those who love rose and almond together and want a long-wearing fragrance that feels both luxurious and approachable.",
+    "Those who love rose and almond together and want a rich fragrance that feels both luxurious and approachable.",
     "Anyone looking for a modern romantic choice that works equally well in the office, on a date, or at weekend leisure.",
     "Fragrance collectors building a layering wardrobe who value iris and vanilla depth over linear simplicity.",
   ],

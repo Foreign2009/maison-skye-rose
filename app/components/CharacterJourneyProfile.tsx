@@ -11,7 +11,7 @@ import DiscoverCollectionGrid from "./DiscoverCollectionGrid";
 const CHARACTER_ACCENTS: Record<string, string> = {
   "Fresh & Light":       "#7a8fa3",
   "Balanced Signature":  "#6aaa8a",
-  "Rich & Long Wearing": "#c4935a",
+  "Rich & Full-Bodied": "#c4935a",
   "Deep & Intense":      "#9b7ce0",
 };
 

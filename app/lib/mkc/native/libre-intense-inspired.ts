@@ -13,7 +13,7 @@ export const libreIntenseInspired: FragranceKnowledge = {
   // ── Classification ────────────────────────────────────────────────────────────
   gender        : "female",
   family        : ["Floral", "Amber"],
-  scentCharacter: "Rich & Long Wearing",
+  scentCharacter: "Rich & Full-Bodied",
   projection    : "moderate",
 
   // ── Composition ─────────────────────────────────────────────────────────────
@@ -80,7 +80,6 @@ export const libreIntenseInspired: FragranceKnowledge = {
     "date-night",
     "layering",
     "confident",
-    "long-wearing",
   ],
   learningPath  : [
     "the-note-pyramid-explained",

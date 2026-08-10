@@ -32,7 +32,7 @@ export const yEdpInspired: FragranceKnowledge = {
   vibe:           ["Confident", "Modern", "Professional", "Sophisticated", "Powerful", "Bold"],
   occasions:      ["Daily Wear", "Office", "Date Night", "Evening", "Weekend"],
   seasons:        ["Spring", "Summer", "Autumn", "Winter"],
-  signatureStyle: ["Modern Professional", "All-Day Signature", "Ambitious Edge"],
+  signatureStyle: ["Modern Professional", "Day-to-Evening Signature", "Ambitious Edge"],
   recommendedFor: [
     "Men who want a signature that carries confidently from morning meetings to evening plans",
     "Those who enjoy the original Y but want more warmth and depth for autumn and winter",

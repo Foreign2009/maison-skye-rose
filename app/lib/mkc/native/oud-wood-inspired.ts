@@ -15,7 +15,7 @@ export const oudWoodInspired: FragranceKnowledge = {
   // ── Classification ───────────────────────────────────────────────────────────
   gender:         "male",
   family:         ["Oud", "Woody", "Amber"],
-  scentCharacter: "Rich & Long Wearing",
+  scentCharacter: "Rich & Full-Bodied",
   projection:     "moderate",
 
   // ── Composition ──────────────────────────────────────────────────────────────

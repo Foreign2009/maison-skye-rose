@@ -149,8 +149,8 @@ const STRUCTURAL_CODES = new Set([
 //
 // Source: docs/mkc-authoring-guide.md § scentCharacter vocabulary (lines 78–85)
 //         and § Performance Claim Policy.
-// "Rich & Long Wearing" contains longevity language. Per the Performance Claim
-// Policy this is a schema-governed vocabulary value requiring founder disposition.
+// EP6-P3: "Rich & Long Wearing" retired. Replaced with "Rich & Full-Bodied"
+// across all 47 affected records per founder disposition 2026-08-10.
 
 const SCENT_CHARACTER_POLICY: Record<string, {
   policyClassification: "SAFE" | "REVIEW" | "POLICY_CONFLICT";
@@ -167,20 +167,10 @@ const SCENT_CHARACTER_POLICY: Record<string, {
     reason:               "Describes olfactive balance and occasion weight. Contains no longevity or measurable performance language.",
     recommendedDisposition: "RETAIN — no vocabulary action required.",
   },
-  "Rich & Long Wearing": {
-    policyClassification: "REVIEW",
-    reason:
-      "Contains 'Long Wearing' — longevity language. Per the Performance Claim Policy " +
-      "(docs/mkc-authoring-guide.md § Performance Claim Policy), measurable performance claims " +
-      "are prohibited. As a schema-governed vocabulary value this is not free-text editorial copy, " +
-      "but a founder disposition is required: either (a) a formal policy exception documenting that " +
-      "schema vocabulary values are excluded from the Performance Claim Policy, or (b) replacement " +
-      "with a longevity-neutral label that preserves the olfactive weight classification.",
-    recommendedDisposition:
-      "SCHEMA_GOVERNANCE_REVIEW — Founder decision required before any record-level correction: " +
-      "(a) retain with a formal policy exception noting that 'Rich & Long Wearing' describes " +
-      "olfactive weight and occasion appropriateness, not a measurable performance guarantee, or " +
-      "(b) replace with a longevity-neutral vocabulary value across all affected records.",
+  "Rich & Full-Bodied": {
+    policyClassification: "SAFE",
+    reason:               "Describes olfactive weight, fullness, and expressive character. Contains no longevity or measurable performance language. Replaces retired 'Rich & Long Wearing' per EP6-P3 founder disposition.",
+    recommendedDisposition: "RETAIN — no vocabulary action required.",
   },
   "Deep & Intense": {
     policyClassification: "SAFE",
@@ -192,7 +182,7 @@ const SCENT_CHARACTER_POLICY: Record<string, {
 const SCENT_CHARACTER_VALUES = [
   "Fresh & Light",
   "Balanced Signature",
-  "Rich & Long Wearing",
+  "Rich & Full-Bodied",
   "Deep & Intense",
 ];
 

@@ -38,7 +38,7 @@ export const TEMPLATE_CONST: FragranceKnowledge = {
   //   Musk  Powdery  Spicy  Fruity
   family:         [],
   // CHANGE after authoring composition:
-  //   "Fresh & Light" | "Balanced Signature" | "Rich & Long Wearing" | "Deep & Intense"
+  //   "Fresh & Light" | "Balanced Signature" | "Rich & Full-Bodied" | "Deep & Intense"
   scentCharacter: "Fresh & Light",
   // CHANGE: "soft" | "moderate" | "strong"
   projection:     "moderate",

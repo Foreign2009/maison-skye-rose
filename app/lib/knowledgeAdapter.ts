@@ -136,7 +136,7 @@ function extractVibes(mood: string): string[] {
 
 /**
  * Derive scentCharacter from a normalised profile.
- * Priority order: Deep & Intense > Fresh & Light > Rich & Long Wearing > Balanced Signature.
+ * Priority order: Deep & Intense > Fresh & Light > Rich & Full-Bodied > Balanced Signature.
  * Heavy note categories take precedence to avoid misclassifying dark orientals as fresh.
  */
 function deriveScentCharacter(normalised: string): Fragrance["scentCharacter"] {
@@ -145,7 +145,7 @@ function deriveScentCharacter(normalised: string): Fragrance["scentCharacter"] {
   if (has("oud") || has("leather") || has("tobacco")) return "Deep & Intense";
   if (has("fresh") || has("citrus") || has("aquatic")) return "Fresh & Light";
   if (has("sweet") || has("vanilla") || has("gourmand") || has("amber") || has("spicy"))
-    return "Rich & Long Wearing";
+    return "Rich & Full-Bodied";
   return "Balanced Signature";
 }
 

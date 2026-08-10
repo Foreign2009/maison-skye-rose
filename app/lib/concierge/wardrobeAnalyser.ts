@@ -45,7 +45,7 @@ export interface WardrobeAnalysis {
 const ALL_CHARACTERS = [
   "Fresh & Light",
   "Balanced Signature",
-  "Rich & Long Wearing",
+  "Rich & Full-Bodied",
   "Deep & Intense",
 ] as const;
 
@@ -55,8 +55,8 @@ const CHARACTER_OPPORTUNITY: Record<string, string> = {
     "A fresh, light fragrance would add an effortless daytime dimension to the collection",
   "Balanced Signature":
     "A versatile everyday signature would anchor the collection for any occasion",
-  "Rich & Long Wearing":
-    "A richer, longer-wearing fragrance would open up the collection for evenings and occasions",
+  "Rich & Full-Bodied":
+    "A richer, more expressive fragrance would open up the collection for evenings and occasions",
   "Deep & Intense":
     "A deep, intense fragrance would add a statement piece for the moments that call for it",
 };
@@ -123,7 +123,7 @@ function classifyStyle(characterCounts: Record<string, number>): string {
 
   const hasFresh    = present.has("Fresh & Light");
   const hasBalanced = present.has("Balanced Signature");
-  const hasRich     = present.has("Rich & Long Wearing");
+  const hasRich     = present.has("Rich & Full-Bodied");
   const hasDeep     = present.has("Deep & Intense");
 
   if (hasFresh && hasBalanced && !hasRich && !hasDeep)  return "Modern Classic";
@@ -176,7 +176,7 @@ function describeOpportunity(
 
   if (style === "Fresh-focused" || style === "Modern Classic") {
     // Fresh/daytime collections grow toward evening depth
-    priorityOrder.push("Rich & Long Wearing", "Deep & Intense", "Balanced Signature");
+    priorityOrder.push("Rich & Full-Bodied", "Deep & Intense", "Balanced Signature");
   } else if (style === "Evening-oriented" || style === "Warm & Rich") {
     // Evening collections grow toward daytime versatility
     priorityOrder.push("Fresh & Light", "Balanced Signature");
@@ -190,7 +190,7 @@ function describeOpportunity(
 
   // Occasion fallback — if evening is uncovered
   if (!coveredOccasions.includes("Evening")) {
-    return CHARACTER_OPPORTUNITY["Rich & Long Wearing"];
+    return CHARACTER_OPPORTUNITY["Rich & Full-Bodied"];
   }
 
   return null;

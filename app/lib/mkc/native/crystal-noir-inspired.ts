@@ -13,7 +13,7 @@ export const crystalNoirInspired: FragranceKnowledge = {
   // ── Classification ────────────────────────────────────────────────────────────
   gender        : "female",
   family        : ["Floral", "Amber"],
-  scentCharacter: "Rich & Long Wearing",
+  scentCharacter: "Rich & Full-Bodied",
   projection    : "moderate",
 
   // ── Composition ─────────────────────────────────────────────────────────────
@@ -77,7 +77,6 @@ export const crystalNoirInspired: FragranceKnowledge = {
     "oud",
     "winter",
     "elegant",
-    "long-wearing",
     "date-night",
     "rich",
     "layering",

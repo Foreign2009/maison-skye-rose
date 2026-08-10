@@ -27,9 +27,9 @@ const WARDROBE_ROLES: Record<ScentCharacter, { role: string; description: string
     role:        "The Daily Anchor",
     description: "The cornerstone of a fragrance wardrobe. Refined enough for any occasion and distinct enough to be remembered — it works every day without ever feeling ordinary.",
   },
-  "Rich & Long Wearing": {
+  "Rich & Full-Bodied": {
     role:        "The Statement Piece",
-    description: "The fragrance you reach for when the occasion deserves attention. Rich sillage and lasting presence make it the defining piece in a considered wardrobe.",
+    description: "The fragrance you reach for when the occasion deserves attention. Rich sillage and distinctive presence make it the defining piece in a considered wardrobe.",
   },
   "Deep & Intense": {
     role:        "The Signature Depth",
@@ -52,10 +52,10 @@ const CHARACTER_PROGRESSION: Record<
   "Balanced Signature": {
     editorial:
       "Balanced Signatures are the cornerstone of any wardrobe. Versatile enough for daily wear, distinctive enough to be remembered. Pairing this with something lighter for daytime and something richer for evenings creates a complete rotation suited to any occasion.",
-    nextStep:  "Rich & Long Wearing",
+    nextStep:  "Rich & Full-Bodied",
     nextLabel: "Explore Richer Fragrances",
   },
-  "Rich & Long Wearing": {
+  "Rich & Full-Bodied": {
     editorial:
       "Rich fragrances are the statement pieces of a wardrobe. At their best worn alongside a lighter daily signature — together they form a rotation suited to any occasion. If you want to go deeper, an intense evening fragrance completes the collection.",
     nextStep:  "Deep & Intense",
@@ -81,7 +81,7 @@ export interface CharacterStage {
 }
 
 export const CHARACTER_STAGES: readonly CharacterStage[] = (
-  ["Fresh & Light", "Balanced Signature", "Rich & Long Wearing", "Deep & Intense"] as const
+  ["Fresh & Light", "Balanced Signature", "Rich & Full-Bodied", "Deep & Intense"] as const
 ).map((character) => ({
   character,
   role:        WARDROBE_ROLES[character].role,

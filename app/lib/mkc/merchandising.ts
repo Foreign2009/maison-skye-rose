@@ -12,7 +12,7 @@ export function generateWhyYoullLikeIt(k: FragranceKnowledge): [string, string, 
   const openingWord =
     scent === "Fresh & Light"         ? "Fresh"
     : scent === "Deep & Intense"      ? "Deep"
-    : scent === "Rich & Long Wearing" ? "Warm"
+    : scent === "Rich & Full-Bodied" ? "Warm"
     : "Refined";
 
   const bullet1 = topNote
@@ -22,7 +22,7 @@ export function generateWhyYoullLikeIt(k: FragranceKnowledge): [string, string, 
   const characterMap: Record<string, string> = {
     "Fresh & Light":       "Light, effortless everyday character",
     "Balanced Signature":  "Refined, balanced signature scent",
-    "Rich & Long Wearing": "Rich sillage that lasts all day",
+    "Rich & Full-Bodied": "Rich, expressive character — full-bodied presence that deepens through the dry-down",
     "Deep & Intense":      "Bold, intense projection",
   };
 

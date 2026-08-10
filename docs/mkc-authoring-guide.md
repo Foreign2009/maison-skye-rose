@@ -81,7 +81,7 @@ Musk     Powdery    Spicy       Fruity
 |---|---|
 | `"Fresh & Light"` | Citrus/aquatic dominants; effortless and approachable; light sillage |
 | `"Balanced Signature"` | Well-rounded; works across occasions; not too light or too heavy |
-| `"Rich & Long Wearing"` | Amber/spice/vanilla base; noticeable sillage; occasion-appropriate weight |
+| `"Rich & Full-Bodied"` | Amber/spice/vanilla base; noticeable sillage; occasion-appropriate weight |
 | `"Deep & Intense"` | Oud/leather/tobacco dominants; maximum sillage; evening/occasion focus |
 
 ---
@@ -783,7 +783,7 @@ Skye is Maison's masculine collection. The Skye editorial voice is assured and d
 **`scentCharacter` in practice:**
 - Dominant marine/citrus → `Fresh & Light`
 - Clean fougère or versatile designer → `Balanced Signature`
-- Amber/vanilla base, evening focus → `Rich & Long Wearing`
+- Amber/vanilla base, evening focus → `Rich & Full-Bodied`
 - Oud/tobacco/leather, specialist → `Deep & Intense`
 
 ---
@@ -806,7 +806,7 @@ Rose is Maison's feminine collection. The Rose editorial voice is warm and expre
 **`scentCharacter` in practice:**
 - Bright citrus/white floral, effortless → `Fresh & Light`
 - Classic chypre or balanced floral → `Balanced Signature`
-- Gourmand/oriental, evening weight → `Rich & Long Wearing`
+- Gourmand/oriental, evening weight → `Rich & Full-Bodied`
 - Heavy oud/tobacco/leather → `Deep & Intense`
 
 **Vibe selection for Rose:** Every Rose record should include at least 2 vibes from the Rose & Elite group (`Feminine`, `Sensual`, `Delicate`, `Flirtatious`) alongside universal vibes. A heavy oriental Rose record might be `Sensual, Mysterious, Bold, Romantic, Wealthy`. A light floral might be `Feminine, Delicate, Elegant, Playful, Clean`.

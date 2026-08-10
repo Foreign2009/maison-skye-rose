@@ -17,13 +17,13 @@ import { KnowledgeChip } from "./knowledge/KnowledgeChip";
 //
 // Selection rationale:
 //   "Balanced Signature" → signature-scents: editorial collection about everyday signatures
-//   "Rich & Long Wearing" → date-night:       occasion-focused; Rich & Long Wearing boosted
+//   "Rich & Full-Bodied" → date-night:       occasion-focused; Rich & Full-Bodied boosted
 //   "Deep & Intense"      → winter-warmth:    highest Deep & Intense boost in the catalogue
 // Fallback: /discover — the discovery hub, safe for any unmapped or null nextStep.
 
 const CHARACTER_DISCOVERY_ROUTE: Record<string, string> = {
   "Balanced Signature": "/discover/signature-scents",
-  "Rich & Long Wearing": "/discover/date-night",
+  "Rich & Full-Bodied": "/discover/date-night",
   "Deep & Intense":     "/discover/winter-warmth",
 };
 
@@ -41,7 +41,7 @@ function wardrobeNote(
     const map: Partial<Record<FragranceKnowledge["scentCharacter"], string>> = {
       "Fresh & Light":       "A lighter contrast for daytime",
       "Balanced Signature":  "An everyday alternative",
-      "Rich & Long Wearing": "A richer option for evenings",
+      "Rich & Full-Bodied": "A richer option for evenings",
       "Deep & Intense":      "A deeper statement for special occasions",
     };
     return map[companion.scentCharacter] ?? "A complementary wardrobe addition";

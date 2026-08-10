@@ -13,7 +13,7 @@ export const flowerbombInspired: FragranceKnowledge = {
   // ── Classification ────────────────────────────────────────────────────────────
   gender        : "female",
   family        : ["Floral", "Sweet"],
-  scentCharacter: "Rich & Long Wearing",
+  scentCharacter: "Rich & Full-Bodied",
   projection    : "moderate",
 
   // ── Composition ─────────────────────────────────────────────────────────────
@@ -47,7 +47,7 @@ export const flowerbombInspired: FragranceKnowledge = {
   recommendedFor: [
     "Women seeking a luxurious floral signature that transitions seamlessly from daily elegance to special occasions.",
     "Those who love rich, romantic florals with depth — rose and tuberose lovers who want more than just pretty.",
-    "Anyone looking for a long-wearing fragrance that makes a sensual statement without overwhelming the senses.",
+    "Anyone looking for a rich fragrance that makes a sensual statement without overwhelming the senses.",
   ],
 
   // ── Merchandising ───────────────────────────────────────────────────────────

@@ -13,7 +13,7 @@ export const burberryHerInspired: FragranceKnowledge = {
   // ── Classification ────────────────────────────────────────────────────────────
   gender        : "female",
   family        : ["Gourmand", "Fruity"],
-  scentCharacter: "Rich & Long Wearing",
+  scentCharacter: "Rich & Full-Bodied",
   projection    : "moderate",
 
   // ── Composition ─────────────────────────────────────────────────────────────
@@ -79,7 +79,6 @@ export const burberryHerInspired: FragranceKnowledge = {
     "summer",
     "daily-wear",
     "sweet",
-    "long-wearing",
     "feminine",
   ],
   learningPath  : [

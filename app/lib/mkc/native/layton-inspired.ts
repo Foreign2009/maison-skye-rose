@@ -15,7 +15,7 @@ export const laytonInspired: FragranceKnowledge = {
   // ── Classification ───────────────────────────────────────────────────────────
   gender:         "male",
   family:         ["Amber", "Vanilla", "Aromatic"],
-  scentCharacter: "Rich & Long Wearing",
+  scentCharacter: "Rich & Full-Bodied",
   projection:     "strong",
 
   // ── Composition ──────────────────────────────────────────────────────────────

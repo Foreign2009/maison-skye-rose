@@ -33,7 +33,7 @@ type ProductCardProps = {
 const WARDROBE_ROLE_SHORT: Record<string, string> = {
   "Fresh & Light":       "Opening Chapter",
   "Balanced Signature":  "Daily Anchor",
-  "Rich & Long Wearing": "Statement Piece",
+  "Rich & Full-Bodied": "Statement Piece",
   "Deep & Intense":      "Signature Depth",
 };
 

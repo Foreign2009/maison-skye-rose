@@ -46,7 +46,7 @@ const CATALOGUE_SEASONS = ["Spring", "Summer", "Autumn", "Winter"] as const;
 const SCENT_CHARACTERS = [
   "Fresh & Light",
   "Balanced Signature",
-  "Rich & Long Wearing",
+  "Rich & Full-Bodied",
   "Deep & Intense",
 ] as const;
 

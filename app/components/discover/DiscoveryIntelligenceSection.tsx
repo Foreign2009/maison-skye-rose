@@ -24,7 +24,7 @@ export function DiscoveryIntelligenceSection({
 
   type DiscoveryFragrance = ReturnType<typeof toDisplayFragrance> & {
     slug:           string;
-    scentCharacter: "Fresh & Light" | "Balanced Signature" | "Rich & Long Wearing" | "Deep & Intense";
+    scentCharacter: "Fresh & Light" | "Balanced Signature" | "Rich & Full-Bodied" | "Deep & Intense";
     recReason:      string | null;
   };
 

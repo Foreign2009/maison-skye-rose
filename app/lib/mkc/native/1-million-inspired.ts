@@ -15,7 +15,7 @@ export const oneMillionInspired: FragranceKnowledge = {
   // ── Classification ───────────────────────────────────────────────────────────
   gender:         "male",
   family:         ["Spicy", "Leather", "Amber"],
-  scentCharacter: "Rich & Long Wearing",
+  scentCharacter: "Rich & Full-Bodied",
   projection:     "strong",
 
   // ── Composition ──────────────────────────────────────────────────────────────

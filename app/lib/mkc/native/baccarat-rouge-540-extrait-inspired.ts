@@ -13,7 +13,7 @@ export const baccaratRouge540ExtraitInspired: FragranceKnowledge = {
   // ── Classification ────────────────────────────────────────────────────────────
   gender        : "female",
   family        : ["Woody", "Amber"],
-  scentCharacter: "Rich & Long Wearing",
+  scentCharacter: "Rich & Full-Bodied",
   projection    : "moderate",
 
   // ── Composition ─────────────────────────────────────────────────────────────
@@ -81,7 +81,6 @@ export const baccaratRouge540ExtraitInspired: FragranceKnowledge = {
     "winter",
     "date-night",
     "layering",
-    "long-wearing",
     "rich",
   ],
   learningPath  : [

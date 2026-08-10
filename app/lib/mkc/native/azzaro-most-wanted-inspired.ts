@@ -15,7 +15,7 @@ export const azzaroMostWantedInspired: FragranceKnowledge = {
   // ── Classification ───────────────────────────────────────────────────────────
   gender:         "male",
   family:         ["Amber", "Sweet", "Spicy"],
-  scentCharacter: "Rich & Long Wearing",
+  scentCharacter: "Rich & Full-Bodied",
   projection:     "moderate",
 
   // ── Composition ──────────────────────────────────────────────────────────────

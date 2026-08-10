@@ -56,7 +56,7 @@ const editorialSpecData = specData
 const CHARACTER_ACCENTS: Record<string, string> = {
   "Fresh & Light":       "#7a8fa3", // fresh-office
   "Balanced Signature":  "#6aaa8a", // everyday-wear
-  "Rich & Long Wearing": "#c4935a", // vanilla-lovers
+  "Rich & Full-Bodied": "#c4935a", // vanilla-lovers
   "Deep & Intense":      "#9b7ce0", // luxury-picks
 };
 

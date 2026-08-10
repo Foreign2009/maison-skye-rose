@@ -18,7 +18,7 @@ export const hypnoticPoisonInspired: FragranceKnowledge = {
   // gourmand route (Bianco Latte) and the coffee route (Black Opium).
   gender:         "female",
   family:         ["Gourmand", "Vanilla", "Floral"],
-  scentCharacter: "Rich & Long Wearing",
+  scentCharacter: "Rich & Full-Bodied",
   projection:     "strong",
 
   // ── Composition ──────────────────────────────────────────────────────────────

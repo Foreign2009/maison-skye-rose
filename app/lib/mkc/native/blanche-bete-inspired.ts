@@ -13,7 +13,7 @@ export const blancheBeteInspired: FragranceKnowledge = {
   // ── Classification ────────────────────────────────────────────────────────────
   gender        : "female",
   family        : ["Gourmand", "Floral"],
-  scentCharacter: "Rich & Long Wearing",
+  scentCharacter: "Rich & Full-Bodied",
   projection    : "moderate",
 
   // ── Composition ─────────────────────────────────────────────────────────────
@@ -41,7 +41,7 @@ export const blancheBeteInspired: FragranceKnowledge = {
   recommendedFor: [
     "Women seeking a luxurious second-skin fragrance that deepens through the evening",
     "Those who love creamy florals and want a signature that feels like cashmere against skin",
-    "Anyone building a winter collection who values intimate, long-wearing scents over bold projection",
+    "Anyone building a winter collection who values intimate, full-bodied scents over bold projection",
     "Women on date nights who want softness paired with sensuality and lasting presence",
   ],
 
@@ -80,7 +80,6 @@ export const blancheBeteInspired: FragranceKnowledge = {
     "creamy",
     "winter",
     "date-night",
-    "long-wearing",
     "sensual",
   ],
   learningPath  : [

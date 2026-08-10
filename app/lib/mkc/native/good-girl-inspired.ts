@@ -13,7 +13,7 @@ export const goodGirlInspired: FragranceKnowledge = {
   // ── Classification ────────────────────────────────────────────────────────────
   gender        : "female",
   family        : ["Amber", "Sweet"],
-  scentCharacter: "Rich & Long Wearing",
+  scentCharacter: "Rich & Full-Bodied",
   projection    : "moderate",
 
   // ── Composition ─────────────────────────────────────────────────────────────
@@ -83,7 +83,6 @@ export const goodGirlInspired: FragranceKnowledge = {
     "bold",
     "winter",
     "date-night",
-    "long-wearing",
   ],
   learningPath  : [
     "the-note-pyramid-explained",

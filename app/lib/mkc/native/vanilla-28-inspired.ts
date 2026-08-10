@@ -13,7 +13,7 @@ export const vanilla28Inspired: FragranceKnowledge = {
   // ── Classification ────────────────────────────────────────────────────────────
   gender        : "female",
   family        : ["Vanilla", "Amber"],
-  scentCharacter: "Rich & Long Wearing",
+  scentCharacter: "Rich & Full-Bodied",
   projection    : "moderate",
 
   // ── Composition ─────────────────────────────────────────────────────────────
@@ -77,7 +77,6 @@ export const vanilla28Inspired: FragranceKnowledge = {
     "tonka-bean",
     "warm",
     "rich",
-    "long-wearing",
     "winter",
     "date-night",
     "gourmand",

@@ -18,7 +18,7 @@ export const baccaratRouge540Inspired: FragranceKnowledge = {
   // Future unisex records calibrate against BR540 for warmth, versatility, and intensity.
   gender:         "unisex",
   family:         ["Amber", "Floral", "Musk"],
-  scentCharacter: "Rich & Long Wearing",
+  scentCharacter: "Rich & Full-Bodied",
   projection:     "strong",
 
   // ── Composition ──────────────────────────────────────────────────────────────

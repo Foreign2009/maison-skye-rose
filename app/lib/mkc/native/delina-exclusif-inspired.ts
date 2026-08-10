@@ -13,7 +13,7 @@ export const delinaExclusifInspired: FragranceKnowledge = {
   // ── Classification ────────────────────────────────────────────────────────────
   gender        : "female",
   family        : ["Amber", "Rose"],
-  scentCharacter: "Rich & Long Wearing",
+  scentCharacter: "Rich & Full-Bodied",
   projection    : "moderate",
 
   // ── Composition ─────────────────────────────────────────────────────────────
@@ -78,7 +78,6 @@ export const delinaExclusifInspired: FragranceKnowledge = {
     "incense",
     "warm",
     "elegant",
-    "long-wearing",
     "winter",
     "date-night",
   ],

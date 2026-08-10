@@ -60,8 +60,8 @@ const SEASON_OBSERVATIONS: Record<string, string> = {
 const CHARACTER_OBSERVATIONS: Record<string, string> = {
   "Fresh & Light":
     "You're drawn to fragrances that wear easily and never overstate. Fresh and light compositions are the most forgiving in any wardrobe — they work in almost any context and for almost any mood.",
-  "Rich & Long Wearing":
-    "Your taste runs toward fragrances that last. Rich, long-wearing compositions reward patience — they give more over time, not less, and tend to be the ones that make the strongest impression by the end of the day.",
+  "Rich & Full-Bodied":
+    "Your taste runs toward fragrances with depth and presence. Rich, full-bodied compositions bring expressive character and tend to make a confident statement.",
   "Deep & Intense":
     "There is depth in what you've been exploring. Intense fragrances require a considered wearer — someone who understands that a measured application, well placed, is more powerful than a generous one.",
   "Balanced Signature":

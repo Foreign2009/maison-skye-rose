@@ -70,7 +70,7 @@ export const academyCatalogue: AcademyArticle[] = [
       {
         type: "fragrance-spotlight",
         fragranceId: "sauvage-inspired",
-        caption: "Sauvage Inspired follows the classic three-layer structure: bright bergamot and pepper in the opening, lavender and geranium through the heart, and a long-wearing ambroxan base — a clear illustration of how the note pyramid unfolds over time on a single fragrance.",
+        caption: "Sauvage Inspired follows the classic three-layer structure: bright bergamot and pepper in the opening, lavender and geranium through the heart, and a characterful ambroxan base — a clear illustration of how the note pyramid unfolds over time on a single fragrance.",
       },
       {
         type: "tip",

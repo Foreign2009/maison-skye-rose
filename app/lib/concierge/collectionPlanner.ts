@@ -64,14 +64,14 @@ const DEFAULT_SIZE: Record<CollectionType, number> = {
 // Priority-ordered scentCharacter sequences per collection type.
 // The planner takes the first N uncovered characters from this list.
 const TYPE_CHARACTER_SEQUENCES: Record<CollectionType, string[]> = {
-  Starter:   ["Fresh & Light", "Balanced Signature", "Rich & Long Wearing", "Deep & Intense"],
-  Signature: ["Balanced Signature", "Fresh & Light", "Rich & Long Wearing", "Deep & Intense"],
-  Business:  ["Fresh & Light", "Balanced Signature", "Rich & Long Wearing", "Deep & Intense"],
-  Travel:    ["Balanced Signature", "Fresh & Light", "Rich & Long Wearing", "Deep & Intense"],
-  Seasonal:  ["Fresh & Light", "Balanced Signature", "Rich & Long Wearing", "Deep & Intense"],
-  Minimal:   ["Fresh & Light", "Rich & Long Wearing", "Balanced Signature", "Deep & Intense"],
-  Luxury:    ["Fresh & Light", "Balanced Signature", "Rich & Long Wearing", "Deep & Intense"],
-  Custom:    ["Fresh & Light", "Balanced Signature", "Rich & Long Wearing", "Deep & Intense"],
+  Starter:   ["Fresh & Light", "Balanced Signature", "Rich & Full-Bodied", "Deep & Intense"],
+  Signature: ["Balanced Signature", "Fresh & Light", "Rich & Full-Bodied", "Deep & Intense"],
+  Business:  ["Fresh & Light", "Balanced Signature", "Rich & Full-Bodied", "Deep & Intense"],
+  Travel:    ["Balanced Signature", "Fresh & Light", "Rich & Full-Bodied", "Deep & Intense"],
+  Seasonal:  ["Fresh & Light", "Balanced Signature", "Rich & Full-Bodied", "Deep & Intense"],
+  Minimal:   ["Fresh & Light", "Rich & Full-Bodied", "Balanced Signature", "Deep & Intense"],
+  Luxury:    ["Fresh & Light", "Balanced Signature", "Rich & Full-Bodied", "Deep & Intense"],
+  Custom:    ["Fresh & Light", "Balanced Signature", "Rich & Full-Bodied", "Deep & Intense"],
 };
 
 // Role templates per scentCharacter — two per character for variety
@@ -97,7 +97,7 @@ const ROLE_TEMPLATES: Record<string, Array<{ title: string; purpose: string }>> 
       purpose: "The fragrance you reach for without deliberation. Confident and adaptable, it works across the full range of your week.",
     },
   ],
-  "Rich & Long Wearing": [
+  "Rich & Full-Bodied": [
     {
       title:   "Evening Character",
       purpose: "A richer, more present fragrance reserved for the occasions that call for warmth, depth, and lasting presence.",
@@ -130,7 +130,7 @@ const CONTEXT_ROLE_OVERRIDES: Partial<Record<CollectionType, Partial<Record<stri
       title:   "Smart-Casual All-Rounder",
       purpose: "The versatile piece that carries naturally from office afternoons through to early evening client meetings.",
     },
-    "Rich & Long Wearing": {
+    "Rich & Full-Bodied": {
       title:   "Evening Client",
       purpose: "A richer presence for dinners, client events, and occasions that extend beyond the working day.",
     },
@@ -150,7 +150,7 @@ const CONTEXT_ROLE_OVERRIDES: Partial<Record<CollectionType, Partial<Record<stri
       title:   "Morning Clarity",
       purpose: "The lighter, daytime end of a minimal collection — clean, versatile, and effortlessly wearable every day.",
     },
-    "Rich & Long Wearing": {
+    "Rich & Full-Bodied": {
       title:   "Evening Counterpart",
       purpose: "The richer piece that completes a minimal collection — giving you depth and occasion-readiness without excess.",
     },

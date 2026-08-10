@@ -13,7 +13,7 @@ export const loveDontBeShyInspired: FragranceKnowledge = {
   // ── Classification ────────────────────────────────────────────────────────────
   gender        : "female",
   family        : ["Gourmand", "Floral"],
-  scentCharacter: "Rich & Long Wearing",
+  scentCharacter: "Rich & Full-Bodied",
   projection    : "moderate",
 
   // ── Composition ─────────────────────────────────────────────────────────────
@@ -81,7 +81,6 @@ export const loveDontBeShyInspired: FragranceKnowledge = {
     "winter",
     "date-night",
     "feminine",
-    "long-wearing",
   ],
   learningPath  : [
     "the-note-pyramid-explained",

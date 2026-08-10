@@ -278,9 +278,9 @@ results.push(proof("406: sauvage-inspired hasRelationships is true", () => {
 // § 500 — Policy Detection (10 proofs)
 // ─────────────────────────────────────────────────────────────────────────────
 
-results.push(proof("501: at least 1 record has policyFindings", () => {
+results.push(proof("501: 0 records have policyFindings (all violations remediated by EP6-P3)", () => {
   const count = audit.records.filter(r => r.policyFindings.length > 0).length;
-  assert(count > 0, "expected at least one record with policy findings");
+  assert(count === 0, `expected 0 records with policy findings; got ${count}`);
 }));
 
 results.push(proof("502: alien-goddess has 0 policy findings", () => {
@@ -288,16 +288,16 @@ results.push(proof("502: alien-goddess has 0 policy findings", () => {
     `expected 0 policy findings; got ${ag.policyFindings.length}`);
 }));
 
-results.push(proof("503: at least 1 HIGH-severity policy finding exists in audit", () => {
+results.push(proof("503: 0 HIGH-severity policy findings exist (all remediated by EP6-P3)", () => {
   const highFindings = audit.records.flatMap(r => r.policyFindings).filter(f => f.severity === "HIGH");
-  assert(highFindings.length > 0, "expected at least 1 HIGH-severity policy finding");
+  assert(highFindings.length === 0, `expected 0 HIGH-severity policy findings; got ${highFindings.length}`);
 }));
 
-results.push(proof("504: althair-inspired has at least 1 policy finding", () => {
+results.push(proof("504: althair-inspired has 0 policy findings after EP6-P3 educationTag correction", () => {
   const althair = audit.records.find(r => r.slug === "althair-inspired");
   assert(althair !== undefined, "althair-inspired not found");
-  assert(althair!.policyFindings.length > 0,
-    "althair-inspired must have at least 1 policy finding");
+  assert(althair!.policyFindings.length === 0,
+    `althair-inspired expected 0 policyFindings; got ${althair!.policyFindings.length}`);
 }));
 
 results.push(proof("505: all policy findings have non-empty field name", () => {
@@ -336,9 +336,9 @@ results.push(proof("508: all policy findings have severity HIGH or MEDIUM", () =
   }
 }));
 
-results.push(proof("509: summary.recordsWithPolicyFindings > 0", () => {
-  assert(audit.summary.recordsWithPolicyFindings > 0,
-    "expected at least 1 record with policy findings in summary");
+results.push(proof("509: summary.recordsWithPolicyFindings is 0 (all violations remediated by EP6-P3)", () => {
+  assert(audit.summary.recordsWithPolicyFindings === 0,
+    `expected 0; got ${audit.summary.recordsWithPolicyFindings}`);
 }));
 
 results.push(proof("510: scentCharacter is not flagged as a policy violation", () => {
@@ -356,9 +356,9 @@ results.push(proof("601: alien-goddess riskLevel is LOW", () => {
   assert(ag.riskLevel === "LOW", `expected "LOW"; got "${ag.riskLevel}"`);
 }));
 
-results.push(proof("602: at least 1 record has riskLevel HIGH", () => {
+results.push(proof("602: 0 records have riskLevel HIGH after EP6-P3 remediation", () => {
   const count = audit.records.filter(r => r.riskLevel === "HIGH").length;
-  assert(count > 0, "expected at least 1 HIGH-risk record");
+  assert(count === 0, `expected 0 HIGH-risk records; got ${count}`);
 }));
 
 results.push(proof("603: at least 1 record has riskLevel MEDIUM", () => {

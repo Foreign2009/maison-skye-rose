@@ -13,7 +13,7 @@ export const guidanceInspired: FragranceKnowledge = {
   // ── Classification ────────────────────────────────────────────────────────────
   gender        : "female",
   family        : ["Floral", "Amber"],
-  scentCharacter: "Rich & Long Wearing",
+  scentCharacter: "Rich & Full-Bodied",
   projection    : "moderate",
 
   // ── Composition ─────────────────────────────────────────────────────────────
@@ -79,7 +79,6 @@ export const guidanceInspired: FragranceKnowledge = {
     "winter",
     "elegant",
     "date-night",
-    "long-wearing",
     "rich",
   ],
   learningPath  : [

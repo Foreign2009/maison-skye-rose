@@ -13,7 +13,7 @@ export const blackOpiumInspired: FragranceKnowledge = {
   // ── Classification ────────────────────────────────────────────────────────────
   gender        : "female",
   family        : ["Gourmand", "Vanilla"],
-  scentCharacter: "Rich & Long Wearing",
+  scentCharacter: "Rich & Full-Bodied",
   projection    : "moderate",
 
   // ── Composition ─────────────────────────────────────────────────────────────
@@ -81,7 +81,6 @@ export const blackOpiumInspired: FragranceKnowledge = {
     "winter",
     "date-night",
     "rich",
-    "long-wearing",
   ],
   learningPath  : [
     "the-note-pyramid-explained",

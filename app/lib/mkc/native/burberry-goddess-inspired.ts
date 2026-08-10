@@ -13,7 +13,7 @@ export const burberryGoddessInspired: FragranceKnowledge = {
   // ── Classification ────────────────────────────────────────────────────────────
   gender        : "female",
   family        : ["Vanilla", "Floral"],
-  scentCharacter: "Rich & Long Wearing",
+  scentCharacter: "Rich & Full-Bodied",
   projection    : "moderate",
 
   // ── Composition ─────────────────────────────────────────────────────────────
@@ -46,7 +46,7 @@ export const burberryGoddessInspired: FragranceKnowledge = {
   signatureStyle: ["Elegant Vanilla Floral", "Refined Luxury", "Soft Femininity"],
   recommendedFor: [
     "Women seeking a refined daily signature that bridges professional polish and intimate femininity.",
-    "Those who love rose and vanilla but prefer elegance over sweetness, with depth that lasts all day.",
+    "Those who love rose and vanilla but prefer elegance over sweetness, with a rich sense of depth.",
     "Anyone building a luxury fragrance wardrobe who wants one versatile scent for work, weekend, and evening.",
     "Fragrance lovers drawn to soft florals with unexpected warmth—cacao and sandalwood add richness without heaviness.",
   ],

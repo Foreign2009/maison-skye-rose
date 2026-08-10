@@ -26,7 +26,7 @@ export const erosInspired: FragranceKnowledge = {
     heart: ["Tonka Bean", "Geranium", "Ambroxan"],
     base:  ["Vanilla", "Vetiver", "Oakmoss", "Cedar"],
   },
-  mood: "Bold, confident and magnetic — night-out energy in an all-day package.",
+  mood: "Bold, confident and magnetic — night-out energy with versatile character.",
 
   // ── Discovery ────────────────────────────────────────────────────────────────
   vibe:           ["Bold", "Confident", "Powerful", "Sexy", "Magnetic"],

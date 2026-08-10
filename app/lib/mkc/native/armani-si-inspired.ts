@@ -13,7 +13,7 @@ export const armaniSiInspired: FragranceKnowledge = {
   // ── Classification ────────────────────────────────────────────────────────────
   gender        : "female",
   family        : ["Fruity", "Amber"],
-  scentCharacter: "Rich & Long Wearing",
+  scentCharacter: "Rich & Full-Bodied",
   projection    : "moderate",
 
   // ── Composition ─────────────────────────────────────────────────────────────
@@ -76,7 +76,6 @@ export const armaniSiInspired: FragranceKnowledge = {
     "blackcurrant",
     "chypre",
     "sophisticated",
-    "long-wearing",
     "layering",
     "office",
     "daily-wear",

@@ -160,7 +160,7 @@ function checkClassification(k: FragranceKnowledge): ValidationIssue[] {
   }
 
   const validCharacters: string[] = [
-    "Fresh & Light", "Balanced Signature", "Rich & Long Wearing", "Deep & Intense",
+    "Fresh & Light", "Balanced Signature", "Rich & Full-Bodied", "Deep & Intense",
   ];
   if (!validCharacters.includes(k.scentCharacter)) {
     issues.push(e("SCENT_CHARACTER_INVALID", g, "scentCharacter",

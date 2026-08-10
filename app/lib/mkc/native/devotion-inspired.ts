@@ -20,7 +20,7 @@ export const devotionInspired: FragranceKnowledge = {
   // to prevent it reading as a dessert or a dark oriental.
   gender:         "female",
   family:         ["Vanilla", "Citrus", "Floral"],
-  scentCharacter: "Rich & Long Wearing",
+  scentCharacter: "Rich & Full-Bodied",
   projection:     "moderate",
 
   // ── Composition ──────────────────────────────────────────────────────────────

@@ -13,7 +13,7 @@ export const althairInspired: FragranceKnowledge = {
   // ── Classification ────────────────────────────────────────────────────────────
   gender        : "male",
   family        : ["Vanilla", "Amber"],
-  scentCharacter: "Rich & Long Wearing",
+  scentCharacter: "Rich & Full-Bodied",
   projection    : "moderate",
 
   // ── Composition ─────────────────────────────────────────────────────────────
@@ -80,7 +80,6 @@ export const althairInspired: FragranceKnowledge = {
     "cinnamon",
     "date-night",
     "rich",
-    "long-wearing",
   ],
   learningPath  : [
     "the-note-pyramid-explained",

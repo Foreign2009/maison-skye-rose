@@ -27,7 +27,7 @@ export type Fragrance = {
   scentCharacter:
     | "Fresh & Light"
     | "Balanced Signature"
-    | "Rich & Long Wearing"
+    | "Rich & Full-Bodied"
     | "Deep & Intense";
 
   projection:

@@ -13,7 +13,7 @@ export const gentleFluidityGoldInspired: FragranceKnowledge = {
   // ── Classification ────────────────────────────────────────────────────────────
   gender        : "female",
   family        : ["Vanilla", "Musk"],
-  scentCharacter: "Rich & Long Wearing",
+  scentCharacter: "Rich & Full-Bodied",
   projection    : "moderate",
 
   // ── Composition ─────────────────────────────────────────────────────────────
@@ -77,7 +77,6 @@ export const gentleFluidityGoldInspired: FragranceKnowledge = {
     "sandalwood",
     "white-musk",
     "elegant",
-    "long-wearing",
     "daily-wear",
     "office",
   ],
