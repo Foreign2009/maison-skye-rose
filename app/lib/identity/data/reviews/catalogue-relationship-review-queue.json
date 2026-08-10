@@ -1,7 +1,7 @@
 {
-  "schemaVersion": "EP6-P5B-v1",
-  "generatedAt": "2026-08-10T18:15:23.736Z",
-  "generatedBy": "EP6-P5B — Relationship Editorial Review Foundation",
+  "schemaVersion": "EP6-P5BR-v1",
+  "generatedAt": "2026-08-10T18:33:05.674Z",
+  "generatedBy": "EP6-P5B/P5BR — Relationship Editorial Review Foundation",
   "graphFingerprint": "478fd478d930137fe21d058470797c324649156d615b60d3b9d3a9108f73b8e2",
   "summary": {
     "totalUnits": 168,
@@ -9,19 +9,22 @@
     "wardrobePartnerPairs": 71,
     "evolutionPairs": 6,
     "byStatus": {
-      "pending-review": 168,
+      "pending-review": 162,
       "in-review": 0,
       "approved": 0,
       "rejected": 0,
-      "needs-research": 0,
+      "needs-research": 6,
       "deferred": 0
     },
     "byGovernanceState": {
-      "REPOSITORY_SUPPORTED": 168,
+      "PENDING": 162,
+      "RESEARCH_BLOCKED": 6,
       "FOUNDER_APPROVED": 0,
-      "FOUNDER_REJECTED": 0
+      "FOUNDER_REJECTED": 0,
+      "DEFERRED": 0
     },
-    "requiresExternalResearch": 6
+    "requiresExternalResearch": 6,
+    "requiresFounderDecision": 162
   },
   "units": [
     {
@@ -29,8 +32,9 @@
       "pairType": "alternatives",
       "slugA": "1-million-inspired",
       "slugB": "azzaro-most-wanted-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -55,9 +59,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 2 shared family/families (Spicy, Amber), scentCharacter matches. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -65,8 +70,9 @@
       "pairType": "alternatives",
       "slugA": "9pm-inspired",
       "slugB": "althair-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -93,9 +99,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 2 shared family/families (Amber, Vanilla), scentCharacter matches. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -103,8 +110,9 @@
       "pairType": "alternatives",
       "slugA": "9pm-inspired",
       "slugB": "vanilla-28-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -131,9 +139,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 2 shared family/families (Amber, Vanilla), scentCharacter matches. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -141,8 +150,9 @@
       "pairType": "alternatives",
       "slugA": "acqua-di-gio-parfum-inspired",
       "slugB": "acqua-di-gio-profondo-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -170,9 +180,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 3 shared family/families (Aquatic, Woody, Aromatic), scentCharacter matches. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -180,8 +191,9 @@
       "pairType": "alternatives",
       "slugA": "afternoon-swim-inspired",
       "slugB": "aqua-di-gio-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -205,9 +217,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 1 shared family/families (Citrus), scentCharacter matches. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -215,8 +228,9 @@
       "pairType": "alternatives",
       "slugA": "afternoon-swim-inspired",
       "slugB": "imagination-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -239,9 +253,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 2 shared family/families (Citrus, Fresh), scentCharacter matches. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -249,8 +264,9 @@
       "pairType": "alternatives",
       "slugA": "afternoon-swim-inspired",
       "slugB": "invictus-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -272,9 +288,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 1 shared family/families (Fresh), scentCharacter differs. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -282,8 +299,9 @@
       "pairType": "alternatives",
       "slugA": "alien-inspired",
       "slugB": "baccarat-rouge-540-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [],
@@ -305,9 +323,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: no shared fragrance family. Substitutability claim is weakly supported by repository data alone. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -315,8 +334,9 @@
       "pairType": "alternatives",
       "slugA": "althair-inspired",
       "slugB": "layton-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -343,9 +363,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 2 shared family/families (Vanilla, Amber), scentCharacter matches. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -353,8 +374,9 @@
       "pairType": "alternatives",
       "slugA": "althair-inspired",
       "slugB": "le-male-elixir-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -381,9 +403,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 2 shared family/families (Vanilla, Amber), scentCharacter matches. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -391,8 +414,9 @@
       "pairType": "alternatives",
       "slugA": "ani-inspired",
       "slugB": "layton-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -418,9 +442,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 1 shared family/families (Vanilla), scentCharacter matches. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -428,8 +453,9 @@
       "pairType": "alternatives",
       "slugA": "ani-inspired",
       "slugB": "spicebomb-extreme-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -451,9 +477,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 1 shared family/families (Vanilla), scentCharacter matches. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -461,8 +488,9 @@
       "pairType": "alternatives",
       "slugA": "aqua-di-gio-inspired",
       "slugB": "l'immensite-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -486,9 +514,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 1 shared family/families (Citrus), scentCharacter matches. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -496,8 +525,9 @@
       "pairType": "alternatives",
       "slugA": "aqua-di-gio-inspired",
       "slugB": "pacific-chill-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [],
@@ -517,9 +547,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: no shared fragrance family. Substitutability claim is weakly supported by repository data alone. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -527,8 +558,9 @@
       "pairType": "alternatives",
       "slugA": "aqua-di-gio-inspired",
       "slugB": "silver-mountain-water-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -552,9 +584,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 1 shared family/families (Citrus), scentCharacter matches. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -562,8 +595,9 @@
       "pairType": "alternatives",
       "slugA": "aqua-di-gio-inspired",
       "slugB": "torino21-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -585,9 +619,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 1 shared family/families (Aromatic), scentCharacter matches. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -595,8 +630,9 @@
       "pairType": "alternatives",
       "slugA": "arabians-tonka-inspired",
       "slugB": "naxos-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -618,9 +654,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 1 shared family/families (Amber), scentCharacter differs. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -628,8 +665,9 @@
       "pairType": "alternatives",
       "slugA": "arabians-tonka-inspired",
       "slugB": "oud-wood-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -654,9 +692,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 2 shared family/families (Amber, Oud), scentCharacter differs. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -664,8 +703,9 @@
       "pairType": "alternatives",
       "slugA": "armani-si-inspired",
       "slugB": "delina-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -693,9 +733,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 1 shared family/families (Fruity), scentCharacter differs. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -703,8 +744,9 @@
       "pairType": "alternatives",
       "slugA": "aventus-inspired",
       "slugB": "erba-pura-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -727,9 +769,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 2 shared family/families (Fruity, Musk), scentCharacter matches. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -737,8 +780,9 @@
       "pairType": "alternatives",
       "slugA": "aventus-inspired",
       "slugB": "kirke-overdose-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -763,9 +807,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 2 shared family/families (Fruity, Musk), scentCharacter matches. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -773,8 +818,9 @@
       "pairType": "alternatives",
       "slugA": "azzaro-most-wanted-inspired",
       "slugB": "carlisle-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -800,9 +846,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 2 shared family/families (Amber, Spicy), scentCharacter matches. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -810,8 +857,9 @@
       "pairType": "alternatives",
       "slugA": "baccarat-rouge-540-extrait-inspired",
       "slugB": "baccarat-rouge-540-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -833,9 +881,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 1 shared family/families (Amber), scentCharacter matches. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -843,8 +892,9 @@
       "pairType": "alternatives",
       "slugA": "baccarat-rouge-540-inspired",
       "slugB": "crystal-noir-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -869,9 +919,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 2 shared family/families (Amber, Floral), scentCharacter matches. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -879,8 +930,9 @@
       "pairType": "alternatives",
       "slugA": "baccarat-rouge-540-inspired",
       "slugB": "delina-exclusif-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -902,9 +954,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 1 shared family/families (Amber), scentCharacter matches. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -912,8 +965,9 @@
       "pairType": "alternatives",
       "slugA": "baccarat-rouge-540-inspired",
       "slugB": "guidance-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -936,9 +990,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 2 shared family/families (Amber, Floral), scentCharacter matches. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -946,8 +1001,9 @@
       "pairType": "alternatives",
       "slugA": "baccarat-rouge-540-inspired",
       "slugB": "hibiscus-mahajad-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -969,9 +1025,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 1 shared family/families (Floral), scentCharacter differs. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -979,8 +1036,9 @@
       "pairType": "alternatives",
       "slugA": "baccarat-rouge-540-inspired",
       "slugB": "libre-intense-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -1005,9 +1063,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 2 shared family/families (Amber, Floral), scentCharacter matches. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -1015,8 +1074,9 @@
       "pairType": "alternatives",
       "slugA": "baccarat-rouge-540-inspired",
       "slugB": "libre-le-parfum-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -1041,9 +1101,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 2 shared family/families (Amber, Floral), scentCharacter matches. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -1051,8 +1112,9 @@
       "pairType": "alternatives",
       "slugA": "baccarat-rouge-540-inspired",
       "slugB": "prada-paradoxe-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -1077,9 +1139,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 2 shared family/families (Amber, Floral), scentCharacter matches. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -1087,8 +1150,9 @@
       "pairType": "alternatives",
       "slugA": "baccarat-rouge-540-inspired",
       "slugB": "valentino-donna-born-in-roma-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -1113,9 +1177,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 2 shared family/families (Amber, Floral), scentCharacter matches. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -1123,8 +1188,9 @@
       "pairType": "alternatives",
       "slugA": "bianco-latte-inspired",
       "slugB": "devotion-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -1150,9 +1216,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 1 shared family/families (Floral), scentCharacter matches. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -1160,8 +1227,9 @@
       "pairType": "alternatives",
       "slugA": "bianco-latte-inspired",
       "slugB": "kayali-vanilla-28-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -1185,9 +1253,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 1 shared family/families (Gourmand), scentCharacter matches. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -1195,8 +1264,9 @@
       "pairType": "alternatives",
       "slugA": "bianco-latte-inspired",
       "slugB": "la-vie-est-belle-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -1220,9 +1290,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 1 shared family/families (Floral), scentCharacter matches. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -1230,8 +1301,9 @@
       "pairType": "alternatives",
       "slugA": "bianco-latte-inspired",
       "slugB": "love-don't-be-shy-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -1256,9 +1328,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 2 shared family/families (Gourmand, Floral), scentCharacter matches. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -1266,8 +1339,9 @@
       "pairType": "alternatives",
       "slugA": "black-opium-inspired",
       "slugB": "hypnotic-poison-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -1293,9 +1367,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 2 shared family/families (Gourmand, Vanilla), scentCharacter matches. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -1303,8 +1378,9 @@
       "pairType": "alternatives",
       "slugA": "black-opium-inspired",
       "slugB": "layton-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -1331,9 +1407,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 1 shared family/families (Vanilla), scentCharacter matches. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -1341,8 +1418,9 @@
       "pairType": "alternatives",
       "slugA": "black-opium-inspired",
       "slugB": "poison-girl-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -1368,9 +1446,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 1 shared family/families (Gourmand), scentCharacter matches. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -1378,8 +1457,9 @@
       "pairType": "alternatives",
       "slugA": "black-opium-inspired",
       "slugB": "ultra-male-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -1403,9 +1483,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 1 shared family/families (Gourmand), scentCharacter matches. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -1413,8 +1494,9 @@
       "pairType": "alternatives",
       "slugA": "blanche-bete-inspired",
       "slugB": "delina-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -1438,9 +1520,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 1 shared family/families (Floral), scentCharacter differs. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -1448,8 +1531,9 @@
       "pairType": "alternatives",
       "slugA": "bleu-de-chanel-inspired",
       "slugB": "l'immensite-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -1476,9 +1560,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 1 shared family/families (Citrus), scentCharacter matches. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -1486,8 +1571,9 @@
       "pairType": "alternatives",
       "slugA": "burberry-goddess-inspired",
       "slugB": "delina-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -1512,9 +1598,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 1 shared family/families (Floral), scentCharacter differs. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -1522,8 +1609,9 @@
       "pairType": "alternatives",
       "slugA": "burberry-her-inspired",
       "slugB": "delina-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -1551,9 +1639,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 1 shared family/families (Fruity), scentCharacter differs. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -1561,8 +1650,9 @@
       "pairType": "alternatives",
       "slugA": "carlisle-inspired",
       "slugB": "spicebomb-extreme-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -1584,9 +1674,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 1 shared family/families (Spicy), scentCharacter matches. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -1594,8 +1685,9 @@
       "pairType": "alternatives",
       "slugA": "carlisle-inspired",
       "slugB": "stronger-with-you-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -1623,9 +1715,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 2 shared family/families (Amber, Spicy), scentCharacter matches. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -1633,8 +1726,9 @@
       "pairType": "alternatives",
       "slugA": "chance-eau-fraiche-inspired",
       "slugB": "chance-eau-tendre-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -1659,9 +1753,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 1 shared family/families (Floral), scentCharacter differs. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -1669,8 +1764,9 @@
       "pairType": "alternatives",
       "slugA": "chance-eau-tendre-inspired",
       "slugB": "delina-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -1698,9 +1794,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 2 shared family/families (Floral, Fruity), scentCharacter matches. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -1708,8 +1805,9 @@
       "pairType": "alternatives",
       "slugA": "coco-mademoiselle-inspired",
       "slugB": "delina-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -1733,9 +1831,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 1 shared family/families (Floral), scentCharacter differs. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -1743,8 +1842,9 @@
       "pairType": "alternatives",
       "slugA": "creed-green-irish-tweed-inspired",
       "slugB": "imagination-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -1767,9 +1867,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 2 shared family/families (Fresh, Woody), scentCharacter matches. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -1777,8 +1878,9 @@
       "pairType": "alternatives",
       "slugA": "creed-green-irish-tweed-inspired",
       "slugB": "terre-d'hermes-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -1802,9 +1904,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 1 shared family/families (Woody), scentCharacter differs. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -1812,8 +1915,9 @@
       "pairType": "alternatives",
       "slugA": "delina-exclusif-inspired",
       "slugB": "delina-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -1837,9 +1941,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 1 shared family/families (Rose), scentCharacter differs. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -1847,8 +1952,9 @@
       "pairType": "alternatives",
       "slugA": "delina-exclusif-inspired",
       "slugB": "hypnotic-poison-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [],
@@ -1868,9 +1974,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: no shared fragrance family. Substitutability claim is weakly supported by repository data alone. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -1878,8 +1985,9 @@
       "pairType": "alternatives",
       "slugA": "delina-inspired",
       "slugB": "flowerbomb-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -1903,9 +2011,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 1 shared family/families (Floral), scentCharacter differs. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -1913,8 +2022,9 @@
       "pairType": "alternatives",
       "slugA": "delina-inspired",
       "slugB": "good-girl-blush-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -1941,9 +2051,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 1 shared family/families (Floral), scentCharacter differs. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -1951,8 +2062,9 @@
       "pairType": "alternatives",
       "slugA": "delina-inspired",
       "slugB": "j'adore-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -1976,9 +2088,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 1 shared family/families (Floral), scentCharacter matches. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -1986,8 +2099,9 @@
       "pairType": "alternatives",
       "slugA": "delina-inspired",
       "slugB": "kayali-vanilla-28-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [],
@@ -2009,9 +2123,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: no shared fragrance family. Substitutability claim is weakly supported by repository data alone. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -2019,8 +2134,9 @@
       "pairType": "alternatives",
       "slugA": "delina-inspired",
       "slugB": "la-vie-est-belle-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -2048,9 +2164,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 1 shared family/families (Floral), scentCharacter differs. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -2058,8 +2175,9 @@
       "pairType": "alternatives",
       "slugA": "delina-inspired",
       "slugB": "libre-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -2087,9 +2205,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 1 shared family/families (Floral), scentCharacter differs. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -2097,8 +2216,9 @@
       "pairType": "alternatives",
       "slugA": "delina-inspired",
       "slugB": "love-don't-be-shy-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -2124,9 +2244,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 1 shared family/families (Floral), scentCharacter differs. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -2134,8 +2255,9 @@
       "pairType": "alternatives",
       "slugA": "delina-inspired",
       "slugB": "miss-dior-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -2162,9 +2284,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 1 shared family/families (Floral), scentCharacter matches. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -2172,8 +2295,9 @@
       "pairType": "alternatives",
       "slugA": "delina-inspired",
       "slugB": "mon-paris-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -2199,9 +2323,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 2 shared family/families (Floral, Fruity), scentCharacter matches. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -2209,8 +2334,9 @@
       "pairType": "alternatives",
       "slugA": "delina-inspired",
       "slugB": "rolling-in-love-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -2237,9 +2363,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 1 shared family/families (Floral), scentCharacter differs. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -2247,8 +2374,9 @@
       "pairType": "alternatives",
       "slugA": "delina-inspired",
       "slugB": "very-good-girl-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -2276,9 +2404,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 2 shared family/families (Floral, Fruity), scentCharacter matches. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -2286,8 +2415,9 @@
       "pairType": "alternatives",
       "slugA": "delina-inspired",
       "slugB": "wedding-silk-santal-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -2309,9 +2439,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 1 shared family/families (Floral), scentCharacter differs. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -2319,8 +2450,9 @@
       "pairType": "alternatives",
       "slugA": "devotion-inspired",
       "slugB": "la-vie-est-belle-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -2346,9 +2478,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 1 shared family/families (Floral), scentCharacter matches. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -2356,8 +2489,9 @@
       "pairType": "alternatives",
       "slugA": "erba-pura-inspired",
       "slugB": "god-of-fire-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -2379,9 +2513,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 1 shared family/families (Fruity), scentCharacter matches. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -2389,8 +2524,9 @@
       "pairType": "alternatives",
       "slugA": "erba-pura-inspired",
       "slugB": "hacivat-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -2412,9 +2548,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 1 shared family/families (Fruity), scentCharacter matches. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -2422,8 +2559,9 @@
       "pairType": "alternatives",
       "slugA": "god-of-fire-inspired",
       "slugB": "kirke-overdose-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -2447,9 +2585,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 1 shared family/families (Fruity), scentCharacter matches. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -2457,8 +2596,9 @@
       "pairType": "alternatives",
       "slugA": "good-girl-inspired",
       "slugB": "stronger-with-you-intensely-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -2482,9 +2622,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 1 shared family/families (Amber), scentCharacter matches. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -2492,8 +2633,9 @@
       "pairType": "alternatives",
       "slugA": "good-girl-inspired",
       "slugB": "ultra-male-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -2518,9 +2660,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 2 shared family/families (Amber, Sweet), scentCharacter matches. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -2528,8 +2671,9 @@
       "pairType": "alternatives",
       "slugA": "gris-charnel-inspired",
       "slugB": "prada-l'homme-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -2554,9 +2698,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 2 shared family/families (Aromatic, Woody), scentCharacter matches. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -2564,8 +2709,9 @@
       "pairType": "alternatives",
       "slugA": "gris-charnel-inspired",
       "slugB": "sauvage-elixir-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -2592,9 +2738,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 2 shared family/families (Aromatic, Woody), scentCharacter differs. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -2602,8 +2749,9 @@
       "pairType": "alternatives",
       "slugA": "haltane-inspired",
       "slugB": "oud-wood-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -2626,9 +2774,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 2 shared family/families (Woody, Oud), scentCharacter differs. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -2636,8 +2785,9 @@
       "pairType": "alternatives",
       "slugA": "hawas-inspired",
       "slugB": "pacific-chill-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -2662,9 +2812,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 2 shared family/families (Fresh, Fruity), scentCharacter differs. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -2672,8 +2823,9 @@
       "pairType": "alternatives",
       "slugA": "hypnotic-poison-inspired",
       "slugB": "kayali-vanilla-28-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -2698,9 +2850,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 2 shared family/families (Gourmand, Vanilla), scentCharacter matches. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -2708,8 +2861,9 @@
       "pairType": "alternatives",
       "slugA": "hypnotic-poison-inspired",
       "slugB": "la-vie-est-belle-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -2734,9 +2888,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 1 shared family/families (Floral), scentCharacter matches. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -2744,8 +2899,9 @@
       "pairType": "alternatives",
       "slugA": "hypnotic-poison-inspired",
       "slugB": "love-don't-be-shy-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -2771,9 +2927,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 2 shared family/families (Gourmand, Floral), scentCharacter matches. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -2781,8 +2938,9 @@
       "pairType": "alternatives",
       "slugA": "hypnotic-poison-inspired",
       "slugB": "poison-girl-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -2807,9 +2965,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 1 shared family/families (Gourmand), scentCharacter matches. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -2817,8 +2976,9 @@
       "pairType": "alternatives",
       "slugA": "imagination-inspired",
       "slugB": "l'immensite-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -2845,9 +3005,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 1 shared family/families (Citrus), scentCharacter matches. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -2855,8 +3016,9 @@
       "pairType": "alternatives",
       "slugA": "imagination-inspired",
       "slugB": "silver-mountain-water-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -2883,9 +3045,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 2 shared family/families (Fresh, Citrus), scentCharacter matches. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -2893,8 +3056,9 @@
       "pairType": "alternatives",
       "slugA": "imagination-inspired",
       "slugB": "torino21-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -2918,9 +3082,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 1 shared family/families (Fresh), scentCharacter matches. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -2928,8 +3093,9 @@
       "pairType": "alternatives",
       "slugA": "invictus-inspired",
       "slugB": "silver-mountain-water-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -2953,9 +3119,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 1 shared family/families (Fresh), scentCharacter differs. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -2963,8 +3130,9 @@
       "pairType": "alternatives",
       "slugA": "layton-inspired",
       "slugB": "naxos-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -2993,9 +3161,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 2 shared family/families (Amber, Vanilla), scentCharacter matches. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -3003,8 +3172,9 @@
       "pairType": "alternatives",
       "slugA": "le-male-elixir-inspired",
       "slugB": "vanilla-28-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -3029,9 +3199,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 2 shared family/families (Amber, Vanilla), scentCharacter matches. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -3039,8 +3210,9 @@
       "pairType": "alternatives",
       "slugA": "myslf-inspired",
       "slugB": "valentino-uomo-born-in-roma-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -3067,9 +3239,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 2 shared family/families (Floral, Woody), scentCharacter matches. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -3077,8 +3250,9 @@
       "pairType": "alternatives",
       "slugA": "ombre-nomade-inspired",
       "slugB": "oud-wood-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -3104,9 +3278,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 2 shared family/families (Woody, Oud), scentCharacter differs. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -3114,8 +3289,9 @@
       "pairType": "alternatives",
       "slugA": "oud-for-greatness-inspired",
       "slugB": "oud-wood-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -3137,9 +3313,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 1 shared family/families (Oud), scentCharacter differs. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -3147,8 +3324,9 @@
       "pairType": "alternatives",
       "slugA": "oud-for-greatness-inspired",
       "slugB": "sauvage-elixir-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -3170,9 +3348,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 1 shared family/families (Spicy), scentCharacter differs. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -3180,8 +3359,9 @@
       "pairType": "alternatives",
       "slugA": "oud-mood-inspired",
       "slugB": "oud-wood-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -3204,9 +3384,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 2 shared family/families (Amber, Oud), scentCharacter differs. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -3214,8 +3395,9 @@
       "pairType": "alternatives",
       "slugA": "prada-l'homme-inspired",
       "slugB": "prada-luna-rossa-carbon-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -3237,9 +3419,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 1 shared family/families (Aromatic), scentCharacter matches. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -3247,8 +3430,9 @@
       "pairType": "alternatives",
       "slugA": "torino21-inspired",
       "slugB": "y-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -3271,9 +3455,10 @@
         "NO_CONSUMER_REVIEW_EVIDENCE"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Comparable alternatives in a similar register\" is a Maison commercial positioning decision — the founder must confirm which fragrance the catalogue should recommend as a substitute for another. Repository evidence: 2 shared family/families (Aromatic, Fresh), scentCharacter differs. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -3281,8 +3466,9 @@
       "pairType": "wardrobePartners",
       "slugA": "afternoon-swim-inspired",
       "slugB": "prada-l'homme-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [],
@@ -3304,9 +3490,10 @@
         "WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Recommended to own alongside\" is a Maison editorial wardrobe curation decision. The authoring guide identifies wardrobePartners as editorial reasoning. No algorithmic rule can substitute for intentional pairing. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -3314,8 +3501,9 @@
       "pairType": "wardrobePartners",
       "slugA": "afternoon-swim-inspired",
       "slugB": "sauvage-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -3337,9 +3525,10 @@
         "WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Recommended to own alongside\" is a Maison editorial wardrobe curation decision. The authoring guide identifies wardrobePartners as editorial reasoning. No algorithmic rule can substitute for intentional pairing. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -3347,8 +3536,9 @@
       "pairType": "wardrobePartners",
       "slugA": "althair-inspired",
       "slugB": "spicebomb-extreme-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -3368,9 +3558,10 @@
         "WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Recommended to own alongside\" is a Maison editorial wardrobe curation decision. The authoring guide identifies wardrobePartners as editorial reasoning. No algorithmic rule can substitute for intentional pairing. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -3378,8 +3569,9 @@
       "pairType": "wardrobePartners",
       "slugA": "ani-inspired",
       "slugB": "aventus-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -3401,9 +3593,10 @@
         "WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Recommended to own alongside\" is a Maison editorial wardrobe curation decision. The authoring guide identifies wardrobePartners as editorial reasoning. No algorithmic rule can substitute for intentional pairing. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -3411,8 +3604,9 @@
       "pairType": "wardrobePartners",
       "slugA": "ani-inspired",
       "slugB": "sauvage-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -3434,9 +3628,10 @@
         "WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Recommended to own alongside\" is a Maison editorial wardrobe curation decision. The authoring guide identifies wardrobePartners as editorial reasoning. No algorithmic rule can substitute for intentional pairing. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -3444,8 +3639,9 @@
       "pairType": "wardrobePartners",
       "slugA": "aqua-di-gio-inspired",
       "slugB": "erba-pura-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [],
@@ -3465,9 +3661,10 @@
         "WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Recommended to own alongside\" is a Maison editorial wardrobe curation decision. The authoring guide identifies wardrobePartners as editorial reasoning. No algorithmic rule can substitute for intentional pairing. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -3475,8 +3672,9 @@
       "pairType": "wardrobePartners",
       "slugA": "arabians-tonka-inspired",
       "slugB": "sauvage-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [],
@@ -3494,9 +3692,10 @@
         "WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Recommended to own alongside\" is a Maison editorial wardrobe curation decision. The authoring guide identifies wardrobePartners as editorial reasoning. No algorithmic rule can substitute for intentional pairing. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -3504,8 +3703,9 @@
       "pairType": "wardrobePartners",
       "slugA": "armani-si-inspired",
       "slugB": "aventus-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -3531,9 +3731,10 @@
         "WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Recommended to own alongside\" is a Maison editorial wardrobe curation decision. The authoring guide identifies wardrobePartners as editorial reasoning. No algorithmic rule can substitute for intentional pairing. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -3541,8 +3742,9 @@
       "pairType": "wardrobePartners",
       "slugA": "armani-si-inspired",
       "slugB": "spicebomb-extreme-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [],
@@ -3562,9 +3764,10 @@
         "WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Recommended to own alongside\" is a Maison editorial wardrobe curation decision. The authoring guide identifies wardrobePartners as editorial reasoning. No algorithmic rule can substitute for intentional pairing. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -3572,8 +3775,9 @@
       "pairType": "wardrobePartners",
       "slugA": "aventus-inspired",
       "slugB": "delina-exclusif-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [],
@@ -3593,9 +3797,10 @@
         "WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Recommended to own alongside\" is a Maison editorial wardrobe curation decision. The authoring guide identifies wardrobePartners as editorial reasoning. No algorithmic rule can substitute for intentional pairing. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -3603,8 +3808,9 @@
       "pairType": "wardrobePartners",
       "slugA": "aventus-inspired",
       "slugB": "oud-for-greatness-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [],
@@ -3626,9 +3832,10 @@
         "WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Recommended to own alongside\" is a Maison editorial wardrobe curation decision. The authoring guide identifies wardrobePartners as editorial reasoning. No algorithmic rule can substitute for intentional pairing. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -3636,8 +3843,9 @@
       "pairType": "wardrobePartners",
       "slugA": "aventus-inspired",
       "slugB": "very-good-girl-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -3661,9 +3869,10 @@
         "WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Recommended to own alongside\" is a Maison editorial wardrobe curation decision. The authoring guide identifies wardrobePartners as editorial reasoning. No algorithmic rule can substitute for intentional pairing. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -3671,8 +3880,9 @@
       "pairType": "wardrobePartners",
       "slugA": "baccarat-rouge-540-extrait-inspired",
       "slugB": "delina-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [],
@@ -3692,9 +3902,10 @@
         "WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Recommended to own alongside\" is a Maison editorial wardrobe curation decision. The authoring guide identifies wardrobePartners as editorial reasoning. No algorithmic rule can substitute for intentional pairing. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -3702,8 +3913,9 @@
       "pairType": "wardrobePartners",
       "slugA": "baccarat-rouge-540-extrait-inspired",
       "slugB": "oud-wood-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -3724,9 +3936,10 @@
         "WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Recommended to own alongside\" is a Maison editorial wardrobe curation decision. The authoring guide identifies wardrobePartners as editorial reasoning. No algorithmic rule can substitute for intentional pairing. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -3734,8 +3947,9 @@
       "pairType": "wardrobePartners",
       "slugA": "baccarat-rouge-540-inspired",
       "slugB": "gentle-fluidity-gold-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -3755,9 +3969,10 @@
         "WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Recommended to own alongside\" is a Maison editorial wardrobe curation decision. The authoring guide identifies wardrobePartners as editorial reasoning. No algorithmic rule can substitute for intentional pairing. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -3765,8 +3980,9 @@
       "pairType": "wardrobePartners",
       "slugA": "baccarat-rouge-540-inspired",
       "slugB": "gris-charnel-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [],
@@ -3784,9 +4000,10 @@
         "WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Recommended to own alongside\" is a Maison editorial wardrobe curation decision. The authoring guide identifies wardrobePartners as editorial reasoning. No algorithmic rule can substitute for intentional pairing. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -3794,8 +4011,9 @@
       "pairType": "wardrobePartners",
       "slugA": "baccarat-rouge-540-inspired",
       "slugB": "haltane-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [],
@@ -3815,9 +4033,10 @@
         "WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Recommended to own alongside\" is a Maison editorial wardrobe curation decision. The authoring guide identifies wardrobePartners as editorial reasoning. No algorithmic rule can substitute for intentional pairing. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -3825,8 +4044,9 @@
       "pairType": "wardrobePartners",
       "slugA": "baccarat-rouge-540-inspired",
       "slugB": "hypnotic-poison-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -3848,9 +4068,10 @@
         "WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Recommended to own alongside\" is a Maison editorial wardrobe curation decision. The authoring guide identifies wardrobePartners as editorial reasoning. No algorithmic rule can substitute for intentional pairing. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -3858,8 +4079,9 @@
       "pairType": "wardrobePartners",
       "slugA": "baccarat-rouge-540-inspired",
       "slugB": "j'adore-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -3879,9 +4101,10 @@
         "WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Recommended to own alongside\" is a Maison editorial wardrobe curation decision. The authoring guide identifies wardrobePartners as editorial reasoning. No algorithmic rule can substitute for intentional pairing. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -3889,8 +4112,9 @@
       "pairType": "wardrobePartners",
       "slugA": "baccarat-rouge-540-inspired",
       "slugB": "kayali-vanilla-28-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [],
@@ -3908,9 +4132,10 @@
         "WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Recommended to own alongside\" is a Maison editorial wardrobe curation decision. The authoring guide identifies wardrobePartners as editorial reasoning. No algorithmic rule can substitute for intentional pairing. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -3918,8 +4143,9 @@
       "pairType": "wardrobePartners",
       "slugA": "baccarat-rouge-540-inspired",
       "slugB": "kirke-overdose-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -3941,9 +4167,10 @@
         "WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Recommended to own alongside\" is a Maison editorial wardrobe curation decision. The authoring guide identifies wardrobePartners as editorial reasoning. No algorithmic rule can substitute for intentional pairing. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -3951,8 +4178,9 @@
       "pairType": "wardrobePartners",
       "slugA": "baccarat-rouge-540-inspired",
       "slugB": "libre-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -3975,9 +4203,10 @@
         "WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Recommended to own alongside\" is a Maison editorial wardrobe curation decision. The authoring guide identifies wardrobePartners as editorial reasoning. No algorithmic rule can substitute for intentional pairing. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -3985,8 +4214,9 @@
       "pairType": "wardrobePartners",
       "slugA": "baccarat-rouge-540-inspired",
       "slugB": "my-way-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [],
@@ -4006,9 +4236,10 @@
         "WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Recommended to own alongside\" is a Maison editorial wardrobe curation decision. The authoring guide identifies wardrobePartners as editorial reasoning. No algorithmic rule can substitute for intentional pairing. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -4016,8 +4247,9 @@
       "pairType": "wardrobePartners",
       "slugA": "baccarat-rouge-540-inspired",
       "slugB": "oud-mood-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -4037,9 +4269,10 @@
         "WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Recommended to own alongside\" is a Maison editorial wardrobe curation decision. The authoring guide identifies wardrobePartners as editorial reasoning. No algorithmic rule can substitute for intentional pairing. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -4047,8 +4280,9 @@
       "pairType": "wardrobePartners",
       "slugA": "baccarat-rouge-540-inspired",
       "slugB": "vanilla-28-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -4068,9 +4302,10 @@
         "WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Recommended to own alongside\" is a Maison editorial wardrobe curation decision. The authoring guide identifies wardrobePartners as editorial reasoning. No algorithmic rule can substitute for intentional pairing. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -4078,8 +4313,9 @@
       "pairType": "wardrobePartners",
       "slugA": "bianco-latte-inspired",
       "slugB": "delina-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -4101,9 +4337,10 @@
         "WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Recommended to own alongside\" is a Maison editorial wardrobe curation decision. The authoring guide identifies wardrobePartners as editorial reasoning. No algorithmic rule can substitute for intentional pairing. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -4111,8 +4348,9 @@
       "pairType": "wardrobePartners",
       "slugA": "black-opium-inspired",
       "slugB": "delina-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [],
@@ -4135,9 +4373,10 @@
         "WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Recommended to own alongside\" is a Maison editorial wardrobe curation decision. The authoring guide identifies wardrobePartners as editorial reasoning. No algorithmic rule can substitute for intentional pairing. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -4145,8 +4384,9 @@
       "pairType": "wardrobePartners",
       "slugA": "blanche-bete-inspired",
       "slugB": "sauvage-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [],
@@ -4166,9 +4406,10 @@
         "WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Recommended to own alongside\" is a Maison editorial wardrobe curation decision. The authoring guide identifies wardrobePartners as editorial reasoning. No algorithmic rule can substitute for intentional pairing. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -4176,8 +4417,9 @@
       "pairType": "wardrobePartners",
       "slugA": "bleu-de-chanel-inspired",
       "slugB": "chance-eau-tendre-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [],
@@ -4200,9 +4442,10 @@
         "WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Recommended to own alongside\" is a Maison editorial wardrobe curation decision. The authoring guide identifies wardrobePartners as editorial reasoning. No algorithmic rule can substitute for intentional pairing. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -4210,8 +4453,9 @@
       "pairType": "wardrobePartners",
       "slugA": "bleu-de-chanel-inspired",
       "slugB": "good-girl-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [],
@@ -4231,9 +4475,10 @@
         "WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Recommended to own alongside\" is a Maison editorial wardrobe curation decision. The authoring guide identifies wardrobePartners as editorial reasoning. No algorithmic rule can substitute for intentional pairing. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -4241,8 +4486,9 @@
       "pairType": "wardrobePartners",
       "slugA": "bleu-de-chanel-inspired",
       "slugB": "miss-dior-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [],
@@ -4265,9 +4511,10 @@
         "WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Recommended to own alongside\" is a Maison editorial wardrobe curation decision. The authoring guide identifies wardrobePartners as editorial reasoning. No algorithmic rule can substitute for intentional pairing. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -4275,8 +4522,9 @@
       "pairType": "wardrobePartners",
       "slugA": "bleu-de-chanel-inspired",
       "slugB": "prada-paradoxe-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [],
@@ -4296,9 +4544,10 @@
         "WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Recommended to own alongside\" is a Maison editorial wardrobe curation decision. The authoring guide identifies wardrobePartners as editorial reasoning. No algorithmic rule can substitute for intentional pairing. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -4306,8 +4555,9 @@
       "pairType": "wardrobePartners",
       "slugA": "burberry-goddess-inspired",
       "slugB": "sauvage-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [],
@@ -4327,9 +4577,10 @@
         "WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Recommended to own alongside\" is a Maison editorial wardrobe curation decision. The authoring guide identifies wardrobePartners as editorial reasoning. No algorithmic rule can substitute for intentional pairing. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -4337,8 +4588,9 @@
       "pairType": "wardrobePartners",
       "slugA": "carlisle-inspired",
       "slugB": "sauvage-elixir-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -4363,9 +4615,10 @@
         "WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Recommended to own alongside\" is a Maison editorial wardrobe curation decision. The authoring guide identifies wardrobePartners as editorial reasoning. No algorithmic rule can substitute for intentional pairing. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -4373,8 +4626,9 @@
       "pairType": "wardrobePartners",
       "slugA": "chance-eau-fraiche-inspired",
       "slugB": "coco-mademoiselle-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -4397,9 +4651,10 @@
         "WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Recommended to own alongside\" is a Maison editorial wardrobe curation decision. The authoring guide identifies wardrobePartners as editorial reasoning. No algorithmic rule can substitute for intentional pairing. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -4407,8 +4662,9 @@
       "pairType": "wardrobePartners",
       "slugA": "chance-eau-fraiche-inspired",
       "slugB": "devotion-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -4431,9 +4687,10 @@
         "WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Recommended to own alongside\" is a Maison editorial wardrobe curation decision. The authoring guide identifies wardrobePartners as editorial reasoning. No algorithmic rule can substitute for intentional pairing. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -4441,8 +4698,9 @@
       "pairType": "wardrobePartners",
       "slugA": "chance-eau-fraiche-inspired",
       "slugB": "poison-girl-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -4464,9 +4722,10 @@
         "WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Recommended to own alongside\" is a Maison editorial wardrobe curation decision. The authoring guide identifies wardrobePartners as editorial reasoning. No algorithmic rule can substitute for intentional pairing. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -4474,8 +4733,9 @@
       "pairType": "wardrobePartners",
       "slugA": "chance-eau-tendre-inspired",
       "slugB": "sauvage-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [],
@@ -4496,9 +4756,10 @@
         "WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Recommended to own alongside\" is a Maison editorial wardrobe curation decision. The authoring guide identifies wardrobePartners as editorial reasoning. No algorithmic rule can substitute for intentional pairing. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -4506,8 +4767,9 @@
       "pairType": "wardrobePartners",
       "slugA": "coco-mademoiselle-inspired",
       "slugB": "sauvage-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -4529,9 +4791,10 @@
         "WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Recommended to own alongside\" is a Maison editorial wardrobe curation decision. The authoring guide identifies wardrobePartners as editorial reasoning. No algorithmic rule can substitute for intentional pairing. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -4539,8 +4802,9 @@
       "pairType": "wardrobePartners",
       "slugA": "creed-green-irish-tweed-inspired",
       "slugB": "sauvage-elixir-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -4563,9 +4827,10 @@
         "WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Recommended to own alongside\" is a Maison editorial wardrobe curation decision. The authoring guide identifies wardrobePartners as editorial reasoning. No algorithmic rule can substitute for intentional pairing. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -4573,8 +4838,9 @@
       "pairType": "wardrobePartners",
       "slugA": "crystal-noir-inspired",
       "slugB": "oud-wood-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -4594,9 +4860,10 @@
         "WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Recommended to own alongside\" is a Maison editorial wardrobe curation decision. The authoring guide identifies wardrobePartners as editorial reasoning. No algorithmic rule can substitute for intentional pairing. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -4604,8 +4871,9 @@
       "pairType": "wardrobePartners",
       "slugA": "crystal-noir-inspired",
       "slugB": "sauvage-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [],
@@ -4627,9 +4895,10 @@
         "WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Recommended to own alongside\" is a Maison editorial wardrobe curation decision. The authoring guide identifies wardrobePartners as editorial reasoning. No algorithmic rule can substitute for intentional pairing. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -4637,8 +4906,9 @@
       "pairType": "wardrobePartners",
       "slugA": "delina-inspired",
       "slugB": "devotion-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -4662,9 +4932,10 @@
         "WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Recommended to own alongside\" is a Maison editorial wardrobe curation decision. The authoring guide identifies wardrobePartners as editorial reasoning. No algorithmic rule can substitute for intentional pairing. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -4672,8 +4943,9 @@
       "pairType": "wardrobePartners",
       "slugA": "delina-inspired",
       "slugB": "hypnotic-poison-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -4696,9 +4968,10 @@
         "WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Recommended to own alongside\" is a Maison editorial wardrobe curation decision. The authoring guide identifies wardrobePartners as editorial reasoning. No algorithmic rule can substitute for intentional pairing. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -4706,8 +4979,9 @@
       "pairType": "wardrobePartners",
       "slugA": "delina-inspired",
       "slugB": "my-way-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [],
@@ -4729,9 +5003,10 @@
         "WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Recommended to own alongside\" is a Maison editorial wardrobe curation decision. The authoring guide identifies wardrobePartners as editorial reasoning. No algorithmic rule can substitute for intentional pairing. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -4739,8 +5014,9 @@
       "pairType": "wardrobePartners",
       "slugA": "erba-pura-inspired",
       "slugB": "sauvage-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [],
@@ -4762,9 +5038,10 @@
         "WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Recommended to own alongside\" is a Maison editorial wardrobe curation decision. The authoring guide identifies wardrobePartners as editorial reasoning. No algorithmic rule can substitute for intentional pairing. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -4772,8 +5049,9 @@
       "pairType": "wardrobePartners",
       "slugA": "flowerbomb-inspired",
       "slugB": "sauvage-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [],
@@ -4794,9 +5072,10 @@
         "WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Recommended to own alongside\" is a Maison editorial wardrobe curation decision. The authoring guide identifies wardrobePartners as editorial reasoning. No algorithmic rule can substitute for intentional pairing. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -4804,8 +5083,9 @@
       "pairType": "wardrobePartners",
       "slugA": "good-girl-blush-inspired",
       "slugB": "sauvage-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [],
@@ -4825,9 +5105,10 @@
         "WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Recommended to own alongside\" is a Maison editorial wardrobe curation decision. The authoring guide identifies wardrobePartners as editorial reasoning. No algorithmic rule can substitute for intentional pairing. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -4835,8 +5116,9 @@
       "pairType": "wardrobePartners",
       "slugA": "gris-charnel-inspired",
       "slugB": "spicebomb-extreme-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [],
@@ -4854,9 +5136,10 @@
         "WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Recommended to own alongside\" is a Maison editorial wardrobe curation decision. The authoring guide identifies wardrobePartners as editorial reasoning. No algorithmic rule can substitute for intentional pairing. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -4864,8 +5147,9 @@
       "pairType": "wardrobePartners",
       "slugA": "hawas-inspired",
       "slugB": "le-beau-paradise-garden-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -4890,9 +5174,10 @@
         "WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Recommended to own alongside\" is a Maison editorial wardrobe curation decision. The authoring guide identifies wardrobePartners as editorial reasoning. No algorithmic rule can substitute for intentional pairing. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -4900,8 +5185,9 @@
       "pairType": "wardrobePartners",
       "slugA": "invictus-inspired",
       "slugB": "invictus-victory-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [],
@@ -4919,9 +5205,10 @@
         "WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Recommended to own alongside\" is a Maison editorial wardrobe curation decision. The authoring guide identifies wardrobePartners as editorial reasoning. No algorithmic rule can substitute for intentional pairing. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -4929,8 +5216,9 @@
       "pairType": "wardrobePartners",
       "slugA": "l'immensite-inspired",
       "slugB": "layton-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -4955,9 +5243,10 @@
         "WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Recommended to own alongside\" is a Maison editorial wardrobe curation decision. The authoring guide identifies wardrobePartners as editorial reasoning. No algorithmic rule can substitute for intentional pairing. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -4965,8 +5254,9 @@
       "pairType": "wardrobePartners",
       "slugA": "l'immensite-inspired",
       "slugB": "stronger-with-you-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -4991,9 +5281,10 @@
         "WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Recommended to own alongside\" is a Maison editorial wardrobe curation decision. The authoring guide identifies wardrobePartners as editorial reasoning. No algorithmic rule can substitute for intentional pairing. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -5001,8 +5292,9 @@
       "pairType": "wardrobePartners",
       "slugA": "la-vie-est-belle-inspired",
       "slugB": "layton-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [],
@@ -5025,9 +5317,10 @@
         "WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Recommended to own alongside\" is a Maison editorial wardrobe curation decision. The authoring guide identifies wardrobePartners as editorial reasoning. No algorithmic rule can substitute for intentional pairing. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -5035,8 +5328,9 @@
       "pairType": "wardrobePartners",
       "slugA": "la-vie-est-belle-inspired",
       "slugB": "ultra-male-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -5061,9 +5355,10 @@
         "WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Recommended to own alongside\" is a Maison editorial wardrobe curation decision. The authoring guide identifies wardrobePartners as editorial reasoning. No algorithmic rule can substitute for intentional pairing. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -5071,8 +5366,9 @@
       "pairType": "wardrobePartners",
       "slugA": "layton-inspired",
       "slugB": "rolling-in-love-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [],
@@ -5095,9 +5391,10 @@
         "WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Recommended to own alongside\" is a Maison editorial wardrobe curation decision. The authoring guide identifies wardrobePartners as editorial reasoning. No algorithmic rule can substitute for intentional pairing. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -5105,8 +5402,9 @@
       "pairType": "wardrobePartners",
       "slugA": "layton-inspired",
       "slugB": "wedding-silk-santal-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -5126,9 +5424,10 @@
         "WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Recommended to own alongside\" is a Maison editorial wardrobe curation decision. The authoring guide identifies wardrobePartners as editorial reasoning. No algorithmic rule can substitute for intentional pairing. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -5136,8 +5435,9 @@
       "pairType": "wardrobePartners",
       "slugA": "libre-intense-inspired",
       "slugB": "sauvage-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [],
@@ -5157,9 +5457,10 @@
         "WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Recommended to own alongside\" is a Maison editorial wardrobe curation decision. The authoring guide identifies wardrobePartners as editorial reasoning. No algorithmic rule can substitute for intentional pairing. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -5167,8 +5468,9 @@
       "pairType": "wardrobePartners",
       "slugA": "libre-intense-inspired",
       "slugB": "spicebomb-extreme-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [],
@@ -5188,9 +5490,10 @@
         "WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Recommended to own alongside\" is a Maison editorial wardrobe curation decision. The authoring guide identifies wardrobePartners as editorial reasoning. No algorithmic rule can substitute for intentional pairing. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -5198,8 +5501,9 @@
       "pairType": "wardrobePartners",
       "slugA": "love-don't-be-shy-inspired",
       "slugB": "sauvage-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [],
@@ -5217,9 +5521,10 @@
         "WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Recommended to own alongside\" is a Maison editorial wardrobe curation decision. The authoring guide identifies wardrobePartners as editorial reasoning. No algorithmic rule can substitute for intentional pairing. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -5227,8 +5532,9 @@
       "pairType": "wardrobePartners",
       "slugA": "miss-dior-inspired",
       "slugB": "sauvage-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [],
@@ -5249,9 +5555,10 @@
         "WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Recommended to own alongside\" is a Maison editorial wardrobe curation decision. The authoring guide identifies wardrobePartners as editorial reasoning. No algorithmic rule can substitute for intentional pairing. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -5259,8 +5566,9 @@
       "pairType": "wardrobePartners",
       "slugA": "mon-paris-inspired",
       "slugB": "sauvage-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [],
@@ -5280,9 +5588,10 @@
         "WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Recommended to own alongside\" is a Maison editorial wardrobe curation decision. The authoring guide identifies wardrobePartners as editorial reasoning. No algorithmic rule can substitute for intentional pairing. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -5290,8 +5599,9 @@
       "pairType": "wardrobePartners",
       "slugA": "ombre-nomade-inspired",
       "slugB": "sauvage-elixir-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -5314,9 +5624,10 @@
         "WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Recommended to own alongside\" is a Maison editorial wardrobe curation decision. The authoring guide identifies wardrobePartners as editorial reasoning. No algorithmic rule can substitute for intentional pairing. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -5324,8 +5635,9 @@
       "pairType": "wardrobePartners",
       "slugA": "ombre-nomade-inspired",
       "slugB": "spicebomb-extreme-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [],
@@ -5345,9 +5657,10 @@
         "WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Recommended to own alongside\" is a Maison editorial wardrobe curation decision. The authoring guide identifies wardrobePartners as editorial reasoning. No algorithmic rule can substitute for intentional pairing. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -5355,8 +5668,9 @@
       "pairType": "wardrobePartners",
       "slugA": "pacific-chill-inspired",
       "slugB": "spicebomb-extreme-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [],
@@ -5374,9 +5688,10 @@
         "WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Recommended to own alongside\" is a Maison editorial wardrobe curation decision. The authoring guide identifies wardrobePartners as editorial reasoning. No algorithmic rule can substitute for intentional pairing. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -5384,8 +5699,9 @@
       "pairType": "wardrobePartners",
       "slugA": "prada-l'homme-inspired",
       "slugB": "wedding-silk-santal-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [],
@@ -5405,9 +5721,10 @@
         "WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Recommended to own alongside\" is a Maison editorial wardrobe curation decision. The authoring guide identifies wardrobePartners as editorial reasoning. No algorithmic rule can substitute for intentional pairing. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -5415,8 +5732,9 @@
       "pairType": "wardrobePartners",
       "slugA": "prada-paradoxe-inspired",
       "slugB": "sauvage-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [],
@@ -5436,9 +5754,10 @@
         "WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Recommended to own alongside\" is a Maison editorial wardrobe curation decision. The authoring guide identifies wardrobePartners as editorial reasoning. No algorithmic rule can substitute for intentional pairing. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -5446,8 +5765,9 @@
       "pairType": "wardrobePartners",
       "slugA": "sauvage-elixir-inspired",
       "slugB": "torino21-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -5469,9 +5789,10 @@
         "WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Recommended to own alongside\" is a Maison editorial wardrobe curation decision. The authoring guide identifies wardrobePartners as editorial reasoning. No algorithmic rule can substitute for intentional pairing. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -5479,8 +5800,9 @@
       "pairType": "wardrobePartners",
       "slugA": "silver-mountain-water-inspired",
       "slugB": "spicebomb-extreme-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [],
@@ -5498,9 +5820,10 @@
         "WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Recommended to own alongside\" is a Maison editorial wardrobe curation decision. The authoring guide identifies wardrobePartners as editorial reasoning. No algorithmic rule can substitute for intentional pairing. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -5508,8 +5831,9 @@
       "pairType": "wardrobePartners",
       "slugA": "spicebomb-extreme-inspired",
       "slugB": "very-good-girl-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [],
@@ -5527,9 +5851,10 @@
         "WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Recommended to own alongside\" is a Maison editorial wardrobe curation decision. The authoring guide identifies wardrobePartners as editorial reasoning. No algorithmic rule can substitute for intentional pairing. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -5537,8 +5862,9 @@
       "pairType": "wardrobePartners",
       "slugA": "valentino-donna-born-in-roma-inspired",
       "slugB": "valentino-uomo-born-in-roma-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
+      "governanceState": "PENDING",
       "status": "pending-review",
       "auditEvidence": {
         "familyOverlap": [
@@ -5560,9 +5886,10 @@
         "WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT"
       ],
       "requiresExternalResearch": false,
+      "requiresFounderDecision": true,
       "blockingReason": "\"Recommended to own alongside\" is a Maison editorial wardrobe curation decision. The authoring guide identifies wardrobePartners as editorial reasoning. No algorithmic rule can substitute for intentional pairing. AI-generated without confirmed human editorial approval.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -5570,9 +5897,10 @@
       "pairType": "evolution",
       "slugA": "aqua-di-gio-inspired",
       "slugB": "acqua-di-gio-parfum-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
-      "status": "pending-review",
+      "governanceState": "RESEARCH_BLOCKED",
+      "status": "needs-research",
       "auditEvidence": {
         "familyOverlap": [
           "Aquatic",
@@ -5598,9 +5926,10 @@
         "NAME_RELATIONSHIP_MAY_NOT_IMPLY_EVOLUTION"
       ],
       "requiresExternalResearch": true,
+      "requiresFounderDecision": false,
       "blockingReason": "Whether one fragrance is a confirmed line evolution of another requires authoritative fragrance industry knowledge. No clear name-prefix relationship found. Lineage claim requires authoritative external confirmation.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -5608,9 +5937,10 @@
       "pairType": "evolution",
       "slugA": "aqua-di-gio-inspired",
       "slugB": "acqua-di-gio-profondo-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
-      "status": "pending-review",
+      "governanceState": "RESEARCH_BLOCKED",
+      "status": "needs-research",
       "auditEvidence": {
         "familyOverlap": [
           "Aquatic",
@@ -5636,9 +5966,10 @@
         "NAME_RELATIONSHIP_MAY_NOT_IMPLY_EVOLUTION"
       ],
       "requiresExternalResearch": true,
+      "requiresFounderDecision": false,
       "blockingReason": "Whether one fragrance is a confirmed line evolution of another requires authoritative fragrance industry knowledge. No clear name-prefix relationship found. Lineage claim requires authoritative external confirmation.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -5646,9 +5977,10 @@
       "pairType": "evolution",
       "slugA": "invictus-inspired",
       "slugB": "invictus-victory-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
-      "status": "pending-review",
+      "governanceState": "RESEARCH_BLOCKED",
+      "status": "needs-research",
       "auditEvidence": {
         "familyOverlap": [],
         "scentCharacterMatch": false,
@@ -5667,9 +5999,10 @@
         "NAME_RELATIONSHIP_MAY_NOT_IMPLY_EVOLUTION"
       ],
       "requiresExternalResearch": true,
+      "requiresFounderDecision": false,
       "blockingReason": "Whether one fragrance is a confirmed line evolution of another requires authoritative fragrance industry knowledge. Name-prefix relationship detected (Source base name \"Invictus Victory\" starts with target base name \"Invictus\" — naming convention suggests line variant). Repository evidence supports the hypothesis but cannot confirm official line lineage.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -5677,9 +6010,10 @@
       "pairType": "evolution",
       "slugA": "sauvage-inspired",
       "slugB": "sauvage-elixir-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
-      "status": "pending-review",
+      "governanceState": "RESEARCH_BLOCKED",
+      "status": "needs-research",
       "auditEvidence": {
         "familyOverlap": [
           "Woody",
@@ -5705,9 +6039,10 @@
         "NAME_RELATIONSHIP_MAY_NOT_IMPLY_EVOLUTION"
       ],
       "requiresExternalResearch": true,
+      "requiresFounderDecision": false,
       "blockingReason": "Whether one fragrance is a confirmed line evolution of another requires authoritative fragrance industry knowledge. Name-prefix relationship detected (Source base name \"Sauvage Elixir\" starts with target base name \"Sauvage\" — naming convention suggests line variant). Repository evidence supports the hypothesis but cannot confirm official line lineage.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -5715,9 +6050,10 @@
       "pairType": "evolution",
       "slugA": "stronger-with-you-inspired",
       "slugB": "stronger-with-you-intensely-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
-      "status": "pending-review",
+      "governanceState": "RESEARCH_BLOCKED",
+      "status": "needs-research",
       "auditEvidence": {
         "familyOverlap": [
           "Amber",
@@ -5743,9 +6079,10 @@
         "NAME_RELATIONSHIP_MAY_NOT_IMPLY_EVOLUTION"
       ],
       "requiresExternalResearch": true,
+      "requiresFounderDecision": false,
       "blockingReason": "Whether one fragrance is a confirmed line evolution of another requires authoritative fragrance industry knowledge. Name-prefix relationship detected (Source base name \"Stronger With You Intensely\" starts with target base name \"Stronger With You\" — naming convention suggests line variant). Repository evidence supports the hypothesis but cannot confirm official line lineage.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     },
     {
@@ -5753,9 +6090,10 @@
       "pairType": "evolution",
       "slugA": "y-inspired",
       "slugB": "y-edp-inspired",
+      "currentCanonicalState": "PRESENT",
       "proposalProvenance": "AI_GENERATED",
-      "governanceState": "REPOSITORY_SUPPORTED",
-      "status": "pending-review",
+      "governanceState": "RESEARCH_BLOCKED",
+      "status": "needs-research",
       "auditEvidence": {
         "familyOverlap": [
           "Aromatic",
@@ -5783,9 +6121,10 @@
         "NAME_RELATIONSHIP_MAY_NOT_IMPLY_EVOLUTION"
       ],
       "requiresExternalResearch": true,
+      "requiresFounderDecision": false,
       "blockingReason": "Whether one fragrance is a confirmed line evolution of another requires authoritative fragrance industry knowledge. Name-prefix relationship detected (Source base name \"Y EDP\" starts with target base name \"Y\" — naming convention suggests line variant). Repository evidence supports the hypothesis but cannot confirm official line lineage.",
-      "createdAt": "2026-08-10T18:15:23.736Z",
-      "updatedAt": "2026-08-10T18:15:23.736Z",
+      "createdAt": "2026-08-10T18:33:05.674Z",
+      "updatedAt": "2026-08-10T18:33:05.674Z",
       "founderNotes": null
     }
   ]

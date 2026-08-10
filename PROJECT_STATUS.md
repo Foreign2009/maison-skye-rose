@@ -2,16 +2,16 @@
 
 **Last updated:** 2026-08-10
 **Phase:** Launch Execution
-**Build status:** PASS — 188 routes, 0 TypeScript errors, 0 warnings (EP6-P5A)
+**Build status:** PASS — 188 routes, 0 TypeScript errors, 0 warnings (EP6-P5BR)
 
 ---
 
 ## Current Engineering Program
 
-**Program:** EP6-P5A — Structural Relationship Reciprocity Remediation — COMPLETE
+**Program:** EP6-P5BR — Correct Relationship Review Governance Semantics — COMPLETE
 **Sprint:** EP6
-**Gate:** None — EP6-P5A is complete. Next programme at founder's direction.
-**Outcome:** Canonical relationship graph fully repaired. Two stale edges removed (founder Option A): `delina-inspired` no longer lists `alien-goddess-inspired` as an alternative; `baccarat-rouge-540-inspired` no longer lists `alien-goddess-inspired` as a wardrobe partner. Graph: 336 edges, 0 structural defects. Post-P5A fingerprint: `478fd478d930137fe21d058470797c324649156d615b60d3b9d3a9108f73b8e2`. EP6-P4 audit regenerated. Dedicated P5A validator: 48 proofs. Build: 188 routes, 0 TypeScript errors, 0 warnings.
+**Gate:** None — EP6-P5BR is complete. Next programme at founder's direction.
+**Outcome:** Corrective episode for EP6-P5B. Three governance-contract violations corrected. Evolution pairs now correctly initialised as `needs-research / RESEARCH_BLOCKED`. Alt+WP pairs correctly initialised as `pending-review / PENDING`. `REPOSITORY_SUPPORTED` eliminated — canonical presence tracked separately via `RelationshipCanonicalState`. `requiresFounderDecision` field added. Builder shadow types removed; imports canonical domain types. Validator strengthened from 52 to 74 proofs with §800 independent edge derivation. Schema version bumped to EP6-P5BR-v1. Queue regenerated. Baselines: EP6-P4 55/55, EP6-P5A 48/48, EP6-P5BR 74/74. Build: 188 routes, 0 TypeScript errors, 0 warnings.
 
 ---
 
@@ -113,6 +113,8 @@ Verify: `npm run build`
 | EP6 | EP6-P4   | Catalogue Relationship Editorial Audit | Complete — 2026-08-10 |
 | EP6 | EP6-P4R  | Relationship Audit Structural Integrity Correction | Complete — 2026-08-10 |
 | EP6 | EP6-P5A  | Structural Relationship Reciprocity Remediation | Complete — 2026-08-10 |
+| EP6 | EP6-P5B  | Relationship Editorial Review Foundation | Complete — 2026-08-10 |
+| EP6 | EP6-P5BR | Correct Relationship Review Governance Semantics | Complete — 2026-08-10 |
 
 `FOUNDATIONS/00_FOUNDERS_LETTER.md` — The permanent founder's letter to Skye, Rose, future employees, and future stewards. *Why we began.*
 `FOUNDATIONS/01_SKYE_AND_ROSE_COVENANT.md` — The institutional promise: to customers, products, technology, and future generations. *What we promise.*
@@ -123,6 +125,10 @@ Verify: `npm run build`
 **EP2-P1 Audit Findings (2026-08-05):** Overall institutional alignment score 7.1/10. Intelligence layer (Fragrance Profile, MaisonCompanion, Concierge, Shop, Quiz) rated Aligned. Critical gaps: About page (3/10 — fails Foundation narrative standard), catalogue count inconsistency (93 vs 465+), "Loyal Customer" terminology, post-purchase experience absent, checkout UX cold. Recommended sequence: EP2-P2 (About page rewrite) → EP2-P3 (checkout + post-purchase) → EP2-P4 (testimonials) → EP2-P5 (concierge voice) → EP2-P6 (language pass).
 
 **EP2-P3 About Page Foundation Alignment (2026-08-05):** `app/about/page.tsx` rewritten from 4 generic paragraphs to 9 Foundation-aligned sections: Opening, A Compliment Changed Everything, Why Skye & Rose, What We Believe, Confidence Is What We Are Here to Deliver, Knowledge Before Recommendation, Accessible Luxury, Growing Together, Our Promise, An Invitation. Count inconsistency removed (465+ → timeless language). OG and Twitter metadata added. Architecture preserved. Build passes: 187 routes, 0 TypeScript errors, 0 warnings.
+
+**EP6-P5BR Correct Relationship Review Governance Semantics (2026-08-10):** Corrective episode for EP6-P5B (b40e010). Three governance-contract violations corrected without reverting b40e010. Root causes: (1) all 168 units initialised as `pending-review` — approved contract required evolution pairs to begin as `needs-research / RESEARCH_BLOCKED`; (2) all 168 units assigned `governanceState: REPOSITORY_SUPPORTED` — conflating physical canonical presence with semantic support; (3) EP6-P5B governance documents incomplete. Corrections: `RelationshipCanonicalState` type added (PRESENT/ABSENT — tracks physical MKC presence independently from governance); `RelationshipGovernanceState` corrected (PENDING / RESEARCH_BLOCKED / FOUNDER_APPROVED / FOUNDER_REJECTED / DEFERRED — REPOSITORY_SUPPORTED removed entirely); `requiresFounderDecision: boolean` added to review unit; evolution pairs now correctly initialised as `needs-research / RESEARCH_BLOCKED / requiresFounderDecision=false / requiresExternalResearch=true`; alt+WP pairs correctly initialised as `pending-review / PENDING / requiresFounderDecision=true / requiresExternalResearch=false`; builder shadow types removed and replaced with canonical type imports; schema version bumped to EP6-P5BR-v1; queue regenerated (162 PENDING + 6 RESEARCH_BLOCKED). Validator corrected and strengthened from 52 to 74 proofs; §800 independent edge-to-pair derivation added (proofs 801–810). Baselines: EP6-P4 55/55, EP6-P5A 48/48, EP6-P5BR 74/74. Zero canonical relationship mutations. Zero AI calls. Zero founder decisions. Build: 188 routes, 0 TypeScript errors, 0 warnings.
+
+**EP6-P5B Relationship Editorial Review Foundation (2026-08-10):** Established the institutional foundation for human review of all 336 post-P5A catalogue relationship edges. Collapsed 336 directional edges into 168 pair-level governance units: 91 alternative pairs (from 182 symmetric edges), 71 wardrobe partner pairs (from 142 symmetric edges), 6 evolution pairs (from 6 directional evolutionOf edges). Deterministic review IDs assigned (REL-alternatives-*, REL-wardrobe-partners-*, REL-evolution-*). All units initialised with proposalProvenance: AI_GENERATED and currentCanonicalState: PRESENT. Graph fingerprint locked to post-P5A baseline (336 edges, 0 structural defects). Zero canonical relationship mutations. Zero AI calls. Zero founder decisions. Note: three governance-contract violations corrected by EP6-P5BR (see above). The corrected artifact and types replace the EP6-P5B versions; commit b40e010 is preserved in history.
 
 **EP6-P5A Structural Relationship Reciprocity Remediation (2026-08-10):** Founder-authorised repair of two stale reciprocal edges. EP5-P4H removed Alien Goddess's entire `relationships` block ("removed entirely — unverified AI inferences") but did not update the incoming references in `delina-inspired` (alternatives) and `baccarat-rouge-540-inspired` (wardrobePartners). EP6-P5A removes those stale incoming references (Option A). This does NOT assert that these fragrance relationships are invalid — it removes an AI-generated canonical recommendation that lacked reciprocal backing after EP5-P4H. Governance: zero AI calls, zero external research, zero composition changes, zero registry mutations. Graph state after repair: 336 edges (−2 from 338), 0 structural defects, 182 alternatives, 142 wardrobePartners, 12 evolution edges — all fully reciprocal. Post-P5A fingerprint: `478fd478d930137fe21d058470797c324649156d615b60d3b9d3a9108f73b8e2`. EP6-P4 audit regenerated (336 edges, 324 FOUNDER_EDITORIAL_DECISION_REQUIRED). EP6-P1/P2/P3 artifacts: unchanged (per-record audits, relationship presence unchanged). Dedicated P5A validation suite: 48 proofs across 7 sections (Mutation Scope, Graph Delta, Reciprocity, Catalogue Integrity, Knowledge Preservation, Governance, Control). All 7 protected SHAs unchanged including alien-goddess native SHA. Build: 188 routes, 0 TypeScript errors, 0 warnings.
 

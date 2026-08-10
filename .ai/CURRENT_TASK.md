@@ -8,44 +8,47 @@
 ## Current Task
 
 **Status:** COMPLETE
-**Program:** EP6-P5B — Relationship Editorial Review Foundation
+**Program:** EP6-P5BR — Correct Relationship Review Governance Semantics
 
-**Objective:**
-Convert the structurally clean 336-edge relationship graph into pair-level governance units.
-Create the institutional foundation for human review of catalogue relationships.
-Zero real founder decisions. Zero relationship mutations. Zero AI calls.
+**Why this corrective episode was required:**
+EP6-P5B (b40e010) shipped with three governance-contract violations:
+1. All 168 units initialised as `pending-review` — but the approved contract required evolution pairs to be `needs-research / RESEARCH_BLOCKED`.
+2. All 168 units assigned `governanceState: REPOSITORY_SUPPORTED` — conflating canonical presence with semantic support (REPOSITORY_SUPPORTED ≠ founder approval).
+3. EP6-P5B close-out was incomplete: ENGINEERING_LOG and PROJECT_STATUS not updated.
 
 **Completed:** 2026-08-10
-**Commit:** (pending — see EP6-P5B commit)
-**Preceded by:** EP6-P5A — Structural Relationship Reciprocity Remediation (2026-08-10, commit aa26a74)
+**Preceded by:** EP6-P5B — Relationship Editorial Review Foundation (2026-08-10, commit b40e010)
 
 **Result:**
-168 review units created (91 alt + 71 wp + 6 evo).
-All pending-review / REPOSITORY_SUPPORTED / AI_GENERATED.
-6 evolution pairs require external research.
-52/52 validation proofs passing.
+- Governance model corrected: PENDING (162 alt+wp) / RESEARCH_BLOCKED (6 evo)
+- Evolution pairs: needs-research / RESEARCH_BLOCKED / requiresFounderDecision=false
+- Alt+WP pairs: pending-review / PENDING / requiresFounderDecision=true
+- REPOSITORY_SUPPORTED removed from types entirely
+- RelationshipCanonicalState (PRESENT/ABSENT) added — separate from governance
+- requiresFounderDecision field added to each unit
+- Builder shadow types removed; imports canonical types from relationship/types.ts
+- schemaVersion bumped to EP6-P5BR-v1
+- Validator corrected and strengthened: 74/74 proofs passing (was 52/52)
+- §800 independent edge-to-pair derivation section added (proofs 801–810)
+- Build: 188 routes, 0 TypeScript errors, 0 warnings
 
 ---
 
 ## Previous Task (COMPLETE)
-**Program:** EP6-P5A — Structural Relationship Reciprocity Remediation
+**Program:** EP6-P5B — Relationship Editorial Review Foundation
 
 **Objective:**
-Repair exactly two stale reciprocal edges left by EP5-P4H:
-1. Remove `alien-goddess-inspired` from `delina-inspired.relationships.alternatives`
-2. Remove `alien-goddess-inspired` from `baccarat-rouge-540-inspired.relationships.wardrobePartners`
-
-Founder selected Option A: remove the stale incoming references.
-Alien Goddess relationship block was NOT restored.
-Zero AI calls. Zero external research. Zero other relationship changes.
+Convert the structurally clean 336-edge relationship graph into pair-level governance units.
 
 **Completed:** 2026-08-10
-**Preceded by:** EP6-P4R — Relationship Audit Structural Integrity Correction (2026-08-10, commit 81c654b)
+**Preceded by:** EP6-P5A — Structural Relationship Reciprocity Remediation (2026-08-10, commit aa26a74)
 
 ---
 
 ## Context Notes
 
+**Preceded by:** EP6-P5A — Structural Relationship Reciprocity Remediation (2026-08-10)
+**Preceded by:** EP6-P4R — Relationship Audit Structural Integrity Correction (2026-08-10)
 **Preceded by:** EP6-P4 — Catalogue Relationship Editorial Audit (2026-08-10)
 **Preceded by:** EP6-P3 — Catalogue Performance-Claim Remediation (2026-08-10)
 **Preceded by:** EP6-P2 — Catalogue Remediation Queue (2026-08-10)

@@ -39,6 +39,67 @@ Never edit or delete past entries.
 
 ## Log
 
+### 2026-08-10 — EP6-P5BR — Correct Relationship Review Governance Semantics
+
+**Participants:** Project Owner (founder authorisation) / Claude (implementation and execution)
+**Program:** EP6-P5BR — Corrective episode for EP6-P5B (commit b40e010). Three governance-contract violations corrected without reverting b40e010.
+
+**Why P5BR was required:**
+1. Evolution status: EP6-P5B initialised all 168 units as `pending-review`. The approved contract required evolution pairs to begin as `needs-research / RESEARCH_BLOCKED` — external research is required before the founder can decide whether a lineage claim is accurate.
+2. REPOSITORY_SUPPORTED semantics: EP6-P5B assigned `governanceState: REPOSITORY_SUPPORTED` to all 168 units. This conflated physical presence in MKC with semantic support. A relationship being in `app/lib/mkc/native/*.ts` proves current canonical presence — it does NOT prove the relationship is semantically accurate or founder-approved. The correct initial governance state for un-reviewed units is `PENDING` (for alt+wp) or `RESEARCH_BLOCKED` (for evolution).
+3. Governance close-out: EP6-P5B's ENGINEERING_LOG and PROJECT_STATUS were not updated in commit b40e010.
+
+**Decisions Made:**
+- Three governance concepts now explicitly separated in the domain model: (1) `RelationshipCanonicalState` (PRESENT/ABSENT — physical presence in MKC), (2) `RelationshipProposalProvenance` (AI_GENERATED — origin method, never changes), (3) `RelationshipGovernanceState` (PENDING/RESEARCH_BLOCKED/FOUNDER_APPROVED/FOUNDER_REJECTED/DEFERRED — human decision state).
+- `REPOSITORY_SUPPORTED` removed entirely from `RelationshipGovernanceState`. No migration path — this concept was incorrect from the start.
+- `RelationshipCanonicalState` added as a separate field on `RelationshipReviewUnit` to track whether the relationship is currently in MKC without conflating presence with governance.
+- `requiresFounderDecision: boolean` added to `RelationshipReviewUnit` — evolution pairs are `false` (research must complete first), alt+wp pairs are `true`.
+- Evolution pairs: `status=needs-research`, `governanceState=RESEARCH_BLOCKED`, `requiresFounderDecision=false`, `requiresExternalResearch=true`.
+- Alt/WP pairs: `status=pending-review`, `governanceState=PENDING`, `requiresFounderDecision=true`, `requiresExternalResearch=false`.
+- Builder shadow types removed; canonical domain types imported from `app/lib/identity/editorial/relationship/types.ts` using `import type`.
+- Schema version bumped to `EP6-P5BR-v1`.
+- Validator strengthened from 52 to 74 proofs; §800 independent edge-to-pair derivation section added (proofs 801–810).
+
+**Tasks Completed:**
+- Confirmed b40e010 at HEAD of current lineage.
+- Read all 8 required files per Golden Rule.
+- Corrected `app/lib/identity/editorial/relationship/types.ts`: added `RelationshipCanonicalState`, corrected `RelationshipGovernanceState` (replaced REPOSITORY_SUPPORTED with PENDING/RESEARCH_BLOCKED/DEFERRED), added `currentCanonicalState` and `requiresFounderDecision` to `RelationshipReviewUnit`, added `requiresFounderDecision` to `RelationshipReviewQueueSummary`, bumped `schemaVersion` to `EP6-P5BR-v1`.
+- Corrected `scripts/identity/build-relationship-review-queue.ts`: removed all shadow types (RelationshipPairType, RelationshipReviewStatus, RelationshipGovernanceState, etc.), imported canonical types via `import type`, implemented correct initial states (alt/wp → PENDING/pending-review, evo → RESEARCH_BLOCKED/needs-research), fixed `as Record<string, number>` cast that broke TypeScript.
+- Regenerated `app/lib/identity/data/reviews/catalogue-relationship-review-queue.json`: schemaVersion EP6-P5BR-v1, 168 units (162 PENDING/pending-review, 6 RESEARCH_BLOCKED/needs-research), 0 REPOSITORY_SUPPORTED, requiresFounderDecision=162, requiresExternalResearch=6.
+- Updated `scripts/identity/validate-relationship-editorial-review-foundation.ts`: corrected §400 (proofs 401-407), corrected §500 (proofs 501-518 — new PENDING/RESEARCH_BLOCKED assertions, currentCanonicalState, requiresFounderDecision, no REPOSITORY_SUPPORTED), added §800 independent derivation (proofs 801-810). Total: 74 proofs.
+- Ran mip:validate:relationship-review: 74/74 PASS.
+- Ran mip:validate:catalogue-relationships (EP6-P4): 55/55 PASS.
+- Ran mip:validate:relationship-reciprocity-remediation (EP6-P5A): 48/48 PASS.
+- Ran npm run build: PASS — 188 routes, 0 TypeScript errors, 0 warnings.
+- Updated .ai/CURRENT_TASK.md, .ai/ENGINEERING_LOG.md, PROJECT_STATUS.md.
+
+**Tasks Started:**
+- None — EP6-P5BR is complete.
+
+**Build Result:** PASS — 188 routes, 0 TypeScript errors, 0 warnings.
+
+**Files Changed:**
+- `app/lib/identity/editorial/relationship/types.ts` — CORRECTED (RelationshipCanonicalState added, RelationshipGovernanceState corrected, RelationshipReviewUnit extended, schemaVersion EP6-P5BR-v1)
+- `scripts/identity/build-relationship-review-queue.ts` — CORRECTED (shadow types removed, canonical imports, correct initial states)
+- `scripts/identity/validate-relationship-editorial-review-foundation.ts` — CORRECTED (74 proofs: §400/§500 corrected, §800 added)
+- `app/lib/identity/data/reviews/catalogue-relationship-review-queue.json` — REGENERATED (EP6-P5BR-v1, 162 PENDING + 6 RESEARCH_BLOCKED)
+- `.ai/CURRENT_TASK.md` — UPDATED (status: COMPLETE)
+- `.ai/ENGINEERING_LOG.md` — APPENDED (this entry)
+- `PROJECT_STATUS.md` — UPDATED (EP6-P5B and EP6-P5BR entries added)
+
+**Handoff:**
+- EP6-P5BR is complete. The relationship review queue is now governance-correct.
+- 168 review units: 162 awaiting founder review (PENDING), 6 awaiting external research (RESEARCH_BLOCKED).
+- REPOSITORY_SUPPORTED has been eliminated from the governance model — canonical presence is now tracked separately via currentCanonicalState.
+- EP6-P5C (founder review execution) requires separate authorisation. Do not begin EP6-P5C automatically.
+- The review queue artifact is the authoritative source for relationship governance state. The audit artifact remains the authoritative source for structural relationship integrity.
+
+**Open Questions Carried Forward:**
+- EP6-P5C scope: should founder review begin with alternatives, wardrobePartners, or both? Evolution pairs are blocked until research is available.
+- What authoritative sources should be used for the 6 evolution pair research requirements?
+
+---
+
 ### 2026-08-10 — EP6-P5A — Structural Relationship Reciprocity Remediation
 
 **Participants:** Project Owner (founder authorisation) / Claude (implementation and execution)
