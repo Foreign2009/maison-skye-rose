@@ -48,7 +48,9 @@
     "mip:validate:catalogue-performance-remediation": "npx tsx scripts/identity/validate-catalogue-performance-remediation.ts",
     "mip:audit:catalogue-relationships": "npx tsx scripts/identity/run-catalogue-relationship-editorial-audit.ts",
     "mip:validate:catalogue-relationships": "npx tsx scripts/identity/validate-catalogue-relationship-editorial-audit.ts",
-    "mip:validate:relationship-reciprocity-remediation": "npx tsx scripts/identity/validate-relationship-reciprocity-remediation.ts"
+    "mip:validate:relationship-reciprocity-remediation": "npx tsx scripts/identity/validate-relationship-reciprocity-remediation.ts",
+    "mip:build:relationship-review": "npx tsx scripts/identity/build-relationship-review-queue.ts",
+    "mip:validate:relationship-review": "npx tsx scripts/identity/validate-relationship-editorial-review-foundation.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.110.0",
