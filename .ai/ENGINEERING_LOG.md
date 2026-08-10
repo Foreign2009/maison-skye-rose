@@ -3907,3 +3907,72 @@ After EP20-P4: `computeLearnedPreferences()` runs the LearningEngine on `profile
 **Open Questions Carried Forward:**
 - None
 
+
+
+---
+
+## EP6-P4 — Catalogue Relationship Editorial Audit
+
+**Date:** 2026-08-10
+**Status:** COMPLETE
+**Preceded by:** EP6-P3 — Catalogue Performance-Claim Remediation
+
+### Programme Objectives
+
+**Institutional Objective:** Establish the first editorial governance map of all AI-generated relationship claims in the catalogue, making explicit what is institutionally supportable versus what requires human authority.
+
+**Guest Outcome:** Guests will eventually encounter only founder-approved relationship suggestions (alternatives, wardrobe partners) and research-verified evolution claims, rather than AI-generated links whose accuracy has never been confirmed.
+
+**Technical Outcome:** Deterministic, read-only editorial audit of all 338 canonical relationship edges. Zero mutations. Zero AI calls.
+
+### Deliverables
+
+- scripts/identity/catalogueRelationshipEditorialAudit.ts — Pure audit service (read-only)
+- scripts/identity/run-catalogue-relationship-editorial-audit.ts — Runner (APPROVED_IDENTITY_ID=null, FORCE=false)
+- scripts/identity/validate-catalogue-relationship-editorial-audit.ts — 54-proof validation suite
+- pp/lib/identity/data/audits/catalogue-relationship-editorial-audit.json — Generated audit artifact
+- package.json — 2 new npm scripts added
+
+### Key Findings
+
+**Classification (338 edges total):**
+- EXTERNAL_RESEARCH_REQUIRED: 12 (all evolutionOf and evolutions edges — factual lineage questions)
+- FOUNDER_EDITORIAL_DECISION_REQUIRED: 326 (all alternatives and wardrobePartners — commercial positioning)
+- REPOSITORY_SUPPORTED: 0 (no edge met the high bar automatically)
+- INSUFFICIENT_EVIDENCE: 0
+
+**Provenance (all edges):**
+- AI_GENERATED: 338 (RelationshipProducer, Anthropic Claude Haiku API, confidence threshold 0.6)
+- HUMAN_EDITED: 0
+- GOVERNED: 0
+
+**Structural integrity:** 0 defects across all 338 edges (confirms EP6-P2 finding)
+
+**Notable finding:** Pre-existing asymmetry documented —
+- delina-inspired → alien-goddess-inspired (alternatives) — one-directional
+- accarat-rouge-540-inspired → alien-goddess-inspired (wardrobePartners) — one-directional
+These were created when lien-goddess-inspired had its relationships cleared in EP5-P4H without updating the reciprocal edges in other records. EP6-P4 does not create or fix these asymmetries.
+
+### Validation
+
+- EP6-P4 validator: 54/54 proofs passing
+- EP6-P1 regression: 73/73
+- EP6-P2 regression: 75/75
+- EP6-P3 regression: 56/56
+- Full suite: all 15+ validators clean
+- All 7 protected SHAs verified unchanged
+- Relationship graph fingerprint verified unchanged
+
+### Build Result
+
+188 routes | 0 TypeScript errors | 0 warnings
+
+### Safety Invariants
+
+- APPROVED_IDENTITY_ID = null
+- FORCE = false
+- noKnowledgeModified = true
+- noRelationshipMutated = true
+- noAiGeneration = true
+- noExternalResearch = true
+- noFactoryInvocation = true

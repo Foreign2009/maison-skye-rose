@@ -2,16 +2,16 @@
 
 **Last updated:** 2026-08-10
 **Phase:** Launch Execution
-**Build status:** PASS — 188 routes, 0 TypeScript errors, 0 warnings (EP6-P3)
+**Build status:** PASS — 188 routes, 0 TypeScript errors, 0 warnings (EP6-P4)
 
 ---
 
 ## Current Engineering Program
 
-**Program:** EP6-P3 — Catalogue Performance-Claim Remediation — COMPLETE
+**Program:** EP6-P4 — Catalogue Relationship Editorial Audit — COMPLETE
 **Sprint:** EP6
-**Gate:** None — EP6-P3 is complete. Next programme at founder's direction.
-**Outcome:** All performance claims and retired vocabulary eliminated from the live catalogue and infrastructure. "Rich & Long Wearing" scentCharacter retired; "Rich & Full-Bodied" established as its replacement across all 47 affected records and 22 infrastructure files. 23 P0 HIGH policy violations corrected (educationTag removals + free-text corrections). 3 P2 MEDIUM policy violations corrected. EP6-P1 and EP6-P2 audit artifacts regenerated. EP6-P3 validation suite: 56 new proofs. 865/865 total proofs passing. Build: 188 routes, 0 TypeScript errors, 0 warnings. All 7 protected SHAs unchanged. Post-remediation queue: P0=0, P1=0, P2=0, P3=89, P4=3, P5=1.
+**Gate:** None — EP6-P4 is complete. Next programme at founder's direction.
+**Outcome:** Deterministic read-only editorial governance audit of all 338 canonical relationship edges across 89 relationship-bearing records. 12 EXTERNAL_RESEARCH_REQUIRED (all evolution edges), 326 FOUNDER_EDITORIAL_DECISION_REQUIRED (all alternatives and wardrobePartners). All 338 edges provenance: AI_GENERATED. 0 structural defects. Pre-existing asymmetry documented: delina-inspired and baccarat-rouge-540-inspired still reference alien-goddess-inspired from before EP5-P4H cleared its relationships. EP6-P4 validation suite: 54 proofs. All 7 protected SHAs verified unchanged. Build: 188 routes, 0 TypeScript errors, 0 warnings.
 
 ---
 
@@ -43,7 +43,7 @@ The Maison Fragrance Academy (EP13) is in the planning stage.
 | Product pages (SSG) | 93 |
 | Static pages | 25 |
 | Dynamic routes | 14 |
-| Last verified | 2026-08-10 (EP6-P3) |
+| Last verified | 2026-08-10 (EP6-P4) |
 
 Verify: `npm run build`
 
@@ -110,6 +110,7 @@ Verify: `npm run build`
 | EP6 | EP6-P1   | Catalogue Knowledge Integrity Audit | Complete — 2026-08-10 |
 | EP6 | EP6-P2   | Catalogue Remediation Queue | Complete — 2026-08-10 |
 | EP6 | EP6-P3   | Catalogue Performance-Claim Remediation | Complete — 2026-08-10 |
+| EP6 | EP6-P4   | Catalogue Relationship Editorial Audit | Complete — 2026-08-10 |
 
 `FOUNDATIONS/00_FOUNDERS_LETTER.md` — The permanent founder's letter to Skye, Rose, future employees, and future stewards. *Why we began.*
 `FOUNDATIONS/01_SKYE_AND_ROSE_COVENANT.md` — The institutional promise: to customers, products, technology, and future generations. *What we promise.*
@@ -120,6 +121,8 @@ Verify: `npm run build`
 **EP2-P1 Audit Findings (2026-08-05):** Overall institutional alignment score 7.1/10. Intelligence layer (Fragrance Profile, MaisonCompanion, Concierge, Shop, Quiz) rated Aligned. Critical gaps: About page (3/10 — fails Foundation narrative standard), catalogue count inconsistency (93 vs 465+), "Loyal Customer" terminology, post-purchase experience absent, checkout UX cold. Recommended sequence: EP2-P2 (About page rewrite) → EP2-P3 (checkout + post-purchase) → EP2-P4 (testimonials) → EP2-P5 (concierge voice) → EP2-P6 (language pass).
 
 **EP2-P3 About Page Foundation Alignment (2026-08-05):** `app/about/page.tsx` rewritten from 4 generic paragraphs to 9 Foundation-aligned sections: Opening, A Compliment Changed Everything, Why Skye & Rose, What We Believe, Confidence Is What We Are Here to Deliver, Knowledge Before Recommendation, Accessible Luxury, Growing Together, Our Promise, An Invitation. Count inconsistency removed (465+ → timeless language). OG and Twitter metadata added. Architecture preserved. Build passes: 187 routes, 0 TypeScript errors, 0 warnings.
+
+**EP6-P4 Catalogue Relationship Editorial Audit (2026-08-10):** Deterministic, read-only editorial governance audit of all 338 canonical relationship edges across 89 relationship-bearing native fragrance knowledge records. Zero relationship mutations. Zero knowledge mutations. Zero AI calls. Classification results: 12 edges EXTERNAL_RESEARCH_REQUIRED (6 evolutionOf + 6 evolutions — factual lineage requiring external source verification), 326 edges FOUNDER_EDITORIAL_DECISION_REQUIRED (183 alternatives + 143 wardrobePartners — commercial positioning requiring founder approval), 0 REPOSITORY_SUPPORTED (no edge meets the high bar automatically), 0 INSUFFICIENT_EVIDENCE. Provenance: all 338 edges AI_GENERATED (RelationshipProducer, Claude Haiku, confidence threshold 0.6) — no confirmed human editorial approval record exists for any edge in the current governance system. Structural integrity: 0 defects across all 338 edges. Notable finding: pre-existing asymmetry documented — `delina-inspired→alien-goddess-inspired` (alternatives) and `baccarat-rouge-540-inspired→alien-goddess-inspired` (wardrobePartners) are one-directional edges created when `alien-goddess-inspired` had its relationships cleared in EP5-P4H without updating reciprocal records. Validation suite: 54 proofs across 6 sections (§100 Artifact Schema, §200 Coverage, §300 Structural Integrity, §400 Classification Quality, §500 Read-Only Control, §600 Immutability). Artifacts: `catalogueRelationshipEditorialAudit.ts` (pure service), `run-catalogue-relationship-editorial-audit.ts` (runner), `validate-catalogue-relationship-editorial-audit.ts` (validator), `catalogue-relationship-editorial-audit.json` (generated audit). 2 npm scripts added: `mip:audit:catalogue-relationships`, `mip:validate:catalogue-relationships`. All 7 protected SHAs verified unchanged. Relationship graph fingerprint verified unchanged. Build: 188 routes, 0 TypeScript errors, 0 warnings. 0 knowledge mutations. 0 registry mutations. 0 factory invocations. APPROVED_IDENTITY_ID=null. FORCE=false.
 
 **EP6-P3 Catalogue Performance-Claim Remediation (2026-08-10):** All performance claims and retired vocabulary eliminated from the live catalogue and infrastructure. "Rich & Long Wearing" scentCharacter retired; "Rich & Full-Bodied" established as its replacement across 47 native records and 22 infrastructure/component/service files. 23 P0 HIGH policy violations corrected (19 educationTag removals + 8 free-text corrections). 3 P2 MEDIUM policy violations corrected (eros mood, armani-code-parfum recommendedFor, y-edp signatureStyle — founder-approved verbatim replacements). 3 infrastructure violations remediated (merchandising.ts, MaisonCompanion.tsx, wardrobeAnalyser.ts) + academy/catalogue.ts caption. EP6-P1 and EP6-P2 audit artifacts regenerated: post-remediation queue state P0=0, P1=0, P2=0, P3=89, P4=3 (side-effect, armani-code-parfum, eros), P5=1 (alien-goddess). EP6-P1 validator: 5 proofs updated. EP6-P2 validator: 13 proofs updated. EP6-P3 validation suite created: 56 proofs across 8 sections (Vocabulary Retirement, Performance Debt Elimination, Infrastructure Remediation, Protected Field Preservation, SHA Verification, Relationship Graph Integrity, Governance Invariants, Historical Provenance). npm script added: mip:validate:catalogue-performance-remediation. All 15 validation suites: 865/865. Build: 188 routes, 0 TypeScript errors, 0 warnings. All 7 protected SHAs verified unchanged. Factory drafts NOT modified (excluded from TypeScript compilation via tsconfig to preserve historical provenance). 0 AI calls. 0 registry mutations. 0 identity mutations. 0 factory draft modifications.
 
