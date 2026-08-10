@@ -17,6 +17,7 @@ const NAV_ITEMS = [
   { href: "/admin/executive-digest",           label: "Executive Digest"        },
   { href: "/admin/executive-report",           label: "Executive Report"        },
   { href: "/admin/identity",                   label: "Identity Review"         },
+  { href: "/admin/identity/relationships",     label: "Relationship Review"     },
 ] as const;
 
 // /admin is the only root item — matched exactly to avoid active-for-all-sub-routes.

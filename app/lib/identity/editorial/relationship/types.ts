@@ -1,5 +1,5 @@
 /**
- * Maison Identity Platform — Relationship Editorial Review Types (EP6-P5B/P5BR)
+ * Maison Identity Platform — Relationship Editorial Review Types (EP6-P5B/P5BR/P5C)
  *
  * Governs pair-level governance units for catalogue relationship review.
  * A symmetric pair (A↔B) is ONE review unit — not two.
@@ -12,6 +12,11 @@
  *   1. RelationshipCanonicalState — is the relationship currently in MKC?
  *   2. RelationshipProposalProvenance — how was it originally proposed?
  *   3. RelationshipGovernanceState — what human decision has been reached?
+ *
+ * EP6-P5C addition: founder decision ledger and service types.
+ *   - RelationshipDecisionEntry — one append-only ledger entry per founder decision.
+ *   - RelationshipDecisionLedger — the mutable decision artifact.
+ *   - Service inputs, results, progress, and repository abstractions.
  *
  * Repository presence (canonical state: PRESENT) is not semantic support.
  * AI origin (provenance: AI_GENERATED) is not human approval.
@@ -210,6 +215,9 @@ export interface RelationshipReviewQueueSummary {
  *   - RelationshipGovernanceState corrected (PENDING/RESEARCH_BLOCKED vs REPOSITORY_SUPPORTED).
  *   - requiresFounderDecision added per unit.
  *   - Evolution pairs correctly initialised as needs-research / RESEARCH_BLOCKED.
+ *
+ * IMMUTABLE after EP6-P5BR. Never modified by P5C or later episodes.
+ * The queue is the frozen proposal/evidence artifact. Decisions live in the ledger.
  */
 export interface RelationshipReviewQueueData {
   readonly schemaVersion: "EP6-P5BR-v1";
@@ -220,3 +228,233 @@ export interface RelationshipReviewQueueData {
   readonly summary: RelationshipReviewQueueSummary;
   readonly units: readonly RelationshipReviewUnit[];
 }
+
+// ══════════════════════════════════════════════════════════════════════════════
+// EP6-P5C — Founder Decision Ledger Types
+// ══════════════════════════════════════════════════════════════════════════════
+
+// ── Decision entry ────────────────────────────────────────────────────────────
+
+/**
+ * One founder decision recorded in the append-only decision ledger.
+ *
+ * The ledger is the ONLY mutable governance artifact. The queue is immutable.
+ * Entries are never modified or deleted. The complete governance history for
+ * any unit is the ordered sequence of entries matching its reviewId.
+ *
+ * transactionId: generated server-side via crypto.randomUUID(). Never client-side.
+ * decidedAt: from the injected RelationshipEditorialClock. Never new Date() inline.
+ */
+export interface RelationshipDecisionEntry {
+  /** Server-side UUID. Dedup sentinel. Never generated client-side. */
+  readonly transactionId: string;
+  /** Stable pair identifier. Links to the frozen queue unit. */
+  readonly reviewId: RelationshipReviewId;
+  /** Denormalised for human-readable audit without queue lookup. */
+  readonly pairType: RelationshipPairType;
+  readonly slugA: string;
+  readonly slugB: string;
+  /** The founder decision: FOUNDER_APPROVED, FOUNDER_REJECTED, or DEFERRED. */
+  readonly decision: "FOUNDER_APPROVED" | "FOUNDER_REJECTED" | "DEFERRED";
+  /** Governance state before this decision. */
+  readonly previousGovernanceState: RelationshipGovernanceState;
+  /** Governance state after this decision. */
+  readonly newGovernanceState: RelationshipGovernanceState;
+  /** Review status before this decision. */
+  readonly previousStatus: RelationshipReviewStatus;
+  /** Review status after this decision. */
+  readonly newStatus: RelationshipReviewStatus;
+  /** Who performed this action. Required non-empty. */
+  readonly actor: string;
+  /** Why this decision was made. Required non-empty. */
+  readonly reason: string;
+  /** Optional additional founder notes. Null if not provided. */
+  readonly founderNotes: string | null;
+  /** ISO 8601 timestamp. From injected clock only — never new Date() inline. */
+  readonly decidedAt: string;
+}
+
+// ── Decision ledger ───────────────────────────────────────────────────────────
+
+/**
+ * The append-only founder decision ledger.
+ * Written to: app/lib/identity/data/decisions/catalogue-relationship-decision-ledger.json
+ *
+ * The ledger records all founder decisions against the frozen EP6-P5BR queue.
+ * Runtime governance state = queue baseline + ordered ledger history per reviewId.
+ *
+ * graphFingerprint must match the queue artifact's fingerprint. Verified at load time.
+ * Entries are strictly append-only. No deletion or modification permitted.
+ */
+export interface RelationshipDecisionLedger {
+  readonly schemaVersion: "EP6-P5C-v1";
+  /** Must match catalogue-relationship-review-queue.json schemaVersion. */
+  readonly initialQueueVersion: "EP6-P5BR-v1";
+  /** Must match the post-P5A graph fingerprint: 478fd478… */
+  readonly graphFingerprint: string;
+  readonly entries: readonly RelationshipDecisionEntry[];
+}
+
+// ── Clock injection ───────────────────────────────────────────────────────────
+
+/**
+ * Injected clock for the relationship editorial service.
+ * Production uses new Date().toISOString(). Tests inject a fixed value.
+ * All timestamps in decision entries come exclusively from this clock.
+ */
+export type RelationshipEditorialClock = {
+  readonly now: () => string;
+};
+
+// ── Repository abstractions ───────────────────────────────────────────────────
+
+/**
+ * Read-only repository for the immutable queue artifact.
+ * The queue is never written by the editorial service.
+ */
+export interface RelationshipQueueRepository {
+  load(): RelationshipReviewQueueData;
+}
+
+/**
+ * Read-write repository for the mutable decision ledger.
+ * Save must be atomic (tmp → verify → backup → rename pattern).
+ */
+export interface RelationshipLedgerRepository {
+  load(): RelationshipDecisionLedger;
+  save(data: RelationshipDecisionLedger): void;
+}
+
+// ── Service error taxonomy ────────────────────────────────────────────────────
+
+/**
+ * Discriminated error kinds for all relationship editorial operation failures.
+ */
+export type RelationshipEditorialErrorKind =
+  | "not-found"           // reviewId not present in queue
+  | "research-blocked"    // unit is RESEARCH_BLOCKED — no founder decision allowed
+  | "invalid-transition"  // the decision is not valid from current governance state
+  | "stale-review"        // expectedGovernanceState does not match current reconstructed state
+  | "invalid-input";      // malformed or empty required input field
+
+// ── Service result ────────────────────────────────────────────────────────────
+
+/**
+ * All relationship editorial mutation methods return RelationshipEditorialResult.
+ * Never throws for expected domain failures.
+ */
+export type RelationshipEditorialResult =
+  | { readonly success: true; readonly entry: RelationshipDecisionEntry }
+  | {
+      readonly success: false;
+      readonly kind: RelationshipEditorialErrorKind;
+      readonly message: string;
+    };
+
+// ── Decision inputs ───────────────────────────────────────────────────────────
+
+/**
+ * Base input for all relationship founder decisions.
+ *
+ * expectedGovernanceState: the governance state the founder saw when they loaded
+ * the review unit. If the reconstructed current state does not match this, the
+ * service returns kind: "stale-review" — the unit changed after the page was loaded.
+ *
+ * This is the stale-write protection token, equivalent to expectedUpdatedAt in
+ * IdentityEditorialService. It prevents two concurrent sessions from both deciding
+ * on a unit that appeared PENDING to both, where only one decision is valid.
+ *
+ * Filesystem concurrency limitation: Node.js readFileSync/renameSync cannot
+ * guarantee atomicity across independent processes on Windows NTFS. Two simultaneous
+ * requests could theoretically both pass the stale check before either saves.
+ * This risk is accepted for a single-founder admin workflow on Vercel (each
+ * serverless function invocation operates on the same underlying filesystem, but
+ * truly concurrent requests remain theoretically possible). The expectedGovernanceState
+ * check provides best-effort protection; true CAS would require a database or file lock.
+ */
+export interface BaseRelationshipDecisionInput {
+  readonly reviewId: RelationshipReviewId;
+  readonly actor: string;
+  readonly reason: string;
+  readonly founderNotes?: string;
+  /**
+   * Stale-write protection token.
+   * Must match the current reconstructed governance state at transaction time.
+   */
+  readonly expectedGovernanceState: RelationshipGovernanceState;
+}
+
+/** approve: PENDING | DEFERRED → FOUNDER_APPROVED. reason required. */
+export interface ApproveRelationshipInput extends BaseRelationshipDecisionInput {}
+
+/** reject: PENDING | DEFERRED → FOUNDER_REJECTED. reason required. */
+export interface RejectRelationshipInput extends BaseRelationshipDecisionInput {}
+
+/** defer: PENDING → DEFERRED only. DEFERRED → DEFERRED is invalid. reason required. */
+export interface DeferRelationshipInput extends BaseRelationshipDecisionInput {}
+
+// ── Progress ──────────────────────────────────────────────────────────────────
+
+/**
+ * Derived progress across all relationship review units.
+ *
+ * All counts are derived at runtime from the queue + ledger.
+ * No value is hardcoded. totalDecisionUnits is derived from:
+ *   queue.units.filter(u => u.requiresFounderDecision).length
+ */
+export interface RelationshipReviewProgress {
+  /** Derived from queue: units where requiresFounderDecision = true. */
+  readonly totalDecisionUnits: number;
+  /** Units currently in PENDING governance state (not yet decided). */
+  readonly pending: number;
+  /** Units with FOUNDER_APPROVED governance state. */
+  readonly founderApproved: number;
+  /** Units with FOUNDER_REJECTED governance state. */
+  readonly founderRejected: number;
+  /**
+   * Units currently in DEFERRED governance state.
+   * Note: a unit re-decided after deferral moves to FOUNDER_APPROVED/REJECTED;
+   * it is no longer counted as deferred.
+   */
+  readonly deferred: number;
+  /** Derived from queue: units where requiresFounderDecision = false (RESEARCH_BLOCKED). */
+  readonly researchBlocked: number;
+  /** (founderApproved + founderRejected) / totalDecisionUnits × 100. Terminal decisions only. */
+  readonly completionPercent: number;
+}
+
+// ── List summary ──────────────────────────────────────────────────────────────
+
+/**
+ * Summary row for the relationship review queue list.
+ * MKC fragrance names are resolved server-side and included here.
+ * Current governance state reflects the merged queue + ledger projection.
+ */
+export interface RelationshipReviewSummary {
+  readonly reviewId: RelationshipReviewId;
+  readonly pairType: RelationshipPairType;
+  readonly slugA: string;
+  readonly slugB: string;
+  /** Resolved from MKC by slugA. Falls back to slug if not found. */
+  readonly nameA: string;
+  /** Resolved from MKC by slugB. Falls back to slug if not found. */
+  readonly nameB: string;
+  readonly overlapScore: number;
+  /** Current governance state: from ledger if decided, from queue otherwise. */
+  readonly governanceState: RelationshipGovernanceState;
+  readonly status: RelationshipReviewStatus;
+  readonly requiresFounderDecision: boolean;
+}
+
+// ── Queue filter ──────────────────────────────────────────────────────────────
+
+/**
+ * Filter for the relationship review queue list.
+ * All fields optional — omitting all returns all units.
+ */
+export type RelationshipQueueFilter = {
+  readonly pairType?: RelationshipPairType;
+  readonly governanceState?: RelationshipGovernanceState;
+  readonly overlapScoreMin?: number;
+  readonly overlapScoreMax?: number;
+};
