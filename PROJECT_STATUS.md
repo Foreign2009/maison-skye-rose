@@ -1,6 +1,6 @@
 # Project Status — Maison Skye & Rose
 
-**Last updated:** 2026-08-09
+**Last updated:** 2026-08-10
 **Phase:** Launch Execution
 **Build status:** PASS — 188 routes, 0 TypeScript errors, 0 warnings
 
@@ -8,10 +8,10 @@
 
 ## Current Engineering Program
 
-**Program:** EP5-P4F Phase 2 — R2 Governance Gap Closure + R3 Authoritative Research Preparation — COMPLETE
+**Program:** EP5-P4G — Alien Goddess Authoritative Research Execution — COMPLETE
 **Sprint:** EP5
-**Gate:** R3 Research Execution — founder commissions authoritative external research per `data/identity/research-requests/alien-goddess-authoritative-research.json`. After findings are reviewed, founder decides R2 (targeted corrections) or R4 (governed regeneration with verified evidence).
-**Outcome:** Legacy Alien Goddess knowledge governance gaps durably documented. Reconciliation record created at `app/lib/identity/data/reconciliation/MIP-000012-alien-goddess-reconciliation.json`. Research contract created at `data/identity/research-requests/alien-goddess-authoritative-research.json`. 40 new proofs (556/556 total). Native MKC record, draft, factory log, identity registry, product registry, and MIPRUN audit all SHA-verified unchanged. 0 AI calls. 0 guest-facing changes. Build: 188 routes, 0 TypeScript errors, 0 warnings.
+**Gate:** R2 Targeted Deterministic Correction — founder reviews research results at `data/identity/research-results/MIP-000012-alien-goddess-authoritative-results.json`, approves the R2 correction plan (with preferred Jasmine variety and scentCharacter replacement), then Claude Code implements targeted MKC corrections.
+**Outcome:** Authoritative external research executed. Official Mugler sources and Fragrantica/Basenotes (strong secondary) confirm MIP Gemini research values for all 4 critical composition fields. Legacy factory AI values refuted by all sources. Research results persisted with 16 findings, 3 identified conflicts, 13-entry three-way comparison, 14-entry field decision matrix. Recommended classification: R2. 58 new proofs (614/614 total). All historical artifacts SHA-verified unchanged. 0 Knowledge Factory AI calls. 0 guest-facing changes. Build: 188 routes, 0 TypeScript errors, 0 warnings.
 
 ---
 
@@ -43,7 +43,7 @@ The Maison Fragrance Academy (EP13) is in the planning stage.
 | Product pages (SSG) | 93 |
 | Static pages | 25 |
 | Dynamic routes | 14 |
-| Last verified | 2026-08-09 |
+| Last verified | 2026-08-10 |
 
 Verify: `npm run build`
 
@@ -105,6 +105,7 @@ Verify: `npm run build`
 | EP5 | EP5-P4D  | Identity-Qualified Factory Run Audit | Complete — 2026-08-09 |
 | EP5 | EP5-P4E  | First Production Identity-Qualified Governance Run | Complete — 2026-08-09 |
 | EP5 | EP5-P4F  | Legacy Alien Goddess Knowledge Reconciliation Review (Phase 1 + Phase 2) | Complete — 2026-08-10 |
+| EP5 | EP5-P4G  | Alien Goddess Authoritative Research Execution | Complete — 2026-08-10 |
 
 `FOUNDATIONS/00_FOUNDERS_LETTER.md` — The permanent founder's letter to Skye, Rose, future employees, and future stewards. *Why we began.*
 `FOUNDATIONS/01_SKYE_AND_ROSE_COVENANT.md` — The institutional promise: to customers, products, technology, and future generations. *What we promise.*
@@ -115,6 +116,8 @@ Verify: `npm run build`
 **EP2-P1 Audit Findings (2026-08-05):** Overall institutional alignment score 7.1/10. Intelligence layer (Fragrance Profile, MaisonCompanion, Concierge, Shop, Quiz) rated Aligned. Critical gaps: About page (3/10 — fails Foundation narrative standard), catalogue count inconsistency (93 vs 465+), "Loyal Customer" terminology, post-purchase experience absent, checkout UX cold. Recommended sequence: EP2-P2 (About page rewrite) → EP2-P3 (checkout + post-purchase) → EP2-P4 (testimonials) → EP2-P5 (concierge voice) → EP2-P6 (language pass).
 
 **EP2-P3 About Page Foundation Alignment (2026-08-05):** `app/about/page.tsx` rewritten from 4 generic paragraphs to 9 Foundation-aligned sections: Opening, A Compliment Changed Everything, Why Skye & Rose, What We Believe, Confidence Is What We Are Here to Deliver, Knowledge Before Recommendation, Accessible Luxury, Growing Together, Our Promise, An Invitation. Count inconsistency removed (465+ → timeless language). OG and Twitter metadata added. Architecture preserved. Build passes: 187 routes, 0 TypeScript errors, 0 warnings.
+
+**EP5-P4G Alien Goddess Authoritative Research Execution (2026-08-10):** R3 authoritative external research executed for MIP-000012 Alien Goddess by Mugler. 6 sources consulted: 3 Tier 1 (official Mugler product page, Mugler scent-family category, Mugler Mag article — all accessed via search snippets after direct HTTP blocked 403), 2 Tier 2 (Fragrantica, Basenotes — accessed via search snippets), 1 Tier 3 (REBL Scents retailer — direct fetch successful). Key findings: (1) Official Mugler family: "floral ambery woody" / site category "Ambery" / Mugler Mag article "Floral oriental woody" — three consistent amber/oriental descriptors, none vanilla. (2) Notes confirmed unanimously: Top (Italian bergamot essence, coconut water accord), Heart (jasmine grandiflorum, heliotrope accord), Base (Madagascar bourbon vanilla, cashmeran wood). (3) All 4 critical MIP Gemini research values confirmed MIP_RESEARCH_CONFIRMED. All 4 legacy factory values refuted. (4) 3 identified conflicts preserved: official-disagreement (floral ambery woody vs Floral oriental woody — internal Mugler naming variant), database-disagreement (Mugler's "floral ambery woody" vs Fragrantica's "Oriental Floral" — traditional vs modern vocabulary), researcher-interpretation (jasmine grandiflorum vs jasmine). (5) Relationships (delina-inspired, baccarat-rouge-540-inspired) — STILL_UNRESOLVED, not confirmed by research. (6) "Rich & Long Wearing" scentCharacter — potential Maison policy violation (longevity promise), flagged for policy review. Recommended classification: R2 (targeted deterministic correction). Research results persisted at `data/identity/research-results/MIP-000012-alien-goddess-authoritative-results.json`. Validation suite `scripts/identity/validate-alien-goddess-research.ts`: 58 proofs across § 100/200/300/400. All 10 existing suites: 556/556 PASS. New suite: 58/58 PASS. Total: 614/614. Build: 188 routes, 0 TypeScript errors, 0 warnings. 0 Knowledge Factory AI calls. 0 native MKC mutations. 0 registry mutations. Next gate: founder approves R2 correction plan.
 
 **EP5-P4F Legacy Alien Goddess Knowledge Reconciliation Review (2026-08-09 — 2026-08-10):** Phase 1 (inspection): Complete repository inspection comparing `alien-goddess-inspired` legacy native MKC record against all available MIP evidence. Phase 1 finding: 5 composition fields CONTRADICTED by MIP research evidence (family, notes.top, notes.heart, notes.base, profile); however, both the legacy factory notes and the MIP research notes are AI-generated — neither is authoritative without external verification. Additional findings: `promotedAt: null` in factory log (promotion provenance unresolved); draft review checklist unchecked; native file manually edited post-factory (academyArticleIds expanded); relationships field has open REVIEW comment. Phase 2 (implementation): R2 governance gap closure + R3 research preparation. Reconciliation record created (`app/lib/identity/data/reconciliation/MIP-000012-alien-goddess-reconciliation.json`) documenting 6 material CONTRADICTED issues with hold-pending-authoritative-research disposition and R3 recommendation. Research contract created (`data/identity/research-requests/alien-goddess-authoritative-research.json`) with 10 research questions, 3-tier source hierarchy, evidence capture schema, and explicit conflict preservation policy. Validation suite (`scripts/identity/validate-alien-goddess-reconciliation.ts`): 40 proofs across 4 sections including SHA-verified immutability of all 6 historical artifacts. Total proofs: 556/556. No historical artifacts modified. No guest-facing knowledge changes. 0 AI calls. Build: 188 routes, 0 TypeScript errors, 0 warnings. Knowledge disposition: hold-pending-authoritative-research (R3). Next gate: R3 research execution authorised by founder.
 

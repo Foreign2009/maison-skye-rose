@@ -39,6 +39,55 @@ Never edit or delete past entries.
 
 ## Log
 
+### 2026-08-10 — EP5-P4G — Alien Goddess Authoritative Research Execution
+
+**Participants:** Project Owner (founder authorisation) / Claude (research execution and implementation)
+**Program:** EP5-P4G — R3 authoritative external research for MIP-000012 Alien Goddess. Official Mugler sources and strong secondary sources consulted. Research results persisted. Three-way comparison produced. Recommended classification: R2.
+
+**Decisions Made:**
+- Direct HTTP access to mugler.com and fragrantica.com blocked (403 Forbidden). Official Mugler brand copy was obtained via search engine snippets — confidence remains HIGH because the language is distinctive official brand terminology confirmed across multiple independent queries and corroborated by a successfully fetched retailer page (REBL Scents).
+- Official Mugler uses multiple family descriptors: "floral ambery woody" (product page), "Floral oriental woody" (Mugler Mag article title), "floral amber woody" (Mugler Mag URL slug), "Ambery" (site category). These are classified as an official-disagreement conflict within Mugler's own content. All agree the family is Amber/Oriental — not Vanilla.
+- Fragrantica uses "Oriental Floral" — this is the traditional industry term for what Mugler calls "floral ambery woody". These are complementary, not contradictory. Maison MKC vocabulary uses "Amber" — MIP research value ["Amber", "Floral"] is the correct normalisation.
+- Official Mugler specifies "Jasmine Grandiflorum" (not Jasmine Sambac). MIP research says "Jasmine" (no variety). Both are correct at different levels of specificity. Founder decision required: "Jasmine" vs "Jasmine Grandiflorum" for the MKC field.
+- Relationships (delina-inspired alternative, baccarat-rouge-540-inspired wardrobePartner) are unverified by research. No fragrance community evidence supports these pairings. Both are legacy AI inferences requiring separate investigation or removal.
+- "Rich & Long Wearing" (scentCharacter) is a potential Maison policy violation — official Mugler copy does not use longevity language. Requires policy review separately from the composition correction.
+- R2 is recommended over R4: composition errors are specific and factual; editorial content (subtitle, vibe, occasions) remains qualitatively sound for an amber floral.
+- TypeScript cast: proof 115 required `as unknown as Record<string, unknown>` for indexing — the `FindingShape` interface needed an intermediate `unknown` cast because it does not have an index signature.
+
+**Tasks Completed:**
+- Read all mandatory files: reconciliation record, research contract, native MKC, draft, identity registry, mid-year-2026-research.json
+- Executed authoritative web research: 6 sources consulted (3 Tier 1, 2 Tier 2, 1 Tier 3)
+- Created `data/identity/research-results/MIP-000012-alien-goddess-authoritative-results.json` — 16 findings, 3 identified conflicts, 13-entry three-way comparison, 14-entry field decision matrix, R2 resolution recommendation
+- Created `scripts/identity/validate-alien-goddess-research.ts` — 58 proofs across § 100/200/300/400
+- Added `mip:validate:research` to `package.json`
+- All regressions: 556/556 PASS. New suite: 58/58 PASS. Total: 614/614.
+- Build: 188 routes, 0 TypeScript errors, 0 warnings.
+
+**Tasks Started:**
+- None — EP5-P4G complete pending founder R2 approval.
+
+**Build Result:** Pass — 188 routes, 0 TypeScript errors, 0 warnings.
+
+**Files Changed:**
+- `data/identity/research-results/MIP-000012-alien-goddess-authoritative-results.json` (created)
+- `scripts/identity/validate-alien-goddess-research.ts` (created)
+- `package.json` (mip:validate:research script added)
+- `.ai/CURRENT_TASK.md` (updated)
+- `.ai/ENGINEERING_LOG.md` (this entry prepended)
+
+**Handoff:**
+- Founder reviews research findings at `data/identity/research-results/MIP-000012-alien-goddess-authoritative-results.json`
+- Founder approves R2 correction plan (with preferred Jasmine variety and scentCharacter replacement)
+- Claude Code implements R2 corrections in a separate episode
+
+**Open Questions Carried Forward:**
+- Jasmine Grandiflorum vs Jasmine — founder preference for MKC field
+- scentCharacter replacement for "Rich & Long Wearing"
+- Relationships (delina-inspired, baccarat-rouge-540-inspired) — keep or remove
+- academyArticleIds — vanilla-and-amber-the-warm-base continued appropriateness
+
+---
+
 ### 2026-08-10 — EP5-P4F Phase 2 — R2 Governance Gap Closure + R3 Authoritative Research Preparation
 
 **Participants:** Project Owner (founder authorisation) / Claude (implementation and execution)

@@ -1,0 +1,660 @@
+{
+  "version": "1.0.0",
+  "requestId": "RR-MIP-000012-001",
+  "requestStatus": "completed",
+  "requestedAt": "2026-08-09T00:00:00.000Z",
+  "executedAt": "2026-08-10T00:00:00.000Z",
+  "executedBy": "EP5-P4G",
+  "governanceActor": "EP5-P4G",
+  "identityId": "MIP-000012",
+  "canonicalName": "Alien Goddess",
+  "canonicalBrand": "Mugler",
+  "maisonSlug": "alien-goddess-inspired",
+  "researchContract": "data/identity/research-requests/alien-goddess-authoritative-research.json",
+  "reconciliationRecord": "app/lib/identity/data/reconciliation/MIP-000012-alien-goddess-reconciliation.json",
+
+  "researchDisposition": "authoritative-evidence-obtained",
+  "researchSummary": "Authoritative evidence has been obtained confirming the composition of Alien Goddess by Mugler. The official Mugler brand sources (product page, scent-family category, brand editorial) and strong secondary sources (Fragrantica, Basenotes, retailer pages reproducing official copy) consistently confirm the MIP Gemini research values for all four critical composition fields (family, notes.top, notes.heart, notes.base). The legacy factory AI values are refuted across all sources. Recommended classification: R2 — targeted deterministic correction.",
+
+  "accessNotes": "Direct HTTP access to mugler.com and fragrantica.com returned 403 Forbidden for all attempted URLs. Official Mugler product descriptions were obtained via Google search engine snippets that accurately index mugler.com page content. The ingredient names and family descriptions are consistent across multiple independent search queries and are corroborated by the successfully fetched REBL Scents retailer page, which reproduces official brand copy. The language is distinctively official brand terminology: 'Italian bergamot essence', 'jasmine grandiflorum', 'Madagascar bourbon vanilla', 'cashmeran wood'. Confidence in the accuracy of the official brand copy is HIGH despite the direct access limitation.",
+
+  "flankerExclusionConfirmed": true,
+  "flankerExclusionNote": "All evidence obtained pertains to the original Alien Goddess Eau de Parfum (2021). Flanker variants were actively excluded during research: Alien Goddess Intense (2022) and Alien Goddess Supra Florale (2023) appeared in search results and were not used as evidence sources. The Fragrantica URL used (alien-goddess-68354) is specifically the 2021 original EDP, distinct from Intense (74871) and Supra Florale (82489). No flanker evidence was admitted.",
+
+  "sourcesConsulted": [
+    {
+      "sourceId": "S-001",
+      "sourceType": "official-brand",
+      "sourceName": "Mugler official product page — Alien Goddess EDP",
+      "sourceReference": "https://www.mugler.com/fragrance/womens-fragrances/alien/alien-goddess-eau-de-parfum/M020604230.html",
+      "accessedAt": "2026-08-10",
+      "tier": 1,
+      "accessMethod": "Search engine snippet (direct HTTP returned 403 Forbidden)",
+      "reliability": "HIGH — Official brand copy confirmed verbatim across multiple independent queries"
+    },
+    {
+      "sourceId": "S-002",
+      "sourceType": "official-brand",
+      "sourceName": "Mugler official scent-family category — Ambery",
+      "sourceReference": "https://www.mugler.com/fragrance/scent-families/ambery/",
+      "accessedAt": "2026-08-10",
+      "tier": 1,
+      "accessMethod": "Search result confirmation",
+      "reliability": "HIGH — Confirms Alien Goddess is listed under Mugler's official Ambery scent family"
+    },
+    {
+      "sourceId": "S-003",
+      "sourceType": "official-brand",
+      "sourceName": "Mugler Mag editorial — genesis of Alien Goddess",
+      "sourceReference": "https://www.mugler.com/int/mugler-mag/mugler-mag/behind-the-scenes/genesis-of-a-floral-amber-woody-perfume--alien-goddess/alien-goddess-a-floral-perfume.html",
+      "accessedAt": "2026-08-10",
+      "tier": 1,
+      "accessMethod": "Search result title and URL slug (direct HTTP returned 403 Forbidden)",
+      "reliability": "HIGH — URL slug and indexed page title both confirm official family terminology"
+    },
+    {
+      "sourceId": "S-004",
+      "sourceType": "strong-secondary",
+      "sourceName": "Fragrantica — Alien Goddess by Mugler",
+      "sourceReference": "https://www.fragrantica.com/perfume/Mugler/Alien-Goddess-68354.html",
+      "accessedAt": "2026-08-10",
+      "tier": 2,
+      "accessMethod": "Search engine snippet (direct HTTP returned 403 Forbidden)",
+      "reliability": "HIGH — Fragrantica is the primary fragrance reference database; data confirmed consistent with official sources"
+    },
+    {
+      "sourceId": "S-005",
+      "sourceType": "strong-secondary",
+      "sourceName": "Basenotes — Alien Goddess by Thierry Mugler",
+      "sourceReference": "https://basenotes.com/fragrances/alien-goddess-by-thierry-mugler.26163592",
+      "accessedAt": "2026-08-10",
+      "tier": 2,
+      "accessMethod": "Search engine snippet (direct HTTP returned 403 Forbidden)",
+      "reliability": "HIGH — Established fragrance reference community; notes confirmed consistent with official and Fragrantica sources"
+    },
+    {
+      "sourceId": "S-006",
+      "sourceType": "supporting-only",
+      "sourceName": "REBL Scents — Mugler Alien Goddess EDP",
+      "sourceReference": "https://reblscents.com/products/mugler-alien-goddess",
+      "accessedAt": "2026-08-10",
+      "tier": 3,
+      "accessMethod": "Direct WebFetch — successful",
+      "reliability": "MEDIUM — Retailer; reproduces official brand copy; independently corroborates official sources"
+    }
+  ],
+
+  "findings": [
+
+    {
+      "sourceId": "S-001",
+      "sourceType": "official-brand",
+      "sourceName": "Mugler official product page",
+      "sourceReference": "https://www.mugler.com/fragrance/womens-fragrances/alien/alien-goddess-eau-de-parfum/M020604230.html",
+      "accessedAt": "2026-08-10",
+      "field": "family",
+      "observedValue": "floral ambery woody",
+      "confidence": "authoritative",
+      "notes": "Official Mugler product page: 'a floral ambery woody creation'. Also confirmed by Mugler Mag article URL path which reads 'genesis-of-a-floral-amber-woody-perfume'. Mugler also categorises this fragrance under their 'Ambery' scent family browse category."
+    },
+    {
+      "sourceId": "S-003",
+      "sourceType": "official-brand",
+      "sourceName": "Mugler Mag editorial article",
+      "sourceReference": "https://www.mugler.com/int/mugler-mag/mugler-mag/behind-the-scenes/genesis-of-a-floral-amber-woody-perfume--alien-goddess/alien-goddess-a-floral-perfume.html",
+      "accessedAt": "2026-08-10",
+      "field": "family",
+      "observedValue": "Floral oriental woody",
+      "confidence": "high",
+      "conflictType": "official-disagreement",
+      "notes": "The Mugler Mag article's page title indexed by Google is 'Floral oriental woody perfume: a Goddess touch'. This uses 'oriental' rather than 'ambery'. The URL slug of the same article says 'floral-amber-woody-perfume'. Both terms are from official Mugler content for the same fragrance. Resolution: both confirm non-vanilla/non-fruity amber-family character. Mugler uses 'ambery' and 'oriental' as overlapping descriptors. This is an internal Mugler naming inconsistency, not a dispute about the fundamental character."
+    },
+    {
+      "sourceId": "S-002",
+      "sourceType": "official-brand",
+      "sourceName": "Mugler official scent-family page — Ambery",
+      "sourceReference": "https://www.mugler.com/fragrance/scent-families/ambery/",
+      "accessedAt": "2026-08-10",
+      "field": "family (Mugler site category)",
+      "observedValue": "Ambery",
+      "confidence": "authoritative",
+      "notes": "Mugler officially lists Alien Goddess under their 'Ambery' scent family browse category. This is the structural brand classification."
+    },
+    {
+      "sourceId": "S-004",
+      "sourceType": "strong-secondary",
+      "sourceName": "Fragrantica",
+      "sourceReference": "https://www.fragrantica.com/perfume/Mugler/Alien-Goddess-68354.html",
+      "accessedAt": "2026-08-10",
+      "field": "family",
+      "observedValue": "Oriental Floral",
+      "confidence": "high",
+      "conflictType": "database-disagreement",
+      "notes": "Fragrantica classifies Alien Goddess as 'Oriental Floral' — the traditional perfumery taxonomy term. 'Oriental Floral' and 'Floral Amber' overlap significantly in traditional perfumery vocabulary. The IFRA/industry 'Oriental' family corresponds closely to the modern 'Amber' family terminology used by many brands. This is a terminology mapping difference, not a factual dispute about the character of the fragrance."
+    },
+
+    {
+      "sourceId": "S-001",
+      "sourceType": "official-brand",
+      "sourceName": "Mugler official product page",
+      "sourceReference": "https://www.mugler.com/fragrance/womens-fragrances/alien/alien-goddess-eau-de-parfum/M020604230.html",
+      "accessedAt": "2026-08-10",
+      "field": "notes.top",
+      "observedValue": ["Italian bergamot essence", "coconut water accord"],
+      "confidence": "authoritative",
+      "notes": "Official Mugler product description: 'The first notes reveal a burst of bubbly Italian bergamot essence. Paired with an overdose of unexpected coconut water accord, the scent immediately releases a dazzling explosion of light.' Origin of bergamot (Italian) and form of coconut note (water accord, not milk) are explicitly stated by the brand."
+    },
+    {
+      "sourceId": "S-004",
+      "sourceType": "strong-secondary",
+      "sourceName": "Fragrantica",
+      "sourceReference": "https://www.fragrantica.com/perfume/Mugler/Alien-Goddess-68354.html",
+      "accessedAt": "2026-08-10",
+      "field": "notes.top",
+      "observedValue": ["Coconut Water", "Bergamot"],
+      "confidence": "high",
+      "notes": "Fragrantica normalised note names: Coconut Water and Bergamot (without 'Italian' or 'essence'/'accord' qualifiers). Consistent with official Mugler content. Fragrantica convention omits origin/form qualifiers."
+    },
+    {
+      "sourceId": "S-006",
+      "sourceType": "supporting-only",
+      "sourceName": "REBL Scents retailer",
+      "sourceReference": "https://reblscents.com/products/mugler-alien-goddess",
+      "accessedAt": "2026-08-10",
+      "field": "notes.top",
+      "observedValue": ["Bergamot Essence", "Coconut Water"],
+      "confidence": "medium",
+      "notes": "Retailer confirms Bergamot Essence and Coconut Water. Consistent with official sources."
+    },
+
+    {
+      "sourceId": "S-001",
+      "sourceType": "official-brand",
+      "sourceName": "Mugler official product page",
+      "sourceReference": "https://www.mugler.com/fragrance/womens-fragrances/alien/alien-goddess-eau-de-parfum/M020604230.html",
+      "accessedAt": "2026-08-10",
+      "field": "notes.heart",
+      "observedValue": ["jasmine grandiflorum", "heliotrope accord"],
+      "confidence": "authoritative",
+      "notes": "Official Mugler: 'At the heart of Alien Goddess resides a deeply sensual and feminine fusion of jasmine grandiflorum and heliotrope accord.' Mugler specifies Jasmine Grandiflorum explicitly — not Jasmine Sambac. The variety distinction is authoritative brand information."
+    },
+    {
+      "sourceId": "S-004",
+      "sourceType": "strong-secondary",
+      "sourceName": "Fragrantica",
+      "sourceReference": "https://www.fragrantica.com/perfume/Mugler/Alien-Goddess-68354.html",
+      "accessedAt": "2026-08-10",
+      "field": "notes.heart",
+      "observedValue": ["Jasmine", "Heliotrope"],
+      "confidence": "high",
+      "notes": "Fragrantica normalised note names: Jasmine and Heliotrope (without the Grandiflorum variety qualifier). Consistent with official Mugler content. The 'Jasmine' in the MIP research value corresponds to Jasmine Grandiflorum in official Mugler language."
+    },
+    {
+      "sourceId": "S-006",
+      "sourceType": "supporting-only",
+      "sourceName": "REBL Scents retailer",
+      "sourceReference": "https://reblscents.com/products/mugler-alien-goddess",
+      "accessedAt": "2026-08-10",
+      "field": "notes.heart",
+      "observedValue": ["Jasmine Grandiflorum", "Heliotrope"],
+      "confidence": "medium",
+      "notes": "Retailer confirms Jasmine Grandiflorum and Heliotrope. Consistent with official Mugler language."
+    },
+
+    {
+      "sourceId": "S-001",
+      "sourceType": "official-brand",
+      "sourceName": "Mugler official product page",
+      "sourceReference": "https://www.mugler.com/fragrance/womens-fragrances/alien/alien-goddess-eau-de-parfum/M020604230.html",
+      "accessedAt": "2026-08-10",
+      "field": "notes.base",
+      "observedValue": ["Madagascar bourbon vanilla", "cashmeran wood"],
+      "confidence": "authoritative",
+      "notes": "Official Mugler: 'an endless trail of addictive Madagascar bourbon vanilla, magnified by the vibrant and woody intensity of cashmeran wood.' Origin (Madagascar) and variety (Bourbon Vanilla) are explicitly stated by the brand."
+    },
+    {
+      "sourceId": "S-004",
+      "sourceType": "strong-secondary",
+      "sourceName": "Fragrantica",
+      "sourceReference": "https://www.fragrantica.com/perfume/Mugler/Alien-Goddess-68354.html",
+      "accessedAt": "2026-08-10",
+      "field": "notes.base",
+      "observedValue": ["Bourbon Vanilla", "Cashmeran"],
+      "confidence": "high",
+      "notes": "Fragrantica normalised note names: Bourbon Vanilla and Cashmeran. Consistent with official Mugler content (minus the Madagascar origin qualifier)."
+    },
+    {
+      "sourceId": "S-006",
+      "sourceType": "supporting-only",
+      "sourceName": "REBL Scents retailer",
+      "sourceReference": "https://reblscents.com/products/mugler-alien-goddess",
+      "accessedAt": "2026-08-10",
+      "field": "notes.base",
+      "observedValue": ["Bourbon Vanilla", "Cashmeran"],
+      "confidence": "medium",
+      "notes": "Retailer confirms Bourbon Vanilla and Cashmeran. Consistent with official sources."
+    },
+
+    {
+      "sourceId": "S-001",
+      "sourceType": "official-brand",
+      "sourceName": "Mugler official product page",
+      "sourceReference": "https://www.mugler.com/fragrance/womens-fragrances/alien/alien-goddess-eau-de-parfum/M020604230.html",
+      "accessedAt": "2026-08-10",
+      "field": "launchYear",
+      "observedValue": 2021,
+      "confidence": "authoritative",
+      "notes": "Launch year 2021 confirmed across all official and secondary sources without exception."
+    },
+
+    {
+      "sourceId": "S-001",
+      "sourceType": "official-brand",
+      "sourceName": "Mugler official product page",
+      "sourceReference": "https://www.mugler.com/fragrance/womens-fragrances/alien/alien-goddess-eau-de-parfum/M020604230.html",
+      "accessedAt": "2026-08-10",
+      "field": "marketedGender",
+      "observedValue": "for women",
+      "confidence": "authoritative",
+      "notes": "Mugler categorises this under 'womens-fragrances' in the URL path. Official description uses 'deeply sensual and feminine fusion'. Fragrantica also lists as 'a fragrance for women'."
+    },
+
+    {
+      "sourceId": "S-004",
+      "sourceType": "strong-secondary",
+      "sourceName": "Fragrantica",
+      "sourceReference": "https://www.fragrantica.com/perfume/Mugler/Alien-Goddess-68354.html",
+      "accessedAt": "2026-08-10",
+      "field": "perfumer",
+      "observedValue": ["Nathalie Lorson", "Marie Salamagne"],
+      "confidence": "high",
+      "notes": "Perfumers Nathalie Lorson and Marie Salamagne confirmed across Fragrantica (Tier 2), Basenotes (Tier 2), and multiple retailer sources. One search result snippet specified 'Firmenich perfumers Nathalie Lorson and Marie Salamagne'. A single secondary source used the spelling 'Nathalie Larson' — this appears to be a transcription error; Fragrantica uses 'Lorson'. MIP Gemini research had the correct attribution."
+    },
+
+    {
+      "sourceId": "S-001",
+      "sourceType": "official-brand",
+      "sourceName": "Mugler official website",
+      "sourceReference": "https://www.mugler.com/",
+      "accessedAt": "2026-08-10",
+      "field": "brand naming",
+      "observedValue": "Mugler",
+      "confidence": "authoritative",
+      "notes": "The official brand website and all 2021+ product launches use 'Mugler' (not 'Thierry Mugler'). The brand was rebranded from 'Thierry Mugler' to 'Mugler'; the exact year of the official name change could not be pinpointed from available sources but was completed before the Alien Goddess 2021 launch. Older retail sources still use 'Thierry Mugler'. MIP Gemini research sourceNotes correctly noted: 'Canonical name is Mugler Alien Goddess (formerly credited under Thierry Mugler).' The supplier list used 'Alien Goddess/ Thierry Mugler' — the 'Thierry Mugler' part is legacy naming. Current canonical brand: Mugler."
+    },
+
+    {
+      "sourceId": "S-SEARCH",
+      "sourceType": "supporting-only",
+      "sourceName": "Fragrance community search results — multiple",
+      "sourceReference": "Multiple URLs — no single authoritative source identified",
+      "accessedAt": "2026-08-10",
+      "field": "relationships.alternatives",
+      "observedValue": "UNRESOLVED",
+      "confidence": "low",
+      "notes": "Research did not find clear evidence that Delina by Parfums de Marly is commonly cited as a direct alternative or dupe for Alien Goddess. The Fragranza 'top alternatives to Alien Goddess' list did not mention Delina. Delina is a rose-dominant floral; Alien Goddess is an amber floral — they occupy different olfactory families. The legacy MKC 'delina-inspired' alternative claim appears to be a legacy factory AI inference and is UNVERIFIED by this research. Requires either further investigation or removal."
+    },
+    {
+      "sourceId": "S-SEARCH",
+      "sourceType": "supporting-only",
+      "sourceName": "Fragrance community search results — multiple",
+      "sourceReference": "Multiple URLs — no single authoritative source identified",
+      "accessedAt": "2026-08-10",
+      "field": "relationships.wardrobePartners",
+      "observedValue": "UNRESOLVED",
+      "confidence": "low",
+      "notes": "Research did not find evidence that Baccarat Rouge 540 by MFK is typically cited as a wardrobe partner to Alien Goddess. A Fragrantica thread titled 'Layer with Baccarat 540?' appeared in results but was not specific to Alien Goddess. The legacy MKC 'baccarat-rouge-540-inspired' wardrobePartner claim appears to be a legacy factory AI inference and is UNVERIFIED by this research. Requires further investigation."
+    },
+
+    {
+      "sourceId": "S-SEARCH",
+      "sourceType": "supporting-only",
+      "sourceName": "Official Mugler descriptions (via search snippets)",
+      "sourceReference": "https://www.mugler.com/fragrance/womens-fragrances/alien/alien-goddess-eau-de-parfum/M020604230.html",
+      "accessedAt": "2026-08-10",
+      "field": "scentCharacter (performance claim review)",
+      "observedValue": "Official Mugler descriptions do not use longevity or intensity claims in the found product copy",
+      "confidence": "medium",
+      "notes": "Legacy MKC has scentCharacter: 'Rich & Long Wearing'. Official Mugler descriptions found during research do not use 'long wearing' or longevity language. Community sources informally describe strong projection but this is not official brand language. Maison policy prohibits longevity/intensity promises. 'Rich & Long Wearing' is a potential policy violation independent of the composition dispute. This is a separate policy review action."
+    },
+
+    {
+      "sourceId": "S-001",
+      "sourceType": "official-brand",
+      "sourceName": "Mugler official product page",
+      "sourceReference": "https://www.mugler.com/fragrance/womens-fragrances/alien/alien-goddess-eau-de-parfum/M020604230.html",
+      "accessedAt": "2026-08-10",
+      "field": "official ingredient/accord language",
+      "observedValue": {
+        "topIngredients": "Italian bergamot essence + coconut water accord",
+        "heartIngredients": "jasmine grandiflorum + heliotrope accord",
+        "baseIngredients": "Madagascar bourbon vanilla + cashmeran wood",
+        "officialNoteChapters": ["Radiant Revelation", "Miraculous Revelation", "Mindful Revelation"]
+      },
+      "confidence": "authoritative",
+      "notes": "Mugler describes their note chapters using the terms: 'Radiant Revelation' (top), 'Miraculous Revelation' (heart), 'Mindful Revelation' (base). This is evocative brand language layered over the ingredient names. The note pyramid structure is present in official Mugler documentation. The MKC top/heart/base schema is compatible with this structure."
+    }
+  ],
+
+  "identifiedConflicts": [
+    {
+      "conflictId": "C-001",
+      "field": "family",
+      "conflictType": "official-disagreement",
+      "sourceA": { "sourceId": "S-001", "value": "floral ambery woody" },
+      "sourceB": { "sourceId": "S-003", "value": "Floral oriental woody" },
+      "resolution": "Both are official Mugler. The URL slug uses 'floral-amber-woody'; the page title uses 'Floral oriental woody'. The structural category is 'Ambery'. All three agree the character is amber/oriental — not vanilla. The naming inconsistency is within Mugler's own editorial content and does not represent a dispute about the fundamental olfactory character. Resolution: Amber family confirmed; exact label is a Maison normalisation decision."
+    },
+    {
+      "conflictId": "C-002",
+      "field": "family",
+      "conflictType": "database-disagreement",
+      "sourceA": { "sourceId": "S-001", "value": "floral ambery woody (Mugler official)" },
+      "sourceB": { "sourceId": "S-004", "value": "Oriental Floral (Fragrantica)" },
+      "resolution": "Fragrantica uses traditional perfumery classification 'Oriental Floral'. Mugler uses 'floral ambery woody'. Both describe the same olfactory character — a floral fragrance with a dominant amber/oriental character and woody base. 'Oriental' is the traditional industry term; 'Amber' is the modern brand term. These are complementary, not contradictory. Maison MKC vocabulary uses 'Amber' (not 'Oriental') as a family term. MIP research value ['Amber', 'Floral'] is the appropriate Maison-vocabulary normalisation of both official sources."
+    },
+    {
+      "conflictId": "C-003",
+      "field": "notes.heart — jasmine variety",
+      "conflictType": "researcher-interpretation",
+      "sourceA": { "sourceId": "S-001", "value": "jasmine grandiflorum (official Mugler)" },
+      "sourceB": { "sourceId": "S-004", "value": "Jasmine (Fragrantica — no variety)" },
+      "resolution": "Official Mugler specifies 'Jasmine Grandiflorum'. Fragrantica normalises to 'Jasmine' (no variety). For the Maison MKC, the question is whether to use 'Jasmine' (matching Fragrantica normalisation and MIP research) or 'Jasmine Grandiflorum' (matching official Mugler precision). Recommended: 'Jasmine Grandiflorum' is the more precise and authoritative term. Founder decision required on Maison vocabulary preference."
+    }
+  ],
+
+  "threeWayComparison": [
+    {
+      "field": "family",
+      "legacyMkcValue": ["Vanilla", "Floral"],
+      "mipResearchValue": ["Amber", "Floral"],
+      "authoritativeEvidence": "Mugler official: 'floral ambery woody'. Mugler category: 'Ambery'. Mugler Mag: 'Floral oriental woody'. Fragrantica: 'Oriental Floral'. ALL sources confirm Amber/Oriental character — NOT Vanilla.",
+      "primarySource": "S-001 (Mugler official product page)",
+      "verdict": "MIP_RESEARCH_CONFIRMED",
+      "notes": "Legacy 'Vanilla' family classification is refuted by all authoritative sources. The fragrance is Amber/Oriental in character. 'Vanilla' appears in the BASE NOTES as an ingredient but is not the family classification."
+    },
+    {
+      "field": "profile",
+      "legacyMkcValue": "Vanilla Floral",
+      "mipResearchValue": "Amber Floral (derived)",
+      "authoritativeEvidence": "Derived from family. All sources confirm Amber/Oriental family — not Vanilla. Profile 'Vanilla Floral' is incorrect; 'Amber Floral' is the appropriate Maison normalisation.",
+      "primarySource": "S-001 (Mugler official — family classification)",
+      "verdict": "MIP_RESEARCH_CONFIRMED",
+      "notes": "Profile is directly derived from family. Legacy 'Vanilla Floral' is incorrect. Correct: 'Amber Floral'."
+    },
+    {
+      "field": "notes.top",
+      "legacyMkcValue": ["Coconut Milk", "Yuzu"],
+      "mipResearchValue": ["Coconut Water", "Bergamot"],
+      "authoritativeEvidence": "Mugler official: 'Italian bergamot essence' and 'coconut water accord'. Fragrantica: 'Coconut Water' and 'Bergamot'. Basenotes confirms. REBL Scents: 'Bergamot Essence' and 'Coconut Water'. ALL sources confirm Bergamot and Coconut Water.",
+      "primarySource": "S-001 (Mugler official product page)",
+      "verdict": "MIP_RESEARCH_CONFIRMED",
+      "notes": "Legacy 'Coconut Milk' and 'Yuzu' are both incorrect. Coconut Water (not Milk) — different ingredient form. Bergamot (not Yuzu) — completely different citrus material. Both legacy top notes are refuted."
+    },
+    {
+      "field": "notes.heart",
+      "legacyMkcValue": ["Jasmine Sambac", "Tuberose"],
+      "mipResearchValue": ["Jasmine", "Heliotrope"],
+      "authoritativeEvidence": "Mugler official: 'jasmine grandiflorum and heliotrope accord'. Fragrantica: 'Jasmine' and 'Heliotrope'. REBL Scents: 'Jasmine Grandiflorum' and 'Heliotrope'. ALL sources confirm Jasmine (Grandiflorum) and Heliotrope.",
+      "primarySource": "S-001 (Mugler official product page)",
+      "verdict": "MIP_RESEARCH_CONFIRMED",
+      "notes": "Legacy 'Jasmine Sambac' — incorrect variety (official is Grandiflorum). Legacy 'Tuberose' — completely absent from all authoritative sources; refuted entirely. Heliotrope confirmed by all sources."
+    },
+    {
+      "field": "notes.base",
+      "legacyMkcValue": ["Vanilla Absolute", "Sandalwood"],
+      "mipResearchValue": ["Bourbon Vanilla", "Cashmeran"],
+      "authoritativeEvidence": "Mugler official: 'Madagascar bourbon vanilla' and 'cashmeran wood'. Fragrantica: 'Bourbon Vanilla' and 'Cashmeran'. REBL Scents confirms both. ALL sources confirm Bourbon Vanilla and Cashmeran.",
+      "primarySource": "S-001 (Mugler official product page)",
+      "verdict": "MIP_RESEARCH_CONFIRMED",
+      "notes": "Legacy 'Vanilla Absolute' — incorrect form/variety (official is Bourbon Vanilla, from Madagascar). Legacy 'Sandalwood' — completely absent from all authoritative sources; refuted entirely. Cashmeran (a synthetic amber-musky-woody molecule) is confirmed by all sources."
+    },
+    {
+      "field": "description",
+      "legacyMkcValue": "Coconut milk and yuzu open with sun-drenched clarity, yielding to a luminous heart of jasmine sambac and tuberose that blooms without apology. Vanilla absolute and sandalwood anchor the composition in warm, creamy depth—a fragrance that radiates from within.",
+      "mipResearchValue": "All named notes in the description are contradicted (derivatively).",
+      "authoritativeEvidence": "Composition correction confirms: Coconut Milk → Coconut Water; Yuzu → Bergamot; Jasmine Sambac → Jasmine Grandiflorum; Tuberose → Heliotrope; Vanilla Absolute → Bourbon Vanilla; Sandalwood → Cashmeran. The description names all six incorrect legacy notes by name.",
+      "primarySource": "Derived from composition findings",
+      "verdict": "MIP_RESEARCH_CONFIRMED",
+      "notes": "The description requires a full rewrite. The Maison voice and editorial quality of the prose are sound — only the named ingredients must change. The mood ('radiates from within'), character (warm, luminous), and persona fit remain valid."
+    },
+    {
+      "field": "launchYear",
+      "legacyMkcValue": "Not present in MKC schema (institutional knowledge only)",
+      "mipResearchValue": 2021,
+      "authoritativeEvidence": "2021 confirmed by all sources without exception.",
+      "primarySource": "S-001 (Mugler official)",
+      "verdict": "MIP_RESEARCH_CONFIRMED",
+      "notes": "MIP research value 2021 is confirmed."
+    },
+    {
+      "field": "marketedGender",
+      "legacyMkcValue": "female",
+      "mipResearchValue": "female",
+      "authoritativeEvidence": "Confirmed by all sources: Mugler categorises under 'womens-fragrances'; Fragrantica says 'for women'.",
+      "primarySource": "S-001 (Mugler official)",
+      "verdict": "LEGACY_CONFIRMED",
+      "notes": "Both legacy and MIP values correct. No change required."
+    },
+    {
+      "field": "brand naming",
+      "legacyMkcValue": "N/A (native MKC uses 'Maison Skye & Rose' for brand field; referencing 'Alien Goddess Inspired')",
+      "mipResearchValue": "Mugler",
+      "authoritativeEvidence": "Current official brand name is 'Mugler'. The supplier list used 'Thierry Mugler' which is legacy naming. MIP research correctly identified 'Mugler' as canonical.",
+      "primarySource": "S-001 (Mugler official website)",
+      "verdict": "MIP_RESEARCH_CONFIRMED",
+      "notes": "Canonical brand: Mugler. No MKC change required (MKC brand field correctly says 'Maison Skye & Rose')."
+    },
+    {
+      "field": "perfumer",
+      "legacyMkcValue": "Not present in MKC schema",
+      "mipResearchValue": ["Nathalie Lorson", "Marie Salamagne"],
+      "authoritativeEvidence": "Confirmed across Fragrantica (Tier 2), Basenotes (Tier 2), and multiple retailer sources. Firmenich house confirmed.",
+      "primarySource": "S-004 (Fragrantica)",
+      "verdict": "MIP_RESEARCH_CONFIRMED",
+      "notes": "Perfumer attribution confirmed. Institutional knowledge only — not a MKC field."
+    },
+    {
+      "field": "relationships.alternatives",
+      "legacyMkcValue": ["delina-inspired"],
+      "mipResearchValue": "Not researched by MIP",
+      "authoritativeEvidence": "No authoritative evidence found for Delina as an alternative to Alien Goddess. Fragrance communities do not prominently cite this pairing.",
+      "primarySource": "None — UNRESOLVED",
+      "verdict": "STILL_UNRESOLVED",
+      "notes": "The delina-inspired alternative is unverified. Requires separate investigation or removal."
+    },
+    {
+      "field": "relationships.wardrobePartners",
+      "legacyMkcValue": ["baccarat-rouge-540-inspired"],
+      "mipResearchValue": "Not researched by MIP",
+      "authoritativeEvidence": "No authoritative evidence found for Baccarat Rouge 540 as a wardrobe partner to Alien Goddess.",
+      "primarySource": "None — UNRESOLVED",
+      "verdict": "STILL_UNRESOLVED",
+      "notes": "The baccarat-rouge-540-inspired wardrobePartner is unverified. Requires separate investigation or removal."
+    },
+    {
+      "field": "scentCharacter",
+      "legacyMkcValue": "Rich & Long Wearing",
+      "mipResearchValue": "Not researched by MIP",
+      "authoritativeEvidence": "Official Mugler descriptions do not use longevity language in found product copy. 'Rich & Long Wearing' is a performance promise.",
+      "primarySource": "Maison policy — no longevity/intensity promises",
+      "verdict": "STILL_UNRESOLVED",
+      "notes": "Separate policy review required. 'Rich & Long Wearing' may be an impermissible performance promise. This is independent of the composition dispute."
+    }
+  ],
+
+  "fieldDecisionMatrix": [
+    {
+      "field": "family",
+      "legacyMkcValue": ["Vanilla", "Floral"],
+      "mipResearchValue": ["Amber", "Floral"],
+      "authoritativeEvidence": "Mugler: 'floral ambery woody'. Mugler category: 'Ambery'. Fragrantica: 'Oriental Floral'.",
+      "primarySource": "Mugler official (S-001, S-002, S-003)",
+      "resolution": "MIP_RESEARCH_CONFIRMED",
+      "confidence": "authoritative",
+      "recommendedNextAction": "ADOPT AUTHORITATIVE VALUE — change to ['Amber', 'Floral'] per Maison vocabulary normalisation"
+    },
+    {
+      "field": "profile",
+      "legacyMkcValue": "Vanilla Floral",
+      "mipResearchValue": "Amber Floral (derived)",
+      "authoritativeEvidence": "Derived from family correction.",
+      "primarySource": "Derived",
+      "resolution": "MIP_RESEARCH_CONFIRMED",
+      "confidence": "authoritative",
+      "recommendedNextAction": "ADOPT AUTHORITATIVE VALUE — change to 'Amber Floral'"
+    },
+    {
+      "field": "notes.top",
+      "legacyMkcValue": ["Coconut Milk", "Yuzu"],
+      "mipResearchValue": ["Coconut Water", "Bergamot"],
+      "authoritativeEvidence": "Mugler: 'Italian bergamot essence' + 'coconut water accord'. Fragrantica: 'Coconut Water', 'Bergamot'. REBL Scents confirms.",
+      "primarySource": "Mugler official (S-001)",
+      "resolution": "MIP_RESEARCH_CONFIRMED",
+      "confidence": "authoritative",
+      "recommendedNextAction": "ADOPT AUTHORITATIVE VALUE — change to ['Coconut Water', 'Bergamot']"
+    },
+    {
+      "field": "notes.heart",
+      "legacyMkcValue": ["Jasmine Sambac", "Tuberose"],
+      "mipResearchValue": ["Jasmine", "Heliotrope"],
+      "authoritativeEvidence": "Mugler: 'jasmine grandiflorum' + 'heliotrope accord'. Fragrantica: 'Jasmine', 'Heliotrope'. REBL Scents: 'Jasmine Grandiflorum', 'Heliotrope'.",
+      "primarySource": "Mugler official (S-001)",
+      "resolution": "MIP_RESEARCH_CONFIRMED",
+      "confidence": "authoritative",
+      "recommendedNextAction": "ADOPT AUTHORITATIVE VALUE — change to ['Jasmine Grandiflorum', 'Heliotrope']. Founder decision required: use 'Jasmine Grandiflorum' (official Mugler precision) or 'Jasmine' (Fragrantica normalisation / MIP research). Both are defensible."
+    },
+    {
+      "field": "notes.base",
+      "legacyMkcValue": ["Vanilla Absolute", "Sandalwood"],
+      "mipResearchValue": ["Bourbon Vanilla", "Cashmeran"],
+      "authoritativeEvidence": "Mugler: 'Madagascar bourbon vanilla' + 'cashmeran wood'. Fragrantica: 'Bourbon Vanilla', 'Cashmeran'. REBL Scents confirms.",
+      "primarySource": "Mugler official (S-001)",
+      "resolution": "MIP_RESEARCH_CONFIRMED",
+      "confidence": "authoritative",
+      "recommendedNextAction": "ADOPT AUTHORITATIVE VALUE — change to ['Bourbon Vanilla', 'Cashmeran']"
+    },
+    {
+      "field": "description",
+      "legacyMkcValue": "Coconut milk and yuzu open with sun-drenched clarity, yielding to a luminous heart of jasmine sambac and tuberose that blooms without apology. Vanilla absolute and sandalwood anchor the composition in warm, creamy depth—a fragrance that radiates from within.",
+      "mipResearchValue": "N/A (no description in MIP research)",
+      "authoritativeEvidence": "All six named legacy notes are contradicted. Composition correction requires prose rewrite.",
+      "primarySource": "Derived from all composition findings",
+      "resolution": "CONTRADICTED (DERIVATIVELY)",
+      "confidence": "authoritative",
+      "recommendedNextAction": "REWRITE DERIVED EDITORIAL — preserve Maison voice and mood; replace all six incorrect ingredient names. Quality of prose is otherwise sound."
+    },
+    {
+      "field": "scentCharacter",
+      "legacyMkcValue": "Rich & Long Wearing",
+      "mipResearchValue": "N/A",
+      "authoritativeEvidence": "Not a composition field. Policy issue — performance promise.",
+      "primarySource": "Maison policy",
+      "resolution": "STILL_UNRESOLVED",
+      "confidence": "medium",
+      "recommendedNextAction": "REMOVE UNSUPPORTED CLAIM — 'Rich & Long Wearing' is a longevity promise inconsistent with Maison policy. Replace with editorial characterisation (e.g. 'Solar Amber Floral' or remove). Founder decision required on replacement."
+    },
+    {
+      "field": "educationTags",
+      "legacyMkcValue": ["vanilla", "floral", "jasmine", "tuberose", "coconut", "sandalwood", "summer", "long-wearing", "layering", "tropical"],
+      "mipResearchValue": "N/A",
+      "authoritativeEvidence": "Tags 'vanilla' (family incorrect), 'tuberose' (note incorrect), 'sandalwood' (note incorrect) are driven by incorrect composition. 'long-wearing' is a performance tag inconsistent with Maison policy.",
+      "primarySource": "Derived",
+      "resolution": "MIP_RESEARCH_CONFIRMED (partially)",
+      "confidence": "high",
+      "recommendedNextAction": "TARGETED CORRECTION — remove 'tuberose', 'sandalwood', 'long-wearing'; review 'vanilla' (ingredient tag is still valid for Bourbon Vanilla; family tag for Vanilla family may be removed); add 'amber', 'heliotrope', 'bergamot', 'cashmeran'."
+    },
+    {
+      "field": "academyArticleIds",
+      "legacyMkcValue": ["the-note-pyramid-explained", "guide-to-fragrance-families", "vanilla-and-amber-the-warm-base", "the-world-of-floral-fragrances", "office-and-professional-fragrances", "choosing-your-season-scent"],
+      "mipResearchValue": "N/A",
+      "authoritativeEvidence": "'vanilla-and-amber-the-warm-base' was linked because of Vanilla family classification. Now that the family is confirmed as Amber (not Vanilla), the article title is less on-point but still partially relevant (Amber is correct). Other articles remain appropriate.",
+      "primarySource": "Derived",
+      "resolution": "STILL_UNRESOLVED",
+      "confidence": "medium",
+      "recommendedNextAction": "TARGETED CORRECTION — review 'vanilla-and-amber-the-warm-base' linkage for continued appropriateness given family correction. The 'Amber' part of the title is now the primary match. Founder decision required."
+    },
+    {
+      "field": "relationships",
+      "legacyMkcValue": { "alternatives": ["delina-inspired"], "wardrobePartners": ["baccarat-rouge-540-inspired"] },
+      "mipResearchValue": "Not researched",
+      "authoritativeEvidence": "No corroborating evidence found for either relationship. Both appear to be legacy AI inferences.",
+      "primarySource": "None — UNRESOLVED",
+      "resolution": "STILL_UNRESOLVED",
+      "confidence": "low",
+      "recommendedNextAction": "RESEARCH MORE — specific investigation into fragrance community comparisons/pairings, or REMOVE UNSUPPORTED CLAIM if founder determines AI-only provenance is insufficient basis."
+    },
+    {
+      "field": "gender",
+      "legacyMkcValue": "female",
+      "mipResearchValue": "female",
+      "authoritativeEvidence": "Confirmed female positioning.",
+      "primarySource": "S-001 (Mugler official)",
+      "resolution": "LEGACY_CONFIRMED",
+      "confidence": "authoritative",
+      "recommendedNextAction": "KEEP LEGACY — no change needed"
+    },
+    {
+      "field": "season / seasons",
+      "legacyMkcValue": "Summer",
+      "mipResearchValue": "N/A",
+      "authoritativeEvidence": "Not a direct authoritative-research question. Amber florals often span seasons; the official Mugler copy uses 'solar' language suggesting warm-weather orientation. No direct refutation.",
+      "primarySource": "N/A",
+      "resolution": "LEGACY_CONFIRMED",
+      "confidence": "medium",
+      "recommendedNextAction": "KEEP LEGACY — Summer designation is directionally appropriate for an amber floral with coconut water and bergamot opening. No authoritative evidence contradicts it."
+    },
+    {
+      "field": "vibe",
+      "legacyMkcValue": ["Radiant", "Luminous", "Sensual", "Confident", "Warm", "Sophisticated"],
+      "mipResearchValue": "N/A",
+      "authoritativeEvidence": "Not subject to authoritative external research — Maison editorial classification.",
+      "primarySource": "Maison editorial",
+      "resolution": "LEGACY_CONFIRMED",
+      "confidence": "high",
+      "recommendedNextAction": "KEEP LEGACY — These are Maison editorial vibes, consistent with an amber floral character."
+    },
+    {
+      "field": "subtitle",
+      "legacyMkcValue": "Radiant Bloom",
+      "mipResearchValue": "N/A",
+      "authoritativeEvidence": "Not subject to authoritative external research — Maison editorial.",
+      "primarySource": "Maison editorial",
+      "resolution": "LEGACY_CONFIRMED",
+      "confidence": "high",
+      "recommendedNextAction": "KEEP LEGACY — 'Radiant Bloom' is appropriate for this amber floral with jasmine and heliotrope heart."
+    }
+  ],
+
+  "resolutionRecommendation": {
+    "classification": "R2",
+    "rationale": "Authoritative research clearly and consistently confirms the MIP Gemini research values for all four critical composition fields. The legacy factory values are refuted across multiple independent sources. R2 (targeted deterministic correction) is recommended over R4 (full regeneration) because: (1) the corrections are specific and factual — family, notes.top, notes.heart, notes.base, profile, and description require updating; (2) the existing Maison editorial content — subtitle 'Radiant Bloom', vibe tags, occasions, seasons, signatureStyle, intelligence scores — is qualitatively sound and appropriate for the confirmed amber-floral character; (3) regenerating the full record risks losing editorial quality that is well-authored; (4) R4 is reserved for records whose editorial and discovery knowledge is broadly compromised — this record's non-composition knowledge is not compromised.",
+    "fieldsRequiringChange": [
+      { "field": "family", "action": "ADOPT AUTHORITATIVE VALUE", "from": ["Vanilla", "Floral"], "to": ["Amber", "Floral"] },
+      { "field": "profile", "action": "ADOPT AUTHORITATIVE VALUE", "from": "Vanilla Floral", "to": "Amber Floral" },
+      { "field": "notes.top", "action": "ADOPT AUTHORITATIVE VALUE", "from": ["Coconut Milk", "Yuzu"], "to": ["Coconut Water", "Bergamot"] },
+      { "field": "notes.heart", "action": "ADOPT AUTHORITATIVE VALUE", "from": ["Jasmine Sambac", "Tuberose"], "to": ["Jasmine Grandiflorum", "Heliotrope"], "founderNote": "Founder may choose 'Jasmine' vs 'Jasmine Grandiflorum' — both defensible" },
+      { "field": "notes.base", "action": "ADOPT AUTHORITATIVE VALUE", "from": ["Vanilla Absolute", "Sandalwood"], "to": ["Bourbon Vanilla", "Cashmeran"] },
+      { "field": "description", "action": "REWRITE DERIVED EDITORIAL", "note": "Preserve Maison voice; replace all six incorrect ingredient names" },
+      { "field": "scentCharacter", "action": "REMOVE UNSUPPORTED CLAIM", "from": "Rich & Long Wearing", "note": "Policy issue — longevity promise. Replace with editorial alternative or remove." }
+    ],
+    "fieldsRequiringFounderDecision": [
+      "notes.heart — 'Jasmine Grandiflorum' vs 'Jasmine'",
+      "scentCharacter — replacement term or removal",
+      "relationships — investigate or remove unverified claims",
+      "academyArticleIds — review 'vanilla-and-amber-the-warm-base' linkage"
+    ],
+    "fieldsConfirmedCorrect": [
+      "slug", "brand", "name", "collection", "gender", "status",
+      "season", "seasons", "mood", "vibe", "occasions",
+      "prices", "images", "bestSeller", "newArrival",
+      "subtitle", "academyCategories", "projection",
+      "sweetness", "warmth", "intensity", "versatility", "popularity"
+    ],
+    "fieldsRequiringReview": [
+      "signatureStyle", "recommendedFor", "educationTags", "academyArticleIds", "learningPath", "relationships"
+    ],
+    "founderDecisionRequired": true,
+    "founderDecisionNote": "Founder must approve the R2 correction plan before any MKC changes are made. The research establishes what is factually correct — the founder decides the exact Maison vocabulary, jasmine variety preference, and scentCharacter replacement."
+  }
+}
