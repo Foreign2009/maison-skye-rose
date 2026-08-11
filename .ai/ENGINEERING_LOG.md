@@ -66,21 +66,21 @@ Never edit or delete past entries.
 - Validator updated: P5C-07 replaced; §9 added (P5CR-01 through P5CR-07 — source code proofs); §10 added (P5CR-08 through P5CR-35 — 28 behavioural fixture proofs). Total: 75 proofs.
 - Ran mip:validate:relationship-review-p5c: 75/75 PASS.
 - Ran regression suite: mip:validate:relationship-review 74/74, mip:validate:relationship-reciprocity-remediation 48/48, mip:validate:catalogue-relationships 55/55. All PASS.
-- Ran npm run build: PASS — 189 routes, 0 TypeScript errors, 0 warnings.
+- Ran npm run build: PASS — static generation 189/189; 0 TypeScript errors; 0 warnings.
 - Updated .ai/CURRENT_TASK.md, .ai/ENGINEERING_LOG.md, PROJECT_STATUS.md.
 - Committed as EP6-P5CR (separate commit; d5f5570 not amended).
 
 **Tasks Started:**
 - None — EP6-P5CR is complete.
 
-**Build Result:** PASS — 189 routes, 0 TypeScript errors, 0 warnings.
+**Build Result:** PASS — static generation 189/189; 0 TypeScript errors; 0 warnings.
 
 **Files Changed:**
 - `app/lib/identity/editorial/relationship/RelationshipEditorialService.ts` — CORRECTED (single-snapshot `_decide()`, honest CAS comment, `_loadMerged()` notation)
 - `scripts/identity/validate-relationship-editorial-review-p5c.ts` — CORRECTED (P5C-07 replaced; §9 P5CR-01 through P5CR-07 added; §10 P5CR-08 through P5CR-35 added; 75 total proofs)
 - `.ai/CURRENT_TASK.md` — UPDATED (EP6-P5C + EP6-P5CR complete)
 - `.ai/ENGINEERING_LOG.md` — APPENDED (this entry)
-- `PROJECT_STATUS.md` — UPDATED (EP6-P5CR complete; 189 routes)
+- `PROJECT_STATUS.md` — UPDATED (EP6-P5CR complete; static generation 189/189)
 
 **Handoff:**
 - EP6-P5CR is complete. The decision ledger is now hardened for live founder use.
@@ -130,12 +130,12 @@ Never edit or delete past entries.
 - Added `mip:validate:relationship-review-p5c` to package.json.
 - Ran mip:validate:relationship-review-p5c: 40/40 PASS.
 - Ran full regression suite: P5BR 74/74, P5A 48/48, P4 55/55. All PASS.
-- Ran npm run build: PASS — 189 routes (2 new admin routes added), 0 TypeScript errors, 0 warnings.
+- Ran npm run build: PASS — static generation 189/189; 2 new admin route patterns added; 0 TypeScript errors; 0 warnings.
 
 **Tasks Started:**
 - EP6-P5CR (same session, separate corrective episode) — see P5CR entry.
 
-**Build Result:** PASS — 189 routes, 0 TypeScript errors, 0 warnings.
+**Build Result:** PASS — static generation 189/189; 0 TypeScript errors; 0 warnings.
 
 **Files Changed:**
 - `app/lib/identity/editorial/relationship/types.ts` — EXTENDED (EP6-P5C types: ledger, service, inputs, results, progress)

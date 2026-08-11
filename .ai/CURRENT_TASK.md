@@ -26,7 +26,7 @@ EP6-P5BR delivered a governance-correct 168-unit review queue. EP6-P5C built the
 - Score-only labels (0–3, 4–7, 8+); evidence disclaimer on both list and detail
 - Evolution pairs: RESEARCH_BLOCKED UI with no action panel
 - P5C validator: 40 proofs across 8 sections
-- Build: 189 routes, 0 TypeScript errors, 0 warnings
+- Build: PASS — static generation 189/189; 0 TypeScript errors; 0 warnings
 
 **EP6-P5CR result (commit EP6-P5CR):**
 Corrected two live-use safety defects before the first real founder decision:
