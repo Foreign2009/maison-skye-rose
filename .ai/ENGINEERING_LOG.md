@@ -39,6 +39,127 @@ Never edit or delete past entries.
 
 ## Log
 
+### 2026-08-11 — EP6-P5CR — Harden Relationship Decision Ledger
+
+**Participants:** Project Owner (founder authorisation) / Claude (implementation and execution)
+**Program:** EP6-P5CR — Same-session corrective episode for EP6-P5C (commit d5f5570). Two live-use safety defects corrected before the first real founder decision was recorded. Production ledger not touched (entries remain `[]`). d5f5570 not reverted or amended.
+
+**Why P5CR was required:**
+1. **Defect A — Empty-Ledger-Only Validator (P5C-07):** Proof P5C-07 asserted `ledger.entries.length === 0`. This assertion is true only before any decision is recorded. After the first legitimate founder decision, P5C-07 would permanently fail, making the validator unusable for live-use verification.
+2. **Defect B — Stale-Write Window (Second `ledgerRepo.load()`):** `_decide()` called `ledgerRepo.load()` twice: once via `_loadMerged()` at the top (snapshot L1), and again when building `updatedLedger` (snapshot L2). Stale-write validation was applied against L1 but the new entry was appended to L2. If the ledger changed between the two loads, the validation would be stale.
+
+**Decisions Made:**
+- P5C-07 replaced: `entries.length === 0` → `Array.isArray(entries)`. Valid for any ledger size. Entry-level validation moved to §10 fixture tests.
+- `_decide()` refactored to single-snapshot design: `queueRepo.load()` and `ledgerRepo.load()` called exactly ONCE per transaction. All subsequent validation AND the append use the same coherent snapshot objects. No second `ledgerRepo.load()` after step 2.
+- Filesystem CAS limitation honestly stated in service class comment: single-snapshot design eliminates ONE avoidable race window but cannot guarantee cross-process atomicity. True CAS requires a database or filesystem lock. Residual risk accepted for single-founder admin workflow.
+- `_loadMerged()` clarified as read-only projection utility; comment explicitly states "NOT used by `_decide()`".
+- Validator hardened (Approach A): §9 source-code proofs + §10 fixture behavioural tests added to existing P5C validator. No separate P5CR validator file created.
+- In-memory fixture repositories used for behavioural tests — production ledger never written to prove tests pass.
+- Fixture units sourced from the real frozen queue (FIXTURE_PENDING_UNIT, FIXTURE_EVOLUTION_UNIT).
+
+**Tasks Completed:**
+- Confirmed stop conditions: production ledger `entries: []`; d5f5570 at HEAD; no canonical MKC mutations in scope.
+- Read all required files per Golden Rule (service, persistence, ledger JSON, validator, types, actions, detail component, CURRENT_TASK, ENGINEERING_LOG, PROJECT_STATUS).
+- Edit 1 (service class comment): added EP6-P5CR single-snapshot description; added honest filesystem CAS limitation section.
+- Edit 2 (`_decide()` body): refactored to single-snapshot core — one `queueRepo.load()`, one `ledgerRepo.load()`, inline `latestGovStateMap` construction, `transactionId` collision guard, no second `ledgerRepo.load()`, append to same snapshot.
+- Edit 3 (`_loadMerged()` docstring): added "NOT used by `_decide()`" notation.
+- Validator updated: P5C-07 replaced; §9 added (P5CR-01 through P5CR-07 — source code proofs); §10 added (P5CR-08 through P5CR-35 — 28 behavioural fixture proofs). Total: 75 proofs.
+- Ran mip:validate:relationship-review-p5c: 75/75 PASS.
+- Ran regression suite: mip:validate:relationship-review 74/74, mip:validate:relationship-reciprocity-remediation 48/48, mip:validate:catalogue-relationships 55/55. All PASS.
+- Ran npm run build: PASS — 189 routes, 0 TypeScript errors, 0 warnings.
+- Updated .ai/CURRENT_TASK.md, .ai/ENGINEERING_LOG.md, PROJECT_STATUS.md.
+- Committed as EP6-P5CR (separate commit; d5f5570 not amended).
+
+**Tasks Started:**
+- None — EP6-P5CR is complete.
+
+**Build Result:** PASS — 189 routes, 0 TypeScript errors, 0 warnings.
+
+**Files Changed:**
+- `app/lib/identity/editorial/relationship/RelationshipEditorialService.ts` — CORRECTED (single-snapshot `_decide()`, honest CAS comment, `_loadMerged()` notation)
+- `scripts/identity/validate-relationship-editorial-review-p5c.ts` — CORRECTED (P5C-07 replaced; §9 P5CR-01 through P5CR-07 added; §10 P5CR-08 through P5CR-35 added; 75 total proofs)
+- `.ai/CURRENT_TASK.md` — UPDATED (EP6-P5C + EP6-P5CR complete)
+- `.ai/ENGINEERING_LOG.md` — APPENDED (this entry)
+- `PROJECT_STATUS.md` — UPDATED (EP6-P5CR complete; 189 routes)
+
+**Handoff:**
+- EP6-P5CR is complete. The decision ledger is now hardened for live founder use.
+- Production ledger remains `entries: []` — no real decisions recorded during P5CR.
+- The founder may begin recording decisions when ready. The first decision will be a PENDING → FOUNDER_APPROVED, FOUNDER_REJECTED, or DEFERRED transition.
+- P5CR validator (75/75) will continue passing as the ledger grows: P5CR-07 is live-state-agnostic, §10 fixture tests prove all transition semantics against in-memory repos.
+- Evolution pairs (6 units) remain RESEARCH_BLOCKED until authoritative research is available.
+- Do not begin relationship removal (FOUNDER_REJECTED → canonical mutation) automatically. That requires a separate founder authorisation.
+
+**Open Questions Carried Forward:**
+- When will the founder begin recording decisions on the 162 PENDING units?
+- What authoritative sources will be used for the 6 evolution pair research requirements before those units can receive founder decisions?
+
+---
+
+### 2026-08-11 — EP6-P5C — Founder Relationship Review Interface
+
+**Participants:** Project Owner (founder authorisation) / Claude (implementation and execution)
+**Program:** EP6-P5C — Build the founder-facing workstation for relationship editorial review. Delivers the admin UI, server actions, ledger persistence, and service layer required to record founder decisions against the 162 PENDING queue units from EP6-P5BR.
+
+**Decisions Made:**
+- Append-only decision ledger established: `catalogue-relationship-decision-ledger.json` (schemaVersion: EP6-P5C-v1). Queue is frozen (EP6-P5BR artifact); decisions are recorded in the ledger only. Queue is never modified.
+- Atomic ledger persistence: tmp file → round-trip JSON verify → .bak rename → atomic rename. No partial writes. No data loss on crash.
+- Score labels: numeric-only (0–3, 4–7, 8+) on both list and detail. No editorial qualifiers ("weak", "moderate", "strong"). Evidence disclaimer: "Repository evidence — not editorial truth" on both surfaces.
+- Transition matrix: PENDING → {FOUNDER_APPROVED, FOUNDER_REJECTED, DEFERRED}; DEFERRED → {FOUNDER_APPROVED, FOUNDER_REJECTED}; DEFERRED → DEFERRED blocked (no-op protection). Terminal states have no outgoing transitions.
+- Evolution pairs: UI shows RESEARCH_BLOCKED state and a descriptive explanation. No action panel. No decision allowed via service.
+- transactionId generated server-side only via `crypto.randomUUID()`. Never client-side.
+- Stale-write protection: `expectedGovernanceState` token on all input types. Service rejects if current reconstructed state ≠ expected state.
+- MKC canonical records NOT mutated by P5C. Rejected relationships remain in MKC. Canonical removal is a separate future episode.
+- Detail page uses `key={stateKey}` for clean client remount after mutations.
+- Population count derived from queue filter at runtime: `units.filter(u => u.requiresFounderDecision).length`. Never hardcoded.
+
+**Tasks Completed:**
+- Read all required files per Golden Rule.
+- Confirmed d5f5570 in git lineage (EP6-P5C); confirmed EP6-P5BR queue at HEAD.
+- Extended `types.ts`: `RelationshipDecisionEntry`, `RelationshipDecisionLedger`, `RelationshipEditorialClock`, repository interfaces, service error taxonomy, `RelationshipEditorialResult`, input types with `expectedGovernanceState`, `RelationshipReviewProgress`, `RelationshipReviewSummary`, `RelationshipQueueFilter`.
+- Created `persistence.ts`: atomic queue load (with schemaVersion + graphFingerprint validation), atomic ledger load/save (tmp → verify → bak → rename).
+- Created `RelationshipEditorialService.ts` with `getReviewQueue()`, `getReviewUnit()`, `getProgress()`, `approveRelationship()`, `rejectRelationship()`, `deferRelationship()`, `_decide()` (single-source transaction core), `_loadMerged()`, `_buildCurrentStateMap()`, `_governanceToStatus()`.
+- Created `app/lib/identity/data/decisions/catalogue-relationship-decision-ledger.json` (empty ledger: `entries: []`).
+- Created `app/admin/identity/relationships/page.tsx` (Server Component: queue list with progress bar).
+- Created `app/admin/identity/relationships/RelationshipReviewList.tsx` (Client Component: filterable queue list).
+- Created `app/admin/identity/relationships/actions.ts` (Server Actions: `assertAuth()` per action, service delegation).
+- Created `app/admin/identity/relationships/[reviewId]/page.tsx` (Server Component: detail with `stateKey`).
+- Created `app/admin/identity/relationships/RelationshipReviewDetail.tsx` (Client Component: decision workstation with approve/reject/defer panels).
+- Updated `app/admin/components/AdminNavigation.tsx`: added "Relationship Review" nav item.
+- Created `scripts/identity/validate-relationship-editorial-review-p5c.ts`: 40 proofs (§§ 1–8).
+- Added `mip:validate:relationship-review-p5c` to package.json.
+- Ran mip:validate:relationship-review-p5c: 40/40 PASS.
+- Ran full regression suite: P5BR 74/74, P5A 48/48, P4 55/55. All PASS.
+- Ran npm run build: PASS — 189 routes (2 new admin routes added), 0 TypeScript errors, 0 warnings.
+
+**Tasks Started:**
+- EP6-P5CR (same session, separate corrective episode) — see P5CR entry.
+
+**Build Result:** PASS — 189 routes, 0 TypeScript errors, 0 warnings.
+
+**Files Changed:**
+- `app/lib/identity/editorial/relationship/types.ts` — EXTENDED (EP6-P5C types: ledger, service, inputs, results, progress)
+- `app/lib/identity/editorial/relationship/persistence.ts` — CREATED (atomic queue + ledger persistence)
+- `app/lib/identity/editorial/relationship/RelationshipEditorialService.ts` — CREATED (founder decision service)
+- `app/lib/identity/data/decisions/catalogue-relationship-decision-ledger.json` — CREATED (empty ledger)
+- `app/admin/identity/relationships/page.tsx` — CREATED (queue list Server Component)
+- `app/admin/identity/relationships/RelationshipReviewList.tsx` — CREATED (queue list Client Component)
+- `app/admin/identity/relationships/actions.ts` — CREATED (Server Actions)
+- `app/admin/identity/relationships/[reviewId]/page.tsx` — CREATED (detail Server Component)
+- `app/admin/identity/relationships/RelationshipReviewDetail.tsx` — CREATED (detail workstation Client Component)
+- `app/admin/components/AdminNavigation.tsx` — MODIFIED (Relationship Review nav item added)
+- `scripts/identity/validate-relationship-editorial-review-p5c.ts` — CREATED (40-proof P5C validator)
+- `package.json` — MODIFIED (mip:validate:relationship-review-p5c script added)
+
+**Handoff:**
+- EP6-P5C committed as d5f5570. EP6-P5CR corrective episode follows in same session.
+- See EP6-P5CR entry for the corrective details.
+
+**Open Questions Carried Forward:**
+- See EP6-P5CR entry.
+
+---
+
 ### 2026-08-10 — EP6-P5BR — Correct Relationship Review Governance Semantics
 
 **Participants:** Project Owner (founder authorisation) / Claude (implementation and execution)

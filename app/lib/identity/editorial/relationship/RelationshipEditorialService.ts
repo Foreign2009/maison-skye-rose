@@ -1,5 +1,5 @@
 /**
- * Maison Identity Platform — Relationship Editorial Transaction Service (EP6-P5C)
+ * Maison Identity Platform — Relationship Editorial Transaction Service (EP6-P5C/P5CR)
  *
  * SERVER-ONLY MODULE.
  * Provides founder decision governance for the 162 PENDING relationship review units.
@@ -20,12 +20,25 @@
  *   6. Evolution guard — RESEARCH_BLOCKED units are unconditionally rejected from
  *      all mutation paths.
  *
- * Stale-write limitation:
- *   Node.js filesystem operations cannot guarantee true CAS across independent
- *   processes on Windows NTFS. Two simultaneous requests could theoretically both
- *   pass the expectedGovernanceState check before either saves. This risk is
- *   accepted for a single-founder admin workflow. The expectedGovernanceState
- *   check provides best-effort protection. True CAS would require a database.
+ * EP6-P5CR — Single-snapshot transaction core:
+ *   Each mutation in _decide() loads queue + ledger exactly ONCE and uses that
+ *   coherent snapshot for all validation AND the append operation. This eliminates
+ *   the avoidable second ledgerRepo.load() call that existed in the original P5C
+ *   implementation, narrowing the stale-write race window.
+ *
+ * Filesystem concurrency limitation (unchanged after P5CR):
+ *   The single-snapshot design removes ONE avoidable race window but cannot
+ *   eliminate filesystem-level concurrency between independent processes:
+ *   - Two simultaneous requests can still both pass the expectedGovernanceState
+ *     check between each other's load and save operations.
+ *   - Atomic file replacement (tmp → rename) protects against partial-file
+ *     corruption but not against concurrent reads before either write.
+ *   - True cross-process CAS would require a database or a filesystem locking
+ *     primitive.
+ *   For a single-founder admin workflow this residual risk is accepted.
+ *   The correct post-P5CR guarantee: stale-review tokens protect normal stale
+ *   submissions; each transaction uses one coherent snapshot; atomic file
+ *   replacement protects file integrity; distributed CAS is not claimed.
  */
 
 import { randomUUID } from "crypto";
@@ -210,18 +223,22 @@ export class RelationshipEditorialService {
   // ── Private transaction core ────────────────────────────────────────────────
 
   /**
-   * Core decision transaction:
-   *   1. Load queue + ledger
-   *   2. Locate unit
-   *   3. Validate: not research-blocked, not evolution
-   *   4. Reconstruct current governance state
-   *   5. Stale-write check: expected vs current governance state
-   *   6. Validate transition: current state ∈ allowedFromStates
-   *   7. Validate input: actor non-empty, reason non-empty
-   *   8. Generate server-side transactionId
-   *   9. Build decision entry
-   *  10. Append to ledger
-   *  11. Save atomically
+   * Core decision transaction — EP6-P5CR single-snapshot design:
+   *
+   *  1. Validate input (actor, reason non-empty) — cheapest path, no I/O
+   *  2. Load queue + ledger — EXACTLY ONCE per transaction. Both repositories
+   *     are read from this single coherent snapshot. No second load is made.
+   *  3. Build current-state index from the loaded ledger entries
+   *  4. Locate unit in queue (not-found guard)
+   *  5. Evolution guard: !requiresFounderDecision → research-blocked error
+   *  6. Reconstruct current governance state from THE SAME loaded ledger
+   *  7. Stale-write check: currentGovState vs input.expectedGovernanceState
+   *  8. Transition guard: currentGovState ∈ allowedFromStates
+   *  9. Generate server-side transactionId (randomUUID, server domain only)
+   * 10. Guard against transactionId collision in the LOADED ledger snapshot
+   * 11. Build decision entry — identity fields derived from queue unit, not input
+   * 12. Append to THE SAME loaded ledger snapshot (no second ledgerRepo.load())
+   * 13. Save atomically via ledgerRepo.save()
    */
   private _decide(
     input: ApproveRelationshipInput | RejectRelationshipInput | DeferRelationshipInput,
@@ -230,7 +247,7 @@ export class RelationshipEditorialService {
     newStatus: RelationshipReviewStatus,
   ): RelationshipEditorialResult {
 
-    // Input validation
+    // 1. Input validation — before any I/O
     if (!input.actor.trim()) {
       return { success: false, kind: "invalid-input", message: "Actor (reviewer name) is required." };
     }
@@ -238,10 +255,21 @@ export class RelationshipEditorialService {
       return { success: false, kind: "invalid-input", message: "Reason is required for this decision." };
     }
 
-    // Load
-    const { units, allEntries } = this._loadMerged();
-    const unit = units.find(u => u.reviewId === input.reviewId) ?? null;
+    // 2. Single coherent snapshot — queue and ledger loaded ONCE.
+    //    All subsequent validation and the append use these exact objects.
+    //    ledgerRepo.load() is NOT called again after this point.
+    const queue  = this.queueRepo.load();
+    const ledger = this.ledgerRepo.load();
+    const units  = queue.units;
 
+    // 3. Build governance state index from this ledger snapshot (last-entry-wins)
+    const latestGovStateMap = new Map<string, RelationshipGovernanceState>();
+    for (const entry of ledger.entries) {
+      latestGovStateMap.set(entry.reviewId, entry.newGovernanceState);
+    }
+
+    // 4. Locate unit
+    const unit = units.find(u => u.reviewId === input.reviewId) ?? null;
     if (!unit) {
       return {
         success: false,
@@ -250,7 +278,7 @@ export class RelationshipEditorialService {
       };
     }
 
-    // Evolution / research-blocked guard
+    // 5. Evolution / research-blocked guard
     if (!unit.requiresFounderDecision) {
       return {
         success: false,
@@ -262,12 +290,11 @@ export class RelationshipEditorialService {
       };
     }
 
-    // Reconstruct current governance state
-    const currentStateMap = this._buildCurrentStateMap(units, allEntries);
-    const currentGovState = currentStateMap.get(unit.reviewId) ?? unit.governanceState;
+    // 6. Reconstruct current governance state from THE SAME snapshot
+    const currentGovState = latestGovStateMap.get(unit.reviewId) ?? unit.governanceState;
     const currentStatus   = this._governanceToStatus(currentGovState, unit.status);
 
-    // Stale-write check
+    // 7. Stale-write check
     if (currentGovState !== input.expectedGovernanceState) {
       return {
         success: false,
@@ -279,7 +306,7 @@ export class RelationshipEditorialService {
       };
     }
 
-    // Transition validation
+    // 8. Transition validation
     if (!allowedFromStates.includes(currentGovState)) {
       return {
         success: false,
@@ -291,10 +318,24 @@ export class RelationshipEditorialService {
       };
     }
 
-    // Build entry — transactionId generated server-side only
+    // 9. Generate server-side transactionId (randomUUID — never client-side)
+    const transactionId = randomUUID();
+
+    // 10. Guard against transactionId collision in the loaded ledger snapshot.
+    //     UUID v4 collision probability is ~10^-18 per entry; guard included
+    //     for ledger integrity completeness.
+    if (ledger.entries.some(e => e.transactionId === transactionId)) {
+      return {
+        success: false,
+        kind:    "invalid-input",
+        message: "Transaction ID collision detected (UUID v4 collision). This is an internal error — please retry.",
+      };
+    }
+
+    // 11. Build entry — reviewId/pairType/slugA/slugB derived from queue unit
     const now = this.clock.now();
     const entry: RelationshipDecisionEntry = {
-      transactionId:          randomUUID(),
+      transactionId,
       reviewId:               unit.reviewId,
       pairType:               unit.pairType,
       slugA:                  unit.slugA,
@@ -310,12 +351,13 @@ export class RelationshipEditorialService {
       decidedAt:              now,
     };
 
-    // Append and save
-    const ledger = this.ledgerRepo.load();
+    // 12. Append to THE SAME ledger snapshot — no second ledgerRepo.load()
     const updatedLedger: RelationshipDecisionLedger = {
       ...ledger,
       entries: [...ledger.entries, entry],
     };
+
+    // 13. Atomic save
     this.ledgerRepo.save(updatedLedger);
 
     return { success: true, entry };
@@ -323,6 +365,12 @@ export class RelationshipEditorialService {
 
   // ── Private utilities ───────────────────────────────────────────────────────
 
+  /**
+   * Loads and merges queue + ledger for READ-ONLY projections.
+   * Used by getReviewQueue, getReviewUnit, getProgress.
+   * NOT used by _decide() — mutations use a dedicated single-snapshot load
+   * inside _decide() to eliminate the second-read race window (EP6-P5CR).
+   */
   private _loadMerged(): {
     units: readonly RelationshipReviewUnit[];
     allEntries: readonly RelationshipDecisionEntry[];

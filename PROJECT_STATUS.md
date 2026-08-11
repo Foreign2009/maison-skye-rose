@@ -1,17 +1,20 @@
 # Project Status — Maison Skye & Rose
 
-**Last updated:** 2026-08-10
+**Last updated:** 2026-08-11
 **Phase:** Launch Execution
-**Build status:** PASS — 188 routes, 0 TypeScript errors, 0 warnings (EP6-P5BR)
+**Build status:** PASS — 189 routes, 0 TypeScript errors, 0 warnings (EP6-P5CR)
 
 ---
 
 ## Current Engineering Program
 
-**Program:** EP6-P5BR — Correct Relationship Review Governance Semantics — COMPLETE
+**Program:** EP6-P5CR — Harden Relationship Decision Ledger — COMPLETE
 **Sprint:** EP6
-**Gate:** None — EP6-P5BR is complete. Next programme at founder's direction.
-**Outcome:** Corrective episode for EP6-P5B. Three governance-contract violations corrected. Evolution pairs now correctly initialised as `needs-research / RESEARCH_BLOCKED`. Alt+WP pairs correctly initialised as `pending-review / PENDING`. `REPOSITORY_SUPPORTED` eliminated — canonical presence tracked separately via `RelationshipCanonicalState`. `requiresFounderDecision` field added. Builder shadow types removed; imports canonical domain types. Validator strengthened from 52 to 74 proofs with §800 independent edge derivation. Schema version bumped to EP6-P5BR-v1. Queue regenerated. Baselines: EP6-P4 55/55, EP6-P5A 48/48, EP6-P5BR 74/74. Build: 188 routes, 0 TypeScript errors, 0 warnings.
+**Gate:** None — EP6-P5CR is complete. Founder may begin recording decisions at their direction.
+**Outcome:** Same-session corrective episode for EP6-P5C (d5f5570). Two live-use safety defects corrected: (1) P5C-07 validator replaced with live-state-agnostic array check; (2) `_decide()` refactored to single-snapshot transaction core eliminating the second `ledgerRepo.load()` race window. Validator hardened from 40 to 75 proofs (§9 source-code proofs P5CR-01–P5CR-07; §10 behavioural fixture tests P5CR-08–P5CR-35 using in-memory repos). Production ledger remains `entries: []`. All regressions pass: EP6-P5BR 74/74, EP6-P5A 48/48, EP6-P4 55/55. Build: 189 routes, 0 TypeScript errors, 0 warnings.
+
+**Previous Programme:** EP6-P5C — Founder Relationship Review Interface — COMPLETE (commit d5f5570, 2026-08-11)
+Founder-facing workstation for relationship editorial review. Append-only decision ledger, atomic persistence, RelationshipEditorialService (approve/reject/defer), admin queue list, admin detail workstation, Server Actions with auth, 40-proof P5C validator. 2 new admin routes. Build: 189 routes.
 
 ---
 
@@ -39,11 +42,11 @@ The Maison Fragrance Academy (EP13) is in the planning stage.
 | Build result | PASS |
 | TypeScript errors | 0 |
 | Warnings | 0 |
-| Total pages | 188 |
+| Total pages | 189 |
 | Product pages (SSG) | 93 |
 | Static pages | 25 |
-| Dynamic routes | 14 |
-| Last verified | 2026-08-10 (EP6-P4) |
+| Dynamic routes | 16 |
+| Last verified | 2026-08-11 (EP6-P5CR) |
 
 Verify: `npm run build`
 
