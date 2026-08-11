@@ -98,6 +98,54 @@
       "reason": "produce not the  the same feeling",
       "founderNotes": null,
       "decidedAt": "2026-08-11T18:49:42.920Z"
+    },
+    {
+      "transactionId": "2de92666-0cdc-4181-ac0e-4754624b5edc",
+      "reviewId": "REL-alternatives-acqua-di-gio-parfum-inspired--acqua-di-gio-profondo-inspired",
+      "pairType": "alternatives",
+      "slugA": "acqua-di-gio-parfum-inspired",
+      "slugB": "acqua-di-gio-profondo-inspired",
+      "decision": "FOUNDER_APPROVED",
+      "previousGovernanceState": "PENDING",
+      "newGovernanceState": "FOUNDER_APPROVED",
+      "previousStatus": "pending-review",
+      "newStatus": "approved",
+      "actor": "Awf",
+      "reason": "produce the same feeling",
+      "founderNotes": null,
+      "decidedAt": "2026-08-11T19:41:47.345Z"
+    },
+    {
+      "transactionId": "7a7b095b-eb24-4f44-9c6b-c222c910a219",
+      "reviewId": "REL-alternatives-afternoon-swim-inspired--aqua-di-gio-inspired",
+      "pairType": "alternatives",
+      "slugA": "afternoon-swim-inspired",
+      "slugB": "aqua-di-gio-inspired",
+      "decision": "FOUNDER_APPROVED",
+      "previousGovernanceState": "PENDING",
+      "newGovernanceState": "FOUNDER_APPROVED",
+      "previousStatus": "pending-review",
+      "newStatus": "approved",
+      "actor": "Awf",
+      "reason": "produce the same feeling",
+      "founderNotes": null,
+      "decidedAt": "2026-08-11T19:42:11.611Z"
+    },
+    {
+      "transactionId": "dfb49152-1098-42f8-8b33-cfcbf88fea6c",
+      "reviewId": "REL-alternatives-afternoon-swim-inspired--imagination-inspired",
+      "pairType": "alternatives",
+      "slugA": "afternoon-swim-inspired",
+      "slugB": "imagination-inspired",
+      "decision": "FOUNDER_APPROVED",
+      "previousGovernanceState": "PENDING",
+      "newGovernanceState": "FOUNDER_APPROVED",
+      "previousStatus": "pending-review",
+      "newStatus": "approved",
+      "actor": "Awf",
+      "reason": "produce the same feeling",
+      "founderNotes": null,
+      "decidedAt": "2026-08-11T19:42:35.840Z"
     }
   ]
 }

@@ -51,7 +51,8 @@
     "mip:validate:relationship-reciprocity-remediation": "npx tsx scripts/identity/validate-relationship-reciprocity-remediation.ts",
     "mip:build:relationship-review": "npx tsx scripts/identity/build-relationship-review-queue.ts",
     "mip:validate:relationship-review": "npx tsx scripts/identity/validate-relationship-editorial-review-foundation.ts",
-    "mip:validate:relationship-review-p5c": "npx tsx scripts/identity/validate-relationship-editorial-review-p5c.ts"
+    "mip:validate:relationship-review-p5c": "npx tsx scripts/identity/validate-relationship-editorial-review-p5c.ts",
+    "mip:validate:relationship-evidence-enrichment": "npx tsx scripts/identity/validate-relationship-evidence-enrichment.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.110.0",

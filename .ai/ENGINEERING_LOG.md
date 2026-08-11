@@ -4335,3 +4335,54 @@ These were created when lien-goddess-inspired had its relationships cleared in 
 - noAiGeneration = true
 - noExternalResearch = true
 - noFactoryInvocation = true
+
+---
+
+### 2026-08-11 — EP6-P5E-R — Relationship Review Evidence Enrichment
+
+**Participants:** Project Owner (founder authorisation + stop condition resolution) / Claude (Phase 1 inspection, Phase 2 implementation)
+**Program:** EP6-P5E-R — Deterministic evidence enrichment for the `/admin/identity/relationships/[reviewId]` workstation. The EP6-P5E campaign was paused after 3 decisions (A1–A3 FOUNDER_APPROVED) because the founder lacked sufficient personal fragrance familiarity for responsible decisions on remaining pairs. EP6-P5E-R enriches the evidence available to the founder without replacing editorial judgment with AI.
+
+**Decisions Made:**
+- Architecture: Option B (deterministic enrichment in existing detail page). No new routes. No new database reads. All data already loaded via fragranceA/fragranceB props.
+- Evidence sufficiency (provisional, repository-only classification, NOT final research determination): 5 sufficient existing evidence, 12 partial existing evidence, 0 strictly research-required of the 17 remaining P5E units.
+- Phase 1 arithmetic correction: the report originally stated 4/11 split; correct split is 5 SUFFICIENT / 12 PARTIAL.
+- Anti-circularity rule enforced: deterministic comparison of AI-generated MKC fields does NOT constitute independent verification.
+- Cross-gender wardrobe pairs: W6/W7/W8/W10 surfaced with institutional context note; no global approve/reject rule created.
+- RESEARCH_REQUIRED = 0 is provisional, not a final institutional conclusion. Post-enrichment review required.
+
+**Tasks Completed:**
+- Phase 1: full repository inspection + evidence audit + architecture assessment + 50-section formal plan
+- Phase 2: `compareFragrances.ts` pure utility (60/60 proofs)
+- Phase 2: `validate-relationship-evidence-enrichment.ts` (60/60 proofs)
+- Phase 2: `RelationshipReviewDetail.tsx` enriched with description, comparison section, expanded limitations, review question
+- All regressions: P5C/P5CR 75/75, P5BR 74/74, P5A 48/48, P4 55/55, MKC 93/0/0, P5E-R 60/60
+
+**Tasks Started:**
+- None. Campaign is NOT resumed. Awaiting founder evidence-readiness review.
+
+**Build Result:** PASS — static generation 189/189; 0 TypeScript errors; 0 warnings
+
+**Files Changed:**
+- CREATED: `app/admin/identity/relationships/compareFragrances.ts` (pure comparison utility)
+- CREATED: `scripts/identity/validate-relationship-evidence-enrichment.ts` (60 proofs)
+- MODIFIED: `app/admin/identity/relationships/RelationshipReviewDetail.tsx` (enrichment sections added)
+- MODIFIED: `package.json` (new `mip:validate:relationship-evidence-enrichment` command)
+- MODIFIED: `.ai/CURRENT_TASK.md` (status update)
+- MODIFIED: `.ai/ENGINEERING_LOG.md` (this entry)
+- MODIFIED: `PROJECT_STATUS.md` (milestone update)
+- NOT MODIFIED: `app/lib/identity/editorial/relationship/RelationshipEditorialService.ts`
+- NOT MODIFIED: `app/admin/identity/relationships/actions.ts`
+- NOT MODIFIED: `catalogue-relationship-review-queue.json` (frozen)
+- NOT MODIFIED: `catalogue-relationship-decision-ledger.json` (3 pre-existing P5E entries preserved byte-for-byte)
+- NOT MODIFIED: `app/lib/mkc/native/*` (zero native mutations)
+
+**Handoff:**
+- Founder should inspect the enriched `/admin/identity/relationships/[reviewId]` page against the 17 remaining P5E units.
+- EP6-P5E-R Phase 3 (Evidence Readiness Assessment) or direct campaign resumption to be authorised separately.
+- Do NOT resume campaign without explicit founder authorisation.
+- Graph fingerprint: 478fd478d930137fe21d058470797c324649156d615b60d3b9d3a9108f73b8e2 (unchanged).
+
+**Open Questions Carried Forward:**
+- Are the 17 remaining P5E units decision-ready with the enriched evidence, or do any require research advisory?
+- Does Maison endorse cross-gender wardrobe pairings as a general catalogue concept?

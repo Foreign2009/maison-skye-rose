@@ -36,6 +36,7 @@ import type {
   RelationshipEditorialResult,
 } from "@/app/lib/identity/editorial/relationship/types";
 import type { FragranceKnowledge } from "@/app/lib/mkc/types";
+import { compareFragrances } from "./compareFragrances";
 
 // ── Display helpers ───────────────────────────────────────────────────────────
 
@@ -53,6 +54,24 @@ const GOV_LABELS: Record<RelationshipGovernanceState, string> = {
   FOUNDER_APPROVED: "Founder Approved",
   FOUNDER_REJECTED: "Founder Rejected",
   RESEARCH_BLOCKED: "Research Blocked",
+};
+
+// Plain-English labels for evidence limitation codes (EP6-P5E-R)
+const LIMITATION_LABELS: Record<string, string> = {
+  NO_HUMAN_EDITORIAL_APPROVAL_RECORD:
+    "No human editorial approval record exists. This relationship was proposed by the Knowledge Factory and has not been independently reviewed.",
+  HUMAN_APPROVAL_NOT_CONFIRMED:
+    "Human editorial confirmation has not been recorded for this relationship.",
+  METADATA_SIMILARITY_NOT_SEMANTIC_PROOF:
+    "Shared metadata does not by itself prove that these fragrances should be treated as alternatives or wardrobe partners.",
+  NO_OLFACTIVE_TESTING:
+    "No olfactive testing has been recorded. The comparison is based on Maison's stored fragrance information.",
+  NO_THIRD_PARTY_DATABASE_CONFIRMATION:
+    "No independent specialist-database confirmation is recorded for this relationship.",
+  NO_CONSUMER_REVIEW_EVIDENCE:
+    "No consumer review evidence is recorded.",
+  WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT:
+    "Wardrobe-partner relationships require Maison editorial judgment; metadata alone cannot decide which fragrances guests should own together.",
 };
 
 function formatDate(iso: string): string {
@@ -147,8 +166,142 @@ function FragrancePanel({ label, slug, fragrance }: {
             <p className="text-xs text-[#4f4a52]/70 italic">{fragrance.mood}</p>
           </div>
         )}
+        {fragrance.description && (
+          <div className="py-2">
+            <p className="text-[11px] font-medium text-[#4f4a52]/40 mb-1">About</p>
+            <p className="text-xs text-[#4f4a52]/70 leading-relaxed">{fragrance.description}</p>
+          </div>
+        )}
       </div>
     </section>
+  );
+}
+
+// ── Comparison section helpers (EP6-P5E-R) ────────────────────────────────────
+
+function Chip({ text, variant = "neutral" }: { text: string; variant?: "shared" | "neutral" }) {
+  return (
+    <span className={`inline-block rounded-full px-2 py-0.5 text-[10px] font-medium ${
+      variant === "shared"
+        ? "bg-[#4f4a52]/10 text-[#4f4a52]"
+        : "bg-gray-100 text-[#4f4a52]/60"
+    }`}>
+      {text}
+    </span>
+  );
+}
+
+function ComparisonOverlapRow({ label, items, emptyMessage }: {
+  label: string;
+  items: readonly string[];
+  emptyMessage: string;
+}) {
+  return (
+    <div className="flex gap-3 py-1">
+      <span className="w-28 shrink-0 text-[11px] text-[#4f4a52]/40">{label}:</span>
+      {items.length > 0
+        ? <div className="flex flex-wrap gap-1">{items.map(i => <Chip key={i} text={i} variant="shared" />)}</div>
+        : <span className="text-[11px] text-[#4f4a52]/30 italic">{emptyMessage}</span>}
+    </div>
+  );
+}
+
+function ComparisonUniqueRow({ labelA, itemsA, labelB, itemsB }: {
+  labelA: string; itemsA: readonly string[];
+  labelB: string; itemsB: readonly string[];
+}) {
+  if (itemsA.length === 0 && itemsB.length === 0) return null;
+  return (
+    <div className="flex gap-3 py-1">
+      <span className="w-28 shrink-0 text-[11px] text-[#4f4a52]/40">Only in one:</span>
+      <div className="flex flex-wrap gap-1">
+        {itemsA.map(i => (
+          <span key={`a-${i}`} className="inline-flex items-center gap-1 rounded-full bg-blue-50 px-2 py-0.5 text-[10px] text-blue-700">
+            <span className="font-semibold">A</span> {i}
+          </span>
+        ))}
+        {itemsB.map(i => (
+          <span key={`b-${i}`} className="inline-flex items-center gap-1 rounded-full bg-violet-50 px-2 py-0.5 text-[10px] text-violet-700">
+            <span className="font-semibold">B</span> {i}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function NoteGroupRow({ label, shared, uniqueA, uniqueB }: {
+  label: string;
+  shared: readonly string[];
+  uniqueA: readonly string[];
+  uniqueB: readonly string[];
+}) {
+  const hasContent = shared.length > 0 || uniqueA.length > 0 || uniqueB.length > 0;
+  if (!hasContent) return (
+    <div className="flex gap-3 py-1">
+      <span className="w-28 shrink-0 text-[11px] text-[#4f4a52]/40">{label}:</span>
+      <span className="text-[11px] text-[#4f4a52]/30 italic">No notes recorded for this category.</span>
+    </div>
+  );
+  return (
+    <div className="space-y-0.5">
+      <p className="text-[10px] font-medium text-[#4f4a52]/40">{label}</p>
+      <div className="flex flex-wrap gap-1">
+        {shared.map(n => <Chip key={n} text={n} variant="shared" />)}
+        {uniqueA.map(n => (
+          <span key={`a-${n}`} className="inline-flex items-center gap-1 rounded-full bg-blue-50 px-2 py-0.5 text-[10px] text-blue-700">
+            <span className="font-semibold">A</span> {n}
+          </span>
+        ))}
+        {uniqueB.map(n => (
+          <span key={`b-${n}`} className="inline-flex items-center gap-1 rounded-full bg-violet-50 px-2 py-0.5 text-[10px] text-violet-700">
+            <span className="font-semibold">B</span> {n}
+          </span>
+        ))}
+      </div>
+      {shared.length > 0 && (
+        <p className="text-[9px] text-[#4f4a52]/30">
+          Shared: {shared.join(", ")}
+        </p>
+      )}
+    </div>
+  );
+}
+
+function DiscoveryRow({ label, shared, uniqueA, uniqueB }: {
+  label: string;
+  shared: readonly string[];
+  uniqueA: readonly string[];
+  uniqueB: readonly string[];
+}) {
+  return (
+    <div className="flex gap-3 py-1.5 border-t border-gray-50 first:border-t-0">
+      <span className="w-20 shrink-0 text-[11px] font-medium text-[#4f4a52]/40">{label}</span>
+      <div className="flex-1 space-y-1">
+        {shared.length > 0 && (
+          <div className="flex flex-wrap gap-1">
+            {shared.map(v => <Chip key={v} text={v} variant="shared" />)}
+          </div>
+        )}
+        {shared.length === 0 && uniqueA.length === 0 && uniqueB.length === 0 && (
+          <span className="text-[11px] text-[#4f4a52]/30 italic">No structured data recorded.</span>
+        )}
+        {(uniqueA.length > 0 || uniqueB.length > 0) && (
+          <div className="flex flex-wrap gap-1">
+            {uniqueA.map(v => (
+              <span key={`a-${v}`} className="inline-flex items-center gap-1 rounded-full bg-blue-50 px-2 py-0.5 text-[10px] text-blue-700">
+                <span className="font-semibold">A</span> {v}
+              </span>
+            ))}
+            {uniqueB.map(v => (
+              <span key={`b-${v}`} className="inline-flex items-center gap-1 rounded-full bg-violet-50 px-2 py-0.5 text-[10px] text-violet-700">
+                <span className="font-semibold">B</span> {v}
+              </span>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
   );
 }
 
@@ -185,6 +338,11 @@ export default function RelationshipReviewDetail({ unitState, fragranceA, fragra
   const [actor,        setActor]        = useState("");
   const [reason,       setReason]       = useState("");
   const [founderNotes, setFounderNotes] = useState("");
+
+  // Deterministic comparison — read-only, computed from props already loaded (EP6-P5E-R)
+  const comparison = fragranceA && fragranceB
+    ? compareFragrances(fragranceA, fragranceB)
+    : null;
 
   // Action eligibility
   const canAct = unit.requiresFounderDecision &&
@@ -422,6 +580,19 @@ export default function RelationshipReviewDetail({ unitState, fragranceA, fragra
                   relationship correctness, editorial value, or founder approval probability.
                 </p>
               </div>
+              {/* Relationship-type review question */}
+              <div className="mb-4 rounded-xl bg-[#4f4a52]/5 px-4 py-3">
+                <p className="text-[10px] font-semibold uppercase tracking-wider text-[#4f4a52]/50 mb-1">
+                  Review Question
+                </p>
+                <p className="text-xs text-[#4f4a52]/70">
+                  {unit.pairType === "alternatives"
+                    ? "Maison is reviewing whether these fragrances belong in a comparable register and whether one could reasonably be suggested to a guest who likes the other."
+                    : unit.pairType === "wardrobePartners"
+                    ? "Maison is reviewing whether these fragrances make sense to own together as complementary options for different moods, occasions, seasons, or styles."
+                    : "This evolution pair requires external authoritative confirmation before a decision can be made."}
+                </p>
+              </div>
               <div className="divide-y divide-gray-50">
                 <div className="flex items-center justify-between py-2">
                   <span className="text-[11px] font-medium text-[#4f4a52]/40">Overlap Score</span>
@@ -479,18 +650,23 @@ export default function RelationshipReviewDetail({ unitState, fragranceA, fragra
                 )}
               </div>
 
-              {/* Evidence limitations */}
+              {/* Evidence limitations — always visible with plain-English labels (EP6-P5E-R) */}
               {unit.evidenceLimitations.length > 0 && (
-                <details className="mt-4">
-                  <summary className="cursor-pointer text-[10px] font-semibold uppercase tracking-wider text-[#4f4a52]/40 hover:text-[#4f4a52]">
-                    Evidence Limitations ({unit.evidenceLimitations.length})
-                  </summary>
-                  <ul className="mt-2 space-y-1">
+                <div className="mt-4">
+                  <p className="mb-2 text-[10px] font-semibold uppercase tracking-wider text-[#4f4a52]/40">
+                    Evidence Limitations
+                  </p>
+                  <ul className="space-y-2">
                     {unit.evidenceLimitations.map((l, i) => (
-                      <li key={i} className="text-xs text-[#4f4a52]/50 font-mono">{l}</li>
+                      <li key={i} className="rounded-lg bg-amber-50/70 px-3 py-2 ring-1 ring-amber-100">
+                        <p className="text-xs text-[#4f4a52]/70 leading-relaxed">
+                          {LIMITATION_LABELS[l] ?? l}
+                        </p>
+                        <p className="mt-0.5 font-mono text-[9px] text-[#4f4a52]/30">{l}</p>
+                      </li>
                     ))}
                   </ul>
-                </details>
+                </div>
               )}
 
               {/* Blocking reason */}
@@ -503,6 +679,159 @@ export default function RelationshipReviewDetail({ unitState, fragranceA, fragra
                 </div>
               )}
             </section>
+
+            {/* Current Maison Knowledge — deterministic comparison (EP6-P5E-R) */}
+            {comparison && (
+              <section className="rounded-2xl border border-gray-200 bg-white p-6">
+                <SectionHeader label="Current Maison Knowledge" />
+
+                {/* Provenance notice */}
+                <div className="mb-4 rounded-xl bg-gray-50 px-4 py-3">
+                  <p className="text-[10px] text-[#4f4a52]/50 leading-relaxed">
+                    Maison record comparison — current MKC evidence only, not external corroboration.
+                    These fields originate from the Knowledge Factory. Deterministic comparison of
+                    AI-generated records does not constitute independent verification of the relationship.
+                  </p>
+                </div>
+
+                {/* Cross-gender wardrobe note */}
+                {unit.pairType === "wardrobePartners" && !comparison.genderMatch && (
+                  <div className="mb-4 rounded-xl bg-blue-50 px-4 py-3 ring-1 ring-blue-100">
+                    <p className="text-[10px] font-semibold text-blue-800 mb-0.5">Cross-gender pair</p>
+                    <p className="text-[10px] text-blue-700 leading-relaxed">
+                      Maison permits the founder to consider cross-gender wardrobe relationships,
+                      including gifting, shared ownership, couple-oriented curation, or broader
+                      wardrobe complementarity. Each pair remains individually governed.
+                    </p>
+                  </div>
+                )}
+
+                {/* Classification comparison */}
+                <div className="mb-5">
+                  <p className="mb-2 text-[10px] font-semibold uppercase tracking-wider text-[#d89ca4]">
+                    Classification
+                  </p>
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-xs">
+                      <thead>
+                        <tr className="border-b border-gray-100">
+                          <th className="w-24 py-1.5 text-left text-[10px] font-medium text-[#4f4a52]/40">Field</th>
+                          <th className="py-1.5 text-left text-[10px] font-medium text-[#4f4a52]/60">Fragrance A</th>
+                          <th className="py-1.5 text-left text-[10px] font-medium text-[#4f4a52]/60">Fragrance B</th>
+                          <th className="py-1.5 text-left text-[10px] font-medium text-[#4f4a52]/40">Same?</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-gray-50">
+                        <tr>
+                          <td className="py-1.5 text-[11px] text-[#4f4a52]/40">Gender</td>
+                          <td className="py-1.5 text-sm text-[#4f4a52] capitalize">{comparison.genderA}</td>
+                          <td className="py-1.5 text-sm text-[#4f4a52] capitalize">{comparison.genderB}</td>
+                          <td className="py-1.5">
+                            {comparison.genderMatch
+                              ? <span className="text-xs font-medium text-green-700">Yes</span>
+                              : <span className="text-xs text-amber-700">No</span>}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td className="py-1.5 text-[11px] text-[#4f4a52]/40">Collection</td>
+                          <td className="py-1.5 text-sm text-[#4f4a52]">{comparison.collectionA}</td>
+                          <td className="py-1.5 text-sm text-[#4f4a52]">{comparison.collectionB}</td>
+                          <td className="py-1.5">
+                            {comparison.collectionMatch
+                              ? <span className="text-xs font-medium text-green-700">Yes</span>
+                              : <span className="text-xs text-amber-700">No</span>}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td className="py-1.5 text-[11px] text-[#4f4a52]/40">Scent</td>
+                          <td className="py-1.5 text-sm text-[#4f4a52]">{comparison.scentCharacterA}</td>
+                          <td className="py-1.5 text-sm text-[#4f4a52]">{comparison.scentCharacterB}</td>
+                          <td className="py-1.5">
+                            {comparison.scentCharacterMatch
+                              ? <span className="text-xs font-medium text-green-700">Yes</span>
+                              : <span className="text-xs text-amber-700">No</span>}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td className="py-1.5 text-[11px] text-[#4f4a52]/40">Projection</td>
+                          <td className="py-1.5 text-sm text-[#4f4a52] capitalize">{comparison.projectionA}</td>
+                          <td className="py-1.5 text-sm text-[#4f4a52] capitalize">{comparison.projectionB}</td>
+                          <td></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                {/* Family comparison */}
+                <div className="mb-5">
+                  <p className="mb-2 text-[10px] font-semibold uppercase tracking-wider text-[#d89ca4]">
+                    Fragrance Families
+                  </p>
+                  <ComparisonOverlapRow
+                    label="Both records list"
+                    items={comparison.sharedFamilies}
+                    emptyMessage="No shared families are recorded."
+                  />
+                  <ComparisonUniqueRow labelA="A only" itemsA={comparison.uniqueFamiliesA} labelB="B only" itemsB={comparison.uniqueFamiliesB} />
+                </div>
+
+                {/* Notes comparison (top, heart, base) */}
+                <div className="mb-5">
+                  <p className="mb-2 text-[10px] font-semibold uppercase tracking-wider text-[#d89ca4]">
+                    Notes Comparison
+                  </p>
+                  <div className="space-y-3">
+                    <NoteGroupRow label="Top Notes" shared={comparison.sharedTopNotes} uniqueA={comparison.uniqueTopNotesA} uniqueB={comparison.uniqueTopNotesB} />
+                    <NoteGroupRow label="Heart Notes" shared={comparison.sharedHeartNotes} uniqueA={comparison.uniqueHeartNotesA} uniqueB={comparison.uniqueHeartNotesB} />
+                    <NoteGroupRow label="Base Notes" shared={comparison.sharedBaseNotes} uniqueA={comparison.uniqueBaseNotesA} uniqueB={comparison.uniqueBaseNotesB} />
+                  </div>
+                </div>
+
+                {/* Discovery comparison */}
+                <div className="mb-5">
+                  <p className="mb-2 text-[10px] font-semibold uppercase tracking-wider text-[#d89ca4]">
+                    Discovery Overlap
+                  </p>
+                  <div className="space-y-3">
+                    <DiscoveryRow label="Occasions" shared={comparison.sharedOccasions} uniqueA={comparison.uniqueOccasionsA} uniqueB={comparison.uniqueOccasionsB} />
+                    <DiscoveryRow label="Vibes"     shared={comparison.sharedVibes}     uniqueA={comparison.uniqueVibesA}     uniqueB={comparison.uniqueVibesB} />
+                    <DiscoveryRow label="Seasons"   shared={comparison.sharedSeasons}   uniqueA={comparison.uniqueSeasonsA}   uniqueB={comparison.uniqueSeasonsB} />
+                  </div>
+                </div>
+
+                {/* Intelligence attributes — raw recorded values only */}
+                <div>
+                  <p className="mb-2 text-[10px] font-semibold uppercase tracking-wider text-[#d89ca4]">
+                    Recorded Attributes
+                  </p>
+                  <p className="mb-2 text-[9px] text-[#4f4a52]/40">
+                    Raw values as recorded in the Maison catalogue (1–5 scale). These are repository-recorded
+                    attributes — not quality scores or approval indicators.
+                  </p>
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-xs">
+                      <thead>
+                        <tr className="border-b border-gray-100">
+                          <th className="w-24 py-1.5 text-left text-[10px] font-medium text-[#4f4a52]/40">Attribute</th>
+                          <th className="py-1.5 text-left text-[10px] font-medium text-[#4f4a52]/60">Fragrance A</th>
+                          <th className="py-1.5 text-left text-[10px] font-medium text-[#4f4a52]/60">Fragrance B</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-gray-50">
+                        {(["sweetness", "freshness", "warmth", "intensity"] as const).map(attr => (
+                          <tr key={attr}>
+                            <td className="py-1.5 text-[11px] text-[#4f4a52]/40 capitalize">{attr}</td>
+                            <td className="py-1.5 font-mono text-sm text-[#4f4a52]">{comparison.attributesA[attr]}</td>
+                            <td className="py-1.5 font-mono text-sm text-[#4f4a52]">{comparison.attributesB[attr]}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </section>
+            )}
 
             {/* Governance metadata */}
             <section className="rounded-2xl border border-gray-200 bg-white p-6">

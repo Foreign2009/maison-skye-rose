@@ -8,16 +8,33 @@
 ## Current Task
 
 **Status:** COMPLETE
-**Program:** EP6-P5D — First Controlled Founder Relationship Review Pilot
+**Program:** EP6-P5E-R — Relationship Review Evidence Enrichment
 
 **Why this programme was required:**
-EP6-P5C/P5CR delivered the governed workstation and hardened service. EP6-P5D is the first live use: the founder reviewed five deterministic pilot units through `/admin/identity/relationships` and recorded their decisions. This proves the full governance chain works under real load: workstation → service → atomic persistence → append-only ledger → live-ledger validator.
+The EP6-P5E campaign (20-unit controlled relationship review) was paused after 3 decisions (A1–A3) because the founder lacked sufficient personal fragrance familiarity to make responsible decisions for all pairs. The institutional response: enrich the evidence available to the decision-maker, not replace human judgment with AI. EP6-P5E-R Phase 1 performed a full repository inspection and architecture assessment. Phase 2 implemented the smallest reusable deterministic enrichment architecture.
 
 **Completed:** 2026-08-11
-**Preceded by:** EP6-P5CR-V — Verify Relationship Review Live Readiness (2026-08-11, commit 72584ed)
+**Preceded by:** EP6-P5D — First Controlled Founder Relationship Review Pilot (2026-08-11, commit 8f30707)
 
-**EP6-P5D result:**
-- Founder reviewed 5 deterministic pilot units (3 alternatives + 2 wardrobePartners)
+**EP6-P5E-R result:**
+- Pure deterministic comparison utility: `compareFragrances.ts` — 60/60 proofs
+- Description (MKC education text) surfaced per fragrance
+- Scent character actual values shown (not just boolean match)
+- Heart-note overlap calculated and displayed (new — not in auditEvidence)
+- Occasion, vibe, season overlap and difference displayed
+- Numeric intelligence attributes (sweetness/freshness/warmth/intensity) displayed as raw values
+- Cross-gender wardrobe pair institutional note added
+- Relationship-type review question added to evidence section
+- Evidence limitations expanded: always-visible with plain-English labels
+- Provenance notice: "Maison record comparison — not external corroboration"
+- 0 AI decisions; 0 external research; 0 MKC mutations; 0 ledger mutations during P5E-R
+- Ledger baseline preserved: 9 transactions / 8 unique reviewIds (3 P5E A1–A3 FOUNDER_APPROVED)
+- P5E campaign: 3/20 complete; 17 PENDING
+- Phase 1 evidence sufficiency (provisional, repository-only): 5 sufficient, 12 partial, 0 research-required
+- All regressions: P5C/P5CR 75/75, P5BR 74/74, P5A 48/48, P4 55/55, MKC 93/0/0
+- Build: PASS — static generation 189/189; 0 TypeScript errors; 0 warnings
+
+**Graph fingerprint:** 478fd478d930137fe21d058470797c324649156d615b60d3b9d3a9108f73b8e2 (unchanged)
 - All 5 reached final state FOUNDER_APPROVED
 - Unit 4 (Afternoon Swim ↔ Prada L'Homme) went through DEFERRED → FOUNDER_APPROVED (2 ledger entries, 1 reviewId) — valid multi-step decision path exercised in live use
 - Production ledger: 0 → 6 entries; 5 unique reviewIds

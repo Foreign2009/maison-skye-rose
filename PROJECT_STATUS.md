@@ -2,16 +2,19 @@
 
 **Last updated:** 2026-08-11
 **Phase:** Launch Execution
-**Build status:** PASS — static generation 189/189; 0 TypeScript errors; 0 warnings (EP6-P5D)
+**Build status:** PASS — static generation 189/189; 0 TypeScript errors; 0 warnings (EP6-P5E-R)
 
 ---
 
 ## Current Engineering Program
 
-**Program:** EP6-P5D — First Controlled Founder Relationship Review Pilot — COMPLETE
+**Program:** EP6-P5E-R — Relationship Review Evidence Enrichment — COMPLETE
 **Sprint:** EP6
-**Gate:** None — EP6-P5D is complete. Scale of ongoing review is a founder decision.
-**Outcome:** First live use of the EP6-P5C/P5CR relationship review workstation. Five deterministic pilot units reviewed by the founder through `/admin/identity/relationships`. All 5 reached final state FOUNDER_APPROVED. Unit 4 (Afternoon Swim ↔ Prada L'Homme) exercised the DEFERRED → FOUNDER_APPROVED multi-step path. 6 ledger entries / 5 unique reviewIds. P5CR live-ledger proofs (P5CR-33/34/35) passed against non-empty ledger — the critical P5D proof. All regressions pass. Graph fingerprint unchanged. 0 MKC mutations. 0 AI decisions. Build: PASS — static generation 189/189; 0 TypeScript errors; 0 warnings. Ledger progress: 5 / 162 = 3.09%.
+**Gate:** Awaiting founder evidence-readiness review. Campaign NOT resumed — EP6-P5E-R Phase 3 or direct campaign resumption requires separate authorisation.
+**Outcome:** Deterministic evidence enrichment for the relationship review workstation. `compareFragrances.ts` pure utility (60/60 proofs). `RelationshipReviewDetail.tsx` enriched with: fragrance description text, scent character values, heart-note overlap (new), occasion/vibe/season comparison, numeric attribute comparison, plain-English evidence limitations, cross-gender wardrobe context, relationship-type review question, provenance notice. Ledger baseline preserved: 9 transactions / 8 unique completed reviewIds. P5E campaign: 3/20 complete, 17 pending. Phase 1 provisional evidence sufficiency: 5 sufficient, 12 partial, 0 strictly research-required (NOT final research determination). All regressions: P5C/P5CR 75/75, P5BR 74/74, P5A 48/48, P4 55/55, MKC 93/0/0, P5E-R 60/60. Build: PASS — 189/189. 0 AI decisions. 0 MKC mutations. 0 ledger mutations during P5E-R.
+
+**Previous Programme:** EP6-P5D — First Controlled Founder Relationship Review Pilot — COMPLETE (commit 8f30707, 2026-08-11)
+First live use of the EP6-P5C/P5CR relationship review workstation. Five deterministic pilot units reviewed. All 5 FOUNDER_APPROVED. 6 ledger entries / 5 unique reviewIds. Build: PASS — static generation 189/189.
 
 **Previous Programme:** EP6-P5CR — Harden Relationship Decision Ledger — COMPLETE (commit cbf1e0a, 2026-08-11)
 Same-session corrective episode for EP6-P5C. Two live-use safety defects corrected: (1) P5C-07 validator replaced with live-state-agnostic array check; (2) `_decide()` refactored to single-snapshot transaction core eliminating the second `ledgerRepo.load()` race window. Validator hardened from 40 to 75 proofs. Production ledger remains `entries: []`. All regressions pass. Build: PASS — static generation 189/189.
@@ -46,7 +49,7 @@ The Maison Fragrance Academy (EP13) is in the planning stage.
 | Product pages (SSG) | 93 |
 | Static pages | 25 |
 | Dynamic routes | 16 |
-| Last verified | 2026-08-11 (EP6-P5D) |
+| Last verified | 2026-08-11 (EP6-P5E-R) |
 
 Verify: `npm run build`
 
