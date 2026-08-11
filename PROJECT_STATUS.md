@@ -2,19 +2,19 @@
 
 **Last updated:** 2026-08-11
 **Phase:** Launch Execution
-**Build status:** PASS — static generation 189/189; 0 TypeScript errors; 0 warnings (EP6-P5CR)
+**Build status:** PASS — static generation 189/189; 0 TypeScript errors; 0 warnings (EP6-P5D)
 
 ---
 
 ## Current Engineering Program
 
-**Program:** EP6-P5CR — Harden Relationship Decision Ledger — COMPLETE
+**Program:** EP6-P5D — First Controlled Founder Relationship Review Pilot — COMPLETE
 **Sprint:** EP6
-**Gate:** None — EP6-P5CR is complete. Founder may begin recording decisions at their direction.
-**Outcome:** Same-session corrective episode for EP6-P5C (d5f5570). Two live-use safety defects corrected: (1) P5C-07 validator replaced with live-state-agnostic array check; (2) `_decide()` refactored to single-snapshot transaction core eliminating the second `ledgerRepo.load()` race window. Validator hardened from 40 to 75 proofs (§9 source-code proofs P5CR-01–P5CR-07; §10 behavioural fixture tests P5CR-08–P5CR-35 using in-memory repos). Production ledger remains `entries: []`. All regressions pass: EP6-P5BR 74/74, EP6-P5A 48/48, EP6-P4 55/55. Build: PASS — static generation 189/189; 0 TypeScript errors; 0 warnings.
+**Gate:** None — EP6-P5D is complete. Scale of ongoing review is a founder decision.
+**Outcome:** First live use of the EP6-P5C/P5CR relationship review workstation. Five deterministic pilot units reviewed by the founder through `/admin/identity/relationships`. All 5 reached final state FOUNDER_APPROVED. Unit 4 (Afternoon Swim ↔ Prada L'Homme) exercised the DEFERRED → FOUNDER_APPROVED multi-step path. 6 ledger entries / 5 unique reviewIds. P5CR live-ledger proofs (P5CR-33/34/35) passed against non-empty ledger — the critical P5D proof. All regressions pass. Graph fingerprint unchanged. 0 MKC mutations. 0 AI decisions. Build: PASS — static generation 189/189; 0 TypeScript errors; 0 warnings. Ledger progress: 5 / 162 = 3.09%.
 
-**Previous Programme:** EP6-P5C — Founder Relationship Review Interface — COMPLETE (commit d5f5570, 2026-08-11)
-Founder-facing workstation for relationship editorial review. Append-only decision ledger, atomic persistence, RelationshipEditorialService (approve/reject/defer), admin queue list, admin detail workstation, Server Actions with auth, 40-proof P5C validator. 2 new admin route patterns. Build: PASS — static generation 189/189.
+**Previous Programme:** EP6-P5CR — Harden Relationship Decision Ledger — COMPLETE (commit cbf1e0a, 2026-08-11)
+Same-session corrective episode for EP6-P5C. Two live-use safety defects corrected: (1) P5C-07 validator replaced with live-state-agnostic array check; (2) `_decide()` refactored to single-snapshot transaction core eliminating the second `ledgerRepo.load()` race window. Validator hardened from 40 to 75 proofs. Production ledger remains `entries: []`. All regressions pass. Build: PASS — static generation 189/189.
 
 ---
 
@@ -46,7 +46,7 @@ The Maison Fragrance Academy (EP13) is in the planning stage.
 | Product pages (SSG) | 93 |
 | Static pages | 25 |
 | Dynamic routes | 16 |
-| Last verified | 2026-08-11 (EP6-P5CR) |
+| Last verified | 2026-08-11 (EP6-P5D) |
 
 Verify: `npm run build`
 
@@ -118,6 +118,10 @@ Verify: `npm run build`
 | EP6 | EP6-P5A  | Structural Relationship Reciprocity Remediation | Complete — 2026-08-10 |
 | EP6 | EP6-P5B  | Relationship Editorial Review Foundation | Complete — 2026-08-10 |
 | EP6 | EP6-P5BR | Correct Relationship Review Governance Semantics | Complete — 2026-08-10 |
+| EP6 | EP6-P5C  | Founder Relationship Review Interface | Complete — 2026-08-11 |
+| EP6 | EP6-P5CR | Harden Relationship Decision Ledger | Complete — 2026-08-11 |
+| EP6 | EP6-P5CR-V | Verify Relationship Review Live Readiness | Complete — 2026-08-11 |
+| EP6 | EP6-P5D  | First Controlled Founder Relationship Review Pilot | Complete — 2026-08-11 |
 
 `FOUNDATIONS/00_FOUNDERS_LETTER.md` — The permanent founder's letter to Skye, Rose, future employees, and future stewards. *Why we began.*
 `FOUNDATIONS/01_SKYE_AND_ROSE_COVENANT.md` — The institutional promise: to customers, products, technology, and future generations. *What we promise.*

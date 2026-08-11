@@ -39,6 +39,72 @@ Never edit or delete past entries.
 
 ## Log
 
+### 2026-08-11 — EP6-P5D — First Controlled Founder Relationship Review Pilot
+
+**Participants:** Project Owner (founder authorisation + all five decisions) / Claude (selection, verification, governance close-out)
+**Program:** EP6-P5D — First live use of the EP6-P5C/P5CR founder relationship review workstation. Five deterministic pilot units reviewed by the founder through `/admin/identity/relationships`. Claude's role was selection + pre-pilot report + post-decision verification only. Zero AI editorial decisions.
+
+**Decisions Made:**
+- Pilot selection method: first 3 pending alternatives + first 2 pending wardrobePartners by ascending reviewId (deterministic, no editorial judgment).
+- MISMATCH STOP RULE was correctly triggered on first ledger inspection (6 entries, 1 DEFERRED entry). Founder confirmed this was expected: unit 4 was deferred and then approved via a valid DEFERRED → FOUNDER_APPROVED transition (two legitimate entries for one reviewId).
+- All five authorised reviewIds reached final state FOUNDER_APPROVED. The ledger is structurally correct.
+- Proof count arithmetic correction applied to governance records: P5CR-V report stated 1,260 named proofs; correct sum of 20 named-proof suites is 1,240. Validators not modified.
+
+**Tasks Completed:**
+- Pre-pilot: read ledger (confirmed entries: []), read queue, confirmed HEAD 72584ed, selected 5 deterministic units, resolved all 8 fragrance names, produced §6 pre-pilot report, stopped for founder review.
+- Post-founder: read live ledger (6 entries, 5 unique reviewIds, all final-state FOUNDER_APPROVED), analysed DEFERRED → FOUNDER_APPROVED journey for unit 4, confirmed no unauthorized entries.
+- Ran mip:validate:relationship-review-p5c: 75/75 PASS on non-empty production ledger. P5CR-33/34/35 live-ledger proofs passed. This is the critical P5D proof that P5CR hardening works in live use.
+- Ran mip:validate:relationship-review (P5BR): 74/74 PASS.
+- Ran mip:validate:relationship-reciprocity-remediation (P5A): 48/48 PASS.
+- Ran mip:validate:catalogue-relationships (P4): 55/55 PASS.
+- Ran mkc:validate: 93 PASS / 0 WARN / 0 FAIL.
+- Verified graph fingerprint unchanged: 478fd478d930137fe21d058470797c324649156d615b60d3b9d3a9108f73b8e2.
+- Verified 0 app/lib/mkc/native/*.ts files modified.
+- Verified frozen queue (catalogue-relationship-review-queue.json) unchanged (EP6-P5BR-v1 schemaVersion and matching fingerprint).
+- Verified only tracked change: catalogue-relationship-decision-ledger.json.
+- Ran npm run build: PASS — static generation 189/189; 0 TypeScript errors; 0 warnings.
+- Updated governance documents and committed.
+
+**Governance projection (derived from repository state after P5D):**
+- Total decision units: 162 (requiresFounderDecision=true alt+wp)
+- Founder approved: 5 (via 6 ledger entries — 1 unit went DEFERRED → FOUNDER_APPROVED)
+- Founder rejected: 0
+- Currently deferred: 0 (the DEFERRED was resolved to FOUNDER_APPROVED)
+- Pending: 157
+- Research blocked (evolution, not founder-actionable): 6
+- Decision completion: 5 / 162 = 3.09%
+
+**Five reviewed pairs:**
+1. (Alt) 1 Million Inspired ↔ Azzaro Most Wanted Inspired → FOUNDER_APPROVED
+2. (Alt) 9PM Inspired ↔ Althair Inspired → FOUNDER_APPROVED
+3. (Alt) 9PM Inspired ↔ Vanilla 28 Inspired → FOUNDER_APPROVED
+4. (WP) Afternoon Swim Inspired ↔ Prada L'Homme Inspired → DEFERRED then FOUNDER_APPROVED
+5. (WP) Afternoon Swim Inspired ↔ Sauvage Inspired → FOUNDER_APPROVED
+
+**AI / external research control:**
+- AI-generated decisions: 0
+- Claude editorial decisions: 0
+- External research: 0
+- GenerationProvider calls: 0
+
+**Tasks Started:**
+- None — EP6-P5D is complete. Scale of ongoing review is a founder decision.
+
+**Build Result:** PASS — static generation 189/189; 0 TypeScript errors; 0 warnings.
+
+**Files Changed:**
+- `app/lib/identity/data/decisions/catalogue-relationship-decision-ledger.json` — 6 founder decisions appended (0 → 6 entries; 5 unique reviewIds all reaching FOUNDER_APPROVED)
+
+**Handoff:**
+- Ledger is live with 5 approved relationships. Validator confirms non-empty ledger governance is operational.
+- 157 pending units remain. Next scale decision is the founder's.
+
+**Open Questions Carried Forward:**
+- P5CR-V aggregate proof count: 1,240 named proofs (not 1,260 as stated in P5CR-V final report — arithmetic correction).
+- Scale of ongoing review pace: founder decision.
+
+---
+
 ### 2026-08-11 — EP6-P5CR — Harden Relationship Decision Ledger
 
 **Participants:** Project Owner (founder authorisation) / Claude (implementation and execution)
