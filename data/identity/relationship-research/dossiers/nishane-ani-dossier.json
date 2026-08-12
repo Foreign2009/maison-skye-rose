@@ -1,0 +1,55 @@
+{
+  "schemaVersion": "EP6-P5E-RR-v1",
+  "dossierVersion": "1.0.0",
+  "dossierRef": "nishane-ani",
+  "dossierStatus": "PENDING_RESEARCH",
+  "referenceFragranceName": "Ani",
+  "referenceBrand": "Nishane",
+  "referenceIdentityStatus": "EXPECTED",
+  "referenceIdentityNote": "Identity supplied by founder in EP6-P5E-R Phase 4B authorization (2026-08-12). Phase 4A incorrectly attributed Ani to 'Parfums de Marly'. Correction: Nishane — Ani. Requires independent verification in Phase 4C. Note: 'Parfums de Marly — Ani' does not exist; Parfums de Marly makes fragrances such as Althaïr and Layton but not one named Ani. Nishane is a Turkish niche house.",
+  "maisonSlugs": ["ani-inspired"],
+  "maisonTitles": ["Ani Inspired"],
+  "usedByPairs": [
+    "REL-alternatives-ani-inspired--layton-inspired",
+    "REL-alternatives-ani-inspired--spicebomb-extreme-inspired",
+    "REL-wardrobe-partners-ani-inspired--aventus-inspired",
+    "REL-wardrobe-partners-ani-inspired--sauvage-inspired"
+  ],
+  "createdAt": "2026-08-12",
+  "createdBy": "EP6-P5E-R Phase 4B",
+  "researchAuthorization": "EP6-P5E-R Phase 4C — not yet issued",
+  "researchQuestions": {
+    "identityVerification": [
+      "Confirm that Maison's 'Ani Inspired' is inspired by 'Ani' by Nishane. What is the independent evidence for this identity attribution?"
+    ],
+    "canonicalFact": [
+      "What is the official fragrance family or accord classification of Ani by Nishane?",
+      "What are the official top notes of Ani by Nishane?",
+      "What are the official heart notes of Ani by Nishane?",
+      "What are the official base notes of Ani by Nishane?",
+      "What is the officially marketed gender positioning of Ani by Nishane?",
+      "What is the official launch year of Ani by Nishane?",
+      "Who are the credited perfumers for Ani by Nishane?"
+    ]
+  },
+  "sourceHierarchyApplicable": {
+    "tier1": "Official Nishane product page (nishane.com.tr), official brand press materials",
+    "tier2": "Fragrantica database (fragrantica.com), Basenotes (basenotes.net), established fragrance publications",
+    "tier3": "Retailer product descriptions, community reviews — contextual and supporting only"
+  },
+  "directAccessAttempts": [],
+  "sourcesConsulted": [],
+  "findings": [],
+  "contradictions": [],
+  "canonicalSummary": null,
+  "accessDisposition": "NOT_YET_RESEARCHED",
+  "referenceVsMaisonNote": "All findings in this dossier pertain to the REFERENCE fragrance: Ani by Nishane. They do not constitute evidence about Maison Skye & Rose's inspired formulation.",
+  "governanceConstraints": {
+    "noDecisionFields": true,
+    "noApprovalRecommendation": true,
+    "noGovernanceStateOutput": true,
+    "noRelationshipConfidence": true,
+    "readOnlyOnceComplete": true,
+    "note": "This dossier is evidence infrastructure. It has no governance authority."
+  }
+}

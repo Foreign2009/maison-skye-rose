@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "EP6-P5E-RR-v1",
+  "dossierVersion": "1.0.0",
+  "dossierRef": "initio-oud-for-greatness",
+  "dossierStatus": "PENDING_RESEARCH",
+  "referenceFragranceName": "Oud For Greatness",
+  "referenceBrand": "Initio Parfums Privés",
+  "referenceIdentityStatus": "REPOSITORY_SUPPORTED",
+  "referenceIdentityNote": "The Maison product 'Oud For Greatness Inspired' references 'Oud For Greatness' by Initio Parfums Privés. Identity attribution is REPOSITORY_SUPPORTED through naming convention.",
+  "maisonSlugs": ["oud-for-greatness-inspired"],
+  "maisonTitles": ["Oud For Greatness Inspired"],
+  "usedByPairs": ["REL-wardrobe-partners-aventus-inspired--oud-for-greatness-inspired"],
+  "createdAt": "2026-08-12",
+  "createdBy": "EP6-P5E-R Phase 4B",
+  "researchAuthorization": "EP6-P5E-R Phase 4C — not yet issued",
+  "researchQuestions": {
+    "canonicalFact": [
+      "What is the official fragrance family or accord classification of Oud For Greatness by Initio Parfums Privés?",
+      "What are the official top notes of Oud For Greatness by Initio Parfums Privés?",
+      "What are the official heart notes of Oud For Greatness by Initio Parfums Privés?",
+      "What are the official base notes of Oud For Greatness by Initio Parfums Privés?",
+      "What is the officially marketed gender positioning of Oud For Greatness?",
+      "What is the official launch year of Oud For Greatness by Initio Parfums Privés?",
+      "Who are the credited perfumers for Oud For Greatness by Initio Parfums Privés?"
+    ]
+  },
+  "sourceHierarchyApplicable": {
+    "tier1": "Official Initio Parfums Privés product page (initio-parfums-prives.com), official brand press materials",
+    "tier2": "Fragrantica database (fragrantica.com), Basenotes (basenotes.net), established fragrance publications",
+    "tier3": "Retailer product descriptions, community reviews — contextual and supporting only"
+  },
+  "directAccessAttempts": [],
+  "sourcesConsulted": [],
+  "findings": [],
+  "contradictions": [],
+  "canonicalSummary": null,
+  "accessDisposition": "NOT_YET_RESEARCHED",
+  "referenceVsMaisonNote": "All findings in this dossier pertain to the REFERENCE fragrance: Oud For Greatness by Initio Parfums Privés. They do not constitute evidence about Maison Skye & Rose's inspired formulation.",
+  "governanceConstraints": {
+    "noDecisionFields": true,
+    "noApprovalRecommendation": true,
+    "noGovernanceStateOutput": true,
+    "noRelationshipConfidence": true,
+    "readOnlyOnceComplete": true,
+    "note": "This dossier is evidence infrastructure. It has no governance authority."
+  }
+}

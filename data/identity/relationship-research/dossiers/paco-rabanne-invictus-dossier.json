@@ -1,0 +1,48 @@
+{
+  "schemaVersion": "EP6-P5E-RR-v1",
+  "dossierVersion": "1.0.0",
+  "dossierRef": "paco-rabanne-invictus",
+  "dossierStatus": "PENDING_RESEARCH",
+  "referenceFragranceName": "Invictus",
+  "referenceBrand": "Paco Rabanne",
+  "referenceIdentityStatus": "REPOSITORY_SUPPORTED",
+  "referenceIdentityNote": "The Maison product name 'Invictus Inspired' directly corresponds to 'Invictus' by Paco Rabanne, one of the most recognizable masculine fragrances of the modern era. Identity attribution is considered REPOSITORY_SUPPORTED through naming convention. Independent verification in Phase 4C will confirm.",
+  "maisonSlugs": ["invictus-inspired"],
+  "maisonTitles": ["Invictus Inspired"],
+  "usedByPairs": ["REL-alternatives-afternoon-swim-inspired--invictus-inspired"],
+  "createdAt": "2026-08-12",
+  "createdBy": "EP6-P5E-R Phase 4B",
+  "researchAuthorization": "EP6-P5E-R Phase 4C — not yet issued",
+  "researchQuestions": {
+    "canonicalFact": [
+      "What is the official fragrance family or accord classification of Invictus by Paco Rabanne?",
+      "What are the official top notes of Invictus by Paco Rabanne?",
+      "What are the official heart notes of Invictus by Paco Rabanne?",
+      "What are the official base notes of Invictus by Paco Rabanne?",
+      "What is the officially marketed gender positioning of Invictus by Paco Rabanne?",
+      "What is the official launch year of Invictus by Paco Rabanne?",
+      "Who are the credited perfumers for Invictus by Paco Rabanne?",
+      "Are there significant flanker variants that should be excluded from this dossier?"
+    ]
+  },
+  "sourceHierarchyApplicable": {
+    "tier1": "Official Paco Rabanne product page (pacorabanne.com), official brand press materials, Puig Group brand documentation",
+    "tier2": "Fragrantica database (fragrantica.com), Basenotes (basenotes.net), established fragrance publications",
+    "tier3": "Retailer product descriptions, community reviews — contextual and supporting only, not authoritative"
+  },
+  "directAccessAttempts": [],
+  "sourcesConsulted": [],
+  "findings": [],
+  "contradictions": [],
+  "canonicalSummary": null,
+  "accessDisposition": "NOT_YET_RESEARCHED",
+  "referenceVsMaisonNote": "All findings in this dossier pertain to the REFERENCE fragrance: Invictus by Paco Rabanne. They do not constitute evidence about Maison Skye & Rose's inspired formulation.",
+  "governanceConstraints": {
+    "noDecisionFields": true,
+    "noApprovalRecommendation": true,
+    "noGovernanceStateOutput": true,
+    "noRelationshipConfidence": true,
+    "readOnlyOnceComplete": true,
+    "note": "This dossier is evidence infrastructure. It has no governance authority."
+  }
+}

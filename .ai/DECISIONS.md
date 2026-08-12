@@ -109,6 +109,22 @@ Do not reverse a decision without understanding its rationale first.
 
 ---
 
+## D-REL-001 — Wardrobe Partner Relationships May Cross Collection and Gender Boundaries
+
+**Decision:** Maison wardrobePartner relationships are not restricted to products within the same collection or marketed gender. A cross-collection, cross-gender pairing may be approved when a clear, evidence-supported complementary ownership rationale exists — i.e., when a guest owning Product A would have a genuine reason to also own Product B regardless of collection or gender marketing.
+
+**Why:** The wardrobe partner relationship exists to serve guests who own multiple fragrances. A guest who wears Armani Sì may also wear Creed Aventus; the Rose/Skye collection boundary is irrelevant to their wardrobe. Restricting wardrobe partnerships to within-collection pairings would create artificial walls that do not reflect how guests actually build fragrance wardrobes. Requiring same-gender marketing would exclude the most complementary couples pairings (one feminine + one masculine), which are often the strongest wardrobe partner rationale.
+
+**Trade-off:** Cross-collection, cross-gender pairings require stronger evidence of complementary ownership rationale, since the pairing cannot rely on genre or gender similarity as implicit justification. Each cross-collection pair must be reviewed and approved individually by the founder with explicit rationale. This decision approves the architectural principle; it does not approve any individual pair.
+
+**Scope:** This principle applies to wardrobePartner relationships only. It does not extend to alternatives relationships, which by definition involve products a guest would choose between rather than own together.
+
+**Implementation:** Cross-collection wardrobe pairings are flagged with `crossCollection: true` and `crossCollectionPermissibility: "APPROVED — D-REL-001"` in the research campaign manifest. Individual pair approval remains the founder's decision.
+
+**Authorized:** EP6-P5E-R Phase 4B Authorization — 2026-08-12
+
+---
+
 ## D10 — MiniCart Uses Total-Based Delivery, Checkout Uses Province-Based Delivery
 
 **Decision:** Two delivery calculation systems exist and were not reconciled.

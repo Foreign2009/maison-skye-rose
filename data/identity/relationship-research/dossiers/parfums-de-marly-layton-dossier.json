@@ -1,0 +1,50 @@
+{
+  "schemaVersion": "EP6-P5E-RR-v1",
+  "dossierVersion": "1.0.0",
+  "dossierRef": "parfums-de-marly-layton",
+  "dossierStatus": "PENDING_RESEARCH",
+  "referenceFragranceName": "Layton",
+  "referenceBrand": "Parfums de Marly",
+  "referenceIdentityStatus": "REPOSITORY_SUPPORTED",
+  "referenceIdentityNote": "The Maison product 'Layton Inspired' references 'Layton' by Parfums de Marly, one of the house's most celebrated masculines. The MKC description explicitly references 'the Marly house'. Identity attribution is REPOSITORY_SUPPORTED. Independent verification in Phase 4C will confirm.",
+  "maisonSlugs": ["layton-inspired"],
+  "maisonTitles": ["Layton Inspired"],
+  "usedByPairs": [
+    "REL-alternatives-althair-inspired--layton-inspired",
+    "REL-alternatives-ani-inspired--layton-inspired"
+  ],
+  "createdAt": "2026-08-12",
+  "createdBy": "EP6-P5E-R Phase 4B",
+  "researchAuthorization": "EP6-P5E-R Phase 4C — not yet issued",
+  "researchQuestions": {
+    "canonicalFact": [
+      "What is the official fragrance family or accord classification of Layton by Parfums de Marly?",
+      "What are the official top notes of Layton by Parfums de Marly?",
+      "What are the official heart notes of Layton by Parfums de Marly?",
+      "What are the official base notes of Layton by Parfums de Marly?",
+      "What is the officially marketed gender positioning of Layton by Parfums de Marly?",
+      "What is the official launch year of Layton by Parfums de Marly?",
+      "Who are the credited perfumers for Layton by Parfums de Marly?"
+    ]
+  },
+  "sourceHierarchyApplicable": {
+    "tier1": "Official Parfums de Marly product page (parfumsdemarly.com), official brand press materials",
+    "tier2": "Fragrantica database (fragrantica.com), Basenotes (basenotes.net), established fragrance publications",
+    "tier3": "Retailer product descriptions, community reviews — contextual and supporting only"
+  },
+  "directAccessAttempts": [],
+  "sourcesConsulted": [],
+  "findings": [],
+  "contradictions": [],
+  "canonicalSummary": null,
+  "accessDisposition": "NOT_YET_RESEARCHED",
+  "referenceVsMaisonNote": "All findings in this dossier pertain to the REFERENCE fragrance: Layton by Parfums de Marly. They do not constitute evidence about Maison Skye & Rose's inspired formulation.",
+  "governanceConstraints": {
+    "noDecisionFields": true,
+    "noApprovalRecommendation": true,
+    "noGovernanceStateOutput": true,
+    "noRelationshipConfidence": true,
+    "readOnlyOnceComplete": true,
+    "note": "This dossier is evidence infrastructure. It has no governance authority."
+  }
+}

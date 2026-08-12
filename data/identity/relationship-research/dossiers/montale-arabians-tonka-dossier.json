@@ -1,0 +1,50 @@
+{
+  "schemaVersion": "EP6-P5E-RR-v1",
+  "dossierVersion": "1.0.0",
+  "dossierRef": "montale-arabians-tonka",
+  "dossierStatus": "PENDING_RESEARCH",
+  "referenceFragranceName": "Arabians Tonka",
+  "referenceBrand": "Montale",
+  "referenceIdentityStatus": "EXPECTED",
+  "referenceIdentityNote": "Identity supplied by founder in EP6-P5E-R Phase 4B authorization (2026-08-12). Phase 4A listed the reference house as unknown. Correction: Montale — Arabians Tonka. Requires independent verification in Phase 4C.",
+  "maisonSlugs": ["arabians-tonka-inspired"],
+  "maisonTitles": ["Arabians Tonka Inspired"],
+  "usedByPairs": ["REL-wardrobe-partners-arabians-tonka-inspired--sauvage-inspired"],
+  "createdAt": "2026-08-12",
+  "createdBy": "EP6-P5E-R Phase 4B",
+  "researchAuthorization": "EP6-P5E-R Phase 4C — not yet issued",
+  "researchQuestions": {
+    "identityVerification": [
+      "Confirm that Maison's 'Arabians Tonka Inspired' is inspired by 'Arabians Tonka' by Montale. What is the independent evidence for this identity attribution?"
+    ],
+    "canonicalFact": [
+      "What is the official fragrance family or accord classification of Arabians Tonka by Montale?",
+      "What are the official top notes of Arabians Tonka by Montale?",
+      "What are the official heart notes of Arabians Tonka by Montale?",
+      "What are the official base notes of Arabians Tonka by Montale?",
+      "What is the officially marketed gender positioning of Arabians Tonka?",
+      "What is the official launch year of Arabians Tonka by Montale?",
+      "Who are the credited perfumers for Arabians Tonka by Montale?"
+    ]
+  },
+  "sourceHierarchyApplicable": {
+    "tier1": "Official Montale product page (montale-paris.com), official brand press materials",
+    "tier2": "Fragrantica database (fragrantica.com), Basenotes (basenotes.net), established fragrance publications",
+    "tier3": "Retailer product descriptions, community reviews — contextual and supporting only"
+  },
+  "directAccessAttempts": [],
+  "sourcesConsulted": [],
+  "findings": [],
+  "contradictions": [],
+  "canonicalSummary": null,
+  "accessDisposition": "NOT_YET_RESEARCHED",
+  "referenceVsMaisonNote": "All findings in this dossier pertain to the REFERENCE fragrance: Arabians Tonka by Montale. They do not constitute evidence about Maison Skye & Rose's inspired formulation.",
+  "governanceConstraints": {
+    "noDecisionFields": true,
+    "noApprovalRecommendation": true,
+    "noGovernanceStateOutput": true,
+    "noRelationshipConfidence": true,
+    "readOnlyOnceComplete": true,
+    "note": "This dossier is evidence infrastructure. It has no governance authority."
+  }
+}

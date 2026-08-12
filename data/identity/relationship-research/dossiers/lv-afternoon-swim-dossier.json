@@ -1,0 +1,50 @@
+{
+  "schemaVersion": "EP6-P5E-RR-v1",
+  "dossierVersion": "1.0.0",
+  "dossierRef": "lv-afternoon-swim",
+  "dossierStatus": "PENDING_RESEARCH",
+  "referenceFragranceName": "Afternoon Swim",
+  "referenceBrand": "Louis Vuitton",
+  "referenceIdentityStatus": "EXPECTED",
+  "referenceIdentityNote": "Identity supplied by founder in EP6-P5E-R Phase 4B authorization (2026-08-12). Phase 4A incorrectly suggested Hermès. Correction: Louis Vuitton. Requires independent verification in Phase 4C before any research finding can be treated as REPOSITORY_SUPPORTED or INDEPENDENTLY_VERIFIED.",
+  "maisonSlugs": ["afternoon-swim-inspired"],
+  "maisonTitles": ["Afternoon Swim Inspired"],
+  "usedByPairs": ["REL-alternatives-afternoon-swim-inspired--invictus-inspired"],
+  "createdAt": "2026-08-12",
+  "createdBy": "EP6-P5E-R Phase 4B",
+  "researchAuthorization": "EP6-P5E-R Phase 4C — not yet issued",
+  "researchQuestions": {
+    "identityVerification": [
+      "Confirm that Maison's 'Afternoon Swim Inspired' is inspired by 'Afternoon Swim' by Louis Vuitton. What is the independent evidence for this identity attribution?"
+    ],
+    "canonicalFact": [
+      "What is the official fragrance family or accord classification of Afternoon Swim by Louis Vuitton?",
+      "What are the official top notes of Afternoon Swim by Louis Vuitton?",
+      "What are the official heart notes of Afternoon Swim by Louis Vuitton?",
+      "What are the official base notes of Afternoon Swim by Louis Vuitton?",
+      "What is the officially marketed gender positioning of Afternoon Swim by Louis Vuitton?",
+      "What is the official launch year of Afternoon Swim by Louis Vuitton?",
+      "Who are the credited perfumers for Afternoon Swim by Louis Vuitton?"
+    ]
+  },
+  "sourceHierarchyApplicable": {
+    "tier1": "Official Louis Vuitton product page (louisvuitton.com), official brand press materials, official launch documentation",
+    "tier2": "Fragrantica database (fragrantica.com), Basenotes (basenotes.net), established fragrance publications",
+    "tier3": "Retailer product descriptions, community reviews — contextual and supporting only, not authoritative"
+  },
+  "directAccessAttempts": [],
+  "sourcesConsulted": [],
+  "findings": [],
+  "contradictions": [],
+  "canonicalSummary": null,
+  "accessDisposition": "NOT_YET_RESEARCHED",
+  "referenceVsMaisonNote": "All findings in this dossier pertain to the REFERENCE fragrance: Afternoon Swim by Louis Vuitton. They do not constitute evidence about Maison Skye & Rose's inspired formulation. Maison sells an inspired interpretation. Compositional identity with the reference fragrance is not claimed.",
+  "governanceConstraints": {
+    "noDecisionFields": true,
+    "noApprovalRecommendation": true,
+    "noGovernanceStateOutput": true,
+    "noRelationshipConfidence": true,
+    "readOnlyOnceComplete": true,
+    "note": "This dossier is evidence infrastructure. It has no governance authority. Relationship decisions are made by the founder via the governed editorial review process."
+  }
+}

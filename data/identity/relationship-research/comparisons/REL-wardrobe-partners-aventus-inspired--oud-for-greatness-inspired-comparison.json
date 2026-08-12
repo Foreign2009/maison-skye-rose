@@ -1,0 +1,57 @@
+{
+  "schemaVersion": "EP6-P5E-RR-v1",
+  "comparisonVersion": "1.0.0",
+  "reviewId": "REL-wardrobe-partners-aventus-inspired--oud-for-greatness-inspired",
+  "unitId": "W9",
+  "comparisonStatus": "PENDING_RESEARCH",
+  "pairType": "wardrobePartners",
+  "unitScope": "PRIMARY_RESEARCH",
+  "phase3Classification": "RESEARCH_ADVISED",
+  "crossCollection": false,
+  "crossGender": false,
+  "maisonProductA": { "slug": "aventus-inspired", "maisonTitle": "Aventus Inspired", "collection": "Skye", "gender": "male" },
+  "maisonProductB": { "slug": "oud-for-greatness-inspired", "maisonTitle": "Oud For Greatness Inspired", "collection": "Skye", "gender": "male" },
+  "dossierRefA": "creed-aventus",
+  "dossierRefB": "initio-oud-for-greatness",
+  "researchDimensions": ["CANONICAL_FACT_RESEARCH", "WARDROBE_COMPLEMENTARITY_RESEARCH"],
+  "currentMaisonEvidence": {
+    "evidenceState": "RESEARCH_ADVISED",
+    "limitations": [
+      "NO_HUMAN_EDITORIAL_APPROVAL_RECORD",
+      "HUMAN_APPROVAL_NOT_CONFIRMED",
+      "METADATA_SIMILARITY_NOT_SEMANTIC_PROOF",
+      "WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT"
+    ],
+    "evidenceSource": "EP6-P5BR frozen queue snapshot — 2026-08-12",
+    "note": "This is the frozen evidence state from the P5BR queue at Phase 4B creation. It must not be altered. It is not a research conclusion."
+  },
+  "comparisonEvidence": {
+    "wardrobeComplementarityFindings": null,
+    "accessDisposition": "NOT_YET_RESEARCHED"
+  },
+  "createdAt": "2026-08-12",
+  "createdBy": "EP6-P5E-R Phase 4B",
+  "researchAuthorization": "EP6-P5E-R Phase 4C — not yet issued",
+  "governanceConstraints": {
+    "noDecisionFields": true,
+    "noApprovalRecommendation": true,
+    "noGovernanceStateOutput": true,
+    "noRelationshipConfidence": true,
+    "permittedConclusionStates": [
+      "NO_SUPPORTING_RELATIONSHIP_EVIDENCE_FOUND",
+      "LIMITED_SUPPORTING_EVIDENCE_FOUND",
+      "CONTRADICTORY_EVIDENCE_FOUND",
+      "COMPARISON_EVIDENCE_AVAILABLE",
+      "FURTHER_EVIDENCE_REQUIRED"
+    ],
+    "forbiddenOutputFields": [
+      "decision",
+      "approvalRecommendation",
+      "recommendedGovernanceState",
+      "relationshipConfidence",
+      "alternativesRelationshipSupported",
+      "alternativesRelationshipUnsupported"
+    ],
+    "note": "This comparison brief is evidence infrastructure. It has no governance authority."
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "schemaVersion": "EP6-P5E-RR-v1",
+  "dossierVersion": "1.0.0",
+  "dossierRef": "creed-aventus",
+  "dossierStatus": "PENDING_RESEARCH",
+  "referenceFragranceName": "Aventus",
+  "referenceBrand": "Creed",
+  "referenceIdentityStatus": "REPOSITORY_SUPPORTED",
+  "referenceIdentityNote": "The Maison product 'Aventus Inspired' references 'Aventus' by Creed, one of the most influential masculines of the modern era. Identity attribution is REPOSITORY_SUPPORTED through naming convention and product description. This dossier is referenced by five pairs — highest reuse count in the campaign.",
+  "highReuseNote": "This dossier is referenced by 5 campaign pairs: W2, W6, W8, W9, W10. Research quality directly impacts 5 founder decisions.",
+  "maisonSlugs": ["aventus-inspired"],
+  "maisonTitles": ["Aventus Inspired"],
+  "usedByPairs": [
+    "REL-wardrobe-partners-ani-inspired--aventus-inspired",
+    "REL-wardrobe-partners-armani-si-inspired--aventus-inspired",
+    "REL-wardrobe-partners-aventus-inspired--delina-exclusif-inspired",
+    "REL-wardrobe-partners-aventus-inspired--oud-for-greatness-inspired",
+    "REL-wardrobe-partners-aventus-inspired--very-good-girl-inspired"
+  ],
+  "createdAt": "2026-08-12",
+  "createdBy": "EP6-P5E-R Phase 4B",
+  "researchAuthorization": "EP6-P5E-R Phase 4C — not yet issued",
+  "researchQuestions": {
+    "canonicalFact": [
+      "What is the official fragrance family or accord classification of Aventus by Creed?",
+      "What are the official top notes of Aventus by Creed?",
+      "What are the official heart notes of Aventus by Creed?",
+      "What are the official base notes of Aventus by Creed?",
+      "What is the officially marketed gender positioning of Aventus?",
+      "What is the official launch year of Aventus by Creed?",
+      "Who are the credited perfumers for Aventus?",
+      "Are there known batch variations or reformulations of Aventus that should be noted for context?"
+    ]
+  },
+  "sourceHierarchyApplicable": {
+    "tier1": "Official Creed product page (creedfragrances.com), official brand press materials, Kering fragrance group documentation",
+    "tier2": "Fragrantica database (fragrantica.com), Basenotes (basenotes.net), established fragrance publications",
+    "tier3": "Retailer product descriptions, community reviews — contextual and supporting only"
+  },
+  "directAccessAttempts": [],
+  "sourcesConsulted": [],
+  "findings": [],
+  "contradictions": [],
+  "canonicalSummary": null,
+  "accessDisposition": "NOT_YET_RESEARCHED",
+  "referenceVsMaisonNote": "All findings in this dossier pertain to the REFERENCE fragrance: Aventus by Creed. They do not constitute evidence about Maison Skye & Rose's inspired formulation.",
+  "governanceConstraints": {
+    "noDecisionFields": true,
+    "noApprovalRecommendation": true,
+    "noGovernanceStateOutput": true,
+    "noRelationshipConfidence": true,
+    "readOnlyOnceComplete": true,
+    "note": "This dossier is evidence infrastructure. It has no governance authority."
+  }
+}

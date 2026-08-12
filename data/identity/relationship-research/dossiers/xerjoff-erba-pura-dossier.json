@@ -1,0 +1,52 @@
+{
+  "schemaVersion": "EP6-P5E-RR-v1",
+  "dossierVersion": "1.0.0",
+  "dossierRef": "xerjoff-erba-pura",
+  "dossierStatus": "PENDING_RESEARCH",
+  "referenceFragranceName": "Erba Pura",
+  "referenceBrand": "Xerjoff",
+  "referenceIdentityStatus": "EXPECTED",
+  "referenceIdentityNote": "Identity supplied by founder in EP6-P5E-R Phase 4B authorization (2026-08-12). Phase 4A incorrectly attributed Erba Pura to 'Sospiro'. Correction: Xerjoff — Erba Pura. Note: Sospiro is a sub-brand of Xerjoff. Erba Pura was originally released under the Sospiro label before broader Xerjoff attribution became standard. The research must clarify whether the canonical attribution is Xerjoff or Sospiro/Xerjoff, and what the current official brand designation is. Requires independent verification in Phase 4C.",
+  "identityComplexityNote": "Sospiro is a collection/sub-label within the Xerjoff portfolio. Research should determine the current official brand attribution for Erba Pura and note both names where relevant.",
+  "maisonSlugs": ["erba-pura-inspired"],
+  "maisonTitles": ["Erba Pura Inspired"],
+  "usedByPairs": ["REL-wardrobe-partners-aqua-di-gio-inspired--erba-pura-inspired"],
+  "createdAt": "2026-08-12",
+  "createdBy": "EP6-P5E-R Phase 4B",
+  "researchAuthorization": "EP6-P5E-R Phase 4C — not yet issued",
+  "researchQuestions": {
+    "identityVerification": [
+      "Confirm that Maison's 'Erba Pura Inspired' is inspired by 'Erba Pura' by Xerjoff/Sospiro. What is the independent evidence for this identity attribution?",
+      "Is the canonical official brand attribution 'Xerjoff', 'Sospiro', or 'Sospiro by Xerjoff'? What do official sources say?"
+    ],
+    "canonicalFact": [
+      "What is the official fragrance family or accord classification of Erba Pura?",
+      "What are the official top notes of Erba Pura?",
+      "What are the official heart notes of Erba Pura?",
+      "What are the official base notes of Erba Pura?",
+      "What is the officially marketed gender positioning of Erba Pura?",
+      "What is the official launch year of Erba Pura?",
+      "Who are the credited perfumers for Erba Pura?"
+    ]
+  },
+  "sourceHierarchyApplicable": {
+    "tier1": "Official Xerjoff product page (xerjoff.com), official Sospiro brand pages, official brand press materials",
+    "tier2": "Fragrantica database (fragrantica.com), Basenotes (basenotes.net), established fragrance publications",
+    "tier3": "Retailer product descriptions, community reviews — contextual and supporting only"
+  },
+  "directAccessAttempts": [],
+  "sourcesConsulted": [],
+  "findings": [],
+  "contradictions": [],
+  "canonicalSummary": null,
+  "accessDisposition": "NOT_YET_RESEARCHED",
+  "referenceVsMaisonNote": "All findings in this dossier pertain to the REFERENCE fragrance: Erba Pura by Xerjoff/Sospiro. They do not constitute evidence about Maison Skye & Rose's inspired formulation.",
+  "governanceConstraints": {
+    "noDecisionFields": true,
+    "noApprovalRecommendation": true,
+    "noGovernanceStateOutput": true,
+    "noRelationshipConfidence": true,
+    "readOnlyOnceComplete": true,
+    "note": "This dossier is evidence infrastructure. It has no governance authority."
+  }
+}

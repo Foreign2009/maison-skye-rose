@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "EP6-P5E-RR-v1",
+  "dossierVersion": "1.0.0",
+  "dossierRef": "carolina-herrera-very-good-girl",
+  "dossierStatus": "PENDING_RESEARCH",
+  "referenceFragranceName": "Very Good Girl",
+  "referenceBrand": "Carolina Herrera",
+  "referenceIdentityStatus": "REPOSITORY_SUPPORTED",
+  "referenceIdentityNote": "The Maison product 'Very Good Girl Inspired' references 'Very Good Girl' by Carolina Herrera (2021). Identity attribution is REPOSITORY_SUPPORTED through naming convention.",
+  "maisonSlugs": ["very-good-girl-inspired"],
+  "maisonTitles": ["Very Good Girl Inspired"],
+  "usedByPairs": ["REL-wardrobe-partners-aventus-inspired--very-good-girl-inspired"],
+  "createdAt": "2026-08-12",
+  "createdBy": "EP6-P5E-R Phase 4B",
+  "researchAuthorization": "EP6-P5E-R Phase 4C — not yet issued",
+  "researchQuestions": {
+    "canonicalFact": [
+      "What is the official fragrance family or accord classification of Very Good Girl by Carolina Herrera?",
+      "What are the official top notes of Very Good Girl by Carolina Herrera?",
+      "What are the official heart notes of Very Good Girl by Carolina Herrera?",
+      "What are the official base notes of Very Good Girl by Carolina Herrera?",
+      "What is the officially marketed gender positioning of Very Good Girl?",
+      "What is the official launch year of Very Good Girl by Carolina Herrera?",
+      "Who are the credited perfumers for Very Good Girl by Carolina Herrera?"
+    ]
+  },
+  "sourceHierarchyApplicable": {
+    "tier1": "Official Carolina Herrera product page (carolinaherrera.com/fragrances), official brand press materials, Puig group documentation",
+    "tier2": "Fragrantica database (fragrantica.com), Basenotes (basenotes.net), established fragrance publications",
+    "tier3": "Retailer product descriptions, community reviews — contextual and supporting only"
+  },
+  "directAccessAttempts": [],
+  "sourcesConsulted": [],
+  "findings": [],
+  "contradictions": [],
+  "canonicalSummary": null,
+  "accessDisposition": "NOT_YET_RESEARCHED",
+  "referenceVsMaisonNote": "All findings in this dossier pertain to the REFERENCE fragrance: Very Good Girl by Carolina Herrera. They do not constitute evidence about Maison Skye & Rose's inspired formulation.",
+  "governanceConstraints": {
+    "noDecisionFields": true,
+    "noApprovalRecommendation": true,
+    "noGovernanceStateOutput": true,
+    "noRelationshipConfidence": true,
+    "readOnlyOnceComplete": true,
+    "note": "This dossier is evidence infrastructure. It has no governance authority."
+  }
+}

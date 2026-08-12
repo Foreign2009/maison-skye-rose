@@ -1,0 +1,50 @@
+{
+  "schemaVersion": "EP6-P5E-RR-v1",
+  "dossierVersion": "1.0.0",
+  "dossierRef": "mugler-alien",
+  "dossierStatus": "PENDING_RESEARCH",
+  "referenceFragranceName": "Alien (original EDP 2005)",
+  "referenceBrand": "Mugler",
+  "referenceIdentityStatus": "REPOSITORY_SUPPORTED",
+  "referenceIdentityNote": "The Maison product 'Alien Inspired' references the original Mugler Alien EDP (2005), not Alien Goddess (2021) or other flankers. The MKC profile (White Floral family) corresponds to the original 2005 Alien. EP5-P4G research covered Alien Goddess — that research is NOT applicable to this dossier, which concerns the original Alien only.",
+  "flankerExclusionRequired": true,
+  "flankerExclusionNote": "Research must explicitly exclude all flanker variants: Alien Goddess (2021), Alien Goddess Intense (2022), Alien Goddess Supra Florale (2023), Alien Man, Alien Hypersense, etc. All findings must pertain specifically to the original Alien EDP (2005).",
+  "maisonSlugs": ["alien-inspired"],
+  "maisonTitles": ["Alien Inspired"],
+  "usedByPairs": ["REL-alternatives-alien-inspired--baccarat-rouge-540-inspired"],
+  "createdAt": "2026-08-12",
+  "createdBy": "EP6-P5E-R Phase 4B",
+  "researchAuthorization": "EP6-P5E-R Phase 4C — not yet issued",
+  "researchQuestions": {
+    "canonicalFact": [
+      "What is the official fragrance family or accord classification of Alien (original EDP 2005) by Mugler?",
+      "What are the official top notes of Alien (original EDP 2005) by Mugler?",
+      "What are the official heart notes of Alien (original EDP 2005) by Mugler?",
+      "What are the official base notes of Alien (original EDP 2005) by Mugler?",
+      "What is the officially marketed gender positioning of Alien (original EDP 2005) by Mugler?",
+      "What is the official launch year of Alien by Mugler (confirming 2005)?",
+      "Who are the credited perfumers for Alien (original EDP 2005) by Mugler?",
+      "Are there reformulation variants of the original Alien that should be noted?"
+    ]
+  },
+  "sourceHierarchyApplicable": {
+    "tier1": "Official Mugler product page (mugler.com) — Note: EP5 experience shows mugler.com returns HTTP 403 Forbidden; access may require search-snippet method with SEARCH_SNIPPET_ONLY classification",
+    "tier2": "Fragrantica database (fragrantica.com — alien-goddess-68354 is Alien Goddess; Alien original is a different listing), Basenotes (basenotes.net), established fragrance publications",
+    "tier3": "Retailer product descriptions, community reviews — contextual and supporting only"
+  },
+  "directAccessAttempts": [],
+  "sourcesConsulted": [],
+  "findings": [],
+  "contradictions": [],
+  "canonicalSummary": null,
+  "accessDisposition": "NOT_YET_RESEARCHED",
+  "referenceVsMaisonNote": "All findings in this dossier pertain to the REFERENCE fragrance: Alien (original EDP 2005) by Mugler. They do not constitute evidence about Maison Skye & Rose's inspired formulation.",
+  "governanceConstraints": {
+    "noDecisionFields": true,
+    "noApprovalRecommendation": true,
+    "noGovernanceStateOutput": true,
+    "noRelationshipConfidence": true,
+    "readOnlyOnceComplete": true,
+    "note": "This dossier is evidence infrastructure. It has no governance authority."
+  }
+}

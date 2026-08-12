@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "EP6-P5E-RR-v1",
+  "dossierVersion": "1.0.0",
+  "dossierRef": "lv-limmensite",
+  "dossierStatus": "PENDING_RESEARCH",
+  "referenceFragranceName": "L'Immensite",
+  "referenceBrand": "Louis Vuitton",
+  "referenceIdentityStatus": "REPOSITORY_SUPPORTED",
+  "referenceIdentityNote": "The Maison product 'L'immensite Inspired' directly corresponds to 'L'Immensite' by Louis Vuitton. Identity attribution is REPOSITORY_SUPPORTED through naming convention. Note: Maison slug uses a simplified spelling without the apostrophe-accent; the reference brand uses L'Immensite (French).",
+  "maisonSlugs": ["l'immensite-inspired"],
+  "maisonTitles": ["L'immensite Inspired"],
+  "usedByPairs": ["REL-alternatives-aqua-di-gio-inspired--limmensite-inspired-comparison.json"],
+  "createdAt": "2026-08-12",
+  "createdBy": "EP6-P5E-R Phase 4B",
+  "researchAuthorization": "EP6-P5E-R Phase 4C — not yet issued",
+  "researchQuestions": {
+    "canonicalFact": [
+      "What is the official fragrance family or accord classification of L'Immensite by Louis Vuitton?",
+      "What are the official top notes of L'Immensite by Louis Vuitton?",
+      "What are the official heart notes of L'Immensite by Louis Vuitton?",
+      "What are the official base notes of L'Immensite by Louis Vuitton?",
+      "What is the officially marketed gender positioning of L'Immensite?",
+      "What is the official launch year of L'Immensite by Louis Vuitton?",
+      "Who are the credited perfumers for L'Immensite?"
+    ]
+  },
+  "sourceHierarchyApplicable": {
+    "tier1": "Official Louis Vuitton product page (louisvuitton.com/fragrances), official brand press materials, LVMH brand documentation",
+    "tier2": "Fragrantica database (fragrantica.com), Basenotes (basenotes.net), established fragrance publications",
+    "tier3": "Retailer product descriptions, community reviews — contextual and supporting only"
+  },
+  "directAccessAttempts": [],
+  "sourcesConsulted": [],
+  "findings": [],
+  "contradictions": [],
+  "canonicalSummary": null,
+  "accessDisposition": "NOT_YET_RESEARCHED",
+  "referenceVsMaisonNote": "All findings in this dossier pertain to the REFERENCE fragrance: L'Immensite by Louis Vuitton. They do not constitute evidence about Maison Skye & Rose's inspired formulation.",
+  "governanceConstraints": {
+    "noDecisionFields": true,
+    "noApprovalRecommendation": true,
+    "noGovernanceStateOutput": true,
+    "noRelationshipConfidence": true,
+    "readOnlyOnceComplete": true,
+    "note": "This dossier is evidence infrastructure. It has no governance authority."
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "schemaVersion": "EP6-P5E-RR-v1",
+  "dossierVersion": "1.0.0",
+  "dossierRef": "viktor-rolf-spicebomb-extreme",
+  "dossierStatus": "PENDING_RESEARCH",
+  "referenceFragranceName": "Spicebomb Extreme",
+  "referenceBrand": "Viktor&Rolf",
+  "referenceIdentityStatus": "REPOSITORY_SUPPORTED",
+  "referenceIdentityNote": "The Maison product 'Spicebomb Extreme Inspired' directly references 'Spicebomb Extreme' by Viktor&Rolf. The MKC description explicitly names 'Viktor&Rolf's most intensely spiced masculine'. Identity attribution is REPOSITORY_SUPPORTED through naming convention and product description.",
+  "maisonSlugs": ["spicebomb-extreme-inspired"],
+  "maisonTitles": ["Spicebomb Extreme Inspired"],
+  "usedByPairs": [
+    "REL-alternatives-ani-inspired--spicebomb-extreme-inspired",
+    "REL-wardrobe-partners-althair-inspired--spicebomb-extreme-inspired",
+    "REL-wardrobe-partners-armani-si-inspired--spicebomb-extreme-inspired"
+  ],
+  "createdAt": "2026-08-12",
+  "createdBy": "EP6-P5E-R Phase 4B",
+  "researchAuthorization": "EP6-P5E-R Phase 4C — not yet issued",
+  "researchQuestions": {
+    "canonicalFact": [
+      "What is the official fragrance family or accord classification of Spicebomb Extreme by Viktor&Rolf?",
+      "What are the official top notes of Spicebomb Extreme by Viktor&Rolf?",
+      "What are the official heart notes of Spicebomb Extreme by Viktor&Rolf?",
+      "What are the official base notes of Spicebomb Extreme by Viktor&Rolf?",
+      "What is the officially marketed gender positioning of Spicebomb Extreme?",
+      "What is the official launch year of Spicebomb Extreme by Viktor&Rolf?",
+      "Who are the credited perfumers for Spicebomb Extreme?"
+    ]
+  },
+  "sourceHierarchyApplicable": {
+    "tier1": "Official Viktor&Rolf product page (viktor-rolf.com), official brand press materials, L'Oréal Luxe brand documentation",
+    "tier2": "Fragrantica database (fragrantica.com), Basenotes (basenotes.net), established fragrance publications",
+    "tier3": "Retailer product descriptions, community reviews — contextual and supporting only"
+  },
+  "directAccessAttempts": [],
+  "sourcesConsulted": [],
+  "findings": [],
+  "contradictions": [],
+  "canonicalSummary": null,
+  "accessDisposition": "NOT_YET_RESEARCHED",
+  "referenceVsMaisonNote": "All findings in this dossier pertain to the REFERENCE fragrance: Spicebomb Extreme by Viktor&Rolf. They do not constitute evidence about Maison Skye & Rose's inspired formulation.",
+  "governanceConstraints": {
+    "noDecisionFields": true,
+    "noApprovalRecommendation": true,
+    "noGovernanceStateOutput": true,
+    "noRelationshipConfidence": true,
+    "readOnlyOnceComplete": true,
+    "note": "This dossier is evidence infrastructure. It has no governance authority."
+  }
+}

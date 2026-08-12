@@ -1,0 +1,59 @@
+{
+  "schemaVersion": "EP6-P5E-RR-v1",
+  "comparisonVersion": "1.0.0",
+  "reviewId": "REL-alternatives-aqua-di-gio-inspired--l'immensite-inspired",
+  "unitId": "A10",
+  "comparisonStatus": "PENDING_RESEARCH",
+  "pairType": "alternatives",
+  "unitScope": "OPTIONAL_CORROBORATION",
+  "phase3Classification": "DECISION_READY_EXISTING_EVIDENCE",
+  "filenameSanitizationNote": "Filename uses 'limmensite' (no apostrophe) for filesystem compatibility. reviewId preserves the canonical apostrophe form.",
+  "maisonProductA": { "slug": "aqua-di-gio-inspired", "maisonTitle": "Aqua Di Gio Inspired", "collection": "Skye", "gender": "male" },
+  "maisonProductB": { "slug": "l'immensite-inspired", "maisonTitle": "L'immensite Inspired", "collection": "Skye", "gender": "male" },
+  "dossierRefA": "giorgio-armani-acqua-di-gio",
+  "dossierRefB": "lv-limmensite",
+  "researchDimensions": ["CANONICAL_FACT_RESEARCH"],
+  "currentMaisonEvidence": {
+    "evidenceState": "DECISION_READY_EXISTING_EVIDENCE",
+    "limitations": [
+      "NO_HUMAN_EDITORIAL_APPROVAL_RECORD",
+      "HUMAN_APPROVAL_NOT_CONFIRMED",
+      "METADATA_SIMILARITY_NOT_SEMANTIC_PROOF",
+      "NO_OLFACTIVE_TESTING",
+      "NO_THIRD_PARTY_DATABASE_CONFIRMATION",
+      "NO_CONSUMER_REVIEW_EVIDENCE"
+    ],
+    "evidenceSource": "EP6-P5BR frozen queue snapshot — 2026-08-12",
+    "note": "DECISION_READY means the founder may decide without additional research. Research here is OPTIONAL_CORROBORATION only. This is the frozen evidence state; it must not be altered."
+  },
+  "comparisonEvidence": {
+    "olfactiveOverlapFindings": null,
+    "experientialComparisonFindings": null,
+    "accessDisposition": "NOT_YET_RESEARCHED"
+  },
+  "createdAt": "2026-08-12",
+  "createdBy": "EP6-P5E-R Phase 4B",
+  "researchAuthorization": "EP6-P5E-R Phase 4C — not yet issued",
+  "governanceConstraints": {
+    "noDecisionFields": true,
+    "noApprovalRecommendation": true,
+    "noGovernanceStateOutput": true,
+    "noRelationshipConfidence": true,
+    "permittedConclusionStates": [
+      "NO_SUPPORTING_RELATIONSHIP_EVIDENCE_FOUND",
+      "LIMITED_SUPPORTING_EVIDENCE_FOUND",
+      "CONTRADICTORY_EVIDENCE_FOUND",
+      "COMPARISON_EVIDENCE_AVAILABLE",
+      "FURTHER_EVIDENCE_REQUIRED"
+    ],
+    "forbiddenOutputFields": [
+      "decision",
+      "approvalRecommendation",
+      "recommendedGovernanceState",
+      "relationshipConfidence",
+      "alternativesRelationshipSupported",
+      "alternativesRelationshipUnsupported"
+    ],
+    "note": "This comparison brief is evidence infrastructure. It has no governance authority."
+  }
+}

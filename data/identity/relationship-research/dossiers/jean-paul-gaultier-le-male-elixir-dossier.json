@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "EP6-P5E-RR-v1",
+  "dossierVersion": "1.0.0",
+  "dossierRef": "jean-paul-gaultier-le-male-elixir",
+  "dossierStatus": "PENDING_RESEARCH",
+  "referenceFragranceName": "Le Male Elixir",
+  "referenceBrand": "Jean Paul Gaultier",
+  "referenceIdentityStatus": "REPOSITORY_SUPPORTED",
+  "referenceIdentityNote": "The Maison product 'Le Male Elixir Inspired' directly corresponds to 'Le Male Elixir' by Jean Paul Gaultier, an intensified oriental flanker of the Le Male line. Identity attribution is REPOSITORY_SUPPORTED through naming convention.",
+  "maisonSlugs": ["le-male-elixir-inspired"],
+  "maisonTitles": ["Le Male Elixir Inspired"],
+  "usedByPairs": ["REL-alternatives-althair-inspired--le-male-elixir-inspired"],
+  "createdAt": "2026-08-12",
+  "createdBy": "EP6-P5E-R Phase 4B",
+  "researchAuthorization": "EP6-P5E-R Phase 4C — not yet issued",
+  "researchQuestions": {
+    "canonicalFact": [
+      "What is the official fragrance family or accord classification of Le Male Elixir by Jean Paul Gaultier?",
+      "What are the official top notes of Le Male Elixir by Jean Paul Gaultier?",
+      "What are the official heart notes of Le Male Elixir by Jean Paul Gaultier?",
+      "What are the official base notes of Le Male Elixir by Jean Paul Gaultier?",
+      "What is the officially marketed gender positioning of Le Male Elixir?",
+      "What is the official launch year of Le Male Elixir by Jean Paul Gaultier?",
+      "Who are the credited perfumers for Le Male Elixir?"
+    ]
+  },
+  "sourceHierarchyApplicable": {
+    "tier1": "Official Jean Paul Gaultier product page (jeanpaulgaultier.com or jpgaultier.com), official brand press materials, Puig Group brand documentation",
+    "tier2": "Fragrantica database (fragrantica.com), Basenotes (basenotes.net), established fragrance publications",
+    "tier3": "Retailer product descriptions, community reviews — contextual and supporting only"
+  },
+  "directAccessAttempts": [],
+  "sourcesConsulted": [],
+  "findings": [],
+  "contradictions": [],
+  "canonicalSummary": null,
+  "accessDisposition": "NOT_YET_RESEARCHED",
+  "referenceVsMaisonNote": "All findings in this dossier pertain to the REFERENCE fragrance: Le Male Elixir by Jean Paul Gaultier. They do not constitute evidence about Maison Skye & Rose's inspired formulation.",
+  "governanceConstraints": {
+    "noDecisionFields": true,
+    "noApprovalRecommendation": true,
+    "noGovernanceStateOutput": true,
+    "noRelationshipConfidence": true,
+    "readOnlyOnceComplete": true,
+    "note": "This dossier is evidence infrastructure. It has no governance authority."
+  }
+}

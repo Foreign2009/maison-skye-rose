@@ -1,0 +1,50 @@
+{
+  "schemaVersion": "EP6-P5E-RR-v1",
+  "dossierVersion": "1.0.0",
+  "dossierRef": "giorgio-armani-si",
+  "dossierStatus": "PENDING_RESEARCH",
+  "referenceFragranceName": "Sì",
+  "referenceBrand": "Giorgio Armani",
+  "referenceIdentityStatus": "REPOSITORY_SUPPORTED",
+  "referenceIdentityNote": "The Maison product 'Armani Si Inspired' references 'Sì' by Giorgio Armani (2013), a landmark feminine fragrance. Identity attribution is REPOSITORY_SUPPORTED through naming convention. Note: The Sì family includes Sì (2013), Sì Passione (2017), Sì Fiori (2021), Sì Intense (various). Research should clarify the canonical Sì identity as the primary reference.",
+  "maisonSlugs": ["armani-si-inspired"],
+  "maisonTitles": ["Armani Si Inspired"],
+  "usedByPairs": [
+    "REL-wardrobe-partners-armani-si-inspired--aventus-inspired",
+    "REL-wardrobe-partners-armani-si-inspired--spicebomb-extreme-inspired"
+  ],
+  "createdAt": "2026-08-12",
+  "createdBy": "EP6-P5E-R Phase 4B",
+  "researchAuthorization": "EP6-P5E-R Phase 4C — not yet issued",
+  "researchQuestions": {
+    "canonicalFact": [
+      "What is the official fragrance family or accord classification of Sì by Giorgio Armani?",
+      "What are the official top notes of Sì by Giorgio Armani?",
+      "What are the official heart notes of Sì by Giorgio Armani?",
+      "What are the official base notes of Sì by Giorgio Armani?",
+      "What is the officially marketed gender positioning of Sì?",
+      "What is the official launch year of Sì by Giorgio Armani?",
+      "Who are the credited perfumers for Sì by Giorgio Armani?"
+    ]
+  },
+  "sourceHierarchyApplicable": {
+    "tier1": "Official Giorgio Armani Beauty product page (armanibeauty.com), official brand press materials",
+    "tier2": "Fragrantica database (fragrantica.com), Basenotes (basenotes.net), established fragrance publications",
+    "tier3": "Retailer product descriptions, community reviews — contextual and supporting only"
+  },
+  "directAccessAttempts": [],
+  "sourcesConsulted": [],
+  "findings": [],
+  "contradictions": [],
+  "canonicalSummary": null,
+  "accessDisposition": "NOT_YET_RESEARCHED",
+  "referenceVsMaisonNote": "All findings in this dossier pertain to the REFERENCE fragrance: Sì by Giorgio Armani. They do not constitute evidence about Maison Skye & Rose's inspired formulation.",
+  "governanceConstraints": {
+    "noDecisionFields": true,
+    "noApprovalRecommendation": true,
+    "noGovernanceStateOutput": true,
+    "noRelationshipConfidence": true,
+    "readOnlyOnceComplete": true,
+    "note": "This dossier is evidence infrastructure. It has no governance authority."
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "schemaVersion": "EP6-P5E-RR-v1",
+  "dossierVersion": "1.0.0",
+  "dossierRef": "parfums-de-marly-althair",
+  "dossierStatus": "PENDING_RESEARCH",
+  "referenceFragranceName": "Althaïr",
+  "referenceBrand": "Parfums de Marly",
+  "referenceIdentityStatus": "EXPECTED",
+  "referenceIdentityNote": "Identity supplied by founder in EP6-P5E-R Phase 4B authorization (2026-08-12). Phase 4A listed the reference house as unknown. Correction: Parfums de Marly — Althaïr. Requires independent verification in Phase 4C. Note: the correct French spelling is Althaïr (with diaeresis); machine identifiers use the ASCII form 'althair'.",
+  "maisonSlugs": ["althair-inspired"],
+  "maisonTitles": ["Althair Inspired"],
+  "usedByPairs": [
+    "REL-alternatives-althair-inspired--layton-inspired",
+    "REL-alternatives-althair-inspired--le-male-elixir-inspired",
+    "REL-wardrobe-partners-althair-inspired--spicebomb-extreme-inspired"
+  ],
+  "createdAt": "2026-08-12",
+  "createdBy": "EP6-P5E-R Phase 4B",
+  "researchAuthorization": "EP6-P5E-R Phase 4C — not yet issued",
+  "researchQuestions": {
+    "identityVerification": [
+      "Confirm that Maison's 'Althair Inspired' is inspired by 'Althaïr' by Parfums de Marly. What is the independent evidence for this identity attribution?"
+    ],
+    "canonicalFact": [
+      "What is the official fragrance family or accord classification of Althaïr by Parfums de Marly?",
+      "What are the official top notes of Althaïr by Parfums de Marly?",
+      "What are the official heart notes of Althaïr by Parfums de Marly?",
+      "What are the official base notes of Althaïr by Parfums de Marly?",
+      "What is the officially marketed gender positioning of Althaïr by Parfums de Marly?",
+      "What is the official launch year of Althaïr by Parfums de Marly?",
+      "Who are the credited perfumers for Althaïr by Parfums de Marly?"
+    ]
+  },
+  "sourceHierarchyApplicable": {
+    "tier1": "Official Parfums de Marly product page (parfumsdemarly.com), official brand press materials",
+    "tier2": "Fragrantica database (fragrantica.com), Basenotes (basenotes.net), established fragrance publications",
+    "tier3": "Retailer product descriptions, community reviews — contextual and supporting only"
+  },
+  "directAccessAttempts": [],
+  "sourcesConsulted": [],
+  "findings": [],
+  "contradictions": [],
+  "canonicalSummary": null,
+  "accessDisposition": "NOT_YET_RESEARCHED",
+  "referenceVsMaisonNote": "All findings in this dossier pertain to the REFERENCE fragrance: Althaïr by Parfums de Marly. They do not constitute evidence about Maison Skye & Rose's inspired formulation.",
+  "governanceConstraints": {
+    "noDecisionFields": true,
+    "noApprovalRecommendation": true,
+    "noGovernanceStateOutput": true,
+    "noRelationshipConfidence": true,
+    "readOnlyOnceComplete": true,
+    "note": "This dossier is evidence infrastructure. It has no governance authority."
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "schemaVersion": "EP6-P5E-RR-v1",
+  "dossierVersion": "1.0.0",
+  "dossierRef": "dior-sauvage",
+  "dossierStatus": "PENDING_RESEARCH",
+  "referenceFragranceName": "Sauvage",
+  "referenceBrand": "Dior",
+  "referenceIdentityStatus": "REPOSITORY_SUPPORTED",
+  "referenceIdentityNote": "The Maison product 'Sauvage Inspired' references 'Sauvage' by Dior (2015), the world's best-selling men's fragrance. Identity attribution is REPOSITORY_SUPPORTED through naming convention. Note: Dior's Sauvage family includes an Eau de Toilette (2015), Eau de Parfum (2018), and Parfum (2019). Research should clarify which variant is the primary reference, though the canonical composition for the core Sauvage identity is the relevant target.",
+  "maisonSlugs": ["sauvage-inspired"],
+  "maisonTitles": ["Sauvage Inspired"],
+  "usedByPairs": [
+    "REL-wardrobe-partners-ani-inspired--sauvage-inspired",
+    "REL-wardrobe-partners-arabians-tonka-inspired--sauvage-inspired"
+  ],
+  "createdAt": "2026-08-12",
+  "createdBy": "EP6-P5E-R Phase 4B",
+  "researchAuthorization": "EP6-P5E-R Phase 4C — not yet issued",
+  "researchQuestions": {
+    "canonicalFact": [
+      "What is the official fragrance family or accord classification of Sauvage by Dior?",
+      "What are the official top notes of Sauvage (EdT) by Dior?",
+      "What are the official heart notes of Sauvage (EdT) by Dior?",
+      "What are the official base notes of Sauvage (EdT) by Dior?",
+      "What is the officially marketed gender positioning of Sauvage?",
+      "What is the official launch year of Sauvage by Dior?",
+      "Who are the credited perfumers for Sauvage by Dior?"
+    ]
+  },
+  "sourceHierarchyApplicable": {
+    "tier1": "Official Dior beauty product page (dior.com/beauty/fragrances), official brand press materials, LVMH brand documentation",
+    "tier2": "Fragrantica database (fragrantica.com), Basenotes (basenotes.net), established fragrance publications",
+    "tier3": "Retailer product descriptions, community reviews — contextual and supporting only"
+  },
+  "directAccessAttempts": [],
+  "sourcesConsulted": [],
+  "findings": [],
+  "contradictions": [],
+  "canonicalSummary": null,
+  "accessDisposition": "NOT_YET_RESEARCHED",
+  "referenceVsMaisonNote": "All findings in this dossier pertain to the REFERENCE fragrance: Sauvage by Dior. They do not constitute evidence about Maison Skye & Rose's inspired formulation.",
+  "governanceConstraints": {
+    "noDecisionFields": true,
+    "noApprovalRecommendation": true,
+    "noGovernanceStateOutput": true,
+    "noRelationshipConfidence": true,
+    "readOnlyOnceComplete": true,
+    "note": "This dossier is evidence infrastructure. It has no governance authority."
+  }
+}

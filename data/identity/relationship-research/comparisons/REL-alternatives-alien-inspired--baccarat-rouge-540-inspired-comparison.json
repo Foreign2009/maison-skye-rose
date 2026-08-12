@@ -1,0 +1,60 @@
+{
+  "schemaVersion": "EP6-P5E-RR-v1",
+  "comparisonVersion": "1.0.0",
+  "reviewId": "REL-alternatives-alien-inspired--baccarat-rouge-540-inspired",
+  "unitId": "A5",
+  "comparisonStatus": "PENDING_RESEARCH",
+  "pairType": "alternatives",
+  "unitScope": "PRIMARY_RESEARCH",
+  "phase3Classification": "RESEARCH_ADVISED",
+  "specialScrutiny": true,
+  "specialScrutinyNote": "Score 1. No family overlap. Cross-gender (female × unisex). Research must be designed to find NO_SUPPORTING_RELATIONSHIP_EVIDENCE_FOUND as readily as positive evidence. Do not seek to confirm the proposal.",
+  "maisonProductA": { "slug": "alien-inspired", "maisonTitle": "Alien Inspired", "collection": "Rose", "gender": "female" },
+  "maisonProductB": { "slug": "baccarat-rouge-540-inspired", "maisonTitle": "Baccarat Rouge 540 Inspired", "collection": "Rose", "gender": "unisex" },
+  "dossierRefA": "mugler-alien",
+  "dossierRefB": "mfk-baccarat-rouge-540",
+  "researchDimensions": ["CANONICAL_FACT_RESEARCH", "EXPERIENTIAL_COMPARISON_RESEARCH"],
+  "currentMaisonEvidence": {
+    "evidenceState": "RESEARCH_ADVISED",
+    "limitations": [
+      "NO_HUMAN_EDITORIAL_APPROVAL_RECORD",
+      "HUMAN_APPROVAL_NOT_CONFIRMED",
+      "METADATA_SIMILARITY_NOT_SEMANTIC_PROOF",
+      "NO_OLFACTIVE_TESTING",
+      "NO_THIRD_PARTY_DATABASE_CONFIRMATION",
+      "NO_CONSUMER_REVIEW_EVIDENCE"
+    ],
+    "evidenceSource": "EP6-P5BR frozen queue snapshot — 2026-08-12",
+    "note": "This is the frozen evidence state from the P5BR queue at Phase 4B creation. It must not be altered. It is not a research conclusion."
+  },
+  "comparisonEvidence": {
+    "olfactiveOverlapFindings": null,
+    "experientialComparisonFindings": null,
+    "accessDisposition": "NOT_YET_RESEARCHED"
+  },
+  "createdAt": "2026-08-12",
+  "createdBy": "EP6-P5E-R Phase 4B",
+  "researchAuthorization": "EP6-P5E-R Phase 4C — not yet issued",
+  "governanceConstraints": {
+    "noDecisionFields": true,
+    "noApprovalRecommendation": true,
+    "noGovernanceStateOutput": true,
+    "noRelationshipConfidence": true,
+    "permittedConclusionStates": [
+      "NO_SUPPORTING_RELATIONSHIP_EVIDENCE_FOUND",
+      "LIMITED_SUPPORTING_EVIDENCE_FOUND",
+      "CONTRADICTORY_EVIDENCE_FOUND",
+      "COMPARISON_EVIDENCE_AVAILABLE",
+      "FURTHER_EVIDENCE_REQUIRED"
+    ],
+    "forbiddenOutputFields": [
+      "decision",
+      "approvalRecommendation",
+      "recommendedGovernanceState",
+      "relationshipConfidence",
+      "alternativesRelationshipSupported",
+      "alternativesRelationshipUnsupported"
+    ],
+    "note": "This comparison brief is evidence infrastructure. It has no governance authority."
+  }
+}

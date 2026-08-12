@@ -1,0 +1,48 @@
+{
+  "schemaVersion": "EP6-P5E-RR-v1",
+  "dossierVersion": "1.0.0",
+  "dossierRef": "mfk-baccarat-rouge-540",
+  "dossierStatus": "PENDING_RESEARCH",
+  "referenceFragranceName": "Baccarat Rouge 540",
+  "referenceBrand": "Maison Francis Kurkdjian",
+  "referenceIdentityStatus": "REPOSITORY_SUPPORTED",
+  "referenceIdentityNote": "The Maison product 'Baccarat Rouge 540 Inspired' directly corresponds to 'Baccarat Rouge 540' by Maison Francis Kurkdjian (MFK), the defining niche fragrance of the modern era. Identity attribution is REPOSITORY_SUPPORTED through naming convention and product description. Independent verification in Phase 4C will confirm.",
+  "maisonSlugs": ["baccarat-rouge-540-inspired"],
+  "maisonTitles": ["Baccarat Rouge 540 Inspired"],
+  "usedByPairs": ["REL-alternatives-alien-inspired--baccarat-rouge-540-inspired"],
+  "createdAt": "2026-08-12",
+  "createdBy": "EP6-P5E-R Phase 4B",
+  "researchAuthorization": "EP6-P5E-R Phase 4C — not yet issued",
+  "researchQuestions": {
+    "canonicalFact": [
+      "What is the official fragrance family or accord classification of Baccarat Rouge 540 by Maison Francis Kurkdjian?",
+      "What are the official top notes of Baccarat Rouge 540 by MFK?",
+      "What are the official heart notes of Baccarat Rouge 540 by MFK?",
+      "What are the official base notes of Baccarat Rouge 540 by MFK?",
+      "What is the officially marketed gender positioning of Baccarat Rouge 540 (noting it is marketed as unisex)?",
+      "What is the official launch year of Baccarat Rouge 540?",
+      "Who are the credited perfumers for Baccarat Rouge 540?",
+      "Are there flanker variants (e.g. Extrait de Parfum) that should be excluded from this dossier?"
+    ]
+  },
+  "sourceHierarchyApplicable": {
+    "tier1": "Official Maison Francis Kurkdjian product page (franciskurkdjian.com), official brand press materials, LVMH Perfumes & Cosmetics brand documentation",
+    "tier2": "Fragrantica database (fragrantica.com), Basenotes (basenotes.net), established fragrance publications",
+    "tier3": "Retailer product descriptions, community reviews — contextual and supporting only"
+  },
+  "directAccessAttempts": [],
+  "sourcesConsulted": [],
+  "findings": [],
+  "contradictions": [],
+  "canonicalSummary": null,
+  "accessDisposition": "NOT_YET_RESEARCHED",
+  "referenceVsMaisonNote": "All findings in this dossier pertain to the REFERENCE fragrance: Baccarat Rouge 540 by Maison Francis Kurkdjian. They do not constitute evidence about Maison Skye & Rose's inspired formulation.",
+  "governanceConstraints": {
+    "noDecisionFields": true,
+    "noApprovalRecommendation": true,
+    "noGovernanceStateOutput": true,
+    "noRelationshipConfidence": true,
+    "readOnlyOnceComplete": true,
+    "note": "This dossier is evidence infrastructure. It has no governance authority."
+  }
+}

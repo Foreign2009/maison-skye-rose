@@ -1,0 +1,53 @@
+{
+  "schemaVersion": "EP6-P5E-RR-v1",
+  "dossierVersion": "1.0.0",
+  "dossierRef": "giorgio-armani-acqua-di-gio",
+  "dossierStatus": "PENDING_RESEARCH",
+  "referenceFragranceName": "Acqua di Giò",
+  "referenceBrand": "Giorgio Armani",
+  "referenceIdentityStatus": "REPOSITORY_SUPPORTED",
+  "referenceIdentityNote": "The Maison product 'Aqua Di Gio Inspired' references 'Acqua di Giò' by Giorgio Armani, the world's most recognized aquatic masculine fragrance. Identity attribution is REPOSITORY_SUPPORTED. Note: Maison uses 'Aqua Di Gio' (alternate spelling) as the product slug; the reference brand uses 'Acqua di Giò' (Italian). Research must confirm the canonical Acqua di Giò (1996 original or current formulation).",
+  "flankerExclusionRequired": true,
+  "flankerExclusionNote": "Research should exclude Acqua di Giò Profumo, Acqua di Giò Profondo, Acqua di Giò Absolu unless specifically required for comparison context. The base dossier pertains to the core Acqua di Giò EdT/EdP.",
+  "maisonSlugs": ["aqua-di-gio-inspired"],
+  "maisonTitles": ["Aqua Di Gio Inspired"],
+  "usedByPairs": [
+    "REL-alternatives-aqua-di-gio-inspired--limmensite-inspired-comparison.json",
+    "REL-wardrobe-partners-aqua-di-gio-inspired--erba-pura-inspired"
+  ],
+  "createdAt": "2026-08-12",
+  "createdBy": "EP6-P5E-R Phase 4B",
+  "researchAuthorization": "EP6-P5E-R Phase 4C — not yet issued",
+  "researchQuestions": {
+    "canonicalFact": [
+      "What is the official fragrance family or accord classification of Acqua di Giò by Giorgio Armani?",
+      "What are the official top notes of Acqua di Giò by Giorgio Armani?",
+      "What are the official heart notes of Acqua di Giò by Giorgio Armani?",
+      "What are the official base notes of Acqua di Giò by Giorgio Armani?",
+      "What is the officially marketed gender positioning of Acqua di Giò?",
+      "What is the official launch year of Acqua di Giò by Giorgio Armani?",
+      "Who are the credited perfumers for Acqua di Giò?",
+      "Are there known reformulations of Acqua di Giò that should be noted?"
+    ]
+  },
+  "sourceHierarchyApplicable": {
+    "tier1": "Official Giorgio Armani Beauty product page (armani.com/beauty), official brand press materials, L'Oréal Luxe brand documentation",
+    "tier2": "Fragrantica database (fragrantica.com), Basenotes (basenotes.net), established fragrance publications",
+    "tier3": "Retailer product descriptions, community reviews — contextual and supporting only"
+  },
+  "directAccessAttempts": [],
+  "sourcesConsulted": [],
+  "findings": [],
+  "contradictions": [],
+  "canonicalSummary": null,
+  "accessDisposition": "NOT_YET_RESEARCHED",
+  "referenceVsMaisonNote": "All findings in this dossier pertain to the REFERENCE fragrance: Acqua di Giò by Giorgio Armani. They do not constitute evidence about Maison Skye & Rose's inspired formulation.",
+  "governanceConstraints": {
+    "noDecisionFields": true,
+    "noApprovalRecommendation": true,
+    "noGovernanceStateOutput": true,
+    "noRelationshipConfidence": true,
+    "readOnlyOnceComplete": true,
+    "note": "This dossier is evidence infrastructure. It has no governance authority."
+  }
+}
