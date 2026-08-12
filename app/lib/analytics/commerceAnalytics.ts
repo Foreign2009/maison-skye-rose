@@ -22,7 +22,8 @@
  * Callers must handle null gracefully.
  */
 
-import { queryHogQL } from "./posthogQuery";
+import { unstable_cache } from "next/cache";
+import { queryHogQL }     from "./posthogQuery";
 
 // ── Count query builder ───────────────────────────────────────────────────────
 
@@ -63,7 +64,7 @@ export interface CommerceAnalyticsResult {
 
 // ── Main query ────────────────────────────────────────────────────────────────
 
-export async function queryCommerceAnalytics(
+async function _queryCommerceAnalytics(
   windowDays = 30,
 ): Promise<CommerceAnalyticsResult | null> {
   const [
@@ -101,3 +102,9 @@ export async function queryCommerceAnalytics(
     queriedAt: new Date().toISOString(),
   };
 }
+
+export const queryCommerceAnalytics = unstable_cache(
+  _queryCommerceAnalytics,
+  ["commerce-analytics"],
+  { revalidate: 300 },
+);

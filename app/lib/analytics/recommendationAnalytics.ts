@@ -27,6 +27,7 @@
  * vars are absent — nullable behaviour is fully preserved.
  */
 
+import { unstable_cache }              from "next/cache";
 import type { RecommendationStrategy } from "@/app/lib/customer/recommendations/RecommendationStrategy";
 import type { StrategyAnalyticsInput } from "@/app/lib/customer/recommendations/StrategyPerformance";
 import { queryHogQL }                  from "./posthogQuery";
@@ -200,7 +201,7 @@ export interface RecommendationAnalyticsResult {
 
 // ── Main query ────────────────────────────────────────────────────────────────
 
-export async function queryRecommendationAnalytics(
+async function _queryRecommendationAnalytics(
   windowDays = 30,
 ): Promise<RecommendationAnalyticsResult | null> {
   const [
@@ -287,3 +288,9 @@ export async function queryRecommendationAnalytics(
     queriedAt: new Date().toISOString(),
   };
 }
+
+export const queryRecommendationAnalytics = unstable_cache(
+  _queryRecommendationAnalytics,
+  ["recommendation-analytics"],
+  { revalidate: 300 },
+);

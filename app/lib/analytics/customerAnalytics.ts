@@ -22,7 +22,8 @@
  * Callers must handle null gracefully — nullable behaviour is fully preserved.
  */
 
-import { queryHogQL } from "./posthogQuery";
+import { unstable_cache } from "next/cache";
+import { queryHogQL }     from "./posthogQuery";
 
 // ── Count query builder ───────────────────────────────────────────────────────
 
@@ -108,7 +109,7 @@ export interface CustomerAnalyticsResult {
 
 // ── Main query ────────────────────────────────────────────────────────────────
 
-export async function queryCustomerAnalytics(
+async function _queryCustomerAnalytics(
   windowDays = 30,
 ): Promise<CustomerAnalyticsResult | null> {
   const [
@@ -158,3 +159,9 @@ export async function queryCustomerAnalytics(
     queriedAt: new Date().toISOString(),
   };
 }
+
+export const queryCustomerAnalytics = unstable_cache(
+  _queryCustomerAnalytics,
+  ["customer-analytics"],
+  { revalidate: 300 },
+);
