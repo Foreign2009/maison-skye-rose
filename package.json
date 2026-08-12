@@ -53,7 +53,8 @@
     "mip:validate:relationship-review": "npx tsx scripts/identity/validate-relationship-editorial-review-foundation.ts",
     "mip:validate:relationship-review-p5c": "npx tsx scripts/identity/validate-relationship-editorial-review-p5c.ts",
     "mip:validate:relationship-evidence-enrichment": "npx tsx scripts/identity/validate-relationship-evidence-enrichment.ts",
-    "mip:validate:relationship-research-foundation": "npx tsx scripts/identity/validate-relationship-research-foundation.ts"
+    "mip:validate:relationship-research-foundation": "npx tsx scripts/identity/validate-relationship-research-foundation.ts",
+    "mip:validate:relationship-research-pilot": "npx tsx scripts/identity/validate-relationship-research-pilot.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.110.0",

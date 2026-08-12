@@ -1,9 +1,9 @@
 {
   "schemaVersion": "EP6-P5E-RR-v1",
-  "comparisonVersion": "1.0.0",
+  "comparisonVersion": "1.1.0",
   "reviewId": "REL-wardrobe-partners-ani-inspired--sauvage-inspired",
   "unitId": "W3",
-  "comparisonStatus": "PENDING_RESEARCH",
+  "comparisonStatus": "RESEARCH_COMPLETE",
   "pairType": "wardrobePartners",
   "unitScope": "PRIMARY_RESEARCH",
   "phase3Classification": "RESEARCH_ADVISED",
@@ -26,12 +26,71 @@
     "note": "This is the frozen evidence state from the P5BR queue at Phase 4B creation. It must not be altered. It is not a research conclusion."
   },
   "comparisonEvidence": {
-    "wardrobeComplementarityFindings": null,
-    "accessDisposition": "NOT_YET_RESEARCHED"
+    "researchedAt": "2026-08-12",
+    "researchedBy": "EP6-P5E-R Phase 4C-1",
+    "accessDisposition": "SEARCH_SNIPPET_ONLY",
+    "conclusionState": "LIMITED_SUPPORTING_EVIDENCE_FOUND",
+    "wardrobeComplementarityFindings": {
+      "referenceProfileSummaryA": {
+        "fragrance": "Ani by Nishane",
+        "family": "Oriental Floral",
+        "concentration": "Extrait de Parfum",
+        "characterSummary": "Oriental floral; warm, dense, vanilla-forward with Turkish Rose, Blackcurrant and Cardamom heart. Rich, heavy Extrait de Parfum. Unisex. Typically associated with evening, cooler temperatures, and intimate or close-contact settings.",
+        "sourceRef": "nishane-ani-dossier"
+      },
+      "referenceProfileSummaryB": {
+        "fragrance": "Sauvage by Dior (EdT, 2015)",
+        "family": "Aromatic Fougère",
+        "concentration": "Eau de Toilette",
+        "characterSummary": "Aromatic fougère; radically fresh, ambroxan-driven, clean. Bergamot-pepper opening; lavender and Sichuan pepper heart; ambroxan-cedar base. Men's EdT. Associated with daytime, outdoor, and mass-occasion wear.",
+        "sourceRef": "dior-sauvage-dossier"
+      },
+      "evidenceFindings": [
+        {
+          "findingId": "W3-F01",
+          "category": "PROFILE_CONTRAST",
+          "observation": "The olfactive profiles of the two reference fragrances differ substantially across all dimensions. Ani (Oriental Floral, Extrait de Parfum): warm, heavy, vanilla-forward, rich oriental base, unisex, evening. Sauvage EdT (Aromatic Fougère): fresh, clean, ambroxan-dominant, lighter, masculine, daytime. The fragrance families, character emphases, and typical occasion associations are distinct.",
+          "accessMethod": "SEARCH_SNIPPET_ONLY",
+          "significance": "Substantial character contrast between the two reference profiles is structurally consistent with a wardrobe complementarity rationale. A guest owning both would have meaningfully different olfactive options for different occasions and moods."
+        },
+        {
+          "findingId": "W3-F02",
+          "category": "INDIRECT_COMMUNITY_REFERENCE",
+          "observation": "One search result noted that 'Sauvage Very Cool Spray combines the best parts of Sauvage mixed with Nishane Ani', suggesting some perceived olfactive affinity between characteristics of both fragrances in community perception.",
+          "provenance": "WebSearch — SEARCH_SNIPPET_ONLY, Fragrantica community source.",
+          "accessMethod": "SEARCH_SNIPPET_ONLY",
+          "note": "IMPORTANT LIMITATION: This reference concerns 'Sauvage Very Cool Spray' (a 2017 flanker, a different product), not 'Sauvage EdT 2015' (this dossier's reference). The observation is indirect and off-target. It is recorded for completeness but should not be treated as direct evidence about the Sauvage EdT and Ani combination.",
+          "significance": "Indirect and off-target reference only. Does not constitute direct community evidence of Sauvage EdT and Ani wardrobePartner complementarity."
+        },
+        {
+          "findingId": "W3-F03",
+          "category": "OCCASION_DIFFERENTIATION",
+          "observation": "Community and editorial sources characterise Ani as suited to 'cool days and date nights', 'evening wear', and 'intimate settings'. Sauvage EdT is described as a versatile daytime fragrance described as 'radically fresh, raw and noble', widely associated with casual and outdoor occasions. These occasion associations, derived from the reference fragrances' profiles, describe different use contexts.",
+          "accessMethod": "SEARCH_SNIPPET_ONLY",
+          "significance": "Distinct occasion profiles (evening/intimate vs daytime/versatile) could support a wardrobe complementarity rationale for a guest who wears different fragrances for different occasions. However, occasion associations are derived from community description of the reference fragrances and are not direct testimony about Maison's inspired formulations."
+        },
+        {
+          "findingId": "W3-F04",
+          "category": "DIRECT_COMMUNITY_EVIDENCE_ABSENT",
+          "observation": "No direct community evidence of explicit Ani + Sauvage EdT pairing as a wardrobePartner recommendation was found in searches conducted. The Fragrantica forum thread 'A Perfume that Complements Dior Sauvage' was identified in search results (beta.fragrantica.com/board/viewtopic.php?id=232231) but not directly accessed (DIRECT_ACCESS_BLOCKED).",
+          "accessMethod": "SEARCH_SNIPPET_ONLY",
+          "significance": "Absence of direct community wardrobePartner endorsement for this specific pair is noted. The character contrast evidence (W3-F01, W3-F03) is structural in nature rather than community-curated."
+        },
+        {
+          "findingId": "W3-F05",
+          "category": "SAME_COLLECTION_NOTE",
+          "observation": "Both Ani Inspired and Sauvage Inspired are within the Skye collection and are male-positioned products (crossCollection: false, crossGender: false). The wardrobePartner relationship does not require cross-collection or cross-gender justification for this pair.",
+          "accessMethod": "REPOSITORY",
+          "significance": "Same-collection, same-gender pairing. The wardrobePartner rationale must rest on occasion, character, or olfactive complementarity."
+        }
+      ],
+      "conclusionNarrative": "Research found limited supporting evidence for a wardrobePartner relationship between Ani by Nishane and Sauvage by Dior. The most substantive finding is the structural character contrast between the two reference fragrances: Ani (Oriental Floral, warm, evening-associated) vs Sauvage EdT (Aromatic Fougère, fresh, daytime-associated). This contrast is consistent with a wardrobe complementarity rationale. However, no direct community evidence of Ani + Sauvage EdT being explicitly recommended as a wardrobe pair was found. The indirect community reference found (W3-F02) concerns a different product. The founder must evaluate: does the character contrast between the reference fragrances provide sufficient rationale for positioning the inspired formulations as wardrobe partners?"
+    },
+    "researchBoundaryNote": "All findings above concern the REFERENCE fragrances Ani by Nishane and Sauvage by Dior (EdT, 2015). They do not constitute evidence about Maison Skye & Rose's inspired formulations. Do not convert external findings into claims about Maison product character, longevity, projection, or olfactive similarity."
   },
   "createdAt": "2026-08-12",
   "createdBy": "EP6-P5E-R Phase 4B",
-  "researchAuthorization": "EP6-P5E-R Phase 4C — not yet issued",
+  "researchAuthorization": "EP6-P5E-R Phase 4C-1 — 2026-08-12",
   "governanceConstraints": {
     "noDecisionFields": true,
     "noApprovalRecommendation": true,

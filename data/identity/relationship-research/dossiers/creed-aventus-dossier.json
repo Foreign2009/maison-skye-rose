@@ -1,12 +1,12 @@
 {
   "schemaVersion": "EP6-P5E-RR-v1",
-  "dossierVersion": "1.0.0",
+  "dossierVersion": "1.1.0",
   "dossierRef": "creed-aventus",
-  "dossierStatus": "PENDING_RESEARCH",
+  "dossierStatus": "RESEARCH_COMPLETE",
   "referenceFragranceName": "Aventus",
   "referenceBrand": "Creed",
   "referenceIdentityStatus": "REPOSITORY_SUPPORTED",
-  "referenceIdentityNote": "The Maison product 'Aventus Inspired' references 'Aventus' by Creed, one of the most influential masculines of the modern era. Identity attribution is REPOSITORY_SUPPORTED through naming convention and product description. This dossier is referenced by five pairs — highest reuse count in the campaign.",
+  "referenceIdentityNote": "The Maison product 'Aventus Inspired' references 'Aventus' by Creed, one of the most influential masculines of the modern era. Identity attribution is REPOSITORY_SUPPORTED through naming convention and product description. Phase 4C-1 research confirms the fragrance and obtains direct access to official note data via creedboutique.com. This dossier is referenced by five pairs — highest reuse count in the campaign.",
   "highReuseNote": "This dossier is referenced by 5 campaign pairs: W2, W6, W8, W9, W10. Research quality directly impacts 5 founder decisions.",
   "maisonSlugs": ["aventus-inspired"],
   "maisonTitles": ["Aventus Inspired"],
@@ -19,7 +19,9 @@
   ],
   "createdAt": "2026-08-12",
   "createdBy": "EP6-P5E-R Phase 4B",
-  "researchAuthorization": "EP6-P5E-R Phase 4C — not yet issued",
+  "researchAuthorization": "EP6-P5E-R Phase 4C-1 — 2026-08-12",
+  "researchedAt": "2026-08-12",
+  "researchedBy": "EP6-P5E-R Phase 4C-1",
   "researchQuestions": {
     "canonicalFact": [
       "What is the official fragrance family or accord classification of Aventus by Creed?",
@@ -37,12 +39,182 @@
     "tier2": "Fragrantica database (fragrantica.com), Basenotes (basenotes.net), established fragrance publications",
     "tier3": "Retailer product descriptions, community reviews — contextual and supporting only"
   },
-  "directAccessAttempts": [],
-  "sourcesConsulted": [],
-  "findings": [],
-  "contradictions": [],
-  "canonicalSummary": null,
-  "accessDisposition": "NOT_YET_RESEARCHED",
+  "directAccessAttempts": [
+    {
+      "url": "https://www.creedfragrances.com/en-gb/aventus-for-him",
+      "tier": 1,
+      "result": "DIRECT_ACCESS_BLOCKED",
+      "httpStatus": "socket closed",
+      "accessedAt": "2026-08-12",
+      "note": "Official Creed brand site returned a socket-closed connection error."
+    },
+    {
+      "url": "https://www.creedfragrances.com/products/aventus-for-him",
+      "tier": 1,
+      "result": "DIRECT_ACCESS_BLOCKED",
+      "httpStatus": "socket closed",
+      "accessedAt": "2026-08-12",
+      "note": "Alternative path on official Creed site also returned socket-closed error."
+    },
+    {
+      "url": "https://creedboutique.com/products/aventus",
+      "tier": 1,
+      "result": "DIRECT_ACCESS_SUCCESS",
+      "httpStatus": 200,
+      "accessedAt": "2026-08-12",
+      "note": "Creed Boutique is an official Creed retail channel. Full page content accessed successfully. Official note pyramid and product description obtained. This is the authoritative Tier 1 source for this dossier."
+    },
+    {
+      "url": "https://www.fragrantica.com/perfume/Creed/Aventus-9828.html",
+      "tier": 2,
+      "result": "DIRECT_ACCESS_BLOCKED",
+      "httpStatus": 403,
+      "accessedAt": "2026-08-12",
+      "note": "Fragrantica fragrance page returned 403 Forbidden."
+    }
+  ],
+  "sourcesConsulted": [
+    {
+      "source": "creedboutique.com — Creed Boutique official retail site — product page for Aventus",
+      "url": "https://creedboutique.com/products/aventus",
+      "tier": 1,
+      "accessMethod": "DIRECT_ACCESS_SUCCESS",
+      "accessedAt": "2026-08-12",
+      "note": "Primary source. Provides current official note presentation, official brand description, perfumer credits, and production method. Represents the current commercial presentation of the fragrance."
+    },
+    {
+      "source": "WebSearch — multiple results returning snippet data from Fragrantica, Basenotes, heartnotes.co.uk, scentfile.com, parfumei.com — historical notes and batch variation discourse",
+      "tier": "2-3",
+      "accessMethod": "SEARCH_SNIPPET_ONLY",
+      "accessedAt": "2026-08-12",
+      "note": "Supplementary source for historical note listing and batch variation context. Direct Fragrantica page access was blocked; snippets derive from Fragrantica and community sources."
+    }
+  ],
+  "findings": [
+    {
+      "findingId": "AVE-F01",
+      "dimension": "CANONICAL_FACT_RESEARCH",
+      "category": "BRAND",
+      "claim": "Brand: Creed. Founded 1760. Independent fragrance house.",
+      "provenance": "creedboutique.com — DIRECT_ACCESS_SUCCESS.",
+      "accessMethod": "DIRECT_ACCESS_SUCCESS",
+      "tier": 1
+    },
+    {
+      "findingId": "AVE-F02",
+      "dimension": "CANONICAL_FACT_RESEARCH",
+      "category": "LAUNCH_YEAR",
+      "claim": "Launch year: 2010.",
+      "provenance": "WebSearch — multiple sources consistent including Fragrantica snippets.",
+      "accessMethod": "SEARCH_SNIPPET_ONLY",
+      "tier": 2
+    },
+    {
+      "findingId": "AVE-F03",
+      "dimension": "CANONICAL_FACT_RESEARCH",
+      "category": "CONCENTRATION",
+      "claim": "Concentration: Eau de Parfum.",
+      "provenance": "creedboutique.com — DIRECT_ACCESS_SUCCESS. Multiple sources consistent.",
+      "accessMethod": "DIRECT_ACCESS_SUCCESS",
+      "tier": 1
+    },
+    {
+      "findingId": "AVE-F04",
+      "dimension": "CANONICAL_FACT_RESEARCH",
+      "category": "GENDER",
+      "claim": "Gender positioning: Men.",
+      "provenance": "creedboutique.com — DIRECT_ACCESS_SUCCESS. Multiple sources consistent.",
+      "accessMethod": "DIRECT_ACCESS_SUCCESS",
+      "tier": 1
+    },
+    {
+      "findingId": "AVE-F05",
+      "dimension": "CANONICAL_FACT_RESEARCH",
+      "category": "OFFICIAL_DESCRIPTION",
+      "claim": "Official brand description (current): 'Aventus is bold, confident and timeless. Uniting fresh Calabrian bergamot, smoky birch and an iconic pineapple accord, this is a fragrance that leaves its mark.'",
+      "provenance": "creedboutique.com — DIRECT_ACCESS_SUCCESS. This is the current official commercial presentation (2026).",
+      "accessMethod": "DIRECT_ACCESS_SUCCESS",
+      "tier": 1
+    },
+    {
+      "findingId": "AVE-F06",
+      "dimension": "CANONICAL_FACT_RESEARCH",
+      "category": "TOP_NOTES_OFFICIAL_CURRENT",
+      "claim": "Top notes (current official, creedboutique.com): Calabrian Bergamot, Sicilian Lemon & Blackcurrant Leaf Accord.",
+      "provenance": "creedboutique.com — DIRECT_ACCESS_SUCCESS. Current official product page note pyramid.",
+      "accessMethod": "DIRECT_ACCESS_SUCCESS",
+      "tier": 1,
+      "note": "This is the current official note presentation. See AVE-F09 for historical listing. See contradictions."
+    },
+    {
+      "findingId": "AVE-F07",
+      "dimension": "CANONICAL_FACT_RESEARCH",
+      "category": "HEART_NOTES_OFFICIAL_CURRENT",
+      "claim": "Heart notes (current official, creedboutique.com): Pineapple Accord, Pink Pepper & Jasmine Accord.",
+      "provenance": "creedboutique.com — DIRECT_ACCESS_SUCCESS. Note: Pineapple appears in the current heart; historically listed as a top note.",
+      "accessMethod": "DIRECT_ACCESS_SUCCESS",
+      "tier": 1,
+      "note": "Pineapple placement in heart (current) vs top (historical) is part of the notes discrepancy. See contradictions."
+    },
+    {
+      "findingId": "AVE-F08",
+      "dimension": "CANONICAL_FACT_RESEARCH",
+      "category": "BASE_NOTES_OFFICIAL_CURRENT",
+      "claim": "Base notes (current official, creedboutique.com): Birch, Patchouli & Musk Accord.",
+      "provenance": "creedboutique.com — DIRECT_ACCESS_SUCCESS. Simplified three-element base; Oak Moss, Ambergris and Vanilla not listed.",
+      "accessMethod": "DIRECT_ACCESS_SUCCESS",
+      "tier": 1,
+      "note": "Historical listing includes Oak Moss, Ambergris, Vanilla — absent from current official listing. See contradictions."
+    },
+    {
+      "findingId": "AVE-F09",
+      "dimension": "CANONICAL_FACT_RESEARCH",
+      "category": "NOTES_HISTORICAL_LISTING",
+      "claim": "Historical note listing (Fragrantica-style, pre-reformulation characterisation): Top: Blackcurrant, Bergamot, Apple, Pineapple. Heart: Rose, dry Birch, Moroccan Jasmine, Patchouli. Base: Oak Moss, Musk, Ambergris, Vanilla.",
+      "provenance": "WebSearch — SEARCH_SNIPPET_ONLY, source citing Fragrantica historical data.",
+      "accessMethod": "SEARCH_SNIPPET_ONLY",
+      "tier": 2,
+      "note": "This is the historical note presentation. Contrast with current official listing (AVE-F06, AVE-F07, AVE-F08). The two listings are consistent with documented batch variation discourse."
+    },
+    {
+      "findingId": "AVE-F10",
+      "dimension": "CANONICAL_FACT_RESEARCH",
+      "category": "PERFUMERS",
+      "claim": "Credited perfumers: Olivier Creed and Erwin Creed (sixth generation of the Creed family).",
+      "provenance": "creedboutique.com — DIRECT_ACCESS_SUCCESS.",
+      "accessMethod": "DIRECT_ACCESS_SUCCESS",
+      "tier": 1
+    },
+    {
+      "findingId": "AVE-F11",
+      "dimension": "CANONICAL_FACT_RESEARCH",
+      "category": "PRODUCTION_METHOD",
+      "claim": "Production: Millésimé technique — hand-mixed, macerated and matured in Ury, France, unfiltered.",
+      "provenance": "creedboutique.com — DIRECT_ACCESS_SUCCESS.",
+      "accessMethod": "DIRECT_ACCESS_SUCCESS",
+      "tier": 1
+    },
+    {
+      "findingId": "AVE-F12",
+      "dimension": "CANONICAL_FACT_RESEARCH",
+      "category": "BATCH_VARIATIONS",
+      "claim": "Community documentation records significant olfactive variation across production batches. Pre-2016 batches (notably 11Z01, 13ZZ01) are widely characterised as smokier birch, richer pineapple, stronger longevity — widely considered the reference standard by fragrance enthusiasts. 2022–2024 batches are consistently described as softer, sweeter, and less smoky. The 2025 presentation is described as 'more streamlined'. Creed has not publicly confirmed a reformulation. IFRA regulatory requirements and commercial scale are cited in community discussions as contributing factors to the character shift across batches.",
+      "provenance": "WebSearch — SEARCH_SNIPPET_ONLY, multiple community sources: Basenotes forum, Fragrantica community, heartnotes.co.uk, scentfile.com, parfumei.com.",
+      "accessMethod": "SEARCH_SNIPPET_ONLY",
+      "tier": "2-3",
+      "note": "Batch variation is well-documented community discourse. It is relevant context for interpreting any Aventus note listing, as different batches present different olfactive expressions."
+    }
+  ],
+  "contradictions": [
+    {
+      "contradictionId": "AVE-C01",
+      "description": "Two substantially different note pyramids obtained. Current official creedboutique.com (DIRECT_ACCESS_SUCCESS, 2026) presents a simplified three-group pyramid with Pineapple Accord in the heart, no Oak Moss, no Ambergris, no Vanilla in base, no Apple in top. Historical Fragrantica-style listing (SEARCH_SNIPPET_ONLY, secondary) places Pineapple in the top, includes Oak Moss, Ambergris, Vanilla in base, and Apple in top. The discrepancy is consistent with documented batch variation and IFRA-driven ingredient changes. Both note presentations are recorded with their sources and access methods.",
+      "findingsAffected": ["AVE-F06", "AVE-F07", "AVE-F08", "AVE-F09"],
+      "resolution": "BOTH_RECORDED — the creedboutique.com listing (current official, DIRECT_ACCESS_SUCCESS) is the authoritative current presentation; the historical listing is retained as contextual evidence of documented batch variation."
+    }
+  ],
+  "canonicalSummary": "Aventus by Creed is a 2010 men's Eau de Parfum created by Olivier Creed and Erwin Creed using the Millésimé technique. The current official note presentation (creedboutique.com, 2026) lists Calabrian Bergamot, Sicilian Lemon & Blackcurrant Leaf Accord (top); Pineapple Accord, Pink Pepper & Jasmine Accord (heart); Birch, Patchouli & Musk Accord (base). Historical note listings include additional materials (Apple, Oak Moss, Ambergris, Vanilla) consistent with the well-documented batch variation discourse. Creed has not publicly confirmed reformulation. All findings in this dossier concern the reference fragrance only and do not constitute evidence about Maison Skye & Rose's inspired formulation.",
+  "accessDisposition": "DIRECT_ACCESS_SUCCESS",
   "referenceVsMaisonNote": "All findings in this dossier pertain to the REFERENCE fragrance: Aventus by Creed. They do not constitute evidence about Maison Skye & Rose's inspired formulation.",
   "governanceConstraints": {
     "noDecisionFields": true,

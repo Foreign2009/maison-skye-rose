@@ -1,9 +1,9 @@
 {
   "schemaVersion": "EP6-P5E-RR-v1",
-  "comparisonVersion": "1.0.0",
+  "comparisonVersion": "1.1.0",
   "reviewId": "REL-alternatives-ani-inspired--spicebomb-extreme-inspired",
   "unitId": "A9",
-  "comparisonStatus": "PENDING_RESEARCH",
+  "comparisonStatus": "RESEARCH_COMPLETE",
   "pairType": "alternatives",
   "unitScope": "PRIMARY_RESEARCH",
   "phase3Classification": "RESEARCH_ADVISED",
@@ -26,13 +26,87 @@
     "note": "This is the frozen evidence state from the P5BR queue at Phase 4B creation. It must not be altered. It is not a research conclusion."
   },
   "comparisonEvidence": {
-    "olfactiveOverlapFindings": null,
-    "experientialComparisonFindings": null,
-    "accessDisposition": "NOT_YET_RESEARCHED"
+    "researchedAt": "2026-08-12",
+    "researchedBy": "EP6-P5E-R Phase 4C-1",
+    "accessDisposition": "SEARCH_SNIPPET_ONLY",
+    "conclusionState": "LIMITED_SUPPORTING_EVIDENCE_FOUND",
+    "olfactiveOverlapFindings": {
+      "referenceProfileA": {
+        "fragrance": "Ani by Nishane",
+        "family": "Oriental Floral",
+        "concentration": "Extrait de Parfum",
+        "topNotes": ["Bergamot", "Green Notes", "Blue Ginger / Ginger (see dossier ANI-C01)", "Pink Pepper"],
+        "heartNotes": ["Blackcurrant", "Cardamom", "Turkish Rose"],
+        "baseNotes": ["Patchouli", "Cedarwood", "Vanilla", "Benzoin", "Ambergris", "Musk", "Sandalwood"],
+        "characterSummary": "Oriental floral; warm, vanilla-forward with fruity and spicy supporting notes. Dense, unisex Extrait de Parfum concentration.",
+        "sourceRef": "nishane-ani-dossier"
+      },
+      "referenceProfileB": {
+        "fragrance": "Spicebomb Extreme by Viktor&Rolf",
+        "family": "Woody Spicy Amber",
+        "concentration": "Eau de Parfum",
+        "topNotes": ["Lavender", "Black Pepper", "Saffron"],
+        "heartNotes": ["Cinnamon", "Cumin"],
+        "baseNotes": ["Tobacco Accord", "Vanilla", "Bourbon", "Woody Amber", "Cistus"],
+        "characterSummary": "Spicy amber; warm, tobacco-forward with sweet vanilla and dark spice. Masculine EdP concentration.",
+        "sourceRef": "viktor-rolf-spicebomb-extreme-dossier"
+      },
+      "overlapAnalysis": [
+        {
+          "findingId": "A9-O01",
+          "observation": "Both reference fragrances feature Vanilla in the base. This is the most structurally comparable characteristic between the two profiles.",
+          "accessMethod": "SEARCH_SNIPPET_ONLY",
+          "significance": "Shared vanilla base is a limited point of structural overlap. Vanilla is a common fragrance base ingredient that appears across many distinct fragrance families."
+        },
+        {
+          "findingId": "A9-O02",
+          "observation": "Both fragrances are described as 'warm' by community sources. Ani is described as warm due to its oriental-vanilla character; Spicebomb Extreme is described as warm due to its tobacco-spice-amber character.",
+          "accessMethod": "SEARCH_SNIPPET_ONLY",
+          "significance": "Shared 'warm' descriptor is general and does not indicate olfactive similarity. The mechanisms producing warmth differ substantially between the two profiles."
+        },
+        {
+          "findingId": "A9-O03",
+          "observation": "Pepper appears in both profiles: Pink Pepper is a top note of Ani; Black Pepper appears in the top of Spicebomb Extreme. However, these are different pepper varieties with distinct olfactive characteristics.",
+          "accessMethod": "SEARCH_SNIPPET_ONLY",
+          "significance": "Limited note-level overlap. Pink Pepper and Black Pepper are distinct ingredients with different olfactive signatures."
+        },
+        {
+          "findingId": "A9-O04",
+          "observation": "The fragrance families are distinct: Ani is Oriental Floral; Spicebomb Extreme is Woody Spicy Amber. The central accords differ substantially — Ani centres on Turkish Rose, Blackcurrant and Vanilla; Spicebomb Extreme centres on Tobacco, Cinnamon, Cumin and Lavender.",
+          "accessMethod": "SEARCH_SNIPPET_ONLY",
+          "significance": "Distinct fragrance categories. No overlapping central accord."
+        }
+      ]
+    },
+    "experientialComparisonFindings": {
+      "communityAlternativesTreatment": [
+        {
+          "findingId": "A9-E01",
+          "observation": "Multiple community-curated Spicebomb Extreme alternatives lists were identified in search results. Alternatives cited across these lists include: Initio Rehab, Bvlgari Man in Black, Tom Ford Tobacco Vanille, Mancera Red Tobacco, Warm Black (Zara), Al Awsaaf. Nishane Ani was not present in any Spicebomb Extreme alternatives list found.",
+          "sources": ["WhatScent alternatives list (2026)", "The Sniff Test alternatives guide", "10fragrances.com alternatives list", "scentclones.com dupes guide"],
+          "accessMethod": "SEARCH_SNIPPET_ONLY",
+          "significance": "No community-curated source treats Ani as an alternative for Spicebomb Extreme preferences."
+        },
+        {
+          "findingId": "A9-E02",
+          "observation": "Spicebomb Extreme alternatives consistently cite fragrances in the warm spicy amber and tobacco-vanilla categories (Tobacco Vanille, Man in Black, Red Tobacco). Nishane Ani's oriental floral profile is not represented in these categories.",
+          "accessMethod": "SEARCH_SNIPPET_ONLY",
+          "significance": "Community treatment of Spicebomb Extreme alternatives does not include fragrances in Ani's olfactive category."
+        },
+        {
+          "findingId": "A9-E03",
+          "observation": "Community description of Ani emphasises a vanilla-floral character: 'smooth citrus and vanilla combo with fruity and musky nuances', 'often mentioned as the best vanilla scent ever'. Community description of Spicebomb Extreme emphasises spice-tobacco: 'intoxicating blend of warm spices, vanilla, and tobacco'. The experiential emphases are different despite both featuring vanilla.",
+          "accessMethod": "SEARCH_SNIPPET_ONLY",
+          "significance": "Community experiential characterisation of the two fragrances diverges substantially. The consumer experience of each is described in markedly different terms."
+        }
+      ],
+      "conclusionNarrative": "Research found limited supporting evidence for an alternatives relationship between Ani by Nishane and Spicebomb Extreme by Viktor&Rolf. The only structural overlap is vanilla in the base and a general 'warm' character descriptor. Community alternatives lists for Spicebomb Extreme do not include Ani. The central accords, fragrance families, and experiential descriptions of the two reference fragrances are distinct. Whether the Maison's inspired formulations nonetheless serve similar guest preferences is a founder editorial decision not determinable by reference fragrance research alone."
+    },
+    "researchBoundaryNote": "All findings above concern the REFERENCE fragrances Ani by Nishane and Spicebomb Extreme by Viktor&Rolf. They do not constitute evidence about Maison Skye & Rose's inspired formulations. Do not convert external findings into claims about Maison product character, longevity, projection, or olfactive similarity."
   },
   "createdAt": "2026-08-12",
   "createdBy": "EP6-P5E-R Phase 4B",
-  "researchAuthorization": "EP6-P5E-R Phase 4C — not yet issued",
+  "researchAuthorization": "EP6-P5E-R Phase 4C-1 — 2026-08-12",
   "governanceConstraints": {
     "noDecisionFields": true,
     "noApprovalRecommendation": true,

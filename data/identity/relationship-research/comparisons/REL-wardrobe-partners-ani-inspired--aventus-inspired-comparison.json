@@ -1,9 +1,9 @@
 {
   "schemaVersion": "EP6-P5E-RR-v1",
-  "comparisonVersion": "1.0.0",
+  "comparisonVersion": "1.1.0",
   "reviewId": "REL-wardrobe-partners-ani-inspired--aventus-inspired",
   "unitId": "W2",
-  "comparisonStatus": "PENDING_RESEARCH",
+  "comparisonStatus": "RESEARCH_COMPLETE",
   "pairType": "wardrobePartners",
   "unitScope": "PRIMARY_RESEARCH",
   "phase3Classification": "RESEARCH_ADVISED",
@@ -26,12 +26,65 @@
     "note": "This is the frozen evidence state from the P5BR queue at Phase 4B creation. It must not be altered. It is not a research conclusion."
   },
   "comparisonEvidence": {
-    "wardrobeComplementarityFindings": null,
-    "accessDisposition": "NOT_YET_RESEARCHED"
+    "researchedAt": "2026-08-12",
+    "researchedBy": "EP6-P5E-R Phase 4C-1",
+    "accessDisposition": "SEARCH_SNIPPET_ONLY",
+    "conclusionState": "COMPARISON_EVIDENCE_AVAILABLE",
+    "wardrobeComplementarityFindings": {
+      "referenceProfileSummaryA": {
+        "fragrance": "Ani by Nishane",
+        "family": "Oriental Floral",
+        "concentration": "Extrait de Parfum",
+        "characterSummary": "Oriental floral; warm, vanilla-forward with Turkish Rose, Blackcurrant and Cardamom heart. Dense, unisex Extrait de Parfum. Typically associated with evening, cooler temperatures, and intimate settings.",
+        "sourceRef": "nishane-ani-dossier"
+      },
+      "referenceProfileSummaryB": {
+        "fragrance": "Aventus by Creed",
+        "family": "Fresh Fruity Woody",
+        "concentration": "Eau de Parfum",
+        "characterSummary": "Fresh fruity woody with smoky birch and pineapple accord. Masculine Eau de Parfum. Positioned as bold, confident, and timeless. Associated with versatile occasion wear.",
+        "sourceRef": "creed-aventus-dossier"
+      },
+      "evidenceFindings": [
+        {
+          "findingId": "W2-F01",
+          "category": "PERFUMER_CREATIVE_CONTEXT",
+          "observation": "Cécile Zarokian, the perfumer of Ani by Nishane, 'drew slight inspiration from scents like Creed Aventus and Mancera Cedrat Boise while creating this composition.' This describes a creative inspiration acknowledged during the composition process.",
+          "provenance": "WebSearch — SEARCH_SNIPPET_ONLY secondary quotation of Fragrantica editorial text. The primary Fragrantica page was blocked (DIRECT_ACCESS_BLOCKED); this finding is a secondary quotation only.",
+          "accessMethod": "SECONDARY_QUOTATION",
+          "significance": "The perfumer's creative inspiration does not imply olfactive similarity between the two fragrances, nor does it constitute evidence of a wardrobePartner relationship. It is contextual background. The Fragrantica text describes inspiration during composition; this is different from a claim that the two fragrances smell alike or are alternatives."
+        },
+        {
+          "findingId": "W2-F02",
+          "category": "COMMUNITY_SIMILARITY_DEBATE",
+          "observation": "A Basenotes community thread titled 'Nishane's Ani is closer to Aventus than Hacivat' records divided community opinion. Some members report detecting 'a slight resemblance to older batches of Aventus — the vanilla plus slightly tangy fruity gives off a 2011-2013 vibe'. Other members report seeing 'nothing in common between Ani and Aventus'. A third view describes Ani as 'thicker, pungent, tangy — similar to vintage Aventus rather than the sharp quality of modern Aventus'.",
+          "source": "basenotes.com/community/threads/nishanes-ani-is-closer-to-aventus-than-hacivat.470764/",
+          "accessMethod": "SEARCH_SNIPPET_ONLY",
+          "note": "Thread title and snippets recovered via WebSearch. Full thread content not directly accessed (DIRECT_ACCESS_BLOCKED on basenotes.com). The thread concerns olfactive similarity, not wardrobePartner complementarity.",
+          "significance": "Community is divided on whether Ani shares olfactive characteristics with Aventus. This debate is relevant to the wardrobePartner question: if the two fragrances are considered olfactively similar by a significant portion of the community, the founder must evaluate whether a wardrobe complementarity rationale remains distinct from an alternatives-type redundancy. The research does not resolve this question — the founder must evaluate it."
+        },
+        {
+          "findingId": "W2-F03",
+          "category": "PROFILE_CONTRAST",
+          "observation": "The olfactive profiles of the reference fragrances differ substantially in their central character. Ani (Oriental Floral) centres on Turkish Rose, Blackcurrant, and a rich vanilla base. Aventus (Fresh Fruity Woody) centres on Bergamot, Pineapple Accord, and Birch with a characteristic smoky quality. The fragrance families are distinct.",
+          "accessMethod": "SEARCH_SNIPPET_ONLY",
+          "significance": "Structural profile contrast is consistent with a wardrobe complementarity rationale. However, the Basenotes community debate (W2-F02) indicates that some experienced fragrance enthusiasts detect olfactive overlap despite the different families. This complexity is for the founder to evaluate."
+        },
+        {
+          "findingId": "W2-F04",
+          "category": "SAME_COLLECTION_NOTE",
+          "observation": "Both Ani Inspired and Aventus Inspired are within the Skye collection and are male-positioned products (crossCollection: false, crossGender: false). The wardrobePartner relationship does not require cross-collection or cross-gender justification for this pair.",
+          "accessMethod": "REPOSITORY",
+          "significance": "Same-collection, same-gender pairing. The wardrobePartner rationale must rest on occasion, character, or olfactive complementarity rather than the contrast of gender or collection positioning."
+        }
+      ],
+      "conclusionNarrative": "Research has identified comparison evidence relevant to this wardrobePartner pair but does not resolve the wardrobePartner question. The key tension is: (1) the reference fragrances have structurally distinct profiles (Oriental Floral vs Fresh Fruity Woody) which could support complementarity; versus (2) a community debate exists suggesting some experienced observers detect olfactive similarity between Ani and certain Aventus batches. The perfumer's creative inspiration (drawing slightly from Aventus while creating Ani) adds contextual depth but does not resolve whether the pair functions as wardrobe-complementary or redundant in practice. The founder must evaluate: given the olfactive profile contrast and the community similarity debate, does a genuine complementarity rationale exist for a guest owning both Ani Inspired and Aventus Inspired?"
+    },
+    "researchBoundaryNote": "All findings above concern the REFERENCE fragrances Ani by Nishane and Aventus by Creed. They do not constitute evidence about Maison Skye & Rose's inspired formulations. Do not convert external findings into claims about Maison product character, longevity, projection, or olfactive similarity."
   },
   "createdAt": "2026-08-12",
   "createdBy": "EP6-P5E-R Phase 4B",
-  "researchAuthorization": "EP6-P5E-R Phase 4C — not yet issued",
+  "researchAuthorization": "EP6-P5E-R Phase 4C-1 — 2026-08-12",
   "governanceConstraints": {
     "noDecisionFields": true,
     "noApprovalRecommendation": true,

@@ -8,7 +8,7 @@
   "createdAt": "2026-08-12",
   "createdBy": "EP6-P5E-R Phase 4B",
   "governanceActor": "Maison Skye & Rose — Founder Relationship Governance",
-  "researchAuthorizationStatus": "PENDING — Phase 4C not yet issued",
+  "researchAuthorizationStatus": "PHASE 4C-1 COMPLETE — 4 dossiers and 3 comparisons researched (2026-08-12)",
   "governancePrinciple": "Research informs. Research never decides. Evidence may strengthen, weaken, or fail to support a relationship proposition. None of those outcomes automatically approve or reject it. Maison Skye & Rose decides.",
 
   "phase4ACorrections": {
@@ -114,7 +114,10 @@
       "dossierRefB": "viktor-rolf-spicebomb-extreme",
       "researchDimensions": ["CANONICAL_FACT_RESEARCH", "EXPERIENTIAL_COMPARISON_RESEARCH"],
       "comparisonFile": "data/identity/relationship-research/comparisons/REL-alternatives-ani-inspired--spicebomb-extreme-inspired-comparison.json",
-      "researchStatus": "PENDING_RESEARCH"
+      "researchStatus": "RESEARCH_COMPLETE",
+      "researchedAt": "2026-08-12",
+      "researchedBy": "EP6-P5E-R Phase 4C-1",
+      "conclusionState": "LIMITED_SUPPORTING_EVIDENCE_FOUND"
     },
     {
       "unitId": "A10",
@@ -160,7 +163,10 @@
       "dossierRefB": "creed-aventus",
       "researchDimensions": ["CANONICAL_FACT_RESEARCH", "WARDROBE_COMPLEMENTARITY_RESEARCH"],
       "comparisonFile": "data/identity/relationship-research/comparisons/REL-wardrobe-partners-ani-inspired--aventus-inspired-comparison.json",
-      "researchStatus": "PENDING_RESEARCH"
+      "researchStatus": "RESEARCH_COMPLETE",
+      "researchedAt": "2026-08-12",
+      "researchedBy": "EP6-P5E-R Phase 4C-1",
+      "conclusionState": "COMPARISON_EVIDENCE_AVAILABLE"
     },
     {
       "unitId": "W3",
@@ -176,7 +182,10 @@
       "dossierRefB": "dior-sauvage",
       "researchDimensions": ["CANONICAL_FACT_RESEARCH", "WARDROBE_COMPLEMENTARITY_RESEARCH"],
       "comparisonFile": "data/identity/relationship-research/comparisons/REL-wardrobe-partners-ani-inspired--sauvage-inspired-comparison.json",
-      "researchStatus": "PENDING_RESEARCH"
+      "researchStatus": "RESEARCH_COMPLETE",
+      "researchedAt": "2026-08-12",
+      "researchedBy": "EP6-P5E-R Phase 4C-1",
+      "conclusionState": "LIMITED_SUPPORTING_EVIDENCE_FOUND"
     },
     {
       "unitId": "W4",
@@ -365,10 +374,12 @@
       "dossierRef": "nishane-ani",
       "referenceFragranceName": "Ani",
       "referenceBrand": "Nishane",
-      "referenceIdentityStatus": "EXPECTED",
+      "referenceIdentityStatus": "INDEPENDENTLY_VERIFIED",
       "usedByUnits": ["A8", "A9", "W2", "W3"],
       "file": "data/identity/relationship-research/dossiers/nishane-ani-dossier.json",
-      "dossierStatus": "PENDING_RESEARCH"
+      "dossierStatus": "RESEARCH_COMPLETE",
+      "researchedAt": "2026-08-12",
+      "researchedBy": "EP6-P5E-R Phase 4C-1"
     },
     {
       "dossierRef": "viktor-rolf-spicebomb-extreme",
@@ -377,7 +388,9 @@
       "referenceIdentityStatus": "REPOSITORY_SUPPORTED",
       "usedByUnits": ["A9", "W1", "W7"],
       "file": "data/identity/relationship-research/dossiers/viktor-rolf-spicebomb-extreme-dossier.json",
-      "dossierStatus": "PENDING_RESEARCH"
+      "dossierStatus": "RESEARCH_COMPLETE",
+      "researchedAt": "2026-08-12",
+      "researchedBy": "EP6-P5E-R Phase 4C-1"
     },
     {
       "dossierRef": "giorgio-armani-acqua-di-gio",
@@ -404,7 +417,9 @@
       "referenceIdentityStatus": "REPOSITORY_SUPPORTED",
       "usedByUnits": ["W2", "W6", "W8", "W9", "W10"],
       "file": "data/identity/relationship-research/dossiers/creed-aventus-dossier.json",
-      "dossierStatus": "PENDING_RESEARCH"
+      "dossierStatus": "RESEARCH_COMPLETE",
+      "researchedAt": "2026-08-12",
+      "researchedBy": "EP6-P5E-R Phase 4C-1"
     },
     {
       "dossierRef": "dior-sauvage",
@@ -413,7 +428,9 @@
       "referenceIdentityStatus": "REPOSITORY_SUPPORTED",
       "usedByUnits": ["W3", "W5"],
       "file": "data/identity/relationship-research/dossiers/dior-sauvage-dossier.json",
-      "dossierStatus": "PENDING_RESEARCH"
+      "dossierStatus": "RESEARCH_COMPLETE",
+      "researchedAt": "2026-08-12",
+      "researchedBy": "EP6-P5E-R Phase 4C-1"
     },
     {
       "dossierRef": "xerjoff-erba-pura",

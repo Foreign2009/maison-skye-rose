@@ -1,12 +1,12 @@
 {
   "schemaVersion": "EP6-P5E-RR-v1",
-  "dossierVersion": "1.0.0",
+  "dossierVersion": "1.1.0",
   "dossierRef": "viktor-rolf-spicebomb-extreme",
-  "dossierStatus": "PENDING_RESEARCH",
+  "dossierStatus": "RESEARCH_COMPLETE",
   "referenceFragranceName": "Spicebomb Extreme",
   "referenceBrand": "Viktor&Rolf",
   "referenceIdentityStatus": "REPOSITORY_SUPPORTED",
-  "referenceIdentityNote": "The Maison product 'Spicebomb Extreme Inspired' directly references 'Spicebomb Extreme' by Viktor&Rolf. The MKC description explicitly names 'Viktor&Rolf's most intensely spiced masculine'. Identity attribution is REPOSITORY_SUPPORTED through naming convention and product description.",
+  "referenceIdentityNote": "The Maison product 'Spicebomb Extreme Inspired' directly references 'Spicebomb Extreme' by Viktor&Rolf. The MKC description explicitly names 'Viktor&Rolf's most intensely spiced masculine'. Identity attribution is REPOSITORY_SUPPORTED through naming convention and product description. Phase 4C-1 research confirms the fragrance exists and the identity is accurate.",
   "maisonSlugs": ["spicebomb-extreme-inspired"],
   "maisonTitles": ["Spicebomb Extreme Inspired"],
   "usedByPairs": [
@@ -16,7 +16,9 @@
   ],
   "createdAt": "2026-08-12",
   "createdBy": "EP6-P5E-R Phase 4B",
-  "researchAuthorization": "EP6-P5E-R Phase 4C — not yet issued",
+  "researchAuthorization": "EP6-P5E-R Phase 4C-1 — 2026-08-12",
+  "researchedAt": "2026-08-12",
+  "researchedBy": "EP6-P5E-R Phase 4C-1",
   "researchQuestions": {
     "canonicalFact": [
       "What is the official fragrance family or accord classification of Spicebomb Extreme by Viktor&Rolf?",
@@ -33,12 +35,152 @@
     "tier2": "Fragrantica database (fragrantica.com), Basenotes (basenotes.net), established fragrance publications",
     "tier3": "Retailer product descriptions, community reviews — contextual and supporting only"
   },
-  "directAccessAttempts": [],
-  "sourcesConsulted": [],
-  "findings": [],
+  "directAccessAttempts": [
+    {
+      "url": "https://www.viktor-rolf.com/en-gb/fragrances/spicebomb/spicebomb-extreme/",
+      "tier": 1,
+      "result": "DIRECT_ACCESS_BLOCKED",
+      "httpStatus": 404,
+      "accessedAt": "2026-08-12",
+      "note": "Official brand site returned 404. Page not found."
+    },
+    {
+      "url": "https://www.viktor-rolf.com/en-int/fragrances/spicebomb-extreme/",
+      "tier": 1,
+      "result": "DIRECT_ACCESS_BLOCKED",
+      "httpStatus": 404,
+      "accessedAt": "2026-08-12",
+      "note": "Alternative locale URL also returned 404."
+    },
+    {
+      "url": "https://us.viktor-rolf.com/fragrance/spicebomb-extreme-VKR_034.html",
+      "tier": 1,
+      "result": "DIRECT_ACCESS_BLOCKED",
+      "httpStatus": 403,
+      "accessedAt": "2026-08-12",
+      "note": "US store URL returned 403 Forbidden."
+    },
+    {
+      "url": "https://www.fragrantica.com/perfume/Viktor-Rolf/Spicebomb-Extreme-30499.html",
+      "tier": 2,
+      "result": "DIRECT_ACCESS_BLOCKED",
+      "httpStatus": 403,
+      "accessedAt": "2026-08-12",
+      "note": "Fragrantica fragrance page returned 403 Forbidden."
+    },
+    {
+      "url": "https://basenotes.net/fragrances/viktor-rolf-spicebomb-extreme",
+      "tier": 2,
+      "result": "DIRECT_ACCESS_BLOCKED",
+      "httpStatus": "301 → 403",
+      "accessedAt": "2026-08-12",
+      "note": "Basenotes.net redirected (301) to basenotes.com, which returned 403 Forbidden."
+    }
+  ],
+  "sourcesConsulted": [
+    {
+      "source": "WebSearch — multiple results returning snippet data from Viktor&Rolf official pages, Fragrantica, Basenotes, and fragrance community sources",
+      "tier": "1-3",
+      "accessMethod": "SEARCH_SNIPPET_ONLY",
+      "accessedAt": "2026-08-12",
+      "note": "Direct page access was blocked on all Tier 1 and Tier 2 sites. WebSearch snippets derive from those sources. Official Viktor&Rolf product page (us.viktor-rolf.com/fragrance/spicebomb-extreme-eau-de-parfum-VKR_034.html) confirmed in search index; content surfaced via snippet only."
+    }
+  ],
+  "findings": [
+    {
+      "findingId": "SBX-F01",
+      "dimension": "CANONICAL_FACT_RESEARCH",
+      "category": "BRAND",
+      "claim": "Brand: Viktor&Rolf. Part of L'Oréal Luxe.",
+      "provenance": "WebSearch — multiple sources consistent. REPOSITORY_SUPPORTED identity confirmed.",
+      "accessMethod": "SEARCH_SNIPPET_ONLY",
+      "tier": 1
+    },
+    {
+      "findingId": "SBX-F02",
+      "dimension": "CANONICAL_FACT_RESEARCH",
+      "category": "LAUNCH_YEAR",
+      "claim": "Launch year: 2015.",
+      "provenance": "WebSearch — multiple sources consistent including Fragrantica snippet ('Spicebomb Extreme Viktor&Rolf cologne — a fragrance for men 2015').",
+      "accessMethod": "SEARCH_SNIPPET_ONLY",
+      "tier": 2
+    },
+    {
+      "findingId": "SBX-F03",
+      "dimension": "CANONICAL_FACT_RESEARCH",
+      "category": "CONCENTRATION",
+      "claim": "Concentration: Eau de Parfum (EdP).",
+      "provenance": "WebSearch — multiple sources consistent. Fragrantica page title and multiple retailer/community sources confirm EdP.",
+      "accessMethod": "SEARCH_SNIPPET_ONLY",
+      "tier": 1
+    },
+    {
+      "findingId": "SBX-F04",
+      "dimension": "CANONICAL_FACT_RESEARCH",
+      "category": "GENDER",
+      "claim": "Gender positioning: Men.",
+      "provenance": "WebSearch — multiple sources consistent. Fragrantica categorises 'a fragrance for men'.",
+      "accessMethod": "SEARCH_SNIPPET_ONLY",
+      "tier": 2
+    },
+    {
+      "findingId": "SBX-F05",
+      "dimension": "CANONICAL_FACT_RESEARCH",
+      "category": "PERFUMERS",
+      "claim": "Credited perfumers: Carlos Benaim and Jean-Christophe Hérault.",
+      "provenance": "WebSearch — multiple sources consistent citing both perfumers.",
+      "accessMethod": "SEARCH_SNIPPET_ONLY",
+      "tier": 2
+    },
+    {
+      "findingId": "SBX-F06",
+      "dimension": "CANONICAL_FACT_RESEARCH",
+      "category": "FRAGRANCE_FAMILY",
+      "claim": "Fragrance family: Woody Spicy Amber (Gourmand elements present).",
+      "provenance": "WebSearch — Fragrantica family classification. Multiple sources describe it as warm spicy amber with gourmand qualities.",
+      "accessMethod": "SEARCH_SNIPPET_ONLY",
+      "tier": 2
+    },
+    {
+      "findingId": "SBX-F07",
+      "dimension": "CANONICAL_FACT_RESEARCH",
+      "category": "TOP_NOTES",
+      "claim": "Top notes: Lavender, Black Pepper, Saffron.",
+      "provenance": "WebSearch — multiple sources consistent including source citing official Viktor&Rolf product description.",
+      "accessMethod": "SEARCH_SNIPPET_ONLY",
+      "tier": 1
+    },
+    {
+      "findingId": "SBX-F08",
+      "dimension": "CANONICAL_FACT_RESEARCH",
+      "category": "HEART_NOTES",
+      "claim": "Heart notes: Cinnamon, Cumin. Some sources also list Saffron Accord in the heart.",
+      "provenance": "WebSearch — multiple sources consistent. Minor variation on Saffron placement (top vs heart) across sources; recorded.",
+      "accessMethod": "SEARCH_SNIPPET_ONLY",
+      "tier": 1
+    },
+    {
+      "findingId": "SBX-F09",
+      "dimension": "CANONICAL_FACT_RESEARCH",
+      "category": "BASE_NOTES",
+      "claim": "Base notes: Tobacco Accord, Vanilla, Bourbon, Woody Amber, Cistus.",
+      "provenance": "WebSearch — multiple sources consistent. 'Bourbon' and 'Woody Amber' variations reflect overlapping terminology across sources.",
+      "accessMethod": "SEARCH_SNIPPET_ONLY",
+      "tier": 1
+    },
+    {
+      "findingId": "SBX-F10",
+      "dimension": "CANONICAL_FACT_RESEARCH",
+      "category": "BRAND_CHARACTER",
+      "claim": "Described as an 'intensified interpretation' of the original Spicebomb (2012), delivering 'deeper spice, richer warmth, and heightened sensuality'. The original Spicebomb was an Eau de Toilette; Extreme is an Eau de Parfum with a darker, more tenacious character.",
+      "provenance": "WebSearch — source citing Viktor&Rolf official product positioning and brand description.",
+      "accessMethod": "SEARCH_SNIPPET_ONLY",
+      "tier": 1
+    }
+  ],
   "contradictions": [],
-  "canonicalSummary": null,
-  "accessDisposition": "NOT_YET_RESEARCHED",
+  "canonicalSummary": "Spicebomb Extreme by Viktor&Rolf is a 2015 men's Eau de Parfum created by Carlos Benaim and Jean-Christophe Hérault. It is classified as a Woody Spicy Amber fragrance. The top notes open with lavender, black pepper, and saffron; the heart centres on cinnamon and cumin; the base is built on tobacco accord, vanilla, bourbon, woody amber, and cistus. It is described as an intensified and darker evolution of the original Spicebomb (2012 EdT). All findings in this dossier concern the reference fragrance only and do not constitute evidence about Maison Skye & Rose's inspired formulation.",
+  "accessDisposition": "SEARCH_SNIPPET_ONLY",
   "referenceVsMaisonNote": "All findings in this dossier pertain to the REFERENCE fragrance: Spicebomb Extreme by Viktor&Rolf. They do not constitute evidence about Maison Skye & Rose's inspired formulation.",
   "governanceConstraints": {
     "noDecisionFields": true,

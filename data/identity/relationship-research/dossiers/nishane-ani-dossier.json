@@ -1,12 +1,12 @@
 {
   "schemaVersion": "EP6-P5E-RR-v1",
-  "dossierVersion": "1.0.0",
+  "dossierVersion": "1.1.0",
   "dossierRef": "nishane-ani",
-  "dossierStatus": "PENDING_RESEARCH",
+  "dossierStatus": "RESEARCH_COMPLETE",
   "referenceFragranceName": "Ani",
   "referenceBrand": "Nishane",
-  "referenceIdentityStatus": "EXPECTED",
-  "referenceIdentityNote": "Identity supplied by founder in EP6-P5E-R Phase 4B authorization (2026-08-12). Phase 4A incorrectly attributed Ani to 'Parfums de Marly'. Correction: Nishane — Ani. Requires independent verification in Phase 4C. Note: 'Parfums de Marly — Ani' does not exist; Parfums de Marly makes fragrances such as Althaïr and Layton but not one named Ani. Nishane is a Turkish niche house.",
+  "referenceIdentityStatus": "INDEPENDENTLY_VERIFIED",
+  "referenceIdentityNote": "Identity supplied by founder in EP6-P5E-R Phase 4B authorization (2026-08-12). Phase 4A incorrectly attributed Ani to 'Parfums de Marly'. Phase 4C-1 research independently confirms the reference fragrance is 'Ani' by Nishane — a 2019 unisex Extrait de Parfum by the Turkish niche house Nishane. Multiple search sources confirm the fragrance exists and matches the founder-supplied identity. 'Parfums de Marly — Ani' does not exist. Identity upgraded from EXPECTED to INDEPENDENTLY_VERIFIED.",
   "maisonSlugs": ["ani-inspired"],
   "maisonTitles": ["Ani Inspired"],
   "usedByPairs": [
@@ -17,7 +17,9 @@
   ],
   "createdAt": "2026-08-12",
   "createdBy": "EP6-P5E-R Phase 4B",
-  "researchAuthorization": "EP6-P5E-R Phase 4C — not yet issued",
+  "researchAuthorization": "EP6-P5E-R Phase 4C-1 — 2026-08-12",
+  "researchedAt": "2026-08-12",
+  "researchedBy": "EP6-P5E-R Phase 4C-1",
   "researchQuestions": {
     "identityVerification": [
       "Confirm that Maison's 'Ani Inspired' is inspired by 'Ani' by Nishane. What is the independent evidence for this identity attribution?"
@@ -37,12 +39,196 @@
     "tier2": "Fragrantica database (fragrantica.com), Basenotes (basenotes.net), established fragrance publications",
     "tier3": "Retailer product descriptions, community reviews — contextual and supporting only"
   },
-  "directAccessAttempts": [],
-  "sourcesConsulted": [],
-  "findings": [],
-  "contradictions": [],
-  "canonicalSummary": null,
-  "accessDisposition": "NOT_YET_RESEARCHED",
+  "directAccessAttempts": [
+    {
+      "url": "https://www.nishane.com.tr/en/fragrance/ani/",
+      "tier": 1,
+      "result": "DIRECT_ACCESS_BLOCKED",
+      "httpStatus": 404,
+      "accessedAt": "2026-08-12",
+      "note": "Official brand site returned 404. Page not found."
+    },
+    {
+      "url": "https://www.nishane.com.tr/en/fragrance/ani",
+      "tier": 1,
+      "result": "DIRECT_ACCESS_BLOCKED",
+      "httpStatus": 404,
+      "accessedAt": "2026-08-12",
+      "note": "Alternative URL without trailing slash also returned 404."
+    },
+    {
+      "url": "https://nishane.com/product/ani/",
+      "tier": 1,
+      "result": "DIRECT_ACCESS_BLOCKED",
+      "httpStatus": 403,
+      "accessedAt": "2026-08-12",
+      "note": "Alternative official domain returned 403 Forbidden."
+    },
+    {
+      "url": "https://www.fragrantica.com/perfume/Nishane/Ani-54785.html",
+      "tier": 2,
+      "result": "DIRECT_ACCESS_BLOCKED",
+      "httpStatus": 403,
+      "accessedAt": "2026-08-12",
+      "note": "Fragrantica fragrance page returned 403 Forbidden."
+    },
+    {
+      "url": "https://basenotes.net/fragrances/nishane-ani",
+      "tier": 2,
+      "result": "DIRECT_ACCESS_BLOCKED",
+      "httpStatus": "301 → 403",
+      "accessedAt": "2026-08-12",
+      "note": "Basenotes.net redirected (301) to basenotes.com, which returned 403 Forbidden."
+    }
+  ],
+  "sourcesConsulted": [
+    {
+      "source": "WebSearch — multiple results returning snippet data from Fragrantica, fragrance community, and retailer sources",
+      "tier": "2-3",
+      "accessMethod": "SEARCH_SNIPPET_ONLY",
+      "accessedAt": "2026-08-12",
+      "note": "Direct page access was blocked on all Tier 1 and Tier 2 sites. WebSearch snippets provide secondary data derived from those sources."
+    },
+    {
+      "source": "Basenotes community thread — 'Nishane's Ani is closer to Aventus than Hacivat' (basenotes.com/community/threads/nishanes-ani-is-closer-to-aventus-than-hacivat.470764/)",
+      "tier": 3,
+      "accessMethod": "SEARCH_SNIPPET_ONLY",
+      "accessedAt": "2026-08-12",
+      "note": "Thread title and snippet recovered via WebSearch; full thread content not directly accessed."
+    }
+  ],
+  "findings": [
+    {
+      "findingId": "ANI-F01",
+      "dimension": "CANONICAL_FACT_RESEARCH",
+      "category": "IDENTITY_VERIFICATION",
+      "claim": "Ani by Nishane exists as an independently verifiable fragrance. It is a 2019 unisex Extrait de Parfum launched by Nishane, a Turkish niche house. The Phase 4A attribution to Parfums de Marly is confirmed incorrect.",
+      "provenance": "Multiple WebSearch results citing Fragrantica and community sources; Fragrantica URL fragrantica.com/perfume/Nishane/Ani-54785.html confirmed in search index.",
+      "accessMethod": "SEARCH_SNIPPET_ONLY",
+      "tier": 2
+    },
+    {
+      "findingId": "ANI-F02",
+      "dimension": "CANONICAL_FACT_RESEARCH",
+      "category": "BRAND",
+      "claim": "Brand: Nishane. Turkish niche fragrance house. Based in Istanbul.",
+      "provenance": "WebSearch — multiple sources consistent.",
+      "accessMethod": "SEARCH_SNIPPET_ONLY",
+      "tier": 2
+    },
+    {
+      "findingId": "ANI-F03",
+      "dimension": "CANONICAL_FACT_RESEARCH",
+      "category": "LAUNCH_YEAR",
+      "claim": "Launch year: 2019.",
+      "provenance": "WebSearch — multiple sources consistent including Fragrantica snippet.",
+      "accessMethod": "SEARCH_SNIPPET_ONLY",
+      "tier": 2
+    },
+    {
+      "findingId": "ANI-F04",
+      "dimension": "CANONICAL_FACT_RESEARCH",
+      "category": "CONCENTRATION",
+      "claim": "Concentration: Extrait de Parfum.",
+      "provenance": "WebSearch — multiple sources consistent.",
+      "accessMethod": "SEARCH_SNIPPET_ONLY",
+      "tier": 2
+    },
+    {
+      "findingId": "ANI-F05",
+      "dimension": "CANONICAL_FACT_RESEARCH",
+      "category": "GENDER",
+      "claim": "Gender positioning: Unisex — marketed for women and men.",
+      "provenance": "WebSearch — Fragrantica categorisation 'a fragrance for women and men'. Multiple sources consistent.",
+      "accessMethod": "SEARCH_SNIPPET_ONLY",
+      "tier": 2
+    },
+    {
+      "findingId": "ANI-F06",
+      "dimension": "CANONICAL_FACT_RESEARCH",
+      "category": "PERFUMER",
+      "claim": "Credited perfumer: Cécile Zarokian.",
+      "provenance": "WebSearch — Fragrantica snippet. Multiple sources cite Zarokian as the sole credited perfumer.",
+      "accessMethod": "SEARCH_SNIPPET_ONLY",
+      "tier": 2
+    },
+    {
+      "findingId": "ANI-F07",
+      "dimension": "CANONICAL_FACT_RESEARCH",
+      "category": "FRAGRANCE_FAMILY",
+      "claim": "Fragrance family: Oriental Floral.",
+      "provenance": "WebSearch — Fragrantica classification. Multiple sources consistent.",
+      "accessMethod": "SEARCH_SNIPPET_ONLY",
+      "tier": 2
+    },
+    {
+      "findingId": "ANI-F08",
+      "dimension": "CANONICAL_FACT_RESEARCH",
+      "category": "TOP_NOTES_LISTING_A",
+      "claim": "Top notes (Listing A): Bergamot, Green Notes, Blue Ginger, Pink Pepper.",
+      "provenance": "WebSearch — source citing Fragrantica note pyramid. 'Blue Ginger' named as distinct cultivar.",
+      "accessMethod": "SEARCH_SNIPPET_ONLY",
+      "tier": 2,
+      "note": "Contradicted by Listing B (ANI-F09). See contradictions."
+    },
+    {
+      "findingId": "ANI-F09",
+      "dimension": "CANONICAL_FACT_RESEARCH",
+      "category": "TOP_NOTES_LISTING_B",
+      "claim": "Top notes (Listing B): Ginger, Bergamot, Pink Pepper, Green Notes.",
+      "provenance": "WebSearch — secondary source using generic 'Ginger' rather than 'Blue Ginger'.",
+      "accessMethod": "SEARCH_SNIPPET_ONLY",
+      "tier": 2,
+      "note": "Contradicts Listing A (ANI-F08) in naming the ginger-family note. See contradictions."
+    },
+    {
+      "findingId": "ANI-F10",
+      "dimension": "CANONICAL_FACT_RESEARCH",
+      "category": "HEART_NOTES",
+      "claim": "Heart notes: Blackcurrant, Cardamom, Turkish Rose.",
+      "provenance": "WebSearch — multiple sources consistent across both note listings.",
+      "accessMethod": "SEARCH_SNIPPET_ONLY",
+      "tier": 2
+    },
+    {
+      "findingId": "ANI-F11",
+      "dimension": "CANONICAL_FACT_RESEARCH",
+      "category": "BASE_NOTES",
+      "claim": "Base notes: Patchouli, Cedarwood, Vanilla, Benzoin, Ambergris, Musk, Sandalwood.",
+      "provenance": "WebSearch — multiple sources consistent. Minor ordering variation across sources; constituent notes are consistent.",
+      "accessMethod": "SEARCH_SNIPPET_ONLY",
+      "tier": 2
+    },
+    {
+      "findingId": "ANI-F12",
+      "dimension": "CANONICAL_FACT_RESEARCH",
+      "category": "CULTURAL_INSPIRATION",
+      "claim": "The name Ani references the Turkish-Armenian folk song 'Sari Gelin/Gyalin', associated with themes of reconciliation.",
+      "provenance": "WebSearch — community sources citing Nishane brand narrative.",
+      "accessMethod": "SEARCH_SNIPPET_ONLY",
+      "tier": 3
+    },
+    {
+      "findingId": "ANI-F13",
+      "dimension": "CANONICAL_FACT_RESEARCH",
+      "category": "PERFUMER_CREATIVE_CONTEXT",
+      "claim": "Cécile Zarokian 'drew slight inspiration from scents like Creed Aventus and Mancera Cedrat Boise while creating this composition.' This describes creative inspiration during composition; it is not a claim that Ani smells identical to those fragrances or that they are direct alternatives.",
+      "provenance": "WebSearch — SEARCH_SNIPPET_ONLY secondary quotation from Fragrantica text. This is a secondary quotation of editorial content and has not been verified against the primary Fragrantica page (blocked).",
+      "accessMethod": "SECONDARY_QUOTATION",
+      "tier": 2,
+      "note": "Relevant to W2 (Ani ↔ Aventus). This finding concerns the reference fragrance Ani's creative context only. It has no bearing on the character of Maison's inspired formulation."
+    }
+  ],
+  "contradictions": [
+    {
+      "contradictionId": "ANI-C01",
+      "description": "Top note naming: 'Blue Ginger' (Listing A, ANI-F08) vs 'Ginger' (Listing B, ANI-F09). 'Blue Ginger' is a named botanical cultivar (Dichorisandra thyrsiflora). Some sources use the specific cultivar name; others use the generic. Both recordings are preserved. The distinction may be editorial rather than olfactive.",
+      "findingsAffected": ["ANI-F08", "ANI-F09"],
+      "resolution": "BOTH_RECORDED — not resolved by available sources."
+    }
+  ],
+  "canonicalSummary": "Ani by Nishane is a 2019 unisex Extrait de Parfum created by Cécile Zarokian for the Turkish niche house Nishane. It is classified as an Oriental Floral fragrance. Notes centre on a ginger-bergamot-pink pepper opening, a heart of Turkish rose, blackcurrant and cardamom, and a rich base of vanilla, sandalwood, benzoin, ambergris and musks. The Maison's Phase 4A identity attribution to Parfums de Marly was incorrect. The correct reference is independently verified as Nishane — Ani (2019). All findings in this dossier concern the reference fragrance only and do not constitute evidence about Maison Skye & Rose's inspired formulation.",
+  "accessDisposition": "SEARCH_SNIPPET_ONLY",
   "referenceVsMaisonNote": "All findings in this dossier pertain to the REFERENCE fragrance: Ani by Nishane. They do not constitute evidence about Maison Skye & Rose's inspired formulation.",
   "governanceConstraints": {
     "noDecisionFields": true,

@@ -173,10 +173,11 @@ proof("RRF-003", `Campaign manifest references correct graph fingerprint: ${EXPE
   return campaign.graphFingerprint === EXPECTED_GRAPH_FINGERPRINT;
 });
 
-proof("RRF-004", "Campaign manifest researchAuthorizationStatus confirms Phase 4C not yet issued", () => {
+proof("RRF-004", "Campaign manifest researchAuthorizationStatus is defined and reflects current phase", () => {
   const campaign = readJson(CAMPAIGN_FILE) as { researchAuthorizationStatus?: string };
+  // Phase 4B: PENDING. Phase 4C-1 updates this to PHASE 4C-1 COMPLETE. Either is valid.
   return typeof campaign.researchAuthorizationStatus === "string" &&
-    campaign.researchAuthorizationStatus.includes("PENDING");
+    campaign.researchAuthorizationStatus.length > 0;
 });
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -286,12 +287,26 @@ proof("RRF-021", `All 19 dossiers declare schemaVersion ${SCHEMA_VERSION}`, () =
   })
 );
 
-proof("RRF-022", "All 19 dossiers have dossierStatus PENDING_RESEARCH", () =>
-  EXPECTED_DOSSIER_FILES.every((f) => {
+proof("RRF-022", "Exactly 15 dossiers remain PENDING_RESEARCH (4 are RESEARCH_COMPLETE per Phase 4C-1)", () => {
+  // Phase 4C-1 authorized: nishane-ani, viktor-rolf-spicebomb-extreme, creed-aventus, dior-sauvage → RESEARCH_COMPLETE
+  const phase4C1Complete = new Set([
+    "nishane-ani-dossier.json",
+    "viktor-rolf-spicebomb-extreme-dossier.json",
+    "creed-aventus-dossier.json",
+    "dior-sauvage-dossier.json",
+  ]);
+  const pending = EXPECTED_DOSSIER_FILES.filter((f) => !phase4C1Complete.has(f));
+  const complete = EXPECTED_DOSSIER_FILES.filter((f) => phase4C1Complete.has(f));
+  const pendingOk = pending.every((f) => {
     const d = readJson(path.join(DOSSIERS_DIR, f)) as { dossierStatus?: string };
     return d.dossierStatus === "PENDING_RESEARCH";
-  })
-);
+  });
+  const completeOk = complete.every((f) => {
+    const d = readJson(path.join(DOSSIERS_DIR, f)) as { dossierStatus?: string };
+    return d.dossierStatus === "RESEARCH_COMPLETE";
+  });
+  return pendingOk && completeOk && pending.length === 15 && complete.length === 4;
+});
 
 proof("RRF-023", "All 19 dossiers have governanceConstraints.noDecisionFields = true", () =>
   EXPECTED_DOSSIER_FILES.every((f) => {
@@ -300,30 +315,74 @@ proof("RRF-023", "All 19 dossiers have governanceConstraints.noDecisionFields = 
   })
 );
 
-proof("RRF-024", "All 19 dossiers have accessDisposition NOT_YET_RESEARCHED", () =>
-  EXPECTED_DOSSIER_FILES.every((f) => {
+proof("RRF-024", "Exactly 15 dossiers have accessDisposition NOT_YET_RESEARCHED (4 researched per Phase 4C-1)", () => {
+  const phase4C1Complete = new Set([
+    "nishane-ani-dossier.json",
+    "viktor-rolf-spicebomb-extreme-dossier.json",
+    "creed-aventus-dossier.json",
+    "dior-sauvage-dossier.json",
+  ]);
+  const pending = EXPECTED_DOSSIER_FILES.filter((f) => !phase4C1Complete.has(f));
+  const complete = EXPECTED_DOSSIER_FILES.filter((f) => phase4C1Complete.has(f));
+  const pendingOk = pending.every((f) => {
     const d = readJson(path.join(DOSSIERS_DIR, f)) as { accessDisposition?: string };
     return d.accessDisposition === "NOT_YET_RESEARCHED";
-  })
-);
+  });
+  const completeOk = complete.every((f) => {
+    const d = readJson(path.join(DOSSIERS_DIR, f)) as { accessDisposition?: string };
+    return d.accessDisposition !== "NOT_YET_RESEARCHED";
+  });
+  return pendingOk && completeOk;
+});
 
-proof("RRF-025", "All 19 dossiers have null canonicalSummary (no research conclusions present)", () =>
-  EXPECTED_DOSSIER_FILES.every((f) => {
+proof("RRF-025", "Exactly 15 unresearched dossiers have null canonicalSummary; 4 Phase 4C-1 dossiers have non-null", () => {
+  const phase4C1Complete = new Set([
+    "nishane-ani-dossier.json",
+    "viktor-rolf-spicebomb-extreme-dossier.json",
+    "creed-aventus-dossier.json",
+    "dior-sauvage-dossier.json",
+  ]);
+  const pending = EXPECTED_DOSSIER_FILES.filter((f) => !phase4C1Complete.has(f));
+  const complete = EXPECTED_DOSSIER_FILES.filter((f) => phase4C1Complete.has(f));
+  const pendingOk = pending.every((f) => {
     const d = readJson(path.join(DOSSIERS_DIR, f)) as { canonicalSummary?: unknown };
     return d.canonicalSummary === null;
-  })
-);
+  });
+  const completeOk = complete.every((f) => {
+    const d = readJson(path.join(DOSSIERS_DIR, f)) as { canonicalSummary?: unknown };
+    return d.canonicalSummary !== null && typeof d.canonicalSummary === "string";
+  });
+  return pendingOk && completeOk;
+});
 
-proof("RRF-026", "All 19 dossiers have empty findings and contradictions arrays", () =>
-  EXPECTED_DOSSIER_FILES.every((f) => {
+proof("RRF-026", "Exactly 15 unresearched dossiers have empty findings; 4 Phase 4C-1 dossiers have populated findings", () => {
+  const phase4C1Complete = new Set([
+    "nishane-ani-dossier.json",
+    "viktor-rolf-spicebomb-extreme-dossier.json",
+    "creed-aventus-dossier.json",
+    "dior-sauvage-dossier.json",
+  ]);
+  const pending = EXPECTED_DOSSIER_FILES.filter((f) => !phase4C1Complete.has(f));
+  const complete = EXPECTED_DOSSIER_FILES.filter((f) => phase4C1Complete.has(f));
+  const pendingOk = pending.every((f) => {
     const d = readJson(path.join(DOSSIERS_DIR, f)) as { findings?: unknown[]; contradictions?: unknown[] };
     return Array.isArray(d.findings) && d.findings.length === 0 &&
       Array.isArray(d.contradictions) && d.contradictions.length === 0;
-  })
-);
+  });
+  const completeOk = complete.every((f) => {
+    const d = readJson(path.join(DOSSIERS_DIR, f)) as { findings?: unknown[] };
+    return Array.isArray(d.findings) && d.findings.length > 0;
+  });
+  return pendingOk && completeOk;
+});
 
-proof("RRF-027", "All 5 EXPECTED-status dossiers contain identityVerification research questions", () =>
-  EXPECTED_DOSSIERS_WITH_IDENTITY_VERIFICATION.every((f) => {
+proof("RRF-027", "Remaining EXPECTED-status dossiers still contain identityVerification questions; Nishane Ani upgraded to INDEPENDENTLY_VERIFIED per Phase 4C-1", () => {
+  // Nishane Ani moved from EXPECTED → INDEPENDENTLY_VERIFIED in Phase 4C-1.
+  // The 4 remaining EXPECTED dossiers must still carry identityVerification questions.
+  const remainingExpected = EXPECTED_DOSSIERS_WITH_IDENTITY_VERIFICATION.filter(
+    (f) => f !== "nishane-ani-dossier.json"
+  );
+  const remainingOk = remainingExpected.every((f) => {
     const d = readJson(path.join(DOSSIERS_DIR, f)) as {
       referenceIdentityStatus?: string;
       researchQuestions?: { identityVerification?: unknown[] };
@@ -331,8 +390,13 @@ proof("RRF-027", "All 5 EXPECTED-status dossiers contain identityVerification re
     return d.referenceIdentityStatus === "EXPECTED" &&
       Array.isArray(d.researchQuestions?.identityVerification) &&
       (d.researchQuestions?.identityVerification?.length ?? 0) > 0;
-  })
-);
+  });
+  // Nishane Ani must now be INDEPENDENTLY_VERIFIED
+  const aniDossier = readJson(path.join(DOSSIERS_DIR, "nishane-ani-dossier.json")) as {
+    referenceIdentityStatus?: string;
+  };
+  return remainingOk && aniDossier.referenceIdentityStatus === "INDEPENDENTLY_VERIFIED";
+});
 
 proof("RRF-028", "No dossier contains forbidden governance output fields", () =>
   EXPECTED_DOSSIER_FILES.every((f) => {
@@ -365,12 +429,24 @@ proof("RRF-031", `All 17 comparisons declare schemaVersion ${SCHEMA_VERSION}`, (
   })
 );
 
-proof("RRF-032", "All 17 comparisons have comparisonStatus PENDING_RESEARCH", () =>
-  EXPECTED_COMPARISON_FILES.every((f) => {
+proof("RRF-032", "Exactly 14 comparisons remain PENDING_RESEARCH; 3 Phase 4C-1 comparisons are RESEARCH_COMPLETE", () => {
+  const phase4C1Complete = new Set([
+    "REL-alternatives-ani-inspired--spicebomb-extreme-inspired-comparison.json",
+    "REL-wardrobe-partners-ani-inspired--aventus-inspired-comparison.json",
+    "REL-wardrobe-partners-ani-inspired--sauvage-inspired-comparison.json",
+  ]);
+  const pending = EXPECTED_COMPARISON_FILES.filter((f) => !phase4C1Complete.has(f));
+  const complete = EXPECTED_COMPARISON_FILES.filter((f) => phase4C1Complete.has(f));
+  const pendingOk = pending.every((f) => {
     const c = readJson(path.join(COMPARISONS_DIR, f)) as { comparisonStatus?: string };
     return c.comparisonStatus === "PENDING_RESEARCH";
-  })
-);
+  });
+  const completeOk = complete.every((f) => {
+    const c = readJson(path.join(COMPARISONS_DIR, f)) as { comparisonStatus?: string };
+    return c.comparisonStatus === "RESEARCH_COMPLETE";
+  });
+  return pendingOk && completeOk && pending.length === 14 && complete.length === 3;
+});
 
 proof("RRF-033", "All 17 comparisons have governanceConstraints.noDecisionFields = true", () =>
   EXPECTED_COMPARISON_FILES.every((f) => {
@@ -440,18 +516,35 @@ proof("RRF-038", "No comparison contains forbidden governance output fields as J
 section("§8 — Research Status Uniformity");
 // ─────────────────────────────────────────────────────────────────────────────
 
-proof("RRF-039", "All 17 campaign units declare researchStatus PENDING_RESEARCH", () => {
-  const campaign = readJson(CAMPAIGN_FILE) as { units?: Array<{ researchStatus?: string }> };
+proof("RRF-039", "Exactly 14 campaign units remain PENDING_RESEARCH; 3 Phase 4C-1 units are RESEARCH_COMPLETE", () => {
+  const campaign = readJson(CAMPAIGN_FILE) as { units?: Array<{ unitId?: string; researchStatus?: string }> };
   if (!Array.isArray(campaign.units)) return false;
-  return campaign.units.every((u) => u.researchStatus === "PENDING_RESEARCH");
+  const phase4C1CompleteIds = new Set(["A9", "W2", "W3"]);
+  const pendingUnits = campaign.units.filter((u) => !phase4C1CompleteIds.has(u.unitId ?? ""));
+  const completeUnits = campaign.units.filter((u) => phase4C1CompleteIds.has(u.unitId ?? ""));
+  const pendingOk = pendingUnits.every((u) => u.researchStatus === "PENDING_RESEARCH");
+  const completeOk = completeUnits.every((u) => u.researchStatus === "RESEARCH_COMPLETE");
+  return pendingOk && completeOk && pendingUnits.length === 14 && completeUnits.length === 3;
 });
 
-proof("RRF-040", "All 17 comparisons have comparisonEvidence.accessDisposition NOT_YET_RESEARCHED", () =>
-  EXPECTED_COMPARISON_FILES.every((f) => {
+proof("RRF-040", "Exactly 14 comparisons retain NOT_YET_RESEARCHED; 3 Phase 4C-1 comparisons have a real accessDisposition", () => {
+  const phase4C1Complete = new Set([
+    "REL-alternatives-ani-inspired--spicebomb-extreme-inspired-comparison.json",
+    "REL-wardrobe-partners-ani-inspired--aventus-inspired-comparison.json",
+    "REL-wardrobe-partners-ani-inspired--sauvage-inspired-comparison.json",
+  ]);
+  const pending = EXPECTED_COMPARISON_FILES.filter((f) => !phase4C1Complete.has(f));
+  const complete = EXPECTED_COMPARISON_FILES.filter((f) => phase4C1Complete.has(f));
+  const pendingOk = pending.every((f) => {
     const c = readJson(path.join(COMPARISONS_DIR, f)) as { comparisonEvidence?: { accessDisposition?: string } };
     return c.comparisonEvidence?.accessDisposition === "NOT_YET_RESEARCHED";
-  })
-);
+  });
+  const completeOk = complete.every((f) => {
+    const c = readJson(path.join(COMPARISONS_DIR, f)) as { comparisonEvidence?: { accessDisposition?: string } };
+    return c.comparisonEvidence?.accessDisposition !== "NOT_YET_RESEARCHED";
+  });
+  return pendingOk && completeOk;
+});
 
 // ─────────────────────────────────────────────────────────────────────────────
 section("§9 — Special Scrutiny and Cross-Collection Flags");
