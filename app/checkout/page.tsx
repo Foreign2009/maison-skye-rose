@@ -98,40 +98,14 @@ export default function CheckoutPage() {
         clearDiscoveryAttribution();
         clearRecommendationAttribution();
 
-        const nameParts = name.trim().split(/\s+/);
-        const nameFirst = nameParts[0] ?? name.trim();
-        const nameLast  = nameParts.slice(1).join(" ") || nameFirst;
-
-        const payfastResponse = await fetch("/api/payfast", {
-          method:  "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            amount:       total,
-            item_name:    `Maison Skye & Rose Order ${orderData.orderRef}`,
-            name_first:   nameFirst,
-            name_last:    nameLast,
-            m_payment_id: orderData.orderRef,
-          }),
-        });
-
-        const payfastData = await payfastResponse.json() as {
-          success:     boolean;
-          paymentUrl?: string;
-          error?:      string;
-        };
-
-        if (payfastData.success && payfastData.paymentUrl) {
-          try {
-            localStorage.setItem(
-              `msr_purchase_pending_${orderData.orderRef}`,
-              JSON.stringify(cart.map((item) => item.id)),
-            );
-          } catch { /* localStorage unavailable */ }
-          clearCart();
-          window.location.href = payfastData.paymentUrl;
-        } else {
-          setOrderError("We could not initiate payment. Please try again.");
-        }
+        try {
+          localStorage.setItem(
+            `msr_purchase_pending_${orderData.orderRef}`,
+            JSON.stringify(cart.map((item) => item.id)),
+          );
+        } catch { /* localStorage unavailable */ }
+        clearCart();
+        window.location.href = `/payment-success?ref=${encodeURIComponent(orderData.orderRef)}&total=${total.toFixed(2)}`;
       } else {
         setOrderError(orderData.message ?? "We could not process your order. Please try again.");
       }
