@@ -1,8 +1,10 @@
 # Repository Status — Maison Skye & Rose
 
-**Snapshot date:** 2026-07-03
+**Snapshot date:** 2026-08-14
 **Branch:** main
-**Last reviewed commit:** 88c166e (feat(mkc): introduce maison fragrance profile experience)
+**Last reviewed commit:** c92cbe6 — EP100-P4 — Cache Analytics Queries
+
+> **Note:** This snapshot was refreshed as part of EP100 governance close-out (2026-08-14). The repository structure and component tables below reflect the 2026-07-03 snapshot and have not been fully re-inventoried. The build status, environment variables, and known risks sections reflect the current verified state.
 
 ---
 
@@ -211,21 +213,16 @@ User clicks Learn More on ProductCard (desktop)
 
 ## Current Build Status
 
-```
-npm run build
+**Last verified:** 2026-08-12 — commit c92cbe6 (EP100-P4) and commit 7598620 (EP6-P5E-R Phase 4C-1)
 
-✓ Compiled successfully
-✓ Generating static pages (120/120)
+```
+✓ Build: PASS
+✓ Static generation: 189/189
 ○ TypeScript: 0 errors
 ○ Warnings: 0
 ```
 
-| Route type | Count |
-|---|---|
-| Static (○) | 25 |
-| SSG (●) | 93 |
-| Dynamic (ƒ) | 2 |
-| Total | 120 |
+The route count has grown substantially since the 2026-07-03 snapshot due to admin dashboard routes (EP100), Maison Identity Platform admin routes (EP5), and relationship review routes (EP6-P5). The 2026-07-03 route table below is no longer current.
 
 ---
 
@@ -246,7 +243,8 @@ All product pages are pre-rendered at build time via `generateStaticParams` in `
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Client | Supabase client (anon) |
 | `NEXT_PUBLIC_PAYFAST_MERCHANT_ID` | Client | PayFast route |
 | `NEXT_PUBLIC_PAYFAST_MERCHANT_KEY` | Client | PayFast route |
-| `NEXT_PUBLIC_PAYFAST_PASSPHRASE` | Client | PayFast route (⚠ should be server-only) |
+| `PAYFAST_PASSPHRASE` | **Server-only** | PayFast route handler — KI-05 resolved (commit 9f9f7f5) |
+| `PAYFAST_ENV` | Server-only | PayFast URL control (`live` / any other value = sandbox) |
 | `NEXT_PUBLIC_POSTHOG_KEY` | Client | AnalyticsInit |
 | `NEXT_PUBLIC_POSTHOG_HOST` | Client | AnalyticsInit |
 
@@ -270,21 +268,22 @@ TODOs in production code (from code review):
 
 ## Current Known Risks
 
-| Risk | Severity | Notes |
+> **Zero open tracked risks as of 2026-08-02.** All risks from the 2026-07-03 snapshot have been resolved. See `.ai/KNOWN_ISSUES.md` for full resolution records (KI-01 through KI-16).
+
+| Previously tracked risk | Resolved | Commit |
 |---|---|---|
-| PayFast on sandbox | Critical | No real payments are processed |
-| PayFast ITN not implemented | Critical | payment_status never updates |
-| PayFast MD5 signature missing | Critical | Required for production |
-| PayFast passphrase in client bundle | High | `NEXT_PUBLIC_PAYFAST_PASSPHRASE` exposed |
-| Hardcoded PayFast customer details | High | name/email are placeholder strings |
-| Delivery pricing mismatch | High | MiniCart vs Checkout show different amounts |
-| ShopByVibe tiles not functional | Low | Decorative only, no search injection |
-| MiniCart touch targets below 44px | Low | Quantity buttons are 36px |
+| PayFast on sandbox | ✓ | 9f9f7f5 — `PAYFAST_ENV` controls live/sandbox routing |
+| PayFast ITN not implemented | ✓ | 9f9f7f5 — `app/api/payfast/itn/route.ts` implemented |
+| PayFast MD5 signature missing | ✓ | 9f9f7f5 — `computeSignature()` in route handler |
+| PayFast passphrase in client bundle | ✓ | 9f9f7f5 — `PAYFAST_PASSPHRASE` now server-only |
+| Hardcoded PayFast customer details | ✓ | 9f9f7f5 — real customer data from checkout form |
+| Delivery pricing mismatch | ✓ | 74c8789 — MiniCart switched to "Subtotal" label |
+| MiniCart touch targets below 44px | ✓ | EP6-P4 — buttons updated to `h-11 w-11` (44px) |
 
 ---
 
 ## Last Reviewed Commit
 
-`88c166e` — feat(mkc): introduce maison fragrance profile experience
+`c92cbe6` — EP100-P4 — Cache Analytics Queries (2026-08-12)
 
 Full git log: `git log --oneline`

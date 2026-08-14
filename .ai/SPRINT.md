@@ -31,26 +31,38 @@ Each program has a defined scope, ordered task list, and a clear close condition
 
 ## Active Program
 
-**Program 10.0 — Platform Consolidation**
-
-**Objective:** Remove architectural debt from the BI platform: terminated pipeline, duplicate dashboards, analytics caching, executive metrics layer.
-**Lead:** Project Owner + Claude (Implementation Engineer)
-**Opened:** 2026-08-03
-
-| # | Episode | Task | Status |
-|---|---|---|---|
-| 1 | EP100-P2A | Dependency verification — confirmed terminated pipeline self-contained; nav links identified as only live dependency | Complete |
-| 2 | EP100-P2B | Remove terminated Executive Report pipeline — 176 files deleted, 14 nav components cleaned, build passes at 189 routes | Complete |
-| 3 | EP100-P3A | Extract shared AdminNavigation component — 1 component created, 14 dashboards updated, Link import audited, build passes at 189 routes | Complete |
-| 4 | EP100-P3 | Merge duplicate dashboards — EP100-P3B inspection confirmed 2 safe removals (executive-briefing, executive-report-center); EP100-P3C deleted them, migrated READINESS_LABELS, cleaned nav; build passes at 187 routes | Complete |
-| 5 | EP100-P4 | Analytics cache — wrap PostHog query functions with 5-minute server-side cache | Pending |
-| 6 | EP100-P5 | Shared Executive Operations Pipeline — extract duplicated 7-builder cascade into `buildExecutiveOperationsBundle()`; update 6 cascade pages; build passes at 187 routes | Complete |
-
-**Close Condition:** All duplicate dashboards eliminated, analytics cached, Executive Metrics Layer live, build passes.
+None — no active programme. Await founder authorisation for next engineering programme.
 
 ---
 
 ## Completed Programs
+
+### EP100 — Platform Consolidation
+
+**Objective:** Remove architectural debt from the BI platform: terminated pipeline, duplicate dashboards, analytics caching.
+**Lead:** Project Owner + Claude (Implementation Engineer)
+**Opened:** 2026-08-03
+**Closed:** 2026-08-14 (governance close-out)
+
+| # | Episode | Task | Status |
+|---|---|---|---|
+| 1 | EP100-P2A | Dependency verification — confirmed terminated pipeline self-contained; nav links identified as only live dependency | Complete |
+| 2 | EP100-P2B | Remove terminated Executive Report pipeline — 176 files deleted, 14 nav components cleaned | Complete — commit aeea8a9 (2026-08-03) |
+| 3 | EP100-P3A | Extract shared AdminNavigation component — 1 component created, 14 dashboards updated, Link import audited | Complete — commit 3bef1eb (2026-08-04) |
+| 4 | EP100-P3 | Merge duplicate dashboards — EP100-P3B inspection confirmed 2 safe removals (executive-briefing, executive-report-center); EP100-P3C deleted them, migrated READINESS_LABELS, cleaned nav | Complete — commit c77f2fd (2026-08-04) |
+| 5 | EP100-P4 | Analytics cache — wrap PostHog query functions with 5-minute server-side cache | Complete — commit c92cbe6 (2026-08-12) |
+| 6 | EP100-P5 | Shared Executive Operations Pipeline — extract duplicated 7-builder cascade into `buildExecutiveOperationsBundle()`; update 6 cascade pages | Complete — commit 1838d40 (2026-08-04) |
+
+**Close Condition:** All duplicate dashboards eliminated, analytics cached, build passes. Met.
+
+**Engineering completion:** commit c92cbe6 — EP100-P4 — Cache Analytics Queries — 2026-08-12
+**Governance close-out:** 2026-08-14
+
+**Note on "Executive Metrics Layer":** The programme objective referenced an "executive metrics layer" that was never translated into a discrete task. Post-completion inspection confirmed no separate implementation was ever defined. The existing executive dashboard constellation (ExecutiveReportDashboard, ExecutiveOperationsDashboard, ExecutiveOperationsDigestDashboard) combined with EP100-P4 analytics caching constitutes the operational executive metrics capability. Close condition is met.
+
+**Outcome:** BI platform architectural debt eliminated. Terminated Executive Report pipeline (176 files) removed. Duplicate dashboards (executive-report-center, executive-briefing) removed. Shared AdminNavigation extracted across 14 admin components. Executive Operations builder cascade extracted into `buildExecutiveOperationsBundle()` serving 6 dashboard routes. PostHog analytics query functions wrapped with 300-second server-side cache via `unstable_cache`. Build passes: static generation 189/189; 0 TypeScript errors; 0 warnings.
+
+---
 
 ### EP90-P2 — Experience Release 9.0 / Adaptive Experience Messaging
 

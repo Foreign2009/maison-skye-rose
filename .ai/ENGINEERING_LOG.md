@@ -4386,3 +4386,188 @@ These were created when lien-goddess-inspired had its relationships cleared in 
 **Open Questions Carried Forward:**
 - Are the 17 remaining P5E units decision-ready with the enriched evidence, or do any require research advisory?
 - Does Maison endorse cross-gender wardrobe pairings as a general catalogue concept?
+
+---
+
+> **Retroactive entries (2026-08-14):** The following four entries document EP100 Platform Consolidation work completed on 2026-08-03 and 2026-08-04 that was not logged at the time. Appended during EP100 governance close-out.
+
+---
+
+### 2026-08-03 — EP100-P2B — Remove Terminated Executive Report Pipeline
+
+**Participants:** Project Owner / Claude (Implementation Engineer)
+**Program:** EP100 — Platform Consolidation
+
+**Decisions Made:**
+- Confirmed 29-stage terminated Executive Report pipeline is self-contained with only nav link dependencies (EP100-P2A inspection)
+- Deleted all 176 files: 58 terminated route pages (executive-report-archive through executive-report-commitment), 58 terminated dashboard components, 60 terminated lib/operations files
+- Cleaned nav links from 14 live admin components
+
+**Tasks Completed:**
+- EP100-P2A: Dependency verification (inspection-only, no commit)
+- EP100-P2B: Removal of 176 terminated files; nav cleanup across 14 components
+
+**Build Result:** PASS
+
+**Files Changed:**
+- 176 files deleted (terminated route pages, dashboard components, lib/operations files)
+- 14 admin component nav references cleaned
+
+**Commit:** aeea8a9 — Remove terminated Executive Report pipeline (EP100-P2B)
+
+---
+
+### 2026-08-04 — EP100-P3A — Extract Shared AdminNavigation Component
+
+**Participants:** Project Owner / Claude (Implementation Engineer)
+**Program:** EP100 — Platform Consolidation
+
+**Tasks Completed:**
+- Created `app/admin/components/AdminNavigation.tsx` — single shared navigation component for all admin dashboards
+- Updated 14 admin dashboards to use the shared component
+- Audited Link imports across admin components
+
+**Build Result:** PASS
+
+**Files Changed:**
+- `app/admin/components/AdminNavigation.tsx` (NEW)
+- 14 admin dashboard components (updated to use shared navigation)
+
+**Commit:** 3bef1eb — Extract shared AdminNavigation component (EP100-P3A)
+
+---
+
+### 2026-08-04 — EP100-P3C — Consolidate Duplicate Executive Dashboards
+
+**Participants:** Project Owner / Claude (Implementation Engineer)
+**Program:** EP100 — Platform Consolidation
+
+**Decisions Made:**
+- EP100-P3B inspection confirmed 2 safe duplicate removals: `executive-briefing` (duplicate of `executive-digest`) and `executive-report-center` (duplicate of `executive-report-dashboard`)
+- READINESS_LABELS migrated from removed components
+- Nav references cleaned
+
+**Tasks Completed:**
+- Deleted `ExecutiveReportCenter` (confirmed duplicate of `ExecutiveReportDashboard`)
+- Deleted `executive-briefing` route (confirmed duplicate of `executive-digest`)
+- Migrated READINESS_LABELS from removed components
+- Cleaned nav references
+
+**Build Result:** PASS
+
+**Files Changed:**
+- `app/admin/executive-report-center/` (deleted)
+- `app/admin/briefing/` related components (consolidated)
+- Nav and READINESS_LABELS updated
+
+**Commit:** c77f2fd — EP100-P3C — Consolidate duplicate executive dashboards
+
+---
+
+### 2026-08-04 — EP100-P5 — Extract Shared Executive Operations Pipeline
+
+**Participants:** Project Owner / Claude (Implementation Engineer)
+**Program:** EP100 — Platform Consolidation
+
+**Tasks Completed:**
+- Extracted duplicated 7-builder cascade logic into `app/lib/operations/ExecutiveOperationsPipeline.ts` as `buildExecutiveOperationsBundle()`
+- Updated 6 cascade dashboard pages to use the shared pipeline
+
+**Build Result:** PASS
+
+**Files Changed:**
+- `app/lib/operations/ExecutiveOperationsPipeline.ts` (NEW)
+- 6 cascade dashboard page files (updated to call `buildExecutiveOperationsBundle()`)
+
+**Commit:** 1838d40 — EP100-P5 — Extract shared executive operations pipeline
+
+---
+
+### 2026-08-12 — EP6-P5E-R Phase 4B — Establish Relationship Research Foundation
+
+**Participants:** Project Owner / Claude (Implementation Engineer)
+**Program:** EP6-P5E-R — Relationship Review Evidence Enrichment
+
+**Tasks Completed:**
+- Relationship research foundation established for the controlled evidence research campaign
+- Research validator created
+
+**Build Result:** PASS — static generation 189/189; 0 TypeScript errors; 0 warnings
+
+**Commit:** acfb0f3 — EP6-P5E-R Phase 4B — Establish Relationship Research Foundation
+
+---
+
+### 2026-08-12 — EP6-P5E-R Phase 4C-1 — Complete Relationship Evidence Research Pilot
+
+**Participants:** Project Owner / Claude (Implementation Engineer)
+**Program:** EP6-P5E-R — Relationship Review Evidence Enrichment
+
+**Tasks Completed:**
+- Controlled evidence research pilot completed for 4 reference fragrance dossiers (Nishane Ani, Viktor&Rolf Spicebomb Extreme, Creed Aventus, Dior Sauvage)
+- 3 comparison evidence briefs completed (A9: ani ↔ spicebomb-extreme alternatives; W2: ani ↔ aventus wardrobePartners; W3: ani ↔ sauvage wardrobePartners)
+- Phase 4C-1 validator created and passing
+
+**Build Result:** PASS — static generation 189/189; 0 TypeScript errors; 0 warnings
+
+**Campaign state:** 3/20 complete; 17 pending. Campaign PAUSED — awaiting founder authorisation for resumption.
+
+**Commit:** 7598620 — EP6-P5E-R Phase 4C-1 — Complete Relationship Evidence Research Pilot
+
+---
+
+### 2026-08-12 — EP100-P4 — Cache Analytics Queries
+
+**Participants:** Project Owner / Claude (Implementation Engineer)
+**Program:** EP100 — Platform Consolidation
+
+**Tasks Completed:**
+- Wrapped three PostHog query functions with `unstable_cache` from `next/cache`
+- 300-second (5-minute) server-side cache applied to: `queryRecommendationAnalytics`, `queryCustomerAnalytics`, `queryCommerceAnalytics`
+- Cache keys: `["recommendation-analytics"]`, `["customer-analytics"]`, `["commerce-analytics"]`
+- `queriedAt` semantics preserved: timestamp set inside private `_queryXxx` function, reflects actual PostHog query time not cached-read time
+- `cache: "no-store"` on individual PostHog HTTP fetches preserved (not modified)
+- `posthogQuery.ts`, `ExecutiveOperationsPipeline.ts`, dashboard page files: NOT modified
+
+**Build Result:** PASS — static generation 189/189; 0 TypeScript errors; 0 warnings
+
+**Files Changed:**
+- `app/lib/analytics/recommendationAnalytics.ts`
+- `app/lib/analytics/customerAnalytics.ts`
+- `app/lib/analytics/commerceAnalytics.ts`
+
+**Commit:** c92cbe6 — EP100-P4 — Cache Analytics Queries
+
+**EP100 engineering completion:** This commit marks the engineering completion of EP100 Platform Consolidation. All 6 tasks complete.
+
+---
+
+### 2026-08-14 — EP100 — Governance Close-Out
+
+**Participants:** Project Owner / Claude (Implementation Engineer)
+**Program:** EP100 — Platform Consolidation
+
+**Tasks Completed:**
+- `.ai/SPRINT.md`: EP100-P4 marked Complete; EP100 block moved to Completed Programs; Active Program cleared
+- `.ai/CURRENT_TASK.md`: Reset to "No active task"; EP6-P5E-R noted as PAUSED
+- `PROJECT_STATUS.md`: Current programme updated to reflect EP100 closed; Current Sprint cleared; Academy status updated to LIVE; Technical Debt table corrected to show zero open issues; Open Engineering Work updated to EP6-P5E-R paused; Next Approved Sprint cleared; EP100 added to Completed Engineering Programs; Foundation Programme table updated with all missing EP100 and EP6-P5E-R episodes; repository metrics updated
+- `REPOSITORY_STATUS.md`: Snapshot date updated; build status updated to 189 pages; Known Risks updated to all-resolved; environment variables corrected
+- `ENGINEERING_LOG.md`: Retroactive entries added for EP100-P2B, EP100-P3A, EP100-P3C, EP100-P5; entries added for EP6-P5E-R Phase 4B, Phase 4C-1, EP100-P4; this close-out entry added
+
+**Build Result:** Documentation-only — no application code changed. No build required.
+
+**Files Changed:**
+- `.ai/SPRINT.md`
+- `.ai/CURRENT_TASK.md`
+- `PROJECT_STATUS.md`
+- `REPOSITORY_STATUS.md`
+- `.ai/ENGINEERING_LOG.md`
+
+**Handoff:**
+- EP100 Platform Consolidation is formally closed.
+- EP6-P5E-R campaign is PAUSED — 17 of 20 units pending. Awaiting founder authorisation.
+- No active engineering programme. Next programme requires founder authorisation.
+
+**Open Questions Carried Forward:**
+- Which engineering programme should be opened next?
+- Is the EP6-P5E campaign ready for resumption with the enriched evidence and research pilot complete?

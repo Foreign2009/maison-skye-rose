@@ -1,30 +1,38 @@
 # Project Status — Maison Skye & Rose
 
-**Last updated:** 2026-08-11
+**Last updated:** 2026-08-14
 **Phase:** Launch Execution
-**Build status:** PASS — static generation 189/189; 0 TypeScript errors; 0 warnings (EP6-P5E-R)
+**Build status:** PASS — static generation 189/189; 0 TypeScript errors; 0 warnings (last verified EP6-P5E-R Phase 4C-1 / EP100-P4, 2026-08-12)
 
 ---
 
 ## Current Engineering Program
 
-**Program:** EP6-P5E-R — Relationship Review Evidence Enrichment — COMPLETE
-**Sprint:** EP6
-**Gate:** Awaiting founder evidence-readiness review. Campaign NOT resumed — EP6-P5E-R Phase 3 or direct campaign resumption requires separate authorisation.
-**Outcome:** Deterministic evidence enrichment for the relationship review workstation. `compareFragrances.ts` pure utility (60/60 proofs). `RelationshipReviewDetail.tsx` enriched with: fragrance description text, scent character values, heart-note overlap (new), occasion/vibe/season comparison, numeric attribute comparison, plain-English evidence limitations, cross-gender wardrobe context, relationship-type review question, provenance notice. Ledger baseline preserved: 9 transactions / 8 unique completed reviewIds. P5E campaign: 3/20 complete, 17 pending. Phase 1 provisional evidence sufficiency: 5 sufficient, 12 partial, 0 strictly research-required (NOT final research determination). All regressions: P5C/P5CR 75/75, P5BR 74/74, P5A 48/48, P4 55/55, MKC 93/0/0, P5E-R 60/60. Build: PASS — 189/189. 0 AI decisions. 0 MKC mutations. 0 ledger mutations during P5E-R.
+**Programme:** EP100 — Platform Consolidation — FORMALLY CLOSED
+**Engineering completion:** commit c92cbe6 — EP100-P4 — Cache Analytics Queries — 2026-08-12
+**Governance close-out:** 2026-08-14
+All 6 tasks complete. BI platform architectural debt eliminated. See Completed Engineering Programs below.
 
-**Previous Programme:** EP6-P5D — First Controlled Founder Relationship Review Pilot — COMPLETE (commit 8f30707, 2026-08-11)
+**Previous Programme (EP6 line):** EP6-P5E-R Phase 4C-1 — Complete Relationship Evidence Research Pilot — COMPLETE (commit 7598620, 2026-08-12)
+Controlled evidence research pilot for 4 reference fragrance dossiers and 3 comparison evidence briefs. Phase 4 of the EP6-P5E-R Relationship Review Evidence Enrichment programme. Campaign state: 3/20 complete; 17 pending. Campaign remains PAUSED — awaiting founder authorisation.
+
+**Previous Programme (EP6 line):** EP6-P5E-R Phase 4B — Establish Relationship Research Foundation — COMPLETE (commit acfb0f3, 2026-08-12)
+Research foundation for the controlled relationship evidence research campaign. Validator created.
+
+**Previous Programme (EP6 line):** EP6-P5E-R — Relationship Review Evidence Enrichment (Phases 1–2) — COMPLETE (commit d8cbb7a, 2026-08-11)
+Deterministic evidence enrichment for the relationship review workstation. `compareFragrances.ts` pure utility (60/60 proofs). `RelationshipReviewDetail.tsx` enriched. Ledger baseline preserved: 9 transactions / 8 unique completed reviewIds. P5E campaign: 3/20 complete, 17 pending. Build: PASS — 189/189. 0 AI decisions. 0 MKC mutations.
+
+**Previous Programme (EP6 line):** EP6-P5D — First Controlled Founder Relationship Review Pilot — COMPLETE (commit 8f30707, 2026-08-11)
 First live use of the EP6-P5C/P5CR relationship review workstation. Five deterministic pilot units reviewed. All 5 FOUNDER_APPROVED. 6 ledger entries / 5 unique reviewIds. Build: PASS — static generation 189/189.
 
-**Previous Programme:** EP6-P5CR — Harden Relationship Decision Ledger — COMPLETE (commit cbf1e0a, 2026-08-11)
+**Previous Programme (EP6 line):** EP6-P5CR — Harden Relationship Decision Ledger — COMPLETE (commit cbf1e0a, 2026-08-11)
 Same-session corrective episode for EP6-P5C. Two live-use safety defects corrected: (1) P5C-07 validator replaced with live-state-agnostic array check; (2) `_decide()` refactored to single-snapshot transaction core eliminating the second `ledgerRepo.load()` race window. Validator hardened from 40 to 75 proofs. Production ledger remains `entries: []`. All regressions pass. Build: PASS — static generation 189/189.
 
 ---
 
 ## Current Sprint
 
-**EP13-P1 — Academy Foundation**
-G1+G2+G3 planning approved by Engineering Lead. G4 implementation in progress.
+No active sprint. EP100 Platform Consolidation closed 2026-08-14. Next programme requires founder authorisation.
 
 ---
 
@@ -34,7 +42,7 @@ The repository is in an active, production-capable state.
 
 All core commerce flows are implemented and operational. The Maison Knowledge Catalogue (MKC) is the canonical fragrance model and drives the product detail page, quick view experience, and shop page. The Intelligence Layer (recommendation engine, intent parser) is integrated across shop and quiz. Analytics is live with PostHog as the active provider. SEO foundation is established with sitemap, robots.txt, and per-product metadata.
 
-The Maison Fragrance Academy (EP13) is in the planning stage.
+The Maison Fragrance Academy is live — 28 articles across 3 content waves, intelligence layer, MKC integration, Academy commerce bridge, and seasonal editorial are all deployed.
 
 ---
 
@@ -49,7 +57,7 @@ The Maison Fragrance Academy (EP13) is in the planning stage.
 | Product pages (SSG) | 93 |
 | Static pages | 25 |
 | Dynamic routes | 16 |
-| Last verified | 2026-08-11 (EP6-P5E-R) |
+| Last verified | 2026-08-12 (EP100-P4 / EP6-P5E-R Phase 4C-1) |
 
 Verify: `npm run build`
 
@@ -125,6 +133,14 @@ Verify: `npm run build`
 | EP6 | EP6-P5CR | Harden Relationship Decision Ledger | Complete — 2026-08-11 |
 | EP6 | EP6-P5CR-V | Verify Relationship Review Live Readiness | Complete — 2026-08-11 |
 | EP6 | EP6-P5D  | First Controlled Founder Relationship Review Pilot | Complete — 2026-08-11 |
+| EP100 | EP100-P2A | Dependency Verification — terminated pipeline confirmed self-contained | Complete — 2026-08-03 |
+| EP100 | EP100-P2B | Remove Terminated Executive Report Pipeline (176 files) | Complete — 2026-08-03 — commit aeea8a9 |
+| EP100 | EP100-P3A | Extract Shared AdminNavigation Component | Complete — 2026-08-04 — commit 3bef1eb |
+| EP100 | EP100-P3C | Consolidate Duplicate Executive Dashboards | Complete — 2026-08-04 — commit c77f2fd |
+| EP100 | EP100-P5  | Extract Shared Executive Operations Pipeline | Complete — 2026-08-04 — commit 1838d40 |
+| EP6 | EP6-P5E-R Phase 4B | Establish Relationship Research Foundation | Complete — 2026-08-12 — commit acfb0f3 |
+| EP6 | EP6-P5E-R Phase 4C-1 | Complete Relationship Evidence Research Pilot | Complete — 2026-08-12 — commit 7598620 |
+| EP100 | EP100-P4  | Cache Analytics Queries (unstable_cache, 300s) | Complete — 2026-08-12 — commit c92cbe6 |
 
 `FOUNDATIONS/00_FOUNDERS_LETTER.md` — The permanent founder's letter to Skye, Rose, future employees, and future stewards. *Why we began.*
 `FOUNDATIONS/01_SKYE_AND_ROSE_COVENANT.md` — The institutional promise: to customers, products, technology, and future generations. *What we promise.*
@@ -220,6 +236,7 @@ Verify: `npm run build`
 
 | Program | Sprint | Name | Closed |
 |---|---|---|---|
+| EP100 | EP100-P2A through P5, P4 | Platform Consolidation — BI Architectural Debt Elimination | 2026-08-14 |
 | EP1 | — | Foundation | Pre-SPRINT.md |
 | EP2 | — | Conversion, Performance & SEO | Pre-SPRINT.md |
 | AIOS-001 | — | AI Engineering Operating System v1.0 | 2026-06-29 |
@@ -310,12 +327,15 @@ Customer
 - `app/robots.ts` — robots.txt
 - Metadata base: `NEXT_PUBLIC_WEBSITE_URL`
 
-### Education (In Progress)
-The Academy is a first-class product — the long-term knowledge platform for Maison Skye & Rose.
-- Maison Fragrance Academy: EP13-P1 G4 implementation in progress
-- Scope: Academy hub, 6+ articles, Navbar + Footer links, MKC-powered related fragrances
-- Topics: fragrance families, note pyramid, wear & application, scent science, occasions & style, beginner guides
-- Long-term: fragrance terminology, storage, layering, seasonal guidance, gift guides, AI educational experiences
+### Education (Live)
+The Maison Fragrance Academy is a first-class product — the long-term knowledge platform for Maison Skye & Rose.
+- **Status:** LIVE — fully deployed
+- **Content:** 28 articles across 3 waves (foundational, fragrance families, occasions/care/oud/scent science)
+- **Intelligence layer:** Academy explainability, Journey Resolver extended to all 28 articles
+- **MKC integration:** `academyArticleIds` enriched with family and occasion associations; PDP Academy heading live
+- **Commerce bridge:** Academy-to-fragrances and Academy-to-collections link active (EP19.3)
+- **Seasonal editorial:** Homepage seasonal editorial story live (EP13-P2)
+- **Validator:** `academy:validate` script available
 
 ---
 
@@ -339,14 +359,14 @@ The Academy is a first-class product — the long-term knowledge platform for Ma
 
 | Metric | Count |
 |---|---|
-| Total pages (build) | 120 |
+| Static pages generated (build) | 189 |
 | Product pages (SSG) | 93 |
-| UI components | 44 |
-| React contexts | 4 |
 | MKC catalogue entries | 93 |
-| Intelligence Layer modules | 5 |
-| MKC modules | 5 |
+| Admin dashboard routes | 13 |
+| MKC native records | 93 |
+| Academy articles | 28 |
 | Analytics event types | ~20 |
+| Last verified | 2026-08-12 (EP100-P4 / EP6-P5E-R Phase 4C-1) |
 
 ---
 
@@ -399,30 +419,20 @@ The Academy is a first-class product — the long-term knowledge platform for Ma
 
 ## Open Engineering Work
 
-### EP13-P1 — Maison Fragrance Academy
-**Status:** G4 implementation in progress.
-**Scope:** `app/lib/academy/` data model, Academy hub page, article pages, Navbar Academy link, Footer Academy link, MKC-powered related fragrances section.
+### EP6-P5E — Catalogue Relationship Review Campaign
+**Status:** PAUSED — awaiting founder authorisation.
+**Campaign state:** 3/20 units complete (all FOUNDER_APPROVED); 17 units pending.
+**Evidence state:** Workstation enriched (EP6-P5E-R complete through Phase 4C-1). Controlled evidence research pilot complete for 4 reference dossiers and 3 comparison briefs.
+**Constraint:** Do not resume without explicit founder authorisation. The campaign is paused by governance decision, not blocked by a technical defect.
 
 ---
 
 ## Technical Debt
 
-| Issue | Severity | Reference |
-|---|---|---|
-| PayFast on sandbox URL | Critical | KI-01 — blocks live payments |
-| PayFast ITN webhook not implemented | Critical | KI-02 — payment_status never updates |
-| PayFast MD5 signature not computed | Critical | KI-03 — required for production |
-| PayFast passphrase in client bundle | High | KI-05 — security risk |
-| Hardcoded customer details in PayFast payload | High | KI-06 |
-| Delivery pricing mismatch (MiniCart vs Checkout) | High | KI-07 — trust risk |
-| OG metadata missing on non-product pages | Medium | KI-10 |
-| Instagram URL incomplete in brand.ts | Medium | KI-12 |
-| MiniCart quantity buttons below 44px touch target | Low | KI-13 |
+> **Zero open tracked issues as of 2026-08-02.** All 16 previously tracked known issues (KI-01 through KI-16) have been resolved. See `.ai/KNOWN_ISSUES.md` for resolution records.
 
 ---
 
 ## Next Approved Sprint
 
-**EP13-P1 G4** — Academy Implementation
-Awaiting Engineering Lead approval of G1+G2+G3 planning document.
-Estimated scope: 8 new files, 2 file modifications (Navbar, Footer).
+None. EP100 Platform Consolidation closed 2026-08-14. Next engineering programme requires founder authorisation.
