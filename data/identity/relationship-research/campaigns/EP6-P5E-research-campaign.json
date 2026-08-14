@@ -8,7 +8,7 @@
   "createdAt": "2026-08-12",
   "createdBy": "EP6-P5E-R Phase 4B",
   "governanceActor": "Maison Skye & Rose — Founder Relationship Governance",
-  "researchAuthorizationStatus": "PHASE 4C-1 COMPLETE — 4 dossiers and 3 comparisons researched (2026-08-12)",
+  "researchAuthorizationStatus": "PHASE 4C-2 COMPLETE — 7 dossiers and 8 comparisons researched (2026-08-14)",
   "governancePrinciple": "Research informs. Research never decides. Evidence may strengthen, weaken, or fail to support a relationship proposition. None of those outcomes automatically approve or reject it. Maison Skye & Rose decides.",
 
   "phase4ACorrections": {
@@ -72,7 +72,10 @@
       "dossierRefB": "parfums-de-marly-layton",
       "researchDimensions": ["CANONICAL_FACT_RESEARCH"],
       "comparisonFile": "data/identity/relationship-research/comparisons/REL-alternatives-althair-inspired--layton-inspired-comparison.json",
-      "researchStatus": "PENDING_RESEARCH"
+      "researchStatus": "RESEARCH_COMPLETE",
+      "researchedAt": "2026-08-14",
+      "researchedBy": "EP6-P5E-R Phase 4C-2",
+      "conclusionState": "COMPARISON_EVIDENCE_AVAILABLE"
     },
     {
       "unitId": "A7",
@@ -100,7 +103,10 @@
       "dossierRefB": "parfums-de-marly-layton",
       "researchDimensions": ["CANONICAL_FACT_RESEARCH"],
       "comparisonFile": "data/identity/relationship-research/comparisons/REL-alternatives-ani-inspired--layton-inspired-comparison.json",
-      "researchStatus": "PENDING_RESEARCH"
+      "researchStatus": "RESEARCH_COMPLETE",
+      "researchedAt": "2026-08-14",
+      "researchedBy": "EP6-P5E-R Phase 4C-2",
+      "conclusionState": "COMPARISON_EVIDENCE_AVAILABLE"
     },
     {
       "unitId": "A9",
@@ -147,7 +153,10 @@
       "dossierRefB": "viktor-rolf-spicebomb-extreme",
       "researchDimensions": ["CANONICAL_FACT_RESEARCH", "WARDROBE_COMPLEMENTARITY_RESEARCH"],
       "comparisonFile": "data/identity/relationship-research/comparisons/REL-wardrobe-partners-althair-inspired--spicebomb-extreme-inspired-comparison.json",
-      "researchStatus": "PENDING_RESEARCH"
+      "researchStatus": "RESEARCH_COMPLETE",
+      "researchedAt": "2026-08-14",
+      "researchedBy": "EP6-P5E-R Phase 4C-2",
+      "conclusionState": "LIMITED_SUPPORTING_EVIDENCE_FOUND"
     },
     {
       "unitId": "W2",
@@ -234,7 +243,10 @@
       "dossierRefB": "creed-aventus",
       "researchDimensions": ["CANONICAL_FACT_RESEARCH", "WARDROBE_COMPLEMENTARITY_RESEARCH"],
       "comparisonFile": "data/identity/relationship-research/comparisons/REL-wardrobe-partners-armani-si-inspired--aventus-inspired-comparison.json",
-      "researchStatus": "PENDING_RESEARCH"
+      "researchStatus": "RESEARCH_COMPLETE",
+      "researchedAt": "2026-08-14",
+      "researchedBy": "EP6-P5E-R Phase 4C-2",
+      "conclusionState": "LIMITED_SUPPORTING_EVIDENCE_FOUND"
     },
     {
       "unitId": "W7",
@@ -252,7 +264,10 @@
       "dossierRefB": "viktor-rolf-spicebomb-extreme",
       "researchDimensions": ["WARDROBE_COMPLEMENTARITY_RESEARCH"],
       "comparisonFile": "data/identity/relationship-research/comparisons/REL-wardrobe-partners-armani-si-inspired--spicebomb-extreme-inspired-comparison.json",
-      "researchStatus": "PENDING_RESEARCH"
+      "researchStatus": "RESEARCH_COMPLETE",
+      "researchedAt": "2026-08-14",
+      "researchedBy": "EP6-P5E-R Phase 4C-2",
+      "conclusionState": "LIMITED_SUPPORTING_EVIDENCE_FOUND"
     },
     {
       "unitId": "W8",
@@ -347,10 +362,12 @@
       "dossierRef": "parfums-de-marly-althair",
       "referenceFragranceName": "Althaïr",
       "referenceBrand": "Parfums de Marly",
-      "referenceIdentityStatus": "EXPECTED",
+      "referenceIdentityStatus": "INDEPENDENTLY_VERIFIED",
       "usedByUnits": ["A6", "A7", "W1"],
       "file": "data/identity/relationship-research/dossiers/parfums-de-marly-althair-dossier.json",
-      "dossierStatus": "PENDING_RESEARCH"
+      "dossierStatus": "RESEARCH_COMPLETE",
+      "researchedAt": "2026-08-14",
+      "researchedBy": "EP6-P5E-R Phase 4C-2"
     },
     {
       "dossierRef": "parfums-de-marly-layton",
@@ -359,7 +376,9 @@
       "referenceIdentityStatus": "REPOSITORY_SUPPORTED",
       "usedByUnits": ["A6", "A8"],
       "file": "data/identity/relationship-research/dossiers/parfums-de-marly-layton-dossier.json",
-      "dossierStatus": "PENDING_RESEARCH"
+      "dossierStatus": "RESEARCH_COMPLETE",
+      "researchedAt": "2026-08-14",
+      "researchedBy": "EP6-P5E-R Phase 4C-2"
     },
     {
       "dossierRef": "jean-paul-gaultier-le-male-elixir",
@@ -457,7 +476,9 @@
       "referenceIdentityStatus": "REPOSITORY_SUPPORTED",
       "usedByUnits": ["W6", "W7"],
       "file": "data/identity/relationship-research/dossiers/giorgio-armani-si-dossier.json",
-      "dossierStatus": "PENDING_RESEARCH"
+      "dossierStatus": "RESEARCH_COMPLETE",
+      "researchedAt": "2026-08-14",
+      "researchedBy": "EP6-P5E-R Phase 4C-2"
     },
     {
       "dossierRef": "parfums-de-marly-delina-exclusif",

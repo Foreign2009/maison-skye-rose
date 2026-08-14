@@ -1,43 +1,114 @@
 {
   "schemaVersion": "EP6-P5E-RR-v1",
-  "comparisonVersion": "1.0.0",
-  "reviewId": "REL-wardrobe-partners-armani-si-inspired--aventus-inspired",
+  "comparisonVersion": "1.1.0",
   "unitId": "W6",
-  "comparisonStatus": "PENDING_RESEARCH",
   "pairType": "wardrobePartners",
   "unitScope": "PRIMARY_RESEARCH",
-  "phase3Classification": "RESEARCH_ADVISED",
+  "phase3Classification": "FULL_RESEARCH_REQUIRED",
+  "dossierRefA": "giorgio-armani-si",
+  "dossierRefB": "creed-aventus",
+  "maisonPairA": "armani-si-inspired",
+  "maisonPairB": "aventus-inspired",
+  "maisonTitleA": "Armani Si Inspired",
+  "maisonTitleB": "Aventus Inspired",
   "crossCollection": true,
   "crossGender": true,
   "crossCollectionPermissibility": "APPROVED — D-REL-001",
-  "maisonProductA": { "slug": "armani-si-inspired", "maisonTitle": "Armani Si Inspired", "collection": "Rose", "gender": "female" },
-  "maisonProductB": { "slug": "aventus-inspired", "maisonTitle": "Aventus Inspired", "collection": "Skye", "gender": "male" },
-  "dossierRefA": "giorgio-armani-si",
-  "dossierRefB": "creed-aventus",
+  "genderNote": "Giorgio Armani Sì is a women's fragrance. Creed Aventus is marketed as a men's fragrance. This is a His-and-Hers wardrobe-partner pair.",
+  "createdAt": "2026-08-12",
+  "createdBy": "EP6-P5E-R Phase 4B",
+  "researchAuthorization": "EP6-P5E-R Phase 4C-2 — 2026-08-14",
+  "researchedAt": "2026-08-14",
+  "researchedBy": "EP6-P5E-R Phase 4C-2",
   "researchDimensions": ["CANONICAL_FACT_RESEARCH", "WARDROBE_COMPLEMENTARITY_RESEARCH"],
+  "researchQuestions": {
+    "wardrobeComplementarity": [
+      "Does the fragrance community discuss Sì by Giorgio Armani and Aventus by Creed as a wardrobe pair — His and Hers, or complementary fragrances worn together?",
+      "Does the community reference these two fragrances together in the context of occasion sharing, season sharing, or complementary olfactive profiles?",
+      "Is there any press or editorial treatment of these two fragrances as a wardrobe combination?"
+    ]
+  },
+  "comparisonStatus": "RESEARCH_COMPLETE",
+  "comparisonEvidence": {
+    "accessDisposition": "SEARCH_SNIPPET_ONLY",
+    "researchedAt": "2026-08-14",
+    "researchBoundaryNote": "All evidence in this comparison brief concerns REFERENCE fragrances and community treatment of them. No claim is made about Maison Skye & Rose's formulations. Evidence may support, fail to support, or contradict the proposed relationship — none of those outcomes approve or reject it.",
+    "researchNote": "No direct access to fragrance comparison pages was obtained. All evidence is from community discussion retrieved via WebSearch snippets and profile analysis from dossier canonical facts.",
+    "directAccessAttempts": [
+      {
+        "url": "WebSearch: 'Armani Si Aventus wardrobe pair His and Hers'",
+        "result": "NO_RELEVANT_RESULTS",
+        "accessedAt": "2026-08-14",
+        "note": "Zero community results treating Sì and Aventus as a wardrobe pair."
+      },
+      {
+        "url": "WebSearch: 'Giorgio Armani Si Creed Aventus couple fragrance'",
+        "result": "NO_RELEVANT_RESULTS",
+        "accessedAt": "2026-08-14",
+        "note": "No editorial or community treatment of these two fragrances as a couple/wardrobe combination."
+      }
+    ],
+    "sourcesConsulted": [
+      {
+        "source": "WebSearch — multiple queries for community and editorial pairing of Sì and Aventus",
+        "accessMethod": "SEARCH_SNIPPET_ONLY",
+        "accessedAt": "2026-08-14",
+        "note": "No sources located treating these two fragrances as a wardrobe pair. Evidence is absence of pairing treatment."
+      },
+      {
+        "source": "Dossier: giorgio-armani-si — RESEARCH_COMPLETE (Phase 4C-2)",
+        "accessMethod": "INTERNAL_DOSSIER",
+        "note": "Profile of Sì used for structural comparison."
+      },
+      {
+        "source": "Dossier: creed-aventus — RESEARCH_COMPLETE (Phase 4C-1)",
+        "accessMethod": "INTERNAL_DOSSIER",
+        "note": "Profile of Aventus used for structural comparison."
+      }
+    ],
+    "wardrobeComplementarityFindings": [
+      {
+        "findingId": "W6-F01",
+        "claim": "No community source was found that treats Sì by Giorgio Armani and Aventus by Creed as a wardrobe pair. Searches for 'His and Hers Sì Aventus', 'couple fragrance', and 'wardrobe pair' returned no relevant results. This is recorded as NEGATIVE EVIDENCE — the absence of community pairing treatment is a finding, not a research gap.",
+        "evidenceType": "NEGATIVE_EVIDENCE",
+        "accessMethod": "SEARCH_SNIPPET_ONLY"
+      },
+      {
+        "findingId": "W6-F02",
+        "claim": "Olfactive profile comparison from dossiers: Sì is a Chypre Fruity (Women's, 2013) with cassis top, rose/freesia heart, and vanilla-patchouli-ambroxan base. Aventus is a Fruity Chypre (Men's, 2010) with pineapple-bergamot-blackcurrant top, jasmine-birch heart, and oakmoss-musk-ambergris base. Both fragrances share the Chypre Fruity classification and share a blackcurrant/cassis structural element in their opening. Both carry patchouli and an ambroxan-type molecule in their base. This structural adjacency documents that these two fragrances occupy similar olfactive territory — which may argue AGAINST wardrobe complementarity (too similar = redundant) rather than for it (complementarity typically requires contrast).",
+        "evidenceType": "PROFILE_COMPARISON",
+        "accessMethod": "INTERNAL_DOSSIER"
+      },
+      {
+        "findingId": "W6-F03",
+        "claim": "The crossGender dimension (Women's + Men's) is the primary structural basis for the wardrobePartner hypothesis. His-and-Hers wardrobe-partner pairs typically require either (a) a shared design family or 'flanker' relationship (e.g., flanker pairs), or (b) a house intent to position them together. No evidence of house-level positioning as a pair was found. The shared olfactive territory (both Chypre Fruity) could support (a), but neither house is involved — these are fragrances from different houses not released as a pair.",
+        "evidenceType": "STRUCTURAL_ANALYSIS",
+        "accessMethod": "SEARCH_SNIPPET_ONLY"
+      },
+      {
+        "findingId": "W6-F04",
+        "claim": "Aventus community comparisons are primarily cross-house masculine alternatives discussions (alternatives to Aventus, Aventus flankers, batch variation). No community thread was found comparing Aventus with Sì specifically.",
+        "evidenceType": "NEGATIVE_EVIDENCE",
+        "accessMethod": "SEARCH_SNIPPET_ONLY"
+      }
+    ],
+    "conclusionState": "LIMITED_SUPPORTING_EVIDENCE_FOUND",
+    "conclusionNarrative": "The wardrobe-partner relationship between Armani Si Inspired and Aventus Inspired is structurally motivated by their crossGender positioning (Women's Sì + Men's Aventus) and their shared Chypre Fruity olfactive family (both open on cassis/blackcurrant; both carry patchouli and ambroxan-type base). However, no community source was found that explicitly treats Giorgio Armani Sì and Creed Aventus as a wardrobe pair, His-and-Hers combination, or couple's fragrance. The shared olfactive territory (similar family, similar key notes) creates ambiguity: it could support pairing through family cohesion, or argue against pairing through olfactive redundancy. The founder should evaluate whether the Maison description of this relationship as a wardrobe pair can be substantiated through product copy, noting that no external validation was found for this specific pairing."
+  },
   "currentMaisonEvidence": {
-    "evidenceState": "RESEARCH_ADVISED",
     "limitations": [
       "NO_HUMAN_EDITORIAL_APPROVAL_RECORD",
       "HUMAN_APPROVAL_NOT_CONFIRMED",
       "METADATA_SIMILARITY_NOT_SEMANTIC_PROOF",
       "WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT"
-    ],
-    "evidenceSource": "EP6-P5BR frozen queue snapshot — 2026-08-12",
-    "note": "This is the frozen evidence state from the P5BR queue at Phase 4B creation. It must not be altered. It is not a research conclusion."
+    ]
   },
-  "comparisonEvidence": {
-    "wardrobeComplementarityFindings": null,
-    "accessDisposition": "NOT_YET_RESEARCHED"
-  },
-  "createdAt": "2026-08-12",
-  "createdBy": "EP6-P5E-R Phase 4B",
-  "researchAuthorization": "EP6-P5E-R Phase 4C — not yet issued",
   "governanceConstraints": {
     "noDecisionFields": true,
     "noApprovalRecommendation": true,
     "noGovernanceStateOutput": true,
     "noRelationshipConfidence": true,
+    "readOnlyOnceComplete": true,
     "permittedConclusionStates": [
       "NO_SUPPORTING_RELATIONSHIP_EVIDENCE_FOUND",
       "LIMITED_SUPPORTING_EVIDENCE_FOUND",

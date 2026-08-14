@@ -1,12 +1,12 @@
 {
   "schemaVersion": "EP6-P5E-RR-v1",
-  "dossierVersion": "1.0.0",
+  "dossierVersion": "1.1.0",
   "dossierRef": "parfums-de-marly-althair",
-  "dossierStatus": "PENDING_RESEARCH",
+  "dossierStatus": "RESEARCH_COMPLETE",
   "referenceFragranceName": "Althaïr",
   "referenceBrand": "Parfums de Marly",
-  "referenceIdentityStatus": "EXPECTED",
-  "referenceIdentityNote": "Identity supplied by founder in EP6-P5E-R Phase 4B authorization (2026-08-12). Phase 4A listed the reference house as unknown. Correction: Parfums de Marly — Althaïr. Requires independent verification in Phase 4C. Note: the correct French spelling is Althaïr (with diaeresis); machine identifiers use the ASCII form 'althair'.",
+  "referenceIdentityStatus": "INDEPENDENTLY_VERIFIED",
+  "referenceIdentityNote": "Identity supplied by founder in EP6-P5E-R Phase 4B authorization (2026-08-12) as 'Parfums de Marly — Althaïr'. Phase 4C-2 research independently confirms this identity. The official Parfums de Marly US website (DIRECT_ACCESS_SUCCESS) lists Althaïr Eau de Parfum as an active product. Multiple press sources (PBL Magazine, Cafleurebon) confirm the 2023 launch by PdM. No other major fragrance house with a fragrance of this name was found. Identity upgraded from EXPECTED to INDEPENDENTLY_VERIFIED. The correct French spelling is Althaïr (with diaeresis over the 'i'); the Maison identifier uses the ASCII form 'althair'. The name references the star Beta Aquilae.",
   "maisonSlugs": ["althair-inspired"],
   "maisonTitles": ["Althair Inspired"],
   "usedByPairs": [
@@ -16,7 +16,9 @@
   ],
   "createdAt": "2026-08-12",
   "createdBy": "EP6-P5E-R Phase 4B",
-  "researchAuthorization": "EP6-P5E-R Phase 4C — not yet issued",
+  "researchAuthorization": "EP6-P5E-R Phase 4C-2 — 2026-08-14",
+  "researchedAt": "2026-08-14",
+  "researchedBy": "EP6-P5E-R Phase 4C-2",
   "researchQuestions": {
     "identityVerification": [
       "Confirm that Maison's 'Althair Inspired' is inspired by 'Althaïr' by Parfums de Marly. What is the independent evidence for this identity attribution?"
@@ -31,17 +33,315 @@
       "Who are the credited perfumers for Althaïr by Parfums de Marly?"
     ]
   },
+  "identityVerificationFindings": [
+    {
+      "findingId": "ALT-ID01",
+      "claim": "Parfums de Marly produces a fragrance called Althaïr. Confirmed by the official Parfums de Marly US website (us.parfums-de-marly.com, DIRECT_ACCESS_SUCCESS), which lists 'Althaïr Eau de Parfum' as an active product with 75ml and 125ml sizes and lists it under the 'Masculine Iconics' category.",
+      "accessMethod": "DIRECT_ACCESS_SUCCESS",
+      "tier": 1
+    },
+    {
+      "findingId": "ALT-ID02",
+      "claim": "Independent press confirmation: PBL Magazine published a dedicated launch article covering Parfums de Marly Althaïr (2023). Cafleurebon published a dedicated perfumer-named review (URL includes 'parfums-de-marly-althair-hamid-merati-kashani-and-ilias-ermenidis2023'). Both identify the fragrance as a 2023 Parfums de Marly release.",
+      "accessMethod": "DIRECT_ACCESS_SUCCESS",
+      "tier": "1-2"
+    },
+    {
+      "findingId": "ALT-ID03",
+      "claim": "No other major fragrance house with a fragrance named 'Althaïr' or 'Althair' was found in any source reviewed. The identity attribution to Parfums de Marly is unambiguous.",
+      "accessMethod": "SEARCH_SNIPPET_ONLY",
+      "tier": 2
+    }
+  ],
   "sourceHierarchyApplicable": {
-    "tier1": "Official Parfums de Marly product page (parfumsdemarly.com), official brand press materials",
+    "tier1": "Official Parfums de Marly product page (parfumsdemarly.com or us.parfums-de-marly.com), official brand press materials",
     "tier2": "Fragrantica database (fragrantica.com), Basenotes (basenotes.net), established fragrance publications",
     "tier3": "Retailer product descriptions, community reviews — contextual and supporting only"
   },
-  "directAccessAttempts": [],
-  "sourcesConsulted": [],
-  "findings": [],
-  "contradictions": [],
-  "canonicalSummary": null,
-  "accessDisposition": "NOT_YET_RESEARCHED",
+  "directAccessAttempts": [
+    {
+      "url": "https://www.parfumsdemarly.com/products/althair",
+      "tier": 1,
+      "result": "DIRECT_ACCESS_BLOCKED",
+      "httpStatus": "403 Forbidden",
+      "accessedAt": "2026-08-14",
+      "note": "Primary PdM domain blocked."
+    },
+    {
+      "url": "https://www.parfumsdemarly.com/althair",
+      "tier": 1,
+      "result": "DIRECT_ACCESS_BLOCKED",
+      "httpStatus": "403 Forbidden",
+      "accessedAt": "2026-08-14",
+      "note": "Alternative path on primary PdM domain also blocked."
+    },
+    {
+      "url": "https://us.parfums-de-marly.com/products/althair",
+      "tier": 1,
+      "result": "DIRECT_ACCESS_SUCCESS",
+      "httpStatus": 200,
+      "accessedAt": "2026-08-14",
+      "note": "Official Parfums de Marly US website. Full product page retrieved. Listed under 'Fragrances for Him' and 'Masculine Iconics'. Identity confirmed. Note pyramid obtained. This note pyramid differs substantially from press and reviewer sources — see contradictions ALT-C01 through ALT-C06."
+    },
+    {
+      "url": "https://cafleurebon.com/parfums-de-marly-althair-hamid-merati-kashani-and-ilias-ermenidis2023-plus-bourbon-vanilla-giveaway/",
+      "tier": 2,
+      "result": "DIRECT_ACCESS_SUCCESS",
+      "httpStatus": 200,
+      "accessedAt": "2026-08-14",
+      "note": "Cafleurebon dedicated review. Full content retrieved. Perfumer attribution and note profile obtained."
+    },
+    {
+      "url": "https://www.pblmagazine.co.uk/launches/parfums-de-marly-althar",
+      "tier": 2,
+      "result": "DIRECT_ACCESS_SUCCESS",
+      "httpStatus": 200,
+      "accessedAt": "2026-08-14",
+      "note": "PBL Magazine launch article. Full content retrieved. Launch date, perfumers, and detailed note sourcing obtained."
+    },
+    {
+      "url": "https://www.venbafragrance.com/products/parfums-de-marly-althair-edp",
+      "tier": 3,
+      "result": "DIRECT_ACCESS_SUCCESS",
+      "httpStatus": 200,
+      "accessedAt": "2026-08-14",
+      "note": "Specialist fragrance retailer. Note list and product details retrieved. Cross-referenced."
+    },
+    {
+      "url": "https://www.lamaisonduparfum.com/en-us/blogs/news/althair-a-new-2023-parfums-de-marly-release",
+      "tier": 3,
+      "result": "DIRECT_ACCESS_SUCCESS",
+      "httpStatus": 200,
+      "accessedAt": "2026-08-14",
+      "note": "Specialist fragrance retailer blog. Full content retrieved. Note list cross-referenced."
+    },
+    {
+      "url": "https://www.fragrantica.com/perfume/Parfums-de-Marly/Althair-84109.html",
+      "tier": 2,
+      "result": "DIRECT_ACCESS_BLOCKED",
+      "httpStatus": "403 Forbidden",
+      "accessedAt": "2026-08-14",
+      "note": "Fragrantica direct page access blocked. Data obtained via WebSearch snippets referencing this page."
+    },
+    {
+      "url": "https://www.dillards.com/p/parfums-de-marly-althair-eau-de-parfum/517400742",
+      "tier": 3,
+      "result": "DIRECT_ACCESS_BLOCKED",
+      "httpStatus": "Access Denied",
+      "accessedAt": "2026-08-14",
+      "note": "Access denied."
+    }
+  ],
+  "sourcesConsulted": [
+    {
+      "source": "us.parfums-de-marly.com — official Parfums de Marly US website — product page for Althaïr",
+      "url": "https://us.parfums-de-marly.com/products/althair",
+      "tier": 1,
+      "accessMethod": "DIRECT_ACCESS_SUCCESS",
+      "accessedAt": "2026-08-14",
+      "note": "Primary source. Identity confirmed. Note pyramid obtained. Listed under Masculine Iconics / Fragrances for Him. The official website note listing differs from all press and reviewer sources — see contradictions."
+    },
+    {
+      "source": "PBL Magazine — Parfums de Marly Althaïr launch article",
+      "url": "https://www.pblmagazine.co.uk/launches/parfums-de-marly-althar",
+      "tier": 2,
+      "accessMethod": "DIRECT_ACCESS_SUCCESS",
+      "accessedAt": "2026-08-14",
+      "note": "Trade press launch article. Includes ingredient provenance details (Bergamot from Italy, Cinnamon from Ceylon, Cardamom from Guatemala, Bourbon Vanilla from Madagascar). Identifies Hamid Merati-Kashani and Ilias Ermenidis as perfumers and Julien Sprecher as Founder and Creative Director."
+    },
+    {
+      "source": "Cafleurebon — dedicated Althaïr review with perfumer names",
+      "url": "https://cafleurebon.com/parfums-de-marly-althair-hamid-merati-kashani-and-ilias-ermenidis2023-plus-bourbon-vanilla-giveaway/",
+      "tier": 2,
+      "accessMethod": "DIRECT_ACCESS_SUCCESS",
+      "accessedAt": "2026-08-14",
+      "note": "Authoritative fragrance review publication. Confirms perfumers Hamid Merati-Kashani and Ilias Ermenidis. Note list obtained. Review describes the fragrance as 'genderless/unisex' despite official masculine positioning — see contradiction ALT-C07."
+    },
+    {
+      "source": "venbafragrance.com — specialist retailer",
+      "url": "https://www.venbafragrance.com/products/parfums-de-marly-althair-edp",
+      "tier": 3,
+      "accessMethod": "DIRECT_ACCESS_SUCCESS",
+      "accessedAt": "2026-08-14",
+      "note": "Supplementary — note list cross-referenced."
+    },
+    {
+      "source": "lamaisonduparfum.com — specialty retailer blog",
+      "url": "https://www.lamaisonduparfum.com/en-us/blogs/news/althair-a-new-2023-parfums-de-marly-release",
+      "tier": 3,
+      "accessMethod": "DIRECT_ACCESS_SUCCESS",
+      "accessedAt": "2026-08-14",
+      "note": "Supplementary — note list cross-referenced."
+    },
+    {
+      "source": "WebSearch — multiple results referencing Fragrantica, retailer listings, and community sources for Althaïr",
+      "tier": "2-3",
+      "accessMethod": "SEARCH_SNIPPET_ONLY",
+      "accessedAt": "2026-08-14",
+      "note": "Supplementary — used to confirm identity, launch year, community character description, and occasion/season profile."
+    }
+  ],
+  "findings": [
+    {
+      "findingId": "ALT-F01",
+      "dimension": "CANONICAL_FACT_RESEARCH",
+      "category": "BRAND",
+      "claim": "Brand: Parfums de Marly. Founded by Julien Sprecher. French fragrance house. Julien Sprecher is credited as Founder and Creative Director on this project.",
+      "provenance": "us.parfums-de-marly.com — DIRECT_ACCESS_SUCCESS. PBL Magazine — DIRECT_ACCESS_SUCCESS.",
+      "accessMethod": "DIRECT_ACCESS_SUCCESS",
+      "tier": 1
+    },
+    {
+      "findingId": "ALT-F02",
+      "dimension": "CANONICAL_FACT_RESEARCH",
+      "category": "LAUNCH_YEAR",
+      "claim": "Launch year: 2023. PBL Magazine specifies: announced 16 August 2023; available from 18 September 2023.",
+      "provenance": "PBL Magazine — DIRECT_ACCESS_SUCCESS. Cafleurebon — DIRECT_ACCESS_SUCCESS. WebSearch — SEARCH_SNIPPET_ONLY. Consistent across all sources.",
+      "accessMethod": "DIRECT_ACCESS_SUCCESS",
+      "tier": 2
+    },
+    {
+      "findingId": "ALT-F03",
+      "dimension": "CANONICAL_FACT_RESEARCH",
+      "category": "CONCENTRATION",
+      "claim": "Concentration: Eau de Parfum. Available in 75ml and 125ml sizes.",
+      "provenance": "us.parfums-de-marly.com — DIRECT_ACCESS_SUCCESS. venbafragrance.com — DIRECT_ACCESS_SUCCESS. Multiple sources consistent.",
+      "accessMethod": "DIRECT_ACCESS_SUCCESS",
+      "tier": 1
+    },
+    {
+      "findingId": "ALT-F04",
+      "dimension": "CANONICAL_FACT_RESEARCH",
+      "category": "GENDER",
+      "claim": "Official brand positioning: Masculine / Fragrances for Him / Masculine Iconics (official PdM US website, Fragrantica 'for men'). Community characterization varies: Cafleurebon review describes it as 'genderless/unisex'; HDYS Parfums lists it as 'Unisex'. Both positions documented.",
+      "provenance": "us.parfums-de-marly.com — DIRECT_ACCESS_SUCCESS (masculine). Cafleurebon — DIRECT_ACCESS_SUCCESS (genderless). WebSearch — SEARCH_SNIPPET_ONLY (for men / unisex variants). See contradiction ALT-C07.",
+      "accessMethod": "DIRECT_ACCESS_SUCCESS",
+      "tier": 1,
+      "note": "Official brand = masculine. Community and some retailers = genderless / unisex. Both positions documented."
+    },
+    {
+      "findingId": "ALT-F05",
+      "dimension": "CANONICAL_FACT_RESEARCH",
+      "category": "PERFUMERS",
+      "claim": "Credited perfumers (noses): Hamid Merati-Kashani and Ilias Ermenidis. Julien Sprecher is the Founder and Creative Director who directed the creative concept; he is not formally credited as a nose. Note: Hamid Merati-Kashani is also the credited perfumer for Parfums de Marly Layton (2016) — the same house.",
+      "provenance": "Cafleurebon — DIRECT_ACCESS_SUCCESS (perfumers named in article URL and body). PBL Magazine — DIRECT_ACCESS_SUCCESS (names Merati-Kashani, Ermenidis, and Sprecher with roles distinguished). venbafragrance.com — DIRECT_ACCESS_SUCCESS.",
+      "accessMethod": "DIRECT_ACCESS_SUCCESS",
+      "tier": "1-2"
+    },
+    {
+      "findingId": "ALT-F06",
+      "dimension": "CANONICAL_FACT_RESEARCH",
+      "category": "FRAGRANCE_FAMILY",
+      "claim": "Official PdM US website designation: 'Ambery Aromatic Vanilla'. PBL Magazine character description: Woody-vanilla-amber. Cafleurebon characterization: Gourmand, vanilla-forward. These descriptors are complementary, not contradictory — they reflect the same fragrance from different analytical angles.",
+      "provenance": "us.parfums-de-marly.com — DIRECT_ACCESS_SUCCESS. PBL Magazine — DIRECT_ACCESS_SUCCESS. Cafleurebon — DIRECT_ACCESS_SUCCESS.",
+      "accessMethod": "DIRECT_ACCESS_SUCCESS",
+      "tier": 1
+    },
+    {
+      "findingId": "ALT-F07",
+      "dimension": "CANONICAL_FACT_RESEARCH",
+      "category": "TOP_NOTES_OFFICIAL_CURRENT",
+      "claim": "Top notes (official PdM US website, DIRECT_ACCESS_SUCCESS, current): Bergamot, Mandarin, Elemi.",
+      "provenance": "us.parfums-de-marly.com — DIRECT_ACCESS_SUCCESS.",
+      "accessMethod": "DIRECT_ACCESS_SUCCESS",
+      "tier": 1,
+      "note": "The official website places Elemi in the top; all other sources place Elemi in the heart. The official website places Orange Blossom and Cinnamon in the heart; all other sources place them in the top. See contradictions ALT-C01 through ALT-C05."
+    },
+    {
+      "findingId": "ALT-F08",
+      "dimension": "CANONICAL_FACT_RESEARCH",
+      "category": "HEART_NOTES_OFFICIAL_CURRENT",
+      "claim": "Heart notes (official PdM US website, DIRECT_ACCESS_SUCCESS, current): Orange Blossom, Cinnamon, Cardamom.",
+      "provenance": "us.parfums-de-marly.com — DIRECT_ACCESS_SUCCESS.",
+      "accessMethod": "DIRECT_ACCESS_SUCCESS",
+      "tier": 1,
+      "note": "All other sources (PBL Magazine, Cafleurebon, Venba, lamaisonduparfum) place Orange Blossom and Cinnamon in the top, and Bourbon Vanilla / Elemi in the heart. See contradictions."
+    },
+    {
+      "findingId": "ALT-F09",
+      "dimension": "CANONICAL_FACT_RESEARCH",
+      "category": "BASE_NOTES_OFFICIAL_CURRENT",
+      "claim": "Base notes (official PdM US website, DIRECT_ACCESS_SUCCESS, current): Bourbon Vanilla, Guaicwood, Praline.",
+      "provenance": "us.parfums-de-marly.com — DIRECT_ACCESS_SUCCESS.",
+      "accessMethod": "DIRECT_ACCESS_SUCCESS",
+      "tier": 1,
+      "note": "All other sources place Bourbon Vanilla in the heart and add Ambrox / Ambrofix and Musk to the base. Mandarin is listed in the top by the official site but absent from all other sources. See contradictions."
+    },
+    {
+      "findingId": "ALT-F10",
+      "dimension": "CANONICAL_FACT_RESEARCH",
+      "category": "NOTES_PRESS_AND_REVIEWER_LISTING",
+      "claim": "Note listing from PBL Magazine (launch press, DIRECT_ACCESS_SUCCESS): Top: Orange Blossom Absolute, Bergamot (Italy), Cinnamon (Ceylon), Cardamom (Guatemala). Heart: Bourbon Vanilla (Madagascar), Elemi (Philippines). Base: Ambrox, Guaiacwood, Praline, Musk. Cafleurebon (DIRECT_ACCESS_SUCCESS) consistent: Top: Orange Blossom, Bergamot, Cinnamon. Heart: Bourbon Vanilla, Elemi. Base: Guaiacwood, Ambrofix©, Praline, Musk. Venba and lamaisonduparfum are consistent with this press listing.",
+      "provenance": "PBL Magazine — DIRECT_ACCESS_SUCCESS. Cafleurebon — DIRECT_ACCESS_SUCCESS. venbafragrance.com — DIRECT_ACCESS_SUCCESS. lamaisonduparfum.com — DIRECT_ACCESS_SUCCESS.",
+      "accessMethod": "DIRECT_ACCESS_SUCCESS",
+      "tier": "2-3",
+      "note": "This listing from press/reviewer sources differs substantially from the official PdM US website note pyramid. Both are documented."
+    },
+    {
+      "findingId": "ALT-F11",
+      "dimension": "CANONICAL_FACT_RESEARCH",
+      "category": "COMMUNITY_CHARACTER",
+      "claim": "Community and reviewer description of Althaïr's character: vanilla-amber gourmand; warm, praline-cinnamon-guaiacwood; 'an exotic interpretation of vanilla'. Season: primarily fall/winter; spring secondary; summer not recommended. Occasion: daytime to evening viable (bergamot top makes it office-friendly); primarily evening, date, and special occasion coded. One specialist retailer notes: 'Marketed for men, but the sweet-vanilla character wears easily unisex'.",
+      "provenance": "Cafleurebon — DIRECT_ACCESS_SUCCESS. WebSearch — SEARCH_SNIPPET_ONLY (multiple community/review snippets). venbafragrance.com — DIRECT_ACCESS_SUCCESS.",
+      "accessMethod": "SEARCH_SNIPPET_ONLY",
+      "tier": "2-3"
+    },
+    {
+      "findingId": "ALT-F12",
+      "dimension": "CANONICAL_FACT_RESEARCH",
+      "category": "AMBROFIX_NOTE",
+      "claim": "'Ambrofix©' (Cafleurebon spelling) and 'Ambrox' (PBL Magazine, Venba) refer to the same aromatic chemical (IFF's Ambrofix is a commercial name). These are not different ingredients.",
+      "provenance": "Cross-reference of cafleurebon.com (DIRECT_ACCESS_SUCCESS) and pblmagazine.co.uk (DIRECT_ACCESS_SUCCESS).",
+      "accessMethod": "DIRECT_ACCESS_SUCCESS",
+      "tier": 2
+    }
+  ],
+  "contradictions": [
+    {
+      "contradictionId": "ALT-C01",
+      "description": "Elemi placement: official PdM US website = TOP note. All other sources (PBL Magazine, Cafleurebon, Venba, lamaisonduparfum) = HEART note.",
+      "findingsAffected": ["ALT-F07", "ALT-F08", "ALT-F10"],
+      "resolution": "BOTH_RECORDED. Press and reviewer consensus (four independent sources) places Elemi in the heart. Official PdM US website places it in the top. The reason for this discrepancy cannot be confirmed."
+    },
+    {
+      "contradictionId": "ALT-C02",
+      "description": "Orange Blossom placement: official PdM US website = HEART note. All other sources (PBL Magazine, Cafleurebon, Venba, lamaisonduparfum) = TOP note.",
+      "findingsAffected": ["ALT-F07", "ALT-F08", "ALT-F10"],
+      "resolution": "BOTH_RECORDED. Four independent press/reviewer sources place Orange Blossom in the top; the official website places it in the heart."
+    },
+    {
+      "contradictionId": "ALT-C03",
+      "description": "Cinnamon placement: official PdM US website = HEART note. All other sources = TOP note. Cardamom placement: official PdM US website = HEART note. PBL Magazine = TOP note (4-note top). Cafleurebon and Venba do not list Cardamom at all.",
+      "findingsAffected": ["ALT-F07", "ALT-F08", "ALT-F10"],
+      "resolution": "BOTH_RECORDED."
+    },
+    {
+      "contradictionId": "ALT-C04",
+      "description": "Bourbon Vanilla placement: official PdM US website = BASE note. All other sources (PBL Magazine, Cafleurebon, Venba, lamaisonduparfum) = HEART note.",
+      "findingsAffected": ["ALT-F08", "ALT-F09", "ALT-F10"],
+      "resolution": "BOTH_RECORDED. Press/reviewer consensus (four independent sources) places Bourbon Vanilla in the heart — the central character of the fragrance. Official website places it in the base."
+    },
+    {
+      "contradictionId": "ALT-C05",
+      "description": "Ambrox / Musk: absent from official PdM US website listing. Present in every other source's base notes (PBL Magazine, Cafleurebon, Venba, lamaisonduparfum). Mandarin: present in official PdM US website top notes; absent from all other sources.",
+      "findingsAffected": ["ALT-F07", "ALT-F09", "ALT-F10"],
+      "resolution": "BOTH_RECORDED."
+    },
+    {
+      "contradictionId": "ALT-C06",
+      "description": "Overall structural note placement: the official PdM US website note pyramid is inverted relative to the consensus from launch press (PBL Magazine) and reviewers (Cafleurebon, Venba, lamaisonduparfum). The pyramid structures are mirror-images of each other in key placements (Elemi top vs heart; Orange Blossom/Cinnamon top vs heart; Vanilla heart vs base). This degree of discrepancy may indicate a simplified or restructured official marketing pyramid, or a presentation updated after launch. The reason cannot be confirmed from sources reviewed.",
+      "findingsAffected": ["ALT-F07", "ALT-F08", "ALT-F09", "ALT-F10"],
+      "resolution": "BOTH_RECORDED. The press/reviewer listing (PBL Magazine, Cafleurebon, Venba, lamaisonduparfum — four independent direct-access sources) represents the dominant account of the fragrance's structure from 2023 launch coverage. The official PdM US website is authoritative as the current brand presentation but differs substantially."
+    },
+    {
+      "contradictionId": "ALT-C07",
+      "description": "Gender: official PdM website = masculine (Fragrances for Him / Masculine Iconics). Cafleurebon review = genderless/unisex. HDYS Parfums = Unisex. Community characterization is wider than the official positioning.",
+      "findingsAffected": ["ALT-F04"],
+      "resolution": "BOTH_RECORDED. Official brand = masculine. Reviewer and some retailer characterization = genderless/unisex."
+    }
+  ],
+  "canonicalSummary": "Althaïr by Parfums de Marly is a 2023 Eau de Parfum created by perfumers Hamid Merati-Kashani and Ilias Ermenidis, under the creative direction of Founder Julien Sprecher. Identity: independently confirmed as a Parfums de Marly fragrance — no other house with this name found. Official positioning: masculine (Fragrances for Him). The fragrance family is described by the official PdM US website as 'Ambery Aromatic Vanilla'; press and reviewers characterize it as vanilla-amber gourmand with cinnamon and orange blossom. Two substantially different note pyramids were obtained: (1) Official PdM US website (DIRECT_ACCESS_SUCCESS): Top: Bergamot, Mandarin, Elemi; Heart: Orange Blossom, Cinnamon, Cardamom; Base: Bourbon Vanilla, Guaicwood, Praline. (2) Press/reviewer consensus from 2023 launch coverage (PBL Magazine, Cafleurebon, Venba, lamaisonduparfum — DIRECT_ACCESS_SUCCESS): Top: Orange Blossom, Bergamot, Cinnamon (Cardamom in some); Heart: Bourbon Vanilla, Elemi; Base: Guaiacwood, Ambrox, Praline, Musk. The two note pyramids are substantially inverted in structure. Community profile: warm, vanilla-cinnamon-gourmand; fall/winter and evening primary; sweet-vanilla character noted as wearing easily unisex despite masculine positioning. All findings concern the reference fragrance only and do not constitute evidence about Maison Skye & Rose's inspired formulation.",
+  "accessDisposition": "DIRECT_ACCESS_SUCCESS",
   "referenceVsMaisonNote": "All findings in this dossier pertain to the REFERENCE fragrance: Althaïr by Parfums de Marly. They do not constitute evidence about Maison Skye & Rose's inspired formulation.",
   "governanceConstraints": {
     "noDecisionFields": true,

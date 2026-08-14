@@ -1,12 +1,12 @@
 {
   "schemaVersion": "EP6-P5E-RR-v1",
-  "dossierVersion": "1.0.0",
+  "dossierVersion": "1.1.0",
   "dossierRef": "parfums-de-marly-layton",
-  "dossierStatus": "PENDING_RESEARCH",
+  "dossierStatus": "RESEARCH_COMPLETE",
   "referenceFragranceName": "Layton",
   "referenceBrand": "Parfums de Marly",
   "referenceIdentityStatus": "REPOSITORY_SUPPORTED",
-  "referenceIdentityNote": "The Maison product 'Layton Inspired' references 'Layton' by Parfums de Marly, one of the house's most celebrated masculines. The MKC description explicitly references 'the Marly house'. Identity attribution is REPOSITORY_SUPPORTED. Independent verification in Phase 4C will confirm.",
+  "referenceIdentityNote": "The Maison product 'Layton Inspired' references 'Layton' by Parfums de Marly, one of the house's most celebrated masculines. The MKC description explicitly references 'the Marly house'. Identity attribution is REPOSITORY_SUPPORTED. Phase 4C-2 research confirms identity via direct access to the official Parfums de Marly US website and multiple corroborating sources.",
   "maisonSlugs": ["layton-inspired"],
   "maisonTitles": ["Layton Inspired"],
   "usedByPairs": [
@@ -15,7 +15,9 @@
   ],
   "createdAt": "2026-08-12",
   "createdBy": "EP6-P5E-R Phase 4B",
-  "researchAuthorization": "EP6-P5E-R Phase 4C — not yet issued",
+  "researchAuthorization": "EP6-P5E-R Phase 4C-2 — 2026-08-14",
+  "researchedAt": "2026-08-14",
+  "researchedBy": "EP6-P5E-R Phase 4C-2",
   "researchQuestions": {
     "canonicalFact": [
       "What is the official fragrance family or accord classification of Layton by Parfums de Marly?",
@@ -28,16 +30,244 @@
     ]
   },
   "sourceHierarchyApplicable": {
-    "tier1": "Official Parfums de Marly product page (parfumsdemarly.com), official brand press materials",
+    "tier1": "Official Parfums de Marly product page (parfumsdemarly.com or us.parfums-de-marly.com), official brand press materials",
     "tier2": "Fragrantica database (fragrantica.com), Basenotes (basenotes.net), established fragrance publications",
     "tier3": "Retailer product descriptions, community reviews — contextual and supporting only"
   },
-  "directAccessAttempts": [],
-  "sourcesConsulted": [],
-  "findings": [],
-  "contradictions": [],
-  "canonicalSummary": null,
-  "accessDisposition": "NOT_YET_RESEARCHED",
+  "directAccessAttempts": [
+    {
+      "url": "https://www.parfumsdemarly.com/products/layton",
+      "tier": 1,
+      "result": "DIRECT_ACCESS_BLOCKED",
+      "httpStatus": "403 Forbidden",
+      "accessedAt": "2026-08-14",
+      "note": "Primary PdM domain blocked."
+    },
+    {
+      "url": "https://www.parfumsdemarly.com/layton",
+      "tier": 1,
+      "result": "DIRECT_ACCESS_BLOCKED",
+      "httpStatus": "403 Forbidden",
+      "accessedAt": "2026-08-14",
+      "note": "Alternative path on primary PdM domain also blocked."
+    },
+    {
+      "url": "https://us.parfums-de-marly.com/products/layton",
+      "tier": 1,
+      "result": "DIRECT_ACCESS_SUCCESS",
+      "httpStatus": 200,
+      "accessedAt": "2026-08-14",
+      "note": "Official Parfums de Marly US website. Full product page retrieved. Note pyramid, product description, and gender positioning obtained. This is the authoritative Tier 1 source for this dossier. Note: the official US site note listing differs substantially from Fragrantica and most retailer listings — see contradictions LAY-C01 through LAY-C06."
+    },
+    {
+      "url": "https://www.parfumo.com/Perfumes/Parfums_de_Marly/Layton",
+      "tier": 2,
+      "result": "DIRECT_ACCESS_BLOCKED",
+      "httpStatus": "403 Forbidden",
+      "accessedAt": "2026-08-14",
+      "note": "Access denied."
+    },
+    {
+      "url": "https://www.fragrantica.com/perfume/Parfums-de-Marly/Layton-39314.html",
+      "tier": 2,
+      "result": "DIRECT_ACCESS_BLOCKED",
+      "httpStatus": "403 Forbidden",
+      "accessedAt": "2026-08-14",
+      "note": "Fragrantica direct access blocked. Note data obtained via WebSearch snippets."
+    },
+    {
+      "url": "https://fragrancelord.com/blogs/articles/parfums-de-marly-layton-notes",
+      "tier": 3,
+      "result": "DIRECT_ACCESS_SUCCESS",
+      "httpStatus": 200,
+      "accessedAt": "2026-08-14",
+      "note": "Retailer/fragrance blog. Full content retrieved and cross-referenced."
+    },
+    {
+      "url": "https://theperfumespot.com/parfums-de-marly-layton-by-parfums-de-marly-4-2-oz-edp-spray-for-men/",
+      "tier": 3,
+      "result": "DIRECT_ACCESS_SUCCESS",
+      "httpStatus": 200,
+      "accessedAt": "2026-08-14",
+      "note": "Retailer product page. Full content retrieved and cross-referenced."
+    }
+  ],
+  "sourcesConsulted": [
+    {
+      "source": "us.parfums-de-marly.com — official Parfums de Marly US website — product page for Layton",
+      "url": "https://us.parfums-de-marly.com/products/layton",
+      "tier": 1,
+      "accessMethod": "DIRECT_ACCESS_SUCCESS",
+      "accessedAt": "2026-08-14",
+      "note": "Primary source. Provides current official note presentation and product description. Listed under Masculine / For Men. Note: the official US website uses a simplified note pyramid that differs from the widely circulated Fragrantica listing — see contradictions."
+    },
+    {
+      "source": "Fragrantica — Parfums de Marly Layton (fragrantica.com/perfume/Parfums-de-Marly/Layton-39314.html)",
+      "tier": 2,
+      "accessMethod": "SEARCH_SNIPPET_ONLY",
+      "accessedAt": "2026-08-14",
+      "note": "Direct page access blocked. Notes and family classification obtained via WebSearch snippets referencing this page. The Fragrantica note listing is widely circulated and appears on most retailer pages; it differs from the official US website listing."
+    },
+    {
+      "source": "fragrancelord.com — Parfums de Marly Layton notes article",
+      "url": "https://fragrancelord.com/blogs/articles/parfums-de-marly-layton-notes",
+      "tier": 3,
+      "accessMethod": "DIRECT_ACCESS_SUCCESS",
+      "accessedAt": "2026-08-14",
+      "note": "Supplementary — note list appears to derive from Fragrantica data."
+    },
+    {
+      "source": "theperfumespot.com — retailer product listing for Layton",
+      "url": "https://theperfumespot.com/parfums-de-marly-layton-by-parfums-de-marly-4-2-oz-edp-spray-for-men/",
+      "tier": 3,
+      "accessMethod": "DIRECT_ACCESS_SUCCESS",
+      "accessedAt": "2026-08-14",
+      "note": "Supplementary — retailer note list consistent with Fragrantica listing (not official PdM US website)."
+    }
+  ],
+  "findings": [
+    {
+      "findingId": "LAY-F01",
+      "dimension": "CANONICAL_FACT_RESEARCH",
+      "category": "BRAND",
+      "claim": "Brand: Parfums de Marly. French fragrance house founded by Julien Sprecher.",
+      "provenance": "us.parfums-de-marly.com — DIRECT_ACCESS_SUCCESS.",
+      "accessMethod": "DIRECT_ACCESS_SUCCESS",
+      "tier": 1
+    },
+    {
+      "findingId": "LAY-F02",
+      "dimension": "CANONICAL_FACT_RESEARCH",
+      "category": "LAUNCH_YEAR",
+      "claim": "Launch year: 2016.",
+      "provenance": "WebSearch — Fragrantica SEARCH_SNIPPET_ONLY, fragrancelord.com DIRECT_ACCESS_SUCCESS, theperfumespot.com DIRECT_ACCESS_SUCCESS. Consistent across all sources.",
+      "accessMethod": "SEARCH_SNIPPET_ONLY",
+      "tier": 2
+    },
+    {
+      "findingId": "LAY-F03",
+      "dimension": "CANONICAL_FACT_RESEARCH",
+      "category": "CONCENTRATION",
+      "claim": "Concentration: Eau de Parfum.",
+      "provenance": "us.parfums-de-marly.com — DIRECT_ACCESS_SUCCESS. Multiple sources consistent.",
+      "accessMethod": "DIRECT_ACCESS_SUCCESS",
+      "tier": 1
+    },
+    {
+      "findingId": "LAY-F04",
+      "dimension": "CANONICAL_FACT_RESEARCH",
+      "category": "GENDER",
+      "claim": "Official brand positioning: Masculine / For Men. The official PdM US website lists Layton under 'Masculine' and 'For Men' categories. However, Fragrantica classifies it as 'a fragrance for women and men' and a Walmart product listing uses 'Unisex'. Community usage appears to extend significantly into unisex territory.",
+      "provenance": "us.parfums-de-marly.com — DIRECT_ACCESS_SUCCESS (masculine). WebSearch citing Fragrantica — SEARCH_SNIPPET_ONLY (for women and men). Walmart listing — SEARCH_SNIPPET_ONLY (Unisex). See contradiction LAY-C07.",
+      "accessMethod": "DIRECT_ACCESS_SUCCESS",
+      "tier": 1,
+      "note": "Both official (masculine) and community/database (for men and women / unisex) positions recorded."
+    },
+    {
+      "findingId": "LAY-F05",
+      "dimension": "CANONICAL_FACT_RESEARCH",
+      "category": "PERFUMER",
+      "claim": "Credited perfumer: Hamid Merati-Kashani.",
+      "provenance": "WebSearch citing Fragrantica — SEARCH_SNIPPET_ONLY. Not listed on the official PdM US website product page.",
+      "accessMethod": "SEARCH_SNIPPET_ONLY",
+      "tier": 2
+    },
+    {
+      "findingId": "LAY-F06",
+      "dimension": "CANONICAL_FACT_RESEARCH",
+      "category": "FRAGRANCE_FAMILY",
+      "claim": "Fragrance family: Oriental Floral (Fragrantica classification). The official PdM US website does not assign a fragrance family name in its product description.",
+      "provenance": "WebSearch citing Fragrantica — SEARCH_SNIPPET_ONLY for family classification.",
+      "accessMethod": "SEARCH_SNIPPET_ONLY",
+      "tier": 2
+    },
+    {
+      "findingId": "LAY-F07",
+      "dimension": "CANONICAL_FACT_RESEARCH",
+      "category": "TOP_NOTES_OFFICIAL_CURRENT",
+      "claim": "Top notes (official PdM US website, DIRECT_ACCESS_SUCCESS, current): Apple, Bergamot, Cardamom.",
+      "provenance": "us.parfums-de-marly.com — DIRECT_ACCESS_SUCCESS.",
+      "accessMethod": "DIRECT_ACCESS_SUCCESS",
+      "tier": 1,
+      "note": "This listing differs from the widely circulated Fragrantica-derived note pyramid. See contradictions LAY-C01 through LAY-C06."
+    },
+    {
+      "findingId": "LAY-F08",
+      "dimension": "CANONICAL_FACT_RESEARCH",
+      "category": "HEART_NOTES_OFFICIAL_CURRENT",
+      "claim": "Heart notes (official PdM US website, DIRECT_ACCESS_SUCCESS, current): Lavender, Violet, Geranium.",
+      "provenance": "us.parfums-de-marly.com — DIRECT_ACCESS_SUCCESS.",
+      "accessMethod": "DIRECT_ACCESS_SUCCESS",
+      "tier": 1,
+      "note": "Lavender placement as heart note (official site) contrasts with top note placement in Fragrantica and retailer sources. See contradiction LAY-C01."
+    },
+    {
+      "findingId": "LAY-F09",
+      "dimension": "CANONICAL_FACT_RESEARCH",
+      "category": "BASE_NOTES_OFFICIAL_CURRENT",
+      "claim": "Base notes (official PdM US website, DIRECT_ACCESS_SUCCESS, current): Patchouli, Vanilla, Guaicwood, Praline.",
+      "provenance": "us.parfums-de-marly.com — DIRECT_ACCESS_SUCCESS.",
+      "accessMethod": "DIRECT_ACCESS_SUCCESS",
+      "tier": 1,
+      "note": "Praline present on official site but absent from Fragrantica. Mandarin Orange, Jasmine, Sandalwood, Pepper, Ambermax™, Coumarin present in Fragrantica but absent from official site. See contradictions."
+    },
+    {
+      "findingId": "LAY-F10",
+      "dimension": "CANONICAL_FACT_RESEARCH",
+      "category": "NOTES_FRAGRANTICA_LISTING",
+      "claim": "Alternative note listing widely cited by Fragrantica and most retailer sources: Top: Apple, Lavender, Bergamot, Mandarin Orange. Heart: Geranium, Violet, Jasmine. Base: Vanilla, Cardamom, Sandalwood, Pepper, Guaiac Wood, Patchouli, Ambermax™, Coumarin.",
+      "provenance": "WebSearch — SEARCH_SNIPPET_ONLY citing Fragrantica. Consistent with theperfumespot.com (DIRECT_ACCESS_SUCCESS) and fragrancelord.com (DIRECT_ACCESS_SUCCESS).",
+      "accessMethod": "SEARCH_SNIPPET_ONLY",
+      "tier": 2,
+      "note": "This is the most widely circulated note listing across community and retail sources. It differs substantially from the official PdM US website listing. Both are documented."
+    }
+  ],
+  "contradictions": [
+    {
+      "contradictionId": "LAY-C01",
+      "description": "Lavender placement: official PdM US website = HEART note. Fragrantica, theperfumespot, fragrancelord = TOP note. Lavender is a structurally important note in Layton's character; its placement in the pyramid determines whether it is perceived as part of the opening or the body of the fragrance.",
+      "findingsAffected": ["LAY-F07", "LAY-F08", "LAY-F10"],
+      "resolution": "BOTH_RECORDED. Official PdM US website (DIRECT_ACCESS_SUCCESS) is the authoritative current presentation; Fragrantica-derived listing is documented as the widely circulated alternative."
+    },
+    {
+      "contradictionId": "LAY-C02",
+      "description": "Cardamom placement: official PdM US website = TOP note. Fragrantica = BASE note. fragrancelord omits Cardamom entirely.",
+      "findingsAffected": ["LAY-F07", "LAY-F09", "LAY-F10"],
+      "resolution": "BOTH_RECORDED."
+    },
+    {
+      "contradictionId": "LAY-C03",
+      "description": "Mandarin Orange: present in Fragrantica and theperfumespot (top notes). Absent from official PdM US website listing.",
+      "findingsAffected": ["LAY-F07", "LAY-F10"],
+      "resolution": "BOTH_RECORDED. Cannot be confirmed which is authoritative."
+    },
+    {
+      "contradictionId": "LAY-C04",
+      "description": "Jasmine: present in Fragrantica, theperfumespot, fragrancelord (heart notes). Absent from official PdM US website listing.",
+      "findingsAffected": ["LAY-F08", "LAY-F10"],
+      "resolution": "BOTH_RECORDED."
+    },
+    {
+      "contradictionId": "LAY-C05",
+      "description": "Sandalwood, Pepper, Ambermax™, Coumarin: present in Fragrantica and theperfumespot (base notes). Absent from official PdM US website listing.",
+      "findingsAffected": ["LAY-F09", "LAY-F10"],
+      "resolution": "BOTH_RECORDED."
+    },
+    {
+      "contradictionId": "LAY-C06",
+      "description": "Praline: present on official PdM US website (base). Absent from Fragrantica, theperfumespot, fragrancelord.",
+      "findingsAffected": ["LAY-F09", "LAY-F10"],
+      "resolution": "BOTH_RECORDED. Whether this represents a simplified official disclosure, a later reformulation, or a difference in ingredient labeling cannot be determined from sources reviewed."
+    },
+    {
+      "contradictionId": "LAY-C07",
+      "description": "Gender classification: official PdM US website positions Layton as masculine (under 'For Men' category). Fragrantica classifies it 'for women and men'. Walmart lists it as 'Unisex'. The official brand position is masculine; community and database classification is wider.",
+      "findingsAffected": ["LAY-F04"],
+      "resolution": "BOTH_RECORDED. Official brand = masculine. Fragrantica / community = for men and women."
+    }
+  ],
+  "canonicalSummary": "Layton by Parfums de Marly is a 2016 Eau de Parfum created by Hamid Merati-Kashani. The official Parfums de Marly US website lists it under Masculine and For Men categories; Fragrantica classifies it for women and men. The fragrance family is Oriental Floral (Fragrantica). Two substantially different note pyramids were obtained: (1) Official PdM US website (DIRECT_ACCESS_SUCCESS): Top: Apple, Bergamot, Cardamom; Heart: Lavender, Violet, Geranium; Base: Patchouli, Vanilla, Guaicwood, Praline. (2) Fragrantica-derived (widely circulated, SEARCH_SNIPPET_ONLY): Top: Apple, Lavender, Bergamot, Mandarin Orange; Heart: Geranium, Violet, Jasmine; Base: Vanilla, Cardamom, Sandalwood, Pepper, Guaiac Wood, Patchouli, Ambermax™, Coumarin. Both note pyramids are documented with their sources. The discrepancy may reflect different disclosure standards, a simplified official pyramid, or reformulation. Community characterizes Layton as fresh-spicy-vanilla with apple-bergamot opening, lavender heart, and vanilla-woody base — a year-round, daytime-to-evening masculine. All findings concern the reference fragrance only and do not constitute evidence about Maison Skye & Rose's inspired formulation.",
+  "accessDisposition": "DIRECT_ACCESS_SUCCESS",
   "referenceVsMaisonNote": "All findings in this dossier pertain to the REFERENCE fragrance: Layton by Parfums de Marly. They do not constitute evidence about Maison Skye & Rose's inspired formulation.",
   "governanceConstraints": {
     "noDecisionFields": true,

@@ -1,42 +1,119 @@
 {
   "schemaVersion": "EP6-P5E-RR-v1",
-  "comparisonVersion": "1.0.0",
-  "reviewId": "REL-wardrobe-partners-althair-inspired--spicebomb-extreme-inspired",
+  "comparisonVersion": "1.1.0",
   "unitId": "W1",
-  "comparisonStatus": "PENDING_RESEARCH",
   "pairType": "wardrobePartners",
   "unitScope": "PRIMARY_RESEARCH",
-  "phase3Classification": "RESEARCH_ADVISED",
-  "crossCollection": false,
-  "crossGender": false,
-  "maisonProductA": { "slug": "althair-inspired", "maisonTitle": "Althair Inspired", "collection": "Skye", "gender": "male" },
-  "maisonProductB": { "slug": "spicebomb-extreme-inspired", "maisonTitle": "Spicebomb Extreme Inspired", "collection": "Skye", "gender": "male" },
+  "phase3Classification": "FULL_RESEARCH_REQUIRED",
   "dossierRefA": "parfums-de-marly-althair",
   "dossierRefB": "viktor-rolf-spicebomb-extreme",
+  "maisonPairA": "althair-inspired",
+  "maisonPairB": "spicebomb-extreme-inspired",
+  "maisonTitleA": "Althair Inspired",
+  "maisonTitleB": "Spicebomb Extreme Inspired",
+  "crossCollection": false,
+  "crossGender": false,
+  "genderNote": "Both Althaïr and Spicebomb Extreme are marketed as masculine fragrances. This is a same-gender wardrobe-partner pair — the relationship is complementarity by occasion or character, not a His-and-Hers pairing.",
+  "createdAt": "2026-08-12",
+  "createdBy": "EP6-P5E-R Phase 4B",
+  "researchAuthorization": "EP6-P5E-R Phase 4C-2 — 2026-08-14",
+  "researchedAt": "2026-08-14",
+  "researchedBy": "EP6-P5E-R Phase 4C-2",
   "researchDimensions": ["CANONICAL_FACT_RESEARCH", "WARDROBE_COMPLEMENTARITY_RESEARCH"],
+  "researchQuestions": {
+    "wardrobeComplementarity": [
+      "Does the fragrance community discuss Althaïr by Parfums de Marly and Spicebomb Extreme by Viktor & Rolf as wardrobe partners — fragrances that complement each other in a masculine fragrance wardrobe?",
+      "Does community discussion reference these two fragrances as occasion-complementary, season-complementary, or character-complementary?",
+      "Does the community specifically suggest Spicebomb Extreme as a companion to Althaïr (or vice versa)?"
+    ]
+  },
+  "comparisonStatus": "RESEARCH_COMPLETE",
+  "comparisonEvidence": {
+    "accessDisposition": "SEARCH_SNIPPET_ONLY",
+    "researchedAt": "2026-08-14",
+    "researchBoundaryNote": "All evidence in this comparison brief concerns REFERENCE fragrances and community treatment of them. No claim is made about Maison Skye & Rose's formulations. Evidence may support, fail to support, or contradict the proposed relationship — none of those outcomes approve or reject it.",
+    "researchNote": "All evidence is from community discussion retrieved via WebSearch snippets and profile analysis from completed dossiers.",
+    "directAccessAttempts": [
+      {
+        "url": "WebSearch: 'Althaïr Spicebomb Extreme wardrobe complement masculine'",
+        "result": "NO_RELEVANT_RESULTS",
+        "accessedAt": "2026-08-14",
+        "note": "No community results treating Althaïr and Spicebomb Extreme as a wardrobe pair."
+      },
+      {
+        "url": "WebSearch: 'Parfums de Marly Althaïr wardrobe rotation complement'",
+        "result": "PARTIAL_RELEVANCE",
+        "accessedAt": "2026-08-14",
+        "note": "Community results returned for Althaïr wardrobe companions. Herod (Parfums de Marly) is the most frequently cited companion fragrance for Althaïr in the community — not Spicebomb Extreme. Herod is described as the 'sharper, more intense complement' to Althaïr's sweeter vanilla character."
+      },
+      {
+        "url": "WebSearch: 'Spicebomb Extreme wardrobe rotation masculine fragrance complement'",
+        "result": "PARTIAL_RELEVANCE",
+        "accessedAt": "2026-08-14",
+        "note": "Community results for Spicebomb Extreme wardrobe companions reference Oud Wood, Black Orchid, and tobacco-oud masculine fragrances. Althaïr is not referenced."
+      }
+    ],
+    "sourcesConsulted": [
+      {
+        "source": "WebSearch — multiple queries for community treatment of Althaïr and Spicebomb Extreme as wardrobe companions",
+        "accessMethod": "SEARCH_SNIPPET_ONLY",
+        "accessedAt": "2026-08-14",
+        "note": "No direct comparison found. Community wardrobe companion suggestions for each fragrance do not reference the other."
+      },
+      {
+        "source": "Dossier: parfums-de-marly-althair — RESEARCH_COMPLETE (Phase 4C-2)",
+        "accessMethod": "INTERNAL_DOSSIER",
+        "note": "Profile of Althaïr used for structural comparison."
+      },
+      {
+        "source": "Dossier: viktor-rolf-spicebomb-extreme — RESEARCH_COMPLETE (Phase 4C-1)",
+        "accessMethod": "INTERNAL_DOSSIER",
+        "note": "Profile of Spicebomb Extreme used for structural comparison."
+      }
+    ],
+    "wardrobeComplementarityFindings": [
+      {
+        "findingId": "W1-F01",
+        "claim": "No community source was found that treats Althaïr by Parfums de Marly and Spicebomb Extreme by Viktor & Rolf as wardrobe partners. This is NEGATIVE EVIDENCE.",
+        "evidenceType": "NEGATIVE_EVIDENCE",
+        "accessMethod": "SEARCH_SNIPPET_ONLY"
+      },
+      {
+        "findingId": "W1-F02",
+        "claim": "The community wardrobe companion for Althaïr is Herod (Parfums de Marly), not Spicebomb Extreme. Herod is described as providing the 'sharper, darker, more resinous' counterpart to Althaïr's sweet vanilla-amber warmth — a within-house occasion split at the same price tier and quality register. This is the pairing the community has independently arrived at.",
+        "evidenceType": "COMPARABLE_PAIR_EVIDENCE",
+        "accessMethod": "SEARCH_SNIPPET_ONLY"
+      },
+      {
+        "findingId": "W1-F03",
+        "claim": "Olfactive profile comparison from dossiers: Althaïr is 'Ambery Aromatic Vanilla' (2023) — vanilla-amber-gourmand with orange blossom, cinnamon, and praline, categorized as fall/winter evening-coded. Spicebomb Extreme is Woody Spicy Amber (2015) — tobacco-cinnamon-pepper-ambergris, also fall/winter evening-coded. Both fragrances are warm, masculine-marketed, and autumn/winter primary. They share cinnamon as a structural element. However, Althaïr is vanilla-gourmand dominant, while Spicebomb Extreme is tobacco-spice dominant — different enough in character that they could occupy distinct occasion slots in a masculine wardrobe.",
+        "evidenceType": "PROFILE_COMPARISON",
+        "accessMethod": "INTERNAL_DOSSIER"
+      },
+      {
+        "findingId": "W1-F04",
+        "claim": "Since both fragrances are same-gender (masculine) and share the autumn/winter season, the wardrobePartner logic must rest on character differentiation — not a His-and-Hers angle. The character split that could support this pair: Althaïr = sweeter, more gourmand, cozier/intimate; Spicebomb Extreme = spicier, more tobacco-driven, edgier. This is a structural hypothesis derived from dossier profiles, not a community-articulated pairing.",
+        "evidenceType": "STRUCTURAL_ANALYSIS",
+        "accessMethod": "INTERNAL_DOSSIER"
+      }
+    ],
+    "conclusionState": "LIMITED_SUPPORTING_EVIDENCE_FOUND",
+    "conclusionNarrative": "The wardrobe-partner relationship between Althair Inspired and Spicebomb Extreme Inspired is a same-gender masculine pairing, requiring complementarity by character rather than gender contrast. No community source endorses this specific pairing. When the community suggests a companion fragrance for Althaïr, the recommendation is consistently Herod (Parfums de Marly) — not Spicebomb Extreme. The structural basis for the pairing (shared autumn/winter seasonality; vanilla-gourmand vs spicy-tobacco character contrast; cinnamon as a connecting note) is present in the dossier profiles but has not been articulated by any external source as a wardrobe recommendation. The founder should evaluate whether the Maison product copy for this wardrobePartner relationship is substantiated by what guests will actually experience, noting that the character contrast is real but the specific pairing has no community validation."
+  },
   "currentMaisonEvidence": {
-    "evidenceState": "RESEARCH_ADVISED",
     "limitations": [
       "NO_HUMAN_EDITORIAL_APPROVAL_RECORD",
       "HUMAN_APPROVAL_NOT_CONFIRMED",
       "METADATA_SIMILARITY_NOT_SEMANTIC_PROOF",
       "WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT"
-    ],
-    "evidenceSource": "EP6-P5BR frozen queue snapshot — 2026-08-12",
-    "note": "This is the frozen evidence state from the P5BR queue at Phase 4B creation. It must not be altered. It is not a research conclusion."
+    ]
   },
-  "comparisonEvidence": {
-    "wardrobeComplementarityFindings": null,
-    "accessDisposition": "NOT_YET_RESEARCHED"
-  },
-  "createdAt": "2026-08-12",
-  "createdBy": "EP6-P5E-R Phase 4B",
-  "researchAuthorization": "EP6-P5E-R Phase 4C — not yet issued",
   "governanceConstraints": {
     "noDecisionFields": true,
     "noApprovalRecommendation": true,
     "noGovernanceStateOutput": true,
     "noRelationshipConfidence": true,
+    "readOnlyOnceComplete": true,
     "permittedConclusionStates": [
       "NO_SUPPORTING_RELATIONSHIP_EVIDENCE_FOUND",
       "LIMITED_SUPPORTING_EVIDENCE_FOUND",

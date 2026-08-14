@@ -1,12 +1,12 @@
 {
   "schemaVersion": "EP6-P5E-RR-v1",
-  "dossierVersion": "1.0.0",
+  "dossierVersion": "1.1.0",
   "dossierRef": "giorgio-armani-si",
-  "dossierStatus": "PENDING_RESEARCH",
+  "dossierStatus": "RESEARCH_COMPLETE",
   "referenceFragranceName": "Sì",
   "referenceBrand": "Giorgio Armani",
   "referenceIdentityStatus": "REPOSITORY_SUPPORTED",
-  "referenceIdentityNote": "The Maison product 'Armani Si Inspired' references 'Sì' by Giorgio Armani (2013), a landmark feminine fragrance. Identity attribution is REPOSITORY_SUPPORTED through naming convention. Note: The Sì family includes Sì (2013), Sì Passione (2017), Sì Fiori (2021), Sì Intense (various). Research should clarify the canonical Sì identity as the primary reference.",
+  "referenceIdentityNote": "The Maison product 'Armani Si Inspired' references 'Sì' by Giorgio Armani (2013), a landmark feminine fragrance. Identity attribution is REPOSITORY_SUPPORTED through naming convention. Research confirmed the 2013 original Eau de Parfum as the canonical reference. Flankers (Sì Passione, Sì Intense, Sì Fiori, Sì Rosé, Sì Le Parfum) are distinct compositions and are not the reference for this dossier.",
   "maisonSlugs": ["armani-si-inspired"],
   "maisonTitles": ["Armani Si Inspired"],
   "usedByPairs": [
@@ -15,7 +15,9 @@
   ],
   "createdAt": "2026-08-12",
   "createdBy": "EP6-P5E-R Phase 4B",
-  "researchAuthorization": "EP6-P5E-R Phase 4C — not yet issued",
+  "researchAuthorization": "EP6-P5E-R Phase 4C-2 — 2026-08-14",
+  "researchedAt": "2026-08-14",
+  "researchedBy": "EP6-P5E-R Phase 4C-2",
   "researchQuestions": {
     "canonicalFact": [
       "What is the official fragrance family or accord classification of Sì by Giorgio Armani?",
@@ -32,12 +34,182 @@
     "tier2": "Fragrantica database (fragrantica.com), Basenotes (basenotes.net), established fragrance publications",
     "tier3": "Retailer product descriptions, community reviews — contextual and supporting only"
   },
-  "directAccessAttempts": [],
-  "sourcesConsulted": [],
-  "findings": [],
-  "contradictions": [],
-  "canonicalSummary": null,
-  "accessDisposition": "NOT_YET_RESEARCHED",
+  "directAccessAttempts": [
+    {
+      "url": "https://www.armanibeauty.com/products/si-eau-de-parfum",
+      "tier": 1,
+      "result": "DIRECT_ACCESS_BLOCKED",
+      "httpStatus": "404 Not Found",
+      "accessedAt": "2026-08-14",
+      "note": "Page does not exist at this path. Official Armani Beauty product page unavailable."
+    },
+    {
+      "url": "https://www.armanibeauty.com/fragrance/si",
+      "tier": 1,
+      "result": "PARTIAL_ACCESS",
+      "httpStatus": 200,
+      "accessedAt": "2026-08-14",
+      "note": "Page loaded (category-level). Navigation and category structure retrieved. No product-specific note pyramid or perfumer data accessible at this URL."
+    },
+    {
+      "url": "https://fragplace.com/en-US/fragrances/6634/giorgio-armani/si",
+      "tier": 2,
+      "result": "DIRECT_ACCESS_BLOCKED",
+      "httpStatus": "403 Forbidden",
+      "accessedAt": "2026-08-14",
+      "note": "Access denied."
+    },
+    {
+      "url": "https://www.fragrantica.com/perfume/Giorgio-Armani/Si-18453.html",
+      "tier": 2,
+      "result": "DIRECT_ACCESS_BLOCKED",
+      "httpStatus": "403 Forbidden",
+      "accessedAt": "2026-08-14",
+      "note": "Fragrantica product page access denied. Note data obtained via WebSearch snippets only."
+    },
+    {
+      "url": "https://basenotes.com/fragrances/si-by-giorgio-armani.26140187",
+      "tier": 2,
+      "result": "DIRECT_ACCESS_BLOCKED",
+      "httpStatus": "403 Forbidden",
+      "accessedAt": "2026-08-14",
+      "note": "Basenotes product page access denied."
+    },
+    {
+      "url": "http://perfumeshrine.blogspot.com/2013/09/giorgio-armani-si-fragrance-review.html",
+      "tier": 3,
+      "result": "DIRECT_ACCESS_SUCCESS",
+      "httpStatus": 200,
+      "accessedAt": "2026-08-14",
+      "note": "Perfume Shrine is a respected fragrance blog. This review was written close to the 2013 launch and cites press materials. Tier 3 in the source hierarchy. Used for note confirmation and perfumer attribution where consistent with Tier 2 data."
+    }
+  ],
+  "sourcesConsulted": [
+    {
+      "source": "Perfume Shrine blog — Giorgio Armani Sì fragrance review (2013)",
+      "url": "http://perfumeshrine.blogspot.com/2013/09/giorgio-armani-si-fragrance-review.html",
+      "tier": 3,
+      "accessMethod": "DIRECT_ACCESS_SUCCESS",
+      "accessedAt": "2026-08-14",
+      "note": "Full review content retrieved. Written at launch by a respected fragrance reviewer citing press materials. Notes and perfumer attribution consistent with Tier 2 sources."
+    },
+    {
+      "source": "WebSearch — multiple results referencing Fragrantica, Basenotes, and retailer listings for Giorgio Armani Sì (2013)",
+      "tier": "2-3",
+      "accessMethod": "SEARCH_SNIPPET_ONLY",
+      "accessedAt": "2026-08-14",
+      "note": "Fragrantica data accessed via search engine snippets only (direct page access blocked). Multiple independent sources cross-checked for consistency."
+    }
+  ],
+  "findings": [
+    {
+      "findingId": "SI-F01",
+      "dimension": "CANONICAL_FACT_RESEARCH",
+      "category": "BRAND",
+      "claim": "Brand: Giorgio Armani. Fragrance division: Giorgio Armani Beauty (now under L'Oréal distribution).",
+      "provenance": "WebSearch — multiple sources consistent.",
+      "accessMethod": "SEARCH_SNIPPET_ONLY",
+      "tier": 2
+    },
+    {
+      "findingId": "SI-F02",
+      "dimension": "CANONICAL_FACT_RESEARCH",
+      "category": "LAUNCH_YEAR",
+      "claim": "Launch year: 2013.",
+      "provenance": "Fragrantica (via WebSearch), Perfume Shrine blog (DIRECT_ACCESS_SUCCESS). Confirmed across multiple sources.",
+      "accessMethod": "DIRECT_ACCESS_SUCCESS",
+      "tier": 3
+    },
+    {
+      "findingId": "SI-F03",
+      "dimension": "CANONICAL_FACT_RESEARCH",
+      "category": "CONCENTRATION",
+      "claim": "Concentration: Eau de Parfum. The canonical reference is the original Sì EDP (2013), not any flanker concentration variant.",
+      "provenance": "Perfume Shrine blog (DIRECT_ACCESS_SUCCESS). WebSearch multiple sources consistent.",
+      "accessMethod": "DIRECT_ACCESS_SUCCESS",
+      "tier": 3
+    },
+    {
+      "findingId": "SI-F04",
+      "dimension": "CANONICAL_FACT_RESEARCH",
+      "category": "GENDER",
+      "claim": "Gender positioning: Women's / Feminine.",
+      "provenance": "WebSearch — multiple sources consistent. Perfume Shrine (DIRECT_ACCESS_SUCCESS) confirms feminine positioning.",
+      "accessMethod": "SEARCH_SNIPPET_ONLY",
+      "tier": 2
+    },
+    {
+      "findingId": "SI-F05",
+      "dimension": "CANONICAL_FACT_RESEARCH",
+      "category": "PERFUMER",
+      "claim": "Credited perfumer: Christine Nagel, working at Mane at the time of creation.",
+      "provenance": "Perfume Shrine blog (DIRECT_ACCESS_SUCCESS) attributes the fragrance to Christine Nagel. WebSearch citing Fragrantica is consistent.",
+      "accessMethod": "DIRECT_ACCESS_SUCCESS",
+      "tier": 3
+    },
+    {
+      "findingId": "SI-F06",
+      "dimension": "CANONICAL_FACT_RESEARCH",
+      "category": "FRAGRANCE_FAMILY",
+      "claim": "Fragrance family: Chypre Fruity (Fragrantica classification). Perfume Shrine describes it as a 'nouveau chypre' — a modern chypre structure built on ambroxan and patchouli rather than traditional oakmoss.",
+      "provenance": "WebSearch citing Fragrantica (SEARCH_SNIPPET_ONLY). Perfume Shrine blog (DIRECT_ACCESS_SUCCESS) characterization of 'nouveau chypre' captured.",
+      "accessMethod": "SEARCH_SNIPPET_ONLY",
+      "tier": "2-3"
+    },
+    {
+      "findingId": "SI-F07",
+      "dimension": "CANONICAL_FACT_RESEARCH",
+      "category": "TOP_NOTES",
+      "claim": "Top notes (Fragrantica classification, via WebSearch): Cassis (Blackcurrant).",
+      "provenance": "WebSearch — Fragrantica SEARCH_SNIPPET_ONLY. Cassis / Blackcurrant is consistently cited as the dominant top note across multiple sources.",
+      "accessMethod": "SEARCH_SNIPPET_ONLY",
+      "tier": 2,
+      "note": "Perfume Shrine (DIRECT_ACCESS_SUCCESS) lists Blackcurrant and Freesia as top notes — placing Freesia in the top rather than heart. See contradiction SI-C01."
+    },
+    {
+      "findingId": "SI-F08",
+      "dimension": "CANONICAL_FACT_RESEARCH",
+      "category": "HEART_NOTES",
+      "claim": "Heart notes (Fragrantica classification, via WebSearch): May Rose, Freesia.",
+      "provenance": "WebSearch — Fragrantica SEARCH_SNIPPET_ONLY. May Rose is listed in the heart; Freesia placement is contested. See contradiction SI-C01.",
+      "accessMethod": "SEARCH_SNIPPET_ONLY",
+      "tier": 2
+    },
+    {
+      "findingId": "SI-F09",
+      "dimension": "CANONICAL_FACT_RESEARCH",
+      "category": "BASE_NOTES",
+      "claim": "Base notes: Vanilla, Patchouli, Woody Notes, Ambroxan. Both Fragrantica (via WebSearch) and Perfume Shrine (DIRECT_ACCESS_SUCCESS) are consistent on the base structure. 'Blond Woods' (Perfume Shrine) and 'Woody Notes' (Fragrantica) appear to describe the same material. 'Orcanox' (Perfume Shrine) is a commercial name for the same chemical compound as Ambroxan.",
+      "provenance": "WebSearch citing Fragrantica (SEARCH_SNIPPET_ONLY); Perfume Shrine blog (DIRECT_ACCESS_SUCCESS). Base notes are the most consistently reported across sources.",
+      "accessMethod": "SEARCH_SNIPPET_ONLY",
+      "tier": "2-3"
+    },
+    {
+      "findingId": "SI-F10",
+      "dimension": "CANONICAL_FACT_RESEARCH",
+      "category": "FLANKER_DISAMBIGUATION",
+      "claim": "The Sì family includes multiple flankers: Sì Passione (2017), Sì Intense, Sì Fiori (2021), Sì Rosé, and Sì Le Parfum. These are distinct compositions. The reference for this dossier is exclusively the original Sì Eau de Parfum (2013).",
+      "provenance": "WebSearch — multiple sources consistent on flanker list.",
+      "accessMethod": "SEARCH_SNIPPET_ONLY",
+      "tier": 2
+    }
+  ],
+  "contradictions": [
+    {
+      "contradictionId": "SI-C01",
+      "description": "Freesia placement differs between sources. Fragrantica (via WebSearch, the most widely cited database) places Freesia in the heart notes alongside May Rose. The Perfume Shrine review (DIRECT_ACCESS_SUCCESS, Tier 3, written at launch in 2013) places Freesia alongside Blackcurrant in the top notes. The reason for this discrepancy cannot be confirmed from sources reviewed — it may reflect different press materials issued at different stages, or interpretive differences in note pyramid construction.",
+      "findingsAffected": ["SI-F07", "SI-F08"],
+      "resolution": "BOTH_RECORDED. Fragrantica's classification (heart note) is retained as the primary reference due to wider citation; Perfume Shrine's classification (top note) is documented as an alternative account from a source with access to 2013 press materials."
+    },
+    {
+      "contradictionId": "SI-C02",
+      "description": "'May Rose' (Fragrantica via WebSearch) vs 'Rose' (Perfume Shrine). May Rose typically refers to Rosa centifolia. Whether the official press materials specified 'May Rose' or simply 'Rose' cannot be confirmed from sources reviewed. This may reflect different specificity levels in the original brief versus the Fragrantica database entry.",
+      "findingsAffected": ["SI-F08"],
+      "resolution": "BOTH_RECORDED. Fragrantica's 'May Rose' and Perfume Shrine's 'Rose' likely refer to the same ingredient described at different specificity."
+    }
+  ],
+  "canonicalSummary": "Sì by Giorgio Armani is a 2013 women's Eau de Parfum created by Christine Nagel (Mane). It is classified as Chypre Fruity and described by reviewers as a 'nouveau chypre' — a modern interpretation of the chypre structure using ambroxan and patchouli rather than traditional oakmoss. The fragrance opens on blackcurrant/cassis, transitions through rose (May Rose) and freesia (placement varies by source), and rests on a base of vanilla, patchouli, woody notes, and ambroxan. The original Sì EDP (2013) is the reference; multiple flankers (Passione, Intense, Fiori, Rosé, Le Parfum) are distinct compositions. No official Giorgio Armani Beauty product page was directly accessed; findings are based on Tier 3 direct access (Perfume Shrine blog) and Tier 2 search snippets. All findings concern the reference fragrance only and do not constitute evidence about Maison Skye & Rose's inspired formulation.",
+  "accessDisposition": "SEARCH_SNIPPET_ONLY",
   "referenceVsMaisonNote": "All findings in this dossier pertain to the REFERENCE fragrance: Sì by Giorgio Armani. They do not constitute evidence about Maison Skye & Rose's inspired formulation.",
   "governanceConstraints": {
     "noDecisionFields": true,

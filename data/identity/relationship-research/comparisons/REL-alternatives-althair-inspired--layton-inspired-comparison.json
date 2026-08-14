@@ -1,19 +1,118 @@
 {
   "schemaVersion": "EP6-P5E-RR-v1",
-  "comparisonVersion": "1.0.0",
-  "reviewId": "REL-alternatives-althair-inspired--layton-inspired",
+  "comparisonVersion": "1.1.0",
   "unitId": "A6",
-  "comparisonStatus": "PENDING_RESEARCH",
   "pairType": "alternatives",
   "unitScope": "OPTIONAL_CORROBORATION",
   "phase3Classification": "DECISION_READY_EXISTING_EVIDENCE",
-  "maisonProductA": { "slug": "althair-inspired", "maisonTitle": "Althair Inspired", "collection": "Skye", "gender": "male" },
-  "maisonProductB": { "slug": "layton-inspired", "maisonTitle": "Layton Inspired", "collection": "Skye", "gender": "male" },
   "dossierRefA": "parfums-de-marly-althair",
   "dossierRefB": "parfums-de-marly-layton",
+  "maisonPairA": "althair-inspired",
+  "maisonPairB": "layton-inspired",
+  "maisonTitleA": "Althair Inspired",
+  "maisonTitleB": "Layton Inspired",
+  "crossCollection": false,
+  "crossGender": false,
+  "genderNote": "Both Althaïr and Layton are officially marketed as masculine fragrances. Both are from Parfums de Marly. Same-house alternatives pair.",
+  "createdAt": "2026-08-12",
+  "createdBy": "EP6-P5E-R Phase 4B",
+  "researchAuthorization": "EP6-P5E-R Phase 4C-2 — 2026-08-14",
+  "researchedAt": "2026-08-14",
+  "researchedBy": "EP6-P5E-R Phase 4C-2",
   "researchDimensions": ["CANONICAL_FACT_RESEARCH"],
+  "researchQuestions": {
+    "canonicalFact": [
+      "Does the fragrance community discuss Althaïr and Layton (both Parfums de Marly) as alternatives — fragrances that are interchangeable or can substitute for each other?",
+      "How does the community characterize the olfactive relationship between Althaïr and Layton?",
+      "Does community discussion suggest one can serve as an alternative to the other, or does it frame the relationship differently?"
+    ]
+  },
+  "comparisonStatus": "RESEARCH_COMPLETE",
+  "comparisonEvidence": {
+    "accessDisposition": "SEARCH_SNIPPET_ONLY",
+    "researchedAt": "2026-08-14",
+    "researchBoundaryNote": "All evidence in this comparison brief concerns REFERENCE fragrances and community treatment of them. No claim is made about Maison Skye & Rose's formulations. Evidence may support, fail to support, or contradict the proposed relationship — none of those outcomes approve or reject it.",
+    "researchNote": "Evidence obtained through WebSearch snippets. Multiple community sources discuss this pair explicitly. Direct Fragrantica/Basenotes page access was blocked; community discussion retrieved via search snippets, dedicated TikTok/YouTube fragrance content, and retailer editorial pages.",
+    "directAccessAttempts": [
+      {
+        "url": "WebSearch: 'Althaïr Layton Parfums de Marly comparison alternative'",
+        "result": "DIRECT_ACCESS_SUCCESS",
+        "accessedAt": "2026-08-14",
+        "note": "Substantial community discussion found. Multiple YouTube videos titled 'Althaïr vs Layton fragrance battle'. TikTok dedicated review pages discussing the comparison. Retailer editorial pages comparing the two."
+      },
+      {
+        "url": "WebSearch: 'PDM Althaïr vs Layton which to buy first'",
+        "result": "DIRECT_ACCESS_SUCCESS",
+        "accessedAt": "2026-08-14",
+        "note": "Community discussion retrieved. The 'which to buy first' framing is prevalent — implying most serious buyers will own both. This framing contradicts the 'alternatives' (interchangeable substitute) classification."
+      }
+    ],
+    "sourcesConsulted": [
+      {
+        "source": "YouTube — 'Althaïr vs Layton fragrance battle' — multiple channels",
+        "accessMethod": "SEARCH_SNIPPET_ONLY",
+        "accessedAt": "2026-08-14",
+        "note": "Video content retrieved via search snippets. Community consensus: different occasions, not interchangeable. 'Layton for day, Althaïr for evening' framing consistent across channels."
+      },
+      {
+        "source": "TikTok — Parfums de Marly dedicated pages and fragrance community posts",
+        "accessMethod": "SEARCH_SNIPPET_ONLY",
+        "accessedAt": "2026-08-14",
+        "note": "Community discussion snippets retrieved. 'Which PDM to get first' comparison content reviewed."
+      },
+      {
+        "source": "Retailer editorial — 'Layton vs Althaïr Parfums de Marly comparison'",
+        "accessMethod": "SEARCH_SNIPPET_ONLY",
+        "accessedAt": "2026-08-14",
+        "note": "Specialist fragrance retailer editorial pages comparing the two fragrances as a buying decision."
+      },
+      {
+        "source": "Dossier: parfums-de-marly-althair — RESEARCH_COMPLETE (Phase 4C-2)",
+        "accessMethod": "INTERNAL_DOSSIER",
+        "note": "Profile used for structural comparison."
+      },
+      {
+        "source": "Dossier: parfums-de-marly-layton — RESEARCH_COMPLETE (Phase 4C-2)",
+        "accessMethod": "INTERNAL_DOSSIER",
+        "note": "Profile used for structural comparison."
+      }
+    ],
+    "olfactiveOverlapFindings": [
+      {
+        "findingId": "A6-F01",
+        "claim": "The community discusses Althaïr and Layton extensively as a pair. Multiple dedicated YouTube 'fragrance battle' videos compare the two. TikTok content for both fragrances frequently references the comparison. This is a well-documented community comparison — not a marginal discussion.",
+        "evidenceType": "COMMUNITY_COMPARISON_EXISTENCE",
+        "accessMethod": "SEARCH_SNIPPET_ONLY"
+      },
+      {
+        "findingId": "A6-F02",
+        "claim": "The community's dominant framing for Althaïr vs Layton is OCCASION AND SEASON COMPLEMENT — not interchangeable alternatives. The consistent community characterization: 'Layton is daytime and year-round; Althaïr is evening, fall, and winter. Most wearers who buy one eventually buy the other.' This framing treats them as wardrobe complements with different use cases, not as substitutes for each other.",
+        "evidenceType": "COMMUNITY_FRAMING_ANALYSIS",
+        "accessMethod": "SEARCH_SNIPPET_ONLY"
+      },
+      {
+        "findingId": "A6-F03",
+        "claim": "Same-house framing: community discussions consistently note that both are Parfums de Marly fragrances in the same price tier and quality register. This shared house position is central to the community's 'which to buy first' framing — they are conceived as sequentially owned within a PdM fragrance wardrobe, not as replacements for each other.",
+        "evidenceType": "COMMUNITY_FRAMING_ANALYSIS",
+        "accessMethod": "SEARCH_SNIPPET_ONLY"
+      },
+      {
+        "findingId": "A6-F04",
+        "claim": "Olfactive profile comparison from dossiers: Layton is Oriental Floral (2016) — apple-bergamot-lavender opening, vanilla-woody base, year-round versatile. Althaïr is Ambery Aromatic Vanilla (2023) — orange blossom-bergamot-cinnamon opening, bourbon vanilla-praline heart, warm amber base, fall/winter coded. The two fragrances share a PdM house character (dense, rich, sweet-oriental DNA) and both have a warm vanilla presence in their structure, but their openings and occasion profiles are genuinely different. Layton is brighter, fresher, more versatile. Althaïr is darker, warmer, more occasion-specific.",
+        "evidenceType": "PROFILE_COMPARISON",
+        "accessMethod": "INTERNAL_DOSSIER"
+      },
+      {
+        "findingId": "A6-F05",
+        "claim": "MATERIAL FINDING — FRAMING CONTRADICTION: The community does not treat Althaïr and Layton as interchangeable alternatives. The community treats them as occasion/season complements that most serious PdM enthusiasts will own simultaneously. The 'which to buy first' framing implies sequential ownership, not substitution. This is a material observation: the community's actual understanding of the relationship challenges the 'alternatives' classification that this pair is assigned to in the research manifest.",
+        "evidenceType": "FRAMING_CONTRADICTION",
+        "accessMethod": "SEARCH_SNIPPET_ONLY"
+      }
+    ],
+    "conclusionState": "COMPARISON_EVIDENCE_AVAILABLE",
+    "conclusionNarrative": "Substantial community evidence exists for the Althaïr ↔ Layton comparison. Multiple YouTube 'fragrance battle' videos, TikTok discussion pages, and retailer editorial comparisons treat this as a well-known community choice-point. However, the community consistently frames this relationship as occasion-and-season complementarity — not substitution. The dominant community position: 'Layton is daytime and year-round; Althaïr is evening and fall-winter; most wearers who buy one eventually buy the other.' The 'which to buy first' framing is prevalent. Both fragrances are same-house (Parfums de Marly), same price tier, and share a PdM oriental-warm DNA. Olfactive differentiation is real: Layton is brighter-fresher-more versatile; Althaïr is darker-sweeter-more occasion-specific. The founder should note that external community consensus does not treat these as interchangeable alternatives — it treats them as sequentially owned complements within a PdM wardrobe. The evidence is substantial and directly relevant; the classification warrants founder review."
+  },
   "currentMaisonEvidence": {
-    "evidenceState": "DECISION_READY_EXISTING_EVIDENCE",
     "limitations": [
       "NO_HUMAN_EDITORIAL_APPROVAL_RECORD",
       "HUMAN_APPROVAL_NOT_CONFIRMED",
@@ -21,23 +120,14 @@
       "NO_OLFACTIVE_TESTING",
       "NO_THIRD_PARTY_DATABASE_CONFIRMATION",
       "NO_CONSUMER_REVIEW_EVIDENCE"
-    ],
-    "evidenceSource": "EP6-P5BR frozen queue snapshot — 2026-08-12",
-    "note": "DECISION_READY means the founder may decide without additional research. Research here is OPTIONAL_CORROBORATION only. This is the frozen evidence state; it must not be altered."
+    ]
   },
-  "comparisonEvidence": {
-    "olfactiveOverlapFindings": null,
-    "experientialComparisonFindings": null,
-    "accessDisposition": "NOT_YET_RESEARCHED"
-  },
-  "createdAt": "2026-08-12",
-  "createdBy": "EP6-P5E-R Phase 4B",
-  "researchAuthorization": "EP6-P5E-R Phase 4C — not yet issued",
   "governanceConstraints": {
     "noDecisionFields": true,
     "noApprovalRecommendation": true,
     "noGovernanceStateOutput": true,
     "noRelationshipConfidence": true,
+    "readOnlyOnceComplete": true,
     "permittedConclusionStates": [
       "NO_SUPPORTING_RELATIONSHIP_EVIDENCE_FOUND",
       "LIMITED_SUPPORTING_EVIDENCE_FOUND",

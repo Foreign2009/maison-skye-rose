@@ -1,44 +1,121 @@
 {
   "schemaVersion": "EP6-P5E-RR-v1",
-  "comparisonVersion": "1.0.0",
-  "reviewId": "REL-wardrobe-partners-armani-si-inspired--spicebomb-extreme-inspired",
+  "comparisonVersion": "1.1.0",
   "unitId": "W7",
-  "comparisonStatus": "PENDING_RESEARCH",
   "pairType": "wardrobePartners",
   "unitScope": "PRIMARY_RESEARCH",
-  "phase3Classification": "RESEARCH_ADVISED",
+  "phase3Classification": "FULL_RESEARCH_REQUIRED",
+  "dossierRefA": "giorgio-armani-si",
+  "dossierRefB": "viktor-rolf-spicebomb-extreme",
+  "maisonPairA": "armani-si-inspired",
+  "maisonPairB": "spicebomb-extreme-inspired",
+  "maisonTitleA": "Armani Si Inspired",
+  "maisonTitleB": "Spicebomb Extreme Inspired",
   "crossCollection": true,
   "crossGender": true,
   "crossCollectionPermissibility": "APPROVED — D-REL-001",
-  "dossierReuseNote": "Both canonical dossiers are in scope from other units: giorgio-armani-si from W6; viktor-rolf-spicebomb-extreme from A9 and W1. No additional canonical fact research required for this unit.",
-  "maisonProductA": { "slug": "armani-si-inspired", "maisonTitle": "Armani Si Inspired", "collection": "Rose", "gender": "female" },
-  "maisonProductB": { "slug": "spicebomb-extreme-inspired", "maisonTitle": "Spicebomb Extreme Inspired", "collection": "Skye", "gender": "male" },
-  "dossierRefA": "giorgio-armani-si",
-  "dossierRefB": "viktor-rolf-spicebomb-extreme",
+  "genderNote": "Giorgio Armani Sì is a women's fragrance. Viktor & Rolf Spicebomb Extreme is marketed as a men's fragrance. This is a His-and-Hers wardrobe-partner pair.",
+  "dossierReuseNote": "No additional canonical fact research required for this unit. Dossier giorgio-armani-si and dossier viktor-rolf-spicebomb-extreme provide sufficient canonical context. Research dimension is WARDROBE_COMPLEMENTARITY_RESEARCH only.",
+  "createdAt": "2026-08-12",
+  "createdBy": "EP6-P5E-R Phase 4B",
+  "researchAuthorization": "EP6-P5E-R Phase 4C-2 — 2026-08-14",
+  "researchedAt": "2026-08-14",
+  "researchedBy": "EP6-P5E-R Phase 4C-2",
   "researchDimensions": ["WARDROBE_COMPLEMENTARITY_RESEARCH"],
+  "researchQuestions": {
+    "wardrobeComplementarity": [
+      "Does the fragrance community discuss Sì by Giorgio Armani and Spicebomb Extreme by Viktor & Rolf as a wardrobe pair — His and Hers, or complementary fragrances worn together?",
+      "Are there editorial or press treatments recommending these two fragrances as a couple or occasion pairing?",
+      "Does community discussion reference the olfactive contrast or harmony between these two fragrances as a wardrobe combination?"
+    ]
+  },
+  "comparisonStatus": "RESEARCH_COMPLETE",
+  "comparisonEvidence": {
+    "accessDisposition": "SEARCH_SNIPPET_ONLY",
+    "researchedAt": "2026-08-14",
+    "researchBoundaryNote": "All evidence in this comparison brief concerns REFERENCE fragrances and community treatment of them. No claim is made about Maison Skye & Rose's formulations. Evidence may support, fail to support, or contradict the proposed relationship — none of those outcomes approve or reject it.",
+    "researchNote": "All evidence is from community discussion retrieved via WebSearch snippets and profile analysis from completed dossiers.",
+    "directAccessAttempts": [
+      {
+        "url": "WebSearch: 'Armani Si Spicebomb Extreme wardrobe pair His and Hers'",
+        "result": "NO_RELEVANT_RESULTS",
+        "accessedAt": "2026-08-14",
+        "note": "Zero community results treating Sì and Spicebomb Extreme as a wardrobe pair."
+      },
+      {
+        "url": "WebSearch: 'Giorgio Armani Si Viktor Rolf Spicebomb Extreme couple fragrance'",
+        "result": "NO_RELEVANT_RESULTS",
+        "accessedAt": "2026-08-14",
+        "note": "No editorial or community treatment found."
+      },
+      {
+        "url": "WebSearch: 'Spicebomb Extreme His and Hers complement'",
+        "result": "PARTIAL_RELEVANCE",
+        "accessedAt": "2026-08-14",
+        "note": "Spicebomb Extreme community comparisons reference Armani Code Absolu, Armani Code Profumo, and Initio Magnetic Blend 7 as male counterparts in community discussions. Armani Sì is not referenced as a pairing recommendation for Spicebomb Extreme."
+      }
+    ],
+    "sourcesConsulted": [
+      {
+        "source": "WebSearch — multiple queries for community and editorial pairing of Sì and Spicebomb Extreme",
+        "accessMethod": "SEARCH_SNIPPET_ONLY",
+        "accessedAt": "2026-08-14",
+        "note": "No sources found treating these two fragrances as a wardrobe pair."
+      },
+      {
+        "source": "Dossier: giorgio-armani-si — RESEARCH_COMPLETE (Phase 4C-2)",
+        "accessMethod": "INTERNAL_DOSSIER",
+        "note": "Profile of Sì used for structural comparison."
+      },
+      {
+        "source": "Dossier: viktor-rolf-spicebomb-extreme — RESEARCH_COMPLETE (Phase 4C-1)",
+        "accessMethod": "INTERNAL_DOSSIER",
+        "note": "Profile of Spicebomb Extreme used for structural comparison."
+      }
+    ],
+    "wardrobeComplementarityFindings": [
+      {
+        "findingId": "W7-F01",
+        "claim": "No community source was found that treats Sì by Giorgio Armani and Spicebomb Extreme by Viktor & Rolf as a wardrobe pair. This is recorded as NEGATIVE EVIDENCE.",
+        "evidenceType": "NEGATIVE_EVIDENCE",
+        "accessMethod": "SEARCH_SNIPPET_ONLY"
+      },
+      {
+        "findingId": "W7-F02",
+        "claim": "Community comparisons for Spicebomb Extreme as a 'His' fragrance reference Armani Code Absolu and Armani Code Profumo (not Armani Sì) as associated feminine pairings or complementary fragrances. The olfactive link is Code Absolu's oriental character matching Spicebomb Extreme's oriental warmth — not the Chypre Fruity character of Sì.",
+        "evidenceType": "COMPARABLE_PAIR_EVIDENCE",
+        "accessMethod": "SEARCH_SNIPPET_ONLY"
+      },
+      {
+        "findingId": "W7-F03",
+        "claim": "Olfactive profile comparison from dossiers: Sì is Chypre Fruity (Women's) — fruity-floral-green, with cassis, rose, and vanilla-patchouli-ambroxan base. Spicebomb Extreme is Woody Spicy Amber (Men's) — tobacco-cinnamon-red pepper, with a vanilla-ambergris-vetiver base. These are materially different fragrance families. The main shared structural element is vanilla in both bases. The olfactive contrast (fruity-floral vs spicy-tobacco-amber) is genuine and could support a complementarity argument (contrast = complementary in wardrobe terms).",
+        "evidenceType": "PROFILE_COMPARISON",
+        "accessMethod": "INTERNAL_DOSSIER"
+      },
+      {
+        "findingId": "W7-F04",
+        "claim": "The crossGender dimension (Women's Sì + Men's Spicebomb Extreme) combined with the olfactive contrast (Chypre Fruity vs Woody Spicy Amber) could structurally support a wardrobe-partner hypothesis on profile differentiation alone — they are sufficiently different that wearing them as a pair would not feel redundant. However, this is a structural observation from profile comparison, not community endorsement. No press, editorial, or community source has articulated this as an explicit pairing recommendation.",
+        "evidenceType": "STRUCTURAL_ANALYSIS",
+        "accessMethod": "INTERNAL_DOSSIER"
+      }
+    ],
+    "conclusionState": "LIMITED_SUPPORTING_EVIDENCE_FOUND",
+    "conclusionNarrative": "The wardrobe-partner relationship between Armani Si Inspired and Spicebomb Extreme Inspired is structurally motivated by their crossGender positioning (Women's Sì + Men's Spicebomb Extreme) and the olfactive contrast of their respective profiles (Chypre Fruity vs Woody Spicy Amber). Unlike the W6 pair (Sì + Aventus, which share the same broad family), Sì and Spicebomb Extreme are materially different in character — the kind of contrast that can support wardrobe complementarity. However, no community source endorses this specific pairing. When the community looks for a companion feminine fragrance to Spicebomb Extreme, Armani Code Absolu (oriental-amber, not Chypre Fruity) is the reference that appears — not Sì. The founder should evaluate whether the product copy for this wardrobePartner relationship can be substantiated, noting that the olfactive contrast is present but the specific pairing has no community validation."
+  },
   "currentMaisonEvidence": {
-    "evidenceState": "RESEARCH_ADVISED",
     "limitations": [
       "NO_HUMAN_EDITORIAL_APPROVAL_RECORD",
       "HUMAN_APPROVAL_NOT_CONFIRMED",
       "METADATA_SIMILARITY_NOT_SEMANTIC_PROOF",
       "WARDROBE_CURATION_REQUIRES_FOUNDER_INTENT"
-    ],
-    "evidenceSource": "EP6-P5BR frozen queue snapshot — 2026-08-12",
-    "note": "This is the frozen evidence state from the P5BR queue at Phase 4B creation. It must not be altered. It is not a research conclusion."
+    ]
   },
-  "comparisonEvidence": {
-    "wardrobeComplementarityFindings": null,
-    "accessDisposition": "NOT_YET_RESEARCHED"
-  },
-  "createdAt": "2026-08-12",
-  "createdBy": "EP6-P5E-R Phase 4B",
-  "researchAuthorization": "EP6-P5E-R Phase 4C — not yet issued",
   "governanceConstraints": {
     "noDecisionFields": true,
     "noApprovalRecommendation": true,
     "noGovernanceStateOutput": true,
     "noRelationshipConfidence": true,
+    "readOnlyOnceComplete": true,
     "permittedConclusionStates": [
       "NO_SUPPORTING_RELATIONSHIP_EVIDENCE_FOUND",
       "LIMITED_SUPPORTING_EVIDENCE_FOUND",

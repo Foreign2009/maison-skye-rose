@@ -1,19 +1,133 @@
 {
   "schemaVersion": "EP6-P5E-RR-v1",
-  "comparisonVersion": "1.0.0",
-  "reviewId": "REL-alternatives-ani-inspired--layton-inspired",
+  "comparisonVersion": "1.1.0",
   "unitId": "A8",
-  "comparisonStatus": "PENDING_RESEARCH",
   "pairType": "alternatives",
   "unitScope": "OPTIONAL_CORROBORATION",
   "phase3Classification": "DECISION_READY_EXISTING_EVIDENCE",
-  "maisonProductA": { "slug": "ani-inspired", "maisonTitle": "Ani Inspired", "collection": "Skye", "gender": "male" },
-  "maisonProductB": { "slug": "layton-inspired", "maisonTitle": "Layton Inspired", "collection": "Skye", "gender": "male" },
   "dossierRefA": "nishane-ani",
   "dossierRefB": "parfums-de-marly-layton",
+  "maisonPairA": "ani-inspired",
+  "maisonPairB": "layton-inspired",
+  "maisonTitleA": "Ani Inspired",
+  "maisonTitleB": "Layton Inspired",
+  "crossCollection": true,
+  "crossGender": false,
+  "genderNote": "Nishane Ani is marketed as unisex; Parfums de Marly Layton is officially masculine but widely worn unisex. Different houses (Nishane vs Parfums de Marly). Cross-house alternatives pair.",
+  "createdAt": "2026-08-12",
+  "createdBy": "EP6-P5E-R Phase 4B",
+  "researchAuthorization": "EP6-P5E-R Phase 4C-2 — 2026-08-14",
+  "researchedAt": "2026-08-14",
+  "researchedBy": "EP6-P5E-R Phase 4C-2",
   "researchDimensions": ["CANONICAL_FACT_RESEARCH"],
+  "researchQuestions": {
+    "canonicalFact": [
+      "Does the fragrance community discuss Ani by Nishane and Layton by Parfums de Marly as alternatives — fragrances that are interchangeable or can substitute for each other?",
+      "How does the community characterize the olfactive overlap or similarity between Ani and Layton?",
+      "Does community discussion frame one as a substitute for the other, or does the discussion use different framing?"
+    ]
+  },
+  "comparisonStatus": "RESEARCH_COMPLETE",
+  "comparisonEvidence": {
+    "accessDisposition": "SEARCH_SNIPPET_ONLY",
+    "researchedAt": "2026-08-14",
+    "researchBoundaryNote": "All evidence in this comparison brief concerns REFERENCE fragrances and community treatment of them. No claim is made about Maison Skye & Rose's formulations. Evidence may support, fail to support, or contradict the proposed relationship — none of those outcomes approve or reject it.",
+    "researchNote": "Evidence obtained through WebSearch snippets and a retrieved CompareClick structured comparison page. Direct Fragrantica/Basenotes page access was blocked; community discussion retrieved via search snippets, YouTube comparison content, and TikTok discovery pages.",
+    "directAccessAttempts": [
+      {
+        "url": "WebSearch: 'Nishane Ani Layton Parfums de Marly comparison alternative'",
+        "result": "DIRECT_ACCESS_SUCCESS",
+        "accessedAt": "2026-08-14",
+        "note": "Moderate community discussion found. YouTube comparison videos and TikTok discovery content retrieved via search snippets."
+      },
+      {
+        "url": "https://compareclick.co/comparison/nishane-ani-vs-parfums-de-marly-layton",
+        "result": "DIRECT_ACCESS_SUCCESS",
+        "httpStatus": 200,
+        "accessedAt": "2026-08-14",
+        "note": "Structured fragrance comparison page. Full content retrieved. Documents key similarities and differences across note structure, longevity, price tier, and occasion."
+      },
+      {
+        "url": "WebSearch: 'Nishane Ani dupe Layton'",
+        "result": "PARTIAL_RELEVANCE",
+        "accessedAt": "2026-08-14",
+        "note": "Some results use 'dupe' framing (Ani as a Layton alternative or Layton as an Ani alternative). The 'dupe' characterization is contested in Basenotes discussion — multiple reviewers position Ani at a higher quality tier than Layton (Initio/Parfums Prives tier vs PdM tier). See finding A8-F03."
+      }
+    ],
+    "sourcesConsulted": [
+      {
+        "source": "CompareClick — Nishane Ani vs Parfums de Marly Layton structured comparison",
+        "url": "https://compareclick.co/comparison/nishane-ani-vs-parfums-de-marly-layton",
+        "accessMethod": "DIRECT_ACCESS_SUCCESS",
+        "accessedAt": "2026-08-14",
+        "note": "Full structured comparison retrieved. Documents both as oriental-vanilla-floral; notes Ani as 'more fresh and opulent' vs Layton. Longevity comparison included."
+      },
+      {
+        "source": "YouTube — Nishane Ani vs Layton comparison videos",
+        "accessMethod": "SEARCH_SNIPPET_ONLY",
+        "accessedAt": "2026-08-14",
+        "note": "YouTube comparison content retrieved via search. Some videos use 'Ani vs Layton' framing explicitly."
+      },
+      {
+        "source": "TikTok — fragrance discovery and recommendation content referencing both fragrances",
+        "accessMethod": "SEARCH_SNIPPET_ONLY",
+        "accessedAt": "2026-08-14",
+        "note": "TikTok fragrance community snippets retrieved via search."
+      },
+      {
+        "source": "Basenotes — community review thread discussion",
+        "accessMethod": "SEARCH_SNIPPET_ONLY",
+        "accessedAt": "2026-08-14",
+        "note": "Review thread snippets retrieved. Notable: one reviewer positions Ani at 'Initio tier, a level above PdM' — contesting dupe framing."
+      },
+      {
+        "source": "Dossier: nishane-ani — RESEARCH_COMPLETE (Phase 4C-1)",
+        "accessMethod": "INTERNAL_DOSSIER",
+        "note": "Profile of Ani used for structural comparison."
+      },
+      {
+        "source": "Dossier: parfums-de-marly-layton — RESEARCH_COMPLETE (Phase 4C-2)",
+        "accessMethod": "INTERNAL_DOSSIER",
+        "note": "Profile of Layton used for structural comparison."
+      }
+    ],
+    "olfactiveOverlapFindings": [
+      {
+        "findingId": "A8-F01",
+        "claim": "Community acknowledges olfactive similarity between Ani and Layton in the oriental-vanilla-floral register. CompareClick structured comparison documents both as 'warm, floral-vanilla oriental' fragrances with comparable seasonal and occasion profiles. A community comparison quote: 'Ani does smell similar to PDM's Layton, but more fresh and opulent.'",
+        "evidenceType": "COMMUNITY_COMPARISON_QUOTE",
+        "accessMethod": "DIRECT_ACCESS_SUCCESS",
+        "source": "compareclick.co"
+      },
+      {
+        "findingId": "A8-F02",
+        "claim": "Olfactive profile comparison from dossiers: Nishane Ani (2022, unisex) — Oriental Floral, rose-jasmine-iris heart, warm ambergris-patchouli-musk base, described as 'opulent and radiant'. Parfums de Marly Layton (2016, masculine) — Oriental Floral, apple-bergamot-lavender opening, vanilla-guaiacwood base, described as 'fresh-oriental versatile'. Both are Oriental Floral (Fragrantica classification). The overlap is in the warm-oriental register and in the vanilla/amber base. Ani is more floral-opulent; Layton is more fresh-spicy-apple. They share a broad olfactive family but have meaningfully different characters.",
+        "evidenceType": "PROFILE_COMPARISON",
+        "accessMethod": "INTERNAL_DOSSIER"
+      },
+      {
+        "findingId": "A8-F03",
+        "claim": "'Dupe' framing exists in some YouTube content and TikTok discovery material. However, this framing is contested by the Basenotes community, where reviewers position Ani at a higher quality and price tier — 'Initio/Parfums Prives level, above PdM's register.' Ani is typically priced higher than Layton. The 'dupe' framing (one as a substitute for the other at a lower price) does not accurately characterize their market positioning — they are both luxury fragrances, with Ani typically at the higher price point.",
+        "evidenceType": "FRAMING_ANALYSIS",
+        "accessMethod": "SEARCH_SNIPPET_ONLY"
+      },
+      {
+        "findingId": "A8-F04",
+        "claim": "A layering community exists around Ani and Layton — a distinct practice of wearing them together rather than as substitutes. Some community sources explicitly discuss layering these two fragrances to create a combined effect. This practice presupposes owning both, which contradicts the alternatives (substitution) framing.",
+        "evidenceType": "LAYERING_COMMUNITY_EVIDENCE",
+        "accessMethod": "SEARCH_SNIPPET_ONLY"
+      },
+      {
+        "findingId": "A8-F05",
+        "claim": "The step-up framing appears in some community discussions: Layton as the accessible 'starting point' in the oriental-floral masculine register, with Ani as the next-tier upgrade — 'if you love Layton, try Ani for a more opulent experience.' This framing treats them as adjacent points in a quality progression, not as substitutes at the same tier.",
+        "evidenceType": "STEP_UP_FRAMING",
+        "accessMethod": "SEARCH_SNIPPET_ONLY"
+      }
+    ],
+    "conclusionState": "COMPARISON_EVIDENCE_AVAILABLE",
+    "conclusionNarrative": "Moderate community evidence exists for the Ani ↔ Layton comparison. Multiple community sources acknowledge olfactive similarity in the oriental-vanilla-floral register — the shared broad family creates a natural comparison point. The CompareClick structured comparison confirms the overlap: 'similar warm floral-oriental fragrances, with Ani more fresh and opulent.' However, multiple distinct framings co-exist in the community, and not all support straightforward substitution. The 'dupe' framing (one substituting for the other) is contested — Basenotes reviewers position Ani at a higher tier than Layton, and Ani is typically more expensive. A step-up framing also appears: 'if you love Layton, try Ani.' A layering community exists separately, treating them as complements. The comparison is real and documented; the 'alternatives' relationship has moderate community support but is complicated by the tier-positioning and layering community. The founder has sufficient evidence to make a relationship assessment decision."
+  },
   "currentMaisonEvidence": {
-    "evidenceState": "DECISION_READY_EXISTING_EVIDENCE",
     "limitations": [
       "NO_HUMAN_EDITORIAL_APPROVAL_RECORD",
       "HUMAN_APPROVAL_NOT_CONFIRMED",
@@ -21,23 +135,14 @@
       "NO_OLFACTIVE_TESTING",
       "NO_THIRD_PARTY_DATABASE_CONFIRMATION",
       "NO_CONSUMER_REVIEW_EVIDENCE"
-    ],
-    "evidenceSource": "EP6-P5BR frozen queue snapshot — 2026-08-12",
-    "note": "DECISION_READY means the founder may decide without additional research. Research here is OPTIONAL_CORROBORATION only. This is the frozen evidence state; it must not be altered."
+    ]
   },
-  "comparisonEvidence": {
-    "olfactiveOverlapFindings": null,
-    "experientialComparisonFindings": null,
-    "accessDisposition": "NOT_YET_RESEARCHED"
-  },
-  "createdAt": "2026-08-12",
-  "createdBy": "EP6-P5E-R Phase 4B",
-  "researchAuthorization": "EP6-P5E-R Phase 4C — not yet issued",
   "governanceConstraints": {
     "noDecisionFields": true,
     "noApprovalRecommendation": true,
     "noGovernanceStateOutput": true,
     "noRelationshipConfidence": true,
+    "readOnlyOnceComplete": true,
     "permittedConclusionStates": [
       "NO_SUPPORTING_RELATIONSHIP_EVIDENCE_FOUND",
       "LIMITED_SUPPORTING_EVIDENCE_FOUND",
