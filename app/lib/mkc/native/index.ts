@@ -68,7 +68,6 @@ import { crystalNoirInspired } from "./crystal-noir-inspired";
 import { delinaExclusifInspired } from "./delina-exclusif-inspired";
 import { erbaPuraInspired } from "./erba-pura-inspired";
 import { flowerbombInspired } from "./flowerbomb-inspired";
-import { kayaliVanilla28Inspired } from "./kayali-vanilla-28-inspired";
 import { kirkeOverdoseInspired } from "./kirke-overdose-inspired";
 import { limmensiteInspired } from "./l'immensite-inspired";
 import { laVieEstBelleInspired } from "./la-vie-est-belle-inspired";
@@ -163,7 +162,6 @@ export const nativeFragrances = new Map<string, FragranceKnowledge>([
   ["delina-exclusif-inspired", delinaExclusifInspired],
   ["erba-pura-inspired", erbaPuraInspired],
   ["flowerbomb-inspired", flowerbombInspired],
-  ["kayali-vanilla-28-inspired", kayaliVanilla28Inspired],
   ["kirke-overdose-inspired", kirkeOverdoseInspired],
   ["l'immensite-inspired", limmensiteInspired],
   ["la-vie-est-belle-inspired", laVieEstBelleInspired],

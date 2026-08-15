@@ -1396,7 +1396,7 @@ export const academyCatalogue: AcademyArticle[] = [
       "black-opium-inspired",
       "la-vie-est-belle-inspired",
       "ultra-male-inspired",
-      "kayali-vanilla-28-inspired",
+      "vanilla-28-inspired",
     ],
     content: [
       {

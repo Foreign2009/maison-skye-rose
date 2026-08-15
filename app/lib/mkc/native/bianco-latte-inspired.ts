@@ -90,7 +90,7 @@ export const biancoLatteInspired: FragranceKnowledge = {
 
   // ── Relationships ─────────────────────────────────────────────────────────────
   relationships: {
-    alternatives:     ["love-don't-be-shy-inspired", "la-vie-est-belle-inspired", "kayali-vanilla-28-inspired", "devotion-inspired"],
+    alternatives:     ["love-don't-be-shy-inspired", "la-vie-est-belle-inspired", "devotion-inspired"],
     wardrobePartners: ["delina-inspired"],
   },
 
