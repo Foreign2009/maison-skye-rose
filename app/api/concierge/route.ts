@@ -125,6 +125,17 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       : null;
     const customerCtx = unifiedProfile ? adaptCustomerProfile(unifiedProfile) : null;
 
+    // Compute session-wide recommendation history from existing assistant turns.
+    // ConversationTurn.retrievedSlugs is populated by ConciergePanel on every
+    // assistant turn before dispatch — no new client state required.
+    // Bounded by the 10-turn client retention window: at most 5 assistant turns
+    // contribute to the exclusion set in a typical alternating conversation.
+    const cumulativeExcludeSlugs = new Set<string>(
+      state.turns
+        .filter((t) => t.role === "assistant" && (t.retrievedSlugs?.length ?? 0) > 0)
+        .flatMap((t) => t.retrievedSlugs!)
+    );
+
     // 0. Extract and accumulate profile from this message
     const updatedProfile = extractProfile(message, state.profile);
 
@@ -149,7 +160,16 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       resolvedIntent = resolveIntent(message, state.context);
       // Refinement roles and exploration target are mutually exclusive per plan.action
       const refinementRoles = plan.action === "refinement" ? refinement?.affectedRoles : undefined;
-      retrieval = planRetrieval(resolvedIntent, state.context, updatedProfile, refinementRoles, explorationTarget ?? undefined, unifiedProfile);
+      retrieval = planRetrieval(
+        resolvedIntent,
+        state.context,
+        updatedProfile,
+        refinementRoles,
+        explorationTarget ?? undefined,
+        unifiedProfile,
+        cumulativeExcludeSlugs.size > 0 ? cumulativeExcludeSlugs : undefined,
+        message,
+      );
     } else {
       // Reuse cached recommendations without a new catalogue search
       retrieval = buildCachedRetrieval(state);

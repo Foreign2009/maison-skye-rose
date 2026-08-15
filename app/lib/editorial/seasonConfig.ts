@@ -90,6 +90,30 @@ const ACADEMY_TEASERS: Record<string, AcademyTeaser> = {
   },
 };
 
+// ── Editorial campaign ─────────────────────────────────────────────────────────
+// A campaign config overrides the seasonal editorial during a specific date window.
+// After the window expires the campaign has no effect — no manual cleanup required.
+// Campaigns recur annually when startMonth/endMonth stay within the same year.
+
+interface CampaignConfig {
+  startMonth: number;
+  startDay:   number;
+  endMonth:   number;
+  endDay:     number;
+  config:     SeasonConfig;
+}
+
+function isInCampaignWindow(campaign: CampaignConfig, now: Date): boolean {
+  const month = now.getMonth() + 1; // 1–12
+  const day   = now.getDate();      // 1–31
+  if (campaign.startMonth === campaign.endMonth) {
+    return month === campaign.startMonth && day >= campaign.startDay && day < campaign.endDay;
+  }
+  if (month === campaign.startMonth) return day >= campaign.startDay;
+  if (month === campaign.endMonth)   return day <  campaign.endDay;
+  return month > campaign.startMonth && month < campaign.endMonth;
+}
+
 // ── Season configurations ─────────────────────────────────────────────────────
 
 const SEASON_CONFIGS: Record<Season, SeasonConfig> = {
@@ -167,9 +191,46 @@ const SEASON_CONFIGS: Record<Season, SeasonConfig> = {
   },
 };
 
+// ── Editorial campaigns ───────────────────────────────────────────────────────
+// Cape Town Late Winter → Spring transition: August 15–31.
+// On September 1 getCurrentSeason() returns "Spring" and the standard Spring
+// config takes over automatically — no manual cleanup required.
+//
+// The campaign uses season: "Spring" (valid Season type) to signal that the
+// homepage is transitioning toward spring. Discovery and recommendation layers
+// are unaffected; they continue using getCurrentSeason() which returns "Winter"
+// for all of August.
+
+const EDITORIAL_CAMPAIGNS: CampaignConfig[] = [
+  {
+    startMonth: 8, startDay: 15,
+    endMonth:   9, endDay:   1,
+    config: {
+      season:            "Spring",
+      editorialHeadline: "The First Warmth",
+      editorialTagline:  "The season is beginning to turn.",
+      editorialNote:
+        "Cape Town's last winter weeks are changing. The air is softening, the light is shifting, and the first warmth is arriving. This is the natural moment to begin exploring fresher, lighter compositions — alongside the deeper pieces that still carry through the cool evenings.",
+      wardrobeHeadline: "Your Transitional Wardrobe",
+      wardrobeGuidance:
+        "As the season turns, the wardrobe begins to shift. Reach for fresh, floral, and clean-edged fragrances on the warmer days — they feel right in the softening air. Your deeper, richer pieces still belong on the cool evenings and will return to prominence next winter. This is the moment to discover what spring will feel like on your skin.",
+      collectionId:         "spring-essentials",
+      featuredArticleSlugs: [
+        "choosing-your-season-scent",
+        "guide-to-fragrance-families",
+        "how-to-wear-fragrance",
+      ],
+      conciergeContext: { season: "Spring" },
+    },
+  },
+];
+
 // ── Public API ────────────────────────────────────────────────────────────────
 
 export function getSeasonConfig(): SeasonConfig {
+  const now    = new Date();
+  const active = EDITORIAL_CAMPAIGNS.find((c) => isInCampaignWindow(c, now));
+  if (active) return active.config;
   return SEASON_CONFIGS[getCurrentSeason()];
 }
 

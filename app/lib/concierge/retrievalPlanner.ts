@@ -87,6 +87,22 @@ function articlesFromSearch(rawQuery: string, limit = 2): AcademyArticle[] {
 
 // ── Public API ────────────────────────────────────────────────────────────────
 
+// ── Hidden-gem signal detection ───────────────────────────────────────────────
+// Recognises explicit long-tail / hidden-gem discovery requests in the raw message.
+// Used within the general_discovery default path only — consultation-specific paths
+// (explorationTarget, affectedRoles) take precedence.
+
+const HIDDEN_GEM_SIGNALS = [
+  "hidden gem", "hidden gems",
+  "less popular", "less well known", "less mainstream",
+  "less obvious", "not the obvious",
+  "underrated", "overlooked",
+  "something unusual", "something unexpected",
+  "give me something unexpected",
+  "not a bestseller", "not bestsellers",
+  "beyond the obvious", "beyond the bestsellers",
+];
+
 export function planRetrieval(
   resolved:           ResolvedIntent,
   context:            ConversationContext,
@@ -94,6 +110,8 @@ export function planRetrieval(
   affectedRoles?:     ConsultationRole[],
   explorationTarget?: ExplorationTarget,
   unifiedProfile?:    UnifiedCustomerProfile | null,
+  excludeSlugs?:      Set<string>,
+  rawMessage?:        string,
 ): RetrievalContext {
   const { intent, signals, entitySlug, compareSlug } = resolved;
 
@@ -292,6 +310,12 @@ export function planRetrieval(
         }
       }
 
+      // Explicit long-tail / hidden-gem discovery request
+      if (rawMessage && HIDDEN_GEM_SIGNALS.some((p) => rawMessage.toLowerCase().includes(p))) {
+        fragrances = getCollection("hidden-gems").slice(0, 4);
+        break;
+      }
+
       // Standard discovery fallback
       const rawQuery = [signals.family, signals.occasion, signals.vibe, context.learningTopic]
         .filter(Boolean)
@@ -323,7 +347,33 @@ export function planRetrieval(
     }
   }
 
-  // Always surface the source fragrance when it exists
+  // ── Session-wide diversity (RELEVANCE > NOVELTY) ─────────────────────────────
+  // Applies to new retrieval only — comparison intent is exempt because its
+  // fragrances are semantically required by reference.
+  //
+  // Hierarchy:
+  //   1. Return the best RELEVANT + UNSEEN candidates first.
+  //   2. If the unseen pool is smaller than needed, fill remaining positions
+  //      with the best RELEVANT + SEEN candidates.
+  //   3. If ALL relevant candidates have been seen, recycle them — never
+  //      substitute unrelated products to avoid repetition.
+  //
+  // Hidden-gem candidates follow the same rules: unseen hidden gems are
+  // preferred over seen ones, but a seen hidden gem beats an unrelated product.
+
+  if (excludeSlugs && excludeSlugs.size > 0 && intent !== "comparison") {
+    const unseen = fragrances.filter((f) => !excludeSlugs.has(f.slug));
+    if (unseen.length > 0) {
+      // Prefer unseen; relevant-seen candidates fill any remaining positions
+      const seen = fragrances.filter((f) => excludeSlugs.has(f.slug));
+      fragrances = [...unseen, ...seen];
+    }
+    // unseen.length === 0: every relevant candidate has been seen — recycle them
+  }
+
+  // Always surface the source fragrance when it exists (even if previously
+  // recommended — it is the reference point for similarity/education queries,
+  // not a new recommendation in those contexts).
   if (sourceKnowledge && !fragrances.find((f) => f.slug === sourceKnowledge.slug)) {
     fragrances = [sourceKnowledge, ...fragrances].slice(0, 6);
   }
