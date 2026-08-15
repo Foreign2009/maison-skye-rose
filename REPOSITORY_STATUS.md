@@ -1,10 +1,10 @@
 # Repository Status — Maison Skye & Rose
 
-**Snapshot date:** 2026-08-14
+**Snapshot date:** 2026-08-15
 **Branch:** main
-**Last reviewed commit:** c92cbe6 — EP100-P4 — Cache Analytics Queries
+**Last reviewed commit:** d307a5f — FR-02: switch launch checkout to EFT-first flow
 
-> **Note:** This snapshot was refreshed as part of EP100 governance close-out (2026-08-14). The repository structure and component tables below reflect the 2026-07-03 snapshot and have not been fully re-inventoried. The build status, environment variables, and known risks sections reflect the current verified state.
+> **Note:** This snapshot was refreshed as part of FR-03 governance close-out (2026-08-15). Environment variables table reflects the current verified production state as established by FR-03. Repository structure and component tables reflect the 2026-07-03 baseline and have not been fully re-inventoried.
 
 ---
 
@@ -14,8 +14,11 @@
 maison-skye-rose/
 ├── app/                         # Next.js App Router source
 │   ├── api/                     # Server-side Route Handlers
-│   │   ├── orders/route.ts      # POST: persist order to Supabase
-│   │   └── payfast/route.ts     # POST: initialize PayFast payment
+│   │   ├── orders/route.ts      # POST: persist order to Supabase (EFT launch flow)
+│   │   ├── orders/[ref]/route.ts # PATCH: order status management (admin, service role key)
+│   │   ├── payfast/route.ts     # POST: PayFast payment initialization (dormant)
+│   │   ├── payfast/itn/route.ts # POST: PayFast ITN handler (dormant)
+│   │   └── concierge/route.ts   # POST: Maison Concierge (Claude API)
 │   ├── components/              # Shared UI components (44 files)
 │   ├── context/                 # React Context providers (4 files)
 │   ├── data/                    # Static data modules (22 files)
@@ -70,7 +73,7 @@ maison-skye-rose/
 
 ## Current App Structure
 
-### Pages (120 total)
+### Pages (189 total)
 
 | Route | Type | Rendering |
 |---|---|---|
@@ -98,7 +101,10 @@ maison-skye-rose/
 | `/sitemap.xml` | Route | Static |
 | `/robots.txt` | Route | Static |
 | `/api/orders` | Route Handler | Dynamic |
+| `/api/orders/[ref]` | Route Handler | Dynamic |
+| `/api/concierge` | Route Handler | Dynamic |
 | `/api/payfast` | Route Handler | Dynamic |
+| `/api/payfast/itn` | Route Handler | Dynamic |
 
 ### Components (44 files in app/components/)
 
@@ -213,7 +219,7 @@ User clicks Learn More on ProductCard (desktop)
 
 ## Current Build Status
 
-**Last verified:** 2026-08-12 — commit c92cbe6 (EP100-P4) and commit 7598620 (EP6-P5E-R Phase 4C-1)
+**Last verified:** 2026-08-15 — FR-03 governance close-out verification build
 
 ```
 ✓ Build: PASS
@@ -236,17 +242,30 @@ All product pages are pre-rendered at build time via `generateStaticParams` in `
 
 ## Current Environment Variables
 
-| Variable | Scope | Used by |
-|---|---|---|
-| `NEXT_PUBLIC_WEBSITE_URL` | Client | Metadata base URL, canonical URLs |
-| `NEXT_PUBLIC_SUPABASE_URL` | Client | Supabase client |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Client | Supabase client (anon) |
-| `NEXT_PUBLIC_PAYFAST_MERCHANT_ID` | Client | PayFast route |
-| `NEXT_PUBLIC_PAYFAST_MERCHANT_KEY` | Client | PayFast route |
-| `PAYFAST_PASSPHRASE` | **Server-only** | PayFast route handler — KI-05 resolved (commit 9f9f7f5) |
-| `PAYFAST_ENV` | Server-only | PayFast URL control (`live` / any other value = sandbox) |
-| `NEXT_PUBLIC_POSTHOG_KEY` | Client | AnalyticsInit |
-| `NEXT_PUBLIC_POSTHOG_HOST` | Client | AnalyticsInit |
+> **Last verified:** 2026-08-15 (FR-03 repository inspection). Status reflects Vercel Production as confirmed by Founder during FR-03.
+
+| Variable | Scope | Used by | Vercel Status |
+|---|---|---|---|
+| `NEXT_PUBLIC_WEBSITE_URL` | Client | Metadata base URL, canonical URLs, sitemap, robots, PayFast (dormant) | PRESENT |
+| `NEXT_PUBLIC_SUPABASE_URL` | Client | Supabase public client | PRESENT |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Client | Supabase public client — order creation | PRESENT |
+| `SUPABASE_SERVICE_ROLE_KEY` | **Server-only** | Supabase admin client — order status management, admin panel | PRESENT |
+| `ANTHROPIC_API_KEY` | **Server-only** | Anthropic SDK — Maison Concierge (`new Anthropic()` default) | PRESENT |
+| `ADMIN_SECRET` | **Server-only** | Admin panel authentication; order PATCH Authorization header | PRESENT |
+| `NEXT_PUBLIC_BANK_NAME` | Client | EFT banking details on /payment-success | **MISSING — REQUIRED FOR LAUNCH** |
+| `NEXT_PUBLIC_BANK_ACCOUNT_NAME` | Client | EFT banking details on /payment-success | **MISSING — REQUIRED FOR LAUNCH** |
+| `NEXT_PUBLIC_BANK_ACCOUNT_NUMBER` | Client | EFT banking details on /payment-success | **MISSING — REQUIRED FOR LAUNCH** |
+| `NEXT_PUBLIC_BANK_ACCOUNT_TYPE` | Client | EFT banking details on /payment-success | **MISSING — REQUIRED FOR LAUNCH** |
+| `NEXT_PUBLIC_BANK_BRANCH_CODE` | Client | EFT banking details on /payment-success | **MISSING — REQUIRED FOR LAUNCH** |
+| `CLAUDE_CONCIERGE_MODEL` | Server | Concierge model override — optional; defaults to `claude-sonnet-5` | Not set — default active |
+| `NEXT_PUBLIC_POSTHOG_KEY` | Client | PostHog analytics init — silent fail if absent | MISSING — recommended |
+| `NEXT_PUBLIC_POSTHOG_HOST` | Client | PostHog API host — defaults to `https://app.posthog.com` | MISSING — optional |
+| `POSTHOG_PERSONAL_API_KEY` | **Server-only** | Admin intelligence dashboard PostHog queries | MISSING — optional |
+| `POSTHOG_PROJECT_ID` | Server | Admin intelligence dashboard PostHog project | MISSING — optional |
+| `NEXT_PUBLIC_PAYFAST_MERCHANT_ID` | Client | PayFast (dormant — not called from active checkout) | PRESENT (dormant) |
+| `NEXT_PUBLIC_PAYFAST_MERCHANT_KEY` | Client | PayFast (dormant) | PRESENT (dormant) |
+| `NEXT_PUBLIC_PAYFAST_PASSPHRASE` | Client | PayFast (dormant — note: code uses `PAYFAST_PASSPHRASE` without NEXT_PUBLIC_ prefix; known EP8-P3) | PRESENT (dormant) |
+| `PAYFAST_ENV` | Server | PayFast environment routing — dormant | Not set |
 
 ---
 
@@ -284,6 +303,6 @@ TODOs in production code (from code review):
 
 ## Last Reviewed Commit
 
-`c92cbe6` — EP100-P4 — Cache Analytics Queries (2026-08-12)
+`d307a5f` — FR-02: switch launch checkout to EFT-first flow (2026-08-15)
 
 Full git log: `git log --oneline`

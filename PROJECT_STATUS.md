@@ -1,16 +1,27 @@
 # Project Status — Maison Skye & Rose
 
-**Last updated:** 2026-08-14
+**Last updated:** 2026-08-15
 **Phase:** Launch Execution
-**Build status:** PASS — static generation 189/189; 0 TypeScript errors; 0 warnings (last verified EP6-P5E-R Phase 4C-1 / EP100-P4, 2026-08-12)
+**Build status:** PASS — static generation 189/189; 0 TypeScript errors; 0 warnings (last verified FR-03 governance close-out, 2026-08-15)
 
 ---
 
 ## Current Engineering Program
 
-**Programme:** EP100 — Platform Consolidation — FORMALLY CLOSED
-**Engineering completion:** commit c92cbe6 — EP100-P4 — Cache Analytics Queries — 2026-08-12
-**Governance close-out:** 2026-08-14
+**Programme:** FR-03 — Production Environment & Database Verification — FORMALLY CLOSED
+**Decision:** VERIFIED — READY TO CLOSE WITH DOCUMENTED DEFERRED LAUNCH ITEMS
+**Governance close-out:** 2026-08-15
+Repository verified production-ready. No code changes. Deferred launch items: five NEXT_PUBLIC_BANK_* Vercel variables (awaiting banking details); push to origin/main after banking configured; Vercel production branch confirmation.
+
+**Next launch gate:** Banking Configuration + Pre-Deployment Verification — PENDING FOUNDER ACTION.
+
+**Previous Programme (FR line):** FR-02 — Switch Launch Checkout to EFT-First Flow — COMPLETE (commit d307a5f, 2026-08-15)
+EFT established as production payment method. Checkout posts to /api/orders (Supabase, anon key), redirects to /payment-success with banking details and WhatsApp proof-of-payment CTA. PayFast route preserved but dormant.
+
+**Previous Programme (EP19 line):** EP19-P3 — Wave 1 Bestseller Native Knowledge Migration — Batch 2 — COMPLETE (commit 57d312a, 2026-08-15)
+4 native FragranceKnowledge records: Side Effect Inspired, God Of Fire Inspired, Delina Inspired (first Rose female), Baccarat Rouge 540 Inspired (first Rose unisex). MKC native records: 15 → 19. Bestseller coverage: 9/19 → 13/19 (68.4%).
+
+**Previous Programme (EP100 line):** EP100 — Platform Consolidation — FORMALLY CLOSED (commit c92cbe6, 2026-08-12; governance close-out 2026-08-14)
 All 6 tasks complete. BI platform architectural debt eliminated. See Completed Engineering Programs below.
 
 **Previous Programme (EP6 line):** EP6-P5E-R Phase 4C-1 — Complete Relationship Evidence Research Pilot — COMPLETE (commit 7598620, 2026-08-12)
@@ -32,7 +43,11 @@ Same-session corrective episode for EP6-P5C. Two live-use safety defects correct
 
 ## Current Sprint
 
-No active sprint. EP100 Platform Consolidation closed 2026-08-14. Next programme requires founder authorisation.
+No active sprint. FR-03 Production Environment & Database Verification closed 2026-08-15.
+
+**Next launch gate:** Banking Configuration + Pre-Deployment Verification.
+Status: PENDING FOUNDER ACTION — awaiting final banking details.
+Do not push. Do not deploy.
 
 ---
 
@@ -57,7 +72,7 @@ The Maison Fragrance Academy is live — 28 articles across 3 content waves, int
 | Product pages (SSG) | 93 |
 | Static pages | 25 |
 | Dynamic routes | 16 |
-| Last verified | 2026-08-12 (EP100-P4 / EP6-P5E-R Phase 4C-1) |
+| Last verified | 2026-08-15 (FR-03 governance close-out) |
 
 Verify: `npm run build`
 
@@ -141,6 +156,9 @@ Verify: `npm run build`
 | EP6 | EP6-P5E-R Phase 4B | Establish Relationship Research Foundation | Complete — 2026-08-12 — commit acfb0f3 |
 | EP6 | EP6-P5E-R Phase 4C-1 | Complete Relationship Evidence Research Pilot | Complete — 2026-08-12 — commit 7598620 |
 | EP100 | EP100-P4  | Cache Analytics Queries (unstable_cache, 300s) | Complete — 2026-08-12 — commit c92cbe6 |
+| EP19 | EP19-P3 | Wave 1 Bestseller Native Knowledge Migration — Batch 2 | Complete — 2026-08-15 — commit 57d312a |
+| FR | FR-02 | Switch Launch Checkout to EFT-First Flow | Complete — 2026-08-15 — commit d307a5f |
+| FR | FR-03 | Production Environment & Database Verification — Governance Close-Out | Complete — 2026-08-15 |
 
 `FOUNDATIONS/00_FOUNDERS_LETTER.md` — The permanent founder's letter to Skye, Rose, future employees, and future stewards. *Why we began.*
 `FOUNDATIONS/01_SKYE_AND_ROSE_COVENANT.md` — The institutional promise: to customers, products, technology, and future generations. *What we promise.*
@@ -268,8 +286,8 @@ Customer
    │     Explainability
    │
    ├── Commerce                   ← Cart / MiniCart / Checkout
-   │     WhatsApp (primary)
-   │     PayFast (secondary, sandbox)
+   │     EFT (primary — launch)
+   │     PayFast (dormant)
    │
    ├── Analytics                  ← PostHog (active)
    │     Session identity
@@ -293,8 +311,9 @@ Customer
 - FragranceQuickView — MKC-powered learn more modal (portal, full accessibility, framer-motion)
 - ProductDetail — MKC-native 9-section fragrance profile experience
 - Wholesale auto-pricing (activates at 10+ units)
-- WhatsApp checkout (primary flow)
-- PayFast checkout (secondary, sandbox — not production)
+- EFT (manual bank transfer) checkout — primary launch flow
+- /api/orders → Supabase order persist → /payment-success (banking details + WhatsApp proof-of-payment CTA)
+- PayFast checkout (dormant — not called from active checkout)
 - Reward tiers: R400 / R700 / R1000 / R1500
 
 ### Maison Knowledge Catalogue (MKC)
@@ -366,7 +385,7 @@ The Maison Fragrance Academy is a first-class product — the long-term knowledg
 | MKC native records | 93 |
 | Academy articles | 28 |
 | Analytics event types | ~20 |
-| Last verified | 2026-08-12 (EP100-P4 / EP6-P5E-R Phase 4C-1) |
+| Last verified | 2026-08-15 (FR-03 governance close-out) |
 
 ---
 
@@ -381,8 +400,8 @@ The Maison Fragrance Academy is a first-class product — the long-term knowledg
 - ProductCard (Quick Add + Learn More)
 - ProductDetail (MKC-native, 9 sections, note pyramid, recommendations)
 - Wholesale pricing (auto-activates ≥10 units)
-- WhatsApp checkout
-- PayFast checkout (sandbox)
+- EFT checkout (launch flow — /api/orders → /payment-success)
+- PayFast checkout (dormant)
 - Reward tiers (R400–R1500)
 - Cart ID standardized to URL slug
 
@@ -435,4 +454,4 @@ The Maison Fragrance Academy is a first-class product — the long-term knowledg
 
 ## Next Approved Sprint
 
-None. EP100 Platform Consolidation closed 2026-08-14. Next engineering programme requires founder authorisation.
+None. FR-03 closed 2026-08-15. Next launch gate: Banking Configuration + Pre-Deployment Verification. Awaiting Founder authorisation to proceed.

@@ -10,11 +10,45 @@
 **Status:** NO ACTIVE TASK
 **Program:** None
 
-EP100 Platform Consolidation formally closed 2026-08-14. All 6 tasks complete. Engineering completion: commit c92cbe6 (EP100-P4, 2026-08-12). Governance close-out: 2026-08-14.
+FR-03 Production Environment & Database Verification formally closed 2026-08-15. Decision: VERIFIED — READY TO CLOSE WITH DOCUMENTED DEFERRED LAUNCH ITEMS.
 
 EP6-P5E-R Relationship Review Evidence Enrichment is complete through Phase 4C-1. The EP6-P5E campaign (20-unit controlled relationship review) remains PAUSED — 17 of 20 units pending. Campaign resumption requires separate founder authorisation. Do not resume without explicit approval.
 
-Next engineering programme: NOT YET AUTHORISED. Await founder direction.
+**Next launch gate:** Banking Configuration + Pre-Deployment Verification — PENDING FOUNDER ACTION.
+Required before deployment:
+1. Receive final banking details.
+2. Configure five NEXT_PUBLIC_BANK_* Vercel variables.
+3. Verify Vercel Production Branch = main in Settings → Git.
+4. Authorise controlled push of local main to origin/main.
+5. Allow Vercel production deployment.
+6. Perform post-deployment production smoke test.
+
+Do not push. Do not deploy. Await Founder authorisation.
+
+---
+
+## Previous Task (COMPLETE)
+**Program:** FR-03 — Production Environment & Database Verification
+
+**Decision:** VERIFIED — READY TO CLOSE WITH DOCUMENTED DEFERRED LAUNCH ITEMS
+**Completed:** 2026-08-15
+**Scope:** Read-only repository inspection and production environment verification. No application code changes. No commits. No deployment.
+
+**FR-03 Verified:**
+- Production build: PASS — 189/189 pages; 0 TypeScript errors; 0 warnings (2026-08-15)
+- Production Supabase schema: 21 columns confirmed — all repository expectations satisfied
+- `current_status`: NOT required — zero occurrences in codebase; `payment_status` is the authoritative field
+- FR-02 EFT-first checkout: verified correct in repository
+- Required Vercel variables: NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_ANON_KEY, SUPABASE_SERVICE_ROLE_KEY, NEXT_PUBLIC_WEBSITE_URL, ADMIN_SECRET, ANTHROPIC_API_KEY — all PRESENT
+- CLAUDE_CONCIERGE_MODEL: optional — repository defaults to `claude-sonnet-5` (correct for production)
+- PostHog: absent — safely degrades; not launch-blocking
+- Admin authentication: structurally ready
+
+**Deferred launch items (Founder configuration, not repository defects):**
+- NEXT_PUBLIC_BANK_NAME / NEXT_PUBLIC_BANK_ACCOUNT_NAME / NEXT_PUBLIC_BANK_ACCOUNT_NUMBER / NEXT_PUBLIC_BANK_ACCOUNT_TYPE / NEXT_PUBLIC_BANK_BRANCH_CODE — awaiting banking details
+- 400 local commits not yet pushed to origin/main — requires banking configuration first
+- Vercel production branch confirmation (Settings → Git)
+- PostHog — deferred operational enhancement; non-blocking
 
 ---
 

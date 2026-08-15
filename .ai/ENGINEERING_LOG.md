@@ -4571,3 +4571,124 @@ These were created when lien-goddess-inspired had its relationships cleared in 
 **Open Questions Carried Forward:**
 - Which engineering programme should be opened next?
 - Is the EP6-P5E campaign ready for resumption with the enriched evidence and research pilot complete?
+
+---
+
+> **Retroactive entries (2026-08-15):** The following two entries document EP19-P3 and FR-02 work completed after the EP100 governance close-out (2026-08-14) that was not logged at the time. Appended during FR-03 governance close-out per the retroactive entry precedent established by EP100.
+
+---
+
+### 2026-08-15 — EP19-P3 — Wave 1 Bestseller Native Knowledge Migration — Batch 2
+
+**Participants:** Project Owner / Claude (Implementation Engineer)
+**Program:** EP19 — Maison Knowledge Catalogue Native Knowledge Migration
+
+**Tasks Completed:**
+- Authored 4 native FragranceKnowledge records: Side Effect Inspired (Skye), God Of Fire Inspired (Skye), Delina Inspired (Rose — first female record), Baccarat Rouge 540 Inspired (Rose — first unisex record)
+- Registered all 4 records in `app/lib/mkc/native/index.ts`
+- Updated `docs/mkc-authoring-guide.md`: calibration table expanded to 19 rows; EP19-P3 calibration anchors documented; Rose editorial reference records section added
+- Delina established as the fresh feminine floral benchmark; BR540 as the luxury unisex benchmark
+- Intelligence calibration: Side Effect warmth:4 (iris/heliotrope tempers pure warmth vs Naxos warmth:5); BR540 sweetness:3/freshness:3 both at population mean (intentional — the BR540 paradox)
+
+**MKC coverage after EP19-P3:**
+- Total native records: 15 → 19
+- Bestseller coverage: 9/19 → 13/19 (68.4%)
+- First Rose collection native records established
+
+**Build Result:** PASS — static generation 189/189; 0 TypeScript errors; 0 warnings
+
+**Files Changed:**
+- `app/lib/mkc/native/side-effect-inspired.ts` (NEW)
+- `app/lib/mkc/native/god-of-fire-inspired.ts` (NEW)
+- `app/lib/mkc/native/delina-inspired.ts` (NEW)
+- `app/lib/mkc/native/baccarat-rouge-540-inspired.ts` (NEW)
+- `app/lib/mkc/native/index.ts` (updated — 4 imports + 4 map entries)
+- `docs/mkc-authoring-guide.md` (updated — calibration table, anchors, Rose editorial references)
+
+**Commit:** 57d312a — Add Wave 1 bestseller native knowledge records (EP19-P3 Batch 2)
+
+---
+
+### 2026-08-15 — FR-02 — Switch Launch Checkout to EFT-First Flow
+
+**Participants:** Project Owner / Claude (Implementation Engineer)
+**Program:** FR — Foundation Readiness
+
+**Decisions Made:**
+- PayFast payment route retired from active checkout flow
+- EFT (manual bank transfer) established as the production payment method at launch
+- Post-order redirect: `/payment-success?ref=...&total=...` displays banking details and WhatsApp proof-of-payment CTA
+
+**Tasks Completed:**
+- Checkout page updated: `handlePayment()` posts to `/api/orders`, redirects to `/payment-success` on success — PayFast no longer called from active checkout
+- `/payment-success` page updated: EFT banking details card, WhatsApp proof-of-payment CTA, order reference display
+- `/api/orders` route created: validates order body, persists to Supabase (public anon client), returns `orderRef`
+- `/api/orders/[ref]` route created: PATCH endpoint for order status management (admin client, ADMIN_SECRET auth)
+- `app/lib/orderStatus.ts` created: ORDER_STATUSES, VALID_TRANSITIONS, lifecycleTimestampField()
+- `app/lib/supabaseAdmin.ts` created: Supabase admin client using SUPABASE_SERVICE_ROLE_KEY
+- Supabase orders schema requirements established: 21-column schema with status_history, discovery_context, lifecycle timestamp fields
+- PayFast route and ITN route preserved in repository (dormant — not called from checkout)
+
+**Build Result:** PASS — static generation 189/189; 0 TypeScript errors; 0 warnings
+
+**Files Changed:**
+- `app/checkout/page.tsx` (EFT-first flow — PayFast call removed)
+- `app/payment-success/page.tsx` (EFT banking details, WhatsApp CTA)
+- `app/api/orders/route.ts` (NEW — POST order creation)
+- `app/api/orders/[ref]/route.ts` (NEW — PATCH order status management)
+- `app/lib/orderStatus.ts` (NEW — order status types and transitions)
+- `app/lib/supabaseAdmin.ts` (NEW — admin Supabase client)
+
+**Commit:** d307a5f — FR-02: switch launch checkout to EFT-first flow
+
+---
+
+### 2026-08-15 — FR-03 — Production Environment & Database Verification — Governance Close-Out
+
+**Participants:** Project Owner / Claude (Implementation Engineer)
+**Program:** FR — Foundation Readiness
+
+**Scope:** Read-only repository inspection and production environment verification. No application code changes. No application commits. No deployment.
+
+**Decisions Made:**
+- FR-03 determination: VERIFIED — READY TO CLOSE WITH DOCUMENTED DEFERRED LAUNCH ITEMS
+- `current_status` column: NOT required — confirmed zero references in codebase; `payment_status` is the authoritative field throughout
+- EFT banking variables: required for launch but legitimately deferred pending receipt of banking details
+- PostHog: deferred operational enhancement — not launch-blocking
+- Deployment order confirmed: set five NEXT_PUBLIC_BANK_* variables in Vercel FIRST, then push to origin/main
+
+**Tasks Completed:**
+- Full repository inspection: orders API, concierge API, checkout/payment flow, Supabase clients, admin authentication, environment variable reads, PostHog initialization, order schema expectations, order status/history, build configuration, FR-02 EFT changes
+- Global environment variable search across all .ts/.tsx files: 20 variables mapped and classified
+- Build validation: PASS — 189/189 pages; 0 TypeScript errors; 0 warnings; 0 lint errors (2026-08-15)
+- Git state confirmed: HEAD = d307a5f; main branch; 400 commits ahead of origin/main; 0 behind; no tracked modifications
+- Supabase production schema: Founder executed additive ALTER TABLE; 21 columns confirmed present; all repository expectations satisfied
+- Vercel environment: 6 required variables confirmed PRESENT; 5 banking variables intentionally absent; CLAUDE_CONCIERGE_MODEL optional (default active)
+- Admin authentication: structurally sound with ADMIN_SECRET present
+- Concierge: ANTHROPIC_API_KEY present; model defaults to claude-sonnet-5 (no override needed)
+- PostHog: silent-failure pattern confirmed — app fully functional without PostHog credentials
+
+**Deferred Launch Items:**
+- NEXT_PUBLIC_BANK_NAME / NEXT_PUBLIC_BANK_ACCOUNT_NAME / NEXT_PUBLIC_BANK_ACCOUNT_NUMBER / NEXT_PUBLIC_BANK_ACCOUNT_TYPE / NEXT_PUBLIC_BANK_BRANCH_CODE — awaiting banking details
+- Vercel production branch confirmation (Settings → Git)
+- Controlled push of local main → origin/main (400 commits) after banking variables configured
+- PostHog (optional — deferred operational enhancement)
+
+**Build Result:** PASS — static generation 189/189; 0 TypeScript errors; 0 warnings
+
+**Files Changed (governance close-out only):**
+- `.ai/CURRENT_TASK.md`
+- `PROJECT_STATUS.md`
+- `REPOSITORY_STATUS.md`
+- `.ai/ENGINEERING_LOG.md`
+
+**Handoff:**
+- FR-03 is formally closed. Repository is production-ready pending banking configuration.
+- Next launch gate: Banking Configuration + Pre-Deployment Verification.
+- Founder must receive banking details, configure 5 Vercel variables, verify production branch, then authorise push.
+- Do NOT push. Do NOT deploy. Await Founder authorisation.
+
+**Open Questions Carried Forward:**
+- When are banking details expected?
+- Is PostHog configuration to be set up before or after launch?
+- What is the smoke test plan for post-deployment verification?
