@@ -48,9 +48,9 @@ const FAMILY_OBSERVATIONS: Record<string, string> = {
 
 const SEASON_OBSERVATIONS: Record<string, string> = {
   "Winter":
-    "Your saved fragrances lean toward winter wear — rich, enveloping compositions that reward cold air and evening contexts. Base notes deepen in winter in a way that changes the entire experience.",
+    "Your saved fragrances lean toward winter wear — rich, enveloping compositions that feel especially suited to cool air and evening contexts. These styles come into their own in winter, revealing a depth that lighter seasons rarely call for.",
   "Summer":
-    "A clear freshness runs through your selections. These are fragrances that perform best in warmth — light enough for the heat, but with enough character to hold through the day.",
+    "A clear freshness runs through your selections. These are fragrances that feel most natural in warmth — light enough for the heat, but with enough character to remain present through the day.",
   "Autumn":
     "Your taste runs toward the transitional warmth of autumn — spice, woods, and a quieter kind of richness that sits differently on skin as the air cools.",
   "Spring":

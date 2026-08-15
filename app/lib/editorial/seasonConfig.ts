@@ -162,7 +162,7 @@ const SEASON_CONFIGS: Record<Season, SeasonConfig> = {
       "Autumn is the richest fragrance season. As temperatures cool and air dries, warmer compositions come alive. Woody, amber, and spice-forward fragrances reveal nuances that summer heat kept hidden. This is the season to revisit your richer pieces — and to discover new depth.",
     wardrobeHeadline: "Your Autumn Wardrobe",
     wardrobeGuidance:
-      "Autumn invites you to transition your wardrobe. Reach for the woody, amber, and spice-forward fragrances you set aside in summer — they perform at their peak now. This is also the ideal season to add a richer signature: something deeper than your everyday fragrance, warmer than your summer picks.",
+      "Autumn invites you to transition your wardrobe. Reach for the woody, amber, and spice-forward fragrances you set aside in summer — they feel most natural now. This is also the ideal season to add a richer signature: something deeper than your everyday fragrance, warmer than your summer picks.",
     collectionId:      "autumn-essentials",
     featuredArticleSlugs: [
       "choosing-your-season-scent",
@@ -177,10 +177,10 @@ const SEASON_CONFIGS: Record<Season, SeasonConfig> = {
     editorialHeadline: "Winter in Full",
     editorialTagline:  "The season for depth, warmth, and lasting presence.",
     editorialNote:
-      "Cold air slows evaporation and deepens every fragrance. The compositions that feel overwhelming in summer now find their moment — rich orientals, deep oud-based fragrances, and warm ambers come alive in the cool. This is the season to wear your most characterful pieces.",
+      "Winter is a natural moment to turn to richer, warmer compositions. The fragrances that can feel heavy in summer — deep orientals, oud-based pieces, warm ambers — often feel most at home in the cooler months. This is the season to wear your most characterful pieces.",
     wardrobeHeadline: "Your Winter Wardrobe",
     wardrobeGuidance:
-      "Winter is the season to wear the statement pieces of your wardrobe. Rich, deep, and long-lasting fragrances perform at their best in the cold. If you have been saving a Deep Intensity fragrance for the right moment, this is it. Layer over a lighter base for all-day presence that evolves beautifully as the day progresses.",
+      "Winter invites the deeper, richer pieces in your wardrobe. If you have been saving a Deep & Intense fragrance for the right moment, this is a natural one. Consider layering over a lighter base — the combination evolves beautifully as the day progresses.",
     collectionId:      "winter-warmth",
     featuredArticleSlugs: [
       "choosing-your-season-scent",

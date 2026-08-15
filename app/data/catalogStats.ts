@@ -1,9 +1,6 @@
+// Catalogue count fields removed — counts are derived from mkcCatalogue at runtime.
+// Hardcoded counts become stale as the catalogue grows.
 export const catalogStats = {
-  totalFragrances: 465,
-  mensFragrances: 216,
-  womensFragrances: 215,
-  newArrivals: 34,
-
   launchPrices: {
     "5ml": 60,
     "10ml": 100,

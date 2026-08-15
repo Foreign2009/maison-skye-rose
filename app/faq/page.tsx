@@ -30,7 +30,7 @@ const faqs = [
   {
     question: "Can I request a fragrance that is not on the website?",
     answer:
-      "Yes. We have access to over 465 luxury-inspired fragrances. Contact us via WhatsApp and we'll source it for you.",
+      "Yes. We have access to an extensive range of luxury-inspired fragrances. Contact us via WhatsApp and we'll source it for you.",
   },
   {
     question: "Do you deliver nationwide?",

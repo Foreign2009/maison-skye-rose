@@ -432,7 +432,7 @@ export const COLLECTION_SPECS: CollectionSpec[] = [
       purpose:
         "Cool, dry air is autumn's gift to fragrance. Base notes deepen, projection settles to skin-close warmth, and the body's natural heat layers perfectly with richer compositions. This is the season to rediscover what summer set aside.",
       wardrobePurpose:
-        "Autumn invites a deliberate wardrobe transition. The woody and amber fragrances set aside in summer perform at their peak now — and this is the ideal season to add a richer signature that can carry through into winter.",
+        "Autumn invites a deliberate wardrobe transition. The woody and amber fragrances set aside in summer feel most natural now — and this is the ideal season to add a richer signature that can carry through into winter.",
       academyCopy:      "Understand how season shapes fragrance character and why autumn is the ideal time to explore depth",
       articleSlugs:     ["choosing-your-season-scent", "how-to-layer-fragrances", "the-note-pyramid-explained"],
       conciergeCopy:    "Your Concierge can guide your autumn transition — from selecting your first seasonal fragrance to understanding how to layer across the cooler months.",

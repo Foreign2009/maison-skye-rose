@@ -95,7 +95,7 @@ export default function ContactPage() {
 
           <p className="mx-auto mt-6 max-w-2xl text-zinc-300 leading-8">
             Can't find your fragrance on our website?
-            We source from a catalogue of over 465 luxury-inspired
+            We source from an extensive range of luxury-inspired
             fragrances available on request.
           </p>
 

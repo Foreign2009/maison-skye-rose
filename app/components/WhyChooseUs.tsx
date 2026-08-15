@@ -18,9 +18,9 @@ const features = [
   },
   {
     icon: Clock3,
-    title: "Long Lasting Performance",
+    title: "Thoughtfully Selected",
     description:
-      "Designed to keep you smelling incredible throughout your day and evening.",
+      "Fragrance oils selected for quality, character and a memorable wearing experience.",
   },
   {
     icon: Sparkles,
@@ -62,8 +62,8 @@ export default function WhyChooseUs() {
           </h2>
 
           <p className="mx-auto mt-6 max-w-2xl leading-8 text-[#7b7480]">
-            Luxury-inspired fragrances, exceptional value and a growing
-            catalogue of over 465 fragrances available on request.
+            Luxury-inspired fragrances, exceptional value and an extensive
+            range of scents available on request.
           </p>
         </div>
 

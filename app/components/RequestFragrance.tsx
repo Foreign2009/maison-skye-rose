@@ -15,8 +15,8 @@ export default function RequestFragrance() {
 
         <p className="mx-auto mt-8 max-w-2xl text-lg leading-8 text-zinc-300">
           We currently showcase our most popular fragrances online.
-          Looking for something specific? We source from a catalogue of
-          over 465 luxury-inspired fragrances.
+          Looking for something specific? We source from an extensive range of
+          luxury-inspired fragrances.
         </p>
 
         <a
