@@ -34,16 +34,19 @@ export function scaffold(f: DisplayFragrance): ScaffoldResult {
   const slug = deriveSlug(f.title);
 
   // ── Compose notes ───────────────────────────────────────────────────────────
-  // Follows hydrateFromDisplay() pattern from catalogue.ts:
+  // EVIDENCE-LOCK MODE: if notesStructured is present, use it directly.
+  // This preserves the authoritative tier structure (e.g. unordered bouquets like
+  // Gucci Bloom where all notes belong in heart, or sparse sets with 1 note per tier).
+  // CompositionProducer will be skipped for evidence-locked records.
+  //
+  // NORMAL MODE: follows hydrateFromDisplay() pattern from catalogue.ts:
   //   top   → adapted.notes.top  (note at index 0)
   //   heart → adapted.notes.heart (note at index 1)
   //   base  → f.notes.slice(2)   (all remaining notes — lossless for multi-note entries)
-  //
-  // Result is typically [1, 1, 1] per tier from the supplier catalogue.
-  // The Composition Producer (P2) will enrich these to the required minimum of 2 per tier.
-  const notesTop   = adapted.notes.top.length   > 0 ? adapted.notes.top   : [];
-  const notesHeart = adapted.notes.heart.length > 0 ? adapted.notes.heart : [];
-  const notesBase  = f.notes.slice(2).length    > 0 ? f.notes.slice(2)    : [];
+  // Result is typically [1, 1, 1] per tier. CompositionProducer enriches to ≥ 2.
+  const notesTop   = f.notesStructured !== undefined ? f.notesStructured.top   : (adapted.notes.top.length   > 0 ? adapted.notes.top   : []);
+  const notesHeart = f.notesStructured !== undefined ? f.notesStructured.heart : (adapted.notes.heart.length > 0 ? adapted.notes.heart : []);
+  const notesBase  = f.notesStructured !== undefined ? f.notesStructured.base  : (f.notes.slice(2).length    > 0 ? f.notes.slice(2)    : []);
 
   const record: FragranceKnowledge = {
 
@@ -65,7 +68,7 @@ export function scaffold(f: DisplayFragrance): ScaffoldResult {
 
     // ── Composition ───────────────────────────────────────────────────────────
     // profile, season, mood copied verbatim. Notes are seeded from the catalogue
-    // (1 per tier). The validator will flag NOTES_*_MIN until P2 enriches them.
+    // (1 per tier in NORMAL mode; authoritative structure in EVIDENCE-LOCK mode).
     profile: f.profile,
     season:  f.season,
     notes: {
@@ -73,6 +76,7 @@ export function scaffold(f: DisplayFragrance): ScaffoldResult {
       heart: notesHeart,
       base:  notesBase,
     },
+    notesEvidenceLocked: f.notesEvidenceLocked,
     mood: f.mood,
 
     // ── Discovery ─────────────────────────────────────────────────────────────
@@ -133,7 +137,12 @@ function buildMinimalRecord(f: DisplayFragrance): FragranceKnowledge {
 
     profile: f.profile,
     season:  f.season,
-    notes: { top: [], heart: [], base: f.notes.slice(2) },
+    notes: {
+      top:   f.notesStructured?.top   ?? [],
+      heart: f.notesStructured?.heart ?? [],
+      base:  f.notesStructured?.base  ?? f.notes.slice(2),
+    },
+    notesEvidenceLocked: f.notesEvidenceLocked,
     mood:    f.mood,
 
     vibe:           [],

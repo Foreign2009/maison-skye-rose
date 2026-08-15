@@ -84,6 +84,9 @@ export type FragranceKnowledge = {
     heart: string[];
     base: string[];
   };
+  // Evidence-lock: when true, notes are authoritative governed evidence — not AI-generated.
+  // Tier-minimum validation is bypassed. CompositionProducer is skipped.
+  notesEvidenceLocked?: boolean;
   mood: string;
 
   // ── Discovery ─────────────────────────────────────────────────────────────────

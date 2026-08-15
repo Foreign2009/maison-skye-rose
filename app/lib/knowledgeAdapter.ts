@@ -20,6 +20,12 @@ export type DisplayFragrance = {
   newArrival: boolean;
   prices: { "5ml": number; "10ml": number; "30ml": number };
   images: { "5ml": string; "10ml": string; "30ml": string };
+  // Evidence-lock: when true, notes are authoritative governed evidence.
+  // CompositionProducer is bypassed; notesStructured takes precedence over the flat notes[] array.
+  notesEvidenceLocked?: boolean;
+  // Authoritative structured notes for evidence-locked fragrances.
+  // Overrides the flat notes[] array for top/heart/base distribution in scaffold.
+  notesStructured?: { top: string[]; heart: string[]; base: string[] };
 };
 
 // ── Module constants ──────────────────────────────────────────────────────────

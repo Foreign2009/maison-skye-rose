@@ -6,12 +6,18 @@
  * Input:  FactoryContext (reads displayFrag + scaffoldRecord.notes)
  * Output: Partial<FragranceKnowledge> — only { notes: { top, heart, base } }
  *
- * Producer validation (pre-merge, not a duplicate of MKC validator):
- *   COMP_NOTES_MISSING       — notes object absent
- *   COMP_NOTES_TOP_MIN       — top requires ≥ 2
- *   COMP_NOTES_HEART_MIN     — heart requires ≥ 2
- *   COMP_NOTES_BASE_MIN      — base requires ≥ 2
- *   COMP_EMPTY_NOTE          — empty string in any tier (error)
+ * Modes:
+ *   NORMAL MODE        — AI generates a complete notes pyramid (≥ 2 per tier)
+ *   EVIDENCE-LOCK MODE — AI generation is bypassed; governed scaffold notes pass
+ *                        through unchanged. Triggered when scaffoldRecord.notesEvidenceLocked
+ *                        is true. Producer returns "skipped"; merger preserves scaffold notes.
+ *
+ * Producer validation (NORMAL MODE only — not run in evidence-lock mode):
+ *   COMP_NOTES_MISSING        — notes object absent
+ *   COMP_NOTES_TOP_MIN        — top requires ≥ 2
+ *   COMP_NOTES_HEART_MIN      — heart requires ≥ 2
+ *   COMP_NOTES_BASE_MIN       — base requires ≥ 2
+ *   COMP_EMPTY_NOTE           — empty string in any tier (error)
  *   COMP_INTRA_TIER_DUPLICATE — duplicate within same tier (error)
  *   COMP_CROSS_TIER_DUPLICATE — note appears in multiple tiers (warning)
  *   COMP_CAPITALISATION       — note not Title Case (warning)
@@ -25,6 +31,7 @@ import type {
   GenerationTask,
   GenerationResponse,
   FragranceKnowledge,
+  PreCheckResult,
   ProducerValidation,
 } from "../core/types";
 
@@ -36,6 +43,13 @@ export class CompositionProducer extends BaseProducer {
   readonly version = "1.0.0";
 
   private readonly registry = new PromptRegistry(PROMPT_DIR);
+
+  protected override preCheck(ctx: FactoryContext): PreCheckResult {
+    if (ctx.scaffoldRecord.notesEvidenceLocked === true) {
+      return { pass: false, reason: "EVIDENCE_LOCK — governed notes preserved from scaffold; AI generation bypassed" };
+    }
+    return { pass: true };
+  }
 
   protected buildPrompt(ctx: FactoryContext): GenerationTask {
     const producerCfg   = ctx.config.producers[this.name];

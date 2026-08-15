@@ -188,9 +188,15 @@ function checkComposition(k: FragranceKnowledge): ValidationIssue[] {
   const heart = k.notes.heart ?? [];
   const base  = k.notes.base  ?? [];
 
-  if (top.length < 2)   issues.push(e("NOTES_TOP_MIN",   g, "notes.top",   `minimum 2 top notes required (found ${top.length})`));
-  if (heart.length < 2) issues.push(e("NOTES_HEART_MIN", g, "notes.heart", `minimum 2 heart notes required (found ${heart.length})`));
-  if (base.length < 2)  issues.push(e("NOTES_BASE_MIN",  g, "notes.base",  `minimum 2 base notes required (found ${base.length})`));
+  // Tier-minimum enforcement is bypassed for evidence-locked records.
+  // Governed notes may be sparse (1-per-tier) or use an unordered bouquet structure
+  // (all notes in heart, empty top and base). Evidence absence is not permission to generate.
+  // All other composition checks — schema validity, duplicates, malformed data — still apply.
+  if (k.notesEvidenceLocked !== true) {
+    if (top.length < 2)   issues.push(e("NOTES_TOP_MIN",   g, "notes.top",   `minimum 2 top notes required (found ${top.length})`));
+    if (heart.length < 2) issues.push(e("NOTES_HEART_MIN", g, "notes.heart", `minimum 2 heart notes required (found ${heart.length})`));
+    if (base.length < 2)  issues.push(e("NOTES_BASE_MIN",  g, "notes.base",  `minimum 2 base notes required (found ${base.length})`));
+  }
 
   return issues;
 }
