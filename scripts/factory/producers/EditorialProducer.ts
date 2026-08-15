@@ -37,6 +37,7 @@ const MAX_DESCRIPTION_LENGTH = 500;
 const MAX_SUBTITLE_LENGTH    = 60;
 
 const FORBIDDEN_TERMS = [
+  // Origin / mass-market references (v1.0.0)
   "inspired by",
   "dupe",
   "cheap",
@@ -49,6 +50,26 @@ const FORBIDDEN_TERMS = [
   "just like",
   "similar to",
   "reminiscent of",
+  // Performance / longevity claims (v1.1.0)
+  "long-lasting",
+  "long lasting",
+  "lasts",
+  "lingers",
+  "endures",
+  "stays with you",
+  "all-day",
+  "all day",
+  "throughout the day",
+  "sillage",
+  "beast mode",
+  "beast",
+  "projects",
+  "fills the room",
+  "follows you",
+  "announces your presence",
+  "exceptional longevity",
+  "incredible performance",
+  "strong performance",
 ];
 
 export class EditorialProducer extends BaseProducer {
@@ -59,7 +80,7 @@ export class EditorialProducer extends BaseProducer {
 
   protected buildPrompt(ctx: FactoryContext): GenerationTask {
     const producerCfg   = ctx.config.producers[this.name];
-    const promptVersion = producerCfg?.promptVersion ?? "1.0.0";
+    const promptVersion = producerCfg?.promptVersion ?? "1.1.0";
     const prompt        = this.registry.load(PROMPT_NAME, promptVersion);
 
     const f      = ctx.displayFrag;
