@@ -89,7 +89,7 @@ const DEFAULT_FACTORY_CONFIG: FactoryConfig = {
   },
   producers: {
     CompositionProducer:  { enabled: true, temperature: 0.7, maxTokens: 512,  promptVersion: "1.0.0", promptFallback: "fail" },
-    EditorialProducer:    { enabled: true, temperature: 0.8, maxTokens: 512,  promptVersion: "1.0.0", promptFallback: "fail" },
+    EditorialProducer:    { enabled: true, temperature: 0.8, maxTokens: 512,  promptVersion: "1.1.0", promptFallback: "fail" },
     RelationshipProducer: { enabled: true, temperature: 0.3, maxTokens: 1024, promptVersion: "1.0.0", promptFallback: "fail" },
     EducationProducer:    { enabled: true, temperature: 0.4, maxTokens: 512,  promptVersion: "1.0.0", promptFallback: "fail" },
     DiscoveryProducer:    { enabled: true, temperature: 0.5, maxTokens: 768,  promptVersion: "1.0.0", promptFallback: "fail" },
