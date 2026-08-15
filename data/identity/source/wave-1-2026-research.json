@@ -34,13 +34,19 @@
       "sourceNotes": "Top and heart notes sourced from Founder-supplied clarification (EP-CAT-P3A disposition, 2026-08-15) — classified AUTHORITATIVE. Base notes also Founder-supplied (Agarwood/Oud, Cypriol Oil/Nagarmotha, Cedarwood, smoky leather nuances). External source corroboration via WebSearch snippets referencing bykilian.com confirms: Top: Bulgarian Rose, Saffron, Cinnamon; Heart: Tincture of Rose, Litchi — consistent with Founder. CONFLICT: External source (bykilian.com search snippet) lists 'Guaiac Wood' in base alongside Agarwood (Oud), Cypriol Oil/Nagarmotha, Cedar. Guaiac Wood does NOT appear in Founder-supplied base notes. Founder note also mentions 'smoky leather nuances' which is an accord description, not a discrete ingredient — omitted from baseNotes[] per evidence standards. Conflict is flagged for Founder review; Founder-supplied notes are preserved as canonical base per Amendment 4 instructions.",
       "possibleNameIssue": true,
       "nameIssueExplanation": "Supplier text is corrupted — PDF extraction concatenated the supplier's legal boilerplate footer into the product name field. Canonical identity resolved via Founder clarification in disposition file: Kilian Paris Rose Oud.",
+      "founderOlfactoryNuance": "smoky leather nuances — Founder-supplied olfactory accord description for Rose Oud. Not a discrete ingredient; excluded from baseNotes[] per evidence standards. May inform editorial character description. Preserved here for factory context.",
+      "founderResolution": {
+        "resolvedAt": "2026-08-15",
+        "episode": "EP-CAT-P3C-R1 Founder Evidence Resolution",
+        "decision": "Canonical note set confirmed. baseNotes remain: Agarwood (Oud), Cypriol Oil/Nagarmotha, Cedarwood. Guaiac Wood is NOT added to the canonical baseNotes array. The external source variance is preserved as EXTERNAL_SOURCE_VARIANCE evidence and must not be silently merged into the canonical set."
+      },
       "conflicts": [
         {
           "field": "baseNotes",
           "founderValue": ["Agarwood (Oud)", "Cypriol Oil/Nagarmotha", "Cedarwood"],
           "externalValue": ["Agarwood (Oud)", "Guaiac Wood", "Cypriol Oil/Nagarmotha", "Cedar"],
           "externalSource": "bykilian.com (via WebSearch snippet)",
-          "disposition": "FOUNDER_REVIEW_REQUIRED — Guaiac Wood appears in external source but not in Founder-supplied notes. Founder-supplied notes are canonical pending review."
+          "disposition": "EXTERNAL_SOURCE_VARIANCE — Guaiac Wood appears in external source (bykilian.com) but is NOT present in Founder-authorized canonical notes. Founder resolution (EP-CAT-P3C-R1, 2026-08-15): canonical baseNotes are confirmed as Agarwood (Oud), Cypriol Oil/Nagarmotha, Cedarwood. Guaiac Wood is excluded from the canonical set. This variance record must be preserved and must not be silently merged into the canonical baseNotes."
         }
       ],
       "evidenceSources": [
@@ -1097,25 +1103,32 @@
       "_collection": "SKYE",
       "_sourceKey": "MEN-183-Gentleman by Givenchy",
       "supplierName": "Gentleman by Givenchy",
-      "canonicalName": null,
+      "canonicalName": "Gentleman",
       "brand": "Givenchy",
-      "launchYear": null,
+      "launchYear": 2017,
       "marketedGender": "men",
-      "fragranceFamily": null,
-      "topNotes": null,
-      "heartNotes": null,
-      "baseNotes": null,
-      "mainAccords": null,
-      "perfumer": null,
-      "sourceConfidence": "medium",
+      "fragranceFamily": "Oriental Floral",
+      "topNotes": ["Pear", "Cardamom", "Pineapple"],
+      "heartNotes": ["Iris", "Lavender", "Geranium"],
+      "baseNotes": ["Leather", "Black Vanilla Husk", "Patchouli"],
+      "mainAccords": ["Floral", "Woody", "Spicy", "Iris"],
+      "perfumer": "Olivier Cresp, Nathalie Lorson",
+      "sourceConfidence": "high",
       "founderSupplied": false,
-      "sourceNotes": "FOUNDER_DECISION_REQUIRED. The supplier text 'Gentleman by Givenchy' without a concentration or year qualifier is ambiguous — three distinct Givenchy Gentleman products are currently catalogued. All three editions have been researched and documented in editionOptions below. Founder must select the intended edition before this entry can be registered.",
-      "possibleNameIssue": true,
-      "nameIssueExplanation": "Supplier text 'Gentleman by Givenchy' does not specify the concentration or edition. Three distinct commercial products exist under this name: the 2017 EDT, the 2018 EDP, and the 2020 EDP Boisée. All three are currently available and none has been discontinued. Supplier intent cannot be determined from text alone.",
-      "disambiguationStatus": "FOUNDER_DECISION_REQUIRED",
+      "sourceNotes": "RESOLVED BY FOUNDER (EP-CAT-P3C-R1, 2026-08-15) — Founder selected Option A: Givenchy Gentleman EDT (2017). Rationale: supplier text 'Gentleman by Givenchy' without qualifier maps to the 2017 EDT as the least assumptive canonical identity. Founder instruction: do not map MEN-183 to EDP, EDP Boisée, Gentleman Intense, or any qualified flanker. Notes from EP-CAT-P3C-R1 research (Fragrantica, decanthouse.com). Researched alternatives preserved in editionOptions[] as historical evidence.",
+      "possibleNameIssue": false,
+      "nameIssueExplanation": null,
+      "disambiguationStatus": "RESOLVED_BY_FOUNDER — Givenchy Gentleman EDT (2017). Episode: EP-CAT-P3C-R1 Founder Evidence Resolution, 2026-08-15.",
+      "founderResolution": {
+        "resolvedAt": "2026-08-15",
+        "episode": "EP-CAT-P3C-R1 Founder Evidence Resolution",
+        "selectedEdition": "Gentleman Givenchy EDT (2017)",
+        "rationale": "Supplier text 'Gentleman by Givenchy' without qualifier. 2017 EDT is the least assumptive mapping to that unqualified identity. Founder instruction: do not map MEN-183 to EDP, EDP Boisée, Gentleman Intense, or another qualified flanker."
+      },
       "editionOptions": [
         {
           "edition": "Gentleman Givenchy EDT (2017)",
+          "status": "SELECTED_BY_FOUNDER",
           "perfumer": "Olivier Cresp, Nathalie Lorson",
           "topNotes": ["Pear", "Cardamom", "Pineapple"],
           "heartNotes": ["Iris", "Lavender", "Geranium"],
@@ -1125,6 +1138,7 @@
         },
         {
           "edition": "Gentleman Givenchy EDP (2018)",
+          "status": "NOT_SELECTED — preserved as evidence history",
           "perfumer": "Olivier Cresp, Nathalie Lorson",
           "topNotes": ["Black Pepper", "Lavender", "Bergamot"],
           "heartNotes": ["Orris", "Cloves", "Cinnamon"],
@@ -1134,6 +1148,7 @@
         },
         {
           "edition": "Gentleman Givenchy EDP Boisée (2020)",
+          "status": "NOT_SELECTED — preserved as evidence history",
           "perfumer": "Nathalie Lorson",
           "topNotes": ["Black Pepper", "Geranium", "Coriander"],
           "heartNotes": ["Iris", "Cacao Pod", "Cedar"],
@@ -1145,9 +1160,10 @@
       "conflicts": [],
       "evidenceSources": [
         "fragrantica.com — Givenchy Gentleman (all three editions, via WebSearch + WebFetch)",
-        "decanthouse.com — Givenchy Gentleman edition breakdown (via WebSearch snippet)"
+        "decanthouse.com — Givenchy Gentleman edition breakdown (via WebSearch snippet)",
+        "Founder resolution — EP-CAT-P3C-R1, 2026-08-15 (AUTHORITATIVE)"
       ],
-      "proposedSlug": "TBD — pending Founder selection of edition"
+      "proposedSlug": "gentleman-edt-inspired"
     }
   ]
 }
