@@ -1,0 +1,255 @@
+{
+  "batchId": "wave-1-2026",
+  "description": "Wave 1 — August 2026 supplier intake candidates selected for MKC registration. 40 identities spanning ELITE (6), ROSE (18), and SKYE (16) collections. Sourced from fragrance-list-2026-08.json supplier raw file. Dispositions and normalization corrections applied per EP-CAT-P2B and EP-CAT-P3A governance. UNISEX-56 supplier text is corrupted (PDF extraction boilerplate concatenation); canonical identity resolved by Founder clarification.",
+  "governance": {
+    "phase": "EP-CAT-P3C",
+    "authorizedBy": "Founder — Wave 1 Research Authorization 2026-08-15",
+    "rawSourceFile": "data/supplier/raw/fragrance-list-2026-08.json",
+    "dispositionFile": "data/supplier/decisions/fragrance-list-2026-08-dispositions.json",
+    "correctionsFile": "data/supplier/normalized/fragrance-list-2026-08-normalized-corrections.json",
+    "researchFile": "data/identity/source/wave-1-2026-research.json",
+    "note": "supplierName values are exact from raw source file. Where the raw text is corrupted or abbreviated, the canonical identity is resolved in the paired research file."
+  },
+  "entries": [
+    {
+      "supplierName": "Rose Oud All fragrances are inspired by the listed designer brands. Brand names are trademarks of their respective owners. Prices available on request.",
+      "supplierCategory": "UNISEX",
+      "sourceReference": "UNISEX-56-Rose Oud All fragrances are inspired by the listed designer brands. Brand names are trademarks of their respective owners. Prices available on request.",
+      "note": "Corrupted supplier text — PDF extraction concatenated boilerplate footer. Canonical identity resolved via Founder clarification in disposition file: Kilian Paris Rose Oud. Collection: ELITE."
+    },
+    {
+      "supplierName": "Arabians Musk by Montale",
+      "supplierCategory": "UNISEX",
+      "sourceReference": "UNISEX-8-Arabians Musk by Montale",
+      "note": "Collection: ELITE."
+    },
+    {
+      "supplierName": "Creed Royal Oud",
+      "supplierCategory": "UNISEX",
+      "sourceReference": "UNISEX-22-Creed Royal Oud",
+      "note": "Collection: ELITE."
+    },
+    {
+      "supplierName": "Byredo / Rose of No Man's Land",
+      "supplierCategory": "UNISEX",
+      "sourceReference": "UNISEX-16-Byredo / Rose of No Man's Land",
+      "note": "Collection: ELITE."
+    },
+    {
+      "supplierName": "Jo Malone / Wood Sage & Sea Salt",
+      "supplierCategory": "UNISEX",
+      "sourceReference": "UNISEX-38-Jo Malone / Wood Sage & Sea Salt",
+      "note": "Collection: ELITE."
+    },
+    {
+      "supplierName": "Amouage Decision",
+      "supplierCategory": "UNISEX",
+      "sourceReference": "UNISEX-3-Amouage Decision",
+      "note": "Collection: ELITE."
+    },
+    {
+      "supplierName": "Miss Dior Rose 'n Roses",
+      "supplierCategory": "LADIES",
+      "sourceReference": "LADIES-197-Miss Dior Rose 'n Roses",
+      "note": "Collection: ROSE."
+    },
+    {
+      "supplierName": "Black Opium Over Red",
+      "supplierCategory": "LADIES",
+      "sourceReference": "LADIES-39-Black Opium Over Red",
+      "note": "Collection: ROSE."
+    },
+    {
+      "supplierName": "Jo Malone Taif Rose Cologne",
+      "supplierCategory": "LADIES",
+      "sourceReference": "LADIES-161-Jo Malone Taif Rose Cologne",
+      "note": "Collection: ROSE."
+    },
+    {
+      "supplierName": "YSL Libre Flowers & Flames EDP Florale",
+      "supplierCategory": "LADIES",
+      "sourceReference": "LADIES-291-YSL Libre Flowers & Flames EDP Florale",
+      "note": "Collection: ROSE. Disambiguation resolved: Florale IS part of the official product name."
+    },
+    {
+      "supplierName": "DKNY Fresh Blossom",
+      "supplierCategory": "LADIES",
+      "sourceReference": "LADIES-101-DKNY Fresh Blossom",
+      "note": "Collection: ROSE. Full canonical name: DKNY Be Delicious Fresh Blossom."
+    },
+    {
+      "supplierName": "Dolce & Gabbana Light Blue",
+      "supplierCategory": "LADIES",
+      "sourceReference": "LADIES-106-Dolce & Gabbana Light Blue",
+      "note": "Collection: ROSE."
+    },
+    {
+      "supplierName": "Gucci Bloom",
+      "supplierCategory": "LADIES",
+      "sourceReference": "LADIES-125-Gucci Bloom",
+      "note": "Collection: ROSE."
+    },
+    {
+      "supplierName": "Creed Carmina",
+      "supplierCategory": "LADIES",
+      "sourceReference": "LADIES-87-Creed Carmina",
+      "note": "Collection: ROSE."
+    },
+    {
+      "supplierName": "My Way Ylang by Armani",
+      "supplierCategory": "LADIES",
+      "sourceReference": "LADIES-203-My Way Ylang by Armani",
+      "note": "Collection: ROSE. Disposition-assigned canonical year 2023 flagged for review — research suggests 2024."
+    },
+    {
+      "supplierName": "Armani Si Passione Red Musk",
+      "supplierCategory": "LADIES",
+      "sourceReference": "LADIES-24-Armani Si Passione Red Musk",
+      "note": "Collection: ROSE. Disposition-assigned canonical year 2022 is incorrect — research confirms 2025."
+    },
+    {
+      "supplierName": "Bulgari Omnia Green Jade",
+      "supplierCategory": "LADIES",
+      "sourceReference": "LADIES-55-Bulgari Omnia Green Jade",
+      "note": "Collection: ROSE. Supplier spells brand as Bulgari; canonical brand is Bvlgari."
+    },
+    {
+      "supplierName": "Coach Floral",
+      "supplierCategory": "LADIES",
+      "sourceReference": "LADIES-81-Coach Floral",
+      "note": "Collection: ROSE."
+    },
+    {
+      "supplierName": "Oud Ispahan by Dior",
+      "supplierCategory": "LADIES",
+      "sourceReference": "LADIES-216-Oud Ispahan by Dior",
+      "note": "Collection: ROSE. Genderless fragrance; listed under LADIES in supplier. MEN-111 is confirmed excess listing per disposition."
+    },
+    {
+      "supplierName": "Chanel Chance",
+      "supplierCategory": "LADIES",
+      "sourceReference": "LADIES-63-Chanel Chance",
+      "note": "Collection: ROSE."
+    },
+    {
+      "supplierName": "Mon Guerlain",
+      "supplierCategory": "LADIES",
+      "sourceReference": "LADIES-199-Mon Guerlain",
+      "note": "Collection: ROSE."
+    },
+    {
+      "supplierName": "Versace Bright Crystal",
+      "supplierCategory": "LADIES",
+      "sourceReference": "LADIES-273-Versace Bright Crystal",
+      "note": "Collection: ROSE."
+    },
+    {
+      "supplierName": "Twilly by Hermes",
+      "supplierCategory": "LADIES",
+      "sourceReference": "LADIES-266-Twilly by Hermes",
+      "note": "Collection: ROSE. Disambiguation resolved: maps to Twilly d'Hermès original EDP (2017)."
+    },
+    {
+      "supplierName": "Oriana Parfums de Marly",
+      "supplierCategory": "LADIES",
+      "sourceReference": "LADIES-215-Oriana Parfums de Marly",
+      "note": "Collection: ROSE. Estimated year 2022 is incorrect — research confirms 2021."
+    },
+    {
+      "supplierName": "Bleu de Chanel L'Exclusif",
+      "supplierCategory": "MEN",
+      "sourceReference": "MEN-150-Bleu de Chanel L'Exclusif",
+      "note": "Collection: SKYE. Disposition CONFIRMED_DISTINCT_NEW_IDENTITY. 2025 launch."
+    },
+    {
+      "supplierName": "Tom Ford Ombre Leather",
+      "supplierCategory": "MEN",
+      "sourceReference": "MEN-130-Tom Ford Ombre Leather",
+      "note": "Collection: SKYE. Supplier uses Ombre (no accent); canonical is Ombré Leather."
+    },
+    {
+      "supplierName": "Tom Ford Tobacco Vanille",
+      "supplierCategory": "MEN",
+      "sourceReference": "MEN-132-Tom Ford Tobacco Vanille",
+      "note": "Collection: SKYE."
+    },
+    {
+      "supplierName": "Dior Homme Sport",
+      "supplierCategory": "MEN",
+      "sourceReference": "MEN-53-Dior Homme Sport",
+      "note": "Collection: SKYE. Disambiguation resolved: 2021 reformulation (launched 2022) is the current production version."
+    },
+    {
+      "supplierName": "Dunhill Fresh",
+      "supplierCategory": "MEN",
+      "sourceReference": "MEN-64-Dunhill Fresh",
+      "note": "Collection: SKYE. Full canonical name: Alfred Dunhill Dunhill Fresh."
+    },
+    {
+      "supplierName": "Versace Eros Flame",
+      "supplierCategory": "MEN",
+      "sourceReference": "MEN-141-Versace Eros Flame",
+      "note": "Collection: SKYE. Disposition CONFIRMED_DISTINCT_FLANKER."
+    },
+    {
+      "supplierName": "Alien for Men",
+      "supplierCategory": "MEN",
+      "sourceReference": "MEN-14-Alien for Men",
+      "note": "Collection: SKYE. Disposition CONFIRMED_DISTINCT_FLANKER. Canonical product name: Mugler Alien Man."
+    },
+    {
+      "supplierName": "Bulgari Aqua",
+      "supplierCategory": "MEN",
+      "sourceReference": "MEN-32-Bulgari Aqua",
+      "note": "Collection: SKYE. Disambiguation resolved: Bvlgari AQVA Pour Homme original (2005). Official brand: Bvlgari. Official product: AQVA (not Aqua)."
+    },
+    {
+      "supplierName": "H24 Herbs Vives / Hermes",
+      "supplierCategory": "MEN",
+      "sourceReference": "MEN-162-H24 Herbs Vives / Hermes",
+      "note": "Collection: SKYE. Supplier typo: Herbs Vives → correct: Herbes Vives. Canonical: Hermès H24 Herbes Vives EDP (2024)."
+    },
+    {
+      "supplierName": "Paco Rabanne Invictus Victory Absolu",
+      "supplierCategory": "MEN",
+      "sourceReference": "MEN-170-Paco Rabanne Invictus Victory Absolu",
+      "note": "Collection: SKYE. Disposition CONFIRMED_DISTINCT_FLANKER. Disposition year 2023 incorrect — research confirms 2025. Brand renamed Rabanne in 2023."
+    },
+    {
+      "supplierName": "Viktor & Rolf Spicebomb Dark Leather",
+      "supplierCategory": "MEN",
+      "sourceReference": "MEN-178-Viktor & Rolf Spicebomb Dark Leather",
+      "note": "Collection: SKYE. Estimated year 2022 incorrect — research confirms 2024."
+    },
+    {
+      "supplierName": "Godolphin by Parfums de Marly",
+      "supplierCategory": "MEN",
+      "sourceReference": "MEN-159-Godolphin by Parfums de Marly",
+      "note": "Collection: SKYE. Estimated year 2015 incorrect — research confirms 2010."
+    },
+    {
+      "supplierName": "Voyage Hermes",
+      "supplierCategory": "MEN",
+      "sourceReference": "MEN-144-Voyage Hermes",
+      "note": "Collection: SKYE. Disambiguation resolved: Hermès Voyage d'Hermès EDT (2010, unisex). Supplier omits d'."
+    },
+    {
+      "supplierName": "Bois D'Argent by Dior",
+      "supplierCategory": "MEN",
+      "sourceReference": "MEN-1-Bois D'Argent by Dior",
+      "note": "Collection: SKYE. Genderless La Collection Privée fragrance. Referent is original 2004 by Annick Menardo, NOT the 2025 Esprit de Parfum by Kurkdjian."
+    },
+    {
+      "supplierName": "Chanel Allure Sport",
+      "supplierCategory": "MEN",
+      "sourceReference": "MEN-40-Chanel Allure Sport",
+      "note": "Collection: SKYE. Supplier shorthand: Allure Sport → canonical: Chanel Allure Homme Sport EDT (2004)."
+    },
+    {
+      "supplierName": "Gentleman by Givenchy",
+      "supplierCategory": "MEN",
+      "sourceReference": "MEN-183-Gentleman by Givenchy",
+      "note": "Collection: SKYE. FOUNDER_DECISION_REQUIRED — three editions identified (2017 EDT, 2018 EDP, 2020 Boisée). Supplier text is ambiguous. See research file for full edition breakdown."
+    }
+  ]
+}
