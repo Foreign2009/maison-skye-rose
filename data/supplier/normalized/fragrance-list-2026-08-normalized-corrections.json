@@ -51,6 +51,18 @@
       "normalizationRule": "brand-prefix-strip (Dolce & Gabbana — absent from BRAND_NORMALIZATIONS dict)",
       "evidenceLevel": "REPOSITORY_CONFIRMED",
       "notes": "The P1B normalizer BRAND_NORMALIZATIONS dict did not include 'Dolce & Gabbana' as a strippable brand prefix. Manually stripping the prefix yields 'Devotion' which matches 'devotion-inspired' exactly. The product is unambiguously Dolce & Gabbana Devotion (2021). No competing 'Devotion' product exists in the MKC. Slug confirmed at app/lib/mkc/native/devotion-inspired.ts."
+    },
+    {
+      "sourceKey": "MEN-166-Jean Paul Gaultier Elixir",
+      "supplierNameExact": "Jean Paul Gaultier Elixir",
+      "supplierCategory": "MEN",
+      "correctionType": "NORMALIZATION_MISS",
+      "fromStatus": "NEW_SUPPLIER_CANDIDATE",
+      "toStatus": "NORMALIZED_CONFIRMED",
+      "existingMKCSlug": "le-male-elixir-inspired",
+      "normalizationRule": "supplier-shorthand-resolution (supplier abbreviated 'Le Male Elixir' as 'Jean Paul Gaultier Elixir', substituting brand name for product line name — not resolvable by automated normalizer rules)",
+      "evidenceLevel": "AUTHORITATIVE",
+      "notes": "Founder clarification confirmed 2026-08-15 (EP-CAT-P3A close-out): supplier label 'Jean Paul Gaultier Elixir' refers to Le Male Elixir by Jean Paul Gaultier. The automated P1B normalizer assigned NEW_SUPPLIER_CANDIDATE (LOW confidence) because the supplier text contains no 'Le Male' substring. MKC slug le-male-elixir-inspired confirmed at app/lib/mkc/native/le-male-elixir-inspired.ts. This entry is a normalization miss — not a new identity. No MKC product is created."
     }
   ]
 }

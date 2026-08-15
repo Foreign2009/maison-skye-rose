@@ -190,6 +190,28 @@
       "evidenceLevel": "AUTHORITATIVE",
       "evidenceSource": "dior.com (La Collection Privée Christian Dior)",
       "notes": "La Collection Privée Christian Dior fragrances are genderless by brand policy — confirmed on dior.com. Oud Ispahan is a unisex fragrance in the La Collection Privée line. The same fragrance appears in both the LADIES section (LADIES-216-Oud Ispahan by Dior) and this MEN entry. LADIES-216 is retained as the canonical listing. This MEN entry is the excess listing."
+    },
+    {
+      "sourceKey": "MEN-68-Endangered",
+      "supplierNameExact": "Endangered",
+      "supplierCategory": "MEN",
+      "dispositionType": "CONFIRMED_DUPLICATE_IDENTITY",
+      "resolvedStatus": "EXCESS_LISTING",
+      "canonicalIdentity": null,
+      "evidenceLevel": "AUTHORITATIVE",
+      "evidenceSource": "Founder-supplied supplier/product clarification — EP-CAT-P3A close-out 2026-08-15",
+      "notes": "Avroy Shlain 'Endangered' is a LADIES-only fragrance — no men's variant exists. Founder clarification confirmed 2026-08-15 (EP-CAT-P3A close-out). This MEN supplier entry (row 68, supplierNameExact 'Endangered') is a miscategorized duplicate listing of the same commercial identity as LADIES-116-Endangered / Avroy Schlain. The LADIES entry includes the brand qualifier; this MEN entry omits it. LADIES-116 is the retained canonical supplier entry. This MEN entry is the excess listing and contributes zero new MKC identities."
+    },
+    {
+      "sourceKey": "UNISEX-56-Rose Oud All fragrances are inspired by the listed designer brands. Brand names are trademarks of their respective owners. Prices available on request.",
+      "supplierNameExact": "Rose Oud All fragrances are inspired by the listed designer brands. Brand names are trademarks of their respective owners. Prices available on request.",
+      "supplierCategory": "UNISEX",
+      "dispositionType": "CONFIRMED_DISTINCT_NEW_IDENTITY",
+      "resolvedStatus": "NEW_SUPPLIER_CANDIDATE",
+      "canonicalIdentity": "Kilian Paris — Rose Oud",
+      "evidenceLevel": "AUTHORITATIVE",
+      "evidenceSource": "Founder-supplied supplier/product clarification — EP-CAT-P3A close-out 2026-08-15",
+      "notes": "This supplier entry suffered data corruption at PDF extraction (EP-CAT-P1B): the supplier's legal boilerplate footer ('All fragrances are inspired by the listed designer brands...') was concatenated into the product name field, contaminating both the raw supplierNameExact and the normalised canonicalCandidateName. The raw and normalised files are immutable — the corrupted text is preserved as provenance. Founder supplied the corrected commercial identity: Kilian Paris — Rose Oud (brand: By Kilian / Kilian Paris). Founder-supplied fragrance reference — Top: Bulgarian Rose, Saffron, Cinnamon; Heart: Tincture of Rose, Litchi; Base: Agarwood (Oud), Cypriol Oil / Nagarmotha, Cedarwood, smoky leather nuances. This entry is promoted from QUARANTINED_IDENTITY_QUESTION (EP-CAT-P3A report) to CONFIRMED_DISTINCT_NEW_IDENTITY and is eligible as a Wave 1 safe pool candidate."
     }
   ]
 }
