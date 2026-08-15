@@ -1,0 +1,56 @@
+{
+  "schemaVersion": "EP-CAT-P2-corrections-v1.0.0",
+  "description": "Additive normalization corrections for the August 2026 supplier intake. Corrects two entries where the P1B conservative automated reconciliation missed an existing Maison match due to article-stripping and brand-prefix normalization gaps. The immutable P1B normalized intake file is NOT modified — these corrections are append-only governance evidence.",
+  "governance": {
+    "sourceNormalizedFile": "data/supplier/normalized/fragrance-list-2026-08-normalized.json",
+    "sourceNormalizedFileSha256": "714a3b74710419581d6bc6317f808dafc6e549ed2e5bb7db537b16891ae5a7ee",
+    "rawSourceFile": "data/supplier/raw/fragrance-list-2026-08.json",
+    "rawSourceSha256": "26358760dabe1aaeb64d6854425e24f8001053d8cc50b458c26fdad1a305b5eb",
+    "authorizedBy": "EP-CAT-P2 — Founder Approved 2026-08-15",
+    "authorizedAt": "2026-08-15",
+    "approvalEvidence": "EP-CAT-P2C conservative disposition freeze report; Founder authorization 2026-08-15",
+    "governancePrinciples": [
+      "These corrections are additive only. They do not modify the P1B normalized intake.",
+      "Corrections contain HIGH confidence entries only — REPOSITORY_CONFIRMED minimum.",
+      "Each correction restores a missed NORMALIZED_CONFIRMED match that the automated normalizer failed to produce.",
+      "No fuzzy matching or assumption-based corrections are included.",
+      "Quarantined entries from EP-CAT-P2C are explicitly excluded from this artifact."
+    ],
+    "p2cOperationalCounts": {
+      "RAW_SUPPLIER_LISTINGS": 565,
+      "CONFIRMED_EXISTING_MATCH_ROWS": 52,
+      "CONFIRMED_NEW_IDENTITY_ROWS": 454,
+      "QUARANTINED_OR_UNRESOLVED_ROWS": 54,
+      "CONFIRMED_DUPLICATE_EXCESS_ROWS_IN_CANDIDATE_POOL": 5,
+      "WAVE_1_SAFE_POOL_MINIMUM": 454,
+      "WAVE_1_IDENTITY_POOL_READY": true,
+      "note": "These counts reflect EP-CAT-P2C conservative governance. Catalogue-wide alias and variant deduplication has not yet occurred. EXACT_UNIQUE_SUPPLIER_IDENTITIES and EXACT_UNIQUE_NEW_CANDIDATE_IDENTITIES are NOT stated here — they are EP-CAT-P3 outputs."
+    }
+  },
+  "corrections": [
+    {
+      "sourceKey": "MEN-148-Azzaro The Most Wanted",
+      "supplierNameExact": "Azzaro The Most Wanted",
+      "supplierCategory": "MEN",
+      "correctionType": "NORMALIZATION_MISS",
+      "fromStatus": "NEW_SUPPLIER_CANDIDATE",
+      "toStatus": "NORMALIZED_CONFIRMED",
+      "existingMKCSlug": "azzaro-most-wanted-inspired",
+      "normalizationRule": "article-strip (the)",
+      "evidenceLevel": "REPOSITORY_CONFIRMED",
+      "notes": "Standard article stripping of 'the' produces 'azzaro most wanted' which matches 'azzaro-most-wanted-inspired' exactly. The P1B normalizer did not apply article stripping to this entry. Slug confirmed in MKC at app/lib/mkc/native/azzaro-most-wanted-inspired.ts."
+    },
+    {
+      "sourceKey": "LADIES-105-Dolce & Gabbana Devotion",
+      "supplierNameExact": "Dolce & Gabbana Devotion",
+      "supplierCategory": "LADIES",
+      "correctionType": "NORMALIZATION_MISS",
+      "fromStatus": "NEW_SUPPLIER_CANDIDATE",
+      "toStatus": "NORMALIZED_CONFIRMED",
+      "existingMKCSlug": "devotion-inspired",
+      "normalizationRule": "brand-prefix-strip (Dolce & Gabbana — absent from BRAND_NORMALIZATIONS dict)",
+      "evidenceLevel": "REPOSITORY_CONFIRMED",
+      "notes": "The P1B normalizer BRAND_NORMALIZATIONS dict did not include 'Dolce & Gabbana' as a strippable brand prefix. Manually stripping the prefix yields 'Devotion' which matches 'devotion-inspired' exactly. The product is unambiguously Dolce & Gabbana Devotion (2021). No competing 'Devotion' product exists in the MKC. Slug confirmed at app/lib/mkc/native/devotion-inspired.ts."
+    }
+  ]
+}

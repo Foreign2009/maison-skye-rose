@@ -1,0 +1,195 @@
+{
+  "schemaVersion": "EP-CAT-P2-dispositions-v1.0.0",
+  "description": "Disposition decisions for AMBIGUOUS and confirmed-duplicate entries from the August 2026 supplier intake. These decisions are the result of EP-CAT-P2B external identity research and EP-CAT-P2C conservative governance review. The immutable P1B normalized intake is NOT modified — these dispositions are append-only governance evidence.",
+  "governance": {
+    "sourceNormalizedFile": "data/supplier/normalized/fragrance-list-2026-08-normalized.json",
+    "sourceNormalizedFileSha256": "714a3b74710419581d6bc6317f808dafc6e549ed2e5bb7db537b16891ae5a7ee",
+    "rawSourceFile": "data/supplier/raw/fragrance-list-2026-08.json",
+    "rawSourceSha256": "26358760dabe1aaeb64d6854425e24f8001053d8cc50b458c26fdad1a305b5eb",
+    "authorizedBy": "EP-CAT-P2 — Founder Approved 2026-08-15",
+    "authorizedAt": "2026-08-15",
+    "approvalEvidence": "EP-CAT-P2C conservative disposition freeze report; Founder authorization 2026-08-15",
+    "governancePrinciples": [
+      "Dispositions are append-only governance evidence. The P1B normalized intake is immutable.",
+      "CONFIRMED_DISTINCT_FLANKER and CONFIRMED_DISTINCT_NEW_IDENTITY dispositions are supported by AUTHORITATIVE external evidence only.",
+      "CONFIRMED_DUPLICATE_ROW and CONFIRMED_DUPLICATE_IDENTITY dispositions are supported by AUTHORITATIVE or REPOSITORY_CONFIRMED evidence.",
+      "No fuzzy matching, assumption-based, or SUPPLIER_TEXT_ONLY dispositions are recorded here.",
+      "Quarantined entries (SUPPLIER_TEXT_INSUFFICIENT, SUPPLIER_TEXT_CLEAR_BUT_MAISON_IDENTITY_UNRESOLVED, COMMERCIAL_PRODUCTS_EXIST_BUT_SUPPLIER_INTENT_UNPROVEN) are explicitly excluded.",
+      "Commercial product existence is not treated as equivalent to supplier row identity. Only entries whose supplier text self-identifies the specific product are dispositioned here."
+    ],
+    "explicitlyExcluded": [
+      "LADIES-21-Armani Code — SUPPLIER_TEXT_INSUFFICIENT",
+      "MEN-21-Armani Code — SUPPLIER_TEXT_INSUFFICIENT",
+      "LADIES-196-Miss Dior Cherie — SUPPLIER_TEXT_CLEAR_BUT_MAISON_IDENTITY_UNRESOLVED",
+      "MEN-122-Prada — SUPPLIER_TEXT_INSUFFICIENT",
+      "All 50 rows from 25 COMMERCIAL_PRODUCTS_EXIST_BUT_SUPPLIER_INTENT_UNPROVEN same-text groups — quarantined for EP-CAT-P3 canonical identity normalization"
+    ]
+  },
+  "dispositions": [
+    {
+      "sourceKey": "LADIES-4-212 CH Very Good Girl Elixir",
+      "supplierNameExact": "212 CH Very Good Girl Elixir",
+      "supplierCategory": "LADIES",
+      "dispositionType": "CONFIRMED_DISTINCT_FLANKER",
+      "resolvedStatus": "NEW_SUPPLIER_CANDIDATE",
+      "canonicalIdentity": "Carolina Herrera 212 Very Good Girl Elixir (2022)",
+      "evidenceLevel": "AUTHORITATIVE",
+      "evidenceSource": "fragrantica.com",
+      "notes": "Elixir concentration variant explicitly stated in supplier text. CH Very Good Girl Elixir (2022) is confirmed as a distinct commercial product from the base Very Good Girl (2021). Supplier text self-identifies the specific product."
+    },
+    {
+      "sourceKey": "LADIES-24-Armani Si Passione Red Musk",
+      "supplierNameExact": "Armani Si Passione Red Musk",
+      "supplierCategory": "LADIES",
+      "dispositionType": "CONFIRMED_DISTINCT_FLANKER",
+      "resolvedStatus": "NEW_SUPPLIER_CANDIDATE",
+      "canonicalIdentity": "Giorgio Armani Sì Passione Red Musk (2022)",
+      "evidenceLevel": "AUTHORITATIVE",
+      "evidenceSource": "armani.com + fragrantica.com",
+      "notes": "Red Musk variant explicitly stated in supplier text. Armani Sì Passione Red Musk (2022) confirmed as a distinct commercial product from the base Sì Passione. Supplier text self-identifies the specific product."
+    },
+    {
+      "sourceKey": "LADIES-39-Black Opium Over Red",
+      "supplierNameExact": "Black Opium Over Red",
+      "supplierCategory": "LADIES",
+      "dispositionType": "CONFIRMED_DISTINCT_FLANKER",
+      "resolvedStatus": "NEW_SUPPLIER_CANDIDATE",
+      "canonicalIdentity": "Yves Saint Laurent Black Opium Over Red",
+      "evidenceLevel": "AUTHORITATIVE",
+      "evidenceSource": "yslbeauty.com + fragrantica.com",
+      "notes": "Over Red qualifier explicitly stated in supplier text. YSL Black Opium Over Red confirmed as a distinct flanker of the Black Opium line. Supplier text self-identifies the specific product."
+    },
+    {
+      "sourceKey": "LADIES-197-Miss Dior Rose 'n Roses",
+      "supplierNameExact": "Miss Dior Rose 'n Roses",
+      "supplierCategory": "LADIES",
+      "dispositionType": "CONFIRMED_DISTINCT_FLANKER",
+      "resolvedStatus": "NEW_SUPPLIER_CANDIDATE",
+      "canonicalIdentity": "Dior Miss Dior Rose N' Roses (2021)",
+      "evidenceLevel": "AUTHORITATIVE",
+      "evidenceSource": "dior.com + fragrantica.com",
+      "notes": "Rose 'n Roses qualifier explicitly stated in supplier text. Miss Dior Rose N' Roses (2021) confirmed as a distinct commercial flanker of the Miss Dior line. Supplier text self-identifies the specific product. Note: LADIES-196-Miss Dior Cherie is a separate entry and remains quarantined — it is NOT dispositioned here."
+    },
+    {
+      "sourceKey": "LADIES-202-My Way Nectar by Armani",
+      "supplierNameExact": "My Way Nectar by Armani",
+      "supplierCategory": "LADIES",
+      "dispositionType": "CONFIRMED_DISTINCT_FLANKER",
+      "resolvedStatus": "NEW_SUPPLIER_CANDIDATE",
+      "canonicalIdentity": "Giorgio Armani My Way Nectar (2022)",
+      "evidenceLevel": "AUTHORITATIVE",
+      "evidenceSource": "armani.com + fragrantica.com",
+      "notes": "Nectar variant explicitly stated in supplier text. Armani My Way Nectar (2022) confirmed as a distinct commercial product from the base My Way. Supplier text self-identifies the specific product."
+    },
+    {
+      "sourceKey": "LADIES-203-My Way Ylang by Armani",
+      "supplierNameExact": "My Way Ylang by Armani",
+      "supplierCategory": "LADIES",
+      "dispositionType": "CONFIRMED_DISTINCT_FLANKER",
+      "resolvedStatus": "NEW_SUPPLIER_CANDIDATE",
+      "canonicalIdentity": "Giorgio Armani My Way Ylang (2023)",
+      "evidenceLevel": "AUTHORITATIVE",
+      "evidenceSource": "armani.com + fragrantica.com",
+      "notes": "Ylang variant explicitly stated in supplier text. Armani My Way Ylang (2023) confirmed as a distinct commercial product from the base My Way. Supplier text self-identifies the specific product."
+    },
+    {
+      "sourceKey": "MEN-14-Alien for Men",
+      "supplierNameExact": "Alien for Men",
+      "supplierCategory": "MEN",
+      "dispositionType": "CONFIRMED_DISTINCT_FLANKER",
+      "resolvedStatus": "NEW_SUPPLIER_CANDIDATE",
+      "canonicalIdentity": "Mugler Alien Man (2018)",
+      "evidenceLevel": "AUTHORITATIVE",
+      "evidenceSource": "fragrantica.com",
+      "notes": "For Men qualifier explicitly stated in supplier text. Mugler Alien Man (2018, formerly marketed as Alien for Men) is confirmed as a distinct commercial product from the original Alien (women's, 2005). Supplier text self-identifies the specific product."
+    },
+    {
+      "sourceKey": "MEN-141-Versace Eros Flame",
+      "supplierNameExact": "Versace Eros Flame",
+      "supplierCategory": "MEN",
+      "dispositionType": "CONFIRMED_DISTINCT_FLANKER",
+      "resolvedStatus": "NEW_SUPPLIER_CANDIDATE",
+      "canonicalIdentity": "Versace Eros Flame (2018)",
+      "evidenceLevel": "AUTHORITATIVE",
+      "evidenceSource": "versace.com + fragrantica.com",
+      "notes": "Flame qualifier explicitly stated in supplier text. Versace Eros Flame (2018) confirmed as a distinct commercial flanker from the base Eros (2012). Supplier text self-identifies the specific product."
+    },
+    {
+      "sourceKey": "MEN-150-Bleu de Chanel L'Exclusif",
+      "supplierNameExact": "Bleu de Chanel L'Exclusif",
+      "supplierCategory": "MEN",
+      "dispositionType": "CONFIRMED_DISTINCT_NEW_IDENTITY",
+      "resolvedStatus": "NEW_SUPPLIER_CANDIDATE",
+      "canonicalIdentity": "Chanel Bleu de Chanel L'Exclusif (2025, Olivier Polge)",
+      "evidenceLevel": "AUTHORITATIVE",
+      "evidenceSource": "chanel.com (official product pages, multiple regional URLs confirmed in EP-CAT-P2B)",
+      "notes": "L'Exclusif qualifier explicitly stated in supplier text. Chanel Bleu de Chanel L'Exclusif launched August 26, 2025, created by Olivier Polge. Confirmed as separately marketed product on chanel.com with materially different character (leathery, ambery, resinous) from the standard Bleu de Chanel (bleu-de-chanel-inspired already in Maison). Not covered by any existing Maison product."
+    },
+    {
+      "sourceKey": "MEN-170-Paco Rabanne Invictus Victory Absolu",
+      "supplierNameExact": "Paco Rabanne Invictus Victory Absolu",
+      "supplierCategory": "MEN",
+      "dispositionType": "CONFIRMED_DISTINCT_FLANKER",
+      "resolvedStatus": "NEW_SUPPLIER_CANDIDATE",
+      "canonicalIdentity": "Paco Rabanne Invictus Victory Absolu (2023)",
+      "evidenceLevel": "AUTHORITATIVE",
+      "evidenceSource": "fragrantica.com",
+      "notes": "Absolu qualifier explicitly stated in supplier text. Paco Rabanne Invictus Victory Absolu (2023) confirmed as a distinct commercial product from Invictus Victory. Note: the Maison has invictus-victory-inspired (unmatched in P1B) which covers the base Victory — the Absolu is a different product not yet in the Maison catalogue. Supplier text self-identifies the specific product."
+    },
+    {
+      "sourceKey": "LADIES-180-Lady Gaga / Fame",
+      "supplierNameExact": "Lady Gaga / Fame",
+      "supplierCategory": "LADIES",
+      "dispositionType": "CONFIRMED_DUPLICATE_ROW",
+      "resolvedStatus": "EXCESS_LISTING",
+      "canonicalIdentity": null,
+      "evidenceLevel": "REPOSITORY_CONFIRMED",
+      "evidenceSource": "data/supplier/raw/fragrance-list-2026-08.json — raw file row inspection",
+      "notes": "Within-category duplicate of LADIES-179-Lady Gaga / Fame. Both entries are in the LADIES section at consecutive row numbers (179, 180) with byte-identical supplier text. Lady Gaga Fame (2012, Coty) is a single women's fragrance with no gender-split variant. LADIES-179 is retained as the canonical entry. This entry (row 180) is the excess listing."
+    },
+    {
+      "sourceKey": "MEN-25-Baby Johnson",
+      "supplierNameExact": "Baby Johnson",
+      "supplierCategory": "MEN",
+      "dispositionType": "CONFIRMED_DUPLICATE_IDENTITY",
+      "resolvedStatus": "EXCESS_LISTING",
+      "canonicalIdentity": null,
+      "evidenceLevel": "AUTHORITATIVE",
+      "evidenceSource": "Brand identity research — Johnson's Baby product line",
+      "notes": "Baby Johnson is a baby-care brand reference. No gender-differentiated commercial fragrance under this name exists. The same scent reference appears in both the LADIES section (LADIES-32-Baby Johnson) and the MEN section (this entry). The LADIES entry is retained as the canonical listing. This MEN entry is the excess listing."
+    },
+    {
+      "sourceKey": "MEN-27-Black Seduction / Banderas",
+      "supplierNameExact": "Black Seduction / Banderas",
+      "supplierCategory": "MEN",
+      "dispositionType": "CONFIRMED_DUPLICATE_IDENTITY",
+      "resolvedStatus": "EXCESS_LISTING",
+      "canonicalIdentity": null,
+      "evidenceLevel": "AUTHORITATIVE",
+      "evidenceSource": "Fragrance database research — Banderas product line",
+      "notes": "No women's 'Black Seduction' by Banderas found in any authoritative source. Banderas 'Seduction in Black' is a men's-only product (2009). Both supplier entries (LADIES-40-Black Seduction / Banderas and this MEN entry) reference the same men's fragrance. LADIES-40 is retained as the canonical listing. This MEN entry is the excess listing."
+    },
+    {
+      "sourceKey": "MEN-90-Jo Malone / Dark Amber & Ginger Ally",
+      "supplierNameExact": "Jo Malone / Dark Amber & Ginger Ally",
+      "supplierCategory": "MEN",
+      "dispositionType": "CONFIRMED_DUPLICATE_IDENTITY",
+      "resolvedStatus": "EXCESS_LISTING",
+      "canonicalIdentity": null,
+      "evidenceLevel": "AUTHORITATIVE",
+      "evidenceSource": "jomalone.com",
+      "notes": "Jo Malone London fragrances are genderless by brand philosophy and official marketing — confirmed on jomalone.com. Jo Malone Dark Amber & Ginger Lily is a unisex fragrance. The same product appears in both the LADIES section (LADIES-162-Jo Malone / Dark Amber & Ginger Ally) and this MEN entry. Supplier typo 'Ally' for 'Lily' is consistent in both rows, confirming they reference the same entry. LADIES-162 is retained as the canonical listing. This MEN entry is the excess listing."
+    },
+    {
+      "sourceKey": "MEN-111-Oud Ispahan by Dior",
+      "supplierNameExact": "Oud Ispahan by Dior",
+      "supplierCategory": "MEN",
+      "dispositionType": "CONFIRMED_DUPLICATE_IDENTITY",
+      "resolvedStatus": "EXCESS_LISTING",
+      "canonicalIdentity": null,
+      "evidenceLevel": "AUTHORITATIVE",
+      "evidenceSource": "dior.com (La Collection Privée Christian Dior)",
+      "notes": "La Collection Privée Christian Dior fragrances are genderless by brand policy — confirmed on dior.com. Oud Ispahan is a unisex fragrance in the La Collection Privée line. The same fragrance appears in both the LADIES section (LADIES-216-Oud Ispahan by Dior) and this MEN entry. LADIES-216 is retained as the canonical listing. This MEN entry is the excess listing."
+    }
+  ]
+}
