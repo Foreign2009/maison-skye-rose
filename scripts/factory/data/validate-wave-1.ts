@@ -90,6 +90,7 @@ const EVIDENCE_LOCKED_SLUGS = new Set([
   "taif-rose-inspired",
   "wood-sage-sea-salt-inspired",
   "h24-herbes-vives-inspired",
+  "light-blue-inspired",   // EP-CAT-P3C-R4: research-governed, Cedar cross-tier preserved
 ]);
 
 // ── Derived slugs for each catalogue entry ────────────────────────────────────
@@ -191,10 +192,10 @@ test("CHECK 10 — All flat notes[] arrays are non-empty", () => {
     `Entries with empty notes[]: ${empty.join(", ")}`);
 });
 
-// CHECK 11: Evidence-locked count = 5
-test("CHECK 11 — Evidence-locked entry count = 5", () => {
+// CHECK 11: Evidence-locked count = 6
+test("CHECK 11 — Evidence-locked entry count = 6", () => {
   const n = wave1Catalogue.filter(f => f.notesEvidenceLocked === true).length;
-  assert.equal(n, 5, `Expected 5 evidence-locked entries; got ${n}`);
+  assert.equal(n, 6, `Expected 6 evidence-locked entries; got ${n}`);
 });
 
 // CHECK 12: All evidence-locked entries have notesStructured defined
@@ -368,6 +369,27 @@ test("VERIFY D — No Wave 1 slug collides with production catalogue slugs", () 
   // (Full collision check would require parsing fragrances.ts — the VERIFY A check
   // is sufficient to confirm resolution is correct.)
   assert.ok(true, "fragrances.ts path verified; collision verified via VERIFY A");
+});
+
+// CHECK 21: light-blue-inspired — research-governed 4-3-3 structure with Cedar cross-tier
+test("CHECK 21 — light-blue-inspired: 4-3-3 notesStructured, Cedar in top and base", () => {
+  const f = wave1Catalogue.find(x => deriveSlug(x.title) === "light-blue-inspired");
+  assert.ok(f, "light-blue-inspired not found");
+  assert.ok(f!.notesStructured, "notesStructured missing on light-blue-inspired");
+  assert.equal(f!.notesStructured!.top.length,   4, `top must have 4 notes (got ${f!.notesStructured!.top.length})`);
+  assert.equal(f!.notesStructured!.heart.length, 3, `heart must have 3 notes (got ${f!.notesStructured!.heart.length})`);
+  assert.equal(f!.notesStructured!.base.length,  3, `base must have 3 notes (got ${f!.notesStructured!.base.length})`);
+  // Verify exact governed notes
+  assert.deepEqual(f!.notesStructured!.top,   ["Sicilian Lemon", "Apple", "Cedar", "Bellflower"], "top notes");
+  assert.deepEqual(f!.notesStructured!.heart, ["Bamboo", "Jasmine", "White Rose"],                "heart notes");
+  assert.deepEqual(f!.notesStructured!.base,  ["Cedar", "Musk", "Amber"],                         "base notes");
+  // Cedar cross-tier: verified present in both top and base (research evidence)
+  assert.ok(f!.notesStructured!.top.includes("Cedar"),  "Cedar must appear in top (research evidence)");
+  assert.ok(f!.notesStructured!.base.includes("Cedar"), "Cedar must appear in base (research evidence, cross-tier)");
+  // Governed notes that were dropped by AI in R3 must be present
+  assert.ok(f!.notesStructured!.top.includes("Bellflower"),   "Bellflower must be present — was wrongly dropped in R3");
+  assert.ok(f!.notesStructured!.heart.includes("Bamboo"),     "Bamboo must be present — was wrongly dropped in R3");
+  assert.ok(f!.notesStructured!.heart.includes("White Rose"), "White Rose must be present — was wrongly dropped in R3");
 });
 
 // VERIFY E: No staging entry has an image path collision with /products or similar

@@ -255,6 +255,120 @@ test("TEST 10 — Editorial governance intact: DESCRIPTION_REQUIRED still fires 
     `Expected DESCRIPTION_REQUIRED to still fire on evidence-locked records without description; got: ${codes.join(", ")}`);
 });
 
+// ── EP-CAT-P3C-R4: Note identity preservation tests ──────────────────────────
+// Governing principle: EVIDENCE > MODEL KNOWLEDGE.
+// AI generation may NOT add, remove, rename, or rearrange governed note evidence.
+
+// TEST 11: Evidence-lock preserves exact note count per tier — no additions possible.
+test("TEST 11 — Evidence-lock: no notes can be added to any governed tier", () => {
+  const governed = {
+    top:   ["Bergamot"],
+    heart: ["Rose", "Jasmine"],
+    base:  ["Musk"],
+  };
+  const display = baseDisplay({
+    notes:               [...governed.top, ...governed.heart, ...governed.base],
+    notesEvidenceLocked: true,
+    notesStructured:     governed,
+  });
+  const { record } = scaffold(display);
+  assert.equal(record.notes.top.length,   1, `top must have exactly 1 note; got ${record.notes.top.length}`);
+  assert.equal(record.notes.heart.length, 2, `heart must have exactly 2 notes; got ${record.notes.heart.length}`);
+  assert.equal(record.notes.base.length,  1, `base must have exactly 1 note; got ${record.notes.base.length}`);
+});
+
+// TEST 12: Evidence-lock preserves exact note identities — no removals, no renames.
+test("TEST 12 — Evidence-lock: exact note identities preserved (no removals, no renames)", () => {
+  const governed = {
+    top:   ["Sicilian Citrus"],
+    heart: ["White Peony", "Honeysuckle"],
+    base:  ["Sandalwood", "Ambrette"],
+  };
+  const display = baseDisplay({
+    notes:               [...governed.top, ...governed.heart, ...governed.base],
+    notesEvidenceLocked: true,
+    notesStructured:     governed,
+  });
+  const { record } = scaffold(display);
+  assert.deepEqual(record.notes.top,   governed.top,   "top notes must match governed identities exactly");
+  assert.deepEqual(record.notes.heart, governed.heart, "heart notes must match governed identities exactly");
+  assert.deepEqual(record.notes.base,  governed.base,  "base notes must match governed identities exactly");
+});
+
+// TEST 13: Evidence-lock preserves specificity — "Jasmine" must not be broadened or
+// narrowed (e.g. renamed to "Jasmine Sambac") without Founder approval.
+test("TEST 13 — Evidence-lock: note specificity cannot be altered (no AI rename)", () => {
+  const governed = {
+    top:   ["Sicilian Lemon"],
+    heart: ["Jasmine", "White Rose"],  // "Jasmine" not "Jasmine Sambac"; "White Rose" not "Rose"
+    base:  ["Cedar"],                  // "Cedar" not "Cedarwood"
+  };
+  const display = baseDisplay({
+    notes:               [...governed.top, ...governed.heart, ...governed.base],
+    notesEvidenceLocked: true,
+    notesStructured:     governed,
+  });
+  const { record } = scaffold(display);
+  assert.ok(record.notes.heart.includes("Jasmine"),
+    `"Jasmine" must be preserved verbatim — must NOT be renamed to "Jasmine Sambac"`);
+  assert.ok(!record.notes.heart.includes("Jasmine Sambac"),
+    `"Jasmine Sambac" must not appear — it is an AI rename of governed "Jasmine"`);
+  assert.ok(record.notes.heart.includes("White Rose"),
+    `"White Rose" must be preserved verbatim — must NOT be broadened to "Rose"`);
+  assert.ok(record.notes.base.includes("Cedar"),
+    `"Cedar" must be preserved verbatim — must NOT be renamed to "Cedarwood"`);
+});
+
+// TEST 14: Light Blue governed evidence preserved exactly — full fixture.
+// Validates the R3 regression case: governed Bellflower/Bamboo/White Rose were
+// wrongly dropped; Bergamot/Pink Grapefruit/Lily of the Valley were wrongly added.
+test("TEST 14 — Light Blue: exact governed evidence preserved (R3 regression fixture)", () => {
+  const lightBlue = {
+    top:   ["Sicilian Lemon", "Apple", "Cedar", "Bellflower"],
+    heart: ["Bamboo", "Jasmine", "White Rose"],
+    base:  ["Cedar", "Musk", "Amber"],  // Cedar cross-tier: verified in both top and base
+  };
+  const display = baseDisplay({
+    title:               "Light Blue Inspired",
+    collection:          "Rose",
+    notes:               ["Sicilian Lemon", "Apple", "Cedar", "Bellflower", "Bamboo", "Jasmine", "White Rose", "Musk", "Amber"],
+    notesEvidenceLocked: true,
+    notesStructured:     lightBlue,
+  });
+  const { record } = scaffold(display);
+  assert.deepEqual(record.notes.top,   lightBlue.top,   "Light Blue top notes must match governed evidence exactly");
+  assert.deepEqual(record.notes.heart, lightBlue.heart, "Light Blue heart notes must match governed evidence exactly");
+  assert.deepEqual(record.notes.base,  lightBlue.base,  "Light Blue base notes must match governed evidence exactly");
+  // Cedar cross-tier: must appear in both top and base
+  assert.ok(record.notes.top.includes("Cedar"),  "Cedar must appear in top (research evidence)");
+  assert.ok(record.notes.base.includes("Cedar"), "Cedar must appear in base (research evidence, cross-tier)");
+  // Governed notes dropped in R3 must now be present
+  assert.ok(record.notes.top.includes("Bellflower"),   "Bellflower must be in top — was wrongly dropped by R3 AI");
+  assert.ok(record.notes.heart.includes("Bamboo"),     "Bamboo must be in heart — was wrongly dropped by R3 AI");
+  assert.ok(record.notes.heart.includes("White Rose"), "White Rose must be in heart — was wrongly dropped by R3 AI");
+  // AI-invented additions from R3 must NOT appear
+  const allNotes = [...record.notes.top, ...record.notes.heart, ...record.notes.base];
+  assert.ok(!allNotes.includes("Bergamot"),           "Bergamot must NOT appear — AI addition in R3");
+  assert.ok(!allNotes.includes("Pink Grapefruit"),    "Pink Grapefruit must NOT appear — AI addition in R3");
+  assert.ok(!allNotes.includes("Green Apple"),        "Green Apple must NOT appear — AI rename in R3");
+  assert.ok(!allNotes.includes("Lily of the Valley"), "Lily of the Valley must NOT appear — AI addition in R3");
+  assert.ok(!allNotes.includes("Jasmine Sambac"),     "Jasmine Sambac must NOT appear — AI rename in R3");
+  assert.ok(!allNotes.includes("Cedarwood"),          "Cedarwood must NOT appear — AI rename in R3");
+  assert.ok(!allNotes.includes("White Musk"),         "White Musk must NOT appear — AI rename in R3");
+});
+
+// TEST 15: Non-evidence-locked scaffold does NOT set notesEvidenceLocked — CompositionProducer
+// pathway (normal mode) remains intact for entries without governed note evidence.
+test("TEST 15 — Non-evidence-locked scaffold preserves CompositionProducer pathway", () => {
+  const display = baseDisplay({
+    notes: ["Bergamot", "Rose", "Musk"],
+    // notesEvidenceLocked intentionally absent
+  });
+  const { record } = scaffold(display);
+  assert.notEqual(record.notesEvidenceLocked, true,
+    "Non-locked scaffold must NOT set notesEvidenceLocked — CompositionProducer preCheck must pass for this record");
+});
+
 // ── Summary ───────────────────────────────────────────────────────────────────
 
 console.log(`\n${"─".repeat(56)}`);

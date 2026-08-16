@@ -8,8 +8,8 @@
  * Managed exclusively by: scripts/factory/intake.ts (secondary catalogue fallback).
  *
  * Collections:  ELITE (6) · ROSE (18) · SKYE (16) = 40 total
- * Evidence-locked (5): rose-oud-inspired, bloom-inspired, taif-rose-inspired,
- *   wood-sage-sea-salt-inspired, h24-herbes-vives-inspired
+ * Evidence-locked (6): rose-oud-inspired, bloom-inspired, taif-rose-inspired,
+ *   wood-sage-sea-salt-inspired, h24-herbes-vives-inspired, light-blue-inspired
  *
  * Pricing: prices is a required (non-optional) field on DisplayFragrance.
  * Omitting it would require weakening customer-facing type safety. Canonical
@@ -233,6 +233,9 @@ const rose: DisplayFragrance[] = [
     // slug: light-blue-inspired
     // Dolce & Gabbana Light Blue women (2001). Title omits ampersand.
     // Source: Fragrantica.
+    // EVIDENCE-LOCK: EP-CAT-P3C-R4. Research evidence authoritative; CompositionProducer
+    // bypassed. Cedar appears in both top and base in authoritative research (cross-tier
+    // duplicate); both instances are preserved faithfully in notesStructured.
     title:      "Light Blue Inspired",
     collection: "Rose",
     subtitle:   "Inspired by Dolce & Gabbana Light Blue",
@@ -244,6 +247,12 @@ const rose: DisplayFragrance[] = [
     newArrival: false,
     prices:     PRICES,
     images:     IMAGES,
+    notesEvidenceLocked: true,
+    notesStructured: {
+      top:   ["Sicilian Lemon", "Apple", "Cedar", "Bellflower"],
+      heart: ["Bamboo", "Jasmine", "White Rose"],
+      base:  ["Cedar", "Musk", "Amber"],
+    },
   },
   {
     // slug: bloom-inspired

@@ -23,9 +23,23 @@
  *   npm run mkc:factory:promote -- bleu-de-chanel-inspired
  */
 
+import { readFileSync, existsSync } from "fs";
+import path from "path";
 import { run }     from "./orchestrator";
 import { promote } from "./promotion/promotionManager";
 import { deriveSlug } from "./intake";
+
+// Load .env.local for local development — tsx does not load it automatically.
+// ??= preserves vars already set in the environment (CI, shell export, direct export).
+{
+  const envPath = path.join(process.cwd(), ".env.local");
+  if (existsSync(envPath)) {
+    for (const line of readFileSync(envPath, "utf-8").split(/\r?\n/)) {
+      const m = line.match(/^([A-Z_][A-Z0-9_]*)=(.*)$/);
+      if (m) process.env[m[1]] ??= m[2].replace(/^["']|["']$/g, "");
+    }
+  }
+}
 
 // ── Argument parsing ──────────────────────────────────────────────────────────
 
