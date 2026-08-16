@@ -8,11 +8,13 @@
  * Managed exclusively by: scripts/factory/intake.ts (secondary catalogue fallback).
  *
  * Collections:  ELITE (6) · ROSE (18) · SKYE (16) = 40 total
- * Evidence-locked (13): rose-oud-inspired, bloom-inspired, taif-rose-inspired,
+ * Evidence-locked (20): rose-oud-inspired, bloom-inspired, taif-rose-inspired,
  *   wood-sage-sea-salt-inspired, h24-herbes-vives-inspired, light-blue-inspired,
  *   royal-oud-inspired, chance-inspired, black-opium-over-red-inspired,
  *   ombre-leather-inspired, tobacco-vanille-inspired, oud-ispahan-inspired,
- *   eros-flame-inspired
+ *   eros-flame-inspired, carmina-inspired, mon-guerlain-inspired,
+ *   oriana-inspired, bvlgari-aqua-inspired, dior-homme-sport-inspired,
+ *   spicebomb-dark-leather-inspired, godolphin-inspired
  *
  * Pricing: prices is a required (non-optional) field on DisplayFragrance.
  * Omitting it would require weakening customer-facing type safety. Canonical
@@ -295,17 +297,23 @@ const rose: DisplayFragrance[] = [
   {
     // slug: carmina-inspired
     // Creed Carmina (2023). Source: Fragrantica, creedboutique.com.
-    title:      "Carmina Inspired",
-    collection: "Rose",
-    subtitle:   "Inspired by Creed Carmina",
-    mood:       "Romantic Floral Spicy",
-    profile:    "Floral Amber Woody",
-    season:     "Autumn",
-    notes:      ["Pink Pepper", "Black Cherry", "Saffron", "Rose de Mai", "Violet", "Peony", "Cashmere Wood", "Myrrh", "Frankincense", "Ambroxan", "Musk"],
-    bestSeller: false,
-    newArrival: false,
-    prices:     PRICES,
-    images:     IMAGES,
+    title:               "Carmina Inspired",
+    collection:          "Rose",
+    subtitle:            "Inspired by Creed Carmina",
+    mood:                "Romantic Floral Spicy",
+    profile:             "Floral Amber Woody",
+    season:              "Autumn",
+    notes:               ["Pink Pepper", "Black Cherry", "Saffron", "Rose de Mai", "Violet", "Peony", "Cashmere Wood", "Myrrh", "Frankincense", "Ambroxan", "Musk"],
+    bestSeller:          false,
+    newArrival:          false,
+    prices:              PRICES,
+    images:              IMAGES,
+    notesEvidenceLocked: true,
+    notesStructured: {
+      top:   ["Pink Pepper", "Black Cherry", "Saffron"],
+      heart: ["Rose de Mai", "Violet", "Peony", "Cashmere Wood"],
+      base:  ["Myrrh", "Frankincense", "Ambroxan", "Musk"],
+    },
   },
   {
     // slug: my-way-ylang-inspired
@@ -414,17 +422,23 @@ const rose: DisplayFragrance[] = [
   {
     // slug: mon-guerlain-inspired
     // Guerlain Mon Guerlain EDP (2017). Source: Fragrantica.
-    title:      "Mon Guerlain Inspired",
-    collection: "Rose",
-    subtitle:   "Inspired by Guerlain Mon Guerlain",
-    mood:       "Sweet Floral Romantic",
-    profile:    "Oriental Floral",
-    season:     "Winter",
-    notes:      ["Lavender", "Bergamot", "Iris", "Jasmine Sambac", "Rose", "Tahitian Vanilla", "Tonka Bean", "Australian Sandalwood", "Benzoin", "Licorice", "Patchouli"],
-    bestSeller: false,
-    newArrival: false,
-    prices:     PRICES,
-    images:     IMAGES,
+    title:               "Mon Guerlain Inspired",
+    collection:          "Rose",
+    subtitle:            "Inspired by Guerlain Mon Guerlain",
+    mood:                "Sweet Floral Romantic",
+    profile:             "Oriental Floral",
+    season:              "Winter",
+    notes:               ["Lavender", "Bergamot", "Iris", "Jasmine Sambac", "Rose", "Tahitian Vanilla", "Tonka Bean", "Australian Sandalwood", "Benzoin", "Licorice", "Patchouli"],
+    bestSeller:          false,
+    newArrival:          false,
+    prices:              PRICES,
+    images:              IMAGES,
+    notesEvidenceLocked: true,
+    notesStructured: {
+      top:   ["Lavender", "Bergamot"],
+      heart: ["Iris", "Jasmine Sambac", "Rose"],
+      base:  ["Tahitian Vanilla", "Tonka Bean", "Australian Sandalwood", "Benzoin", "Licorice", "Patchouli"],
+    },
   },
   {
     // slug: bright-crystal-inspired
@@ -460,17 +474,23 @@ const rose: DisplayFragrance[] = [
   {
     // slug: oriana-inspired
     // Parfums de Marly Oriana (2021). Source: us.parfums-de-marly.com, Fragrantica.
-    title:      "Oriana Inspired",
-    collection: "Rose",
-    subtitle:   "Inspired by Parfums de Marly Oriana",
-    mood:       "Sweet Fruity Feminine",
-    profile:    "Floral Fruity Gourmand",
-    season:     "Spring",
-    notes:      ["Mandarin Orange", "Bergamot", "Grapefruit", "Orange Blossom", "Blackcurrant", "Raspberry", "Marshmallow", "Ambrette", "Chantilly Cream", "Musk"],
-    bestSeller: false,
-    newArrival: false,
-    prices:     PRICES,
-    images:     IMAGES,
+    title:               "Oriana Inspired",
+    collection:          "Rose",
+    subtitle:            "Inspired by Parfums de Marly Oriana",
+    mood:                "Sweet Fruity Feminine",
+    profile:             "Floral Fruity Gourmand",
+    season:              "Spring",
+    notes:               ["Mandarin Orange", "Bergamot", "Grapefruit", "Orange Blossom", "Blackcurrant", "Raspberry", "Marshmallow", "Ambrette", "Chantilly Cream", "Musk"],
+    bestSeller:          false,
+    newArrival:          false,
+    prices:              PRICES,
+    images:              IMAGES,
+    notesEvidenceLocked: true,
+    notesStructured: {
+      top:   ["Mandarin Orange", "Bergamot", "Grapefruit"],
+      heart: ["Orange Blossom", "Blackcurrant", "Raspberry"],
+      base:  ["Marshmallow", "Ambrette", "Chantilly Cream", "Musk"],
+    },
   },
 ];
 
@@ -538,17 +558,23 @@ const skye: DisplayFragrance[] = [
   {
     // slug: dior-homme-sport-inspired
     // Dior Homme Sport 2021 reformulation (market launch 2022). Source: Fragrantica.
-    title:      "Dior Homme Sport Inspired",
-    collection: "Skye",
-    subtitle:   "Inspired by Dior Homme Sport",
-    mood:       "Fresh Clean Masculine",
-    profile:    "Woody Fresh",
-    season:     "Summer",
-    notes:      ["Lemon", "Bergamot", "Aldehydes", "Elemi", "Pink Pepper", "Woody Notes", "Amber", "Olibanum"],
-    bestSeller: false,
-    newArrival: false,
-    prices:     PRICES,
-    images:     IMAGES,
+    title:               "Dior Homme Sport Inspired",
+    collection:          "Skye",
+    subtitle:            "Inspired by Dior Homme Sport",
+    mood:                "Fresh Clean Masculine",
+    profile:             "Woody Fresh",
+    season:              "Summer",
+    notes:               ["Lemon", "Bergamot", "Aldehydes", "Elemi", "Pink Pepper", "Woody Notes", "Amber", "Olibanum"],
+    bestSeller:          false,
+    newArrival:          false,
+    prices:              PRICES,
+    images:              IMAGES,
+    notesEvidenceLocked: true,
+    notesStructured: {
+      top:   ["Lemon", "Bergamot", "Aldehydes"],
+      heart: ["Elemi", "Pink Pepper"],
+      base:  ["Woody Notes", "Amber", "Olibanum"],
+    },
   },
   {
     // slug: dunhill-fresh-inspired
@@ -605,17 +631,23 @@ const skye: DisplayFragrance[] = [
     // slug: bvlgari-aqua-inspired
     // Bvlgari AQVA Pour Homme (2005). Original — not Atlantiqve, Marine, or Amara flankers.
     // Source: Fragrantica, basenotes.net.
-    title:      "Bvlgari Aqua Inspired",
-    collection: "Skye",
-    subtitle:   "Inspired by Bvlgari AQVA Pour Homme",
-    mood:       "Fresh Aquatic Clean",
-    profile:    "Aromatic Aquatic",
-    season:     "Summer",
-    notes:      ["Mandarin Orange", "Orange", "Petitgrain", "Seaweed", "Lavender", "Cotton Flower", "Virginia Cedar", "Woodsy Notes", "Patchouli", "Clary Sage", "Amber"],
-    bestSeller: false,
-    newArrival: false,
-    prices:     PRICES,
-    images:     IMAGES,
+    title:               "Bvlgari Aqua Inspired",
+    collection:          "Skye",
+    subtitle:            "Inspired by Bvlgari AQVA Pour Homme",
+    mood:                "Fresh Aquatic Clean",
+    profile:             "Aromatic Aquatic",
+    season:              "Summer",
+    notes:               ["Mandarin Orange", "Orange", "Petitgrain", "Seaweed", "Lavender", "Cotton Flower", "Virginia Cedar", "Woodsy Notes", "Patchouli", "Clary Sage", "Amber"],
+    bestSeller:          false,
+    newArrival:          false,
+    prices:              PRICES,
+    images:              IMAGES,
+    notesEvidenceLocked: true,
+    notesStructured: {
+      top:   ["Mandarin Orange", "Orange", "Petitgrain"],
+      heart: ["Seaweed", "Lavender", "Cotton Flower"],
+      base:  ["Virginia Cedar", "Woodsy Notes", "Patchouli", "Clary Sage", "Amber"],
+    },
   },
   {
     // slug: h24-herbes-vives-inspired
@@ -659,32 +691,44 @@ const skye: DisplayFragrance[] = [
   {
     // slug: spicebomb-dark-leather-inspired
     // Viktor & Rolf Spicebomb Dark Leather (2024). Source: viktor-rolf.com, Fragrantica.
-    title:      "Spicebomb Dark Leather Inspired",
-    collection: "Skye",
-    subtitle:   "Inspired by Viktor & Rolf Spicebomb Dark Leather",
-    mood:       "Dark Spicy Masculine",
-    profile:    "Woody Leathery Spicy",
-    season:     "Autumn",
-    notes:      ["Black Pepper", "Nutmeg", "Incense", "Cinnamon", "Dark Leather", "Tobacco Accord"],
-    bestSeller: false,
-    newArrival: false,
-    prices:     PRICES,
-    images:     IMAGES,
+    title:               "Spicebomb Dark Leather Inspired",
+    collection:          "Skye",
+    subtitle:            "Inspired by Viktor & Rolf Spicebomb Dark Leather",
+    mood:                "Dark Spicy Masculine",
+    profile:             "Woody Leathery Spicy",
+    season:              "Autumn",
+    notes:               ["Black Pepper", "Nutmeg", "Incense", "Cinnamon", "Dark Leather", "Tobacco Accord"],
+    bestSeller:          false,
+    newArrival:          false,
+    prices:              PRICES,
+    images:              IMAGES,
+    notesEvidenceLocked: true,
+    notesStructured: {
+      top:   ["Black Pepper", "Nutmeg"],
+      heart: ["Incense", "Cinnamon"],
+      base:  ["Dark Leather", "Tobacco Accord"],
+    },
   },
   {
     // slug: godolphin-inspired
     // Parfums de Marly Godolphin (2010). Source: us.parfums-de-marly.com, Fragrantica.
-    title:      "Godolphin Inspired",
-    collection: "Skye",
-    subtitle:   "Inspired by Parfums de Marly Godolphin",
-    mood:       "Woody Oriental Masculine",
-    profile:    "Oriental Woody Floral",
-    season:     "Autumn",
-    notes:      ["Thyme", "Saffron", "Cypress", "Green Notes", "Fruity Notes", "Mate", "Rose", "Iris", "Jasmine", "Leather", "Vetiver", "Cedar", "Musk", "Amber", "Vanilla"],
-    bestSeller: false,
-    newArrival: false,
-    prices:     PRICES,
-    images:     IMAGES,
+    title:               "Godolphin Inspired",
+    collection:          "Skye",
+    subtitle:            "Inspired by Parfums de Marly Godolphin",
+    mood:                "Woody Oriental Masculine",
+    profile:             "Oriental Woody Floral",
+    season:              "Autumn",
+    notes:               ["Thyme", "Saffron", "Cypress", "Green Notes", "Fruity Notes", "Mate", "Rose", "Iris", "Jasmine", "Leather", "Vetiver", "Cedar", "Musk", "Amber", "Vanilla"],
+    bestSeller:          false,
+    newArrival:          false,
+    prices:              PRICES,
+    images:              IMAGES,
+    notesEvidenceLocked: true,
+    notesStructured: {
+      top:   ["Thyme", "Saffron", "Cypress", "Green Notes", "Fruity Notes", "Mate"],
+      heart: ["Rose", "Iris", "Jasmine"],
+      base:  ["Leather", "Vetiver", "Cedar", "Musk", "Amber", "Vanilla"],
+    },
   },
   {
     // slug: voyage-d'hermes-inspired  (apostrophe in d' preserved by deriveSlug)
