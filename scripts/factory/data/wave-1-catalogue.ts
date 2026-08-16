@@ -8,7 +8,7 @@
  * Managed exclusively by: scripts/factory/intake.ts (secondary catalogue fallback).
  *
  * Collections:  ELITE (6) · ROSE (18) · SKYE (16) = 40 total
- * Evidence-locked (30): rose-oud-inspired, bloom-inspired, taif-rose-inspired,
+ * Evidence-locked (40): rose-oud-inspired, bloom-inspired, taif-rose-inspired,
  *   wood-sage-sea-salt-inspired, h24-herbes-vives-inspired, light-blue-inspired,
  *   royal-oud-inspired, chance-inspired, black-opium-over-red-inspired,
  *   ombre-leather-inspired, tobacco-vanille-inspired, oud-ispahan-inspired,
@@ -19,7 +19,12 @@
  *   omnia-green-jade-inspired, bright-crystal-inspired,
  *   twilly-d'hermes-inspired, my-way-ylang-inspired,
  *   dunhill-fresh-inspired, voyage-d'hermes-inspired,
- *   allure-homme-sport-inspired, gentleman-edt-inspired
+ *   allure-homme-sport-inspired, gentleman-edt-inspired,
+ *   arabians-musk-inspired, decision-inspired,
+ *   libre-flowers-flames-florale-inspired, fresh-blossom-inspired,
+ *   si-passione-red-musk-inspired, coach-floral-inspired,
+ *   bleu-de-chanel-l'exclusif-inspired, alien-man-inspired,
+ *   invictus-victory-absolu-inspired, bois-d'argent-inspired
  *
  * Pricing: prices is a required (non-optional) field on DisplayFragrance.
  * Omitting it would require weakening customer-facing type safety. Canonical
@@ -71,17 +76,23 @@ const elite: DisplayFragrance[] = [
   {
     // slug: arabians-musk-inspired
     // Montale Arabians Musk (2024). Source: Fragrantica, montaleparfums.us.
-    title:      "Arabians Musk Inspired",
-    collection: "Elite",
-    subtitle:   "Inspired by Montale Arabians Musk",
-    mood:       "Sweet Oriental Musky",
-    profile:    "Oriental Floral Gourmand",
-    season:     "Winter",
-    notes:      ["Honey", "Bergamot", "Dates", "Orange Blossom", "Musk", "Vanilla", "Tonka Bean", "Sugar"],
-    bestSeller: false,
-    newArrival: false,
-    prices:     PRICES,
-    images:     IMAGES,
+    title:               "Arabians Musk Inspired",
+    collection:          "Elite",
+    subtitle:            "Inspired by Montale Arabians Musk",
+    mood:                "Sweet Oriental Musky",
+    profile:             "Oriental Floral Gourmand",
+    season:              "Winter",
+    notes:               ["Honey", "Bergamot", "Dates", "Orange Blossom", "Musk", "Vanilla", "Tonka Bean", "Sugar"],
+    bestSeller:          false,
+    newArrival:          false,
+    prices:              PRICES,
+    images:              IMAGES,
+    notesEvidenceLocked: true,
+    notesStructured: {
+      top:   ["Honey", "Bergamot"],
+      heart: ["Dates", "Orange Blossom"],
+      base:  ["Musk", "Vanilla", "Tonka Bean", "Sugar"],
+    },
   },
   {
     // slug: royal-oud-inspired
@@ -151,17 +162,23 @@ const elite: DisplayFragrance[] = [
   {
     // slug: decision-inspired
     // Amouage Decision (2025). Source: Fragrantica, parfumo.com.
-    title:      "Decision Inspired",
-    collection: "Elite",
-    subtitle:   "Inspired by Amouage Decision",
-    mood:       "Woody Resinous Aromatic",
-    profile:    "Woody Aromatic",
-    season:     "Autumn",
-    notes:      ["Cardamom", "Bergamot", "Pink Pepper", "Frankincense", "Myrrh", "Juniper Berries", "Vanilla", "Cedarwood", "Patchouli"],
-    bestSeller: false,
-    newArrival: false,
-    prices:     PRICES,
-    images:     IMAGES,
+    title:               "Decision Inspired",
+    collection:          "Elite",
+    subtitle:            "Inspired by Amouage Decision",
+    mood:                "Woody Resinous Aromatic",
+    profile:             "Woody Aromatic",
+    season:              "Autumn",
+    notes:               ["Cardamom", "Bergamot", "Pink Pepper", "Frankincense", "Myrrh", "Juniper Berries", "Vanilla", "Cedarwood", "Patchouli"],
+    bestSeller:          false,
+    newArrival:          false,
+    prices:              PRICES,
+    images:              IMAGES,
+    notesEvidenceLocked: true,
+    notesStructured: {
+      top:   ["Cardamom", "Bergamot", "Pink Pepper"],
+      heart: ["Frankincense", "Myrrh", "Juniper Berries"],
+      base:  ["Vanilla", "Cedarwood", "Patchouli"],
+    },
   },
 ];
 
@@ -236,32 +253,46 @@ const rose: DisplayFragrance[] = [
     // slug: libre-flowers-flames-florale-inspired
     // YSL Libre Flowers & Flames EDP Florale (2024). Title omits ampersand.
     // Source: johnlewis.com, macys.com, Fragrantica.
-    title:      "Libre Flowers Flames Florale Inspired",
-    collection: "Rose",
-    subtitle:   "Inspired by Yves Saint Laurent Libre Flowers & Flames EDP Florale",
-    mood:       "Fresh Floral Sweet Tropical",
-    profile:    "Floral",
-    season:     "Spring",
-    notes:      ["Lavender", "Bergamot", "Orange Blossom", "Coconut", "Lily", "Palm Tree Flower", "Vanilla"],
-    bestSeller: false,
-    newArrival: false,
-    prices:     PRICES,
-    images:     IMAGES,
+    // EVIDENCE NOTE: Lavender appears in BOTH top and heart tiers per research JSON.
+    // Preserved exactly — cross-tier duplication is legitimate (see Light Blue: Cedar top+base).
+    title:               "Libre Flowers Flames Florale Inspired",
+    collection:          "Rose",
+    subtitle:            "Inspired by Yves Saint Laurent Libre Flowers & Flames EDP Florale",
+    mood:                "Fresh Floral Sweet Tropical",
+    profile:             "Floral",
+    season:              "Spring",
+    notes:               ["Lavender", "Bergamot", "Orange Blossom", "Coconut", "Lily", "Palm Tree Flower", "Vanilla"],
+    bestSeller:          false,
+    newArrival:          false,
+    prices:              PRICES,
+    images:              IMAGES,
+    notesEvidenceLocked: true,
+    notesStructured: {
+      top:   ["Lavender", "Bergamot"],
+      heart: ["Orange Blossom", "Lavender", "Coconut", "Lily", "Palm Tree Flower"],
+      base:  ["Vanilla"],
+    },
   },
   {
     // slug: fresh-blossom-inspired
     // DKNY Be Delicious Fresh Blossom (2009). Source: Fragrantica.
-    title:      "Fresh Blossom Inspired",
-    collection: "Rose",
-    subtitle:   "Inspired by DKNY Be Delicious Fresh Blossom",
-    mood:       "Fresh Fruity Feminine",
-    profile:    "Floral Fruity",
-    season:     "Spring",
-    notes:      ["Grapefruit", "Apricot", "Cassis", "Rose", "Lily of the Valley", "Jasmine", "Red Apple", "Woodsy Notes"],
-    bestSeller: false,
-    newArrival: false,
-    prices:     PRICES,
-    images:     IMAGES,
+    title:               "Fresh Blossom Inspired",
+    collection:          "Rose",
+    subtitle:            "Inspired by DKNY Be Delicious Fresh Blossom",
+    mood:                "Fresh Fruity Feminine",
+    profile:             "Floral Fruity",
+    season:              "Spring",
+    notes:               ["Grapefruit", "Apricot", "Cassis", "Rose", "Lily of the Valley", "Jasmine", "Red Apple", "Woodsy Notes"],
+    bestSeller:          false,
+    newArrival:          false,
+    prices:              PRICES,
+    images:              IMAGES,
+    notesEvidenceLocked: true,
+    notesStructured: {
+      top:   ["Grapefruit", "Apricot", "Cassis"],
+      heart: ["Rose", "Lily of the Valley", "Jasmine"],
+      base:  ["Red Apple", "Woodsy Notes"],
+    },
   },
   {
     // slug: light-blue-inspired
@@ -357,17 +388,23 @@ const rose: DisplayFragrance[] = [
     // slug: si-passione-red-musk-inspired
     // Giorgio Armani Si Passione Red Musk (2025). Title strips accent from canonical "Sì".
     // Source: Fragrantica (primary note set: Strawberry/Red Musk / Rose/Milk / Musk/Vanilla).
-    title:      "Si Passione Red Musk Inspired",
-    collection: "Rose",
-    subtitle:   "Inspired by Giorgio Armani Si Passione Red Musk",
-    mood:       "Sensual Musky Sweet",
-    profile:    "Floral Musky",
-    season:     "Spring",
-    notes:      ["Strawberry", "Red Musk", "Rose", "Milk", "Musk", "Vanilla"],
-    bestSeller: false,
-    newArrival: false,
-    prices:     PRICES,
-    images:     IMAGES,
+    title:               "Si Passione Red Musk Inspired",
+    collection:          "Rose",
+    subtitle:            "Inspired by Giorgio Armani Si Passione Red Musk",
+    mood:                "Sensual Musky Sweet",
+    profile:             "Floral Musky",
+    season:              "Spring",
+    notes:               ["Strawberry", "Red Musk", "Rose", "Milk", "Musk", "Vanilla"],
+    bestSeller:          false,
+    newArrival:          false,
+    prices:              PRICES,
+    images:              IMAGES,
+    notesEvidenceLocked: true,
+    notesStructured: {
+      top:   ["Strawberry", "Red Musk"],
+      heart: ["Rose", "Milk"],
+      base:  ["Musk", "Vanilla"],
+    },
   },
   {
     // slug: omnia-green-jade-inspired
@@ -393,17 +430,23 @@ const rose: DisplayFragrance[] = [
   {
     // slug: coach-floral-inspired
     // Coach Floral (2018). Source: Fragrantica, coach.com.
-    title:      "Coach Floral Inspired",
-    collection: "Rose",
-    subtitle:   "Inspired by Coach Floral",
-    mood:       "Feminine Floral Fresh",
-    profile:    "Floral Woody",
-    season:     "Spring",
-    notes:      ["Citrus", "Pink Peppercorn", "Pineapple Sorbet", "Rose Tea", "Jasmine Sambac", "Gardenia", "Creamy Wood", "Patchouli", "Musk"],
-    bestSeller: false,
-    newArrival: false,
-    prices:     PRICES,
-    images:     IMAGES,
+    title:               "Coach Floral Inspired",
+    collection:          "Rose",
+    subtitle:            "Inspired by Coach Floral",
+    mood:                "Feminine Floral Fresh",
+    profile:             "Floral Woody",
+    season:              "Spring",
+    notes:               ["Citrus", "Pink Peppercorn", "Pineapple Sorbet", "Rose Tea", "Jasmine Sambac", "Gardenia", "Creamy Wood", "Patchouli", "Musk"],
+    bestSeller:          false,
+    newArrival:          false,
+    prices:              PRICES,
+    images:              IMAGES,
+    notesEvidenceLocked: true,
+    notesStructured: {
+      top:   ["Citrus", "Pink Peppercorn", "Pineapple Sorbet"],
+      heart: ["Rose Tea", "Jasmine Sambac", "Gardenia"],
+      base:  ["Creamy Wood", "Patchouli", "Musk"],
+    },
   },
   {
     // slug: oud-ispahan-inspired
@@ -541,17 +584,23 @@ const skye: DisplayFragrance[] = [
   {
     // slug: bleu-de-chanel-l'exclusif-inspired  (apostrophe in L' preserved by deriveSlug)
     // Chanel Bleu de Chanel L'Exclusif (2025). Source: Fragrantica, bustle.com.
-    title:      "Bleu de Chanel L'Exclusif Inspired",
-    collection: "Skye",
-    subtitle:   "Inspired by Chanel Bleu de Chanel L'Exclusif",
-    mood:       "Sophisticated Masculine Elegant",
-    profile:    "Woody Leathery Aromatic",
-    season:     "Autumn",
-    notes:      ["Lavender", "Bergamot", "Lemon Peel", "Jasmine", "Leather Accord", "Sandalwood", "Virginia Cedar", "Patchouli", "Cistus Labdanum"],
-    bestSeller: false,
-    newArrival: false,
-    prices:     PRICES,
-    images:     IMAGES,
+    title:               "Bleu de Chanel L'Exclusif Inspired",
+    collection:          "Skye",
+    subtitle:            "Inspired by Chanel Bleu de Chanel L'Exclusif",
+    mood:                "Sophisticated Masculine Elegant",
+    profile:             "Woody Leathery Aromatic",
+    season:              "Autumn",
+    notes:               ["Lavender", "Bergamot", "Lemon Peel", "Jasmine", "Leather Accord", "Sandalwood", "Virginia Cedar", "Patchouli", "Cistus Labdanum"],
+    bestSeller:          false,
+    newArrival:          false,
+    prices:              PRICES,
+    images:              IMAGES,
+    notesEvidenceLocked: true,
+    notesStructured: {
+      top:   ["Lavender", "Bergamot", "Lemon Peel"],
+      heart: ["Jasmine", "Leather Accord"],
+      base:  ["Sandalwood", "Virginia Cedar", "Patchouli", "Cistus Labdanum"],
+    },
   },
   {
     // slug: ombre-leather-inspired
@@ -664,17 +713,23 @@ const skye: DisplayFragrance[] = [
   {
     // slug: alien-man-inspired
     // Mugler Alien Man (2018). Source: Fragrantica, mugler.com.
-    title:      "Alien Man Inspired",
-    collection: "Skye",
-    subtitle:   "Inspired by Mugler Alien Man",
-    mood:       "Aromatic Spicy Masculine",
-    profile:    "Oriental Woody",
-    season:     "Autumn",
-    notes:      ["Anise", "Dill", "Mint", "Lavender", "Beech", "Thyme", "Lemon", "Leather", "Cashmere Wood", "Osmanthus", "Pepper", "Geranium", "White Amber", "Cashmeran", "Vanilla"],
-    bestSeller: false,
-    newArrival: false,
-    prices:     PRICES,
-    images:     IMAGES,
+    title:               "Alien Man Inspired",
+    collection:          "Skye",
+    subtitle:            "Inspired by Mugler Alien Man",
+    mood:                "Aromatic Spicy Masculine",
+    profile:             "Oriental Woody",
+    season:              "Autumn",
+    notes:               ["Anise", "Dill", "Mint", "Lavender", "Beech", "Thyme", "Lemon", "Leather", "Cashmere Wood", "Osmanthus", "Pepper", "Geranium", "White Amber", "Cashmeran", "Vanilla"],
+    bestSeller:          false,
+    newArrival:          false,
+    prices:              PRICES,
+    images:              IMAGES,
+    notesEvidenceLocked: true,
+    notesStructured: {
+      top:   ["Anise", "Dill", "Mint", "Lavender", "Beech", "Thyme", "Lemon"],
+      heart: ["Leather", "Cashmere Wood", "Osmanthus", "Pepper", "Geranium"],
+      base:  ["White Amber", "Cashmeran", "Vanilla"],
+    },
   },
   {
     // slug: bvlgari-aqua-inspired
@@ -725,17 +780,23 @@ const skye: DisplayFragrance[] = [
   {
     // slug: invictus-victory-absolu-inspired
     // Rabanne Invictus Victory Absolu (2025). Source: rabanne.com, Fragrantica.
-    title:      "Invictus Victory Absolu Inspired",
-    collection: "Skye",
-    subtitle:   "Inspired by Rabanne Invictus Victory Absolu",
-    mood:       "Warm Oriental Masculine",
-    profile:    "Oriental Woody",
-    season:     "Autumn",
-    notes:      ["Black Pepper", "Amber", "Ambergris", "Woodsy Notes", "Sandalwood", "Frankincense", "Patchouli"],
-    bestSeller: false,
-    newArrival: false,
-    prices:     PRICES,
-    images:     IMAGES,
+    title:               "Invictus Victory Absolu Inspired",
+    collection:          "Skye",
+    subtitle:            "Inspired by Rabanne Invictus Victory Absolu",
+    mood:                "Warm Oriental Masculine",
+    profile:             "Oriental Woody",
+    season:              "Autumn",
+    notes:               ["Black Pepper", "Amber", "Ambergris", "Woodsy Notes", "Sandalwood", "Frankincense", "Patchouli"],
+    bestSeller:          false,
+    newArrival:          false,
+    prices:              PRICES,
+    images:              IMAGES,
+    notesEvidenceLocked: true,
+    notesStructured: {
+      top:   ["Black Pepper"],
+      heart: ["Amber", "Ambergris", "Woodsy Notes"],
+      base:  ["Sandalwood", "Frankincense", "Patchouli"],
+    },
   },
   {
     // slug: spicebomb-dark-leather-inspired
@@ -806,17 +867,23 @@ const skye: DisplayFragrance[] = [
     // slug: bois-d'argent-inspired  (apostrophe in d' preserved by deriveSlug)
     // Dior Bois d'Argent (2004). La Collection Privee. Original Annick Menardo version.
     // Source: dior.com, Fragrantica.
-    title:      "Bois d'Argent Inspired",
-    collection: "Skye",
-    subtitle:   "Inspired by Dior Bois d'Argent",
-    mood:       "Woody Floral",
-    profile:    "Woody Floral",
-    season:     "Autumn",
-    notes:      ["Iris", "Cypress", "Juniper Berries", "Myrrh", "Patchouli", "Woodsy Notes", "Honey", "Vanilla", "Amber", "Resins", "Musk", "Leather"],
-    bestSeller: false,
-    newArrival: false,
-    prices:     PRICES,
-    images:     IMAGES,
+    title:               "Bois d'Argent Inspired",
+    collection:          "Skye",
+    subtitle:            "Inspired by Dior Bois d'Argent",
+    mood:                "Woody Floral",
+    profile:             "Woody Floral",
+    season:              "Autumn",
+    notes:               ["Iris", "Cypress", "Juniper Berries", "Myrrh", "Patchouli", "Woodsy Notes", "Honey", "Vanilla", "Amber", "Resins", "Musk", "Leather"],
+    bestSeller:          false,
+    newArrival:          false,
+    prices:              PRICES,
+    images:              IMAGES,
+    notesEvidenceLocked: true,
+    notesStructured: {
+      top:   ["Iris", "Cypress", "Juniper Berries"],
+      heart: ["Myrrh", "Patchouli"],
+      base:  ["Woodsy Notes", "Honey", "Vanilla", "Amber", "Resins", "Musk", "Leather"],
+    },
   },
   {
     // slug: allure-homme-sport-inspired
