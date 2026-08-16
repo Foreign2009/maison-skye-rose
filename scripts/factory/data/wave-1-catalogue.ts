@@ -8,8 +8,11 @@
  * Managed exclusively by: scripts/factory/intake.ts (secondary catalogue fallback).
  *
  * Collections:  ELITE (6) · ROSE (18) · SKYE (16) = 40 total
- * Evidence-locked (6): rose-oud-inspired, bloom-inspired, taif-rose-inspired,
- *   wood-sage-sea-salt-inspired, h24-herbes-vives-inspired, light-blue-inspired
+ * Evidence-locked (13): rose-oud-inspired, bloom-inspired, taif-rose-inspired,
+ *   wood-sage-sea-salt-inspired, h24-herbes-vives-inspired, light-blue-inspired,
+ *   royal-oud-inspired, chance-inspired, black-opium-over-red-inspired,
+ *   ombre-leather-inspired, tobacco-vanille-inspired, oud-ispahan-inspired,
+ *   eros-flame-inspired
  *
  * Pricing: prices is a required (non-optional) field on DisplayFragrance.
  * Omitting it would require weakening customer-facing type safety. Canonical
@@ -76,17 +79,23 @@ const elite: DisplayFragrance[] = [
   {
     // slug: royal-oud-inspired
     // Creed Royal Oud (2011). Source: Fragrantica, creedfragrance.com.
-    title:      "Royal Oud Inspired",
-    collection: "Elite",
-    subtitle:   "Inspired by Creed Royal Oud",
-    mood:       "Woody Sophisticated",
-    profile:    "Woody Aromatic",
-    season:     "Autumn",
-    notes:      ["Pink Pepper", "Lemon", "Sicilian Bergamot", "Cedar", "Angelica", "Galbanum", "Sandalwood", "Agarwood (Oud)", "Musk"],
-    bestSeller: false,
-    newArrival: false,
-    prices:     PRICES,
-    images:     IMAGES,
+    title:               "Royal Oud Inspired",
+    collection:          "Elite",
+    subtitle:            "Inspired by Creed Royal Oud",
+    mood:                "Woody Sophisticated",
+    profile:             "Woody Aromatic",
+    season:              "Autumn",
+    notes:               ["Pink Pepper", "Lemon", "Sicilian Bergamot", "Cedar", "Angelica", "Galbanum", "Sandalwood", "Agarwood (Oud)", "Musk"],
+    bestSeller:          false,
+    newArrival:          false,
+    prices:              PRICES,
+    images:              IMAGES,
+    notesEvidenceLocked: true,
+    notesStructured: {
+      top:   ["Pink Pepper", "Lemon", "Sicilian Bergamot"],
+      heart: ["Cedar", "Angelica", "Galbanum"],
+      base:  ["Sandalwood", "Agarwood (Oud)", "Musk"],
+    },
   },
   {
     // slug: rose-of-no-man's-land-inspired  (apostrophe preserved by deriveSlug)
@@ -164,17 +173,23 @@ const rose: DisplayFragrance[] = [
   {
     // slug: black-opium-over-red-inspired
     // YSL Black Opium Over Red (2023). Source: yslbeauty.com, Fragrantica.
-    title:      "Black Opium Over Red Inspired",
-    collection: "Rose",
-    subtitle:   "Inspired by Yves Saint Laurent Black Opium Over Red",
-    mood:       "Gourmand Sweet Dark",
-    profile:    "Oriental Gourmand",
-    season:     "Autumn",
-    notes:      ["Cherry", "Green Mandarin", "Jasmine", "Orange Blossom", "Black Tea", "Madagascar Vanilla", "Coffee", "Indonesian Patchouli Leaf"],
-    bestSeller: false,
-    newArrival: false,
-    prices:     PRICES,
-    images:     IMAGES,
+    title:               "Black Opium Over Red Inspired",
+    collection:          "Rose",
+    subtitle:            "Inspired by Yves Saint Laurent Black Opium Over Red",
+    mood:                "Gourmand Sweet Dark",
+    profile:             "Oriental Gourmand",
+    season:              "Autumn",
+    notes:               ["Cherry", "Green Mandarin", "Jasmine", "Orange Blossom", "Black Tea", "Madagascar Vanilla", "Coffee", "Indonesian Patchouli Leaf"],
+    bestSeller:          false,
+    newArrival:          false,
+    prices:              PRICES,
+    images:              IMAGES,
+    notesEvidenceLocked: true,
+    notesStructured: {
+      top:   ["Cherry", "Green Mandarin"],
+      heart: ["Jasmine", "Orange Blossom", "Black Tea"],
+      base:  ["Madagascar Vanilla", "Coffee", "Indonesian Patchouli Leaf"],
+    },
   },
   {
     // slug: taif-rose-inspired
@@ -356,33 +371,45 @@ const rose: DisplayFragrance[] = [
   {
     // slug: oud-ispahan-inspired
     // Dior Oud Ispahan (2012). La Collection Privee. Source: dior.com, Fragrantica.
-    title:      "Oud Ispahan Inspired",
-    collection: "Rose",
-    subtitle:   "Inspired by Dior Oud Ispahan",
-    mood:       "Oriental Romantic Rose",
-    profile:    "Oriental Woody",
-    season:     "Winter",
-    notes:      ["Labdanum", "Rose", "Patchouli", "Saffron", "Agarwood (Oud)", "Sandalwood", "Cedar"],
-    bestSeller: false,
-    newArrival: false,
-    prices:     PRICES,
-    images:     IMAGES,
+    title:               "Oud Ispahan Inspired",
+    collection:          "Rose",
+    subtitle:            "Inspired by Dior Oud Ispahan",
+    mood:                "Oriental Romantic Rose",
+    profile:             "Oriental Woody",
+    season:              "Winter",
+    notes:               ["Labdanum", "Rose", "Patchouli", "Saffron", "Agarwood (Oud)", "Sandalwood", "Cedar"],
+    bestSeller:          false,
+    newArrival:          false,
+    prices:              PRICES,
+    images:              IMAGES,
+    notesEvidenceLocked: true,
+    notesStructured: {
+      top:   ["Labdanum"],
+      heart: ["Rose", "Patchouli", "Saffron"],
+      base:  ["Agarwood (Oud)", "Sandalwood", "Cedar"],
+    },
   },
   {
     // slug: chance-inspired
     // Chanel Chance EDT (2002). Original — not Eau Tendre, Eau Fraiche, or Eau Vive.
     // Source: Fragrantica.
-    title:      "Chance Inspired",
-    collection: "Rose",
-    subtitle:   "Inspired by Chanel Chance",
-    mood:       "Fresh Floral Feminine",
-    profile:    "Floral Fresh",
-    season:     "Spring",
-    notes:      ["Citron", "Pink Pepper", "Jasmine Absolute", "Iris Absolute", "Hyacinth", "Amber Patchouli", "White Musk", "Vetiver"],
-    bestSeller: false,
-    newArrival: false,
-    prices:     PRICES,
-    images:     IMAGES,
+    title:               "Chance Inspired",
+    collection:          "Rose",
+    subtitle:            "Inspired by Chanel Chance",
+    mood:                "Fresh Floral Feminine",
+    profile:             "Floral Fresh",
+    season:              "Spring",
+    notes:               ["Citron", "Pink Pepper", "Jasmine Absolute", "Iris Absolute", "Hyacinth", "Amber Patchouli", "White Musk", "Vetiver"],
+    bestSeller:          false,
+    newArrival:          false,
+    prices:              PRICES,
+    images:              IMAGES,
+    notesEvidenceLocked: true,
+    notesStructured: {
+      top:   ["Citron", "Pink Pepper"],
+      heart: ["Jasmine Absolute", "Iris Absolute", "Hyacinth"],
+      base:  ["Amber Patchouli", "White Musk", "Vetiver"],
+    },
   },
   {
     // slug: mon-guerlain-inspired
@@ -469,32 +496,44 @@ const skye: DisplayFragrance[] = [
     // slug: ombre-leather-inspired
     // Tom Ford Ombre Leather (2018). Title strips accent from canonical "Ombré".
     // Source: tomfordbeauty.com, Fragrantica.
-    title:      "Ombre Leather Inspired",
-    collection: "Skye",
-    subtitle:   "Inspired by Tom Ford Ombre Leather",
-    mood:       "Dark Masculine",
-    profile:    "Leather Woody",
-    season:     "Autumn",
-    notes:      ["Cardamom", "Leather", "Jasmine Sambac", "Amber", "Moss", "Patchouli"],
-    bestSeller: false,
-    newArrival: false,
-    prices:     PRICES,
-    images:     IMAGES,
+    title:               "Ombre Leather Inspired",
+    collection:          "Skye",
+    subtitle:            "Inspired by Tom Ford Ombre Leather",
+    mood:                "Dark Masculine",
+    profile:             "Leather Woody",
+    season:              "Autumn",
+    notes:               ["Cardamom", "Leather", "Jasmine Sambac", "Amber", "Moss", "Patchouli"],
+    bestSeller:          false,
+    newArrival:          false,
+    prices:              PRICES,
+    images:              IMAGES,
+    notesEvidenceLocked: true,
+    notesStructured: {
+      top:   ["Cardamom"],
+      heart: ["Leather", "Jasmine Sambac"],
+      base:  ["Amber", "Moss", "Patchouli"],
+    },
   },
   {
     // slug: tobacco-vanille-inspired
     // Tom Ford Tobacco Vanille (2007). Source: tomfordbeauty.com, Fragrantica.
-    title:      "Tobacco Vanille Inspired",
-    collection: "Skye",
-    subtitle:   "Inspired by Tom Ford Tobacco Vanille",
-    mood:       "Sweet Warm Masculine",
-    profile:    "Oriental Spicy",
-    season:     "Winter",
-    notes:      ["Tobacco Leaf", "Spicy Notes", "Vanilla", "Cacao", "Tonka Bean", "Tobacco Blossom", "Dried Fruits", "Woody Notes"],
-    bestSeller: false,
-    newArrival: false,
-    prices:     PRICES,
-    images:     IMAGES,
+    title:               "Tobacco Vanille Inspired",
+    collection:          "Skye",
+    subtitle:            "Inspired by Tom Ford Tobacco Vanille",
+    mood:                "Sweet Warm Masculine",
+    profile:             "Oriental Spicy",
+    season:              "Winter",
+    notes:               ["Tobacco Leaf", "Spicy Notes", "Vanilla", "Cacao", "Tonka Bean", "Tobacco Blossom", "Dried Fruits", "Woody Notes"],
+    bestSeller:          false,
+    newArrival:          false,
+    prices:              PRICES,
+    images:              IMAGES,
+    notesEvidenceLocked: true,
+    notesStructured: {
+      top:   ["Tobacco Leaf", "Spicy Notes"],
+      heart: ["Vanilla", "Cacao", "Tonka Bean", "Tobacco Blossom"],
+      base:  ["Dried Fruits", "Woody Notes"],
+    },
   },
   {
     // slug: dior-homme-sport-inspired
@@ -529,17 +568,23 @@ const skye: DisplayFragrance[] = [
   {
     // slug: eros-flame-inspired
     // Versace Eros Flame (2018). Source: Fragrantica, versace.com.
-    title:      "Eros Flame Inspired",
-    collection: "Skye",
-    subtitle:   "Inspired by Versace Eros Flame",
-    mood:       "Fresh Spicy Masculine",
-    profile:    "Woody Citrus",
-    season:     "Autumn",
-    notes:      ["Mandarin Orange", "Lemon", "Chinotto", "Black Pepper", "Rosemary", "Geranium", "Rose", "Pepperwood", "Vanilla", "Tonka Bean", "Sandalwood", "Texas Cedar", "Patchouli", "Oakmoss"],
-    bestSeller: false,
-    newArrival: false,
-    prices:     PRICES,
-    images:     IMAGES,
+    title:               "Eros Flame Inspired",
+    collection:          "Skye",
+    subtitle:            "Inspired by Versace Eros Flame",
+    mood:                "Fresh Spicy Masculine",
+    profile:             "Woody Citrus",
+    season:              "Autumn",
+    notes:               ["Mandarin Orange", "Lemon", "Chinotto", "Black Pepper", "Rosemary", "Geranium", "Rose", "Pepperwood", "Vanilla", "Tonka Bean", "Sandalwood", "Texas Cedar", "Patchouli", "Oakmoss"],
+    bestSeller:          false,
+    newArrival:          false,
+    prices:              PRICES,
+    images:              IMAGES,
+    notesEvidenceLocked: true,
+    notesStructured: {
+      top:   ["Mandarin Orange", "Lemon", "Chinotto", "Black Pepper", "Rosemary"],
+      heart: ["Geranium", "Rose", "Pepperwood"],
+      base:  ["Vanilla", "Tonka Bean", "Sandalwood", "Texas Cedar", "Patchouli", "Oakmoss"],
+    },
   },
   {
     // slug: alien-man-inspired
