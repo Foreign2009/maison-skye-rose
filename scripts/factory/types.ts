@@ -30,6 +30,10 @@ export interface FragranceIntake extends ProductIntakeBase {
   readonly notes:      string[];
   readonly prices:     { "5ml": number; "10ml": number; "30ml": number };
   readonly images:     { "5ml": string; "10ml": string; "30ml": string };
+  // Evidence-lock: mirrors DisplayFragrance fields. When true, governed notes are
+  // preserved through the pipeline; CompositionProducer is bypassed.
+  readonly notesEvidenceLocked?: boolean;
+  readonly notesStructured?:     { top: string[]; heart: string[]; base: string[] };
 }
 
 export interface HomeFragranceIntake extends ProductIntakeBase {

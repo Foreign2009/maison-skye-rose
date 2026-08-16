@@ -17,6 +17,7 @@ import path from "path";
 import type { DisplayFragrance } from "../../app/lib/knowledgeAdapter";
 import { nativeFragrances }      from "../../app/lib/mkc/native/index";
 import { fragrances }            from "../../app/data/fragrances";
+import { wave1Catalogue }        from "./data/wave-1-catalogue";
 import { CatalogueRegistry }     from "./core/CatalogueRegistry";
 import { deriveSlug }            from "./core/deriveSlug";
 import type { IntakeInput, IntakeResult, FragranceIntake } from "./types";
@@ -61,7 +62,11 @@ export const defaultCatalogueRegistry = new CatalogueRegistry();
 defaultCatalogueRegistry.register("fragrance", (slug) => {
   const allFragrances = fragrances as DisplayFragrance[];
   const match = allFragrances.find(f => deriveSlug(f.title) === slug);
-  return match ? toFragranceIntake(match) : null;
+  if (match) return toFragranceIntake(match);
+  // Secondary: Wave 1 staging catalogue (factory-only; not customer-facing).
+  // Searched only when the production catalogue returns no match.
+  const wave1 = wave1Catalogue.find(f => deriveSlug(f.title) === slug);
+  return wave1 ? toFragranceIntake(wave1) : null;
 });
 // Home fragrance catalogue is empty until supplier data is defined.
 // The loader is registered so the architecture resolves correctly for this category.
