@@ -108,6 +108,17 @@ const EVIDENCE_LOCKED_SLUGS = new Set([
   "dior-homme-sport-inspired",
   "spicebomb-dark-leather-inspired",
   "godolphin-inspired",
+  // EP-CAT-P3C-R8 Batch 3A (10)
+  "rose-of-no-man's-land-inspired",
+  "rose-n'-roses-inspired",
+  "omnia-green-jade-inspired",
+  "bright-crystal-inspired",
+  "twilly-d'hermes-inspired",
+  "my-way-ylang-inspired",
+  "dunhill-fresh-inspired",
+  "voyage-d'hermes-inspired",
+  "allure-homme-sport-inspired",
+  "gentleman-edt-inspired",
 ]);
 
 // ── Derived slugs for each catalogue entry ────────────────────────────────────
@@ -209,10 +220,10 @@ test("CHECK 10 — All flat notes[] arrays are non-empty", () => {
     `Entries with empty notes[]: ${empty.join(", ")}`);
 });
 
-// CHECK 11: Evidence-locked count = 20 (6 pre-R5 + 7 R5 Batch 1 + 7 R6 Batch 2)
-test("CHECK 11 — Evidence-locked entry count = 20", () => {
+// CHECK 11: Evidence-locked count = 30 (6 pre-R5 + 7 R5 Batch 1 + 7 R6 Batch 2 + 10 R8 Batch 3A)
+test("CHECK 11 — Evidence-locked entry count = 30", () => {
   const n = wave1Catalogue.filter(f => f.notesEvidenceLocked === true).length;
-  assert.equal(n, 20, `Expected 20 evidence-locked entries; got ${n}`);
+  assert.equal(n, 30, `Expected 30 evidence-locked entries; got ${n}`);
 });
 
 // CHECK 12: All evidence-locked entries have notesStructured defined

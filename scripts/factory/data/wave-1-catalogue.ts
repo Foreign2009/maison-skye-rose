@@ -8,13 +8,18 @@
  * Managed exclusively by: scripts/factory/intake.ts (secondary catalogue fallback).
  *
  * Collections:  ELITE (6) · ROSE (18) · SKYE (16) = 40 total
- * Evidence-locked (20): rose-oud-inspired, bloom-inspired, taif-rose-inspired,
+ * Evidence-locked (30): rose-oud-inspired, bloom-inspired, taif-rose-inspired,
  *   wood-sage-sea-salt-inspired, h24-herbes-vives-inspired, light-blue-inspired,
  *   royal-oud-inspired, chance-inspired, black-opium-over-red-inspired,
  *   ombre-leather-inspired, tobacco-vanille-inspired, oud-ispahan-inspired,
  *   eros-flame-inspired, carmina-inspired, mon-guerlain-inspired,
  *   oriana-inspired, bvlgari-aqua-inspired, dior-homme-sport-inspired,
- *   spicebomb-dark-leather-inspired, godolphin-inspired
+ *   spicebomb-dark-leather-inspired, godolphin-inspired,
+ *   rose-of-no-man's-land-inspired, rose-n'-roses-inspired,
+ *   omnia-green-jade-inspired, bright-crystal-inspired,
+ *   twilly-d'hermes-inspired, my-way-ylang-inspired,
+ *   dunhill-fresh-inspired, voyage-d'hermes-inspired,
+ *   allure-homme-sport-inspired, gentleman-edt-inspired
  *
  * Pricing: prices is a required (non-optional) field on DisplayFragrance.
  * Omitting it would require weakening customer-facing type safety. Canonical
@@ -113,6 +118,12 @@ const elite: DisplayFragrance[] = [
     newArrival: false,
     prices:     PRICES,
     images:     IMAGES,
+    notesEvidenceLocked: true,
+    notesStructured: {
+      top:   ["Turkish Rose", "Pink Pepper"],
+      heart: ["Turkish Rose", "Raspberry Bloom"],
+      base:  ["Papyrus", "White Amber"],
+    },
   },
   {
     // slug: wood-sage-sea-salt-inspired
@@ -171,6 +182,12 @@ const rose: DisplayFragrance[] = [
     newArrival: false,
     prices:     PRICES,
     images:     IMAGES,
+    notesEvidenceLocked: true,
+    notesStructured: {
+      top:   ["Italian Mandarin", "Bergamot", "Geranium"],
+      heart: ["Grasse Rose", "Damask Rose"],
+      base:  ["White Musk"],
+    },
   },
   {
     // slug: black-opium-over-red-inspired
@@ -329,6 +346,12 @@ const rose: DisplayFragrance[] = [
     newArrival: false,
     prices:     PRICES,
     images:     IMAGES,
+    notesEvidenceLocked: true,
+    notesStructured: {
+      top:   ["Mango Accord", "White Flowers", "Ginger", "Bergamot"],
+      heart: ["Ylang Ylang Essence", "Coconut Water Accord", "Tuberose"],
+      base:  ["White Musk", "Vanilla Bourbon", "Cedarwood"],
+    },
   },
   {
     // slug: si-passione-red-musk-inspired
@@ -360,6 +383,12 @@ const rose: DisplayFragrance[] = [
     newArrival: false,
     prices:     PRICES,
     images:     IMAGES,
+    notesEvidenceLocked: true,
+    notesStructured: {
+      top:   ["Green Notes", "Mandarin Orange"],
+      heart: ["Jasmine", "Peony", "Pear Blossom"],
+      base:  ["Woodsy Notes", "Pistachio", "Musk"],
+    },
   },
   {
     // slug: coach-floral-inspired
@@ -454,6 +483,12 @@ const rose: DisplayFragrance[] = [
     newArrival: false,
     prices:     PRICES,
     images:     IMAGES,
+    notesEvidenceLocked: true,
+    notesStructured: {
+      top:   ["Yuzu", "Pomegranate", "Caramelized Red Fruits", "Ice Accord"],
+      heart: ["Lotus Flower", "Magnolia", "Peony"],
+      base:  ["Amber Woods", "Acajou", "Ambrox Super", "Musk"],
+    },
   },
   {
     // slug: twilly-d'hermes-inspired  (apostrophe in d' preserved by deriveSlug)
@@ -470,6 +505,12 @@ const rose: DisplayFragrance[] = [
     newArrival: false,
     prices:     PRICES,
     images:     IMAGES,
+    notesEvidenceLocked: true,
+    notesStructured: {
+      top:   ["Ginger", "Bitter Orange", "Bergamot"],
+      heart: ["Tuberose", "Orange Blossom", "Jasmine"],
+      base:  ["Sandalwood", "Vanilla"],
+    },
   },
   {
     // slug: oriana-inspired
@@ -579,6 +620,8 @@ const skye: DisplayFragrance[] = [
   {
     // slug: dunhill-fresh-inspired
     // Alfred Dunhill Dunhill Fresh (2005). Source: Fragrantica, basenotes.net.
+    // EVIDENCE NOTE: Freesia appears in BOTH top and heart tiers per research JSON.
+    // Preserved exactly — cross-tier duplication is legitimate (see Light Blue: Cedar top+base).
     title:      "Dunhill Fresh Inspired",
     collection: "Skye",
     subtitle:   "Inspired by Alfred Dunhill Dunhill Fresh",
@@ -590,6 +633,12 @@ const skye: DisplayFragrance[] = [
     newArrival: false,
     prices:     PRICES,
     images:     IMAGES,
+    notesEvidenceLocked: true,
+    notesStructured: {
+      top:   ["Green Notes", "Mint", "Basil", "Lavender", "Freesia", "Sage"],
+      heart: ["Violet", "Iris", "Mimosa", "Freesia"],
+      base:  ["Vetiver", "Cedar", "Oakmoss", "Patchouli", "Amber", "Coumarin"],
+    },
   },
   {
     // slug: eros-flame-inspired
@@ -746,6 +795,12 @@ const skye: DisplayFragrance[] = [
     newArrival: false,
     prices:     PRICES,
     images:     IMAGES,
+    notesEvidenceLocked: true,
+    notesStructured: {
+      top:   ["Cardamom", "Amalfi Lemon", "Spices", "Juniper Berries"],
+      heart: ["Tea", "Green Notes", "Floral Notes"],
+      base:  ["Woodsy Notes", "Musk", "Cedar"],
+    },
   },
   {
     // slug: bois-d'argent-inspired  (apostrophe in d' preserved by deriveSlug)
@@ -777,6 +832,12 @@ const skye: DisplayFragrance[] = [
     newArrival: false,
     prices:     PRICES,
     images:     IMAGES,
+    notesEvidenceLocked: true,
+    notesStructured: {
+      top:   ["Orange", "Sea Notes", "Aldehydes", "Blood Mandarin"],
+      heart: ["Pepper", "Neroli", "Cedar"],
+      base:  ["Vanilla", "Tonka Bean", "White Musk", "Amber", "Vetiver", "Elemi Resin"],
+    },
   },
   {
     // slug: gentleman-edt-inspired
@@ -795,6 +856,12 @@ const skye: DisplayFragrance[] = [
     newArrival: false,
     prices:     PRICES,
     images:     IMAGES,
+    notesEvidenceLocked: true,
+    notesStructured: {
+      top:   ["Pear", "Cardamom", "Pineapple"],
+      heart: ["Iris", "Lavender", "Geranium"],
+      base:  ["Leather", "Black Vanilla Husk", "Patchouli"],
+    },
   },
 ];
 
