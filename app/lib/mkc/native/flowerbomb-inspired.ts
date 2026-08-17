@@ -108,7 +108,7 @@ export const flowerbombInspired: FragranceKnowledge = {
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["delina-inspired"],
-    wardrobePartners: ["sauvage-inspired"],
+    alternatives:     ["delina-inspired", "mon-guerlain-inspired", "libre-flowers-flames-florale-inspired"],
+    wardrobePartners: ["sauvage-inspired", "chance-inspired", "coach-floral-inspired", "light-blue-inspired"],
   },
 };

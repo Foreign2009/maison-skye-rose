@@ -109,7 +109,7 @@ export const monParisInspired: FragranceKnowledge = {
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["delina-inspired"],
-    wardrobePartners: ["sauvage-inspired"],
+    alternatives:     ["delina-inspired", "bright-crystal-inspired", "coach-floral-inspired", "fresh-blossom-inspired", "my-way-ylang-inspired", "oriana-inspired", "si-passione-red-musk-inspired", "twilly-d'hermes-inspired", "rose-n'-roses-inspired"],
+    wardrobePartners: ["sauvage-inspired", "rose-of-no-man's-land-inspired"],
   },
 };

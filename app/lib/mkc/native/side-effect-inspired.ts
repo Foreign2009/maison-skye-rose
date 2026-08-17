@@ -87,6 +87,11 @@ export const sideEffectInspired: FragranceKnowledge = {
     "choosing-your-season-scent",
   ],
 
+  // ── Relationships ─────────────────────────────────────────────────────────────
+  relationships: {
+    alternatives: ["tobacco-vanille-inspired"],
+  },
+
   // ── Intelligence ─────────────────────────────────────────────────────────────
   // Rum/tobacco warmth reference — see docs/mkc-authoring-guide.md calibration anchors.
   // warmth:4 (not 5) because the iris/heliotrope heart introduces powdery-soapy quality

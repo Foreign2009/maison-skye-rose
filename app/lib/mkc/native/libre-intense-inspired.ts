@@ -102,6 +102,6 @@ export const libreIntenseInspired: FragranceKnowledge = {
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
     alternatives:     ["baccarat-rouge-540-inspired"],
-    wardrobePartners: ["sauvage-inspired", "spicebomb-extreme-inspired"],
+    wardrobePartners: ["sauvage-inspired", "spicebomb-extreme-inspired", "libre-flowers-flames-florale-inspired"],
   },
 };

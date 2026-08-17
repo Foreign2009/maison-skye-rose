@@ -102,7 +102,7 @@ export const oudForGreatnessInspired: FragranceKnowledge = {
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["oud-wood-inspired", "sauvage-elixir-inspired"],
-    wardrobePartners: ["aventus-inspired"],
+    alternatives:     ["oud-wood-inspired", "sauvage-elixir-inspired", "spicebomb-dark-leather-inspired"],
+    wardrobePartners: ["aventus-inspired", "tobacco-vanille-inspired", "oud-ispahan-inspired"],
   },
 };

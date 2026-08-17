@@ -30,7 +30,7 @@ const BLOCK_RX = /(  relationships:\s*\{)([^}]*?)(\s*\},)/;
  *  B. relationships block exists, field missing → add new field to block
  *  C. no relationships block                    → add block before Intelligence section
  */
-function addSlugToRelationshipField(
+export function addSlugToRelationshipField(
   content:    string,
   fieldName:  SymmetricField,
   slugToAdd:  string,
@@ -50,11 +50,40 @@ function addSlugToRelationshipField(
     if (fieldMatch) {
       // A. Append slug to the existing array
       const existing = fieldMatch[2];
-      const sep      = existing.trim() ? ", " : "";
-      const newInner = innerContent.replace(
-        fieldRx,
-        `$1${existing}${sep}"${slugToAdd}"$3`,
-      );
+      let newInner: string;
+
+      if (existing.includes("\n")) {
+        // Multi-line: existing ends with ",<indent>" before the closing `]`.
+        // A naive sep+slug after this whitespace creates a sparse-array comma hole.
+        // Extract the closing whitespace and insert the new element on its own line.
+        const closingWsMatch = existing.match(/,(\s+)$/);
+        if (closingWsMatch) {
+          const closingWs   = closingWsMatch[1];
+          const elemWsMatch = existing.match(/^(\s+)/);
+          const elemWs      = elemWsMatch ? elemWsMatch[1] : closingWs + "  ";
+          const base        = existing.slice(0, existing.length - closingWs.length);
+          newInner = innerContent.replace(
+            fieldRx,
+            `$1${base}${elemWs}"${slugToAdd}",${closingWs}$3`,
+          );
+        } else {
+          // Multi-line without trailing comma — trim and append inline
+          const trimmed = existing.trimEnd();
+          const sep     = trimmed ? ", " : "";
+          newInner = innerContent.replace(
+            fieldRx,
+            `$1${trimmed}${sep}"${slugToAdd}"$3`,
+          );
+        }
+      } else {
+        // Single-line array
+        const sep = existing.trim() ? ", " : "";
+        newInner = innerContent.replace(
+          fieldRx,
+          `$1${existing}${sep}"${slugToAdd}"$3`,
+        );
+      }
+
       return content.replace(BLOCK_RX, `$1${newInner}$3`);
     } else {
       // B. Add a new field before the closing brace

@@ -87,7 +87,8 @@ export const terreDHermesInspired: FragranceKnowledge = {
 
   // ── Relationships ─────────────────────────────────────────────────────────────
   relationships: {
-    alternatives: ["creed-green-irish-tweed-inspired"],
+    alternatives: ["creed-green-irish-tweed-inspired", "voyage-d'hermes-inspired"],
+    wardrobePartners: ["allure-homme-sport-inspired"],
   },
 
   // ── Intelligence ─────────────────────────────────────────────────────────────

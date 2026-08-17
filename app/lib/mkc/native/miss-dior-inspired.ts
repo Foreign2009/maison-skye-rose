@@ -109,7 +109,7 @@ export const missDiorInspired: FragranceKnowledge = {
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["delina-inspired"],
+    alternatives:     ["delina-inspired", "rose-n'-roses-inspired"],
     wardrobePartners: ["sauvage-inspired", "bleu-de-chanel-inspired"],
   },
 };

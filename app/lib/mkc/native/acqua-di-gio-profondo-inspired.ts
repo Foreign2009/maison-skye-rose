@@ -85,7 +85,7 @@ export const acquaDiGioProfondoInspired: FragranceKnowledge = {
   // ── Relationships ─────────────────────────────────────────────────────────────
   relationships: {
     evolutionOf:  "aqua-di-gio-inspired",
-    alternatives: ["acqua-di-gio-parfum-inspired"],
+    alternatives: ["acqua-di-gio-parfum-inspired", "wood-sage-sea-salt-inspired"],
   },
 
   // ── Intelligence ─────────────────────────────────────────────────────────────

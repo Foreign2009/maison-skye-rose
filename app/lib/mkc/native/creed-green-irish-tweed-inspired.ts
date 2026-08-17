@@ -108,7 +108,7 @@ export const creedGreenIrishTweedInspired: FragranceKnowledge = {
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["terre-d'hermes-inspired", "imagination-inspired"],
+    alternatives:     ["terre-d'hermes-inspired", "imagination-inspired", "wood-sage-sea-salt-inspired"],
     wardrobePartners: ["sauvage-elixir-inspired"],
   },
 };

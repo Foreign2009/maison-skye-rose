@@ -83,6 +83,11 @@ export const armaniCodeParfumInspired: FragranceKnowledge = {
     "choosing-your-season-scent",
   ],
 
+  // ── Relationships ─────────────────────────────────────────────────────────────
+  relationships: {
+    alternatives: ["bleu-de-chanel-l'exclusif-inspired"],
+  },
+
   // ── Intelligence ─────────────────────────────────────────────────────────────
   // Refined woody evening benchmark. Distinct from Y EDP (warmth:4, intensity:4, versatility:4
   // — daytime versatile aromatic with full-range daily capability) via occasion register:

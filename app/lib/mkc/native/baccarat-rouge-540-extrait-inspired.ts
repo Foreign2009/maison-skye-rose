@@ -104,6 +104,6 @@ export const baccaratRouge540ExtraitInspired: FragranceKnowledge = {
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
     alternatives:     ["baccarat-rouge-540-inspired"],
-    wardrobePartners: ["oud-wood-inspired", "delina-inspired"],
+    wardrobePartners: ["oud-wood-inspired", "delina-inspired", "arabians-musk-inspired"],
   },
 };

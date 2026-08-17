@@ -92,8 +92,8 @@ export const baccaratRouge540Inspired: FragranceKnowledge = {
 
   // ── Relationships ─────────────────────────────────────────────────────────────
   relationships: {
-    wardrobePartners: ["kirke-overdose-inspired", "libre-inspired", "my-way-inspired", "oud-mood-inspired", "vanilla-28-inspired", "gentle-fluidity-gold-inspired", "gris-charnel-inspired", "haltane-inspired", "j'adore-inspired", "hypnotic-poison-inspired"],
-    alternatives: ["alien-inspired", "baccarat-rouge-540-extrait-inspired", "crystal-noir-inspired", "delina-exclusif-inspired", "libre-intense-inspired", "libre-le-parfum-inspired", "prada-paradoxe-inspired", "valentino-donna-born-in-roma-inspired", "guidance-inspired", "hibiscus-mahajad-inspired"],
+    wardrobePartners: ["kirke-overdose-inspired", "libre-inspired", "my-way-inspired", "oud-mood-inspired", "vanilla-28-inspired", "gentle-fluidity-gold-inspired", "gris-charnel-inspired", "haltane-inspired", "j'adore-inspired", "hypnotic-poison-inspired", "bright-crystal-inspired", "carmina-inspired", "decision-inspired", "omnia-green-jade-inspired", "rose-of-no-man's-land-inspired", "royal-oud-inspired", "si-passione-red-musk-inspired", "wood-sage-sea-salt-inspired"],
+    alternatives: ["alien-inspired", "baccarat-rouge-540-extrait-inspired", "crystal-noir-inspired", "delina-exclusif-inspired", "libre-intense-inspired", "libre-le-parfum-inspired", "prada-paradoxe-inspired", "valentino-donna-born-in-roma-inspired", "guidance-inspired", "hibiscus-mahajad-inspired", "arabians-musk-inspired", "rose-oud-inspired", "oud-ispahan-inspired"],
   },
 
   // ── Intelligence ─────────────────────────────────────────────────────────────

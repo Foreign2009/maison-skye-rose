@@ -90,7 +90,8 @@ export const sauvageInspired: FragranceKnowledge = {
   // ── Relationships ─────────────────────────────────────────────────────────────
   relationships: {
     evolutions: ["sauvage-elixir-inspired"],
-    wardrobePartners: ["afternoon-swim-inspired", "miss-dior-inspired", "ani-inspired", "arabians-tonka-inspired", "blanche-bete-inspired", "burberry-goddess-inspired", "chance-eau-tendre-inspired", "coco-mademoiselle-inspired", "crystal-noir-inspired", "erba-pura-inspired", "flowerbomb-inspired", "libre-intense-inspired", "love-don't-be-shy-inspired", "mon-paris-inspired", "prada-paradoxe-inspired", "good-girl-blush-inspired"],
+    wardrobePartners: ["afternoon-swim-inspired", "miss-dior-inspired", "ani-inspired", "arabians-tonka-inspired", "blanche-bete-inspired", "burberry-goddess-inspired", "chance-eau-tendre-inspired", "coco-mademoiselle-inspired", "crystal-noir-inspired", "erba-pura-inspired", "flowerbomb-inspired", "libre-intense-inspired", "love-don't-be-shy-inspired", "mon-paris-inspired", "prada-paradoxe-inspired", "good-girl-blush-inspired", "alien-man-inspired", "allure-homme-sport-inspired", "bvlgari-aqua-inspired", "h24-herbes-vives-inspired", "ombre-leather-inspired"],
+    alternatives: ["dunhill-fresh-inspired", "eros-flame-inspired", "voyage-d'hermes-inspired"],
   },
 
   // ── Intelligence ─────────────────────────────────────────────────────────────

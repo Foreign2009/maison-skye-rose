@@ -102,7 +102,7 @@ export const blancheBeteInspired: FragranceKnowledge = {
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["delina-inspired"],
-    wardrobePartners: ["sauvage-inspired"],
+    alternatives:     ["delina-inspired", "si-passione-red-musk-inspired"],
+    wardrobePartners: ["sauvage-inspired", "oriana-inspired", "libre-flowers-flames-florale-inspired"],
   },
 };

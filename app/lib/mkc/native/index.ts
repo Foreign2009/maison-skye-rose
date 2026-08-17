@@ -102,6 +102,46 @@ import { biancoLatteInspired } from "./bianco-latte-inspired";
 import { chanceEauFraicheInspired } from "./chance-eau-fraiche-inspired";
 import { poisonGirlInspired } from "./poison-girl-inspired";
 import { devotionInspired } from "./devotion-inspired";
+import { alienManInspired } from "./alien-man-inspired";
+import { allureHommeSportInspired } from "./allure-homme-sport-inspired";
+import { arabiansMuskInspired } from "./arabians-musk-inspired";
+import { bleuDeChanelLexclusifInspired } from "./bleu-de-chanel-l'exclusif-inspired";
+import { boisDargentInspired } from "./bois-d'argent-inspired";
+import { brightCrystalInspired } from "./bright-crystal-inspired";
+import { bvlgariAquaInspired } from "./bvlgari-aqua-inspired";
+import { carminaInspired } from "./carmina-inspired";
+import { chanceInspired } from "./chance-inspired";
+import { coachFloralInspired } from "./coach-floral-inspired";
+import { decisionInspired } from "./decision-inspired";
+import { diorHommeSportInspired } from "./dior-homme-sport-inspired";
+import { dunhillFreshInspired } from "./dunhill-fresh-inspired";
+import { erosFlameInspired } from "./eros-flame-inspired";
+import { freshBlossomInspired } from "./fresh-blossom-inspired";
+import { gentlemanEdtInspired } from "./gentleman-edt-inspired";
+import { godolphinInspired } from "./godolphin-inspired";
+import { lightBlueInspired } from "./light-blue-inspired";
+import { monGuerlainInspired } from "./mon-guerlain-inspired";
+import { myWayYlangInspired } from "./my-way-ylang-inspired";
+import { omniaGreenJadeInspired } from "./omnia-green-jade-inspired";
+import { orianaInspired } from "./oriana-inspired";
+import { roseOfNoMansLandInspired } from "./rose-of-no-man's-land-inspired";
+import { roseOudInspired } from "./rose-oud-inspired";
+import { royalOudInspired } from "./royal-oud-inspired";
+import { siPassioneRedMuskInspired } from "./si-passione-red-musk-inspired";
+import { spicebombDarkLeatherInspired } from "./spicebomb-dark-leather-inspired";
+import { tobaccoVanilleInspired } from "./tobacco-vanille-inspired";
+import { twillyDhermesInspired } from "./twilly-d'hermes-inspired";
+import { voyageDhermesInspired } from "./voyage-d'hermes-inspired";
+import { bloomInspired } from "./bloom-inspired";
+import { h24HerbesVivesInspired } from "./h24-herbes-vives-inspired";
+import { invictusVictoryAbsoluInspired } from "./invictus-victory-absolu-inspired";
+import { libreFlowersFlamesFloraleInspired } from "./libre-flowers-flames-florale-inspired";
+import { ombreLeatherInspired } from "./ombre-leather-inspired";
+import { oudIspahanInspired } from "./oud-ispahan-inspired";
+import { roseNRosesInspired } from "./rose-n'-roses-inspired";
+import { taifRoseInspired } from "./taif-rose-inspired";
+import { woodSageSeaSaltInspired } from "./wood-sage-sea-salt-inspired";
+import { blackOpiumOverRedInspired } from "./black-opium-over-red-inspired";
 
 export const nativeFragrances = new Map<string, FragranceKnowledge>([
   ["sauvage-inspired",              sauvageInspired],
@@ -196,4 +236,44 @@ export const nativeFragrances = new Map<string, FragranceKnowledge>([
   ["chance-eau-fraiche-inspired", chanceEauFraicheInspired],
   ["poison-girl-inspired",        poisonGirlInspired],
   ["devotion-inspired",           devotionInspired],
+  ["alien-man-inspired", alienManInspired],
+  ["allure-homme-sport-inspired", allureHommeSportInspired],
+  ["arabians-musk-inspired", arabiansMuskInspired],
+  ["bleu-de-chanel-l'exclusif-inspired", bleuDeChanelLexclusifInspired],
+  ["bois-d'argent-inspired", boisDargentInspired],
+  ["bright-crystal-inspired", brightCrystalInspired],
+  ["bvlgari-aqua-inspired", bvlgariAquaInspired],
+  ["carmina-inspired", carminaInspired],
+  ["chance-inspired", chanceInspired],
+  ["coach-floral-inspired", coachFloralInspired],
+  ["decision-inspired", decisionInspired],
+  ["dior-homme-sport-inspired", diorHommeSportInspired],
+  ["dunhill-fresh-inspired", dunhillFreshInspired],
+  ["eros-flame-inspired", erosFlameInspired],
+  ["fresh-blossom-inspired", freshBlossomInspired],
+  ["gentleman-edt-inspired", gentlemanEdtInspired],
+  ["godolphin-inspired", godolphinInspired],
+  ["light-blue-inspired", lightBlueInspired],
+  ["mon-guerlain-inspired", monGuerlainInspired],
+  ["my-way-ylang-inspired", myWayYlangInspired],
+  ["omnia-green-jade-inspired", omniaGreenJadeInspired],
+  ["oriana-inspired", orianaInspired],
+  ["rose-of-no-man's-land-inspired", roseOfNoMansLandInspired],
+  ["rose-oud-inspired", roseOudInspired],
+  ["royal-oud-inspired", royalOudInspired],
+  ["si-passione-red-musk-inspired", siPassioneRedMuskInspired],
+  ["spicebomb-dark-leather-inspired", spicebombDarkLeatherInspired],
+  ["tobacco-vanille-inspired", tobaccoVanilleInspired],
+  ["twilly-d'hermes-inspired", twillyDhermesInspired],
+  ["voyage-d'hermes-inspired", voyageDhermesInspired],
+  ["bloom-inspired", bloomInspired],
+  ["h24-herbes-vives-inspired", h24HerbesVivesInspired],
+  ["invictus-victory-absolu-inspired", invictusVictoryAbsoluInspired],
+  ["libre-flowers-flames-florale-inspired", libreFlowersFlamesFloraleInspired],
+  ["ombre-leather-inspired", ombreLeatherInspired],
+  ["oud-ispahan-inspired", oudIspahanInspired],
+  ["rose-n'-roses-inspired", roseNRosesInspired],
+  ["taif-rose-inspired", taifRoseInspired],
+  ["wood-sage-sea-salt-inspired", woodSageSeaSaltInspired],
+  ["black-opium-over-red-inspired", blackOpiumOverRedInspired],
 ]);

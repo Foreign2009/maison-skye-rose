@@ -102,6 +102,7 @@ export const alienInspired: FragranceKnowledge = {
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["baccarat-rouge-540-inspired"],
+    alternatives:     ["baccarat-rouge-540-inspired", "bloom-inspired"],
+    wardrobePartners: ["coach-floral-inspired", "light-blue-inspired", "mon-guerlain-inspired", "twilly-d'hermes-inspired", "black-opium-over-red-inspired"],
   },
 };

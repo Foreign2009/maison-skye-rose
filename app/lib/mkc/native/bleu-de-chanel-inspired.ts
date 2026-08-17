@@ -88,7 +88,7 @@ export const bleuDeChanelInspired: FragranceKnowledge = {
   // ── Relationships ─────────────────────────────────────────────────────────────
   relationships: {
     wardrobePartners: ["miss-dior-inspired", "chance-eau-tendre-inspired", "prada-paradoxe-inspired", "good-girl-inspired"],
-    alternatives: ["l'immensite-inspired"],
+    alternatives: ["l'immensite-inspired", "dior-homme-sport-inspired", "eros-flame-inspired"],
   },
 
   // ── Intelligence ─────────────────────────────────────────────────────────────

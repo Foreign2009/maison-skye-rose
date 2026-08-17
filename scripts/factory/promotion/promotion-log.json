@@ -1239,6 +1239,1077 @@
       "slug": "j'adore-inspired",
       "operator": "Adi",
       "details": "promotionId:QeBpzId_dJzQ  validation:PASS  nativePath:app/lib/mkc/native/j'adore-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-17T18:05:20.000Z",
+      "action": "promotion_started",
+      "slug": "alien-man-inspired",
+      "operator": "Founder",
+      "details": "symbol:alienManInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-17T18:05:20.005Z",
+      "action": "relationships_synced",
+      "slug": "alien-man-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:3  files:3"
+    },
+    {
+      "timestamp": "2026-08-17T18:05:55.159Z",
+      "action": "promotion_completed",
+      "slug": "alien-man-inspired",
+      "operator": "Founder",
+      "details": "promotionId:ONFoHEn9Mvjk  validation:PASS  nativePath:app/lib/mkc/native/alien-man-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-17T18:05:55.163Z",
+      "action": "promotion_started",
+      "slug": "allure-homme-sport-inspired",
+      "operator": "Founder",
+      "details": "symbol:allureHommeSportInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-17T18:05:55.168Z",
+      "action": "relationships_synced",
+      "slug": "allure-homme-sport-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:4  files:4"
+    },
+    {
+      "timestamp": "2026-08-17T18:06:35.604Z",
+      "action": "promotion_completed",
+      "slug": "allure-homme-sport-inspired",
+      "operator": "Founder",
+      "details": "promotionId:OvUo_RwWON75  validation:PASS  nativePath:app/lib/mkc/native/allure-homme-sport-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-17T18:06:35.609Z",
+      "action": "promotion_started",
+      "slug": "arabians-musk-inspired",
+      "operator": "Founder",
+      "details": "symbol:arabiansMuskInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-17T18:06:35.615Z",
+      "action": "relationships_synced",
+      "slug": "arabians-musk-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:4  files:4"
+    },
+    {
+      "timestamp": "2026-08-17T18:07:13.932Z",
+      "action": "promotion_completed",
+      "slug": "arabians-musk-inspired",
+      "operator": "Founder",
+      "details": "promotionId:KLacimsfyWUU  validation:PASS  nativePath:app/lib/mkc/native/arabians-musk-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-17T18:07:13.944Z",
+      "action": "promotion_started",
+      "slug": "black-opium-over-red-inspired",
+      "operator": "Founder",
+      "details": "symbol:blackOpiumOverRedInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-17T18:07:13.951Z",
+      "action": "relationships_synced",
+      "slug": "black-opium-over-red-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:5  files:5"
+    },
+    {
+      "timestamp": "2026-08-17T18:07:17.208Z",
+      "action": "promotion_rolled_back",
+      "slug": "black-opium-over-red-inspired",
+      "operator": "Founder",
+      "details": "reason:mkc:validate returned non-zero exit code"
+    },
+    {
+      "timestamp": "2026-08-17T18:07:17.211Z",
+      "action": "promotion_started",
+      "slug": "bleu-de-chanel-l'exclusif-inspired",
+      "operator": "Founder",
+      "details": "symbol:bleuDeChanelLexclusifInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-17T18:07:17.215Z",
+      "action": "relationships_synced",
+      "slug": "bleu-de-chanel-l'exclusif-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:3  files:3"
+    },
+    {
+      "timestamp": "2026-08-17T18:07:55.305Z",
+      "action": "promotion_completed",
+      "slug": "bleu-de-chanel-l'exclusif-inspired",
+      "operator": "Founder",
+      "details": "promotionId:3sq9k8yJte0e  validation:PASS  nativePath:app/lib/mkc/native/bleu-de-chanel-l'exclusif-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-17T18:07:55.314Z",
+      "action": "promotion_started",
+      "slug": "bloom-inspired",
+      "operator": "Founder",
+      "details": "symbol:bloomInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-17T18:07:55.321Z",
+      "action": "relationships_synced",
+      "slug": "bloom-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:3  files:3"
+    },
+    {
+      "timestamp": "2026-08-17T18:07:58.575Z",
+      "action": "promotion_rolled_back",
+      "slug": "bloom-inspired",
+      "operator": "Founder",
+      "details": "reason:mkc:validate returned non-zero exit code"
+    },
+    {
+      "timestamp": "2026-08-17T18:07:58.580Z",
+      "action": "promotion_started",
+      "slug": "bois-d'argent-inspired",
+      "operator": "Founder",
+      "details": "symbol:boisDargentInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-17T18:07:58.587Z",
+      "action": "relationships_synced",
+      "slug": "bois-d'argent-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:4  files:4"
+    },
+    {
+      "timestamp": "2026-08-17T18:08:37.912Z",
+      "action": "promotion_completed",
+      "slug": "bois-d'argent-inspired",
+      "operator": "Founder",
+      "details": "promotionId:KTn4UDGUuTdb  validation:PASS  nativePath:app/lib/mkc/native/bois-d'argent-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-17T18:08:37.916Z",
+      "action": "promotion_started",
+      "slug": "bright-crystal-inspired",
+      "operator": "Founder",
+      "details": "symbol:brightCrystalInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-17T18:08:37.923Z",
+      "action": "relationships_synced",
+      "slug": "bright-crystal-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:5  files:5"
+    },
+    {
+      "timestamp": "2026-08-17T18:09:14.661Z",
+      "action": "promotion_completed",
+      "slug": "bright-crystal-inspired",
+      "operator": "Founder",
+      "details": "promotionId:qLRwWtRhOHR_  validation:PASS  nativePath:app/lib/mkc/native/bright-crystal-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-17T18:09:14.670Z",
+      "action": "promotion_started",
+      "slug": "bvlgari-aqua-inspired",
+      "operator": "Founder",
+      "details": "symbol:bvlgariAquaInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-17T18:09:14.676Z",
+      "action": "relationships_synced",
+      "slug": "bvlgari-aqua-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:4  files:4"
+    },
+    {
+      "timestamp": "2026-08-17T18:09:52.642Z",
+      "action": "promotion_completed",
+      "slug": "bvlgari-aqua-inspired",
+      "operator": "Founder",
+      "details": "promotionId:0Ta-VO4mRlM7  validation:PASS  nativePath:app/lib/mkc/native/bvlgari-aqua-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-17T18:09:52.646Z",
+      "action": "promotion_started",
+      "slug": "carmina-inspired",
+      "operator": "Founder",
+      "details": "symbol:carminaInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-17T18:09:52.650Z",
+      "action": "relationships_synced",
+      "slug": "carmina-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:5  files:5"
+    },
+    {
+      "timestamp": "2026-08-17T18:10:30.802Z",
+      "action": "promotion_completed",
+      "slug": "carmina-inspired",
+      "operator": "Founder",
+      "details": "promotionId:ezxrTOv34NPA  validation:PASS  nativePath:app/lib/mkc/native/carmina-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-17T18:10:30.809Z",
+      "action": "promotion_started",
+      "slug": "chance-inspired",
+      "operator": "Founder",
+      "details": "symbol:chanceInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-17T18:10:30.816Z",
+      "action": "relationships_synced",
+      "slug": "chance-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:5  files:5"
+    },
+    {
+      "timestamp": "2026-08-17T18:11:07.935Z",
+      "action": "promotion_completed",
+      "slug": "chance-inspired",
+      "operator": "Founder",
+      "details": "promotionId:Big4o8jhUS7C  validation:PASS  nativePath:app/lib/mkc/native/chance-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-17T18:11:07.939Z",
+      "action": "promotion_started",
+      "slug": "coach-floral-inspired",
+      "operator": "Founder",
+      "details": "symbol:coachFloralInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-17T18:11:07.944Z",
+      "action": "relationships_synced",
+      "slug": "coach-floral-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:5  files:5"
+    },
+    {
+      "timestamp": "2026-08-17T18:11:46.925Z",
+      "action": "promotion_completed",
+      "slug": "coach-floral-inspired",
+      "operator": "Founder",
+      "details": "promotionId:XJEjd0FYmDic  validation:PASS  nativePath:app/lib/mkc/native/coach-floral-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-17T18:11:46.929Z",
+      "action": "promotion_started",
+      "slug": "decision-inspired",
+      "operator": "Founder",
+      "details": "symbol:decisionInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-17T18:11:46.933Z",
+      "action": "relationships_synced",
+      "slug": "decision-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:3  files:3"
+    },
+    {
+      "timestamp": "2026-08-17T18:12:25.457Z",
+      "action": "promotion_completed",
+      "slug": "decision-inspired",
+      "operator": "Founder",
+      "details": "promotionId:NLqBaWcS-XjZ  validation:PASS  nativePath:app/lib/mkc/native/decision-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-17T18:12:25.460Z",
+      "action": "promotion_started",
+      "slug": "dior-homme-sport-inspired",
+      "operator": "Founder",
+      "details": "symbol:diorHommeSportInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-17T18:12:25.465Z",
+      "action": "relationships_synced",
+      "slug": "dior-homme-sport-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:4  files:4"
+    },
+    {
+      "timestamp": "2026-08-17T18:13:03.018Z",
+      "action": "promotion_completed",
+      "slug": "dior-homme-sport-inspired",
+      "operator": "Founder",
+      "details": "promotionId:oDi5ZZQmppbl  validation:PASS  nativePath:app/lib/mkc/native/dior-homme-sport-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-17T18:13:03.023Z",
+      "action": "promotion_started",
+      "slug": "dunhill-fresh-inspired",
+      "operator": "Founder",
+      "details": "symbol:dunhillFreshInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-17T18:13:03.026Z",
+      "action": "relationships_synced",
+      "slug": "dunhill-fresh-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:3  files:3"
+    },
+    {
+      "timestamp": "2026-08-17T18:13:41.821Z",
+      "action": "promotion_completed",
+      "slug": "dunhill-fresh-inspired",
+      "operator": "Founder",
+      "details": "promotionId:YFCMfnQ1tvWn  validation:PASS  nativePath:app/lib/mkc/native/dunhill-fresh-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-17T18:13:41.824Z",
+      "action": "promotion_started",
+      "slug": "eros-flame-inspired",
+      "operator": "Founder",
+      "details": "symbol:erosFlameInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-17T18:13:41.828Z",
+      "action": "relationships_synced",
+      "slug": "eros-flame-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:4  files:4"
+    },
+    {
+      "timestamp": "2026-08-17T18:14:20.597Z",
+      "action": "promotion_completed",
+      "slug": "eros-flame-inspired",
+      "operator": "Founder",
+      "details": "promotionId:sZGKtFWXpEAC  validation:PASS  nativePath:app/lib/mkc/native/eros-flame-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-17T18:14:20.600Z",
+      "action": "promotion_started",
+      "slug": "fresh-blossom-inspired",
+      "operator": "Founder",
+      "details": "symbol:freshBlossomInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-17T18:14:20.617Z",
+      "action": "relationships_synced",
+      "slug": "fresh-blossom-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:5  files:5"
+    },
+    {
+      "timestamp": "2026-08-17T18:14:58.945Z",
+      "action": "promotion_completed",
+      "slug": "fresh-blossom-inspired",
+      "operator": "Founder",
+      "details": "promotionId:xOLiD96-PIMf  validation:PASS  nativePath:app/lib/mkc/native/fresh-blossom-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-17T18:14:58.950Z",
+      "action": "promotion_started",
+      "slug": "gentleman-edt-inspired",
+      "operator": "Founder",
+      "details": "symbol:gentlemanEdtInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-17T18:14:58.954Z",
+      "action": "relationships_synced",
+      "slug": "gentleman-edt-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:3  files:3"
+    },
+    {
+      "timestamp": "2026-08-17T18:15:37.617Z",
+      "action": "promotion_completed",
+      "slug": "gentleman-edt-inspired",
+      "operator": "Founder",
+      "details": "promotionId:E2qjGMKnzZlm  validation:PASS  nativePath:app/lib/mkc/native/gentleman-edt-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-17T18:15:37.622Z",
+      "action": "promotion_started",
+      "slug": "godolphin-inspired",
+      "operator": "Founder",
+      "details": "symbol:godolphinInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-17T18:15:37.627Z",
+      "action": "relationships_synced",
+      "slug": "godolphin-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:3  files:3"
+    },
+    {
+      "timestamp": "2026-08-17T18:16:18.408Z",
+      "action": "promotion_completed",
+      "slug": "godolphin-inspired",
+      "operator": "Founder",
+      "details": "promotionId:iWrwYHyZo_Cz  validation:PASS  nativePath:app/lib/mkc/native/godolphin-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-17T18:16:18.412Z",
+      "action": "promotion_started",
+      "slug": "h24-herbes-vives-inspired",
+      "operator": "Founder",
+      "details": "symbol:h24HerbesVivesInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-17T18:16:18.418Z",
+      "action": "relationships_synced",
+      "slug": "h24-herbes-vives-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:3  files:3"
+    },
+    {
+      "timestamp": "2026-08-17T18:16:22.073Z",
+      "action": "promotion_rolled_back",
+      "slug": "h24-herbes-vives-inspired",
+      "operator": "Founder",
+      "details": "reason:mkc:validate returned non-zero exit code"
+    },
+    {
+      "timestamp": "2026-08-17T18:16:22.076Z",
+      "action": "promotion_started",
+      "slug": "invictus-victory-absolu-inspired",
+      "operator": "Founder",
+      "details": "symbol:invictusVictoryAbsoluInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-17T18:16:22.080Z",
+      "action": "relationships_synced",
+      "slug": "invictus-victory-absolu-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:4  files:4"
+    },
+    {
+      "timestamp": "2026-08-17T18:16:25.979Z",
+      "action": "promotion_rolled_back",
+      "slug": "invictus-victory-absolu-inspired",
+      "operator": "Founder",
+      "details": "reason:mkc:validate returned non-zero exit code"
+    },
+    {
+      "timestamp": "2026-08-17T18:16:25.982Z",
+      "action": "promotion_started",
+      "slug": "libre-flowers-flames-florale-inspired",
+      "operator": "Founder",
+      "details": "symbol:libreFlowersFlamesFloraleInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-17T18:16:25.991Z",
+      "action": "relationships_synced",
+      "slug": "libre-flowers-flames-florale-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:5  files:5"
+    },
+    {
+      "timestamp": "2026-08-17T18:16:29.252Z",
+      "action": "promotion_rolled_back",
+      "slug": "libre-flowers-flames-florale-inspired",
+      "operator": "Founder",
+      "details": "reason:mkc:validate returned non-zero exit code"
+    },
+    {
+      "timestamp": "2026-08-17T18:16:29.256Z",
+      "action": "promotion_started",
+      "slug": "light-blue-inspired",
+      "operator": "Founder",
+      "details": "symbol:lightBlueInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-17T18:16:29.262Z",
+      "action": "relationships_synced",
+      "slug": "light-blue-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:4  files:4"
+    },
+    {
+      "timestamp": "2026-08-17T18:17:06.347Z",
+      "action": "promotion_completed",
+      "slug": "light-blue-inspired",
+      "operator": "Founder",
+      "details": "promotionId:BYtQTr5NaFCY  validation:PASS  nativePath:app/lib/mkc/native/light-blue-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-17T18:17:06.352Z",
+      "action": "promotion_started",
+      "slug": "mon-guerlain-inspired",
+      "operator": "Founder",
+      "details": "symbol:monGuerlainInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-17T18:17:06.358Z",
+      "action": "relationships_synced",
+      "slug": "mon-guerlain-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:5  files:5"
+    },
+    {
+      "timestamp": "2026-08-17T18:17:43.233Z",
+      "action": "promotion_completed",
+      "slug": "mon-guerlain-inspired",
+      "operator": "Founder",
+      "details": "promotionId:RNoJqg8LAwNS  validation:PASS  nativePath:app/lib/mkc/native/mon-guerlain-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-17T18:17:43.237Z",
+      "action": "promotion_started",
+      "slug": "my-way-ylang-inspired",
+      "operator": "Founder",
+      "details": "symbol:myWayYlangInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-17T18:17:43.247Z",
+      "action": "relationships_synced",
+      "slug": "my-way-ylang-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:4  files:4"
+    },
+    {
+      "timestamp": "2026-08-17T18:18:21.303Z",
+      "action": "promotion_completed",
+      "slug": "my-way-ylang-inspired",
+      "operator": "Founder",
+      "details": "promotionId:ajoI1oC2eCd5  validation:PASS  nativePath:app/lib/mkc/native/my-way-ylang-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-17T18:18:21.312Z",
+      "action": "promotion_started",
+      "slug": "ombre-leather-inspired",
+      "operator": "Founder",
+      "details": "symbol:ombreLeatherInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-17T18:18:21.316Z",
+      "action": "relationships_synced",
+      "slug": "ombre-leather-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:3  files:3"
+    },
+    {
+      "timestamp": "2026-08-17T18:18:24.462Z",
+      "action": "promotion_rolled_back",
+      "slug": "ombre-leather-inspired",
+      "operator": "Founder",
+      "details": "reason:mkc:validate returned non-zero exit code"
+    },
+    {
+      "timestamp": "2026-08-17T18:18:24.466Z",
+      "action": "promotion_started",
+      "slug": "omnia-green-jade-inspired",
+      "operator": "Founder",
+      "details": "symbol:omniaGreenJadeInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-17T18:18:24.469Z",
+      "action": "relationships_synced",
+      "slug": "omnia-green-jade-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:3  files:3"
+    },
+    {
+      "timestamp": "2026-08-17T18:19:02.393Z",
+      "action": "promotion_completed",
+      "slug": "omnia-green-jade-inspired",
+      "operator": "Founder",
+      "details": "promotionId:1eUjj5C0acto  validation:PASS  nativePath:app/lib/mkc/native/omnia-green-jade-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-17T18:19:02.396Z",
+      "action": "promotion_started",
+      "slug": "oriana-inspired",
+      "operator": "Founder",
+      "details": "symbol:orianaInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-17T18:19:02.401Z",
+      "action": "relationships_synced",
+      "slug": "oriana-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:5  files:5"
+    },
+    {
+      "timestamp": "2026-08-17T18:19:39.754Z",
+      "action": "promotion_completed",
+      "slug": "oriana-inspired",
+      "operator": "Founder",
+      "details": "promotionId:d16zpWt2_kqR  validation:PASS  nativePath:app/lib/mkc/native/oriana-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-17T18:19:39.757Z",
+      "action": "promotion_started",
+      "slug": "oud-ispahan-inspired",
+      "operator": "Founder",
+      "details": "symbol:oudIspahanInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-17T18:19:39.761Z",
+      "action": "relationships_synced",
+      "slug": "oud-ispahan-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:4  files:4"
+    },
+    {
+      "timestamp": "2026-08-17T18:19:43.320Z",
+      "action": "promotion_rolled_back",
+      "slug": "oud-ispahan-inspired",
+      "operator": "Founder",
+      "details": "reason:mkc:validate returned non-zero exit code"
+    },
+    {
+      "timestamp": "2026-08-17T18:19:43.323Z",
+      "action": "promotion_started",
+      "slug": "rose-n'-roses-inspired",
+      "operator": "Founder",
+      "details": "symbol:roseNRosesInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-17T18:19:43.328Z",
+      "action": "relationships_synced",
+      "slug": "rose-n'-roses-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:5  files:5"
+    },
+    {
+      "timestamp": "2026-08-17T18:19:46.685Z",
+      "action": "promotion_rolled_back",
+      "slug": "rose-n'-roses-inspired",
+      "operator": "Founder",
+      "details": "reason:mkc:validate returned non-zero exit code"
+    },
+    {
+      "timestamp": "2026-08-17T18:19:46.688Z",
+      "action": "promotion_started",
+      "slug": "rose-of-no-man's-land-inspired",
+      "operator": "Founder",
+      "details": "symbol:roseOfNoMansLandInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-17T18:19:46.693Z",
+      "action": "relationships_synced",
+      "slug": "rose-of-no-man's-land-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:4  files:4"
+    },
+    {
+      "timestamp": "2026-08-17T18:20:23.914Z",
+      "action": "promotion_completed",
+      "slug": "rose-of-no-man's-land-inspired",
+      "operator": "Founder",
+      "details": "promotionId:5prNyX8sPwhN  validation:PASS  nativePath:app/lib/mkc/native/rose-of-no-man's-land-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-17T18:20:23.918Z",
+      "action": "promotion_started",
+      "slug": "rose-oud-inspired",
+      "operator": "Founder",
+      "details": "symbol:roseOudInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-17T18:20:23.922Z",
+      "action": "relationships_synced",
+      "slug": "rose-oud-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:3  files:3"
+    },
+    {
+      "timestamp": "2026-08-17T18:21:01.900Z",
+      "action": "promotion_completed",
+      "slug": "rose-oud-inspired",
+      "operator": "Founder",
+      "details": "promotionId:oj6DT9CiI_Vo  validation:PASS  nativePath:app/lib/mkc/native/rose-oud-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-17T18:21:01.909Z",
+      "action": "promotion_started",
+      "slug": "royal-oud-inspired",
+      "operator": "Founder",
+      "details": "symbol:royalOudInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-17T18:21:01.913Z",
+      "action": "relationships_synced",
+      "slug": "royal-oud-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:3  files:3"
+    },
+    {
+      "timestamp": "2026-08-17T18:21:40.854Z",
+      "action": "promotion_completed",
+      "slug": "royal-oud-inspired",
+      "operator": "Founder",
+      "details": "promotionId:BnwmuXZLwb7I  validation:PASS  nativePath:app/lib/mkc/native/royal-oud-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-17T18:21:40.858Z",
+      "action": "promotion_started",
+      "slug": "si-passione-red-musk-inspired",
+      "operator": "Founder",
+      "details": "symbol:siPassioneRedMuskInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-17T18:21:40.862Z",
+      "action": "relationships_synced",
+      "slug": "si-passione-red-musk-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:3  files:3"
+    },
+    {
+      "timestamp": "2026-08-17T18:22:19.395Z",
+      "action": "promotion_completed",
+      "slug": "si-passione-red-musk-inspired",
+      "operator": "Founder",
+      "details": "promotionId:8yWZdPvV2PwB  validation:PASS  nativePath:app/lib/mkc/native/si-passione-red-musk-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-17T18:22:19.400Z",
+      "action": "promotion_started",
+      "slug": "spicebomb-dark-leather-inspired",
+      "operator": "Founder",
+      "details": "symbol:spicebombDarkLeatherInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-17T18:22:19.406Z",
+      "action": "relationships_synced",
+      "slug": "spicebomb-dark-leather-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:3  files:3"
+    },
+    {
+      "timestamp": "2026-08-17T18:23:01.134Z",
+      "action": "promotion_completed",
+      "slug": "spicebomb-dark-leather-inspired",
+      "operator": "Founder",
+      "details": "promotionId:v-SsY3cGH30v  validation:PASS  nativePath:app/lib/mkc/native/spicebomb-dark-leather-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-17T18:23:01.138Z",
+      "action": "promotion_started",
+      "slug": "taif-rose-inspired",
+      "operator": "Founder",
+      "details": "symbol:taifRoseInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-17T18:23:01.142Z",
+      "action": "relationships_synced",
+      "slug": "taif-rose-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:4  files:4"
+    },
+    {
+      "timestamp": "2026-08-17T18:23:04.776Z",
+      "action": "promotion_rolled_back",
+      "slug": "taif-rose-inspired",
+      "operator": "Founder",
+      "details": "reason:mkc:validate returned non-zero exit code"
+    },
+    {
+      "timestamp": "2026-08-17T18:23:04.779Z",
+      "action": "promotion_started",
+      "slug": "tobacco-vanille-inspired",
+      "operator": "Founder",
+      "details": "symbol:tobaccoVanilleInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-17T18:23:04.789Z",
+      "action": "relationships_synced",
+      "slug": "tobacco-vanille-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:5  files:5"
+    },
+    {
+      "timestamp": "2026-08-17T18:23:43.808Z",
+      "action": "promotion_completed",
+      "slug": "tobacco-vanille-inspired",
+      "operator": "Founder",
+      "details": "promotionId:m2dnjec-sXPQ  validation:PASS  nativePath:app/lib/mkc/native/tobacco-vanille-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-17T18:23:43.813Z",
+      "action": "promotion_started",
+      "slug": "twilly-d'hermes-inspired",
+      "operator": "Founder",
+      "details": "symbol:twillyDhermesInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-17T18:23:43.818Z",
+      "action": "relationships_synced",
+      "slug": "twilly-d'hermes-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:3  files:3"
+    },
+    {
+      "timestamp": "2026-08-17T18:24:18.701Z",
+      "action": "promotion_completed",
+      "slug": "twilly-d'hermes-inspired",
+      "operator": "Founder",
+      "details": "promotionId:_LKAY2NBnF0e  validation:PASS  nativePath:app/lib/mkc/native/twilly-d'hermes-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-17T18:24:18.705Z",
+      "action": "promotion_started",
+      "slug": "voyage-d'hermes-inspired",
+      "operator": "Founder",
+      "details": "symbol:voyageDhermesInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-17T18:24:18.711Z",
+      "action": "relationships_synced",
+      "slug": "voyage-d'hermes-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:5  files:5"
+    },
+    {
+      "timestamp": "2026-08-17T18:24:55.800Z",
+      "action": "promotion_completed",
+      "slug": "voyage-d'hermes-inspired",
+      "operator": "Founder",
+      "details": "promotionId:ftAOQRpTsMUf  validation:PASS  nativePath:app/lib/mkc/native/voyage-d'hermes-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-17T18:24:55.806Z",
+      "action": "promotion_started",
+      "slug": "wood-sage-sea-salt-inspired",
+      "operator": "Founder",
+      "details": "symbol:woodSageSeaSaltInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-17T18:24:55.813Z",
+      "action": "relationships_synced",
+      "slug": "wood-sage-sea-salt-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:3  files:3"
+    },
+    {
+      "timestamp": "2026-08-17T18:24:58.946Z",
+      "action": "promotion_rolled_back",
+      "slug": "wood-sage-sea-salt-inspired",
+      "operator": "Founder",
+      "details": "reason:mkc:validate returned non-zero exit code"
+    },
+    {
+      "timestamp": "2026-08-17T19:37:14.877Z",
+      "action": "promotion_started",
+      "slug": "bloom-inspired",
+      "operator": "Founder",
+      "details": "symbol:bloomInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-17T19:37:14.883Z",
+      "action": "relationships_synced",
+      "slug": "bloom-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:3  files:3"
+    },
+    {
+      "timestamp": "2026-08-17T19:37:51.675Z",
+      "action": "promotion_completed",
+      "slug": "bloom-inspired",
+      "operator": "Founder",
+      "details": "promotionId:jTqUDmDyL7Ut  validation:PASS  nativePath:app/lib/mkc/native/bloom-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-17T19:38:00.184Z",
+      "action": "promotion_started",
+      "slug": "h24-herbes-vives-inspired",
+      "operator": "Founder",
+      "details": "symbol:h24HerbesVivesInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-17T19:38:00.192Z",
+      "action": "relationships_synced",
+      "slug": "h24-herbes-vives-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:3  files:3"
+    },
+    {
+      "timestamp": "2026-08-17T19:38:38.768Z",
+      "action": "promotion_completed",
+      "slug": "h24-herbes-vives-inspired",
+      "operator": "Founder",
+      "details": "promotionId:fQYA6N6od0Zr  validation:PASS  nativePath:app/lib/mkc/native/h24-herbes-vives-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-17T19:38:47.202Z",
+      "action": "promotion_started",
+      "slug": "invictus-victory-absolu-inspired",
+      "operator": "Founder",
+      "details": "symbol:invictusVictoryAbsoluInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-17T19:38:47.215Z",
+      "action": "relationships_synced",
+      "slug": "invictus-victory-absolu-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:4  files:4"
+    },
+    {
+      "timestamp": "2026-08-17T19:39:27.704Z",
+      "action": "promotion_completed",
+      "slug": "invictus-victory-absolu-inspired",
+      "operator": "Founder",
+      "details": "promotionId:jprfmdXIMxIU  validation:PASS  nativePath:app/lib/mkc/native/invictus-victory-absolu-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-17T19:39:36.598Z",
+      "action": "promotion_started",
+      "slug": "libre-flowers-flames-florale-inspired",
+      "operator": "Founder",
+      "details": "symbol:libreFlowersFlamesFloraleInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-17T19:39:36.606Z",
+      "action": "relationships_synced",
+      "slug": "libre-flowers-flames-florale-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:5  files:5"
+    },
+    {
+      "timestamp": "2026-08-17T19:40:17.318Z",
+      "action": "promotion_completed",
+      "slug": "libre-flowers-flames-florale-inspired",
+      "operator": "Founder",
+      "details": "promotionId:srgzumKJYZUl  validation:PASS  nativePath:app/lib/mkc/native/libre-flowers-flames-florale-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-17T19:40:26.602Z",
+      "action": "promotion_started",
+      "slug": "ombre-leather-inspired",
+      "operator": "Founder",
+      "details": "symbol:ombreLeatherInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-17T19:40:26.608Z",
+      "action": "relationships_synced",
+      "slug": "ombre-leather-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:3  files:3"
+    },
+    {
+      "timestamp": "2026-08-17T19:41:06.870Z",
+      "action": "promotion_completed",
+      "slug": "ombre-leather-inspired",
+      "operator": "Founder",
+      "details": "promotionId:RxEq1yz_UxoQ  validation:PASS  nativePath:app/lib/mkc/native/ombre-leather-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-17T19:41:16.286Z",
+      "action": "promotion_started",
+      "slug": "oud-ispahan-inspired",
+      "operator": "Founder",
+      "details": "symbol:oudIspahanInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-17T19:41:16.292Z",
+      "action": "relationships_synced",
+      "slug": "oud-ispahan-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:4  files:4"
+    },
+    {
+      "timestamp": "2026-08-17T19:41:51.910Z",
+      "action": "promotion_completed",
+      "slug": "oud-ispahan-inspired",
+      "operator": "Founder",
+      "details": "promotionId:YOwcOxvENQSG  validation:PASS  nativePath:app/lib/mkc/native/oud-ispahan-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-17T19:42:00.870Z",
+      "action": "promotion_started",
+      "slug": "rose-n'-roses-inspired",
+      "operator": "Founder",
+      "details": "symbol:roseNRosesInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-17T19:42:00.877Z",
+      "action": "relationships_synced",
+      "slug": "rose-n'-roses-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:5  files:5"
+    },
+    {
+      "timestamp": "2026-08-17T19:42:37.157Z",
+      "action": "promotion_completed",
+      "slug": "rose-n'-roses-inspired",
+      "operator": "Founder",
+      "details": "promotionId:E7chVaIWq5vc  validation:PASS  nativePath:app/lib/mkc/native/rose-n'-roses-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-17T19:42:45.808Z",
+      "action": "promotion_started",
+      "slug": "taif-rose-inspired",
+      "operator": "Founder",
+      "details": "symbol:taifRoseInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-17T19:42:45.814Z",
+      "action": "relationships_synced",
+      "slug": "taif-rose-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:4  files:4"
+    },
+    {
+      "timestamp": "2026-08-17T19:43:18.259Z",
+      "action": "promotion_completed",
+      "slug": "taif-rose-inspired",
+      "operator": "Founder",
+      "details": "promotionId:YTXgZOJVktxj  validation:PASS  nativePath:app/lib/mkc/native/taif-rose-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-17T19:43:26.821Z",
+      "action": "promotion_started",
+      "slug": "wood-sage-sea-salt-inspired",
+      "operator": "Founder",
+      "details": "symbol:woodSageSeaSaltInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-17T19:43:26.826Z",
+      "action": "relationships_synced",
+      "slug": "wood-sage-sea-salt-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:3  files:3"
+    },
+    {
+      "timestamp": "2026-08-17T19:43:59.175Z",
+      "action": "promotion_completed",
+      "slug": "wood-sage-sea-salt-inspired",
+      "operator": "Founder",
+      "details": "promotionId:gMD3MUl3oofC  validation:PASS  nativePath:app/lib/mkc/native/wood-sage-sea-salt-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-17T19:44:09.217Z",
+      "action": "promotion_started",
+      "slug": "black-opium-over-red-inspired",
+      "operator": "Founder",
+      "details": "symbol:blackOpiumOverRedInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-17T19:44:09.224Z",
+      "action": "relationships_synced",
+      "slug": "black-opium-over-red-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:5  files:5"
+    },
+    {
+      "timestamp": "2026-08-17T19:44:12.014Z",
+      "action": "promotion_rolled_back",
+      "slug": "black-opium-over-red-inspired",
+      "operator": "Founder",
+      "details": "reason:mkc:validate returned non-zero exit code"
+    },
+    {
+      "timestamp": "2026-08-17T20:04:42.496Z",
+      "action": "promotion_started",
+      "slug": "black-opium-over-red-inspired",
+      "operator": "Founder",
+      "details": "symbol:blackOpiumOverRedInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-17T20:04:42.502Z",
+      "action": "relationships_synced",
+      "slug": "black-opium-over-red-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:5  files:5"
+    },
+    {
+      "timestamp": "2026-08-17T20:05:13.371Z",
+      "action": "promotion_completed",
+      "slug": "black-opium-over-red-inspired",
+      "operator": "Founder",
+      "details": "promotionId:EQVUi88M_dwk  validation:PASS  nativePath:app/lib/mkc/native/black-opium-over-red-inspired.ts"
     }
   ]
 }

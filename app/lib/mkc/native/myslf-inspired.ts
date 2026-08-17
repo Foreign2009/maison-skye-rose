@@ -85,7 +85,7 @@ export const myslfInspired: FragranceKnowledge = {
 
   // ── Relationships ─────────────────────────────────────────────────────────────
   relationships: {
-    alternatives: ["valentino-uomo-born-in-roma-inspired"],
+    alternatives: ["valentino-uomo-born-in-roma-inspired", "gentleman-edt-inspired"],
   },
 
   // ── Intelligence ─────────────────────────────────────────────────────────────

@@ -85,7 +85,7 @@ export const valentinoUomoBornInRomaInspired: FragranceKnowledge = {
 
   // ── Relationships ─────────────────────────────────────────────────────────────
   relationships: {
-    alternatives: ["myslf-inspired"],
+    alternatives: ["myslf-inspired", "bleu-de-chanel-l'exclusif-inspired", "bois-d'argent-inspired", "decision-inspired", "godolphin-inspired"],
     wardrobePartners: ["valentino-donna-born-in-roma-inspired"],
   },
 
