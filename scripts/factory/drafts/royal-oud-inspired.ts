@@ -79,7 +79,7 @@ export const royalOudInspired: FragranceKnowledge = {
   newArrival    : false,
 
   // ── Education ───────────────────────────────────────────────────────────────
-  subtitle      : "Woody Sophistication",
+  subtitle      : "Regal Cedar",
   description   : "Pink pepper and bergamot spark against a cool galbanum heart, yielding swiftly to cedar and the resinous depth of agarwood. Sandalwood and musk anchor the composition in quiet, woody elegance—a fragrance that speaks in measured tones.",
   academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances", "what-makes-a-signature-scent"],
   academyCategories: ["fragrance-families", "the-note-pyramid", "wear-and-application"],

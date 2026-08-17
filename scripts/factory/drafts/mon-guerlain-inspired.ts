@@ -87,7 +87,7 @@ export const monGuerlainInspired: FragranceKnowledge = {
 
   // ── Education ───────────────────────────────────────────────────────────────
   subtitle      : "Soft Luxury",
-  description   : "Lavender and bergamot open onto a lush heart of iris and jasmine sambac, where rose takes center stage with quiet intensity. Tahitian vanilla and tonka bean settle into warm sandalwood and benzoin, creating an enveloping sweetness that feels both romantic and grounded.",
+  description   : "Bergamot and lavender give way to a lush heart of iris and jasmine sambac, where rose takes center stage with quiet intensity. Tahitian vanilla and tonka bean settle into warm sandalwood and benzoin, creating an enveloping sweetness that feels both romantic and grounded.",
   academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "what-makes-a-signature-scent", "choosing-your-season-scent"],
   academyCategories: ["fragrance-families", "the-note-pyramid", "occasions-and-style"],
   educationTags : [

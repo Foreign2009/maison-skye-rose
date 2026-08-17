@@ -78,7 +78,7 @@ export const tobaccoVanilleInspired: FragranceKnowledge = {
   newArrival    : false,
 
   // ── Education ───────────────────────────────────────────────────────────────
-  subtitle      : "Sweet Warmth",
+  subtitle      : "Tobacco & Tonka",
   description   : "Tobacco leaf opens with a whisper of spice, immediately warming into a sensual embrace of vanilla and tonka bean. Cacao and dried fruit deepen the composition, while woody notes ground the sweetness into something rich, contemplative, and unmistakably masculine.",
   academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "choosing-your-season-scent", "how-to-layer-fragrances"],
   academyCategories: ["fragrance-families", "the-note-pyramid", "occasions-and-style"],

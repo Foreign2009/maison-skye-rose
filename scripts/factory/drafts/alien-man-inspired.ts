@@ -93,7 +93,7 @@ export const alienManInspired: FragranceKnowledge = {
   newArrival    : false,
 
   // ── Education ───────────────────────────────────────────────────────────────
-  subtitle      : "Aromatic Spice",
+  subtitle      : "Anise & Leather",
   description   : "Opens with anise and mint that cut sharp and clean, a green aromatic pulse that gives way to leather and pepper in the heart. White amber and cashmeran create a warm, almost tactile base—soft enough to breathe, structured enough to hold its ground.",
   academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "what-makes-a-signature-scent", "how-to-layer-fragrances"],
   academyCategories: ["fragrance-families", "the-note-pyramid", "occasions-and-style"],

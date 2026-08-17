@@ -1316,11 +1316,11 @@
       "factoryVersion": "0.5.0",
       "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
       "validationStatus": "PASS",
-      "status": "in_review",
+      "status": "approved",
       "addedAt": "2026-08-17T17:18:51.522Z",
       "reviewStartedAt": "2026-08-17T17:23:51.774Z",
-      "decidedAt": null,
-      "reviewer": "R14 Editorial Review",
+      "decidedAt": "2026-08-17T17:41:15.499Z",
+      "reviewer": "Founder",
       "notes": [
         {
           "id": "note-1786987483332-ve8ek",
@@ -1331,7 +1331,12 @@
           "resolved": false
         }
       ],
-      "decision": null
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-17T17:41:15.498Z",
+        "reason": "Founder approved Wave 1 after R14 editorial review and R14A resolution."
+      }
     },
     {
       "slug": "allure-homme-sport-inspired",
@@ -1340,13 +1345,18 @@
       "factoryVersion": "0.5.0",
       "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
       "validationStatus": "PASS",
-      "status": "in_review",
+      "status": "approved",
       "addedAt": "2026-08-17T17:18:51.530Z",
       "reviewStartedAt": "2026-08-17T17:24:12.742Z",
-      "decidedAt": null,
-      "reviewer": "R14 Editorial Review",
+      "decidedAt": "2026-08-17T17:41:37.654Z",
+      "reviewer": "Founder",
       "notes": [],
-      "decision": null
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-17T17:41:37.652Z",
+        "reason": "Founder approved Wave 1 after R14 editorial review and R14A resolution."
+      }
     },
     {
       "slug": "arabians-musk-inspired",
@@ -1355,11 +1365,11 @@
       "factoryVersion": "0.5.0",
       "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
       "validationStatus": "PASS",
-      "status": "in_review",
+      "status": "approved",
       "addedAt": "2026-08-17T17:18:51.538Z",
       "reviewStartedAt": "2026-08-17T17:22:34.946Z",
-      "decidedAt": null,
-      "reviewer": "R14 Editorial Review",
+      "decidedAt": "2026-08-17T17:39:57.814Z",
+      "reviewer": "Founder",
       "notes": [
         {
           "id": "note-1786987474767-041zs",
@@ -1370,7 +1380,12 @@
           "resolved": false
         }
       ],
-      "decision": null
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-17T17:39:57.811Z",
+        "reason": "Founder approved Wave 1 after R14 editorial review and R14A resolution."
+      }
     },
     {
       "slug": "black-opium-over-red-inspired",
@@ -1379,13 +1394,18 @@
       "factoryVersion": "0.5.0",
       "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
       "validationStatus": "PASS",
-      "status": "in_review",
+      "status": "approved",
       "addedAt": "2026-08-17T17:18:51.552Z",
       "reviewStartedAt": "2026-08-17T17:22:51.836Z",
-      "decidedAt": null,
-      "reviewer": "R14 Editorial Review",
+      "decidedAt": "2026-08-17T17:40:14.537Z",
+      "reviewer": "Founder",
       "notes": [],
-      "decision": null
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-17T17:40:14.536Z",
+        "reason": "Founder approved Wave 1 after R14 editorial review and R14A resolution."
+      }
     },
     {
       "slug": "bleu-de-chanel-l'exclusif-inspired",
@@ -1394,13 +1414,18 @@
       "factoryVersion": "0.5.0",
       "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
       "validationStatus": "PASS",
-      "status": "in_review",
+      "status": "approved",
       "addedAt": "2026-08-17T17:18:51.558Z",
       "reviewStartedAt": "2026-08-17T17:23:36.023Z",
-      "decidedAt": null,
-      "reviewer": "R14 Editorial Review",
+      "decidedAt": "2026-08-17T17:40:58.579Z",
+      "reviewer": "Founder",
       "notes": [],
-      "decision": null
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-17T17:40:58.578Z",
+        "reason": "Founder approved Wave 1 after R14 editorial review and R14A resolution."
+      }
     },
     {
       "slug": "bloom-inspired",
@@ -1409,13 +1434,18 @@
       "factoryVersion": "0.5.0",
       "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
       "validationStatus": "PASS",
-      "status": "in_review",
+      "status": "approved",
       "addedAt": "2026-08-17T17:18:51.563Z",
       "reviewStartedAt": "2026-08-17T17:23:04.579Z",
-      "decidedAt": null,
-      "reviewer": "R14 Editorial Review",
+      "decidedAt": "2026-08-17T17:40:27.511Z",
+      "reviewer": "Founder",
       "notes": [],
-      "decision": null
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-17T17:40:27.508Z",
+        "reason": "Founder approved Wave 1 after R14 editorial review and R14A resolution."
+      }
     },
     {
       "slug": "bois-d'argent-inspired",
@@ -1424,13 +1454,18 @@
       "factoryVersion": "0.5.0",
       "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
       "validationStatus": "PASS",
-      "status": "in_review",
+      "status": "approved",
       "addedAt": "2026-08-17T17:18:51.566Z",
       "reviewStartedAt": "2026-08-17T17:24:10.027Z",
-      "decidedAt": null,
-      "reviewer": "R14 Editorial Review",
+      "decidedAt": "2026-08-17T17:41:34.932Z",
+      "reviewer": "Founder",
       "notes": [],
-      "decision": null
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-17T17:41:34.931Z",
+        "reason": "Founder approved Wave 1 after R14 editorial review and R14A resolution."
+      }
     },
     {
       "slug": "bright-crystal-inspired",
@@ -1439,11 +1474,11 @@
       "factoryVersion": "0.5.0",
       "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
       "validationStatus": "PASS",
-      "status": "in_review",
+      "status": "approved",
       "addedAt": "2026-08-17T17:18:51.570Z",
       "reviewStartedAt": "2026-08-17T17:23:28.297Z",
-      "decidedAt": null,
-      "reviewer": "R14 Editorial Review",
+      "decidedAt": "2026-08-17T17:40:50.674Z",
+      "reviewer": "Founder",
       "notes": [
         {
           "id": "note-1786987486255-6uzo0",
@@ -1452,9 +1487,22 @@
           "section": "general",
           "note": "Collection-level observation: 'Clarity' appears in 7 Wave 1 subtitles (Coastal Clarity, Sunlit Clarity, Herbal Clarity, Sea-Kissed Clarity, Leather and Clarity, Radiant Clarity, Clarity in Motion). 'Radiant' appears in 4 Rose subtitles. Founder to decide if any subset requires differentiation.",
           "resolved": false
+        },
+        {
+          "id": "note-1786988379500-17v4f",
+          "reviewer": "Founder",
+          "timestamp": "2026-08-17T17:39:39.500Z",
+          "section": "general",
+          "note": "FOUNDER DECISION (R14A): No catalogue-wide subtitle rewrite. 'Radiant Clarity' confirmed. All Clarity/Radiant/Radiance subtitles remain as governed. Shared vocabulary is editorial observation only, not a launch blocker. This issue is closed for Wave 1.",
+          "resolved": false
         }
       ],
-      "decision": null
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-17T17:40:50.673Z",
+        "reason": "Founder approved Wave 1 after R14 editorial review and R14A resolution."
+      }
     },
     {
       "slug": "bvlgari-aqua-inspired",
@@ -1463,13 +1511,18 @@
       "factoryVersion": "0.5.0",
       "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
       "validationStatus": "PASS",
-      "status": "in_review",
+      "status": "approved",
       "addedAt": "2026-08-17T17:18:51.575Z",
       "reviewStartedAt": "2026-08-17T17:23:54.359Z",
-      "decidedAt": null,
-      "reviewer": "R14 Editorial Review",
+      "decidedAt": "2026-08-17T17:41:18.239Z",
+      "reviewer": "Founder",
       "notes": [],
-      "decision": null
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-17T17:41:18.238Z",
+        "reason": "Founder approved Wave 1 after R14 editorial review and R14A resolution."
+      }
     },
     {
       "slug": "carmina-inspired",
@@ -1478,13 +1531,18 @@
       "factoryVersion": "0.5.0",
       "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
       "validationStatus": "PASS",
-      "status": "in_review",
+      "status": "approved",
       "addedAt": "2026-08-17T17:18:51.580Z",
       "reviewStartedAt": "2026-08-17T17:23:07.402Z",
-      "decidedAt": null,
-      "reviewer": "R14 Editorial Review",
+      "decidedAt": "2026-08-17T17:40:30.090Z",
+      "reviewer": "Founder",
       "notes": [],
-      "decision": null
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-17T17:40:30.089Z",
+        "reason": "Founder approved Wave 1 after R14 editorial review and R14A resolution."
+      }
     },
     {
       "slug": "chance-inspired",
@@ -1493,13 +1551,18 @@
       "factoryVersion": "0.5.0",
       "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
       "validationStatus": "PASS",
-      "status": "in_review",
+      "status": "approved",
       "addedAt": "2026-08-17T17:18:51.585Z",
       "reviewStartedAt": "2026-08-17T17:23:23.182Z",
-      "decidedAt": null,
-      "reviewer": "R14 Editorial Review",
+      "decidedAt": "2026-08-17T17:40:45.546Z",
+      "reviewer": "Founder",
       "notes": [],
-      "decision": null
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-17T17:40:45.545Z",
+        "reason": "Founder approved Wave 1 after R14 editorial review and R14A resolution."
+      }
     },
     {
       "slug": "coach-floral-inspired",
@@ -1508,13 +1571,18 @@
       "factoryVersion": "0.5.0",
       "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
       "validationStatus": "PASS",
-      "status": "in_review",
+      "status": "approved",
       "addedAt": "2026-08-17T17:18:51.589Z",
       "reviewStartedAt": "2026-08-17T17:23:17.905Z",
-      "decidedAt": null,
-      "reviewer": "R14 Editorial Review",
+      "decidedAt": "2026-08-17T17:40:40.400Z",
+      "reviewer": "Founder",
       "notes": [],
-      "decision": null
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-17T17:40:40.400Z",
+        "reason": "Founder approved Wave 1 after R14 editorial review and R14A resolution."
+      }
     },
     {
       "slug": "decision-inspired",
@@ -1523,13 +1591,18 @@
       "factoryVersion": "0.5.0",
       "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
       "validationStatus": "PASS",
-      "status": "in_review",
+      "status": "approved",
       "addedAt": "2026-08-17T17:18:51.597Z",
       "reviewStartedAt": "2026-08-17T17:22:45.967Z",
-      "decidedAt": null,
-      "reviewer": "R14 Editorial Review",
+      "decidedAt": "2026-08-17T17:40:09.009Z",
+      "reviewer": "Founder",
       "notes": [],
-      "decision": null
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-17T17:40:09.008Z",
+        "reason": "Founder approved Wave 1 after R14 editorial review and R14A resolution."
+      }
     },
     {
       "slug": "dior-homme-sport-inspired",
@@ -1538,13 +1611,18 @@
       "factoryVersion": "0.5.0",
       "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
       "validationStatus": "PASS",
-      "status": "in_review",
+      "status": "approved",
       "addedAt": "2026-08-17T17:18:51.602Z",
       "reviewStartedAt": "2026-08-17T17:23:44.015Z",
-      "decidedAt": null,
-      "reviewer": "R14 Editorial Review",
+      "decidedAt": "2026-08-17T17:41:06.946Z",
+      "reviewer": "Founder",
       "notes": [],
-      "decision": null
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-17T17:41:06.944Z",
+        "reason": "Founder approved Wave 1 after R14 editorial review and R14A resolution."
+      }
     },
     {
       "slug": "dunhill-fresh-inspired",
@@ -1553,13 +1631,18 @@
       "factoryVersion": "0.5.0",
       "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
       "validationStatus": "PASS",
-      "status": "in_review",
+      "status": "approved",
       "addedAt": "2026-08-17T17:18:51.605Z",
       "reviewStartedAt": "2026-08-17T17:23:46.624Z",
-      "decidedAt": null,
-      "reviewer": "R14 Editorial Review",
+      "decidedAt": "2026-08-17T17:41:09.781Z",
+      "reviewer": "Founder",
       "notes": [],
-      "decision": null
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-17T17:41:09.781Z",
+        "reason": "Founder approved Wave 1 after R14 editorial review and R14A resolution."
+      }
     },
     {
       "slug": "eros-flame-inspired",
@@ -1568,13 +1651,18 @@
       "factoryVersion": "0.5.0",
       "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
       "validationStatus": "PASS",
-      "status": "in_review",
+      "status": "approved",
       "addedAt": "2026-08-17T17:18:51.610Z",
       "reviewStartedAt": "2026-08-17T17:23:49.214Z",
-      "decidedAt": null,
-      "reviewer": "R14 Editorial Review",
+      "decidedAt": "2026-08-17T17:41:12.732Z",
+      "reviewer": "Founder",
       "notes": [],
-      "decision": null
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-17T17:41:12.731Z",
+        "reason": "Founder approved Wave 1 after R14 editorial review and R14A resolution."
+      }
     },
     {
       "slug": "fresh-blossom-inspired",
@@ -1583,13 +1671,18 @@
       "factoryVersion": "0.5.0",
       "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
       "validationStatus": "PASS",
-      "status": "in_review",
+      "status": "approved",
       "addedAt": "2026-08-17T17:18:51.615Z",
       "reviewStartedAt": "2026-08-17T17:22:59.379Z",
-      "decidedAt": null,
-      "reviewer": "R14 Editorial Review",
+      "decidedAt": "2026-08-17T17:40:22.279Z",
+      "reviewer": "Founder",
       "notes": [],
-      "decision": null
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-17T17:40:22.278Z",
+        "reason": "Founder approved Wave 1 after R14 editorial review and R14A resolution."
+      }
     },
     {
       "slug": "gentleman-edt-inspired",
@@ -1598,13 +1691,18 @@
       "factoryVersion": "0.5.0",
       "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
       "validationStatus": "PASS",
-      "status": "in_review",
+      "status": "approved",
       "addedAt": "2026-08-17T17:18:51.620Z",
       "reviewStartedAt": "2026-08-17T17:24:15.724Z",
-      "decidedAt": null,
-      "reviewer": "R14 Editorial Review",
+      "decidedAt": "2026-08-17T17:41:40.342Z",
+      "reviewer": "Founder",
       "notes": [],
-      "decision": null
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-17T17:41:40.341Z",
+        "reason": "Founder approved Wave 1 after R14 editorial review and R14A resolution."
+      }
     },
     {
       "slug": "godolphin-inspired",
@@ -1613,13 +1711,18 @@
       "factoryVersion": "0.5.0",
       "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
       "validationStatus": "PASS",
-      "status": "in_review",
+      "status": "approved",
       "addedAt": "2026-08-17T17:18:51.624Z",
       "reviewStartedAt": "2026-08-17T17:24:04.782Z",
-      "decidedAt": null,
-      "reviewer": "R14 Editorial Review",
+      "decidedAt": "2026-08-17T17:41:29.395Z",
+      "reviewer": "Founder",
       "notes": [],
-      "decision": null
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-17T17:41:29.393Z",
+        "reason": "Founder approved Wave 1 after R14 editorial review and R14A resolution."
+      }
     },
     {
       "slug": "h24-herbes-vives-inspired",
@@ -1628,13 +1731,18 @@
       "factoryVersion": "0.5.0",
       "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
       "validationStatus": "PASS",
-      "status": "in_review",
+      "status": "approved",
       "addedAt": "2026-08-17T17:18:51.638Z",
       "reviewStartedAt": "2026-08-17T17:23:56.955Z",
-      "decidedAt": null,
-      "reviewer": "R14 Editorial Review",
+      "decidedAt": "2026-08-17T17:41:20.977Z",
+      "reviewer": "Founder",
       "notes": [],
-      "decision": null
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-17T17:41:20.976Z",
+        "reason": "Founder approved Wave 1 after R14 editorial review and R14A resolution."
+      }
     },
     {
       "slug": "invictus-victory-absolu-inspired",
@@ -1643,13 +1751,18 @@
       "factoryVersion": "0.5.0",
       "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
       "validationStatus": "PASS",
-      "status": "in_review",
+      "status": "approved",
       "addedAt": "2026-08-17T17:18:51.644Z",
       "reviewStartedAt": "2026-08-17T17:23:59.527Z",
-      "decidedAt": null,
-      "reviewer": "R14 Editorial Review",
+      "decidedAt": "2026-08-17T17:41:23.976Z",
+      "reviewer": "Founder",
       "notes": [],
-      "decision": null
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-17T17:41:23.976Z",
+        "reason": "Founder approved Wave 1 after R14 editorial review and R14A resolution."
+      }
     },
     {
       "slug": "libre-flowers-flames-florale-inspired",
@@ -1658,13 +1771,18 @@
       "factoryVersion": "0.5.0",
       "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
       "validationStatus": "PASS",
-      "status": "in_review",
+      "status": "approved",
       "addedAt": "2026-08-17T17:18:51.653Z",
       "reviewStartedAt": "2026-08-17T17:22:56.866Z",
-      "decidedAt": null,
-      "reviewer": "R14 Editorial Review",
+      "decidedAt": "2026-08-17T17:40:19.751Z",
+      "reviewer": "Founder",
       "notes": [],
-      "decision": null
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-17T17:40:19.750Z",
+        "reason": "Founder approved Wave 1 after R14 editorial review and R14A resolution."
+      }
     },
     {
       "slug": "light-blue-inspired",
@@ -1673,13 +1791,18 @@
       "factoryVersion": "0.5.0",
       "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
       "validationStatus": "PASS",
-      "status": "in_review",
+      "status": "approved",
       "addedAt": "2026-08-17T17:18:51.658Z",
       "reviewStartedAt": "2026-08-17T17:23:01.970Z",
-      "decidedAt": null,
-      "reviewer": "R14 Editorial Review",
+      "decidedAt": "2026-08-17T17:40:24.948Z",
+      "reviewer": "Founder",
       "notes": [],
-      "decision": null
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-17T17:40:24.947Z",
+        "reason": "Founder approved Wave 1 after R14 editorial review and R14A resolution."
+      }
     },
     {
       "slug": "mon-guerlain-inspired",
@@ -1688,11 +1811,11 @@
       "factoryVersion": "0.5.0",
       "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
       "validationStatus": "PASS",
-      "status": "in_review",
+      "status": "approved",
       "addedAt": "2026-08-17T17:18:51.667Z",
       "reviewStartedAt": "2026-08-17T17:23:25.710Z",
-      "decidedAt": null,
-      "reviewer": "R14 Editorial Review",
+      "decidedAt": "2026-08-17T17:40:48.136Z",
+      "reviewer": "Founder",
       "notes": [
         {
           "id": "note-1786987489159-ewjb9",
@@ -1703,7 +1826,12 @@
           "resolved": false
         }
       ],
-      "decision": null
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-17T17:40:48.134Z",
+        "reason": "Founder approved Wave 1 after R14 editorial review and R14A resolution."
+      }
     },
     {
       "slug": "my-way-ylang-inspired",
@@ -1712,13 +1840,18 @@
       "factoryVersion": "0.5.0",
       "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
       "validationStatus": "PASS",
-      "status": "in_review",
+      "status": "approved",
       "addedAt": "2026-08-17T17:18:51.672Z",
       "reviewStartedAt": "2026-08-17T17:23:10.052Z",
-      "decidedAt": null,
-      "reviewer": "R14 Editorial Review",
+      "decidedAt": "2026-08-17T17:40:32.659Z",
+      "reviewer": "Founder",
       "notes": [],
-      "decision": null
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-17T17:40:32.658Z",
+        "reason": "Founder approved Wave 1 after R14 editorial review and R14A resolution."
+      }
     },
     {
       "slug": "ombre-leather-inspired",
@@ -1727,13 +1860,18 @@
       "factoryVersion": "0.5.0",
       "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
       "validationStatus": "PASS",
-      "status": "in_review",
+      "status": "approved",
       "addedAt": "2026-08-17T17:18:51.675Z",
       "reviewStartedAt": "2026-08-17T17:23:38.610Z",
-      "decidedAt": null,
-      "reviewer": "R14 Editorial Review",
+      "decidedAt": "2026-08-17T17:41:01.394Z",
+      "reviewer": "Founder",
       "notes": [],
-      "decision": null
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-17T17:41:01.393Z",
+        "reason": "Founder approved Wave 1 after R14 editorial review and R14A resolution."
+      }
     },
     {
       "slug": "omnia-green-jade-inspired",
@@ -1742,13 +1880,18 @@
       "factoryVersion": "0.5.0",
       "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
       "validationStatus": "PASS",
-      "status": "in_review",
+      "status": "approved",
       "addedAt": "2026-08-17T17:18:51.680Z",
       "reviewStartedAt": "2026-08-17T17:23:15.349Z",
-      "decidedAt": null,
-      "reviewer": "R14 Editorial Review",
+      "decidedAt": "2026-08-17T17:40:37.719Z",
+      "reviewer": "Founder",
       "notes": [],
-      "decision": null
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-17T17:40:37.718Z",
+        "reason": "Founder approved Wave 1 after R14 editorial review and R14A resolution."
+      }
     },
     {
       "slug": "oriana-inspired",
@@ -1757,13 +1900,18 @@
       "factoryVersion": "0.5.0",
       "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
       "validationStatus": "PASS",
-      "status": "in_review",
+      "status": "approved",
       "addedAt": "2026-08-17T17:18:51.683Z",
       "reviewStartedAt": "2026-08-17T17:23:33.358Z",
-      "decidedAt": null,
-      "reviewer": "R14 Editorial Review",
+      "decidedAt": "2026-08-17T17:40:55.811Z",
+      "reviewer": "Founder",
       "notes": [],
-      "decision": null
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-17T17:40:55.809Z",
+        "reason": "Founder approved Wave 1 after R14 editorial review and R14A resolution."
+      }
     },
     {
       "slug": "oud-ispahan-inspired",
@@ -1772,13 +1920,18 @@
       "factoryVersion": "0.5.0",
       "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
       "validationStatus": "PASS",
-      "status": "in_review",
+      "status": "approved",
       "addedAt": "2026-08-17T17:18:51.687Z",
       "reviewStartedAt": "2026-08-17T17:23:20.480Z",
-      "decidedAt": null,
-      "reviewer": "R14 Editorial Review",
+      "decidedAt": "2026-08-17T17:40:42.947Z",
+      "reviewer": "Founder",
       "notes": [],
-      "decision": null
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-17T17:40:42.946Z",
+        "reason": "Founder approved Wave 1 after R14 editorial review and R14A resolution."
+      }
     },
     {
       "slug": "rose-n'-roses-inspired",
@@ -1787,13 +1940,18 @@
       "factoryVersion": "0.5.0",
       "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
       "validationStatus": "PASS",
-      "status": "in_review",
+      "status": "approved",
       "addedAt": "2026-08-17T17:18:51.696Z",
       "reviewStartedAt": "2026-08-17T17:22:49.361Z",
-      "decidedAt": null,
-      "reviewer": "R14 Editorial Review",
+      "decidedAt": "2026-08-17T17:40:11.621Z",
+      "reviewer": "Founder",
       "notes": [],
-      "decision": null
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-17T17:40:11.620Z",
+        "reason": "Founder approved Wave 1 after R14 editorial review and R14A resolution."
+      }
     },
     {
       "slug": "rose-of-no-man's-land-inspired",
@@ -1802,13 +1960,18 @@
       "factoryVersion": "0.5.0",
       "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
       "validationStatus": "PASS",
-      "status": "in_review",
+      "status": "approved",
       "addedAt": "2026-08-17T17:18:51.700Z",
       "reviewStartedAt": "2026-08-17T17:22:40.401Z",
-      "decidedAt": null,
-      "reviewer": "R14 Editorial Review",
+      "decidedAt": "2026-08-17T17:40:03.460Z",
+      "reviewer": "Founder",
       "notes": [],
-      "decision": null
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-17T17:40:03.458Z",
+        "reason": "Founder approved Wave 1 after R14 editorial review and R14A resolution."
+      }
     },
     {
       "slug": "rose-oud-inspired",
@@ -1817,13 +1980,18 @@
       "factoryVersion": "0.5.0",
       "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
       "validationStatus": "PASS",
-      "status": "in_review",
+      "status": "approved",
       "addedAt": "2026-08-17T17:18:51.703Z",
       "reviewStartedAt": "2026-08-17T17:22:32.258Z",
-      "decidedAt": null,
-      "reviewer": "R14 Editorial Review",
+      "decidedAt": "2026-08-17T17:39:55.074Z",
+      "reviewer": "Founder",
       "notes": [],
-      "decision": null
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-17T17:39:55.073Z",
+        "reason": "Founder approved Wave 1 after R14 editorial review and R14A resolution."
+      }
     },
     {
       "slug": "royal-oud-inspired",
@@ -1832,11 +2000,11 @@
       "factoryVersion": "0.5.0",
       "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
       "validationStatus": "PASS",
-      "status": "in_review",
+      "status": "approved",
       "addedAt": "2026-08-17T17:18:51.707Z",
       "reviewStartedAt": "2026-08-17T17:22:37.550Z",
-      "decidedAt": null,
-      "reviewer": "R14 Editorial Review",
+      "decidedAt": "2026-08-17T17:40:00.611Z",
+      "reviewer": "Founder",
       "notes": [
         {
           "id": "note-1786987477743-ps7wk",
@@ -1847,7 +2015,12 @@
           "resolved": false
         }
       ],
-      "decision": null
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-17T17:40:00.610Z",
+        "reason": "Founder approved Wave 1 after R14 editorial review and R14A resolution."
+      }
     },
     {
       "slug": "si-passione-red-musk-inspired",
@@ -1856,13 +2029,18 @@
       "factoryVersion": "0.5.0",
       "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
       "validationStatus": "PASS",
-      "status": "in_review",
+      "status": "approved",
       "addedAt": "2026-08-17T17:18:51.709Z",
       "reviewStartedAt": "2026-08-17T17:23:12.759Z",
-      "decidedAt": null,
-      "reviewer": "R14 Editorial Review",
+      "decidedAt": "2026-08-17T17:40:35.210Z",
+      "reviewer": "Founder",
       "notes": [],
-      "decision": null
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-17T17:40:35.209Z",
+        "reason": "Founder approved Wave 1 after R14 editorial review and R14A resolution."
+      }
     },
     {
       "slug": "spicebomb-dark-leather-inspired",
@@ -1871,13 +2049,18 @@
       "factoryVersion": "0.5.0",
       "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
       "validationStatus": "PASS",
-      "status": "in_review",
+      "status": "approved",
       "addedAt": "2026-08-17T17:18:51.715Z",
       "reviewStartedAt": "2026-08-17T17:24:02.160Z",
-      "decidedAt": null,
-      "reviewer": "R14 Editorial Review",
+      "decidedAt": "2026-08-17T17:41:26.624Z",
+      "reviewer": "Founder",
       "notes": [],
-      "decision": null
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-17T17:41:26.623Z",
+        "reason": "Founder approved Wave 1 after R14 editorial review and R14A resolution."
+      }
     },
     {
       "slug": "taif-rose-inspired",
@@ -1886,13 +2069,18 @@
       "factoryVersion": "0.5.0",
       "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
       "validationStatus": "PASS",
-      "status": "in_review",
+      "status": "approved",
       "addedAt": "2026-08-17T17:18:51.719Z",
       "reviewStartedAt": "2026-08-17T17:22:54.364Z",
-      "decidedAt": null,
-      "reviewer": "R14 Editorial Review",
+      "decidedAt": "2026-08-17T17:40:17.150Z",
+      "reviewer": "Founder",
       "notes": [],
-      "decision": null
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-17T17:40:17.150Z",
+        "reason": "Founder approved Wave 1 after R14 editorial review and R14A resolution."
+      }
     },
     {
       "slug": "tobacco-vanille-inspired",
@@ -1901,11 +2089,11 @@
       "factoryVersion": "0.5.0",
       "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
       "validationStatus": "PASS",
-      "status": "in_review",
+      "status": "approved",
       "addedAt": "2026-08-17T17:18:51.724Z",
       "reviewStartedAt": "2026-08-17T17:23:41.255Z",
-      "decidedAt": null,
-      "reviewer": "R14 Editorial Review",
+      "decidedAt": "2026-08-17T17:41:03.983Z",
+      "reviewer": "Founder",
       "notes": [
         {
           "id": "note-1786987480609-4lmwq",
@@ -1916,7 +2104,12 @@
           "resolved": false
         }
       ],
-      "decision": null
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-17T17:41:03.981Z",
+        "reason": "Founder approved Wave 1 after R14 editorial review and R14A resolution."
+      }
     },
     {
       "slug": "twilly-d'hermes-inspired",
@@ -1925,13 +2118,18 @@
       "factoryVersion": "0.5.0",
       "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
       "validationStatus": "PASS",
-      "status": "in_review",
+      "status": "approved",
       "addedAt": "2026-08-17T17:18:51.730Z",
       "reviewStartedAt": "2026-08-17T17:23:30.836Z",
-      "decidedAt": null,
-      "reviewer": "R14 Editorial Review",
+      "decidedAt": "2026-08-17T17:40:53.237Z",
+      "reviewer": "Founder",
       "notes": [],
-      "decision": null
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-17T17:40:53.236Z",
+        "reason": "Founder approved Wave 1 after R14 editorial review and R14A resolution."
+      }
     },
     {
       "slug": "voyage-d'hermes-inspired",
@@ -1940,13 +2138,18 @@
       "factoryVersion": "0.5.0",
       "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
       "validationStatus": "PASS",
-      "status": "in_review",
+      "status": "approved",
       "addedAt": "2026-08-17T17:18:51.736Z",
       "reviewStartedAt": "2026-08-17T17:24:07.417Z",
-      "decidedAt": null,
-      "reviewer": "R14 Editorial Review",
+      "decidedAt": "2026-08-17T17:41:32.146Z",
+      "reviewer": "Founder",
       "notes": [],
-      "decision": null
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-17T17:41:32.145Z",
+        "reason": "Founder approved Wave 1 after R14 editorial review and R14A resolution."
+      }
     },
     {
       "slug": "wood-sage-sea-salt-inspired",
@@ -1955,13 +2158,18 @@
       "factoryVersion": "0.5.0",
       "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
       "validationStatus": "PASS",
-      "status": "in_review",
+      "status": "approved",
       "addedAt": "2026-08-17T17:18:51.741Z",
       "reviewStartedAt": "2026-08-17T17:22:42.895Z",
-      "decidedAt": null,
-      "reviewer": "R14 Editorial Review",
+      "decidedAt": "2026-08-17T17:40:06.296Z",
+      "reviewer": "Founder",
       "notes": [],
-      "decision": null
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-17T17:40:06.295Z",
+        "reason": "Founder approved Wave 1 after R14 editorial review and R14A resolution."
+      }
     }
   ]
 }

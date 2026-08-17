@@ -80,7 +80,7 @@ export const arabiansMuskInspired: FragranceKnowledge = {
   newArrival    : false,
 
   // ── Education ───────────────────────────────────────────────────────────────
-  subtitle      : "Creamy Oriental Warmth",
+  subtitle      : "Honeyed Musk",
   description   : "Honey and bergamot open onto a warm embrace of dates and orange blossom, grounding into a creamy base of musk, vanilla, and tonka bean. Sweet without cloying, this is oriental perfumery rendered in soft focus—sensual, intimate, deeply comforting.",
   academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "choosing-your-season-scent", "how-to-layer-fragrances"],
   academyCategories: ["fragrance-families", "the-note-pyramid", "occasions-and-style"],
