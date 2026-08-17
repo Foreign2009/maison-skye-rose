@@ -1,4 +1,4 @@
-// ═════════════════════════════════════════════════════════════════
+﻿// ═════════════════════════════════════════════════════════════════
 // FACTORY DRAFT — wood-sage-sea-salt-inspired
 // ─────────────────────────────────────────────────────────────────
 // Generated:         2026-08-16T17:09:57.491Z
@@ -44,6 +44,7 @@ export const woodSageSeaSaltInspired: FragranceKnowledge = {
     heart: ["Sea Salt"],
     base:  ["Sage"],
   },
+  notesEvidenceLocked: true,
   mood          : "Fresh Clean Marine",
 
   // ── Discovery ───────────────────────────────────────────────────────────────

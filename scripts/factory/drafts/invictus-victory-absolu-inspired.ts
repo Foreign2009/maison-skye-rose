@@ -1,4 +1,4 @@
-// ═════════════════════════════════════════════════════════════════
+﻿// ═════════════════════════════════════════════════════════════════
 // FACTORY DRAFT — invictus-victory-absolu-inspired
 // ─────────────────────────────────────────────────────────────────
 // Generated:         2026-08-16T18:50:55.862Z
@@ -44,6 +44,7 @@ export const invictusVictoryAbsoluInspired: FragranceKnowledge = {
     heart: ["Amber", "Ambergris", "Woodsy Notes"],
     base:  ["Sandalwood", "Frankincense", "Patchouli"],
   },
+  notesEvidenceLocked: true,
   mood          : "Warm Oriental Masculine",
 
   // ── Discovery ───────────────────────────────────────────────────────────────

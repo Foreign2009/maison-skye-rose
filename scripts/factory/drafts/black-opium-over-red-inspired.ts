@@ -44,6 +44,7 @@ export const blackOpiumOverRedInspired: FragranceKnowledge = {
     heart: ["Jasmine", "Orange Blossom", "Black Tea"],
     base:  ["Madagascar Vanilla", "Coffee", "Indonesian Patchouli Leaf"],
   },
+  notesEvidenceLocked: true,
   mood          : "Gourmand Sweet Dark",
 
   // ── Discovery ───────────────────────────────────────────────────────────────

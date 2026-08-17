@@ -1,4 +1,4 @@
-// ═════════════════════════════════════════════════════════════════
+﻿// ═════════════════════════════════════════════════════════════════
 // FACTORY DRAFT — oud-ispahan-inspired
 // ─────────────────────────────────────────────────────────────────
 // Generated:         2026-08-16T16:53:29.429Z
@@ -44,6 +44,7 @@ export const oudIspahanInspired: FragranceKnowledge = {
     heart: ["Rose", "Patchouli", "Saffron"],
     base:  ["Agarwood (Oud)", "Sandalwood", "Cedar"],
   },
+  notesEvidenceLocked: true,
   mood          : "Oriental Romantic Rose",
 
   // ── Discovery ───────────────────────────────────────────────────────────────

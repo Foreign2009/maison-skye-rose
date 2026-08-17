@@ -1,4 +1,4 @@
-// ═════════════════════════════════════════════════════════════════
+﻿// ═════════════════════════════════════════════════════════════════
 // FACTORY DRAFT — ombre-leather-inspired
 // ─────────────────────────────────────────────────────────────────
 // Generated:         2026-08-16T16:52:13.666Z
@@ -44,6 +44,7 @@ export const ombreLeatherInspired: FragranceKnowledge = {
     heart: ["Leather", "Jasmine Sambac"],
     base:  ["Amber", "Moss", "Patchouli"],
   },
+  notesEvidenceLocked: true,
   mood          : "Dark Masculine",
 
   // ── Discovery ───────────────────────────────────────────────────────────────

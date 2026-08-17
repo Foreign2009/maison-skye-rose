@@ -1,4 +1,4 @@
-// ═════════════════════════════════════════════════════════════════
+﻿// ═════════════════════════════════════════════════════════════════
 // FACTORY DRAFT — libre-flowers-flames-florale-inspired
 // ─────────────────────────────────────────────────────────────────
 // Generated:         2026-08-16T18:48:46.436Z
@@ -50,6 +50,7 @@ export const libreFlowersFlamesFloraleInspired: FragranceKnowledge = {
     ],
     base:  ["Vanilla"],
   },
+  notesEvidenceLocked: true,
   mood          : "Fresh Floral Sweet Tropical",
 
   // ── Discovery ───────────────────────────────────────────────────────────────

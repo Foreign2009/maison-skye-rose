@@ -1,4 +1,4 @@
-// ═════════════════════════════════════════════════════════════════
+﻿// ═════════════════════════════════════════════════════════════════
 // FACTORY DRAFT — taif-rose-inspired
 // ─────────────────────────────────────────────────────────────────
 // Generated:         2026-08-16T17:09:19.571Z
@@ -44,6 +44,7 @@ export const taifRoseInspired: FragranceKnowledge = {
     heart: ["Taif Rose"],
     base:  ["Amber", "Coffee"],
   },
+  notesEvidenceLocked: true,
   mood          : "Romantic Floral Oriental",
 
   // ── Discovery ───────────────────────────────────────────────────────────────

@@ -120,7 +120,7 @@ function renderComposition(r: FragranceKnowledge, ann: AnnotationMap): string {
   const heartLine = `    heart: ${renderStrArray(r.notes.heart, "    ")},${heartAnn}`;
   const baseLine  = `    base:  ${renderStrArray(r.notes.base,  "    ")},${baseAnn}`;
 
-  return [
+  const lines: string[] = [
     ``,
     `  // ── Composition ─────────────────────────────────────────────────────────────`,
     fieldLine("profile", renderStr(r.profile), trailingAnnotation(ann, "profile")),
@@ -130,8 +130,15 @@ function renderComposition(r: FragranceKnowledge, ann: AnnotationMap): string {
     heartLine,
     baseLine,
     `  },`,
-    fieldLine("mood",    renderStr(r.mood),    trailingAnnotation(ann, "mood")),
-  ].join("\n");
+  ];
+
+  if (r.notesEvidenceLocked === true) {
+    lines.push(`  notesEvidenceLocked: true,`);
+  }
+
+  lines.push(fieldLine("mood", renderStr(r.mood), trailingAnnotation(ann, "mood")));
+
+  return lines.join("\n");
 }
 
 // ── Section: Discovery ────────────────────────────────────────────────────────

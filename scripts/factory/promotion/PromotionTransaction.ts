@@ -240,10 +240,17 @@ export async function promoteSingle(
     errMsg:  string,
     valStatus: PromotionRecord["validationStatus"],
     buildRes:  PromotionRecord["buildResult"],
+    diagnosticOutput?: string,
   ): PromotionTransactionResult => {
     rollback(backup, slug, symbol);
 
     const completedAt = new Date().toISOString();
+
+    // Persist full validator/build output in history for post-mortem diagnosis
+    const errorDetail = diagnosticOutput
+      ? `${errMsg}\n--- validator output ---\n${diagnosticOutput.trim()}`
+      : errMsg;
+
     const historyEntry: PromotionHistoryEntry = {
       promotionId,
       slug, name, collection, operator, reviewedBy,
@@ -256,7 +263,7 @@ export async function promoteSingle(
       validationStatus: valStatus,
       buildResult:      buildRes,
       nativePath:       null,
-      error:            errMsg,
+      error:            errorDetail,
     };
     recordHistory(historyEntry);
 
@@ -266,7 +273,7 @@ export async function promoteSingle(
       validationStatus: valStatus,
       buildResult:      buildRes,
       durationMs:       elapsed(),
-      error:            errMsg,
+      error:            errorDetail,
     });
 
     logPromotionAction("promotion_rolled_back", slug, operator, `reason:${errMsg}`);
@@ -276,7 +283,7 @@ export async function promoteSingle(
       validationStatus: valStatus,
       buildResult:      buildRes,
       durationMs:       elapsed(),
-      error:            errMsg,
+      error:            errorDetail,
       message,
     };
   };
@@ -301,6 +308,7 @@ export async function promoteSingle(
       "mkc:validate returned non-zero exit code",
       "FAIL",
       null,
+      validateResult.output,
     );
   }
 
@@ -313,6 +321,7 @@ export async function promoteSingle(
       "npm run build returned non-zero exit code",
       validateResult.status,
       "fail",
+      buildResult.output,
     );
   }
 

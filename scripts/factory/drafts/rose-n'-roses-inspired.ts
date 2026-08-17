@@ -1,4 +1,4 @@
-// ═════════════════════════════════════════════════════════════════
+﻿// ═════════════════════════════════════════════════════════════════
 // FACTORY DRAFT — rose-n'-roses-inspired
 // ─────────────────────────────────────────────────────────────────
 // Generated:         2026-08-16T18:06:42.053Z
@@ -44,6 +44,7 @@ export const roseNRosesInspired: FragranceKnowledge = {
     heart: ["Grasse Rose", "Damask Rose"],
     base:  ["White Musk"],
   },
+  notesEvidenceLocked: true,
   mood          : "Romantic Floral Fresh",
 
   // ── Discovery ───────────────────────────────────────────────────────────────

@@ -431,6 +431,39 @@ test("CHECK 21 — light-blue-inspired: 4-3-3 notesStructured, Cedar in top and 
   assert.ok(f!.notesStructured!.heart.includes("White Rose"), "White Rose must be present — was wrongly dropped in R3");
 });
 
+// CHECK 22: Pending (not yet promoted) evidence-locked draft files must contain notesEvidenceLocked: true.
+// Already-promoted slugs are skipped — their native file is the authoritative state.
+// Catches the draftBuilder serialisation bug where the field was silently dropped.
+test("CHECK 22 — Evidence-locked draft files (pending promotion) contain notesEvidenceLocked: true", () => {
+  const DRAFTS_DIR = path.join(process.cwd(), "scripts", "factory", "drafts");
+  const NATIVE_DIR = path.join(process.cwd(), "app", "lib", "mkc", "native");
+  const missing:     string[] = [];
+  const notPresent:  string[] = [];
+
+  for (const slug of EVIDENCE_LOCKED_SLUGS) {
+    // Skip slugs that already have a native file — the draft is a historical
+    // artefact at that point; the native record is authoritative.
+    if (existsSync(path.join(NATIVE_DIR, `${slug}.ts`))) continue;
+
+    const draftPath = path.join(DRAFTS_DIR, `${slug}.ts`);
+    if (!existsSync(draftPath)) {
+      missing.push(slug);
+      continue;
+    }
+    const content = readFileSync(draftPath, "utf-8");
+    if (!content.includes("notesEvidenceLocked: true")) {
+      notPresent.push(slug);
+    }
+  }
+
+  const problems: string[] = [
+    ...missing.map(s     => `${s}: draft file not found`),
+    ...notPresent.map(s  => `${s}: draft exists but missing notesEvidenceLocked: true`),
+  ];
+  assert.equal(problems.length, 0,
+    `Evidence-lock field not in draft:\n     ${problems.join("\n     ")}`);
+});
+
 // VERIFY E: No staging entry has an image path collision with /products or similar
 test("VERIFY E — All image fields are empty strings (no false product image paths)", () => {
   const wrong: string[] = [];

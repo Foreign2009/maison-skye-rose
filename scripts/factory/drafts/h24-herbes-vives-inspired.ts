@@ -1,4 +1,4 @@
-// ═════════════════════════════════════════════════════════════════
+﻿// ═════════════════════════════════════════════════════════════════
 // FACTORY DRAFT — h24-herbes-vives-inspired
 // ─────────────────────────────────────────────────────────────────
 // Generated:         2026-08-16T16:09:20.186Z
@@ -44,6 +44,7 @@ export const h24HerbesVivesInspired: FragranceKnowledge = {
     heart: ["Pear"],
     base:  ["Physcool®"],
   },
+  notesEvidenceLocked: true,
   mood          : "Fresh Herbal Aromatic",
 
   // ── Discovery ───────────────────────────────────────────────────────────────
