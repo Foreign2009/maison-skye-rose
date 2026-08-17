@@ -1295,6 +1295,608 @@
       "slug": "j'adore-inspired",
       "reviewer": "Adi",
       "details": "promotionId:QeBpzId_dJzQ  nativePath:app/lib/mkc/native/j'adore-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-17T17:18:51.526Z",
+      "action": "added_to_queue",
+      "slug": "alien-man-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-08-17T17:18:51.532Z",
+      "action": "added_to_queue",
+      "slug": "allure-homme-sport-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-08-17T17:18:51.539Z",
+      "action": "added_to_queue",
+      "slug": "arabians-musk-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-08-17T17:18:51.555Z",
+      "action": "added_to_queue",
+      "slug": "black-opium-over-red-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-08-17T17:18:51.559Z",
+      "action": "added_to_queue",
+      "slug": "bleu-de-chanel-l'exclusif-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-08-17T17:18:51.565Z",
+      "action": "added_to_queue",
+      "slug": "bloom-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-08-17T17:18:51.568Z",
+      "action": "added_to_queue",
+      "slug": "bois-d'argent-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-08-17T17:18:51.571Z",
+      "action": "added_to_queue",
+      "slug": "bright-crystal-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-08-17T17:18:51.576Z",
+      "action": "added_to_queue",
+      "slug": "bvlgari-aqua-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-08-17T17:18:51.582Z",
+      "action": "added_to_queue",
+      "slug": "carmina-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-08-17T17:18:51.587Z",
+      "action": "added_to_queue",
+      "slug": "chance-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-08-17T17:18:51.590Z",
+      "action": "added_to_queue",
+      "slug": "coach-floral-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-08-17T17:18:51.599Z",
+      "action": "added_to_queue",
+      "slug": "decision-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-08-17T17:18:51.604Z",
+      "action": "added_to_queue",
+      "slug": "dior-homme-sport-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-08-17T17:18:51.607Z",
+      "action": "added_to_queue",
+      "slug": "dunhill-fresh-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-08-17T17:18:51.612Z",
+      "action": "added_to_queue",
+      "slug": "eros-flame-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-08-17T17:18:51.617Z",
+      "action": "added_to_queue",
+      "slug": "fresh-blossom-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-08-17T17:18:51.622Z",
+      "action": "added_to_queue",
+      "slug": "gentleman-edt-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-08-17T17:18:51.628Z",
+      "action": "added_to_queue",
+      "slug": "godolphin-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-08-17T17:18:51.639Z",
+      "action": "added_to_queue",
+      "slug": "h24-herbes-vives-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-08-17T17:18:51.647Z",
+      "action": "added_to_queue",
+      "slug": "invictus-victory-absolu-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-08-17T17:18:51.654Z",
+      "action": "added_to_queue",
+      "slug": "libre-flowers-flames-florale-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-08-17T17:18:51.659Z",
+      "action": "added_to_queue",
+      "slug": "light-blue-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-08-17T17:18:51.668Z",
+      "action": "added_to_queue",
+      "slug": "mon-guerlain-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-08-17T17:18:51.673Z",
+      "action": "added_to_queue",
+      "slug": "my-way-ylang-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-08-17T17:18:51.676Z",
+      "action": "added_to_queue",
+      "slug": "ombre-leather-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-08-17T17:18:51.681Z",
+      "action": "added_to_queue",
+      "slug": "omnia-green-jade-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-08-17T17:18:51.684Z",
+      "action": "added_to_queue",
+      "slug": "oriana-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-08-17T17:18:51.688Z",
+      "action": "added_to_queue",
+      "slug": "oud-ispahan-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-08-17T17:18:51.698Z",
+      "action": "added_to_queue",
+      "slug": "rose-n'-roses-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-08-17T17:18:51.702Z",
+      "action": "added_to_queue",
+      "slug": "rose-of-no-man's-land-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-08-17T17:18:51.705Z",
+      "action": "added_to_queue",
+      "slug": "rose-oud-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-08-17T17:18:51.708Z",
+      "action": "added_to_queue",
+      "slug": "royal-oud-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-08-17T17:18:51.712Z",
+      "action": "added_to_queue",
+      "slug": "si-passione-red-musk-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-08-17T17:18:51.717Z",
+      "action": "added_to_queue",
+      "slug": "spicebomb-dark-leather-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-08-17T17:18:51.722Z",
+      "action": "added_to_queue",
+      "slug": "taif-rose-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-08-17T17:18:51.725Z",
+      "action": "added_to_queue",
+      "slug": "tobacco-vanille-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-08-17T17:18:51.732Z",
+      "action": "added_to_queue",
+      "slug": "twilly-d'hermes-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-08-17T17:18:51.738Z",
+      "action": "added_to_queue",
+      "slug": "voyage-d'hermes-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-08-17T17:18:51.743Z",
+      "action": "added_to_queue",
+      "slug": "wood-sage-sea-salt-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-08-17T17:22:32.262Z",
+      "action": "review_started",
+      "slug": "rose-oud-inspired",
+      "reviewer": "R14 Editorial Review",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-08-17T17:22:34.950Z",
+      "action": "review_started",
+      "slug": "arabians-musk-inspired",
+      "reviewer": "R14 Editorial Review",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-08-17T17:22:37.553Z",
+      "action": "review_started",
+      "slug": "royal-oud-inspired",
+      "reviewer": "R14 Editorial Review",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-08-17T17:22:40.405Z",
+      "action": "review_started",
+      "slug": "rose-of-no-man's-land-inspired",
+      "reviewer": "R14 Editorial Review",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-08-17T17:22:42.899Z",
+      "action": "review_started",
+      "slug": "wood-sage-sea-salt-inspired",
+      "reviewer": "R14 Editorial Review",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-08-17T17:22:45.973Z",
+      "action": "review_started",
+      "slug": "decision-inspired",
+      "reviewer": "R14 Editorial Review",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-08-17T17:22:49.365Z",
+      "action": "review_started",
+      "slug": "rose-n'-roses-inspired",
+      "reviewer": "R14 Editorial Review",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-08-17T17:22:51.840Z",
+      "action": "review_started",
+      "slug": "black-opium-over-red-inspired",
+      "reviewer": "R14 Editorial Review",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-08-17T17:22:54.369Z",
+      "action": "review_started",
+      "slug": "taif-rose-inspired",
+      "reviewer": "R14 Editorial Review",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-08-17T17:22:56.871Z",
+      "action": "review_started",
+      "slug": "libre-flowers-flames-florale-inspired",
+      "reviewer": "R14 Editorial Review",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-08-17T17:22:59.383Z",
+      "action": "review_started",
+      "slug": "fresh-blossom-inspired",
+      "reviewer": "R14 Editorial Review",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-08-17T17:23:01.975Z",
+      "action": "review_started",
+      "slug": "light-blue-inspired",
+      "reviewer": "R14 Editorial Review",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-08-17T17:23:04.584Z",
+      "action": "review_started",
+      "slug": "bloom-inspired",
+      "reviewer": "R14 Editorial Review",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-08-17T17:23:07.406Z",
+      "action": "review_started",
+      "slug": "carmina-inspired",
+      "reviewer": "R14 Editorial Review",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-08-17T17:23:10.056Z",
+      "action": "review_started",
+      "slug": "my-way-ylang-inspired",
+      "reviewer": "R14 Editorial Review",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-08-17T17:23:12.764Z",
+      "action": "review_started",
+      "slug": "si-passione-red-musk-inspired",
+      "reviewer": "R14 Editorial Review",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-08-17T17:23:15.357Z",
+      "action": "review_started",
+      "slug": "omnia-green-jade-inspired",
+      "reviewer": "R14 Editorial Review",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-08-17T17:23:17.909Z",
+      "action": "review_started",
+      "slug": "coach-floral-inspired",
+      "reviewer": "R14 Editorial Review",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-08-17T17:23:20.484Z",
+      "action": "review_started",
+      "slug": "oud-ispahan-inspired",
+      "reviewer": "R14 Editorial Review",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-08-17T17:23:23.185Z",
+      "action": "review_started",
+      "slug": "chance-inspired",
+      "reviewer": "R14 Editorial Review",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-08-17T17:23:25.715Z",
+      "action": "review_started",
+      "slug": "mon-guerlain-inspired",
+      "reviewer": "R14 Editorial Review",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-08-17T17:23:28.302Z",
+      "action": "review_started",
+      "slug": "bright-crystal-inspired",
+      "reviewer": "R14 Editorial Review",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-08-17T17:23:30.841Z",
+      "action": "review_started",
+      "slug": "twilly-d'hermes-inspired",
+      "reviewer": "R14 Editorial Review",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-08-17T17:23:33.364Z",
+      "action": "review_started",
+      "slug": "oriana-inspired",
+      "reviewer": "R14 Editorial Review",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-08-17T17:23:36.027Z",
+      "action": "review_started",
+      "slug": "bleu-de-chanel-l'exclusif-inspired",
+      "reviewer": "R14 Editorial Review",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-08-17T17:23:38.614Z",
+      "action": "review_started",
+      "slug": "ombre-leather-inspired",
+      "reviewer": "R14 Editorial Review",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-08-17T17:23:41.260Z",
+      "action": "review_started",
+      "slug": "tobacco-vanille-inspired",
+      "reviewer": "R14 Editorial Review",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-08-17T17:23:44.022Z",
+      "action": "review_started",
+      "slug": "dior-homme-sport-inspired",
+      "reviewer": "R14 Editorial Review",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-08-17T17:23:46.629Z",
+      "action": "review_started",
+      "slug": "dunhill-fresh-inspired",
+      "reviewer": "R14 Editorial Review",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-08-17T17:23:49.218Z",
+      "action": "review_started",
+      "slug": "eros-flame-inspired",
+      "reviewer": "R14 Editorial Review",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-08-17T17:23:51.780Z",
+      "action": "review_started",
+      "slug": "alien-man-inspired",
+      "reviewer": "R14 Editorial Review",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-08-17T17:23:54.368Z",
+      "action": "review_started",
+      "slug": "bvlgari-aqua-inspired",
+      "reviewer": "R14 Editorial Review",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-08-17T17:23:56.959Z",
+      "action": "review_started",
+      "slug": "h24-herbes-vives-inspired",
+      "reviewer": "R14 Editorial Review",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-08-17T17:23:59.532Z",
+      "action": "review_started",
+      "slug": "invictus-victory-absolu-inspired",
+      "reviewer": "R14 Editorial Review",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-08-17T17:24:02.165Z",
+      "action": "review_started",
+      "slug": "spicebomb-dark-leather-inspired",
+      "reviewer": "R14 Editorial Review",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-08-17T17:24:04.788Z",
+      "action": "review_started",
+      "slug": "godolphin-inspired",
+      "reviewer": "R14 Editorial Review",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-08-17T17:24:07.423Z",
+      "action": "review_started",
+      "slug": "voyage-d'hermes-inspired",
+      "reviewer": "R14 Editorial Review",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-08-17T17:24:10.032Z",
+      "action": "review_started",
+      "slug": "bois-d'argent-inspired",
+      "reviewer": "R14 Editorial Review",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-08-17T17:24:12.746Z",
+      "action": "review_started",
+      "slug": "allure-homme-sport-inspired",
+      "reviewer": "R14 Editorial Review",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-08-17T17:24:15.732Z",
+      "action": "review_started",
+      "slug": "gentleman-edt-inspired",
+      "reviewer": "R14 Editorial Review",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-08-17T17:24:34.771Z",
+      "action": "note_added",
+      "slug": "arabians-musk-inspired",
+      "reviewer": "R14 Editorial Review",
+      "details": "[general] Subtitle 'Creamy Oriental Warmth' is generic for an Elite product and matches signatureStyle[0] exactly. Recommend a more distinctive hook. No claims issue. Content is otherwise strong."
+    },
+    {
+      "timestamp": "2026-08-17T17:24:37.750Z",
+      "action": "note_added",
+      "slug": "royal-oud-inspired",
+      "reviewer": "R14 Editorial Review",
+      "details": "[general] Subtitle 'Woody Sophistication' is the most generic subtitle in the Wave 1 catalogue — two broad descriptors with no differentiation. This is a premium Elite product. Recommend a more evocative subtitle."
+    },
+    {
+      "timestamp": "2026-08-17T17:24:40.617Z",
+      "action": "note_added",
+      "slug": "tobacco-vanille-inspired",
+      "reviewer": "R14 Editorial Review",
+      "details": "[general] Subtitle 'Sweet Warmth' is generic for a Skye position. Neither word differentiates this fragrance from others. Description and content are excellent. Subtitle alone is low-distinctiveness."
+    },
+    {
+      "timestamp": "2026-08-17T17:24:43.338Z",
+      "action": "note_added",
+      "slug": "alien-man-inspired",
+      "reviewer": "R14 Editorial Review",
+      "details": "[general] Subtitle 'Aromatic Spice' is the most generic Skye subtitle — both words are category-level descriptors, not product-level identity. Description is strong. Subtitle alone lacks customer hook."
+    },
+    {
+      "timestamp": "2026-08-17T17:24:46.260Z",
+      "action": "note_added",
+      "slug": "bright-crystal-inspired",
+      "reviewer": "R14 Editorial Review",
+      "details": "[general] Collection-level observation: 'Clarity' appears in 7 Wave 1 subtitles (Coastal Clarity, Sunlit Clarity, Herbal Clarity, Sea-Kissed Clarity, Leather and Clarity, Radiant Clarity, Clarity in Motion). 'Radiant' appears in 4 Rose subtitles. Founder to decide if any subset requires differentiation."
+    },
+    {
+      "timestamp": "2026-08-17T17:24:49.164Z",
+      "action": "note_added",
+      "slug": "mon-guerlain-inspired",
+      "reviewer": "R14 Editorial Review",
+      "details": "[general] Description opens 'Lavender and bergamot open onto' — identical construction to libre-flowers-flames-florale ('Lavender and bergamot open into'). Both in Rose collection. Minor monotony risk for customers browsing. Not a blocking issue."
     }
   ]
 }
