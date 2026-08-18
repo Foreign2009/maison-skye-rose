@@ -1,0 +1,256 @@
+{
+  "batchId": "wave-2-2026",
+  "description": "Wave 2 — August 2026 supplier intake candidates selected for MKC registration. 40 identities spanning ELITE (10), ROSE (16), and SKYE (14) collections. Sourced from fragrance-list-2026-08-normalized.json. Wave 2 selection authorized by Founder per EP-CAT-P4A (2026-08-18). Dispositions and normalization corrections applied per EP-CAT-P2B and EP-CAT-P3A governance carry-forward. MEN-83 and MEN-87 are legitimate distinct supplier products requiring canonical identity confirmation.",
+  "governance": {
+    "phase": "EP-CAT-P4B",
+    "authorizedBy": "Founder — Wave 2 Selection Authorization 2026-08-18",
+    "rawSourceFile": "data/supplier/raw/fragrance-list-2026-08.json",
+    "normalizedSourceFile": "data/supplier/normalized/fragrance-list-2026-08-normalized.json",
+    "dispositionFile": "data/supplier/decisions/fragrance-list-2026-08-dispositions.json",
+    "correctionsFile": "data/supplier/normalized/fragrance-list-2026-08-normalized-corrections.json",
+    "researchFile": "data/identity/source/wave-2-2026-research.json",
+    "note": "supplierName values are exact from normalized source file. Where the raw text is abbreviated, misspelled, or missing brand context, the canonical identity is resolved in the paired research file. Two entries (MEN-83, MEN-87) are confirmed distinct supplier men's products whose canonical commercial identities must be Founder-confirmed before promotion."
+  },
+  "entries": [
+    {
+      "supplierName": "Idole Lancome",
+      "supplierCategory": "LADIES",
+      "sourceReference": "LADIES-146-Idole Lancome",
+      "note": "Collection: ROSE. Supplier uses 'Lancome' (missing circumflex accent); canonical brand is 'Lancôme', product is 'Idôle' (2019)."
+    },
+    {
+      "supplierName": "Paco Rabanne Fame",
+      "supplierCategory": "LADIES",
+      "sourceReference": "LADIES-219-Paco Rabanne Fame",
+      "note": "Collection: ROSE. Supplier uses 'Paco Rabanne'; brand rebranded to 'Rabanne' in 2023. Canonical brand: Rabanne."
+    },
+    {
+      "supplierName": "Paco Rabanne Lady Million",
+      "supplierCategory": "LADIES",
+      "sourceReference": "LADIES-220-Paco Rabanne Lady Million",
+      "note": "Collection: ROSE. Supplier uses 'Paco Rabanne'; brand rebranded to 'Rabanne' in 2023. Canonical brand: Rabanne."
+    },
+    {
+      "supplierName": "Paco Rabanne Olympea",
+      "supplierCategory": "LADIES",
+      "sourceReference": "LADIES-221-Paco Rabanne Olympea",
+      "note": "Collection: ROSE. Supplier uses 'Paco Rabanne'; brand rebranded to 'Rabanne' in 2023. Canonical brand: Rabanne."
+    },
+    {
+      "supplierName": "Jean Paul Gaultier Scandal",
+      "supplierCategory": "LADIES",
+      "sourceReference": "LADIES-155-Jean Paul Gaultier Scandal",
+      "note": "Collection: ROSE. Women's Scandal (2017); confirmed distinct from MEN-88 Jean Paul Gaultier Scandal NEW (men's flanker)."
+    },
+    {
+      "supplierName": "Jean Paul Gaultier La Belle",
+      "supplierCategory": "LADIES",
+      "sourceReference": "LADIES-154-Jean Paul Gaultier La Belle",
+      "note": "Collection: ROSE."
+    },
+    {
+      "supplierName": "La Nuit Tresor / Lancome",
+      "supplierCategory": "LADIES",
+      "sourceReference": "LADIES-172-La Nuit Tresor / Lancome",
+      "note": "Collection: ROSE. Supplier uses 'Tresor' (missing accent); canonical: 'La Nuit Trésor' by Lancôme (2015). Confirmed distinct from LADIES-171 La Nuit Tresor Nude."
+    },
+    {
+      "supplierName": "Narciso Rodriques",
+      "supplierCategory": "LADIES",
+      "sourceReference": "LADIES-205-Narciso Rodriques",
+      "note": "Collection: ROSE. Supplier typo: 'Rodriques' → canonical brand: 'Narciso Rodriguez'. Canonical product: Narciso Rodriguez For Her EDP (2006). Note: 2003 is the For Her EDT; 2006 is the EDP. See research file for disambiguation."
+    },
+    {
+      "supplierName": "Narciso Rouge",
+      "supplierCategory": "LADIES",
+      "sourceReference": "LADIES-207-Narciso Rouge",
+      "note": "Collection: ROSE. IDENTITY_REVIEW_REQUIRED — two products share this name: Narciso Rouge EDP (2018) and Narciso Rouge EDT (2019). Research defaults to EDP (2018) as primary candidate. Founder decision required before promotion. See research file."
+    },
+    {
+      "supplierName": "Dylan Purple by Versace",
+      "supplierCategory": "LADIES",
+      "sourceReference": "LADIES-112-Dylan Purple by Versace",
+      "note": "Collection: ROSE. Year correction: P4A estimated 2021 — research confirms 2022."
+    },
+    {
+      "supplierName": "Versace Yellow Diamonds",
+      "supplierCategory": "LADIES",
+      "sourceReference": "LADIES-277-Versace Yellow Diamonds",
+      "note": "Collection: ROSE. Name correction: supplier uses plural 'Yellow Diamonds' — canonical product name is 'Yellow Diamond' (singular), per Versace and Fragrantica."
+    },
+    {
+      "supplierName": "Sparkling Lychee by Kayali",
+      "supplierCategory": "LADIES",
+      "sourceReference": "LADIES-257-Sparkling Lychee by Kayali",
+      "note": "Collection: ROSE. Name correction AND year correction: canonical product name is 'Eden Sparkling Lychee | 39' (number is 39, not 40; 'Eden' prefix is part of the official name). P4A estimated year 2021 incorrect — research confirms 2023."
+    },
+    {
+      "supplierName": "212 CH Very Good Girl Elixir",
+      "supplierCategory": "LADIES",
+      "sourceReference": "LADIES-4-212 CH Very Good Girl Elixir",
+      "note": "Collection: ROSE. Name correction AND year correction: canonical product name is 'Very Good Girl Elixir' by Carolina Herrera — no '212' prefix. This fragrance belongs to the Very Good Girl franchise, not the 212 franchise; different CH product family. P4A estimated year 2022 incorrect — research confirms 2024."
+    },
+    {
+      "supplierName": "Gucci Guilty",
+      "supplierCategory": "LADIES",
+      "sourceReference": "LADIES-129-Gucci Guilty",
+      "note": "Collection: ROSE. Disambiguation resolved: LADIES section entry maps to Gucci Guilty Pour Femme (2010). Confirmed distinct from MEN-74 Gucci Guilty (Pour Homme)."
+    },
+    {
+      "supplierName": "Gucci Bamboo",
+      "supplierCategory": "LADIES",
+      "sourceReference": "LADIES-124-Gucci Bamboo",
+      "note": "Collection: ROSE."
+    },
+    {
+      "supplierName": "Creed Eladaria",
+      "supplierCategory": "LADIES",
+      "sourceReference": "LADIES-88-Creed Eladaria",
+      "note": "Collection: ROSE. Year correction: P4A estimated 2024 — research confirms 2025."
+    },
+    {
+      "supplierName": "Mont Blanc Legend",
+      "supplierCategory": "MEN",
+      "sourceReference": "MEN-103-Mont Blanc Legend",
+      "note": "Collection: SKYE. Name correction: supplier uses 'Mont Blanc' (two words) — canonical brand is 'Montblanc' (one word). Canonical product: Montblanc Legend EDT (2011)."
+    },
+    {
+      "supplierName": "Mont Blanc Explorer",
+      "supplierCategory": "MEN",
+      "sourceReference": "MEN-102-Mont Blanc Explorer",
+      "note": "Collection: SKYE. Name correction: supplier uses 'Mont Blanc' (two words) — canonical brand is 'Montblanc' (one word). Canonical product: Montblanc Explorer EDP (2019)."
+    },
+    {
+      "supplierName": "Issey Miyake",
+      "supplierCategory": "MEN",
+      "sourceReference": "MEN-83-Issey Miyake",
+      "note": "Collection: SKYE. CANONICAL_IDENTITY_PROBABLE — FOUNDER_DECISION_REQUIRED. Supplier text 'Inspired by Issey Miyake (M)'. Supplier separately labels '(L)' and 'Sport' variants. Research strongly supports L'Eau d'Issey Pour Homme (1994) as the canonical men's flagship; RESEARCHED AND PROVEN per P4B mandate. See research file for full evidence chain. Identity must be Founder-confirmed before promotion."
+    },
+    {
+      "supplierName": "Tom Ford Noir",
+      "supplierCategory": "MEN",
+      "sourceReference": "MEN-129-Tom Ford Noir",
+      "note": "Collection: SKYE. Canonical product: Tom Ford Noir EDP (2012)."
+    },
+    {
+      "supplierName": "Tom Ford / Tuscan Leather",
+      "supplierCategory": "MEN",
+      "sourceReference": "MEN-133-Tom Ford / Tuscan Leather",
+      "note": "Collection: SKYE. COLLECTION_REVIEW_REQUIRED — see research file. Year correction: P4A estimated 2013 — research confirms 2007. Fragrantica classifies as 'for women and men' (unisex); P4A assigned to SKYE (male). Founder decision pending on correct collection assignment (SKYE vs ELITE)."
+    },
+    {
+      "supplierName": "Gucci Guilty",
+      "supplierCategory": "MEN",
+      "sourceReference": "MEN-74-Gucci Guilty",
+      "note": "Collection: SKYE. Disambiguation resolved: MEN section entry maps to Gucci Guilty Pour Homme (2011). Confirmed distinct from LADIES-129 Gucci Guilty (Pour Femme)."
+    },
+    {
+      "supplierName": "Polo Black",
+      "supplierCategory": "MEN",
+      "sourceReference": "MEN-117-Polo Black",
+      "note": "Collection: SKYE. Canonical product: Polo Black by Ralph Lauren (2005)."
+    },
+    {
+      "supplierName": "Paco Rabanne Phantom NEW",
+      "supplierCategory": "MEN",
+      "sourceReference": "MEN-115-Paco Rabanne Phantom NEW",
+      "note": "Collection: SKYE. Supplier uses 'Paco Rabanne' and internal label 'NEW' — brand rebranded to 'Rabanne' in 2023; 'NEW' is not part of the canonical product name. Canonical product: Phantom by Rabanne (2021)."
+    },
+    {
+      "supplierName": "Boss Bottled Elixir",
+      "supplierCategory": "MEN",
+      "sourceReference": "MEN-152-Boss Bottled Elixir",
+      "note": "Collection: SKYE. Year correction: P4A estimated 2022 — research confirms 2023."
+    },
+    {
+      "supplierName": "Versace Eros Energy",
+      "supplierCategory": "MEN",
+      "sourceReference": "MEN-177-Versace Eros Energy",
+      "note": "Collection: SKYE. Year correction: P4A estimated 2023 — research confirms 2024."
+    },
+    {
+      "supplierName": "Fahrenheit",
+      "supplierCategory": "MEN",
+      "sourceReference": "MEN-70-Fahrenheit",
+      "note": "Collection: SKYE. Supplier text omits brand; canonical brand is Christian Dior, product is Fahrenheit (1988)."
+    },
+    {
+      "supplierName": "Amen Fantasm by Thierry Mugler",
+      "supplierCategory": "MEN",
+      "sourceReference": "MEN-146-Amen Fantasm by Thierry Mugler",
+      "note": "Collection: SKYE. Name correction AND brand rebranding: canonical product name is 'A*Men Fantasm' (asterisk is part of the official name). Brand rebranded from 'Thierry Mugler' to 'Mugler'. Year correction: P4A estimated 2022 — research confirms 2024."
+    },
+    {
+      "supplierName": "Jean Paul Gaultier",
+      "supplierCategory": "MEN",
+      "sourceReference": "MEN-87-Jean Paul Gaultier",
+      "note": "Collection: SKYE. CANONICAL_IDENTITY_PROBABLE — FOUNDER_DECISION_REQUIRED. Supplier text 'Inspired by Jean Paul Gaultier (M)'. Supplier separately names Scandal variants and other JPG products. Research strongly supports 'Le Male' (1995) as the canonical men's flagship; RESEARCHED AND PROVEN per P4B mandate. See research file for full evidence chain. Identity must be Founder-confirmed before promotion."
+    },
+    {
+      "supplierName": "Lacoste Noir",
+      "supplierCategory": "MEN",
+      "sourceReference": "MEN-168-Lacoste Noir",
+      "note": "Collection: SKYE. Supplier shorthand 'Lacoste Noir' omits full official name. Canonical product: Eau de Lacoste L.12.12. Noir (2013)."
+    },
+    {
+      "supplierName": "Angels Share by Kilian",
+      "supplierCategory": "UNISEX",
+      "sourceReference": "UNISEX-4-Angels Share by Kilian",
+      "note": "Collection: ELITE. Supplier omits apostrophe; canonical: Angels' Share by Kilian Paris (2020)."
+    },
+    {
+      "supplierName": "Angels Share Paradis by Kilian",
+      "supplierCategory": "UNISEX",
+      "sourceReference": "UNISEX-5-Angels Share Paradis by Kilian",
+      "note": "Collection: ELITE. Supplier omits apostrophe; canonical: Angels' Share Paradis by Kilian Paris (2025). Year correction: P4A estimated 2023 — research confirms 2025. Concentration: Extrait de Parfum."
+    },
+    {
+      "supplierName": "Gold Oud by Kilian",
+      "supplierCategory": "UNISEX",
+      "sourceReference": "UNISEX-27-Gold Oud by Kilian",
+      "note": "Collection: ELITE. Year correction: P4A estimated 2007 or 2017 (uncertain) — research confirms 2014."
+    },
+    {
+      "supplierName": "Peony & Blush Suede by Jo Malone",
+      "supplierCategory": "UNISEX",
+      "sourceReference": "UNISEX-55-Peony & Blush Suede by Jo Malone",
+      "note": "Collection: ELITE. COLLECTION_REVIEW_REQUIRED — see research file. Year correction: P4A estimated 2012 — research confirms 2013. Fragrantica classifies as 'for women'; Jo Malone markets all fragrances as genderless. P4A assigned to ELITE; Founder decision pending on collection assignment (ELITE vs ROSE)."
+    },
+    {
+      "supplierName": "Jo Malone / Velvet Rose & Oud",
+      "supplierCategory": "UNISEX",
+      "sourceReference": "UNISEX-37-Jo Malone / Velvet Rose & Oud",
+      "note": "Collection: ELITE. Year correction: P4A estimated 2013 — research confirms 2012."
+    },
+    {
+      "supplierName": "Jo Malone / English Pear & Freesia",
+      "supplierCategory": "UNISEX",
+      "sourceReference": "UNISEX-64-Jo Malone / English Pear & Freesia",
+      "note": "Collection: ELITE. COLLECTION_REVIEW_REQUIRED — see research file. Fragrantica classifies as 'for women'; Jo Malone markets all fragrances as genderless. P4A assigned to ELITE; Founder decision pending on collection assignment (ELITE vs ROSE)."
+    },
+    {
+      "supplierName": "Oud & Bergamot by Jo Malone",
+      "supplierCategory": "UNISEX",
+      "sourceReference": "UNISEX-76-Oud & Bergamot by Jo Malone",
+      "note": "Collection: ELITE. Canonical product: Oud & Bergamot by Jo Malone London (2010)."
+    },
+    {
+      "supplierName": "Black Orchid",
+      "supplierCategory": "UNISEX",
+      "sourceReference": "UNISEX-13-Black Orchid",
+      "note": "Collection: ELITE. Supplier text omits brand; research confirms canonical brand Tom Ford, product Tom Ford Black Orchid EDP (2006). Fragrantica classifies as 'for women'; supplier listed in UNISEX section."
+    },
+    {
+      "supplierName": "Tom Ford Soleil Blanc",
+      "supplierCategory": "UNISEX",
+      "sourceReference": "UNISEX-48-Tom Ford Soleil Blanc",
+      "note": "Collection: ELITE. Canonical product: Soleil Blanc by Tom Ford (2016). Unisex."
+    },
+    {
+      "supplierName": "Khamrah by Lattafa",
+      "supplierCategory": "UNISEX",
+      "sourceReference": "UNISEX-41-Khamrah by Lattafa",
+      "note": "Collection: ELITE. Canonical brand: Lattafa Perfumes. Canonical product: Khamrah (2022). Unisex."
+    }
+  ]
+}

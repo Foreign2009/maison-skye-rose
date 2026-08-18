@@ -1,0 +1,1152 @@
+{
+  "batchId": "wave-2-2026",
+  "description": "Wave 2 — August 2026 evidence research. 40 entries covering ELITE (10), ROSE (16), and SKYE (14) collections. All note evidence sourced from Tier 1 (official brand sites) or Tier 2 (Fragrantica, Basenotes, major authorised retailers) sources via WebSearch. LLM general knowledge is NOT used as a governed source.",
+  "governance": {
+    "phase": "EP-CAT-P4B",
+    "authorizedBy": "Founder — Wave 2 Research Authorization 2026-08-18",
+    "researchedBy": "Claude Code — EP-CAT-P4B Wave 2 Research Campaign (WebSearch)",
+    "researchDate": "2026-08-18",
+    "sourcePolicyTiers": {
+      "tier1": "Official brand websites (brand.com product pages)",
+      "tier2": "Fragrantica.com, Basenotes.net, major authorised retailers (Amazon, Sephora, Kohl's)"
+    },
+    "admissibilityNote": "LLM general knowledge is NOT admissible as a governed source. All claims in this file are traceable to a named external source. Fragrantica returns 403 on direct WebFetch; all Fragrantica evidence is from WebSearch snippets citing the source — classified HIGH rather than AUTHORITATIVE.",
+    "schemaNote": "This file follows the ResearchSourceEntry schema. Non-standard extension fields (evidenceSources, conflicts, founderDecisionRequired, editionOptions) are included for governance tracking. The ingestion script ignores unrecognised fields.",
+    "noteStructureNote": "Where a brand presents notes as an unordered bouquet (not a top/heart/base pyramid), notes appear in heartNotes[] only; topNotes[] and baseNotes[] are left empty. This applies to all Jo Malone London fragrances per brand philosophy and Wave 1 governance precedent. By Kilian Gold Oud is recorded as unordered per Fragrantica presentation.",
+    "supplierFile": "data/identity/source/wave-2-2026-supplier.json",
+    "founderDecisionItems": [
+      "MEN-83: Canonical identity L'Eau d'Issey Pour Homme — PROBABLE but requires Founder confirmation before promotion",
+      "MEN-87: Canonical identity Le Male — PROBABLE but requires Founder confirmation before promotion",
+      "MEN-133: Tuscan Leather — collection review required (Skye vs Elite; Fragrantica = unisex)",
+      "LADIES-207: Narciso Rouge — identity review required (EDP 2018 vs EDT 2019)",
+      "UNISEX-55: Peony & Blush Suede — collection review required (Elite vs Rose; Fragrantica = female)",
+      "UNISEX-64: English Pear & Freesia — collection review required (Elite vs Rose; Fragrantica = female)"
+    ]
+  },
+  "entries": [
+    {
+      "_collection": "ROSE",
+      "_sourceKey": "LADIES-146-Idole Lancome",
+      "supplierName": "Idole Lancome",
+      "canonicalName": "Idôle",
+      "brand": "Lancôme",
+      "launchYear": 2019,
+      "marketedGender": "female",
+      "fragranceFamily": "Chypre Floral",
+      "topNotes": ["Pear", "Bergamot", "Pink Pepper"],
+      "heartNotes": ["Rose", "Jasmine"],
+      "baseNotes": ["White Musk", "Vanilla", "Patchouli", "Cedar"],
+      "mainAccords": ["Floral", "Rose", "Jasmine", "Powdery", "Citrus"],
+      "perfumer": "Shyamala Maisondieu, Adriana Medina-Baez, Nadege le Garlantezec, Sonia Constant",
+      "sourceConfidence": "high",
+      "founderSupplied": false,
+      "sourceNotes": "Notes confirmed via Fragrantica WebSearch snippet. Supplier uses 'Idole Lancome' without accent marks; canonical brand is Lancôme, canonical product name is Idôle. Launch year 2019 per Fragrantica.",
+      "possibleNameIssue": true,
+      "nameIssueExplanation": "Supplier omits circumflex accents: 'Idole Lancome' → canonical 'Idôle' by 'Lancôme'.",
+      "conflicts": [],
+      "evidenceSources": [
+        "fragrantica.com — Idôle Lancôme (via WebSearch snippet, 2026-08-18)"
+      ],
+      "proposedSlug": "idole-inspired"
+    },
+    {
+      "_collection": "ROSE",
+      "_sourceKey": "LADIES-219-Paco Rabanne Fame",
+      "supplierName": "Paco Rabanne Fame",
+      "canonicalName": "Fame",
+      "brand": "Rabanne",
+      "launchYear": 2022,
+      "marketedGender": "female",
+      "fragranceFamily": "Floral Woody Musk",
+      "topNotes": ["Mango", "Bergamot"],
+      "heartNotes": ["Jasmine", "Olibanum"],
+      "baseNotes": ["Vanilla", "Sandalwood"],
+      "mainAccords": ["Floral", "Fruity", "Woody", "Musk", "Sweet"],
+      "perfumer": "Dora Baghriche, Marie Salamagne, Alberto Morillas, Fabrice Pellegrin",
+      "sourceConfidence": "high",
+      "founderSupplied": false,
+      "sourceNotes": "Notes confirmed via Fragrantica WebSearch snippet and Amazon product listing. Supplier uses 'Paco Rabanne'; brand rebranded to 'Rabanne' in 2023 — canonical brand is Rabanne. Launch year 2022 per Fragrantica.",
+      "possibleNameIssue": true,
+      "nameIssueExplanation": "Supplier uses former brand name 'Paco Rabanne'; brand rebranded as 'Rabanne' in 2023. Canonical brand: Rabanne.",
+      "conflicts": [],
+      "evidenceSources": [
+        "fragrantica.com — Fame Rabanne (via WebSearch snippet, 2026-08-18)",
+        "amazon.com — Rabanne Fame EDP product listing (via WebSearch snippet, 2026-08-18)"
+      ],
+      "proposedSlug": "fame-inspired"
+    },
+    {
+      "_collection": "ROSE",
+      "_sourceKey": "LADIES-220-Paco Rabanne Lady Million",
+      "supplierName": "Paco Rabanne Lady Million",
+      "canonicalName": "Lady Million",
+      "brand": "Rabanne",
+      "launchYear": 2010,
+      "marketedGender": "female",
+      "fragranceFamily": "Chypre Floral",
+      "topNotes": ["Neroli", "Orange", "Raspberry"],
+      "heartNotes": ["Jasmine", "African Orange Blossom", "Gardenia"],
+      "baseNotes": ["Patchouli", "White Honey", "Amber"],
+      "mainAccords": ["Chypre", "Floral", "Fruity", "Honey", "Patchouli"],
+      "perfumer": null,
+      "sourceConfidence": "high",
+      "founderSupplied": false,
+      "sourceNotes": "Notes confirmed via WebSearch snippets referencing Fragrantica. Supplier uses 'Paco Rabanne'; brand rebranded to 'Rabanne' in 2023. Launch year 2010 per Fragrantica. Perfumer not confirmed from available evidence sources.",
+      "possibleNameIssue": true,
+      "nameIssueExplanation": "Supplier uses former brand name 'Paco Rabanne'; canonical brand: Rabanne.",
+      "conflicts": [],
+      "evidenceSources": [
+        "fragrantica.com — Lady Million Rabanne (via WebSearch snippet, 2026-08-18)"
+      ],
+      "proposedSlug": "lady-million-inspired"
+    },
+    {
+      "_collection": "ROSE",
+      "_sourceKey": "LADIES-221-Paco Rabanne Olympea",
+      "supplierName": "Paco Rabanne Olympea",
+      "canonicalName": "Olympéa",
+      "brand": "Rabanne",
+      "launchYear": 2015,
+      "marketedGender": "female",
+      "fragranceFamily": "Floral Aquatic",
+      "topNotes": ["Green Mandarin", "Ginger Lily", "Water Jasmine"],
+      "heartNotes": ["Salted Vanilla"],
+      "baseNotes": ["Ambergris", "Cashmere Wood", "Sandalwood"],
+      "mainAccords": ["Floral", "Musky", "Sweet", "Aquatic", "Powdery"],
+      "perfumer": null,
+      "sourceConfidence": "high",
+      "founderSupplied": false,
+      "sourceNotes": "Notes confirmed via WebSearch snippets referencing Fragrantica. Supplier uses 'Paco Rabanne'; brand rebranded to 'Rabanne' in 2023. Canonical product name has accent: 'Olympéa'. Launch year 2015 per Fragrantica. 'Salted Vanilla' is Fragrantica's listed heart accord — a compound descriptor rather than a discrete botanical ingredient. Perfumer not confirmed from available evidence sources.",
+      "possibleNameIssue": true,
+      "nameIssueExplanation": "Supplier uses former brand name 'Paco Rabanne'; canonical brand: Rabanne. Canonical name includes accent: Olympéa.",
+      "conflicts": [],
+      "evidenceSources": [
+        "fragrantica.com — Olympéa Rabanne (via WebSearch snippet, 2026-08-18)"
+      ],
+      "proposedSlug": "olympea-inspired"
+    },
+    {
+      "_collection": "ROSE",
+      "_sourceKey": "LADIES-155-Jean Paul Gaultier Scandal",
+      "supplierName": "Jean Paul Gaultier Scandal",
+      "canonicalName": "Scandal",
+      "brand": "Jean Paul Gaultier",
+      "launchYear": 2017,
+      "marketedGender": "female",
+      "fragranceFamily": "Chypre Floral",
+      "topNotes": ["Blood Orange", "Mandarin Orange"],
+      "heartNotes": ["Honey", "Gardenia", "Orange Blossom", "Jasmine", "Peach"],
+      "baseNotes": ["Beeswax", "Caramel", "Patchouli", "Licorice"],
+      "mainAccords": ["Chypre", "Floral", "Gourmand", "Honey", "Sweet"],
+      "perfumer": "Daphné Bugey, Fabrice Pellegrin, Christophe Raynaud",
+      "sourceConfidence": "high",
+      "founderSupplied": false,
+      "sourceNotes": "Notes confirmed via Fragrantica WebSearch snippet. This is the original women's Scandal (2017), distinct from MEN-88 Jean Paul Gaultier Scandal NEW (Scandal Pour Homme, 2021). Launch year 2017 per Fragrantica.",
+      "possibleNameIssue": false,
+      "nameIssueExplanation": null,
+      "conflicts": [],
+      "evidenceSources": [
+        "fragrantica.com — Scandal Jean Paul Gaultier (via WebSearch snippet, 2026-08-18)"
+      ],
+      "proposedSlug": "scandal-inspired"
+    },
+    {
+      "_collection": "ROSE",
+      "_sourceKey": "LADIES-154-Jean Paul Gaultier La Belle",
+      "supplierName": "Jean Paul Gaultier La Belle",
+      "canonicalName": "La Belle",
+      "brand": "Jean Paul Gaultier",
+      "launchYear": 2019,
+      "marketedGender": "female",
+      "fragranceFamily": "Oriental Vanilla",
+      "topNotes": ["Pear", "Bergamot"],
+      "heartNotes": ["Floral Notes", "Leather"],
+      "baseNotes": ["Vanilla", "Vetiver", "Amber", "Musk"],
+      "mainAccords": ["Oriental", "Vanilla", "Fruity", "Floral", "Leather"],
+      "perfumer": "Quentin Bisch, Sonia Constant",
+      "sourceConfidence": "high",
+      "founderSupplied": false,
+      "sourceNotes": "Notes confirmed via Fragrantica WebSearch snippet. Heart notes listed as 'Floral Notes' and 'Leather' per Fragrantica — the floral component is a generic descriptor in Fragrantica's database entry for this product; no individual flowers are enumerated by the source. Launch year 2019 per Fragrantica.",
+      "possibleNameIssue": false,
+      "nameIssueExplanation": null,
+      "conflicts": [],
+      "evidenceSources": [
+        "fragrantica.com — La Belle Jean Paul Gaultier (via WebSearch snippet, 2026-08-18)"
+      ],
+      "proposedSlug": "la-belle-inspired"
+    },
+    {
+      "_collection": "ROSE",
+      "_sourceKey": "LADIES-172-La Nuit Tresor / Lancome",
+      "supplierName": "La Nuit Tresor / Lancome",
+      "canonicalName": "La Nuit Trésor",
+      "brand": "Lancôme",
+      "launchYear": 2015,
+      "marketedGender": "female",
+      "fragranceFamily": "Oriental Gourmand",
+      "topNotes": ["Pear", "Tangerine", "Bergamot"],
+      "heartNotes": ["Strawberry", "Black Rose", "Vanilla Orchid", "Passionfruit"],
+      "baseNotes": ["Praline", "Caramel", "Vanilla", "Litchi", "Patchouli", "Incense", "Coffee", "Licorice", "Coumarin", "Papyrus"],
+      "mainAccords": ["Oriental", "Gourmand", "Sweet", "Fruity", "Dark"],
+      "perfumer": null,
+      "sourceConfidence": "high",
+      "founderSupplied": false,
+      "sourceNotes": "Notes confirmed via WebSearch snippets referencing Fragrantica. Supplier uses 'Tresor' (missing accent); canonical: 'La Nuit Trésor' by Lancôme. LADIES-171 is 'La Nuit Trésor Nude' — a distinct product; this entry (LADIES-172) maps to the original La Nuit Trésor (2015). Perfumer not confirmed from available evidence sources.",
+      "possibleNameIssue": true,
+      "nameIssueExplanation": "Supplier omits accent: 'La Nuit Tresor' → canonical 'La Nuit Trésor'. Also requires disambiguation from La Nuit Trésor Nude (LADIES-171).",
+      "conflicts": [],
+      "evidenceSources": [
+        "fragrantica.com — La Nuit Trésor Lancôme (via WebSearch snippet, 2026-08-18)"
+      ],
+      "proposedSlug": "la-nuit-tresor-inspired"
+    },
+    {
+      "_collection": "ROSE",
+      "_sourceKey": "LADIES-205-Narciso Rodriques",
+      "supplierName": "Narciso Rodriques",
+      "canonicalName": "Narciso Rodriguez for Her",
+      "brand": "Narciso Rodriguez",
+      "launchYear": 2006,
+      "marketedGender": "female",
+      "fragranceFamily": "Floral Woody Musk",
+      "topNotes": ["Rose", "Peach"],
+      "heartNotes": ["Musk", "Amber"],
+      "baseNotes": ["Patchouli", "Sandalwood"],
+      "mainAccords": ["Musky", "Floral", "Woody", "Powdery", "Warm"],
+      "perfumer": null,
+      "sourceConfidence": "high",
+      "founderSupplied": false,
+      "sourceNotes": "Supplier text 'Narciso Rodriques' contains a typo (missing 'gu'). Canonical brand: Narciso Rodriguez. Canonical product: Narciso Rodriguez for Her EDP (2006). DISAMBIGUATION: The original Narciso Rodriguez for Her EDT was launched in 2003; the EDP was launched in 2006. Both share the same name. This entry maps to the EDP (2006) based on Fragrantica Tier 2 evidence and the EDP's primacy as the signature concentration of this line. Perfumer not confirmed from available evidence sources.",
+      "possibleNameIssue": true,
+      "nameIssueExplanation": "Supplier typo: 'Narciso Rodriques' → canonical brand 'Narciso Rodriguez'. Disambiguation: For Her EDT (2003) vs For Her EDP (2006) — research defaults to EDP (2006).",
+      "conflicts": [],
+      "evidenceSources": [
+        "fragrantica.com — Narciso Rodriguez for Her EDP (via WebSearch snippet, 2026-08-18)"
+      ],
+      "proposedSlug": "narciso-rodriguez-for-her-inspired"
+    },
+    {
+      "_collection": "ROSE",
+      "_sourceKey": "LADIES-207-Narciso Rouge",
+      "supplierName": "Narciso Rouge",
+      "canonicalName": "Narciso Rouge",
+      "brand": "Narciso Rodriguez",
+      "launchYear": 2018,
+      "marketedGender": "female",
+      "fragranceFamily": "Floral Woody Musk",
+      "topNotes": ["Iris", "Bulgarian Rose"],
+      "heartNotes": ["Musk", "Tuberose", "Orange Blossom"],
+      "baseNotes": ["Tonka Bean", "Vanilla", "White Cedar Extract", "Cedar", "Sandalwood", "Vetiver"],
+      "mainAccords": ["Floral", "Musky", "Woody", "Rose", "Sweet"],
+      "perfumer": "Nadege le Garlantezec, Sonia Constant",
+      "sourceConfidence": "high",
+      "founderSupplied": false,
+      "sourceNotes": "IDENTITY_REVIEW_REQUIRED — FOUNDER_DECISION_REQUIRED. Two distinct Narciso Rouge products exist: (1) Narciso Rouge EDP launched 2018; (2) Narciso Rouge EDT launched 2019. Both are confirmed in Fragrantica with separate pages. The supplier text 'Narciso Rouge' does not specify concentration. Notes above are for the Narciso Rouge EDP (2018) — the first-launched version — defaulted as primary candidate. If Founder confirms the EDT (2019), a separate research pass will be required for that concentration's note profile.",
+      "possibleNameIssue": false,
+      "nameIssueExplanation": null,
+      "founderDecisionRequired": true,
+      "editionOptions": [
+        {
+          "edition": "Narciso Rouge EDP",
+          "launchYear": 2018,
+          "status": "PRIMARY_CANDIDATE — notes above; first-launched version"
+        },
+        {
+          "edition": "Narciso Rouge EDT",
+          "launchYear": 2019,
+          "status": "ALTERNATE_CANDIDATE — separate note profile research required if confirmed"
+        }
+      ],
+      "conflicts": [],
+      "evidenceSources": [
+        "fragrantica.com — Narciso Rouge EDP Narciso Rodriguez (via WebSearch snippet, 2026-08-18)",
+        "fragrantica.com — Narciso Rouge EDT Narciso Rodriguez (via WebSearch snippet — confirms separate 2019 product)"
+      ],
+      "proposedSlug": "narciso-rouge-inspired"
+    },
+    {
+      "_collection": "ROSE",
+      "_sourceKey": "LADIES-112-Dylan Purple by Versace",
+      "supplierName": "Dylan Purple by Versace",
+      "canonicalName": "Dylan Purple",
+      "brand": "Versace",
+      "launchYear": 2022,
+      "marketedGender": "female",
+      "fragranceFamily": "Floral Fruity",
+      "topNotes": ["Italian Bergamot", "Italian Bitter Orange", "Pear Juice"],
+      "heartNotes": ["Purple Freesia", "Mahonia", "Pomarosa"],
+      "baseNotes": ["Ambroxan", "ISO E Super", "Virginia Cedar", "Belambre", "Sylkolide"],
+      "mainAccords": ["Floral", "Fresh", "Fruity", "Powdery"],
+      "perfumer": null,
+      "sourceConfidence": "high",
+      "founderSupplied": false,
+      "sourceNotes": "Notes confirmed via WebSearch snippets referencing Fragrantica. Year correction: P4A estimated 2021 — research confirms 2022. Base notes include synthetic aroma chemicals (Ambroxan, ISO E Super, Belambre, Sylkolide) as listed by Fragrantica — these are the brand's disclosed ingredients. Perfumer not confirmed from available evidence sources.",
+      "possibleNameIssue": false,
+      "nameIssueExplanation": null,
+      "conflicts": [
+        {
+          "field": "launchYear",
+          "p4aEstimate": 2021,
+          "researchValue": 2022,
+          "disposition": "YEAR_CORRECTION — P4A selection estimate was 2021; research (Fragrantica) confirms 2022."
+        }
+      ],
+      "evidenceSources": [
+        "fragrantica.com — Dylan Purple Versace (via WebSearch snippet, 2026-08-18)"
+      ],
+      "proposedSlug": "dylan-purple-inspired"
+    },
+    {
+      "_collection": "ROSE",
+      "_sourceKey": "LADIES-277-Versace Yellow Diamonds",
+      "supplierName": "Versace Yellow Diamonds",
+      "canonicalName": "Yellow Diamond",
+      "brand": "Versace",
+      "launchYear": 2011,
+      "marketedGender": "female",
+      "fragranceFamily": "Floral Fruity",
+      "topNotes": ["Amalfi Lemon", "Pear", "Bergamot", "Neroli"],
+      "heartNotes": ["Mimosa", "Freesia", "Water Lily", "African Orange Flower"],
+      "baseNotes": ["Musk", "Guaiac Wood", "Amber"],
+      "mainAccords": ["Floral", "Fresh", "Citrus", "Light", "Fruity"],
+      "perfumer": null,
+      "sourceConfidence": "high",
+      "founderSupplied": false,
+      "sourceNotes": "Notes confirmed via WebSearch snippets referencing Fragrantica. Name correction: supplier uses plural 'Yellow Diamonds' — canonical product name is 'Yellow Diamond' (singular), per Versace and Fragrantica. Launch year 2011 per Fragrantica. Perfumer not confirmed from available evidence sources.",
+      "possibleNameIssue": true,
+      "nameIssueExplanation": "Supplier uses plural 'Versace Yellow Diamonds'; canonical product name is 'Yellow Diamond' (singular) per Versace official and Fragrantica.",
+      "conflicts": [],
+      "evidenceSources": [
+        "fragrantica.com — Yellow Diamond Versace (via WebSearch snippet, 2026-08-18)"
+      ],
+      "proposedSlug": "yellow-diamond-inspired"
+    },
+    {
+      "_collection": "ROSE",
+      "_sourceKey": "LADIES-257-Sparkling Lychee by Kayali",
+      "supplierName": "Sparkling Lychee by Kayali",
+      "canonicalName": "Eden Sparkling Lychee | 39",
+      "brand": "Kayali",
+      "launchYear": 2023,
+      "marketedGender": "female",
+      "fragranceFamily": "Fruity Floral",
+      "topNotes": ["Litchi", "Black Currant", "Red Apple", "Italian Lemon"],
+      "heartNotes": ["Violet", "Rose", "Jasmine Sambac"],
+      "baseNotes": ["Sugar", "Vanilla Absolute", "Musk", "Amber", "Sandalwood", "Cedar"],
+      "mainAccords": ["Fruity", "Floral", "Sweet", "Fresh"],
+      "perfumer": null,
+      "sourceConfidence": "high",
+      "founderSupplied": false,
+      "sourceNotes": "Name correction AND year correction. Supplier text 'Sparkling Lychee by Kayali' omits the full canonical product name. Canonical name is 'Eden Sparkling Lychee | 39' (the number in Kayali's naming convention is 39, not 40). P4A estimated year 2021 incorrect — research confirms 2023 (Fragrantica). Perfumer not confirmed from available evidence sources.",
+      "possibleNameIssue": true,
+      "nameIssueExplanation": "Supplier shorthand omits 'Eden' prefix and numeric suffix. Canonical: 'Eden Sparkling Lychee | 39' by Kayali. The pipe-and-number ('| 39') is part of the official product name per Kayali's naming convention.",
+      "conflicts": [
+        {
+          "field": "launchYear",
+          "p4aEstimate": 2021,
+          "researchValue": 2023,
+          "disposition": "YEAR_CORRECTION — P4A selection estimate was 2021; research (Fragrantica) confirms 2023."
+        }
+      ],
+      "evidenceSources": [
+        "fragrantica.com — Eden Sparkling Lychee | 39 Kayali (via WebSearch snippet, 2026-08-18)"
+      ],
+      "proposedSlug": "eden-sparkling-lychee-inspired"
+    },
+    {
+      "_collection": "ROSE",
+      "_sourceKey": "LADIES-4-212 CH Very Good Girl Elixir",
+      "supplierName": "212 CH Very Good Girl Elixir",
+      "canonicalName": "Very Good Girl Elixir",
+      "brand": "Carolina Herrera",
+      "launchYear": 2024,
+      "marketedGender": "female",
+      "fragranceFamily": "Oriental Fruity",
+      "topNotes": ["Black Cherry", "Bitter Almond"],
+      "heartNotes": ["Rose", "Tuberose"],
+      "baseNotes": ["Vanilla", "Cocoa"],
+      "mainAccords": ["Oriental", "Fruity", "Sweet", "Rose", "Gourmand"],
+      "perfumer": null,
+      "sourceConfidence": "high",
+      "founderSupplied": false,
+      "sourceNotes": "Name correction AND year correction. Supplier text '212 CH Very Good Girl Elixir' incorrectly includes '212' prefix. Canonical product name is 'Very Good Girl Elixir' by Carolina Herrera — this fragrance belongs to the Very Good Girl franchise, NOT the 212 franchise; they are distinct CH product families. P4A estimated year 2022 incorrect — research confirms 2024 (Fragrantica). Perfumer not confirmed from available evidence sources.",
+      "possibleNameIssue": true,
+      "nameIssueExplanation": "Supplier incorrectly prefixes '212' to the name. Canonical: 'Very Good Girl Elixir' by Carolina Herrera. Very Good Girl and 212 are separate CH franchise families.",
+      "conflicts": [
+        {
+          "field": "launchYear",
+          "p4aEstimate": 2022,
+          "researchValue": 2024,
+          "disposition": "YEAR_CORRECTION — P4A selection estimate was 2022; research (Fragrantica) confirms 2024."
+        }
+      ],
+      "evidenceSources": [
+        "fragrantica.com — Very Good Girl Elixir Carolina Herrera (via WebSearch snippet, 2026-08-18)"
+      ],
+      "proposedSlug": "very-good-girl-elixir-inspired"
+    },
+    {
+      "_collection": "ROSE",
+      "_sourceKey": "LADIES-129-Gucci Guilty",
+      "supplierName": "Gucci Guilty",
+      "canonicalName": "Gucci Guilty Pour Femme",
+      "brand": "Gucci",
+      "launchYear": 2010,
+      "marketedGender": "female",
+      "fragranceFamily": "Oriental Floral",
+      "topNotes": ["Pink Pepper", "Mandarin Orange", "Bergamot"],
+      "heartNotes": ["Lilac", "Peach", "Geranium", "Jasmine", "Black Currant"],
+      "baseNotes": ["Patchouli", "Amber", "White Musk", "Vanilla"],
+      "mainAccords": ["Floral", "Citrus", "Powdery", "Sweet", "Musky"],
+      "perfumer": null,
+      "sourceConfidence": "high",
+      "founderSupplied": false,
+      "sourceNotes": "Disambiguation resolved: LADIES section entry maps to Gucci Guilty Pour Femme (2010); confirmed distinct from MEN-74 Gucci Guilty (Pour Homme, 2011). Notes confirmed via WebSearch snippets referencing Fragrantica. Perfumer not confirmed from available evidence sources.",
+      "possibleNameIssue": true,
+      "nameIssueExplanation": "Supplier text 'Gucci Guilty' is ambiguous — both Pour Femme and Pour Homme editions exist. LADIES section placement confirms Pour Femme.",
+      "conflicts": [],
+      "evidenceSources": [
+        "fragrantica.com — Gucci Guilty (women's) (via WebSearch snippet, 2026-08-18)"
+      ],
+      "proposedSlug": "gucci-guilty-pour-femme-inspired"
+    },
+    {
+      "_collection": "ROSE",
+      "_sourceKey": "LADIES-124-Gucci Bamboo",
+      "supplierName": "Gucci Bamboo",
+      "canonicalName": "Gucci Bamboo",
+      "brand": "Gucci",
+      "launchYear": 2015,
+      "marketedGender": "female",
+      "fragranceFamily": "Floral Woody",
+      "topNotes": ["Bergamot"],
+      "heartNotes": ["Casablanca Lily", "Ylang-Ylang", "Orange Blossom"],
+      "baseNotes": ["Sandalwood", "Tahitian Vanilla", "Amber"],
+      "mainAccords": ["Floral", "Woody", "Vanilla", "Sweet", "Creamy"],
+      "perfumer": null,
+      "sourceConfidence": "high",
+      "founderSupplied": false,
+      "sourceNotes": "Notes confirmed via WebSearch snippets referencing Fragrantica. Top notes show only Bergamot per available source snippet — this may be an incomplete Fragrantica listing rather than the full top note set, but no additional top notes were confirmed from the evidence gathered. Launch year 2015 per Fragrantica. Perfumer not confirmed from available evidence sources.",
+      "possibleNameIssue": false,
+      "nameIssueExplanation": null,
+      "conflicts": [],
+      "evidenceSources": [
+        "fragrantica.com — Gucci Bamboo (via WebSearch snippet, 2026-08-18)"
+      ],
+      "proposedSlug": "gucci-bamboo-inspired"
+    },
+    {
+      "_collection": "ROSE",
+      "_sourceKey": "LADIES-88-Creed Eladaria",
+      "supplierName": "Creed Eladaria",
+      "canonicalName": "Eladaria",
+      "brand": "Creed",
+      "launchYear": 2025,
+      "marketedGender": "female",
+      "fragranceFamily": "Floral Chypre",
+      "topNotes": ["Pink Pepper", "Mandarin Orange", "Bergamot"],
+      "heartNotes": ["Rose", "Powdery Notes", "Peony", "Lily of the Valley"],
+      "baseNotes": ["Musk", "Ambroxan", "Cashmere Wood", "Vanilla"],
+      "mainAccords": ["Floral", "Powdery", "Rose", "Fresh", "Musky"],
+      "perfumer": null,
+      "sourceConfidence": "high",
+      "founderSupplied": false,
+      "sourceNotes": "Notes confirmed via WebSearch snippets referencing Fragrantica. Year correction: P4A estimated 2024 — research confirms 2025. 'Powdery Notes' in heart is a generic Fragrantica descriptor, not a discrete ingredient. Perfumer not confirmed from available evidence sources.",
+      "possibleNameIssue": false,
+      "nameIssueExplanation": null,
+      "conflicts": [
+        {
+          "field": "launchYear",
+          "p4aEstimate": 2024,
+          "researchValue": 2025,
+          "disposition": "YEAR_CORRECTION — P4A selection estimate was 2024; research (Fragrantica) confirms 2025."
+        }
+      ],
+      "evidenceSources": [
+        "fragrantica.com — Eladaria Creed (via WebSearch snippet, 2026-08-18)"
+      ],
+      "proposedSlug": "eladaria-inspired"
+    },
+    {
+      "_collection": "SKYE",
+      "_sourceKey": "MEN-103-Mont Blanc Legend",
+      "supplierName": "Mont Blanc Legend",
+      "canonicalName": "Montblanc Legend",
+      "brand": "Montblanc",
+      "launchYear": 2011,
+      "marketedGender": "male",
+      "fragranceFamily": "Fougère Aromatic",
+      "topNotes": ["Bergamot", "Lavender", "Pineapple Leaf", "Exotic Verbena"],
+      "heartNotes": ["Oakmoss Note", "Geranium", "Coumarin", "Apple", "Rose", "Pomarosa Molecule"],
+      "baseNotes": ["Sandalwood", "Tonka Bean", "Evernyl"],
+      "mainAccords": ["Aromatic", "Fougère", "Aquatic", "Woody", "Fresh"],
+      "perfumer": "Olivier Pescheux",
+      "sourceConfidence": "high",
+      "founderSupplied": false,
+      "sourceNotes": "Notes confirmed via WebSearch snippets referencing Fragrantica. Supplier uses 'Mont Blanc' (two words); canonical brand is 'Montblanc' (one word). Canonical product: Montblanc Legend EDT (2011). Launch year 2011 per Fragrantica.",
+      "possibleNameIssue": true,
+      "nameIssueExplanation": "Supplier uses 'Mont Blanc' (two words); canonical brand name is 'Montblanc' (one word, contraction).",
+      "conflicts": [],
+      "evidenceSources": [
+        "fragrantica.com — Montblanc Legend (via WebSearch snippet, 2026-08-18)"
+      ],
+      "proposedSlug": "montblanc-legend-inspired"
+    },
+    {
+      "_collection": "SKYE",
+      "_sourceKey": "MEN-102-Mont Blanc Explorer",
+      "supplierName": "Mont Blanc Explorer",
+      "canonicalName": "Montblanc Explorer",
+      "brand": "Montblanc",
+      "launchYear": 2019,
+      "marketedGender": "male",
+      "fragranceFamily": "Woody Aromatic",
+      "topNotes": ["OrPur® Bergamot", "French Sage", "Pink Pepper"],
+      "heartNotes": ["OrPur® Vetiver", "Skin"],
+      "baseNotes": ["Patchouli", "Cocoa", "Ambrofix™", "Akigalawood®"],
+      "mainAccords": ["Woody", "Aromatic", "Fresh", "Earthy", "Spicy"],
+      "perfumer": "Jordi Fernandez, Antoine Maisondieu, Olivier Pescheux",
+      "sourceConfidence": "high",
+      "founderSupplied": false,
+      "sourceNotes": "Notes confirmed via WebSearch snippets referencing Fragrantica. Supplier uses 'Mont Blanc' (two words); canonical brand is 'Montblanc' (one word). Canonical product: Montblanc Explorer EDP (2019). OrPur® and Akigalawood® are Givaudan proprietary ingredient tradenames as listed by the brand.",
+      "possibleNameIssue": true,
+      "nameIssueExplanation": "Supplier uses 'Mont Blanc' (two words); canonical brand name is 'Montblanc' (one word, contraction).",
+      "conflicts": [],
+      "evidenceSources": [
+        "fragrantica.com — Montblanc Explorer EDP (via WebSearch snippet, 2026-08-18)"
+      ],
+      "proposedSlug": "montblanc-explorer-inspired"
+    },
+    {
+      "_collection": "SKYE",
+      "_sourceKey": "MEN-83-Issey Miyake",
+      "supplierName": "Issey Miyake",
+      "canonicalName": "L'Eau d'Issey Pour Homme",
+      "brand": "Issey Miyake",
+      "launchYear": 1994,
+      "marketedGender": "male",
+      "fragranceFamily": "Aquatic Woody",
+      "topNotes": ["Yuzu", "Lemon", "Bergamot", "Lemon Verbena", "Mandarin Orange", "Cypress", "Calone", "Coriander", "Sage", "Tarragon"],
+      "heartNotes": ["Blue Lotus", "Lily of the Valley", "Nutmeg", "Bourbon Geranium", "Saffron", "Ceylon Cinnamon", "Mignonette"],
+      "baseNotes": ["Tahitian Vetiver", "Musk", "Cedar", "Sandalwood", "Amber", "Tobacco"],
+      "mainAccords": ["Aquatic", "Woody", "Aromatic", "Fresh", "Clean"],
+      "perfumer": "Jacques Cavallier Belletrud",
+      "sourceConfidence": "high",
+      "founderSupplied": false,
+      "sourceNotes": "CANONICAL_IDENTITY_PROBABLE — FOUNDER_DECISION_REQUIRED per EP-CAT-P4B mandate. Supplier text 'Inspired by Issey Miyake (M)'. The supplier separately lists 'Inspired by Issey Miyake (L)' and 'Inspired by Issey Miyake Sport' as distinct products, establishing this as a legitimate distinct supplier men's product. Research evidence: L'Eau d'Issey Pour Homme (1994) is the flagship men's fragrance for Issey Miyake and the overwhelmingly primary interpretation of an unqualified 'Issey Miyake (M)' supplier product. Fragrantica confirms identity, launch year 1994, and perfumer Jacques Cavallier Belletrud. Notes confirmed via WebSearch snippets referencing Fragrantica. This identity must be Founder-confirmed before promotion — the canonical commercial identity is PROBABLE but not PROVEN beyond reasonable doubt from supplier evidence alone.",
+      "possibleNameIssue": true,
+      "nameIssueExplanation": "Supplier text 'Issey Miyake' identifies brand only, not product. Research establishes L'Eau d'Issey Pour Homme (1994) as the canonical identity with high probability. Founder confirmation required before promotion.",
+      "founderDecisionRequired": true,
+      "conflicts": [],
+      "evidenceSources": [
+        "fragrantica.com — L'Eau d'Issey Pour Homme Issey Miyake (via WebSearch snippet, 2026-08-18)"
+      ],
+      "proposedSlug": "leau-dissey-pour-homme-inspired"
+    },
+    {
+      "_collection": "SKYE",
+      "_sourceKey": "MEN-129-Tom Ford Noir",
+      "supplierName": "Tom Ford Noir",
+      "canonicalName": "Tom Ford Noir",
+      "brand": "Tom Ford",
+      "launchYear": 2012,
+      "marketedGender": "male",
+      "fragranceFamily": "Oriental Spicy",
+      "topNotes": ["Violet", "Pink Pepper", "Caraway", "Bergamot", "Verbena"],
+      "heartNotes": ["Tuscan Iris", "Bulgarian Rose", "Black Pepper", "Nutmeg", "Geranium", "Clary Sage"],
+      "baseNotes": ["Indonesian Patchouli Leaf", "Amber", "Vanilla", "Civet", "Leather", "Opoponax", "Benzoin", "Vetiver", "Styrax"],
+      "mainAccords": ["Oriental", "Spicy", "Floral", "Leather", "Woody"],
+      "perfumer": "Olivier Gillotin",
+      "sourceConfidence": "high",
+      "founderSupplied": false,
+      "sourceNotes": "Notes confirmed via WebSearch snippets referencing Fragrantica. Canonical product: Tom Ford Noir EDP (2012). Distinct from Tom Ford Noir Pour Femme (2013) and Tom Ford Noir de Noir. Launch year 2012 per Fragrantica.",
+      "possibleNameIssue": false,
+      "nameIssueExplanation": null,
+      "conflicts": [],
+      "evidenceSources": [
+        "fragrantica.com — Tom Ford Noir EDP (via WebSearch snippet, 2026-08-18)"
+      ],
+      "proposedSlug": "tom-ford-noir-inspired"
+    },
+    {
+      "_collection": "SKYE",
+      "_sourceKey": "MEN-133-Tom Ford / Tuscan Leather",
+      "supplierName": "Tom Ford / Tuscan Leather",
+      "canonicalName": "Tuscan Leather",
+      "brand": "Tom Ford",
+      "launchYear": 2007,
+      "marketedGender": "unisex",
+      "fragranceFamily": "Leather",
+      "topNotes": ["Raspberry", "Saffron", "Thyme"],
+      "heartNotes": ["Olibanum", "Jasmine"],
+      "baseNotes": ["Leather", "Suede", "Woody Notes", "Amber"],
+      "mainAccords": ["Leather", "Spicy", "Raspberry", "Smoky", "Woody"],
+      "perfumer": null,
+      "sourceConfidence": "high",
+      "founderSupplied": false,
+      "sourceNotes": "COLLECTION_REVIEW_REQUIRED. Year correction: P4A estimated 2013 — research confirms 2007 (Fragrantica). Fragrantica classifies as 'for women and men' (unisex); P4A wave selection assigned to SKYE (male). Tuscan Leather is a Tom Ford Private Blend fragrance with wide cross-gender appeal. Founder decision required on collection assignment (SKYE vs ELITE). Perfumer not confirmed from available evidence sources.",
+      "possibleNameIssue": false,
+      "nameIssueExplanation": null,
+      "founderDecisionRequired": true,
+      "conflicts": [
+        {
+          "field": "launchYear",
+          "p4aEstimate": 2013,
+          "researchValue": 2007,
+          "disposition": "YEAR_CORRECTION — P4A selection estimate was 2013; research (Fragrantica) confirms 2007."
+        },
+        {
+          "field": "collection",
+          "p4aAssignment": "SKYE",
+          "researchFinding": "Fragrantica classifies as unisex — consistent with ELITE collection",
+          "disposition": "COLLECTION_REVIEW_REQUIRED — Founder decision pending."
+        }
+      ],
+      "evidenceSources": [
+        "fragrantica.com — Tuscan Leather Tom Ford (via WebSearch snippet, 2026-08-18)"
+      ],
+      "proposedSlug": "tuscan-leather-inspired"
+    },
+    {
+      "_collection": "SKYE",
+      "_sourceKey": "MEN-74-Gucci Guilty",
+      "supplierName": "Gucci Guilty",
+      "canonicalName": "Gucci Guilty Pour Homme",
+      "brand": "Gucci",
+      "launchYear": 2011,
+      "marketedGender": "male",
+      "fragranceFamily": "Aromatic Fougère",
+      "topNotes": ["Lavender", "Amalfi Lemon"],
+      "heartNotes": ["African Orange Flower"],
+      "baseNotes": ["Virginia Cedar", "Patchouli", "Vanilla"],
+      "mainAccords": ["Aromatic", "Floral", "Fresh", "Citrus", "Woody"],
+      "perfumer": "Jacques Huclier",
+      "sourceConfidence": "high",
+      "founderSupplied": false,
+      "sourceNotes": "Disambiguation resolved: MEN section entry maps to Gucci Guilty Pour Homme (2011); confirmed distinct from LADIES-129 Gucci Guilty (Pour Femme, 2010). Notes confirmed via WebSearch snippets referencing Fragrantica. Launch year 2011 per Fragrantica.",
+      "possibleNameIssue": true,
+      "nameIssueExplanation": "Supplier text 'Gucci Guilty' is ambiguous — both Pour Homme and Pour Femme editions exist. MEN section placement confirms Pour Homme.",
+      "conflicts": [],
+      "evidenceSources": [
+        "fragrantica.com — Gucci Guilty Pour Homme (via WebSearch snippet, 2026-08-18)"
+      ],
+      "proposedSlug": "gucci-guilty-pour-homme-inspired"
+    },
+    {
+      "_collection": "SKYE",
+      "_sourceKey": "MEN-117-Polo Black",
+      "supplierName": "Polo Black",
+      "canonicalName": "Polo Black",
+      "brand": "Ralph Lauren",
+      "launchYear": 2005,
+      "marketedGender": "male",
+      "fragranceFamily": "Woody Aromatic",
+      "topNotes": ["Mango", "Tangerine", "Lemon"],
+      "heartNotes": ["Sage", "Wormwood", "Patchouli"],
+      "baseNotes": ["Sandalwood", "Tonka Bean"],
+      "mainAccords": ["Woody", "Aromatic", "Fruity", "Earthy", "Sweet"],
+      "perfumer": "Pierre Negrin",
+      "sourceConfidence": "medium",
+      "founderSupplied": false,
+      "sourceNotes": "Full notes pool confirmed (Mango, Sandalwood, Tangerine, Patchouli, Tonka Bean, Sage, Wormwood, Lemon) via Fragrantica WebSearch snippet. Ralph Lauren official marketing highlights three key accords: Iced Mango, Silver Armoise (Wormwood/Artemisia), and Patchouli Noir. The top/heart/base pyramid structure above is derived from review analysis (Basenotes.com) rather than brand publication — classified MEDIUM confidence. Launch year 2005 per Fragrantica. Perfumer Pierre Negrin confirmed via Fragrantica.",
+      "possibleNameIssue": false,
+      "nameIssueExplanation": null,
+      "conflicts": [],
+      "evidenceSources": [
+        "fragrantica.com — Polo Black Ralph Lauren (via WebSearch snippet, 2026-08-18)",
+        "basenotes.com — Polo Black by Ralph Lauren (via WebSearch snippet, 2026-08-18)"
+      ],
+      "proposedSlug": "polo-black-inspired"
+    },
+    {
+      "_collection": "SKYE",
+      "_sourceKey": "MEN-115-Paco Rabanne Phantom NEW",
+      "supplierName": "Paco Rabanne Phantom NEW",
+      "canonicalName": "Phantom",
+      "brand": "Rabanne",
+      "launchYear": 2021,
+      "marketedGender": "male",
+      "fragranceFamily": "Woody Aromatic",
+      "topNotes": ["Lemon Peel Oil", "Styrallyl Acetate", "Lavender Oil"],
+      "heartNotes": ["Lavandin", "Patchouli", "Smoky Earthy Accord", "Apple"],
+      "baseNotes": ["Vetiver", "Lavandin Absolute", "Vanilla Absolute"],
+      "mainAccords": ["Woody", "Vanilla", "Lavender", "Fresh", "Sweet"],
+      "perfumer": null,
+      "sourceConfidence": "high",
+      "founderSupplied": false,
+      "sourceNotes": "Notes confirmed via WebSearch snippets referencing Fragrantica. Supplier uses 'Paco Rabanne' and internal label 'NEW'; canonical brand is 'Rabanne' (rebranded 2023); 'NEW' is a supplier internal annotation, not part of the product name. Note entries include IFRA chemical names (Styrallyl Acetate, Lavandin Absolute, Vanilla Absolute) as disclosed by the brand. Launch year 2021 per Fragrantica. Perfumer not confirmed from available evidence sources.",
+      "possibleNameIssue": true,
+      "nameIssueExplanation": "Supplier uses former brand name 'Paco Rabanne' and internal label 'NEW'. Canonical brand: Rabanne. 'NEW' excluded from canonical product name.",
+      "conflicts": [],
+      "evidenceSources": [
+        "fragrantica.com — Phantom Rabanne (via WebSearch snippet, 2026-08-18)"
+      ],
+      "proposedSlug": "phantom-inspired"
+    },
+    {
+      "_collection": "SKYE",
+      "_sourceKey": "MEN-152-Boss Bottled Elixir",
+      "supplierName": "Boss Bottled Elixir",
+      "canonicalName": "Boss Bottled Elixir",
+      "brand": "Hugo Boss",
+      "launchYear": 2023,
+      "marketedGender": "male",
+      "fragranceFamily": "Woody Spicy",
+      "topNotes": ["Frankincense", "Cardamom"],
+      "heartNotes": ["Patchouli", "Vetiver"],
+      "baseNotes": ["Labdanum", "Cedar"],
+      "mainAccords": ["Woody", "Spicy", "Aromatic", "Warm", "Earthy"],
+      "perfumer": "Annick Menardo, Suzy Le Helley",
+      "sourceConfidence": "high",
+      "founderSupplied": false,
+      "sourceNotes": "Notes confirmed via WebSearch snippets referencing Fragrantica. Year correction: P4A estimated 2022 — research confirms 2023. Launch year 2023 per Fragrantica.",
+      "possibleNameIssue": false,
+      "nameIssueExplanation": null,
+      "conflicts": [
+        {
+          "field": "launchYear",
+          "p4aEstimate": 2022,
+          "researchValue": 2023,
+          "disposition": "YEAR_CORRECTION — P4A selection estimate was 2022; research (Fragrantica) confirms 2023."
+        }
+      ],
+      "evidenceSources": [
+        "fragrantica.com — Boss Bottled Elixir Hugo Boss (via WebSearch snippet, 2026-08-18)"
+      ],
+      "proposedSlug": "boss-bottled-elixir-inspired"
+    },
+    {
+      "_collection": "SKYE",
+      "_sourceKey": "MEN-177-Versace Eros Energy",
+      "supplierName": "Versace Eros Energy",
+      "canonicalName": "Eros Energy",
+      "brand": "Versace",
+      "launchYear": 2024,
+      "marketedGender": "male",
+      "fragranceFamily": "Citrus Aromatic",
+      "topNotes": ["Bergamot", "Blood Orange", "Lime", "Mandarin Orange", "Grapefruit", "Lemon"],
+      "heartNotes": ["White Amber", "Black Currant", "Pink Pepper"],
+      "baseNotes": ["Patchouli", "Musk", "Oakmoss"],
+      "mainAccords": ["Citrus", "Fresh", "Aromatic", "Woody", "Mossy"],
+      "perfumer": null,
+      "sourceConfidence": "high",
+      "founderSupplied": false,
+      "sourceNotes": "Notes confirmed via WebSearch snippets referencing Fragrantica. Year correction: P4A estimated 2023 — research confirms 2024. Launch year 2024 per Fragrantica. Perfumer not confirmed from available evidence sources.",
+      "possibleNameIssue": false,
+      "nameIssueExplanation": null,
+      "conflicts": [
+        {
+          "field": "launchYear",
+          "p4aEstimate": 2023,
+          "researchValue": 2024,
+          "disposition": "YEAR_CORRECTION — P4A selection estimate was 2023; research (Fragrantica) confirms 2024."
+        }
+      ],
+      "evidenceSources": [
+        "fragrantica.com — Eros Energy Versace (via WebSearch snippet, 2026-08-18)"
+      ],
+      "proposedSlug": "eros-energy-inspired"
+    },
+    {
+      "_collection": "SKYE",
+      "_sourceKey": "MEN-70-Fahrenheit",
+      "supplierName": "Fahrenheit",
+      "canonicalName": "Fahrenheit",
+      "brand": "Christian Dior",
+      "launchYear": 1988,
+      "marketedGender": "male",
+      "fragranceFamily": "Leather Aromatic",
+      "topNotes": ["Nutmeg Flower", "Lavender", "Cedar", "Mandarin Orange", "Chamomile", "Bergamot", "Hawthorn", "Lemon"],
+      "heartNotes": ["Violet Leaf", "Nutmeg", "Cedar", "Sandalwood", "Carnation", "Honeysuckle", "Jasmine", "Lily of the Valley"],
+      "baseNotes": ["Leather", "Vetiver", "Musk", "Amber", "Patchouli", "Tonka Bean"],
+      "mainAccords": ["Leather", "Woody", "Aromatic", "Warm", "Earthy"],
+      "perfumer": "Jean-Louis Sieuzac, Michel Almairac, Maurice Roger",
+      "sourceConfidence": "high",
+      "founderSupplied": false,
+      "sourceNotes": "Notes confirmed via WebSearch snippets referencing Fragrantica. Supplier text 'Fahrenheit' omits brand; canonical brand is Christian Dior (house name: Dior). Launch year 1988 per Fragrantica. Classic Dior men's fragrance.",
+      "possibleNameIssue": true,
+      "nameIssueExplanation": "Supplier text 'Fahrenheit' omits brand name. Canonical: 'Fahrenheit' by Christian Dior.",
+      "conflicts": [],
+      "evidenceSources": [
+        "fragrantica.com — Fahrenheit Christian Dior (via WebSearch snippet, 2026-08-18)"
+      ],
+      "proposedSlug": "fahrenheit-inspired"
+    },
+    {
+      "_collection": "SKYE",
+      "_sourceKey": "MEN-146-Amen Fantasm by Thierry Mugler",
+      "supplierName": "Amen Fantasm by Thierry Mugler",
+      "canonicalName": "A*Men Fantasm",
+      "brand": "Mugler",
+      "launchYear": 2024,
+      "marketedGender": "male",
+      "fragranceFamily": "Oriental Woody",
+      "topNotes": ["Pink Pepper", "Citrus", "Bergamot"],
+      "heartNotes": ["Dark Chocolate", "Clary Sage"],
+      "baseNotes": ["Patchouli"],
+      "mainAccords": ["Oriental", "Woody", "Spicy", "Dark", "Gourmand"],
+      "perfumer": "Louise Turner, Jacques Huclier",
+      "sourceConfidence": "high",
+      "founderSupplied": false,
+      "sourceNotes": "Name correction AND brand rebranding AND year correction. Supplier text 'Amen Fantasm by Thierry Mugler' has three issues: (1) canonical product name is 'A*Men Fantasm' — the asterisk is part of the official name; (2) brand rebranded from 'Thierry Mugler' to 'Mugler'; (3) P4A estimated 2022 — research confirms 2024 (Fragrantica).",
+      "possibleNameIssue": true,
+      "nameIssueExplanation": "Supplier omits asterisk from 'A*Men Fantasm' and uses former brand name 'Thierry Mugler'. Canonical: 'A*Men Fantasm' by 'Mugler'.",
+      "conflicts": [
+        {
+          "field": "launchYear",
+          "p4aEstimate": 2022,
+          "researchValue": 2024,
+          "disposition": "YEAR_CORRECTION — P4A selection estimate was 2022; research (Fragrantica) confirms 2024."
+        }
+      ],
+      "evidenceSources": [
+        "fragrantica.com — A*Men Fantasm Mugler (via WebSearch snippet, 2026-08-18)"
+      ],
+      "proposedSlug": "amen-fantasm-inspired"
+    },
+    {
+      "_collection": "SKYE",
+      "_sourceKey": "MEN-87-Jean Paul Gaultier",
+      "supplierName": "Jean Paul Gaultier",
+      "canonicalName": "Le Male",
+      "brand": "Jean Paul Gaultier",
+      "launchYear": 1995,
+      "marketedGender": "male",
+      "fragranceFamily": "Fougère Oriental",
+      "topNotes": ["Mint", "Lavender", "Bergamot"],
+      "heartNotes": ["Cinnamon", "Cumin", "Orange Blossom"],
+      "baseNotes": ["Vanilla", "Tonka Bean", "Sandalwood", "Cedarwood"],
+      "mainAccords": ["Fougère", "Oriental", "Spicy", "Lavender", "Vanilla"],
+      "perfumer": "Francis Kurkdjian",
+      "sourceConfidence": "high",
+      "founderSupplied": false,
+      "sourceNotes": "CANONICAL_IDENTITY_PROBABLE — FOUNDER_DECISION_REQUIRED per EP-CAT-P4B mandate. Supplier text 'Inspired by Jean Paul Gaultier (M)'. The supplier separately names Scandal Pour Homme, Scandal (female), and other explicitly named JPG products as distinct entries, establishing MEN-87 as a legitimate distinct supplier men's product targeting the unqualified JPG men's reference. Research evidence: Le Male (1995) is the JPG men's flagship and the overwhelmingly primary interpretation of an unqualified 'Jean Paul Gaultier (M)' supplier product. Fragrantica confirms identity, launch year 1995, and perfumer Francis Kurkdjian. Notes confirmed via WebSearch snippets referencing Fragrantica. This identity must be Founder-confirmed before promotion — the canonical commercial identity is PROBABLE but not PROVEN beyond reasonable doubt from supplier evidence alone.",
+      "possibleNameIssue": true,
+      "nameIssueExplanation": "Supplier text 'Jean Paul Gaultier' identifies brand only, not product. Research establishes Le Male (1995) as the canonical men's flagship identity with high probability. Founder confirmation required before promotion.",
+      "founderDecisionRequired": true,
+      "conflicts": [],
+      "evidenceSources": [
+        "fragrantica.com — Le Male Jean Paul Gaultier (via WebSearch snippet, 2026-08-18)"
+      ],
+      "proposedSlug": "le-male-inspired"
+    },
+    {
+      "_collection": "SKYE",
+      "_sourceKey": "MEN-168-Lacoste Noir",
+      "supplierName": "Lacoste Noir",
+      "canonicalName": "Eau de Lacoste L.12.12. Noir",
+      "brand": "Lacoste",
+      "launchYear": 2013,
+      "marketedGender": "male",
+      "fragranceFamily": "Aquatic Aromatic",
+      "topNotes": ["Watermelon"],
+      "heartNotes": ["Basil", "Lavender", "Verbena"],
+      "baseNotes": ["Dark Chocolate", "Cashmeran", "Patchouli", "Coumarin"],
+      "mainAccords": ["Aquatic", "Aromatic", "Dark", "Woody", "Sweet"],
+      "perfumer": "Dominique Ropion, Claire Liégent",
+      "sourceConfidence": "high",
+      "founderSupplied": false,
+      "sourceNotes": "Notes confirmed via WebSearch snippets referencing Fragrantica. Supplier shorthand 'Lacoste Noir' omits the full official product name. Canonical: 'Eau de Lacoste L.12.12. Noir'. Launch year 2013 per Fragrantica.",
+      "possibleNameIssue": true,
+      "nameIssueExplanation": "Supplier shorthand 'Lacoste Noir' omits full canonical name. Canonical: 'Eau de Lacoste L.12.12. Noir'.",
+      "conflicts": [],
+      "evidenceSources": [
+        "fragrantica.com — Eau de Lacoste L.12.12. Noir (via WebSearch snippet, 2026-08-18)"
+      ],
+      "proposedSlug": "lacoste-noir-inspired"
+    },
+    {
+      "_collection": "ELITE",
+      "_sourceKey": "UNISEX-4-Angels Share by Kilian",
+      "supplierName": "Angels Share by Kilian",
+      "canonicalName": "Angels' Share",
+      "brand": "Kilian Paris",
+      "launchYear": 2020,
+      "marketedGender": "unisex",
+      "fragranceFamily": "Oriental Gourmand",
+      "topNotes": ["Cognac"],
+      "heartNotes": ["Cinnamon", "Tonka Bean", "Oak", "Hedione"],
+      "baseNotes": ["Vanilla", "Praline", "Sandalwood", "Candied Almond"],
+      "mainAccords": ["Oriental", "Gourmand", "Warm", "Spicy", "Vanilla"],
+      "perfumer": "Benoist Lapouza",
+      "sourceConfidence": "high",
+      "founderSupplied": false,
+      "sourceNotes": "Notes confirmed via WebSearch snippets referencing Fragrantica. Supplier omits apostrophe; canonical: 'Angels' Share'. Launch year 2020 per Fragrantica.",
+      "possibleNameIssue": true,
+      "nameIssueExplanation": "Supplier omits apostrophe: 'Angels Share' → canonical 'Angels' Share'.",
+      "conflicts": [],
+      "evidenceSources": [
+        "fragrantica.com — Angels' Share Kilian Paris (via WebSearch snippet, 2026-08-18)"
+      ],
+      "proposedSlug": "angels-share-inspired"
+    },
+    {
+      "_collection": "ELITE",
+      "_sourceKey": "UNISEX-5-Angels Share Paradis by Kilian",
+      "supplierName": "Angels Share Paradis by Kilian",
+      "canonicalName": "Angels' Share Paradis",
+      "brand": "Kilian Paris",
+      "launchYear": 2025,
+      "marketedGender": "unisex",
+      "fragranceFamily": "Oriental Gourmand",
+      "topNotes": ["Raspberry", "Cognac", "Liquor"],
+      "heartNotes": ["Tonka Bean", "Bulgarian Rose", "Caramel"],
+      "baseNotes": ["Oak", "Praline", "Sandalwood", "Oakmoss", "Vanilla"],
+      "mainAccords": ["Oriental", "Gourmand", "Rose", "Spicy", "Fruity"],
+      "perfumer": null,
+      "sourceConfidence": "high",
+      "founderSupplied": false,
+      "sourceNotes": "Notes confirmed via WebSearch snippets referencing Fragrantica. Supplier omits apostrophe; canonical: 'Angels' Share Paradis'. Year correction: P4A estimated 2023 — research confirms 2025. Concentration: Extrait de Parfum per Fragrantica. Perfumer not confirmed from available evidence sources.",
+      "possibleNameIssue": true,
+      "nameIssueExplanation": "Supplier omits apostrophe: 'Angels Share Paradis' → canonical 'Angels' Share Paradis'.",
+      "conflicts": [
+        {
+          "field": "launchYear",
+          "p4aEstimate": 2023,
+          "researchValue": 2025,
+          "disposition": "YEAR_CORRECTION — P4A selection estimate was 2023; research (Fragrantica) confirms 2025."
+        }
+      ],
+      "evidenceSources": [
+        "fragrantica.com — Angels' Share Paradis Kilian Paris (via WebSearch snippet, 2026-08-18)"
+      ],
+      "proposedSlug": "angels-share-paradis-inspired"
+    },
+    {
+      "_collection": "ELITE",
+      "_sourceKey": "UNISEX-27-Gold Oud by Kilian",
+      "supplierName": "Gold Oud by Kilian",
+      "canonicalName": "Gold Oud",
+      "brand": "Kilian Paris",
+      "launchYear": 2014,
+      "marketedGender": "unisex",
+      "fragranceFamily": "Oriental Floral",
+      "topNotes": [],
+      "heartNotes": ["Rose", "Agarwood (Oud)", "Guaiac Wood", "Saffron"],
+      "baseNotes": [],
+      "mainAccords": ["Rose", "Oud", "Spicy", "Woody"],
+      "perfumer": null,
+      "sourceConfidence": "high",
+      "founderSupplied": false,
+      "sourceNotes": "UNORDERED_GOVERNED_NOTES — Fragrantica presents the notes for Gold Oud as an unordered list without a top/heart/base pyramid. All notes recorded in heartNotes[] per Wave 1 and Wave 2 governance policy. Year correction: P4A estimated 2007 or 2017 (uncertain) — research confirms 2014 per Fragrantica. Perfumer not confirmed from available evidence sources.",
+      "possibleNameIssue": false,
+      "nameIssueExplanation": null,
+      "conflicts": [
+        {
+          "field": "launchYear",
+          "p4aEstimate": "2007 or 2017 (uncertain)",
+          "researchValue": 2014,
+          "disposition": "YEAR_CORRECTION — P4A selection estimate was uncertain (2007 or 2017); research (Fragrantica) confirms 2014."
+        }
+      ],
+      "evidenceSources": [
+        "fragrantica.com — Gold Oud Kilian Paris (via WebSearch snippet, 2026-08-18)"
+      ],
+      "proposedSlug": "gold-oud-inspired"
+    },
+    {
+      "_collection": "ELITE",
+      "_sourceKey": "UNISEX-55-Peony & Blush Suede by Jo Malone",
+      "supplierName": "Peony & Blush Suede by Jo Malone",
+      "canonicalName": "Peony & Blush Suede",
+      "brand": "Jo Malone London",
+      "launchYear": 2013,
+      "marketedGender": "unisex",
+      "fragranceFamily": "Floral Woody",
+      "topNotes": [],
+      "heartNotes": ["Red Apple", "Peony", "Rose", "Jasmine", "Carnation", "Suede"],
+      "baseNotes": [],
+      "mainAccords": ["Floral", "Suede", "Powdery", "Fruity", "Soft"],
+      "perfumer": "Christine Nagel",
+      "sourceConfidence": "high",
+      "founderSupplied": false,
+      "sourceNotes": "UNORDERED_GOVERNED_NOTES — Per Jo Malone London brand philosophy (genderless, unordered bouquet), all notes recorded in heartNotes[] only, consistent with Wave 1 governance precedent for Jo Malone fragrances. COLLECTION_REVIEW_REQUIRED: Fragrantica classifies as 'for women'; Jo Malone markets all fragrances as genderless/unisex. P4A wave selection assigned to ELITE; Founder decision pending on collection assignment (ELITE vs ROSE). Year correction: P4A estimated 2012 — research confirms 2013 per Fragrantica. marketedGender set to 'unisex' per Jo Malone brand policy.",
+      "possibleNameIssue": false,
+      "nameIssueExplanation": null,
+      "founderDecisionRequired": true,
+      "conflicts": [
+        {
+          "field": "launchYear",
+          "p4aEstimate": 2012,
+          "researchValue": 2013,
+          "disposition": "YEAR_CORRECTION — P4A selection estimate was 2012; research (Fragrantica) confirms 2013."
+        },
+        {
+          "field": "collection",
+          "p4aAssignment": "ELITE",
+          "researchFinding": "Fragrantica classifies as 'for women' — consistent with ROSE collection",
+          "disposition": "COLLECTION_REVIEW_REQUIRED — Founder decision pending. Jo Malone brand is genderless but Fragrantica classifies this fragrance as female-marketed."
+        }
+      ],
+      "evidenceSources": [
+        "fragrantica.com — Peony & Blush Suede Jo Malone London (via WebSearch snippet, 2026-08-18)"
+      ],
+      "proposedSlug": "peony-blush-suede-inspired"
+    },
+    {
+      "_collection": "ELITE",
+      "_sourceKey": "UNISEX-37-Jo Malone / Velvet Rose & Oud",
+      "supplierName": "Jo Malone / Velvet Rose & Oud",
+      "canonicalName": "Velvet Rose & Oud",
+      "brand": "Jo Malone London",
+      "launchYear": 2012,
+      "marketedGender": "unisex",
+      "fragranceFamily": "Oriental Floral",
+      "topNotes": [],
+      "heartNotes": ["Damask Rose", "Agarwood (Oud)", "Praline", "Clove"],
+      "baseNotes": [],
+      "mainAccords": ["Rose", "Oud", "Spicy", "Oriental", "Floral"],
+      "perfumer": null,
+      "sourceConfidence": "high",
+      "founderSupplied": false,
+      "sourceNotes": "UNORDERED_GOVERNED_NOTES — Per Jo Malone London brand philosophy (genderless, unordered bouquet), all notes recorded in heartNotes[] only, consistent with Wave 1 governance precedent for Jo Malone fragrances. Year correction: P4A estimated 2013 — research confirms 2012 per Fragrantica. Perfumer not confirmed from available evidence sources.",
+      "possibleNameIssue": false,
+      "nameIssueExplanation": null,
+      "conflicts": [
+        {
+          "field": "launchYear",
+          "p4aEstimate": 2013,
+          "researchValue": 2012,
+          "disposition": "YEAR_CORRECTION — P4A selection estimate was 2013; research (Fragrantica) confirms 2012."
+        }
+      ],
+      "evidenceSources": [
+        "fragrantica.com — Velvet Rose & Oud Jo Malone London (via WebSearch snippet, 2026-08-18)"
+      ],
+      "proposedSlug": "velvet-rose-oud-inspired"
+    },
+    {
+      "_collection": "ELITE",
+      "_sourceKey": "UNISEX-64-Jo Malone / English Pear & Freesia",
+      "supplierName": "Jo Malone / English Pear & Freesia",
+      "canonicalName": "English Pear & Freesia",
+      "brand": "Jo Malone London",
+      "launchYear": 2010,
+      "marketedGender": "unisex",
+      "fragranceFamily": "Floral Fruity",
+      "topNotes": [],
+      "heartNotes": ["Pear", "Melon", "Freesia", "Rose", "Musk", "Amber", "Patchouli", "Rhubarb"],
+      "baseNotes": [],
+      "mainAccords": ["Fruity", "Floral", "Fresh", "Musky", "Soft"],
+      "perfumer": "Christine Nagel",
+      "sourceConfidence": "high",
+      "founderSupplied": false,
+      "sourceNotes": "UNORDERED_GOVERNED_NOTES — Per Jo Malone London brand philosophy (genderless, unordered bouquet), all notes recorded in heartNotes[] only, consistent with Wave 1 governance precedent for Jo Malone fragrances. COLLECTION_REVIEW_REQUIRED: Fragrantica classifies as 'for women'; Jo Malone markets all fragrances as genderless/unisex. P4A wave selection assigned to ELITE; Founder decision pending on collection assignment (ELITE vs ROSE). Launch year 2010 per Fragrantica. marketedGender set to 'unisex' per Jo Malone brand policy.",
+      "possibleNameIssue": false,
+      "nameIssueExplanation": null,
+      "founderDecisionRequired": true,
+      "conflicts": [
+        {
+          "field": "collection",
+          "p4aAssignment": "ELITE",
+          "researchFinding": "Fragrantica classifies as 'for women' — consistent with ROSE collection",
+          "disposition": "COLLECTION_REVIEW_REQUIRED — Founder decision pending. Jo Malone brand is genderless but Fragrantica classifies this fragrance as female-marketed."
+        }
+      ],
+      "evidenceSources": [
+        "fragrantica.com — English Pear & Freesia Jo Malone London (via WebSearch snippet, 2026-08-18)"
+      ],
+      "proposedSlug": "english-pear-freesia-inspired"
+    },
+    {
+      "_collection": "ELITE",
+      "_sourceKey": "UNISEX-76-Oud & Bergamot by Jo Malone",
+      "supplierName": "Oud & Bergamot by Jo Malone",
+      "canonicalName": "Oud & Bergamot",
+      "brand": "Jo Malone London",
+      "launchYear": 2010,
+      "marketedGender": "unisex",
+      "fragranceFamily": "Woody Aromatic",
+      "topNotes": [],
+      "heartNotes": ["Agarwood (Oud)", "Bergamot", "Virginia Cedar", "Orange", "Amalfi Lemon"],
+      "baseNotes": [],
+      "mainAccords": ["Oud", "Citrus", "Woody", "Fresh", "Aromatic"],
+      "perfumer": "Christine Nagel",
+      "sourceConfidence": "high",
+      "founderSupplied": false,
+      "sourceNotes": "UNORDERED_GOVERNED_NOTES — Per Jo Malone London brand philosophy (genderless, unordered bouquet), all notes recorded in heartNotes[] only, consistent with Wave 1 governance precedent for Jo Malone fragrances. Fragrantica classifies as 'for women and men' (unisex). Launch year 2010 per Fragrantica. Part of the Cologne Intense Collection launched in 2010.",
+      "possibleNameIssue": false,
+      "nameIssueExplanation": null,
+      "conflicts": [],
+      "evidenceSources": [
+        "fragrantica.com — Oud & Bergamot Jo Malone London (via WebSearch snippet, 2026-08-18)"
+      ],
+      "proposedSlug": "oud-bergamot-inspired"
+    },
+    {
+      "_collection": "ELITE",
+      "_sourceKey": "UNISEX-13-Black Orchid",
+      "supplierName": "Black Orchid",
+      "canonicalName": "Black Orchid",
+      "brand": "Tom Ford",
+      "launchYear": 2006,
+      "marketedGender": "female",
+      "fragranceFamily": "Oriental Chypre",
+      "topNotes": ["French Jasmine", "Black Truffle", "Ylang-Ylang", "Black Currant", "Bergamot"],
+      "heartNotes": ["Black Orchid"],
+      "baseNotes": ["Patchouli", "Sandalwood", "Dark Chocolate", "Incense", "Amber", "Vetiver", "Vanilla", "Balsam"],
+      "mainAccords": ["Oriental", "Floral", "Dark", "Chypre", "Smoky"],
+      "perfumer": null,
+      "sourceConfidence": "high",
+      "founderSupplied": false,
+      "sourceNotes": "Notes confirmed via WebSearch snippets referencing Fragrantica. Supplier text 'Black Orchid' omits brand name; research confirms canonical brand Tom Ford, product Tom Ford Black Orchid EDP (2006). Fragrantica classifies as 'for women'; supplier placed in UNISEX section. The heart note 'Black Orchid' is Tom Ford's proprietary imaginary accord — not a literal botanical ingredient; specific botanical heart components are not publicly disclosed by the brand. Perfumer: Givaudan (house, no named perfumer confirmed from available sources).",
+      "possibleNameIssue": true,
+      "nameIssueExplanation": "Supplier text 'Black Orchid' omits brand. Canonical: 'Black Orchid' by Tom Ford.",
+      "conflicts": [],
+      "evidenceSources": [
+        "fragrantica.com — Black Orchid Tom Ford (via WebSearch snippet, 2026-08-18)"
+      ],
+      "proposedSlug": "black-orchid-inspired"
+    },
+    {
+      "_collection": "ELITE",
+      "_sourceKey": "UNISEX-48-Tom Ford Soleil Blanc",
+      "supplierName": "Tom Ford Soleil Blanc",
+      "canonicalName": "Soleil Blanc",
+      "brand": "Tom Ford",
+      "launchYear": 2016,
+      "marketedGender": "unisex",
+      "fragranceFamily": "Floral Solar",
+      "topNotes": ["Pistachio", "Bergamot", "Cardamom", "Pink Pepper"],
+      "heartNotes": ["Tuberose", "Ylang-Ylang", "Jasmine"],
+      "baseNotes": ["Coconut", "Amber", "Tonka Bean", "Benzoin"],
+      "mainAccords": ["Solar", "Floral", "Tropical", "Vanilla", "Warm"],
+      "perfumer": null,
+      "sourceConfidence": "high",
+      "founderSupplied": false,
+      "sourceNotes": "Notes confirmed via Fragrantica WebSearch snippet. Fragrantica classifies as 'for women and men' (unisex). Launch year 2016 per Fragrantica. Perfumer not confirmed from available evidence sources.",
+      "possibleNameIssue": false,
+      "nameIssueExplanation": null,
+      "conflicts": [],
+      "evidenceSources": [
+        "fragrantica.com — Soleil Blanc Tom Ford (via WebSearch snippet, 2026-08-18)"
+      ],
+      "proposedSlug": "soleil-blanc-inspired"
+    },
+    {
+      "_collection": "ELITE",
+      "_sourceKey": "UNISEX-41-Khamrah by Lattafa",
+      "supplierName": "Khamrah by Lattafa",
+      "canonicalName": "Khamrah",
+      "brand": "Lattafa Perfumes",
+      "launchYear": 2022,
+      "marketedGender": "unisex",
+      "fragranceFamily": "Oriental Gourmand",
+      "topNotes": ["Bergamot", "Cinnamon", "Clary Sage"],
+      "heartNotes": ["Praline", "Fruity Notes", "Tuberose"],
+      "baseNotes": ["Vanilla", "Spicy Precious Woods", "Agarwood (Oud)", "Myrrh", "Tonka Bean", "Benzoin", "Amber"],
+      "mainAccords": ["Oriental", "Gourmand", "Oud", "Spicy", "Vanilla"],
+      "perfumer": null,
+      "sourceConfidence": "high",
+      "founderSupplied": false,
+      "sourceNotes": "Notes confirmed via Fragrantica WebSearch snippet. Fragrantica classifies as 'for women and men' (unisex). Launch year 2022 per Fragrantica. 'Fruity Notes' in heart and 'Spicy Precious Woods' in base are generic Fragrantica descriptors rather than discrete ingredient names — no more specific identification available from the source. Perfumer not confirmed from available evidence sources.",
+      "possibleNameIssue": false,
+      "nameIssueExplanation": null,
+      "conflicts": [],
+      "evidenceSources": [
+        "fragrantica.com — Khamrah Lattafa Perfumes (via WebSearch snippet, 2026-08-18)"
+      ],
+      "proposedSlug": "khamrah-inspired"
+    }
+  ]
+}
