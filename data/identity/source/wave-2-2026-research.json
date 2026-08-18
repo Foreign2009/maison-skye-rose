@@ -1,6 +1,6 @@
 {
   "batchId": "wave-2-2026",
-  "description": "Wave 2 — August 2026 evidence research. 40 entries covering ELITE (10), ROSE (16), and SKYE (14) collections. All note evidence sourced from Tier 1 (official brand sites) or Tier 2 (Fragrantica, Basenotes, major authorised retailers) sources via WebSearch. LLM general knowledge is NOT used as a governed source.",
+  "description": "Wave 2 — August 2026 evidence research. 40 entries covering ELITE (11), ROSE (16), and SKYE (13) collections. All note evidence sourced from Tier 1 (official brand sites) or Tier 2 (Fragrantica, Basenotes, major authorised retailers) sources via WebSearch. LLM general knowledge is NOT used as a governed source. Founder decisions applied EP-CAT-P4B-R1 (2026-08-18): MEN-83 confirmed L'Eau d'Issey Pour Homme; MEN-87 confirmed Le Male; LADIES-207 confirmed EDP (2018); MEN-133 moved SKYE→ELITE; UNISEX-55 confirmed ELITE; UNISEX-64 confirmed ELITE.",
   "governance": {
     "phase": "EP-CAT-P4B",
     "authorizedBy": "Founder — Wave 2 Research Authorization 2026-08-18",
@@ -15,13 +15,18 @@
     "noteStructureNote": "Where a brand presents notes as an unordered bouquet (not a top/heart/base pyramid), notes appear in heartNotes[] only; topNotes[] and baseNotes[] are left empty. This applies to all Jo Malone London fragrances per brand philosophy and Wave 1 governance precedent. By Kilian Gold Oud is recorded as unordered per Fragrantica presentation.",
     "supplierFile": "data/identity/source/wave-2-2026-supplier.json",
     "founderDecisionItems": [
-      "MEN-83: Canonical identity L'Eau d'Issey Pour Homme — PROBABLE but requires Founder confirmation before promotion",
-      "MEN-87: Canonical identity Le Male — PROBABLE but requires Founder confirmation before promotion",
-      "MEN-133: Tuscan Leather — collection review required (Skye vs Elite; Fragrantica = unisex)",
-      "LADIES-207: Narciso Rouge — identity review required (EDP 2018 vs EDT 2019)",
-      "UNISEX-55: Peony & Blush Suede — collection review required (Elite vs Rose; Fragrantica = female)",
-      "UNISEX-64: English Pear & Freesia — collection review required (Elite vs Rose; Fragrantica = female)"
-    ]
+      "MEN-83: RESOLVED EP-CAT-P4B-R1 — Founder confirmed L'Eau d'Issey Pour Homme (1994) as canonical identity",
+      "MEN-87: RESOLVED EP-CAT-P4B-R1 — Founder confirmed Le Male (1995) as canonical identity",
+      "MEN-133: RESOLVED EP-CAT-P4B-R1 — Founder collection decision: ELITE (moved from SKYE)",
+      "LADIES-207: RESOLVED EP-CAT-P4B-R1 — Founder confirmed Narciso Rouge EDP (2018); EDT not selected",
+      "UNISEX-55: RESOLVED EP-CAT-P4B-R1 — Founder confirmed ELITE; Jo Malone genderless positioning governs",
+      "UNISEX-64: RESOLVED EP-CAT-P4B-R1 — Founder confirmed ELITE; Jo Malone genderless positioning governs"
+    ],
+    "founderDecisionCloseOut": {
+      "closedAt": "2026-08-18",
+      "episode": "EP-CAT-P4B-R1",
+      "summary": "All six Founder decisions applied. Final collection totals: ROSE=16, SKYE=13, ELITE=11, TOTAL=40. Zero unresolved Founder decisions remain."
+    }
   },
   "entries": [
     {
@@ -229,7 +234,7 @@
       "_collection": "ROSE",
       "_sourceKey": "LADIES-207-Narciso Rouge",
       "supplierName": "Narciso Rouge",
-      "canonicalName": "Narciso Rouge",
+      "canonicalName": "Narciso Rouge Eau de Parfum",
       "brand": "Narciso Rodriguez",
       "launchYear": 2018,
       "marketedGender": "female",
@@ -241,20 +246,25 @@
       "perfumer": "Nadege le Garlantezec, Sonia Constant",
       "sourceConfidence": "high",
       "founderSupplied": false,
-      "sourceNotes": "IDENTITY_REVIEW_REQUIRED — FOUNDER_DECISION_REQUIRED. Two distinct Narciso Rouge products exist: (1) Narciso Rouge EDP launched 2018; (2) Narciso Rouge EDT launched 2019. Both are confirmed in Fragrantica with separate pages. The supplier text 'Narciso Rouge' does not specify concentration. Notes above are for the Narciso Rouge EDP (2018) — the first-launched version — defaulted as primary candidate. If Founder confirms the EDT (2019), a separate research pass will be required for that concentration's note profile.",
+      "sourceNotes": "FOUNDER_CONFIRMED EP-CAT-P4B-R1. P4B research identified two Narciso Rouge products: EDP (2018) and EDT (2019). Founder selected EDP (2018). Notes above govern the Narciso Rouge EDP (2018) — the first-launched version and Founder-selected edition. EDT (2019) is not the selected identity and its note evidence is not merged here. Supplier text 'Narciso Rouge' does not specify concentration; concentration clarified in canonicalName field.",
       "possibleNameIssue": false,
       "nameIssueExplanation": null,
-      "founderDecisionRequired": true,
+      "founderDecisionRequired": false,
+      "founderDecision": {
+        "resolvedAt": "2026-08-18",
+        "episode": "EP-CAT-P4B-R1",
+        "decision": "Narciso Rouge EDP (2018) confirmed as canonical identity. EDT (2019) is NOT the selected edition. Governed evidence for EDP stands. Proposed slug narciso-rouge-inspired retained."
+      },
       "editionOptions": [
         {
           "edition": "Narciso Rouge EDP",
           "launchYear": 2018,
-          "status": "PRIMARY_CANDIDATE — notes above; first-launched version"
+          "status": "FOUNDER_CONFIRMED — canonical identity for this record"
         },
         {
           "edition": "Narciso Rouge EDT",
           "launchYear": 2019,
-          "status": "ALTERNATE_CANDIDATE — separate note profile research required if confirmed"
+          "status": "NOT_SELECTED — excluded by Founder decision EP-CAT-P4B-R1"
         }
       ],
       "conflicts": [],
@@ -533,10 +543,15 @@
       "perfumer": "Jacques Cavallier Belletrud",
       "sourceConfidence": "high",
       "founderSupplied": false,
-      "sourceNotes": "CANONICAL_IDENTITY_PROBABLE — FOUNDER_DECISION_REQUIRED per EP-CAT-P4B mandate. Supplier text 'Inspired by Issey Miyake (M)'. The supplier separately lists 'Inspired by Issey Miyake (L)' and 'Inspired by Issey Miyake Sport' as distinct products, establishing this as a legitimate distinct supplier men's product. Research evidence: L'Eau d'Issey Pour Homme (1994) is the flagship men's fragrance for Issey Miyake and the overwhelmingly primary interpretation of an unqualified 'Issey Miyake (M)' supplier product. Fragrantica confirms identity, launch year 1994, and perfumer Jacques Cavallier Belletrud. Notes confirmed via WebSearch snippets referencing Fragrantica. This identity must be Founder-confirmed before promotion — the canonical commercial identity is PROBABLE but not PROVEN beyond reasonable doubt from supplier evidence alone.",
+      "sourceNotes": "FOUNDER_CONFIRMED EP-CAT-P4B-R1. P4B research established: supplier text 'Inspired by Issey Miyake (M)'; supplier separately lists '(L)' and 'Sport' variants, confirming this is a distinct supplier men's product. Research evidence (Fragrantica) identified L'Eau d'Issey Pour Homme (1994) as the overwhelmingly primary interpretation. Founder has confirmed this canonical identity. Provenance preserved: supplier raw label was 'Issey Miyake' — brand only, no product name. Notes confirmed via WebSearch snippets referencing Fragrantica. Perfumer Jacques Cavallier Belletrud confirmed per Fragrantica.",
       "possibleNameIssue": true,
-      "nameIssueExplanation": "Supplier text 'Issey Miyake' identifies brand only, not product. Research establishes L'Eau d'Issey Pour Homme (1994) as the canonical identity with high probability. Founder confirmation required before promotion.",
-      "founderDecisionRequired": true,
+      "nameIssueExplanation": "Supplier text 'Issey Miyake' identified brand only, not product. Canonical identity confirmed by Founder EP-CAT-P4B-R1: L'Eau d'Issey Pour Homme (1994). Supplier raw label preserved as provenance.",
+      "founderDecisionRequired": false,
+      "founderDecision": {
+        "resolvedAt": "2026-08-18",
+        "episode": "EP-CAT-P4B-R1",
+        "decision": "Canonical identity confirmed: L'Eau d'Issey Pour Homme (1994) by Issey Miyake. Proposed slug leau-dissey-pour-homme-inspired retained."
+      },
       "conflicts": [],
       "evidenceSources": [
         "fragrantica.com — L'Eau d'Issey Pour Homme Issey Miyake (via WebSearch snippet, 2026-08-18)"
@@ -569,7 +584,7 @@
       "proposedSlug": "tom-ford-noir-inspired"
     },
     {
-      "_collection": "SKYE",
+      "_collection": "ELITE",
       "_sourceKey": "MEN-133-Tom Ford / Tuscan Leather",
       "supplierName": "Tom Ford / Tuscan Leather",
       "canonicalName": "Tuscan Leather",
@@ -584,10 +599,15 @@
       "perfumer": null,
       "sourceConfidence": "high",
       "founderSupplied": false,
-      "sourceNotes": "COLLECTION_REVIEW_REQUIRED. Year correction: P4A estimated 2013 — research confirms 2007 (Fragrantica). Fragrantica classifies as 'for women and men' (unisex); P4A wave selection assigned to SKYE (male). Tuscan Leather is a Tom Ford Private Blend fragrance with wide cross-gender appeal. Founder decision required on collection assignment (SKYE vs ELITE). Perfumer not confirmed from available evidence sources.",
+      "sourceNotes": "FOUNDER_COLLECTION_DECISION EP-CAT-P4B-R1 — moved from SKYE to ELITE. Tom Ford Private Blend genderless/unisex positioning confirmed by Fragrantica; Founder elected ELITE as the governing collection. Year correction: P4A estimated 2013 — research confirms 2007 (Fragrantica). Perfumer not confirmed from available evidence sources.",
       "possibleNameIssue": false,
       "nameIssueExplanation": null,
-      "founderDecisionRequired": true,
+      "founderDecisionRequired": false,
+      "founderDecision": {
+        "resolvedAt": "2026-08-18",
+        "episode": "EP-CAT-P4B-R1",
+        "decision": "Collection moved SKYE→ELITE. Tom Ford Private Blend genderless positioning governs. Proposed slug tuscan-leather-inspired retained."
+      },
       "conflicts": [
         {
           "field": "launchYear",
@@ -599,7 +619,7 @@
           "field": "collection",
           "p4aAssignment": "SKYE",
           "researchFinding": "Fragrantica classifies as unisex — consistent with ELITE collection",
-          "disposition": "COLLECTION_REVIEW_REQUIRED — Founder decision pending."
+          "disposition": "FOUNDER_COLLECTION_DECISION EP-CAT-P4B-R1 — collection assigned ELITE. Tom Ford Private Blend genderless positioning governs."
         }
       ],
       "evidenceSources": [
@@ -820,10 +840,15 @@
       "perfumer": "Francis Kurkdjian",
       "sourceConfidence": "high",
       "founderSupplied": false,
-      "sourceNotes": "CANONICAL_IDENTITY_PROBABLE — FOUNDER_DECISION_REQUIRED per EP-CAT-P4B mandate. Supplier text 'Inspired by Jean Paul Gaultier (M)'. The supplier separately names Scandal Pour Homme, Scandal (female), and other explicitly named JPG products as distinct entries, establishing MEN-87 as a legitimate distinct supplier men's product targeting the unqualified JPG men's reference. Research evidence: Le Male (1995) is the JPG men's flagship and the overwhelmingly primary interpretation of an unqualified 'Jean Paul Gaultier (M)' supplier product. Fragrantica confirms identity, launch year 1995, and perfumer Francis Kurkdjian. Notes confirmed via WebSearch snippets referencing Fragrantica. This identity must be Founder-confirmed before promotion — the canonical commercial identity is PROBABLE but not PROVEN beyond reasonable doubt from supplier evidence alone.",
+      "sourceNotes": "FOUNDER_CONFIRMED EP-CAT-P4B-R1. P4B research established: supplier text 'Inspired by Jean Paul Gaultier (M)'; supplier separately names Scandal variants and other JPG products explicitly, confirming MEN-87 as a distinct supplier men's product. Research evidence (Fragrantica) identified Le Male (1995) as the overwhelmingly primary interpretation. Founder has confirmed this canonical identity. Provenance preserved: supplier raw label was 'Jean Paul Gaultier' — brand only, no product name. Notes confirmed via WebSearch snippets referencing Fragrantica. Perfumer Francis Kurkdjian confirmed per Fragrantica.",
       "possibleNameIssue": true,
-      "nameIssueExplanation": "Supplier text 'Jean Paul Gaultier' identifies brand only, not product. Research establishes Le Male (1995) as the canonical men's flagship identity with high probability. Founder confirmation required before promotion.",
-      "founderDecisionRequired": true,
+      "nameIssueExplanation": "Supplier text 'Jean Paul Gaultier' identified brand only, not product. Canonical identity confirmed by Founder EP-CAT-P4B-R1: Le Male (1995). Supplier raw label preserved as provenance.",
+      "founderDecisionRequired": false,
+      "founderDecision": {
+        "resolvedAt": "2026-08-18",
+        "episode": "EP-CAT-P4B-R1",
+        "decision": "Canonical identity confirmed: Le Male (1995) by Jean Paul Gaultier. Proposed slug le-male-inspired retained."
+      },
       "conflicts": [],
       "evidenceSources": [
         "fragrantica.com — Le Male Jean Paul Gaultier (via WebSearch snippet, 2026-08-18)"
@@ -960,10 +985,15 @@
       "perfumer": "Christine Nagel",
       "sourceConfidence": "high",
       "founderSupplied": false,
-      "sourceNotes": "UNORDERED_GOVERNED_NOTES — Per Jo Malone London brand philosophy (genderless, unordered bouquet), all notes recorded in heartNotes[] only, consistent with Wave 1 governance precedent for Jo Malone fragrances. COLLECTION_REVIEW_REQUIRED: Fragrantica classifies as 'for women'; Jo Malone markets all fragrances as genderless/unisex. P4A wave selection assigned to ELITE; Founder decision pending on collection assignment (ELITE vs ROSE). Year correction: P4A estimated 2012 — research confirms 2013 per Fragrantica. marketedGender set to 'unisex' per Jo Malone brand policy.",
+      "sourceNotes": "UNORDERED_GOVERNED_NOTES — Per Jo Malone London brand philosophy (genderless, unordered bouquet), all notes recorded in heartNotes[] only, consistent with Wave 1 governance precedent for Jo Malone fragrances. FOUNDER_CONFIRMED EP-CAT-P4B-R1 — KEEP ELITE. Jo Malone London officially operates genderless fragrance positioning; Maison governance preserves prestige ELITE classification despite third-party female classification. Year correction: P4A estimated 2012 — research confirms 2013 per Fragrantica. marketedGender set to 'unisex' per Jo Malone brand policy.",
       "possibleNameIssue": false,
       "nameIssueExplanation": null,
-      "founderDecisionRequired": true,
+      "founderDecisionRequired": false,
+      "founderDecision": {
+        "resolvedAt": "2026-08-18",
+        "episode": "EP-CAT-P4B-R1",
+        "decision": "Collection confirmed ELITE. Jo Malone genderless positioning governs over third-party female classification. Proposed slug peony-blush-suede-inspired retained."
+      },
       "conflicts": [
         {
           "field": "launchYear",
@@ -975,7 +1005,7 @@
           "field": "collection",
           "p4aAssignment": "ELITE",
           "researchFinding": "Fragrantica classifies as 'for women' — consistent with ROSE collection",
-          "disposition": "COLLECTION_REVIEW_REQUIRED — Founder decision pending. Jo Malone brand is genderless but Fragrantica classifies this fragrance as female-marketed."
+          "disposition": "FOUNDER_CONFIRMED EP-CAT-P4B-R1 — ELITE confirmed. Jo Malone genderless positioning governs."
         }
       ],
       "evidenceSources": [
@@ -1031,16 +1061,21 @@
       "perfumer": "Christine Nagel",
       "sourceConfidence": "high",
       "founderSupplied": false,
-      "sourceNotes": "UNORDERED_GOVERNED_NOTES — Per Jo Malone London brand philosophy (genderless, unordered bouquet), all notes recorded in heartNotes[] only, consistent with Wave 1 governance precedent for Jo Malone fragrances. COLLECTION_REVIEW_REQUIRED: Fragrantica classifies as 'for women'; Jo Malone markets all fragrances as genderless/unisex. P4A wave selection assigned to ELITE; Founder decision pending on collection assignment (ELITE vs ROSE). Launch year 2010 per Fragrantica. marketedGender set to 'unisex' per Jo Malone brand policy.",
+      "sourceNotes": "UNORDERED_GOVERNED_NOTES — Per Jo Malone London brand philosophy (genderless, unordered bouquet), all notes recorded in heartNotes[] only, consistent with Wave 1 governance precedent for Jo Malone fragrances. FOUNDER_CONFIRMED EP-CAT-P4B-R1 — KEEP ELITE. Jo Malone London officially operates genderless fragrance positioning; Maison governance preserves prestige ELITE classification despite third-party female classification. Same governance principle as UNISEX-55 Peony & Blush Suede. Launch year 2010 per Fragrantica. marketedGender set to 'unisex' per Jo Malone brand policy.",
       "possibleNameIssue": false,
       "nameIssueExplanation": null,
-      "founderDecisionRequired": true,
+      "founderDecisionRequired": false,
+      "founderDecision": {
+        "resolvedAt": "2026-08-18",
+        "episode": "EP-CAT-P4B-R1",
+        "decision": "Collection confirmed ELITE. Jo Malone genderless positioning governs over third-party female classification. Proposed slug english-pear-freesia-inspired retained."
+      },
       "conflicts": [
         {
           "field": "collection",
           "p4aAssignment": "ELITE",
           "researchFinding": "Fragrantica classifies as 'for women' — consistent with ROSE collection",
-          "disposition": "COLLECTION_REVIEW_REQUIRED — Founder decision pending. Jo Malone brand is genderless but Fragrantica classifies this fragrance as female-marketed."
+          "disposition": "FOUNDER_CONFIRMED EP-CAT-P4B-R1 — ELITE confirmed. Jo Malone genderless positioning governs."
         }
       ],
       "evidenceSources": [

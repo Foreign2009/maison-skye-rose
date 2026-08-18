@@ -1,6 +1,6 @@
 {
   "batchId": "wave-2-2026",
-  "description": "Wave 2 — August 2026 supplier intake candidates selected for MKC registration. 40 identities spanning ELITE (10), ROSE (16), and SKYE (14) collections. Sourced from fragrance-list-2026-08-normalized.json. Wave 2 selection authorized by Founder per EP-CAT-P4A (2026-08-18). Dispositions and normalization corrections applied per EP-CAT-P2B and EP-CAT-P3A governance carry-forward. MEN-83 and MEN-87 are legitimate distinct supplier products requiring canonical identity confirmation.",
+  "description": "Wave 2 — August 2026 supplier intake candidates selected for MKC registration. 40 identities spanning ELITE (11), ROSE (16), and SKYE (13) collections. Sourced from fragrance-list-2026-08-normalized.json. Wave 2 selection authorized by Founder per EP-CAT-P4A (2026-08-18). Dispositions and normalization corrections applied per EP-CAT-P2B and EP-CAT-P3A governance carry-forward. All six Founder decisions resolved EP-CAT-P4B-R1 (2026-08-18): MEN-83=L'Eau d'Issey Pour Homme, MEN-87=Le Male, LADIES-207=Narciso Rouge EDP (2018), MEN-133=ELITE, UNISEX-55=ELITE confirmed, UNISEX-64=ELITE confirmed.",
   "governance": {
     "phase": "EP-CAT-P4B",
     "authorizedBy": "Founder — Wave 2 Selection Authorization 2026-08-18",
@@ -9,7 +9,7 @@
     "dispositionFile": "data/supplier/decisions/fragrance-list-2026-08-dispositions.json",
     "correctionsFile": "data/supplier/normalized/fragrance-list-2026-08-normalized-corrections.json",
     "researchFile": "data/identity/source/wave-2-2026-research.json",
-    "note": "supplierName values are exact from normalized source file. Where the raw text is abbreviated, misspelled, or missing brand context, the canonical identity is resolved in the paired research file. Two entries (MEN-83, MEN-87) are confirmed distinct supplier men's products whose canonical commercial identities must be Founder-confirmed before promotion."
+    "note": "supplierName values are exact from normalized source file. Where the raw text is abbreviated, misspelled, or missing brand context, the canonical identity is resolved in the paired research file. All six Founder decisions resolved EP-CAT-P4B-R1 (2026-08-18) — see description field for details."
   },
   "entries": [
     {
@@ -64,7 +64,7 @@
       "supplierName": "Narciso Rouge",
       "supplierCategory": "LADIES",
       "sourceReference": "LADIES-207-Narciso Rouge",
-      "note": "Collection: ROSE. IDENTITY_REVIEW_REQUIRED — two products share this name: Narciso Rouge EDP (2018) and Narciso Rouge EDT (2019). Research defaults to EDP (2018) as primary candidate. Founder decision required before promotion. See research file."
+      "note": "Collection: ROSE. FOUNDER_CONFIRMED EP-CAT-P4B-R1 — canonical edition: Narciso Rouge Eau de Parfum (2018). The 2019 EDT is NOT the selected identity. See research file."
     },
     {
       "supplierName": "Dylan Purple by Versace",
@@ -124,7 +124,7 @@
       "supplierName": "Issey Miyake",
       "supplierCategory": "MEN",
       "sourceReference": "MEN-83-Issey Miyake",
-      "note": "Collection: SKYE. CANONICAL_IDENTITY_PROBABLE — FOUNDER_DECISION_REQUIRED. Supplier text 'Inspired by Issey Miyake (M)'. Supplier separately labels '(L)' and 'Sport' variants. Research strongly supports L'Eau d'Issey Pour Homme (1994) as the canonical men's flagship; RESEARCHED AND PROVEN per P4B mandate. See research file for full evidence chain. Identity must be Founder-confirmed before promotion."
+      "note": "Collection: SKYE. FOUNDER_CONFIRMED EP-CAT-P4B-R1 — canonical identity: L'Eau d'Issey Pour Homme (1994) by Issey Miyake. Supplier raw label 'Issey Miyake' (brand only) preserved as provenance. See research file."
     },
     {
       "supplierName": "Tom Ford Noir",
@@ -136,7 +136,7 @@
       "supplierName": "Tom Ford / Tuscan Leather",
       "supplierCategory": "MEN",
       "sourceReference": "MEN-133-Tom Ford / Tuscan Leather",
-      "note": "Collection: SKYE. COLLECTION_REVIEW_REQUIRED — see research file. Year correction: P4A estimated 2013 — research confirms 2007. Fragrantica classifies as 'for women and men' (unisex); P4A assigned to SKYE (male). Founder decision pending on correct collection assignment (SKYE vs ELITE)."
+      "note": "Collection: ELITE. FOUNDER_COLLECTION_DECISION EP-CAT-P4B-R1 — moved from SKYE to ELITE. Tom Ford Private Blend genderless positioning governs. Year correction: P4A estimated 2013 — research confirms 2007."
     },
     {
       "supplierName": "Gucci Guilty",
@@ -184,7 +184,7 @@
       "supplierName": "Jean Paul Gaultier",
       "supplierCategory": "MEN",
       "sourceReference": "MEN-87-Jean Paul Gaultier",
-      "note": "Collection: SKYE. CANONICAL_IDENTITY_PROBABLE — FOUNDER_DECISION_REQUIRED. Supplier text 'Inspired by Jean Paul Gaultier (M)'. Supplier separately names Scandal variants and other JPG products. Research strongly supports 'Le Male' (1995) as the canonical men's flagship; RESEARCHED AND PROVEN per P4B mandate. See research file for full evidence chain. Identity must be Founder-confirmed before promotion."
+      "note": "Collection: SKYE. FOUNDER_CONFIRMED EP-CAT-P4B-R1 — canonical identity: Le Male (1995) by Jean Paul Gaultier. Supplier raw label 'Jean Paul Gaultier' (brand only) preserved as provenance. See research file."
     },
     {
       "supplierName": "Lacoste Noir",
@@ -214,7 +214,7 @@
       "supplierName": "Peony & Blush Suede by Jo Malone",
       "supplierCategory": "UNISEX",
       "sourceReference": "UNISEX-55-Peony & Blush Suede by Jo Malone",
-      "note": "Collection: ELITE. COLLECTION_REVIEW_REQUIRED — see research file. Year correction: P4A estimated 2012 — research confirms 2013. Fragrantica classifies as 'for women'; Jo Malone markets all fragrances as genderless. P4A assigned to ELITE; Founder decision pending on collection assignment (ELITE vs ROSE)."
+      "note": "Collection: ELITE. FOUNDER_CONFIRMED EP-CAT-P4B-R1 — KEEP ELITE. Jo Malone London genderless positioning governs. Year correction: P4A estimated 2012 — research confirms 2013."
     },
     {
       "supplierName": "Jo Malone / Velvet Rose & Oud",
@@ -226,7 +226,7 @@
       "supplierName": "Jo Malone / English Pear & Freesia",
       "supplierCategory": "UNISEX",
       "sourceReference": "UNISEX-64-Jo Malone / English Pear & Freesia",
-      "note": "Collection: ELITE. COLLECTION_REVIEW_REQUIRED — see research file. Fragrantica classifies as 'for women'; Jo Malone markets all fragrances as genderless. P4A assigned to ELITE; Founder decision pending on collection assignment (ELITE vs ROSE)."
+      "note": "Collection: ELITE. FOUNDER_CONFIRMED EP-CAT-P4B-R1 — KEEP ELITE. Jo Malone London genderless positioning governs (same governance principle as UNISEX-55 Peony & Blush Suede)."
     },
     {
       "supplierName": "Oud & Bergamot by Jo Malone",
