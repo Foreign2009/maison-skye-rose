@@ -540,6 +540,7 @@ test("VERIFY D — app/data/fragrances.ts exists (collision safety gate)", () =>
 // VERIFY E: Only Founder-authorized drafts may exist.
 // Updated EP-CAT-P4D: 3 pilot drafts authorized.
 // Updated EP-CAT-P4E: 10 Elite Batch 1 drafts authorized. Total authorized = 13.
+// Updated EP-CAT-P4F: 15 Rose batch drafts authorized. Total authorized = 28.
 // Non-authorized Wave 2 drafts are unauthorized and must not exist.
 const AUTHORIZED_WAVE2_SLUGS = new Set([
   // EP-CAT-P4D pilot drafts (3)
@@ -557,8 +558,24 @@ const AUTHORIZED_WAVE2_SLUGS = new Set([
   "soleil-blanc-inspired",
   "khamrah-inspired",
   "tuscan-leather-inspired",
+  // EP-CAT-P4F Rose batch drafts (15)
+  "idole-inspired",
+  "fame-inspired",
+  "olympea-inspired",
+  "scandal-inspired",
+  "la-belle-inspired",
+  "la-nuit-tresor-inspired",
+  "narciso-rodriguez-for-her-inspired",
+  "narciso-rouge-inspired",
+  "dylan-purple-inspired",
+  "yellow-diamond-inspired",
+  "eden-sparkling-lychee-inspired",
+  "very-good-girl-elixir-inspired",
+  "gucci-guilty-pour-femme-inspired",
+  "gucci-bamboo-inspired",
+  "eladaria-inspired",
 ]);
-test("VERIFY E — Only authorized Wave 2 drafts exist (pilot 3 + Batch 1 Elite 10)", () => {
+test("VERIFY E — Only authorized Wave 2 drafts exist (pilot 3 + Elite 10 + Rose 15)", () => {
   const DRAFTS_DIR = path.join(process.cwd(), "scripts", "factory", "drafts");
   const unauthorized: string[] = [];
   for (const slug of APPROVED_SLUGS) {
@@ -569,7 +586,7 @@ test("VERIFY E — Only authorized Wave 2 drafts exist (pilot 3 + Batch 1 Elite 
     }
   }
   assert.equal(unauthorized.length, 0,
-    `Unauthorized Wave 2 drafts found (only 13 are authorized: 3 pilot + 10 Batch 1 Elite):\n     ${unauthorized.join("\n     ")}`);
+    `Unauthorized Wave 2 drafts found (only 28 are authorized: 3 pilot + 10 Elite + 15 Rose):\n     ${unauthorized.join("\n     ")}`);
 });
 
 // ── Summary ───────────────────────────────────────────────────────────────────
