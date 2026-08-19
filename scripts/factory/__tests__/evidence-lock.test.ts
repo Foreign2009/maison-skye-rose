@@ -369,6 +369,178 @@ test("TEST 15 — Non-evidence-locked scaffold preserves CompositionProducer pat
     "Non-locked scaffold must NOT set notesEvidenceLocked — CompositionProducer preCheck must pass for this record");
 });
 
+// ── EP-CAT-P4C: Wave 2 UNORDERED_GOVERNED_NOTES regression tests ─────────────
+// These tests guard the five Wave 2 Jo Malone London / unordered-bouquet entries.
+// The UNORDERED_GOVERNED_NOTES pattern:
+//   notes=[all], notesStructured={ top:[], heart:[...all], base:[] }, notesEvidenceLocked:true
+// This is a TRANSPORT CONVENTION — heartNotes[] does NOT assert that these notes
+// are semantically "heart tier". These tests enforce that the pipeline cannot:
+//   - enrich notes from the transport heart[] into a fabricated pyramid
+//   - add notes not present in the governed set
+//   - redistribute notes into top or base tiers
+//   - silently promote the transport heart[] to a semantic tier assertion
+
+// TEST 16: UNORDERED_GOVERNED_NOTES — scaffold preserves empty top and base exactly.
+test("TEST 16 — Wave 2 UNORDERED: scaffold preserves empty top[] and base[] (no tier invention)", () => {
+  // Peony & Blush Suede fixture — Jo Malone London, unordered bouquet
+  const display = baseDisplay({
+    title:               "Peony Blush Suede Inspired",
+    collection:          "Elite",
+    notes:               ["Red Apple", "Peony", "Rose", "Jasmine", "Carnation", "Suede"],
+    notesEvidenceLocked: true,
+    notesStructured: {
+      top:   [],
+      heart: ["Red Apple", "Peony", "Rose", "Jasmine", "Carnation", "Suede"],
+      base:  [],
+    },
+  });
+  const { record } = scaffold(display);
+  assert.deepEqual(record.notes.top,  [], "UNORDERED top must remain empty — no top-note invention");
+  assert.deepEqual(record.notes.base, [], "UNORDERED base must remain empty — no base-note invention");
+});
+
+// TEST 17: UNORDERED_GOVERNED_NOTES — heart[] note identities survive scaffold exactly.
+test("TEST 17 — Wave 2 UNORDERED: governed note identities survive scaffold byte-for-byte", () => {
+  const governed = ["Red Apple", "Peony", "Rose", "Jasmine", "Carnation", "Suede"];
+  const display = baseDisplay({
+    title:               "Peony Blush Suede Inspired",
+    collection:          "Elite",
+    notes:               governed,
+    notesEvidenceLocked: true,
+    notesStructured:     { top: [], heart: governed, base: [] },
+  });
+  const { record } = scaffold(display);
+  assert.deepEqual(record.notes.heart, governed,
+    "UNORDERED heart notes must be byte-for-byte identical to the governed evidence");
+  assert.equal(record.notes.heart.length, 6,
+    `UNORDERED heart must have exactly 6 notes (got ${record.notes.heart.length}) — no notes added`);
+});
+
+// TEST 18: UNORDERED_GOVERNED_NOTES — validation passes (no tier-min errors).
+test("TEST 18 — Wave 2 UNORDERED: validation accepts empty top/base tiers (no tier-min errors)", () => {
+  const record = baseRecord({
+    name:                "peony-blush-suede-inspired",
+    id:                  "peony-blush-suede-inspired",
+    slug:                "peony-blush-suede-inspired",
+    notes:               { top: [], heart: ["Red Apple", "Peony", "Rose", "Jasmine", "Carnation", "Suede"], base: [] },
+    notesEvidenceLocked: true,
+  });
+  const result = validateKnowledgeRecord(record);
+  const tierMinCodes = result.errors.map(e => e.code).filter(c =>
+    c === "NOTES_TOP_MIN" || c === "NOTES_HEART_MIN" || c === "NOTES_BASE_MIN",
+  );
+  assert.equal(tierMinCodes.length, 0,
+    `UNORDERED entry must pass validation without tier-min errors; got: ${tierMinCodes.join(", ")}`);
+});
+
+// TEST 19: UNORDERED_GOVERNED_NOTES — notes cannot be redistributed into a pyramid.
+// The factory must never split heart[] transport into top/heart/base.
+test("TEST 19 — Wave 2 UNORDERED: notes cannot be redistributed from transport heart[] into pyramid", () => {
+  const governed = ["Damask Rose", "Agarwood (Oud)", "Praline", "Clove"];
+  const display = baseDisplay({
+    title:               "Velvet Rose Oud Inspired",
+    collection:          "Elite",
+    notes:               governed,
+    notesEvidenceLocked: true,
+    notesStructured:     { top: [], heart: governed, base: [] },
+  });
+  const { record } = scaffold(display);
+  // All 4 notes must remain in heart; none may have been redistributed
+  assert.deepEqual(record.notes.top,   [],      "Redistribution guard: top must be empty []");
+  assert.deepEqual(record.notes.base,  [],      "Redistribution guard: base must be empty []");
+  assert.equal(record.notes.heart.length, 4,
+    `Redistribution guard: all 4 notes must remain in heart (got ${record.notes.heart.length})`);
+  // Ensure Agarwood (Oud) — a likely "base note" by convention — has not been moved
+  // (if deepEqual(base, []) passed above, base is already empty — includes check redundant)
+  assert.ok(record.notes.heart.includes("Agarwood (Oud)"),
+    "Agarwood (Oud) must NOT be moved to base — it is a transport convention in heart[], not a semantic tier claim");
+});
+
+// TEST 20: UNORDERED_GOVERNED_NOTES — notes cannot be enriched with AI-inferred additions.
+// Even if a note like "Bergamot" is well-known for a fragrance, it must not be added
+// unless it appears in the governed evidence set.
+test("TEST 20 — Wave 2 UNORDERED: no notes can be added to the governed set (no enrichment)", () => {
+  const governed = ["Agarwood (Oud)", "Bergamot", "Virginia Cedar", "Orange", "Amalfi Lemon"];
+  const display = baseDisplay({
+    title:               "Oud Bergamot Inspired",
+    collection:          "Elite",
+    notes:               governed,
+    notesEvidenceLocked: true,
+    notesStructured:     { top: [], heart: governed, base: [] },
+  });
+  const { record } = scaffold(display);
+  const allNotes = [...record.notes.top, ...record.notes.heart, ...record.notes.base];
+  // Total notes must not exceed the governed set
+  assert.equal(allNotes.length, 5,
+    `Total notes must be exactly 5 (the governed set); got ${allNotes.length} — enrichment is prohibited`);
+  // Each governed note must appear in the result
+  for (const note of governed) {
+    assert.ok(allNotes.includes(note), `Governed note "${note}" must be present — not removed`);
+  }
+});
+
+// TEST 21: UNORDERED_GOVERNED_NOTES — English Pear & Freesia (8-note bouquet).
+// Verifies the largest UNORDERED set is preserved without invention.
+test("TEST 21 — Wave 2 UNORDERED: English Pear & Freesia 8-note bouquet preserved exactly", () => {
+  const governed = ["Pear", "Melon", "Freesia", "Rose", "Musk", "Amber", "Patchouli", "Rhubarb"];
+  const display = baseDisplay({
+    title:               "English Pear Freesia Inspired",
+    collection:          "Elite",
+    notes:               governed,
+    notesEvidenceLocked: true,
+    notesStructured:     { top: [], heart: governed, base: [] },
+  });
+  const { record } = scaffold(display);
+  assert.deepEqual(record.notes.top,  [], "English Pear & Freesia top must be empty (unordered)");
+  assert.deepEqual(record.notes.base, [], "English Pear & Freesia base must be empty (unordered)");
+  assert.deepEqual(
+    [...record.notes.heart].sort(),
+    [...governed].sort(),
+    "English Pear & Freesia: all 8 governed notes must survive scaffold exactly",
+  );
+});
+
+// TEST 22: Wave 2 sparse structured entry — Boss Bottled Elixir 2-2-2 preserved.
+// (Not UNORDERED; standard pyramid with small tiers.)
+test("TEST 22 — Wave 2 SPARSE structured: Boss Bottled Elixir 2-2-2 preserved exactly", () => {
+  const display = baseDisplay({
+    title:               "Boss Bottled Elixir Inspired",
+    collection:          "Skye",
+    notes:               ["Frankincense", "Cardamom", "Patchouli", "Vetiver", "Labdanum", "Cedar"],
+    notesEvidenceLocked: true,
+    notesStructured: {
+      top:   ["Frankincense", "Cardamom"],
+      heart: ["Patchouli", "Vetiver"],
+      base:  ["Labdanum", "Cedar"],
+    },
+  });
+  const { record } = scaffold(display);
+  assert.deepEqual(record.notes.top,   ["Frankincense", "Cardamom"], "Boss Bottled Elixir top preserved");
+  assert.deepEqual(record.notes.heart, ["Patchouli", "Vetiver"],     "Boss Bottled Elixir heart preserved");
+  assert.deepEqual(record.notes.base,  ["Labdanum", "Cedar"],        "Boss Bottled Elixir base preserved");
+});
+
+// TEST 23: Wave 2 branded molecules — Montblanc Explorer symbols survive scaffold.
+test("TEST 23 — Wave 2: Montblanc Explorer branded molecule names survive scaffold verbatim", () => {
+  const display = baseDisplay({
+    title:               "Montblanc Explorer Inspired",
+    collection:          "Skye",
+    notes:               ["OrPur® Bergamot", "French Sage", "Pink Pepper", "OrPur® Vetiver", "Skin", "Patchouli", "Cocoa", "Ambrofix™", "Akigalawood®"],
+    notesEvidenceLocked: true,
+    notesStructured: {
+      top:   ["OrPur® Bergamot", "French Sage", "Pink Pepper"],
+      heart: ["OrPur® Vetiver", "Skin"],
+      base:  ["Patchouli", "Cocoa", "Ambrofix™", "Akigalawood®"],
+    },
+  });
+  const { record } = scaffold(display);
+  const allNotes = [...record.notes.top, ...record.notes.heart, ...record.notes.base];
+  assert.ok(allNotes.includes("OrPur® Bergamot"),  "OrPur® Bergamot must survive scaffold verbatim");
+  assert.ok(allNotes.includes("OrPur® Vetiver"),   "OrPur® Vetiver must survive scaffold verbatim");
+  assert.ok(allNotes.includes("Ambrofix™"),         "Ambrofix™ must survive scaffold verbatim");
+  assert.ok(allNotes.includes("Akigalawood®"),      "Akigalawood® must survive scaffold verbatim");
+});
+
 // ── Summary ───────────────────────────────────────────────────────────────────
 
 console.log(`\n${"─".repeat(56)}`);
