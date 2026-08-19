@@ -12,7 +12,11 @@ import { validateKnowledgeRecord } from "../../../app/lib/mkc/validator";
 import { scaffold }                from "../scaffold";
 import type { FragranceKnowledge } from "../../../app/lib/mkc/types";
 import type { DisplayFragrance }   from "../../../app/lib/knowledgeAdapter";
-import { peonyBlushSuedeInspired } from "../drafts/peony-blush-suede-inspired";
+import { peonyBlushSuedeInspired }  from "../drafts/peony-blush-suede-inspired";
+import { goldOudInspired }          from "../drafts/gold-oud-inspired";
+import { velvetRoseOudInspired }    from "../drafts/velvet-rose-oud-inspired";
+import { englishPearFreesiaInspired } from "../drafts/english-pear-freesia-inspired";
+import { oudBergamotInspired }      from "../drafts/oud-bergamot-inspired";
 
 // ── Test harness ──────────────────────────────────────────────────────────────
 
@@ -542,37 +546,74 @@ test("TEST 23 — Wave 2: Montblanc Explorer branded molecule names survive scaf
   assert.ok(allNotes.includes("Akigalawood®"),      "Akigalawood® must survive scaffold verbatim");
 });
 
+// ── UNORDERED semantic regression helper ─────────────────────────────────────
+// Checks that a committed UNORDERED_GOVERNED_NOTES draft's customer-facing copy
+// contains no temporal note-sequencing or tier language.
+// Must be defined before any test that calls it (harness executes fn() immediately).
+
+const UNORDERED_SEQUENCING_PATTERNS: Array<[RegExp, string]> = [
+  [/\bopens with\b/i,    "opens with"],
+  [/\bopen into\b/i,     "open into"],
+  [/\bopening\b/i,       "opening (olfactory)"],
+  [/\bstarts with\b/i,   "starts with"],
+  [/\bfollowed by\b/i,   "followed by"],
+  [/\bgives way to\b/i,  "gives way to"],
+  [/\bsettles into\b/i,  "settles into"],
+  [/\bdries down\b/i,    "dries down"],
+  [/\bdrydown\b/i,       "drydown"],
+  [/\bfinishes with\b/i, "finishes with"],
+  [/\bthen\b/i,          "then (temporal connector)"],
+  [/\bunfolds\b/i,       "unfolds (temporal development)"],
+  [/\bfloral heart\b/i,  "floral heart (tier claim)"],
+  [/\boud heart\b/i,     "oud heart (tier claim)"],
+  [/\bdark heart\b/i,    "dark heart (tier claim)"],
+  [/\bheart of\b/i,      "heart of (tier claim)"],
+  [/\bbase of\b/i,       "base of (tier claim)"],
+];
+
+function assertNoUnorderedSequencing(
+  draft: { description?: string; subtitle?: string; recommendedFor?: string[] },
+  slug: string,
+): void {
+  const fields: string[] = [
+    draft.description ?? "",
+    draft.subtitle    ?? "",
+    ...(draft.recommendedFor ?? []),
+  ];
+  const combined = fields.join(" ");
+  const violations: string[] = [];
+  for (const [pattern, label] of UNORDERED_SEQUENCING_PATTERNS) {
+    if (pattern.test(combined)) violations.push(label);
+  }
+  assert.equal(violations.length, 0,
+    `${slug}: UNORDERED draft must not contain sequencing/tier language; found: ${violations.join(", ")}`);
+}
+
 // TEST 24: UNORDERED semantic regression — Peony & Blush Suede customer-facing copy must
 // not assert or imply temporal note sequence. For UNORDERED_GOVERNED_NOTES we know only
 // that governed notes are present — not which appear first, develop, or dry down.
 // Imports the actual committed pilot draft so future copy regressions are caught.
 test("TEST 24 — Wave 2 UNORDERED: peony draft customer copy free of unsupported note-sequencing language", () => {
-  const SEQUENCING_PATTERNS: Array<[RegExp, string]> = [
-    [/\bopens with\b/i,    "opens with"],
-    [/\bopening\b/i,       "opening (as olfactory descriptor)"],
-    [/\bstarts with\b/i,   "starts with"],
-    [/\bfollowed by\b/i,   "followed by"],
-    [/\bgives way to\b/i,  "gives way to"],
-    [/\bsettles into\b/i,  "settles into"],
-    [/\bdries down\b/i,    "dries down"],
-    [/\bdrydown\b/i,       "drydown"],
-    [/\bfinishes with\b/i, "finishes with"],
-    [/\bthen\b/i,          "then (temporal connector)"],
-  ];
+  assertNoUnorderedSequencing(peonyBlushSuedeInspired, "peony-blush-suede-inspired");
+});
 
-  const customerFacingFields: string[] = [
-    peonyBlushSuedeInspired.description ?? "",
-    peonyBlushSuedeInspired.subtitle    ?? "",
-    ...(peonyBlushSuedeInspired.recommendedFor ?? []),
-  ];
-  const combined = customerFacingFields.join(" ");
+// TEST 25-28: UNORDERED semantic regression for Batch 1 Ep-CAT-P4E UNORDERED records.
+// Imports committed pilot/batch drafts; a future regeneration regression will be caught here.
 
-  const violations: string[] = [];
-  for (const [pattern, label] of SEQUENCING_PATTERNS) {
-    if (pattern.test(combined)) violations.push(label);
-  }
-  assert.equal(violations.length, 0,
-    `UNORDERED peony draft must not contain note-sequencing language; found: ${violations.join(", ")}`);
+test("TEST 25 — Wave 2 UNORDERED: gold-oud draft customer copy free of sequencing language", () => {
+  assertNoUnorderedSequencing(goldOudInspired, "gold-oud-inspired");
+});
+
+test("TEST 26 — Wave 2 UNORDERED: velvet-rose-oud draft customer copy free of sequencing language", () => {
+  assertNoUnorderedSequencing(velvetRoseOudInspired, "velvet-rose-oud-inspired");
+});
+
+test("TEST 27 — Wave 2 UNORDERED: english-pear-freesia draft customer copy free of sequencing language", () => {
+  assertNoUnorderedSequencing(englishPearFreesiaInspired, "english-pear-freesia-inspired");
+});
+
+test("TEST 28 — Wave 2 UNORDERED: oud-bergamot draft customer copy free of sequencing language", () => {
+  assertNoUnorderedSequencing(oudBergamotInspired, "oud-bergamot-inspired");
 });
 
 // ── Summary ───────────────────────────────────────────────────────────────────

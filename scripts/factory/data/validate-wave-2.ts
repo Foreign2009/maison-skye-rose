@@ -537,26 +537,39 @@ test("VERIFY D — app/data/fragrances.ts exists (collision safety gate)", () =>
   assert.ok(true, "fragrances.ts path verified; collision verified via VERIFY A");
 });
 
-// VERIFY E: Only the 3 EP-CAT-P4D authorized pilot drafts may exist.
-// Updated EP-CAT-P4D: Founder-authorized pilot generation produced exactly 3 drafts.
-// Non-pilot Wave 2 drafts are unauthorized and must not exist.
-const AUTHORIZED_PILOT_SLUGS = new Set([
+// VERIFY E: Only Founder-authorized drafts may exist.
+// Updated EP-CAT-P4D: 3 pilot drafts authorized.
+// Updated EP-CAT-P4E: 10 Elite Batch 1 drafts authorized. Total authorized = 13.
+// Non-authorized Wave 2 drafts are unauthorized and must not exist.
+const AUTHORIZED_WAVE2_SLUGS = new Set([
+  // EP-CAT-P4D pilot drafts (3)
   "lady-million-inspired",
   "lacoste-noir-inspired",
   "peony-blush-suede-inspired",
+  // EP-CAT-P4E Elite Batch 1 drafts (10)
+  "angels-share-inspired",
+  "angels-share-paradis-inspired",
+  "gold-oud-inspired",
+  "velvet-rose-oud-inspired",
+  "english-pear-freesia-inspired",
+  "oud-bergamot-inspired",
+  "black-orchid-inspired",
+  "soleil-blanc-inspired",
+  "khamrah-inspired",
+  "tuscan-leather-inspired",
 ]);
-test("VERIFY E — Only authorized EP-CAT-P4D pilot drafts exist (no unauthorized Wave 2 generation)", () => {
+test("VERIFY E — Only authorized Wave 2 drafts exist (pilot 3 + Batch 1 Elite 10)", () => {
   const DRAFTS_DIR = path.join(process.cwd(), "scripts", "factory", "drafts");
   const unauthorized: string[] = [];
   for (const slug of APPROVED_SLUGS) {
-    if (AUTHORIZED_PILOT_SLUGS.has(slug)) continue; // pilot drafts are authorized
+    if (AUTHORIZED_WAVE2_SLUGS.has(slug)) continue;
     const draftPath = path.join(DRAFTS_DIR, `${slug}.ts`);
     if (existsSync(draftPath)) {
       unauthorized.push(slug);
     }
   }
   assert.equal(unauthorized.length, 0,
-    `Unauthorized Wave 2 drafts found (only pilot 3 are authorized):\n     ${unauthorized.join("\n     ")}`);
+    `Unauthorized Wave 2 drafts found (only 13 are authorized: 3 pilot + 10 Batch 1 Elite):\n     ${unauthorized.join("\n     ")}`);
 });
 
 // ── Summary ───────────────────────────────────────────────────────────────────
