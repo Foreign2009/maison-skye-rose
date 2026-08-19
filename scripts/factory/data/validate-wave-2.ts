@@ -537,18 +537,26 @@ test("VERIFY D — app/data/fragrances.ts exists (collision safety gate)", () =>
   assert.ok(true, "fragrances.ts path verified; collision verified via VERIFY A");
 });
 
-// VERIFY E: This file MUST NOT cause any Wave 2 drafts or generation
-test("VERIFY E — No Wave 2 draft files exist (generation must not have occurred)", () => {
+// VERIFY E: Only the 3 EP-CAT-P4D authorized pilot drafts may exist.
+// Updated EP-CAT-P4D: Founder-authorized pilot generation produced exactly 3 drafts.
+// Non-pilot Wave 2 drafts are unauthorized and must not exist.
+const AUTHORIZED_PILOT_SLUGS = new Set([
+  "lady-million-inspired",
+  "lacoste-noir-inspired",
+  "peony-blush-suede-inspired",
+]);
+test("VERIFY E — Only authorized EP-CAT-P4D pilot drafts exist (no unauthorized Wave 2 generation)", () => {
   const DRAFTS_DIR = path.join(process.cwd(), "scripts", "factory", "drafts");
-  const generated: string[] = [];
+  const unauthorized: string[] = [];
   for (const slug of APPROVED_SLUGS) {
+    if (AUTHORIZED_PILOT_SLUGS.has(slug)) continue; // pilot drafts are authorized
     const draftPath = path.join(DRAFTS_DIR, `${slug}.ts`);
     if (existsSync(draftPath)) {
-      generated.push(slug);
+      unauthorized.push(slug);
     }
   }
-  assert.equal(generated.length, 0,
-    `Wave 2 drafts found — generation must not have occurred:\n     ${generated.join("\n     ")}`);
+  assert.equal(unauthorized.length, 0,
+    `Unauthorized Wave 2 drafts found (only pilot 3 are authorized):\n     ${unauthorized.join("\n     ")}`);
 });
 
 // ── Summary ───────────────────────────────────────────────────────────────────
