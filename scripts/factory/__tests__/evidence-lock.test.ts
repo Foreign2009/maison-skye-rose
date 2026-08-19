@@ -12,6 +12,7 @@ import { validateKnowledgeRecord } from "../../../app/lib/mkc/validator";
 import { scaffold }                from "../scaffold";
 import type { FragranceKnowledge } from "../../../app/lib/mkc/types";
 import type { DisplayFragrance }   from "../../../app/lib/knowledgeAdapter";
+import { peonyBlushSuedeInspired } from "../drafts/peony-blush-suede-inspired";
 
 // ── Test harness ──────────────────────────────────────────────────────────────
 
@@ -539,6 +540,39 @@ test("TEST 23 — Wave 2: Montblanc Explorer branded molecule names survive scaf
   assert.ok(allNotes.includes("OrPur® Vetiver"),   "OrPur® Vetiver must survive scaffold verbatim");
   assert.ok(allNotes.includes("Ambrofix™"),         "Ambrofix™ must survive scaffold verbatim");
   assert.ok(allNotes.includes("Akigalawood®"),      "Akigalawood® must survive scaffold verbatim");
+});
+
+// TEST 24: UNORDERED semantic regression — Peony & Blush Suede customer-facing copy must
+// not assert or imply temporal note sequence. For UNORDERED_GOVERNED_NOTES we know only
+// that governed notes are present — not which appear first, develop, or dry down.
+// Imports the actual committed pilot draft so future copy regressions are caught.
+test("TEST 24 — Wave 2 UNORDERED: peony draft customer copy free of unsupported note-sequencing language", () => {
+  const SEQUENCING_PATTERNS: Array<[RegExp, string]> = [
+    [/\bopens with\b/i,    "opens with"],
+    [/\bopening\b/i,       "opening (as olfactory descriptor)"],
+    [/\bstarts with\b/i,   "starts with"],
+    [/\bfollowed by\b/i,   "followed by"],
+    [/\bgives way to\b/i,  "gives way to"],
+    [/\bsettles into\b/i,  "settles into"],
+    [/\bdries down\b/i,    "dries down"],
+    [/\bdrydown\b/i,       "drydown"],
+    [/\bfinishes with\b/i, "finishes with"],
+    [/\bthen\b/i,          "then (temporal connector)"],
+  ];
+
+  const customerFacingFields: string[] = [
+    peonyBlushSuedeInspired.description ?? "",
+    peonyBlushSuedeInspired.subtitle    ?? "",
+    ...(peonyBlushSuedeInspired.recommendedFor ?? []),
+  ];
+  const combined = customerFacingFields.join(" ");
+
+  const violations: string[] = [];
+  for (const [pattern, label] of SEQUENCING_PATTERNS) {
+    if (pattern.test(combined)) violations.push(label);
+  }
+  assert.equal(violations.length, 0,
+    `UNORDERED peony draft must not contain note-sequencing language; found: ${violations.join(", ")}`);
 });
 
 // ── Summary ───────────────────────────────────────────────────────────────────

@@ -68,7 +68,7 @@ export const peonyBlushSuedeInspired: FragranceKnowledge = {
   signatureStyle: ["Soft Luxury", "Powdery Floral", "Everyday Refinement"],
   recommendedFor: [
     "Women seeking a refined daily signature that feels like a second skin—soft, familiar, and effortlessly elegant.",
-    "Anyone who loves florals but prefers powdery subtlety over bold sweetness or projection.",
+    "Anyone who loves florals but prefers a soft, powdery character over bold sweetness or intense presence.",
     "Those building a fragrance wardrobe who want a universal bridge between casual comfort and polished sophistication.",
   ],
 
@@ -88,7 +88,7 @@ export const peonyBlushSuedeInspired: FragranceKnowledge = {
 
   // ── Education ───────────────────────────────────────────────────────────────
   subtitle      : "Soft Luxury",
-  description   : "A soft floral that opens with the bright blush of peony and red apple, then settles into a powdery embrace of rose, jasmine, and suede. The composition unfolds as a second skin—delicate, familiar, quietly luxurious.",
+  description   : "A soft floral composition pairing peony and red apple with rose, jasmine, carnation and suede—delicate in character, powdery in presence, and quietly luxurious in feel.",
   academyArticleIds: ["guide-to-fragrance-families", "how-to-wear-fragrance", "what-makes-a-signature-scent", "how-to-layer-fragrances"],
   academyCategories: ["fragrance-families", "wear-and-application", "occasions-and-style"],
   educationTags : [

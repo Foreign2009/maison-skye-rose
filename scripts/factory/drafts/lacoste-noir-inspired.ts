@@ -69,7 +69,7 @@ export const lacosteNoirInspired: FragranceKnowledge = {
     "Men seeking a balanced signature that transitions seamlessly from office to evening without demanding attention",
     "Those who appreciate green herbal sophistication anchored by dark woody depth rather than bright citrus",
     "Anyone wanting a year-round fragrance with enough complexity to reveal itself across multiple wearings",
-    "Men drawn to dark chocolate and patchouli but preferring restraint over heavy projection",
+    "Men drawn to dark chocolate and patchouli but preferring a more restrained, polished character",
   ],
 
   // ── Merchandising ───────────────────────────────────────────────────────────
