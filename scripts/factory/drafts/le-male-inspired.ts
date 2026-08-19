@@ -1,10 +1,10 @@
 // ═════════════════════════════════════════════════════════════════
-// FACTORY DRAFT — narciso-rouge-inspired
+// FACTORY DRAFT — le-male-inspired
 // ─────────────────────────────────────────────────────────────────
-// Generated:         2026-08-19T18:36:28.074Z
+// Generated:         2026-08-19T19:03:50.849Z
 // Factory version:   0.5.0
 // Prompt versions:   EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0
-// Validation status: FAIL  [3 error(s), 0 warning(s)]
+// Validation status: FAIL  [4 error(s), 0 warning(s)]
 // Projected KQ tier: (not available — requires Intelligence Producer)
 // ─────────────────────────────────────────────────────────────────
 // REVIEW CHECKLIST
@@ -20,56 +20,49 @@
 
 import type { FragranceKnowledge } from "../../../app/lib/mkc/types";
 
-export const narcisoRougeInspired: FragranceKnowledge = {
+export const leMaleInspired: FragranceKnowledge = {
   // ── Identity ──────────────────────────────────────────────────────────────────
-  id            : "narciso-rouge-inspired",
-  slug          : "narciso-rouge-inspired",
+  id            : "le-male-inspired",
+  slug          : "le-male-inspired",
   brand         : "Maison Skye & Rose",
-  name          : "Narciso Rouge Inspired",
-  collection    : "Rose",
+  name          : "Le Male Inspired",
+  collection    : "Skye",
   catalogVersion: "1.0",
   status        : "active",
 
   // ── Classification ────────────────────────────────────────────────────────────
-  gender        : "female",
-  family        : ["Floral", "Musk"],
+  gender        : "male",
+  family        : ["Aromatic"],
   scentCharacter: "Balanced Signature",
   projection    : "moderate",
 
   // ── Composition ─────────────────────────────────────────────────────────────
-  profile       : "Floral Musk",
+  profile       : "Oriental Fougère",
   season        : "Year-Round",
   notes: {
-    top:   ["Iris", "Bulgarian Rose"],
-    heart: ["Musk", "Tuberose", "Orange Blossom"],
-    base:  [
-      "Tonka Bean",
-      "Vanilla",
-      "White Cedar Extract",
-      "Cedar",
-      "Sandalwood",
-      "Vetiver",
-    ],
+    top:   ["Mint", "Lavender", "Bergamot"],
+    heart: ["Cinnamon", "Cumin", "Orange Blossom"],
+    base:  ["Vanilla", "Tonka Bean", "Sandalwood", "Cedarwood"],
   },
   notesEvidenceLocked: true,
-  mood          : "Powdery Floral",
+  mood          : "Warm Sweet Aromatic",
 
   // ── Discovery ───────────────────────────────────────────────────────────────
   vibe          : [
-    "Elegant",
-    "Sophisticated",
-    "Soft",
-    "Luminous",
-    "Feminine",
     "Warm",
+    "Sweet",
+    "Sophisticated",
+    "Confident",
+    "Aromatic",
+    "Elegant",
   ],
-  occasions     : ["Daily Wear", "Office", "Date Night", "Evening"],
+  occasions     : ["Daily Wear", "Office", "Weekend", "Casual"],
   seasons       : ["Spring", "Summer", "Autumn", "Winter"],
-  signatureStyle: ["Powdery Floral Signature", "Modern Rose Icon", "Sophisticated Elegance"],
+  signatureStyle: ["Warm Spiced Elegance", "Balanced Aromatic", "Creamy Sophistication"],
   recommendedFor: [
-    "Women seeking a sophisticated signature fragrance that transitions seamlessly from office to evening without adjustment",
-    "Those who love rose but want it softened by powdery florals and creamy musks rather than sharp or dewy interpretations",
-    "Anyone building a year-round collection who needs one versatile floral that feels both polished and intimately personal",
+    "Men seeking a warm signature fragrance that balances fresh aromatic notes with creamy sweetness for everyday confidence",
+    "Those who love spiced fragrances but want sophistication over aggression—a refined alternative to heavier orientals",
+    "Anyone building a collection who needs a versatile middle ground between fresh and gourmand for any season",
   ],
 
   // ── Merchandising ───────────────────────────────────────────────────────────
@@ -87,30 +80,28 @@ export const narcisoRougeInspired: FragranceKnowledge = {
   newArrival    : false,
 
   // ── Education ───────────────────────────────────────────────────────────────
-  subtitle      : "Powdered Rose",
-  description   : "Iris and Bulgarian rose open with pristine clarity, yielding to a powdery heart of tuberose and musk that feels both intimate and luminous. Tonka bean and sandalwood settle into a soft, intimate base that whispers rather than demands.",
-  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-wear-fragrance", "what-makes-a-signature-scent"],
+  subtitle      : "Warm Spiced Cream",
+  description   : "Mint and bergamot spark against warm spice—cinnamon and cumin—before melting into creamy tonka and sandalwood. A fragrance that balances aromatic freshness with enveloping sweetness, neither aggressive nor soft.",
+  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "what-makes-a-signature-scent", "how-to-layer-fragrances"],
   academyCategories: ["fragrance-families", "the-note-pyramid", "wear-and-application"],
   educationTags : [
-    "floral-musk",
-    "rose",
-    "iris",
-    "tuberose",
+    "oriental",
+    "fougère",
+    "mint",
+    "lavender",
     "vanilla",
     "tonka-bean",
+    "spicy",
+    "warm",
     "signature-scent",
-    "balanced",
-    "year-round",
     "daily-wear",
-    "sandalwood",
-    "cedar",
   ],
-  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "what-makes-a-signature-scent", "how-to-wear-fragrance"],
+  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "what-makes-a-signature-scent", "how-to-layer-fragrances"],
 
   // ── Intelligence ────────────────────────────────────────────────────────────
   // Approximated from profile + season. Calibrated by Intelligence Producer in P2.
   sweetness     : 2,
-  freshness     : 3,
+  freshness     : 2,
   warmth        : 2,
   intensity     : 3,
   versatility   : 3,
@@ -119,7 +110,7 @@ export const narcisoRougeInspired: FragranceKnowledge = {
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["baccarat-rouge-540-inspired", "crystal-noir-inspired", "si-passione-red-musk-inspired"],
-    wardrobePartners: ["delina-inspired", "good-girl-inspired"],
+    alternatives:     ["spicebomb-extreme-inspired", "le-male-elixir-inspired", "stronger-with-you-inspired"],
+    wardrobePartners: ["sauvage-inspired", "bleu-de-chanel-inspired"],
   },
 };

@@ -1,7 +1,7 @@
 // ═════════════════════════════════════════════════════════════════
-// FACTORY DRAFT — narciso-rouge-inspired
+// FACTORY DRAFT — polo-black-inspired
 // ─────────────────────────────────────────────────────────────────
-// Generated:         2026-08-19T18:36:28.074Z
+// Generated:         2026-08-19T19:01:38.456Z
 // Factory version:   0.5.0
 // Prompt versions:   EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0
 // Validation status: FAIL  [3 error(s), 0 warning(s)]
@@ -20,56 +20,48 @@
 
 import type { FragranceKnowledge } from "../../../app/lib/mkc/types";
 
-export const narcisoRougeInspired: FragranceKnowledge = {
+export const poloBlackInspired: FragranceKnowledge = {
   // ── Identity ──────────────────────────────────────────────────────────────────
-  id            : "narciso-rouge-inspired",
-  slug          : "narciso-rouge-inspired",
+  id            : "polo-black-inspired",
+  slug          : "polo-black-inspired",
   brand         : "Maison Skye & Rose",
-  name          : "Narciso Rouge Inspired",
-  collection    : "Rose",
+  name          : "Polo Black Inspired",
+  collection    : "Skye",
   catalogVersion: "1.0",
   status        : "active",
 
   // ── Classification ────────────────────────────────────────────────────────────
-  gender        : "female",
-  family        : ["Floral", "Musk"],
+  gender        : "male",
+  family        : ["Fruity", "Woody"],
   scentCharacter: "Balanced Signature",
   projection    : "moderate",
 
   // ── Composition ─────────────────────────────────────────────────────────────
-  profile       : "Floral Musk",
-  season        : "Year-Round",
+  profile       : "Woody Fruity",
+  season        : "Autumn",
   notes: {
-    top:   ["Iris", "Bulgarian Rose"],
-    heart: ["Musk", "Tuberose", "Orange Blossom"],
-    base:  [
-      "Tonka Bean",
-      "Vanilla",
-      "White Cedar Extract",
-      "Cedar",
-      "Sandalwood",
-      "Vetiver",
-    ],
+    top:   ["Mango", "Tangerine", "Lemon"],
+    heart: ["Sage", "Wormwood", "Patchouli"],
+    base:  ["Sandalwood", "Tonka Bean"],
   },
   notesEvidenceLocked: true,
-  mood          : "Powdery Floral",
+  mood          : "Dark Woody Sweet",
 
   // ── Discovery ───────────────────────────────────────────────────────────────
   vibe          : [
-    "Elegant",
-    "Sophisticated",
-    "Soft",
-    "Luminous",
-    "Feminine",
     "Warm",
+    "Sophisticated",
+    "Grounded",
+    "Confident",
+    "Balanced",
   ],
-  occasions     : ["Daily Wear", "Office", "Date Night", "Evening"],
-  seasons       : ["Spring", "Summer", "Autumn", "Winter"],
-  signatureStyle: ["Powdery Floral Signature", "Modern Rose Icon", "Sophisticated Elegance"],
+  occasions     : ["Office", "Date Night", "Casual", "Evening"],
+  seasons       : ["Autumn", "Winter"],
+  signatureStyle: ["Woody Fruity Signature", "Balanced Dark Sweetness", "Modern Classic"],
   recommendedFor: [
-    "Women seeking a sophisticated signature fragrance that transitions seamlessly from office to evening without adjustment",
-    "Those who love rose but want it softened by powdery florals and creamy musks rather than sharp or dewy interpretations",
-    "Anyone building a year-round collection who needs one versatile floral that feels both polished and intimately personal",
+    "Men seeking a balanced signature fragrance that transitions seamlessly from office to evening without requiring a wardrobe change",
+    "Those who appreciate woody depth with subtle fruit sweetness—sophisticated enough for formal settings yet approachable for daily wear",
+    "Anyone drawn to autumnal character: warm mango and citrus that ground into earthy sage and sandalwood rather than bright freshness",
   ],
 
   // ── Merchandising ───────────────────────────────────────────────────────────
@@ -87,31 +79,29 @@ export const narcisoRougeInspired: FragranceKnowledge = {
   newArrival    : false,
 
   // ── Education ───────────────────────────────────────────────────────────────
-  subtitle      : "Powdered Rose",
-  description   : "Iris and Bulgarian rose open with pristine clarity, yielding to a powdery heart of tuberose and musk that feels both intimate and luminous. Tonka bean and sandalwood settle into a soft, intimate base that whispers rather than demands.",
-  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-wear-fragrance", "what-makes-a-signature-scent"],
-  academyCategories: ["fragrance-families", "the-note-pyramid", "wear-and-application"],
+  subtitle      : "Dark Woody Sweet",
+  description   : "Mango and tangerine open with a citrus warmth that deepens into sage and wormwood—herbaceous, slightly bitter, grounding. Sandalwood and tonka bean anchor the composition, weaving woody restraint with a whisper of vanilla sweetness that feels more like caramel smoke than confession.",
+  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "what-makes-a-signature-scent", "how-to-layer-fragrances"],
+  academyCategories: ["fragrance-families", "the-note-pyramid", "occasions-and-style"],
   educationTags : [
-    "floral-musk",
-    "rose",
-    "iris",
-    "tuberose",
-    "vanilla",
-    "tonka-bean",
-    "signature-scent",
-    "balanced",
-    "year-round",
-    "daily-wear",
+    "fruity-woody",
+    "mango",
+    "citrus",
+    "patchouli",
     "sandalwood",
-    "cedar",
+    "tonka-bean",
+    "balanced",
+    "signature-scent",
+    "office",
+    "date-night",
   ],
-  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "what-makes-a-signature-scent", "how-to-wear-fragrance"],
+  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "what-makes-a-signature-scent", "how-to-layer-fragrances"],
 
   // ── Intelligence ────────────────────────────────────────────────────────────
   // Approximated from profile + season. Calibrated by Intelligence Producer in P2.
   sweetness     : 2,
-  freshness     : 3,
-  warmth        : 2,
+  freshness     : 2,
+  warmth        : 3,
   intensity     : 3,
   versatility   : 3,
   popularity    : 5,
@@ -119,7 +109,7 @@ export const narcisoRougeInspired: FragranceKnowledge = {
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["baccarat-rouge-540-inspired", "crystal-noir-inspired", "si-passione-red-musk-inspired"],
-    wardrobePartners: ["delina-inspired", "good-girl-inspired"],
+    alternatives:     ["god-of-fire-inspired", "hacivat-inspired"],
+    wardrobePartners: ["spicebomb-extreme-inspired", "sauvage-elixir-inspired"],
   },
 };

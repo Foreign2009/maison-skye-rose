@@ -1,7 +1,7 @@
 // ═════════════════════════════════════════════════════════════════
-// FACTORY DRAFT — narciso-rouge-inspired
+// FACTORY DRAFT — tom-ford-noir-inspired
 // ─────────────────────────────────────────────────────────────────
-// Generated:         2026-08-19T18:36:28.074Z
+// Generated:         2026-08-19T19:00:55.813Z
 // Factory version:   0.5.0
 // Prompt versions:   EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0
 // Validation status: FAIL  [3 error(s), 0 warning(s)]
@@ -20,56 +20,73 @@
 
 import type { FragranceKnowledge } from "../../../app/lib/mkc/types";
 
-export const narcisoRougeInspired: FragranceKnowledge = {
+export const tomFordNoirInspired: FragranceKnowledge = {
   // ── Identity ──────────────────────────────────────────────────────────────────
-  id            : "narciso-rouge-inspired",
-  slug          : "narciso-rouge-inspired",
+  id            : "tom-ford-noir-inspired",
+  slug          : "tom-ford-noir-inspired",
   brand         : "Maison Skye & Rose",
-  name          : "Narciso Rouge Inspired",
-  collection    : "Rose",
+  name          : "Tom Ford Noir Inspired",
+  collection    : "Skye",
   catalogVersion: "1.0",
   status        : "active",
 
   // ── Classification ────────────────────────────────────────────────────────────
-  gender        : "female",
-  family        : ["Floral", "Musk"],
+  gender        : "male",
+  family        : ["Floral"],
   scentCharacter: "Balanced Signature",
   projection    : "moderate",
 
   // ── Composition ─────────────────────────────────────────────────────────────
-  profile       : "Floral Musk",
-  season        : "Year-Round",
+  profile       : "Oriental Floral",
+  season        : "Winter",
   notes: {
-    top:   ["Iris", "Bulgarian Rose"],
-    heart: ["Musk", "Tuberose", "Orange Blossom"],
+    top:   [
+      "Violet",
+      "Pink Pepper",
+      "Caraway",
+      "Bergamot",
+      "Verbena",
+    ],
+    heart: [
+      "Tuscan Iris",
+      "Bulgarian Rose",
+      "Black Pepper",
+      "Nutmeg",
+      "Geranium",
+      "Clary Sage",
+    ],
     base:  [
-      "Tonka Bean",
+      "Indonesian Patchouli Leaf",
+      "Amber",
       "Vanilla",
-      "White Cedar Extract",
-      "Cedar",
-      "Sandalwood",
+      "Civet",
+      "Leather",
+      "Opoponax",
+      "Benzoin",
       "Vetiver",
+      "Styrax",
     ],
   },
   notesEvidenceLocked: true,
-  mood          : "Powdery Floral",
+  mood          : "Dark Spicy Oriental",
 
   // ── Discovery ───────────────────────────────────────────────────────────────
   vibe          : [
-    "Elegant",
     "Sophisticated",
-    "Soft",
-    "Luminous",
-    "Feminine",
+    "Sensual",
     "Warm",
+    "Mysterious",
+    "Elegant",
+    "Bold",
   ],
-  occasions     : ["Daily Wear", "Office", "Date Night", "Evening"],
-  seasons       : ["Spring", "Summer", "Autumn", "Winter"],
-  signatureStyle: ["Powdery Floral Signature", "Modern Rose Icon", "Sophisticated Elegance"],
+  occasions     : ["Date Night", "Evening", "Formal", "Weekend"],
+  seasons       : ["Winter", "Autumn"],
+  signatureStyle: ["Dark Spicy Oriental", "Velvet Masculine Floral", "Winter Evening Signature"],
   recommendedFor: [
-    "Women seeking a sophisticated signature fragrance that transitions seamlessly from office to evening without adjustment",
-    "Those who love rose but want it softened by powdery florals and creamy musks rather than sharp or dewy interpretations",
-    "Anyone building a year-round collection who needs one versatile floral that feels both polished and intimately personal",
+    "Men seeking a refined dark fragrance that balances floral sophistication with spiced warmth for evening occasions.",
+    "Those who appreciate rose and iris in a masculine context without sweetness, grounded by leather and patchouli.",
+    "Anyone drawn to oriental fragrances who wants velvet sensuality and quiet authority for winter nights and formal settings.",
+    "Fragrance enthusiasts building a collection who need a signature evening piece that bridges delicate florals and bold spices.",
   ],
 
   // ── Merchandising ───────────────────────────────────────────────────────────
@@ -87,39 +104,40 @@ export const narcisoRougeInspired: FragranceKnowledge = {
   newArrival    : false,
 
   // ── Education ───────────────────────────────────────────────────────────────
-  subtitle      : "Powdered Rose",
-  description   : "Iris and Bulgarian rose open with pristine clarity, yielding to a powdery heart of tuberose and musk that feels both intimate and luminous. Tonka bean and sandalwood settle into a soft, intimate base that whispers rather than demands.",
-  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-wear-fragrance", "what-makes-a-signature-scent"],
-  academyCategories: ["fragrance-families", "the-note-pyramid", "wear-and-application"],
+  subtitle      : "Velvet Noir",
+  description   : "Pink pepper and violet open with a whisper of bergamot before a dark heart of iris and rose emerges, warmed by nutmeg and black pepper. Indonesian patchouli, amber, and civet anchor the composition in shadow, creating an oriental that moves between floral elegance and animalic depth.",
+  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances", "choosing-your-season-scent"],
+  academyCategories: ["fragrance-families", "the-note-pyramid", "occasions-and-style"],
   educationTags : [
-    "floral-musk",
+    "oriental-floral",
     "rose",
     "iris",
-    "tuberose",
+    "amber",
     "vanilla",
-    "tonka-bean",
-    "signature-scent",
-    "balanced",
-    "year-round",
-    "daily-wear",
-    "sandalwood",
-    "cedar",
+    "patchouli",
+    "spiced",
+    "warm",
+    "winter",
+    "signature",
+    "date-night",
+    "leather",
+    "pepper",
   ],
-  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "what-makes-a-signature-scent", "how-to-wear-fragrance"],
+  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "choosing-your-season-scent", "how-to-layer-fragrances"],
 
   // ── Intelligence ────────────────────────────────────────────────────────────
   // Approximated from profile + season. Calibrated by Intelligence Producer in P2.
   sweetness     : 2,
   freshness     : 3,
   warmth        : 2,
-  intensity     : 3,
-  versatility   : 3,
+  intensity     : 4,
+  versatility   : 2,
   popularity    : 5,
 
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["baccarat-rouge-540-inspired", "crystal-noir-inspired", "si-passione-red-musk-inspired"],
-    wardrobePartners: ["delina-inspired", "good-girl-inspired"],
+    alternatives:     ["prada-l'homme-inspired", "gentleman-edt-inspired"],
+    wardrobePartners: ["spicebomb-extreme-inspired", "oud-wood-inspired"],
   },
 };

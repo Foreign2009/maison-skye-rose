@@ -541,7 +541,8 @@ test("VERIFY D — app/data/fragrances.ts exists (collision safety gate)", () =>
 // Updated EP-CAT-P4D: 3 pilot drafts authorized.
 // Updated EP-CAT-P4E: 10 Elite Batch 1 drafts authorized. Total authorized = 13.
 // Updated EP-CAT-P4F: 15 Rose batch drafts authorized. Total authorized = 28.
-// Non-authorized Wave 2 drafts are unauthorized and must not exist.
+// Updated EP-CAT-P4G: 12 Skye batch drafts authorized. Total authorized = 40.
+// Wave 2 generation complete — all 40 Founder-authorized drafts now exist.
 const AUTHORIZED_WAVE2_SLUGS = new Set([
   // EP-CAT-P4D pilot drafts (3)
   "lady-million-inspired",
@@ -574,8 +575,21 @@ const AUTHORIZED_WAVE2_SLUGS = new Set([
   "gucci-guilty-pour-femme-inspired",
   "gucci-bamboo-inspired",
   "eladaria-inspired",
+  // EP-CAT-P4G Skye batch drafts (12)
+  "montblanc-legend-inspired",
+  "montblanc-explorer-inspired",
+  "leau-dissey-pour-homme-inspired",
+  "tom-ford-noir-inspired",
+  "gucci-guilty-pour-homme-inspired",
+  "polo-black-inspired",
+  "phantom-inspired",
+  "boss-bottled-elixir-inspired",
+  "eros-energy-inspired",
+  "fahrenheit-inspired",
+  "amen-fantasm-inspired",
+  "le-male-inspired",
 ]);
-test("VERIFY E — Only authorized Wave 2 drafts exist (pilot 3 + Elite 10 + Rose 15)", () => {
+test("VERIFY E — Only authorized Wave 2 drafts exist (pilot 3 + Elite 10 + Rose 15 + Skye 12 = 40)", () => {
   const DRAFTS_DIR = path.join(process.cwd(), "scripts", "factory", "drafts");
   const unauthorized: string[] = [];
   for (const slug of APPROVED_SLUGS) {
@@ -586,7 +600,7 @@ test("VERIFY E — Only authorized Wave 2 drafts exist (pilot 3 + Elite 10 + Ros
     }
   }
   assert.equal(unauthorized.length, 0,
-    `Unauthorized Wave 2 drafts found (only 28 are authorized: 3 pilot + 10 Elite + 15 Rose):\n     ${unauthorized.join("\n     ")}`);
+    `Unauthorized Wave 2 drafts found (all 40 are now authorized: 3 pilot + 10 Elite + 15 Rose + 12 Skye):\n     ${unauthorized.join("\n     ")}`);
 });
 
 // ── Summary ───────────────────────────────────────────────────────────────────

@@ -1,7 +1,7 @@
 // ═════════════════════════════════════════════════════════════════
-// FACTORY DRAFT — narciso-rouge-inspired
+// FACTORY DRAFT — eros-energy-inspired
 // ─────────────────────────────────────────────────────────────────
-// Generated:         2026-08-19T18:36:28.074Z
+// Generated:         2026-08-19T19:02:40.078Z
 // Factory version:   0.5.0
 // Prompt versions:   EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0
 // Validation status: FAIL  [3 error(s), 0 warning(s)]
@@ -20,56 +20,55 @@
 
 import type { FragranceKnowledge } from "../../../app/lib/mkc/types";
 
-export const narcisoRougeInspired: FragranceKnowledge = {
+export const erosEnergyInspired: FragranceKnowledge = {
   // ── Identity ──────────────────────────────────────────────────────────────────
-  id            : "narciso-rouge-inspired",
-  slug          : "narciso-rouge-inspired",
+  id            : "eros-energy-inspired",
+  slug          : "eros-energy-inspired",
   brand         : "Maison Skye & Rose",
-  name          : "Narciso Rouge Inspired",
-  collection    : "Rose",
+  name          : "Eros Energy Inspired",
+  collection    : "Skye",
   catalogVersion: "1.0",
   status        : "active",
 
   // ── Classification ────────────────────────────────────────────────────────────
-  gender        : "female",
-  family        : ["Floral", "Musk"],
-  scentCharacter: "Balanced Signature",
+  gender        : "male",
+  family        : ["Aromatic", "Citrus"],
+  scentCharacter: "Fresh & Light",
   projection    : "moderate",
 
   // ── Composition ─────────────────────────────────────────────────────────────
-  profile       : "Floral Musk",
-  season        : "Year-Round",
+  profile       : "Citrus Aromatic",
+  season        : "Summer",
   notes: {
-    top:   ["Iris", "Bulgarian Rose"],
-    heart: ["Musk", "Tuberose", "Orange Blossom"],
-    base:  [
-      "Tonka Bean",
-      "Vanilla",
-      "White Cedar Extract",
-      "Cedar",
-      "Sandalwood",
-      "Vetiver",
+    top:   [
+      "Bergamot",
+      "Blood Orange",
+      "Lime",
+      "Mandarin Orange",
+      "Grapefruit",
+      "Lemon",
     ],
+    heart: ["White Amber", "Black Currant", "Pink Pepper"],
+    base:  ["Patchouli", "Musk", "Oakmoss"],
   },
   notesEvidenceLocked: true,
-  mood          : "Powdery Floral",
+  mood          : "Fresh Energetic Citrus",
 
   // ── Discovery ───────────────────────────────────────────────────────────────
   vibe          : [
-    "Elegant",
-    "Sophisticated",
-    "Soft",
-    "Luminous",
-    "Feminine",
-    "Warm",
+    "Fresh",
+    "Energetic",
+    "Bright",
+    "Confident",
+    "Modern",
   ],
-  occasions     : ["Daily Wear", "Office", "Date Night", "Evening"],
-  seasons       : ["Spring", "Summer", "Autumn", "Winter"],
-  signatureStyle: ["Powdery Floral Signature", "Modern Rose Icon", "Sophisticated Elegance"],
+  occasions     : ["Daily Wear", "Casual", "Weekend", "Travel"],
+  seasons       : ["Summer", "Spring"],
+  signatureStyle: ["Citrus Velocity", "Fresh Aromatic", "Summer Signature"],
   recommendedFor: [
-    "Women seeking a sophisticated signature fragrance that transitions seamlessly from office to evening without adjustment",
-    "Those who love rose but want it softened by powdery florals and creamy musks rather than sharp or dewy interpretations",
-    "Anyone building a year-round collection who needs one versatile floral that feels both polished and intimately personal",
+    "Men seeking a bright, energetic citrus for summer days and casual weekend activities",
+    "Those who want immediate freshness with a subtle spicy edge — clean but not boring",
+    "Anyone looking for a fresh signature that carries with easy brightness for daily wear without demanding attention",
   ],
 
   // ── Merchandising ───────────────────────────────────────────────────────────
@@ -87,39 +86,37 @@ export const narcisoRougeInspired: FragranceKnowledge = {
   newArrival    : false,
 
   // ── Education ───────────────────────────────────────────────────────────────
-  subtitle      : "Powdered Rose",
-  description   : "Iris and Bulgarian rose open with pristine clarity, yielding to a powdery heart of tuberose and musk that feels both intimate and luminous. Tonka bean and sandalwood settle into a soft, intimate base that whispers rather than demands.",
-  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-wear-fragrance", "what-makes-a-signature-scent"],
-  academyCategories: ["fragrance-families", "the-note-pyramid", "wear-and-application"],
+  subtitle      : "Citrus Velocity",
+  description   : "Blood orange and bergamot collide with a sharp edge of grapefruit, creating an immediate sense of vitality and motion. Pink pepper adds a subtle bite to the heart, while patchouli and musk anchor the composition with quiet depth, preventing the brightness from ever turning shrill.",
+  academyArticleIds: ["guide-to-fragrance-families", "choosing-your-season-scent", "how-to-wear-fragrance"],
+  academyCategories: ["fragrance-families", "occasions-and-style"],
   educationTags : [
-    "floral-musk",
-    "rose",
-    "iris",
-    "tuberose",
-    "vanilla",
-    "tonka-bean",
-    "signature-scent",
-    "balanced",
-    "year-round",
+    "citrus",
+    "aromatic",
+    "bergamot",
+    "fresh",
+    "light",
+    "summer",
     "daily-wear",
-    "sandalwood",
-    "cedar",
+    "masculine",
+    "energetic",
+    "versatile",
   ],
-  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "what-makes-a-signature-scent", "how-to-wear-fragrance"],
+  learningPath  : ["guide-to-fragrance-families", "choosing-your-season-scent", "how-to-wear-fragrance"],
 
   // ── Intelligence ────────────────────────────────────────────────────────────
   // Approximated from profile + season. Calibrated by Intelligence Producer in P2.
-  sweetness     : 2,
-  freshness     : 3,
-  warmth        : 2,
-  intensity     : 3,
+  sweetness     : 1,
+  freshness     : 5,
+  warmth        : 1,
+  intensity     : 2,
   versatility   : 3,
   popularity    : 5,
 
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["baccarat-rouge-540-inspired", "crystal-noir-inspired", "si-passione-red-musk-inspired"],
-    wardrobePartners: ["delina-inspired", "good-girl-inspired"],
+    alternatives:     ["sauvage-inspired", "bleu-de-chanel-inspired", "aqua-di-gio-inspired"],
+    wardrobePartners: ["spicebomb-extreme-inspired"],
   },
 };

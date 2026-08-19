@@ -89,7 +89,7 @@ export const edenSparklingLycheeInspired: FragranceKnowledge = {
 
   // ── Education ───────────────────────────────────────────────────────────────
   subtitle      : "Radiant Sweetness",
-  description   : "Lychee and black currant burst open with Italian lemon's bright snap, then settle into a heart of violet and rose that feels both delicate and alive. Sugar and vanilla absolute warm the base, while musk and sandalwood create a skin-close finish that's sweetly sensual without heaviness.",
+  description   : "Lychee and black currant burst open with Italian lemon's bright snap, then settle into a heart of violet and rose that feels both delicate and alive. Sugar and vanilla absolute warm the base, while musk and sandalwood create an intimate, enveloping finish that's sweetly sensual without heaviness.",
   academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "choosing-your-season-scent", "how-to-layer-fragrances"],
   academyCategories: ["fragrance-families", "the-note-pyramid", "occasions-and-style"],
   educationTags : [
