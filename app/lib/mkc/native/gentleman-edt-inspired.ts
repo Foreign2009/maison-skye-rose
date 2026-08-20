@@ -110,7 +110,7 @@ export const gentlemanEdtInspired: FragranceKnowledge = {
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["prada-l'homme-inspired", "myslf-inspired"],
+    alternatives:     ["prada-l'homme-inspired", "myslf-inspired", "tom-ford-noir-inspired"],
     wardrobePartners: ["spicebomb-extreme-inspired"],
   },
 };

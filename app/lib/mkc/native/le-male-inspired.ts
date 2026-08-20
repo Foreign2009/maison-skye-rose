@@ -1,7 +1,7 @@
 // ═════════════════════════════════════════════════════════════════
-// FACTORY DRAFT — tobacco-vanille-inspired
+// FACTORY DRAFT — le-male-inspired
 // ─────────────────────────────────────────────────────────────────
-// Generated:         2026-08-16T16:52:55.153Z
+// Generated:         2026-08-19T19:03:50.849Z
 // Factory version:   0.5.0
 // Prompt versions:   EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0
 // Validation status: PASS  [0 error(s), 0 warning(s)]
@@ -20,47 +20,49 @@
 
 import type { FragranceKnowledge } from "../types";
 
-export const tobaccoVanilleInspired: FragranceKnowledge = {
+export const leMaleInspired: FragranceKnowledge = {
   // ── Identity ──────────────────────────────────────────────────────────────────
-  id            : "tobacco-vanille-inspired",
-  slug          : "tobacco-vanille-inspired",
+  id            : "le-male-inspired",
+  slug          : "le-male-inspired",
   brand         : "Maison Skye & Rose",
-  name          : "Tobacco Vanille Inspired",
+  name          : "Le Male Inspired",
   collection    : "Skye",
   catalogVersion: "1.0",
   status        : "active",
 
   // ── Classification ────────────────────────────────────────────────────────────
   gender        : "male",
-  family        : ["Spicy"],
-  scentCharacter: "Rich & Full-Bodied",
+  family        : ["Aromatic"],
+  scentCharacter: "Balanced Signature",
   projection    : "moderate",
 
   // ── Composition ─────────────────────────────────────────────────────────────
-  profile       : "Oriental Spicy",
-  season        : "Winter",
+  profile       : "Oriental Fougère",
+  season        : "Year-Round",
   notes: {
-    top:   ["Tobacco Leaf", "Spicy Notes"],
-    heart: ["Vanilla", "Cacao", "Tonka Bean", "Tobacco Blossom"],
-    base:  ["Dried Fruits", "Woody Notes"],
+    top:   ["Mint", "Lavender", "Bergamot"],
+    heart: ["Cinnamon", "Cumin", "Orange Blossom"],
+    base:  ["Vanilla", "Tonka Bean", "Sandalwood", "Cedarwood"],
   },
-  mood          : "Sweet Warm Masculine",
+  notesEvidenceLocked: true,
+  mood          : "Warm Sweet Aromatic",
 
   // ── Discovery ───────────────────────────────────────────────────────────────
   vibe          : [
     "Warm",
-    "Sensual",
+    "Sweet",
     "Sophisticated",
-    "Luxurious",
-    "Magnetic",
+    "Confident",
+    "Aromatic",
+    "Elegant",
   ],
-  occasions     : ["Date Night", "Evening", "Weekend"],
-  seasons       : ["Winter", "Autumn"],
-  signatureStyle: ["Warm Masculine Elegance", "Spiced Comfort Luxury"],
+  occasions     : ["Daily Wear", "Office", "Weekend", "Casual"],
+  seasons       : ["Spring", "Summer", "Autumn", "Winter"],
+  signatureStyle: ["Warm Spiced Elegance", "Balanced Aromatic", "Creamy Sophistication"],
   recommendedFor: [
-    "Men seeking a rich, sensual signature for evening occasions and cooler months.",
-    "Those who appreciate warm spice and creamy sweetness over fresh or citrus-forward profiles.",
-    "Anyone looking for a sophisticated fragrance that feels luxurious without being overly formal.",
+    "Men seeking a warm signature fragrance that balances fresh aromatic notes with creamy sweetness for everyday confidence",
+    "Those who love spiced fragrances but want sophistication over aggression—a refined alternative to heavier orientals",
+    "Anyone building a collection who needs a versatile middle ground between fresh and gourmand for any season",
   ],
 
   // ── Merchandising ───────────────────────────────────────────────────────────
@@ -78,37 +80,37 @@ export const tobaccoVanilleInspired: FragranceKnowledge = {
   newArrival    : false,
 
   // ── Education ───────────────────────────────────────────────────────────────
-  subtitle      : "Tobacco & Tonka",
-  description   : "Tobacco leaf opens with a whisper of spice, immediately warming into a sensual embrace of vanilla and tonka bean. Cacao and dried fruit deepen the composition, while woody notes ground the sweetness into something rich, contemplative, and unmistakably masculine.",
-  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "choosing-your-season-scent", "how-to-layer-fragrances"],
-  academyCategories: ["fragrance-families", "the-note-pyramid", "occasions-and-style"],
+  subtitle      : "Warm Spiced Cream",
+  description   : "Mint and bergamot spark against warm spice—cinnamon and cumin—before melting into creamy tonka and sandalwood. A fragrance that balances aromatic freshness with enveloping sweetness, neither aggressive nor soft.",
+  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "what-makes-a-signature-scent", "how-to-layer-fragrances"],
+  academyCategories: ["fragrance-families", "the-note-pyramid", "wear-and-application"],
   educationTags : [
-    "oriental-spicy",
-    "tobacco",
+    "oriental",
+    "fougère",
+    "mint",
+    "lavender",
     "vanilla",
     "tonka-bean",
-    "cacao",
-    "woody",
+    "spicy",
     "warm",
-    "winter",
-    "date-night",
-    "layering",
+    "signature-scent",
+    "daily-wear",
   ],
-  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "choosing-your-season-scent", "how-to-layer-fragrances"],
+  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "what-makes-a-signature-scent", "how-to-layer-fragrances"],
 
   // ── Intelligence ────────────────────────────────────────────────────────────
   // Approximated from profile + season. Calibrated by Intelligence Producer in P2.
   sweetness     : 2,
   freshness     : 2,
-  warmth        : 4,
-  intensity     : 4,
-  versatility   : 2,
+  warmth        : 2,
+  intensity     : 3,
+  versatility   : 3,
   popularity    : 5,
 
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["spicebomb-extreme-inspired", "naxos-inspired", "side-effect-inspired", "angels-share-inspired", "amen-fantasm-inspired"],
-    wardrobePartners: ["sauvage-elixir-inspired", "oud-for-greatness-inspired"],
+    alternatives:     ["spicebomb-extreme-inspired", "le-male-elixir-inspired", "stronger-with-you-inspired"],
+    wardrobePartners: ["sauvage-inspired", "bleu-de-chanel-inspired"],
   },
 };

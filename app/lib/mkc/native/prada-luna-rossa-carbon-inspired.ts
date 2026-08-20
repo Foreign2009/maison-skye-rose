@@ -85,7 +85,7 @@ export const pradaLunaRossaCarbonInspired: FragranceKnowledge = {
 
   // ── Relationships ─────────────────────────────────────────────────────────────
   relationships: {
-    alternatives: ["prada-l'homme-inspired"],
+    alternatives: ["prada-l'homme-inspired", "phantom-inspired"],
   },
 
   // ── Intelligence ─────────────────────────────────────────────────────────────

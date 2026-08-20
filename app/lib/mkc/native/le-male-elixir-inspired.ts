@@ -85,7 +85,7 @@ export const leMaleElixirInspired: FragranceKnowledge = {
 
   // ── Relationships ─────────────────────────────────────────────────────────────
   relationships: {
-    alternatives: ["althair-inspired", "vanilla-28-inspired"],
+    alternatives: ["althair-inspired", "vanilla-28-inspired", "le-male-inspired"],
   },
 
   // ── Intelligence ─────────────────────────────────────────────────────────────

@@ -85,8 +85,8 @@ export const oudWoodInspired: FragranceKnowledge = {
 
   // ── Relationships ─────────────────────────────────────────────────────────────
   relationships: {
-    alternatives: ["arabians-tonka-inspired", "ombre-nomade-inspired", "oud-for-greatness-inspired", "oud-mood-inspired", "haltane-inspired", "alien-man-inspired", "royal-oud-inspired", "invictus-victory-absolu-inspired", "ombre-leather-inspired", "oud-bergamot-inspired"],
-    wardrobePartners: ["baccarat-rouge-540-extrait-inspired", "crystal-noir-inspired", "bois-d'argent-inspired", "oud-ispahan-inspired", "khamrah-inspired"],
+    alternatives: ["arabians-tonka-inspired", "ombre-nomade-inspired", "oud-for-greatness-inspired", "oud-mood-inspired", "haltane-inspired", "alien-man-inspired", "royal-oud-inspired", "invictus-victory-absolu-inspired", "ombre-leather-inspired", "oud-bergamot-inspired", "boss-bottled-elixir-inspired"],
+    wardrobePartners: ["baccarat-rouge-540-extrait-inspired", "crystal-noir-inspired", "bois-d'argent-inspired", "oud-ispahan-inspired", "khamrah-inspired", "tom-ford-noir-inspired"],
   },
 
   // ── Intelligence ─────────────────────────────────────────────────────────────

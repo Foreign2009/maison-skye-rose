@@ -2877,6 +2877,279 @@
       "slug": "eden-sparkling-lychee-inspired",
       "operator": "Founder",
       "details": "promotionId:RkkyJJisnZpn  validation:PASS  nativePath:app/lib/mkc/native/eden-sparkling-lychee-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-20T19:47:17.661Z",
+      "action": "promotion_started",
+      "slug": "lacoste-noir-inspired",
+      "operator": "Founder",
+      "details": "symbol:lacosteNoirInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-20T19:47:17.666Z",
+      "action": "relationships_synced",
+      "slug": "lacoste-noir-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:3  files:3"
+    },
+    {
+      "timestamp": "2026-08-20T19:47:53.627Z",
+      "action": "promotion_completed",
+      "slug": "lacoste-noir-inspired",
+      "operator": "Founder",
+      "details": "promotionId:7j-3PVVezR7b  validation:PASS  nativePath:app/lib/mkc/native/lacoste-noir-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-20T19:48:02.700Z",
+      "action": "promotion_started",
+      "slug": "montblanc-legend-inspired",
+      "operator": "Founder",
+      "details": "symbol:montblancLegendInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-20T19:48:02.708Z",
+      "action": "relationships_synced",
+      "slug": "montblanc-legend-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:5  files:5"
+    },
+    {
+      "timestamp": "2026-08-20T19:48:40.892Z",
+      "action": "promotion_completed",
+      "slug": "montblanc-legend-inspired",
+      "operator": "Founder",
+      "details": "promotionId:-vJZI0Rzpe3j  validation:PASS  nativePath:app/lib/mkc/native/montblanc-legend-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-20T19:48:49.964Z",
+      "action": "promotion_started",
+      "slug": "montblanc-explorer-inspired",
+      "operator": "Founder",
+      "details": "symbol:montblancExplorerInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-20T19:48:49.971Z",
+      "action": "relationships_synced",
+      "slug": "montblanc-explorer-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:4  files:4"
+    },
+    {
+      "timestamp": "2026-08-20T19:49:28.990Z",
+      "action": "promotion_completed",
+      "slug": "montblanc-explorer-inspired",
+      "operator": "Founder",
+      "details": "promotionId:GjHKG6ZjZXYT  validation:PASS  nativePath:app/lib/mkc/native/montblanc-explorer-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-20T19:49:38.780Z",
+      "action": "promotion_started",
+      "slug": "leau-dissey-pour-homme-inspired",
+      "operator": "Founder",
+      "details": "symbol:leauDisseyPourHommeInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-20T19:49:38.788Z",
+      "action": "relationships_synced",
+      "slug": "leau-dissey-pour-homme-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:4  files:4"
+    },
+    {
+      "timestamp": "2026-08-20T19:50:17.399Z",
+      "action": "promotion_completed",
+      "slug": "leau-dissey-pour-homme-inspired",
+      "operator": "Founder",
+      "details": "promotionId:jDBtuOrWTTgd  validation:PASS  nativePath:app/lib/mkc/native/leau-dissey-pour-homme-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-20T19:50:25.307Z",
+      "action": "promotion_started",
+      "slug": "tom-ford-noir-inspired",
+      "operator": "Founder",
+      "details": "symbol:tomFordNoirInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-20T19:50:25.317Z",
+      "action": "relationships_synced",
+      "slug": "tom-ford-noir-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:4  files:4"
+    },
+    {
+      "timestamp": "2026-08-20T19:51:03.518Z",
+      "action": "promotion_completed",
+      "slug": "tom-ford-noir-inspired",
+      "operator": "Founder",
+      "details": "promotionId:VN96iZ_CqQ7v  validation:PASS  nativePath:app/lib/mkc/native/tom-ford-noir-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-20T19:51:11.894Z",
+      "action": "promotion_started",
+      "slug": "polo-black-inspired",
+      "operator": "Founder",
+      "details": "symbol:poloBlackInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-20T19:51:11.903Z",
+      "action": "relationships_synced",
+      "slug": "polo-black-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:4  files:4"
+    },
+    {
+      "timestamp": "2026-08-20T19:51:48.544Z",
+      "action": "promotion_completed",
+      "slug": "polo-black-inspired",
+      "operator": "Founder",
+      "details": "promotionId:ubgMKcis2Jxz  validation:PASS  nativePath:app/lib/mkc/native/polo-black-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-20T19:51:57.717Z",
+      "action": "promotion_started",
+      "slug": "phantom-inspired",
+      "operator": "Founder",
+      "details": "symbol:phantomInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-20T19:51:57.724Z",
+      "action": "relationships_synced",
+      "slug": "phantom-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:3  files:3"
+    },
+    {
+      "timestamp": "2026-08-20T19:52:35.977Z",
+      "action": "promotion_completed",
+      "slug": "phantom-inspired",
+      "operator": "Founder",
+      "details": "promotionId:G-GoD9GD9mbM  validation:PASS  nativePath:app/lib/mkc/native/phantom-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-20T19:52:46.295Z",
+      "action": "promotion_started",
+      "slug": "boss-bottled-elixir-inspired",
+      "operator": "Founder",
+      "details": "symbol:bossBottledElixirInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-20T19:52:46.303Z",
+      "action": "relationships_synced",
+      "slug": "boss-bottled-elixir-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:3  files:3"
+    },
+    {
+      "timestamp": "2026-08-20T19:53:21.096Z",
+      "action": "promotion_completed",
+      "slug": "boss-bottled-elixir-inspired",
+      "operator": "Founder",
+      "details": "promotionId:CgLru8nzJo7U  validation:PASS  nativePath:app/lib/mkc/native/boss-bottled-elixir-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-20T19:53:28.591Z",
+      "action": "promotion_started",
+      "slug": "fahrenheit-inspired",
+      "operator": "Founder",
+      "details": "symbol:fahrenheitInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-20T19:53:28.602Z",
+      "action": "relationships_synced",
+      "slug": "fahrenheit-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:5  files:5"
+    },
+    {
+      "timestamp": "2026-08-20T19:54:07.517Z",
+      "action": "promotion_completed",
+      "slug": "fahrenheit-inspired",
+      "operator": "Founder",
+      "details": "promotionId:zVk86j0foBdZ  validation:PASS  nativePath:app/lib/mkc/native/fahrenheit-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-20T19:54:15.834Z",
+      "action": "promotion_started",
+      "slug": "amen-fantasm-inspired",
+      "operator": "Founder",
+      "details": "symbol:amenFantasmInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-20T19:54:15.842Z",
+      "action": "relationships_synced",
+      "slug": "amen-fantasm-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:5  files:5"
+    },
+    {
+      "timestamp": "2026-08-20T19:54:53.463Z",
+      "action": "promotion_completed",
+      "slug": "amen-fantasm-inspired",
+      "operator": "Founder",
+      "details": "promotionId:-X7Ivr3306Xg  validation:PASS  nativePath:app/lib/mkc/native/amen-fantasm-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-20T19:55:03.088Z",
+      "action": "promotion_started",
+      "slug": "le-male-inspired",
+      "operator": "Founder",
+      "details": "symbol:leMaleInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-20T19:55:03.096Z",
+      "action": "relationships_synced",
+      "slug": "le-male-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:5  files:5"
+    },
+    {
+      "timestamp": "2026-08-20T19:55:37.349Z",
+      "action": "promotion_completed",
+      "slug": "le-male-inspired",
+      "operator": "Founder",
+      "details": "promotionId:wUhRrG3SMe3_  validation:PASS  nativePath:app/lib/mkc/native/le-male-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-20T19:55:45.639Z",
+      "action": "promotion_started",
+      "slug": "gucci-guilty-pour-homme-inspired",
+      "operator": "Founder",
+      "details": "symbol:gucciGuiltyPourHommeInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-20T19:55:45.647Z",
+      "action": "relationships_synced",
+      "slug": "gucci-guilty-pour-homme-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:5  files:5"
+    },
+    {
+      "timestamp": "2026-08-20T19:56:20.920Z",
+      "action": "promotion_completed",
+      "slug": "gucci-guilty-pour-homme-inspired",
+      "operator": "Founder",
+      "details": "promotionId:3RzotLmY075U  validation:PASS  nativePath:app/lib/mkc/native/gucci-guilty-pour-homme-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-20T19:56:28.931Z",
+      "action": "promotion_started",
+      "slug": "eros-energy-inspired",
+      "operator": "Founder",
+      "details": "symbol:erosEnergyInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-20T19:56:28.938Z",
+      "action": "relationships_synced",
+      "slug": "eros-energy-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:4  files:4"
+    },
+    {
+      "timestamp": "2026-08-20T19:57:05.939Z",
+      "action": "promotion_completed",
+      "slug": "eros-energy-inspired",
+      "operator": "Founder",
+      "details": "promotionId:P8n_gxv8WcvT  validation:PASS  nativePath:app/lib/mkc/native/eros-energy-inspired.ts"
     }
   ]
 }

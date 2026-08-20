@@ -87,8 +87,8 @@ export const bleuDeChanelInspired: FragranceKnowledge = {
 
   // ── Relationships ─────────────────────────────────────────────────────────────
   relationships: {
-    wardrobePartners: ["miss-dior-inspired", "chance-eau-tendre-inspired", "prada-paradoxe-inspired", "good-girl-inspired", "soleil-blanc-inspired", "oud-bergamot-inspired", "la-belle-inspired", "gucci-guilty-pour-femme-inspired", "eladaria-inspired"],
-    alternatives: ["l'immensite-inspired", "dior-homme-sport-inspired", "eros-flame-inspired"],
+    wardrobePartners: ["miss-dior-inspired", "chance-eau-tendre-inspired", "prada-paradoxe-inspired", "good-girl-inspired", "soleil-blanc-inspired", "oud-bergamot-inspired", "la-belle-inspired", "gucci-guilty-pour-femme-inspired", "eladaria-inspired", "le-male-inspired"],
+    alternatives: ["l'immensite-inspired", "dior-homme-sport-inspired", "eros-flame-inspired", "gucci-guilty-pour-homme-inspired", "eros-energy-inspired"],
   },
 
   // ── Intelligence ─────────────────────────────────────────────────────────────

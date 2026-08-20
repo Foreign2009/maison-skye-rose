@@ -87,7 +87,7 @@ export const godOfFireInspired: FragranceKnowledge = {
 
   // ── Relationships ─────────────────────────────────────────────────────────────
   relationships: {
-    alternatives: ["erba-pura-inspired", "kirke-overdose-inspired"],
+    alternatives: ["erba-pura-inspired", "kirke-overdose-inspired", "polo-black-inspired"],
   },
 
   // ── Intelligence ─────────────────────────────────────────────────────────────

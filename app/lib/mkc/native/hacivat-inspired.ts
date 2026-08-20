@@ -87,7 +87,7 @@ export const hacivatInspired: FragranceKnowledge = {
 
   // ── Relationships ─────────────────────────────────────────────────────────────
   relationships: {
-    alternatives: ["erba-pura-inspired"],
+    alternatives: ["erba-pura-inspired", "polo-black-inspired"],
   },
 
   // ── Intelligence ─────────────────────────────────────────────────────────────

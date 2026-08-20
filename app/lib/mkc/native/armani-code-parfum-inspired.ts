@@ -85,7 +85,7 @@ export const armaniCodeParfumInspired: FragranceKnowledge = {
 
   // ── Relationships ─────────────────────────────────────────────────────────────
   relationships: {
-    alternatives: ["bleu-de-chanel-l'exclusif-inspired"],
+    alternatives: ["bleu-de-chanel-l'exclusif-inspired", "montblanc-explorer-inspired", "fahrenheit-inspired"],
   },
 
   // ── Intelligence ─────────────────────────────────────────────────────────────

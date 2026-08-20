@@ -169,6 +169,19 @@ import { gucciBambooInspired } from "./gucci-bamboo-inspired";
 import { eladariaInspired } from "./eladaria-inspired";
 import { narcisoRougeInspired } from "./narciso-rouge-inspired";
 import { edenSparklingLycheeInspired } from "./eden-sparkling-lychee-inspired";
+import { lacosteNoirInspired } from "./lacoste-noir-inspired";
+import { montblancLegendInspired } from "./montblanc-legend-inspired";
+import { montblancExplorerInspired } from "./montblanc-explorer-inspired";
+import { leauDisseyPourHommeInspired } from "./leau-dissey-pour-homme-inspired";
+import { tomFordNoirInspired } from "./tom-ford-noir-inspired";
+import { poloBlackInspired } from "./polo-black-inspired";
+import { phantomInspired } from "./phantom-inspired";
+import { bossBottledElixirInspired } from "./boss-bottled-elixir-inspired";
+import { fahrenheitInspired } from "./fahrenheit-inspired";
+import { amenFantasmInspired } from "./amen-fantasm-inspired";
+import { leMaleInspired } from "./le-male-inspired";
+import { gucciGuiltyPourHommeInspired } from "./gucci-guilty-pour-homme-inspired";
+import { erosEnergyInspired } from "./eros-energy-inspired";
 
 export const nativeFragrances = new Map<string, FragranceKnowledge>([
   ["sauvage-inspired",              sauvageInspired],
@@ -330,4 +343,17 @@ export const nativeFragrances = new Map<string, FragranceKnowledge>([
   ["eladaria-inspired", eladariaInspired],
   ["narciso-rouge-inspired", narcisoRougeInspired],
   ["eden-sparkling-lychee-inspired", edenSparklingLycheeInspired],
+  ["lacoste-noir-inspired", lacosteNoirInspired],
+  ["montblanc-legend-inspired", montblancLegendInspired],
+  ["montblanc-explorer-inspired", montblancExplorerInspired],
+  ["leau-dissey-pour-homme-inspired", leauDisseyPourHommeInspired],
+  ["tom-ford-noir-inspired", tomFordNoirInspired],
+  ["polo-black-inspired", poloBlackInspired],
+  ["phantom-inspired", phantomInspired],
+  ["boss-bottled-elixir-inspired", bossBottledElixirInspired],
+  ["fahrenheit-inspired", fahrenheitInspired],
+  ["amen-fantasm-inspired", amenFantasmInspired],
+  ["le-male-inspired", leMaleInspired],
+  ["gucci-guilty-pour-homme-inspired", gucciGuiltyPourHommeInspired],
+  ["eros-energy-inspired", erosEnergyInspired],
 ]);
