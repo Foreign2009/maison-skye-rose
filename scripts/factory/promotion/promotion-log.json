@@ -2541,6 +2541,342 @@
       "slug": "tuscan-leather-inspired",
       "operator": "Founder",
       "details": "promotionId:KI1sAsqwv2sQ  validation:PASS  nativePath:app/lib/mkc/native/tuscan-leather-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-20T18:52:23.453Z",
+      "action": "promotion_started",
+      "slug": "lady-million-inspired",
+      "operator": "Founder",
+      "details": "symbol:ladyMillionInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-20T18:52:23.459Z",
+      "action": "relationships_synced",
+      "slug": "lady-million-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:4  files:4"
+    },
+    {
+      "timestamp": "2026-08-20T18:52:58.632Z",
+      "action": "promotion_completed",
+      "slug": "lady-million-inspired",
+      "operator": "Founder",
+      "details": "promotionId:wlgVcgaHIbwb  validation:PASS  nativePath:app/lib/mkc/native/lady-million-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-20T18:53:07.131Z",
+      "action": "promotion_started",
+      "slug": "idole-inspired",
+      "operator": "Founder",
+      "details": "symbol:idoleInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-20T18:53:07.142Z",
+      "action": "relationships_synced",
+      "slug": "idole-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:5  files:5"
+    },
+    {
+      "timestamp": "2026-08-20T18:53:45.587Z",
+      "action": "promotion_completed",
+      "slug": "idole-inspired",
+      "operator": "Founder",
+      "details": "promotionId:PrIClTQVOt2E  validation:PASS  nativePath:app/lib/mkc/native/idole-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-20T18:53:54.536Z",
+      "action": "promotion_started",
+      "slug": "fame-inspired",
+      "operator": "Founder",
+      "details": "symbol:fameInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-20T18:53:54.542Z",
+      "action": "relationships_synced",
+      "slug": "fame-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:4  files:4"
+    },
+    {
+      "timestamp": "2026-08-20T18:54:30.957Z",
+      "action": "promotion_completed",
+      "slug": "fame-inspired",
+      "operator": "Founder",
+      "details": "promotionId:xlSQUZI6kNSV  validation:PASS  nativePath:app/lib/mkc/native/fame-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-20T18:54:40.156Z",
+      "action": "promotion_started",
+      "slug": "olympea-inspired",
+      "operator": "Founder",
+      "details": "symbol:olympeaInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-20T18:54:40.161Z",
+      "action": "relationships_synced",
+      "slug": "olympea-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:3  files:3"
+    },
+    {
+      "timestamp": "2026-08-20T18:55:15.759Z",
+      "action": "promotion_completed",
+      "slug": "olympea-inspired",
+      "operator": "Founder",
+      "details": "promotionId:S4hLhDYZivGh  validation:PASS  nativePath:app/lib/mkc/native/olympea-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-20T18:55:23.614Z",
+      "action": "promotion_started",
+      "slug": "scandal-inspired",
+      "operator": "Founder",
+      "details": "symbol:scandalInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-20T18:55:23.625Z",
+      "action": "relationships_synced",
+      "slug": "scandal-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:5  files:5"
+    },
+    {
+      "timestamp": "2026-08-20T18:56:00.096Z",
+      "action": "promotion_completed",
+      "slug": "scandal-inspired",
+      "operator": "Founder",
+      "details": "promotionId:vie4iVjgQo0Q  validation:PASS  nativePath:app/lib/mkc/native/scandal-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-20T18:56:09.587Z",
+      "action": "promotion_started",
+      "slug": "la-belle-inspired",
+      "operator": "Founder",
+      "details": "symbol:laBelleInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-20T18:56:09.594Z",
+      "action": "relationships_synced",
+      "slug": "la-belle-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:4  files:4"
+    },
+    {
+      "timestamp": "2026-08-20T18:56:42.119Z",
+      "action": "promotion_completed",
+      "slug": "la-belle-inspired",
+      "operator": "Founder",
+      "details": "promotionId:XNvHaq6dmN1k  validation:PASS  nativePath:app/lib/mkc/native/la-belle-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-20T18:56:52.763Z",
+      "action": "promotion_started",
+      "slug": "la-nuit-tresor-inspired",
+      "operator": "Founder",
+      "details": "symbol:laNuitTresorInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-20T18:56:52.771Z",
+      "action": "relationships_synced",
+      "slug": "la-nuit-tresor-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:5  files:5"
+    },
+    {
+      "timestamp": "2026-08-20T18:57:31.954Z",
+      "action": "promotion_completed",
+      "slug": "la-nuit-tresor-inspired",
+      "operator": "Founder",
+      "details": "promotionId:quBlBl9Xu83N  validation:PASS  nativePath:app/lib/mkc/native/la-nuit-tresor-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-20T18:57:40.266Z",
+      "action": "promotion_started",
+      "slug": "narciso-rodriguez-for-her-inspired",
+      "operator": "Founder",
+      "details": "symbol:narcisoRodriguezForHerInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-20T18:57:40.275Z",
+      "action": "relationships_synced",
+      "slug": "narciso-rodriguez-for-her-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:3  files:3"
+    },
+    {
+      "timestamp": "2026-08-20T18:58:19.862Z",
+      "action": "promotion_completed",
+      "slug": "narciso-rodriguez-for-her-inspired",
+      "operator": "Founder",
+      "details": "promotionId:6Z6ixEjDyQHj  validation:PASS  nativePath:app/lib/mkc/native/narciso-rodriguez-for-her-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-20T18:58:28.153Z",
+      "action": "promotion_started",
+      "slug": "dylan-purple-inspired",
+      "operator": "Founder",
+      "details": "symbol:dylanPurpleInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-20T18:58:28.165Z",
+      "action": "relationships_synced",
+      "slug": "dylan-purple-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:5  files:5"
+    },
+    {
+      "timestamp": "2026-08-20T18:59:07.912Z",
+      "action": "promotion_completed",
+      "slug": "dylan-purple-inspired",
+      "operator": "Founder",
+      "details": "promotionId:XpJnaAR11VqR  validation:PASS  nativePath:app/lib/mkc/native/dylan-purple-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-20T18:59:16.572Z",
+      "action": "promotion_started",
+      "slug": "yellow-diamond-inspired",
+      "operator": "Founder",
+      "details": "symbol:yellowDiamondInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-20T18:59:16.582Z",
+      "action": "relationships_synced",
+      "slug": "yellow-diamond-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:3  files:3"
+    },
+    {
+      "timestamp": "2026-08-20T18:59:55.880Z",
+      "action": "promotion_completed",
+      "slug": "yellow-diamond-inspired",
+      "operator": "Founder",
+      "details": "promotionId:QqlH6-f2Vm6-  validation:PASS  nativePath:app/lib/mkc/native/yellow-diamond-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-20T19:00:04.870Z",
+      "action": "promotion_started",
+      "slug": "very-good-girl-elixir-inspired",
+      "operator": "Founder",
+      "details": "symbol:veryGoodGirlElixirInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-20T19:00:04.876Z",
+      "action": "relationships_synced",
+      "slug": "very-good-girl-elixir-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:5  files:5"
+    },
+    {
+      "timestamp": "2026-08-20T19:00:42.725Z",
+      "action": "promotion_completed",
+      "slug": "very-good-girl-elixir-inspired",
+      "operator": "Founder",
+      "details": "promotionId:gcPSpFBH5zZy  validation:PASS  nativePath:app/lib/mkc/native/very-good-girl-elixir-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-20T19:00:51.821Z",
+      "action": "promotion_started",
+      "slug": "gucci-guilty-pour-femme-inspired",
+      "operator": "Founder",
+      "details": "symbol:gucciGuiltyPourFemmeInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-20T19:00:51.828Z",
+      "action": "relationships_synced",
+      "slug": "gucci-guilty-pour-femme-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:4  files:4"
+    },
+    {
+      "timestamp": "2026-08-20T19:01:29.768Z",
+      "action": "promotion_completed",
+      "slug": "gucci-guilty-pour-femme-inspired",
+      "operator": "Founder",
+      "details": "promotionId:Udacen-JYH23  validation:PASS  nativePath:app/lib/mkc/native/gucci-guilty-pour-femme-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-20T19:01:38.163Z",
+      "action": "promotion_started",
+      "slug": "gucci-bamboo-inspired",
+      "operator": "Founder",
+      "details": "symbol:gucciBambooInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-20T19:01:38.169Z",
+      "action": "relationships_synced",
+      "slug": "gucci-bamboo-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:4  files:4"
+    },
+    {
+      "timestamp": "2026-08-20T19:02:16.570Z",
+      "action": "promotion_completed",
+      "slug": "gucci-bamboo-inspired",
+      "operator": "Founder",
+      "details": "promotionId:hmOCsy54PjXI  validation:PASS  nativePath:app/lib/mkc/native/gucci-bamboo-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-20T19:02:27.605Z",
+      "action": "promotion_started",
+      "slug": "eladaria-inspired",
+      "operator": "Founder",
+      "details": "symbol:eladariaInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-20T19:02:27.611Z",
+      "action": "relationships_synced",
+      "slug": "eladaria-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:4  files:4"
+    },
+    {
+      "timestamp": "2026-08-20T19:03:04.736Z",
+      "action": "promotion_completed",
+      "slug": "eladaria-inspired",
+      "operator": "Founder",
+      "details": "promotionId:2zfQGPOeS8IP  validation:PASS  nativePath:app/lib/mkc/native/eladaria-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-20T19:03:13.036Z",
+      "action": "promotion_started",
+      "slug": "narciso-rouge-inspired",
+      "operator": "Founder",
+      "details": "symbol:narcisoRougeInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-20T19:03:13.047Z",
+      "action": "relationships_synced",
+      "slug": "narciso-rouge-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:5  files:5"
+    },
+    {
+      "timestamp": "2026-08-20T19:03:49.451Z",
+      "action": "promotion_completed",
+      "slug": "narciso-rouge-inspired",
+      "operator": "Founder",
+      "details": "promotionId:y23MuCFpTwMN  validation:PASS  nativePath:app/lib/mkc/native/narciso-rouge-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-20T19:06:51.548Z",
+      "action": "promotion_started",
+      "slug": "eden-sparkling-lychee-inspired",
+      "operator": "Founder",
+      "details": "symbol:edenSparklingLycheeInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-20T19:06:51.555Z",
+      "action": "relationships_synced",
+      "slug": "eden-sparkling-lychee-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:5  files:5"
+    },
+    {
+      "timestamp": "2026-08-20T19:07:27.744Z",
+      "action": "promotion_completed",
+      "slug": "eden-sparkling-lychee-inspired",
+      "operator": "Founder",
+      "details": "promotionId:RkkyJJisnZpn  validation:PASS  nativePath:app/lib/mkc/native/eden-sparkling-lychee-inspired.ts"
     }
   ]
 }

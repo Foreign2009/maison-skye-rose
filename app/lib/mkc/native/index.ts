@@ -153,6 +153,22 @@ import { goldOudInspired } from "./gold-oud-inspired";
 import { oudBergamotInspired } from "./oud-bergamot-inspired";
 import { khamrahInspired } from "./khamrah-inspired";
 import { tuscanLeatherInspired } from "./tuscan-leather-inspired";
+import { ladyMillionInspired } from "./lady-million-inspired";
+import { idoleInspired } from "./idole-inspired";
+import { fameInspired } from "./fame-inspired";
+import { olympeaInspired } from "./olympea-inspired";
+import { scandalInspired } from "./scandal-inspired";
+import { laBelleInspired } from "./la-belle-inspired";
+import { laNuitTresorInspired } from "./la-nuit-tresor-inspired";
+import { narcisoRodriguezForHerInspired } from "./narciso-rodriguez-for-her-inspired";
+import { dylanPurpleInspired } from "./dylan-purple-inspired";
+import { yellowDiamondInspired } from "./yellow-diamond-inspired";
+import { veryGoodGirlElixirInspired } from "./very-good-girl-elixir-inspired";
+import { gucciGuiltyPourFemmeInspired } from "./gucci-guilty-pour-femme-inspired";
+import { gucciBambooInspired } from "./gucci-bamboo-inspired";
+import { eladariaInspired } from "./eladaria-inspired";
+import { narcisoRougeInspired } from "./narciso-rouge-inspired";
+import { edenSparklingLycheeInspired } from "./eden-sparkling-lychee-inspired";
 
 export const nativeFragrances = new Map<string, FragranceKnowledge>([
   ["sauvage-inspired",              sauvageInspired],
@@ -298,4 +314,20 @@ export const nativeFragrances = new Map<string, FragranceKnowledge>([
   ["oud-bergamot-inspired", oudBergamotInspired],
   ["khamrah-inspired", khamrahInspired],
   ["tuscan-leather-inspired", tuscanLeatherInspired],
+  ["lady-million-inspired", ladyMillionInspired],
+  ["idole-inspired", idoleInspired],
+  ["fame-inspired", fameInspired],
+  ["olympea-inspired", olympeaInspired],
+  ["scandal-inspired", scandalInspired],
+  ["la-belle-inspired", laBelleInspired],
+  ["la-nuit-tresor-inspired", laNuitTresorInspired],
+  ["narciso-rodriguez-for-her-inspired", narcisoRodriguezForHerInspired],
+  ["dylan-purple-inspired", dylanPurpleInspired],
+  ["yellow-diamond-inspired", yellowDiamondInspired],
+  ["very-good-girl-elixir-inspired", veryGoodGirlElixirInspired],
+  ["gucci-guilty-pour-femme-inspired", gucciGuiltyPourFemmeInspired],
+  ["gucci-bamboo-inspired", gucciBambooInspired],
+  ["eladaria-inspired", eladariaInspired],
+  ["narciso-rouge-inspired", narcisoRougeInspired],
+  ["eden-sparkling-lychee-inspired", edenSparklingLycheeInspired],
 ]);

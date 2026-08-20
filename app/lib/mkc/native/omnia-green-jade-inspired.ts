@@ -116,7 +116,7 @@ export const omniaGreenJadeInspired: FragranceKnowledge = {
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["coco-mademoiselle-inspired", "chance-eau-fraiche-inspired"],
+    alternatives:     ["coco-mademoiselle-inspired", "chance-eau-fraiche-inspired", "yellow-diamond-inspired"],
     wardrobePartners: ["baccarat-rouge-540-inspired"],
   },
 };

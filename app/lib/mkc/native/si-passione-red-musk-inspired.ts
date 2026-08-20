@@ -110,7 +110,7 @@ export const siPassioneRedMuskInspired: FragranceKnowledge = {
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["blanche-bete-inspired", "mon-paris-inspired"],
+    alternatives:     ["blanche-bete-inspired", "mon-paris-inspired", "olympea-inspired", "narciso-rodriguez-for-her-inspired", "narciso-rouge-inspired"],
     wardrobePartners: ["baccarat-rouge-540-inspired"],
   },
 };

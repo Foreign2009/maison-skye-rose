@@ -103,6 +103,6 @@ export const blackOpiumInspired: FragranceKnowledge = {
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
     alternatives:     ["ultra-male-inspired", "layton-inspired", "hypnotic-poison-inspired", "poison-girl-inspired", "black-opium-over-red-inspired"],
-    wardrobePartners: ["delina-inspired", "mon-guerlain-inspired", "rose-n'-roses-inspired", "taif-rose-inspired"],
+    wardrobePartners: ["delina-inspired", "mon-guerlain-inspired", "rose-n'-roses-inspired", "taif-rose-inspired", "idole-inspired", "la-nuit-tresor-inspired", "narciso-rodriguez-for-her-inspired", "dylan-purple-inspired", "very-good-girl-elixir-inspired"],
   },
 };

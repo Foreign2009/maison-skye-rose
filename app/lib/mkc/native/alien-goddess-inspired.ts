@@ -100,7 +100,8 @@ export const alienGoddessInspired: FragranceKnowledge = {
 
   // ── Relationships ─────────────────────────────────────────────────────────────
   relationships: {
-    alternatives: ["soleil-blanc-inspired"],
+    alternatives: ["soleil-blanc-inspired", "olympea-inspired"],
+    wardrobePartners: ["dylan-purple-inspired"],
   },
 
   // ── Intelligence ────────────────────────────────────────────────────────────

@@ -86,7 +86,7 @@ export const spicebombExtremeInspired: FragranceKnowledge = {
 
   // ── Relationships ─────────────────────────────────────────────────────────────
   relationships: {
-    wardrobePartners: ["althair-inspired", "armani-si-inspired", "libre-intense-inspired", "ombre-nomade-inspired", "pacific-chill-inspired", "silver-mountain-water-inspired", "very-good-girl-inspired", "gris-charnel-inspired", "bleu-de-chanel-l'exclusif-inspired", "bois-d'argent-inspired", "dior-homme-sport-inspired", "eros-flame-inspired", "gentleman-edt-inspired", "godolphin-inspired"],
+    wardrobePartners: ["althair-inspired", "armani-si-inspired", "libre-intense-inspired", "ombre-nomade-inspired", "pacific-chill-inspired", "silver-mountain-water-inspired", "very-good-girl-inspired", "gris-charnel-inspired", "bleu-de-chanel-l'exclusif-inspired", "bois-d'argent-inspired", "dior-homme-sport-inspired", "eros-flame-inspired", "gentleman-edt-inspired", "godolphin-inspired", "fame-inspired"],
     alternatives: ["ani-inspired", "carlisle-inspired", "allure-homme-sport-inspired", "spicebomb-dark-leather-inspired", "tobacco-vanille-inspired", "angels-share-inspired"],
   },
 

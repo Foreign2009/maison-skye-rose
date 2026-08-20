@@ -117,7 +117,7 @@ export const monGuerlainInspired: FragranceKnowledge = {
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["la-vie-est-belle-inspired", "delina-inspired", "flowerbomb-inspired"],
+    alternatives:     ["la-vie-est-belle-inspired", "delina-inspired", "flowerbomb-inspired", "gucci-bamboo-inspired"],
     wardrobePartners: ["alien-inspired", "black-opium-inspired"],
   },
 };

@@ -108,7 +108,7 @@ export const cocoMademoiselleInspired: FragranceKnowledge = {
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["delina-inspired", "chance-inspired", "light-blue-inspired", "omnia-green-jade-inspired", "rose-n'-roses-inspired"],
+    alternatives:     ["delina-inspired", "chance-inspired", "light-blue-inspired", "omnia-green-jade-inspired", "rose-n'-roses-inspired", "idole-inspired", "narciso-rodriguez-for-her-inspired"],
     wardrobePartners: ["sauvage-inspired", "chance-eau-fraiche-inspired", "fresh-blossom-inspired", "my-way-ylang-inspired", "taif-rose-inspired"],
   },
 };
