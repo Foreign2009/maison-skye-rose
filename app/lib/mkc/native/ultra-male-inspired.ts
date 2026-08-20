@@ -88,7 +88,7 @@ export const ultraMaleInspired: FragranceKnowledge = {
 
   // ── Relationships ─────────────────────────────────────────────────────────────
   relationships: {
-    alternatives: ["black-opium-inspired", "good-girl-inspired"],
+    alternatives: ["black-opium-inspired", "good-girl-inspired", "angels-share-paradis-inspired"],
     wardrobePartners: ["la-vie-est-belle-inspired"],
   },
 

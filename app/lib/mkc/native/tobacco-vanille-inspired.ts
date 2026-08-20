@@ -108,7 +108,7 @@ export const tobaccoVanilleInspired: FragranceKnowledge = {
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["spicebomb-extreme-inspired", "naxos-inspired", "side-effect-inspired"],
+    alternatives:     ["spicebomb-extreme-inspired", "naxos-inspired", "side-effect-inspired", "angels-share-inspired"],
     wardrobePartners: ["sauvage-elixir-inspired", "oud-for-greatness-inspired"],
   },
 };

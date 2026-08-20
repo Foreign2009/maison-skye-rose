@@ -142,6 +142,17 @@ import { roseNRosesInspired } from "./rose-n'-roses-inspired";
 import { taifRoseInspired } from "./taif-rose-inspired";
 import { woodSageSeaSaltInspired } from "./wood-sage-sea-salt-inspired";
 import { blackOpiumOverRedInspired } from "./black-opium-over-red-inspired";
+import { peonyBlushSuedeInspired } from "./peony-blush-suede-inspired";
+import { velvetRoseOudInspired } from "./velvet-rose-oud-inspired";
+import { englishPearFreesiaInspired } from "./english-pear-freesia-inspired";
+import { blackOrchidInspired } from "./black-orchid-inspired";
+import { soleilBlancInspired } from "./soleil-blanc-inspired";
+import { angelsShareInspired } from "./angels-share-inspired";
+import { angelsShareParadisInspired } from "./angels-share-paradis-inspired";
+import { goldOudInspired } from "./gold-oud-inspired";
+import { oudBergamotInspired } from "./oud-bergamot-inspired";
+import { khamrahInspired } from "./khamrah-inspired";
+import { tuscanLeatherInspired } from "./tuscan-leather-inspired";
 
 export const nativeFragrances = new Map<string, FragranceKnowledge>([
   ["sauvage-inspired",              sauvageInspired],
@@ -276,4 +287,15 @@ export const nativeFragrances = new Map<string, FragranceKnowledge>([
   ["taif-rose-inspired", taifRoseInspired],
   ["wood-sage-sea-salt-inspired", woodSageSeaSaltInspired],
   ["black-opium-over-red-inspired", blackOpiumOverRedInspired],
+  ["peony-blush-suede-inspired", peonyBlushSuedeInspired],
+  ["velvet-rose-oud-inspired", velvetRoseOudInspired],
+  ["english-pear-freesia-inspired", englishPearFreesiaInspired],
+  ["black-orchid-inspired", blackOrchidInspired],
+  ["soleil-blanc-inspired", soleilBlancInspired],
+  ["angels-share-inspired", angelsShareInspired],
+  ["angels-share-paradis-inspired", angelsShareParadisInspired],
+  ["gold-oud-inspired", goldOudInspired],
+  ["oud-bergamot-inspired", oudBergamotInspired],
+  ["khamrah-inspired", khamrahInspired],
+  ["tuscan-leather-inspired", tuscanLeatherInspired],
 ]);

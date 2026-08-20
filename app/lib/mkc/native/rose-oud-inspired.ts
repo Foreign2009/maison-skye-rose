@@ -110,7 +110,7 @@ export const roseOudInspired: FragranceKnowledge = {
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["baccarat-rouge-540-inspired", "oud-mood-inspired"],
+    alternatives:     ["baccarat-rouge-540-inspired", "oud-mood-inspired", "velvet-rose-oud-inspired", "gold-oud-inspired"],
     wardrobePartners: ["delina-inspired"],
   },
 };

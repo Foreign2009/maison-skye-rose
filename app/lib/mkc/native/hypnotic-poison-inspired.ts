@@ -98,6 +98,7 @@ export const hypnoticPoisonInspired: FragranceKnowledge = {
       "love-don't-be-shy-inspired",
       "poison-girl-inspired",
       "black-opium-over-red-inspired",
+      "khamrah-inspired",
     ],
     wardrobePartners: ["delina-inspired", "baccarat-rouge-540-inspired"],
   },

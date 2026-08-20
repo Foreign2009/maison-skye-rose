@@ -110,7 +110,7 @@ export const arabiansMuskInspired: FragranceKnowledge = {
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["baccarat-rouge-540-inspired", "love-don't-be-shy-inspired"],
+    alternatives:     ["baccarat-rouge-540-inspired", "love-don't-be-shy-inspired", "khamrah-inspired"],
     wardrobePartners: ["oud-mood-inspired", "baccarat-rouge-540-extrait-inspired"],
   },
 };
