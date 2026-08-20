@@ -81,7 +81,7 @@ export const narcisoRodriguezForHerInspired: FragranceKnowledge = {
   newArrival    : false,
 
   // ── Education ───────────────────────────────────────────────────────────────
-  subtitle      : "Soft Luxury",
+  subtitle      : "Intimate Rose",
   description   : "Rose and peach open with delicate brightness before melting into a warm embrace of musk and amber. Patchouli and sandalwood anchor the composition, creating a fragrance that feels both intimate and effortlessly wearable—a second skin rather than a statement.",
   academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "what-makes-a-signature-scent", "how-to-layer-fragrances"],
   academyCategories: ["fragrance-families", "the-note-pyramid", "wear-and-application"],

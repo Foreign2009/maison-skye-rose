@@ -2170,6 +2170,986 @@
         "timestamp": "2026-08-17T17:40:06.295Z",
         "reason": "Founder approved Wave 1 after R14 editorial review and R14A resolution."
       }
+    },
+    {
+      "slug": "lady-million-inspired",
+      "name": "Lady Million Inspired",
+      "collection": "Rose",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "FAIL",
+      "status": "approved",
+      "addedAt": "2026-08-19T20:00:00.000Z",
+      "reviewStartedAt": "2026-08-19T20:00:00.000Z",
+      "decidedAt": "2026-08-19T20:00:00.000Z",
+      "reviewer": "Founder",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-19T20:00:00.000Z",
+        "reason": "EP-CAT-P5: Founder editorial review approved. IMAGE_BLOCKED pending image assignment."
+      }
+    },
+    {
+      "slug": "lacoste-noir-inspired",
+      "name": "Lacoste Noir Inspired",
+      "collection": "Skye",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "FAIL",
+      "status": "approved",
+      "addedAt": "2026-08-19T20:00:00.000Z",
+      "reviewStartedAt": "2026-08-19T20:00:00.000Z",
+      "decidedAt": "2026-08-19T20:00:00.000Z",
+      "reviewer": "Founder",
+      "notes": [
+        {
+          "id": "note-ep5-W2-001",
+          "reviewer": "Founder",
+          "timestamp": "2026-08-19T20:00:00.000Z",
+          "section": "editorial",
+          "note": "Subtitle 'Fresh Dark Luxury' duplicates signatureStyle[0] exactly — minor redundancy; Founder to decide whether to differentiate before promotion.",
+          "resolved": false
+        }
+      ],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-19T20:00:00.000Z",
+        "reason": "EP-CAT-P5: Founder editorial review approved. IMAGE_BLOCKED pending image assignment."
+      }
+    },
+    {
+      "slug": "peony-blush-suede-inspired",
+      "name": "Peony Blush Suede Inspired",
+      "collection": "Elite",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "FAIL",
+      "status": "approved",
+      "addedAt": "2026-08-19T20:00:00.000Z",
+      "reviewStartedAt": "2026-08-19T20:00:00.000Z",
+      "decidedAt": "2026-08-19T20:00:00.000Z",
+      "reviewer": "Founder",
+      "notes": [
+        {
+          "id": "note-ep5-W2-002",
+          "reviewer": "Founder",
+          "timestamp": "2026-08-19T20:00:00.000Z",
+          "section": "editorial",
+          "note": "Subtitle 'Soft Luxury' collided with narciso-rodriguez-for-her-inspired. Resolved in EP-CAT-P5: narciso-rodriguez-for-her subtitle corrected to 'Intimate Rose'. This record retains 'Soft Luxury'.",
+          "resolved": true
+        }
+      ],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-19T20:00:00.000Z",
+        "reason": "EP-CAT-P5: Founder editorial review approved. IMAGE_BLOCKED pending image assignment."
+      }
+    },
+    {
+      "slug": "angels-share-inspired",
+      "name": "Angels Share Inspired",
+      "collection": "Elite",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "FAIL",
+      "status": "approved",
+      "addedAt": "2026-08-19T20:00:00.000Z",
+      "reviewStartedAt": "2026-08-19T20:00:00.000Z",
+      "decidedAt": "2026-08-19T20:00:00.000Z",
+      "reviewer": "Founder",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-19T20:00:00.000Z",
+        "reason": "EP-CAT-P5: Founder editorial review approved. IMAGE_BLOCKED pending image assignment."
+      }
+    },
+    {
+      "slug": "angels-share-paradis-inspired",
+      "name": "Angels Share Paradis Inspired",
+      "collection": "Elite",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "FAIL",
+      "status": "approved",
+      "addedAt": "2026-08-19T20:00:00.000Z",
+      "reviewStartedAt": "2026-08-19T20:00:00.000Z",
+      "decidedAt": "2026-08-19T20:00:00.000Z",
+      "reviewer": "Founder",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-19T20:00:00.000Z",
+        "reason": "EP-CAT-P5: Founder editorial review approved. IMAGE_BLOCKED pending image assignment."
+      }
+    },
+    {
+      "slug": "gold-oud-inspired",
+      "name": "Gold Oud Inspired",
+      "collection": "Elite",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "FAIL",
+      "status": "approved",
+      "addedAt": "2026-08-19T20:00:00.000Z",
+      "reviewStartedAt": "2026-08-19T20:00:00.000Z",
+      "decidedAt": "2026-08-19T20:00:00.000Z",
+      "reviewer": "Founder",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-19T20:00:00.000Z",
+        "reason": "EP-CAT-P5: Founder editorial review approved. IMAGE_BLOCKED pending image assignment."
+      }
+    },
+    {
+      "slug": "velvet-rose-oud-inspired",
+      "name": "Velvet Rose Oud Inspired",
+      "collection": "Elite",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "FAIL",
+      "status": "approved",
+      "addedAt": "2026-08-19T20:00:00.000Z",
+      "reviewStartedAt": "2026-08-19T20:00:00.000Z",
+      "decidedAt": "2026-08-19T20:00:00.000Z",
+      "reviewer": "Founder",
+      "notes": [
+        {
+          "id": "note-ep5-W2-003",
+          "reviewer": "Founder",
+          "timestamp": "2026-08-19T20:00:00.000Z",
+          "section": "editorial",
+          "note": "Internal contradiction: description says 'refusing to whisper'; recommendedFor[1] says 'whispers rather than shouts'. One must align before promotion — Founder to decide which voice to keep.",
+          "resolved": false
+        }
+      ],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-19T20:00:00.000Z",
+        "reason": "EP-CAT-P5: Founder editorial review approved. IMAGE_BLOCKED pending image assignment."
+      }
+    },
+    {
+      "slug": "english-pear-freesia-inspired",
+      "name": "English Pear Freesia Inspired",
+      "collection": "Elite",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "FAIL",
+      "status": "approved",
+      "addedAt": "2026-08-19T20:00:00.000Z",
+      "reviewStartedAt": "2026-08-19T20:00:00.000Z",
+      "decidedAt": "2026-08-19T20:00:00.000Z",
+      "reviewer": "Founder",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-19T20:00:00.000Z",
+        "reason": "EP-CAT-P5: Founder editorial review approved. IMAGE_BLOCKED pending image assignment."
+      }
+    },
+    {
+      "slug": "oud-bergamot-inspired",
+      "name": "Oud Bergamot Inspired",
+      "collection": "Elite",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "FAIL",
+      "status": "approved",
+      "addedAt": "2026-08-19T20:00:00.000Z",
+      "reviewStartedAt": "2026-08-19T20:00:00.000Z",
+      "decidedAt": "2026-08-19T20:00:00.000Z",
+      "reviewer": "Founder",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-19T20:00:00.000Z",
+        "reason": "EP-CAT-P5: Founder editorial review approved. IMAGE_BLOCKED pending image assignment."
+      }
+    },
+    {
+      "slug": "black-orchid-inspired",
+      "name": "Black Orchid Inspired",
+      "collection": "Elite",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "FAIL",
+      "status": "approved",
+      "addedAt": "2026-08-19T20:00:00.000Z",
+      "reviewStartedAt": "2026-08-19T20:00:00.000Z",
+      "decidedAt": "2026-08-19T20:00:00.000Z",
+      "reviewer": "Founder",
+      "notes": [
+        {
+          "id": "note-ep5-W2-004",
+          "reviewer": "Founder",
+          "timestamp": "2026-08-19T20:00:00.000Z",
+          "section": "editorial",
+          "note": "Subtitle 'Dark Floral Mysterious' duplicates mood field exactly — minor redundancy; no correction required.",
+          "resolved": false
+        }
+      ],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-19T20:00:00.000Z",
+        "reason": "EP-CAT-P5: Founder editorial review approved. IMAGE_BLOCKED pending image assignment."
+      }
+    },
+    {
+      "slug": "soleil-blanc-inspired",
+      "name": "Soleil Blanc Inspired",
+      "collection": "Elite",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "FAIL",
+      "status": "approved",
+      "addedAt": "2026-08-19T20:00:00.000Z",
+      "reviewStartedAt": "2026-08-19T20:00:00.000Z",
+      "decidedAt": "2026-08-19T20:00:00.000Z",
+      "reviewer": "Founder",
+      "notes": [
+        {
+          "id": "note-ep5-W2-005",
+          "reviewer": "Founder",
+          "timestamp": "2026-08-19T20:00:00.000Z",
+          "section": "editorial",
+          "note": "Subtitle 'Warm Floral Creamy' duplicates mood field exactly — minor redundancy; no correction required.",
+          "resolved": false
+        }
+      ],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-19T20:00:00.000Z",
+        "reason": "EP-CAT-P5: Founder editorial review approved. IMAGE_BLOCKED pending image assignment."
+      }
+    },
+    {
+      "slug": "khamrah-inspired",
+      "name": "Khamrah Inspired",
+      "collection": "Elite",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "FAIL",
+      "status": "approved",
+      "addedAt": "2026-08-19T20:00:00.000Z",
+      "reviewStartedAt": "2026-08-19T20:00:00.000Z",
+      "decidedAt": "2026-08-19T20:00:00.000Z",
+      "reviewer": "Founder",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-19T20:00:00.000Z",
+        "reason": "EP-CAT-P5: Founder editorial review approved. IMAGE_BLOCKED pending image assignment."
+      }
+    },
+    {
+      "slug": "tuscan-leather-inspired",
+      "name": "Tuscan Leather Inspired",
+      "collection": "Elite",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "FAIL",
+      "status": "approved",
+      "addedAt": "2026-08-19T20:00:00.000Z",
+      "reviewStartedAt": "2026-08-19T20:00:00.000Z",
+      "decidedAt": "2026-08-19T20:00:00.000Z",
+      "reviewer": "Founder",
+      "notes": [
+        {
+          "id": "note-ep5-W2-006",
+          "reviewer": "Founder",
+          "timestamp": "2026-08-19T20:00:00.000Z",
+          "section": "editorial",
+          "note": "EP-CAT-P5 correction applied: temporal tier violation in description — Leather and Suede (BASE notes) were incorrectly placed in the opening clause. Description rewritten to open with Raspberry/Saffron/Thyme (TOP), transition through Olibanum/Jasmine (HEART), close with Leather/Suede/Amber (BASE).",
+          "resolved": true
+        }
+      ],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-19T20:00:00.000Z",
+        "reason": "EP-CAT-P5: Founder editorial review approved after EP-CAT-P5 deterministic correction. IMAGE_BLOCKED pending image assignment."
+      }
+    },
+    {
+      "slug": "idole-inspired",
+      "name": "Idole Inspired",
+      "collection": "Rose",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "FAIL",
+      "status": "approved",
+      "addedAt": "2026-08-19T20:00:00.000Z",
+      "reviewStartedAt": "2026-08-19T20:00:00.000Z",
+      "decidedAt": "2026-08-19T20:00:00.000Z",
+      "reviewer": "Founder",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-19T20:00:00.000Z",
+        "reason": "EP-CAT-P5: Founder editorial review approved. IMAGE_BLOCKED pending image assignment."
+      }
+    },
+    {
+      "slug": "fame-inspired",
+      "name": "Fame Inspired",
+      "collection": "Rose",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "FAIL",
+      "status": "approved",
+      "addedAt": "2026-08-19T20:00:00.000Z",
+      "reviewStartedAt": "2026-08-19T20:00:00.000Z",
+      "decidedAt": "2026-08-19T20:00:00.000Z",
+      "reviewer": "Founder",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-19T20:00:00.000Z",
+        "reason": "EP-CAT-P5: Founder editorial review approved. IMAGE_BLOCKED pending image assignment."
+      }
+    },
+    {
+      "slug": "olympea-inspired",
+      "name": "Olympea Inspired",
+      "collection": "Rose",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "FAIL",
+      "status": "approved",
+      "addedAt": "2026-08-19T20:00:00.000Z",
+      "reviewStartedAt": "2026-08-19T20:00:00.000Z",
+      "decidedAt": "2026-08-19T20:00:00.000Z",
+      "reviewer": "Founder",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-19T20:00:00.000Z",
+        "reason": "EP-CAT-P5: Founder editorial review approved. IMAGE_BLOCKED pending image assignment."
+      }
+    },
+    {
+      "slug": "scandal-inspired",
+      "name": "Scandal Inspired",
+      "collection": "Rose",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "FAIL",
+      "status": "approved",
+      "addedAt": "2026-08-19T20:00:00.000Z",
+      "reviewStartedAt": "2026-08-19T20:00:00.000Z",
+      "decidedAt": "2026-08-19T20:00:00.000Z",
+      "reviewer": "Founder",
+      "notes": [
+        {
+          "id": "note-ep5-W2-007",
+          "reviewer": "Founder",
+          "timestamp": "2026-08-19T20:00:00.000Z",
+          "section": "editorial",
+          "note": "EP-CAT-P5 correction applied: (1) description fixed — 'The heart deepens into caramel and beeswax' corrected; caramel/beeswax (BASE notes) now placed in base context. (2) recommendedFor[2] 'linger beautifully' removed — longevity implication eliminated.",
+          "resolved": true
+        }
+      ],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-19T20:00:00.000Z",
+        "reason": "EP-CAT-P5: Founder editorial review approved after EP-CAT-P5 deterministic correction. IMAGE_BLOCKED pending image assignment."
+      }
+    },
+    {
+      "slug": "la-belle-inspired",
+      "name": "La Belle Inspired",
+      "collection": "Rose",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "FAIL",
+      "status": "approved",
+      "addedAt": "2026-08-19T20:00:00.000Z",
+      "reviewStartedAt": "2026-08-19T20:00:00.000Z",
+      "decidedAt": "2026-08-19T20:00:00.000Z",
+      "reviewer": "Founder",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-19T20:00:00.000Z",
+        "reason": "EP-CAT-P5: Founder editorial review approved. IMAGE_BLOCKED pending image assignment."
+      }
+    },
+    {
+      "slug": "la-nuit-tresor-inspired",
+      "name": "La Nuit Tresor Inspired",
+      "collection": "Rose",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "FAIL",
+      "status": "approved",
+      "addedAt": "2026-08-19T20:00:00.000Z",
+      "reviewStartedAt": "2026-08-19T20:00:00.000Z",
+      "decidedAt": "2026-08-19T20:00:00.000Z",
+      "reviewer": "Founder",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-19T20:00:00.000Z",
+        "reason": "EP-CAT-P5: Founder editorial review approved. IMAGE_BLOCKED pending image assignment."
+      }
+    },
+    {
+      "slug": "narciso-rodriguez-for-her-inspired",
+      "name": "Narciso Rodriguez For Her Inspired",
+      "collection": "Rose",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "FAIL",
+      "status": "approved",
+      "addedAt": "2026-08-19T20:00:00.000Z",
+      "reviewStartedAt": "2026-08-19T20:00:00.000Z",
+      "decidedAt": "2026-08-19T20:00:00.000Z",
+      "reviewer": "Founder",
+      "notes": [
+        {
+          "id": "note-ep5-W2-008",
+          "reviewer": "Founder",
+          "timestamp": "2026-08-19T20:00:00.000Z",
+          "section": "editorial",
+          "note": "EP-CAT-P5 correction applied: subtitle changed from 'Soft Luxury' to 'Intimate Rose' to resolve collision with peony-blush-suede-inspired.",
+          "resolved": true
+        }
+      ],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-19T20:00:00.000Z",
+        "reason": "EP-CAT-P5: Founder editorial review approved after EP-CAT-P5 deterministic correction. IMAGE_BLOCKED pending image assignment."
+      }
+    },
+    {
+      "slug": "dylan-purple-inspired",
+      "name": "Dylan Purple Inspired",
+      "collection": "Rose",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "FAIL",
+      "status": "approved",
+      "addedAt": "2026-08-19T20:00:00.000Z",
+      "reviewStartedAt": "2026-08-19T20:00:00.000Z",
+      "decidedAt": "2026-08-19T20:00:00.000Z",
+      "reviewer": "Founder",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-19T20:00:00.000Z",
+        "reason": "EP-CAT-P5: Founder editorial review approved. IMAGE_BLOCKED pending image assignment."
+      }
+    },
+    {
+      "slug": "yellow-diamond-inspired",
+      "name": "Yellow Diamond Inspired",
+      "collection": "Rose",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "FAIL",
+      "status": "approved",
+      "addedAt": "2026-08-19T20:00:00.000Z",
+      "reviewStartedAt": "2026-08-19T20:00:00.000Z",
+      "decidedAt": "2026-08-19T20:00:00.000Z",
+      "reviewer": "Founder",
+      "notes": [
+        {
+          "id": "note-ep5-W2-009",
+          "reviewer": "Founder",
+          "timestamp": "2026-08-19T20:00:00.000Z",
+          "section": "editorial",
+          "note": "recommendedFor[2] 'suitable for daily wear through evening' is borderline duration language — Founder to review before promotion.",
+          "resolved": false
+        }
+      ],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-19T20:00:00.000Z",
+        "reason": "EP-CAT-P5: Founder editorial review approved. IMAGE_BLOCKED pending image assignment."
+      }
+    },
+    {
+      "slug": "very-good-girl-elixir-inspired",
+      "name": "Very Good Girl Elixir Inspired",
+      "collection": "Rose",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "FAIL",
+      "status": "approved",
+      "addedAt": "2026-08-19T20:00:00.000Z",
+      "reviewStartedAt": "2026-08-19T20:00:00.000Z",
+      "decidedAt": "2026-08-19T20:00:00.000Z",
+      "reviewer": "Founder",
+      "notes": [
+        {
+          "id": "note-ep5-W2-010",
+          "reviewer": "Founder",
+          "timestamp": "2026-08-19T20:00:00.000Z",
+          "section": "editorial",
+          "note": "EP-CAT-P5 correction applied: recommendedFor[2] 'without reapplication' removed — explicit performance/durability claim eliminated.",
+          "resolved": true
+        }
+      ],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-19T20:00:00.000Z",
+        "reason": "EP-CAT-P5: Founder editorial review approved after EP-CAT-P5 deterministic correction. IMAGE_BLOCKED pending image assignment."
+      }
+    },
+    {
+      "slug": "gucci-guilty-pour-femme-inspired",
+      "name": "Gucci Guilty Pour Femme Inspired",
+      "collection": "Rose",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "FAIL",
+      "status": "approved",
+      "addedAt": "2026-08-19T20:00:00.000Z",
+      "reviewStartedAt": "2026-08-19T20:00:00.000Z",
+      "decidedAt": "2026-08-19T20:00:00.000Z",
+      "reviewer": "Founder",
+      "notes": [
+        {
+          "id": "note-ep5-W2-011",
+          "reviewer": "Founder",
+          "timestamp": "2026-08-19T20:00:00.000Z",
+          "section": "editorial",
+          "note": "Two advisories: (1) subtitle 'Luminous Floral Warmth' duplicates signatureStyle[0]; (2) description opening 'Pink pepper and mandarin ignite...' near-identical to eladaria-inspired. Both are minor; Founder to decide before promotion.",
+          "resolved": false
+        }
+      ],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-19T20:00:00.000Z",
+        "reason": "EP-CAT-P5: Founder editorial review approved. IMAGE_BLOCKED pending image assignment."
+      }
+    },
+    {
+      "slug": "gucci-bamboo-inspired",
+      "name": "Gucci Bamboo Inspired",
+      "collection": "Rose",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "FAIL",
+      "status": "approved",
+      "addedAt": "2026-08-19T20:00:00.000Z",
+      "reviewStartedAt": "2026-08-19T20:00:00.000Z",
+      "decidedAt": "2026-08-19T20:00:00.000Z",
+      "reviewer": "Founder",
+      "notes": [
+        {
+          "id": "note-ep5-W2-012",
+          "reviewer": "Founder",
+          "timestamp": "2026-08-19T20:00:00.000Z",
+          "section": "editorial",
+          "note": "Description presents heart/base notes (lily, sandalwood, vanilla) before the top note opening (bergamot) — reversed tier order. Editorial choice; not a violation. Founder to decide whether to reorder before promotion.",
+          "resolved": false
+        }
+      ],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-19T20:00:00.000Z",
+        "reason": "EP-CAT-P5: Founder editorial review approved. IMAGE_BLOCKED pending image assignment."
+      }
+    },
+    {
+      "slug": "eladaria-inspired",
+      "name": "Eladaria Inspired",
+      "collection": "Rose",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "FAIL",
+      "status": "approved",
+      "addedAt": "2026-08-19T20:00:00.000Z",
+      "reviewStartedAt": "2026-08-19T20:00:00.000Z",
+      "decidedAt": "2026-08-19T20:00:00.000Z",
+      "reviewer": "Founder",
+      "notes": [
+        {
+          "id": "note-ep5-W2-013",
+          "reviewer": "Founder",
+          "timestamp": "2026-08-19T20:00:00.000Z",
+          "section": "editorial",
+          "note": "Description opening 'Pink pepper and mandarin ignite...' near-identical to gucci-guilty-pour-femme-inspired — both share the same top notes and opening verb. Founder to decide if differentiation is needed before promotion.",
+          "resolved": false
+        }
+      ],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-19T20:00:00.000Z",
+        "reason": "EP-CAT-P5: Founder editorial review approved. IMAGE_BLOCKED pending image assignment."
+      }
+    },
+    {
+      "slug": "narciso-rouge-inspired",
+      "name": "Narciso Rouge Inspired",
+      "collection": "Rose",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "FAIL",
+      "status": "approved",
+      "addedAt": "2026-08-19T20:00:00.000Z",
+      "reviewStartedAt": "2026-08-19T20:00:00.000Z",
+      "decidedAt": "2026-08-19T20:00:00.000Z",
+      "reviewer": "Founder",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-19T20:00:00.000Z",
+        "reason": "EP-CAT-P5: Founder editorial review approved. IMAGE_BLOCKED pending image assignment."
+      }
+    },
+    {
+      "slug": "eden-sparkling-lychee-inspired",
+      "name": "Eden Sparkling Lychee Inspired",
+      "collection": "Rose",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "FAIL",
+      "status": "approved",
+      "addedAt": "2026-08-19T20:00:00.000Z",
+      "reviewStartedAt": "2026-08-19T20:00:00.000Z",
+      "decidedAt": "2026-08-19T20:00:00.000Z",
+      "reviewer": "Founder",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-19T20:00:00.000Z",
+        "reason": "EP-CAT-P5: Founder editorial review approved. IMAGE_BLOCKED pending image assignment."
+      }
+    },
+    {
+      "slug": "montblanc-legend-inspired",
+      "name": "Montblanc Legend Inspired",
+      "collection": "Skye",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "FAIL",
+      "status": "approved",
+      "addedAt": "2026-08-19T20:00:00.000Z",
+      "reviewStartedAt": "2026-08-19T20:00:00.000Z",
+      "decidedAt": "2026-08-19T20:00:00.000Z",
+      "reviewer": "Founder",
+      "notes": [
+        {
+          "id": "note-ep5-W2-014",
+          "reviewer": "Founder",
+          "timestamp": "2026-08-19T20:00:00.000Z",
+          "section": "editorial",
+          "note": "Subtitle 'Crisp Sophistication' duplicates signatureStyle[0] exactly — minor redundancy; no correction required.",
+          "resolved": false
+        }
+      ],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-19T20:00:00.000Z",
+        "reason": "EP-CAT-P5: Founder editorial review approved. IMAGE_BLOCKED pending image assignment."
+      }
+    },
+    {
+      "slug": "montblanc-explorer-inspired",
+      "name": "Montblanc Explorer Inspired",
+      "collection": "Skye",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "FAIL",
+      "status": "approved",
+      "addedAt": "2026-08-19T20:00:00.000Z",
+      "reviewStartedAt": "2026-08-19T20:00:00.000Z",
+      "decidedAt": "2026-08-19T20:00:00.000Z",
+      "reviewer": "Founder",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-19T20:00:00.000Z",
+        "reason": "EP-CAT-P5: Founder editorial review approved. IMAGE_BLOCKED pending image assignment."
+      }
+    },
+    {
+      "slug": "leau-dissey-pour-homme-inspired",
+      "name": "Leau Dissey Pour Homme Inspired",
+      "collection": "Skye",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "FAIL",
+      "status": "approved",
+      "addedAt": "2026-08-19T20:00:00.000Z",
+      "reviewStartedAt": "2026-08-19T20:00:00.000Z",
+      "decidedAt": "2026-08-19T20:00:00.000Z",
+      "reviewer": "Founder",
+      "notes": [
+        {
+          "id": "note-ep5-W2-015",
+          "reviewer": "Founder",
+          "timestamp": "2026-08-19T20:00:00.000Z",
+          "section": "editorial",
+          "note": "EP-CAT-P5 correction applied: recommendedFor[0] 'from morning routines through office hours and into casual evenings' removed — all-day duration implication eliminated.",
+          "resolved": true
+        }
+      ],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-19T20:00:00.000Z",
+        "reason": "EP-CAT-P5: Founder editorial review approved after EP-CAT-P5 deterministic correction. IMAGE_BLOCKED pending image assignment."
+      }
+    },
+    {
+      "slug": "tom-ford-noir-inspired",
+      "name": "Tom Ford Noir Inspired",
+      "collection": "Skye",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "FAIL",
+      "status": "approved",
+      "addedAt": "2026-08-19T20:00:00.000Z",
+      "reviewStartedAt": "2026-08-19T20:00:00.000Z",
+      "decidedAt": "2026-08-19T20:00:00.000Z",
+      "reviewer": "Founder",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-19T20:00:00.000Z",
+        "reason": "EP-CAT-P5: Founder editorial review approved. IMAGE_BLOCKED pending image assignment."
+      }
+    },
+    {
+      "slug": "polo-black-inspired",
+      "name": "Polo Black Inspired",
+      "collection": "Skye",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "FAIL",
+      "status": "approved",
+      "addedAt": "2026-08-19T20:00:00.000Z",
+      "reviewStartedAt": "2026-08-19T20:00:00.000Z",
+      "decidedAt": "2026-08-19T20:00:00.000Z",
+      "reviewer": "Founder",
+      "notes": [
+        {
+          "id": "note-ep5-W2-016",
+          "reviewer": "Founder",
+          "timestamp": "2026-08-19T20:00:00.000Z",
+          "section": "editorial",
+          "note": "Subtitle 'Dark Woody Sweet' duplicates mood field exactly — minor redundancy; no correction required.",
+          "resolved": false
+        }
+      ],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-19T20:00:00.000Z",
+        "reason": "EP-CAT-P5: Founder editorial review approved. IMAGE_BLOCKED pending image assignment."
+      }
+    },
+    {
+      "slug": "phantom-inspired",
+      "name": "Phantom Inspired",
+      "collection": "Skye",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "FAIL",
+      "status": "approved",
+      "addedAt": "2026-08-19T20:00:00.000Z",
+      "reviewStartedAt": "2026-08-19T20:00:00.000Z",
+      "decidedAt": "2026-08-19T20:00:00.000Z",
+      "reviewer": "Founder",
+      "notes": [
+        {
+          "id": "note-ep5-W2-017",
+          "reviewer": "Founder",
+          "timestamp": "2026-08-19T20:00:00.000Z",
+          "section": "editorial",
+          "note": "Subtitle 'Smoke and Lavender' duplicates signatureStyle[1] exactly — minor redundancy; no correction required.",
+          "resolved": false
+        }
+      ],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-19T20:00:00.000Z",
+        "reason": "EP-CAT-P5: Founder editorial review approved. IMAGE_BLOCKED pending image assignment."
+      }
+    },
+    {
+      "slug": "boss-bottled-elixir-inspired",
+      "name": "Boss Bottled Elixir Inspired",
+      "collection": "Skye",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "FAIL",
+      "status": "approved",
+      "addedAt": "2026-08-19T20:00:00.000Z",
+      "reviewStartedAt": "2026-08-19T20:00:00.000Z",
+      "decidedAt": "2026-08-19T20:00:00.000Z",
+      "reviewer": "Founder",
+      "notes": [
+        {
+          "id": "note-ep5-W2-018",
+          "reviewer": "Founder",
+          "timestamp": "2026-08-19T20:00:00.000Z",
+          "section": "editorial",
+          "note": "EP-CAT-P5 correction applied: recommendedFor[1] 'evolves throughout the day' removed — longevity/durability implication eliminated.",
+          "resolved": true
+        }
+      ],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-19T20:00:00.000Z",
+        "reason": "EP-CAT-P5: Founder editorial review approved after EP-CAT-P5 deterministic correction. IMAGE_BLOCKED pending image assignment."
+      }
+    },
+    {
+      "slug": "fahrenheit-inspired",
+      "name": "Fahrenheit Inspired",
+      "collection": "Skye",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "FAIL",
+      "status": "approved",
+      "addedAt": "2026-08-19T20:00:00.000Z",
+      "reviewStartedAt": "2026-08-19T20:00:00.000Z",
+      "decidedAt": "2026-08-19T20:00:00.000Z",
+      "reviewer": "Founder",
+      "notes": [
+        {
+          "id": "note-ep5-W2-019",
+          "reviewer": "Founder",
+          "timestamp": "2026-08-19T20:00:00.000Z",
+          "section": "editorial",
+          "note": "Three advisories: (1) Cedar appears in both top and heart tiers in evidence-locked notes — evidence-locked, cannot correct, Founder awareness only; (2) subtitle 'Warm Leather Woody' duplicates both mood and signatureStyle[0]; (3) recommendedFor[3] references 'tobacco' which is not in the notes pyramid.",
+          "resolved": false
+        }
+      ],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-19T20:00:00.000Z",
+        "reason": "EP-CAT-P5: Founder editorial review approved. IMAGE_BLOCKED pending image assignment."
+      }
+    },
+    {
+      "slug": "amen-fantasm-inspired",
+      "name": "Amen Fantasm Inspired",
+      "collection": "Skye",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "FAIL",
+      "status": "approved",
+      "addedAt": "2026-08-19T20:00:00.000Z",
+      "reviewStartedAt": "2026-08-19T20:00:00.000Z",
+      "decidedAt": "2026-08-19T20:00:00.000Z",
+      "reviewer": "Founder",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-19T20:00:00.000Z",
+        "reason": "EP-CAT-P5: Founder editorial review approved. IMAGE_BLOCKED pending image assignment."
+      }
+    },
+    {
+      "slug": "le-male-inspired",
+      "name": "Le Male Inspired",
+      "collection": "Skye",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "FAIL",
+      "status": "approved",
+      "addedAt": "2026-08-19T20:00:00.000Z",
+      "reviewStartedAt": "2026-08-19T20:00:00.000Z",
+      "decidedAt": "2026-08-19T20:00:00.000Z",
+      "reviewer": "Founder",
+      "notes": [
+        {
+          "id": "note-ep5-W2-020",
+          "reviewer": "Founder",
+          "timestamp": "2026-08-19T20:00:00.000Z",
+          "section": "editorial",
+          "note": "Two advisories: (1) factory header reports 4 errors (vs 3 for all other Wave 2 drafts) — 4th error is unresolved from generation; Founder to run npm run validate after image assignment; (2) description co-presents top and heart notes in the opening clause rather than sequentially.",
+          "resolved": false
+        }
+      ],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-19T20:00:00.000Z",
+        "reason": "EP-CAT-P5: Founder editorial review approved. IMAGE_BLOCKED pending image assignment."
+      }
+    },
+    {
+      "slug": "gucci-guilty-pour-homme-inspired",
+      "name": "Gucci Guilty Pour Homme Inspired",
+      "collection": "Skye",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "FAIL",
+      "status": "approved",
+      "addedAt": "2026-08-19T20:00:00.000Z",
+      "reviewStartedAt": "2026-08-19T20:00:00.000Z",
+      "decidedAt": "2026-08-19T20:00:00.000Z",
+      "reviewer": "Founder",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-19T20:00:00.000Z",
+        "reason": "EP-CAT-P5: Founder editorial review approved. IMAGE_BLOCKED pending image assignment."
+      }
+    },
+    {
+      "slug": "eros-energy-inspired",
+      "name": "Eros Energy Inspired",
+      "collection": "Skye",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "FAIL",
+      "status": "approved",
+      "addedAt": "2026-08-19T20:00:00.000Z",
+      "reviewStartedAt": "2026-08-19T20:00:00.000Z",
+      "decidedAt": "2026-08-19T20:00:00.000Z",
+      "reviewer": "Founder",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder",
+        "timestamp": "2026-08-19T20:00:00.000Z",
+        "reason": "EP-CAT-P5: Founder editorial review approved. IMAGE_BLOCKED pending image assignment."
+      }
     }
   ]
 }

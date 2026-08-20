@@ -62,7 +62,7 @@ export const veryGoodGirlElixirInspired: FragranceKnowledge = {
   recommendedFor: [
     "Women seeking a signature floral that balances elegance with sensuality for professional and evening wear.",
     "Those who love dark, gourmand florals and want something more sophisticated than purely sweet fragrances.",
-    "Anyone looking for a fragrance that transitions seamlessly from office to date night without reapplication.",
+    "Anyone looking for a fragrance that transitions seamlessly from office to date night.",
     "Women building a collection who want a rose-based scent with unexpected depth and edible warmth.",
   ],
 

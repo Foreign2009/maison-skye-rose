@@ -81,7 +81,7 @@ export const tuscanLeatherInspired: FragranceKnowledge = {
 
   // ── Education ───────────────────────────────────────────────────────────────
   subtitle      : "Dark Leather Sensuality",
-  description   : "Leather opens with spiced warmth—saffron and thyme kindle against supple suede. Olibanum and jasmine soften the hide, while amber and woody notes anchor the composition in shadow and sensuality.",
+  description   : "Raspberry and saffron open with warm spice, thyme lending herbal sharpness to the first impression. Olibanum and jasmine soften the composition through the heart, before leather and suede emerge from the base with amber and woody depth—dark, deliberate, and intimate.",
   academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "choosing-your-season-scent", "how-to-layer-fragrances"],
   academyCategories: ["fragrance-families", "the-note-pyramid", "occasions-and-style"],
   educationTags : [

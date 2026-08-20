@@ -91,7 +91,7 @@ export const leauDisseyPourHommeInspired: FragranceKnowledge = {
   seasons       : ["Spring", "Summer"],
   signatureStyle: ["Aquatic Clarity", "Fresh Masculine Lightness", "Modern Aquatic"],
   recommendedFor: [
-    "Men seeking a fresh aquatic fragrance that transitions seamlessly from morning routines through office hours and into casual evenings",
+    "Men seeking a fresh aquatic fragrance appropriate for office, weekend, and casual occasions",
     "Those who want summer brightness without heaviness — citrus and aquatics that feel clean rather than sweet",
     "Anyone building a signature collection who values versatility and a presence that feels considered rather than demanding in professional settings",
     "Travel-focused men who need one fragrance that works across climates, dress codes, and social contexts",

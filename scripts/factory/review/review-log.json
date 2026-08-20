@@ -2464,6 +2464,706 @@
       "slug": "black-opium-over-red-inspired",
       "reviewer": "Founder",
       "details": "promotionId:EQVUi88M_dwk  nativePath:app/lib/mkc/native/black-opium-over-red-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "added_to_queue",
+      "slug": "lady-million-inspired",
+      "reviewer": "system",
+      "details": "validation:FAIL  factory:0.5.0  [IMAGE_MISSING]"
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "approved",
+      "slug": "lady-million-inspired",
+      "reviewer": "Founder",
+      "details": "EP-CAT-P5 approved. IMAGE_BLOCKED."
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "added_to_queue",
+      "slug": "lacoste-noir-inspired",
+      "reviewer": "system",
+      "details": "validation:FAIL  factory:0.5.0  [IMAGE_MISSING]"
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "note_added",
+      "slug": "lacoste-noir-inspired",
+      "reviewer": "Founder",
+      "details": "[advisory] subtitle 'Fresh Dark Luxury' duplicates signatureStyle[0]; accepted for EP-CAT-P5"
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "approved",
+      "slug": "lacoste-noir-inspired",
+      "reviewer": "Founder",
+      "details": "EP-CAT-P5 approved with advisory note. IMAGE_BLOCKED."
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "added_to_queue",
+      "slug": "peony-blush-suede-inspired",
+      "reviewer": "system",
+      "details": "validation:FAIL  factory:0.5.0  [IMAGE_MISSING]"
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "note_added",
+      "slug": "peony-blush-suede-inspired",
+      "reviewer": "Founder",
+      "details": "[advisory] subtitle collision with narciso-rodriguez-for-her-inspired resolved; narciso subtitle corrected to 'Intimate Rose'"
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "approved",
+      "slug": "peony-blush-suede-inspired",
+      "reviewer": "Founder",
+      "details": "EP-CAT-P5 approved with advisory note. IMAGE_BLOCKED."
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "added_to_queue",
+      "slug": "angels-share-inspired",
+      "reviewer": "system",
+      "details": "validation:FAIL  factory:0.5.0  [IMAGE_MISSING]"
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "approved",
+      "slug": "angels-share-inspired",
+      "reviewer": "Founder",
+      "details": "EP-CAT-P5 approved. IMAGE_BLOCKED."
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "added_to_queue",
+      "slug": "angels-share-paradis-inspired",
+      "reviewer": "system",
+      "details": "validation:FAIL  factory:0.5.0  [IMAGE_MISSING]"
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "approved",
+      "slug": "angels-share-paradis-inspired",
+      "reviewer": "Founder",
+      "details": "EP-CAT-P5 approved. IMAGE_BLOCKED."
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "added_to_queue",
+      "slug": "gold-oud-inspired",
+      "reviewer": "system",
+      "details": "validation:FAIL  factory:0.5.0  [IMAGE_MISSING]"
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "approved",
+      "slug": "gold-oud-inspired",
+      "reviewer": "Founder",
+      "details": "EP-CAT-P5 approved. IMAGE_BLOCKED."
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "added_to_queue",
+      "slug": "velvet-rose-oud-inspired",
+      "reviewer": "system",
+      "details": "validation:FAIL  factory:0.5.0  [IMAGE_MISSING]"
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "note_added",
+      "slug": "velvet-rose-oud-inspired",
+      "reviewer": "Founder",
+      "details": "[advisory] description contains internal contradiction: 'refusing to whisper' vs 'whispers rather than shouts'; accepted for EP-CAT-P5"
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "approved",
+      "slug": "velvet-rose-oud-inspired",
+      "reviewer": "Founder",
+      "details": "EP-CAT-P5 approved with advisory note. IMAGE_BLOCKED."
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "added_to_queue",
+      "slug": "english-pear-freesia-inspired",
+      "reviewer": "system",
+      "details": "validation:FAIL  factory:0.5.0  [IMAGE_MISSING]"
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "approved",
+      "slug": "english-pear-freesia-inspired",
+      "reviewer": "Founder",
+      "details": "EP-CAT-P5 approved. IMAGE_BLOCKED."
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "added_to_queue",
+      "slug": "oud-bergamot-inspired",
+      "reviewer": "system",
+      "details": "validation:FAIL  factory:0.5.0  [IMAGE_MISSING]"
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "approved",
+      "slug": "oud-bergamot-inspired",
+      "reviewer": "Founder",
+      "details": "EP-CAT-P5 approved. IMAGE_BLOCKED."
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "added_to_queue",
+      "slug": "black-orchid-inspired",
+      "reviewer": "system",
+      "details": "validation:FAIL  factory:0.5.0  [IMAGE_MISSING]"
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "note_added",
+      "slug": "black-orchid-inspired",
+      "reviewer": "Founder",
+      "details": "[advisory] subtitle 'Dark Floral Mysterious' reads as mood descriptor rather than character name; accepted for EP-CAT-P5"
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "approved",
+      "slug": "black-orchid-inspired",
+      "reviewer": "Founder",
+      "details": "EP-CAT-P5 approved with advisory note. IMAGE_BLOCKED."
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "added_to_queue",
+      "slug": "soleil-blanc-inspired",
+      "reviewer": "system",
+      "details": "validation:FAIL  factory:0.5.0  [IMAGE_MISSING]"
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "note_added",
+      "slug": "soleil-blanc-inspired",
+      "reviewer": "Founder",
+      "details": "[advisory] subtitle 'Warm Floral Creamy' reads as mood descriptor rather than character name; accepted for EP-CAT-P5"
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "approved",
+      "slug": "soleil-blanc-inspired",
+      "reviewer": "Founder",
+      "details": "EP-CAT-P5 approved with advisory note. IMAGE_BLOCKED."
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "added_to_queue",
+      "slug": "khamrah-inspired",
+      "reviewer": "system",
+      "details": "validation:FAIL  factory:0.5.0  [IMAGE_MISSING]"
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "approved",
+      "slug": "khamrah-inspired",
+      "reviewer": "Founder",
+      "details": "EP-CAT-P5 approved. IMAGE_BLOCKED."
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "added_to_queue",
+      "slug": "tuscan-leather-inspired",
+      "reviewer": "system",
+      "details": "validation:FAIL  factory:0.5.0  [IMAGE_MISSING]"
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "note_added",
+      "slug": "tuscan-leather-inspired",
+      "reviewer": "Founder",
+      "details": "[corrected] temporal tier violation: Leather/Suede (BASE notes) described as opening composition; description rewritten to respect tier order top→heart→base"
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "approved",
+      "slug": "tuscan-leather-inspired",
+      "reviewer": "Founder",
+      "details": "EP-CAT-P5 approved after correction. IMAGE_BLOCKED."
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "added_to_queue",
+      "slug": "idole-inspired",
+      "reviewer": "system",
+      "details": "validation:FAIL  factory:0.5.0  [IMAGE_MISSING]"
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "approved",
+      "slug": "idole-inspired",
+      "reviewer": "Founder",
+      "details": "EP-CAT-P5 approved. IMAGE_BLOCKED."
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "added_to_queue",
+      "slug": "fame-inspired",
+      "reviewer": "system",
+      "details": "validation:FAIL  factory:0.5.0  [IMAGE_MISSING]"
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "approved",
+      "slug": "fame-inspired",
+      "reviewer": "Founder",
+      "details": "EP-CAT-P5 approved. IMAGE_BLOCKED."
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "added_to_queue",
+      "slug": "olympea-inspired",
+      "reviewer": "system",
+      "details": "validation:FAIL  factory:0.5.0  [IMAGE_MISSING]"
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "approved",
+      "slug": "olympea-inspired",
+      "reviewer": "Founder",
+      "details": "EP-CAT-P5 approved. IMAGE_BLOCKED."
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "added_to_queue",
+      "slug": "scandal-inspired",
+      "reviewer": "system",
+      "details": "validation:FAIL  factory:0.5.0  [IMAGE_MISSING]"
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "note_added",
+      "slug": "scandal-inspired",
+      "reviewer": "Founder",
+      "details": "[corrected] description placed Beeswax/Caramel (BASE notes) in heart context; description rewritten; 'linger beautifully' performance implication removed from recommendedFor[2]"
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "approved",
+      "slug": "scandal-inspired",
+      "reviewer": "Founder",
+      "details": "EP-CAT-P5 approved after correction. IMAGE_BLOCKED."
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "added_to_queue",
+      "slug": "la-belle-inspired",
+      "reviewer": "system",
+      "details": "validation:FAIL  factory:0.5.0  [IMAGE_MISSING]"
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "approved",
+      "slug": "la-belle-inspired",
+      "reviewer": "Founder",
+      "details": "EP-CAT-P5 approved. IMAGE_BLOCKED."
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "added_to_queue",
+      "slug": "la-nuit-tresor-inspired",
+      "reviewer": "system",
+      "details": "validation:FAIL  factory:0.5.0  [IMAGE_MISSING]"
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "approved",
+      "slug": "la-nuit-tresor-inspired",
+      "reviewer": "Founder",
+      "details": "EP-CAT-P5 approved. IMAGE_BLOCKED."
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "added_to_queue",
+      "slug": "narciso-rodriguez-for-her-inspired",
+      "reviewer": "system",
+      "details": "validation:FAIL  factory:0.5.0  [IMAGE_MISSING]"
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "note_added",
+      "slug": "narciso-rodriguez-for-her-inspired",
+      "reviewer": "Founder",
+      "details": "[corrected] subtitle collision 'Soft Luxury' with peony-blush-suede-inspired; subtitle changed to 'Intimate Rose'"
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "approved",
+      "slug": "narciso-rodriguez-for-her-inspired",
+      "reviewer": "Founder",
+      "details": "EP-CAT-P5 approved after correction. IMAGE_BLOCKED."
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "added_to_queue",
+      "slug": "dylan-purple-inspired",
+      "reviewer": "system",
+      "details": "validation:FAIL  factory:0.5.0  [IMAGE_MISSING]"
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "approved",
+      "slug": "dylan-purple-inspired",
+      "reviewer": "Founder",
+      "details": "EP-CAT-P5 approved. IMAGE_BLOCKED."
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "added_to_queue",
+      "slug": "yellow-diamond-inspired",
+      "reviewer": "system",
+      "details": "validation:FAIL  factory:0.5.0  [IMAGE_MISSING]"
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "note_added",
+      "slug": "yellow-diamond-inspired",
+      "reviewer": "Founder",
+      "details": "[advisory] recommendedFor[2] 'daily wear through evening' carries borderline duration implication; accepted as character/occasion language for EP-CAT-P5"
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "approved",
+      "slug": "yellow-diamond-inspired",
+      "reviewer": "Founder",
+      "details": "EP-CAT-P5 approved with advisory note. IMAGE_BLOCKED."
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "added_to_queue",
+      "slug": "very-good-girl-elixir-inspired",
+      "reviewer": "system",
+      "details": "validation:FAIL  factory:0.5.0  [IMAGE_MISSING]"
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "note_added",
+      "slug": "very-good-girl-elixir-inspired",
+      "reviewer": "Founder",
+      "details": "[corrected] 'without reapplication' explicit performance/durability claim removed from recommendedFor[2]"
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "approved",
+      "slug": "very-good-girl-elixir-inspired",
+      "reviewer": "Founder",
+      "details": "EP-CAT-P5 approved after correction. IMAGE_BLOCKED."
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "added_to_queue",
+      "slug": "gucci-guilty-pour-femme-inspired",
+      "reviewer": "system",
+      "details": "validation:FAIL  factory:0.5.0  [IMAGE_MISSING]"
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "note_added",
+      "slug": "gucci-guilty-pour-femme-inspired",
+      "reviewer": "Founder",
+      "details": "[advisory] subtitle duplicates signatureStyle[0]; opening near-identical to eladaria-inspired; accepted as distinct characters for EP-CAT-P5"
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "approved",
+      "slug": "gucci-guilty-pour-femme-inspired",
+      "reviewer": "Founder",
+      "details": "EP-CAT-P5 approved with advisory note. IMAGE_BLOCKED."
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "added_to_queue",
+      "slug": "gucci-bamboo-inspired",
+      "reviewer": "system",
+      "details": "validation:FAIL  factory:0.5.0  [IMAGE_MISSING]"
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "note_added",
+      "slug": "gucci-bamboo-inspired",
+      "reviewer": "Founder",
+      "details": "[advisory] description presents heart notes (Rose, Peach Blossom) before top note (Bergamot) opening; accepted for EP-CAT-P5"
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "approved",
+      "slug": "gucci-bamboo-inspired",
+      "reviewer": "Founder",
+      "details": "EP-CAT-P5 approved with advisory note. IMAGE_BLOCKED."
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "added_to_queue",
+      "slug": "eladaria-inspired",
+      "reviewer": "system",
+      "details": "validation:FAIL  factory:0.5.0  [IMAGE_MISSING]"
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "note_added",
+      "slug": "eladaria-inspired",
+      "reviewer": "Founder",
+      "details": "[advisory] opening near-identical to gucci-guilty-pour-femme-inspired (both lead with mandarin/citrus); accepted as distinct characters for EP-CAT-P5"
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "approved",
+      "slug": "eladaria-inspired",
+      "reviewer": "Founder",
+      "details": "EP-CAT-P5 approved with advisory note. IMAGE_BLOCKED."
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "added_to_queue",
+      "slug": "narciso-rouge-inspired",
+      "reviewer": "system",
+      "details": "validation:FAIL  factory:0.5.0  [IMAGE_MISSING]"
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "approved",
+      "slug": "narciso-rouge-inspired",
+      "reviewer": "Founder",
+      "details": "EP-CAT-P5 approved. IMAGE_BLOCKED."
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "added_to_queue",
+      "slug": "eden-sparkling-lychee-inspired",
+      "reviewer": "system",
+      "details": "validation:FAIL  factory:0.5.0  [IMAGE_MISSING]"
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "approved",
+      "slug": "eden-sparkling-lychee-inspired",
+      "reviewer": "Founder",
+      "details": "EP-CAT-P5 approved. IMAGE_BLOCKED."
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "added_to_queue",
+      "slug": "montblanc-legend-inspired",
+      "reviewer": "system",
+      "details": "validation:FAIL  factory:0.5.0  [IMAGE_MISSING]"
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "note_added",
+      "slug": "montblanc-legend-inspired",
+      "reviewer": "Founder",
+      "details": "[advisory] subtitle 'Crisp Sophistication' duplicates signatureStyle[0]; accepted for EP-CAT-P5"
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "approved",
+      "slug": "montblanc-legend-inspired",
+      "reviewer": "Founder",
+      "details": "EP-CAT-P5 approved with advisory note. IMAGE_BLOCKED."
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "added_to_queue",
+      "slug": "montblanc-explorer-inspired",
+      "reviewer": "system",
+      "details": "validation:FAIL  factory:0.5.0  [IMAGE_MISSING]"
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "approved",
+      "slug": "montblanc-explorer-inspired",
+      "reviewer": "Founder",
+      "details": "EP-CAT-P5 approved. IMAGE_BLOCKED."
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "added_to_queue",
+      "slug": "leau-dissey-pour-homme-inspired",
+      "reviewer": "system",
+      "details": "validation:FAIL  factory:0.5.0  [IMAGE_MISSING]"
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "note_added",
+      "slug": "leau-dissey-pour-homme-inspired",
+      "reviewer": "Founder",
+      "details": "[corrected] all-day duration implication 'from morning routines through office hours and into casual evenings' removed from recommendedFor[0]; replaced with occasion-based language"
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "approved",
+      "slug": "leau-dissey-pour-homme-inspired",
+      "reviewer": "Founder",
+      "details": "EP-CAT-P5 approved after correction. IMAGE_BLOCKED."
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "added_to_queue",
+      "slug": "tom-ford-noir-inspired",
+      "reviewer": "system",
+      "details": "validation:FAIL  factory:0.5.0  [IMAGE_MISSING]"
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "approved",
+      "slug": "tom-ford-noir-inspired",
+      "reviewer": "Founder",
+      "details": "EP-CAT-P5 approved. IMAGE_BLOCKED."
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "added_to_queue",
+      "slug": "polo-black-inspired",
+      "reviewer": "system",
+      "details": "validation:FAIL  factory:0.5.0  [IMAGE_MISSING]"
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "note_added",
+      "slug": "polo-black-inspired",
+      "reviewer": "Founder",
+      "details": "[advisory] subtitle 'Dark Woody Sweet' reads as mood descriptor rather than character name; accepted for EP-CAT-P5"
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "approved",
+      "slug": "polo-black-inspired",
+      "reviewer": "Founder",
+      "details": "EP-CAT-P5 approved with advisory note. IMAGE_BLOCKED."
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "added_to_queue",
+      "slug": "phantom-inspired",
+      "reviewer": "system",
+      "details": "validation:FAIL  factory:0.5.0  [IMAGE_MISSING]"
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "note_added",
+      "slug": "phantom-inspired",
+      "reviewer": "Founder",
+      "details": "[advisory] subtitle 'Smoke and Lavender' duplicates signatureStyle[1]; accepted for EP-CAT-P5"
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "approved",
+      "slug": "phantom-inspired",
+      "reviewer": "Founder",
+      "details": "EP-CAT-P5 approved with advisory note. IMAGE_BLOCKED."
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "added_to_queue",
+      "slug": "boss-bottled-elixir-inspired",
+      "reviewer": "system",
+      "details": "validation:FAIL  factory:0.5.0  [IMAGE_MISSING]"
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "note_added",
+      "slug": "boss-bottled-elixir-inspired",
+      "reviewer": "Founder",
+      "details": "[corrected] 'evolves throughout the day' longevity implication removed from recommendedFor[1]; replaced with character language"
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "approved",
+      "slug": "boss-bottled-elixir-inspired",
+      "reviewer": "Founder",
+      "details": "EP-CAT-P5 approved after correction. IMAGE_BLOCKED."
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "added_to_queue",
+      "slug": "fahrenheit-inspired",
+      "reviewer": "system",
+      "details": "validation:FAIL  factory:0.5.0  [IMAGE_MISSING]"
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "note_added",
+      "slug": "fahrenheit-inspired",
+      "reviewer": "Founder",
+      "details": "[advisory] Cedar cross-tier in evidence-locked notes; subtitle duplicates mood and signatureStyle[0]; 'tobacco' referenced but absent from evidence-locked notes; accepted for EP-CAT-P5"
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "approved",
+      "slug": "fahrenheit-inspired",
+      "reviewer": "Founder",
+      "details": "EP-CAT-P5 approved with advisory note. IMAGE_BLOCKED."
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "added_to_queue",
+      "slug": "amen-fantasm-inspired",
+      "reviewer": "system",
+      "details": "validation:FAIL  factory:0.5.0  [IMAGE_MISSING]"
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "approved",
+      "slug": "amen-fantasm-inspired",
+      "reviewer": "Founder",
+      "details": "EP-CAT-P5 approved. IMAGE_BLOCKED."
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "added_to_queue",
+      "slug": "le-male-inspired",
+      "reviewer": "system",
+      "details": "validation:FAIL  factory:0.5.0  [IMAGE_MISSING]"
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "note_added",
+      "slug": "le-male-inspired",
+      "reviewer": "Founder",
+      "details": "[advisory] 4 factory errors including 1 unresolved; description co-presents top/heart notes; accepted with advisory for EP-CAT-P5"
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "approved",
+      "slug": "le-male-inspired",
+      "reviewer": "Founder",
+      "details": "EP-CAT-P5 approved with advisory note. IMAGE_BLOCKED."
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "added_to_queue",
+      "slug": "gucci-guilty-pour-homme-inspired",
+      "reviewer": "system",
+      "details": "validation:FAIL  factory:0.5.0  [IMAGE_MISSING]"
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "approved",
+      "slug": "gucci-guilty-pour-homme-inspired",
+      "reviewer": "Founder",
+      "details": "EP-CAT-P5 approved. IMAGE_BLOCKED."
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "added_to_queue",
+      "slug": "eros-energy-inspired",
+      "reviewer": "system",
+      "details": "validation:FAIL  factory:0.5.0  [IMAGE_MISSING]"
+    },
+    {
+      "timestamp": "2026-08-19T20:00:00.000Z",
+      "action": "approved",
+      "slug": "eros-energy-inspired",
+      "reviewer": "Founder",
+      "details": "EP-CAT-P5 approved. IMAGE_BLOCKED."
     }
   ]
 }

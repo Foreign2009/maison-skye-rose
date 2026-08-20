@@ -60,7 +60,7 @@ export const bossBottledElixirInspired: FragranceKnowledge = {
   signatureStyle: ["Warm Oriental Woody", "Amber Resin Signature", "Balanced Sophistication"],
   recommendedFor: [
     "Men seeking a warm, resinous signature that bridges professional polish and evening sophistication.",
-    "Those who appreciate spiced woods and amber over fresh citrus, and want depth that evolves throughout the day.",
+    "Those who appreciate spiced woods and amber over fresh citrus, and want resinous depth and earthy complexity.",
     "Anyone building a fragrance wardrobe who needs a confident autumn and winter staple for office and date nights.",
   ],
 

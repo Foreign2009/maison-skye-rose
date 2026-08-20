@@ -68,7 +68,7 @@ export const scandalInspired: FragranceKnowledge = {
   recommendedFor: [
     "Women seeking a signature scent that balances honeyed sweetness with sophisticated floral depth for evening and date occasions.",
     "Those who love gourmand fragrances but want elegance over pure dessert—a sensual fragrance that feels luxurious rather than juvenile.",
-    "Anyone drawn to warm, full-bodied florals with caramel and honey undertones that linger beautifully in professional and social settings.",
+    "Anyone drawn to warm, full-bodied florals with caramel and honey undertones, suited to evening and professional occasions.",
   ],
 
   // ── Merchandising ───────────────────────────────────────────────────────────
@@ -87,7 +87,7 @@ export const scandalInspired: FragranceKnowledge = {
 
   // ── Education ───────────────────────────────────────────────────────────────
   subtitle      : "Honeyed Scandal",
-  description   : "Blood orange and mandarin open with crystalline brightness, immediately softened by honeyed gardenia and jasmine. The heart deepens into caramel and beeswax—a warm, almost edible sweetness—while patchouli adds subtle earthiness beneath layers of peach and orange blossom.",
+  description   : "Blood orange and mandarin open with crystalline brightness, immediately softened by honeyed gardenia and jasmine. Peach and orange blossom deepen the floral heart into something warm and full, before beeswax and caramel settle the composition into a rich base of patchouli and licorice.",
   academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances", "choosing-your-season-scent"],
   academyCategories: ["fragrance-families", "the-note-pyramid", "occasions-and-style"],
   educationTags : [
