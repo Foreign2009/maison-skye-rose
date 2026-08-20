@@ -1,27 +1,27 @@
-// ═════════════════════════════════════════════════════════════════
-// FACTORY DRAFT — idole-inspired
-// ─────────────────────────────────────────────────────────────────
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// FACTORY DRAFT â€” idole-inspired
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 // Generated:         2026-08-19T18:33:50.409Z
 // Factory version:   0.5.0
 // Prompt versions:   EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0
-// Validation status: FAIL  [3 error(s), 0 warning(s)]
-// Projected KQ tier: (not available — requires Intelligence Producer)
-// ─────────────────────────────────────────────────────────────────
+// Validation status: PASS  [0 error(s), 0 warning(s)]
+// Projected KQ tier: (not available â€” requires Intelligence Producer)
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 // REVIEW CHECKLIST
-//   □ Notes pyramid verified (≥ 2 per tier, no cross-tier duplicates)
-//   □ Description reviewed in Maison editorial voice
-//   □ Vibe tags meet minimum of 3 (from approved vocabulary)
-//   □ recommendedFor has minimum of 2 persona statements
-//   □ All FACTORY_ERROR markers resolved
-//   □ All FACTORY_WARN markers reviewed
-//   □ Relationship suggestions reviewed (see footer)
-//   □ npm run mkc:validate passes before promotion
-// ═════════════════════════════════════════════════════════════════
+//   â–¡ Notes pyramid verified (â‰¥ 2 per tier, no cross-tier duplicates)
+//   â–¡ Description reviewed in Maison editorial voice
+//   â–¡ Vibe tags meet minimum of 3 (from approved vocabulary)
+//   â–¡ recommendedFor has minimum of 2 persona statements
+//   â–¡ All FACTORY_ERROR markers resolved
+//   â–¡ All FACTORY_WARN markers reviewed
+//   â–¡ Relationship suggestions reviewed (see footer)
+//   â–¡ npm run mkc:validate passes before promotion
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 
 import type { FragranceKnowledge } from "../../../app/lib/mkc/types";
 
 export const idoleInspired: FragranceKnowledge = {
-  // ── Identity ──────────────────────────────────────────────────────────────────
+  // â”€â”€ Identity â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   id            : "idole-inspired",
   slug          : "idole-inspired",
   brand         : "Maison Skye & Rose",
@@ -30,13 +30,13 @@ export const idoleInspired: FragranceKnowledge = {
   catalogVersion: "1.0",
   status        : "active",
 
-  // ── Classification ────────────────────────────────────────────────────────────
+  // â”€â”€ Classification â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   gender        : "female",
   family        : ["Floral"],
   scentCharacter: "Balanced Signature",
   projection    : "moderate",
 
-  // ── Composition ─────────────────────────────────────────────────────────────
+  // â”€â”€ Composition â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   profile       : "Floral",
   season        : "Spring",
   notes: {
@@ -47,7 +47,7 @@ export const idoleInspired: FragranceKnowledge = {
   notesEvidenceLocked: true,
   mood          : "Clean Floral Fresh",
 
-  // ── Discovery ───────────────────────────────────────────────────────────────
+  // â”€â”€ Discovery â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   vibe          : [
     "Clean",
     "Fresh",
@@ -72,23 +72,23 @@ export const idoleInspired: FragranceKnowledge = {
     "Fragrance collectors wanting a modern rose that pairs beautifully with both professional and intimate wardrobes",
   ],
 
-  // ── Merchandising ───────────────────────────────────────────────────────────
+  // â”€â”€ Merchandising â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   prices: {
     "5ml":  60,
     "10ml": 100,
     "30ml": 250,
   },
   images: {
-    "5ml":  "",  // FACTORY_ERROR: IMAGE_MISSING — image path for 5ml is required
-    "10ml": "",  // FACTORY_ERROR: IMAGE_MISSING — image path for 10ml is required
-    "30ml": "",  // FACTORY_ERROR: IMAGE_MISSING — image path for 30ml is required
+    "5ml":  "/images/pink-5ml.png",
+    "10ml": "/images/pink-10ml.png",
+    "30ml": "/images/glass-pink-30ml.png",
   },
   bestSeller    : false,
   newArrival    : false,
 
-  // ── Education ───────────────────────────────────────────────────────────────
+  // â”€â”€ Education â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   subtitle      : "Luminous Rose",
-  description   : "Opens with bright pear and bergamot, a luminous prelude to a heart of rose and jasmine that blooms with quiet intensity. White musk and vanilla anchor the composition, creating a fragrance that feels both fresh and deeply sensual—modern femininity distilled to its essence.",
+  description   : "Opens with bright pear and bergamot, a luminous prelude to a heart of rose and jasmine that blooms with quiet intensity. White musk and vanilla anchor the composition, creating a fragrance that feels both fresh and deeply sensualâ€”modern femininity distilled to its essence.",
   academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "what-makes-a-signature-scent", "how-to-layer-fragrances"],
   academyCategories: ["fragrance-families", "the-note-pyramid", "occasions-and-style"],
   educationTags : [
@@ -105,7 +105,7 @@ export const idoleInspired: FragranceKnowledge = {
   ],
   learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "what-makes-a-signature-scent", "how-to-layer-fragrances"],
 
-  // ── Intelligence ────────────────────────────────────────────────────────────
+  // â”€â”€ Intelligence â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   // Approximated from profile + season. Calibrated by Intelligence Producer in P2.
   sweetness     : 2,
   freshness     : 3,
@@ -114,7 +114,7 @@ export const idoleInspired: FragranceKnowledge = {
   versatility   : 3,
   popularity    : 5,
 
-  // ── Relationships ────────────────────────────────────────────────────────────
+  // â”€â”€ Relationships â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
     alternatives:     ["delina-inspired", "chance-eau-tendre-inspired", "coco-mademoiselle-inspired"],

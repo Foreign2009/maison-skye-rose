@@ -1,27 +1,27 @@
-// ═════════════════════════════════════════════════════════════════
-// FACTORY DRAFT — eros-energy-inspired
-// ─────────────────────────────────────────────────────────────────
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// FACTORY DRAFT â€” eros-energy-inspired
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 // Generated:         2026-08-19T19:02:40.078Z
 // Factory version:   0.5.0
 // Prompt versions:   EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0
-// Validation status: FAIL  [3 error(s), 0 warning(s)]
-// Projected KQ tier: (not available — requires Intelligence Producer)
-// ─────────────────────────────────────────────────────────────────
+// Validation status: PASS  [0 error(s), 0 warning(s)]
+// Projected KQ tier: (not available â€” requires Intelligence Producer)
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 // REVIEW CHECKLIST
-//   □ Notes pyramid verified (≥ 2 per tier, no cross-tier duplicates)
-//   □ Description reviewed in Maison editorial voice
-//   □ Vibe tags meet minimum of 3 (from approved vocabulary)
-//   □ recommendedFor has minimum of 2 persona statements
-//   □ All FACTORY_ERROR markers resolved
-//   □ All FACTORY_WARN markers reviewed
-//   □ Relationship suggestions reviewed (see footer)
-//   □ npm run mkc:validate passes before promotion
-// ═════════════════════════════════════════════════════════════════
+//   â–¡ Notes pyramid verified (â‰¥ 2 per tier, no cross-tier duplicates)
+//   â–¡ Description reviewed in Maison editorial voice
+//   â–¡ Vibe tags meet minimum of 3 (from approved vocabulary)
+//   â–¡ recommendedFor has minimum of 2 persona statements
+//   â–¡ All FACTORY_ERROR markers resolved
+//   â–¡ All FACTORY_WARN markers reviewed
+//   â–¡ Relationship suggestions reviewed (see footer)
+//   â–¡ npm run mkc:validate passes before promotion
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 
 import type { FragranceKnowledge } from "../../../app/lib/mkc/types";
 
 export const erosEnergyInspired: FragranceKnowledge = {
-  // ── Identity ──────────────────────────────────────────────────────────────────
+  // â”€â”€ Identity â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   id            : "eros-energy-inspired",
   slug          : "eros-energy-inspired",
   brand         : "Maison Skye & Rose",
@@ -30,13 +30,13 @@ export const erosEnergyInspired: FragranceKnowledge = {
   catalogVersion: "1.0",
   status        : "active",
 
-  // ── Classification ────────────────────────────────────────────────────────────
+  // â”€â”€ Classification â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   gender        : "male",
   family        : ["Aromatic", "Citrus"],
   scentCharacter: "Fresh & Light",
   projection    : "moderate",
 
-  // ── Composition ─────────────────────────────────────────────────────────────
+  // â”€â”€ Composition â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   profile       : "Citrus Aromatic",
   season        : "Summer",
   notes: {
@@ -54,7 +54,7 @@ export const erosEnergyInspired: FragranceKnowledge = {
   notesEvidenceLocked: true,
   mood          : "Fresh Energetic Citrus",
 
-  // ── Discovery ───────────────────────────────────────────────────────────────
+  // â”€â”€ Discovery â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   vibe          : [
     "Fresh",
     "Energetic",
@@ -67,25 +67,25 @@ export const erosEnergyInspired: FragranceKnowledge = {
   signatureStyle: ["Citrus Velocity", "Fresh Aromatic", "Summer Signature"],
   recommendedFor: [
     "Men seeking a bright, energetic citrus for summer days and casual weekend activities",
-    "Those who want immediate freshness with a subtle spicy edge — clean but not boring",
+    "Those who want immediate freshness with a subtle spicy edge â€” clean but not boring",
     "Anyone looking for a fresh signature that carries with easy brightness for daily wear without demanding attention",
   ],
 
-  // ── Merchandising ───────────────────────────────────────────────────────────
+  // â”€â”€ Merchandising â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   prices: {
     "5ml":  60,
     "10ml": 100,
     "30ml": 250,
   },
   images: {
-    "5ml":  "",  // FACTORY_ERROR: IMAGE_MISSING — image path for 5ml is required
-    "10ml": "",  // FACTORY_ERROR: IMAGE_MISSING — image path for 10ml is required
-    "30ml": "",  // FACTORY_ERROR: IMAGE_MISSING — image path for 30ml is required
+    "5ml":  "/images/blue-5ml.png",
+    "10ml": "/images/blue-10ml.png",
+    "30ml": "/images/glass-blue-30ml.png",
   },
   bestSeller    : false,
   newArrival    : false,
 
-  // ── Education ───────────────────────────────────────────────────────────────
+  // â”€â”€ Education â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   subtitle      : "Citrus Velocity",
   description   : "Blood orange and bergamot collide with a sharp edge of grapefruit, creating an immediate sense of vitality and motion. Pink pepper adds a subtle bite to the heart, while patchouli and musk anchor the composition with quiet depth, preventing the brightness from ever turning shrill.",
   academyArticleIds: ["guide-to-fragrance-families", "choosing-your-season-scent", "how-to-wear-fragrance"],
@@ -104,7 +104,7 @@ export const erosEnergyInspired: FragranceKnowledge = {
   ],
   learningPath  : ["guide-to-fragrance-families", "choosing-your-season-scent", "how-to-wear-fragrance"],
 
-  // ── Intelligence ────────────────────────────────────────────────────────────
+  // â”€â”€ Intelligence â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   // Approximated from profile + season. Calibrated by Intelligence Producer in P2.
   sweetness     : 1,
   freshness     : 5,
@@ -113,7 +113,7 @@ export const erosEnergyInspired: FragranceKnowledge = {
   versatility   : 3,
   popularity    : 5,
 
-  // ── Relationships ────────────────────────────────────────────────────────────
+  // â”€â”€ Relationships â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
     alternatives:     ["sauvage-inspired", "bleu-de-chanel-inspired", "aqua-di-gio-inspired"],

@@ -4,7 +4,7 @@
 // Generated:         2026-08-19T19:03:50.849Z
 // Factory version:   0.5.0
 // Prompt versions:   EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0
-// Validation status: FAIL  [4 error(s), 0 warning(s)]
+// Validation status: PASS  [0 error(s), 0 warning(s)]
 // Projected KQ tier: (not available — requires Intelligence Producer)
 // ─────────────────────────────────────────────────────────────────
 // REVIEW CHECKLIST
@@ -72,9 +72,9 @@ export const leMaleInspired: FragranceKnowledge = {
     "30ml": 250,
   },
   images: {
-    "5ml":  "",  // FACTORY_ERROR: IMAGE_MISSING — image path for 5ml is required
-    "10ml": "",  // FACTORY_ERROR: IMAGE_MISSING — image path for 10ml is required
-    "30ml": "",  // FACTORY_ERROR: IMAGE_MISSING — image path for 30ml is required
+    "5ml":  "/images/blue-5ml.png",
+    "10ml": "/images/blue-10ml.png",
+    "30ml": "/images/glass-blue-30ml.png",
   },
   bestSeller    : false,
   newArrival    : false,
