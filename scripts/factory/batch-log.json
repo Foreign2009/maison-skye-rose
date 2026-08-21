@@ -2,6 +2,39 @@
   "version": "1.0",
   "batches": [
     {
+      "batchId": "2026-08-19T18-03-23",
+      "startedAt": "2026-08-19T18:03:23.389Z",
+      "completedAt": "2026-08-19T18:03:23.413Z",
+      "config": {
+        "maxConcurrency": 3,
+        "dryRun": false,
+        "force": false
+      },
+      "report": {
+        "batchId": "2026-08-19T18-03-23",
+        "startedAt": "2026-08-19T18:03:23.389Z",
+        "completedAt": "2026-08-19T18:03:23.413Z",
+        "durationMs": 24,
+        "total": 10,
+        "generated": 10,
+        "skipped": 0,
+        "failed": 0,
+        "tokenUsage": {
+          "promptTokens": 0,
+          "completionTokens": 0,
+          "totalTokens": 0
+        },
+        "estimatedCostUsd": 0,
+        "validationSummary": {
+          "pass": 0,
+          "passWithWarnings": 0,
+          "fail": 10,
+          "unknown": 0
+        },
+        "failures": []
+      }
+    },
+    {
       "batchId": "2026-07-13T18-27-34",
       "startedAt": "2026-07-13T18:27:34.011Z",
       "completedAt": "2026-07-13T18:31:37.006Z",
