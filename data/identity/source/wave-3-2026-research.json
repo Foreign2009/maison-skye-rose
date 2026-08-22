@@ -1,6 +1,6 @@
 {
   "batchId": "wave-3-2026",
-  "description": "Wave 3 — August 2026 research scope manifest. 30 entries: ROSE (10), SKYE (10), ELITE (10). External research conducted in EP-CAT-P10D (2026-08-22). All 30 entries researched. 29 entries READY; 1 entry FOUNDER_DECISION_REQUIRED (UNISEX-49, Xerjoff withholds notes).",
+  "description": "Wave 3 — August 2026 research scope manifest. 30 entries: ROSE (10), SKYE (10), ELITE (10). External research conducted in EP-CAT-P10D (2026-08-22). All 30 entries researched. 29 entries READY; 1 entry BRAND_NARRATIVE_ONLY (UNISEX-49, Xerjoff withholds notes — Founder approved brand-narrative-only governance 2026-08-22). EP-CAT-P11: Torino24 governance closed.",
   "governance": {
     "phase": "EP-CAT-P10D",
     "authorizedBy": "Founder — Wave 3 Selection Authorization 2026-08-21",
@@ -19,6 +19,7 @@
       "READY_FROM_EXISTING_EVIDENCE": "Legacy status — LADIES-202 only. Identity and flanker governance resolved via existing disposition record before EP-CAT-P10D. Now promoted to READY after notes research.",
       "VERIFIED_MIP_EVIDENCE": "Legacy status — MIP-000006 only. Canonical identity resolved via verified MIP record before EP-CAT-P10D. Now promoted to READY after notes research.",
       "FOUNDER_DECISION_REQUIRED": "Research conducted but governance gap requires Founder confirmation before proceeding. See sourceNotes for the specific decision required.",
+      "BRAND_NARRATIVE_ONLY": "Founder decision received. Brand deliberately withholds official notes. Factory generation proceeds using brand narrative only. Community-sourced notes preserved in research record as LOW-confidence reference only — NOT canonical. Community notes must not enter canonical note fields or factory output.",
       "BLOCKED": "Research cannot proceed due to unresolvable conflict or missing prerequisite."
     },
     "readySummary": {
@@ -27,7 +28,8 @@
         "MEN-58","MEN-4","MEN-154","MEN-38","MEN-42","MEN-35","MEN-10","MEN-33","MEN-88","MEN-99",
         "UNISEX-32","UNISEX-1","UNISEX-17","UNISEX-60","UNISEX-36","UNISEX-20","UNISEX-61","UNISEX-24","UNISEX-9"
       ],
-      "FOUNDER_DECISION_REQUIRED": ["UNISEX-49"],
+      "BRAND_NARRATIVE_ONLY": ["UNISEX-49"],
+      "FOUNDER_DECISION_REQUIRED": [],
       "RESEARCH_REQUIRED": [],
       "BLOCKED": []
     },
@@ -775,9 +777,11 @@
       "_collection": "ELITE",
       "_sourceKey": "UNISEX-49-Torino 24 by Xerjoff",
       "supplierName": "Torino 24 by Xerjoff",
-      "evidenceStatus": "FOUNDER_DECISION_REQUIRED",
+      "evidenceStatus": "BRAND_NARRATIVE_ONLY",
+      "founderDecision": "BRAND_NARRATIVE_ONLY",
+      "founderDecisionDate": "2026-08-22",
       "researchRequired": false,
-      "researchNotes": "Research conducted. GOVERNANCE GAP: Xerjoff explicitly does NOT publish official notes for the 'Join the Club' collection. Notes listed below are community-sourced from Fragrantica — NOT confirmed by brand. Founder decision required: proceed with LOW-confidence community notes, or accept an evidence-only description without specific notes.",
+      "researchNotes": "Research conducted. GOVERNANCE GAP RESOLVED (EP-CAT-P11): Xerjoff explicitly does NOT publish official notes for the 'Join the Club' collection. Founder decision received 2026-08-22: BRAND_NARRATIVE_ONLY — community-sourced notes below are preserved as LOW-confidence reference only and must NOT enter canonical note fields or factory output.",
       "canonicalName": "TORINO24",
       "brand": "Xerjoff",
       "launchYear": 2024,
@@ -791,7 +795,7 @@
       "perfumer": null,
       "sourceConfidence": "LOW",
       "founderSupplied": false,
-      "sourceNotes": "GOVERNANCE FLAG — FOUNDER DECISION REQUIRED: Xerjoff officially states notes for all 'Join the Club' collection fragrances are kept secret (confirmed on xerjoff.com product page). Notes in this record are crowd-sourced/community-inferred from Fragrantica and third-party sites — NOT confirmed by Xerjoff. Source confidence: LOW. Canonical name: 'TORINO24' (official Xerjoff spelling, no space; commonly written 'Torino 24' with space by third parties). Options: (A) Proceed with LOW-confidence community notes for product description — acceptable if brand secret is noted in copy; (B) Leave notes field empty and write fragrance description from brand narrative only. Perfumer not disclosed.",
+      "sourceNotes": "GOVERNANCE RESOLVED (EP-CAT-P11, 2026-08-22): Xerjoff officially states notes for all 'Join the Club' collection fragrances are kept secret (confirmed on xerjoff.com product page). Founder decision: BRAND_NARRATIVE_ONLY. Notes in this record (topNotes, heartNotes, baseNotes) are crowd-sourced/community-inferred from Fragrantica and third-party sites — NOT confirmed by Xerjoff — and are preserved here as LOW-confidence reference only. These notes must NOT enter canonical note fields or factory staging output. Factory catalogue entry for TORINO24 must carry empty notes arrays with notesEvidenceLocked:true to prevent AI note generation. Canonical name: 'TORINO24' (official Xerjoff spelling, no space). Perfumer not disclosed.",
       "possibleNameIssue": true,
       "nameIssueExplanation": "Official Xerjoff spelling is 'TORINO24' (no space). Third parties use 'Torino 24' (with space). Both forms circulate.",
       "conflicts": [

@@ -1,7 +1,7 @@
 /**
  * Wave 3 Research Governance — Validation Script
  *
- * EP-CAT-P10D: verifies Wave 3 research evidence governance state.
+ * EP-CAT-P10D/P11: verifies Wave 3 research evidence governance state.
  * Validates wave-3-2026-research.json only — NO generated drafts required
  * because factory generation has not occurred yet for Wave 3.
  *
@@ -12,14 +12,15 @@
  *
  * Governance constraints verified:
  *   - All 30 entries present (ROSE=10, SKYE=10, ELITE=10)
- *   - 29 READY entries, 1 FOUNDER_DECISION_REQUIRED (UNISEX-49 Torino24)
+ *   - 29 READY entries, 1 BRAND_NARRATIVE_ONLY (UNISEX-49 Torino24 — EP-CAT-P11)
+ *   - 0 FOUNDER_DECISION_REQUIRED (all decisions resolved)
  *   - All READY entries have notes populated
  *   - 2 UNORDERED_GOVERNED_NOTES entries: top=[], base=[], heart non-empty
  *   - 1 SPARSE structured entry (Scandal Pour Homme Le Parfum 1-1-1)
  *   - All READY entries have evidenceSources
  *   - Accent characters preserved in canonical names
  *   - Year corrections applied (My Way Nectar 2024, 212 VIP Black 2017, etc.)
- *   - Torino24 sourceConfidence is LOW
+ *   - Torino24 evidenceStatus BRAND_NARRATIVE_ONLY; sourceConfidence LOW (community reference only)
  */
 
 import assert from "node:assert/strict";
@@ -121,11 +122,14 @@ test("W3-V6 — 29 entries have evidenceStatus READY", () => {
   assert.equal(ready.length, 29, `Expected 29 READY entries, got ${ready.length}`);
 });
 
-test("W3-V7 — 1 entry has evidenceStatus FOUNDER_DECISION_REQUIRED (UNISEX-49 Torino24)", () => {
+test("W3-V7 — 1 entry has evidenceStatus BRAND_NARRATIVE_ONLY (UNISEX-49 Torino24 — EP-CAT-P11 Founder decision)", () => {
+  const bno = entries.filter(e => e.evidenceStatus === "BRAND_NARRATIVE_ONLY");
+  assert.equal(bno.length, 1, `Expected 1 BRAND_NARRATIVE_ONLY entry, got ${bno.length}`);
+  assert.ok(bno[0]._sourceKey.includes("UNISEX-49"),
+    `BRAND_NARRATIVE_ONLY entry must be UNISEX-49 (Torino24), got ${bno[0]._sourceKey}`);
+  // FOUNDER_DECISION_REQUIRED must now be empty — decision has been made
   const fdr = entries.filter(e => e.evidenceStatus === "FOUNDER_DECISION_REQUIRED");
-  assert.equal(fdr.length, 1, `Expected 1 FOUNDER_DECISION_REQUIRED entry, got ${fdr.length}`);
-  assert.ok(fdr[0]._sourceKey.includes("UNISEX-49"),
-    `FOUNDER_DECISION_REQUIRED entry must be UNISEX-49 (Torino24), got ${fdr[0]._sourceKey}`);
+  assert.equal(fdr.length, 0, `FOUNDER_DECISION_REQUIRED must be 0 after EP-CAT-P11 Founder decision, got ${fdr.length}`);
 });
 
 test("W3-V8 — 0 entries remain as RESEARCH_REQUIRED (research campaign complete)", () => {
@@ -277,11 +281,11 @@ test("W3-V26 — Centaurus launchYear is 2024 (not 2023 from initial brief)", ()
     `Centaurus launchYear must be 2024 (corrected from 2023), got ${entry.launchYear}`);
 });
 
-// ── Section 8: Torino24 governance flag ──────────────────────────────────────
+// ── Section 8: Torino24 brand-narrative-only governance (EP-CAT-P11) ─────────
 
-console.log("\n  ─── Section 8: Torino24 governance ───\n");
+console.log("\n  ─── Section 8: Torino24 brand-narrative-only governance ───\n");
 
-test("W3-V27 — Torino24 sourceConfidence is LOW (Xerjoff withholds notes)", () => {
+test("W3-V27 — Torino24 sourceConfidence is LOW (community notes preserved as non-canonical reference)", () => {
   const entry = find("UNISEX-49");
   assert.equal(entry.sourceConfidence, "LOW",
     `Torino24 sourceConfidence must be LOW (community-inferred notes), got '${entry.sourceConfidence}'`);
@@ -344,5 +348,5 @@ if (failed > 0) {
   console.log(`\n  PASS — all ${passed} Wave 3 governance validation checks passed.\n`);
   console.log("  Wave 3 research governance: VERIFIED");
   console.log("  29 entries READY for factory staging.");
-  console.log("  1 entry (UNISEX-49 Torino24) requires Founder decision.\n");
+  console.log("  1 entry (UNISEX-49 Torino24) BRAND_NARRATIVE_ONLY — Founder decision received EP-CAT-P11.\n");
 }

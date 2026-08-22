@@ -736,22 +736,23 @@ test("TEST 33 — Wave 3 governance: special-character canonical names preserved
     "Louis Vuitton canonical name must be 'Attrape-Rêves' with correct accent — not 'Attrape-Reves'");
 });
 
-// TEST 34: Wave 3 governance — FOUNDER_DECISION_REQUIRED flag for Torino24.
-// Xerjoff withholds notes; evidence confidence is LOW and flag must be set.
-test("TEST 34 — Wave 3 governance: Torino24 carries FOUNDER_DECISION_REQUIRED and LOW confidence", () => {
+// TEST 34: Wave 3 governance — BRAND_NARRATIVE_ONLY governance for Torino24 (EP-CAT-P11).
+// Xerjoff withholds notes; Founder approved brand-narrative-only governance 2026-08-22.
+// Community notes preserved as LOW-confidence reference only — not canonical.
+test("TEST 34 — Wave 3 governance: Torino24 carries BRAND_NARRATIVE_ONLY status and LOW confidence", () => {
   const torino = wave3Research.entries.find(e => e._sourceKey.includes("UNISEX-49"));
   assert.ok(torino, "UNISEX-49 Torino24 entry must exist in wave-3 research JSON");
-  assert.equal(torino?.evidenceStatus, "FOUNDER_DECISION_REQUIRED",
-    "Torino24 must be FOUNDER_DECISION_REQUIRED — Xerjoff does not publish official notes");
+  assert.equal(torino?.evidenceStatus, "BRAND_NARRATIVE_ONLY",
+    "Torino24 must be BRAND_NARRATIVE_ONLY — Founder decision EP-CAT-P11: Xerjoff withholds notes; no community notes enter canonical fields");
   assert.equal(torino?.sourceConfidence, "LOW",
-    "Torino24 source confidence must be LOW — notes are community-inferred, not brand-confirmed");
+    "Torino24 source confidence must remain LOW — community notes preserved as non-canonical reference only");
 });
 
 // TEST 35: Wave 3 governance — 29 READY entries and all year corrections applied.
 test("TEST 35 — Wave 3 governance: 29 READY entries; year corrections applied for known candidates", () => {
   const readyCount = wave3Research.entries.filter(e => e.evidenceStatus === "READY").length;
   assert.equal(readyCount, 29,
-    `Wave 3 research must have exactly 29 READY entries (got ${readyCount}); 1 is FOUNDER_DECISION_REQUIRED`);
+    `Wave 3 research must have exactly 29 READY entries (got ${readyCount}); 1 is BRAND_NARRATIVE_ONLY (Torino24 — EP-CAT-P11)`);
 
   // Year correction: My Way Nectar must be 2024, not 2022 (disposition record error)
   const myWayNectar = wave3Research.entries.find(e => e._sourceKey.includes("LADIES-202"));
