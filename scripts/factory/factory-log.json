@@ -2,6 +2,2007 @@
   "version": "1.0",
   "runs": [
     {
+      "slug": "armani-prive-oud-royal-inspired",
+      "name": "Armani Prive Oud Royal Inspired",
+      "wave": null,
+      "startedAt": "2026-08-22T18:54:41.955Z",
+      "completedAt": "2026-08-22T18:54:54.948Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "skip",
+          "durationMs": 0,
+          "message": "EVIDENCE_LOCK — governed notes preserved from scaffold; AI generation bypassed"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 1681,
+          "message": "808 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 4832,
+          "message": "6949 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 2416,
+          "message": "1360 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 4062,
+          "message": "1714 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "10831 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "fail",
+          "durationMs": 0,
+          "message": "FAIL  [3 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 2
+        }
+      ],
+      "validationStatus": "FAIL",
+      "promotedAt": null
+    },
+    {
+      "slug": "dark-vanilla-inspired",
+      "name": "Dark Vanilla Inspired",
+      "wave": null,
+      "startedAt": "2026-08-22T18:54:27.202Z",
+      "completedAt": "2026-08-22T18:54:41.930Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 1
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "skip",
+          "durationMs": 0,
+          "message": "EVIDENCE_LOCK — governed notes preserved from scaffold; AI generation bypassed"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 1661,
+          "message": "813 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 5554,
+          "message": "6919 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 2572,
+          "message": "1409 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 4937,
+          "message": "1725 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "10866 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "fail",
+          "durationMs": 0,
+          "message": "FAIL  [3 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 2
+        }
+      ],
+      "validationStatus": "FAIL",
+      "promotedAt": null
+    },
+    {
+      "slug": "grapefruit-inspired",
+      "name": "Grapefruit Inspired",
+      "wave": null,
+      "startedAt": "2026-08-22T18:54:15.612Z",
+      "completedAt": "2026-08-22T18:54:27.163Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 1
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "skip",
+          "durationMs": 0,
+          "message": "EVIDENCE_LOCK — governed notes preserved from scaffold; AI generation bypassed"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 1918,
+          "message": "800 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 2714,
+          "message": "6753 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 2683,
+          "message": "1301 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 4232,
+          "message": "1622 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "10476 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "fail",
+          "durationMs": 0,
+          "message": "FAIL  [3 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 3
+        }
+      ],
+      "validationStatus": "FAIL",
+      "promotedAt": null
+    },
+    {
+      "slug": "centaurus-inspired",
+      "name": "Centaurus Inspired",
+      "wave": null,
+      "startedAt": "2026-08-22T18:54:00.446Z",
+      "completedAt": "2026-08-22T18:54:15.579Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "skip",
+          "durationMs": 0,
+          "message": "EVIDENCE_LOCK — governed notes preserved from scaffold; AI generation bypassed"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 1712,
+          "message": "829 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 4639,
+          "message": "6953 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 3092,
+          "message": "1371 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 5687,
+          "message": "1719 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "10872 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "fail",
+          "durationMs": 0,
+          "message": "FAIL  [3 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 2
+        }
+      ],
+      "validationStatus": "FAIL",
+      "promotedAt": null
+    },
+    {
+      "slug": "outlands-inspired",
+      "name": "Outlands Inspired",
+      "wave": null,
+      "startedAt": "2026-08-22T18:53:44.881Z",
+      "completedAt": "2026-08-22T18:54:00.417Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 1
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "skip",
+          "durationMs": 0,
+          "message": "EVIDENCE_LOCK — governed notes preserved from scaffold; AI generation bypassed"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 2192,
+          "message": "919 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 4462,
+          "message": "7003 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 4178,
+          "message": "1557 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 4701,
+          "message": "1770 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "11249 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "fail",
+          "durationMs": 0,
+          "message": "FAIL  [3 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 2
+        }
+      ],
+      "validationStatus": "FAIL",
+      "promotedAt": null
+    },
+    {
+      "slug": "fig-lotus-flower-inspired",
+      "name": "Fig Lotus Flower Inspired",
+      "wave": null,
+      "startedAt": "2026-08-22T18:53:33.977Z",
+      "completedAt": "2026-08-22T18:53:44.861Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 1
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "skip",
+          "durationMs": 0,
+          "message": "EVIDENCE_LOCK — governed notes preserved from scaffold; AI generation bypassed"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 1539,
+          "message": "786 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 3095,
+          "message": "6683 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 2470,
+          "message": "1303 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 3775,
+          "message": "1602 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "10374 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "fail",
+          "durationMs": 0,
+          "message": "FAIL  [3 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 3
+        }
+      ],
+      "validationStatus": "FAIL",
+      "promotedAt": null
+    },
+    {
+      "slug": "cinque-terre-inspired",
+      "name": "Cinque Terre Inspired",
+      "wave": null,
+      "startedAt": "2026-08-22T18:53:20.038Z",
+      "completedAt": "2026-08-22T18:53:33.945Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "skip",
+          "durationMs": 0,
+          "message": "EVIDENCE_LOCK — governed notes preserved from scaffold; AI generation bypassed"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 2018,
+          "message": "817 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 3520,
+          "message": "6742 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 3858,
+          "message": "1448 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 4509,
+          "message": "1686 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "10693 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "fail",
+          "durationMs": 0,
+          "message": "FAIL  [3 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 2
+        }
+      ],
+      "validationStatus": "FAIL",
+      "promotedAt": null
+    },
+    {
+      "slug": "abu-dhabi-inspired",
+      "name": "Abu Dhabi Inspired",
+      "wave": null,
+      "startedAt": "2026-08-22T18:53:06.825Z",
+      "completedAt": "2026-08-22T18:53:20.010Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 1
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "skip",
+          "durationMs": 0,
+          "message": "EVIDENCE_LOCK — governed notes preserved from scaffold; AI generation bypassed"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 1740,
+          "message": "918 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 2892,
+          "message": "6801 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 3537,
+          "message": "1503 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 5011,
+          "message": "1793 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "11015 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "fail",
+          "durationMs": 0,
+          "message": "FAIL  [3 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 4
+        }
+      ],
+      "validationStatus": "FAIL",
+      "promotedAt": null
+    },
+    {
+      "slug": "oud-sapparot-inspired",
+      "name": "Oud Sapparot Inspired",
+      "wave": null,
+      "startedAt": "2026-08-22T18:52:54.739Z",
+      "completedAt": "2026-08-22T18:53:06.806Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "skip",
+          "durationMs": 0,
+          "message": "EVIDENCE_LOCK — governed notes preserved from scaffold; AI generation bypassed"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 1932,
+          "message": "835 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 3562,
+          "message": "6791 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 2710,
+          "message": "1418 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 3859,
+          "message": "1676 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "10720 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "fail",
+          "durationMs": 1,
+          "message": "FAIL  [3 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 2
+        }
+      ],
+      "validationStatus": "FAIL",
+      "promotedAt": null
+    },
+    {
+      "slug": "lacoste-blanc-inspired",
+      "name": "Lacoste Blanc Inspired",
+      "wave": null,
+      "startedAt": "2026-08-22T18:52:38.575Z",
+      "completedAt": "2026-08-22T18:52:54.718Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "skip",
+          "durationMs": 0,
+          "message": "EVIDENCE_LOCK — governed notes preserved from scaffold; AI generation bypassed"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 1499,
+          "message": "829 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 4847,
+          "message": "6934 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 3260,
+          "message": "1373 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 6533,
+          "message": "1724 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "10860 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "fail",
+          "durationMs": 0,
+          "message": "FAIL  [3 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 4
+        }
+      ],
+      "validationStatus": "FAIL",
+      "promotedAt": null
+    },
+    {
+      "slug": "scandal-pour-homme-inspired",
+      "name": "Scandal Pour Homme Inspired",
+      "wave": null,
+      "startedAt": "2026-08-22T18:52:26.083Z",
+      "completedAt": "2026-08-22T18:52:38.566Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 1
+        },
+        {
+          "stage": "composition",
+          "status": "skip",
+          "durationMs": 0,
+          "message": "EVIDENCE_LOCK — governed notes preserved from scaffold; AI generation bypassed"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 1867,
+          "message": "797 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 4150,
+          "message": "6859 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 2324,
+          "message": "1324 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 4137,
+          "message": "1668 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "10648 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "fail",
+          "durationMs": 0,
+          "message": "FAIL  [3 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 4
+        }
+      ],
+      "validationStatus": "FAIL",
+      "promotedAt": null
+    },
+    {
+      "slug": "aqva-amara-inspired",
+      "name": "Aqva Amara Inspired",
+      "wave": null,
+      "startedAt": "2026-08-22T18:52:13.957Z",
+      "completedAt": "2026-08-22T18:52:26.053Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "skip",
+          "durationMs": 0,
+          "message": "EVIDENCE_LOCK — governed notes preserved from scaffold; AI generation bypassed"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 2148,
+          "message": "828 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 4060,
+          "message": "6849 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 2378,
+          "message": "1356 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 3506,
+          "message": "1653 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "10686 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "fail",
+          "durationMs": 0,
+          "message": "FAIL  [3 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 3
+        }
+      ],
+      "validationStatus": "FAIL",
+      "promotedAt": null
+    },
+    {
+      "slug": "212-vip-black-inspired",
+      "name": "212 Vip Black Inspired",
+      "wave": null,
+      "startedAt": "2026-08-22T18:52:02.816Z",
+      "completedAt": "2026-08-22T18:52:13.921Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 1
+        },
+        {
+          "stage": "composition",
+          "status": "skip",
+          "durationMs": 0,
+          "message": "EVIDENCE_LOCK — governed notes preserved from scaffold; AI generation bypassed"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 1732,
+          "message": "812 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 3491,
+          "message": "6780 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 2427,
+          "message": "1345 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 3451,
+          "message": "1643 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "10580 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "fail",
+          "durationMs": 0,
+          "message": "FAIL  [3 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 3
+        }
+      ],
+      "validationStatus": "FAIL",
+      "promotedAt": null
+    },
+    {
+      "slug": "bvlgari-black-inspired",
+      "name": "Bvlgari Black Inspired",
+      "wave": null,
+      "startedAt": "2026-08-22T18:51:49.977Z",
+      "completedAt": "2026-08-22T18:52:02.777Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "skip",
+          "durationMs": 0,
+          "message": "EVIDENCE_LOCK — governed notes preserved from scaffold; AI generation bypassed"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 1834,
+          "message": "828 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 4727,
+          "message": "6928 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 2905,
+          "message": "1363 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 3330,
+          "message": "1641 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "10760 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "fail",
+          "durationMs": 0,
+          "message": "FAIL  [3 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 3
+        }
+      ],
+      "validationStatus": "FAIL",
+      "promotedAt": null
+    },
+    {
+      "slug": "eternity-inspired",
+      "name": "Eternity Inspired",
+      "wave": null,
+      "startedAt": "2026-08-22T18:51:36.697Z",
+      "completedAt": "2026-08-22T18:51:49.940Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "skip",
+          "durationMs": 0,
+          "message": "EVIDENCE_LOCK — governed notes preserved from scaffold; AI generation bypassed"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 1836,
+          "message": "858 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 4121,
+          "message": "6893 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 3065,
+          "message": "1395 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 4217,
+          "message": "1730 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "10876 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "fail",
+          "durationMs": 0,
+          "message": "FAIL  [3 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 2
+        }
+      ],
+      "validationStatus": "FAIL",
+      "promotedAt": null
+    },
+    {
+      "slug": "burberry-london-inspired",
+      "name": "Burberry London Inspired",
+      "wave": null,
+      "startedAt": "2026-08-22T18:51:24.374Z",
+      "completedAt": "2026-08-22T18:51:36.675Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 1
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "skip",
+          "durationMs": 1,
+          "message": "EVIDENCE_LOCK — governed notes preserved from scaffold; AI generation bypassed"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 1894,
+          "message": "826 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 3851,
+          "message": "6859 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 2969,
+          "message": "1462 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 3577,
+          "message": "1660 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "10807 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "fail",
+          "durationMs": 1,
+          "message": "FAIL  [3 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 7
+        }
+      ],
+      "validationStatus": "FAIL",
+      "promotedAt": null
+    },
+    {
+      "slug": "egoiste-platinum-inspired",
+      "name": "Egoiste Platinum Inspired",
+      "wave": null,
+      "startedAt": "2026-08-22T18:51:10.897Z",
+      "completedAt": "2026-08-22T18:51:24.351Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 1
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "skip",
+          "durationMs": 0,
+          "message": "EVIDENCE_LOCK — governed notes preserved from scaffold; AI generation bypassed"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 1730,
+          "message": "845 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 3000,
+          "message": "6751 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 3601,
+          "message": "1419 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 5118,
+          "message": "1755 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "10770 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "fail",
+          "durationMs": 1,
+          "message": "FAIL  [3 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 3
+        }
+      ],
+      "validationStatus": "FAIL",
+      "promotedAt": null
+    },
+    {
+      "slug": "bois-pacifique-inspired",
+      "name": "Bois Pacifique Inspired",
+      "wave": null,
+      "startedAt": "2026-08-22T18:50:59.193Z",
+      "completedAt": "2026-08-22T18:51:10.891Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 1
+        },
+        {
+          "stage": "composition",
+          "status": "skip",
+          "durationMs": 0,
+          "message": "EVIDENCE_LOCK — governed notes preserved from scaffold; AI generation bypassed"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 1689,
+          "message": "836 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 4041,
+          "message": "6873 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 2365,
+          "message": "1386 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 3600,
+          "message": "1682 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "10777 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "fail",
+          "durationMs": 0,
+          "message": "FAIL  [3 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 1
+        }
+      ],
+      "validationStatus": "FAIL",
+      "promotedAt": null
+    },
+    {
+      "slug": "light-blue-pour-homme-inspired",
+      "name": "Light Blue Pour Homme Inspired",
+      "wave": null,
+      "startedAt": "2026-08-22T18:50:45.280Z",
+      "completedAt": "2026-08-22T18:50:59.183Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 2
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 1
+        },
+        {
+          "stage": "composition",
+          "status": "skip",
+          "durationMs": 0,
+          "message": "EVIDENCE_LOCK — governed notes preserved from scaffold; AI generation bypassed"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 1651,
+          "message": "823 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 4579,
+          "message": "6939 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 3634,
+          "message": "1468 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 4035,
+          "message": "1693 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "10923 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "fail",
+          "durationMs": 0,
+          "message": "FAIL  [3 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 1
+        }
+      ],
+      "validationStatus": "FAIL",
+      "promotedAt": null
+    },
+    {
+      "slug": "a-la-rose-inspired",
+      "name": "A La Rose Inspired",
+      "wave": null,
+      "startedAt": "2026-08-22T18:50:32.498Z",
+      "completedAt": "2026-08-22T18:50:45.259Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 1
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "skip",
+          "durationMs": 0,
+          "message": "EVIDENCE_LOCK — governed notes preserved from scaffold; AI generation bypassed"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 2684,
+          "message": "796 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 3717,
+          "message": "6784 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 2423,
+          "message": "1364 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 3933,
+          "message": "1668 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "10612 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "fail",
+          "durationMs": 1,
+          "message": "FAIL  [3 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 2
+        }
+      ],
+      "validationStatus": "FAIL",
+      "promotedAt": null
+    },
+    {
+      "slug": "crazy-in-love-inspired",
+      "name": "Crazy in Love Inspired",
+      "wave": null,
+      "startedAt": "2026-08-22T18:50:17.667Z",
+      "completedAt": "2026-08-22T18:50:32.492Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "skip",
+          "durationMs": 0,
+          "message": "EVIDENCE_LOCK — governed notes preserved from scaffold; AI generation bypassed"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 2358,
+          "message": "806 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 4678,
+          "message": "6920 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 2843,
+          "message": "1367 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 4945,
+          "message": "1671 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "10764 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "fail",
+          "durationMs": 0,
+          "message": "FAIL  [3 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 1
+        }
+      ],
+      "validationStatus": "FAIL",
+      "promotedAt": null
+    },
+    {
+      "slug": "valaya-exclusif-inspired",
+      "name": "Valaya Exclusif Inspired",
+      "wave": null,
+      "startedAt": "2026-08-22T18:50:06.129Z",
+      "completedAt": "2026-08-22T18:50:17.655Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 1
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "skip",
+          "durationMs": 0,
+          "message": "EVIDENCE_LOCK — governed notes preserved from scaffold; AI generation bypassed"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 1516,
+          "message": "827 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 3328,
+          "message": "6744 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 2124,
+          "message": "1380 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 4555,
+          "message": "1705 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "10656 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "fail",
+          "durationMs": 0,
+          "message": "FAIL  [3 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 2
+        }
+      ],
+      "validationStatus": "FAIL",
+      "promotedAt": null
+    },
+    {
+      "slug": "omnia-crystalline-inspired",
+      "name": "Omnia Crystalline Inspired",
+      "wave": null,
+      "startedAt": "2026-08-22T18:49:54.134Z",
+      "completedAt": "2026-08-22T18:50:06.122Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 1
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "skip",
+          "durationMs": 0,
+          "message": "EVIDENCE_LOCK — governed notes preserved from scaffold; AI generation bypassed"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 1685,
+          "message": "805 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 3614,
+          "message": "6783 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 3090,
+          "message": "1353 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 3596,
+          "message": "1666 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "10607 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "fail",
+          "durationMs": 0,
+          "message": "FAIL  [3 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 2
+        }
+      ],
+      "validationStatus": "FAIL",
+      "promotedAt": null
+    },
+    {
+      "slug": "attrape-reves-inspired",
+      "name": "Attrape Reves Inspired",
+      "wave": null,
+      "startedAt": "2026-08-22T18:49:40.420Z",
+      "completedAt": "2026-08-22T18:49:54.123Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 1
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "skip",
+          "durationMs": 0,
+          "message": "EVIDENCE_LOCK — governed notes preserved from scaffold; AI generation bypassed"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 2329,
+          "message": "826 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 4758,
+          "message": "6983 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 2726,
+          "message": "1413 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 3887,
+          "message": "1677 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "10899 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "fail",
+          "durationMs": 0,
+          "message": "FAIL  [3 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 2
+        }
+      ],
+      "validationStatus": "FAIL",
+      "promotedAt": null
+    },
+    {
+      "slug": "gabrielle-inspired",
+      "name": "Gabrielle Inspired",
+      "wave": null,
+      "startedAt": "2026-08-22T18:49:27.422Z",
+      "completedAt": "2026-08-22T18:49:40.402Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "skip",
+          "durationMs": 0,
+          "message": "EVIDENCE_LOCK — governed notes preserved from scaffold; AI generation bypassed"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 1417,
+          "message": "848 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 3806,
+          "message": "6851 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 3144,
+          "message": "1397 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 4610,
+          "message": "1717 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "10813 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "fail",
+          "durationMs": 0,
+          "message": "FAIL  [3 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 3
+        }
+      ],
+      "validationStatus": "FAIL",
+      "promotedAt": null
+    },
+    {
+      "slug": "chanel-no-5-inspired",
+      "name": "Chanel No 5 Inspired",
+      "wave": null,
+      "startedAt": "2026-08-22T18:49:13.966Z",
+      "completedAt": "2026-08-22T18:49:27.415Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 1
+        },
+        {
+          "stage": "composition",
+          "status": "skip",
+          "durationMs": 0,
+          "message": "EVIDENCE_LOCK — governed notes preserved from scaffold; AI generation bypassed"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 2581,
+          "message": "864 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "degraded",
+          "durationMs": 3731,
+          "message": "6842 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 3234,
+          "message": "1401 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 3901,
+          "message": "1762 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "10869 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "fail",
+          "durationMs": 0,
+          "message": "FAIL  [3 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 1
+        }
+      ],
+      "validationStatus": "FAIL",
+      "promotedAt": null
+    },
+    {
+      "slug": "queen-of-silk-inspired",
+      "name": "Queen of Silk Inspired",
+      "wave": null,
+      "startedAt": "2026-08-22T18:49:01.496Z",
+      "completedAt": "2026-08-22T18:49:13.960Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "skip",
+          "durationMs": 0,
+          "message": "EVIDENCE_LOCK — governed notes preserved from scaffold; AI generation bypassed"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 1633,
+          "message": "823 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 3422,
+          "message": "6852 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 2454,
+          "message": "1367 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 4954,
+          "message": "1736 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "10778 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "fail",
+          "durationMs": 0,
+          "message": "FAIL  [3 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 1
+        }
+      ],
+      "validationStatus": "FAIL",
+      "promotedAt": null
+    },
+    {
+      "slug": "changing-constance-inspired",
+      "name": "Changing Constance Inspired",
+      "wave": null,
+      "startedAt": "2026-08-22T18:48:48.404Z",
+      "completedAt": "2026-08-22T18:49:01.468Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 1
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "skip",
+          "durationMs": 0,
+          "message": "EVIDENCE_LOCK — governed notes preserved from scaffold; AI generation bypassed"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 1913,
+          "message": "815 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 4671,
+          "message": "6912 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 2443,
+          "message": "1354 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 4031,
+          "message": "1684 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "10765 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "fail",
+          "durationMs": 1,
+          "message": "FAIL  [3 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 2
+        }
+      ],
+      "validationStatus": "FAIL",
+      "promotedAt": null
+    },
+    {
+      "slug": "my-way-nectar-inspired",
+      "name": "My Way Nectar Inspired",
+      "wave": null,
+      "startedAt": "2026-08-22T15:14:35.936Z",
+      "completedAt": "2026-08-22T15:14:49.113Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 1
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 1
+        },
+        {
+          "stage": "composition",
+          "status": "skip",
+          "durationMs": 0,
+          "message": "EVIDENCE_LOCK — governed notes preserved from scaffold; AI generation bypassed"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 2098,
+          "message": "835 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 3534,
+          "message": "6809 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 2484,
+          "message": "1364 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 5050,
+          "message": "1730 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "10738 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "fail",
+          "durationMs": 2,
+          "message": "FAIL  [3 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 3
+        }
+      ],
+      "validationStatus": "FAIL",
+      "promotedAt": null
+    },
+    {
       "slug": "le-male-inspired",
       "name": "Le Male Inspired",
       "wave": null,
