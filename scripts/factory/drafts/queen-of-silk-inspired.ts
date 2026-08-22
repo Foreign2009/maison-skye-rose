@@ -60,9 +60,9 @@ export const queenOfSilkInspired: FragranceKnowledge = {
   seasons       : ["Spring", "Summer", "Autumn", "Winter"],
   signatureStyle: ["Luminous Floral Amber", "Creamy Sophistication", "Warm Luxury Floral"],
   recommendedFor: [
-    "Women seeking a rich, enveloping fragrance that transitions seamlessly from day to evening and feels like a signature second skin.",
+    "Women seeking a rich, enveloping fragrance that transitions seamlessly from day to evening with timeless character.",
     "Those who love creamy florals with depth and warmth — tuberose and patchouli lovers who want luxury without sweetness dominating.",
-    "Anyone drawn to amber and woody base notes who wants a full-bodied floral that lingers with sophistication and sensuality.",
+    "Anyone drawn to amber and woody base notes who wants a full-bodied floral with sophistication and sensuality.",
     "Women building a refined fragrance wardrobe who need one versatile floral-amber that works year-round and pairs beautifully with other scents.",
   ],
 
@@ -73,9 +73,9 @@ export const queenOfSilkInspired: FragranceKnowledge = {
     "30ml": 250,
   },
   images: {
-    "5ml":  "",  // FACTORY_ERROR: IMAGE_MISSING — image path for 5ml is required
-    "10ml": "",  // FACTORY_ERROR: IMAGE_MISSING — image path for 10ml is required
-    "30ml": "",  // FACTORY_ERROR: IMAGE_MISSING — image path for 30ml is required
+    "5ml":  "/images/pink-5ml.png",
+    "10ml": "/images/pink-10ml.png",
+    "30ml": "/images/glass-pink-30ml.png",
   },
   bestSeller    : false,
   newArrival    : false,

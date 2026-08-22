@@ -3330,6 +3330,968 @@
                                          "timestamp":  "2026-08-19T20:00:00.000Z",
                                          "reason":  "EP-CAT-P5: Founder editorial review approved. IMAGE_BLOCKED pending image assignment."
                                      }
+                    },
+                    {
+                        "slug":  "a-la-rose-inspired",
+                        "name":  "A La Rose Inspired",
+                        "collection":  "Rose",
+                        "factoryVersion":  "0.5.0",
+                        "promptVersions":  "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+                        "validationStatus":  "PASS",
+                        "status":  "approved",
+                        "addedAt":  "2026-08-22T00:00:00.000Z",
+                        "reviewStartedAt":  "2026-08-22T00:00:00.000Z",
+                        "decidedAt":  "2026-08-22T00:00:00.000Z",
+                        "reviewer":  "Founder",
+                        "notes":  [
+                                      {
+                                          "id":  "note-ep13-W3-001",
+                                          "reviewer":  "Founder",
+                                          "timestamp":  "2026-08-22T00:00:00.000Z",
+                                          "section":  "editorial",
+                                          "note":  "Correction applied: recommendedFor[3] 'balanced projection' rewritten to 'timeless elegance' — performance/projection claim removed.",
+                                          "resolved":  true
+                                      }
+                                  ],
+                        "decision":  {
+                                         "decision":  "approved",
+                                         "reviewer":  "Founder",
+                                         "timestamp":  "2026-08-22T00:00:00.000Z",
+                                         "reason":  "EP-CAT-P13: Founder editorial review approved. All governance violations corrected."
+                                     }
+                    },
+                    {
+                        "slug":  "212-vip-black-inspired",
+                        "name":  "212 VIP Black Inspired",
+                        "collection":  "Skye",
+                        "factoryVersion":  "0.5.0",
+                        "promptVersions":  "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+                        "validationStatus":  "PASS",
+                        "status":  "approved",
+                        "addedAt":  "2026-08-22T00:00:00.000Z",
+                        "reviewStartedAt":  "2026-08-22T00:00:00.000Z",
+                        "decidedAt":  "2026-08-22T00:00:00.000Z",
+                        "reviewer":  "Founder",
+                        "notes":  [
+                                      {
+                                          "id":  "note-ep13-W3-002a",
+                                          "reviewer":  "Founder",
+                                          "timestamp":  "2026-08-22T00:00:00.000Z",
+                                          "section":  "editorial",
+                                          "note":  "ADVISORY: subtitle 'Dark Aromatic Elegance' duplicates signatureStyle[0] exactly — minor naming redundancy.",
+                                          "resolved":  false
+                                      },
+                                      {
+                                          "id":  "note-ep13-W3-002b",
+                                          "reviewer":  "Founder",
+                                          "timestamp":  "2026-08-22T00:00:00.000Z",
+                                          "section":  "editorial",
+                                          "note":  "ADVISORY: description 'skin-like base' — mild sillage-adjacent texture language; Founder awareness only.",
+                                          "resolved":  false
+                                      }
+                                  ],
+                        "decision":  {
+                                         "decision":  "approved",
+                                         "reviewer":  "Founder",
+                                         "timestamp":  "2026-08-22T00:00:00.000Z",
+                                         "reason":  "EP-CAT-P13: Founder editorial review approved. Advisories logged; no mandatory corrections required."
+                                     }
+                    },
+                    {
+                        "slug":  "abu-dhabi-inspired",
+                        "name":  "Abu Dhabi Inspired",
+                        "collection":  "Elite",
+                        "factoryVersion":  "0.5.0",
+                        "promptVersions":  "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+                        "validationStatus":  "PASS",
+                        "status":  "approved",
+                        "addedAt":  "2026-08-22T00:00:00.000Z",
+                        "reviewStartedAt":  "2026-08-22T00:00:00.000Z",
+                        "decidedAt":  "2026-08-22T00:00:00.000Z",
+                        "reviewer":  "Founder",
+                        "notes":  [
+                                      {
+                                          "id":  "note-ep13-W3-003a",
+                                          "reviewer":  "Founder",
+                                          "timestamp":  "2026-08-22T00:00:00.000Z",
+                                          "section":  "editorial",
+                                          "note":  "ADVISORY: subtitle 'Spiced Amber Luxury' duplicates signatureStyle[0] exactly.",
+                                          "resolved":  false
+                                      },
+                                      {
+                                          "id":  "note-ep13-W3-003b",
+                                          "reviewer":  "Founder",
+                                          "timestamp":  "2026-08-22T00:00:00.000Z",
+                                          "section":  "editorial",
+                                          "note":  "ADVISORY: description 'settles into amber and vanilla' — mild temporal base language; base-accurate, Founder awareness only.",
+                                          "resolved":  false
+                                      }
+                                  ],
+                        "decision":  {
+                                         "decision":  "approved",
+                                         "reviewer":  "Founder",
+                                         "timestamp":  "2026-08-22T00:00:00.000Z",
+                                         "reason":  "EP-CAT-P13: Founder editorial review approved. Advisories logged; no mandatory corrections required."
+                                     }
+                    },
+                    {
+                        "slug":  "aqva-amara-inspired",
+                        "name":  "Aqva Amara Inspired",
+                        "collection":  "Skye",
+                        "factoryVersion":  "0.5.0",
+                        "promptVersions":  "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+                        "validationStatus":  "PASS",
+                        "status":  "approved",
+                        "addedAt":  "2026-08-22T00:00:00.000Z",
+                        "reviewStartedAt":  "2026-08-22T00:00:00.000Z",
+                        "decidedAt":  "2026-08-22T00:00:00.000Z",
+                        "reviewer":  "Founder",
+                        "notes":  [
+                                      {
+                                          "id":  "note-ep13-W3-004",
+                                          "reviewer":  "Founder",
+                                          "timestamp":  "2026-08-22T00:00:00.000Z",
+                                          "section":  "editorial",
+                                          "note":  "Correction applied: recommendedFor[1] 'moderate projection and lasting clarity' rewritten to 'fresh citrus clarity' — projection and longevity claims removed.",
+                                          "resolved":  true
+                                      }
+                                  ],
+                        "decision":  {
+                                         "decision":  "approved",
+                                         "reviewer":  "Founder",
+                                         "timestamp":  "2026-08-22T00:00:00.000Z",
+                                         "reason":  "EP-CAT-P13: Founder editorial review approved. All governance violations corrected."
+                                     }
+                    },
+                    {
+                        "slug":  "armani-prive-oud-royal-inspired",
+                        "name":  "Armani Prive Oud Royal Inspired",
+                        "collection":  "Elite",
+                        "factoryVersion":  "0.5.0",
+                        "promptVersions":  "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+                        "validationStatus":  "PASS",
+                        "status":  "approved",
+                        "addedAt":  "2026-08-22T00:00:00.000Z",
+                        "reviewStartedAt":  "2026-08-22T00:00:00.000Z",
+                        "decidedAt":  "2026-08-22T00:00:00.000Z",
+                        "reviewer":  "Founder",
+                        "notes":  [
+
+                                  ],
+                        "decision":  {
+                                         "decision":  "approved",
+                                         "reviewer":  "Founder",
+                                         "timestamp":  "2026-08-22T00:00:00.000Z",
+                                         "reason":  "EP-CAT-P13: Founder editorial review approved. No corrections required."
+                                     }
+                    },
+                    {
+                        "slug":  "attrape-reves-inspired",
+                        "name":  "Attrape-Reves Inspired",
+                        "collection":  "Rose",
+                        "factoryVersion":  "0.5.0",
+                        "promptVersions":  "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+                        "validationStatus":  "PASS",
+                        "status":  "approved",
+                        "addedAt":  "2026-08-22T00:00:00.000Z",
+                        "reviewStartedAt":  "2026-08-22T00:00:00.000Z",
+                        "decidedAt":  "2026-08-22T00:00:00.000Z",
+                        "reviewer":  "Founder",
+                        "notes":  [
+
+                                  ],
+                        "decision":  {
+                                         "decision":  "approved",
+                                         "reviewer":  "Founder",
+                                         "timestamp":  "2026-08-22T00:00:00.000Z",
+                                         "reason":  "EP-CAT-P13: Founder editorial review approved. No corrections required."
+                                     }
+                    },
+                    {
+                        "slug":  "bois-pacifique-inspired",
+                        "name":  "Bois Pacifique Inspired",
+                        "collection":  "Skye",
+                        "factoryVersion":  "0.5.0",
+                        "promptVersions":  "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+                        "validationStatus":  "PASS",
+                        "status":  "approved",
+                        "addedAt":  "2026-08-22T00:00:00.000Z",
+                        "reviewStartedAt":  "2026-08-22T00:00:00.000Z",
+                        "decidedAt":  "2026-08-22T00:00:00.000Z",
+                        "reviewer":  "Founder",
+                        "notes":  [
+                                      {
+                                          "id":  "note-ep13-W3-007a",
+                                          "reviewer":  "Founder",
+                                          "timestamp":  "2026-08-22T00:00:00.000Z",
+                                          "section":  "editorial",
+                                          "note":  "ADVISORY: subtitle 'Warm Woody Spice' duplicates signatureStyle[0] exactly.",
+                                          "resolved":  false
+                                      },
+                                      {
+                                          "id":  "note-ep13-W3-007b",
+                                          "reviewer":  "Founder",
+                                          "timestamp":  "2026-08-22T00:00:00.000Z",
+                                          "section":  "editorial",
+                                          "note":  "ADVISORY: description 'settles into creamy sandalwood and cedar' — mild base temporal; notes are base-accurate. Founder awareness only.",
+                                          "resolved":  false
+                                      }
+                                  ],
+                        "decision":  {
+                                         "decision":  "approved",
+                                         "reviewer":  "Founder",
+                                         "timestamp":  "2026-08-22T00:00:00.000Z",
+                                         "reason":  "EP-CAT-P13: Founder editorial review approved. Advisories logged; no mandatory corrections required."
+                                     }
+                    },
+                    {
+                        "slug":  "burberry-london-inspired",
+                        "name":  "Burberry London Inspired",
+                        "collection":  "Skye",
+                        "factoryVersion":  "0.5.0",
+                        "promptVersions":  "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+                        "validationStatus":  "PASS",
+                        "status":  "approved",
+                        "addedAt":  "2026-08-22T00:00:00.000Z",
+                        "reviewStartedAt":  "2026-08-22T00:00:00.000Z",
+                        "decidedAt":  "2026-08-22T00:00:00.000Z",
+                        "reviewer":  "Founder",
+                        "notes":  [
+
+                                  ],
+                        "decision":  {
+                                         "decision":  "approved",
+                                         "reviewer":  "Founder",
+                                         "timestamp":  "2026-08-22T00:00:00.000Z",
+                                         "reason":  "EP-CAT-P13: Founder editorial review approved. No corrections required."
+                                     }
+                    },
+                    {
+                        "slug":  "bvlgari-black-inspired",
+                        "name":  "Bvlgari Black Inspired",
+                        "collection":  "Skye",
+                        "factoryVersion":  "0.5.0",
+                        "promptVersions":  "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+                        "validationStatus":  "PASS",
+                        "status":  "approved",
+                        "addedAt":  "2026-08-22T00:00:00.000Z",
+                        "reviewStartedAt":  "2026-08-22T00:00:00.000Z",
+                        "decidedAt":  "2026-08-22T00:00:00.000Z",
+                        "reviewer":  "Founder",
+                        "notes":  [
+                                      {
+                                          "id":  "note-ep13-W3-009a",
+                                          "reviewer":  "Founder",
+                                          "timestamp":  "2026-08-22T00:00:00.000Z",
+                                          "section":  "editorial",
+                                          "note":  "Correction applied: description 'leather-touched heart' rewritten — Leather is in base tier, not heart. Tier contradiction resolved.",
+                                          "resolved":  true
+                                      },
+                                      {
+                                          "id":  "note-ep13-W3-009b",
+                                          "reviewer":  "Founder",
+                                          "timestamp":  "2026-08-22T00:00:00.000Z",
+                                          "section":  "editorial",
+                                          "note":  "ADVISORY: recommendedFor[1] 'commands presence' — indirect projection-adjacent language; Founder awareness only.",
+                                          "resolved":  false
+                                      }
+                                  ],
+                        "decision":  {
+                                         "decision":  "approved",
+                                         "reviewer":  "Founder",
+                                         "timestamp":  "2026-08-22T00:00:00.000Z",
+                                         "reason":  "EP-CAT-P13: Founder editorial review approved. Tier contradiction corrected."
+                                     }
+                    },
+                    {
+                        "slug":  "centaurus-inspired",
+                        "name":  "Centaurus Inspired",
+                        "collection":  "Elite",
+                        "factoryVersion":  "0.5.0",
+                        "promptVersions":  "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+                        "validationStatus":  "PASS",
+                        "status":  "approved",
+                        "addedAt":  "2026-08-22T00:00:00.000Z",
+                        "reviewStartedAt":  "2026-08-22T00:00:00.000Z",
+                        "decidedAt":  "2026-08-22T00:00:00.000Z",
+                        "reviewer":  "Founder",
+                        "notes":  [
+                                      {
+                                          "id":  "note-ep13-W3-010",
+                                          "reviewer":  "Founder",
+                                          "timestamp":  "2026-08-22T00:00:00.000Z",
+                                          "section":  "editorial",
+                                          "note":  "ADVISORY: description 'skin-like warmth' — texture/sillage-adjacent descriptor; Founder awareness only.",
+                                          "resolved":  false
+                                      }
+                                  ],
+                        "decision":  {
+                                         "decision":  "approved",
+                                         "reviewer":  "Founder",
+                                         "timestamp":  "2026-08-22T00:00:00.000Z",
+                                         "reason":  "EP-CAT-P13: Founder editorial review approved. Advisory logged; no mandatory corrections required."
+                                     }
+                    },
+                    {
+                        "slug":  "chanel-no-5-inspired",
+                        "name":  "Chanel No.5 Inspired",
+                        "collection":  "Rose",
+                        "factoryVersion":  "0.5.0",
+                        "promptVersions":  "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+                        "validationStatus":  "PASS",
+                        "status":  "approved",
+                        "addedAt":  "2026-08-22T00:00:00.000Z",
+                        "reviewStartedAt":  "2026-08-22T00:00:00.000Z",
+                        "decidedAt":  "2026-08-22T00:00:00.000Z",
+                        "reviewer":  "Founder",
+                        "notes":  [
+                                      {
+                                          "id":  "note-ep13-W3-011",
+                                          "reviewer":  "Founder",
+                                          "timestamp":  "2026-08-22T00:00:00.000Z",
+                                          "section":  "editorial",
+                                          "note":  "ADVISORY: subtitle 'Powdery Floral Elegance' duplicates signatureStyle[0] exactly — minor naming redundancy.",
+                                          "resolved":  false
+                                      }
+                                  ],
+                        "decision":  {
+                                         "decision":  "approved",
+                                         "reviewer":  "Founder",
+                                         "timestamp":  "2026-08-22T00:00:00.000Z",
+                                         "reason":  "EP-CAT-P13: Founder editorial review approved. Advisory logged; no mandatory corrections required."
+                                     }
+                    },
+                    {
+                        "slug":  "changing-constance-inspired",
+                        "name":  "Changing Constance Inspired",
+                        "collection":  "Rose",
+                        "factoryVersion":  "0.5.0",
+                        "promptVersions":  "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+                        "validationStatus":  "PASS",
+                        "status":  "approved",
+                        "addedAt":  "2026-08-22T00:00:00.000Z",
+                        "reviewStartedAt":  "2026-08-22T00:00:00.000Z",
+                        "decidedAt":  "2026-08-22T00:00:00.000Z",
+                        "reviewer":  "Founder",
+                        "notes":  [
+
+                                  ],
+                        "decision":  {
+                                         "decision":  "approved",
+                                         "reviewer":  "Founder",
+                                         "timestamp":  "2026-08-22T00:00:00.000Z",
+                                         "reason":  "EP-CAT-P13: Founder editorial review approved. No corrections required."
+                                     }
+                    },
+                    {
+                        "slug":  "cinque-terre-inspired",
+                        "name":  "Cinque Terre Inspired",
+                        "collection":  "Elite",
+                        "factoryVersion":  "0.5.0",
+                        "promptVersions":  "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+                        "validationStatus":  "PASS",
+                        "status":  "approved",
+                        "addedAt":  "2026-08-22T00:00:00.000Z",
+                        "reviewStartedAt":  "2026-08-22T00:00:00.000Z",
+                        "decidedAt":  "2026-08-22T00:00:00.000Z",
+                        "reviewer":  "Founder",
+                        "notes":  [
+                                      {
+                                          "id":  "note-ep13-W3-013a",
+                                          "reviewer":  "Founder",
+                                          "timestamp":  "2026-08-22T00:00:00.000Z",
+                                          "section":  "editorial",
+                                          "note":  "Correction applied: description placed Grey Amber in base tier — Grey Amber is in heart. Rewritten to reference Oakmoss and Tonka Beans as base anchors.",
+                                          "resolved":  true
+                                      },
+                                      {
+                                          "id":  "note-ep13-W3-013b",
+                                          "reviewer":  "Founder",
+                                          "timestamp":  "2026-08-22T00:00:00.000Z",
+                                          "section":  "editorial",
+                                          "note":  "Correction applied: recommendedFor[1] 'that projects clarity and sophistication' rewritten to 'with clarity and sophistication' — projection claim removed.",
+                                          "resolved":  true
+                                      }
+                                  ],
+                        "decision":  {
+                                         "decision":  "approved",
+                                         "reviewer":  "Founder",
+                                         "timestamp":  "2026-08-22T00:00:00.000Z",
+                                         "reason":  "EP-CAT-P13: Founder editorial review approved. Tier contradiction and projection claim corrected."
+                                     }
+                    },
+                    {
+                        "slug":  "crazy-in-love-inspired",
+                        "name":  "Crazy In Love Inspired",
+                        "collection":  "Rose",
+                        "factoryVersion":  "0.5.0",
+                        "promptVersions":  "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+                        "validationStatus":  "PASS",
+                        "status":  "approved",
+                        "addedAt":  "2026-08-22T00:00:00.000Z",
+                        "reviewStartedAt":  "2026-08-22T00:00:00.000Z",
+                        "decidedAt":  "2026-08-22T00:00:00.000Z",
+                        "reviewer":  "Founder",
+                        "notes":  [
+                                      {
+                                          "id":  "note-ep13-W3-014",
+                                          "reviewer":  "Founder",
+                                          "timestamp":  "2026-08-22T00:00:00.000Z",
+                                          "section":  "editorial",
+                                          "note":  "Correction applied: description 'settle into skin like a second shadow' rewritten to 'warm the base with dark, unhurried richness' — skin sillage language removed.",
+                                          "resolved":  true
+                                      }
+                                  ],
+                        "decision":  {
+                                         "decision":  "approved",
+                                         "reviewer":  "Founder",
+                                         "timestamp":  "2026-08-22T00:00:00.000Z",
+                                         "reason":  "EP-CAT-P13: Founder editorial review approved. All governance violations corrected."
+                                     }
+                    },
+                    {
+                        "slug":  "dark-vanilla-inspired",
+                        "name":  "Dark Vanilla Inspired",
+                        "collection":  "Elite",
+                        "factoryVersion":  "0.5.0",
+                        "promptVersions":  "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+                        "validationStatus":  "PASS",
+                        "status":  "approved",
+                        "addedAt":  "2026-08-22T00:00:00.000Z",
+                        "reviewStartedAt":  "2026-08-22T00:00:00.000Z",
+                        "decidedAt":  "2026-08-22T00:00:00.000Z",
+                        "reviewer":  "Founder",
+                        "notes":  [
+                                      {
+                                          "id":  "note-ep13-W3-015a",
+                                          "reviewer":  "Founder",
+                                          "timestamp":  "2026-08-22T00:00:00.000Z",
+                                          "section":  "editorial",
+                                          "note":  "Correction applied: description 'Vanilla and amber settle into skin like embers' rewritten to 'Vanilla and amber deepen into a smouldering base' — skin sillage language removed.",
+                                          "resolved":  true
+                                      },
+                                      {
+                                          "id":  "note-ep13-W3-015b",
+                                          "reviewer":  "Founder",
+                                          "timestamp":  "2026-08-22T00:00:00.000Z",
+                                          "section":  "editorial",
+                                          "note":  "ADVISORY: subtitle 'Spiced Leather Warmth' duplicates signatureStyle[0] exactly — minor naming redundancy.",
+                                          "resolved":  false
+                                      }
+                                  ],
+                        "decision":  {
+                                         "decision":  "approved",
+                                         "reviewer":  "Founder",
+                                         "timestamp":  "2026-08-22T00:00:00.000Z",
+                                         "reason":  "EP-CAT-P13: Founder editorial review approved. Skin sillage language corrected."
+                                     }
+                    },
+                    {
+                        "slug":  "egoiste-platinum-inspired",
+                        "name":  "Egoiste Platinum Inspired",
+                        "collection":  "Skye",
+                        "factoryVersion":  "0.5.0",
+                        "promptVersions":  "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+                        "validationStatus":  "PASS",
+                        "status":  "approved",
+                        "addedAt":  "2026-08-22T00:00:00.000Z",
+                        "reviewStartedAt":  "2026-08-22T00:00:00.000Z",
+                        "decidedAt":  "2026-08-22T00:00:00.000Z",
+                        "reviewer":  "Founder",
+                        "notes":  [
+                                      {
+                                          "id":  "note-ep13-W3-016",
+                                          "reviewer":  "Founder",
+                                          "timestamp":  "2026-08-22T00:00:00.000Z",
+                                          "section":  "editorial",
+                                          "note":  "ADVISORY: recommendedFor references 'projection fatigue' — indirect projection reference; Founder awareness only.",
+                                          "resolved":  false
+                                      }
+                                  ],
+                        "decision":  {
+                                         "decision":  "approved",
+                                         "reviewer":  "Founder",
+                                         "timestamp":  "2026-08-22T00:00:00.000Z",
+                                         "reason":  "EP-CAT-P13: Founder editorial review approved. Advisory logged; no mandatory corrections required."
+                                     }
+                    },
+                    {
+                        "slug":  "eternity-inspired",
+                        "name":  "Eternity Inspired",
+                        "collection":  "Skye",
+                        "factoryVersion":  "0.5.0",
+                        "promptVersions":  "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+                        "validationStatus":  "PASS",
+                        "status":  "approved",
+                        "addedAt":  "2026-08-22T00:00:00.000Z",
+                        "reviewStartedAt":  "2026-08-22T00:00:00.000Z",
+                        "decidedAt":  "2026-08-22T00:00:00.000Z",
+                        "reviewer":  "Founder",
+                        "notes":  [
+                                      {
+                                          "id":  "note-ep13-W3-017a",
+                                          "reviewer":  "Founder",
+                                          "timestamp":  "2026-08-22T00:00:00.000Z",
+                                          "section":  "editorial",
+                                          "note":  "Correction applied: description 'from first spray to final fade' rewritten to 'complete and unhurried' — evaporation rate/longevity claim removed.",
+                                          "resolved":  true
+                                      },
+                                      {
+                                          "id":  "note-ep13-W3-017b",
+                                          "reviewer":  "Founder",
+                                          "timestamp":  "2026-08-22T00:00:00.000Z",
+                                          "section":  "editorial",
+                                          "note":  "ADVISORY: recommendedFor references 'projection fatigue' — indirect projection reference; Founder awareness only.",
+                                          "resolved":  false
+                                      }
+                                  ],
+                        "decision":  {
+                                         "decision":  "approved",
+                                         "reviewer":  "Founder",
+                                         "timestamp":  "2026-08-22T00:00:00.000Z",
+                                         "reason":  "EP-CAT-P13: Founder editorial review approved. Longevity claim corrected."
+                                     }
+                    },
+                    {
+                        "slug":  "fig-lotus-flower-inspired",
+                        "name":  "Fig Lotus Flower Inspired",
+                        "collection":  "Elite",
+                        "factoryVersion":  "0.5.0",
+                        "promptVersions":  "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+                        "validationStatus":  "PASS",
+                        "status":  "approved",
+                        "addedAt":  "2026-08-22T00:00:00.000Z",
+                        "reviewStartedAt":  "2026-08-22T00:00:00.000Z",
+                        "decidedAt":  "2026-08-22T00:00:00.000Z",
+                        "reviewer":  "Founder",
+                        "notes":  [
+                                      {
+                                          "id":  "note-ep13-W3-018",
+                                          "reviewer":  "Founder",
+                                          "timestamp":  "2026-08-22T00:00:00.000Z",
+                                          "section":  "editorial",
+                                          "note":  "Correction applied: UNORDERED_GOVERNED_NOTES — description 'opens like morning light on water' rewritten to remove temporal sequencing. Notes are all in heart tier; no top-note opening exists.",
+                                          "resolved":  true
+                                      },
+                                      {
+                                          "id":  "note-ep13-W3-018b",
+                                          "reviewer":  "Founder",
+                                          "timestamp":  "2026-08-22T03:00:00.000Z",
+                                          "section":  "editorial",
+                                          "note":  "Correction applied (P16 validation): UNORDERED_GOVERNED_NOTES — description residual 'floral heart' tier claim rewritten to 'this brightness' — tier placement language must not appear in UNORDERED copy.",
+                                          "resolved":  true
+                                      }
+                                  ],
+                        "decision":  {
+                                         "decision":  "approved",
+                                         "reviewer":  "Founder",
+                                         "timestamp":  "2026-08-22T00:00:00.000Z",
+                                         "reason":  "EP-CAT-P13: Founder editorial review approved. UNORDERED temporal sequencing corrected."
+                                     }
+                    },
+                    {
+                        "slug":  "gabrielle-inspired",
+                        "name":  "Gabrielle Inspired",
+                        "collection":  "Rose",
+                        "factoryVersion":  "0.5.0",
+                        "promptVersions":  "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+                        "validationStatus":  "PASS",
+                        "status":  "approved",
+                        "addedAt":  "2026-08-22T00:00:00.000Z",
+                        "reviewStartedAt":  "2026-08-22T00:00:00.000Z",
+                        "decidedAt":  "2026-08-22T00:00:00.000Z",
+                        "reviewer":  "Founder",
+                        "notes":  [
+                                      {
+                                          "id":  "note-ep13-W3-019a",
+                                          "reviewer":  "Founder",
+                                          "timestamp":  "2026-08-22T00:00:00.000Z",
+                                          "section":  "editorial",
+                                          "note":  "Correction applied: recommendedFor[0] 'without reapplication' removed — longevity/reapplication claim.",
+                                          "resolved":  true
+                                      },
+                                      {
+                                          "id":  "note-ep13-W3-019b",
+                                          "reviewer":  "Founder",
+                                          "timestamp":  "2026-08-22T00:00:00.000Z",
+                                          "section":  "editorial",
+                                          "note":  "ADVISORY: subtitle 'Luminous White Floral' duplicates signatureStyle[0] exactly — minor naming redundancy.",
+                                          "resolved":  false
+                                      }
+                                  ],
+                        "decision":  {
+                                         "decision":  "approved",
+                                         "reviewer":  "Founder",
+                                         "timestamp":  "2026-08-22T00:00:00.000Z",
+                                         "reason":  "EP-CAT-P13: Founder editorial review approved. Reapplication longevity claim corrected."
+                                     }
+                    },
+                    {
+                        "slug":  "grapefruit-inspired",
+                        "name":  "Grapefruit Inspired",
+                        "collection":  "Elite",
+                        "factoryVersion":  "0.5.0",
+                        "promptVersions":  "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+                        "validationStatus":  "PASS",
+                        "status":  "approved",
+                        "addedAt":  "2026-08-22T00:00:00.000Z",
+                        "reviewStartedAt":  "2026-08-22T00:00:00.000Z",
+                        "decidedAt":  "2026-08-22T00:00:00.000Z",
+                        "reviewer":  "Founder",
+                        "notes":  [
+                                      {
+                                          "id":  "note-ep13-W3-020",
+                                          "reviewer":  "Founder",
+                                          "timestamp":  "2026-08-22T00:00:00.000Z",
+                                          "section":  "editorial",
+                                          "note":  "Correction applied: UNORDERED_GOVERNED_NOTES — description 'Grapefruit opens with bright, zesty intensity' rewritten; notes are all in heart tier. No top-note opening exists.",
+                                          "resolved":  true
+                                      }
+                                  ],
+                        "decision":  {
+                                         "decision":  "approved",
+                                         "reviewer":  "Founder",
+                                         "timestamp":  "2026-08-22T00:00:00.000Z",
+                                         "reason":  "EP-CAT-P13: Founder editorial review approved. UNORDERED temporal sequencing corrected."
+                                     }
+                    },
+                    {
+                        "slug":  "lacoste-blanc-inspired",
+                        "name":  "Lacoste Blanc Inspired",
+                        "collection":  "Skye",
+                        "factoryVersion":  "0.5.0",
+                        "promptVersions":  "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+                        "validationStatus":  "PASS",
+                        "status":  "approved",
+                        "addedAt":  "2026-08-22T00:00:00.000Z",
+                        "reviewStartedAt":  "2026-08-22T00:00:00.000Z",
+                        "decidedAt":  "2026-08-22T00:00:00.000Z",
+                        "reviewer":  "Founder",
+                        "notes":  [
+                                      {
+                                          "id":  "note-ep13-W3-021",
+                                          "reviewer":  "Founder",
+                                          "timestamp":  "2026-08-22T00:00:00.000Z",
+                                          "section":  "editorial",
+                                          "note":  "ADVISORY: description 'skin-warm' — texture descriptor; mild, Founder awareness only.",
+                                          "resolved":  false
+                                      }
+                                  ],
+                        "decision":  {
+                                         "decision":  "approved",
+                                         "reviewer":  "Founder",
+                                         "timestamp":  "2026-08-22T00:00:00.000Z",
+                                         "reason":  "EP-CAT-P13: Founder editorial review approved. Advisory logged; no mandatory corrections required."
+                                     }
+                    },
+                    {
+                        "slug":  "light-blue-pour-homme-inspired",
+                        "name":  "Light Blue Pour Homme Inspired",
+                        "collection":  "Skye",
+                        "factoryVersion":  "0.5.0",
+                        "promptVersions":  "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+                        "validationStatus":  "PASS",
+                        "status":  "approved",
+                        "addedAt":  "2026-08-22T00:00:00.000Z",
+                        "reviewStartedAt":  "2026-08-22T00:00:00.000Z",
+                        "decidedAt":  "2026-08-22T00:00:00.000Z",
+                        "reviewer":  "Founder",
+                        "notes":  [
+                                      {
+                                          "id":  "note-ep13-W3-022",
+                                          "reviewer":  "Founder",
+                                          "timestamp":  "2026-08-22T00:00:00.000Z",
+                                          "section":  "editorial",
+                                          "note":  "Correction applied: recommendedFor[2] 'values moderate projection over bold statements' rewritten to 'prefers understated elegance over bold statements' — projection claim removed.",
+                                          "resolved":  true
+                                      }
+                                  ],
+                        "decision":  {
+                                         "decision":  "approved",
+                                         "reviewer":  "Founder",
+                                         "timestamp":  "2026-08-22T00:00:00.000Z",
+                                         "reason":  "EP-CAT-P13: Founder editorial review approved. All governance violations corrected."
+                                     }
+                    },
+                    {
+                        "slug":  "my-way-nectar-inspired",
+                        "name":  "My Way Nectar Inspired",
+                        "collection":  "Rose",
+                        "factoryVersion":  "0.5.0",
+                        "promptVersions":  "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+                        "validationStatus":  "PASS",
+                        "status":  "approved",
+                        "addedAt":  "2026-08-22T00:00:00.000Z",
+                        "reviewStartedAt":  "2026-08-22T00:00:00.000Z",
+                        "decidedAt":  "2026-08-22T00:00:00.000Z",
+                        "reviewer":  "Founder",
+                        "notes":  [
+                                      {
+                                          "id":  "note-ep13-W3-023",
+                                          "reviewer":  "Founder",
+                                          "timestamp":  "2026-08-22T00:00:00.000Z",
+                                          "section":  "editorial",
+                                          "note":  "Correction applied: description 'skin-like base' rewritten to 'warm the base with creamy depth' — skin sillage language removed.",
+                                          "resolved":  true
+                                      }
+                                  ],
+                        "decision":  {
+                                         "decision":  "approved",
+                                         "reviewer":  "Founder",
+                                         "timestamp":  "2026-08-22T00:00:00.000Z",
+                                         "reason":  "EP-CAT-P13: Founder editorial review approved. All governance violations corrected."
+                                     }
+                    },
+                    {
+                        "slug":  "omnia-crystalline-inspired",
+                        "name":  "Omnia Crystalline Inspired",
+                        "collection":  "Rose",
+                        "factoryVersion":  "0.5.0",
+                        "promptVersions":  "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+                        "validationStatus":  "PASS",
+                        "status":  "approved",
+                        "addedAt":  "2026-08-22T00:00:00.000Z",
+                        "reviewStartedAt":  "2026-08-22T00:00:00.000Z",
+                        "decidedAt":  "2026-08-22T00:00:00.000Z",
+                        "reviewer":  "Founder",
+                        "notes":  [
+                                      {
+                                          "id":  "note-ep13-W3-024",
+                                          "reviewer":  "Founder",
+                                          "timestamp":  "2026-08-22T00:00:00.000Z",
+                                          "section":  "editorial",
+                                          "note":  "ADVISORY: recommendedFor 'breathes rather than announces' — inverse projection reference; Founder awareness only.",
+                                          "resolved":  false
+                                      }
+                                  ],
+                        "decision":  {
+                                         "decision":  "approved",
+                                         "reviewer":  "Founder",
+                                         "timestamp":  "2026-08-22T00:00:00.000Z",
+                                         "reason":  "EP-CAT-P13: Founder editorial review approved. Advisory logged; no mandatory corrections required."
+                                     }
+                    },
+                    {
+                        "slug":  "oud-sapparot-inspired",
+                        "name":  "Oud Sapparot Inspired",
+                        "collection":  "Elite",
+                        "factoryVersion":  "0.5.0",
+                        "promptVersions":  "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+                        "validationStatus":  "PASS",
+                        "status":  "approved",
+                        "addedAt":  "2026-08-22T00:00:00.000Z",
+                        "reviewStartedAt":  "2026-08-22T00:00:00.000Z",
+                        "decidedAt":  "2026-08-22T00:00:00.000Z",
+                        "reviewer":  "Founder",
+                        "notes":  [
+                                      {
+                                          "id":  "note-ep13-W3-025a",
+                                          "reviewer":  "Founder",
+                                          "timestamp":  "2026-08-22T00:00:00.000Z",
+                                          "section":  "editorial",
+                                          "note":  "Correction applied: description placed Cambodian Oud in heart tier — Oud is in top. Description rewritten to show pineapple and oud opening together into leather/birch/cinnamon heart.",
+                                          "resolved":  true
+                                      },
+                                      {
+                                          "id":  "note-ep13-W3-025b",
+                                          "reviewer":  "Founder",
+                                          "timestamp":  "2026-08-22T00:00:00.000Z",
+                                          "section":  "editorial",
+                                          "note":  "ADVISORY: recommendedFor 'commands attention' — indirect projection-adjacent language; Founder awareness only.",
+                                          "resolved":  false
+                                      }
+                                  ],
+                        "decision":  {
+                                         "decision":  "approved",
+                                         "reviewer":  "Founder",
+                                         "timestamp":  "2026-08-22T00:00:00.000Z",
+                                         "reason":  "EP-CAT-P13: Founder editorial review approved. Tier contradiction corrected."
+                                     }
+                    },
+                    {
+                        "slug":  "outlands-inspired",
+                        "name":  "Outlands Inspired",
+                        "collection":  "Elite",
+                        "factoryVersion":  "0.5.0",
+                        "promptVersions":  "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+                        "validationStatus":  "PASS",
+                        "status":  "approved",
+                        "addedAt":  "2026-08-22T00:00:00.000Z",
+                        "reviewStartedAt":  "2026-08-22T00:00:00.000Z",
+                        "decidedAt":  "2026-08-22T00:00:00.000Z",
+                        "reviewer":  "Founder",
+                        "notes":  [
+                                      {
+                                          "id":  "note-ep13-W3-026a",
+                                          "reviewer":  "Founder",
+                                          "timestamp":  "2026-08-22T00:00:00.000Z",
+                                          "section":  "editorial",
+                                          "note":  "ADVISORY: subtitle 'Ritual and Resin' near-collision with armani-prive-oud-royal-inspired subtitle 'Ritual and Resin' — deduplicate before promotion.",
+                                          "resolved":  false
+                                      },
+                                      {
+                                          "id":  "note-ep13-W3-026b",
+                                          "reviewer":  "Founder",
+                                          "timestamp":  "2026-08-22T00:00:00.000Z",
+                                          "section":  "editorial",
+                                          "note":  "ADVISORY: recommendedFor 'command attention' — indirect projection-adjacent language; Founder awareness only.",
+                                          "resolved":  false
+                                      }
+                                  ],
+                        "decision":  {
+                                         "decision":  "approved",
+                                         "reviewer":  "Founder",
+                                         "timestamp":  "2026-08-22T00:00:00.000Z",
+                                         "reason":  "EP-CAT-P13: Founder editorial review approved. Advisories logged; subtitle collision to be resolved before promotion."
+                                     }
+                    },
+                    {
+                        "slug":  "queen-of-silk-inspired",
+                        "name":  "Queen Of Silk Inspired",
+                        "collection":  "Rose",
+                        "factoryVersion":  "0.5.0",
+                        "promptVersions":  "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+                        "validationStatus":  "PASS",
+                        "status":  "approved",
+                        "addedAt":  "2026-08-22T00:00:00.000Z",
+                        "reviewStartedAt":  "2026-08-22T00:00:00.000Z",
+                        "decidedAt":  "2026-08-22T00:00:00.000Z",
+                        "reviewer":  "Founder",
+                        "notes":  [
+                                      {
+                                          "id":  "note-ep13-W3-027a",
+                                          "reviewer":  "Founder",
+                                          "timestamp":  "2026-08-22T00:00:00.000Z",
+                                          "section":  "editorial",
+                                          "note":  "Correction applied: recommendedFor[0] 'feels like a signature second skin' rewritten to 'with timeless character' — skin sillage language removed.",
+                                          "resolved":  true
+                                      },
+                                      {
+                                          "id":  "note-ep13-W3-027b",
+                                          "reviewer":  "Founder",
+                                          "timestamp":  "2026-08-22T00:00:00.000Z",
+                                          "section":  "editorial",
+                                          "note":  "Correction applied: recommendedFor[2] 'lingers with sophistication' rewritten to 'with sophistication' — FORBIDDEN_TERM 'lingers' removed.",
+                                          "resolved":  true
+                                      },
+                                      {
+                                          "id":  "note-ep13-W3-027c",
+                                          "reviewer":  "Founder",
+                                          "timestamp":  "2026-08-22T00:00:00.000Z",
+                                          "section":  "editorial",
+                                          "note":  "ADVISORY: description 'feels like silk against skin' — texture metaphor, mild; Founder awareness only.",
+                                          "resolved":  false
+                                      }
+                                  ],
+                        "decision":  {
+                                         "decision":  "approved",
+                                         "reviewer":  "Founder",
+                                         "timestamp":  "2026-08-22T00:00:00.000Z",
+                                         "reason":  "EP-CAT-P13: Founder editorial review approved. Second-skin and FORBIDDEN_TERM corrections applied."
+                                     }
+                    },
+                    {
+                        "slug":  "scandal-pour-homme-inspired",
+                        "name":  "Scandal Pour Homme Inspired",
+                        "collection":  "Skye",
+                        "factoryVersion":  "0.5.0",
+                        "promptVersions":  "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+                        "validationStatus":  "PASS",
+                        "status":  "approved",
+                        "addedAt":  "2026-08-22T00:00:00.000Z",
+                        "reviewStartedAt":  "2026-08-22T00:00:00.000Z",
+                        "decidedAt":  "2026-08-22T00:00:00.000Z",
+                        "reviewer":  "Founder",
+                        "notes":  [
+                                      {
+                                          "id":  "note-ep13-W3-028a",
+                                          "reviewer":  "Founder",
+                                          "timestamp":  "2026-08-22T00:00:00.000Z",
+                                          "section":  "editorial",
+                                          "note":  "Correction applied: recommendedFor[1] 'throughout the day' removed — FORBIDDEN_TERM longevity claim.",
+                                          "resolved":  true
+                                      },
+                                      {
+                                          "id":  "note-ep13-W3-028b",
+                                          "reviewer":  "Founder",
+                                          "timestamp":  "2026-08-22T00:00:00.000Z",
+                                          "section":  "editorial",
+                                          "note":  "ADVISORY: subtitle 'Warm Woody Sensual' duplicates signatureStyle[0] exactly — minor naming redundancy.",
+                                          "resolved":  false
+                                      }
+                                  ],
+                        "decision":  {
+                                         "decision":  "approved",
+                                         "reviewer":  "Founder",
+                                         "timestamp":  "2026-08-22T00:00:00.000Z",
+                                         "reason":  "EP-CAT-P13: Founder editorial review approved. FORBIDDEN_TERM corrected."
+                                     }
+                    },
+                    {
+                        "slug":  "torino24-inspired",
+                        "name":  "Torino24 Inspired",
+                        "collection":  "Elite",
+                        "factoryVersion":  "0.5.0",
+                        "promptVersions":  "EditorialProducer@1.2.0-narrative  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+                        "validationStatus":  "PASS",
+                        "status":  "approved",
+                        "addedAt":  "2026-08-22T00:00:00.000Z",
+                        "reviewStartedAt":  "2026-08-22T00:00:00.000Z",
+                        "decidedAt":  "2026-08-22T00:00:00.000Z",
+                        "reviewer":  "Founder",
+                        "notes":  [
+                                      {
+                                          "id":  "note-ep13-W3-029",
+                                          "reviewer":  "Founder",
+                                          "timestamp":  "2026-08-22T00:00:00.000Z",
+                                          "section":  "editorial",
+                                          "note":  "BRAND_NARRATIVE_ONLY path (EditorialProducer@1.2.0-narrative): Xerjoff withholds official notes. notesEvidenceLocked:true. Correction applied: description 'settles into skin like a private luxury' rewritten — skin sillage language removed.",
+                                          "resolved":  true
+                                      }
+                                  ],
+                        "decision":  {
+                                         "decision":  "approved",
+                                         "reviewer":  "Founder",
+                                         "timestamp":  "2026-08-22T00:00:00.000Z",
+                                         "reason":  "EP-CAT-P13: Founder editorial review approved. BRAND_NARRATIVE_ONLY path verified; skin sillage corrected."
+                                     }
+                    },
+                    {
+                        "slug":  "valaya-exclusif-inspired",
+                        "name":  "Valaya Exclusif Inspired",
+                        "collection":  "Rose",
+                        "factoryVersion":  "0.5.0",
+                        "promptVersions":  "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+                        "validationStatus":  "PASS",
+                        "status":  "approved",
+                        "addedAt":  "2026-08-22T00:00:00.000Z",
+                        "reviewStartedAt":  "2026-08-22T00:00:00.000Z",
+                        "decidedAt":  "2026-08-22T00:00:00.000Z",
+                        "reviewer":  "Founder",
+                        "notes":  [
+                                      {
+                                          "id":  "note-ep13-W3-030a",
+                                          "reviewer":  "Founder",
+                                          "timestamp":  "2026-08-22T00:00:00.000Z",
+                                          "section":  "editorial",
+                                          "note":  "Correction applied: description 'skin-close finish' rewritten to 'intimate finish' — skin sillage language removed.",
+                                          "resolved":  true
+                                      },
+                                      {
+                                          "id":  "note-ep13-W3-030b",
+                                          "reviewer":  "Founder",
+                                          "timestamp":  "2026-08-22T00:00:00.000Z",
+                                          "section":  "editorial",
+                                          "note":  "Correction applied: recommendedFor[2] 'skin-close elegance over bold projection' rewritten to 'understated elegance over bold statements' — skin sillage and projection claims removed.",
+                                          "resolved":  true
+                                      }
+                                  ],
+                        "decision":  {
+                                         "decision":  "approved",
+                                         "reviewer":  "Founder",
+                                         "timestamp":  "2026-08-22T00:00:00.000Z",
+                                         "reason":  "EP-CAT-P13: Founder editorial review approved. All governance violations corrected."
+                                     }
                     }
                 ]
 }

@@ -71,16 +71,16 @@ export const torino24Inspired: FragranceKnowledge = {
     "30ml": 250,
   },
   images: {
-    "5ml":  "",  // FACTORY_ERROR: IMAGE_MISSING — image path for 5ml is required
-    "10ml": "",  // FACTORY_ERROR: IMAGE_MISSING — image path for 10ml is required
-    "30ml": "",  // FACTORY_ERROR: IMAGE_MISSING — image path for 30ml is required
+    "5ml":  "/images/blue-5ml.png",
+    "10ml": "/images/blue-10ml.png",
+    "30ml": "/images/glass-blue-30ml.png",
   },
   bestSeller    : false,
   newArrival    : false,
 
   // ── Education ───────────────────────────────────────────────────────────────
   subtitle      : "Velvet Indulgence",
-  description   : "A fragrance that captures the warmth of indulgence without apology—fruity and sumptuous, it settles into skin like a private luxury. There is generosity in its character, an ease that feels both refined and deeply sensual.",
+  description   : "A fragrance that captures the warmth of indulgence without apology—fruity and sumptuous, generous in character and deeply sensual. There is an ease to its presence, a richness that feels both refined and entirely its own.",
   academyArticleIds: ["guide-to-fragrance-families", "what-makes-a-signature-scent", "how-to-wear-fragrance"],
   academyCategories: ["fragrance-families", "fragrance-fundamentals"],
   educationTags : [

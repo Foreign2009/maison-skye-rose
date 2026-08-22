@@ -3444,6 +3444,559 @@
       "slug": "eros-energy-inspired",
       "reviewer": "Founder",
       "details": "promotionId:P8n_gxv8WcvT  nativePath:app/lib/mkc/native/eros-energy-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-22T00:00:00.000Z",
+      "action": "added_to_queue",
+      "slug": "a-la-rose-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0  wave:3"
+    },
+    {
+      "timestamp": "2026-08-22T00:00:00.001Z",
+      "action": "added_to_queue",
+      "slug": "212-vip-black-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0  wave:3"
+    },
+    {
+      "timestamp": "2026-08-22T00:00:00.002Z",
+      "action": "added_to_queue",
+      "slug": "abu-dhabi-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0  wave:3"
+    },
+    {
+      "timestamp": "2026-08-22T00:00:00.003Z",
+      "action": "added_to_queue",
+      "slug": "aqva-amara-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0  wave:3"
+    },
+    {
+      "timestamp": "2026-08-22T00:00:00.004Z",
+      "action": "added_to_queue",
+      "slug": "armani-prive-oud-royal-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0  wave:3"
+    },
+    {
+      "timestamp": "2026-08-22T00:00:00.005Z",
+      "action": "added_to_queue",
+      "slug": "attrape-reves-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0  wave:3"
+    },
+    {
+      "timestamp": "2026-08-22T00:00:00.006Z",
+      "action": "added_to_queue",
+      "slug": "bois-pacifique-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0  wave:3"
+    },
+    {
+      "timestamp": "2026-08-22T00:00:00.007Z",
+      "action": "added_to_queue",
+      "slug": "burberry-london-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0  wave:3"
+    },
+    {
+      "timestamp": "2026-08-22T00:00:00.008Z",
+      "action": "added_to_queue",
+      "slug": "bvlgari-black-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0  wave:3"
+    },
+    {
+      "timestamp": "2026-08-22T00:00:00.009Z",
+      "action": "added_to_queue",
+      "slug": "centaurus-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0  wave:3"
+    },
+    {
+      "timestamp": "2026-08-22T00:00:00.010Z",
+      "action": "added_to_queue",
+      "slug": "chanel-no-5-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0  wave:3"
+    },
+    {
+      "timestamp": "2026-08-22T00:00:00.011Z",
+      "action": "added_to_queue",
+      "slug": "changing-constance-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0  wave:3"
+    },
+    {
+      "timestamp": "2026-08-22T00:00:00.012Z",
+      "action": "added_to_queue",
+      "slug": "cinque-terre-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0  wave:3"
+    },
+    {
+      "timestamp": "2026-08-22T00:00:00.013Z",
+      "action": "added_to_queue",
+      "slug": "crazy-in-love-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0  wave:3"
+    },
+    {
+      "timestamp": "2026-08-22T00:00:00.014Z",
+      "action": "added_to_queue",
+      "slug": "dark-vanilla-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0  wave:3"
+    },
+    {
+      "timestamp": "2026-08-22T00:00:00.015Z",
+      "action": "added_to_queue",
+      "slug": "egoiste-platinum-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0  wave:3"
+    },
+    {
+      "timestamp": "2026-08-22T00:00:00.016Z",
+      "action": "added_to_queue",
+      "slug": "eternity-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0  wave:3"
+    },
+    {
+      "timestamp": "2026-08-22T00:00:00.017Z",
+      "action": "added_to_queue",
+      "slug": "fig-lotus-flower-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0  wave:3"
+    },
+    {
+      "timestamp": "2026-08-22T00:00:00.018Z",
+      "action": "added_to_queue",
+      "slug": "gabrielle-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0  wave:3"
+    },
+    {
+      "timestamp": "2026-08-22T00:00:00.019Z",
+      "action": "added_to_queue",
+      "slug": "grapefruit-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0  wave:3"
+    },
+    {
+      "timestamp": "2026-08-22T00:00:00.020Z",
+      "action": "added_to_queue",
+      "slug": "lacoste-blanc-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0  wave:3"
+    },
+    {
+      "timestamp": "2026-08-22T00:00:00.021Z",
+      "action": "added_to_queue",
+      "slug": "light-blue-pour-homme-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0  wave:3"
+    },
+    {
+      "timestamp": "2026-08-22T00:00:00.022Z",
+      "action": "added_to_queue",
+      "slug": "my-way-nectar-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0  wave:3"
+    },
+    {
+      "timestamp": "2026-08-22T00:00:00.023Z",
+      "action": "added_to_queue",
+      "slug": "omnia-crystalline-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0  wave:3"
+    },
+    {
+      "timestamp": "2026-08-22T00:00:00.024Z",
+      "action": "added_to_queue",
+      "slug": "oud-sapparot-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0  wave:3"
+    },
+    {
+      "timestamp": "2026-08-22T00:00:00.025Z",
+      "action": "added_to_queue",
+      "slug": "outlands-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0  wave:3"
+    },
+    {
+      "timestamp": "2026-08-22T00:00:00.026Z",
+      "action": "added_to_queue",
+      "slug": "queen-of-silk-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0  wave:3"
+    },
+    {
+      "timestamp": "2026-08-22T00:00:00.027Z",
+      "action": "added_to_queue",
+      "slug": "scandal-pour-homme-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0  wave:3"
+    },
+    {
+      "timestamp": "2026-08-22T00:00:00.028Z",
+      "action": "added_to_queue",
+      "slug": "torino24-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0  wave:3  path:BRAND_NARRATIVE_ONLY"
+    },
+    {
+      "timestamp": "2026-08-22T00:00:00.029Z",
+      "action": "added_to_queue",
+      "slug": "valaya-exclusif-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0  wave:3"
+    },
+    {
+      "timestamp": "2026-08-22T01:00:00.000Z",
+      "action": "review_started",
+      "slug": "EP-CAT-P13 Wave 3 batch",
+      "reviewer": "Founder",
+      "details": "Founder editorial review commenced for all 30 Wave 3 drafts"
+    },
+    {
+      "timestamp": "2026-08-22T01:00:01.000Z",
+      "action": "correction_applied",
+      "slug": "a-la-rose-inspired",
+      "reviewer": "Founder",
+      "details": "[editorial] recommendedFor[3] 'balanced projection' rewritten to 'timeless elegance' — projection claim removed"
+    },
+    {
+      "timestamp": "2026-08-22T01:00:02.000Z",
+      "action": "correction_applied",
+      "slug": "aqva-amara-inspired",
+      "reviewer": "Founder",
+      "details": "[editorial] recommendedFor[1] 'moderate projection and lasting clarity' rewritten to 'fresh citrus clarity' — projection and longevity claims removed"
+    },
+    {
+      "timestamp": "2026-08-22T01:00:03.000Z",
+      "action": "correction_applied",
+      "slug": "bvlgari-black-inspired",
+      "reviewer": "Founder",
+      "details": "[editorial] description tier contradiction resolved: 'leather-touched heart' rewritten — Leather is in base tier not heart"
+    },
+    {
+      "timestamp": "2026-08-22T01:00:04.000Z",
+      "action": "correction_applied",
+      "slug": "cinque-terre-inspired",
+      "reviewer": "Founder",
+      "details": "[editorial] description tier contradiction resolved: Grey Amber placed in base, corrected to heart. recommendedFor[1] 'projects clarity' rewritten — projection claim removed"
+    },
+    {
+      "timestamp": "2026-08-22T01:00:05.000Z",
+      "action": "correction_applied",
+      "slug": "crazy-in-love-inspired",
+      "reviewer": "Founder",
+      "details": "[editorial] description 'settle into skin like a second shadow' rewritten to 'warm the base with dark, unhurried richness' — skin sillage removed"
+    },
+    {
+      "timestamp": "2026-08-22T01:00:06.000Z",
+      "action": "correction_applied",
+      "slug": "dark-vanilla-inspired",
+      "reviewer": "Founder",
+      "details": "[editorial] description 'settle into skin like embers' rewritten to 'deepen into a smouldering base' — skin sillage removed"
+    },
+    {
+      "timestamp": "2026-08-22T01:00:07.000Z",
+      "action": "correction_applied",
+      "slug": "eternity-inspired",
+      "reviewer": "Founder",
+      "details": "[editorial] description 'from first spray to final fade' rewritten to 'complete and unhurried' — evaporation rate/longevity claim removed"
+    },
+    {
+      "timestamp": "2026-08-22T01:00:08.000Z",
+      "action": "correction_applied",
+      "slug": "fig-lotus-flower-inspired",
+      "reviewer": "Founder",
+      "details": "[editorial] UNORDERED_GOVERNED_NOTES: description temporal sequencing 'opens like morning light on water' rewritten — all notes in heart tier, no top-note opening"
+    },
+    {
+      "timestamp": "2026-08-22T01:00:09.000Z",
+      "action": "correction_applied",
+      "slug": "gabrielle-inspired",
+      "reviewer": "Founder",
+      "details": "[editorial] recommendedFor[0] 'without reapplication' removed — longevity claim"
+    },
+    {
+      "timestamp": "2026-08-22T01:00:10.000Z",
+      "action": "correction_applied",
+      "slug": "grapefruit-inspired",
+      "reviewer": "Founder",
+      "details": "[editorial] UNORDERED_GOVERNED_NOTES: description temporal sequencing 'Grapefruit opens with bright, zesty intensity' rewritten — all notes in heart tier, no top-note opening"
+    },
+    {
+      "timestamp": "2026-08-22T01:00:11.000Z",
+      "action": "correction_applied",
+      "slug": "light-blue-pour-homme-inspired",
+      "reviewer": "Founder",
+      "details": "[editorial] recommendedFor[2] 'values moderate projection over bold statements' rewritten to 'prefers understated elegance over bold statements' — projection claim removed"
+    },
+    {
+      "timestamp": "2026-08-22T01:00:12.000Z",
+      "action": "correction_applied",
+      "slug": "my-way-nectar-inspired",
+      "reviewer": "Founder",
+      "details": "[editorial] description 'skin-like base' rewritten to 'warm the base with creamy depth' — skin sillage removed"
+    },
+    {
+      "timestamp": "2026-08-22T01:00:13.000Z",
+      "action": "correction_applied",
+      "slug": "oud-sapparot-inspired",
+      "reviewer": "Founder",
+      "details": "[editorial] description tier contradiction resolved: Cambodian Oud placed in heart, corrected to top. Description rewritten to reflect pineapple and oud opening together"
+    },
+    {
+      "timestamp": "2026-08-22T01:00:14.000Z",
+      "action": "correction_applied",
+      "slug": "queen-of-silk-inspired",
+      "reviewer": "Founder",
+      "details": "[editorial] recommendedFor[0] 'second skin' removed; recommendedFor[2] 'lingers' (FORBIDDEN_TERM) removed"
+    },
+    {
+      "timestamp": "2026-08-22T01:00:15.000Z",
+      "action": "correction_applied",
+      "slug": "scandal-pour-homme-inspired",
+      "reviewer": "Founder",
+      "details": "[editorial] recommendedFor[1] 'throughout the day' (FORBIDDEN_TERM) removed"
+    },
+    {
+      "timestamp": "2026-08-22T01:00:16.000Z",
+      "action": "correction_applied",
+      "slug": "torino24-inspired",
+      "reviewer": "Founder",
+      "details": "[editorial] BRAND_NARRATIVE_ONLY: description 'settles into skin like a private luxury' rewritten — skin sillage removed"
+    },
+    {
+      "timestamp": "2026-08-22T01:00:17.000Z",
+      "action": "correction_applied",
+      "slug": "valaya-exclusif-inspired",
+      "reviewer": "Founder",
+      "details": "[editorial] description 'skin-close finish' → 'intimate finish'; recommendedFor[2] 'skin-close elegance over bold projection' → 'understated elegance over bold statements'"
+    },
+    {
+      "timestamp": "2026-08-22T03:00:00.000Z",
+      "action": "correction_applied",
+      "slug": "fig-lotus-flower-inspired",
+      "reviewer": "Founder",
+      "details": "[editorial] P16 validation catch: UNORDERED residual 'floral heart' tier claim in description rewritten to 'this brightness' — UNORDERED_GOVERNED_NOTES must not assert tier placement in copy"
+    },
+    {
+      "timestamp": "2026-08-22T02:00:00.000Z",
+      "action": "approved",
+      "slug": "a-la-rose-inspired",
+      "reviewer": "Founder",
+      "details": "EP-CAT-P13: Founder editorial review approved. All governance violations corrected."
+    },
+    {
+      "timestamp": "2026-08-22T02:00:01.000Z",
+      "action": "approved",
+      "slug": "212-vip-black-inspired",
+      "reviewer": "Founder",
+      "details": "EP-CAT-P13: Founder editorial review approved. Advisories logged."
+    },
+    {
+      "timestamp": "2026-08-22T02:00:02.000Z",
+      "action": "approved",
+      "slug": "abu-dhabi-inspired",
+      "reviewer": "Founder",
+      "details": "EP-CAT-P13: Founder editorial review approved. Advisories logged."
+    },
+    {
+      "timestamp": "2026-08-22T02:00:03.000Z",
+      "action": "approved",
+      "slug": "aqva-amara-inspired",
+      "reviewer": "Founder",
+      "details": "EP-CAT-P13: Founder editorial review approved. All governance violations corrected."
+    },
+    {
+      "timestamp": "2026-08-22T02:00:04.000Z",
+      "action": "approved",
+      "slug": "armani-prive-oud-royal-inspired",
+      "reviewer": "Founder",
+      "details": "EP-CAT-P13: Founder editorial review approved. No corrections required."
+    },
+    {
+      "timestamp": "2026-08-22T02:00:05.000Z",
+      "action": "approved",
+      "slug": "attrape-reves-inspired",
+      "reviewer": "Founder",
+      "details": "EP-CAT-P13: Founder editorial review approved. No corrections required."
+    },
+    {
+      "timestamp": "2026-08-22T02:00:06.000Z",
+      "action": "approved",
+      "slug": "bois-pacifique-inspired",
+      "reviewer": "Founder",
+      "details": "EP-CAT-P13: Founder editorial review approved. Advisories logged."
+    },
+    {
+      "timestamp": "2026-08-22T02:00:07.000Z",
+      "action": "approved",
+      "slug": "burberry-london-inspired",
+      "reviewer": "Founder",
+      "details": "EP-CAT-P13: Founder editorial review approved. No corrections required."
+    },
+    {
+      "timestamp": "2026-08-22T02:00:08.000Z",
+      "action": "approved",
+      "slug": "bvlgari-black-inspired",
+      "reviewer": "Founder",
+      "details": "EP-CAT-P13: Founder editorial review approved. Tier contradiction corrected."
+    },
+    {
+      "timestamp": "2026-08-22T02:00:09.000Z",
+      "action": "approved",
+      "slug": "centaurus-inspired",
+      "reviewer": "Founder",
+      "details": "EP-CAT-P13: Founder editorial review approved. Advisory logged."
+    },
+    {
+      "timestamp": "2026-08-22T02:00:10.000Z",
+      "action": "approved",
+      "slug": "chanel-no-5-inspired",
+      "reviewer": "Founder",
+      "details": "EP-CAT-P13: Founder editorial review approved. Advisory logged."
+    },
+    {
+      "timestamp": "2026-08-22T02:00:11.000Z",
+      "action": "approved",
+      "slug": "changing-constance-inspired",
+      "reviewer": "Founder",
+      "details": "EP-CAT-P13: Founder editorial review approved. No corrections required."
+    },
+    {
+      "timestamp": "2026-08-22T02:00:12.000Z",
+      "action": "approved",
+      "slug": "cinque-terre-inspired",
+      "reviewer": "Founder",
+      "details": "EP-CAT-P13: Founder editorial review approved. Tier contradiction and projection claim corrected."
+    },
+    {
+      "timestamp": "2026-08-22T02:00:13.000Z",
+      "action": "approved",
+      "slug": "crazy-in-love-inspired",
+      "reviewer": "Founder",
+      "details": "EP-CAT-P13: Founder editorial review approved. All governance violations corrected."
+    },
+    {
+      "timestamp": "2026-08-22T02:00:14.000Z",
+      "action": "approved",
+      "slug": "dark-vanilla-inspired",
+      "reviewer": "Founder",
+      "details": "EP-CAT-P13: Founder editorial review approved. Skin sillage corrected."
+    },
+    {
+      "timestamp": "2026-08-22T02:00:15.000Z",
+      "action": "approved",
+      "slug": "egoiste-platinum-inspired",
+      "reviewer": "Founder",
+      "details": "EP-CAT-P13: Founder editorial review approved. Advisory logged."
+    },
+    {
+      "timestamp": "2026-08-22T02:00:16.000Z",
+      "action": "approved",
+      "slug": "eternity-inspired",
+      "reviewer": "Founder",
+      "details": "EP-CAT-P13: Founder editorial review approved. Longevity claim corrected."
+    },
+    {
+      "timestamp": "2026-08-22T02:00:17.000Z",
+      "action": "approved",
+      "slug": "fig-lotus-flower-inspired",
+      "reviewer": "Founder",
+      "details": "EP-CAT-P13: Founder editorial review approved. UNORDERED temporal sequencing corrected."
+    },
+    {
+      "timestamp": "2026-08-22T02:00:18.000Z",
+      "action": "approved",
+      "slug": "gabrielle-inspired",
+      "reviewer": "Founder",
+      "details": "EP-CAT-P13: Founder editorial review approved. Reapplication longevity claim corrected."
+    },
+    {
+      "timestamp": "2026-08-22T02:00:19.000Z",
+      "action": "approved",
+      "slug": "grapefruit-inspired",
+      "reviewer": "Founder",
+      "details": "EP-CAT-P13: Founder editorial review approved. UNORDERED temporal sequencing corrected."
+    },
+    {
+      "timestamp": "2026-08-22T02:00:20.000Z",
+      "action": "approved",
+      "slug": "lacoste-blanc-inspired",
+      "reviewer": "Founder",
+      "details": "EP-CAT-P13: Founder editorial review approved. Advisory logged."
+    },
+    {
+      "timestamp": "2026-08-22T02:00:21.000Z",
+      "action": "approved",
+      "slug": "light-blue-pour-homme-inspired",
+      "reviewer": "Founder",
+      "details": "EP-CAT-P13: Founder editorial review approved. All governance violations corrected."
+    },
+    {
+      "timestamp": "2026-08-22T02:00:22.000Z",
+      "action": "approved",
+      "slug": "my-way-nectar-inspired",
+      "reviewer": "Founder",
+      "details": "EP-CAT-P13: Founder editorial review approved. All governance violations corrected."
+    },
+    {
+      "timestamp": "2026-08-22T02:00:23.000Z",
+      "action": "approved",
+      "slug": "omnia-crystalline-inspired",
+      "reviewer": "Founder",
+      "details": "EP-CAT-P13: Founder editorial review approved. Advisory logged."
+    },
+    {
+      "timestamp": "2026-08-22T02:00:24.000Z",
+      "action": "approved",
+      "slug": "oud-sapparot-inspired",
+      "reviewer": "Founder",
+      "details": "EP-CAT-P13: Founder editorial review approved. Tier contradiction corrected."
+    },
+    {
+      "timestamp": "2026-08-22T02:00:25.000Z",
+      "action": "approved",
+      "slug": "outlands-inspired",
+      "reviewer": "Founder",
+      "details": "EP-CAT-P13: Founder editorial review approved. Subtitle collision advisory logged; resolve before promotion."
+    },
+    {
+      "timestamp": "2026-08-22T02:00:26.000Z",
+      "action": "approved",
+      "slug": "queen-of-silk-inspired",
+      "reviewer": "Founder",
+      "details": "EP-CAT-P13: Founder editorial review approved. Second-skin and FORBIDDEN_TERM corrections applied."
+    },
+    {
+      "timestamp": "2026-08-22T02:00:27.000Z",
+      "action": "approved",
+      "slug": "scandal-pour-homme-inspired",
+      "reviewer": "Founder",
+      "details": "EP-CAT-P13: Founder editorial review approved. FORBIDDEN_TERM corrected."
+    },
+    {
+      "timestamp": "2026-08-22T02:00:28.000Z",
+      "action": "approved",
+      "slug": "torino24-inspired",
+      "reviewer": "Founder",
+      "details": "EP-CAT-P13: Founder editorial review approved. BRAND_NARRATIVE_ONLY path verified; skin sillage corrected."
+    },
+    {
+      "timestamp": "2026-08-22T02:00:29.000Z",
+      "action": "approved",
+      "slug": "valaya-exclusif-inspired",
+      "reviewer": "Founder",
+      "details": "EP-CAT-P13: Founder editorial review approved. All governance violations corrected."
     }
   ]
 }

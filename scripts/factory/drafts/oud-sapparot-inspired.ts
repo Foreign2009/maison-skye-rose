@@ -72,16 +72,16 @@ export const oudSapparotInspired: FragranceKnowledge = {
     "30ml": 250,
   },
   images: {
-    "5ml":  "",  // FACTORY_ERROR: IMAGE_MISSING — image path for 5ml is required
-    "10ml": "",  // FACTORY_ERROR: IMAGE_MISSING — image path for 10ml is required
-    "30ml": "",  // FACTORY_ERROR: IMAGE_MISSING — image path for 30ml is required
+    "5ml":  "/images/blue-5ml.png",
+    "10ml": "/images/blue-10ml.png",
+    "30ml": "/images/glass-blue-30ml.png",
   },
   bestSeller    : false,
   newArrival    : false,
 
   // ── Education ───────────────────────────────────────────────────────────────
   subtitle      : "Tropical Oud Intensity",
-  description   : "Thai pineapple opens into a dark, resinous heart of oud and leather, grounded by swirling spice and smoke. Vanilla and coconut settle beneath, creating a fragrance that moves between tropical warmth and woody depth—neither fully sweet nor austere, but tensioned between both.",
+  description   : "Thai pineapple and oud open together—bright fruit meeting resinous depth—then give way to dark leather, smoky birch, and spiced cinnamon. Vanilla and coconut settle beneath, creating a fragrance that moves between tropical warmth and woody depth—neither fully sweet nor austere, but tensioned between both.",
   academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances", "what-makes-a-signature-scent"],
   academyCategories: ["fragrance-families", "the-note-pyramid", "wear-and-application"],
   educationTags : [

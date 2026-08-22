@@ -80,16 +80,16 @@ export const darkVanillaInspired: FragranceKnowledge = {
     "30ml": 250,
   },
   images: {
-    "5ml":  "",  // FACTORY_ERROR: IMAGE_MISSING — image path for 5ml is required
-    "10ml": "",  // FACTORY_ERROR: IMAGE_MISSING — image path for 10ml is required
-    "30ml": "",  // FACTORY_ERROR: IMAGE_MISSING — image path for 30ml is required
+    "5ml":  "/images/blue-5ml.png",
+    "10ml": "/images/blue-10ml.png",
+    "30ml": "/images/glass-blue-30ml.png",
   },
   bestSeller    : false,
   newArrival    : false,
 
   // ── Education ───────────────────────────────────────────────────────────────
   subtitle      : "Spiced Leather Warmth",
-  description   : "Pink pepper and saffron ignite a warmth that unfolds into leather and oud—a dark, spiced landscape beneath. Vanilla and amber settle into skin like embers, rich and unhurried, without sweetness's typical brightness.",
+  description   : "Pink pepper and saffron ignite a warmth that unfolds into leather and oud—a dark, spiced landscape beneath. Vanilla and amber deepen into a smouldering base—rich and unhurried, without sweetness's typical brightness.",
   academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances", "choosing-your-season-scent"],
   academyCategories: ["fragrance-families", "the-note-pyramid", "wear-and-application"],
   educationTags : [

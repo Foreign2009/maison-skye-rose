@@ -61,7 +61,7 @@ export const cinqueTerreInspired: FragranceKnowledge = {
   signatureStyle: ["Coastal Woody Aromatic", "Mediterranean Freshness", "Balanced Signature"],
   recommendedFor: [
     "Anyone seeking a fresh, grounded fragrance that evokes Mediterranean coastal escapes without heavy sweetness.",
-    "Men and women who want a balanced woody aromatic for everyday wear that projects clarity and sophistication.",
+    "Men and women who want a balanced woody aromatic for everyday wear with clarity and sophistication.",
     "Fragrance enthusiasts looking for a versatile signature that bridges crisp citrus top notes with anchoring woody base.",
     "Travelers and vacation planners who want one fragrance capturing sun-soaked seaside destinations.",
   ],
@@ -73,16 +73,16 @@ export const cinqueTerreInspired: FragranceKnowledge = {
     "30ml": 250,
   },
   images: {
-    "5ml":  "",  // FACTORY_ERROR: IMAGE_MISSING — image path for 5ml is required
-    "10ml": "",  // FACTORY_ERROR: IMAGE_MISSING — image path for 10ml is required
-    "30ml": "",  // FACTORY_ERROR: IMAGE_MISSING — image path for 30ml is required
+    "5ml":  "/images/blue-5ml.png",
+    "10ml": "/images/blue-10ml.png",
+    "30ml": "/images/glass-blue-30ml.png",
   },
   bestSeller    : false,
   newArrival    : false,
 
   // ── Education ───────────────────────────────────────────────────────────────
   subtitle      : "Coastal Wood",
-  description   : "Rosemary and bright lemon open onto a composition of cedar, sea salt, and fig leaves—a woody aromatic that captures the clarity of Mediterranean air. Grey amber and oakmoss anchor the base, grounding the fresh verdancy in warm, earthy depth.",
+  description   : "Rosemary and bright lemon open onto a composition of cedar, sea salt, and fig leaves—a woody aromatic that captures the clarity of Mediterranean air. Oakmoss and tonka beans anchor the base, grounding the fresh verdancy in warm, earthy depth.",
   academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances", "choosing-your-season-scent"],
   academyCategories: ["fragrance-families", "the-note-pyramid", "occasions-and-style"],
   educationTags : [

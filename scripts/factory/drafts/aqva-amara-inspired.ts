@@ -60,7 +60,7 @@ export const aqvaAmaraInspired: FragranceKnowledge = {
   signatureStyle: ["Citrus Aquatic", "Summer Signature", "Fresh Clarity"],
   recommendedFor: [
     "Men seeking a fresh, citrus-driven summer signature that feels clean and slightly sophisticated without heaviness.",
-    "Those who want moderate projection and lasting clarity — ideal for office, travel, or warm-weather daily wear.",
+    "Those who want fresh citrus clarity — ideal for office, travel, or warm-weather daily wear.",
     "Fragrance explorers who appreciate aquatic-woody balance with a subtle bitter edge and natural neroli character.",
   ],
 
@@ -71,9 +71,9 @@ export const aqvaAmaraInspired: FragranceKnowledge = {
     "30ml": 250,
   },
   images: {
-    "5ml":  "",  // FACTORY_ERROR: IMAGE_MISSING — image path for 5ml is required
-    "10ml": "",  // FACTORY_ERROR: IMAGE_MISSING — image path for 10ml is required
-    "30ml": "",  // FACTORY_ERROR: IMAGE_MISSING — image path for 30ml is required
+    "5ml":  "/images/blue-5ml.png",
+    "10ml": "/images/blue-10ml.png",
+    "30ml": "/images/glass-blue-30ml.png",
   },
   bestSeller    : false,
   newArrival    : false,

@@ -72,16 +72,16 @@ export const figLotusFlowerInspired: FragranceKnowledge = {
     "30ml": 250,
   },
   images: {
-    "5ml":  "",  // FACTORY_ERROR: IMAGE_MISSING — image path for 5ml is required
-    "10ml": "",  // FACTORY_ERROR: IMAGE_MISSING — image path for 10ml is required
-    "30ml": "",  // FACTORY_ERROR: IMAGE_MISSING — image path for 30ml is required
+    "5ml":  "/images/pink-5ml.png",
+    "10ml": "/images/pink-10ml.png",
+    "30ml": "/images/glass-pink-30ml.png",
   },
   bestSeller    : false,
   newArrival    : false,
 
   // ── Education ───────────────────────────────────────────────────────────────
   subtitle      : "Green Water Luxury",
-  description   : "Green fig leaf meets luminous lotus in a fragrance that opens like morning light on water. Vetiver grounds the floral heart with quiet earthiness, creating a composition that feels both aquatic and botanical—fresh without artifice, contemplative without heaviness.",
+  description   : "Green fig leaf meets luminous lotus in a composition of quiet clarity and botanical depth. Vetiver grounds this brightness with quiet earthiness, creating something that feels both aquatic and botanical—fresh without artifice, contemplative without heaviness.",
   academyArticleIds: ["guide-to-fragrance-families", "choosing-your-season-scent", "what-makes-a-signature-scent"],
   academyCategories: ["fragrance-families", "occasions-and-style"],
   educationTags : [

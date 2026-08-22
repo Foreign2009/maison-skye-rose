@@ -68,7 +68,7 @@ export const lightBluePourHommeInspired: FragranceKnowledge = {
   recommendedFor: [
     "Men seeking a crisp, Mediterranean-inspired daily fragrance that feels effortless in warm weather and professional settings.",
     "Those who want fresh citrus with understated sophistication—bright enough for casual wear, refined enough for the office.",
-    "Anyone drawn to morning freshness and sunlit clarity who values moderate projection over bold statements.",
+    "Anyone drawn to morning freshness and sunlit clarity who prefers understated elegance over bold statements.",
     "Fragrance explorers building a summer wardrobe who need a versatile anchor between sporty and elegant scents.",
   ],
 
@@ -79,9 +79,9 @@ export const lightBluePourHommeInspired: FragranceKnowledge = {
     "30ml": 250,
   },
   images: {
-    "5ml":  "",  // FACTORY_ERROR: IMAGE_MISSING — image path for 5ml is required
-    "10ml": "",  // FACTORY_ERROR: IMAGE_MISSING — image path for 10ml is required
-    "30ml": "",  // FACTORY_ERROR: IMAGE_MISSING — image path for 30ml is required
+    "5ml":  "/images/blue-5ml.png",
+    "10ml": "/images/blue-10ml.png",
+    "30ml": "/images/glass-blue-30ml.png",
   },
   bestSeller    : false,
   newArrival    : false,

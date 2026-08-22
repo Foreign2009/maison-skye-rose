@@ -74,7 +74,7 @@ export const gabrielleInspired: FragranceKnowledge = {
   seasons       : ["Spring", "Summer", "Autumn", "Winter"],
   signatureStyle: ["Luminous White Floral", "Modern Feminine Signature", "Balanced Elegance"],
   recommendedFor: [
-    "Women seeking a luminous, balanced white floral that transitions seamlessly from office to evening without reapplication.",
+    "Women seeking a luminous, balanced white floral that transitions seamlessly from office to evening.",
     "Those who want signature femininity that feels modern and confident rather than traditionally romantic.",
     "Fragrance enthusiasts building a collection who need a sophisticated everyday floral that anchors multiple wardrobe moods.",
     "Anyone looking for a year-round staple with enough complexity to stay interesting through repeated wear.",
@@ -87,9 +87,9 @@ export const gabrielleInspired: FragranceKnowledge = {
     "30ml": 250,
   },
   images: {
-    "5ml":  "",  // FACTORY_ERROR: IMAGE_MISSING — image path for 5ml is required
-    "10ml": "",  // FACTORY_ERROR: IMAGE_MISSING — image path for 10ml is required
-    "30ml": "",  // FACTORY_ERROR: IMAGE_MISSING — image path for 30ml is required
+    "5ml":  "/images/pink-5ml.png",
+    "10ml": "/images/pink-10ml.png",
+    "30ml": "/images/glass-pink-30ml.png",
   },
   bestSeller    : false,
   newArrival    : false,

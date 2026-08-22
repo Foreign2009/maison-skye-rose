@@ -62,7 +62,7 @@ export const valayaExclusifInspired: FragranceKnowledge = {
   recommendedFor: [
     "Women seeking a refined everyday floral that balances brightness with softness without demanding attention",
     "Those who love powdery white florals but want enough citrus and woody depth to feel sophisticated and complete",
-    "Anyone building a signature scent wardrobe who values luminous, skin-close elegance over bold projection",
+    "Anyone building a signature scent wardrobe who values luminous, understated elegance over bold statements",
     "Women who pair fragrances with understated luxury aesthetics and appreciate creamy sandalwood warmth",
   ],
 
@@ -73,16 +73,16 @@ export const valayaExclusifInspired: FragranceKnowledge = {
     "30ml": 250,
   },
   images: {
-    "5ml":  "",  // FACTORY_ERROR: IMAGE_MISSING — image path for 5ml is required
-    "10ml": "",  // FACTORY_ERROR: IMAGE_MISSING — image path for 10ml is required
-    "30ml": "",  // FACTORY_ERROR: IMAGE_MISSING — image path for 30ml is required
+    "5ml":  "/images/pink-5ml.png",
+    "10ml": "/images/pink-10ml.png",
+    "30ml": "/images/glass-pink-30ml.png",
   },
   bestSeller    : false,
   newArrival    : false,
 
   // ── Education ───────────────────────────────────────────────────────────────
   subtitle      : "Soft Luminosity",
-  description   : "A powdery white floral that opens with bitter almond and citrus brightness, settling into a luminous heart of orange blossom and creamy white flowers. Sandalwood and soft musks create a gentle, skin-close finish that feels both intimate and refined.",
+  description   : "A powdery white floral that opens with bitter almond and citrus brightness, settling into a luminous heart of orange blossom and creamy white flowers. Sandalwood and soft musks create a gentle, intimate finish that feels both luminous and refined.",
   academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "what-makes-a-signature-scent", "how-to-layer-fragrances"],
   academyCategories: ["fragrance-families", "the-note-pyramid", "wear-and-application"],
   educationTags : [

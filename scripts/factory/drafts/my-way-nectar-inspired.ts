@@ -73,16 +73,16 @@ export const myWayNectarInspired: FragranceKnowledge = {
     "30ml": 250,
   },
   images: {
-    "5ml":  "",  // FACTORY_ERROR: IMAGE_MISSING — image path for 5ml is required
-    "10ml": "",  // FACTORY_ERROR: IMAGE_MISSING — image path for 10ml is required
-    "30ml": "",  // FACTORY_ERROR: IMAGE_MISSING — image path for 30ml is required
+    "5ml":  "/images/pink-5ml.png",
+    "10ml": "/images/pink-10ml.png",
+    "30ml": "/images/glass-pink-30ml.png",
   },
   bestSeller    : false,
   newArrival    : false,
 
   // ── Education ───────────────────────────────────────────────────────────────
   subtitle      : "Warm Floral Depth",
-  description   : "Pear and bergamot open with a whisper of orange blossom, then the heart unfolds into creamy tuberose and jasmine—a floral richness that feels both intimate and luminous. White musk and bourbon vanilla settle into a warm, skin-like base, grounded by cedarwood's gentle structure.",
+  description   : "Pear and bergamot open with a whisper of orange blossom, then the heart unfolds into creamy tuberose and jasmine—a floral richness that feels both intimate and luminous. White musk and bourbon vanilla warm the base with creamy depth, grounded by cedarwood's gentle structure.",
   academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances", "what-makes-a-signature-scent"],
   academyCategories: ["fragrance-families", "the-note-pyramid", "wear-and-application"],
   educationTags : [

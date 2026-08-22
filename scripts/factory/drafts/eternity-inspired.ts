@@ -89,16 +89,16 @@ export const eternityInspired: FragranceKnowledge = {
     "30ml": 250,
   },
   images: {
-    "5ml":  "",  // FACTORY_ERROR: IMAGE_MISSING — image path for 5ml is required
-    "10ml": "",  // FACTORY_ERROR: IMAGE_MISSING — image path for 10ml is required
-    "30ml": "",  // FACTORY_ERROR: IMAGE_MISSING — image path for 30ml is required
+    "5ml":  "/images/blue-5ml.png",
+    "10ml": "/images/blue-10ml.png",
+    "30ml": "/images/glass-blue-30ml.png",
   },
   bestSeller    : false,
   newArrival    : false,
 
   // ── Education ───────────────────────────────────────────────────────────────
   subtitle      : "Verdant Classic",
-  description   : "Crisp lavender and citrus open with classical restraint, revealing a verdant heart of sage and juniper that speaks to timeless aromatic tradition. Sandalwood and vetiver ground the composition in warm, subtle sensuality—a fragrance that feels complete from first spray to final fade.",
+  description   : "Crisp lavender and citrus open with classical restraint, revealing a verdant heart of sage and juniper that speaks to timeless aromatic tradition. Sandalwood and vetiver ground the composition in warm, subtle sensuality—a fragrance that feels complete and unhurried.",
   academyArticleIds: ["guide-to-fragrance-families", "what-makes-a-signature-scent", "how-to-layer-fragrances", "how-to-wear-fragrance"],
   academyCategories: ["fragrance-families", "wear-and-application", "occasions-and-style"],
   educationTags : [

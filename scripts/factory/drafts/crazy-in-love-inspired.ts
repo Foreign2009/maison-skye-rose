@@ -73,16 +73,16 @@ export const crazyInLoveInspired: FragranceKnowledge = {
     "30ml": 250,
   },
   images: {
-    "5ml":  "",  // FACTORY_ERROR: IMAGE_MISSING — image path for 5ml is required
-    "10ml": "",  // FACTORY_ERROR: IMAGE_MISSING — image path for 10ml is required
-    "30ml": "",  // FACTORY_ERROR: IMAGE_MISSING — image path for 30ml is required
+    "5ml":  "/images/pink-5ml.png",
+    "10ml": "/images/pink-10ml.png",
+    "30ml": "/images/glass-pink-30ml.png",
   },
   bestSeller    : false,
   newArrival    : false,
 
   // ── Education ───────────────────────────────────────────────────────────────
   subtitle      : "Warm Floral Intimacy",
-  description   : "Wild rose and violet leaves open with a gentle green bite, then melt into saffron and caramelized brown sugar—a warm, sensual heart that feels both spiced and sweet. Amber and vanilla bean settle into skin like a second shadow, creating an Oriental floral that is confident without volume, intimate without apology.",
+  description   : "Wild rose and violet leaves open with a gentle green bite, then melt into saffron and caramelized brown sugar—a warm, sensual heart that feels both spiced and sweet. Amber and vanilla bean warm the base with dark, unhurried richness—an Oriental floral that is intimate without apology.",
   academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances", "what-makes-a-signature-scent"],
   academyCategories: ["fragrance-families", "the-note-pyramid", "occasions-and-style"],
   educationTags : [

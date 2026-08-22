@@ -17,6 +17,26 @@ import { goldOudInspired }          from "../drafts/gold-oud-inspired";
 import { velvetRoseOudInspired }    from "../drafts/velvet-rose-oud-inspired";
 import { englishPearFreesiaInspired } from "../drafts/english-pear-freesia-inspired";
 import { oudBergamotInspired }      from "../drafts/oud-bergamot-inspired";
+// Wave 3 P13 UNORDERED regression imports
+import { figLotusFlowerInspired }   from "../drafts/fig-lotus-flower-inspired";
+import { grapefruitInspired }       from "../drafts/grapefruit-inspired";
+// Wave 3 P13 tier-contradiction regression imports
+import { bvlgariBlackInspired }     from "../drafts/bvlgari-black-inspired";
+import { oudSapparotInspired }      from "../drafts/oud-sapparot-inspired";
+import { cinqueTerreInspired }      from "../drafts/cinque-terre-inspired";
+// Wave 3 P13 skin-sillage and forbidden-term regression imports
+import { crazyInLoveInspired }      from "../drafts/crazy-in-love-inspired";
+import { darkVanillaInspired }      from "../drafts/dark-vanilla-inspired";
+import { myWayNectarInspired }      from "../drafts/my-way-nectar-inspired";
+import { queenOfSilkInspired }      from "../drafts/queen-of-silk-inspired";
+import { scandalPourHommeInspired } from "../drafts/scandal-pour-homme-inspired";
+import { eternityInspired }         from "../drafts/eternity-inspired";
+import { gabrielleInspired }        from "../drafts/gabrielle-inspired";
+import { valayaExclusifInspired }   from "../drafts/valaya-exclusif-inspired";
+import { torino24Inspired }         from "../drafts/torino24-inspired";
+import { aLaRoseInspired }          from "../drafts/a-la-rose-inspired";
+import { aqvaAmaraInspired }        from "../drafts/aqva-amara-inspired";
+import { lightBluePourHommeInspired } from "../drafts/light-blue-pour-homme-inspired";
 
 // ── Test harness ──────────────────────────────────────────────────────────────
 
@@ -763,6 +783,166 @@ test("TEST 35 — Wave 3 governance: 29 READY entries; year corrections applied 
   const vipBlack = wave3Research.entries.find(e => e._sourceKey.includes("MEN-10"));
   assert.equal(vipBlack?.launchYear, 2017,
     "212 VIP Black launchYear must be 2017 (research corrected from supplier-noted 2012)");
+});
+
+// ── Wave 3 P13 Governance Regression Tests ───────────────────────────────────
+// EP-CAT-P13: Guards against regression of governance violations discovered
+// during Founder editorial review of 30 Wave 3 drafts on 2026-08-22.
+//
+// Categories protected:
+//   (A) UNORDERED_GOVERNED_NOTES temporal sequencing (fig-lotus-flower, grapefruit)
+//   (B) Skin-close / second-skin / skin-like sillage language
+//   (C) FORBIDDEN_TERM list violations (lingers, throughout the day, projection, etc.)
+//   (D) Tier contradiction: note placed in wrong tier in customer-facing description
+
+// ── P13 helper: skin-sillage scan ─────────────────────────────────────────────
+const SKIN_SILLAGE_PATTERNS: Array<[RegExp, string]> = [
+  [/\bskin[- ]like\b/i,         "skin-like"],
+  [/\bskin[- ]close\b/i,        "skin-close"],
+  [/\bsecond skin\b/i,          "second skin"],
+  [/\bsettles into skin\b/i,    "settles into skin"],
+  [/\bskin[- ]like base\b/i,    "skin-like base"],
+];
+
+function assertNoSkinSillage(
+  draft: { description?: string; recommendedFor?: string[] },
+  slug: string,
+): void {
+  const combined = [draft.description ?? "", ...(draft.recommendedFor ?? [])].join(" ");
+  const violations: string[] = [];
+  for (const [pattern, label] of SKIN_SILLAGE_PATTERNS) {
+    if (pattern.test(combined)) violations.push(label);
+  }
+  assert.equal(violations.length, 0,
+    `${slug}: must not contain skin sillage language after P13 corrections; found: ${violations.join(", ")}`);
+}
+
+// ── P13 helper: forbidden-term scan ───────────────────────────────────────────
+const P13_FORBIDDEN_PATTERNS: Array<[RegExp, string]> = [
+  [/\blingers\b/i,                 "lingers (FORBIDDEN_TERM)"],
+  [/\bthroughout the day\b/i,      "throughout the day (FORBIDDEN_TERM)"],
+  [/\bmoderate projection\b/i,     "moderate projection (performance claim)"],
+  [/\bbalanced projection\b/i,     "balanced projection (performance claim)"],
+  [/\bprojects\b/i,                "projects (FORBIDDEN_TERM)"],
+  [/\bfrom first spray to final fade\b/i, "from first spray to final fade (longevity claim)"],
+  [/\bwithout reapplication\b/i,   "without reapplication (longevity claim)"],
+];
+
+function assertNoForbiddenTerms(
+  draft: { description?: string; recommendedFor?: string[] },
+  slug: string,
+): void {
+  const combined = [draft.description ?? "", ...(draft.recommendedFor ?? [])].join(" ");
+  const violations: string[] = [];
+  for (const [pattern, label] of P13_FORBIDDEN_PATTERNS) {
+    if (pattern.test(combined)) violations.push(label);
+  }
+  assert.equal(violations.length, 0,
+    `${slug}: must not contain FORBIDDEN_TERMS after P13 corrections; found: ${violations.join(", ")}`);
+}
+
+// ── (A) UNORDERED Wave 3 semantic regression ──────────────────────────────────
+
+// TEST 36: fig-lotus-flower UNORDERED — temporal sequencing corrected in P13.
+// Original: "opens like morning light on water" (implied top-note opening).
+// After correction: temporal language removed. Verify it does not regress.
+test("TEST 36 — Wave 3 P13 UNORDERED: fig-lotus-flower copy free of temporal sequencing after correction", () => {
+  assertNoUnorderedSequencing(figLotusFlowerInspired, "fig-lotus-flower-inspired");
+});
+
+// TEST 37: grapefruit UNORDERED — "Grapefruit opens with bright, zesty intensity" corrected.
+// This phrase was caught by the FORBIDDEN opens-with pattern.
+test("TEST 37 — Wave 3 P13 UNORDERED: grapefruit copy free of temporal sequencing after correction", () => {
+  assertNoUnorderedSequencing(grapefruitInspired, "grapefruit-inspired");
+});
+
+// ── (B) Skin-sillage regressions ──────────────────────────────────────────────
+
+test("TEST 38 — Wave 3 P13 sillage: crazy-in-love description free of skin sillage language", () => {
+  assertNoSkinSillage(crazyInLoveInspired, "crazy-in-love-inspired");
+});
+
+test("TEST 39 — Wave 3 P13 sillage: dark-vanilla description free of skin sillage language", () => {
+  assertNoSkinSillage(darkVanillaInspired, "dark-vanilla-inspired");
+});
+
+test("TEST 40 — Wave 3 P13 sillage: my-way-nectar description free of skin sillage language", () => {
+  assertNoSkinSillage(myWayNectarInspired, "my-way-nectar-inspired");
+});
+
+test("TEST 41 — Wave 3 P13 sillage: queen-of-silk recommendedFor free of 'second skin' language", () => {
+  assertNoSkinSillage(queenOfSilkInspired, "queen-of-silk-inspired");
+});
+
+test("TEST 42 — Wave 3 P13 sillage: valaya-exclusif free of skin-close sillage language", () => {
+  assertNoSkinSillage(valayaExclusifInspired, "valaya-exclusif-inspired");
+});
+
+test("TEST 43 — Wave 3 P13 sillage: torino24 BRAND_NARRATIVE_ONLY free of skin sillage language", () => {
+  assertNoSkinSillage(torino24Inspired, "torino24-inspired");
+});
+
+// ── (C) Forbidden-term regressions ────────────────────────────────────────────
+
+test("TEST 44 — Wave 3 P13 forbidden: queen-of-silk free of FORBIDDEN_TERM 'lingers'", () => {
+  assertNoForbiddenTerms(queenOfSilkInspired, "queen-of-silk-inspired");
+});
+
+test("TEST 45 — Wave 3 P13 forbidden: scandal-pour-homme free of FORBIDDEN_TERM 'throughout the day'", () => {
+  assertNoForbiddenTerms(scandalPourHommeInspired, "scandal-pour-homme-inspired");
+});
+
+test("TEST 46 — Wave 3 P13 forbidden: eternity free of longevity claim 'from first spray to final fade'", () => {
+  assertNoForbiddenTerms(eternityInspired, "eternity-inspired");
+});
+
+test("TEST 47 — Wave 3 P13 forbidden: gabrielle free of 'without reapplication' longevity claim", () => {
+  assertNoForbiddenTerms(gabrielleInspired, "gabrielle-inspired");
+});
+
+test("TEST 48 — Wave 3 P13 forbidden: a-la-rose free of 'balanced projection' performance claim", () => {
+  assertNoForbiddenTerms(aLaRoseInspired, "a-la-rose-inspired");
+});
+
+test("TEST 49 — Wave 3 P13 forbidden: aqva-amara free of 'moderate projection' and longevity claims", () => {
+  assertNoForbiddenTerms(aqvaAmaraInspired, "aqva-amara-inspired");
+});
+
+test("TEST 50 — Wave 3 P13 forbidden: light-blue-pour-homme free of 'moderate projection' claim", () => {
+  assertNoForbiddenTerms(lightBluePourHommeInspired, "light-blue-pour-homme-inspired");
+});
+
+// ── (D) Tier-contradiction regressions ────────────────────────────────────────
+// These guard against notes being mis-placed in the wrong tier in customer copy.
+
+// TEST 51: bvlgari-black — Leather is in BASE tier; description must not assert it is
+// in the heart. The original "leather-touched heart" was corrected in P13.
+test("TEST 51 — Wave 3 P13 tier: bvlgari-black description must not place Leather in heart tier", () => {
+  const desc = bvlgariBlackInspired.description ?? "";
+  assert.ok(
+    !(/leather[- ]touched heart/i.test(desc) || /heart.*leather/i.test(desc)),
+    `bvlgari-black: description must not reference Leather in a heart-tier context — Leather is in BASE. Got: "${desc}"`,
+  );
+});
+
+// TEST 52: oud-sapparot — Cambodian Oud is in TOP tier; description must not present
+// it as a heart note. Original "opens into a dark, resinous heart of oud" was corrected.
+test("TEST 52 — Wave 3 P13 tier: oud-sapparot description must not place Oud in heart tier", () => {
+  const desc = oudSapparotInspired.description ?? "";
+  assert.ok(
+    !(/heart of oud/i.test(desc) || /resinous heart.*oud/i.test(desc) || /oud.*heart/i.test(desc)),
+    `oud-sapparot: description must not reference Oud in heart-tier context — Oud is in TOP. Got: "${desc}"`,
+  );
+});
+
+// TEST 53: cinque-terre — Grey Amber is in HEART tier; description must not assert it
+// anchors the base. Original "Grey amber and oakmoss anchor the base" was corrected.
+test("TEST 53 — Wave 3 P13 tier: cinque-terre description must not place Grey Amber in base tier", () => {
+  const desc = cinqueTerreInspired.description ?? "";
+  assert.ok(
+    !(/grey amber.*base/i.test(desc) || /base.*grey amber/i.test(desc) || /grey amber.*anchor/i.test(desc)),
+    `cinque-terre: description must not reference Grey Amber as a base anchor — Grey Amber is in HEART. Got: "${desc}"`,
+  );
 });
 
 // ── Summary ───────────────────────────────────────────────────────────────────

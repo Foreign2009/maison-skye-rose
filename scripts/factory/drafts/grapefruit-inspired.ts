@@ -72,16 +72,16 @@ export const grapefruitInspired: FragranceKnowledge = {
     "30ml": 250,
   },
   images: {
-    "5ml":  "",  // FACTORY_ERROR: IMAGE_MISSING — image path for 5ml is required
-    "10ml": "",  // FACTORY_ERROR: IMAGE_MISSING — image path for 10ml is required
-    "30ml": "",  // FACTORY_ERROR: IMAGE_MISSING — image path for 30ml is required
+    "5ml":  "/images/blue-5ml.png",
+    "10ml": "/images/blue-10ml.png",
+    "30ml": "/images/glass-blue-30ml.png",
   },
   bestSeller    : false,
   newArrival    : false,
 
   // ── Education ───────────────────────────────────────────────────────────────
   subtitle      : "Bright Green Energy",
-  description   : "Grapefruit opens with bright, zesty intensity, grounded by peppermint and rosemary that turn the composition herbal and alive. A sharp, green citrus unfolds—less sweet than savoury, with pimento adding unexpected spice and depth.",
+  description   : "Bright, zesty grapefruit meets peppermint and rosemary in a composition that turns herbal and alive. A sharp, green citrus character emerges—less sweet than savoury, with pimento adding unexpected spice and depth.",
   academyArticleIds: ["guide-to-fragrance-families", "choosing-your-season-scent", "how-to-wear-fragrance"],
   academyCategories: ["fragrance-families", "occasions-and-style"],
   educationTags : [

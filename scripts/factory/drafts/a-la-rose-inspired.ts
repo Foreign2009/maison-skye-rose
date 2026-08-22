@@ -63,7 +63,7 @@ export const aLaRoseInspired: FragranceKnowledge = {
     "Women seeking a luminous rose signature that feels garden-fresh rather than powdery or heavy.",
     "Those who love floral fragrances but want brightness and citrus lift, not drowsy sweetness.",
     "Anyone building a spring wardrobe who needs a fragrance that works from morning coffee to evening garden parties.",
-    "Fragrance collectors drawn to classic rose compositions with modern restraint and balanced projection.",
+    "Fragrance collectors drawn to classic rose compositions with modern restraint and timeless elegance.",
   ],
 
   // ── Merchandising ───────────────────────────────────────────────────────────
@@ -73,9 +73,9 @@ export const aLaRoseInspired: FragranceKnowledge = {
     "30ml": 250,
   },
   images: {
-    "5ml":  "",  // FACTORY_ERROR: IMAGE_MISSING — image path for 5ml is required
-    "10ml": "",  // FACTORY_ERROR: IMAGE_MISSING — image path for 10ml is required
-    "30ml": "",  // FACTORY_ERROR: IMAGE_MISSING — image path for 30ml is required
+    "5ml":  "/images/pink-5ml.png",
+    "10ml": "/images/pink-10ml.png",
+    "30ml": "/images/glass-pink-30ml.png",
   },
   bestSeller    : false,
   newArrival    : false,

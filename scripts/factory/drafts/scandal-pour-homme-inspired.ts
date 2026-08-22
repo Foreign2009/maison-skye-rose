@@ -61,7 +61,7 @@ export const scandalPourHommeInspired: FragranceKnowledge = {
   signatureStyle: ["Warm Woody Sensual", "Intimate Signature", "Autumn Statement"],
   recommendedFor: [
     "Men seeking a warm woody signature that commands attention without aggression—perfect for evening dates and intimate occasions.",
-    "Those who appreciate creamy, sensual bases and want a fragrance that deepens throughout the day rather than fades.",
+    "Those who appreciate creamy, sensual bases and want a fragrance that deepens with warmth and restraint.",
     "Anyone building a collection who needs a sophisticated autumn staple that bridges office professionalism and date night confidence.",
     "Men drawn to oriental woody compositions who prefer balanced warmth over heavy sweetness or spice-forward intensity.",
   ],
@@ -73,9 +73,9 @@ export const scandalPourHommeInspired: FragranceKnowledge = {
     "30ml": 250,
   },
   images: {
-    "5ml":  "",  // FACTORY_ERROR: IMAGE_MISSING — image path for 5ml is required
-    "10ml": "",  // FACTORY_ERROR: IMAGE_MISSING — image path for 10ml is required
-    "30ml": "",  // FACTORY_ERROR: IMAGE_MISSING — image path for 30ml is required
+    "5ml":  "/images/blue-5ml.png",
+    "10ml": "/images/blue-10ml.png",
+    "30ml": "/images/glass-blue-30ml.png",
   },
   bestSeller    : false,
   newArrival    : false,
