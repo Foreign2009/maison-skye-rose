@@ -104,7 +104,7 @@ export const haltaneInspired: FragranceKnowledge = {
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["oud-wood-inspired"],
+    alternatives:     ["oud-wood-inspired", "outlands-inspired"],
     wardrobePartners: ["baccarat-rouge-540-inspired"],
   },
 };

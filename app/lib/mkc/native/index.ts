@@ -182,6 +182,16 @@ import { amenFantasmInspired } from "./amen-fantasm-inspired";
 import { leMaleInspired } from "./le-male-inspired";
 import { gucciGuiltyPourHommeInspired } from "./gucci-guilty-pour-homme-inspired";
 import { erosEnergyInspired } from "./eros-energy-inspired";
+import { oudSapparotInspired } from "./oud-sapparot-inspired";
+import { abuDhabiInspired } from "./abu-dhabi-inspired";
+import { cinqueTerreInspired } from "./cinque-terre-inspired";
+import { figLotusFlowerInspired } from "./fig-lotus-flower-inspired";
+import { torino24Inspired } from "./torino24-inspired";
+import { outlandsInspired } from "./outlands-inspired";
+import { centaurusInspired } from "./centaurus-inspired";
+import { grapefruitInspired } from "./grapefruit-inspired";
+import { darkVanillaInspired } from "./dark-vanilla-inspired";
+import { armaniPriveOudRoyalInspired } from "./armani-prive-oud-royal-inspired";
 
 export const nativeFragrances = new Map<string, FragranceKnowledge>([
   ["sauvage-inspired",              sauvageInspired],
@@ -356,4 +366,14 @@ export const nativeFragrances = new Map<string, FragranceKnowledge>([
   ["le-male-inspired", leMaleInspired],
   ["gucci-guilty-pour-homme-inspired", gucciGuiltyPourHommeInspired],
   ["eros-energy-inspired", erosEnergyInspired],
+  ["oud-sapparot-inspired", oudSapparotInspired],
+  ["abu-dhabi-inspired", abuDhabiInspired],
+  ["cinque-terre-inspired", cinqueTerreInspired],
+  ["fig-lotus-flower-inspired", figLotusFlowerInspired],
+  ["torino24-inspired", torino24Inspired],
+  ["outlands-inspired", outlandsInspired],
+  ["centaurus-inspired", centaurusInspired],
+  ["grapefruit-inspired", grapefruitInspired],
+  ["dark-vanilla-inspired", darkVanillaInspired],
+  ["armani-prive-oud-royal-inspired", armaniPriveOudRoyalInspired],
 ]);

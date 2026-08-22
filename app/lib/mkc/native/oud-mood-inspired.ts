@@ -104,7 +104,7 @@ export const oudMoodInspired: FragranceKnowledge = {
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["oud-wood-inspired", "rose-oud-inspired", "velvet-rose-oud-inspired", "black-orchid-inspired", "gold-oud-inspired"],
-    wardrobePartners: ["baccarat-rouge-540-inspired", "arabians-musk-inspired", "carmina-inspired", "khamrah-inspired"],
+    alternatives:     ["oud-wood-inspired", "rose-oud-inspired", "velvet-rose-oud-inspired", "black-orchid-inspired", "gold-oud-inspired", "oud-sapparot-inspired", "abu-dhabi-inspired", "outlands-inspired", "armani-prive-oud-royal-inspired"],
+    wardrobePartners: ["baccarat-rouge-540-inspired", "arabians-musk-inspired", "carmina-inspired", "khamrah-inspired", "fig-lotus-flower-inspired", "centaurus-inspired", "dark-vanilla-inspired"],
   },
 };

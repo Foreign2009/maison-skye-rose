@@ -104,7 +104,7 @@ export const arabiansTonkaInspired: FragranceKnowledge = {
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["oud-wood-inspired", "naxos-inspired", "angels-share-paradis-inspired", "oud-bergamot-inspired"],
+    alternatives:     ["oud-wood-inspired", "naxos-inspired", "angels-share-paradis-inspired", "oud-bergamot-inspired", "armani-prive-oud-royal-inspired"],
     wardrobePartners: ["sauvage-inspired"],
   },
 };

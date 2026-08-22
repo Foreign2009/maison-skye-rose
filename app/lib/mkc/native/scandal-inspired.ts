@@ -118,7 +118,7 @@ export const scandalInspired: FragranceKnowledge = {
   // â”€â”€ Relationships â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["oriana-inspired", "burberry-her-inspired", "love-don't-be-shy-inspired"],
+    alternatives:     ["oriana-inspired", "burberry-her-inspired", "love-don't-be-shy-inspired", "torino24-inspired"],
     wardrobePartners: ["delina-inspired", "chance-eau-fraiche-inspired"],
   },
 };

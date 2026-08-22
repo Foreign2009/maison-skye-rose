@@ -102,7 +102,7 @@ export const silverMountainWaterInspired: FragranceKnowledge = {
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["aqua-di-gio-inspired", "imagination-inspired", "invictus-inspired"],
+    alternatives:     ["aqua-di-gio-inspired", "imagination-inspired", "invictus-inspired", "grapefruit-inspired"],
     wardrobePartners: ["spicebomb-extreme-inspired"],
   },
 };

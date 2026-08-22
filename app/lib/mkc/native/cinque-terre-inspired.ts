@@ -1,10 +1,10 @@
 // ═════════════════════════════════════════════════════════════════
-// FACTORY DRAFT — rose-oud-inspired
+// FACTORY DRAFT — cinque-terre-inspired
 // ─────────────────────────────────────────────────────────────────
-// Generated:         2026-08-16T17:08:42.738Z
+// Generated:         2026-08-22T18:53:33.944Z
 // Factory version:   0.5.0
 // Prompt versions:   EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0
-// Validation status: PASS  [0 error(s), 0 warning(s)]
+// Validation status: FAIL  [3 error(s), 0 warning(s)]
 // Projected KQ tier: (not available — requires Intelligence Producer)
 // ─────────────────────────────────────────────────────────────────
 // REVIEW CHECKLIST
@@ -20,49 +20,50 @@
 
 import type { FragranceKnowledge } from "../types";
 
-export const roseOudInspired: FragranceKnowledge = {
+export const cinqueTerreInspired: FragranceKnowledge = {
   // ── Identity ──────────────────────────────────────────────────────────────────
-  id            : "rose-oud-inspired",
-  slug          : "rose-oud-inspired",
+  id            : "cinque-terre-inspired",
+  slug          : "cinque-terre-inspired",
   brand         : "Maison Skye & Rose",
-  name          : "Rose Oud Inspired",
+  name          : "Cinque Terre Inspired",
   collection    : "Elite",
   catalogVersion: "1.0",
   status        : "active",
 
   // ── Classification ────────────────────────────────────────────────────────────
   gender        : "unisex",
-  family        : ["Floral"],
+  family        : ["Aromatic", "Woody"],
   scentCharacter: "Balanced Signature",
   projection    : "moderate",
 
   // ── Composition ─────────────────────────────────────────────────────────────
-  profile       : "Oriental Floral",
-  season        : "Winter",
+  profile       : "Woody Aromatic",
+  season        : "Summer",
   notes: {
-    top:   ["Bulgarian Rose", "Saffron", "Cinnamon"],
-    heart: ["Tincture of Rose", "Litchi"],
-    base:  ["Agarwood (Oud)", "Cypriol Oil/Nagarmotha", "Cedarwood"],
+    top:   ["Italian Rosemary", "Lemon", "Cardamom"],
+    heart: ["Cedar & Pine", "Fig Leaves", "Sea Salt", "Grey Amber"],
+    base:  ["Oakmoss", "Tonka Beans", "Sandalwood", "Labdanum"],
   },
-  mood          : "Smoky Romantic Oriental",
+  notesEvidenceLocked: true,
+  mood          : "Fresh Mediterranean Woody",
 
   // ── Discovery ───────────────────────────────────────────────────────────────
   vibe          : [
-    "Romantic",
+    "Fresh",
     "Sophisticated",
-    "Sensual",
-    "Mysterious",
+    "Elegant",
+    "Clean",
     "Warm",
-    "Luxurious",
+    "Artistic",
   ],
-  occasions     : ["Date Night", "Evening", "Formal", "Weekend"],
-  seasons       : ["Winter", "Autumn"],
-  signatureStyle: ["Spiced Floral Romance", "Oriental Elegance", "Smoky Rose Signature"],
+  occasions     : ["Daily Wear", "Vacation", "Weekend", "Casual"],
+  seasons       : ["Summer", "Spring"],
+  signatureStyle: ["Coastal Woody Aromatic", "Mediterranean Freshness", "Balanced Signature"],
   recommendedFor: [
-    "Anyone seeking a sophisticated rose fragrance that balances spice and sensuality without sweetness or lightness.",
-    "Those drawn to oud and agarwood who want a wearable oriental that centers on rose rather than raw wood.",
-    "Women and men who wear velvet, leather, and dark florals and want their signature winter evening scent.",
-    "Fragrance collectors building a curated wardrobe who recognise rose oud as a modern classic register.",
+    "Anyone seeking a fresh, grounded fragrance that evokes Mediterranean coastal escapes without heavy sweetness.",
+    "Men and women who want a balanced woody aromatic for everyday wear with clarity and sophistication.",
+    "Fragrance enthusiasts looking for a versatile signature that bridges crisp citrus top notes with anchoring woody base.",
+    "Travelers and vacation planners who want one fragrance capturing sun-soaked seaside destinations.",
   ],
 
   // ── Merchandising ───────────────────────────────────────────────────────────
@@ -72,45 +73,50 @@ export const roseOudInspired: FragranceKnowledge = {
     "30ml": 250,
   },
   images: {
-    "5ml":  "/images/pink-5ml.png",
-    "10ml": "/images/pink-10ml.png",
-    "30ml": "/images/glass-pink-30ml.png",
+    "5ml":  "/images/blue-5ml.png",
+    "10ml": "/images/blue-10ml.png",
+    "30ml": "/images/glass-blue-30ml.png",
   },
   bestSeller    : false,
   newArrival    : false,
 
   // ── Education ───────────────────────────────────────────────────────────────
-  subtitle      : "Spiced Velvet Romance",
-  description   : "Opens with Bulgarian rose and saffron—a spiced floral that immediately commands attention. The heart deepens into a tincture of rose and litchi, a sensual pairing that blurs sweetness with shadow, while agarwood and cedarwood anchor the composition in smoke and velvet warmth.",
-  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "what-makes-a-signature-scent", "how-to-layer-fragrances"],
+  subtitle      : "Coastal Wood",
+  description   : "Rosemary and bright lemon open onto a composition of cedar, sea salt, and fig leaves—a woody aromatic that captures the clarity of Mediterranean air. Oakmoss and tonka beans anchor the base, grounding the fresh verdancy in warm, earthy depth.",
+  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances", "choosing-your-season-scent"],
   academyCategories: ["fragrance-families", "the-note-pyramid", "occasions-and-style"],
   educationTags : [
-    "oriental-floral",
-    "rose",
-    "oud",
-    "agarwood",
-    "saffron",
-    "cedarwood",
-    "romantic",
-    "winter",
+    "aromatic",
+    "woody",
+    "rosemary",
+    "cedar",
+    "pine",
+    "unisex",
+    "balanced",
     "signature",
+    "summer",
+    "coastal",
+    "fig-leaves",
+    "sea-salt",
+    "oakmoss",
+    "sandalwood",
     "layering",
   ],
-  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "what-makes-a-signature-scent", "how-to-layer-fragrances"],
+  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "choosing-your-season-scent", "how-to-layer-fragrances"],
 
   // ── Intelligence ────────────────────────────────────────────────────────────
   // Approximated from profile + season. Calibrated by Intelligence Producer in P2.
   sweetness     : 2,
-  freshness     : 3,
-  warmth        : 2,
-  intensity     : 4,
-  versatility   : 2,
+  freshness     : 2,
+  warmth        : 3,
+  intensity     : 2,
+  versatility   : 3,
   popularity    : 5,
 
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["baccarat-rouge-540-inspired", "oud-mood-inspired", "velvet-rose-oud-inspired", "gold-oud-inspired", "outlands-inspired", "armani-prive-oud-royal-inspired"],
-    wardrobePartners: ["delina-inspired"],
+    alternatives:     ["valentino-uomo-born-in-roma-inspired", "bleu-de-chanel-inspired"],
+    wardrobePartners: ["baccarat-rouge-540-inspired"],
   },
 };

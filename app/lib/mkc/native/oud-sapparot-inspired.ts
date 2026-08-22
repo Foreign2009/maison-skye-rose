@@ -1,10 +1,10 @@
 // ═════════════════════════════════════════════════════════════════
-// FACTORY DRAFT — rose-oud-inspired
+// FACTORY DRAFT — oud-sapparot-inspired
 // ─────────────────────────────────────────────────────────────────
-// Generated:         2026-08-16T17:08:42.738Z
+// Generated:         2026-08-22T18:53:06.804Z
 // Factory version:   0.5.0
 // Prompt versions:   EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0
-// Validation status: PASS  [0 error(s), 0 warning(s)]
+// Validation status: FAIL  [3 error(s), 0 warning(s)]
 // Projected KQ tier: (not available — requires Intelligence Producer)
 // ─────────────────────────────────────────────────────────────────
 // REVIEW CHECKLIST
@@ -20,49 +20,49 @@
 
 import type { FragranceKnowledge } from "../types";
 
-export const roseOudInspired: FragranceKnowledge = {
+export const oudSapparotInspired: FragranceKnowledge = {
   // ── Identity ──────────────────────────────────────────────────────────────────
-  id            : "rose-oud-inspired",
-  slug          : "rose-oud-inspired",
+  id            : "oud-sapparot-inspired",
+  slug          : "oud-sapparot-inspired",
   brand         : "Maison Skye & Rose",
-  name          : "Rose Oud Inspired",
+  name          : "Oud Sapparot Inspired",
   collection    : "Elite",
   catalogVersion: "1.0",
   status        : "active",
 
   // ── Classification ────────────────────────────────────────────────────────────
   gender        : "unisex",
-  family        : ["Floral"],
+  family        : ["Woody"],
   scentCharacter: "Balanced Signature",
   projection    : "moderate",
 
   // ── Composition ─────────────────────────────────────────────────────────────
-  profile       : "Oriental Floral",
-  season        : "Winter",
+  profile       : "Oriental Woody",
+  season        : "Autumn",
   notes: {
-    top:   ["Bulgarian Rose", "Saffron", "Cinnamon"],
-    heart: ["Tincture of Rose", "Litchi"],
-    base:  ["Agarwood (Oud)", "Cypriol Oil/Nagarmotha", "Cedarwood"],
+    top:   ["Thai Pineapple", "Cambodian Oud", "Indian Saffron"],
+    heart: ["Dark Leather", "Smoky Silver Birch", "Ceylon Cinnamon"],
+    base:  ["Sweet Vanilla", "Mexican Coconut", "White Musk"],
   },
-  mood          : "Smoky Romantic Oriental",
+  notesEvidenceLocked: true,
+  mood          : "Rich Oud Tropical",
 
   // ── Discovery ───────────────────────────────────────────────────────────────
   vibe          : [
-    "Romantic",
     "Sophisticated",
-    "Sensual",
     "Mysterious",
     "Warm",
-    "Luxurious",
+    "Powerful",
+    "Sensual",
+    "Artistic",
   ],
-  occasions     : ["Date Night", "Evening", "Formal", "Weekend"],
-  seasons       : ["Winter", "Autumn"],
-  signatureStyle: ["Spiced Floral Romance", "Oriental Elegance", "Smoky Rose Signature"],
+  occasions     : ["Office", "Date Night", "Evening", "Formal"],
+  seasons       : ["Autumn", "Winter"],
+  signatureStyle: ["Tropical Oud Luxury", "Dark Spiced Oriental", "Balanced Intensity"],
   recommendedFor: [
-    "Anyone seeking a sophisticated rose fragrance that balances spice and sensuality without sweetness or lightness.",
-    "Those drawn to oud and agarwood who want a wearable oriental that centers on rose rather than raw wood.",
-    "Women and men who wear velvet, leather, and dark florals and want their signature winter evening scent.",
-    "Fragrance collectors building a curated wardrobe who recognise rose oud as a modern classic register.",
+    "Those seeking a sophisticated oud fragrance that bridges tropical brightness with dark, resinous depth for evening and special occasions",
+    "Unisex fragrance enthusiasts who want bold spice and leather without sacrifice of warmth or approachability",
+    "Confident wearers looking for a signature that commands attention in professional settings while remaining elegant and composed",
   ],
 
   // ── Merchandising ───────────────────────────────────────────────────────────
@@ -72,45 +72,45 @@ export const roseOudInspired: FragranceKnowledge = {
     "30ml": 250,
   },
   images: {
-    "5ml":  "/images/pink-5ml.png",
-    "10ml": "/images/pink-10ml.png",
-    "30ml": "/images/glass-pink-30ml.png",
+    "5ml":  "/images/blue-5ml.png",
+    "10ml": "/images/blue-10ml.png",
+    "30ml": "/images/glass-blue-30ml.png",
   },
   bestSeller    : false,
   newArrival    : false,
 
   // ── Education ───────────────────────────────────────────────────────────────
-  subtitle      : "Spiced Velvet Romance",
-  description   : "Opens with Bulgarian rose and saffron—a spiced floral that immediately commands attention. The heart deepens into a tincture of rose and litchi, a sensual pairing that blurs sweetness with shadow, while agarwood and cedarwood anchor the composition in smoke and velvet warmth.",
-  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "what-makes-a-signature-scent", "how-to-layer-fragrances"],
-  academyCategories: ["fragrance-families", "the-note-pyramid", "occasions-and-style"],
+  subtitle      : "Tropical Oud Intensity",
+  description   : "Thai pineapple and oud open together—bright fruit meeting resinous depth—then give way to dark leather, smoky birch, and spiced cinnamon. Vanilla and coconut settle beneath, creating a fragrance that moves between tropical warmth and woody depth—neither fully sweet nor austere, but tensioned between both.",
+  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances", "what-makes-a-signature-scent"],
+  academyCategories: ["fragrance-families", "the-note-pyramid", "wear-and-application"],
   educationTags : [
-    "oriental-floral",
-    "rose",
     "oud",
-    "agarwood",
+    "woody",
+    "oriental",
+    "leather",
     "saffron",
-    "cedarwood",
-    "romantic",
-    "winter",
-    "signature",
+    "cinnamon",
+    "vanilla",
+    "unisex",
+    "signature-scent",
     "layering",
   ],
-  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "what-makes-a-signature-scent", "how-to-layer-fragrances"],
+  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances", "what-makes-a-signature-scent"],
 
   // ── Intelligence ────────────────────────────────────────────────────────────
   // Approximated from profile + season. Calibrated by Intelligence Producer in P2.
   sweetness     : 2,
-  freshness     : 3,
-  warmth        : 2,
-  intensity     : 4,
-  versatility   : 2,
+  freshness     : 2,
+  warmth        : 3,
+  intensity     : 3,
+  versatility   : 3,
   popularity    : 5,
 
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["baccarat-rouge-540-inspired", "oud-mood-inspired", "velvet-rose-oud-inspired", "gold-oud-inspired", "outlands-inspired", "armani-prive-oud-royal-inspired"],
-    wardrobePartners: ["delina-inspired"],
+    alternatives:     ["oud-mood-inspired", "oud-for-greatness-inspired"],
+    wardrobePartners: ["aventus-inspired", "spicebomb-extreme-inspired"],
   },
 };

@@ -103,7 +103,7 @@ export const torino21Inspired: FragranceKnowledge = {
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["aqua-di-gio-inspired", "imagination-inspired", "y-inspired"],
+    alternatives:     ["aqua-di-gio-inspired", "imagination-inspired", "y-inspired", "grapefruit-inspired"],
     wardrobePartners: ["sauvage-elixir-inspired"],
   },
 };

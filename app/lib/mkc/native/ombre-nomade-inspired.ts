@@ -104,6 +104,6 @@ export const ombreNomadeInspired: FragranceKnowledge = {
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
     alternatives:     ["oud-wood-inspired", "royal-oud-inspired", "ombre-leather-inspired", "oud-bergamot-inspired"],
-    wardrobePartners: ["sauvage-elixir-inspired", "spicebomb-extreme-inspired", "voyage-d'hermes-inspired", "black-orchid-inspired", "gold-oud-inspired"],
+    wardrobePartners: ["sauvage-elixir-inspired", "spicebomb-extreme-inspired", "voyage-d'hermes-inspired", "black-orchid-inspired", "gold-oud-inspired", "armani-prive-oud-royal-inspired"],
   },
 };

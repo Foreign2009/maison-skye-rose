@@ -1,10 +1,10 @@
 // ═════════════════════════════════════════════════════════════════
-// FACTORY DRAFT — rose-oud-inspired
+// FACTORY DRAFT — armani-prive-oud-royal-inspired
 // ─────────────────────────────────────────────────────────────────
-// Generated:         2026-08-16T17:08:42.738Z
+// Generated:         2026-08-22T18:54:54.946Z
 // Factory version:   0.5.0
 // Prompt versions:   EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0
-// Validation status: PASS  [0 error(s), 0 warning(s)]
+// Validation status: FAIL  [3 error(s), 0 warning(s)]
 // Projected KQ tier: (not available — requires Intelligence Producer)
 // ─────────────────────────────────────────────────────────────────
 // REVIEW CHECKLIST
@@ -20,49 +20,50 @@
 
 import type { FragranceKnowledge } from "../types";
 
-export const roseOudInspired: FragranceKnowledge = {
+export const armaniPriveOudRoyalInspired: FragranceKnowledge = {
   // ── Identity ──────────────────────────────────────────────────────────────────
-  id            : "rose-oud-inspired",
-  slug          : "rose-oud-inspired",
+  id            : "armani-prive-oud-royal-inspired",
+  slug          : "armani-prive-oud-royal-inspired",
   brand         : "Maison Skye & Rose",
-  name          : "Rose Oud Inspired",
+  name          : "Armani Prive Oud Royal Inspired",
   collection    : "Elite",
   catalogVersion: "1.0",
   status        : "active",
 
   // ── Classification ────────────────────────────────────────────────────────────
   gender        : "unisex",
-  family        : ["Floral"],
-  scentCharacter: "Balanced Signature",
+  family        : ["Woody", "Amber"],
+  scentCharacter: "Rich & Full-Bodied",
   projection    : "moderate",
 
   // ── Composition ─────────────────────────────────────────────────────────────
-  profile       : "Oriental Floral",
+  profile       : "Amber Woody",
   season        : "Winter",
   notes: {
-    top:   ["Bulgarian Rose", "Saffron", "Cinnamon"],
-    heart: ["Tincture of Rose", "Litchi"],
-    base:  ["Agarwood (Oud)", "Cypriol Oil/Nagarmotha", "Cedarwood"],
+    top:   ["Saffron", "Incense"],
+    heart: ["Rose", "Amber"],
+    base:  ["Sandalwood", "Hindi Oud"],
   },
-  mood          : "Smoky Romantic Oriental",
+  notesEvidenceLocked: true,
+  mood          : "Rich Dark Oud",
 
   // ── Discovery ───────────────────────────────────────────────────────────────
   vibe          : [
-    "Romantic",
-    "Sophisticated",
-    "Sensual",
     "Mysterious",
-    "Warm",
     "Luxurious",
+    "Sensual",
+    "Sophisticated",
+    "Warm",
+    "Intense",
   ],
-  occasions     : ["Date Night", "Evening", "Formal", "Weekend"],
-  seasons       : ["Winter", "Autumn"],
-  signatureStyle: ["Spiced Floral Romance", "Oriental Elegance", "Smoky Rose Signature"],
+  occasions     : ["Date Night", "Evening", "Formal"],
+  seasons       : ["Winter"],
+  signatureStyle: ["Luxe Oud Ceremony", "Dark Amber Sophistication", "Unisex Evening Ritual"],
   recommendedFor: [
-    "Anyone seeking a sophisticated rose fragrance that balances spice and sensuality without sweetness or lightness.",
-    "Those drawn to oud and agarwood who want a wearable oriental that centers on rose rather than raw wood.",
-    "Women and men who wear velvet, leather, and dark florals and want their signature winter evening scent.",
-    "Fragrance collectors building a curated wardrobe who recognise rose oud as a modern classic register.",
+    "Those seeking a luxurious evening fragrance that transforms intimate moments with dark, resinous warmth and ceremonial depth.",
+    "Unisex fragrance lovers who want a sophisticated oud experience grounded in rose and amber rather than aggressive wood.",
+    "Anyone drawn to ritual and incense—who wears fragrance as a personal ceremony and values complexity over simplicity.",
+    "Collectors building a winter wardrobe who need a statement piece that pairs beautifully with leather, velvet, and candlelit settings.",
   ],
 
   // ── Merchandising ───────────────────────────────────────────────────────────
@@ -72,37 +73,39 @@ export const roseOudInspired: FragranceKnowledge = {
     "30ml": 250,
   },
   images: {
-    "5ml":  "/images/pink-5ml.png",
-    "10ml": "/images/pink-10ml.png",
-    "30ml": "/images/glass-pink-30ml.png",
+    "5ml":  "/images/blue-5ml.png",
+    "10ml": "/images/blue-10ml.png",
+    "30ml": "/images/glass-blue-30ml.png",
   },
   bestSeller    : false,
   newArrival    : false,
 
   // ── Education ───────────────────────────────────────────────────────────────
-  subtitle      : "Spiced Velvet Romance",
-  description   : "Opens with Bulgarian rose and saffron—a spiced floral that immediately commands attention. The heart deepens into a tincture of rose and litchi, a sensual pairing that blurs sweetness with shadow, while agarwood and cedarwood anchor the composition in smoke and velvet warmth.",
-  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "what-makes-a-signature-scent", "how-to-layer-fragrances"],
-  academyCategories: ["fragrance-families", "the-note-pyramid", "occasions-and-style"],
+  subtitle      : "Ritual & Resin",
+  description   : "Saffron and incense open with ceremonial warmth, giving way to a rose-amber heart that deepens into Hindi oud and sandalwood. Dark, resinous, and thoroughly self-assured—this is fragrance as intimate luxury, where restraint meets opulence.",
+  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances", "what-makes-a-signature-scent"],
+  academyCategories: ["fragrance-families", "the-note-pyramid", "scent-science"],
   educationTags : [
-    "oriental-floral",
-    "rose",
+    "woody",
+    "amber",
     "oud",
-    "agarwood",
+    "sandalwood",
+    "rose",
     "saffron",
-    "cedarwood",
-    "romantic",
+    "incense",
+    "unisex",
     "winter",
-    "signature",
-    "layering",
+    "full-bodied",
+    "luxurious",
+    "date-night",
   ],
-  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "what-makes-a-signature-scent", "how-to-layer-fragrances"],
+  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances"],
 
   // ── Intelligence ────────────────────────────────────────────────────────────
   // Approximated from profile + season. Calibrated by Intelligence Producer in P2.
-  sweetness     : 2,
-  freshness     : 3,
-  warmth        : 2,
+  sweetness     : 3,
+  freshness     : 2,
+  warmth        : 4,
   intensity     : 4,
   versatility   : 2,
   popularity    : 5,
@@ -110,7 +113,7 @@ export const roseOudInspired: FragranceKnowledge = {
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["baccarat-rouge-540-inspired", "oud-mood-inspired", "velvet-rose-oud-inspired", "gold-oud-inspired", "outlands-inspired", "armani-prive-oud-royal-inspired"],
-    wardrobePartners: ["delina-inspired"],
+    alternatives:     ["oud-mood-inspired", "arabians-tonka-inspired", "rose-oud-inspired"],
+    wardrobePartners: ["baccarat-rouge-540-inspired", "ombre-nomade-inspired"],
   },
 };

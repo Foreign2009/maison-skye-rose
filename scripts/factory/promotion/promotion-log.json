@@ -3150,6 +3150,216 @@
       "slug": "eros-energy-inspired",
       "operator": "Founder",
       "details": "promotionId:P8n_gxv8WcvT  validation:PASS  nativePath:app/lib/mkc/native/eros-energy-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-22T20:50:57.174Z",
+      "action": "promotion_started",
+      "slug": "oud-sapparot-inspired",
+      "operator": "Founder",
+      "details": "symbol:oudSapparotInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-22T20:50:57.179Z",
+      "action": "relationships_synced",
+      "slug": "oud-sapparot-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:4  files:4"
+    },
+    {
+      "timestamp": "2026-08-22T20:51:29.546Z",
+      "action": "promotion_completed",
+      "slug": "oud-sapparot-inspired",
+      "operator": "Founder",
+      "details": "promotionId:xzee3UGBQZGP  validation:PASS  nativePath:app/lib/mkc/native/oud-sapparot-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-22T20:51:38.982Z",
+      "action": "promotion_started",
+      "slug": "abu-dhabi-inspired",
+      "operator": "Founder",
+      "details": "symbol:abuDhabiInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-22T20:51:38.988Z",
+      "action": "relationships_synced",
+      "slug": "abu-dhabi-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:3  files:3"
+    },
+    {
+      "timestamp": "2026-08-22T20:52:10.869Z",
+      "action": "promotion_completed",
+      "slug": "abu-dhabi-inspired",
+      "operator": "Founder",
+      "details": "promotionId:UTMsrqR2x8tN  validation:PASS  nativePath:app/lib/mkc/native/abu-dhabi-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-22T20:52:19.684Z",
+      "action": "promotion_started",
+      "slug": "cinque-terre-inspired",
+      "operator": "Founder",
+      "details": "symbol:cinqueTerreInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-22T20:52:19.691Z",
+      "action": "relationships_synced",
+      "slug": "cinque-terre-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:3  files:3"
+    },
+    {
+      "timestamp": "2026-08-22T20:52:51.866Z",
+      "action": "promotion_completed",
+      "slug": "cinque-terre-inspired",
+      "operator": "Founder",
+      "details": "promotionId:4kuL_G4EQj6D  validation:PASS  nativePath:app/lib/mkc/native/cinque-terre-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-22T20:53:01.419Z",
+      "action": "promotion_started",
+      "slug": "fig-lotus-flower-inspired",
+      "operator": "Founder",
+      "details": "symbol:figLotusFlowerInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-22T20:53:01.425Z",
+      "action": "relationships_synced",
+      "slug": "fig-lotus-flower-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:3  files:3"
+    },
+    {
+      "timestamp": "2026-08-22T20:53:33.858Z",
+      "action": "promotion_completed",
+      "slug": "fig-lotus-flower-inspired",
+      "operator": "Founder",
+      "details": "promotionId:8KXffbpYnGFC  validation:PASS  nativePath:app/lib/mkc/native/fig-lotus-flower-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-22T20:53:41.005Z",
+      "action": "promotion_started",
+      "slug": "torino24-inspired",
+      "operator": "Founder",
+      "details": "symbol:torino24Inspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-22T20:53:41.012Z",
+      "action": "relationships_synced",
+      "slug": "torino24-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:3  files:3"
+    },
+    {
+      "timestamp": "2026-08-22T20:54:13.362Z",
+      "action": "promotion_completed",
+      "slug": "torino24-inspired",
+      "operator": "Founder",
+      "details": "promotionId:2p_m6JEhzFPC  validation:PASS  nativePath:app/lib/mkc/native/torino24-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-22T20:54:21.125Z",
+      "action": "promotion_started",
+      "slug": "outlands-inspired",
+      "operator": "Founder",
+      "details": "symbol:outlandsInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-22T20:54:21.133Z",
+      "action": "relationships_synced",
+      "slug": "outlands-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:5  files:5"
+    },
+    {
+      "timestamp": "2026-08-22T20:54:53.215Z",
+      "action": "promotion_completed",
+      "slug": "outlands-inspired",
+      "operator": "Founder",
+      "details": "promotionId:73oyJkneebQn  validation:PASS  nativePath:app/lib/mkc/native/outlands-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-22T20:55:02.222Z",
+      "action": "promotion_started",
+      "slug": "centaurus-inspired",
+      "operator": "Founder",
+      "details": "symbol:centaurusInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-22T20:55:02.228Z",
+      "action": "relationships_synced",
+      "slug": "centaurus-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:5  files:5"
+    },
+    {
+      "timestamp": "2026-08-22T20:55:34.357Z",
+      "action": "promotion_completed",
+      "slug": "centaurus-inspired",
+      "operator": "Founder",
+      "details": "promotionId:1RML4F4fHI_F  validation:PASS  nativePath:app/lib/mkc/native/centaurus-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-22T20:55:42.178Z",
+      "action": "promotion_started",
+      "slug": "grapefruit-inspired",
+      "operator": "Founder",
+      "details": "symbol:grapefruitInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-22T20:55:42.187Z",
+      "action": "relationships_synced",
+      "slug": "grapefruit-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:3  files:3"
+    },
+    {
+      "timestamp": "2026-08-22T20:56:14.627Z",
+      "action": "promotion_completed",
+      "slug": "grapefruit-inspired",
+      "operator": "Founder",
+      "details": "promotionId:s9j1Pkxcj4yb  validation:PASS  nativePath:app/lib/mkc/native/grapefruit-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-22T20:56:21.999Z",
+      "action": "promotion_started",
+      "slug": "dark-vanilla-inspired",
+      "operator": "Founder",
+      "details": "symbol:darkVanillaInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-22T20:56:22.007Z",
+      "action": "relationships_synced",
+      "slug": "dark-vanilla-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:4  files:4"
+    },
+    {
+      "timestamp": "2026-08-22T20:56:54.670Z",
+      "action": "promotion_completed",
+      "slug": "dark-vanilla-inspired",
+      "operator": "Founder",
+      "details": "promotionId:gN-yo1FbjEtb  validation:PASS  nativePath:app/lib/mkc/native/dark-vanilla-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-22T20:57:05.672Z",
+      "action": "promotion_started",
+      "slug": "armani-prive-oud-royal-inspired",
+      "operator": "Founder",
+      "details": "symbol:armaniPriveOudRoyalInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-22T20:57:05.679Z",
+      "action": "relationships_synced",
+      "slug": "armani-prive-oud-royal-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:5  files:5"
+    },
+    {
+      "timestamp": "2026-08-22T20:57:37.898Z",
+      "action": "promotion_completed",
+      "slug": "armani-prive-oud-royal-inspired",
+      "operator": "Founder",
+      "details": "promotionId:ljNsvxDxpzVn  validation:PASS  nativePath:app/lib/mkc/native/armani-prive-oud-royal-inspired.ts"
     }
   ]
 }

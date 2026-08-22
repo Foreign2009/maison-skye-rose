@@ -86,7 +86,7 @@ export const aventusInspired: FragranceKnowledge = {
 
   // ── Relationships ─────────────────────────────────────────────────────────────
   relationships: {
-    wardrobePartners: ["ani-inspired", "armani-si-inspired", "delina-exclusif-inspired", "oud-for-greatness-inspired", "very-good-girl-inspired"],
+    wardrobePartners: ["ani-inspired", "armani-si-inspired", "delina-exclusif-inspired", "oud-for-greatness-inspired", "very-good-girl-inspired", "oud-sapparot-inspired"],
     alternatives: ["erba-pura-inspired", "kirke-overdose-inspired"],
   },
 

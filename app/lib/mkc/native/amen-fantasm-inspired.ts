@@ -111,7 +111,7 @@ export const amenFantasmInspired: FragranceKnowledge = {
   // â”€â”€ Relationships â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["spicebomb-extreme-inspired", "tobacco-vanille-inspired", "1-million-inspired"],
+    alternatives:     ["spicebomb-extreme-inspired", "tobacco-vanille-inspired", "1-million-inspired", "centaurus-inspired"],
     wardrobePartners: ["sauvage-elixir-inspired", "stronger-with-you-inspired"],
   },
 };
