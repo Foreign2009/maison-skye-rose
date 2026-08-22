@@ -29,8 +29,9 @@ import type {
   ProducerValidation,
 } from "../core/types";
 
-const PROMPT_DIR  = path.join(process.cwd(), "scripts", "factory", "prompts");
-const PROMPT_NAME = "editorial";
+const PROMPT_DIR             = path.join(process.cwd(), "scripts", "factory", "prompts");
+const PROMPT_NAME            = "editorial";
+const NARRATIVE_PROMPT_VERSION = "1.2.0-narrative" as const;
 
 const MIN_DESCRIPTION_LENGTH = 80;
 const MAX_DESCRIPTION_LENGTH = 500;
@@ -72,6 +73,27 @@ const FORBIDDEN_TERMS = [
   "strong performance",
 ];
 
+/**
+ * Returns true when a fragrance is BRAND_NARRATIVE_ONLY: evidence-locked with
+ * no notes in any tier. Exported for regression testing.
+ *
+ * This condition means no authoritative note evidence exists. The standard
+ * notes-pyramid editorial path would send "not yet set" for all tiers while the
+ * system prompt instructs "Name the most evocative notes" — risking note invention
+ * from model training knowledge. The narrative-only path avoids this entirely.
+ */
+export function isNarrativeOnlyMode(
+  notesEvidenceLocked: boolean | undefined,
+  topNotes: string[],
+  heartNotes: string[],
+  baseNotes: string[],
+): boolean {
+  return notesEvidenceLocked === true &&
+    topNotes.length   === 0 &&
+    heartNotes.length === 0 &&
+    baseNotes.length  === 0;
+}
+
 export class EditorialProducer extends BaseProducer {
   readonly name    = "EditorialProducer";
   readonly version = "1.0.0";
@@ -79,12 +101,51 @@ export class EditorialProducer extends BaseProducer {
   private readonly registry = new PromptRegistry(PROMPT_DIR);
 
   protected buildPrompt(ctx: FactoryContext): GenerationTask {
-    const producerCfg   = ctx.config.producers[this.name];
+    const producerCfg  = ctx.config.producers[this.name];
+    const f            = ctx.displayFrag;
+    const record       = ctx.currentRecord;
+
+    const providerName = producerCfg?.providerName ?? ctx.config.defaultProvider;
+    const modelId      = producerCfg?.modelId
+      ?? ctx.config.providers[providerName]?.modelId
+      ?? "claude-haiku-4-5-20251001";
+
+    // BRAND_NARRATIVE_ONLY: evidence-locked + all note tiers empty.
+    // Switches to narrative-only prompt to prevent note invention.
+    if (isNarrativeOnlyMode(f.notesEvidenceLocked, record.notes.top, record.notes.heart, record.notes.base)) {
+      const prompt = this.registry.load(PROMPT_NAME, NARRATIVE_PROMPT_VERSION);
+
+      const userMessage = [
+        `Fragrance: ${f.title}`,
+        `Collection: ${record.collection}`,
+        `Profile:    ${f.profile}`,
+        `Season:     ${f.season}`,
+        `Mood:       ${f.mood}`,
+        ``,
+        `No note information is available. Write from character, mood, and profile only.`,
+        ``,
+        `Write the editorial description and subtitle for this fragrance.`,
+      ].join("\n");
+
+      return {
+        producerName:   this.name,
+        promptName:     PROMPT_NAME,
+        promptVersion:  NARRATIVE_PROMPT_VERSION,
+        providerName,
+        modelId,
+        systemPrompt:   prompt.content,
+        userMessage,
+        temperature:    producerCfg?.temperature ?? 0.8,
+        maxTokens:      producerCfg?.maxTokens   ?? 512,
+        expectedFormat: "json",
+        correlationId:  ctx.runId,
+        metadata:       { slug: ctx.slug, collection: ctx.collection },
+      };
+    }
+
+    // Standard notes-pyramid path
     const promptVersion = producerCfg?.promptVersion ?? "1.1.0";
     const prompt        = this.registry.load(PROMPT_NAME, promptVersion);
-
-    const f      = ctx.displayFrag;
-    const record = ctx.currentRecord;   // has composition notes at this point in the pipeline
 
     const noteLines = [
       `  Top:   ${record.notes.top.join(", ")   || "not yet set"}`,
@@ -106,11 +167,6 @@ export class EditorialProducer extends BaseProducer {
       ``,
       `Write the editorial description and subtitle for this fragrance.`,
     ].join("\n");
-
-    const providerName = producerCfg?.providerName ?? ctx.config.defaultProvider;
-    const modelId      = producerCfg?.modelId
-      ?? ctx.config.providers[providerName]?.modelId
-      ?? "claude-haiku-4-5-20251001";
 
     return {
       producerName:   this.name,

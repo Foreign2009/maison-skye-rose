@@ -2,6 +2,75 @@
   "version": "1.0",
   "runs": [
     {
+      "slug": "torino24-inspired",
+      "name": "Torino24 Inspired",
+      "wave": null,
+      "startedAt": "2026-08-22T19:22:29.602Z",
+      "completedAt": "2026-08-22T19:22:41.328Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 1
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 1
+        },
+        {
+          "stage": "composition",
+          "status": "skip",
+          "durationMs": 0,
+          "message": "EVIDENCE_LOCK — governed notes preserved from scaffold; AI generation bypassed"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 1841,
+          "message": "767 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 2850,
+          "message": "6670 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 2848,
+          "message": "1287 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 4173,
+          "message": "1593 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "10317 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "fail",
+          "durationMs": 4,
+          "message": "FAIL  [3 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 4
+        }
+      ],
+      "validationStatus": "FAIL",
+      "promotedAt": null
+    },
+    {
       "slug": "armani-prive-oud-royal-inspired",
       "name": "Armani Prive Oud Royal Inspired",
       "wave": null,
