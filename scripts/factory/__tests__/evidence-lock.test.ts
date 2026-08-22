@@ -616,6 +616,154 @@ test("TEST 28 — Wave 2 UNORDERED: oud-bergamot draft customer copy free of seq
   assertNoUnorderedSequencing(oudBergamotInspired, "oud-bergamot-inspired");
 });
 
+// ── Wave 3 Evidence-Lock Regression Tests ────────────────────────────────────
+// EP-CAT-P10D: Wave 3 External Evidence Research Campaign
+// Tests 29-35: Cover ordered pyramid, UNORDERED, sparse, branded molecules,
+// special characters (accents), and governance flags.
+
+// Import Wave 3 research manifest for governance tests
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const wave3Research = require("../../../data/identity/source/wave-3-2026-research.json") as {
+  entries: Array<{
+    _sourceKey: string;
+    evidenceStatus: string;
+    sourceConfidence: string | null;
+    canonicalName: string | null;
+    launchYear: number | null;
+    topNotes: string[];
+    heartNotes: string[];
+    baseNotes: string[];
+  }>;
+};
+
+// TEST 29: Wave 3 UNORDERED — Fig & Lotus Flower (3-note bouquet).
+// Jo Malone presents notes as an unordered bouquet.
+// Scaffold must preserve empty top/base and exact heart notes.
+test("TEST 29 — Wave 3 UNORDERED: Fig & Lotus Flower 3-note bouquet scaffold preserves empty top/base", () => {
+  const governed = ["Fig Leaf", "Lotus Flower", "Vetiver"];
+  const display = baseDisplay({
+    title:               "Fig Lotus Flower Inspired",
+    collection:          "Elite",
+    notes:               governed,
+    notesEvidenceLocked: true,
+    notesStructured:     { top: [], heart: governed, base: [] },
+  });
+  const { record } = scaffold(display);
+  assert.deepEqual(record.notes.top,  [], "Fig & Lotus Flower UNORDERED top must be empty — no tier invention");
+  assert.deepEqual(record.notes.base, [], "Fig & Lotus Flower UNORDERED base must be empty — no tier invention");
+  assert.deepEqual(
+    [...record.notes.heart].sort(),
+    [...governed].sort(),
+    "Fig & Lotus Flower: all 3 governed notes must survive scaffold exactly",
+  );
+});
+
+// TEST 30: Wave 3 UNORDERED — Grapefruit (4-note bouquet).
+// Jo Malone London brand note list: Grapefruit, Rosemary, Peppermint, Pimento.
+test("TEST 30 — Wave 3 UNORDERED: Grapefruit 4-note bouquet scaffold preserves note identities byte-for-byte", () => {
+  const governed = ["Grapefruit", "Rosemary", "Peppermint", "Pimento"];
+  const display = baseDisplay({
+    title:               "Grapefruit Inspired",
+    collection:          "Elite",
+    notes:               governed,
+    notesEvidenceLocked: true,
+    notesStructured:     { top: [], heart: governed, base: [] },
+  });
+  const { record } = scaffold(display);
+  assert.deepEqual(record.notes.top,  [], "Grapefruit UNORDERED top must be empty");
+  assert.deepEqual(record.notes.base, [], "Grapefruit UNORDERED base must be empty");
+  assert.equal(record.notes.heart.length, 4,
+    `Grapefruit UNORDERED heart must have exactly 4 notes (got ${record.notes.heart.length})`);
+  assert.ok(record.notes.heart.includes("Pimento"),
+    "Pimento must survive scaffold verbatim (Jo Malone brand note, not 'Allspice' or 'Pimento Berries')");
+});
+
+// TEST 31: Wave 3 SPARSE structured — Scandal Pour Homme Le Parfum (1-1-1).
+// Deliberately minimal pyramid from JPG — 3 notes total, one per tier.
+test("TEST 31 — Wave 3 SPARSE structured: Scandal Pour Homme Le Parfum 1-1-1 pyramid preserved exactly", () => {
+  const display = baseDisplay({
+    title:               "Scandal Pour Homme Inspired",
+    collection:          "Skye",
+    notes:               ["Geranium", "Tonka Bean", "Sandalwood"],
+    notesEvidenceLocked: true,
+    notesStructured: {
+      top:   ["Geranium"],
+      heart: ["Tonka Bean"],
+      base:  ["Sandalwood"],
+    },
+  });
+  const { record } = scaffold(display);
+  assert.deepEqual(record.notes.top,   ["Geranium"],    "Scandal Pour Homme Le Parfum top: Geranium only");
+  assert.deepEqual(record.notes.heart, ["Tonka Bean"],  "Scandal Pour Homme Le Parfum heart: Tonka Bean only");
+  assert.deepEqual(record.notes.base,  ["Sandalwood"],  "Scandal Pour Homme Le Parfum base: Sandalwood only");
+});
+
+// TEST 32: Wave 3 branded molecules — Abu Dhabi (Memo Paris) unusual ingredient names.
+// Governed ingredients include synthetic molecules and proprietary captives.
+test("TEST 32 — Wave 3 branded molecules: Abu Dhabi (Memo Paris) ingredient names survive scaffold verbatim", () => {
+  const top   = ["Bergamot Oil", "Orange Oil Brazil", "Pink Peppercorn", "Cardamom", "Ginger", "Olibanum", "Safraleine"];
+  const heart = ["Date Accord", "Plum Accord", "Davana Oil", "Carrot Seed", "Orange Flower Absolute", "Mahonial"];
+  const base  = ["Vetiver des Sables", "Vetiver Oil Haiti", "Vetiver Oil Indonesia", "Patchouli",
+                 "Cistus Absolute", "Hydrocarboresine", "Fir Balsam Absolute", "Vanillin", "Ambrofix", "AmbreXolide"];
+  const display = baseDisplay({
+    title:               "Abu Dhabi Inspired",
+    collection:          "Elite",
+    notes:               [...top, ...heart, ...base],
+    notesEvidenceLocked: true,
+    notesStructured:     { top, heart, base },
+  });
+  const { record } = scaffold(display);
+  const allNotes = [...record.notes.top, ...record.notes.heart, ...record.notes.base];
+  assert.ok(allNotes.includes("Safraleine"),         "Safraleine (proprietary captive) must survive scaffold verbatim");
+  assert.ok(allNotes.includes("Ambrofix"),           "Ambrofix (synthetic molecule) must survive scaffold verbatim");
+  assert.ok(allNotes.includes("AmbreXolide"),        "AmbreXolide (proprietary molecule) must survive scaffold verbatim");
+  assert.ok(allNotes.includes("Mahonial"),           "Mahonial (synthetic captive) must survive scaffold verbatim");
+  assert.ok(allNotes.includes("Vetiver des Sables"), "Vetiver des Sables (origin-specific ingredient) must survive verbatim");
+  assert.ok(allNotes.includes("Hydrocarboresine"),   "Hydrocarboresine must survive scaffold verbatim");
+});
+
+// TEST 33: Wave 3 governance — accented canonical names in research JSON.
+// Special characters (French accents) must not be corrupted during research file write.
+test("TEST 33 — Wave 3 governance: special-character canonical names preserved in research JSON", () => {
+  const mfkEntry = wave3Research.entries.find(e => e._sourceKey === "mid-year-2026::mfk a la rose");
+  assert.ok(mfkEntry, "MIP-000006 entry must exist in wave-3 research JSON");
+  assert.equal(mfkEntry?.canonicalName, "À la rose",
+    "MFK canonical name must be 'À la rose' with correct accent on À — not 'A la rose'");
+
+  const lvEntry = wave3Research.entries.find(e => e._sourceKey.includes("LADIES-184"));
+  assert.ok(lvEntry, "LADIES-184 Attrape-Rêves entry must exist in wave-3 research JSON");
+  assert.equal(lvEntry?.canonicalName, "Attrape-Rêves",
+    "Louis Vuitton canonical name must be 'Attrape-Rêves' with correct accent — not 'Attrape-Reves'");
+});
+
+// TEST 34: Wave 3 governance — FOUNDER_DECISION_REQUIRED flag for Torino24.
+// Xerjoff withholds notes; evidence confidence is LOW and flag must be set.
+test("TEST 34 — Wave 3 governance: Torino24 carries FOUNDER_DECISION_REQUIRED and LOW confidence", () => {
+  const torino = wave3Research.entries.find(e => e._sourceKey.includes("UNISEX-49"));
+  assert.ok(torino, "UNISEX-49 Torino24 entry must exist in wave-3 research JSON");
+  assert.equal(torino?.evidenceStatus, "FOUNDER_DECISION_REQUIRED",
+    "Torino24 must be FOUNDER_DECISION_REQUIRED — Xerjoff does not publish official notes");
+  assert.equal(torino?.sourceConfidence, "LOW",
+    "Torino24 source confidence must be LOW — notes are community-inferred, not brand-confirmed");
+});
+
+// TEST 35: Wave 3 governance — 29 READY entries and all year corrections applied.
+test("TEST 35 — Wave 3 governance: 29 READY entries; year corrections applied for known candidates", () => {
+  const readyCount = wave3Research.entries.filter(e => e.evidenceStatus === "READY").length;
+  assert.equal(readyCount, 29,
+    `Wave 3 research must have exactly 29 READY entries (got ${readyCount}); 1 is FOUNDER_DECISION_REQUIRED`);
+
+  // Year correction: My Way Nectar must be 2024, not 2022 (disposition record error)
+  const myWayNectar = wave3Research.entries.find(e => e._sourceKey.includes("LADIES-202"));
+  assert.equal(myWayNectar?.launchYear, 2024,
+    "My Way Nectar launchYear must be 2024 (research corrected from disposition year 2022)");
+
+  // Year correction: 212 VIP Black must be 2017, not 2012 (supplier note error)
+  const vipBlack = wave3Research.entries.find(e => e._sourceKey.includes("MEN-10"));
+  assert.equal(vipBlack?.launchYear, 2017,
+    "212 VIP Black launchYear must be 2017 (research corrected from supplier-noted 2012)");
+});
+
 // ── Summary ───────────────────────────────────────────────────────────────────
 
 console.log(`\n${"─".repeat(56)}`);
