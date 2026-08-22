@@ -4127,7 +4127,15 @@
                                           "timestamp":  "2026-08-22T00:00:00.000Z",
                                           "section":  "editorial",
                                           "note":  "ADVISORY: subtitle 'Ritual and Resin' near-collision with armani-prive-oud-royal-inspired subtitle 'Ritual and Resin' — deduplicate before promotion.",
-                                          "resolved":  false
+                                          "resolved":  true
+                                      },
+                                      {
+                                          "id":  "note-ep13-R1-026c",
+                                          "reviewer":  "Founder",
+                                          "timestamp":  "2026-08-22T04:00:00.000Z",
+                                          "section":  "editorial",
+                                          "note":  "EP-CAT-P13-R1: Founder decision — outlands-inspired subtitle changed from 'Ritual and Resin' to 'Wild Frontier'. armani-prive-oud-royal-inspired subtitle 'Ritual & Resin' retained. Collision resolved. No evidence fields modified.",
+                                          "resolved":  true
                                       },
                                       {
                                           "id":  "note-ep13-W3-026b",

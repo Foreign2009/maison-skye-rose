@@ -110,7 +110,7 @@ export const outlandsInspired: FragranceKnowledge = {
   newArrival    : false,
 
   // ── Education ───────────────────────────────────────────────────────────────
-  subtitle      : "Ritual and Resin",
+  subtitle      : "Wild Frontier",
   description   : "Frankincense and cardamom ignite a sharp, almost medicinal opening that dissolves into a complex heart of saffron, patchouli, and rose—layered, warm, uncompromising. The base settles into a deep oud-amber symphony, grounded by vanilla and benzoin, where the fragrance becomes something slower, richer, almost ceremonial.",
   academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances", "what-makes-a-signature-scent"],
   academyCategories: ["fragrance-families", "the-note-pyramid", "wear-and-application"],
