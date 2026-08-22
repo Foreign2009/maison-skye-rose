@@ -101,7 +101,7 @@ export const libreInspired: FragranceKnowledge = {
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["delina-inspired", "libre-flowers-flames-florale-inspired"],
+    alternatives:     ["delina-inspired", "libre-flowers-flames-florale-inspired", "queen-of-silk-inspired"],
     wardrobePartners: ["baccarat-rouge-540-inspired", "chance-inspired", "black-opium-over-red-inspired"],
   },
 };

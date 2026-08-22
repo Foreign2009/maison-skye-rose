@@ -1,7 +1,7 @@
 // ═════════════════════════════════════════════════════════════════
-// FACTORY DRAFT — chanel-no-5-inspired
+// FACTORY DRAFT — gabrielle-inspired
 // ─────────────────────────────────────────────────────────────────
-// Generated:         2026-08-22T18:49:27.414Z
+// Generated:         2026-08-22T18:49:40.400Z
 // Factory version:   0.5.0
 // Prompt versions:   EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0
 // Validation status: FAIL  [3 error(s), 0 warning(s)]
@@ -18,14 +18,14 @@
 //   □ npm run mkc:validate passes before promotion
 // ═════════════════════════════════════════════════════════════════
 
-import type { FragranceKnowledge } from "../../../app/lib/mkc/types";
+import type { FragranceKnowledge } from "../types";
 
-export const chanelNo5Inspired: FragranceKnowledge = {
+export const gabrielleInspired: FragranceKnowledge = {
   // ── Identity ──────────────────────────────────────────────────────────────────
-  id            : "chanel-no-5-inspired",
-  slug          : "chanel-no-5-inspired",
+  id            : "gabrielle-inspired",
+  slug          : "gabrielle-inspired",
   brand         : "Maison Skye & Rose",
-  name          : "Chanel No 5 Inspired",
+  name          : "Gabrielle Inspired",
   collection    : "Rose",
   catalogVersion: "1.0",
   status        : "active",
@@ -37,51 +37,47 @@ export const chanelNo5Inspired: FragranceKnowledge = {
   projection    : "moderate",
 
   // ── Composition ─────────────────────────────────────────────────────────────
-  profile       : "Floral Aldehyde",
+  profile       : "Floral",
   season        : "Year-Round",
   notes: {
-    top:   [
-      "Aldehydes",
+    top:   ["Grapefruit", "Mandarin Orange", "Black Currant"],
+    heart: [
+      "Orange Blossom",
+      "Jasmine",
       "Ylang-Ylang",
-      "Neroli",
-      "Bergamot",
-      "Peach",
+      "Tuberose",
+      "Lily of the Valley",
+      "Pear",
+      "Pink Pepper",
     ],
-    heart: ["May Rose", "Jasmine", "Iris", "Lily of the Valley"],
-    base:  [
-      "Sandalwood",
-      "Vetiver",
-      "Oakmoss",
-      "Patchouli",
-      "Vanilla",
-    ],
+    base:  ["Musk", "Sandalwood", "Cashmeran", "Orris"],
   },
   notesEvidenceLocked: true,
-  mood          : "Powdery Floral Classic",
+  mood          : "Luminous White Floral",
 
   // ── Discovery ───────────────────────────────────────────────────────────────
   vibe          : [
-    "Elegant",
+    "Luminous",
+    "Confident",
     "Sophisticated",
+    "Elegant",
     "Feminine",
-    "Soft",
-    "Romantic",
-    "Luxury",
+    "Fresh",
   ],
   occasions     : [
     "Daily Wear",
     "Office",
     "Date Night",
     "Evening",
-    "Formal",
+    "Weekend",
   ],
   seasons       : ["Spring", "Summer", "Autumn", "Winter"],
-  signatureStyle: ["Powdery Floral Elegance", "Classic Signature", "Refined Femininity"],
+  signatureStyle: ["Luminous White Floral", "Modern Feminine Signature", "Balanced Elegance"],
   recommendedFor: [
-    "Women seeking a timeless floral signature that bridges elegance and intimacy across all occasions.",
-    "Those drawn to powdery, classic florals with sophistication rather than sweetness or intensity.",
-    "Anyone building a fragrance wardrobe who wants one refined rose-jasmine scent that transcends seasons and dress codes.",
-    "Women who appreciate balanced, wearable florals that whisper rather than shout.",
+    "Women seeking a luminous, balanced white floral that transitions seamlessly from office to evening.",
+    "Those who want signature femininity that feels modern and confident rather than traditionally romantic.",
+    "Fragrance enthusiasts building a collection who need a sophisticated everyday floral that anchors multiple wardrobe moods.",
+    "Anyone looking for a year-round staple with enough complexity to stay interesting through repeated wear.",
   ],
 
   // ── Merchandising ───────────────────────────────────────────────────────────
@@ -99,21 +95,21 @@ export const chanelNo5Inspired: FragranceKnowledge = {
   newArrival    : false,
 
   // ── Education ───────────────────────────────────────────────────────────────
-  subtitle      : "Powdery Floral Elegance",
-  description   : "Aldehydes open with a whisper of peach and neroli, their soapy luminescence framing a heart of May rose and jasmine. Iris and lily of the valley soften the floral core into something powdery and intimate, while sandalwood and vetiver ground the composition with quiet warmth.",
+  subtitle      : "Luminous White Floral",
+  description   : "Grapefruit and black currant open onto a luminous heart of orange blossom and jasmine, where tuberose and lily of the valley create an intoxicating white floral core. Sandalwood and musk settle beneath, grounding the composition in soft, creamy warmth.",
   academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "what-makes-a-signature-scent", "how-to-layer-fragrances"],
-  academyCategories: ["fragrance-families", "the-note-pyramid", "fragrance-fundamentals"],
+  academyCategories: ["fragrance-families", "the-note-pyramid", "wear-and-application"],
   educationTags : [
-    "floral-aldehyde",
-    "rose",
+    "floral",
     "jasmine",
-    "aldehydes",
-    "iris",
+    "orange-blossom",
     "signature-scent",
-    "balanced",
     "year-round",
-    "elegant",
-    "daily-wear",
+    "balanced",
+    "feminine",
+    "citrus",
+    "musk",
+    "sandalwood",
   ],
   learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "what-makes-a-signature-scent", "how-to-layer-fragrances"],
 
@@ -129,7 +125,7 @@ export const chanelNo5Inspired: FragranceKnowledge = {
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["j'adore-inspired", "miss-dior-inspired", "coco-mademoiselle-inspired"],
-    wardrobePartners: ["black-opium-inspired", "hypnotic-poison-inspired"],
+    alternatives:     ["delina-inspired", "mon-paris-inspired", "very-good-girl-inspired"],
+    wardrobePartners: ["baccarat-rouge-540-inspired", "alien-inspired"],
   },
 };

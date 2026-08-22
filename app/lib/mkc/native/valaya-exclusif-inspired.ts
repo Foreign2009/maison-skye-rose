@@ -1,7 +1,7 @@
 // ═════════════════════════════════════════════════════════════════
-// FACTORY DRAFT — chanel-no-5-inspired
+// FACTORY DRAFT — valaya-exclusif-inspired
 // ─────────────────────────────────────────────────────────────────
-// Generated:         2026-08-22T18:49:27.414Z
+// Generated:         2026-08-22T18:50:17.654Z
 // Factory version:   0.5.0
 // Prompt versions:   EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0
 // Validation status: FAIL  [3 error(s), 0 warning(s)]
@@ -18,70 +18,52 @@
 //   □ npm run mkc:validate passes before promotion
 // ═════════════════════════════════════════════════════════════════
 
-import type { FragranceKnowledge } from "../../../app/lib/mkc/types";
+import type { FragranceKnowledge } from "../types";
 
-export const chanelNo5Inspired: FragranceKnowledge = {
+export const valayaExclusifInspired: FragranceKnowledge = {
   // ── Identity ──────────────────────────────────────────────────────────────────
-  id            : "chanel-no-5-inspired",
-  slug          : "chanel-no-5-inspired",
+  id            : "valaya-exclusif-inspired",
+  slug          : "valaya-exclusif-inspired",
   brand         : "Maison Skye & Rose",
-  name          : "Chanel No 5 Inspired",
+  name          : "Valaya Exclusif Inspired",
   collection    : "Rose",
   catalogVersion: "1.0",
   status        : "active",
 
   // ── Classification ────────────────────────────────────────────────────────────
   gender        : "female",
-  family        : ["Floral"],
+  family        : ["Powdery", "Floral", "Woody"],
   scentCharacter: "Balanced Signature",
   projection    : "moderate",
 
   // ── Composition ─────────────────────────────────────────────────────────────
-  profile       : "Floral Aldehyde",
+  profile       : "Floral Powdery Woody",
   season        : "Year-Round",
   notes: {
-    top:   [
-      "Aldehydes",
-      "Ylang-Ylang",
-      "Neroli",
-      "Bergamot",
-      "Peach",
-    ],
-    heart: ["May Rose", "Jasmine", "Iris", "Lily of the Valley"],
-    base:  [
-      "Sandalwood",
-      "Vetiver",
-      "Oakmoss",
-      "Patchouli",
-      "Vanilla",
-    ],
+    top:   ["Almond", "Bergamot", "Mandarin"],
+    heart: ["Orange Blossom", "White Flowers"],
+    base:  ["White Musks", "Akigalawood", "Sandalwood", "Vanilla"],
   },
   notesEvidenceLocked: true,
-  mood          : "Powdery Floral Classic",
+  mood          : "Soft Powdery Floral",
 
   // ── Discovery ───────────────────────────────────────────────────────────────
   vibe          : [
-    "Elegant",
-    "Sophisticated",
-    "Feminine",
     "Soft",
-    "Romantic",
-    "Luxury",
+    "Elegant",
+    "Luminous",
+    "Feminine",
+    "Sophisticated",
+    "Delicate",
   ],
-  occasions     : [
-    "Daily Wear",
-    "Office",
-    "Date Night",
-    "Evening",
-    "Formal",
-  ],
+  occasions     : ["Daily Wear", "Office", "Casual", "Weekend"],
   seasons       : ["Spring", "Summer", "Autumn", "Winter"],
-  signatureStyle: ["Powdery Floral Elegance", "Classic Signature", "Refined Femininity"],
+  signatureStyle: ["Luminous Powdery Floral", "Soft Signature", "Creamy Elegance"],
   recommendedFor: [
-    "Women seeking a timeless floral signature that bridges elegance and intimacy across all occasions.",
-    "Those drawn to powdery, classic florals with sophistication rather than sweetness or intensity.",
-    "Anyone building a fragrance wardrobe who wants one refined rose-jasmine scent that transcends seasons and dress codes.",
-    "Women who appreciate balanced, wearable florals that whisper rather than shout.",
+    "Women seeking a refined everyday floral that balances brightness with softness without demanding attention",
+    "Those who love powdery white florals but want enough citrus and woody depth to feel sophisticated and complete",
+    "Anyone building a signature scent wardrobe who values luminous, understated elegance over bold statements",
+    "Women who pair fragrances with understated luxury aesthetics and appreciate creamy sandalwood warmth",
   ],
 
   // ── Merchandising ───────────────────────────────────────────────────────────
@@ -99,21 +81,21 @@ export const chanelNo5Inspired: FragranceKnowledge = {
   newArrival    : false,
 
   // ── Education ───────────────────────────────────────────────────────────────
-  subtitle      : "Powdery Floral Elegance",
-  description   : "Aldehydes open with a whisper of peach and neroli, their soapy luminescence framing a heart of May rose and jasmine. Iris and lily of the valley soften the floral core into something powdery and intimate, while sandalwood and vetiver ground the composition with quiet warmth.",
+  subtitle      : "Soft Luminosity",
+  description   : "A powdery white floral that opens with bitter almond and citrus brightness, settling into a luminous heart of orange blossom and creamy white flowers. Sandalwood and soft musks create a gentle, intimate finish that feels both luminous and refined.",
   academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "what-makes-a-signature-scent", "how-to-layer-fragrances"],
-  academyCategories: ["fragrance-families", "the-note-pyramid", "fragrance-fundamentals"],
+  academyCategories: ["fragrance-families", "the-note-pyramid", "wear-and-application"],
   educationTags : [
-    "floral-aldehyde",
-    "rose",
-    "jasmine",
-    "aldehydes",
-    "iris",
+    "floral",
+    "powdery",
+    "woody",
+    "white-flowers",
+    "orange-blossom",
+    "sandalwood",
+    "vanilla",
     "signature-scent",
-    "balanced",
-    "year-round",
-    "elegant",
     "daily-wear",
+    "balanced",
   ],
   learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "what-makes-a-signature-scent", "how-to-layer-fragrances"],
 
@@ -121,7 +103,7 @@ export const chanelNo5Inspired: FragranceKnowledge = {
   // Approximated from profile + season. Calibrated by Intelligence Producer in P2.
   sweetness     : 2,
   freshness     : 3,
-  warmth        : 2,
+  warmth        : 3,
   intensity     : 3,
   versatility   : 3,
   popularity    : 5,
@@ -129,7 +111,7 @@ export const chanelNo5Inspired: FragranceKnowledge = {
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["j'adore-inspired", "miss-dior-inspired", "coco-mademoiselle-inspired"],
-    wardrobePartners: ["black-opium-inspired", "hypnotic-poison-inspired"],
+    alternatives:     ["delina-exclusif-inspired", "rolling-in-love-inspired"],
+    wardrobePartners: ["prada-l'homme-inspired"],
   },
 };

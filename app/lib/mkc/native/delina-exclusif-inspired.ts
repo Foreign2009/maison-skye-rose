@@ -101,7 +101,7 @@ export const delinaExclusifInspired: FragranceKnowledge = {
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["delina-inspired", "baccarat-rouge-540-inspired", "hypnotic-poison-inspired", "oud-ispahan-inspired", "taif-rose-inspired"],
+    alternatives:     ["delina-inspired", "baccarat-rouge-540-inspired", "hypnotic-poison-inspired", "oud-ispahan-inspired", "taif-rose-inspired", "valaya-exclusif-inspired"],
     wardrobePartners: ["aventus-inspired"],
   },
 };

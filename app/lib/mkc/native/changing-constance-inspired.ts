@@ -1,7 +1,7 @@
 // ═════════════════════════════════════════════════════════════════
-// FACTORY DRAFT — chanel-no-5-inspired
+// FACTORY DRAFT — changing-constance-inspired
 // ─────────────────────────────────────────────────────────────────
-// Generated:         2026-08-22T18:49:27.414Z
+// Generated:         2026-08-22T18:49:01.467Z
 // Factory version:   0.5.0
 // Prompt versions:   EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0
 // Validation status: FAIL  [3 error(s), 0 warning(s)]
@@ -18,70 +18,51 @@
 //   □ npm run mkc:validate passes before promotion
 // ═════════════════════════════════════════════════════════════════
 
-import type { FragranceKnowledge } from "../../../app/lib/mkc/types";
+import type { FragranceKnowledge } from "../types";
 
-export const chanelNo5Inspired: FragranceKnowledge = {
+export const changingConstanceInspired: FragranceKnowledge = {
   // ── Identity ──────────────────────────────────────────────────────────────────
-  id            : "chanel-no-5-inspired",
-  slug          : "chanel-no-5-inspired",
+  id            : "changing-constance-inspired",
+  slug          : "changing-constance-inspired",
   brand         : "Maison Skye & Rose",
-  name          : "Chanel No 5 Inspired",
+  name          : "Changing Constance Inspired",
   collection    : "Rose",
   catalogVersion: "1.0",
   status        : "active",
 
   // ── Classification ────────────────────────────────────────────────────────────
   gender        : "female",
-  family        : ["Floral"],
-  scentCharacter: "Balanced Signature",
+  family        : ["Gourmand"],
+  scentCharacter: "Rich & Full-Bodied",
   projection    : "moderate",
 
   // ── Composition ─────────────────────────────────────────────────────────────
-  profile       : "Floral Aldehyde",
-  season        : "Year-Round",
+  profile       : "Gourmand",
+  season        : "Autumn",
   notes: {
-    top:   [
-      "Aldehydes",
-      "Ylang-Ylang",
-      "Neroli",
-      "Bergamot",
-      "Peach",
-    ],
-    heart: ["May Rose", "Jasmine", "Iris", "Lily of the Valley"],
-    base:  [
-      "Sandalwood",
-      "Vetiver",
-      "Oakmoss",
-      "Patchouli",
-      "Vanilla",
-    ],
+    top:   ["Cardamom", "Pimento Seeds"],
+    heart: ["Caramel", "Salt"],
+    base:  ["Vanilla", "Cashmeran", "Tobacco"],
   },
   notesEvidenceLocked: true,
-  mood          : "Powdery Floral Classic",
+  mood          : "Sweet Spicy Gourmand",
 
   // ── Discovery ───────────────────────────────────────────────────────────────
   vibe          : [
-    "Elegant",
+    "Warm",
+    "Sensual",
     "Sophisticated",
-    "Feminine",
-    "Soft",
-    "Romantic",
-    "Luxury",
+    "Magnetic",
+    "Composed",
   ],
-  occasions     : [
-    "Daily Wear",
-    "Office",
-    "Date Night",
-    "Evening",
-    "Formal",
-  ],
-  seasons       : ["Spring", "Summer", "Autumn", "Winter"],
-  signatureStyle: ["Powdery Floral Elegance", "Classic Signature", "Refined Femininity"],
+  occasions     : ["Date Night", "Office", "Evening", "Weekend"],
+  seasons       : ["Autumn", "Winter"],
+  signatureStyle: ["Sophisticated Gourmand", "Spiced Sweetness", "Warm Sensuality"],
   recommendedFor: [
-    "Women seeking a timeless floral signature that bridges elegance and intimacy across all occasions.",
-    "Those drawn to powdery, classic florals with sophistication rather than sweetness or intensity.",
-    "Anyone building a fragrance wardrobe who wants one refined rose-jasmine scent that transcends seasons and dress codes.",
-    "Women who appreciate balanced, wearable florals that whisper rather than shout.",
+    "Women seeking a sophisticated gourmand that balances sweetness with spice and smoke for evening elegance",
+    "Those who love warm, edible fragrances with complexity—caramel and vanilla paired with cardamom and tobacco depth",
+    "Anyone looking for an autumn signature that feels composed and mature rather than candy-sweet",
+    "Women drawn to sensual, full-bodied scents that transition seamlessly from date night to intimate evenings",
   ],
 
   // ── Merchandising ───────────────────────────────────────────────────────────
@@ -99,28 +80,28 @@ export const chanelNo5Inspired: FragranceKnowledge = {
   newArrival    : false,
 
   // ── Education ───────────────────────────────────────────────────────────────
-  subtitle      : "Powdery Floral Elegance",
-  description   : "Aldehydes open with a whisper of peach and neroli, their soapy luminescence framing a heart of May rose and jasmine. Iris and lily of the valley soften the floral core into something powdery and intimate, while sandalwood and vetiver ground the composition with quiet warmth.",
-  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "what-makes-a-signature-scent", "how-to-layer-fragrances"],
-  academyCategories: ["fragrance-families", "the-note-pyramid", "fragrance-fundamentals"],
+  subtitle      : "Spiced Sweetness",
+  description   : "Cardamom and pimento seeds ignite a warm spice that yields to salted caramel—sweet, slightly smoky, utterly composed. Vanilla and cashmeran anchor the base in soft gourmand comfort, while a whisper of tobacco adds quiet sophistication to what could have been simple indulgence.",
+  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "choosing-your-season-scent", "how-to-layer-fragrances"],
+  academyCategories: ["fragrance-families", "the-note-pyramid", "occasions-and-style"],
   educationTags : [
-    "floral-aldehyde",
-    "rose",
-    "jasmine",
-    "aldehydes",
-    "iris",
-    "signature-scent",
-    "balanced",
-    "year-round",
-    "elegant",
-    "daily-wear",
+    "gourmand",
+    "vanilla",
+    "caramel",
+    "cardamom",
+    "tobacco",
+    "warm",
+    "spiced",
+    "autumn",
+    "date-night",
+    "office",
   ],
-  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "what-makes-a-signature-scent", "how-to-layer-fragrances"],
+  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "choosing-your-season-scent", "how-to-layer-fragrances"],
 
   // ── Intelligence ────────────────────────────────────────────────────────────
   // Approximated from profile + season. Calibrated by Intelligence Producer in P2.
-  sweetness     : 2,
-  freshness     : 3,
+  sweetness     : 4,
+  freshness     : 2,
   warmth        : 2,
   intensity     : 3,
   versatility   : 3,
@@ -129,7 +110,7 @@ export const chanelNo5Inspired: FragranceKnowledge = {
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["j'adore-inspired", "miss-dior-inspired", "coco-mademoiselle-inspired"],
-    wardrobePartners: ["black-opium-inspired", "hypnotic-poison-inspired"],
+    alternatives:     ["hypnotic-poison-inspired", "black-opium-inspired", "love-don't-be-shy-inspired"],
+    wardrobePartners: ["spicebomb-extreme-inspired", "naxos-inspired"],
   },
 };

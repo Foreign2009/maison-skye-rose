@@ -102,7 +102,7 @@ export const loveDontBeShyInspired: FragranceKnowledge = {
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["delina-inspired", "hypnotic-poison-inspired", "bianco-latte-inspired", "arabians-musk-inspired", "black-opium-over-red-inspired", "scandal-inspired"],
+    alternatives:     ["delina-inspired", "hypnotic-poison-inspired", "bianco-latte-inspired", "arabians-musk-inspired", "black-opium-over-red-inspired", "scandal-inspired", "changing-constance-inspired", "attrape-reves-inspired"],
     wardrobePartners: ["sauvage-inspired", "oriana-inspired"],
   },
 };

@@ -109,7 +109,7 @@ export const monParisInspired: FragranceKnowledge = {
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["delina-inspired", "bright-crystal-inspired", "coach-floral-inspired", "fresh-blossom-inspired", "my-way-ylang-inspired", "oriana-inspired", "si-passione-red-musk-inspired", "twilly-d'hermes-inspired", "rose-n'-roses-inspired", "english-pear-freesia-inspired", "lady-million-inspired", "fame-inspired", "la-nuit-tresor-inspired", "dylan-purple-inspired", "gucci-guilty-pour-femme-inspired", "eladaria-inspired"],
+    alternatives:     ["delina-inspired", "bright-crystal-inspired", "coach-floral-inspired", "fresh-blossom-inspired", "my-way-ylang-inspired", "oriana-inspired", "si-passione-red-musk-inspired", "twilly-d'hermes-inspired", "rose-n'-roses-inspired", "english-pear-freesia-inspired", "lady-million-inspired", "fame-inspired", "la-nuit-tresor-inspired", "dylan-purple-inspired", "gucci-guilty-pour-femme-inspired", "eladaria-inspired", "my-way-nectar-inspired", "gabrielle-inspired", "crazy-in-love-inspired"],
     wardrobePartners: ["sauvage-inspired", "rose-of-no-man's-land-inspired"],
   },
 };

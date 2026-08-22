@@ -192,6 +192,16 @@ import { centaurusInspired } from "./centaurus-inspired";
 import { grapefruitInspired } from "./grapefruit-inspired";
 import { darkVanillaInspired } from "./dark-vanilla-inspired";
 import { armaniPriveOudRoyalInspired } from "./armani-prive-oud-royal-inspired";
+import { myWayNectarInspired } from "./my-way-nectar-inspired";
+import { changingConstanceInspired } from "./changing-constance-inspired";
+import { queenOfSilkInspired } from "./queen-of-silk-inspired";
+import { chanelNo5Inspired } from "./chanel-no-5-inspired";
+import { gabrielleInspired } from "./gabrielle-inspired";
+import { attrapeRevesInspired } from "./attrape-reves-inspired";
+import { omniaCrystallineInspired } from "./omnia-crystalline-inspired";
+import { valayaExclusifInspired } from "./valaya-exclusif-inspired";
+import { crazyInLoveInspired } from "./crazy-in-love-inspired";
+import { aLaRoseInspired } from "./a-la-rose-inspired";
 
 export const nativeFragrances = new Map<string, FragranceKnowledge>([
   ["sauvage-inspired",              sauvageInspired],
@@ -376,4 +386,14 @@ export const nativeFragrances = new Map<string, FragranceKnowledge>([
   ["grapefruit-inspired", grapefruitInspired],
   ["dark-vanilla-inspired", darkVanillaInspired],
   ["armani-prive-oud-royal-inspired", armaniPriveOudRoyalInspired],
+  ["my-way-nectar-inspired", myWayNectarInspired],
+  ["changing-constance-inspired", changingConstanceInspired],
+  ["queen-of-silk-inspired", queenOfSilkInspired],
+  ["chanel-no-5-inspired", chanelNo5Inspired],
+  ["gabrielle-inspired", gabrielleInspired],
+  ["attrape-reves-inspired", attrapeRevesInspired],
+  ["omnia-crystalline-inspired", omniaCrystallineInspired],
+  ["valaya-exclusif-inspired", valayaExclusifInspired],
+  ["crazy-in-love-inspired", crazyInLoveInspired],
+  ["a-la-rose-inspired", aLaRoseInspired],
 ]);

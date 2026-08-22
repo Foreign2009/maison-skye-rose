@@ -102,7 +102,7 @@ export const jadoreInspired: FragranceKnowledge = {
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["delina-inspired", "gucci-bamboo-inspired"],
+    alternatives:     ["delina-inspired", "gucci-bamboo-inspired", "chanel-no-5-inspired"],
     wardrobePartners: ["baccarat-rouge-540-inspired"],
   },
 };

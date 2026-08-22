@@ -18,7 +18,7 @@
 //   □ npm run mkc:validate passes before promotion
 // ═════════════════════════════════════════════════════════════════
 
-import type { FragranceKnowledge } from "../../../app/lib/mkc/types";
+import type { FragranceKnowledge } from "../types";
 
 export const chanelNo5Inspired: FragranceKnowledge = {
   // ── Identity ──────────────────────────────────────────────────────────────────

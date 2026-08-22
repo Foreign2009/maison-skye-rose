@@ -109,7 +109,7 @@ export const rollingInLoveInspired: FragranceKnowledge = {
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["delina-inspired"],
+    alternatives:     ["delina-inspired", "valaya-exclusif-inspired"],
     wardrobePartners: ["layton-inspired"],
   },
 };

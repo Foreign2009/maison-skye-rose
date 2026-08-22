@@ -3652,6 +3652,14 @@
                                           "section":  "editorial",
                                           "note":  "ADVISORY: subtitle 'Powdery Floral Elegance' duplicates signatureStyle[0] exactly — minor naming redundancy.",
                                           "resolved":  false
+                                      },
+                                      {
+                                          "id":  "note-ep14b-W3-011b",
+                                          "reviewer":  "Founder",
+                                          "timestamp":  "2026-08-22T05:00:00.000Z",
+                                          "section":  "relationships",
+                                          "note":  "EP-CAT-P14B correction: relationship pointer 'j-adore-inspired' → 'j'adore-inspired' — slug used hyphen instead of apostrophe; native record is j'adore-inspired.ts. Relationship content preserved; pointer corrected to match native registry.",
+                                          "resolved":  true
                                       }
                                   ],
                         "decision":  {

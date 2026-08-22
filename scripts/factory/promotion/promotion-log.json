@@ -3360,6 +3360,237 @@
       "slug": "armani-prive-oud-royal-inspired",
       "operator": "Founder",
       "details": "promotionId:ljNsvxDxpzVn  validation:PASS  nativePath:app/lib/mkc/native/armani-prive-oud-royal-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-22T21:08:47.573Z",
+      "action": "promotion_started",
+      "slug": "my-way-nectar-inspired",
+      "operator": "Founder",
+      "details": "symbol:myWayNectarInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-22T21:08:47.582Z",
+      "action": "relationships_synced",
+      "slug": "my-way-nectar-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:5  files:5"
+    },
+    {
+      "timestamp": "2026-08-22T21:09:27.798Z",
+      "action": "promotion_completed",
+      "slug": "my-way-nectar-inspired",
+      "operator": "Founder",
+      "details": "promotionId:Hofq4LPBn_wM  validation:PASS  nativePath:app/lib/mkc/native/my-way-nectar-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-22T21:09:38.424Z",
+      "action": "promotion_started",
+      "slug": "changing-constance-inspired",
+      "operator": "Founder",
+      "details": "symbol:changingConstanceInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-22T21:09:38.433Z",
+      "action": "relationships_synced",
+      "slug": "changing-constance-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:5  files:5"
+    },
+    {
+      "timestamp": "2026-08-22T21:10:20.789Z",
+      "action": "promotion_completed",
+      "slug": "changing-constance-inspired",
+      "operator": "Founder",
+      "details": "promotionId:gnbD78fmDHuj  validation:PASS  nativePath:app/lib/mkc/native/changing-constance-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-22T21:10:28.308Z",
+      "action": "promotion_started",
+      "slug": "queen-of-silk-inspired",
+      "operator": "Founder",
+      "details": "symbol:queenOfSilkInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-22T21:10:28.316Z",
+      "action": "relationships_synced",
+      "slug": "queen-of-silk-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:4  files:4"
+    },
+    {
+      "timestamp": "2026-08-22T21:11:10.498Z",
+      "action": "promotion_completed",
+      "slug": "queen-of-silk-inspired",
+      "operator": "Founder",
+      "details": "promotionId:zCUyzAKUN5YQ  validation:PASS  nativePath:app/lib/mkc/native/queen-of-silk-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-22T21:11:19.323Z",
+      "action": "promotion_started",
+      "slug": "chanel-no-5-inspired",
+      "operator": "Founder",
+      "details": "symbol:chanelNo5Inspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-22T21:11:19.329Z",
+      "action": "relationships_synced",
+      "slug": "chanel-no-5-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:4  files:4"
+    },
+    {
+      "timestamp": "2026-08-22T21:11:22.739Z",
+      "action": "promotion_rolled_back",
+      "slug": "chanel-no-5-inspired",
+      "operator": "Founder",
+      "details": "reason:mkc:validate returned non-zero exit code"
+    },
+    {
+      "timestamp": "2026-08-22T21:14:15.118Z",
+      "action": "promotion_started",
+      "slug": "chanel-no-5-inspired",
+      "operator": "Founder",
+      "details": "symbol:chanelNo5Inspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-22T21:14:15.128Z",
+      "action": "relationships_synced",
+      "slug": "chanel-no-5-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:5  files:5"
+    },
+    {
+      "timestamp": "2026-08-22T21:14:57.117Z",
+      "action": "promotion_completed",
+      "slug": "chanel-no-5-inspired",
+      "operator": "Founder",
+      "details": "promotionId:Ic4H2GJ1RL_X  validation:PASS  nativePath:app/lib/mkc/native/chanel-no-5-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-22T21:15:07.648Z",
+      "action": "promotion_started",
+      "slug": "gabrielle-inspired",
+      "operator": "Founder",
+      "details": "symbol:gabrielleInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-22T21:15:07.655Z",
+      "action": "relationships_synced",
+      "slug": "gabrielle-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:5  files:5"
+    },
+    {
+      "timestamp": "2026-08-22T21:15:48.535Z",
+      "action": "promotion_completed",
+      "slug": "gabrielle-inspired",
+      "operator": "Founder",
+      "details": "promotionId:nygSEkjle4fL  validation:PASS  nativePath:app/lib/mkc/native/gabrielle-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-22T21:15:56.843Z",
+      "action": "promotion_started",
+      "slug": "attrape-reves-inspired",
+      "operator": "Founder",
+      "details": "symbol:attrapeRevesInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-22T21:15:56.853Z",
+      "action": "relationships_synced",
+      "slug": "attrape-reves-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:5  files:5"
+    },
+    {
+      "timestamp": "2026-08-22T21:16:38.219Z",
+      "action": "promotion_completed",
+      "slug": "attrape-reves-inspired",
+      "operator": "Founder",
+      "details": "promotionId:Y8n8fiFdz0KP  validation:PASS  nativePath:app/lib/mkc/native/attrape-reves-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-22T21:16:48.296Z",
+      "action": "promotion_started",
+      "slug": "omnia-crystalline-inspired",
+      "operator": "Founder",
+      "details": "symbol:omniaCrystallineInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-22T21:16:48.305Z",
+      "action": "relationships_synced",
+      "slug": "omnia-crystalline-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:3  files:3"
+    },
+    {
+      "timestamp": "2026-08-22T21:17:28.237Z",
+      "action": "promotion_completed",
+      "slug": "omnia-crystalline-inspired",
+      "operator": "Founder",
+      "details": "promotionId:ho8Cp3wFd9NQ  validation:PASS  nativePath:app/lib/mkc/native/omnia-crystalline-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-22T21:17:36.563Z",
+      "action": "promotion_started",
+      "slug": "valaya-exclusif-inspired",
+      "operator": "Founder",
+      "details": "symbol:valayaExclusifInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-22T21:17:36.570Z",
+      "action": "relationships_synced",
+      "slug": "valaya-exclusif-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:3  files:3"
+    },
+    {
+      "timestamp": "2026-08-22T21:18:13.711Z",
+      "action": "promotion_completed",
+      "slug": "valaya-exclusif-inspired",
+      "operator": "Founder",
+      "details": "promotionId:PNdpcP2kHC9A  validation:PASS  nativePath:app/lib/mkc/native/valaya-exclusif-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-22T21:18:22.177Z",
+      "action": "promotion_started",
+      "slug": "crazy-in-love-inspired",
+      "operator": "Founder",
+      "details": "symbol:crazyInLoveInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-22T21:18:22.185Z",
+      "action": "relationships_synced",
+      "slug": "crazy-in-love-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:5  files:5"
+    },
+    {
+      "timestamp": "2026-08-22T21:19:01.890Z",
+      "action": "promotion_completed",
+      "slug": "crazy-in-love-inspired",
+      "operator": "Founder",
+      "details": "promotionId:Fk5wCCVOKEYA  validation:PASS  nativePath:app/lib/mkc/native/crazy-in-love-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-22T21:19:11.005Z",
+      "action": "promotion_started",
+      "slug": "a-la-rose-inspired",
+      "operator": "Founder",
+      "details": "symbol:aLaRoseInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-22T21:19:11.013Z",
+      "action": "relationships_synced",
+      "slug": "a-la-rose-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:5  files:5"
+    },
+    {
+      "timestamp": "2026-08-22T21:19:51.978Z",
+      "action": "promotion_completed",
+      "slug": "a-la-rose-inspired",
+      "operator": "Founder",
+      "details": "promotionId:TMqnT8UqB2nh  validation:PASS  nativePath:app/lib/mkc/native/a-la-rose-inspired.ts"
     }
   ]
 }

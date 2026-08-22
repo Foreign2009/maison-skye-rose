@@ -88,7 +88,7 @@ export const pradaLHommeInspired: FragranceKnowledge = {
   // ── Relationships ─────────────────────────────────────────────────────────────
   relationships: {
     alternatives: ["prada-luna-rossa-carbon-inspired", "gris-charnel-inspired", "bois-d'argent-inspired", "gentleman-edt-inspired", "godolphin-inspired", "tom-ford-noir-inspired"],
-    wardrobePartners: ["afternoon-swim-inspired", "wedding-silk-santal-inspired", "dunhill-fresh-inspired", "gucci-guilty-pour-homme-inspired"],
+    wardrobePartners: ["afternoon-swim-inspired", "wedding-silk-santal-inspired", "dunhill-fresh-inspired", "gucci-guilty-pour-homme-inspired", "valaya-exclusif-inspired"],
   },
 
   // ── Intelligence ─────────────────────────────────────────────────────────────

@@ -1,7 +1,7 @@
 // ═════════════════════════════════════════════════════════════════
-// FACTORY DRAFT — chanel-no-5-inspired
+// FACTORY DRAFT — crazy-in-love-inspired
 // ─────────────────────────────────────────────────────────────────
-// Generated:         2026-08-22T18:49:27.414Z
+// Generated:         2026-08-22T18:50:32.492Z
 // Factory version:   0.5.0
 // Prompt versions:   EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0
 // Validation status: FAIL  [3 error(s), 0 warning(s)]
@@ -18,14 +18,14 @@
 //   □ npm run mkc:validate passes before promotion
 // ═════════════════════════════════════════════════════════════════
 
-import type { FragranceKnowledge } from "../../../app/lib/mkc/types";
+import type { FragranceKnowledge } from "../types";
 
-export const chanelNo5Inspired: FragranceKnowledge = {
+export const crazyInLoveInspired: FragranceKnowledge = {
   // ── Identity ──────────────────────────────────────────────────────────────────
-  id            : "chanel-no-5-inspired",
-  slug          : "chanel-no-5-inspired",
+  id            : "crazy-in-love-inspired",
+  slug          : "crazy-in-love-inspired",
   brand         : "Maison Skye & Rose",
-  name          : "Chanel No 5 Inspired",
+  name          : "Crazy in Love Inspired",
   collection    : "Rose",
   catalogVersion: "1.0",
   status        : "active",
@@ -37,51 +37,33 @@ export const chanelNo5Inspired: FragranceKnowledge = {
   projection    : "moderate",
 
   // ── Composition ─────────────────────────────────────────────────────────────
-  profile       : "Floral Aldehyde",
-  season        : "Year-Round",
+  profile       : "Oriental Floral",
+  season        : "Autumn",
   notes: {
-    top:   [
-      "Aldehydes",
-      "Ylang-Ylang",
-      "Neroli",
-      "Bergamot",
-      "Peach",
-    ],
-    heart: ["May Rose", "Jasmine", "Iris", "Lily of the Valley"],
-    base:  [
-      "Sandalwood",
-      "Vetiver",
-      "Oakmoss",
-      "Patchouli",
-      "Vanilla",
-    ],
+    top:   ["Wild Rose", "Violet Leaves"],
+    heart: ["Saffron", "Brown Sugar"],
+    base:  ["Amber", "Vanilla Bean"],
   },
   notesEvidenceLocked: true,
-  mood          : "Powdery Floral Classic",
+  mood          : "Warm Floral Oriental",
 
   // ── Discovery ───────────────────────────────────────────────────────────────
   vibe          : [
-    "Elegant",
+    "Warm",
+    "Sensual",
     "Sophisticated",
-    "Feminine",
-    "Soft",
-    "Romantic",
-    "Luxury",
+    "Balanced",
+    "Magnetic",
+    "Elegant",
   ],
-  occasions     : [
-    "Daily Wear",
-    "Office",
-    "Date Night",
-    "Evening",
-    "Formal",
-  ],
-  seasons       : ["Spring", "Summer", "Autumn", "Winter"],
-  signatureStyle: ["Powdery Floral Elegance", "Classic Signature", "Refined Femininity"],
+  occasions     : ["Office", "Date Night", "Evening", "Weekend"],
+  seasons       : ["Autumn", "Winter"],
+  signatureStyle: ["Warm Floral Oriental", "Spiced Elegance", "Sensual Signature"],
   recommendedFor: [
-    "Women seeking a timeless floral signature that bridges elegance and intimacy across all occasions.",
-    "Those drawn to powdery, classic florals with sophistication rather than sweetness or intensity.",
-    "Anyone building a fragrance wardrobe who wants one refined rose-jasmine scent that transcends seasons and dress codes.",
-    "Women who appreciate balanced, wearable florals that whisper rather than shout.",
+    "Women seeking a warm, spiced floral signature that transitions beautifully from office to evening",
+    "Those who love rose and amber but want sophistication over sweetness—balanced, never cloying",
+    "Anyone drawn to sensual oriental florals with an edgy saffron note that feels modern and unexpected",
+    "Women building a fragrance wardrobe who need one scent that works for professional settings and intimate occasions",
   ],
 
   // ── Merchandising ───────────────────────────────────────────────────────────
@@ -99,21 +81,21 @@ export const chanelNo5Inspired: FragranceKnowledge = {
   newArrival    : false,
 
   // ── Education ───────────────────────────────────────────────────────────────
-  subtitle      : "Powdery Floral Elegance",
-  description   : "Aldehydes open with a whisper of peach and neroli, their soapy luminescence framing a heart of May rose and jasmine. Iris and lily of the valley soften the floral core into something powdery and intimate, while sandalwood and vetiver ground the composition with quiet warmth.",
-  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "what-makes-a-signature-scent", "how-to-layer-fragrances"],
-  academyCategories: ["fragrance-families", "the-note-pyramid", "fragrance-fundamentals"],
+  subtitle      : "Warm Floral Intimacy",
+  description   : "Wild rose and violet leaves open with a gentle green bite, then melt into saffron and caramelized brown sugar—a warm, sensual heart that feels both spiced and sweet. Amber and vanilla bean warm the base with dark, unhurried richness—an Oriental floral that is intimate without apology.",
+  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances", "what-makes-a-signature-scent"],
+  academyCategories: ["fragrance-families", "the-note-pyramid", "occasions-and-style"],
   educationTags : [
-    "floral-aldehyde",
+    "oriental-floral",
     "rose",
-    "jasmine",
-    "aldehydes",
-    "iris",
+    "amber",
+    "vanilla",
+    "saffron",
     "signature-scent",
+    "autumn",
+    "date-night",
+    "layering",
     "balanced",
-    "year-round",
-    "elegant",
-    "daily-wear",
   ],
   learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "what-makes-a-signature-scent", "how-to-layer-fragrances"],
 
@@ -129,7 +111,7 @@ export const chanelNo5Inspired: FragranceKnowledge = {
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["j'adore-inspired", "miss-dior-inspired", "coco-mademoiselle-inspired"],
-    wardrobePartners: ["black-opium-inspired", "hypnotic-poison-inspired"],
+    alternatives:     ["delina-inspired", "mon-paris-inspired", "good-girl-blush-inspired"],
+    wardrobePartners: ["black-opium-inspired", "chance-eau-fraiche-inspired"],
   },
 };

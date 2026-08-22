@@ -1,7 +1,7 @@
 // ═════════════════════════════════════════════════════════════════
-// FACTORY DRAFT — chanel-no-5-inspired
+// FACTORY DRAFT — a-la-rose-inspired
 // ─────────────────────────────────────────────────────────────────
-// Generated:         2026-08-22T18:49:27.414Z
+// Generated:         2026-08-22T18:50:45.257Z
 // Factory version:   0.5.0
 // Prompt versions:   EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0
 // Validation status: FAIL  [3 error(s), 0 warning(s)]
@@ -18,14 +18,14 @@
 //   □ npm run mkc:validate passes before promotion
 // ═════════════════════════════════════════════════════════════════
 
-import type { FragranceKnowledge } from "../../../app/lib/mkc/types";
+import type { FragranceKnowledge } from "../types";
 
-export const chanelNo5Inspired: FragranceKnowledge = {
+export const aLaRoseInspired: FragranceKnowledge = {
   // ── Identity ──────────────────────────────────────────────────────────────────
-  id            : "chanel-no-5-inspired",
-  slug          : "chanel-no-5-inspired",
+  id            : "a-la-rose-inspired",
+  slug          : "a-la-rose-inspired",
   brand         : "Maison Skye & Rose",
-  name          : "Chanel No 5 Inspired",
+  name          : "A La Rose Inspired",
   collection    : "Rose",
   catalogVersion: "1.0",
   status        : "active",
@@ -37,51 +37,33 @@ export const chanelNo5Inspired: FragranceKnowledge = {
   projection    : "moderate",
 
   // ── Composition ─────────────────────────────────────────────────────────────
-  profile       : "Floral Aldehyde",
-  season        : "Year-Round",
+  profile       : "Floral",
+  season        : "Spring",
   notes: {
-    top:   [
-      "Aldehydes",
-      "Ylang-Ylang",
-      "Neroli",
-      "Bergamot",
-      "Peach",
-    ],
-    heart: ["May Rose", "Jasmine", "Iris", "Lily of the Valley"],
-    base:  [
-      "Sandalwood",
-      "Vetiver",
-      "Oakmoss",
-      "Patchouli",
-      "Vanilla",
-    ],
+    top:   ["Calabrian Bergamot", "California Orange"],
+    heart: ["Bulgarian Rose", "Grasse Rose", "Violet", "Magnolia"],
+    base:  ["Cedar", "Musk"],
   },
   notesEvidenceLocked: true,
-  mood          : "Powdery Floral Classic",
+  mood          : "Dewy Floral Rose",
 
   // ── Discovery ───────────────────────────────────────────────────────────────
   vibe          : [
+    "Fresh",
     "Elegant",
-    "Sophisticated",
-    "Feminine",
-    "Soft",
     "Romantic",
-    "Luxury",
+    "Dewy",
+    "Sophisticated",
+    "Soft",
   ],
-  occasions     : [
-    "Daily Wear",
-    "Office",
-    "Date Night",
-    "Evening",
-    "Formal",
-  ],
-  seasons       : ["Spring", "Summer", "Autumn", "Winter"],
-  signatureStyle: ["Powdery Floral Elegance", "Classic Signature", "Refined Femininity"],
+  occasions     : ["Daily Wear", "Wedding", "Office", "Casual"],
+  seasons       : ["Spring", "Summer"],
+  signatureStyle: ["Luminous Floral Rose", "Modern Garden Classic", "Balanced Signature Bloom"],
   recommendedFor: [
-    "Women seeking a timeless floral signature that bridges elegance and intimacy across all occasions.",
-    "Those drawn to powdery, classic florals with sophistication rather than sweetness or intensity.",
-    "Anyone building a fragrance wardrobe who wants one refined rose-jasmine scent that transcends seasons and dress codes.",
-    "Women who appreciate balanced, wearable florals that whisper rather than shout.",
+    "Women seeking a luminous rose signature that feels garden-fresh rather than powdery or heavy.",
+    "Those who love floral fragrances but want brightness and citrus lift, not drowsy sweetness.",
+    "Anyone building a spring wardrobe who needs a fragrance that works from morning coffee to evening garden parties.",
+    "Fragrance collectors drawn to classic rose compositions with modern restraint and timeless elegance.",
   ],
 
   // ── Merchandising ───────────────────────────────────────────────────────────
@@ -99,21 +81,25 @@ export const chanelNo5Inspired: FragranceKnowledge = {
   newArrival    : false,
 
   // ── Education ───────────────────────────────────────────────────────────────
-  subtitle      : "Powdery Floral Elegance",
-  description   : "Aldehydes open with a whisper of peach and neroli, their soapy luminescence framing a heart of May rose and jasmine. Iris and lily of the valley soften the floral core into something powdery and intimate, while sandalwood and vetiver ground the composition with quiet warmth.",
+  subtitle      : "Morning Rose",
+  description   : "Bergamot and California orange open onto a lush garden of Bulgarian and Grasse rose, softened by violet and magnolia. Cedar and musk ground the composition, allowing the floral heart to breathe with dewy, luminous restraint.",
   academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "what-makes-a-signature-scent", "how-to-layer-fragrances"],
-  academyCategories: ["fragrance-families", "the-note-pyramid", "fragrance-fundamentals"],
+  academyCategories: ["fragrance-families", "the-note-pyramid", "occasions-and-style"],
   educationTags : [
-    "floral-aldehyde",
+    "floral",
     "rose",
-    "jasmine",
-    "aldehydes",
-    "iris",
+    "bulgarian-rose",
+    "violet",
+    "magnolia",
+    "citrus",
+    "bergamot",
     "signature-scent",
-    "balanced",
-    "year-round",
-    "elegant",
+    "spring",
     "daily-wear",
+    "wedding",
+    "balanced",
+    "cedar",
+    "musk",
   ],
   learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "what-makes-a-signature-scent", "how-to-layer-fragrances"],
 
@@ -122,14 +108,14 @@ export const chanelNo5Inspired: FragranceKnowledge = {
   sweetness     : 2,
   freshness     : 3,
   warmth        : 2,
-  intensity     : 3,
+  intensity     : 2,
   versatility   : 3,
   popularity    : 5,
 
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["j'adore-inspired", "miss-dior-inspired", "coco-mademoiselle-inspired"],
-    wardrobePartners: ["black-opium-inspired", "hypnotic-poison-inspired"],
+    alternatives:     ["miss-dior-inspired", "coco-mademoiselle-inspired", "chance-inspired"],
+    wardrobePartners: ["blanche-bete-inspired", "crystal-noir-inspired"],
   },
 };

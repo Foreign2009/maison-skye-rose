@@ -109,7 +109,7 @@ export const goodGirlBlushInspired: FragranceKnowledge = {
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["delina-inspired", "peony-blush-suede-inspired"],
+    alternatives:     ["delina-inspired", "peony-blush-suede-inspired", "crazy-in-love-inspired"],
     wardrobePartners: ["sauvage-inspired"],
   },
 };

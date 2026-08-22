@@ -102,7 +102,7 @@ export const pradaParadoxeInspired: FragranceKnowledge = {
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["baccarat-rouge-540-inspired", "carmina-inspired", "la-belle-inspired"],
+    alternatives:     ["baccarat-rouge-540-inspired", "carmina-inspired", "la-belle-inspired", "queen-of-silk-inspired"],
     wardrobePartners: ["sauvage-inspired", "bleu-de-chanel-inspired"],
   },
 };

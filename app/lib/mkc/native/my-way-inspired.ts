@@ -108,7 +108,7 @@ export const myWayInspired: FragranceKnowledge = {
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    wardrobePartners: ["baccarat-rouge-540-inspired", "delina-inspired"],
+    wardrobePartners: ["baccarat-rouge-540-inspired", "delina-inspired", "my-way-nectar-inspired"],
     alternatives: ["my-way-ylang-inspired", "bloom-inspired"],
   },
 };
