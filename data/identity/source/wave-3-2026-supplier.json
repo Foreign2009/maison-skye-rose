@@ -1,0 +1,197 @@
+{
+  "batchId": "wave-3-2026",
+  "description": "Wave 3 — August 2026 Founder selection. 30 identities: ROSE (10), SKYE (10), ELITE (10). 29 entries sourced from August 2026 supplier pool (fragrance-list-2026-08). 1 entry (MIP-000006) sourced from Mid-Year 2026 Supplier List via MIP governance track. Wave 3 selection authorised by Founder per EP-CAT-P10C (2026-08-21). Research scope defined in wave-3-2026-research.json. External research to be conducted in EP-CAT-P10D.",
+  "governance": {
+    "phase": "EP-CAT-P10C",
+    "authorizedBy": "Founder — Wave 3 Selection Authorization 2026-08-21",
+    "rawSourceFile": "data/supplier/raw/fragrance-list-2026-08.json",
+    "normalizedSourceFile": "data/supplier/normalized/fragrance-list-2026-08-normalized.json",
+    "dispositionFile": "data/supplier/decisions/fragrance-list-2026-08-dispositions.json",
+    "poolFile": "data/supplier/.pool452-temp.json",
+    "researchFile": "data/identity/source/wave-3-2026-research.json",
+    "mipSource": "app/lib/identity/data/identity-registry.json",
+    "note": "supplierName values are exact from pool source file. Where supplier text contains misspellings, accent omissions, or brand name abbreviations, the canonical identity is resolved in the paired research file. MIP-000006 is sourced from the Mid-Year 2026 Supplier List (not the August 2026 pool); its MIP provenance and verified status are preserved from identity-registry.json."
+  },
+  "entries": [
+    {
+      "supplierName": "My Way Nectar by Armani",
+      "supplierCategory": "LADIES",
+      "sourceReference": "LADIES-202-My Way Nectar by Armani",
+      "note": "Collection: ROSE. Disposition: CONFIRMED_DISTINCT_FLANKER (AUTHORITATIVE, evidenceLevel per disposition record). Canonical identity: Giorgio Armani My Way Nectar (2022). Evidence source: armani.com + fragrantica.com. Confirmed distinct from native my-way-inspired (My Way by Giorgio Armani) and my-way-ylang-inspired. Identity and flanker governance resolved via disposition record LADIES-202-My Way Nectar by Armani. MKC knowledge research (notes, family, accords) required in EP-CAT-P10D."
+    },
+    {
+      "supplierName": "Changing Constance by Penhaligons",
+      "supplierCategory": "LADIES",
+      "sourceReference": "LADIES-67-Changing Constance by Penhaligons",
+      "note": "Collection: ROSE. Name note: supplier uses 'Penhaligons' (missing apostrophe); canonical brand: Penhaligon's. No Penhaligon's identity currently in catalogue. Research required."
+    },
+    {
+      "supplierName": "Queen of Silk by Creed",
+      "supplierCategory": "LADIES",
+      "sourceReference": "LADIES-241-Queen of Silk by Creed",
+      "note": "Collection: ROSE. By Creed. Confirmed distinct from all native Creed records: aventus-inspired (founding SKYE), creed-green-irish-tweed-inspired (founding SKYE), royal-oud-inspired (W1 ELITE), carmina-inspired (W1 ROSE), eladaria-inspired (W2 ROSE). Research required."
+    },
+    {
+      "supplierName": "Chanel No 5",
+      "supplierCategory": "LADIES",
+      "sourceReference": "LADIES-66-Chanel No 5",
+      "note": "Collection: ROSE. Confirmed distinct from all native Chanel records: bleu-de-chanel-inspired (founding SKYE), bleu-de-chanel-l'exclusif-inspired (W1 SKYE), chance-inspired (founding ROSE), chance-eau-fraiche-inspired (founding ROSE), chance-eau-tendre-inspired (founding ROSE), coco-mademoiselle-inspired (founding ROSE), allure-homme-sport-inspired (W1 SKYE). Research required."
+    },
+    {
+      "supplierName": "Chanel Gabrielle",
+      "supplierCategory": "LADIES",
+      "sourceReference": "LADIES-65-Chanel Gabrielle",
+      "note": "Collection: ROSE. Confirmed distinct from all native Chanel records (see LADIES-66 note). Research required."
+    },
+    {
+      "supplierName": "Louis Vuitton Attrape-Reves",
+      "supplierCategory": "LADIES",
+      "sourceReference": "LADIES-184-Louis Vuitton Attrape-Reves",
+      "note": "Collection: ROSE. Name note: supplier omits accent; canonical product name: 'Attrape-Rêves' by Louis Vuitton. No Louis Vuitton identity currently in any collection. Research required."
+    },
+    {
+      "supplierName": "Bulgari Omnia Crystalline",
+      "supplierCategory": "LADIES",
+      "sourceReference": "LADIES-54-Bulgari Omnia Crystalline",
+      "note": "Collection: ROSE. Name note: supplier uses 'Bulgari'; canonical brand: 'Bvlgari'. Confirmed distinct from native omnia-green-jade-inspired (Bvlgari Omnia Green Jade, W1 ROSE). Research required."
+    },
+    {
+      "supplierName": "Valaya Exclusif by Parfums de Marly",
+      "supplierCategory": "LADIES",
+      "sourceReference": "LADIES-268-Valaya Exclusif by Parfums de Marly",
+      "note": "Collection: ROSE. Research required. Canonical product name confirmation needed: 'Valaya Exclusif' vs 'Valaya' (confirm full official name and any Exclusif designation). No Parfums de Marly women's fragrance currently in catalogue."
+    },
+    {
+      "supplierName": "Crazy in Love by Montale",
+      "supplierCategory": "LADIES",
+      "sourceReference": "LADIES-86-Crazy in Love by Montale",
+      "note": "Collection: ROSE. By Montale. Confirmed distinct from native arabians-musk-inspired (Montale Arabians Musk, W1 ELITE) and arabians-tonka-inspired (Montale Arabians Tonka, W1 ELITE). Research required."
+    },
+    {
+      "supplierName": "MFK A La Rose",
+      "supplierCategory": "LADIES",
+      "sourceReference": "mid-year-2026::mfk a la rose",
+      "note": "Collection: ROSE. SOURCE: Mid-Year 2026 Supplier List — not August 2026 pool. MIP governance preserved. MIP ID: MIP-000006. Verified status: confirmed by Awf 2026-08-08T22:49:00. Canonical identity: À la rose by Maison Francis Kurkdjian (2014), female, EDP. Research confidence: high (per MIP-000006-ev-res). No Maison Francis Kurkdjian identity currently in catalogue. MKC knowledge research (notes, family, accords, perfumer) required in EP-CAT-P10D. Do not mark native until factory generation complete."
+    },
+    {
+      "supplierName": "Dolce & Gabanna Light Blue",
+      "supplierCategory": "MEN",
+      "sourceReference": "MEN-58-Dolce & Gabanna Light Blue",
+      "note": "Collection: SKYE. Name correction: supplier misspells 'Gabanna'; canonical brand: 'Dolce & Gabbana'. Canonical product: Light Blue Pour Homme by Dolce & Gabbana. Confirmed distinct from native light-blue-inspired (Dolce & Gabbana Light Blue women's, W2 ROSE) — different gendered expressions, different products. Research required."
+    },
+    {
+      "supplierName": "Tom Ford Bois Pacifique",
+      "supplierCategory": "MEN",
+      "sourceReference": "MEN-4-Tom Ford Bois Pacifique",
+      "note": "Collection: SKYE. Tom Ford Private Collection/Signature line. Confirmed distinct from all native Tom Ford records: oud-wood-inspired (founding SKYE), tobacco-vanille-inspired (W1 ELITE), ombre-leather-inspired (W1 SKYE), black-orchid-inspired (W2 ELITE), soleil-blanc-inspired (W2 ELITE), tom-ford-noir-inspired (W2 SKYE), tuscan-leather-inspired (W2 ELITE). Research required."
+    },
+    {
+      "supplierName": "Chanel Platinum Egoiste",
+      "supplierCategory": "MEN",
+      "sourceReference": "MEN-154-Chanel Platinum Egoiste",
+      "note": "Collection: SKYE. Canonical product: Égoïste Platinum by Chanel (1993). Name note: supplier uses 'Platinum Egoiste' — canonical product is formally 'Égoïste Platinum'. Confirmed distinct from all native Chanel records. Research required."
+    },
+    {
+      "supplierName": "Burberry London",
+      "supplierCategory": "MEN",
+      "sourceReference": "MEN-38-Burberry London",
+      "note": "Collection: SKYE. Canonical product: Burberry London for Men (2006). Confirmed distinct from native burberry-her-inspired (W1 ROSE) and burberry-goddess-inspired (W2 ROSE). No Burberry men's fragrance currently in catalogue. Research required."
+    },
+    {
+      "supplierName": "CK Eternity",
+      "supplierCategory": "MEN",
+      "sourceReference": "MEN-42-CK Eternity",
+      "note": "Collection: SKYE. Name note: supplier uses 'CK Eternity'; canonical brand: Calvin Klein. Canonical product: Eternity for Men by Calvin Klein (1988). No Calvin Klein men's fragrance currently in catalogue. Research required."
+    },
+    {
+      "supplierName": "Bulgari Black",
+      "supplierCategory": "MEN",
+      "sourceReference": "MEN-35-Bulgari Black",
+      "note": "Collection: SKYE. Name note: supplier uses 'Bulgari'; canonical brand: 'Bvlgari'. Canonical product: Bvlgari Black (1998). Confirmed distinct from native bvlgari-aqua-inspired (Bvlgari AQVA Pour Homme, W1 SKYE) and omnia-green-jade-inspired (W1 ROSE). Research required."
+    },
+    {
+      "supplierName": "212 Vip Black Carolina Herrera",
+      "supplierCategory": "MEN",
+      "sourceReference": "MEN-10-212 Vip Black Carolina Herrera",
+      "note": "Collection: SKYE. Canonical product: 212 VIP Black by Carolina Herrera (2012). Confirmed distinct from native very-good-girl-inspired and very-good-girl-elixir-inspired. Research required."
+    },
+    {
+      "supplierName": "Bulgari Aqua Amara",
+      "supplierCategory": "MEN",
+      "sourceReference": "MEN-33-Bulgari Aqua Amara",
+      "note": "Collection: SKYE. Name note: supplier uses 'Bulgari'; canonical brand: 'Bvlgari'. Canonical product: Bvlgari AQVA Amara (2014). FLANKER NOTE: AQVA Amara is a flanker in the Bvlgari AQVA line; bvlgari-aqua-inspired (AQVA Pour Homme, 2005) is W1 SKYE native. Flanker relationship: CONFIRMED_DISTINCT_FLANKER (distinct commercial product, different concentration and accord profile). Founder selection governs. Research required."
+    },
+    {
+      "supplierName": "Jean Paul Gaultier Scandal NEW",
+      "supplierCategory": "MEN",
+      "sourceReference": "MEN-88-Jean Paul Gaultier Scandal NEW",
+      "note": "Collection: SKYE. Name note: 'NEW' in supplier label is an internal supplier convention, not part of the canonical product name. Likely refers to Scandal Pour Homme by Jean Paul Gaultier (2022) or Scandal Le Parfum Pour Homme — canonical product name requires research confirmation. Confirmed distinct from native scandal-inspired (Jean Paul Gaultier Scandal women's, W2 ROSE) — different gender and product family. See also: native le-male-inspired (W2 SKYE) — same house, unrelated product. Research required."
+    },
+    {
+      "supplierName": "Lacoste White",
+      "supplierCategory": "MEN",
+      "sourceReference": "MEN-99-Lacoste White",
+      "note": "Collection: SKYE. Canonical product: likely Eau de Lacoste Blanc (White) — canonical product name requires research confirmation. Confirmed distinct from native lacoste-noir-inspired (Eau de Lacoste L.12.12. Noir, W2 SKYE). Research required."
+    },
+    {
+      "supplierName": "Oud Sapparot by Montale",
+      "supplierCategory": "UNISEX",
+      "sourceReference": "UNISEX-32-Oud Sapparot by Montale",
+      "note": "Collection: ELITE. By Montale. Confirmed distinct from native arabians-musk-inspired (W1 ELITE) and arabians-tonka-inspired (W1 ELITE). Research required."
+    },
+    {
+      "supplierName": "Abu Dhabi by Memo Paris",
+      "supplierCategory": "UNISEX",
+      "sourceReference": "UNISEX-1-Abu Dhabi by Memo Paris",
+      "note": "Collection: ELITE. By Memo Paris. No Memo Paris identity currently in any collection. Research required."
+    },
+    {
+      "supplierName": "Cinque Terre EDP by Mancera",
+      "supplierCategory": "UNISEX",
+      "sourceReference": "UNISEX-17-Cinque Terre EDP by Mancera",
+      "note": "Collection: ELITE. By Mancera. No Mancera identity currently in any collection. Research required."
+    },
+    {
+      "supplierName": "Jo Malone / Fig & Lotus Flower",
+      "supplierCategory": "UNISEX",
+      "sourceReference": "UNISEX-60-Jo Malone / Fig & Lotus Flower",
+      "note": "Collection: ELITE. Jo Malone London genderless positioning governs — consistent with existing Jo Malone governance (Peony & Blush Suede, English Pear & Freesia assigned ELITE per Founder EP-CAT-P4B-R1). Note structure: Jo Malone London presents notes as an unordered bouquet (not a top/heart/base pyramid); notes to be recorded in heartNotes[] only per Wave 2 governance precedent. Confirmed distinct from all five native Jo Malone records: wood-sage-sea-salt-inspired, oud-bergamot-inspired, peony-blush-suede-inspired, velvet-rose-oud-inspired, english-pear-freesia-inspired. Research required."
+    },
+    {
+      "supplierName": "Torino 24 by Xerjoff",
+      "supplierCategory": "UNISEX",
+      "sourceReference": "UNISEX-49-Torino 24 by Xerjoff",
+      "note": "Collection: ELITE. By Xerjoff. Product year disambiguation: Torino 21 (2021) and Torino 24 (2024) are different editions of the Xerjoff 'Torino' line. Confirmed distinct from native torino21-inspired (Xerjoff Torino 21, founding ELITE). Research required."
+    },
+    {
+      "supplierName": "Outlands by Amouage",
+      "supplierCategory": "UNISEX",
+      "sourceReference": "UNISEX-36-Outlands by Amouage",
+      "note": "Collection: ELITE. By Amouage. Confirmed distinct from native decision-inspired (Amouage Decision, W1 ELITE). Research required."
+    },
+    {
+      "supplierName": "Creed Centaurus",
+      "supplierCategory": "UNISEX",
+      "sourceReference": "UNISEX-20-Creed Centaurus",
+      "note": "Collection: ELITE. By Creed. Confirmed distinct from all native Creed records: aventus-inspired (founding SKYE), creed-green-irish-tweed-inspired (founding SKYE), royal-oud-inspired (W1 ELITE), carmina-inspired (W1 ROSE), eladaria-inspired (W2 ROSE). Centaurus (2023) is a unisex fragrance. Research required."
+    },
+    {
+      "supplierName": "Jo Malone / Grapefruit",
+      "supplierCategory": "UNISEX",
+      "sourceReference": "UNISEX-61-Jo Malone / Grapefruit",
+      "note": "Collection: ELITE. Jo Malone London genderless positioning governs. Note structure: unordered bouquet per Jo Malone governance precedent. Confirmed distinct from all five native Jo Malone records. Research required."
+    },
+    {
+      "supplierName": "Dark Vanilla by Montale",
+      "supplierCategory": "UNISEX",
+      "sourceReference": "UNISEX-24-Dark Vanilla by Montale",
+      "note": "Collection: ELITE. By Montale. Confirmed distinct from native arabians-musk-inspired and arabians-tonka-inspired. Research required."
+    },
+    {
+      "supplierName": "Armani Prive Oud Royal",
+      "supplierCategory": "UNISEX",
+      "sourceReference": "UNISEX-9-Armani Prive Oud Royal",
+      "note": "Collection: ELITE. Name note: supplier uses 'Armani Prive'; canonical: 'Armani Privé' (with accent). Armani Privé line (luxury niche tier, distinct from mainline Giorgio Armani). Confirmed distinct from all native Armani records: armani-code-parfum-inspired, armani-si-inspired, si-passione-red-musk-inspired, my-way-inspired, my-way-ylang-inspired. Research required."
+    }
+  ]
+}
