@@ -102,7 +102,7 @@ export default function DiscoverPage() {
             </h1>
             <p className="mt-6 text-base md:text-lg text-[#7b7480] max-w-2xl mx-auto leading-7">
               Fragrances curated using the Maison Knowledge Catalogue — our
-              intelligent fragrance database spanning 93 unique scents.
+              intelligent fragrance database of hand-chosen scents.
             </p>
             <div className="mt-8 flex flex-wrap gap-3 justify-center">
               <Link

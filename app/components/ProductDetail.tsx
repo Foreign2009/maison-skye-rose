@@ -630,8 +630,8 @@ export default function ProductDetail({
         </div>
       </section>
 
-      {/* ── Signature Notes ──────────────────────────────────────────────────── */}
-      <section className="px-4 md:px-6 pb-8">
+      {/* ── Signature Notes — only rendered when governed notes exist ─────────── */}
+      {allNotes.length > 0 && <section className="px-4 md:px-6 pb-8">
         <div className="mx-auto max-w-7xl">
           <div className="rounded-3xl bg-white p-6 md:p-10">
 
@@ -712,7 +712,7 @@ export default function ProductDetail({
 
           </div>
         </div>
-      </section>
+      </section>}
 
       {/* ── Why You'll Like It ───────────────────────────────────────────────── */}
       <section className="px-4 md:px-6 pb-8">
