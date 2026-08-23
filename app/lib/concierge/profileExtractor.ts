@@ -387,10 +387,15 @@ export function extractProfile(
 
   // ── 7. Preferred gender (only when shopping for self or unspecified) ──────
   if (!shopping.shoppingIntent || shopping.shoppingIntent.value === "self") {
-    if (/\bfor men\b|\bmasculine fragrances?\b/.test(q)) {
+    const MALE_PATTERN   = /\bfor men\b|\bmasculine fragrances?\b|\bmen'?s fragrances?\b|\bi'?m (?:a )?(?:man|male|guy)\b|\bi am (?:a )?(?:man|male|guy)\b|\bas a (?:man|male|guy)\b/;
+    const FEMALE_PATTERN = /\bfor women\b|\bfeminine fragrances?\b|\bwomen'?s fragrances?\b|\bi'?m (?:a )?(?:woman|female|girl|lady)\b|\bi am (?:a )?(?:woman|female|girl|lady)\b|\bas a (?:woman|female|girl|lady)\b/;
+    const UNISEX_PATTERN = /\bgender doesn'?t matter\b|\bunisex fragrances?\b|\bshow me unisex\b|\bi don'?t (?:mind|care)(?: (?:about|the))? gender\b|\bfor anyone\b/;
+    if (MALE_PATTERN.test(q)) {
       profile.preferredGender = { value: "male", confidence: "HIGH" };
-    } else if (/\bfor women\b|\bfeminine fragrances?\b/.test(q)) {
+    } else if (FEMALE_PATTERN.test(q)) {
       profile.preferredGender = { value: "female", confidence: "HIGH" };
+    } else if (UNISEX_PATTERN.test(q)) {
+      profile.preferredGender = { value: "unisex", confidence: "HIGH" };
     }
   }
 

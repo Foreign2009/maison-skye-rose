@@ -171,9 +171,14 @@ function buildFragranceSection(fragrances: FragranceKnowledge[], reuseMode: bool
 
       // Composition — structural context
       lines.push(`   Family: ${k.family.join(", ")} | Season: ${k.season} | Character: ${k.scentCharacter} | Projection: ${k.projection}`);
-      lines.push(`   Top: ${k.notes.top.join(", ")}`);
-      lines.push(`   Heart: ${k.notes.heart.join(", ")}`);
-      lines.push(`   Base: ${k.notes.base.join(", ")}`);
+      const allNotesList = [...k.notes.top, ...k.notes.heart, ...k.notes.base];
+      if (allNotesList.length > 0) {
+        lines.push(`   Top: ${k.notes.top.join(", ")}`);
+        lines.push(`   Heart: ${k.notes.heart.join(", ")}`);
+        lines.push(`   Base: ${k.notes.base.join(", ")}`);
+      } else {
+        lines.push(`   Notes: [Canonical composition not disclosed — use mood and profile for recommendations]`);
+      }
       lines.push(`   Profile: ${k.profile}`);
 
       // Intelligence scores — support comparisons and explanations

@@ -103,6 +103,46 @@ const HIDDEN_GEM_SIGNALS = [
   "beyond the obvious", "beyond the bestsellers",
 ];
 
+// ── Gender constraint helpers (EP-AI-C1) ─────────────────────────────────────
+// Exported for deterministic evaluation harness — do not inline.
+
+/**
+ * Resolves the effective gender constraint for candidate pool filtering.
+ * When shopping for a gift, the recipient's gender overrides personal preference.
+ * Returns null when constraint is "unisex" (no hard filter) or when not set.
+ */
+export function getEffectiveGenderConstraint(
+  profile: ConversationProfile | undefined,
+): "male" | "female" | null {
+  if (!profile) return null;
+  if (profile.shoppingIntent?.value === "gift" && profile.recipientGender?.value) {
+    const g = profile.recipientGender.value;
+    if (g === "male" || g === "female") return g;
+    return null;
+  }
+  if (profile.preferredGender?.value) {
+    const g = profile.preferredGender.value;
+    if (g === "male" || g === "female") return g;
+    return null;
+  }
+  return null;
+}
+
+/**
+ * Filters candidates to those matching the gender constraint (gender === constraint
+ * OR gender === "unisex"). NEVER falls back to the opposite gender — returns empty
+ * array when zero matches, which surfaces a clarification response from the route.
+ */
+export function applyGenderConstraint(
+  candidates: FragranceKnowledge[],
+  constraint: "male" | "female" | null,
+): FragranceKnowledge[] {
+  if (!constraint) return candidates;
+  return candidates.filter(
+    (k) => k.gender === constraint || k.gender === "unisex"
+  );
+}
+
 export function planRetrieval(
   resolved:           ResolvedIntent,
   context:            ConversationContext,
@@ -347,28 +387,42 @@ export function planRetrieval(
     }
   }
 
+  // ── Gender constraint — hard filter (EP-AI-C1) ───────────────────────────────
+  // Applied post-retrieval across all intents except comparison (customer specified
+  // fragrances by name). NEVER restores opposite-gender candidates on zero match.
+  if (intent !== "comparison") {
+    const genderConstraint = getEffectiveGenderConstraint(profile);
+    fragrances = applyGenderConstraint(fragrances, genderConstraint);
+  }
+
   // ── Session-wide diversity (RELEVANCE > NOVELTY) ─────────────────────────────
-  // Applies to new retrieval only — comparison intent is exempt because its
-  // fragrances are semantically required by reference.
+  // Applies to new retrieval only — comparison intent is exempt.
   //
   // Hierarchy:
   //   1. Return the best RELEVANT + UNSEEN candidates first.
-  //   2. If the unseen pool is smaller than needed, fill remaining positions
-  //      with the best RELEVANT + SEEN candidates.
-  //   3. If ALL relevant candidates have been seen, recycle them — never
-  //      substitute unrelated products to avoid repetition.
-  //
-  // Hidden-gem candidates follow the same rules: unseen hidden gems are
-  // preferred over seen ones, but a seen hidden gem beats an unrelated product.
+  //   2. If the unseen pool is smaller than needed, fill with RELEVANT + SEEN.
+  //   3. If ALL relevant candidates have been seen, reach into the broader
+  //      constrained catalogue for fresh records rather than recycling.
+  //   4. Only recycle when the constrained catalogue itself is exhausted.
 
   if (excludeSlugs && excludeSlugs.size > 0 && intent !== "comparison") {
     const unseen = fragrances.filter((f) => !excludeSlugs.has(f.slug));
     if (unseen.length > 0) {
-      // Prefer unseen; relevant-seen candidates fill any remaining positions
       const seen = fragrances.filter((f) => excludeSlugs.has(f.slug));
       fragrances = [...unseen, ...seen];
+    } else if (fragrances.length > 0) {
+      // All relevant candidates seen — draw fresh records from the broader catalogue.
+      const genderConstraint = getEffectiveGenderConstraint(profile);
+      const broader = mkcCatalogue
+        .filter((k) =>
+          !excludeSlugs.has(k.slug) &&
+          (!genderConstraint || k.gender === genderConstraint || k.gender === "unisex")
+        )
+        .sort(sortByQuality)
+        .slice(0, fragrances.length);
+      if (broader.length > 0) fragrances = broader;
+      // Final fallback: recycle only when constrained catalogue is itself exhausted.
     }
-    // unseen.length === 0: every relevant candidate has been seen — recycle them
   }
 
   // Always surface the source fragrance when it exists (even if previously
