@@ -48,6 +48,27 @@ function sortByQuality(a: FragranceKnowledge, b: FragranceKnowledge): number {
   return b.popularity - a.popularity;
 }
 
+// ── Broad pool builder (EP-AI-C2) ────────────────────────────────────────────
+// Used for generic discovery and gift intents when no signal-specific rawQuery
+// is available. Returns the top candidates from the full gender-eligible
+// catalogue sorted by quality, providing enough breadth to survive the
+// post-switch gender filter and return ≥3 candidates.
+// Pre-filtering by gender constraint here is deliberate — the post-switch
+// applyGenderConstraint call is idempotent on this result.
+
+function buildBroadPool(
+  profile: ConversationProfile | undefined,
+  maxCount: number = 8,
+): FragranceKnowledge[] {
+  const genderConstraint = getEffectiveGenderConstraint(profile);
+  return mkcCatalogue
+    .filter(
+      (k) => !genderConstraint || k.gender === genderConstraint || k.gender === "unisex"
+    )
+    .sort(sortByQuality)
+    .slice(0, maxCount);
+}
+
 // ── Search index singleton (rebuilt once per server process) ──────────────────
 
 let _searchIndex: SearchIndex | null = null;
@@ -169,7 +190,7 @@ export function planRetrieval(
           .map((r) => r.fragrance);
         articles = recommendAcademyArticles(sourceKnowledge, 2);
       } else {
-        fragrances = getCollection("trending").slice(0, 4);
+        fragrances = buildBroadPool(profile, 8);
       }
       break;
     }
@@ -244,16 +265,10 @@ export function planRetrieval(
     }
 
     case "gift": {
-      fragrances = [
-        ...getCollection("trending").slice(0, 3),
-      ];
-      // Supplement with bestsellers if trending is small
-      if (fragrances.length < 3) {
-        const additional = mkcCatalogue
-          .filter((k) => k.bestSeller && !fragrances.find((f) => f.slug === k.slug))
-          .slice(0, 3 - fragrances.length);
-        fragrances = [...fragrances, ...additional];
-      }
+      // buildBroadPool pre-filters by recipient gender (getEffectiveGenderConstraint
+      // returns recipientGender when shoppingIntent === "gift"), so this pool is
+      // already gender-appropriate before the post-switch hard filter.
+      fragrances = buildBroadPool(profile, 8);
       articles = articlesBySlug(["what-makes-a-signature-scent"]);
       break;
     }
@@ -379,9 +394,9 @@ export function planRetrieval(
             break;
           }
         }
-        fragrances = getCollection("trending").slice(0, 4);
+        fragrances = buildBroadPool(profile, 8);
       } else {
-        fragrances = getCollection("trending").slice(0, 4);
+        fragrances = buildBroadPool(profile, 8);
       }
       break;
     }
@@ -393,6 +408,25 @@ export function planRetrieval(
   if (intent !== "comparison") {
     const genderConstraint = getEffectiveGenderConstraint(profile);
     fragrances = applyGenderConstraint(fragrances, genderConstraint);
+
+    // ── Minimum breadth guarantee (EP-AI-C2) ──────────────────────────────────
+    // When a gender constraint is active and the retrieval returned fewer than
+    // three candidates, supplement from the broader eligible catalogue WITHOUT
+    // relaxing the gender constraint. Signal-based paths can narrow the pool
+    // aggressively (e.g. a very specific vibe query); this ensures the LLM
+    // always has enough material to form a meaningful recommendation.
+    if (fragrances.length < 3 && genderConstraint) {
+      const alreadyIn = new Set(fragrances.map((f) => f.slug));
+      const supplement = mkcCatalogue
+        .filter(
+          (k) =>
+            (k.gender === genderConstraint || k.gender === "unisex") &&
+            !alreadyIn.has(k.slug)
+        )
+        .sort(sortByQuality)
+        .slice(0, 3 - fragrances.length);
+      fragrances = [...fragrances, ...supplement];
+    }
   }
 
   // ── Session-wide diversity (RELEVANCE > NOVELTY) ─────────────────────────────

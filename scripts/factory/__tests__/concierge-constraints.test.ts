@@ -757,6 +757,370 @@ test("T-FOUNDER — 4-turn scenario: male → fresh → different → girlfriend
     `T-FOUNDER T4 — male-only candidates for girlfriend: ${t4Males.map(f => f.slug).join(", ")}`);
 });
 
+// ── Section 11: C2 Breadth + Ranking ─────────────────────────────────────────
+// 30 deterministic gates for EP-AI-C2: recommendation breadth, minimum candidate
+// guarantee, catalogue variety, quality ordering, cross-turn diversity, and
+// reachability under active gender constraints.
+
+console.log("\n── 11. C2 Breadth + Ranking ─────────────────────────────────────────");
+
+// ── Group A: Core breadth guarantee ──────────────────────────────────────────
+
+test("T-C2-01 — generic male: ≥3 candidates returned", () => {
+  const profile = makeProfile({ preferredGender: { value: "male", confidence: "HIGH" } });
+  const result = planRetrieval(
+    GENERAL_INTENT, EMPTY_CONTEXT, profile,
+    undefined, undefined, null, undefined, "recommend a fragrance for me",
+  );
+  assert.ok(result.fragrances.length >= 3,
+    `T-C2-01 — expected ≥3 candidates, got ${result.fragrances.length}: ${result.fragrances.map(f => f.slug).join(", ")}`);
+});
+
+test("T-C2-02 — generic female: ≥3 candidates returned", () => {
+  const profile = makeProfile({ preferredGender: { value: "female", confidence: "HIGH" } });
+  const result = planRetrieval(
+    GENERAL_INTENT, EMPTY_CONTEXT, profile,
+    undefined, undefined, null, undefined, "recommend a fragrance for me",
+  );
+  assert.ok(result.fragrances.length >= 3,
+    `T-C2-02 — expected ≥3 candidates, got ${result.fragrances.length}: ${result.fragrances.map(f => f.slug).join(", ")}`);
+});
+
+test("T-C2-03 — generic no-gender: ≥3 candidates returned", () => {
+  const result = planRetrieval(
+    GENERAL_INTENT, EMPTY_CONTEXT, undefined,
+    undefined, undefined, null, undefined, "recommend a fragrance",
+  );
+  assert.ok(result.fragrances.length >= 3,
+    `T-C2-03 — expected ≥3 candidates, got ${result.fragrances.length}`);
+});
+
+test("T-C2-04 — generic male breadth: zero female-only candidates", () => {
+  const profile = makeProfile({ preferredGender: { value: "male", confidence: "HIGH" } });
+  const result = planRetrieval(
+    GENERAL_INTENT, EMPTY_CONTEXT, profile,
+    undefined, undefined, null, undefined, "recommend a fragrance",
+  );
+  const females = result.fragrances.filter(f => f.gender === "female");
+  assert.equal(females.length, 0,
+    `T-C2-04 — female candidates in male broad pool: ${females.map(f => f.slug).join(", ")}`);
+});
+
+test("T-C2-05 — generic female breadth: zero male-only candidates", () => {
+  const profile = makeProfile({ preferredGender: { value: "female", confidence: "HIGH" } });
+  const result = planRetrieval(
+    GENERAL_INTENT, EMPTY_CONTEXT, profile,
+    undefined, undefined, null, undefined, "recommend a fragrance",
+  );
+  const males = result.fragrances.filter(f => f.gender === "male");
+  assert.equal(males.length, 0,
+    `T-C2-05 — male candidates in female broad pool: ${males.map(f => f.slug).join(", ")}`);
+});
+
+test("T-C2-06 — gift for male recipient: ≥3 male+unisex candidates", () => {
+  const profile = makeProfile({
+    shoppingIntent:  { value: "gift",  confidence: "HIGH" },
+    recipientGender: { value: "male",  confidence: "HIGH" },
+  });
+  const result = planRetrieval(
+    GENERAL_INTENT, EMPTY_CONTEXT, profile,
+    undefined, undefined, null, undefined, "I'm buying a gift for my husband",
+  );
+  const females = result.fragrances.filter(f => f.gender === "female");
+  assert.ok(result.fragrances.length >= 3,
+    `T-C2-06 — expected ≥3 candidates for male gift, got ${result.fragrances.length}`);
+  assert.equal(females.length, 0,
+    `T-C2-06 — female candidates in male-gift pool: ${females.map(f => f.slug).join(", ")}`);
+});
+
+// ── Group B: Signal-based breadth ────────────────────────────────────────────
+
+test("T-C2-07 — male + fresh vibe: ≥3 male+unisex candidates", () => {
+  const profile = makeProfile({ preferredGender: { value: "male", confidence: "HIGH" } });
+  const intent: ResolvedIntent = { intent: "general_discovery", signals: { vibe: "fresh" }, entitySlug: undefined, compareSlug: [] };
+  const result = planRetrieval(intent, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "something fresh for me");
+  const females = result.fragrances.filter(f => f.gender === "female");
+  assert.ok(result.fragrances.length >= 3,
+    `T-C2-07 — expected ≥3 male fresh candidates, got ${result.fragrances.length}: ${result.fragrances.map(f => f.slug).join(", ")}`);
+  assert.equal(females.length, 0,
+    `T-C2-07 — female candidates in male fresh result: ${females.map(f => f.slug).join(", ")}`);
+});
+
+test("T-C2-08 — female + floral family: ≥3 female+unisex candidates", () => {
+  const profile = makeProfile({ preferredGender: { value: "female", confidence: "HIGH" } });
+  const intent: ResolvedIntent = { intent: "general_discovery", signals: { family: "floral" }, entitySlug: undefined, compareSlug: [] };
+  const result = planRetrieval(intent, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "I love floral scents");
+  const males = result.fragrances.filter(f => f.gender === "male");
+  assert.ok(result.fragrances.length >= 3,
+    `T-C2-08 — expected ≥3 female floral candidates, got ${result.fragrances.length}: ${result.fragrances.map(f => f.slug).join(", ")}`);
+  assert.equal(males.length, 0,
+    `T-C2-08 — male candidates in female floral result: ${males.map(f => f.slug).join(", ")}`);
+});
+
+test("T-C2-09 — male + woody family: ≥3 male+unisex candidates", () => {
+  const profile = makeProfile({ preferredGender: { value: "male", confidence: "HIGH" } });
+  const intent: ResolvedIntent = { intent: "general_discovery", signals: { family: "woody" }, entitySlug: undefined, compareSlug: [] };
+  const result = planRetrieval(intent, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "recommend a woody fragrance");
+  const females = result.fragrances.filter(f => f.gender === "female");
+  assert.ok(result.fragrances.length >= 3,
+    `T-C2-09 — expected ≥3 male woody candidates, got ${result.fragrances.length}: ${result.fragrances.map(f => f.slug).join(", ")}`);
+  assert.equal(females.length, 0,
+    `T-C2-09 — female candidates in male woody result: ${females.map(f => f.slug).join(", ")}`);
+});
+
+test("T-C2-10 — gift for female recipient: ≥3 female+unisex candidates", () => {
+  const profile = makeProfile({
+    shoppingIntent:  { value: "gift",   confidence: "HIGH" },
+    recipientGender: { value: "female", confidence: "HIGH" },
+  });
+  const result = planRetrieval(
+    GENERAL_INTENT, EMPTY_CONTEXT, profile,
+    undefined, undefined, null, undefined, "gift for my wife",
+  );
+  const males = result.fragrances.filter(f => f.gender === "male");
+  assert.ok(result.fragrances.length >= 3,
+    `T-C2-10 — expected ≥3 candidates for female gift, got ${result.fragrances.length}`);
+  assert.equal(males.length, 0,
+    `T-C2-10 — male candidates in female-gift pool: ${males.map(f => f.slug).join(", ")}`);
+});
+
+test("T-C2-11 — female + oriental family: ≥3 female+unisex candidates", () => {
+  const profile = makeProfile({ preferredGender: { value: "female", confidence: "HIGH" } });
+  const intent: ResolvedIntent = { intent: "general_discovery", signals: { family: "oriental" }, entitySlug: undefined, compareSlug: [] };
+  const result = planRetrieval(intent, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "deep oriental scent for me");
+  const males = result.fragrances.filter(f => f.gender === "male");
+  assert.ok(result.fragrances.length >= 3,
+    `T-C2-11 — expected ≥3 female oriental candidates, got ${result.fragrances.length}: ${result.fragrances.map(f => f.slug).join(", ")}`);
+  assert.equal(males.length, 0,
+    `T-C2-11 — male candidates in female oriental result: ${males.map(f => f.slug).join(", ")}`);
+});
+
+// ── Group C: Catalogue variety ────────────────────────────────────────────────
+
+test("T-C2-12 — generic male: ≥3 distinct slugs", () => {
+  const profile = makeProfile({ preferredGender: { value: "male", confidence: "HIGH" } });
+  const result = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "recommend a fragrance");
+  const unique = new Set(result.fragrances.map(f => f.slug));
+  assert.ok(unique.size >= 3,
+    `T-C2-12 — expected ≥3 distinct slugs, got ${unique.size}: ${[...unique].join(", ")}`);
+});
+
+test("T-C2-13 — generic female: ≥3 distinct slugs", () => {
+  const profile = makeProfile({ preferredGender: { value: "female", confidence: "HIGH" } });
+  const result = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "recommend a fragrance");
+  const unique = new Set(result.fragrances.map(f => f.slug));
+  assert.ok(unique.size >= 3,
+    `T-C2-13 — expected ≥3 distinct slugs, got ${unique.size}: ${[...unique].join(", ")}`);
+});
+
+test("T-C2-14 — generic male: candidate pool not limited to one fragrance", () => {
+  const profile = makeProfile({ preferredGender: { value: "male", confidence: "HIGH" } });
+  const result = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "recommend a fragrance");
+  assert.ok(result.fragrances.length > 1,
+    `T-C2-14 — male generic should yield >1 candidate, got: ${result.fragrances.map(f => f.slug).join(", ")}`);
+});
+
+test("T-C2-15 — generic female: candidate pool not limited to one fragrance", () => {
+  const profile = makeProfile({ preferredGender: { value: "female", confidence: "HIGH" } });
+  const result = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "recommend a fragrance");
+  assert.ok(result.fragrances.length > 1,
+    `T-C2-15 — female generic should yield >1 candidate, got: ${result.fragrances.map(f => f.slug).join(", ")}`);
+});
+
+// ── Group D: Quality ordering ─────────────────────────────────────────────────
+
+test("T-C2-16 — generic male: if multiple bestsellers exist in pool, no non-bestseller precedes them", () => {
+  const profile = makeProfile({ preferredGender: { value: "male", confidence: "HIGH" } });
+  const result = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "recommend a fragrance");
+  const frags = result.fragrances;
+  const firstNonBsIdx = frags.findIndex(f => !f.bestSeller);
+  const lastBsAfterNonBs = firstNonBsIdx === -1 ? -1
+    : frags.slice(firstNonBsIdx).findIndex(f => f.bestSeller);
+  assert.equal(lastBsAfterNonBs, -1,
+    `T-C2-16 — a bestseller appears after a non-bestseller in the male generic pool (sort order violated)`);
+});
+
+test("T-C2-17 — generic female: no non-bestseller before bestsellers", () => {
+  const profile = makeProfile({ preferredGender: { value: "female", confidence: "HIGH" } });
+  const result = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "recommend a fragrance");
+  const frags = result.fragrances;
+  const firstNonBsIdx = frags.findIndex(f => !f.bestSeller);
+  const lastBsAfterNonBs = firstNonBsIdx === -1 ? -1
+    : frags.slice(firstNonBsIdx).findIndex(f => f.bestSeller);
+  assert.equal(lastBsAfterNonBs, -1,
+    `T-C2-17 — a bestseller appears after a non-bestseller in the female generic pool`);
+});
+
+test("T-C2-18 — generic no-gender: zero duplicate slugs in result", () => {
+  const result = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, undefined, undefined, undefined, null, undefined, "recommend something");
+  const slugs = result.fragrances.map(f => f.slug);
+  const unique = new Set(slugs);
+  assert.equal(slugs.length, unique.size,
+    `T-C2-18 — duplicate slugs in no-gender generic result: ${slugs.filter((s, i) => slugs.indexOf(s) !== i).join(", ")}`);
+});
+
+// ── Group E: Session diversity with constraint ────────────────────────────────
+
+test("T-C2-19 — male turn 2 with turn 1 excluded: still ≥3 candidates", () => {
+  const profile = makeProfile({ preferredGender: { value: "male", confidence: "HIGH" } });
+  const t1 = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "recommend a fragrance");
+  const excludeT1 = new Set(t1.fragrances.map(f => f.slug));
+  const t2 = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile, undefined, undefined, null, excludeT1, "give me something different");
+  assert.ok(t2.fragrances.length >= 3,
+    `T-C2-19 — turn 2 male: expected ≥3 candidates after turn 1 excluded, got ${t2.fragrances.length}: ${t2.fragrances.map(f => f.slug).join(", ")}`);
+});
+
+test("T-C2-20 — female turn 2 with turn 1 excluded: still ≥3 candidates", () => {
+  const profile = makeProfile({ preferredGender: { value: "female", confidence: "HIGH" } });
+  const t1 = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "recommend a fragrance");
+  const excludeT1 = new Set(t1.fragrances.map(f => f.slug));
+  const t2 = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile, undefined, undefined, null, excludeT1, "give me something different");
+  assert.ok(t2.fragrances.length >= 3,
+    `T-C2-20 — turn 2 female: expected ≥3 candidates after turn 1 excluded, got ${t2.fragrances.length}: ${t2.fragrances.map(f => f.slug).join(", ")}`);
+});
+
+test("T-C2-21 — turn 2 male with exclusions: gender constraint still maintained", () => {
+  const profile = makeProfile({ preferredGender: { value: "male", confidence: "HIGH" } });
+  const t1 = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "recommend");
+  const excludeT1 = new Set(t1.fragrances.map(f => f.slug));
+  const t2 = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile, undefined, undefined, null, excludeT1, "different options");
+  const females = t2.fragrances.filter(f => f.gender === "female");
+  assert.equal(females.length, 0,
+    `T-C2-21 — female candidates in turn 2 male result: ${females.map(f => f.slug).join(", ")}`);
+});
+
+test("T-C2-22 — turn 2 female with exclusions: gender constraint still maintained", () => {
+  const profile = makeProfile({ preferredGender: { value: "female", confidence: "HIGH" } });
+  const t1 = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "recommend");
+  const excludeT1 = new Set(t1.fragrances.map(f => f.slug));
+  const t2 = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile, undefined, undefined, null, excludeT1, "different options");
+  const males = t2.fragrances.filter(f => f.gender === "male");
+  assert.equal(males.length, 0,
+    `T-C2-22 — male candidates in turn 2 female result: ${males.map(f => f.slug).join(", ")}`);
+});
+
+test("T-C2-23 — 3-turn male session: turn 3 still produces candidates", () => {
+  const profile = makeProfile({ preferredGender: { value: "male", confidence: "HIGH" } });
+  const cumulative = new Set<string>();
+  const t1 = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "recommend");
+  t1.fragrances.forEach(f => cumulative.add(f.slug));
+  const t2 = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile, undefined, undefined, null, new Set(cumulative), "different");
+  t2.fragrances.forEach(f => cumulative.add(f.slug));
+  const t3 = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile, undefined, undefined, null, new Set(cumulative), "more options");
+  assert.ok(t3.fragrances.length > 0,
+    `T-C2-23 — turn 3 male returned 0 candidates after ${cumulative.size} excluded`);
+  const t3Females = t3.fragrances.filter(f => f.gender === "female");
+  assert.equal(t3Females.length, 0,
+    `T-C2-23 — female candidates leaked in turn 3 male: ${t3Females.map(f => f.slug).join(", ")}`);
+});
+
+// ── Group F: Minimum guarantee safety net ─────────────────────────────────────
+
+test("T-C2-24 — male + occasion signal: ≥3 candidates including minimum guarantee", () => {
+  const profile = makeProfile({ preferredGender: { value: "male", confidence: "HIGH" } });
+  const intent: ResolvedIntent = { intent: "occasion_search", signals: { occasion: "evening event" }, entitySlug: undefined, compareSlug: [] };
+  const result = planRetrieval(intent, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "something for an evening event");
+  const females = result.fragrances.filter(f => f.gender === "female");
+  assert.ok(result.fragrances.length >= 3,
+    `T-C2-24 — expected ≥3 candidates for male evening intent, got ${result.fragrances.length}`);
+  assert.equal(females.length, 0,
+    `T-C2-24 — female candidates in male occasion result: ${females.map(f => f.slug).join(", ")}`);
+});
+
+test("T-C2-25 — female + occasion signal: ≥3 candidates including minimum guarantee", () => {
+  const profile = makeProfile({ preferredGender: { value: "female", confidence: "HIGH" } });
+  const intent: ResolvedIntent = { intent: "occasion_search", signals: { occasion: "summer outdoor" }, entitySlug: undefined, compareSlug: [] };
+  const result = planRetrieval(intent, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "something for a summer event");
+  const males = result.fragrances.filter(f => f.gender === "male");
+  assert.ok(result.fragrances.length >= 3,
+    `T-C2-25 — expected ≥3 candidates for female occasion intent, got ${result.fragrances.length}`);
+  assert.equal(males.length, 0,
+    `T-C2-25 — male candidates in female occasion result: ${males.map(f => f.slug).join(", ")}`);
+});
+
+test("T-C2-26 — no gender constraint: retrieval returns candidates without restriction", () => {
+  const result = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, undefined, undefined, undefined, null, undefined, "recommend something");
+  assert.ok(result.fragrances.length >= 3,
+    `T-C2-26 — no-gender generic should yield ≥3, got ${result.fragrances.length}`);
+  const allGenders = new Set(result.fragrances.map(f => f.gender));
+  // With no constraint the pool is unconstrained; it may include any mix
+  assert.ok(allGenders.size >= 1, "T-C2-26 — expected at least one gender in result");
+});
+
+// ── Group G: Catalogue reachability ───────────────────────────────────────────
+
+test("T-C2-27 — diverse male queries: ≥10 unique male+unisex slugs reached", () => {
+  const profile = makeProfile({ preferredGender: { value: "male", confidence: "HIGH" } });
+  const messages = [
+    { msg: "recommend something", intent: GENERAL_INTENT },
+    { msg: "something fresh and citrus", intent: { intent: "general_discovery", signals: { vibe: "fresh" }, entitySlug: undefined, compareSlug: [] } as ResolvedIntent },
+    { msg: "deep woody oud scent",  intent: { intent: "general_discovery", signals: { family: "woody" }, entitySlug: undefined, compareSlug: [] } as ResolvedIntent },
+    { msg: "romantic evening fragrance", intent: { intent: "occasion_search", signals: { occasion: "evening" }, entitySlug: undefined, compareSlug: [] } as ResolvedIntent },
+    { msg: "aromatic spicy scent",  intent: { intent: "general_discovery", signals: { family: "aromatic" }, entitySlug: undefined, compareSlug: [] } as ResolvedIntent },
+  ];
+  const allSlugs = new Set<string>();
+  for (const { msg, intent } of messages) {
+    const result = planRetrieval(intent, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, msg);
+    result.fragrances.forEach(f => allSlugs.add(f.slug));
+  }
+  assert.ok(allSlugs.size >= 10,
+    `T-C2-27 — expected ≥10 unique male+unisex slugs across diverse queries, got ${allSlugs.size}`);
+});
+
+test("T-C2-28 — diverse female queries: ≥10 unique female+unisex slugs reached", () => {
+  const profile = makeProfile({ preferredGender: { value: "female", confidence: "HIGH" } });
+  const messages = [
+    { msg: "recommend something", intent: GENERAL_INTENT },
+    { msg: "light floral scent",  intent: { intent: "general_discovery", signals: { family: "floral" }, entitySlug: undefined, compareSlug: [] } as ResolvedIntent },
+    { msg: "sweet gourmand",      intent: { intent: "general_discovery", signals: { vibe: "sweet" },   entitySlug: undefined, compareSlug: [] } as ResolvedIntent },
+    { msg: "romantic date night", intent: { intent: "occasion_search",  signals: { occasion: "date night" }, entitySlug: undefined, compareSlug: [] } as ResolvedIntent },
+    { msg: "fresh aquatic",       intent: { intent: "general_discovery", signals: { vibe: "aquatic" }, entitySlug: undefined, compareSlug: [] } as ResolvedIntent },
+  ];
+  const allSlugs = new Set<string>();
+  for (const { msg, intent } of messages) {
+    const result = planRetrieval(intent, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, msg);
+    result.fragrances.forEach(f => allSlugs.add(f.slug));
+  }
+  assert.ok(allSlugs.size >= 10,
+    `T-C2-28 — expected ≥10 unique female+unisex slugs across diverse queries, got ${allSlugs.size}`);
+});
+
+test("T-C2-29 — 5-turn male session with exclusions: all turns yield ≥1 unseen candidate", () => {
+  const profile = makeProfile({ preferredGender: { value: "male", confidence: "HIGH" } });
+  const cumulative = new Set<string>();
+  let allTurnsHadUnseen = true;
+  for (let turn = 1; turn <= 5; turn++) {
+    const result = planRetrieval(
+      GENERAL_INTENT, EMPTY_CONTEXT, profile,
+      undefined, undefined, null,
+      cumulative.size > 0 ? new Set(cumulative) : undefined,
+      "recommend",
+    );
+    const unseen = result.fragrances.filter(f => !cumulative.has(f.slug));
+    if (unseen.length === 0 && result.fragrances.length > 0) allTurnsHadUnseen = false;
+    result.fragrances.forEach(f => cumulative.add(f.slug));
+    if (result.fragrances.length === 0) break; // catalogue exhausted — acceptable
+  }
+  assert.ok(allTurnsHadUnseen,
+    "T-C2-29 — at least one turn returned only previously-seen candidates before catalogue was exhausted");
+});
+
+test("T-C2-30 — similar_to fallback (no entity): ≥3 male+unisex candidates with male constraint", () => {
+  const profile = makeProfile({ preferredGender: { value: "male", confidence: "HIGH" } });
+  const similarIntent: ResolvedIntent = {
+    intent: "similar_to",
+    signals: {},
+    entitySlug: undefined, // no entity → falls through to buildBroadPool
+    compareSlug: [],
+  };
+  const result = planRetrieval(similarIntent, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "something similar");
+  const females = result.fragrances.filter(f => f.gender === "female");
+  assert.ok(result.fragrances.length >= 3,
+    `T-C2-30 — expected ≥3 male+unisex candidates for similar_to fallback, got ${result.fragrances.length}: ${result.fragrances.map(f => f.slug).join(", ")}`);
+  assert.equal(females.length, 0,
+    `T-C2-30 — female candidates in male similar_to fallback: ${females.map(f => f.slug).join(", ")}`);
+});
+
 // ── Summary ───────────────────────────────────────────────────────────────────
 
 const total = passed + failed;
