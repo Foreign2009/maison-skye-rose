@@ -13,7 +13,12 @@ import {
   planRetrieval,
   getEffectiveGenderConstraint,
   applyGenderConstraint,
+  scoreFit,
+  applyFamilyDiversity,
+  applySameBrandPenalty,
+  assignRecommendationRoles,
 } from "../../../app/lib/concierge/retrievalPlanner";
+import type { FitSignals } from "../../../app/lib/concierge/retrievalPlanner";
 import { buildContext, renderContext } from "../../../app/lib/concierge/contextBuilder";
 import { mkcCatalogue }      from "../../../app/lib/mkc/catalogue";
 import { nativeFragrances }  from "../../../app/lib/mkc/native";
@@ -1119,6 +1124,146 @@ test("T-C2-30 — similar_to fallback (no entity): ≥3 male+unisex candidates w
     `T-C2-30 — expected ≥3 male+unisex candidates for similar_to fallback, got ${result.fragrances.length}: ${result.fragrances.map(f => f.slug).join(", ")}`);
   assert.equal(females.length, 0,
     `T-C2-30 — female candidates in male similar_to fallback: ${females.map(f => f.slug).join(", ")}`);
+});
+
+// ── Section 12: R1 Fit Ranking + Diversity Gates (EP-AI-C2-R1) ───────────────
+
+test("T-R1-01 — scoreFit: returns 0 with no signals and no profile", () => {
+  const k = mkcCatalogue[0];
+  const fit = scoreFit(k, {}, undefined);
+  assert.equal(fit, 0.0, `T-R1-01 — expected 0.0, got ${fit} for slug ${k.slug}`);
+});
+
+test("T-R1-02 — scoreFit: family-matched fragrance scores higher than unmatched", () => {
+  const signals: FitSignals = { family: "fresh" };
+  const freshCandidate = mkcCatalogue.find(
+    k => k.family.some(f => f.toLowerCase().includes("fresh"))
+  );
+  const nonFreshCandidate = mkcCatalogue.find(
+    k => !k.family.some(f => f.toLowerCase().includes("fresh")) && k.family.length > 0
+  );
+  assert.ok(freshCandidate, "T-R1-02 — fresh-family fixture not found in catalogue");
+  assert.ok(nonFreshCandidate, "T-R1-02 — non-fresh fixture not found in catalogue");
+  const freshFit   = scoreFit(freshCandidate!, signals, undefined);
+  const nonFreshFit = scoreFit(nonFreshCandidate!, signals, undefined);
+  assert.ok(
+    freshFit > nonFreshFit,
+    `T-R1-02 — fresh-family fit (${freshFit}) must exceed non-fresh fit (${nonFreshFit}). Fresh: ${freshCandidate!.slug}, Non-fresh: ${nonFreshCandidate!.slug}`
+  );
+});
+
+test("T-R1-03 — fit ranking: fresh-signal planRetrieval promotes fresh-family candidate to top position", () => {
+  const profile = makeProfile({ preferredGender: { value: "male", confidence: "HIGH" } });
+  const freshIntent: ResolvedIntent = {
+    intent: "general_discovery",
+    signals: { family: "fresh" },
+    entitySlug: undefined,
+    compareSlug: [],
+  };
+  const result = planRetrieval(freshIntent, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "something fresh");
+  assert.ok(result.fragrances.length >= 1, "T-R1-03 — fresh signal with male profile must return ≥1 candidate");
+  const top = result.fragrances[0];
+  const topFit = scoreFit(top, { family: "fresh" }, profile);
+  assert.ok(
+    topFit > 0,
+    `T-R1-03 — top candidate "${top.slug}" should have fit > 0 for fresh family signal, got ${topFit}. Families: ${top.family.join(", ")}`
+  );
+});
+
+test("T-R1-04 — family diversity: top-4 unconstrained results span ≥2 distinct primary families", () => {
+  const result = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, undefined, undefined, undefined, null, undefined, "recommend something");
+  const top4 = result.fragrances.slice(0, 4);
+  const primaryFamilies = new Set(top4.map(f => (f.family[0] ?? "other").toLowerCase()));
+  assert.ok(
+    primaryFamilies.size >= 2,
+    `T-R1-04 — top-4 should have ≥2 distinct primary families, got ${primaryFamilies.size}: ${[...primaryFamilies].join(", ")}`
+  );
+});
+
+test("T-R1-05 — applyFamilyDiversity: limits same primary family to maxPerFamily leading positions", () => {
+  const floral = mkcCatalogue.filter(k => (k.family[0] ?? "").toLowerCase() === "floral").slice(0, 4);
+  const woody  = mkcCatalogue.filter(k => (k.family[0] ?? "").toLowerCase() === "woody").slice(0, 2);
+  assert.ok(floral.length >= 3, "T-R1-05 — need ≥3 floral records in catalogue");
+  const input = [...floral, ...woody]; // 4 floral + 2 woody
+  const out = applyFamilyDiversity(input, 2);
+  assert.equal(out.length, input.length, "T-R1-05 — applyFamilyDiversity must not drop candidates");
+  const floralInTop4 = out.slice(0, 4).filter(k => (k.family[0] ?? "").toLowerCase() === "floral").length;
+  assert.ok(
+    floralInTop4 <= 2,
+    `T-R1-05 — at most 2 floral in leading positions; found ${floralInTop4}`
+  );
+});
+
+test("T-R1-06 — applySameBrandPenalty: preserves all candidates, only reorders", () => {
+  const candidates = mkcCatalogue.slice(0, 8);
+  const result = applySameBrandPenalty(candidates, 2);
+  assert.equal(result.length, candidates.length, "T-R1-06 — applySameBrandPenalty must not remove candidates");
+  const inputSlugs = new Set(candidates.map(k => k.slug));
+  assert.ok(
+    result.every(k => inputSlugs.has(k.slug)),
+    "T-R1-06 — applySameBrandPenalty output must contain same candidates as input"
+  );
+});
+
+test("T-R1-07 — roles: fragranceRoles array length equals fragrances array length", () => {
+  const result = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, undefined, undefined, undefined, null, undefined, "recommend");
+  assert.equal(
+    result.fragranceRoles?.length,
+    result.fragrances.length,
+    `T-R1-07 — fragranceRoles.length (${result.fragranceRoles?.length}) must equal fragrances.length (${result.fragrances.length})`
+  );
+});
+
+test("T-R1-08 — roles: all values are non-empty strings", () => {
+  const result = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, undefined, undefined, undefined, null, undefined, "recommend");
+  assert.ok(result.fragranceRoles !== undefined, "T-R1-08 — fragranceRoles must be present");
+  const invalid = result.fragranceRoles!.filter(r => typeof r !== "string" || r.length === 0);
+  assert.equal(invalid.length, 0, `T-R1-08 — invalid roles found: ${JSON.stringify(invalid)}`);
+});
+
+test("T-R1-09 — roles: 'Best Seller Pick' or 'Top Recommendation' appears at position 0 when no signals", () => {
+  const result = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, undefined, undefined, undefined, null, undefined, "recommend");
+  const firstRole = result.fragranceRoles?.[0];
+  assert.ok(
+    firstRole === "Best Seller Pick" || firstRole === "Top Recommendation",
+    `T-R1-09 — position-0 role with no signals should be 'Best Seller Pick' or 'Top Recommendation', got '${firstRole}'`
+  );
+});
+
+test("T-R1-10 — roles: 'Perfect Match' assigned when fit ≥ 0.35 in signal-rich context", () => {
+  const profile = makeProfile({ preferredGender: { value: "male", confidence: "HIGH" } });
+  const freshIntent: ResolvedIntent = {
+    intent: "general_discovery",
+    signals: { family: "fresh" },
+    entitySlug: undefined,
+    compareSlug: [],
+  };
+  const result = planRetrieval(freshIntent, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "I love fresh scents");
+  const roles = result.fragranceRoles ?? [];
+  const hasPerfectMatch = roles.some(r => r === "Perfect Match" || r === "You May Also Love");
+  assert.ok(
+    hasPerfectMatch,
+    `T-R1-10 — expected at least one fit-aware role ('Perfect Match' or 'You May Also Love') in result; got: ${JSON.stringify(roles)}`
+  );
+});
+
+test("T-R1-11 — hidden-gem path: less-obvious request returns ≥1 non-bestseller candidate", () => {
+  const profile = makeProfile({ preferredGender: { value: "male", confidence: "HIGH" } });
+  const result = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "something less obvious");
+  assert.ok(result.fragrances.length >= 1, "T-R1-11 — less-obvious request must yield ≥1 candidate");
+  const hasNonBS = result.fragrances.some(f => !f.bestSeller);
+  assert.ok(hasNonBS, "T-R1-11 — less-obvious request should include at least 1 non-bestseller");
+});
+
+test("T-R1-12 — recipient gender hard constraint still enforced after R1 changes (regression)", () => {
+  const profile = makeProfile({
+    shoppingIntent:  { value: "gift", confidence: "HIGH" },
+    recipientGender: { value: "female", confidence: "HIGH" },
+  });
+  const result = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "gift for her");
+  const males = result.fragrances.filter(f => f.gender === "male");
+  assert.equal(males.length, 0, `T-R1-12 — male candidates leaked for female-gift intent: ${males.map(f => f.slug).join(", ")}`);
+  assert.ok(result.fragrances.length >= 3, `T-R1-12 — expected ≥3 female/unisex candidates for gift-female, got ${result.fragrances.length}`);
 });
 
 // ── Summary ───────────────────────────────────────────────────────────────────

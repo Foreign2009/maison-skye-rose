@@ -24,9 +24,10 @@ import { planCollection }                  from "./collectionPlanner";
 // ── Types ─────────────────────────────────────────────────────────────────────
 
 export interface RetrievalContext {
-  fragrances:      FragranceKnowledge[];
-  articles:        AcademyArticle[];
-  collectionName?: string;
+  fragrances:       FragranceKnowledge[];
+  articles:         AcademyArticle[];
+  collectionName?:  string;
+  fragranceRoles?:  string[];  // deterministic role labels (EP-AI-C2-R1)
 }
 
 export interface PromptSection {
@@ -145,7 +146,11 @@ function buildRelationshipBlock(k: FragranceKnowledge): string | null {
   return `   Relationships:\n${parts.join("\n")}`;
 }
 
-function buildFragranceSection(fragrances: FragranceKnowledge[], reuseMode: boolean): PromptSection {
+function buildFragranceSection(
+  fragrances: FragranceKnowledge[],
+  reuseMode: boolean,
+  fragranceRoles?: string[],
+): PromptSection {
   if (fragrances.length === 0) return { label: "", content: "" };
 
   const label = reuseMode ? "CURRENT FRAGRANCES IN DISCUSSION" : "FRAGRANCES IN CONTEXT";
@@ -154,7 +159,11 @@ function buildFragranceSection(fragrances: FragranceKnowledge[], reuseMode: bool
   // Description → Mood → Wardrobe Role → Vibe → Occasions → Notes → Intelligence
   const content = fragrances
     .map((k, i) => {
-      const lines: string[] = [`${i + 1}. ${k.name} [slug: ${k.slug}]`];
+      const role = fragranceRoles?.[i];
+      const header = role
+        ? `${i + 1}. ${k.name} [slug: ${k.slug}] — [${role}]`
+        : `${i + 1}. ${k.name} [slug: ${k.slug}]`;
+      const lines: string[] = [header];
       const quality = getKnowledgeQuality(k.slug);
 
       // Editorial content — authored for native records only
@@ -636,7 +645,7 @@ export function buildContext(
     buildConsultationPlanSection(state, refinement, explorationTarget),        // EP18-P1/P2
     buildGoalSection(plan, state, effectiveIntent),
     buildPreviousRecommendationsSection(state, retrieval.fragrances),
-    buildFragranceSection(retrieval.fragrances, plan.reuseRecommendations),
+    buildFragranceSection(retrieval.fragrances, plan.reuseRecommendations, retrieval.fragranceRoles),
     retrieval.collectionName
       ? { label: "FEATURED COLLECTION", content: retrieval.collectionName }
       : { label: "", content: "" },

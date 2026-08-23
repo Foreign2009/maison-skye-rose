@@ -48,24 +48,174 @@ function sortByQuality(a: FragranceKnowledge, b: FragranceKnowledge): number {
   return b.popularity - a.popularity;
 }
 
+// ── Fit scoring (EP-AI-C2-R1) ─────────────────────────────────────────────────
+// Scores a candidate's relevance to current session signals and accumulated
+// profile preferences. Merchandising signals (bestSeller, popularity) are NOT
+// included — they serve as tiebreakers only via sortByQuality.
+// FIT FIRST. DIVERSITY SECOND. MERCHANDISING THIRD.
+
+type FitSignals = { family?: string; vibe?: string; occasion?: string };
+
+function scoreFit(
+  k: FragranceKnowledge,
+  signals: FitSignals,
+  profile: ConversationProfile | undefined,
+): number {
+  let score = 0;
+
+  // Family match: accumulated profile preferences + current-request family signal → +0.40
+  const wantedFamilies = [
+    ...(profile?.preferredFamilies?.value ?? []),
+    ...(signals.family ? [signals.family] : []),
+  ].map((f) => f.toLowerCase());
+  if (wantedFamilies.length > 0) {
+    const kFamilies = k.family.map((f) => f.toLowerCase());
+    if (wantedFamilies.some((wf) => kFamilies.some((kf) => kf.includes(wf) || wf.includes(kf)))) {
+      score += 0.40;
+    }
+  }
+
+  // Vibe match: current-request vibe signal → +0.30
+  if (signals.vibe) {
+    const vibe = signals.vibe.toLowerCase();
+    if (
+      k.vibe.some((v) => v.toLowerCase().includes(vibe) || vibe.includes(v.toLowerCase())) ||
+      k.mood.toLowerCase().includes(vibe) ||
+      k.profile.toLowerCase().includes(vibe)
+    ) {
+      score += 0.30;
+    }
+  }
+
+  // Occasion match: accumulated profile preferences + current-request occasion → +0.20
+  const wantedOccasions = [
+    ...(profile?.preferredOccasions?.value ?? []),
+    ...(signals.occasion ? [signals.occasion] : []),
+  ].map((o) => o.toLowerCase());
+  if (wantedOccasions.length > 0) {
+    const kOccasions = k.occasions.map((o) => o.toLowerCase());
+    if (wantedOccasions.some((wo) => kOccasions.some((ko) => ko.includes(wo) || wo.includes(ko)))) {
+      score += 0.20;
+    }
+  }
+
+  // Season match: accumulated profile preferences → +0.10
+  const wantedSeasons = (profile?.preferredSeasons?.value ?? []).map((s) => s.toLowerCase());
+  if (wantedSeasons.length > 0) {
+    const kSeasons = k.seasons.map((s) => s.toLowerCase());
+    if (wantedSeasons.some((ws) => kSeasons.some((ks) => ks.includes(ws) || ws.includes(ks)))) {
+      score += 0.10;
+    }
+  }
+
+  return Math.min(score, 1.0);
+}
+
+function makeFitComparator(
+  signals: FitSignals,
+  profile: ConversationProfile | undefined,
+): (a: FragranceKnowledge, b: FragranceKnowledge) => number {
+  return (a, b) => {
+    const fitA = scoreFit(a, signals, profile);
+    const fitB = scoreFit(b, signals, profile);
+    // Meaningful fit difference → rank by fit first
+    if (Math.abs(fitA - fitB) > 0.05) return fitB - fitA;
+    // Equal fit → merchandising quality tiebreaker
+    return sortByQuality(a, b);
+  };
+}
+
+// ── Diversity controls (EP-AI-C2-R1) ─────────────────────────────────────────
+// Applied after gender filter. These functions reorder candidates — they never
+// exclude eligible records. Fit order and gender constraint are always preserved.
+
+function applyFamilyDiversity(
+  candidates: FragranceKnowledge[],
+  maxPerPrimaryFamily: number = 2,
+): FragranceKnowledge[] {
+  const familyCounts: Record<string, number> = {};
+  const selected: FragranceKnowledge[] = [];
+  const deferred: FragranceKnowledge[] = [];
+  for (const k of candidates) {
+    const primary = (k.family[0] ?? "other").toLowerCase();
+    const count = familyCounts[primary] ?? 0;
+    if (count < maxPerPrimaryFamily) {
+      selected.push(k);
+      familyCounts[primary] = count + 1;
+    } else {
+      deferred.push(k);
+    }
+  }
+  return [...selected, ...deferred];
+}
+
+function applySameBrandPenalty(
+  candidates: FragranceKnowledge[],
+  maxPerBrand: number = 2,
+): FragranceKnowledge[] {
+  const brandCounts: Record<string, number> = {};
+  const selected: FragranceKnowledge[] = [];
+  const deferred: FragranceKnowledge[] = [];
+  for (const k of candidates) {
+    const brand = k.brand.toLowerCase();
+    const count = brandCounts[brand] ?? 0;
+    if (count < maxPerBrand) {
+      selected.push(k);
+      brandCounts[brand] = count + 1;
+    } else {
+      deferred.push(k);
+    }
+  }
+  return [...selected, ...deferred];
+}
+
+// ── Recommendation roles (EP-AI-C2-R1) ───────────────────────────────────────
+// Deterministic role labels based on fit score and position. Embedded in
+// context rendering so the LLM uses them to frame its explanation — not to
+// select candidates. The candidate selection order always determines the role.
+
+function assignRecommendationRoles(
+  candidates: FragranceKnowledge[],
+  signals: FitSignals,
+  profile: ConversationProfile | undefined,
+): string[] {
+  const hasSignals = !!(
+    signals.family || signals.vibe || signals.occasion ||
+    (profile?.preferredFamilies?.value.length ?? 0) > 0 ||
+    (profile?.preferredOccasions?.value.length ?? 0) > 0
+  );
+  return candidates.map((k, i) => {
+    const fit = scoreFit(k, signals, profile);
+    if (!hasSignals) {
+      if (i === 0) return k.bestSeller ? "Best Seller Pick" : "Top Recommendation";
+      if (i === 1) return "You May Also Love";
+      return "Discover Something New";
+    }
+    if (fit >= 0.35) return i === 0 ? "Perfect Match" : "You May Also Love";
+    if (i === 0) return "Top Recommendation";
+    if (k.bestSeller) return "Popular Choice";
+    return "Discover Something New";
+  });
+}
+
 // ── Broad pool builder (EP-AI-C2) ────────────────────────────────────────────
-// Used for generic discovery and gift intents when no signal-specific rawQuery
-// is available. Returns the top candidates from the full gender-eligible
-// catalogue sorted by quality, providing enough breadth to survive the
-// post-switch gender filter and return ≥3 candidates.
-// Pre-filtering by gender constraint here is deliberate — the post-switch
-// applyGenderConstraint call is idempotent on this result.
+// For generic discovery and gift intents when no signal-specific rawQuery is
+// available. Sorts by fit score (using current signals + accumulated profile)
+// first, merchandising quality second. Pre-filters by gender constraint so the
+// post-switch applyGenderConstraint call is idempotent on this result.
 
 function buildBroadPool(
   profile: ConversationProfile | undefined,
+  signals: FitSignals,
   maxCount: number = 8,
 ): FragranceKnowledge[] {
   const genderConstraint = getEffectiveGenderConstraint(profile);
+  const comparator = makeFitComparator(signals, profile);
   return mkcCatalogue
     .filter(
       (k) => !genderConstraint || k.gender === genderConstraint || k.gender === "unisex"
     )
-    .sort(sortByQuality)
+    .sort(comparator)
     .slice(0, maxCount);
 }
 
@@ -124,6 +274,11 @@ const HIDDEN_GEM_SIGNALS = [
   "beyond the obvious", "beyond the bestsellers",
 ];
 
+// ── Exported scoring helpers (EP-AI-C2-R1) ────────────────────────────────────
+// Exported for deterministic evaluation harness — do not inline.
+export { scoreFit, applyFamilyDiversity, applySameBrandPenalty, assignRecommendationRoles };
+export type { FitSignals };
+
 // ── Gender constraint helpers (EP-AI-C1) ─────────────────────────────────────
 // Exported for deterministic evaluation harness — do not inline.
 
@@ -176,9 +331,17 @@ export function planRetrieval(
 ): RetrievalContext {
   const { intent, signals, entitySlug, compareSlug } = resolved;
 
-  let fragrances:     FragranceKnowledge[] = [];
-  let articles:       AcademyArticle[]     = [];
-  let collectionName: string | undefined;
+  // Fit signals — passed to buildBroadPool and makeFitComparator throughout
+  const fitSignals: FitSignals = {
+    family:   signals.family,
+    vibe:     signals.vibe,
+    occasion: signals.occasion,
+  };
+
+  let fragrances:          FragranceKnowledge[] = [];
+  let articles:            AcademyArticle[]     = [];
+  let collectionName:      string | undefined;
+  let isHiddenGemRequest = false;
 
   const sourceKnowledge = entitySlug ? catalogueMaps.bySlug.get(entitySlug) : undefined;
 
@@ -190,7 +353,7 @@ export function planRetrieval(
           .map((r) => r.fragrance);
         articles = recommendAcademyArticles(sourceKnowledge, 2);
       } else {
-        fragrances = buildBroadPool(profile, 8);
+        fragrances = buildBroadPool(profile, fitSignals, 8);
       }
       break;
     }
@@ -268,7 +431,7 @@ export function planRetrieval(
       // buildBroadPool pre-filters by recipient gender (getEffectiveGenderConstraint
       // returns recipientGender when shoppingIntent === "gift"), so this pool is
       // already gender-appropriate before the post-switch hard filter.
-      fragrances = buildBroadPool(profile, 8);
+      fragrances = buildBroadPool(profile, fitSignals, 8);
       articles = articlesBySlug(["what-makes-a-signature-scent"]);
       break;
     }
@@ -368,6 +531,7 @@ export function planRetrieval(
       // Explicit long-tail / hidden-gem discovery request
       if (rawMessage && HIDDEN_GEM_SIGNALS.some((p) => rawMessage.toLowerCase().includes(p))) {
         fragrances = getCollection("hidden-gems").slice(0, 4);
+        isHiddenGemRequest = true;
         break;
       }
 
@@ -394,9 +558,9 @@ export function planRetrieval(
             break;
           }
         }
-        fragrances = buildBroadPool(profile, 8);
+        fragrances = buildBroadPool(profile, fitSignals, 8);
       } else {
-        fragrances = buildBroadPool(profile, 8);
+        fragrances = buildBroadPool(profile, fitSignals, 8);
       }
       break;
     }
@@ -415,6 +579,8 @@ export function planRetrieval(
     // relaxing the gender constraint. Signal-based paths can narrow the pool
     // aggressively (e.g. a very specific vibe query); this ensures the LLM
     // always has enough material to form a meaningful recommendation.
+    // For hidden-gem / less-obvious requests: supplements prefer non-bestsellers
+    // so the clarification candidates don't undermine the intent.
     if (fragrances.length < 3 && genderConstraint) {
       const alreadyIn = new Set(fragrances.map((f) => f.slug));
       const supplement = mkcCatalogue
@@ -423,10 +589,21 @@ export function planRetrieval(
             (k.gender === genderConstraint || k.gender === "unisex") &&
             !alreadyIn.has(k.slug)
         )
-        .sort(sortByQuality)
+        .sort(
+          isHiddenGemRequest
+            // Less-obvious supplement: non-bestsellers first, then by quality
+            ? (a, b) => (a.bestSeller ? 1 : 0) - (b.bestSeller ? 1 : 0) || sortByQuality(a, b)
+            : sortByQuality
+        )
         .slice(0, 3 - fragrances.length);
       fragrances = [...fragrances, ...supplement];
     }
+
+    // ── Diversity controls (EP-AI-C2-R1) ──────────────────────────────────────
+    // Applied after hard filter + minimum guarantee. Never excludes records —
+    // only reorders so the top slice has family and brand variety.
+    fragrances = applyFamilyDiversity(fragrances);
+    fragrances = applySameBrandPenalty(fragrances);
   }
 
   // ── Session-wide diversity (RELEVANCE > NOVELTY) ─────────────────────────────
@@ -446,13 +623,14 @@ export function planRetrieval(
       fragrances = [...unseen, ...seen];
     } else if (fragrances.length > 0) {
       // All relevant candidates seen — draw fresh records from the broader catalogue.
+      // Use fit-aware sort so session diversity respects accumulated preferences.
       const genderConstraint = getEffectiveGenderConstraint(profile);
       const broader = mkcCatalogue
         .filter((k) =>
           !excludeSlugs.has(k.slug) &&
           (!genderConstraint || k.gender === genderConstraint || k.gender === "unisex")
         )
-        .sort(sortByQuality)
+        .sort(makeFitComparator(fitSignals, profile))
         .slice(0, fragrances.length);
       if (broader.length > 0) fragrances = broader;
       // Final fallback: recycle only when constrained catalogue is itself exhausted.
@@ -466,7 +644,12 @@ export function planRetrieval(
     fragrances = [sourceKnowledge, ...fragrances].slice(0, 6);
   }
 
-  return { fragrances, articles, collectionName };
+  // ── Recommendation roles (EP-AI-C2-R1) ───────────────────────────────────────
+  // Assigned after all filtering and diversity adjustments so roles reflect
+  // the final ranked shortlist rather than any intermediate order.
+  const fragranceRoles = assignRecommendationRoles(fragrances, fitSignals, profile);
+
+  return { fragrances, articles, collectionName, fragranceRoles };
 }
 
 /**
