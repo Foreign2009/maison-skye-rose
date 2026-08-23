@@ -1,10 +1,10 @@
 // ═════════════════════════════════════════════════════════════════
-// FACTORY DRAFT — le-male-inspired
+// FACTORY DRAFT — egoiste-platinum-inspired
 // ─────────────────────────────────────────────────────────────────
-// Generated:         2026-08-19T19:03:50.849Z
+// Generated:         2026-08-22T18:51:24.349Z
 // Factory version:   0.5.0
 // Prompt versions:   EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0
-// Validation status: PASS  [0 error(s), 0 warning(s)]
+// Validation status: FAIL  [3 error(s), 0 warning(s)]
 // Projected KQ tier: (not available — requires Intelligence Producer)
 // ─────────────────────────────────────────────────────────────────
 // REVIEW CHECKLIST
@@ -20,49 +20,56 @@
 
 import type { FragranceKnowledge } from "../types";
 
-export const leMaleInspired: FragranceKnowledge = {
+export const egoistePlatinumInspired: FragranceKnowledge = {
   // ── Identity ──────────────────────────────────────────────────────────────────
-  id            : "le-male-inspired",
-  slug          : "le-male-inspired",
+  id            : "egoiste-platinum-inspired",
+  slug          : "egoiste-platinum-inspired",
   brand         : "Maison Skye & Rose",
-  name          : "Le Male Inspired",
+  name          : "Egoiste Platinum Inspired",
   collection    : "Skye",
   catalogVersion: "1.0",
   status        : "active",
 
   // ── Classification ────────────────────────────────────────────────────────────
   gender        : "male",
-  family        : ["Aromatic"],
+  family        : ["Floral", "Woody", "Musk"],
   scentCharacter: "Balanced Signature",
   projection    : "moderate",
 
   // ── Composition ─────────────────────────────────────────────────────────────
-  profile       : "Oriental Fougère",
+  profile       : "Woody Floral Musk",
   season        : "Year-Round",
   notes: {
-    top:   ["Mint", "Lavender", "Bergamot"],
-    heart: ["Cinnamon", "Cumin", "Orange Blossom"],
-    base:  ["Vanilla", "Tonka Bean", "Sandalwood", "Cedarwood"],
+    top:   ["Lavender", "Rosemary", "Neroli", "Petitgrain"],
+    heart: ["Geranium", "Clary Sage", "Galbanum", "Jasmine"],
+    base:  [
+      "Oakmoss",
+      "Vetiver",
+      "Cedar",
+      "Sandalwood",
+      "Amber",
+    ],
   },
   notesEvidenceLocked: true,
-  mood          : "Warm Sweet Aromatic",
+  mood          : "Aromatic Woody Classic",
 
   // ── Discovery ───────────────────────────────────────────────────────────────
   vibe          : [
-    "Warm",
-    "Sweet",
     "Sophisticated",
     "Confident",
-    "Aromatic",
     "Elegant",
+    "Mature",
+    "Clean",
+    "Magnetic",
   ],
   occasions     : ["Daily Wear", "Office", "Weekend", "Casual"],
   seasons       : ["Spring", "Summer", "Autumn", "Winter"],
-  signatureStyle: ["Warm Spiced Elegance", "Balanced Aromatic", "Creamy Sophistication"],
+  signatureStyle: ["Aromatic Woody Classic", "Refined Herbaceous Signature", "Balanced Sophistication", "Modern Aromatic Tradition"],
   recommendedFor: [
-    "Men seeking a warm signature fragrance that balances fresh aromatic notes with creamy sweetness for everyday confidence",
-    "Those who love spiced fragrances but want sophistication over aggression—a refined alternative to heavier orientals",
-    "Anyone building a collection who needs a versatile middle ground between fresh and gourmand for any season",
+    "Men seeking a refined aromatic signature that balances fresh herbaceous clarity with sophisticated woody depth for everyday wear and professional settings.",
+    "Those who appreciate classical lavender-based fragrances with modern woody grounding and want a versatile year-round daily companion.",
+    "Fragrance enthusiasts building a collection who recognize the appeal of balanced, mature woody florals over sweet or heavily projected scents.",
+    "Anyone looking for a timeless aromatic woody that performs consistently across seasons without demanding special occasions.",
   ],
 
   // ── Merchandising ───────────────────────────────────────────────────────────
@@ -80,19 +87,20 @@ export const leMaleInspired: FragranceKnowledge = {
   newArrival    : false,
 
   // ── Education ───────────────────────────────────────────────────────────────
-  subtitle      : "Warm Spiced Cream",
-  description   : "Mint and bergamot spark against warm spice—cinnamon and cumin—before melting into creamy tonka and sandalwood. A fragrance that balances aromatic freshness with enveloping sweetness, neither aggressive nor soft.",
+  subtitle      : "Aromatic Clarity",
+  description   : "Lavender and rosemary open with crystalline clarity, grounded by neroli's bitter brightness. The heart unfolds into a sophisticated interplay of geranium and clary sage, while oakmoss and vetiver anchor the composition in dry, mineral woods that deepen into amber and sandalwood.",
   academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "what-makes-a-signature-scent", "how-to-layer-fragrances"],
   academyCategories: ["fragrance-families", "the-note-pyramid", "wear-and-application"],
   educationTags : [
-    "oriental",
-    "fougère",
-    "mint",
+    "woody-floral",
     "lavender",
-    "vanilla",
-    "tonka-bean",
-    "spicy",
-    "warm",
+    "jasmine",
+    "oakmoss",
+    "vetiver",
+    "cedar",
+    "musk",
+    "masculine",
+    "balanced",
     "signature-scent",
     "daily-wear",
   ],
@@ -101,8 +109,8 @@ export const leMaleInspired: FragranceKnowledge = {
   // ── Intelligence ────────────────────────────────────────────────────────────
   // Approximated from profile + season. Calibrated by Intelligence Producer in P2.
   sweetness     : 2,
-  freshness     : 2,
-  warmth        : 2,
+  freshness     : 3,
+  warmth        : 3,
   intensity     : 3,
   versatility   : 3,
   popularity    : 5,
@@ -110,7 +118,7 @@ export const leMaleInspired: FragranceKnowledge = {
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["spicebomb-extreme-inspired", "le-male-elixir-inspired", "stronger-with-you-inspired"],
-    wardrobePartners: ["sauvage-inspired", "bleu-de-chanel-inspired", "light-blue-pour-homme-inspired"],
+    alternatives:     ["prada-l'homme-inspired", "valentino-uomo-born-in-roma-inspired"],
+    wardrobePartners: ["sauvage-elixir-inspired"],
   },
 };

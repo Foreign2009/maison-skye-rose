@@ -85,7 +85,8 @@ export const leMaleElixirInspired: FragranceKnowledge = {
 
   // ── Relationships ─────────────────────────────────────────────────────────────
   relationships: {
-    alternatives: ["althair-inspired", "vanilla-28-inspired", "le-male-inspired"],
+    alternatives: ["althair-inspired", "vanilla-28-inspired", "le-male-inspired", "212-vip-black-inspired"],
+    wardrobePartners: ["lacoste-blanc-inspired"],
   },
 
   // ── Intelligence ─────────────────────────────────────────────────────────────

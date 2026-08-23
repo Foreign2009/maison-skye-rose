@@ -1,10 +1,10 @@
 // ═════════════════════════════════════════════════════════════════
-// FACTORY DRAFT — le-male-inspired
+// FACTORY DRAFT — aqva-amara-inspired
 // ─────────────────────────────────────────────────────────────────
-// Generated:         2026-08-19T19:03:50.849Z
+// Generated:         2026-08-22T18:52:26.051Z
 // Factory version:   0.5.0
 // Prompt versions:   EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0
-// Validation status: PASS  [0 error(s), 0 warning(s)]
+// Validation status: FAIL  [3 error(s), 0 warning(s)]
 // Projected KQ tier: (not available — requires Intelligence Producer)
 // ─────────────────────────────────────────────────────────────────
 // REVIEW CHECKLIST
@@ -20,49 +20,48 @@
 
 import type { FragranceKnowledge } from "../types";
 
-export const leMaleInspired: FragranceKnowledge = {
+export const aqvaAmaraInspired: FragranceKnowledge = {
   // ── Identity ──────────────────────────────────────────────────────────────────
-  id            : "le-male-inspired",
-  slug          : "le-male-inspired",
+  id            : "aqva-amara-inspired",
+  slug          : "aqva-amara-inspired",
   brand         : "Maison Skye & Rose",
-  name          : "Le Male Inspired",
+  name          : "Aqva Amara Inspired",
   collection    : "Skye",
   catalogVersion: "1.0",
   status        : "active",
 
   // ── Classification ────────────────────────────────────────────────────────────
   gender        : "male",
-  family        : ["Aromatic"],
-  scentCharacter: "Balanced Signature",
+  family        : ["Aquatic", "Woody"],
+  scentCharacter: "Fresh & Light",
   projection    : "moderate",
 
   // ── Composition ─────────────────────────────────────────────────────────────
-  profile       : "Oriental Fougère",
-  season        : "Year-Round",
+  profile       : "Woody Aquatic",
+  season        : "Summer",
   notes: {
-    top:   ["Mint", "Lavender", "Bergamot"],
-    heart: ["Cinnamon", "Cumin", "Orange Blossom"],
-    base:  ["Vanilla", "Tonka Bean", "Sandalwood", "Cedarwood"],
+    top:   ["Sicilian Mandarin"],
+    heart: ["Watery Notes", "Neroli"],
+    base:  ["Olibanum", "Indonesian Patchouli Leaf"],
   },
   notesEvidenceLocked: true,
-  mood          : "Warm Sweet Aromatic",
+  mood          : "Citrus Aquatic Bitter",
 
   // ── Discovery ───────────────────────────────────────────────────────────────
   vibe          : [
-    "Warm",
-    "Sweet",
+    "Fresh",
+    "Bright",
+    "Clean",
     "Sophisticated",
-    "Confident",
-    "Aromatic",
-    "Elegant",
+    "Airy",
   ],
-  occasions     : ["Daily Wear", "Office", "Weekend", "Casual"],
-  seasons       : ["Spring", "Summer", "Autumn", "Winter"],
-  signatureStyle: ["Warm Spiced Elegance", "Balanced Aromatic", "Creamy Sophistication"],
+  occasions     : ["Daily Wear", "Office", "Casual", "Travel"],
+  seasons       : ["Summer", "Spring"],
+  signatureStyle: ["Citrus Aquatic", "Summer Signature", "Fresh Clarity"],
   recommendedFor: [
-    "Men seeking a warm signature fragrance that balances fresh aromatic notes with creamy sweetness for everyday confidence",
-    "Those who love spiced fragrances but want sophistication over aggression—a refined alternative to heavier orientals",
-    "Anyone building a collection who needs a versatile middle ground between fresh and gourmand for any season",
+    "Men seeking a fresh, citrus-driven summer signature that feels clean and slightly sophisticated without heaviness.",
+    "Those who want fresh citrus clarity — ideal for office, travel, or warm-weather daily wear.",
+    "Fragrance explorers who appreciate aquatic-woody balance with a subtle bitter edge and natural neroli character.",
   ],
 
   // ── Merchandising ───────────────────────────────────────────────────────────
@@ -80,37 +79,37 @@ export const leMaleInspired: FragranceKnowledge = {
   newArrival    : false,
 
   // ── Education ───────────────────────────────────────────────────────────────
-  subtitle      : "Warm Spiced Cream",
-  description   : "Mint and bergamot spark against warm spice—cinnamon and cumin—before melting into creamy tonka and sandalwood. A fragrance that balances aromatic freshness with enveloping sweetness, neither aggressive nor soft.",
-  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "what-makes-a-signature-scent", "how-to-layer-fragrances"],
-  academyCategories: ["fragrance-families", "the-note-pyramid", "wear-and-application"],
+  subtitle      : "Citrus Aquatic Clarity",
+  description   : "Sicilian mandarin cuts through a luminous aquatic heart, bright and slightly bitter. Neroli and watery notes create an airy, almost translucent core that feels like salt spray and citrus zest. Olibanum and patchouli leaf anchor the composition with warm, resinous depth—woody without weight.",
+  academyArticleIds: ["guide-to-fragrance-families", "choosing-your-season-scent", "how-to-wear-fragrance"],
+  academyCategories: ["fragrance-families", "occasions-and-style"],
   educationTags : [
-    "oriental",
-    "fougère",
-    "mint",
-    "lavender",
-    "vanilla",
-    "tonka-bean",
-    "spicy",
-    "warm",
-    "signature-scent",
+    "aquatic",
+    "woody",
+    "mandarin",
+    "neroli",
+    "fresh",
+    "light",
+    "summer",
     "daily-wear",
+    "vacation",
+    "citrus",
   ],
-  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "what-makes-a-signature-scent", "how-to-layer-fragrances"],
+  learningPath  : ["guide-to-fragrance-families", "choosing-your-season-scent", "how-to-wear-fragrance"],
 
   // ── Intelligence ────────────────────────────────────────────────────────────
   // Approximated from profile + season. Calibrated by Intelligence Producer in P2.
-  sweetness     : 2,
-  freshness     : 2,
-  warmth        : 2,
-  intensity     : 3,
+  sweetness     : 1,
+  freshness     : 5,
+  warmth        : 3,
+  intensity     : 2,
   versatility   : 3,
   popularity    : 5,
 
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["spicebomb-extreme-inspired", "le-male-elixir-inspired", "stronger-with-you-inspired"],
-    wardrobePartners: ["sauvage-inspired", "bleu-de-chanel-inspired", "light-blue-pour-homme-inspired"],
+    alternatives:     ["aqua-di-gio-inspired", "invictus-inspired", "hawas-inspired"],
+    wardrobePartners: ["spicebomb-extreme-inspired"],
   },
 };

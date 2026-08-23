@@ -116,7 +116,7 @@ export const montblancLegendInspired: FragranceKnowledge = {
   // â”€â”€ Relationships â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["y-inspired", "y-edp-inspired", "valentino-uomo-born-in-roma-inspired"],
+    alternatives:     ["y-inspired", "y-edp-inspired", "valentino-uomo-born-in-roma-inspired", "eternity-inspired"],
     wardrobePartners: ["spicebomb-extreme-inspired", "layton-inspired"],
   },
 };

@@ -1,10 +1,10 @@
 // ═════════════════════════════════════════════════════════════════
-// FACTORY DRAFT — le-male-inspired
+// FACTORY DRAFT — scandal-pour-homme-inspired
 // ─────────────────────────────────────────────────────────────────
-// Generated:         2026-08-19T19:03:50.849Z
+// Generated:         2026-08-22T18:52:38.562Z
 // Factory version:   0.5.0
 // Prompt versions:   EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0
-// Validation status: PASS  [0 error(s), 0 warning(s)]
+// Validation status: FAIL  [3 error(s), 0 warning(s)]
 // Projected KQ tier: (not available — requires Intelligence Producer)
 // ─────────────────────────────────────────────────────────────────
 // REVIEW CHECKLIST
@@ -20,49 +20,50 @@
 
 import type { FragranceKnowledge } from "../types";
 
-export const leMaleInspired: FragranceKnowledge = {
+export const scandalPourHommeInspired: FragranceKnowledge = {
   // ── Identity ──────────────────────────────────────────────────────────────────
-  id            : "le-male-inspired",
-  slug          : "le-male-inspired",
+  id            : "scandal-pour-homme-inspired",
+  slug          : "scandal-pour-homme-inspired",
   brand         : "Maison Skye & Rose",
-  name          : "Le Male Inspired",
+  name          : "Scandal Pour Homme Inspired",
   collection    : "Skye",
   catalogVersion: "1.0",
   status        : "active",
 
   // ── Classification ────────────────────────────────────────────────────────────
   gender        : "male",
-  family        : ["Aromatic"],
+  family        : ["Woody"],
   scentCharacter: "Balanced Signature",
   projection    : "moderate",
 
   // ── Composition ─────────────────────────────────────────────────────────────
-  profile       : "Oriental Fougère",
-  season        : "Year-Round",
+  profile       : "Oriental Woody",
+  season        : "Autumn",
   notes: {
-    top:   ["Mint", "Lavender", "Bergamot"],
-    heart: ["Cinnamon", "Cumin", "Orange Blossom"],
-    base:  ["Vanilla", "Tonka Bean", "Sandalwood", "Cedarwood"],
+    top:   ["Geranium"],
+    heart: ["Tonka Bean"],
+    base:  ["Sandalwood"],
   },
   notesEvidenceLocked: true,
-  mood          : "Warm Sweet Aromatic",
+  mood          : "Warm Woody Sensual",
 
   // ── Discovery ───────────────────────────────────────────────────────────────
   vibe          : [
+    "Sensual",
     "Warm",
-    "Sweet",
     "Sophisticated",
     "Confident",
-    "Aromatic",
     "Elegant",
+    "Mysterious",
   ],
-  occasions     : ["Daily Wear", "Office", "Weekend", "Casual"],
-  seasons       : ["Spring", "Summer", "Autumn", "Winter"],
-  signatureStyle: ["Warm Spiced Elegance", "Balanced Aromatic", "Creamy Sophistication"],
+  occasions     : ["Office", "Date Night", "Evening", "Weekend"],
+  seasons       : ["Autumn", "Winter"],
+  signatureStyle: ["Warm Woody Sensual", "Intimate Signature", "Autumn Statement"],
   recommendedFor: [
-    "Men seeking a warm signature fragrance that balances fresh aromatic notes with creamy sweetness for everyday confidence",
-    "Those who love spiced fragrances but want sophistication over aggression—a refined alternative to heavier orientals",
-    "Anyone building a collection who needs a versatile middle ground between fresh and gourmand for any season",
+    "Men seeking a warm woody signature that commands attention without aggression—perfect for evening dates and intimate occasions.",
+    "Those who appreciate creamy, sensual bases and want a fragrance that deepens with warmth and restraint.",
+    "Anyone building a collection who needs a sophisticated autumn staple that bridges office professionalism and date night confidence.",
+    "Men drawn to oriental woody compositions who prefer balanced warmth over heavy sweetness or spice-forward intensity.",
   ],
 
   // ── Merchandising ───────────────────────────────────────────────────────────
@@ -80,29 +81,29 @@ export const leMaleInspired: FragranceKnowledge = {
   newArrival    : false,
 
   // ── Education ───────────────────────────────────────────────────────────────
-  subtitle      : "Warm Spiced Cream",
-  description   : "Mint and bergamot spark against warm spice—cinnamon and cumin—before melting into creamy tonka and sandalwood. A fragrance that balances aromatic freshness with enveloping sweetness, neither aggressive nor soft.",
-  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "what-makes-a-signature-scent", "how-to-layer-fragrances"],
+  subtitle      : "Warm Woody Sensual",
+  description   : "Geranium's green spice opens into a creamy tonka bean heart that settles against warm sandalwood—a composition that feels both intimate and deliberate. The fragrance moves through warmth without softness, holding its ground with woody restraint and sensual depth.",
+  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances", "what-makes-a-signature-scent"],
   academyCategories: ["fragrance-families", "the-note-pyramid", "wear-and-application"],
   educationTags : [
+    "woody",
     "oriental",
-    "fougère",
-    "mint",
-    "lavender",
-    "vanilla",
+    "sandalwood",
     "tonka-bean",
-    "spicy",
-    "warm",
-    "signature-scent",
-    "daily-wear",
+    "geranium",
+    "sensual",
+    "signature",
+    "autumn",
+    "office",
+    "date-night",
   ],
-  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "what-makes-a-signature-scent", "how-to-layer-fragrances"],
+  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances"],
 
   // ── Intelligence ────────────────────────────────────────────────────────────
   // Approximated from profile + season. Calibrated by Intelligence Producer in P2.
   sweetness     : 2,
   freshness     : 2,
-  warmth        : 2,
+  warmth        : 3,
   intensity     : 3,
   versatility   : 3,
   popularity    : 5,
@@ -110,7 +111,7 @@ export const leMaleInspired: FragranceKnowledge = {
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["spicebomb-extreme-inspired", "le-male-elixir-inspired", "stronger-with-you-inspired"],
-    wardrobePartners: ["sauvage-inspired", "bleu-de-chanel-inspired", "light-blue-pour-homme-inspired"],
+    alternatives:     ["spicebomb-extreme-inspired", "tobacco-vanille-inspired"],
+    wardrobePartners: ["aqua-di-gio-inspired", "sauvage-inspired"],
   },
 };

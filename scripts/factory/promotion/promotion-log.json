@@ -3591,6 +3591,216 @@
       "slug": "a-la-rose-inspired",
       "operator": "Founder",
       "details": "promotionId:TMqnT8UqB2nh  validation:PASS  nativePath:app/lib/mkc/native/a-la-rose-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-23T16:08:22.809Z",
+      "action": "promotion_started",
+      "slug": "light-blue-pour-homme-inspired",
+      "operator": "Founder",
+      "details": "symbol:lightBluePourHommeInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-23T16:08:22.816Z",
+      "action": "relationships_synced",
+      "slug": "light-blue-pour-homme-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:5  files:5"
+    },
+    {
+      "timestamp": "2026-08-23T16:08:56.545Z",
+      "action": "promotion_completed",
+      "slug": "light-blue-pour-homme-inspired",
+      "operator": "Founder",
+      "details": "promotionId:cZ7Qqn8oQsXB  validation:PASS  nativePath:app/lib/mkc/native/light-blue-pour-homme-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-23T16:09:04.892Z",
+      "action": "promotion_started",
+      "slug": "bois-pacifique-inspired",
+      "operator": "Founder",
+      "details": "symbol:boisPacifiqueInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-23T16:09:04.899Z",
+      "action": "relationships_synced",
+      "slug": "bois-pacifique-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:4  files:4"
+    },
+    {
+      "timestamp": "2026-08-23T16:09:36.956Z",
+      "action": "promotion_completed",
+      "slug": "bois-pacifique-inspired",
+      "operator": "Founder",
+      "details": "promotionId:dHc_BlTHrjaR  validation:PASS  nativePath:app/lib/mkc/native/bois-pacifique-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-23T16:09:44.829Z",
+      "action": "promotion_started",
+      "slug": "egoiste-platinum-inspired",
+      "operator": "Founder",
+      "details": "symbol:egoistePlatinumInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-23T16:09:44.836Z",
+      "action": "relationships_synced",
+      "slug": "egoiste-platinum-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:3  files:3"
+    },
+    {
+      "timestamp": "2026-08-23T16:10:17.609Z",
+      "action": "promotion_completed",
+      "slug": "egoiste-platinum-inspired",
+      "operator": "Founder",
+      "details": "promotionId:KTrt_P302WY7  validation:PASS  nativePath:app/lib/mkc/native/egoiste-platinum-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-23T16:10:25.418Z",
+      "action": "promotion_started",
+      "slug": "burberry-london-inspired",
+      "operator": "Founder",
+      "details": "symbol:burberryLondonInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-23T16:10:25.426Z",
+      "action": "relationships_synced",
+      "slug": "burberry-london-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:4  files:4"
+    },
+    {
+      "timestamp": "2026-08-23T16:10:57.930Z",
+      "action": "promotion_completed",
+      "slug": "burberry-london-inspired",
+      "operator": "Founder",
+      "details": "promotionId:eXWovrCoR2jJ  validation:PASS  nativePath:app/lib/mkc/native/burberry-london-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-23T16:11:06.028Z",
+      "action": "promotion_started",
+      "slug": "eternity-inspired",
+      "operator": "Founder",
+      "details": "symbol:eternityInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-23T16:11:06.036Z",
+      "action": "relationships_synced",
+      "slug": "eternity-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:4  files:4"
+    },
+    {
+      "timestamp": "2026-08-23T16:11:37.846Z",
+      "action": "promotion_completed",
+      "slug": "eternity-inspired",
+      "operator": "Founder",
+      "details": "promotionId:r5XRm_4prQeH  validation:PASS  nativePath:app/lib/mkc/native/eternity-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-23T16:11:46.297Z",
+      "action": "promotion_started",
+      "slug": "bvlgari-black-inspired",
+      "operator": "Founder",
+      "details": "symbol:bvlgariBlackInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-23T16:11:46.303Z",
+      "action": "relationships_synced",
+      "slug": "bvlgari-black-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:5  files:5"
+    },
+    {
+      "timestamp": "2026-08-23T16:12:18.564Z",
+      "action": "promotion_completed",
+      "slug": "bvlgari-black-inspired",
+      "operator": "Founder",
+      "details": "promotionId:7sCfIjIBqkNb  validation:PASS  nativePath:app/lib/mkc/native/bvlgari-black-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-23T16:12:26.736Z",
+      "action": "promotion_started",
+      "slug": "212-vip-black-inspired",
+      "operator": "Founder",
+      "details": "symbol:_212VipBlackInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-23T16:12:26.744Z",
+      "action": "relationships_synced",
+      "slug": "212-vip-black-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:3  files:3"
+    },
+    {
+      "timestamp": "2026-08-23T16:12:57.821Z",
+      "action": "promotion_completed",
+      "slug": "212-vip-black-inspired",
+      "operator": "Founder",
+      "details": "promotionId:KIysvg924n9s  validation:PASS  nativePath:app/lib/mkc/native/212-vip-black-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-23T16:13:05.525Z",
+      "action": "promotion_started",
+      "slug": "aqva-amara-inspired",
+      "operator": "Founder",
+      "details": "symbol:aqvaAmaraInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-23T16:13:05.532Z",
+      "action": "relationships_synced",
+      "slug": "aqva-amara-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:4  files:4"
+    },
+    {
+      "timestamp": "2026-08-23T16:13:36.955Z",
+      "action": "promotion_completed",
+      "slug": "aqva-amara-inspired",
+      "operator": "Founder",
+      "details": "promotionId:wyX2PgTkcn9o  validation:PASS  nativePath:app/lib/mkc/native/aqva-amara-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-23T16:13:45.882Z",
+      "action": "promotion_started",
+      "slug": "scandal-pour-homme-inspired",
+      "operator": "Founder",
+      "details": "symbol:scandalPourHommeInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-23T16:13:45.888Z",
+      "action": "relationships_synced",
+      "slug": "scandal-pour-homme-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:4  files:4"
+    },
+    {
+      "timestamp": "2026-08-23T16:14:21.781Z",
+      "action": "promotion_completed",
+      "slug": "scandal-pour-homme-inspired",
+      "operator": "Founder",
+      "details": "promotionId:7bmHyHE74Mew  validation:PASS  nativePath:app/lib/mkc/native/scandal-pour-homme-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-23T16:14:29.457Z",
+      "action": "promotion_started",
+      "slug": "lacoste-blanc-inspired",
+      "operator": "Founder",
+      "details": "symbol:lacosteBlancInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-23T16:14:29.465Z",
+      "action": "relationships_synced",
+      "slug": "lacoste-blanc-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:5  files:5"
+    },
+    {
+      "timestamp": "2026-08-23T16:15:06.809Z",
+      "action": "promotion_completed",
+      "slug": "lacoste-blanc-inspired",
+      "operator": "Founder",
+      "details": "promotionId:Cfco50vVexhd  validation:PASS  nativePath:app/lib/mkc/native/lacoste-blanc-inspired.ts"
     }
   ]
 }

@@ -1,10 +1,10 @@
 // ═════════════════════════════════════════════════════════════════
-// FACTORY DRAFT — le-male-inspired
+// FACTORY DRAFT — light-blue-pour-homme-inspired
 // ─────────────────────────────────────────────────────────────────
-// Generated:         2026-08-19T19:03:50.849Z
+// Generated:         2026-08-22T18:50:59.182Z
 // Factory version:   0.5.0
 // Prompt versions:   EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0
-// Validation status: PASS  [0 error(s), 0 warning(s)]
+// Validation status: FAIL  [3 error(s), 0 warning(s)]
 // Projected KQ tier: (not available — requires Intelligence Producer)
 // ─────────────────────────────────────────────────────────────────
 // REVIEW CHECKLIST
@@ -20,49 +20,56 @@
 
 import type { FragranceKnowledge } from "../types";
 
-export const leMaleInspired: FragranceKnowledge = {
+export const lightBluePourHommeInspired: FragranceKnowledge = {
   // ── Identity ──────────────────────────────────────────────────────────────────
-  id            : "le-male-inspired",
-  slug          : "le-male-inspired",
+  id            : "light-blue-pour-homme-inspired",
+  slug          : "light-blue-pour-homme-inspired",
   brand         : "Maison Skye & Rose",
-  name          : "Le Male Inspired",
+  name          : "Light Blue Pour Homme Inspired",
   collection    : "Skye",
   catalogVersion: "1.0",
   status        : "active",
 
   // ── Classification ────────────────────────────────────────────────────────────
   gender        : "male",
-  family        : ["Aromatic"],
-  scentCharacter: "Balanced Signature",
+  family        : ["Aromatic", "Citrus"],
+  scentCharacter: "Fresh & Light",
   projection    : "moderate",
 
   // ── Composition ─────────────────────────────────────────────────────────────
-  profile       : "Oriental Fougère",
-  season        : "Year-Round",
+  profile       : "Citrus Aromatic",
+  season        : "Summer",
   notes: {
-    top:   ["Mint", "Lavender", "Bergamot"],
-    heart: ["Cinnamon", "Cumin", "Orange Blossom"],
-    base:  ["Vanilla", "Tonka Bean", "Sandalwood", "Cedarwood"],
+    top:   ["Grapefruit", "Bergamot", "Sicilian Mandarin", "Juniper"],
+    heart: ["Pepper", "Rosemary", "Brazilian Rosewood"],
+    base:  ["Musk", "Incense", "Oakmoss"],
   },
   notesEvidenceLocked: true,
-  mood          : "Warm Sweet Aromatic",
+  mood          : "Fresh Citrus Mediterranean",
 
   // ── Discovery ───────────────────────────────────────────────────────────────
   vibe          : [
-    "Warm",
-    "Sweet",
+    "Fresh",
+    "Bright",
     "Sophisticated",
+    "Clean",
+    "Warm",
     "Confident",
-    "Aromatic",
-    "Elegant",
   ],
-  occasions     : ["Daily Wear", "Office", "Weekend", "Casual"],
-  seasons       : ["Spring", "Summer", "Autumn", "Winter"],
-  signatureStyle: ["Warm Spiced Elegance", "Balanced Aromatic", "Creamy Sophistication"],
+  occasions     : [
+    "Daily Wear",
+    "Office",
+    "Casual",
+    "Weekend",
+    "Travel",
+  ],
+  seasons       : ["Summer", "Spring"],
+  signatureStyle: ["Mediterranean Citrus", "Fresh Sophistication", "Casual Elegance"],
   recommendedFor: [
-    "Men seeking a warm signature fragrance that balances fresh aromatic notes with creamy sweetness for everyday confidence",
-    "Those who love spiced fragrances but want sophistication over aggression—a refined alternative to heavier orientals",
-    "Anyone building a collection who needs a versatile middle ground between fresh and gourmand for any season",
+    "Men seeking a crisp, Mediterranean-inspired daily fragrance that feels effortless in warm weather and professional settings.",
+    "Those who want fresh citrus with understated sophistication—bright enough for casual wear, refined enough for the office.",
+    "Anyone drawn to morning freshness and sunlit clarity who prefers understated elegance over bold statements.",
+    "Fragrance explorers building a summer wardrobe who need a versatile anchor between sporty and elegant scents.",
   ],
 
   // ── Merchandising ───────────────────────────────────────────────────────────
@@ -80,37 +87,37 @@ export const leMaleInspired: FragranceKnowledge = {
   newArrival    : false,
 
   // ── Education ───────────────────────────────────────────────────────────────
-  subtitle      : "Warm Spiced Cream",
-  description   : "Mint and bergamot spark against warm spice—cinnamon and cumin—before melting into creamy tonka and sandalwood. A fragrance that balances aromatic freshness with enveloping sweetness, neither aggressive nor soft.",
-  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "what-makes-a-signature-scent", "how-to-layer-fragrances"],
-  academyCategories: ["fragrance-families", "the-note-pyramid", "wear-and-application"],
+  subtitle      : "Citrus Clarity",
+  description   : "Grapefruit and bergamot open with Mediterranean clarity, bright as morning light on water. Rosemary and pepper anchor the composition in quiet sophistication, while musk and incense settle into a warm, understated base that feels both mineral and intimate.",
+  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "choosing-your-season-scent", "how-to-wear-fragrance"],
+  academyCategories: ["fragrance-families", "the-note-pyramid", "occasions-and-style"],
   educationTags : [
-    "oriental",
-    "fougère",
-    "mint",
-    "lavender",
-    "vanilla",
-    "tonka-bean",
-    "spicy",
-    "warm",
-    "signature-scent",
+    "citrus",
+    "aromatic",
+    "grapefruit",
+    "bergamot",
+    "fresh",
+    "summer",
     "daily-wear",
+    "masculine",
+    "rosemary",
+    "musk",
   ],
-  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "what-makes-a-signature-scent", "how-to-layer-fragrances"],
+  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "choosing-your-season-scent", "how-to-wear-fragrance"],
 
   // ── Intelligence ────────────────────────────────────────────────────────────
   // Approximated from profile + season. Calibrated by Intelligence Producer in P2.
-  sweetness     : 2,
-  freshness     : 2,
-  warmth        : 2,
-  intensity     : 3,
+  sweetness     : 1,
+  freshness     : 5,
+  warmth        : 1,
+  intensity     : 2,
   versatility   : 3,
   popularity    : 5,
 
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["spicebomb-extreme-inspired", "le-male-elixir-inspired", "stronger-with-you-inspired"],
-    wardrobePartners: ["sauvage-inspired", "bleu-de-chanel-inspired", "light-blue-pour-homme-inspired"],
+    alternatives:     ["aqua-di-gio-inspired", "bleu-de-chanel-inspired", "imagination-inspired"],
+    wardrobePartners: ["sauvage-inspired", "le-male-inspired"],
   },
 };

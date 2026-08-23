@@ -85,7 +85,7 @@ export const hawasInspired: FragranceKnowledge = {
   // ── Relationships ─────────────────────────────────────────────────────────────
   relationships: {
     wardrobePartners: ["le-beau-paradise-garden-inspired"],
-    alternatives: ["pacific-chill-inspired", "bvlgari-aqua-inspired", "leau-dissey-pour-homme-inspired"],
+    alternatives: ["pacific-chill-inspired", "bvlgari-aqua-inspired", "leau-dissey-pour-homme-inspired", "aqva-amara-inspired"],
   },
 
   // ── Intelligence ─────────────────────────────────────────────────────────────

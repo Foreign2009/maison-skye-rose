@@ -1,10 +1,10 @@
 // ═════════════════════════════════════════════════════════════════
-// FACTORY DRAFT — le-male-inspired
+// FACTORY DRAFT — 212-vip-black-inspired
 // ─────────────────────────────────────────────────────────────────
-// Generated:         2026-08-19T19:03:50.849Z
+// Generated:         2026-08-22T18:52:13.919Z
 // Factory version:   0.5.0
 // Prompt versions:   EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0
-// Validation status: PASS  [0 error(s), 0 warning(s)]
+// Validation status: FAIL  [3 error(s), 0 warning(s)]
 // Projected KQ tier: (not available — requires Intelligence Producer)
 // ─────────────────────────────────────────────────────────────────
 // REVIEW CHECKLIST
@@ -20,12 +20,12 @@
 
 import type { FragranceKnowledge } from "../types";
 
-export const leMaleInspired: FragranceKnowledge = {
+export const _212VipBlackInspired: FragranceKnowledge = {
   // ── Identity ──────────────────────────────────────────────────────────────────
-  id            : "le-male-inspired",
-  slug          : "le-male-inspired",
+  id            : "212-vip-black-inspired",
+  slug          : "212-vip-black-inspired",
   brand         : "Maison Skye & Rose",
-  name          : "Le Male Inspired",
+  name          : "212 Vip Black Inspired",
   collection    : "Skye",
   catalogVersion: "1.0",
   status        : "active",
@@ -37,32 +37,32 @@ export const leMaleInspired: FragranceKnowledge = {
   projection    : "moderate",
 
   // ── Composition ─────────────────────────────────────────────────────────────
-  profile       : "Oriental Fougère",
-  season        : "Year-Round",
+  profile       : "Aromatic Fougere",
+  season        : "Winter",
   notes: {
-    top:   ["Mint", "Lavender", "Bergamot"],
-    heart: ["Cinnamon", "Cumin", "Orange Blossom"],
-    base:  ["Vanilla", "Tonka Bean", "Sandalwood", "Cedarwood"],
+    top:   ["Absinthe", "Anise", "Fennel"],
+    heart: ["Lavender"],
+    base:  ["Black Vanilla Husk", "Musk"],
   },
   notesEvidenceLocked: true,
-  mood          : "Warm Sweet Aromatic",
+  mood          : "Dark Spicy Aromatic",
 
   // ── Discovery ───────────────────────────────────────────────────────────────
   vibe          : [
-    "Warm",
-    "Sweet",
     "Sophisticated",
-    "Confident",
-    "Aromatic",
-    "Elegant",
+    "Mysterious",
+    "Warm",
+    "Bold",
+    "Mature",
+    "Magnetic",
   ],
-  occasions     : ["Daily Wear", "Office", "Weekend", "Casual"],
-  seasons       : ["Spring", "Summer", "Autumn", "Winter"],
-  signatureStyle: ["Warm Spiced Elegance", "Balanced Aromatic", "Creamy Sophistication"],
+  occasions     : ["Date Night", "Evening", "Formal", "Weekend"],
+  seasons       : ["Winter", "Autumn"],
+  signatureStyle: ["Dark Aromatic Elegance", "Spiced Sophistication", "Winter Signature"],
   recommendedFor: [
-    "Men seeking a warm signature fragrance that balances fresh aromatic notes with creamy sweetness for everyday confidence",
-    "Those who love spiced fragrances but want sophistication over aggression—a refined alternative to heavier orientals",
-    "Anyone building a collection who needs a versatile middle ground between fresh and gourmand for any season",
+    "Men seeking a dark, spiced aromatic that commands presence without aggression in evening and winter settings",
+    "Those who appreciate herbal complexity and anise-forward compositions that feel sophisticated rather than sweet",
+    "Anyone looking for a balanced signature that transitions seamlessly from dinner to after-hours occasions",
   ],
 
   // ── Merchandising ───────────────────────────────────────────────────────────
@@ -80,37 +80,37 @@ export const leMaleInspired: FragranceKnowledge = {
   newArrival    : false,
 
   // ── Education ───────────────────────────────────────────────────────────────
-  subtitle      : "Warm Spiced Cream",
-  description   : "Mint and bergamot spark against warm spice—cinnamon and cumin—before melting into creamy tonka and sandalwood. A fragrance that balances aromatic freshness with enveloping sweetness, neither aggressive nor soft.",
-  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "what-makes-a-signature-scent", "how-to-layer-fragrances"],
+  subtitle      : "Dark Aromatic Elegance",
+  description   : "Absinthe and anise open with a sharp, almost austere clarity—spirit-like and mineral. A whisper of lavender softens the aromatic intensity before black vanilla husk and musk settle into a warm, skin-like base that feels both intimate and distinctly masculine.",
+  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances", "choosing-your-season-scent"],
   academyCategories: ["fragrance-families", "the-note-pyramid", "wear-and-application"],
   educationTags : [
-    "oriental",
-    "fougère",
-    "mint",
+    "aromatic",
+    "fougere",
+    "anise",
     "lavender",
     "vanilla",
-    "tonka-bean",
+    "musk",
     "spicy",
-    "warm",
-    "signature-scent",
-    "daily-wear",
+    "winter",
+    "signature",
+    "layering",
   ],
-  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "what-makes-a-signature-scent", "how-to-layer-fragrances"],
+  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances"],
 
   // ── Intelligence ────────────────────────────────────────────────────────────
   // Approximated from profile + season. Calibrated by Intelligence Producer in P2.
   sweetness     : 2,
   freshness     : 2,
   warmth        : 2,
-  intensity     : 3,
-  versatility   : 3,
+  intensity     : 4,
+  versatility   : 2,
   popularity    : 5,
 
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["spicebomb-extreme-inspired", "le-male-elixir-inspired", "stronger-with-you-inspired"],
-    wardrobePartners: ["sauvage-inspired", "bleu-de-chanel-inspired", "light-blue-pour-homme-inspired"],
+    alternatives:     ["spicebomb-extreme-inspired", "le-male-elixir-inspired"],
+    wardrobePartners: ["sauvage-inspired"],
   },
 };

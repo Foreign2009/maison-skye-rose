@@ -202,6 +202,16 @@ import { omniaCrystallineInspired } from "./omnia-crystalline-inspired";
 import { valayaExclusifInspired } from "./valaya-exclusif-inspired";
 import { crazyInLoveInspired } from "./crazy-in-love-inspired";
 import { aLaRoseInspired } from "./a-la-rose-inspired";
+import { lightBluePourHommeInspired } from "./light-blue-pour-homme-inspired";
+import { boisPacifiqueInspired } from "./bois-pacifique-inspired";
+import { egoistePlatinumInspired } from "./egoiste-platinum-inspired";
+import { burberryLondonInspired } from "./burberry-london-inspired";
+import { eternityInspired } from "./eternity-inspired";
+import { bvlgariBlackInspired } from "./bvlgari-black-inspired";
+import { _212VipBlackInspired } from "./212-vip-black-inspired";
+import { aqvaAmaraInspired } from "./aqva-amara-inspired";
+import { scandalPourHommeInspired } from "./scandal-pour-homme-inspired";
+import { lacosteBlancInspired } from "./lacoste-blanc-inspired";
 
 export const nativeFragrances = new Map<string, FragranceKnowledge>([
   ["sauvage-inspired",              sauvageInspired],
@@ -396,4 +406,14 @@ export const nativeFragrances = new Map<string, FragranceKnowledge>([
   ["valaya-exclusif-inspired", valayaExclusifInspired],
   ["crazy-in-love-inspired", crazyInLoveInspired],
   ["a-la-rose-inspired", aLaRoseInspired],
+  ["light-blue-pour-homme-inspired", lightBluePourHommeInspired],
+  ["bois-pacifique-inspired", boisPacifiqueInspired],
+  ["egoiste-platinum-inspired", egoistePlatinumInspired],
+  ["burberry-london-inspired", burberryLondonInspired],
+  ["eternity-inspired", eternityInspired],
+  ["bvlgari-black-inspired", bvlgariBlackInspired],
+  ["212-vip-black-inspired", _212VipBlackInspired],
+  ["aqva-amara-inspired", aqvaAmaraInspired],
+  ["scandal-pour-homme-inspired", scandalPourHommeInspired],
+  ["lacoste-blanc-inspired", lacosteBlancInspired],
 ]);
