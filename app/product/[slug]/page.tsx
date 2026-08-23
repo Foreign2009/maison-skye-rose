@@ -40,7 +40,8 @@ export async function generateMetadata({
     ...knowledge.notes.heart,
     ...knowledge.notes.base,
   ];
-  const description = `${knowledge.mood} Notes: ${allNotes.slice(0, 4).join(", ")}. From R${startingPrice}.`;
+  const notesClause = allNotes.length > 0 ? ` Notes: ${allNotes.slice(0, 4).join(", ")}.` : "";
+  const description = `${knowledge.mood}${notesClause} From R${startingPrice}.`;
 
   return {
     title: `${knowledge.name} | Maison Skye & Rose`,
