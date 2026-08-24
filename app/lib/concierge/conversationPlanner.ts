@@ -8,6 +8,7 @@
  */
 
 import type { ConversationIntent, ConversationState } from "./types";
+import { NONE_OF_THOSE_SIGNALS } from "./rejectionDetector";
 
 // ── Plan types ────────────────────────────────────────────────────────────────
 
@@ -185,6 +186,24 @@ export function planConversation(
     return {
       action:                "alternative_exploration",
       reason:                "Customer wants to explore an alternative for an active consultation role",
+      requiresRetrieval:     true,
+      requiresComparison:    false,
+      requiresClarification: false,
+      reuseRecommendations:  false,
+      nextIntent:            "general_discovery",
+    };
+  }
+
+  // ── 2.5 Rejection — "none of those", "none of these" (EP-AI-C4-P0) ──────────
+  // Must fire BEFORE the reference-back check so that rejection phrases
+  // containing "those" / "these" are not misclassified as reuse_cached.
+  // route.ts step 0a (detectRejections) merges lastRecommendationSlugs into
+  // rejectedSlugs before planRetrieval runs, preventing re-surfacing of
+  // rejected candidates via the hard rejection filter.
+  if (NONE_OF_THOSE_SIGNALS.some((s) => q.includes(s))) {
+    return {
+      action:                "new_search",
+      reason:                "Guest rejected all previous recommendations — fresh retrieval required",
       requiresRetrieval:     true,
       requiresComparison:    false,
       requiresClarification: false,

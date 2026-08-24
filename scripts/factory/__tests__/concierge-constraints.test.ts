@@ -25,7 +25,7 @@ import { nativeFragrances }  from "../../../app/lib/mkc/native";
 import { resolveIntent } from "../../../app/lib/concierge/intentResolver";
 import type { ConversationProfile, ConversationState }  from "../../../app/lib/concierge/types";
 import type { ResolvedIntent } from "../../../app/lib/concierge/intentResolver";
-import type { ConversationPlan } from "../../../app/lib/concierge/conversationPlanner";
+import { planConversation, type ConversationPlan } from "../../../app/lib/concierge/conversationPlanner";
 import type { RetrievalContext } from "../../../app/lib/concierge/contextBuilder";
 import { detectRejections, NONE_OF_THOSE_SIGNALS } from "../../../app/lib/concierge/rejectionDetector";
 
@@ -1911,6 +1911,275 @@ test("T-C3-40 — multi-turn Founder scenario: zero gender leakage + zero reject
   if (rejectedSlug) {
     assert.equal(result.fragrances.find(f => f.slug === rejectedSlug), undefined, `T-C3-40 T4 — rejected ${rejectedSlug} reappeared after pivot`);
   }
+});
+
+// ── Section 19: C4-P0 Candidate Integrity ─────────────────────────────────────
+
+console.log("\n── 19. C4-P0 Candidate Integrity ────────────────────────────────────");
+
+test("T-C4-P0-01 — 'None of those.' with prior recs → action=new_search, requiresRetrieval=true", () => {
+  const state: ConversationState = {
+    ...EMPTY_STATE,
+    lastRecommendationSlugs: ["aventus-inspired", "hacivat-inspired"],
+    turns: [{ role: "assistant" as const, content: "Here are some options", intent: "general_discovery" as const, timestamp: 0 }],
+  };
+  const plan = planConversation("None of those.", state);
+  assert.equal(plan.action, "new_search",
+    `T-C4-P0-01 — expected new_search, got ${plan.action}`);
+  assert.equal(plan.requiresRetrieval, true,
+    "T-C4-P0-01 — requiresRetrieval must be true on rejection");
+  assert.equal(plan.reuseRecommendations, false,
+    "T-C4-P0-01 — reuseRecommendations must be false on rejection");
+});
+
+test("T-C4-P0-02 — 'None of these.' → action=new_search", () => {
+  const state: ConversationState = {
+    ...EMPTY_STATE,
+    lastRecommendationSlugs: ["aventus-inspired"],
+    turns: [{ role: "assistant" as const, content: "Here are some options", intent: "general_discovery" as const, timestamp: 0 }],
+  };
+  const plan = planConversation("None of these.", state);
+  assert.equal(plan.action, "new_search",
+    `T-C4-P0-02 — expected new_search, got ${plan.action}`);
+});
+
+test("T-C4-P0-03 — 'Not those.' → action=new_search", () => {
+  const state: ConversationState = {
+    ...EMPTY_STATE,
+    lastRecommendationSlugs: ["aventus-inspired"],
+    turns: [{ role: "assistant" as const, content: "Here are some options", intent: "general_discovery" as const, timestamp: 0 }],
+  };
+  const plan = planConversation("Not those.", state);
+  assert.equal(plan.action, "new_search",
+    `T-C4-P0-03 — expected new_search, got ${plan.action}`);
+});
+
+test("T-C4-P0-04 — 'None of them.' → action=new_search", () => {
+  const state: ConversationState = {
+    ...EMPTY_STATE,
+    lastRecommendationSlugs: ["aventus-inspired"],
+    turns: [{ role: "assistant" as const, content: "Here are some options", intent: "general_discovery" as const, timestamp: 0 }],
+  };
+  const plan = planConversation("None of them.", state);
+  assert.equal(plan.action, "new_search",
+    `T-C4-P0-04 — expected new_search, got ${plan.action}`);
+});
+
+test("T-C4-P0-05 — 'those two' (genuine reference) → NOT classified as rejection (reuse_cached)", () => {
+  const state: ConversationState = {
+    ...EMPTY_STATE,
+    lastRecommendationSlugs: ["aventus-inspired", "hacivat-inspired"],
+    turns: [{ role: "assistant" as const, content: "Here are some options", intent: "general_discovery" as const, timestamp: 0 }],
+  };
+  const plan = planConversation("Tell me more about those two.", state);
+  assert.equal(plan.action, "reuse_cached",
+    `T-C4-P0-05 — 'those two' should be reuse_cached (reference), got ${plan.action}`);
+  assert.equal(plan.requiresRetrieval, false,
+    "T-C4-P0-05 — reference phrase must not trigger retrieval");
+});
+
+test("T-C4-P0-06 — all NONE_OF_THOSE_SIGNALS classify as new_search with prior recs", () => {
+  const state: ConversationState = {
+    ...EMPTY_STATE,
+    lastRecommendationSlugs: ["aventus-inspired"],
+    turns: [{ role: "assistant" as const, content: "Here are some options", intent: "general_discovery" as const, timestamp: 0 }],
+  };
+  for (const signal of NONE_OF_THOSE_SIGNALS) {
+    const plan = planConversation(signal, state);
+    assert.equal(plan.action, "new_search",
+      `T-C4-P0-06 — signal "${signal}" was not classified as new_search (got ${plan.action})`);
+  }
+});
+
+test("T-C4-P0-07 — similar_to path: avoidedFamilies applied universally", () => {
+  const oudFragrances = mkcCatalogue.filter(k => k.family.some(f => f.toLowerCase() === "oud"));
+  if (oudFragrances.length === 0) { skip("T-C4-P0-07 — no oud-family fragrances in catalogue"); return; }
+  const source = mkcCatalogue.find(k => k.gender === "male" || k.gender === "unisex");
+  if (!source) { skip("T-C4-P0-07 — no source fragrance found"); return; }
+  const simIntent: ResolvedIntent = { intent: "similar_to", signals: {}, entitySlug: source.slug, compareSlug: [] };
+  const profile = makeProfile({ avoidedFamilies: { value: ["Oud"], confidence: "HIGH" } });
+  const result = planRetrieval(simIntent, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, `something like ${source.slug}`);
+  const oudInResult = result.fragrances.filter(f => f.family.some(fam => fam.toLowerCase() === "oud"));
+  assert.equal(oudInResult.length, 0,
+    `T-C4-P0-07 — oud in similar_to result despite avoidance: ${oudInResult.map(f => f.slug).join(", ")}`);
+});
+
+test("T-C4-P0-08 — occasion_search path: avoidedFamilies applied universally", () => {
+  const oudFragrances = mkcCatalogue.filter(k => k.family.some(f => f.toLowerCase() === "oud"));
+  if (oudFragrances.length === 0) { skip("T-C4-P0-08 — no oud-family fragrances in catalogue"); return; }
+  const occasionIntent: ResolvedIntent = { intent: "occasion_search", signals: { occasion: "evening" }, entitySlug: undefined, compareSlug: [] };
+  const profile = makeProfile({ avoidedFamilies: { value: ["Oud"], confidence: "HIGH" } });
+  const result = planRetrieval(occasionIntent, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "evening occasion");
+  const oudInResult = result.fragrances.filter(f => f.family.some(fam => fam.toLowerCase() === "oud"));
+  assert.equal(oudInResult.length, 0,
+    `T-C4-P0-08 — oud in occasion_search result despite avoidance: ${oudInResult.map(f => f.slug).join(", ")}`);
+});
+
+test("T-C4-P0-09 — seasonal path: avoidedFamilies applied universally", () => {
+  const oudFragrances = mkcCatalogue.filter(k => k.family.some(f => f.toLowerCase() === "oud"));
+  if (oudFragrances.length === 0) { skip("T-C4-P0-09 — no oud-family fragrances in catalogue"); return; }
+  const seasonalIntent: ResolvedIntent = { intent: "seasonal", signals: { occasion: "winter" }, entitySlug: undefined, compareSlug: [] };
+  const profile = makeProfile({ avoidedFamilies: { value: ["Oud"], confidence: "HIGH" } });
+  const result = planRetrieval(seasonalIntent, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "winter fragrance");
+  const oudInResult = result.fragrances.filter(f => f.family.some(fam => fam.toLowerCase() === "oud"));
+  assert.equal(oudInResult.length, 0,
+    `T-C4-P0-09 — oud in seasonal result despite avoidance: ${oudInResult.map(f => f.slug).join(", ")}`);
+});
+
+test("T-C4-P0-10 — comparison: explicitly named avoided product preserved as comparison subject", () => {
+  const oudFrag    = mkcCatalogue.find(k => k.family.some(f => f.toLowerCase() === "oud"));
+  const nonOudFrag = mkcCatalogue.find(k => !k.family.some(f => f.toLowerCase() === "oud"));
+  if (!oudFrag || !nonOudFrag) { skip("T-C4-P0-10 — required catalogue fixtures not found"); return; }
+  const profile = makeProfile({ avoidedFamilies: { value: ["Oud"], confidence: "HIGH" } });
+  const compIntent: ResolvedIntent = {
+    intent: "comparison", signals: {}, entitySlug: oudFrag.slug, compareSlug: [oudFrag.slug, nonOudFrag.slug],
+  };
+  const result = planRetrieval(compIntent, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, `compare ${oudFrag.slug} and ${nonOudFrag.slug}`);
+  assert.ok(result.fragrances.find(f => f.slug === oudFrag.slug),
+    `T-C4-P0-10 — named oud comparison subject was incorrectly filtered`);
+  assert.ok(result.fragrances.find(f => f.slug === nonOudFrag.slug),
+    `T-C4-P0-10 — non-oud comparison subject missing from result`);
+});
+
+test("T-C4-P0-11 — sourceKnowledge with avoidedFamily must not appear in candidate list", () => {
+  const oudSource = mkcCatalogue.find(k => k.family.some(f => f.toLowerCase() === "oud"));
+  if (!oudSource) { skip("T-C4-P0-11 — no oud fragrance found as source fixture"); return; }
+  const profile = makeProfile({ avoidedFamilies: { value: ["Oud"], confidence: "HIGH" } });
+  const simIntent: ResolvedIntent = { intent: "similar_to", signals: {}, entitySlug: oudSource.slug, compareSlug: [] };
+  const result = planRetrieval(simIntent, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, `something like ${oudSource.slug}`);
+  assert.equal(result.fragrances.find(f => f.slug === oudSource.slug), undefined,
+    `T-C4-P0-11 — oud sourceKnowledge ${oudSource.slug} appeared in candidates despite avoidedFamilies`);
+});
+
+test("T-C4-P0-12 — sourceKnowledge with rejectedSlug must not appear in candidate list", () => {
+  const source = mkcCatalogue.find(k => k.gender === "male" || k.gender === "unisex");
+  if (!source) { skip("T-C4-P0-12 — no source fragrance found"); return; }
+  const profile = makeProfile({ rejectedSlugs: [source.slug] });
+  const simIntent: ResolvedIntent = { intent: "similar_to", signals: {}, entitySlug: source.slug, compareSlug: [] };
+  const result = planRetrieval(simIntent, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, `something like ${source.slug}`);
+  assert.equal(result.fragrances.find(f => f.slug === source.slug), undefined,
+    `T-C4-P0-12 — rejected sourceKnowledge ${source.slug} appeared in candidates`);
+});
+
+test("T-C4-P0-13 — sourceKnowledge with avoidedNote must not appear in candidate list", () => {
+  const withNotes = mkcCatalogue.find(k => [...k.notes.top, ...k.notes.heart, ...k.notes.base].length > 0);
+  if (!withNotes) { skip("T-C4-P0-13 — no fragrance with notes found"); return; }
+  const someNote = [...withNotes.notes.top, ...withNotes.notes.heart, ...withNotes.notes.base][0];
+  const profile = makeProfile({ avoidedNotes: { value: [someNote], confidence: "HIGH" } });
+  const simIntent: ResolvedIntent = { intent: "similar_to", signals: {}, entitySlug: withNotes.slug, compareSlug: [] };
+  const result = planRetrieval(simIntent, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, `something like ${withNotes.slug}`);
+  assert.equal(result.fragrances.find(f => f.slug === withNotes.slug), undefined,
+    `T-C4-P0-13 — sourceKnowledge with avoided note "${someNote}" appeared in candidates`);
+});
+
+test("T-C4-P0-14 — education path: avoidedFamilies applied universally", () => {
+  const oudFragrances = mkcCatalogue.filter(k => k.family.some(f => f.toLowerCase() === "oud"));
+  if (oudFragrances.length === 0) { skip("T-C4-P0-14 — no oud-family fragrances in catalogue"); return; }
+  const educationIntent: ResolvedIntent = { intent: "education", signals: {}, entitySlug: undefined, compareSlug: [] };
+  const profile = makeProfile({ avoidedFamilies: { value: ["Oud"], confidence: "HIGH" } });
+  const result = planRetrieval(educationIntent, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "tell me about fragrance families");
+  const oudInResult = result.fragrances.filter(f => f.family.some(fam => fam.toLowerCase() === "oud"));
+  assert.equal(oudInResult.length, 0,
+    `T-C4-P0-14 — oud in education result despite avoidance: ${oudInResult.map(f => f.slug).join(", ")}`);
+});
+
+test("T-C4-P0-15 — zero forbidden candidates: full constraint stack (gender + rejection + avoidance)", () => {
+  const profile = makeProfile({
+    preferredGender:  { value: "female", confidence: "HIGH" },
+    avoidedFamilies:  { value: ["Oud"],  confidence: "HIGH" },
+    rejectedSlugs:    ["aventus-inspired"],
+  });
+  const result = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "recommend");
+  const males = result.fragrances.filter(f => f.gender === "male");
+  const oud   = result.fragrances.filter(f => f.family.some(fam => fam.toLowerCase() === "oud"));
+  const rej   = result.fragrances.filter(f => f.slug === "aventus-inspired");
+  assert.equal(males.length, 0, `T-C4-P0-15 — male candidates in female result: ${males.map(f => f.slug).join(", ")}`);
+  assert.equal(oud.length,   0, `T-C4-P0-15 — oud in result despite avoidance: ${oud.map(f => f.slug).join(", ")}`);
+  assert.equal(rej.length,   0, `T-C4-P0-15 — rejected aventus-inspired in result`);
+});
+
+test("T-C4-P0-16 — 'none of those' + new planRetrieval: zero T4 slugs in T5 result", () => {
+  const profile = makeProfile({ preferredGender: { value: "male", confidence: "HIGH" } });
+  const t4 = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "recommend");
+  const t4Slugs = t4.fragrances.map(f => f.slug);
+  const profileAfterRejection = makeProfile({
+    preferredGender: { value: "male", confidence: "HIGH" },
+    rejectedSlugs:   t4Slugs,
+  });
+  const t5 = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profileAfterRejection, undefined, undefined, null, new Set(t4Slugs), "None of those. Something else.");
+  const leaked = t5.fragrances.filter(f => t4Slugs.includes(f.slug));
+  assert.equal(leaked.length, 0,
+    `T-C4-P0-16 — T4 slugs reappeared in T5 after 'none of those': ${leaked.map(f => f.slug).join(", ")}`);
+});
+
+test("T-C4-P0-17 — avoidedNotes on similar_to: avoided note absent from result candidates", () => {
+  const noteCounts = new Map<string, number>();
+  for (const k of mkcCatalogue) {
+    for (const n of [...k.notes.top, ...k.notes.heart, ...k.notes.base]) {
+      noteCounts.set(n.toLowerCase(), (noteCounts.get(n.toLowerCase()) ?? 0) + 1);
+    }
+  }
+  const commonNote = [...noteCounts.entries()].sort((a, b) => b[1] - a[1])[0]?.[0];
+  if (!commonNote) { skip("T-C4-P0-17 — no common note found in catalogue"); return; }
+  const source = mkcCatalogue.find(k =>
+    ![...k.notes.top, ...k.notes.heart, ...k.notes.base].map(n => n.toLowerCase()).includes(commonNote)
+  );
+  if (!source) { skip("T-C4-P0-17 — no source without the avoided note"); return; }
+  const profile = makeProfile({ avoidedNotes: { value: [commonNote], confidence: "HIGH" } });
+  const simIntent: ResolvedIntent = { intent: "similar_to", signals: {}, entitySlug: source.slug, compareSlug: [] };
+  const result = planRetrieval(simIntent, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, `something like ${source.slug}`);
+  const leaked = result.fragrances.filter(f =>
+    [...f.notes.top, ...f.notes.heart, ...f.notes.base].some(n =>
+      n.toLowerCase().includes(commonNote) || commonNote.includes(n.toLowerCase())
+    )
+  );
+  assert.equal(leaked.length, 0,
+    `T-C4-P0-17 — candidates with avoided note "${commonNote}" in similar_to result: ${leaked.map(f => f.slug).join(", ")}`);
+});
+
+test("T-C4-P0-18 — sourceKnowledge that passes all constraints is still permitted (non-regression)", () => {
+  const source = mkcCatalogue.find(k =>
+    (k.gender === "male" || k.gender === "unisex") &&
+    !k.family.some(f => f.toLowerCase() === "oud")
+  );
+  if (!source) { skip("T-C4-P0-18 — no clean source fixture found"); return; }
+  const profile = makeProfile({
+    preferredGender:  { value: "male", confidence: "HIGH" },
+    avoidedFamilies:  { value: ["Oud"], confidence: "HIGH" },
+  });
+  const simIntent: ResolvedIntent = { intent: "similar_to", signals: {}, entitySlug: source.slug, compareSlug: [] };
+  const result = planRetrieval(simIntent, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, `something like ${source.slug}`);
+  const genderLeaks = result.fragrances.filter(f => f.gender === "female");
+  const oudLeaks    = result.fragrances.filter(f => f.family.some(fam => fam.toLowerCase() === "oud"));
+  assert.equal(genderLeaks.length, 0, `T-C4-P0-18 — gender leak in clean similar_to: ${genderLeaks.map(f => f.slug).join(", ")}`);
+  assert.equal(oudLeaks.length,    0, `T-C4-P0-18 — oud in clean similar_to despite avoidance: ${oudLeaks.map(f => f.slug).join(", ")}`);
+});
+
+test("T-C4-P0-19 — 'not any of those' → new_search (NONE_OF_THOSE_SIGNALS variant)", () => {
+  const state: ConversationState = {
+    ...EMPTY_STATE,
+    lastRecommendationSlugs: ["aventus-inspired"],
+    turns: [{ role: "assistant" as const, content: "Here are some options", intent: "general_discovery" as const, timestamp: 0 }],
+  };
+  const plan = planConversation("not any of those", state);
+  assert.equal(plan.action, "new_search",
+    `T-C4-P0-19 — expected new_search for 'not any of those', got ${plan.action}`);
+});
+
+test("T-C4-P0-20 — avoidance + rejection combined on similar_to: source absent, zero oud in result", () => {
+  const oudSource = mkcCatalogue.find(k => k.family.some(f => f.toLowerCase() === "oud"));
+  if (!oudSource) { skip("T-C4-P0-20 — no oud source fragrance found"); return; }
+  const profile = makeProfile({
+    avoidedFamilies: { value: ["Oud"], confidence: "HIGH" },
+    rejectedSlugs:   [oudSource.slug],
+  });
+  const simIntent: ResolvedIntent = { intent: "similar_to", signals: {}, entitySlug: oudSource.slug, compareSlug: [] };
+  const result = planRetrieval(simIntent, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, `something like ${oudSource.slug}`);
+  assert.equal(result.fragrances.find(f => f.slug === oudSource.slug), undefined,
+    `T-C4-P0-20 — rejected+avoided oud source appeared in candidates`);
+  const oudLeaks = result.fragrances.filter(f => f.family.some(fam => fam.toLowerCase() === "oud"));
+  assert.equal(oudLeaks.length, 0,
+    `T-C4-P0-20 — oud in result with rejection+avoidance active: ${oudLeaks.map(f => f.slug).join(", ")}`);
 });
 
 // ── Summary ───────────────────────────────────────────────────────────────────

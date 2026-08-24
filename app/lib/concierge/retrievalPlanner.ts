@@ -689,13 +689,57 @@ export function planRetrieval(
     fragrances = fragrances.filter((f) => !rejectedSet.has(f.slug));
   }
 
-  // Always surface the source fragrance when it exists (even if previously
-  // recommended — it is the reference point for similarity/education queries,
-  // not a new recommendation in those contexts).
-  // Rejected slugs override this: a product the guest has explicitly refused
-  // must not be re-inserted via this path (EP-AI-C3).
+  // ── Universal avoidance filter (EP-AI-C4-P0) ──────────────────────────────────
+  // Enforces avoidedFamilies and avoidedNotes on ALL retrieval paths — not just
+  // buildBroadPool. Comparison subjects named explicitly by the guest are exempt
+  // so the LLM can fulfil the compare request. Zero-note records pass because
+  // their note arrays are empty.
+  const profileAvoidedFamilies = (profile?.avoidedFamilies?.value ?? []).map((f) => f.toLowerCase());
+  const profileAvoidedNotes    = (profile?.avoidedNotes?.value    ?? []).map((n) => n.toLowerCase());
+
+  if (profileAvoidedFamilies.length > 0 || profileAvoidedNotes.length > 0) {
+    const comparisonExemptSlugs: Set<string> =
+      intent === "comparison"
+        ? new Set(
+            compareSlug.length >= 2
+              ? compareSlug
+              : ([entitySlug, context.compareSlug?.[0]].filter(Boolean) as string[])
+          )
+        : new Set();
+
+    fragrances = fragrances.filter((k) => {
+      if (comparisonExemptSlugs.has(k.slug)) return true;
+      if (profileAvoidedFamilies.some((af) =>
+        k.family.some((f) => f.toLowerCase().includes(af) || af.includes(f.toLowerCase()))
+      )) return false;
+      if (profileAvoidedNotes.some((an) =>
+        [...k.notes.top, ...k.notes.heart, ...k.notes.base]
+          .some((n) => n.toLowerCase().includes(an) || an.includes(n.toLowerCase()))
+      )) return false;
+      return true;
+    });
+  }
+
+  // ── Source knowledge re-add (EP-AI-C3 / EP-AI-C4-P0) ─────────────────────────
+  // sourceKnowledge remains available as reference context for the LLM via
+  // state.context / conversation history. It may only enter the final candidate
+  // list (resp.fragrances) when it passes all guest constraints — rejectedSlugs,
+  // avoidedFamilies, and avoidedNotes (EP-AI-C4-P0).
   const rejectedSourceSlug = profileRejectedSlugs.includes(sourceKnowledge?.slug ?? "");
-  if (sourceKnowledge && !fragrances.find((f) => f.slug === sourceKnowledge.slug) && !rejectedSourceSlug) {
+  const sourceViolatesFamily = profileAvoidedFamilies.some((af) =>
+    (sourceKnowledge?.family ?? []).some((f) => f.toLowerCase().includes(af) || af.includes(f.toLowerCase()))
+  );
+  const sourceViolatesNotes = profileAvoidedNotes.some((an) =>
+    [...(sourceKnowledge?.notes.top ?? []), ...(sourceKnowledge?.notes.heart ?? []), ...(sourceKnowledge?.notes.base ?? [])]
+      .some((n) => n.toLowerCase().includes(an) || an.includes(n.toLowerCase()))
+  );
+  if (
+    sourceKnowledge &&
+    !fragrances.find((f) => f.slug === sourceKnowledge.slug) &&
+    !rejectedSourceSlug &&
+    !sourceViolatesFamily &&
+    !sourceViolatesNotes
+  ) {
     fragrances = [sourceKnowledge, ...fragrances].slice(0, 6);
   }
 
