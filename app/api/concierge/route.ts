@@ -28,6 +28,7 @@ import { buildSystemPrompt, validateResponse, SAFE_FALLBACK } from "../../lib/co
 import { planResponse }                        from "../../lib/concierge/responsePlanner";
 import { formatResponse }                      from "../../lib/concierge/responseFormatter";
 import { extractProfile }                                                              from "../../lib/concierge/profileExtractor";
+import { detectRejections }                                                            from "../../lib/concierge/rejectionDetector";
 import { buildConsultationPlan, evolveConsultationPlan, detectAffectedRoles, detectExplorationTarget } from "../../lib/concierge/consultationTracker";
 import { adaptCustomerProfile }                from "../../lib/concierge/customerAdapter";
 import { catalogueMaps }                       from "../../lib/discovery";
@@ -139,7 +140,33 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     // 0. Extract and accumulate profile from this message
     const updatedProfile = extractProfile(message, state.profile);
 
-    // 0b. Detect refinement against the active consultation plan (EP18-P1)
+    // 0a. Detect slug-level rejections (EP-AI-C3):
+    //   - Named-product rejection: "I don't like Sauvage" → reject sauvage-inspired
+    //   - "None of those" → reject the previous recommendation set
+    // Merged into updatedProfile so planRetrieval's hard rejection filter fires.
+    const newRejectedSlugs = detectRejections(message, state.profile, state.lastRecommendationSlugs);
+    if (newRejectedSlugs.length > 0) {
+      updatedProfile.rejectedSlugs = newRejectedSlugs;
+    }
+
+    // 0b. Ordinal reference resolution (EP-AI-C3):
+    // "the second one" / "second option" → resolve to lastRecommendationSlugs[1]
+    // Used in buildConversationContextSection to surface the correct focused fragrance.
+    const ORDINAL_LOOKUP: Array<[RegExp, number]> = [
+      [/(the )?first( one| option)?/,  0],
+      [/(the )?second( one| option)?/, 1],
+      [/(the )?third( one| option)?/,  2],
+    ];
+    let resolvedOrdinalSlug: string | undefined;
+    const qOrdinal = message.toLowerCase();
+    for (const [pattern, idx] of ORDINAL_LOOKUP) {
+      if (pattern.test(qOrdinal)) {
+        resolvedOrdinalSlug = state.lastRecommendationSlugs?.[idx];
+        break;
+      }
+    }
+
+    // 0d. Detect refinement against the active consultation plan (EP18-P1)
     const refinement = state.consultationPlan
       ? detectAffectedRoles(state.consultationPlan, updatedProfile, message)
       : null;
@@ -180,7 +207,13 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 
     // 3. Build context — gate refinement and explorationTarget to their respective plan.action
     const activeRefinement = plan.action === "refinement" ? refinement : null;
-    const builtContext     = buildContext(retrieval, { ...state, profile: updatedProfile }, plan, effectiveIntent, activeRefinement, explorationTarget, customerCtx);
+    // Apply ordinal resolution: "the second one" overrides selectedSlug for context only
+    const stateForContext: typeof state = {
+      ...state,
+      profile: updatedProfile,
+      ...(resolvedOrdinalSlug ? { selectedSlug: resolvedOrdinalSlug } : {}),
+    };
+    const builtContext     = buildContext(retrieval, stateForContext, plan, effectiveIntent, activeRefinement, explorationTarget, customerCtx);
     const contextContent = renderContext(builtContext);
 
     // 4. Build system prompt

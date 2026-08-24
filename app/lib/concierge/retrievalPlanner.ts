@@ -198,11 +198,11 @@ function assignRecommendationRoles(
   });
 }
 
-// ── Broad pool builder (EP-AI-C2) ────────────────────────────────────────────
+// ── Broad pool builder (EP-AI-C2 / EP-AI-C3) ─────────────────────────────────
 // For generic discovery and gift intents when no signal-specific rawQuery is
 // available. Sorts by fit score (using current signals + accumulated profile)
-// first, merchandising quality second. Pre-filters by gender constraint so the
-// post-switch applyGenderConstraint call is idempotent on this result.
+// first, merchandising quality second. Pre-filters by gender constraint and
+// profile avoidances so the post-switch hard filters are idempotent.
 
 function buildBroadPool(
   profile: ConversationProfile | undefined,
@@ -210,11 +210,24 @@ function buildBroadPool(
   maxCount: number = 8,
 ): FragranceKnowledge[] {
   const genderConstraint = getEffectiveGenderConstraint(profile);
-  const comparator = makeFitComparator(signals, profile);
+  const avoidedFamilies  = (profile?.avoidedFamilies?.value ?? []).map((f) => f.toLowerCase());
+  const avoidedNotes     = (profile?.avoidedNotes?.value    ?? []).map((n) => n.toLowerCase());
+  const comparator       = makeFitComparator(signals, profile);
+
   return mkcCatalogue
-    .filter(
-      (k) => !genderConstraint || k.gender === genderConstraint || k.gender === "unisex"
-    )
+    .filter((k) => {
+      if (genderConstraint && k.gender !== genderConstraint && k.gender !== "unisex") return false;
+      // Hard-exclude avoided families
+      if (avoidedFamilies.length > 0 && avoidedFamilies.some((af) =>
+        k.family.some((f) => f.toLowerCase().includes(af) || af.includes(f.toLowerCase()))
+      )) return false;
+      // Hard-exclude avoided notes (zero-note records pass because note arrays are empty)
+      if (avoidedNotes.length > 0 && avoidedNotes.some((an) =>
+        [...k.notes.top, ...k.notes.heart, ...k.notes.base]
+          .some((n) => n.toLowerCase().includes(an) || an.includes(n.toLowerCase()))
+      )) return false;
+      return true;
+    })
     .sort(comparator)
     .slice(0, maxCount);
 }
@@ -272,6 +285,20 @@ const HIDDEN_GEM_SIGNALS = [
   "give me something unexpected",
   "not a bestseller", "not bestsellers",
   "beyond the obvious", "beyond the bestsellers",
+];
+
+// ── Variety signals (EP-AI-C3) ────────────────────────────────────────────────
+// Explicit guest requests for alternatives / different options.
+// When detected AND unseen constrained candidates are available, the session-
+// diversity block restricts FRAGRANCES IN CONTEXT to unseen candidates only —
+// preventing the LLM from re-recommending previously presented fragrances.
+
+const VARIETY_SIGNALS = [
+  "different options", "something else", "other options",
+  "show me alternatives", "alternatives please", "completely different",
+  "different fragrances", "something different", "other fragrances",
+  "different ones", "other ones", "show me other",
+  "none of those", "none of these",
 ];
 
 // ── Exported scoring helpers (EP-AI-C2-R1) ────────────────────────────────────
@@ -342,6 +369,13 @@ export function planRetrieval(
   let articles:            AcademyArticle[]     = [];
   let collectionName:      string | undefined;
   let isHiddenGemRequest = false;
+
+  // Variety-request detection (EP-AI-C3): when guest asks for alternatives,
+  // the session-diversity block will restrict candidates to unseen-only so the
+  // LLM cannot re-surface previously recommended fragrances.
+  const isVarietyRequest = rawMessage
+    ? VARIETY_SIGNALS.some((p) => rawMessage.toLowerCase().includes(p))
+    : false;
 
   const sourceKnowledge = entitySlug ? catalogueMaps.bySlug.get(entitySlug) : undefined;
 
@@ -619,8 +653,16 @@ export function planRetrieval(
   if (excludeSlugs && excludeSlugs.size > 0 && intent !== "comparison") {
     const unseen = fragrances.filter((f) => !excludeSlugs.has(f.slug));
     if (unseen.length > 0) {
-      const seen = fragrances.filter((f) => excludeSlugs.has(f.slug));
-      fragrances = [...unseen, ...seen];
+      if (isVarietyRequest && unseen.length >= 2) {
+        // On explicit variety / "different options" turns: restrict FRAGRANCES IN
+        // CONTEXT to unseen candidates only. This prevents the LLM from re-presenting
+        // previously recommended fragrances as new recommendations. (EP-AI-C3 REQUIRED)
+        fragrances = unseen;
+      } else {
+        // Standard session diversity: unseen candidates first, seen deferred to end.
+        const seen = fragrances.filter((f) => excludeSlugs.has(f.slug));
+        fragrances = [...unseen, ...seen];
+      }
     } else if (fragrances.length > 0) {
       // All relevant candidates seen — draw fresh records from the broader catalogue.
       // Use fit-aware sort so session diversity respects accumulated preferences.
@@ -637,10 +679,23 @@ export function planRetrieval(
     }
   }
 
+  // ── Hard rejection filter (EP-AI-C3) ──────────────────────────────────────────
+  // Explicitly rejected product slugs are removed after ALL other filtering.
+  // Unlike excludeSlugs (which allows recycling), rejected slugs are NEVER
+  // surfaced — not as supplements, not as broad-catalogue fallback candidates.
+  const profileRejectedSlugs = profile?.rejectedSlugs ?? [];
+  if (profileRejectedSlugs.length > 0) {
+    const rejectedSet = new Set(profileRejectedSlugs);
+    fragrances = fragrances.filter((f) => !rejectedSet.has(f.slug));
+  }
+
   // Always surface the source fragrance when it exists (even if previously
   // recommended — it is the reference point for similarity/education queries,
   // not a new recommendation in those contexts).
-  if (sourceKnowledge && !fragrances.find((f) => f.slug === sourceKnowledge.slug)) {
+  // Rejected slugs override this: a product the guest has explicitly refused
+  // must not be re-inserted via this path (EP-AI-C3).
+  const rejectedSourceSlug = profileRejectedSlugs.includes(sourceKnowledge?.slug ?? "");
+  if (sourceKnowledge && !fragrances.find((f) => f.slug === sourceKnowledge.slug) && !rejectedSourceSlug) {
     fragrances = [sourceKnowledge, ...fragrances].slice(0, 6);
   }
 

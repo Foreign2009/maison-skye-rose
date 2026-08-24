@@ -44,12 +44,17 @@ const VOCAB: VocabEntry[] = [
 
 const NEGATION_TRIGGERS = [
   "don't like", "dont like", "do not like",
+  "doesn't like", "doesnt like", "does not like",
   "don't enjoy", "dont enjoy", "do not enjoy",
-  "don't want", "dont want",
+  "doesn't enjoy", "doesnt enjoy", "does not enjoy",
+  "don't want", "dont want", "doesn't want", "doesnt want",
   "don't wear", "dont wear",
   "hate ", "dislike", "avoid ", "not into",
   "not a fan", "can't stand", "cant stand",
   "not fond of", "never wear",
+  "she hates", "he hates", "they hate",
+  "she avoids", "he avoids", "she doesn't", "he doesn't",
+  "nothing ", "without ",
 ];
 
 const POSITIVE_TRIGGERS = [

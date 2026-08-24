@@ -81,6 +81,11 @@ export interface ConversationProfile {
   preferredNotes?:     ProfileField<string[]>;
   avoidedNotes?:       ProfileField<string[]>;
 
+  // Explicitly rejected product slugs — session-scoped hard exclusions (EP-AI-C3)
+  // Populated by rejectionDetector when guest names a specific product to exclude
+  // or says "none of those". Never persisted beyond the session.
+  rejectedSlugs?:      string[];
+
   // Context preferences
   preferredOccasions?: ProfileField<string[]>;
   preferredSeasons?:   ProfileField<string[]>;

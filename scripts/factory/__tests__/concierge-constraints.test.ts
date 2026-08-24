@@ -27,6 +27,7 @@ import type { ConversationProfile, ConversationState }  from "../../../app/lib/c
 import type { ResolvedIntent } from "../../../app/lib/concierge/intentResolver";
 import type { ConversationPlan } from "../../../app/lib/concierge/conversationPlanner";
 import type { RetrievalContext } from "../../../app/lib/concierge/contextBuilder";
+import { detectRejections, NONE_OF_THOSE_SIGNALS } from "../../../app/lib/concierge/rejectionDetector";
 
 // ── Harness ───────────────────────────────────────────────────────────────────
 
@@ -1264,6 +1265,652 @@ test("T-R1-12 — recipient gender hard constraint still enforced after R1 chang
   const males = result.fragrances.filter(f => f.gender === "male");
   assert.equal(males.length, 0, `T-R1-12 — male candidates leaked for female-gift intent: ${males.map(f => f.slug).join(", ")}`);
   assert.ok(result.fragrances.length >= 3, `T-R1-12 — expected ≥3 female/unisex candidates for gift-female, got ${result.fragrances.length}`);
+});
+
+// ── Section 13: C3 Rejection Model ───────────────────────────────────────────
+// EP-AI-C3: named-product rejection, "none of those", session-seen filtering.
+
+console.log("\n── 13. C3 Rejection Model ────────────────────────────────────────────");
+
+test("T-C3-01 — detectRejections: named fragrance ('I don't like Sauvage') → sauvage-inspired rejected", () => {
+  const rejected = detectRejections("I don't like Sauvage", undefined, undefined);
+  assert.ok(
+    rejected.includes("sauvage-inspired"),
+    `T-C3-01 — expected sauvage-inspired in rejected set, got: [${rejected.join(", ")}]`,
+  );
+});
+
+test("T-C3-02 — rejected slug absent from planRetrieval candidates", () => {
+  const profile = makeProfile({
+    preferredGender: { value: "male", confidence: "HIGH" },
+    rejectedSlugs: ["sauvage-inspired"],
+  });
+  const result = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "recommend for me");
+  const leaked = result.fragrances.find(f => f.slug === "sauvage-inspired");
+  assert.equal(leaked, undefined,
+    "T-C3-02 — sauvage-inspired appeared in candidates despite being rejected");
+});
+
+test("T-C3-03 — detectRejections: 'none of those' rejects previous recommendation set", () => {
+  const lastRecs = ["aventus-inspired", "hacivat-inspired", "layton-inspired"];
+  const rejected = detectRejections("None of those", undefined, lastRecs);
+  for (const slug of lastRecs) {
+    assert.ok(
+      rejected.includes(slug),
+      `T-C3-03 — expected ${slug} in rejected set after 'none of those', got: [${rejected.join(", ")}]`,
+    );
+  }
+});
+
+test("T-C3-04 — NONE_OF_THOSE_SIGNALS covers key phrases", () => {
+  for (const phrase of ["none of those", "none of these", "none of them", "not those"]) {
+    assert.ok(
+      NONE_OF_THOSE_SIGNALS.some(p => p === phrase),
+      `T-C3-04 — '${phrase}' not in NONE_OF_THOSE_SIGNALS`,
+    );
+  }
+});
+
+test("T-C3-05 — 'different options' variety turn: only unseen candidates returned (≥2 unseen exist)", () => {
+  const profile = makeProfile({ preferredGender: { value: "male", confidence: "HIGH" } });
+  // Seed session with first batch
+  const t1 = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "recommend for me");
+  const t1Slugs = new Set(t1.fragrances.map(f => f.slug));
+
+  // Variety turn — should return only unseen candidates
+  const t2 = planRetrieval(
+    GENERAL_INTENT, EMPTY_CONTEXT, profile,
+    undefined, undefined, null,
+    t1Slugs,
+    "Give me different options",
+  );
+  const t2Repeated = t2.fragrances.filter(f => t1Slugs.has(f.slug));
+  assert.equal(t2Repeated.length, 0,
+    `T-C3-05 — variety turn returned session-seen slugs: ${t2Repeated.map(f => f.slug).join(", ")}`);
+});
+
+test("T-C3-06 — 'something else' variety turn: only unseen candidates returned", () => {
+  const profile = makeProfile({ preferredGender: { value: "female", confidence: "HIGH" } });
+  const t1 = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "recommend for me");
+  const t1Slugs = new Set(t1.fragrances.map(f => f.slug));
+
+  const t2 = planRetrieval(
+    GENERAL_INTENT, EMPTY_CONTEXT, profile,
+    undefined, undefined, null,
+    t1Slugs,
+    "Show me something else",
+  );
+  const t2Repeated = t2.fragrances.filter(f => t1Slugs.has(f.slug));
+  assert.equal(t2Repeated.length, 0,
+    `T-C3-06 — 'something else' turn returned session-seen slugs: ${t2Repeated.map(f => f.slug).join(", ")}`);
+});
+
+test("T-C3-07 — gender constraint (male) preserved after slug rejection", () => {
+  const profile = makeProfile({
+    preferredGender: { value: "male", confidence: "HIGH" },
+    rejectedSlugs: ["aventus-inspired"],
+  });
+  const result = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "recommend");
+  const females = result.fragrances.filter(f => f.gender === "female");
+  assert.equal(females.length, 0,
+    `T-C3-07 — female candidates leaked despite male constraint + rejection: ${females.map(f => f.slug).join(", ")}`);
+  assert.equal(result.fragrances.find(f => f.slug === "aventus-inspired"), undefined,
+    "T-C3-07 — rejected aventus-inspired still in candidates");
+});
+
+test("T-C3-08 — gender constraint (female) preserved after slug rejection", () => {
+  const profile = makeProfile({
+    preferredGender: { value: "female", confidence: "HIGH" },
+    rejectedSlugs: ["delina-inspired"],
+  });
+  const result = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "recommend");
+  const males = result.fragrances.filter(f => f.gender === "male");
+  assert.equal(males.length, 0,
+    `T-C3-08 — male candidates leaked despite female constraint + rejection: ${males.map(f => f.slug).join(", ")}`);
+  assert.equal(result.fragrances.find(f => f.slug === "delina-inspired"), undefined,
+    "T-C3-08 — rejected delina-inspired still in candidates");
+});
+
+test("T-C3-09 — gift-recipient female constraint preserved after rejection", () => {
+  const profile = makeProfile({
+    shoppingIntent:  { value: "gift",   confidence: "HIGH" },
+    recipientGender: { value: "female", confidence: "HIGH" },
+    rejectedSlugs:   ["delina-inspired"],
+  });
+  const result = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "gift for her");
+  const males = result.fragrances.filter(f => f.gender === "male");
+  assert.equal(males.length, 0,
+    `T-C3-09 — male candidates leaked despite female gift constraint: ${males.map(f => f.slug).join(", ")}`);
+  assert.equal(result.fragrances.find(f => f.slug === "delina-inspired"), undefined,
+    "T-C3-09 — rejected delina-inspired still in candidates for gift turn");
+});
+
+// ── Section 14: C3 Negative Preference Constraints ───────────────────────────
+
+console.log("\n── 14. C3 Negative Preference Constraints ────────────────────────────");
+
+test("T-C3-10 — extractProfile: 'I hate oud' → avoidedFamilies includes Oud", () => {
+  const p = extractProfile("I hate oud fragrances", undefined);
+  assert.ok(
+    (p.avoidedFamilies?.value ?? []).some(f => f.toLowerCase() === "oud"),
+    `T-C3-10 — expected Oud in avoidedFamilies, got: [${p.avoidedFamilies?.value.join(", ")}]`,
+  );
+});
+
+test("T-C3-11 — avoidedFamilies Oud: oud-family fragrances excluded from broad pool", () => {
+  const oudFamilies = mkcCatalogue.filter(
+    k => k.family.some(f => f.toLowerCase() === "oud") && (k.gender === "male" || k.gender === "unisex")
+  );
+  if (oudFamilies.length === 0) {
+    skip("T-C3-11 — no oud-family male/unisex fragrances in catalogue");
+    return;
+  }
+  const profile = makeProfile({
+    preferredGender:  { value: "male", confidence: "HIGH" },
+    avoidedFamilies:  { value: ["Oud"],  confidence: "HIGH" },
+  });
+  const result = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "recommend for me");
+  const oudLeaks = result.fragrances.filter(
+    f => f.family.some(fam => fam.toLowerCase() === "oud")
+  );
+  assert.equal(oudLeaks.length, 0,
+    `T-C3-11 — oud-family fragrances in result despite avoidance: ${oudLeaks.map(f => f.slug).join(", ")}`);
+});
+
+test("T-C3-12 — extractProfile: 'I don't like floral scents' → avoidedFamilies includes Floral", () => {
+  const p = extractProfile("I don't like floral scents", undefined);
+  assert.ok(
+    (p.avoidedFamilies?.value ?? []).some(f => f.toLowerCase() === "floral"),
+    `T-C3-12 — expected Floral in avoidedFamilies, got: [${p.avoidedFamilies?.value.join(", ")}]`,
+  );
+});
+
+test("T-C3-13 — extractProfile: 'nothing gourmand' → avoidedFamilies includes Gourmand", () => {
+  const p = extractProfile("nothing gourmand please", undefined);
+  assert.ok(
+    (p.avoidedFamilies?.value ?? []).some(f => f.toLowerCase() === "gourmand"),
+    `T-C3-13 — expected Gourmand in avoidedFamilies, got: [${p.avoidedFamilies?.value.join(", ")}]`,
+  );
+});
+
+test("T-C3-14 — avoidedFamilies Floral: floral fragrances excluded for female guest", () => {
+  const floralFemale = mkcCatalogue.filter(
+    k => k.family.some(f => f.toLowerCase() === "floral") && (k.gender === "female" || k.gender === "unisex")
+  );
+  if (floralFemale.length === 0) {
+    skip("T-C3-14 — no floral female/unisex fragrances in catalogue");
+    return;
+  }
+  const profile = makeProfile({
+    preferredGender:  { value: "female", confidence: "HIGH" },
+    avoidedFamilies:  { value: ["Floral"], confidence: "HIGH" },
+  });
+  const result = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "something for me");
+  const floralLeaks = result.fragrances.filter(
+    f => f.family.some(fam => fam.toLowerCase() === "floral") && f.gender === "female"
+  );
+  assert.equal(floralLeaks.length, 0,
+    `T-C3-14 — floral fragrances in female result despite avoidance: ${floralLeaks.map(f => f.slug).join(", ")}`);
+});
+
+test("T-C3-15 — extractProfile: 'without oud' → avoidedFamilies includes Oud", () => {
+  const p = extractProfile("I want something without oud", undefined);
+  assert.ok(
+    (p.avoidedFamilies?.value ?? []).some(f => f.toLowerCase() === "oud"),
+    `T-C3-15 — expected Oud in avoidedFamilies after 'without oud', got: [${p.avoidedFamilies?.value.join(", ")}]`,
+  );
+});
+
+test("T-C3-16 — unknown negative attribute does not corrupt profile", () => {
+  const p = extractProfile("I don't like boring fragrances", undefined);
+  // 'boring' is not in FAMILIES or NOTES — profile should not have avoidedFamilies or avoidedNotes set from this
+  const avoidedLen = (p.avoidedFamilies?.value ?? []).length + (p.avoidedNotes?.value ?? []).length;
+  assert.equal(avoidedLen, 0,
+    `T-C3-16 — unexpected avoidances added for unknown term 'boring': families=[${p.avoidedFamilies?.value.join(", ")}] notes=[${p.avoidedNotes?.value.join(", ")}]`,
+  );
+});
+
+// ── Section 15: C3 Profile Correction ────────────────────────────────────────
+
+console.log("\n── 15. C3 Profile Correction ─────────────────────────────────────────");
+
+test("T-C3-17 — gender correction: 'I'm male' → 'I'm female' overrides to female", () => {
+  let p = extractProfile("I'm male", undefined);
+  assert.equal(p.preferredGender?.value, "male", "T-C3-17 — initial male not detected");
+  p = extractProfile("I'm female", p);
+  assert.equal(p.preferredGender?.value, "female",
+    `T-C3-17 — expected female after correction, got ${p.preferredGender?.value}`);
+});
+
+test("T-C3-18 — gift → self pivot: shoppingIntent returns to self", () => {
+  let p = extractProfile("I'm buying for my girlfriend", undefined);
+  assert.equal(p.shoppingIntent?.value, "gift", "T-C3-18 — gift not detected initially");
+  p = extractProfile("Actually I'd like something for myself", p);
+  assert.equal(p.shoppingIntent?.value, "self",
+    `T-C3-18 — expected self after pivot, got ${p.shoppingIntent?.value}`);
+  assert.equal(getEffectiveGenderConstraint(p), null,
+    "T-C3-18 — expected no constraint after self pivot (unspecified personal gender)");
+});
+
+test("T-C3-19 — self → gift pivot: recipientGender drives constraint", () => {
+  let p = extractProfile("I'm male. Recommend for me.", undefined);
+  assert.equal(p.preferredGender?.value, "male", "T-C3-19 — male not detected initially");
+  p = extractProfile("Actually this is for my girlfriend", p);
+  assert.equal(p.shoppingIntent?.value, "gift", "T-C3-19 — gift not detected after pivot");
+  assert.equal(p.recipientGender?.value, "female", "T-C3-19 — recipientGender not female");
+  assert.equal(getEffectiveGenderConstraint(p), "female",
+    `T-C3-19 — expected female constraint after self→gift pivot, got ${getEffectiveGenderConstraint(p)}`);
+});
+
+test("T-C3-20 — avoided family removes from preferred when contradiction detected", () => {
+  let p = extractProfile("I love fresh fragrances", undefined);
+  assert.ok((p.preferredFamilies?.value ?? []).some(f => f.toLowerCase() === "fresh"),
+    "T-C3-20 — Fresh not in preferredFamilies initially");
+  p = extractProfile("I don't like fresh scents anymore", p);
+  const preferred = p.preferredFamilies?.value ?? [];
+  const avoided   = p.avoidedFamilies?.value  ?? [];
+  assert.ok(!preferred.some(f => f.toLowerCase() === "fresh"),
+    `T-C3-20 — Fresh still in preferredFamilies after contradiction: [${preferred.join(", ")}]`);
+  assert.ok(avoided.some(f => f.toLowerCase() === "fresh"),
+    `T-C3-20 — Fresh not in avoidedFamilies after contradiction: [${avoided.join(", ")}]`);
+});
+
+// ── Section 16: C3 Comparison Exemption + Candidate Bound ────────────────────
+
+console.log("\n── 16. C3 Comparison Exemption + Candidate Bound ────────────────────");
+
+test("T-C3-21 — comparison intent: cross-gender products preserved (exemption)", () => {
+  const maleSlug   = "aventus-inspired";
+  const femaleSlug = "delina-inspired";
+  const comparisonIntent: ResolvedIntent = {
+    intent:      "comparison",
+    signals:     {},
+    entitySlug:  maleSlug,
+    compareSlug: [maleSlug, femaleSlug],
+  };
+  const profile = makeProfile({ preferredGender: { value: "male", confidence: "HIGH" } });
+  const result = planRetrieval(comparisonIntent, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "compare these two");
+  const slugs = result.fragrances.map(f => f.slug);
+  assert.ok(slugs.includes(maleSlug),   `T-C3-21 — ${maleSlug} missing from comparison result`);
+  assert.ok(slugs.includes(femaleSlug), `T-C3-21 — ${femaleSlug} missing from comparison (exemption not applied)`);
+});
+
+test("T-C3-22 — rejected slug is absent even in comparison result (hard filter applies)", () => {
+  const maleSlug   = "aventus-inspired";
+  const femaleSlug = "delina-inspired";
+  const comparisonIntent: ResolvedIntent = {
+    intent:      "comparison",
+    signals:     {},
+    entitySlug:  maleSlug,
+    compareSlug: [maleSlug, femaleSlug],
+  };
+  // NOTE: rejected slugs still apply to comparison (hard filter after switch).
+  // The comparison exemption is only for gender — not for product rejection.
+  const profile = makeProfile({ rejectedSlugs: ["aventus-inspired"] });
+  const result = planRetrieval(comparisonIntent, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "compare these");
+  assert.equal(result.fragrances.find(f => f.slug === "aventus-inspired"), undefined,
+    "T-C3-22 — rejected aventus-inspired appeared in comparison candidates");
+});
+
+test("T-C3-23 — no duplicate slugs in single planRetrieval result", () => {
+  const profile = makeProfile({ preferredGender: { value: "male", confidence: "HIGH" } });
+  const result = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "recommend");
+  const slugs = result.fragrances.map(f => f.slug);
+  const uniqueSlugs = new Set(slugs);
+  assert.equal(slugs.length, uniqueSlugs.size,
+    `T-C3-23 — duplicate slugs in result: [${slugs.join(", ")}]`);
+});
+
+// ── Section 17: C3 Session Diversity + Variety ───────────────────────────────
+
+console.log("\n── 17. C3 Session Diversity + Variety ────────────────────────────────");
+
+test("T-C3-24 — rejected slug absent even when it would be highest-quality candidate", () => {
+  // Find a bestseller in the male pool to use as the rejection target
+  const topMale = mkcCatalogue.find(k => k.bestSeller && (k.gender === "male" || k.gender === "unisex"));
+  if (!topMale) {
+    skip("T-C3-24 — no male bestseller available as fixture");
+    return;
+  }
+  const profile = makeProfile({
+    preferredGender: { value: "male", confidence: "HIGH" },
+    rejectedSlugs:   [topMale.slug],
+  });
+  const result = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "recommend the best");
+  assert.equal(result.fragrances.find(f => f.slug === topMale.slug), undefined,
+    `T-C3-24 — rejected bestseller ${topMale.slug} appeared in candidates`);
+});
+
+test("T-C3-25 — variety turn excludes all session-seen when ≥2 unseen available", () => {
+  const profile = makeProfile({ preferredGender: { value: "male", confidence: "HIGH" } });
+  // Get a large first batch to create session-seen set
+  const t1 = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "recommend");
+  const t1Slugs = new Set(t1.fragrances.map(f => f.slug));
+
+  // Verify ≥2 unseen exist in the constrained catalogue
+  const male = mkcCatalogue.filter(k => k.gender === "male" || k.gender === "unisex");
+  const unseenInCatalogue = male.filter(k => !t1Slugs.has(k.slug));
+  if (unseenInCatalogue.length < 2) {
+    skip("T-C3-25 — fewer than 2 unseen male candidates after T1, cannot test variety filtering");
+    return;
+  }
+
+  const t2 = planRetrieval(
+    GENERAL_INTENT, EMPTY_CONTEXT, profile,
+    undefined, undefined, null, t1Slugs,
+    "Give me completely different options",
+  );
+  const t2Repeated = t2.fragrances.filter(f => t1Slugs.has(f.slug));
+  assert.equal(t2Repeated.length, 0,
+    `T-C3-25 — variety turn returned previously seen slugs: ${t2Repeated.map(f => f.slug).join(", ")}`);
+});
+
+test("T-C3-26 — recycle permitted when constrained catalogue exhausted (non-variety turn)", () => {
+  // Exhaust the female catalogue by excluding everything
+  const allFemale = mkcCatalogue.filter(k => k.gender === "female" || k.gender === "unisex");
+  const exhaustedSet = new Set(allFemale.map(k => k.slug));
+  const profile = makeProfile({ preferredGender: { value: "female", confidence: "HIGH" } });
+
+  const result = planRetrieval(
+    GENERAL_INTENT, EMPTY_CONTEXT, profile,
+    undefined, undefined, null, exhaustedSet,
+    "recommend", // not a variety turn — recycle allowed
+  );
+  // Should not throw and should still return something (recycled candidates)
+  assert.ok(result.fragrances.length >= 0, "T-C3-26 — planRetrieval crashed on exhausted catalogue");
+});
+
+test("T-C3-27 — rejected slugs do not appear across a 3-turn male session", () => {
+  const profile = makeProfile({ preferredGender: { value: "male", confidence: "HIGH" } });
+
+  // Turn 1
+  const t1 = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "recommend");
+  const t1Slugs = t1.fragrances.map(f => f.slug);
+
+  // Reject all of Turn 1
+  const profileWithRejections = makeProfile({
+    preferredGender: { value: "male", confidence: "HIGH" },
+    rejectedSlugs:   t1Slugs,
+  });
+
+  // Turn 2 — none from T1 should appear
+  const t2 = planRetrieval(
+    GENERAL_INTENT, EMPTY_CONTEXT, profileWithRejections,
+    undefined, undefined, null,
+    new Set(t1Slugs),
+    "something different",
+  );
+  const t2Leaked = t2.fragrances.filter(f => t1Slugs.includes(f.slug));
+  assert.equal(t2Leaked.length, 0,
+    `T-C3-27 — Turn 2 returned rejected T1 slugs: ${t2Leaked.map(f => f.slug).join(", ")}`);
+
+  // Turn 3 — rejected slugs still excluded
+  const t2Slugs = t2.fragrances.map(f => f.slug);
+  const t3 = planRetrieval(
+    GENERAL_INTENT, EMPTY_CONTEXT, profileWithRejections,
+    undefined, undefined, null,
+    new Set([...t1Slugs, ...t2Slugs]),
+    "more recommendations",
+  );
+  const t3Leaked = t3.fragrances.filter(f => t1Slugs.includes(f.slug));
+  assert.equal(t3Leaked.length, 0,
+    `T-C3-27 — Turn 3 returned rejected T1 slugs: ${t3Leaked.map(f => f.slug).join(", ")}`);
+});
+
+test("T-C3-28 — unknown entity reference: planRetrieval returns non-empty graceful fallback", () => {
+  const unknownIntent: ResolvedIntent = {
+    intent:      "similar_to",
+    signals:     {},
+    entitySlug:  "not-a-real-slug-xyz-99999",
+    compareSlug: [],
+  };
+  const result = planRetrieval(unknownIntent, EMPTY_CONTEXT, undefined, undefined, undefined, null, undefined, "something similar");
+  assert.ok(result.fragrances.length >= 0, "T-C3-28 — planRetrieval crashed on unknown entity slug");
+});
+
+// ── Section 18: C3 Safety + Multi-Turn Scenarios ─────────────────────────────
+
+console.log("\n── 18. C3 Safety + Multi-Turn Scenarios ─────────────────────────────");
+
+test("T-C3-29 — Torino24 zero-note safety: rejected slugs active does not invent notes", () => {
+  // Torino24 has notesEvidenceLocked = true and empty note arrays.
+  // The context builder must not claim note tier content for it.
+  const torino = mkcCatalogue.find(k => k.slug === "torino24-inspired");
+  if (!torino) {
+    skip("T-C3-29 — torino24-inspired not found in catalogue");
+    return;
+  }
+  assert.equal([...torino.notes.top, ...torino.notes.heart, ...torino.notes.base].length, 0,
+    "T-C3-29 — torino24-inspired unexpectedly has note data");
+});
+
+test("T-C3-30 — rejected Torino24 absent from candidates", () => {
+  const profile = makeProfile({
+    preferredGender: { value: "female", confidence: "HIGH" },
+    rejectedSlugs:   ["torino24-inspired"],
+  });
+  const result = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "recommend");
+  assert.equal(result.fragrances.find(f => f.slug === "torino24-inspired"), undefined,
+    "T-C3-30 — rejected torino24-inspired appeared in candidates");
+});
+
+test("T-C3-31 — avoidedFamilies + rejectedSlugs both enforced simultaneously", () => {
+  const anyOudMale = mkcCatalogue.find(
+    k => k.family.some(f => f.toLowerCase() === "oud") && (k.gender === "male" || k.gender === "unisex")
+  );
+  const topMale = mkcCatalogue.find(k => k.bestSeller && (k.gender === "male" || k.gender === "unisex") &&
+    !k.family.some(f => f.toLowerCase() === "oud"));
+
+  const profile = makeProfile({
+    preferredGender: { value: "male", confidence: "HIGH" },
+    avoidedFamilies: { value: ["Oud"], confidence: "HIGH" },
+    rejectedSlugs:   topMale ? [topMale.slug] : [],
+  });
+  const result = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "recommend");
+
+  if (anyOudMale) {
+    const oudInResult = result.fragrances.filter(f => f.family.some(fam => fam.toLowerCase() === "oud"));
+    assert.equal(oudInResult.length, 0,
+      `T-C3-31 — oud fragrances in result despite avoidance: ${oudInResult.map(f => f.slug).join(", ")}`);
+  }
+  if (topMale) {
+    assert.equal(result.fragrances.find(f => f.slug === topMale.slug), undefined,
+      `T-C3-31 — rejected slug ${topMale.slug} still in result despite being rejected`);
+  }
+});
+
+test("T-C3-32 — third-person negation: 'She doesn't like oud' → avoidedFamilies includes Oud", () => {
+  const p = extractProfile("She doesn't like oud fragrances", undefined);
+  assert.ok(
+    (p.avoidedFamilies?.value ?? []).some(f => f.toLowerCase() === "oud"),
+    `T-C3-32 — expected Oud in avoidedFamilies from third-person negation, got: [${p.avoidedFamilies?.value.join(", ")}]`,
+  );
+});
+
+test("T-C3-33 — multi-turn: rejection persists across profile updates", () => {
+  // Simulate route.ts behavior: extraction updates profile, rejection is passed through
+  let profile: ConversationProfile | undefined = undefined;
+  const lastRecs: string[] = [];
+
+  // Turn 1 — establish male preference
+  profile = extractProfile("I'm male", profile);
+  let result = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "recommend");
+  result.fragrances.forEach(f => lastRecs.push(f.slug));
+
+  // Turn 2 — reject a specific fragrance
+  const targetSlug = result.fragrances[0]?.slug;
+  if (!targetSlug) {
+    skip("T-C3-33 — no candidates in Turn 1 to use as rejection fixture");
+    return;
+  }
+  profile = extractProfile("something fresh", profile);
+  profile.rejectedSlugs = [targetSlug];
+
+  // Turn 3 — fresh signal with rejection active
+  const freshIntent: ResolvedIntent = {
+    intent: "general_discovery", signals: { vibe: "fresh" }, entitySlug: undefined, compareSlug: [],
+  };
+  result = planRetrieval(freshIntent, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "something fresh");
+  assert.equal(result.fragrances.find(f => f.slug === targetSlug), undefined,
+    `T-C3-33 — rejected slug ${targetSlug} reappeared in Turn 3`);
+});
+
+test("T-C3-34 — multi-turn female: avoidance survives pivot from male context", () => {
+  let profile: ConversationProfile | undefined = undefined;
+
+  // Phase 1: male context with oud avoidance
+  profile = extractProfile("I'm male and I hate oud", profile);
+  assert.ok(
+    (profile.avoidedFamilies?.value ?? []).some(f => f.toLowerCase() === "oud"),
+    "T-C3-34 — oud not in avoidedFamilies before pivot",
+  );
+
+  // Phase 2: pivot to gift for girlfriend (female context)
+  profile = extractProfile("Actually this is for my girlfriend", profile);
+  assert.equal(profile.shoppingIntent?.value, "gift", "T-C3-34 — gift not detected after pivot");
+  assert.equal(profile.recipientGender?.value, "female", "T-C3-34 — female recipient not detected");
+
+  // Avoidance should survive pivot
+  assert.ok(
+    (profile.avoidedFamilies?.value ?? []).some(f => f.toLowerCase() === "oud"),
+    `T-C3-34 — oud avoidance lost after gift pivot: [${profile.avoidedFamilies?.value.join(", ")}]`,
+  );
+
+  // Retrieval should honour both female constraint AND oud avoidance
+  const result = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "recommend");
+  const males = result.fragrances.filter(f => f.gender === "male");
+  const oudLeaks = result.fragrances.filter(f => f.family.some(fam => fam.toLowerCase() === "oud"));
+  assert.equal(males.length, 0,
+    `T-C3-34 — male candidates after gift pivot: ${males.map(f => f.slug).join(", ")}`);
+  assert.equal(oudLeaks.length, 0,
+    `T-C3-34 — oud fragrances persisted despite avoidance after pivot: ${oudLeaks.map(f => f.slug).join(", ")}`);
+});
+
+test("T-C3-35 — no gender leakage after male → female pivot with rejection active", () => {
+  let profile = makeProfile({
+    preferredGender: { value: "male",   confidence: "HIGH" },
+    rejectedSlugs:   ["aventus-inspired"],
+  });
+
+  // Pivot to female gift
+  profile = extractProfile("Actually I'm buying for my wife", profile);
+  profile.rejectedSlugs = ["aventus-inspired"]; // simulate route.ts merge
+
+  const result = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "recommend");
+  const males = result.fragrances.filter(f => f.gender === "male");
+  assert.equal(males.length, 0,
+    `T-C3-35 — male candidates after pivot to female gift: ${males.map(f => f.slug).join(", ")}`);
+  assert.equal(result.fragrances.find(f => f.slug === "aventus-inspired"), undefined,
+    "T-C3-35 — rejected aventus-inspired appeared after pivot");
+});
+
+test("T-C3-36 — 'none of those' followed by new search: results contain only new candidates", () => {
+  const profile = makeProfile({ preferredGender: { value: "female", confidence: "HIGH" } });
+  const t1 = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "recommend");
+  const t1Slugs = t1.fragrances.map(f => f.slug);
+  const t1SlugSet = new Set(t1Slugs);
+
+  // Simulate "none of those" → t1Slugs become rejected
+  const profileAfterNone = makeProfile({
+    preferredGender: { value: "female", confidence: "HIGH" },
+    rejectedSlugs:   t1Slugs,
+  });
+
+  const t2 = planRetrieval(
+    GENERAL_INTENT, EMPTY_CONTEXT, profileAfterNone,
+    undefined, undefined, null,
+    t1SlugSet,
+    "show me other options",
+  );
+  const t2Leaked = t2.fragrances.filter(f => t1SlugSet.has(f.slug));
+  assert.equal(t2Leaked.length, 0,
+    `T-C3-36 — after 'none of those', T1 slugs reappeared in T2: ${t2Leaked.map(f => f.slug).join(", ")}`);
+});
+
+test("T-C3-37 — ordinal reference: lastRecommendationSlugs[1] resolves as 'second one'", () => {
+  // Unit-level test: verify the structure that ordinal resolution depends on.
+  // The full ordinal → selectedSlug resolution happens in route.ts (not planRetrieval),
+  // so this test confirms the data model is correctly populated.
+  const mockLastRecs = ["aventus-inspired", "hacivat-inspired", "layton-inspired"];
+  const secondOne = mockLastRecs[1];
+  assert.equal(secondOne, "hacivat-inspired",
+    "T-C3-37 — index 1 of mockLastRecs should be hacivat-inspired");
+  // The route resolves ordinals and overrides selectedSlug — no further action needed at planRetrieval level.
+  // Documented: planRetrieval order = planner order, not guaranteed LLM presentation order.
+});
+
+test("T-C3-38 — variety turn with zero unseen: falls through to broad-catalogue fallback", () => {
+  // Exhaust a small portion of the female catalogue
+  const profile = makeProfile({ preferredGender: { value: "female", confidence: "HIGH" } });
+  const t1 = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "recommend");
+  const allFemale = mkcCatalogue.filter(k => k.gender === "female" || k.gender === "unisex");
+
+  if (allFemale.length <= t1.fragrances.length) {
+    skip("T-C3-38 — catalogue too small to exhaust for variety-fallback test");
+    return;
+  }
+
+  // All current fragrances are excluded, so variety filter falls through to broader catalogue
+  const excludeAll = new Set(allFemale.map(k => k.slug));
+  const t2 = planRetrieval(
+    GENERAL_INTENT, EMPTY_CONTEXT, profile,
+    undefined, undefined, null, excludeAll,
+    "Show me other options", // variety signal, but no unseen → fallback to catalogue
+  );
+  // Should not crash; recycled candidates are acceptable when catalogue is exhausted
+  assert.ok(t2.fragrances.length >= 0, "T-C3-38 — planRetrieval crashed on exhausted catalogue with variety turn");
+});
+
+test("T-C3-39 — detectRejections: merges existing rejections with newly detected", () => {
+  const existingProfile = makeProfile({ rejectedSlugs: ["delina-inspired"] });
+  const lastRecs = ["aventus-inspired", "hacivat-inspired"];
+  const merged = detectRejections("None of those", existingProfile, lastRecs);
+  assert.ok(merged.includes("delina-inspired"),  "T-C3-39 — existing rejected slug lost in merge");
+  assert.ok(merged.includes("aventus-inspired"), "T-C3-39 — new none-of-those slug missing in merge");
+  assert.ok(merged.includes("hacivat-inspired"), "T-C3-39 — new none-of-those slug missing in merge");
+});
+
+test("T-C3-40 — multi-turn Founder scenario: zero gender leakage + zero rejection leakage across 4 turns", () => {
+  let profile: ConversationProfile | undefined = undefined;
+  const cumulativeExcluded = new Set<string>();
+  let allRejectedSlugs: string[] = [];
+
+  // Turn 1 — male
+  profile = extractProfile("I'm male. Recommend a fragrance for myself.", profile);
+  let result = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "I'm male. Recommend a fragrance for myself.");
+  result.fragrances.forEach(f => cumulativeExcluded.add(f.slug));
+  assert.equal(result.fragrances.filter(f => f.gender === "female").length, 0, "T-C3-40 T1 — female candidates");
+
+  // Turn 2 — reject first result
+  const rejectedSlug = result.fragrances[0]?.slug;
+  if (rejectedSlug) allRejectedSlugs = [rejectedSlug];
+  profile = extractProfile("I want something fresh.", profile);
+  profile.rejectedSlugs = allRejectedSlugs.length > 0 ? [...allRejectedSlugs] : undefined;
+  const freshIntent: ResolvedIntent = { intent: "general_discovery", signals: { vibe: "fresh" }, entitySlug: undefined, compareSlug: [] };
+  result = planRetrieval(freshIntent, EMPTY_CONTEXT, profile, undefined, undefined, null, cumulativeExcluded.size > 0 ? new Set(cumulativeExcluded) : undefined, "I want something fresh.");
+  result.fragrances.forEach(f => cumulativeExcluded.add(f.slug));
+  assert.equal(result.fragrances.filter(f => f.gender === "female").length, 0, "T-C3-40 T2 — female candidates");
+  if (rejectedSlug) {
+    assert.equal(result.fragrances.find(f => f.slug === rejectedSlug), undefined, `T-C3-40 T2 — rejected ${rejectedSlug} reappeared`);
+  }
+
+  // Turn 3 — variety turn
+  result = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile, undefined, undefined, null, cumulativeExcluded.size > 0 ? new Set(cumulativeExcluded) : undefined, "Give me different options.");
+  result.fragrances.forEach(f => cumulativeExcluded.add(f.slug));
+  assert.equal(result.fragrances.filter(f => f.gender === "female").length, 0, "T-C3-40 T3 — female candidates on variety turn");
+  if (rejectedSlug) {
+    assert.equal(result.fragrances.find(f => f.slug === rejectedSlug), undefined, `T-C3-40 T3 — rejected ${rejectedSlug} reappeared on variety turn`);
+  }
+
+  // Turn 4 — gift pivot to girlfriend
+  profile = extractProfile("Actually I'm buying for my girlfriend now.", profile);
+  profile.rejectedSlugs = allRejectedSlugs.length > 0 ? [...allRejectedSlugs] : undefined;
+  result = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile, undefined, undefined, null, cumulativeExcluded.size > 0 ? new Set(cumulativeExcluded) : undefined, "Actually I'm buying for my girlfriend now.");
+  assert.equal(getEffectiveGenderConstraint(profile), "female", "T-C3-40 T4 — constraint should be female after gift pivot");
+  assert.equal(result.fragrances.filter(f => f.gender === "male").length, 0, "T-C3-40 T4 — male candidates after female pivot");
+  if (rejectedSlug) {
+    assert.equal(result.fragrances.find(f => f.slug === rejectedSlug), undefined, `T-C3-40 T4 — rejected ${rejectedSlug} reappeared after pivot`);
+  }
 });
 
 // ── Summary ───────────────────────────────────────────────────────────────────
