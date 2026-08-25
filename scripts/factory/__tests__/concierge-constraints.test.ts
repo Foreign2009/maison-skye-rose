@@ -28,6 +28,7 @@ import type { ResolvedIntent } from "../../../app/lib/concierge/intentResolver";
 import { planConversation, type ConversationPlan } from "../../../app/lib/concierge/conversationPlanner";
 import type { RetrievalContext } from "../../../app/lib/concierge/contextBuilder";
 import { detectRejections, NONE_OF_THOSE_SIGNALS } from "../../../app/lib/concierge/rejectionDetector";
+import { planResponse } from "../../../app/lib/concierge/responsePlanner";
 
 // ── Harness ───────────────────────────────────────────────────────────────────
 
@@ -2180,6 +2181,518 @@ test("T-C4-P0-20 — avoidance + rejection combined on similar_to: source absent
   const oudLeaks = result.fragrances.filter(f => f.family.some(fam => fam.toLowerCase() === "oud"));
   assert.equal(oudLeaks.length, 0,
     `T-C4-P0-20 — oud in result with rejection+avoidance active: ${oudLeaks.map(f => f.slug).join(", ")}`);
+});
+
+// ── Section 20: EP-AI-C4 — Progressive Refinement + Comparative Intelligence ──
+
+console.log("\n── 20. EP-AI-C4 Progressive Refinement ──────────────────────────────");
+
+// ── C4-01 to C4-10: Planner routing ──────────────────────────────────────────
+
+test("T-C4-01 — 'like the first one but fresher' → anchored_refinement", () => {
+  const state: ConversationState = {
+    sessionId: "test", turns: [{ role: "assistant" as const, content: "Here are some options", intent: "general_discovery" as const, timestamp: 0 }],
+    context: {}, lastRecommendationSlugs: ["fragrance-a", "fragrance-b"],
+  };
+  const plan = planConversation("like the first one but fresher", state);
+  assert.equal(plan.action, "anchored_refinement",
+    `T-C4-01 — expected anchored_refinement, got ${plan.action}`);
+  assert.equal(plan.requiresRetrieval, true, "T-C4-01 — requiresRetrieval must be true");
+});
+
+test("T-C4-02 — 'same as the second but less sweet' → anchored_refinement", () => {
+  const state: ConversationState = {
+    sessionId: "test", turns: [{ role: "assistant" as const, content: "Here are options", intent: "general_discovery" as const, timestamp: 0 }],
+    context: {}, lastRecommendationSlugs: ["fragrance-a", "fragrance-b"],
+  };
+  const plan = planConversation("same as the second but less sweet", state);
+  assert.equal(plan.action, "anchored_refinement",
+    `T-C4-02 — expected anchored_refinement, got ${plan.action}`);
+});
+
+test("T-C4-03 — direction signal + selectedSlug → anchored_refinement (no explicit reference)", () => {
+  const state: ConversationState = {
+    sessionId: "test", turns: [{ role: "assistant" as const, content: "Here are options", intent: "general_discovery" as const, timestamp: 0 }],
+    context: {}, lastRecommendationSlugs: ["fragrance-a"], selectedSlug: "fragrance-a",
+  };
+  const plan = planConversation("something warmer", state);
+  assert.equal(plan.action, "anchored_refinement",
+    `T-C4-03 — expected anchored_refinement with selectedSlug anchor, got ${plan.action}`);
+});
+
+test("T-C4-04 — 'the first one' with NO direction signal → reuse_cached (not anchored)", () => {
+  const state: ConversationState = {
+    sessionId: "test", turns: [{ role: "assistant" as const, content: "Here are options", intent: "general_discovery" as const, timestamp: 0 }],
+    context: {}, lastRecommendationSlugs: ["fragrance-a", "fragrance-b"],
+  };
+  const plan = planConversation("tell me more about the first one", state);
+  assert.equal(plan.action, "reuse_cached",
+    `T-C4-04 — expected reuse_cached for reference without direction, got ${plan.action}`);
+});
+
+test("T-C4-05 — 'something fresher' with NO previous recs and NO selectedSlug → new_search", () => {
+  const state: ConversationState = {
+    sessionId: "test", turns: [], context: {},
+  };
+  const plan = planConversation("something fresher please", state);
+  assert.notEqual(plan.action, "anchored_refinement",
+    "T-C4-05 — should not anchor when there is no previous recommendation to anchor on");
+});
+
+test("T-C4-06 — 'the third one but bolder' → anchored_refinement", () => {
+  const state: ConversationState = {
+    sessionId: "test", turns: [{ role: "assistant" as const, content: "Here are options", intent: "general_discovery" as const, timestamp: 0 }],
+    context: {}, lastRecommendationSlugs: ["a", "b", "c"],
+  };
+  const plan = planConversation("the third one but bolder", state);
+  assert.equal(plan.action, "anchored_refinement",
+    `T-C4-06 — expected anchored_refinement, got ${plan.action}`);
+});
+
+test("T-C4-07 — 'option 2 but less intense' → anchored_refinement", () => {
+  const state: ConversationState = {
+    sessionId: "test", turns: [{ role: "assistant" as const, content: "Here are options", intent: "general_discovery" as const, timestamp: 0 }],
+    context: {}, lastRecommendationSlugs: ["a", "b", "c"],
+  };
+  const plan = planConversation("option 2 but less intense", state);
+  assert.equal(plan.action, "anchored_refinement",
+    `T-C4-07 — expected anchored_refinement for 'option 2 but less intense', got ${plan.action}`);
+});
+
+test("T-C4-08 — comparison signal takes precedence over anchored_refinement", () => {
+  const state: ConversationState = {
+    sessionId: "test", turns: [{ role: "assistant" as const, content: "Here are options", intent: "general_discovery" as const, timestamp: 0 }],
+    context: {}, lastRecommendationSlugs: ["a", "b"], selectedSlug: "a",
+  };
+  const plan = planConversation("compare them, which is fresher?", state);
+  assert.equal(plan.action, "comparison",
+    `T-C4-08 — comparison must take precedence, got ${plan.action}`);
+});
+
+test("T-C4-09 — 'none of those' takes precedence over anchored_refinement signals", () => {
+  const state: ConversationState = {
+    sessionId: "test", turns: [{ role: "assistant" as const, content: "Here are options", intent: "general_discovery" as const, timestamp: 0 }],
+    context: {}, lastRecommendationSlugs: ["a", "b"], selectedSlug: "a",
+  };
+  // "none of those" fires before anchored_refinement check
+  const plan = planConversation("none of those, something fresher", state);
+  assert.equal(plan.action, "new_search",
+    `T-C4-09 — none_of_those + direction should still → new_search, got ${plan.action}`);
+});
+
+test("T-C4-10 — 'the last one but cooler' → anchored_refinement", () => {
+  const state: ConversationState = {
+    sessionId: "test", turns: [{ role: "assistant" as const, content: "Here are options", intent: "general_discovery" as const, timestamp: 0 }],
+    context: {}, lastRecommendationSlugs: ["a", "b", "c"],
+  };
+  const plan = planConversation("the last one but cooler", state);
+  assert.equal(plan.action, "anchored_refinement",
+    `T-C4-10 — expected anchored_refinement for 'the last one but cooler', got ${plan.action}`);
+});
+
+// ── C4-11 to C4-20: Anchored pool — directional filtering ────────────────────
+
+const ANCHORED_INTENT: ResolvedIntent = {
+  intent: "anchored_refinement" as const, signals: {}, entitySlug: undefined, compareSlug: [],
+};
+
+test("T-C4-11 — freshness:more strict match: anchor below max freshness → fresher candidates", () => {
+  // Find an anchor with freshness < max so fresher candidates exist
+  const maxFresh = Math.max(...mkcCatalogue.map(k => k.freshness ?? 0));
+  const anchor   = mkcCatalogue.find(k => (k.freshness ?? 0) < maxFresh);
+  if (!anchor) { skip("T-C4-11 — no anchor below max freshness"); return; }
+  const result = planRetrieval(ANCHORED_INTENT, EMPTY_CONTEXT, undefined, undefined, undefined, null, undefined,
+    "like that but fresher", anchor.slug);
+  const allFresher = result.fragrances.every(f => (f.freshness ?? 0) > (anchor.freshness ?? 0));
+  // When strictMatches=true, all candidates must be fresher
+  if (result.anchoredMeta?.strictMatches) {
+    assert.ok(allFresher,
+      `T-C4-11 — strict match but some candidates not fresher than ${anchor.freshness}`);
+  } else {
+    // No strict matches found — acceptable fallback
+    assert.ok(result.fragrances.length > 0, "T-C4-11 — fallback must still return candidates");
+  }
+});
+
+test("T-C4-12 — freshness:more no strict match: anchor at max freshness → strictMatches=false", () => {
+  const maxFresh = Math.max(...mkcCatalogue.map(k => k.freshness ?? 0));
+  const anchor   = mkcCatalogue.find(k => (k.freshness ?? 0) >= maxFresh);
+  if (!anchor) { skip("T-C4-12 — no max-freshness anchor"); return; }
+  const result = planRetrieval(ANCHORED_INTENT, EMPTY_CONTEXT, undefined, undefined, undefined, null, undefined,
+    "like that but fresher", anchor.slug);
+  assert.equal(result.anchoredMeta?.strictMatches, false,
+    "T-C4-12 — anchor at max freshness must produce strictMatches=false");
+  assert.ok(result.fragrances.length > 0, "T-C4-12 — fallback must return candidates even with no strict match");
+});
+
+test("T-C4-13 — sweetness:less strict match: anchor above min sweetness → candidates less sweet", () => {
+  const minSweet = Math.min(...mkcCatalogue.map(k => k.sweetness ?? 5));
+  const anchor   = mkcCatalogue.find(k => (k.sweetness ?? 0) > minSweet + 1);
+  if (!anchor) { skip("T-C4-13 — no anchor above min sweetness"); return; }
+  const result = planRetrieval(ANCHORED_INTENT, EMPTY_CONTEXT, undefined, undefined, undefined, null, undefined,
+    "like that but less sweet", anchor.slug);
+  if (result.anchoredMeta?.strictMatches) {
+    const allLessSweet = result.fragrances.every(f => (f.sweetness ?? 0) < (anchor.sweetness ?? 0));
+    assert.ok(allLessSweet,
+      `T-C4-13 — strict match but some candidates not less sweet than anchor (${anchor.sweetness})`);
+  } else {
+    assert.ok(result.fragrances.length > 0, "T-C4-13 — fallback must return candidates");
+  }
+});
+
+test("T-C4-14 — sweetness:less no strict match: anchor at min sweetness → strictMatches=false", () => {
+  const minSweet = Math.min(...mkcCatalogue.map(k => k.sweetness ?? 5));
+  const anchor   = mkcCatalogue.find(k => (k.sweetness ?? 5) <= minSweet);
+  if (!anchor) { skip("T-C4-14 — no min-sweetness anchor"); return; }
+  const result = planRetrieval(ANCHORED_INTENT, EMPTY_CONTEXT, undefined, undefined, undefined, null, undefined,
+    "like that but less sweet", anchor.slug);
+  assert.equal(result.anchoredMeta?.strictMatches, false,
+    "T-C4-14 — anchor at min sweetness must produce strictMatches=false");
+});
+
+test("T-C4-15 — warmth:more strict match: anchor below max warmth → warmer candidates", () => {
+  const maxWarmth = Math.max(...mkcCatalogue.map(k => k.warmth ?? 0));
+  const anchor    = mkcCatalogue.find(k => (k.warmth ?? 0) < maxWarmth);
+  if (!anchor) { skip("T-C4-15 — no anchor below max warmth"); return; }
+  const result = planRetrieval(ANCHORED_INTENT, EMPTY_CONTEXT, undefined, undefined, undefined, null, undefined,
+    "like that but warmer", anchor.slug);
+  if (result.anchoredMeta?.strictMatches) {
+    const allWarmer = result.fragrances.every(f => (f.warmth ?? 0) > (anchor.warmth ?? 0));
+    assert.ok(allWarmer, `T-C4-15 — strict match but some candidates not warmer than anchor (${anchor.warmth})`);
+  } else {
+    assert.ok(result.fragrances.length > 0, "T-C4-15 — fallback must return candidates");
+  }
+});
+
+test("T-C4-16 — intensity:less strict match: anchor above min intensity → lighter candidates", () => {
+  const minInt = Math.min(...mkcCatalogue.map(k => k.intensity ?? 5));
+  const anchor  = mkcCatalogue.find(k => (k.intensity ?? 0) > minInt + 1);
+  if (!anchor) { skip("T-C4-16 — no anchor above min intensity"); return; }
+  const result = planRetrieval(ANCHORED_INTENT, EMPTY_CONTEXT, undefined, undefined, undefined, null, undefined,
+    "like that but lighter", anchor.slug);
+  if (result.anchoredMeta?.strictMatches) {
+    const allLighter = result.fragrances.every(f => (f.intensity ?? 0) < (anchor.intensity ?? 0));
+    assert.ok(allLighter, `T-C4-16 — strict match but some candidates not lighter than anchor (${anchor.intensity})`);
+  } else {
+    assert.ok(result.fragrances.length > 0, "T-C4-16 — fallback must return candidates");
+  }
+});
+
+test("T-C4-17 — anchor slug itself must never appear in results", () => {
+  const anchor = mkcCatalogue[0];
+  const result = planRetrieval(ANCHORED_INTENT, EMPTY_CONTEXT, undefined, undefined, undefined, null, undefined,
+    "like that but fresher", anchor.slug);
+  assert.equal(result.fragrances.find(f => f.slug === anchor.slug), undefined,
+    `T-C4-17 — anchor slug ${anchor.slug} appeared in anchored_refinement results`);
+});
+
+test("T-C4-18 — gender constraint respected in anchored pool", () => {
+  const femaleAnchor = mkcCatalogue.find(k => k.gender === "female");
+  if (!femaleAnchor) { skip("T-C4-18 — no female anchor available"); return; }
+  const profile = makeProfile({ preferredGender: { value: "male", confidence: "HIGH" } });
+  const result = planRetrieval(ANCHORED_INTENT, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined,
+    "like that but fresher", femaleAnchor.slug);
+  const genderLeaks = result.fragrances.filter(f => f.gender === "female");
+  assert.equal(genderLeaks.length, 0,
+    `T-C4-18 — female fragrance in male-constrained anchored pool: ${genderLeaks.map(f => f.slug).join(", ")}`);
+});
+
+test("T-C4-19 — avoidedFamilies respected in anchored pool", () => {
+  const anchor = mkcCatalogue.find(k => k.freshness !== undefined);
+  if (!anchor) { skip("T-C4-19 — no anchor with freshness"); return; }
+  const profile = makeProfile({ avoidedFamilies: { value: ["Floral"], confidence: "HIGH" } });
+  const result = planRetrieval(ANCHORED_INTENT, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined,
+    "like that but fresher", anchor.slug);
+  const floralLeaks = result.fragrances.filter(f =>
+    f.family.some(fam => fam.toLowerCase() === "floral")
+  );
+  assert.equal(floralLeaks.length, 0,
+    `T-C4-19 — floral fragrance appeared in anchored pool with floral avoided: ${floralLeaks.map(f => f.slug).join(", ")}`);
+});
+
+test("T-C4-20 — rejectedSlugs respected in anchored pool", () => {
+  const candidates = mkcCatalogue.filter(k => k.freshness !== undefined && k.freshness < 5);
+  if (candidates.length < 2) { skip("T-C4-20 — not enough candidates"); return; }
+  const anchor   = candidates[0];
+  const rejected = candidates[1].slug;
+  const profile  = makeProfile({ rejectedSlugs: [rejected] });
+  const result = planRetrieval(ANCHORED_INTENT, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined,
+    "like that but fresher", anchor.slug);
+  assert.equal(result.fragrances.find(f => f.slug === rejected), undefined,
+    `T-C4-20 — rejected slug ${rejected} appeared in anchored pool`);
+});
+
+// ── C4-21 to C4-28: Product card reliability (A2 fix) ────────────────────────
+
+const ANCHOR_PLAN: ConversationPlan = {
+  action: "anchored_refinement", reason: "test", requiresRetrieval: true,
+  requiresComparison: false, requiresClarification: false,
+  reuseRecommendations: false, nextIntent: "anchored_refinement",
+};
+
+test("T-C4-21 — valid [PRODUCT:slug] marker → exactly the matching card rendered", () => {
+  const frag = mkcCatalogue[0];
+  const retrieval: RetrievalContext = { fragrances: [frag, mkcCatalogue[1]], articles: [] };
+  const raw = `Here is your recommendation [PRODUCT:${frag.slug}]`;
+  const result = planResponse(raw, "anchored_refinement", retrieval, ANCHOR_PLAN);
+  assert.deepEqual(result.recommendedSlugs, [frag.slug],
+    `T-C4-21 — expected [${frag.slug}], got [${result.recommendedSlugs.join(", ")}]`);
+});
+
+test("T-C4-22 — invalid [PRODUCT:unknown-slug] marker → no card rendered (not unknown slug)", () => {
+  const frag = mkcCatalogue[0];
+  const retrieval: RetrievalContext = { fragrances: [frag], articles: [] };
+  const raw = `Here is a great fragrance [PRODUCT:totally-made-up-slug-xyz]`;
+  const result = planResponse(raw, "anchored_refinement", retrieval, ANCHOR_PLAN);
+  assert.ok(!result.recommendedSlugs.includes("totally-made-up-slug-xyz"),
+    "T-C4-22 — invalid slug must not appear in recommendedSlugs");
+});
+
+test("T-C4-23 — no marker but exact name in prose → card from retrieval candidates", () => {
+  const frag = mkcCatalogue[0];
+  const retrieval: RetrievalContext = { fragrances: [frag], articles: [] };
+  // No [PRODUCT:slug] marker — only the name in prose
+  const raw = `I'd recommend ${frag.name} for this direction.`;
+  const result = planResponse(raw, "anchored_refinement", retrieval, ANCHOR_PLAN);
+  assert.ok(result.recommendedSlugs.includes(frag.slug),
+    `T-C4-23 — name match fallback did not resolve ${frag.name} → ${frag.slug}`);
+});
+
+test("T-C4-24 — single-best: retrieval holds exactly 1 fragrance → exactly 1 deterministic card", () => {
+  const frag = mkcCatalogue[0];
+  const retrieval: RetrievalContext = { fragrances: [frag], articles: [] };
+  // No marker and name not in prose
+  const raw = "This is the perfect fragrance for you based on your preferences.";
+  const result = planResponse(raw, "anchored_refinement", retrieval, ANCHOR_PLAN);
+  assert.deepEqual(result.recommendedSlugs, [frag.slug],
+    `T-C4-24 — single candidate must produce deterministic card: got [${result.recommendedSlugs.join(", ")}]`);
+});
+
+test("T-C4-25 — no marker, no name match, multiple candidates → no speculative cards", () => {
+  const frag1 = mkcCatalogue[0];
+  const frag2 = mkcCatalogue[1];
+  const retrieval: RetrievalContext = { fragrances: [frag1, frag2], articles: [] };
+  // Generic response that mentions neither name
+  const raw = "Here are some options that might work for you.";
+  const result = planResponse(raw, "anchored_refinement", retrieval, ANCHOR_PLAN);
+  assert.equal(result.recommendedSlugs.length, 0,
+    `T-C4-25 — no marker + no name match + multiple candidates must produce 0 cards, got: [${result.recommendedSlugs.join(", ")}]`);
+});
+
+test("T-C4-26 — retrieved fragrance not mentioned/marked must not become a card", () => {
+  const mentioned = mkcCatalogue[0];
+  const notMentioned = mkcCatalogue[1];
+  const retrieval: RetrievalContext = { fragrances: [mentioned, notMentioned], articles: [] };
+  const raw = `I'd recommend ${mentioned.name} [PRODUCT:${mentioned.slug}]`;
+  const result = planResponse(raw, "anchored_refinement", retrieval, ANCHOR_PLAN);
+  assert.ok(!result.recommendedSlugs.includes(notMentioned.slug),
+    `T-C4-26 — unrecommended retrieval candidate ${notMentioned.slug} must not appear in cards`);
+});
+
+test("T-C4-27 — multiple valid markers → multiple matching cards only", () => {
+  const f1 = mkcCatalogue[0];
+  const f2 = mkcCatalogue[1];
+  const f3 = mkcCatalogue[2];
+  const retrieval: RetrievalContext = { fragrances: [f1, f2, f3], articles: [] };
+  const raw = `Option A [PRODUCT:${f1.slug}] and Option B [PRODUCT:${f2.slug}]`;
+  const result = planResponse(raw, "general_discovery", retrieval, BASE_PLAN);
+  assert.deepEqual(result.recommendedSlugs.sort(), [f1.slug, f2.slug].sort(),
+    `T-C4-27 — expected [${f1.slug}, ${f2.slug}], got [${result.recommendedSlugs.join(", ")}]`);
+  assert.ok(!result.recommendedSlugs.includes(f3.slug),
+    `T-C4-27 — unrecommended ${f3.slug} must not appear even though retrieved`);
+});
+
+test("T-C4-28 — response may never map to non-current candidate", () => {
+  const inContext = mkcCatalogue[0];
+  const notInContext = mkcCatalogue[5];
+  const retrieval: RetrievalContext = { fragrances: [inContext], articles: [] };
+  // LLM emits a slug for a fragrance NOT in retrieval context
+  const raw = `I recommend this [PRODUCT:${notInContext.slug}]`;
+  const result = planResponse(raw, "anchored_refinement", retrieval, ANCHOR_PLAN);
+  assert.ok(!result.recommendedSlugs.includes(notInContext.slug),
+    `T-C4-28 — non-current candidate ${notInContext.slug} must never render as a card`);
+});
+
+// ── C4-29 to C4-35: Anchored refinement constraints (Founder required) ────────
+
+test("T-C4-29 — strict directional match exists: leading candidates satisfy direction", () => {
+  // Find anchor with freshness < max so strict fresher candidates exist
+  const maxFresh = Math.max(...mkcCatalogue.map(k => k.freshness ?? 0));
+  const anchor   = mkcCatalogue.find(k => (k.freshness ?? 0) < maxFresh - 1);
+  if (!anchor) { skip("T-C4-29 — no suitable anchor for strict test"); return; }
+  const result = planRetrieval(ANCHORED_INTENT, EMPTY_CONTEXT, undefined, undefined, undefined, null, undefined,
+    "like that but fresher", anchor.slug);
+  if (result.anchoredMeta?.strictMatches) {
+    const leadsFresher = (result.fragrances[0]?.freshness ?? 0) > (anchor.freshness ?? 0);
+    assert.ok(leadsFresher,
+      `T-C4-29 — strict match declared but lead candidate (${result.fragrances[0]?.freshness}) not fresher than anchor (${anchor.freshness})`);
+  } else {
+    // No strict matches available in catalogue — graceful fallback
+    assert.ok(result.fragrances.length > 0, "T-C4-29 — fallback must provide candidates");
+  }
+});
+
+test("T-C4-30 — no strict directional match: strictMatches=false, no false 'improved' result", () => {
+  const minFresh = Math.min(...mkcCatalogue.map(k => k.freshness ?? 5));
+  const anchor   = mkcCatalogue.find(k => (k.freshness ?? 5) <= minFresh);
+  if (!anchor) { skip("T-C4-30 — no min-freshness anchor"); return; }
+  const result = planRetrieval(ANCHORED_INTENT, EMPTY_CONTEXT, undefined, undefined, undefined, null, undefined,
+    "like that but less fresh", anchor.slug);
+  assert.equal(result.anchoredMeta?.strictMatches, false,
+    "T-C4-30 — anchor at minimum freshness: strictMatches must be false");
+  // Confirm meta carries the honest direction info
+  assert.equal(result.anchoredMeta?.direction, "less", "T-C4-30 — direction must be 'less'");
+});
+
+test("T-C4-31 — anchor is not automatically presented as a new recommendation", () => {
+  const anchor = mkcCatalogue[0];
+  const result = planRetrieval(ANCHORED_INTENT, EMPTY_CONTEXT, undefined, undefined, undefined, null, undefined,
+    "like that but fresher", anchor.slug);
+  assert.equal(result.fragrances.find(f => f.slug === anchor.slug), undefined,
+    `T-C4-31 — anchor ${anchor.slug} must not appear in recommendations`);
+});
+
+test("T-C4-32 — rejected anchor: results exclude it even as a reference", () => {
+  const anchor  = mkcCatalogue[0];
+  const profile = makeProfile({ rejectedSlugs: [anchor.slug] });
+  const result  = planRetrieval(ANCHORED_INTENT, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined,
+    "like that but fresher", anchor.slug);
+  assert.equal(result.fragrances.find(f => f.slug === anchor.slug), undefined,
+    `T-C4-32 — rejected anchor ${anchor.slug} must not appear in results`);
+});
+
+test("T-C4-33 — avoided-family anchor: results exclude anchor even when it's the source", () => {
+  const floralAnchor = mkcCatalogue.find(k => k.family.some(f => f.toLowerCase() === "floral"));
+  if (!floralAnchor) { skip("T-C4-33 — no floral anchor"); return; }
+  const profile = makeProfile({ avoidedFamilies: { value: ["Floral"], confidence: "HIGH" } });
+  const result  = planRetrieval(ANCHORED_INTENT, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined,
+    "like that but fresher", floralAnchor.slug);
+  assert.equal(result.fragrances.find(f => f.slug === floralAnchor.slug), undefined,
+    `T-C4-33 — avoided-family anchor ${floralAnchor.slug} must not appear in results`);
+  const floralLeaks = result.fragrances.filter(f => f.family.some(fam => fam.toLowerCase() === "floral"));
+  assert.equal(floralLeaks.length, 0,
+    `T-C4-33 — floral fragrance leaked into anchored pool with floral avoided`);
+});
+
+test("T-C4-34 — gender constraint survives anchored refinement", () => {
+  const maleAnchor = mkcCatalogue.find(k => k.gender === "male");
+  if (!maleAnchor) { skip("T-C4-34 — no male anchor"); return; }
+  const profile = makeProfile({ preferredGender: { value: "female", confidence: "HIGH" } });
+  const result  = planRetrieval(ANCHORED_INTENT, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined,
+    "like that but fresher", maleAnchor.slug);
+  const maleLeaks = result.fragrances.filter(f => f.gender === "male");
+  assert.equal(maleLeaks.length, 0,
+    `T-C4-34 — male fragrance in female-constrained anchored pool: ${maleLeaks.map(f => f.slug).join(", ")}`);
+});
+
+test("T-C4-35 — gift recipient gender constraint survives anchored refinement", () => {
+  const anchor = mkcCatalogue[0];
+  const profile = makeProfile({
+    shoppingIntent:   { value: "gift",   confidence: "HIGH" },
+    recipientGender:  { value: "female", confidence: "HIGH" },
+  });
+  const result = planRetrieval(ANCHORED_INTENT, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined,
+    "like that but warmer", anchor.slug);
+  const maleLeaks = result.fragrances.filter(f => f.gender === "male");
+  assert.equal(maleLeaks.length, 0,
+    `T-C4-35 — male fragrance in gift/female anchored pool: ${maleLeaks.map(f => f.slug).join(", ")}`);
+});
+
+// ── C4-36 to C4-40: Acceptance conversations + governance ─────────────────────
+
+test("T-C4-36 — Conversation A: multi-turn discover → anchor + direction → fresh retrieval", () => {
+  // Turn 1: discover → get recommendations
+  const t1 = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, undefined, undefined, undefined, null, undefined, "recommend me a fragrance");
+  assert.ok(t1.fragrances.length > 0, "T-C4-36 — Turn 1 must return candidates");
+
+  // Turn 2: guest references second recommendation + direction
+  const t1Slugs = t1.fragrances.map(f => f.slug);
+  const anchorSlug = t1Slugs[1] ?? t1Slugs[0];
+  const anchIntent: ResolvedIntent = { intent: "anchored_refinement" as const, signals: {}, entitySlug: undefined, compareSlug: [] };
+  const t2 = planRetrieval(anchIntent, EMPTY_CONTEXT, undefined, undefined, undefined, null, undefined,
+    "like the second one but fresher", anchorSlug);
+
+  assert.ok(t2.fragrances.length > 0, "T-C4-36 — Turn 2 anchored_refinement must return candidates");
+  assert.equal(t2.fragrances.find(f => f.slug === anchorSlug), undefined,
+    "T-C4-36 — anchor must not appear in Turn 2 results");
+  assert.equal(t2.anchoredMeta?.anchorSlug, anchorSlug,
+    "T-C4-36 — anchoredMeta must carry the correct anchor slug");
+  assert.equal(t2.anchoredMeta?.dimension, "freshness",
+    `T-C4-36 — dimension must be 'freshness', got '${t2.anchoredMeta?.dimension}'`);
+  assert.equal(t2.anchoredMeta?.direction, "more",
+    `T-C4-36 — direction must be 'more', got '${t2.anchoredMeta?.direction}'`);
+});
+
+test("T-C4-37 — Conversation B: 'the second one but less sweet' → sweetness:less anchor", () => {
+  const t1 = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, undefined, undefined, undefined, null, undefined, "recommend fragrances");
+  const anchorSlug = t1.fragrances[1]?.slug ?? t1.fragrances[0]?.slug;
+  if (!anchorSlug) { skip("T-C4-37 — no candidates from Turn 1"); return; }
+
+  const anchIntent: ResolvedIntent = { intent: "anchored_refinement" as const, signals: {}, entitySlug: undefined, compareSlug: [] };
+  const t2 = planRetrieval(anchIntent, EMPTY_CONTEXT, undefined, undefined, undefined, null, undefined,
+    "the second one but less sweet", anchorSlug);
+
+  assert.equal(t2.anchoredMeta?.dimension, "sweetness",
+    `T-C4-37 — expected dimension sweetness, got ${t2.anchoredMeta?.dimension}`);
+  assert.equal(t2.anchoredMeta?.direction, "less",
+    `T-C4-37 — expected direction less, got ${t2.anchoredMeta?.direction}`);
+  assert.equal(t2.fragrances.find(f => f.slug === anchorSlug), undefined,
+    "T-C4-37 — anchor must not be in Turn 2 results");
+});
+
+test("T-C4-38 — BUDGET_REFINEMENT_NOT_MEANINGFUL_CURRENTLY: all fragrances same price tiers", () => {
+  const prices = mkcCatalogue.map(k => ({
+    s5:  k.prices?.["5ml"]  ?? "missing",
+    s10: k.prices?.["10ml"] ?? "missing",
+    s30: k.prices?.["30ml"] ?? "missing",
+  }));
+  const distinct = new Set(prices.map(p => JSON.stringify(p)));
+  assert.equal(distinct.size, 1,
+    `T-C4-38 — Expected 1 unique price combo (uniform pricing), found ${distinct.size}. ` +
+    `If pricing is now differentiated, remove BUDGET_REFINEMENT_NOT_MEANINGFUL_CURRENTLY guard.`);
+});
+
+test("T-C4-39 — anchored_refinement plan action correctly sets requiresRetrieval=true and nextIntent", () => {
+  const state: ConversationState = {
+    sessionId: "test", turns: [{ role: "assistant" as const, content: "options", intent: "general_discovery" as const, timestamp: 0 }],
+    context: {}, lastRecommendationSlugs: ["a", "b", "c"],
+  };
+  const plan = planConversation("the third one but richer", state);
+  assert.equal(plan.action, "anchored_refinement",
+    `T-C4-39 — expected anchored_refinement, got ${plan.action}`);
+  assert.equal(plan.requiresRetrieval, true,
+    "T-C4-39 — requiresRetrieval must be true for anchored_refinement");
+  assert.equal(plan.nextIntent, "anchored_refinement",
+    `T-C4-39 — nextIntent must be 'anchored_refinement', got ${plan.nextIntent}`);
+});
+
+test("T-C4-40 — anchored_refinement + avoidance + rejection all respected simultaneously", () => {
+  const allCandidates = mkcCatalogue.filter(k => k.freshness !== undefined);
+  if (allCandidates.length < 3) { skip("T-C4-40 — insufficient candidates"); return; }
+  const anchor   = allCandidates[0];
+  const rejected = allCandidates[1].slug;
+  const avoided  = allCandidates[2].family[0] ?? "Floral";
+
+  const profile = makeProfile({
+    rejectedSlugs:   [rejected],
+    avoidedFamilies: { value: [avoided], confidence: "HIGH" },
+  });
+
+  const result = planRetrieval(ANCHORED_INTENT, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined,
+    "like that but fresher", anchor.slug);
+
+  // Anchor absent
+  assert.equal(result.fragrances.find(f => f.slug === anchor.slug), undefined,
+    `T-C4-40 — anchor ${anchor.slug} appeared in results`);
+  // Rejected absent
+  assert.equal(result.fragrances.find(f => f.slug === rejected), undefined,
+    `T-C4-40 — rejected slug ${rejected} appeared in results`);
+  // Avoided family absent
+  const avoidedLeaks = result.fragrances.filter(f =>
+    f.family.some(fam => fam.toLowerCase() === avoided.toLowerCase())
+  );
+  assert.equal(avoidedLeaks.length, 0,
+    `T-C4-40 — avoided family '${avoided}' leaked into anchored pool`);
 });
 
 // ── Summary ───────────────────────────────────────────────────────────────────

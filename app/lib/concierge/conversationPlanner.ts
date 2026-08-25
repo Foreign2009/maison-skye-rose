@@ -20,7 +20,8 @@ export type ConversationAction =
   | "academy_lookup"
   | "follow_up"
   | "refinement"
-  | "alternative_exploration";
+  | "alternative_exploration"
+  | "anchored_refinement";
 
 export interface ConversationPlan {
   action:                ConversationAction;
@@ -96,6 +97,24 @@ const REFINEMENT_PATTERNS = [
 // Simple pronouns that are reference-back without other context
 const PRONOUN_PATTERNS = ["why?", "which?", "really?", "both?", "them?", "this?"];
 
+// Intelligence direction signals — governed MKC numeric dimensions (EP-AI-C4)
+// Covers all patterns in DIRECTION_MAP in retrievalPlanner. When combined with a
+// reference signal (REFERENCE_PATTERNS / ordinal / state.selectedSlug), these
+// trigger anchored_refinement before reuse_cached. Stand-alone (no anchor context)
+// they fall through to alternative_exploration or new_search.
+// Deferred (no governed field): "elegant", "sophisticated", "better for office/date".
+const ANCHORED_DIRECTION_SIGNALS = [
+  // freshness
+  "fresher", "more fresh", "airier", "more airy", "less fresh",
+  // sweetness
+  "less sweet", "less sweetness", "drier", "more dry", "sweeter", "more sweet", "more sweetness",
+  // warmth
+  "warmer", "more warm", "more warmth", "richer", "more rich", "cooler", "less warm", "less warmth",
+  // intensity
+  "more intense", "more intensity", "bolder", "stronger", "more powerful",
+  "less intense", "less intensity", "lighter", "softer", "subtler",
+];
+
 // ── Discovery signal detection ────────────────────────────────────────────────
 //
 // Returns true when the message contains at least one actionable discovery
@@ -131,6 +150,9 @@ function detectOrdinalReference(q: string): number {
   if (/(the )?first( one)?/.test(q))  return 1;
   if (/(the )?second( one)?/.test(q)) return 2;
   if (/(the )?third( one)?/.test(q))  return 3;
+  if (/\boption\s+(1|one|2|two|3|three)\b/.test(q)) return 1;
+  if (/\bnumber\s+(1|one|2|two|3|three)\b/.test(q)) return 1;
+  if (/\bthe\s+last\s+(one|option|fragrance)?\b/.test(q)) return 1;
   return 0;
 }
 
@@ -175,6 +197,31 @@ export function planConversation(
       requiresClarification: false,
       reuseRecommendations:  false,
       nextIntent:            "comparison",
+    };
+  }
+
+  // ── 1.5 Anchored refinement — reference + direction signal (EP-AI-C4) ──────────
+  // "Like the first one but fresher", "the second but less sweet", "something similar but warmer"
+  // Fires when the message contains both a reference to a prior recommendation (or an
+  // active selectedSlug) AND an intelligence direction signal. Takes precedence over
+  // alternative_exploration and reuse_cached because a direction implies fresh retrieval
+  // is needed against a specific intelligence dimension. Direction is deterministic only
+  // for governed MKC fields — see ANCHORED_DIRECTION_SIGNALS and DIRECTION_MAP.
+  const hasDirectionSignal = ANCHORED_DIRECTION_SIGNALS.some((p) => q.includes(p));
+  const hasReferenceSignal = hasPreviousRecs && (
+    REFERENCE_PATTERNS.some((p) => q.includes(p)) ||
+    detectOrdinalReference(q) > 0
+  );
+  const isNoneOfThose = NONE_OF_THOSE_SIGNALS.some((s) => q.includes(s));
+  if (hasDirectionSignal && (hasReferenceSignal || !!state.selectedSlug) && !isNoneOfThose) {
+    return {
+      action:                "anchored_refinement",
+      reason:                "Guest requested a directional variation relative to a reference fragrance",
+      requiresRetrieval:     true,
+      requiresComparison:    false,
+      requiresClarification: false,
+      reuseRecommendations:  false,
+      nextIntent:            "anchored_refinement",
     };
   }
 

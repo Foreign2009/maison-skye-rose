@@ -16,7 +16,8 @@ export type ConversationIntent =
   | "seasonal"
   | "gift"
   | "general_discovery"
-  | "clarification";
+  | "clarification"
+  | "anchored_refinement";
 
 export interface ConversationContext {
   mentionedSlug?:   string;

@@ -23,11 +23,21 @@ import { planCollection }                  from "./collectionPlanner";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
+export interface AnchoredMeta {
+  anchorSlug:    string;
+  anchorName:    string;
+  dimension:     string;
+  direction:     "more" | "less";
+  anchorScore:   number;
+  strictMatches: boolean;
+}
+
 export interface RetrievalContext {
   fragrances:       FragranceKnowledge[];
   articles:         AcademyArticle[];
   collectionName?:  string;
   fragranceRoles?:  string[];  // deterministic role labels (EP-AI-C2-R1)
+  anchoredMeta?:    AnchoredMeta;  // EP-AI-C4: anchored refinement metadata
 }
 
 export interface PromptSection {
@@ -101,6 +111,9 @@ function buildGoalSection(
     parts.push("Goal: Recommend fragrances suited to the requested season.");
   } else if (effectiveIntent === "occasion_search") {
     parts.push("Goal: Recommend fragrances that suit the stated occasion.");
+  } else if (effectiveIntent === "anchored_refinement") {
+    parts.push("Goal: Find fragrances that vary from a reference in a specific intelligence dimension.");
+    parts.push("Do not re-recommend the anchor fragrance unless the guest explicitly asks about it.");
   }
 
   if (state.context.occasion && !plan.requiresComparison) {
@@ -230,9 +243,35 @@ function buildInstructionsSection(
   state:              ConversationState,
   effectiveIntent?:   ConversationIntent,
   refinement?:        RefinementState | null,
-  explorationTarget?: ExplorationTarget | null
+  explorationTarget?: ExplorationTarget | null,
+  anchoredMeta?:      AnchoredMeta,
 ): PromptSection {
   const instructions: string[] = [];
+
+  // ── Anchored refinement instructions (EP-AI-C4) ──────────────────────────────
+  // Must fire first so the anchor context frames all other instructions.
+  if (effectiveIntent === "anchored_refinement" && anchoredMeta) {
+    const { anchorName, dimension, direction, anchorScore, strictMatches } = anchoredMeta;
+    const dirWord = direction === "more" ? "higher" : "lower";
+    instructions.push(
+      `[Anchored Refinement — anchor: ${anchorName} · ${dimension} ${anchorScore}/5 · guest requested: ${dirWord} ${dimension}]`
+    );
+    if (strictMatches) {
+      instructions.push(
+        `FRAGRANCES IN CONTEXT are genuinely ${dirWord} in ${dimension} than ${anchorName} (${anchorScore}/5).`,
+        `Present them as satisfying the directional request. Tag each as [PRODUCT:slug].`,
+        `Briefly reference the ${dimension} difference to make the improvement concrete — e.g., compare the score to the anchor's.`
+      );
+    } else {
+      instructions.push(
+        `No fragrances in context score ${dirWord} in ${dimension} than ${anchorName} (${anchorScore}/5).`,
+        `FRAGRANCES IN CONTEXT are the closest available options — they do not strictly satisfy the directional request.`,
+        `Be transparent: acknowledge the closest available options, describe their ${dimension} character honestly, and let the guest decide.`,
+        `Do NOT claim these are ${dirWord} in ${dimension} when they are not. Do not use language like "fresher option" if they are not fresher.`,
+        `Tag each presented option as [PRODUCT:slug].`
+      );
+    }
+  }
 
   if (plan.requiresComparison) {
     instructions.push(
@@ -650,7 +689,7 @@ export function buildContext(
       ? { label: "FEATURED COLLECTION", content: retrieval.collectionName }
       : { label: "", content: "" },
     buildArticleSection(retrieval.articles),
-    buildInstructionsSection(plan, state, effectiveIntent, refinement, explorationTarget), // EP18-P1/P2
+    buildInstructionsSection(plan, state, effectiveIntent, refinement, explorationTarget, retrieval.anchoredMeta), // EP18-P1/P2 / EP-AI-C4
   ].filter((s) => s.label && s.content);
 
   const fullText      = sections.map((s) => `=== ${s.label} ===\n${s.content}`).join("\n\n");

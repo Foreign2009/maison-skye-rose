@@ -20,13 +20,132 @@ import type { FragranceKnowledge } from "../mkc/types";
 import type { AcademyArticle } from "../academy/types";
 import type { ConversationContext, ConversationState, ConversationProfile, ConsultationRole, ExplorationTarget } from "./types";
 import type { ResolvedIntent } from "./intentResolver";
-import type { RetrievalContext } from "./contextBuilder";
+import type { RetrievalContext, AnchoredMeta } from "./contextBuilder";
 import { planCollection } from "./collectionPlanner";
 
 // ── Intelligence score accessor (EP18-P2) ─────────────────────────────────────
 
 type IntelligenceDim = "sweetness" | "freshness" | "warmth" | "intensity" | "versatility";
 const INTELLIGENCE_DIMS: IntelligenceDim[] = ["sweetness", "freshness", "warmth", "intensity", "versatility"];
+
+// ── Anchored refinement direction map (EP-AI-C4) ──────────────────────────────
+// Maps guest language to a governed MKC intelligence dimension (0–5 numeric field
+// on FragranceKnowledge). Only terms with unambiguous, deterministic mappings are
+// included. Deferred (no governed field): "elegant", "sophisticated", "versatile",
+// "better for office", "better for date", "more complex".
+const DIRECTION_MAP: Array<{
+  patterns:  string[];
+  dimension: IntelligenceDim;
+  direction: "more" | "less";
+}> = [
+  // freshness (FragranceKnowledge.freshness, 0–5)
+  { patterns: ["fresher", "more fresh", "airier", "more airy"],                              dimension: "freshness", direction: "more" },
+  { patterns: ["less fresh"],                                                                  dimension: "freshness", direction: "less" },
+  // sweetness (FragranceKnowledge.sweetness, 0–5)
+  { patterns: ["less sweet", "less sweetness", "drier", "more dry"],                         dimension: "sweetness", direction: "less" },
+  { patterns: ["sweeter", "more sweet", "more sweetness"],                                    dimension: "sweetness", direction: "more" },
+  // warmth (FragranceKnowledge.warmth, 0–5)
+  { patterns: ["warmer", "more warm", "more warmth", "richer", "more rich"],                 dimension: "warmth",    direction: "more" },
+  { patterns: ["cooler", "less warm", "less warmth"],                                         dimension: "warmth",    direction: "less" },
+  // intensity (FragranceKnowledge.intensity, 0–5)
+  // "lighter" defaults to intensity:less (lighter sillage); "fresher" handles olfactory lightness.
+  { patterns: ["more intense", "more intensity", "bolder", "stronger", "more powerful"],     dimension: "intensity", direction: "more" },
+  { patterns: ["less intense", "less intensity", "lighter", "softer", "subtler"],            dimension: "intensity", direction: "less" },
+];
+
+function extractDirectionHint(
+  rawMessage: string,
+): { dimension: IntelligenceDim; direction: "more" | "less" } | null {
+  const q = rawMessage.toLowerCase();
+  for (const entry of DIRECTION_MAP) {
+    if (entry.patterns.some((p) => q.includes(p))) {
+      return { dimension: entry.dimension, direction: entry.direction };
+    }
+  }
+  return null;
+}
+
+/**
+ * Builds a candidate pool anchored to a specific fragrance, filtered by the
+ * direction signal. Returns `strictMatches: true` only when ≥3 candidates
+ * genuinely satisfy the directional request (i.e. score strictly better in the
+ * requested dimension than the anchor). When fewer than 3 strict matches exist,
+ * the pool is supplemented with nearest alternatives and strictMatches is false.
+ *
+ * Anchor intelligence governance: all dimensions map to numeric 0–5 fields on
+ * FragranceKnowledge (sweetness, freshness, warmth, intensity). See DIRECTION_MAP.
+ */
+function buildAnchoredPool(
+  anchorSlug: string,
+  hint:       { dimension: IntelligenceDim; direction: "more" | "less" } | null,
+  profile:    ConversationProfile | undefined,
+): { fragrances: FragranceKnowledge[]; strictMatches: boolean } {
+  const anchor           = catalogueMaps.bySlug.get(anchorSlug);
+  const genderConstraint = getEffectiveGenderConstraint(profile);
+  const avoidedFamilies  = (profile?.avoidedFamilies?.value ?? []).map((f) => f.toLowerCase());
+  const avoidedNotes     = (profile?.avoidedNotes?.value    ?? []).map((n) => n.toLowerCase());
+  const rejectedSlugs    = profile?.rejectedSlugs ?? [];
+
+  // Base candidates: all fragrances except anchor, respecting hard constraints
+  const baseCandidates = mkcCatalogue.filter((k) => {
+    if (k.slug === anchorSlug) return false;
+    if (genderConstraint && k.gender !== genderConstraint && k.gender !== "unisex") return false;
+    if (rejectedSlugs.includes(k.slug)) return false;
+    if (avoidedFamilies.some((af) =>
+      k.family.some((f) => f.toLowerCase().includes(af) || af.includes(f.toLowerCase()))
+    )) return false;
+    if (avoidedNotes.some((an) =>
+      [...k.notes.top, ...k.notes.heart, ...k.notes.base]
+        .some((n) => n.toLowerCase().includes(an) || an.includes(n.toLowerCase()))
+    )) return false;
+    return true;
+  });
+
+  if (!hint || !anchor) {
+    return { fragrances: baseCandidates.sort(sortByQuality).slice(0, 6), strictMatches: false };
+  }
+
+  const anchorScore = getIntelligenceScore(anchor, hint.dimension);
+  if (anchorScore === null) {
+    return { fragrances: baseCandidates.sort(sortByQuality).slice(0, 6), strictMatches: false };
+  }
+
+  // Strict directional candidates: score strictly in the requested direction
+  const strict = baseCandidates.filter((k) => {
+    const kScore = getIntelligenceScore(k, hint.dimension);
+    return kScore !== null && (
+      hint.direction === "less" ? kScore < anchorScore : kScore > anchorScore
+    );
+  });
+
+  if (strict.length >= 3) {
+    // Full strict set: sort strongest-direction-first
+    strict.sort((a, b) => {
+      const aScore = getIntelligenceScore(a, hint.dimension) ?? anchorScore;
+      const bScore = getIntelligenceScore(b, hint.dimension) ?? anchorScore;
+      return hint.direction === "less" ? aScore - bScore : bScore - aScore;
+    });
+    return { fragrances: strict.slice(0, 6), strictMatches: true };
+  }
+
+  if (strict.length > 0) {
+    // Some strict matches but < 3 — supplement with non-strict; mark as mixed (false)
+    strict.sort((a, b) => {
+      const aScore = getIntelligenceScore(a, hint.dimension) ?? anchorScore;
+      const bScore = getIntelligenceScore(b, hint.dimension) ?? anchorScore;
+      return hint.direction === "less" ? aScore - bScore : bScore - aScore;
+    });
+    const strictSlugs = new Set(strict.map((k) => k.slug));
+    const supplement  = baseCandidates
+      .filter((k) => !strictSlugs.has(k.slug))
+      .sort(sortByQuality)
+      .slice(0, 6 - strict.length);
+    return { fragrances: [...strict, ...supplement], strictMatches: false };
+  }
+
+  // No strict matches — return quality-sorted base pool
+  return { fragrances: baseCandidates.sort(sortByQuality).slice(0, 6), strictMatches: false };
+}
 
 function getIntelligenceScore(k: FragranceKnowledge, dimension: string): number | null {
   if (!INTELLIGENCE_DIMS.includes(dimension as IntelligenceDim)) return null;
@@ -355,6 +474,7 @@ export function planRetrieval(
   unifiedProfile?:    UnifiedCustomerProfile | null,
   excludeSlugs?:      Set<string>,
   rawMessage?:        string,
+  anchorSlug?:        string,  // EP-AI-C4: anchor for anchored_refinement path
 ): RetrievalContext {
   const { intent, signals, entitySlug, compareSlug } = resolved;
 
@@ -365,10 +485,12 @@ export function planRetrieval(
     occasion: signals.occasion,
   };
 
-  let fragrances:          FragranceKnowledge[] = [];
-  let articles:            AcademyArticle[]     = [];
+  let fragrances:          FragranceKnowledge[]     = [];
+  let articles:            AcademyArticle[]         = [];
   let collectionName:      string | undefined;
   let isHiddenGemRequest = false;
+  // EP-AI-C4: anchored refinement metadata, populated only in anchored_refinement path
+  let anchoredMeta: AnchoredMeta | undefined;
 
   // Variety-request detection (EP-AI-C3): when guest asks for alternatives,
   // the session-diversity block will restrict candidates to unseen-only so the
@@ -467,6 +589,35 @@ export function planRetrieval(
       // already gender-appropriate before the post-switch hard filter.
       fragrances = buildBroadPool(profile, fitSignals, 8);
       articles = articlesBySlug(["what-makes-a-signature-scent"]);
+      break;
+    }
+
+    case "anchored_refinement": { // EP-AI-C4
+      // Retrieve candidates that score differently in the requested intelligence
+      // dimension relative to the anchor fragrance. The anchor's intelligence scores
+      // are governed MKC numeric fields (0–5). Hard constraints (gender, avoidances,
+      // rejections) are applied inside buildAnchoredPool; the post-switch filters
+      // are idempotent. strictMatches signals whether all candidates genuinely satisfy
+      // the direction — carried through to contextBuilder for LLM instruction.
+      if (anchorSlug) {
+        const hint   = rawMessage ? extractDirectionHint(rawMessage) : null;
+        const anchor = catalogueMaps.bySlug.get(anchorSlug);
+        const pool   = buildAnchoredPool(anchorSlug, hint, profile);
+        fragrances   = pool.fragrances;
+        if (anchor && hint) {
+          anchoredMeta = {
+            anchorSlug,
+            anchorName:    anchor.name,
+            dimension:     hint.dimension,
+            direction:     hint.direction,
+            anchorScore:   getIntelligenceScore(anchor, hint.dimension) ?? 0,
+            strictMatches: pool.strictMatches,
+          };
+        }
+      } else {
+        // No anchor resolved — fall back to broad pool
+        fragrances = buildBroadPool(profile, fitSignals, 6);
+      }
       break;
     }
 
@@ -748,7 +899,7 @@ export function planRetrieval(
   // the final ranked shortlist rather than any intermediate order.
   const fragranceRoles = assignRecommendationRoles(fragrances, fitSignals, profile);
 
-  return { fragrances, articles, collectionName, fragranceRoles };
+  return { fragrances, articles, collectionName, fragranceRoles, anchoredMeta };
 }
 
 /**

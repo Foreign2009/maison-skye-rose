@@ -149,22 +149,37 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       updatedProfile.rejectedSlugs = newRejectedSlugs;
     }
 
-    // 0b. Ordinal reference resolution (EP-AI-C3):
-    // "the second one" / "second option" → resolve to lastRecommendationSlugs[1]
-    // Used in buildConversationContextSection to surface the correct focused fragrance.
-    const ORDINAL_LOOKUP: Array<[RegExp, number]> = [
-      [/(the )?first( one| option)?/,  0],
-      [/(the )?second( one| option)?/, 1],
-      [/(the )?third( one| option)?/,  2],
+    // 0b. Ordinal reference resolution (EP-AI-C3 / EP-AI-C4):
+    // "the second one" / "option 2" / "the last one" → lastRecommendationSlugs[n]
+    // Used in context building and as the anchor for anchored_refinement turns.
+    type OrdinalIndex = number | "last";
+    const ORDINAL_LOOKUP: Array<[RegExp, OrdinalIndex]> = [
+      [/(the )?first( one| option| fragrance)?/,          0],
+      [/(the )?second( one| option| fragrance)?/,         1],
+      [/(the )?third( one| option| fragrance)?/,          2],
+      [/\boption\s+(1|one)\b/,                             0],
+      [/\boption\s+(2|two)\b/,                             1],
+      [/\boption\s+(3|three)\b/,                           2],
+      [/\bnumber\s+(1|one)\b/,                             0],
+      [/\bnumber\s+(2|two)\b/,                             1],
+      [/\bnumber\s+(3|three)\b/,                           2],
+      [/\bthe\s+last\s+(one|option|fragrance)?\b/,        "last"],
     ];
     let resolvedOrdinalSlug: string | undefined;
     const qOrdinal = message.toLowerCase();
     for (const [pattern, idx] of ORDINAL_LOOKUP) {
       if (pattern.test(qOrdinal)) {
-        resolvedOrdinalSlug = state.lastRecommendationSlugs?.[idx];
+        resolvedOrdinalSlug = idx === "last"
+          ? state.lastRecommendationSlugs?.at(-1)
+          : state.lastRecommendationSlugs?.[idx as number];
         break;
       }
     }
+
+    // 0c. Anchor resolution for anchored_refinement (EP-AI-C4):
+    // Resolved early so it's available to planConversation signal context and
+    // planRetrieval. Ordinal wins over persisted selectedSlug for specificity.
+    // Evaluated after planConversation so we can check plan.action below.
 
     // 0d. Detect refinement against the active consultation plan (EP18-P1)
     const refinement = state.consultationPlan
@@ -179,12 +194,25 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       ? detectExplorationTarget(state.consultationPlan, message, state.selectedSlug)
       : null;
 
+    // 1c. Anchor slug for anchored_refinement (EP-AI-C4):
+    // Ordinal takes precedence (guest explicitly referenced a position);
+    // falls back to persisted selectedSlug; falls back to first previous rec.
+    const anchorSlug: string | undefined = plan.action === "anchored_refinement"
+      ? (resolvedOrdinalSlug ?? state.selectedSlug ?? state.lastRecommendationSlugs?.[0])
+      : undefined;
+
     // 2. Retrieval — conditional on plan
     let retrieval;
     let resolvedIntent;
 
     if (plan.requiresRetrieval) {
       resolvedIntent = resolveIntent(message, state.context);
+
+      // EP-AI-C4: override intent so planRetrieval routes to anchored_refinement case
+      if (plan.action === "anchored_refinement") {
+        resolvedIntent = { ...resolvedIntent, intent: "anchored_refinement" as const };
+      }
+
       // Refinement roles and exploration target are mutually exclusive per plan.action
       const refinementRoles = plan.action === "refinement" ? refinement?.affectedRoles : undefined;
       retrieval = planRetrieval(
@@ -196,6 +224,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
         unifiedProfile,
         cumulativeExcludeSlugs.size > 0 ? cumulativeExcludeSlugs : undefined,
         message,
+        anchorSlug,
       );
     } else {
       // Reuse cached recommendations without a new catalogue search
@@ -207,11 +236,13 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 
     // 3. Build context — gate refinement and explorationTarget to their respective plan.action
     const activeRefinement = plan.action === "refinement" ? refinement : null;
-    // Apply ordinal resolution: "the second one" overrides selectedSlug for context only
+    // Ordinal resolution and anchor resolution both surface the correct focused fragrance.
+    // anchorSlug wins for anchored_refinement turns; ordinal wins otherwise.
+    const contextSelectedSlug = anchorSlug ?? resolvedOrdinalSlug;
     const stateForContext: typeof state = {
       ...state,
       profile: updatedProfile,
-      ...(resolvedOrdinalSlug ? { selectedSlug: resolvedOrdinalSlug } : {}),
+      ...(contextSelectedSlug ? { selectedSlug: contextSelectedSlug } : {}),
     };
     const builtContext     = buildContext(retrieval, stateForContext, plan, effectiveIntent, activeRefinement, explorationTarget, customerCtx);
     const contextContent = renderContext(builtContext);
@@ -256,8 +287,14 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
         : (newPlan ?? state.consultationPlan ?? undefined);
 
     // 9. Derive session state updates for the client to store
+    // selectedSlug persistence (EP-AI-C4):
+    //   anchored_refinement → anchor slug (the fragrance the guest referenced)
+    //   ordinal resolved    → the specifically referenced fragrance
+    //   otherwise           → first validated recommendation from this turn
     const sessionUpdates: SessionUpdates = {
-      selectedSlug:    planned.recommendedSlugs[0],
+      selectedSlug: plan.action === "anchored_refinement"
+        ? (anchorSlug ?? planned.recommendedSlugs[0])
+        : (resolvedOrdinalSlug ?? planned.recommendedSlugs[0]),
       lastArticleSlug: planned.articleSlugs[0],
       lastCollection:  retrieval.collectionName,
       comparisonSlugs: plan.requiresComparison

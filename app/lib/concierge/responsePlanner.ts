@@ -20,14 +20,15 @@ const ARTICLE_RE = /\[ARTICLE:([a-z0-9-]+)\]/g;
 // ── Contextual follow-up generation ──────────────────────────────────────────
 
 const STATIC_FOLLOW_UPS: Record<ConversationIntent, string[]> = {
-  similar_to:        ["Compare these", "Show me another", "Find something fresher"],
-  comparison:        ["Which is better for the office?", "Show me something different"],
-  education:         ["Show fragrances in this family", "Teach me more"],
-  occasion_search:   ["Find something subtler", "Show best sellers for this"],
-  seasonal:          ["Show year-round options", "Find something warmer"],
-  gift:              ["Is this good for her?", "Show luxury options"],
-  general_discovery: ["Help me find my signature scent", "Show best sellers"],
-  clarification:     ["Tell me what I usually wear", "Shop by occasion"],
+  similar_to:          ["Compare these", "Show me another", "Find something fresher"],
+  comparison:          ["Which is better for the office?", "Show me something different"],
+  education:           ["Show fragrances in this family", "Teach me more"],
+  occasion_search:     ["Find something subtler", "Show best sellers for this"],
+  seasonal:            ["Show year-round options", "Find something warmer"],
+  gift:                ["Is this good for her?", "Show luxury options"],
+  general_discovery:   ["Help me find my signature scent", "Show best sellers"],
+  clarification:       ["Tell me what I usually wear", "Shop by occasion"],
+  anchored_refinement: ["Show me more in this direction", "Compare these", "Tell me more about this one"],
 };
 
 function generateFollowUps(
@@ -78,12 +79,12 @@ export function planResponse(
   retrieval:  RetrievalContext,
   plan:       ConversationPlan
 ): PlannedResponse {
-  const recommendedSlugs: string[] = [];
-  const articleSlugs:     string[] = [];
+  const rawSlugs:    string[] = [];
+  const articleSlugs: string[] = [];
 
-  // Extract and strip [PRODUCT:slug] markers
+  // Extract and strip [PRODUCT:slug] markers (captured but not yet validated)
   let content = rawContent.replace(PRODUCT_RE, (_, slug: string) => {
-    if (!recommendedSlugs.includes(slug)) recommendedSlugs.push(slug);
+    if (!rawSlugs.includes(slug)) rawSlugs.push(slug);
     return "";
   });
 
@@ -93,20 +94,43 @@ export function planResponse(
     return "";
   });
 
-  // Fall back to retrieval context when model omits markers
-  if (recommendedSlugs.length === 0) {
-    retrieval.fragrances.slice(0, 3).forEach((f) => recommendedSlugs.push(f.slug));
-  }
   if (articleSlugs.length === 0 && retrieval.articles.length > 0) {
     retrieval.articles.slice(0, 2).forEach((a) => articleSlugs.push(a.slug));
   }
 
-  // Validate recommended slugs exist in retrieval context
-  const validFragranceSlugs = new Set(retrieval.fragrances.map((f) => f.slug));
-  const filteredSlugs       = recommendedSlugs.filter((s) => validFragranceSlugs.has(s));
-  const finalSlugs          = filteredSlugs.length > 0 ? filteredSlugs : recommendedSlugs.slice(0, 3);
+  // ── Product card resolution (EP-AI-C4 A2 fix) ────────────────────────────────
+  // Product cards must refer only to fragrances actually in the current retrieval
+  // context. Precedence (Founder-approved):
+  //   1. Valid [PRODUCT:slug] markers restricted to current retrieval candidates
+  //   2. Exact product-name matches in prose, restricted to current candidates
+  //   3. Deterministic single candidate when retrieval holds exactly one fragrance
+  //   4. No card — never render speculative or unvalidated product cards
+  //
+  // PROHIBITED: arbitrary first-N fallback, catalogue-wide matching, unknown slugs.
 
-  const hasRecs            = retrieval.fragrances.length > 0;
+  const validFragranceSlugs = new Set(retrieval.fragrances.map((f) => f.slug));
+
+  // Precedence 1: valid markers
+  let finalSlugs: string[] = rawSlugs.filter((s) => validFragranceSlugs.has(s));
+
+  if (finalSlugs.length === 0) {
+    // Precedence 2: exact product-name match in prose (case-insensitive)
+    // After marker stripping, fragrance names appear naturally in the content.
+    const contentLower = content.toLowerCase();
+    const nameMatched  = retrieval.fragrances
+      .filter((f) => contentLower.includes(f.name.toLowerCase()))
+      .map((f) => f.slug);
+
+    if (nameMatched.length > 0) {
+      finalSlugs = nameMatched;
+    } else if (retrieval.fragrances.length === 1) {
+      // Precedence 3: single deterministic candidate (single-best intent)
+      finalSlugs = [retrieval.fragrances[0].slug];
+    }
+    // Precedence 4: no card (finalSlugs stays [])
+  }
+
+  const hasRecs             = retrieval.fragrances.length > 0;
   const followUpSuggestions = generateFollowUps(plan, intent, hasRecs).slice(0, 2);
 
   return {
