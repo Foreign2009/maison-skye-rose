@@ -20,6 +20,7 @@ import { fragrances }            from "../../app/data/fragrances";
 import { wave1Catalogue }        from "./data/wave-1-catalogue";
 import { wave2Catalogue }        from "./data/wave-2-catalogue";
 import { wave3Catalogue }        from "./data/wave-3-catalogue";
+import { wave4Catalogue }        from "./data/wave-4-catalogue";
 import { CatalogueRegistry }     from "./core/CatalogueRegistry";
 import { deriveSlug }            from "./core/deriveSlug";
 import type { IntakeInput, IntakeResult, FragranceIntake } from "./types";
@@ -76,7 +77,11 @@ defaultCatalogueRegistry.register("fragrance", (slug) => {
   // Quaternary: Wave 3 staging catalogue (factory-only; not customer-facing).
   // Searched only when production, Wave 1, and Wave 2 all return no match.
   const wave3 = wave3Catalogue.find(f => deriveSlug(f.title) === slug);
-  return wave3 ? toFragranceIntake(wave3) : null;
+  if (wave3) return toFragranceIntake(wave3);
+  // Quinary: Wave 4 staging catalogue (factory-only; not customer-facing).
+  // Searched only when production, Wave 1, Wave 2, and Wave 3 all return no match.
+  const wave4 = wave4Catalogue.find(f => deriveSlug(f.title) === slug);
+  return wave4 ? toFragranceIntake(wave4) : null;
 });
 // Home fragrance catalogue is empty until supplier data is defined.
 // The loader is registered so the architecture resolves correctly for this category.
