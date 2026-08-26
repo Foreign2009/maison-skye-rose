@@ -10,7 +10,7 @@
  * Does NOT call any AI provider. Does NOT generate any drafts.
  * Does NOT modify any files. Read-only validation only.
  *
- * Current governance state (P18C_R1_PASS_WAVE4_20_OF_20_EVIDENCE_LOCKED):
+ * Current governance state (P18D_PASS_WAVE4_20_OF_20_STAGED_GENERATION_READY):
  *   - 20 entries total (ROSE=7, SKYE=7, ELITE=6)
  *   - 20 READY entries (all Founder decisions resolved in EP-CAT-P18C-R1)
  *   - 0 FOUNDER_DECISION_REQUIRED
@@ -19,11 +19,14 @@
  *   - OUD_GAP_PROVEN_HIGH: Maison Crivelli Oud Cadenza — Agarwood confirmed (Fragrantica + Harrods, HIGH)
  *   - ASSORTMENT_GAP_MISMATCH_INFORMATIONAL: Creed Delphinus Oriental Floral — Founder RETAIN
  *   - Gucci Flora: Founder confirmed Option B — Flora Gorgeous Gardenia EDP 2021
+ *   - P18D: all 20 wave-4-catalogue.ts records staged with notesEvidenceLocked=true,
+ *     notesStructured populated, mood/profile/season populated, subtitle corrections applied
  */
 
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import path from "node:path";
+import { wave4Catalogue } from "./wave-4-catalogue";
 
 // ── Test harness ──────────────────────────────────────────────────────────────
 
@@ -90,7 +93,7 @@ function find(keyPrefix: string): ResearchEntry {
 
 // ── Section 1: Structure and counts ──────────────────────────────────────────
 
-console.log("\n  Wave 4 Research Governance Validator\n  EP-CAT-P18C-R1\n");
+console.log("\n  Wave 4 Research + Catalogue Governance Validator\n  EP-CAT-P18D\n");
 console.log("  ─── Section 1: Structure and counts ───\n");
 
 test("W4-V1 — batchId is wave-4-2026", () => {
@@ -473,6 +476,98 @@ test("W4-V49 — readySummary FOUNDER_DECISION_REQUIRED is empty array (all reso
     `readySummary.FOUNDER_DECISION_REQUIRED must be empty array after R1. Got: ${JSON.stringify(fdr)}`);
 });
 
+// ── Section 15: Wave 4 Catalogue Staged State (EP-CAT-P18D) ──────────────────
+
+console.log("\n  ─── Section 15: Wave 4 Catalogue P18D staged state ───\n");
+
+test("W4-V50 — wave4Catalogue contains exactly 20 records", () => {
+  assert.equal(wave4Catalogue.length, 20,
+    `wave4Catalogue must have 20 records, got ${wave4Catalogue.length}`);
+});
+
+test("W4-V51 — all 20 catalogue records have notesEvidenceLocked: true (P18D staged)", () => {
+  const unlocked = wave4Catalogue.filter(f => f.notesEvidenceLocked !== true);
+  assert.equal(unlocked.length, 0,
+    `${unlocked.length} records still have notesEvidenceLocked: false or missing: ${unlocked.map(f => f.title).join(", ")}`);
+});
+
+test("W4-V52 — all 20 catalogue records have non-empty notes[] (P18D populated)", () => {
+  const empty = wave4Catalogue.filter(f => !f.notes || f.notes.length === 0);
+  assert.equal(empty.length, 0,
+    `${empty.length} records have empty notes[]: ${empty.map(f => f.title).join(", ")}`);
+});
+
+test("W4-V53 — all 20 catalogue records have notesStructured defined (P18D populated)", () => {
+  const missing = wave4Catalogue.filter(f => f.notesStructured === undefined);
+  assert.equal(missing.length, 0,
+    `${missing.length} records have undefined notesStructured: ${missing.map(f => f.title).join(", ")}`);
+});
+
+test("W4-V54 — 19 ordered-pyramid records have non-empty notesStructured.top (Beach Blossom excluded)", () => {
+  const ordered = wave4Catalogue.filter(f => f.title !== "Beach Blossom Inspired");
+  const emptyTop = ordered.filter(f => !f.notesStructured || f.notesStructured.top.length === 0);
+  assert.equal(emptyTop.length, 0,
+    `${emptyTop.length} ordered records have empty notesStructured.top: ${emptyTop.map(f => f.title).join(", ")}`);
+});
+
+test("W4-V55 — Beach Blossom has UNORDERED pattern: top=[], heartNotes=[4], base=[]", () => {
+  const bb = wave4Catalogue.find(f => f.title === "Beach Blossom Inspired");
+  assert.ok(bb, "Beach Blossom Inspired must exist in wave4Catalogue");
+  assert.deepEqual(bb!.notesStructured!.top,  [], "Beach Blossom top must be []");
+  assert.deepEqual(bb!.notesStructured!.base, [], "Beach Blossom base must be []");
+  assert.equal(bb!.notesStructured!.heart.length, 4,
+    `Beach Blossom heart must have 4 notes, got ${bb!.notesStructured!.heart.length}`);
+});
+
+test("W4-V56 — Bleu Noir subtitle corrected to 'for Him Bleu Noir' (EP-CAT-P18D)", () => {
+  const bleuNoir = wave4Catalogue.find(f => f.title === "Blue Noir Inspired");
+  assert.ok(bleuNoir, "'Blue Noir Inspired' must exist in wave4Catalogue");
+  assert.ok(
+    bleuNoir!.subtitle.includes("Bleu Noir"),
+    `Blue Noir subtitle must use French 'Bleu Noir'. Got: '${bleuNoir!.subtitle}'`
+  );
+  assert.ok(
+    bleuNoir!.subtitle.includes("for Him"),
+    `Blue Noir subtitle must include 'for Him'. Got: '${bleuNoir!.subtitle}'`
+  );
+});
+
+test("W4-V57 — Gucci Flora subtitle corrected to 'Flora Gorgeous Gardenia' (EP-CAT-P18D)", () => {
+  const gucciFlora = wave4Catalogue.find(f => f.title === "Gucci Flora Inspired");
+  assert.ok(gucciFlora, "'Gucci Flora Inspired' must exist in wave4Catalogue");
+  assert.ok(
+    gucciFlora!.subtitle.includes("Flora Gorgeous Gardenia"),
+    `Gucci Flora subtitle must include 'Flora Gorgeous Gardenia'. Got: '${gucciFlora!.subtitle}'`
+  );
+});
+
+test("W4-V58 — all 20 catalogue records have non-empty mood, profile, season (P18D curatorial fields)", () => {
+  const missingMood    = wave4Catalogue.filter(f => !f.mood || f.mood.trim() === "");
+  const missingProfile = wave4Catalogue.filter(f => !f.profile || f.profile.trim() === "");
+  const missingSeason  = wave4Catalogue.filter(f => !f.season || f.season.trim() === "");
+  assert.equal(missingMood.length,    0, `${missingMood.length} records have empty mood: ${missingMood.map(f => f.title).join(", ")}`);
+  assert.equal(missingProfile.length, 0, `${missingProfile.length} records have empty profile: ${missingProfile.map(f => f.title).join(", ")}`);
+  assert.equal(missingSeason.length,  0, `${missingSeason.length} records have empty season: ${missingSeason.map(f => f.title).join(", ")}`);
+});
+
+test("W4-V59 — Oud Cadenza notes contain 'Agarwood (Oud)' (OUD_GAP_PROVEN_HIGH confirmed in catalogue)", () => {
+  const oudCadenza = wave4Catalogue.find(f => f.title === "Oud Cadenza Inspired");
+  assert.ok(oudCadenza, "'Oud Cadenza Inspired' must exist in wave4Catalogue");
+  const allNotes = [
+    ...(oudCadenza!.notesStructured?.heart ?? []),
+    ...oudCadenza!.notes,
+  ];
+  const hasOud = allNotes.some(n => n.toLowerCase().includes("agarwood") || n.toLowerCase().includes("oud"));
+  assert.ok(hasOud, "Oud Cadenza catalogue record must contain Agarwood (Oud) in notes");
+});
+
+test("W4-V60 — all 20 catalogue records have collection set to Elite, Skye, or Rose", () => {
+  const valid = new Set(["Elite", "Skye", "Rose"]);
+  const invalid = wave4Catalogue.filter(f => !valid.has(f.collection));
+  assert.equal(invalid.length, 0,
+    `${invalid.length} records have invalid collection: ${invalid.map(f => `${f.title}→${f.collection}`).join(", ")}`);
+});
+
 // ── Summary ───────────────────────────────────────────────────────────────────
 
 console.log(`\n${"─".repeat(56)}`);
@@ -482,10 +577,10 @@ if (failed > 0) {
   process.exit(1);
 } else {
   console.log(`\n  PASS — all ${passed} Wave 4 governance validation checks passed.\n`);
-  console.log("  Wave 4 research governance: VERIFIED (P18C_R1_PASS_WAVE4_20_OF_20_EVIDENCE_LOCKED)");
-  console.log("  20 entries READY for factory staging.");
-  console.log("  0 entries FOUNDER_DECISION_REQUIRED — all Founder decisions resolved in EP-CAT-P18C-R1.\n");
-  console.log("  Catalogue corrections pending before P18D staging:");
-  console.log("    1. MEN-151 Bleu Noir: subtitle correction 'Blue Noir' → 'for Him Bleu Noir' in wave-4-catalogue.ts");
-  console.log("    2. LADIES-127 Gucci Flora: subtitle correction 'Inspired by Gucci Flora' → 'Inspired by Gucci Flora Gorgeous Gardenia' in wave-4-catalogue.ts\n");
+  console.log("  Wave 4 research governance: VERIFIED");
+  console.log("  Wave 4 catalogue staged state: VERIFIED");
+  console.log("  Target: P18D_PASS_WAVE4_20_OF_20_STAGED_GENERATION_READY");
+  console.log("  20 entries READY, notesEvidenceLocked: true, notesStructured populated.");
+  console.log("  Subtitle corrections applied: Bleu Noir, Gucci Flora Gorgeous Gardenia.");
+  console.log("  0 entries FOUNDER_DECISION_REQUIRED — all Founder decisions resolved EP-CAT-P18C-R1.\n");
 }
