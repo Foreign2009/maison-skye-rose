@@ -111,7 +111,7 @@ export const narcisoRodriguezForHerInspired: FragranceKnowledge = {
   // â”€â”€ Relationships â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["si-passione-red-musk-inspired", "coco-mademoiselle-inspired"],
+    alternatives:     ["si-passione-red-musk-inspired", "coco-mademoiselle-inspired", "narciso-pure-musc-inspired"],
     wardrobePartners: ["black-opium-inspired"],
   },
 };

@@ -119,7 +119,7 @@ export const khamrahInspired: FragranceKnowledge = {
   // â”€â”€ Relationships â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["arabians-musk-inspired", "hypnotic-poison-inspired", "black-opium-over-red-inspired"],
+    alternatives:     ["arabians-musk-inspired", "hypnotic-poison-inspired", "black-opium-over-red-inspired", "vanilla-powder-inspired"],
     wardrobePartners: ["oud-wood-inspired", "oud-mood-inspired"],
   },
 };

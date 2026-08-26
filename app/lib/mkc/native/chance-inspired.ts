@@ -117,7 +117,7 @@ export const chanceInspired: FragranceKnowledge = {
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["coco-mademoiselle-inspired", "chance-eau-fraiche-inspired", "chance-eau-tendre-inspired", "a-la-rose-inspired"],
+    alternatives:     ["coco-mademoiselle-inspired", "chance-eau-fraiche-inspired", "chance-eau-tendre-inspired", "a-la-rose-inspired", "chloe-original-inspired"],
     wardrobePartners: ["flowerbomb-inspired", "libre-inspired"],
   },
 };

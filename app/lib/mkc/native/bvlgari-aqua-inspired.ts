@@ -114,7 +114,7 @@ export const bvlgariAquaInspired: FragranceKnowledge = {
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["aqua-di-gio-inspired", "invictus-inspired", "hawas-inspired"],
+    alternatives:     ["aqua-di-gio-inspired", "invictus-inspired", "hawas-inspired", "bvlgari-aqva-marine-inspired"],
     wardrobePartners: ["sauvage-inspired"],
   },
 };

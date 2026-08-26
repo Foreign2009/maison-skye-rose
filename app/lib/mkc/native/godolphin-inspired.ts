@@ -125,6 +125,6 @@ export const godolphinInspired: FragranceKnowledge = {
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
     alternatives:     ["prada-l'homme-inspired", "valentino-uomo-born-in-roma-inspired"],
-    wardrobePartners: ["spicebomb-extreme-inspired"],
+    wardrobePartners: ["spicebomb-extreme-inspired", "oud-cadenza-inspired"],
   },
 };

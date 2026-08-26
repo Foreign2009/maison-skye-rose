@@ -212,6 +212,26 @@ import { _212VipBlackInspired } from "./212-vip-black-inspired";
 import { aqvaAmaraInspired } from "./aqva-amara-inspired";
 import { scandalPourHommeInspired } from "./scandal-pour-homme-inspired";
 import { lacosteBlancInspired } from "./lacoste-blanc-inspired";
+import { creedDelphinusInspired } from "./creed-delphinus-inspired";
+import { aquaAllegoriaRosaVerdeInspired } from "./aqua-allegoria-rosa-verde-inspired";
+import { vanillaPowderInspired } from "./vanilla-powder-inspired";
+import { beachBlossomInspired } from "./beach-blossom-inspired";
+import { ckOneInspired } from "./ck-one-inspired";
+import { oudCadenzaInspired } from "./oud-cadenza-inspired";
+import { coolWaterInspired } from "./cool-water-inspired";
+import { dylanBlueInspired } from "./dylan-blue-inspired";
+import { poloBlueInspired } from "./polo-blue-inspired";
+import { pradaParadigmeInspired } from "./prada-paradigme-inspired";
+import { legendBlueInspired } from "./legend-blue-inspired";
+import { blueNoirInspired } from "./blue-noir-inspired";
+import { bvlgariAqvaMarineInspired } from "./bvlgari-aqva-marine-inspired";
+import { dknyBeDeliciousGreenInspired } from "./dkny-be-delicious-green-inspired";
+import { cliniqueHappyInspired } from "./clinique-happy-inspired";
+import { narcisoPureMuscInspired } from "./narciso-pure-musc-inspired";
+import { dylanBluePourFemmeInspired } from "./dylan-blue-pour-femme-inspired";
+import { cherryInTheAirInspired } from "./cherry-in-the-air-inspired";
+import { chloeOriginalInspired } from "./chloe-original-inspired";
+import { gucciFloraInspired } from "./gucci-flora-inspired";
 
 export const nativeFragrances = new Map<string, FragranceKnowledge>([
   ["sauvage-inspired",              sauvageInspired],
@@ -416,4 +436,24 @@ export const nativeFragrances = new Map<string, FragranceKnowledge>([
   ["aqva-amara-inspired", aqvaAmaraInspired],
   ["scandal-pour-homme-inspired", scandalPourHommeInspired],
   ["lacoste-blanc-inspired", lacosteBlancInspired],
+  ["creed-delphinus-inspired", creedDelphinusInspired],
+  ["aqua-allegoria-rosa-verde-inspired", aquaAllegoriaRosaVerdeInspired],
+  ["vanilla-powder-inspired", vanillaPowderInspired],
+  ["beach-blossom-inspired", beachBlossomInspired],
+  ["ck-one-inspired", ckOneInspired],
+  ["oud-cadenza-inspired", oudCadenzaInspired],
+  ["cool-water-inspired", coolWaterInspired],
+  ["dylan-blue-inspired", dylanBlueInspired],
+  ["polo-blue-inspired", poloBlueInspired],
+  ["prada-paradigme-inspired", pradaParadigmeInspired],
+  ["legend-blue-inspired", legendBlueInspired],
+  ["blue-noir-inspired", blueNoirInspired],
+  ["bvlgari-aqva-marine-inspired", bvlgariAqvaMarineInspired],
+  ["dkny-be-delicious-green-inspired", dknyBeDeliciousGreenInspired],
+  ["clinique-happy-inspired", cliniqueHappyInspired],
+  ["narciso-pure-musc-inspired", narcisoPureMuscInspired],
+  ["dylan-blue-pour-femme-inspired", dylanBluePourFemmeInspired],
+  ["cherry-in-the-air-inspired", cherryInTheAirInspired],
+  ["chloe-original-inspired", chloeOriginalInspired],
+  ["gucci-flora-inspired", gucciFloraInspired],
 ]);

@@ -87,7 +87,7 @@ export const invictusInspired: FragranceKnowledge = {
   relationships: {
     evolutions:       ["invictus-victory-inspired"],
     wardrobePartners: ["invictus-victory-inspired", "invictus-victory-absolu-inspired"],
-    alternatives: ["afternoon-swim-inspired", "silver-mountain-water-inspired", "bvlgari-aqua-inspired", "leau-dissey-pour-homme-inspired", "aqva-amara-inspired"],
+    alternatives: ["afternoon-swim-inspired", "silver-mountain-water-inspired", "bvlgari-aqua-inspired", "leau-dissey-pour-homme-inspired", "aqva-amara-inspired", "cool-water-inspired", "dylan-blue-inspired", "polo-blue-inspired", "bvlgari-aqva-marine-inspired"],
   },
 
   // ── Intelligence ─────────────────────────────────────────────────────────────

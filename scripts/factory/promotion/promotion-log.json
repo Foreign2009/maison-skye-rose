@@ -3801,6 +3801,433 @@
       "slug": "lacoste-blanc-inspired",
       "operator": "Founder",
       "details": "promotionId:Cfco50vVexhd  validation:PASS  nativePath:app/lib/mkc/native/lacoste-blanc-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-26T18:47:18.823Z",
+      "action": "promotion_started",
+      "slug": "creed-delphinus-inspired",
+      "operator": "Founder",
+      "details": "symbol:creedDelphinusInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-26T18:47:18.830Z",
+      "action": "relationships_synced",
+      "slug": "creed-delphinus-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:4  files:4"
+    },
+    {
+      "timestamp": "2026-08-26T18:48:00.610Z",
+      "action": "promotion_completed",
+      "slug": "creed-delphinus-inspired",
+      "operator": "Founder",
+      "details": "promotionId:qiOxWMsUA2_p  validation:PASS  nativePath:app/lib/mkc/native/creed-delphinus-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-26T18:48:03.786Z",
+      "action": "promotion_started",
+      "slug": "aqua-allegoria-rosa-verde-inspired",
+      "operator": "Founder",
+      "details": "symbol:aquaAllegoriaRosaVerdeInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-26T18:48:03.794Z",
+      "action": "relationships_synced",
+      "slug": "aqua-allegoria-rosa-verde-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:3  files:3"
+    },
+    {
+      "timestamp": "2026-08-26T18:48:43.724Z",
+      "action": "promotion_completed",
+      "slug": "aqua-allegoria-rosa-verde-inspired",
+      "operator": "Founder",
+      "details": "promotionId:EQBTIjoP919d  validation:PASS  nativePath:app/lib/mkc/native/aqua-allegoria-rosa-verde-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-26T18:48:46.693Z",
+      "action": "promotion_started",
+      "slug": "vanilla-powder-inspired",
+      "operator": "Founder",
+      "details": "symbol:vanillaPowderInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-26T18:48:46.700Z",
+      "action": "relationships_synced",
+      "slug": "vanilla-powder-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:3  files:3"
+    },
+    {
+      "timestamp": "2026-08-26T18:49:26.146Z",
+      "action": "promotion_completed",
+      "slug": "vanilla-powder-inspired",
+      "operator": "Founder",
+      "details": "promotionId:jNJ1GrX-Aq9H  validation:PASS  nativePath:app/lib/mkc/native/vanilla-powder-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-26T18:49:29.299Z",
+      "action": "promotion_started",
+      "slug": "beach-blossom-inspired",
+      "operator": "Founder",
+      "details": "symbol:beachBlossomInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-26T18:49:29.308Z",
+      "action": "relationships_synced",
+      "slug": "beach-blossom-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:3  files:3"
+    },
+    {
+      "timestamp": "2026-08-26T18:50:10.905Z",
+      "action": "promotion_completed",
+      "slug": "beach-blossom-inspired",
+      "operator": "Founder",
+      "details": "promotionId:IBn1NohTu6yX  validation:PASS  nativePath:app/lib/mkc/native/beach-blossom-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-26T18:50:15.126Z",
+      "action": "promotion_started",
+      "slug": "ck-one-inspired",
+      "operator": "Founder",
+      "details": "symbol:ckOneInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-26T18:50:15.135Z",
+      "action": "relationships_synced",
+      "slug": "ck-one-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:3  files:3"
+    },
+    {
+      "timestamp": "2026-08-26T18:51:07.034Z",
+      "action": "promotion_completed",
+      "slug": "ck-one-inspired",
+      "operator": "Founder",
+      "details": "promotionId:uCQcK2tkS5HP  validation:PASS  nativePath:app/lib/mkc/native/ck-one-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-26T18:51:10.166Z",
+      "action": "promotion_started",
+      "slug": "oud-cadenza-inspired",
+      "operator": "Founder",
+      "details": "symbol:oudCadenzaInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-26T18:51:10.177Z",
+      "action": "relationships_synced",
+      "slug": "oud-cadenza-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:5  files:5"
+    },
+    {
+      "timestamp": "2026-08-26T18:51:51.378Z",
+      "action": "promotion_completed",
+      "slug": "oud-cadenza-inspired",
+      "operator": "Founder",
+      "details": "promotionId:0acYvSMpm8qy  validation:PASS  nativePath:app/lib/mkc/native/oud-cadenza-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-26T18:51:54.681Z",
+      "action": "promotion_started",
+      "slug": "cool-water-inspired",
+      "operator": "Founder",
+      "details": "symbol:coolWaterInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-26T18:51:54.691Z",
+      "action": "relationships_synced",
+      "slug": "cool-water-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:5  files:5"
+    },
+    {
+      "timestamp": "2026-08-26T18:52:33.167Z",
+      "action": "promotion_completed",
+      "slug": "cool-water-inspired",
+      "operator": "Founder",
+      "details": "promotionId:PoMGZzHwYhUM  validation:PASS  nativePath:app/lib/mkc/native/cool-water-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-26T18:52:36.651Z",
+      "action": "promotion_started",
+      "slug": "dylan-blue-inspired",
+      "operator": "Founder",
+      "details": "symbol:dylanBlueInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-26T18:52:36.662Z",
+      "action": "relationships_synced",
+      "slug": "dylan-blue-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:3  files:3"
+    },
+    {
+      "timestamp": "2026-08-26T18:53:13.941Z",
+      "action": "promotion_completed",
+      "slug": "dylan-blue-inspired",
+      "operator": "Founder",
+      "details": "promotionId:wzdx1IXTv4eK  validation:PASS  nativePath:app/lib/mkc/native/dylan-blue-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-26T18:53:17.358Z",
+      "action": "promotion_started",
+      "slug": "polo-blue-inspired",
+      "operator": "Founder",
+      "details": "symbol:poloBlueInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-26T18:53:17.366Z",
+      "action": "relationships_synced",
+      "slug": "polo-blue-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:4  files:4"
+    },
+    {
+      "timestamp": "2026-08-26T18:53:56.577Z",
+      "action": "promotion_completed",
+      "slug": "polo-blue-inspired",
+      "operator": "Founder",
+      "details": "promotionId:ULrR9_0j871v  validation:PASS  nativePath:app/lib/mkc/native/polo-blue-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-26T18:53:59.474Z",
+      "action": "promotion_started",
+      "slug": "prada-paradigme-inspired",
+      "operator": "Founder",
+      "details": "symbol:pradaParadigmeInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-26T18:53:59.484Z",
+      "action": "relationships_synced",
+      "slug": "prada-paradigme-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:3  files:3"
+    },
+    {
+      "timestamp": "2026-08-26T18:54:37.697Z",
+      "action": "promotion_completed",
+      "slug": "prada-paradigme-inspired",
+      "operator": "Founder",
+      "details": "promotionId:XQH_ko9NYtso  validation:PASS  nativePath:app/lib/mkc/native/prada-paradigme-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-26T18:54:40.487Z",
+      "action": "promotion_started",
+      "slug": "legend-blue-inspired",
+      "operator": "Founder",
+      "details": "symbol:legendBlueInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-26T18:54:40.495Z",
+      "action": "relationships_synced",
+      "slug": "legend-blue-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:5  files:5"
+    },
+    {
+      "timestamp": "2026-08-26T18:55:19.780Z",
+      "action": "promotion_completed",
+      "slug": "legend-blue-inspired",
+      "operator": "Founder",
+      "details": "promotionId:SIWAUhykN-RP  validation:PASS  nativePath:app/lib/mkc/native/legend-blue-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-26T18:55:22.684Z",
+      "action": "promotion_started",
+      "slug": "blue-noir-inspired",
+      "operator": "Founder",
+      "details": "symbol:blueNoirInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-26T18:55:22.694Z",
+      "action": "relationships_synced",
+      "slug": "blue-noir-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:4  files:4"
+    },
+    {
+      "timestamp": "2026-08-26T18:56:02.031Z",
+      "action": "promotion_completed",
+      "slug": "blue-noir-inspired",
+      "operator": "Founder",
+      "details": "promotionId:smHFtgAoWo9u  validation:PASS  nativePath:app/lib/mkc/native/blue-noir-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-26T18:56:04.941Z",
+      "action": "promotion_started",
+      "slug": "bvlgari-aqva-marine-inspired",
+      "operator": "Founder",
+      "details": "symbol:bvlgariAqvaMarineInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-26T18:56:04.948Z",
+      "action": "relationships_synced",
+      "slug": "bvlgari-aqva-marine-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:4  files:4"
+    },
+    {
+      "timestamp": "2026-08-26T18:56:45.013Z",
+      "action": "promotion_completed",
+      "slug": "bvlgari-aqva-marine-inspired",
+      "operator": "Founder",
+      "details": "promotionId:HsFaqovLV7q3  validation:PASS  nativePath:app/lib/mkc/native/bvlgari-aqva-marine-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-26T18:56:47.704Z",
+      "action": "promotion_started",
+      "slug": "dkny-be-delicious-green-inspired",
+      "operator": "Founder",
+      "details": "symbol:dknyBeDeliciousGreenInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-26T18:56:47.712Z",
+      "action": "relationships_synced",
+      "slug": "dkny-be-delicious-green-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:5  files:5"
+    },
+    {
+      "timestamp": "2026-08-26T18:58:05.649Z",
+      "action": "promotion_started",
+      "slug": "dkny-be-delicious-green-inspired",
+      "operator": "Founder",
+      "details": "symbol:dknyBeDeliciousGreenInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-26T18:58:42.473Z",
+      "action": "promotion_completed",
+      "slug": "dkny-be-delicious-green-inspired",
+      "operator": "Founder",
+      "details": "promotionId:h8IYFGKBSaeQ  validation:PASS  nativePath:app/lib/mkc/native/dkny-be-delicious-green-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-26T18:58:45.379Z",
+      "action": "promotion_started",
+      "slug": "clinique-happy-inspired",
+      "operator": "Founder",
+      "details": "symbol:cliniqueHappyInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-26T18:58:45.387Z",
+      "action": "relationships_synced",
+      "slug": "clinique-happy-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:3  files:3"
+    },
+    {
+      "timestamp": "2026-08-26T18:59:21.978Z",
+      "action": "promotion_completed",
+      "slug": "clinique-happy-inspired",
+      "operator": "Founder",
+      "details": "promotionId:L2HBTKclgyF-  validation:PASS  nativePath:app/lib/mkc/native/clinique-happy-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-26T18:59:24.955Z",
+      "action": "promotion_started",
+      "slug": "narciso-pure-musc-inspired",
+      "operator": "Founder",
+      "details": "symbol:narcisoPureMuscInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-26T18:59:24.964Z",
+      "action": "relationships_synced",
+      "slug": "narciso-pure-musc-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:3  files:3"
+    },
+    {
+      "timestamp": "2026-08-26T19:00:01.282Z",
+      "action": "promotion_completed",
+      "slug": "narciso-pure-musc-inspired",
+      "operator": "Founder",
+      "details": "promotionId:SInThSIX_D5m  validation:PASS  nativePath:app/lib/mkc/native/narciso-pure-musc-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-26T19:00:04.061Z",
+      "action": "promotion_started",
+      "slug": "dylan-blue-pour-femme-inspired",
+      "operator": "Founder",
+      "details": "symbol:dylanBluePourFemmeInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-26T19:00:04.070Z",
+      "action": "relationships_synced",
+      "slug": "dylan-blue-pour-femme-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:5  files:5"
+    },
+    {
+      "timestamp": "2026-08-26T19:00:40.846Z",
+      "action": "promotion_completed",
+      "slug": "dylan-blue-pour-femme-inspired",
+      "operator": "Founder",
+      "details": "promotionId:hXPzS6la--hg  validation:PASS  nativePath:app/lib/mkc/native/dylan-blue-pour-femme-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-26T19:00:44.001Z",
+      "action": "promotion_started",
+      "slug": "cherry-in-the-air-inspired",
+      "operator": "Founder",
+      "details": "symbol:cherryInTheAirInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-26T19:00:44.011Z",
+      "action": "relationships_synced",
+      "slug": "cherry-in-the-air-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:4  files:4"
+    },
+    {
+      "timestamp": "2026-08-26T19:01:21.367Z",
+      "action": "promotion_completed",
+      "slug": "cherry-in-the-air-inspired",
+      "operator": "Founder",
+      "details": "promotionId:19iduhdk87eM  validation:PASS  nativePath:app/lib/mkc/native/cherry-in-the-air-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-26T19:01:24.038Z",
+      "action": "promotion_started",
+      "slug": "chloe-original-inspired",
+      "operator": "Founder",
+      "details": "symbol:chloeOriginalInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-26T19:01:24.046Z",
+      "action": "relationships_synced",
+      "slug": "chloe-original-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:4  files:4"
+    },
+    {
+      "timestamp": "2026-08-26T19:02:00.841Z",
+      "action": "promotion_completed",
+      "slug": "chloe-original-inspired",
+      "operator": "Founder",
+      "details": "promotionId:1qdtEQoqnM-p  validation:PASS  nativePath:app/lib/mkc/native/chloe-original-inspired.ts"
+    },
+    {
+      "timestamp": "2026-08-26T19:02:03.744Z",
+      "action": "promotion_started",
+      "slug": "gucci-flora-inspired",
+      "operator": "Founder",
+      "details": "symbol:gucciFloraInspired  reviewedBy:Founder"
+    },
+    {
+      "timestamp": "2026-08-26T19:02:03.753Z",
+      "action": "relationships_synced",
+      "slug": "gucci-flora-inspired",
+      "operator": "Founder",
+      "details": "reciprocals:4  files:4"
+    },
+    {
+      "timestamp": "2026-08-26T19:02:39.830Z",
+      "action": "promotion_completed",
+      "slug": "gucci-flora-inspired",
+      "operator": "Founder",
+      "details": "promotionId:O4y1zlcqeTf9  validation:PASS  nativePath:app/lib/mkc/native/gucci-flora-inspired.ts"
     }
   ]
 }

@@ -111,7 +111,7 @@ export const oudIspahanInspired: FragranceKnowledge = {
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["delina-exclusif-inspired", "baccarat-rouge-540-inspired"],
+    alternatives:     ["delina-exclusif-inspired", "baccarat-rouge-540-inspired", "oud-cadenza-inspired"],
     wardrobePartners: ["oud-wood-inspired", "oud-for-greatness-inspired"],
   },
 };

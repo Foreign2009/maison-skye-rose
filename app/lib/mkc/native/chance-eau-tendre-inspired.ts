@@ -104,7 +104,7 @@ export const chanceEauTendreInspired: FragranceKnowledge = {
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["delina-inspired", "chance-eau-fraiche-inspired", "bright-crystal-inspired", "chance-inspired", "coach-floral-inspired", "fresh-blossom-inspired", "rose-of-no-man's-land-inspired", "twilly-d'hermes-inspired", "peony-blush-suede-inspired", "english-pear-freesia-inspired", "idole-inspired", "fame-inspired", "gucci-guilty-pour-femme-inspired", "eladaria-inspired", "eden-sparkling-lychee-inspired", "my-way-nectar-inspired"],
+    alternatives:     ["delina-inspired", "chance-eau-fraiche-inspired", "bright-crystal-inspired", "chance-inspired", "coach-floral-inspired", "fresh-blossom-inspired", "rose-of-no-man's-land-inspired", "twilly-d'hermes-inspired", "peony-blush-suede-inspired", "english-pear-freesia-inspired", "idole-inspired", "fame-inspired", "gucci-guilty-pour-femme-inspired", "eladaria-inspired", "eden-sparkling-lychee-inspired", "my-way-nectar-inspired", "gucci-flora-inspired"],
     wardrobePartners: ["sauvage-inspired", "bleu-de-chanel-inspired"],
   },
 };

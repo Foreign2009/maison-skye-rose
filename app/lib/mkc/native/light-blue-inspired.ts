@@ -109,7 +109,7 @@ export const lightBlueInspired: FragranceKnowledge = {
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["coco-mademoiselle-inspired", "chance-eau-fraiche-inspired", "yellow-diamond-inspired", "fig-lotus-flower-inspired", "omnia-crystalline-inspired"],
-    wardrobePartners: ["alien-inspired", "flowerbomb-inspired"],
+    alternatives:     ["coco-mademoiselle-inspired", "chance-eau-fraiche-inspired", "yellow-diamond-inspired", "fig-lotus-flower-inspired", "omnia-crystalline-inspired", "ck-one-inspired", "dylan-blue-pour-femme-inspired"],
+    wardrobePartners: ["alien-inspired", "flowerbomb-inspired", "dkny-be-delicious-green-inspired"],
   },
 };

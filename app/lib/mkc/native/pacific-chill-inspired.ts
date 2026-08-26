@@ -109,7 +109,7 @@ export const pacificChillInspired: FragranceKnowledge = {
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["hawas-inspired", "aqua-di-gio-inspired"],
+    alternatives:     ["hawas-inspired", "aqua-di-gio-inspired", "beach-blossom-inspired"],
     wardrobePartners: ["spicebomb-extreme-inspired"],
   },
 };

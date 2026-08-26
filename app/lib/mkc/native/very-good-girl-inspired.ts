@@ -103,7 +103,7 @@ export const veryGoodGirlInspired: FragranceKnowledge = {
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["delina-inspired", "eden-sparkling-lychee-inspired", "gabrielle-inspired"],
+    alternatives:     ["delina-inspired", "eden-sparkling-lychee-inspired", "gabrielle-inspired", "dkny-be-delicious-green-inspired", "cherry-in-the-air-inspired"],
     wardrobePartners: ["aventus-inspired", "spicebomb-extreme-inspired", "very-good-girl-elixir-inspired"],
   },
 };

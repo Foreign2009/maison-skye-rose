@@ -84,7 +84,7 @@ export const leBeauParadiseGardenInspired: FragranceKnowledge = {
 
   // ── Relationships ─────────────────────────────────────────────────────────────
   relationships: {
-    wardrobePartners: ["hawas-inspired"],
+    wardrobePartners: ["hawas-inspired", "beach-blossom-inspired"],
   },
 
   // ── Intelligence ─────────────────────────────────────────────────────────────

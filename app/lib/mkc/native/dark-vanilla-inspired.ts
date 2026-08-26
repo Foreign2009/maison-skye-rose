@@ -119,7 +119,7 @@ export const darkVanillaInspired: FragranceKnowledge = {
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["spicebomb-extreme-inspired", "hypnotic-poison-inspired"],
+    alternatives:     ["spicebomb-extreme-inspired", "hypnotic-poison-inspired", "vanilla-powder-inspired"],
     wardrobePartners: ["oud-mood-inspired", "baccarat-rouge-540-inspired"],
   },
 };

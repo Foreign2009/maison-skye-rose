@@ -110,7 +110,7 @@ export const leMaleInspired: FragranceKnowledge = {
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["spicebomb-extreme-inspired", "le-male-elixir-inspired", "stronger-with-you-inspired"],
+    alternatives:     ["spicebomb-extreme-inspired", "le-male-elixir-inspired", "stronger-with-you-inspired", "prada-paradigme-inspired"],
     wardrobePartners: ["sauvage-inspired", "bleu-de-chanel-inspired", "light-blue-pour-homme-inspired"],
   },
 };

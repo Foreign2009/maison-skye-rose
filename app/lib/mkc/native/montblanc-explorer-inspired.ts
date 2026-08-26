@@ -111,7 +111,7 @@ export const montblancExplorerInspired: FragranceKnowledge = {
   // â”€â”€ Relationships â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["sauvage-inspired", "valentino-uomo-born-in-roma-inspired", "armani-code-parfum-inspired"],
+    alternatives:     ["sauvage-inspired", "valentino-uomo-born-in-roma-inspired", "armani-code-parfum-inspired", "legend-blue-inspired"],
     wardrobePartners: ["spicebomb-extreme-inspired"],
   },
 };
