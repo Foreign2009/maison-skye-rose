@@ -1,27 +1,27 @@
-// ═════════════════════════════════════════════════════════════════
-// FACTORY DRAFT — beach-blossom-inspired
-// ─────────────────────────────────────────────────────────────────
+﻿// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// FACTORY DRAFT â€” beach-blossom-inspired
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 // Generated:         2026-08-26T18:04:24.889Z
 // Factory version:   0.5.0
 // Prompt versions:   EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0
-// Validation status: FAIL  [3 error(s), 0 warning(s)]
-// Projected KQ tier: (not available — requires Intelligence Producer)
-// ─────────────────────────────────────────────────────────────────
+// Validation status: PASS  [0 error(s), 0 warning(s)]  [EP-CAT-P18F]
+// Projected KQ tier: (not available â€” requires Intelligence Producer)
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 // REVIEW CHECKLIST
-//   □ Notes pyramid verified (≥ 2 per tier, no cross-tier duplicates)
-//   □ Description reviewed in Maison editorial voice
-//   □ Vibe tags meet minimum of 3 (from approved vocabulary)
-//   □ recommendedFor has minimum of 2 persona statements
-//   □ All FACTORY_ERROR markers resolved
-//   □ All FACTORY_WARN markers reviewed
-//   □ Relationship suggestions reviewed (see footer)
-//   □ npm run mkc:validate passes before promotion
-// ═════════════════════════════════════════════════════════════════
+//   â–¡ Notes pyramid verified (â‰¥ 2 per tier, no cross-tier duplicates)
+//   â–¡ Description reviewed in Maison editorial voice
+//   â–¡ Vibe tags meet minimum of 3 (from approved vocabulary)
+//   â–¡ recommendedFor has minimum of 2 persona statements
+//   â–¡ All FACTORY_ERROR markers resolved
+//   â–¡ All FACTORY_WARN markers reviewed
+//   â–¡ Relationship suggestions reviewed (see footer)
+//   â–¡ npm run mkc:validate passes before promotion
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 
 import type { FragranceKnowledge } from "../../../app/lib/mkc/types";
 
 export const beachBlossomInspired: FragranceKnowledge = {
-  // ── Identity ──────────────────────────────────────────────────────────────────
+  // â”€â”€ Identity â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   id            : "beach-blossom-inspired",
   slug          : "beach-blossom-inspired",
   brand         : "Maison Skye & Rose",
@@ -30,13 +30,13 @@ export const beachBlossomInspired: FragranceKnowledge = {
   catalogVersion: "1.0",
   status        : "active",
 
-  // ── Classification ────────────────────────────────────────────────────────────
+  // â”€â”€ Classification â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   gender        : "unisex",
   family        : ["Aromatic", "Fresh"],
   scentCharacter: "Fresh & Light",
   projection    : "moderate",
 
-  // ── Composition ─────────────────────────────────────────────────────────────
+  // â”€â”€ Composition â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   profile       : "Aromatic Green",
   season        : "Summer",
   notes: {
@@ -47,7 +47,7 @@ export const beachBlossomInspired: FragranceKnowledge = {
   notesEvidenceLocked: true,
   mood          : "Fresh Tropical",
 
-  // ── Discovery ───────────────────────────────────────────────────────────────
+  // â”€â”€ Discovery â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   vibe          : [
     "Fresh",
     "Bright",
@@ -68,26 +68,26 @@ export const beachBlossomInspired: FragranceKnowledge = {
   recommendedFor: [
     "Anyone seeking a fresh, skin-like fragrance that captures the feeling of sun, salt air, and tropical ease without heaviness.",
     "Women and men who want a versatile summer signature that works equally well for beach days, casual outings, and warm-weather travel.",
-    "Those who prefer aromatic green freshness with a subtle sweetness—alive and uplifting rather than floral or gourmand.",
+    "Those who prefer aromatic green freshness with a subtle sweetnessâ€”alive and uplifting rather than floral or gourmand.",
   ],
 
-  // ── Merchandising ───────────────────────────────────────────────────────────
+  // â”€â”€ Merchandising â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   prices: {
     "5ml":  60,
     "10ml": 100,
     "30ml": 250,
   },
   images: {
-    "5ml":  "",  // FACTORY_ERROR: IMAGE_MISSING — image path for 5ml is required
-    "10ml": "",  // FACTORY_ERROR: IMAGE_MISSING — image path for 10ml is required
-    "30ml": "",  // FACTORY_ERROR: IMAGE_MISSING — image path for 30ml is required
+    "5ml":  "/images/blue-5ml.png",
+    "10ml": "/images/blue-10ml.png",
+    "30ml": "/images/glass-blue-30ml.png",
   },
   bestSeller    : false,
   newArrival    : false,
 
-  // ── Education ───────────────────────────────────────────────────────────────
+  // â”€â”€ Education â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   subtitle      : "Green Tropical Light",
-  description   : "Lime and mint open into a sunlit breeze, where coconut water meets the warmth of tonka bean. Green, tropical, utterly alive—a fragrance that tastes like salt air and tastes like skin.",
+  description   : "Lime and mint open into a sunlit breeze, where coconut water meets the warmth of tonka bean. Green, tropical, utterly aliveâ€”a fragrance that tastes like salt air and tastes like skin.",
   academyArticleIds: ["guide-to-fragrance-families", "choosing-your-season-scent", "how-to-wear-fragrance"],
   academyCategories: ["fragrance-families", "occasions-and-style"],
   educationTags : [
@@ -104,7 +104,7 @@ export const beachBlossomInspired: FragranceKnowledge = {
   ],
   learningPath  : ["guide-to-fragrance-families", "choosing-your-season-scent", "how-to-wear-fragrance"],
 
-  // ── Intelligence ────────────────────────────────────────────────────────────
+  // â”€â”€ Intelligence â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   // Approximated from profile + season. Calibrated by Intelligence Producer in P2.
   sweetness     : 1,
   freshness     : 5,
@@ -113,10 +113,12 @@ export const beachBlossomInspired: FragranceKnowledge = {
   versatility   : 3,
   popularity    : 5,
 
-  // ── Relationships ────────────────────────────────────────────────────────────
+  // â”€â”€ Relationships â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
     alternatives:     ["pacific-chill-inspired", "torino21-inspired"],
     wardrobePartners: ["le-beau-paradise-garden-inspired"],
   },
 };
+
+

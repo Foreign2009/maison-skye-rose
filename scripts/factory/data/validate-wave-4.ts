@@ -28,6 +28,37 @@ import { readFileSync } from "node:fs";
 import path from "node:path";
 import { wave4Catalogue } from "./wave-4-catalogue";
 
+// ── Draft imports for Section 16 regression tests ────────────────────────────
+import { creedDelphinusInspired }         from "../drafts/creed-delphinus-inspired";
+import { aquaAllegoriaRosaVerdeInspired } from "../drafts/aqua-allegoria-rosa-verde-inspired";
+import { vanillaPowderInspired }          from "../drafts/vanilla-powder-inspired";
+import { beachBlossomInspired }           from "../drafts/beach-blossom-inspired";
+import { ckOneInspired }                  from "../drafts/ck-one-inspired";
+import { oudCadenzaInspired }             from "../drafts/oud-cadenza-inspired";
+import { coolWaterInspired }              from "../drafts/cool-water-inspired";
+import { dylanBlueInspired }              from "../drafts/dylan-blue-inspired";
+import { poloBlueInspired }               from "../drafts/polo-blue-inspired";
+import { pradaParadigmeInspired }         from "../drafts/prada-paradigme-inspired";
+import { legendBlueInspired }             from "../drafts/legend-blue-inspired";
+import { blueNoirInspired }               from "../drafts/blue-noir-inspired";
+import { bvlgariAqvaMarineInspired }      from "../drafts/bvlgari-aqva-marine-inspired";
+import { dknyBeDeliciousGreenInspired }   from "../drafts/dkny-be-delicious-green-inspired";
+import { cliniqueHappyInspired }          from "../drafts/clinique-happy-inspired";
+import { narcisoPureMuscInspired }        from "../drafts/narciso-pure-musc-inspired";
+import { dylanBluePourFemmeInspired }     from "../drafts/dylan-blue-pour-femme-inspired";
+import { cherryInTheAirInspired }         from "../drafts/cherry-in-the-air-inspired";
+import { chloeOriginalInspired }          from "../drafts/chloe-original-inspired";
+import { gucciFloraInspired }             from "../drafts/gucci-flora-inspired";
+
+const wave4Drafts = [
+  creedDelphinusInspired, aquaAllegoriaRosaVerdeInspired, vanillaPowderInspired,
+  beachBlossomInspired, ckOneInspired, oudCadenzaInspired, coolWaterInspired,
+  dylanBlueInspired, poloBlueInspired, pradaParadigmeInspired, legendBlueInspired,
+  blueNoirInspired, bvlgariAqvaMarineInspired, dknyBeDeliciousGreenInspired,
+  cliniqueHappyInspired, narcisoPureMuscInspired, dylanBluePourFemmeInspired,
+  cherryInTheAirInspired, chloeOriginalInspired, gucciFloraInspired,
+];
+
 // ── Test harness ──────────────────────────────────────────────────────────────
 
 let passed = 0;
@@ -568,6 +599,94 @@ test("W4-V60 — all 20 catalogue records have collection set to Elite, Skye, or
     `${invalid.length} records have invalid collection: ${invalid.map(f => `${f.title}→${f.collection}`).join(", ")}`);
 });
 
+// ── Section 16: Draft-level regression guards (EP-CAT-P18F) ──────────────────
+
+console.log("\n  ─── Section 16: Draft-level regression guards (EP-CAT-P18F) ───\n");
+
+test("W4-V61 — wave4Drafts array contains exactly 20 draft records", () => {
+  assert.equal(wave4Drafts.length, 20,
+    `wave4Drafts must have 20 records, got ${wave4Drafts.length}`);
+});
+
+test("W4-V62 — prada-paradigme-inspired family is non-empty (corrected from [] in P18F)", () => {
+  assert.ok(
+    Array.isArray(pradaParadigmeInspired.family) && pradaParadigmeInspired.family.length > 0,
+    `prada-paradigme family must be non-empty. Got: [${pradaParadigmeInspired.family.join(", ")}]`
+  );
+});
+
+test("W4-V63 — prada-paradigme-inspired family includes Aromatic and Amber (P18F FAMILY_CORRECTION)", () => {
+  assert.ok(pradaParadigmeInspired.family.includes("Aromatic"),
+    `prada-paradigme family must include 'Aromatic'. Got: [${pradaParadigmeInspired.family.join(", ")}]`);
+  assert.ok(pradaParadigmeInspired.family.includes("Amber"),
+    `prada-paradigme family must include 'Amber'. Got: [${pradaParadigmeInspired.family.join(", ")}]`);
+});
+
+test("W4-V64 — beach-blossom-inspired draft: UNORDERED pattern — top=[], heart=[4 notes], base=[]", () => {
+  assert.deepEqual(beachBlossomInspired.notes.top,  [], "beach-blossom top must be [] (Jo Malone UNORDERED)");
+  assert.deepEqual(beachBlossomInspired.notes.base, [], "beach-blossom base must be [] (Jo Malone UNORDERED)");
+  assert.equal(beachBlossomInspired.notes.heart.length, 4,
+    `beach-blossom heart must have 4 notes, got ${beachBlossomInspired.notes.heart.length}`);
+});
+
+test("W4-V65 — gucci-flora-inspired notes.heart includes Gardenia (Gorgeous Gardenia identity)", () => {
+  assert.ok(gucciFloraInspired.notes.heart.includes("Gardenia"),
+    `gucci-flora heart must include 'Gardenia'. Got: [${gucciFloraInspired.notes.heart.join(", ")}]`);
+});
+
+test("W4-V66 — blue-noir-inspired gender is 'male' (Narciso Rodriguez for Him identity)", () => {
+  assert.equal(blueNoirInspired.gender, "male",
+    `blue-noir gender must be 'male'. Got: '${blueNoirInspired.gender}'`);
+});
+
+test("W4-V67 — blue-noir-inspired subtitle is NOT 'Quiet Sophistication' (subtitle collision corrected P18F)", () => {
+  assert.notEqual(blueNoirInspired.subtitle, "Quiet Sophistication",
+    "blue-noir subtitle must not be 'Quiet Sophistication' — was identical to signatureStyle[0], corrected in P18F");
+});
+
+test("W4-V68 — dylan-blue-inspired gender is 'male' (distinct from dylan-blue-pour-femme)", () => {
+  assert.equal(dylanBlueInspired.gender, "male",
+    `dylan-blue gender must be 'male'. Got: '${dylanBlueInspired.gender}'`);
+});
+
+test("W4-V69 — dylan-blue-pour-femme-inspired gender is 'female'", () => {
+  assert.equal(dylanBluePourFemmeInspired.gender, "female",
+    `dylan-blue-pour-femme gender must be 'female'. Got: '${dylanBluePourFemmeInspired.gender}'`);
+});
+
+test("W4-V70 — oud-cadenza-inspired recommendedFor contains no forbidden projection/sillage claims", () => {
+  const forbidden = /\bprojection\b|\bsillage\b/i;
+  const violations = oudCadenzaInspired.recommendedFor.filter(r => forbidden.test(r));
+  assert.equal(violations.length, 0,
+    `oud-cadenza recommendedFor must not contain projection/sillage claims. Violations: ${violations.join(" | ")}`);
+});
+
+test("W4-V71 — cool-water-inspired recommendedFor contains no 'moderate-projection' claim (P18F corrected)", () => {
+  const violations = coolWaterInspired.recommendedFor.filter(r => r.includes("moderate-projection"));
+  assert.equal(violations.length, 0,
+    `cool-water recommendedFor must not contain 'moderate-projection'. Violations: ${violations.join(" | ")}`);
+});
+
+test("W4-V72 — legend-blue-inspired subtitle is NOT 'Crisp Woody Elegance' (subtitle collision corrected P18F)", () => {
+  assert.notEqual(legendBlueInspired.subtitle, "Crisp Woody Elegance",
+    "legend-blue subtitle must not be 'Crisp Woody Elegance' — was identical to signatureStyle[0], corrected in P18F");
+});
+
+test("W4-V73 — all 20 drafts have non-empty image paths for 5ml, 10ml, 30ml", () => {
+  const missing = wave4Drafts.filter(d => {
+    const img = d.images as Record<string, string>;
+    return !img["5ml"] || !img["10ml"] || !img["30ml"];
+  });
+  assert.equal(missing.length, 0,
+    `${missing.length} drafts have missing image paths: ${missing.map(d => d.slug).join(", ")}`);
+});
+
+test("W4-V74 — all 20 drafts have non-empty family array", () => {
+  const empty = wave4Drafts.filter(d => !d.family || d.family.length === 0);
+  assert.equal(empty.length, 0,
+    `${empty.length} drafts have empty family[]: ${empty.map(d => d.slug).join(", ")}`);
+});
+
 // ── Summary ───────────────────────────────────────────────────────────────────
 
 console.log(`\n${"─".repeat(56)}`);
@@ -579,8 +698,8 @@ if (failed > 0) {
   console.log(`\n  PASS — all ${passed} Wave 4 governance validation checks passed.\n`);
   console.log("  Wave 4 research governance: VERIFIED");
   console.log("  Wave 4 catalogue staged state: VERIFIED");
-  console.log("  Target: P18D_PASS_WAVE4_20_OF_20_STAGED_GENERATION_READY");
-  console.log("  20 entries READY, notesEvidenceLocked: true, notesStructured populated.");
-  console.log("  Subtitle corrections applied: Bleu Noir, Gucci Flora Gorgeous Gardenia.");
+  console.log("  Wave 4 draft-level regression guards: VERIFIED (EP-CAT-P18F)");
+  console.log("  Target: P18F_PASS_WAVE4_20_OF_20_PROMOTION_READY");
+  console.log("  20 drafts: images assigned, families valid, governance violations corrected.");
   console.log("  0 entries FOUNDER_DECISION_REQUIRED — all Founder decisions resolved EP-CAT-P18C-R1.\n");
 }

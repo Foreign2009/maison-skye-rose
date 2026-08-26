@@ -1,4 +1,4 @@
-{
+﻿{
     "version":  "1.0",
     "records":  [
                     {
@@ -114,7 +114,7 @@
                                           "reviewer":  "Adi",
                                           "timestamp":  "2026-07-13T19:03:36.031Z",
                                           "section":  "merchandising",
-                                          "note":  "newArrival:true was set by AI based on source fragrance novelty — confirm with business before promotion",
+                                          "note":  "newArrival:true was set by AI based on source fragrance novelty â€” confirm with business before promotion",
                                           "resolved":  false
                                       }
                                   ],
@@ -209,7 +209,7 @@
                                           "reviewer":  "Adi",
                                           "timestamp":  "2026-07-13T19:04:25.713Z",
                                           "section":  "editorial",
-                                          "note":  "Subtitle \u0027Radiant Depth\u0027 collides with guidance-inspired — deduplicate before promotion",
+                                          "note":  "Subtitle \u0027Radiant Depth\u0027 collides with guidance-inspired â€” deduplicate before promotion",
                                           "resolved":  false
                                       }
                                   ],
@@ -239,7 +239,7 @@
                                          "decision":  "needs_regeneration",
                                          "reviewer":  "Adi",
                                          "timestamp":  "2026-07-13T18:52:54.760Z",
-                                         "reason":  "Missing relationships block — factory left alternatives and wardrobePartners empty"
+                                         "reason":  "Missing relationships block â€” factory left alternatives and wardrobePartners empty"
                                      }
                     },
                     {
@@ -282,7 +282,7 @@
                                           "reviewer":  "Adi",
                                           "timestamp":  "2026-07-13T19:04:45.905Z",
                                           "section":  "editorial",
-                                          "note":  "subtitle \u0027Soft Luxury\u0027 duplicates signatureStyle entry exactly — minor naming redundancy",
+                                          "note":  "subtitle \u0027Soft Luxury\u0027 duplicates signatureStyle entry exactly â€” minor naming redundancy",
                                           "resolved":  false
                                       }
                                   ],
@@ -378,7 +378,7 @@
                                          "decision":  "needs_regeneration",
                                          "reviewer":  "Adi",
                                          "timestamp":  "2026-07-13T18:52:57.351Z",
-                                         "reason":  "Missing relationships block — factory left alternatives and wardrobePartners empty"
+                                         "reason":  "Missing relationships block â€” factory left alternatives and wardrobePartners empty"
                                      }
                     },
                     {
@@ -494,7 +494,7 @@
                                           "reviewer":  "Adi",
                                           "timestamp":  "2026-07-13T19:04:01.658Z",
                                           "section":  "merchandising",
-                                          "note":  "bestSeller:true was set by AI — confirm with business before promotion",
+                                          "note":  "bestSeller:true was set by AI â€” confirm with business before promotion",
                                           "resolved":  false
                                       }
                                   ],
@@ -611,7 +611,7 @@
                                           "reviewer":  "Adi",
                                           "timestamp":  "2026-07-13T19:04:33.561Z",
                                           "section":  "editorial",
-                                          "note":  "recommendedFor item 3 uses \u0027reprising\u0027 which appears to be \u0027reapplying\u0027 — review before promotion",
+                                          "note":  "recommendedFor item 3 uses \u0027reprising\u0027 which appears to be \u0027reapplying\u0027 â€” review before promotion",
                                           "resolved":  false
                                       }
                                   ],
@@ -640,7 +640,7 @@
                                           "reviewer":  "Adi",
                                           "timestamp":  "2026-07-13T19:03:38.663Z",
                                           "section":  "merchandising",
-                                          "note":  "newArrival:true was set by AI based on source fragrance novelty — confirm with business before promotion",
+                                          "note":  "newArrival:true was set by AI based on source fragrance novelty â€” confirm with business before promotion",
                                           "resolved":  false
                                       }
                                   ],
@@ -691,7 +691,7 @@
                                           "reviewer":  "Adi",
                                           "timestamp":  "2026-07-13T19:03:41.104Z",
                                           "section":  "merchandising",
-                                          "note":  "newArrival:true was set by AI based on source fragrance novelty — confirm with business before promotion",
+                                          "note":  "newArrival:true was set by AI based on source fragrance novelty â€” confirm with business before promotion",
                                           "resolved":  false
                                       },
                                       {
@@ -699,7 +699,7 @@
                                           "reviewer":  "Adi",
                                           "timestamp":  "2026-07-13T19:04:23.127Z",
                                           "section":  "editorial",
-                                          "note":  "Subtitle \u0027Radiant Depth\u0027 collides with baccarat-rouge-540-extrait-inspired — deduplicate before promotion",
+                                          "note":  "Subtitle \u0027Radiant Depth\u0027 collides with baccarat-rouge-540-extrait-inspired â€” deduplicate before promotion",
                                           "resolved":  false
                                       }
                                   ],
@@ -728,7 +728,7 @@
                                           "reviewer":  "Adi",
                                           "timestamp":  "2026-07-13T19:03:46.496Z",
                                           "section":  "merchandising",
-                                          "note":  "newArrival:true was set by AI based on source fragrance novelty — confirm with business before promotion",
+                                          "note":  "newArrival:true was set by AI based on source fragrance novelty â€” confirm with business before promotion",
                                           "resolved":  false
                                       }
                                   ],
@@ -757,7 +757,7 @@
                                           "reviewer":  "Adi",
                                           "timestamp":  "2026-07-13T19:03:43.774Z",
                                           "section":  "merchandising",
-                                          "note":  "newArrival:true was set by AI based on source fragrance novelty — confirm with business before promotion",
+                                          "note":  "newArrival:true was set by AI based on source fragrance novelty â€” confirm with business before promotion",
                                           "resolved":  false
                                       }
                                   ],
@@ -787,7 +787,7 @@
                                          "decision":  "needs_regeneration",
                                          "reviewer":  "Adi",
                                          "timestamp":  "2026-07-13T18:53:02.139Z",
-                                         "reason":  "Missing relationships block — factory left alternatives and wardrobePartners empty"
+                                         "reason":  "Missing relationships block â€” factory left alternatives and wardrobePartners empty"
                                      }
                     },
                     {
@@ -852,7 +852,7 @@
                                           "reviewer":  "Adi",
                                           "timestamp":  "2026-07-13T19:03:49.041Z",
                                           "section":  "merchandising",
-                                          "note":  "newArrival:true was set by AI based on source fragrance novelty — confirm with business before promotion",
+                                          "note":  "newArrival:true was set by AI based on source fragrance novelty â€” confirm with business before promotion",
                                           "resolved":  false
                                       }
                                   ],
@@ -903,7 +903,7 @@
                                           "reviewer":  "Adi",
                                           "timestamp":  "2026-07-13T19:04:28.432Z",
                                           "section":  "editorial",
-                                          "note":  "Subtitle \u0027Radiant Softness\u0027 collides with prada-paradoxe-inspired — deduplicate before promotion",
+                                          "note":  "Subtitle \u0027Radiant Softness\u0027 collides with prada-paradoxe-inspired â€” deduplicate before promotion",
                                           "resolved":  false
                                       }
                                   ],
@@ -976,7 +976,7 @@
                                           "reviewer":  "Adi",
                                           "timestamp":  "2026-07-13T19:04:41.196Z",
                                           "section":  "relationships",
-                                          "note":  "wardrobePartners missing — only alternatives populated; consider adding a male complement before promotion",
+                                          "note":  "wardrobePartners missing â€” only alternatives populated; consider adding a male complement before promotion",
                                           "resolved":  false
                                       }
                                   ],
@@ -1005,7 +1005,7 @@
                                           "reviewer":  "Adi",
                                           "timestamp":  "2026-07-13T19:03:54.861Z",
                                           "section":  "merchandising",
-                                          "note":  "bestSeller:true was set by AI — confirm with business before promotion",
+                                          "note":  "bestSeller:true was set by AI â€” confirm with business before promotion",
                                           "resolved":  false
                                       }
                                   ],
@@ -1056,7 +1056,7 @@
                                           "reviewer":  "Adi",
                                           "timestamp":  "2026-07-13T19:04:43.549Z",
                                           "section":  "relationships",
-                                          "note":  "alternatives missing — only wardrobePartners populated; consider adding a comparable female fragrance before promotion",
+                                          "note":  "alternatives missing â€” only wardrobePartners populated; consider adding a comparable female fragrance before promotion",
                                           "resolved":  false
                                       }
                                   ],
@@ -1202,7 +1202,7 @@
                                           "reviewer":  "Adi",
                                           "timestamp":  "2026-07-13T19:04:31.060Z",
                                           "section":  "editorial",
-                                          "note":  "Subtitle \u0027Radiant Softness\u0027 collides with la-vie-est-belle-inspired — deduplicate before promotion",
+                                          "note":  "Subtitle \u0027Radiant Softness\u0027 collides with la-vie-est-belle-inspired â€” deduplicate before promotion",
                                           "resolved":  false
                                       }
                                   ],
@@ -1319,7 +1319,7 @@
                                           "reviewer":  "Adi",
                                           "timestamp":  "2026-07-13T19:03:57.941Z",
                                           "section":  "merchandising",
-                                          "note":  "bestSeller:true was set by AI — confirm with business before promotion",
+                                          "note":  "bestSeller:true was set by AI â€” confirm with business before promotion",
                                           "resolved":  false
                                       }
                                   ],
@@ -1370,7 +1370,7 @@
                                           "reviewer":  "Adi",
                                           "timestamp":  "2026-07-13T19:03:51.523Z",
                                           "section":  "merchandising",
-                                          "note":  "newArrival:true was set by AI based on source fragrance novelty — confirm with business before promotion",
+                                          "note":  "newArrival:true was set by AI based on source fragrance novelty â€” confirm with business before promotion",
                                           "resolved":  false
                                       }
                                   ],
@@ -1399,7 +1399,7 @@
                                           "reviewer":  "R14 Editorial Review",
                                           "timestamp":  "2026-08-17T17:24:43.332Z",
                                           "section":  "general",
-                                          "note":  "Subtitle \u0027Aromatic Spice\u0027 is the most generic Skye subtitle — both words are category-level descriptors, not product-level identity. Description is strong. Subtitle alone lacks customer hook.",
+                                          "note":  "Subtitle \u0027Aromatic Spice\u0027 is the most generic Skye subtitle â€” both words are category-level descriptors, not product-level identity. Description is strong. Subtitle alone lacks customer hook.",
                                           "resolved":  false
                                       }
                                   ],
@@ -1934,7 +1934,7 @@
                                           "reviewer":  "R14 Editorial Review",
                                           "timestamp":  "2026-08-17T17:24:49.159Z",
                                           "section":  "general",
-                                          "note":  "Description opens \u0027Lavender and bergamot open onto\u0027 — identical construction to libre-flowers-flames-florale (\u0027Lavender and bergamot open into\u0027). Both in Rose collection. Minor monotony risk for customers browsing. Not a blocking issue.",
+                                          "note":  "Description opens \u0027Lavender and bergamot open onto\u0027 â€” identical construction to libre-flowers-flames-florale (\u0027Lavender and bergamot open into\u0027). Both in Rose collection. Minor monotony risk for customers browsing. Not a blocking issue.",
                                           "resolved":  false
                                       }
                                   ],
@@ -2139,7 +2139,7 @@
                                           "reviewer":  "R14 Editorial Review",
                                           "timestamp":  "2026-08-17T17:24:37.743Z",
                                           "section":  "general",
-                                          "note":  "Subtitle \u0027Woody Sophistication\u0027 is the most generic subtitle in the Wave 1 catalogue — two broad descriptors with no differentiation. This is a premium Elite product. Recommend a more evocative subtitle.",
+                                          "note":  "Subtitle \u0027Woody Sophistication\u0027 is the most generic subtitle in the Wave 1 catalogue â€” two broad descriptors with no differentiation. This is a premium Elite product. Recommend a more evocative subtitle.",
                                           "resolved":  false
                                       }
                                   ],
@@ -2351,7 +2351,7 @@
                                           "reviewer":  "Founder",
                                           "timestamp":  "2026-08-19T20:00:00.000Z",
                                           "section":  "editorial",
-                                          "note":  "Subtitle \u0027Fresh Dark Luxury\u0027 duplicates signatureStyle[0] exactly — minor redundancy; Founder to decide whether to differentiate before promotion.",
+                                          "note":  "Subtitle \u0027Fresh Dark Luxury\u0027 duplicates signatureStyle[0] exactly â€” minor redundancy; Founder to decide whether to differentiate before promotion.",
                                           "resolved":  false
                                       }
                                   ],
@@ -2475,7 +2475,7 @@
                                           "reviewer":  "Founder",
                                           "timestamp":  "2026-08-19T20:00:00.000Z",
                                           "section":  "editorial",
-                                          "note":  "Internal contradiction: description says \u0027refusing to whisper\u0027; recommendedFor[1] says \u0027whispers rather than shouts\u0027. One must align before promotion — Founder to decide which voice to keep.",
+                                          "note":  "Internal contradiction: description says \u0027refusing to whisper\u0027; recommendedFor[1] says \u0027whispers rather than shouts\u0027. One must align before promotion â€” Founder to decide which voice to keep.",
                                           "resolved":  false
                                       }
                                   ],
@@ -2548,7 +2548,7 @@
                                           "reviewer":  "Founder",
                                           "timestamp":  "2026-08-19T20:00:00.000Z",
                                           "section":  "editorial",
-                                          "note":  "Subtitle \u0027Dark Floral Mysterious\u0027 duplicates mood field exactly — minor redundancy; no correction required.",
+                                          "note":  "Subtitle \u0027Dark Floral Mysterious\u0027 duplicates mood field exactly â€” minor redundancy; no correction required.",
                                           "resolved":  false
                                       }
                                   ],
@@ -2577,7 +2577,7 @@
                                           "reviewer":  "Founder",
                                           "timestamp":  "2026-08-19T20:00:00.000Z",
                                           "section":  "editorial",
-                                          "note":  "Subtitle \u0027Warm Floral Creamy\u0027 duplicates mood field exactly — minor redundancy; no correction required.",
+                                          "note":  "Subtitle \u0027Warm Floral Creamy\u0027 duplicates mood field exactly â€” minor redundancy; no correction required.",
                                           "resolved":  false
                                       }
                                   ],
@@ -2628,7 +2628,7 @@
                                           "reviewer":  "Founder",
                                           "timestamp":  "2026-08-19T20:00:00.000Z",
                                           "section":  "editorial",
-                                          "note":  "EP-CAT-P5 correction applied: temporal tier violation in description — Leather and Suede (BASE notes) were incorrectly placed in the opening clause. Description rewritten to open with Raspberry/Saffron/Thyme (TOP), transition through Olibanum/Jasmine (HEART), close with Leather/Suede/Amber (BASE).",
+                                          "note":  "EP-CAT-P5 correction applied: temporal tier violation in description â€” Leather and Suede (BASE notes) were incorrectly placed in the opening clause. Description rewritten to open with Raspberry/Saffron/Thyme (TOP), transition through Olibanum/Jasmine (HEART), close with Leather/Suede/Amber (BASE).",
                                           "resolved":  true
                                       }
                                   ],
@@ -2723,7 +2723,7 @@
                                           "reviewer":  "Founder",
                                           "timestamp":  "2026-08-19T20:00:00.000Z",
                                           "section":  "editorial",
-                                          "note":  "EP-CAT-P5 correction applied: (1) description fixed — \u0027The heart deepens into caramel and beeswax\u0027 corrected; caramel/beeswax (BASE notes) now placed in base context. (2) recommendedFor[2] \u0027linger beautifully\u0027 removed — longevity implication eliminated.",
+                                          "note":  "EP-CAT-P5 correction applied: (1) description fixed â€” \u0027The heart deepens into caramel and beeswax\u0027 corrected; caramel/beeswax (BASE notes) now placed in base context. (2) recommendedFor[2] \u0027linger beautifully\u0027 removed â€” longevity implication eliminated.",
                                           "resolved":  true
                                       }
                                   ],
@@ -2847,7 +2847,7 @@
                                           "reviewer":  "Founder",
                                           "timestamp":  "2026-08-19T20:00:00.000Z",
                                           "section":  "editorial",
-                                          "note":  "recommendedFor[2] \u0027suitable for daily wear through evening\u0027 is borderline duration language — Founder to review before promotion.",
+                                          "note":  "recommendedFor[2] \u0027suitable for daily wear through evening\u0027 is borderline duration language â€” Founder to review before promotion.",
                                           "resolved":  false
                                       }
                                   ],
@@ -2876,7 +2876,7 @@
                                           "reviewer":  "Founder",
                                           "timestamp":  "2026-08-19T20:00:00.000Z",
                                           "section":  "editorial",
-                                          "note":  "EP-CAT-P5 correction applied: recommendedFor[2] \u0027without reapplication\u0027 removed — explicit performance/durability claim eliminated.",
+                                          "note":  "EP-CAT-P5 correction applied: recommendedFor[2] \u0027without reapplication\u0027 removed â€” explicit performance/durability claim eliminated.",
                                           "resolved":  true
                                       }
                                   ],
@@ -2934,7 +2934,7 @@
                                           "reviewer":  "Founder",
                                           "timestamp":  "2026-08-19T20:00:00.000Z",
                                           "section":  "editorial",
-                                          "note":  "Description presents heart/base notes (lily, sandalwood, vanilla) before the top note opening (bergamot) — reversed tier order. Editorial choice; not a violation. Founder to decide whether to reorder before promotion.",
+                                          "note":  "Description presents heart/base notes (lily, sandalwood, vanilla) before the top note opening (bergamot) â€” reversed tier order. Editorial choice; not a violation. Founder to decide whether to reorder before promotion.",
                                           "resolved":  false
                                       }
                                   ],
@@ -2963,7 +2963,7 @@
                                           "reviewer":  "Founder",
                                           "timestamp":  "2026-08-19T20:00:00.000Z",
                                           "section":  "editorial",
-                                          "note":  "Description opening \u0027Pink pepper and mandarin ignite...\u0027 near-identical to gucci-guilty-pour-femme-inspired — both share the same top notes and opening verb. Founder to decide if differentiation is needed before promotion.",
+                                          "note":  "Description opening \u0027Pink pepper and mandarin ignite...\u0027 near-identical to gucci-guilty-pour-femme-inspired â€” both share the same top notes and opening verb. Founder to decide if differentiation is needed before promotion.",
                                           "resolved":  false
                                       }
                                   ],
@@ -3036,7 +3036,7 @@
                                           "reviewer":  "Founder",
                                           "timestamp":  "2026-08-19T20:00:00.000Z",
                                           "section":  "editorial",
-                                          "note":  "Subtitle \u0027Crisp Sophistication\u0027 duplicates signatureStyle[0] exactly — minor redundancy; no correction required.",
+                                          "note":  "Subtitle \u0027Crisp Sophistication\u0027 duplicates signatureStyle[0] exactly â€” minor redundancy; no correction required.",
                                           "resolved":  false
                                       }
                                   ],
@@ -3087,7 +3087,7 @@
                                           "reviewer":  "Founder",
                                           "timestamp":  "2026-08-19T20:00:00.000Z",
                                           "section":  "editorial",
-                                          "note":  "EP-CAT-P5 correction applied: recommendedFor[0] \u0027from morning routines through office hours and into casual evenings\u0027 removed — all-day duration implication eliminated.",
+                                          "note":  "EP-CAT-P5 correction applied: recommendedFor[0] \u0027from morning routines through office hours and into casual evenings\u0027 removed â€” all-day duration implication eliminated.",
                                           "resolved":  true
                                       }
                                   ],
@@ -3138,7 +3138,7 @@
                                           "reviewer":  "Founder",
                                           "timestamp":  "2026-08-19T20:00:00.000Z",
                                           "section":  "editorial",
-                                          "note":  "Subtitle \u0027Dark Woody Sweet\u0027 duplicates mood field exactly — minor redundancy; no correction required.",
+                                          "note":  "Subtitle \u0027Dark Woody Sweet\u0027 duplicates mood field exactly â€” minor redundancy; no correction required.",
                                           "resolved":  false
                                       }
                                   ],
@@ -3167,7 +3167,7 @@
                                           "reviewer":  "Founder",
                                           "timestamp":  "2026-08-19T20:00:00.000Z",
                                           "section":  "editorial",
-                                          "note":  "Subtitle \u0027Smoke and Lavender\u0027 duplicates signatureStyle[1] exactly — minor redundancy; no correction required.",
+                                          "note":  "Subtitle \u0027Smoke and Lavender\u0027 duplicates signatureStyle[1] exactly â€” minor redundancy; no correction required.",
                                           "resolved":  false
                                       }
                                   ],
@@ -3196,7 +3196,7 @@
                                           "reviewer":  "Founder",
                                           "timestamp":  "2026-08-19T20:00:00.000Z",
                                           "section":  "editorial",
-                                          "note":  "EP-CAT-P5 correction applied: recommendedFor[1] \u0027evolves throughout the day\u0027 removed — longevity/durability implication eliminated.",
+                                          "note":  "EP-CAT-P5 correction applied: recommendedFor[1] \u0027evolves throughout the day\u0027 removed â€” longevity/durability implication eliminated.",
                                           "resolved":  true
                                       }
                                   ],
@@ -3225,7 +3225,7 @@
                                           "reviewer":  "Founder",
                                           "timestamp":  "2026-08-19T20:00:00.000Z",
                                           "section":  "editorial",
-                                          "note":  "Three advisories: (1) Cedar appears in both top and heart tiers in evidence-locked notes — evidence-locked, cannot correct, Founder awareness only; (2) subtitle \u0027Warm Leather Woody\u0027 duplicates both mood and signatureStyle[0]; (3) recommendedFor[3] references \u0027tobacco\u0027 which is not in the notes pyramid.",
+                                          "note":  "Three advisories: (1) Cedar appears in both top and heart tiers in evidence-locked notes â€” evidence-locked, cannot correct, Founder awareness only; (2) subtitle \u0027Warm Leather Woody\u0027 duplicates both mood and signatureStyle[0]; (3) recommendedFor[3] references \u0027tobacco\u0027 which is not in the notes pyramid.",
                                           "resolved":  false
                                       }
                                   ],
@@ -3276,7 +3276,7 @@
                                           "reviewer":  "Founder",
                                           "timestamp":  "2026-08-19T20:00:00.000Z",
                                           "section":  "editorial",
-                                          "note":  "Two advisories: (1) factory header reports 4 errors (vs 3 for all other Wave 2 drafts) — 4th error is unresolved from generation; Founder to run npm run validate after image assignment; (2) description co-presents top and heart notes in the opening clause rather than sequentially.",
+                                          "note":  "Two advisories: (1) factory header reports 4 errors (vs 3 for all other Wave 2 drafts) â€” 4th error is unresolved from generation; Founder to run npm run validate after image assignment; (2) description co-presents top and heart notes in the opening clause rather than sequentially.",
                                           "resolved":  false
                                       }
                                   ],
@@ -3349,7 +3349,7 @@
                                           "reviewer":  "Founder",
                                           "timestamp":  "2026-08-22T00:00:00.000Z",
                                           "section":  "editorial",
-                                          "note":  "Correction applied: recommendedFor[3] 'balanced projection' rewritten to 'timeless elegance' — performance/projection claim removed.",
+                                          "note":  "Correction applied: recommendedFor[3] 'balanced projection' rewritten to 'timeless elegance' â€” performance/projection claim removed.",
                                           "resolved":  true
                                       }
                                   ],
@@ -3378,7 +3378,7 @@
                                           "reviewer":  "Founder",
                                           "timestamp":  "2026-08-22T00:00:00.000Z",
                                           "section":  "editorial",
-                                          "note":  "ADVISORY: subtitle 'Dark Aromatic Elegance' duplicates signatureStyle[0] exactly — minor naming redundancy.",
+                                          "note":  "ADVISORY: subtitle 'Dark Aromatic Elegance' duplicates signatureStyle[0] exactly â€” minor naming redundancy.",
                                           "resolved":  false
                                       },
                                       {
@@ -3386,7 +3386,7 @@
                                           "reviewer":  "Founder",
                                           "timestamp":  "2026-08-22T00:00:00.000Z",
                                           "section":  "editorial",
-                                          "note":  "ADVISORY: description 'skin-like base' — mild sillage-adjacent texture language; Founder awareness only.",
+                                          "note":  "ADVISORY: description 'skin-like base' â€” mild sillage-adjacent texture language; Founder awareness only.",
                                           "resolved":  false
                                       }
                                   ],
@@ -3423,7 +3423,7 @@
                                           "reviewer":  "Founder",
                                           "timestamp":  "2026-08-22T00:00:00.000Z",
                                           "section":  "editorial",
-                                          "note":  "ADVISORY: description 'settles into amber and vanilla' — mild temporal base language; base-accurate, Founder awareness only.",
+                                          "note":  "ADVISORY: description 'settles into amber and vanilla' â€” mild temporal base language; base-accurate, Founder awareness only.",
                                           "resolved":  false
                                       }
                                   ],
@@ -3452,7 +3452,7 @@
                                           "reviewer":  "Founder",
                                           "timestamp":  "2026-08-22T00:00:00.000Z",
                                           "section":  "editorial",
-                                          "note":  "Correction applied: recommendedFor[1] 'moderate projection and lasting clarity' rewritten to 'fresh citrus clarity' — projection and longevity claims removed.",
+                                          "note":  "Correction applied: recommendedFor[1] 'moderate projection and lasting clarity' rewritten to 'fresh citrus clarity' â€” projection and longevity claims removed.",
                                           "resolved":  true
                                       }
                                   ],
@@ -3533,7 +3533,7 @@
                                           "reviewer":  "Founder",
                                           "timestamp":  "2026-08-22T00:00:00.000Z",
                                           "section":  "editorial",
-                                          "note":  "ADVISORY: description 'settles into creamy sandalwood and cedar' — mild base temporal; notes are base-accurate. Founder awareness only.",
+                                          "note":  "ADVISORY: description 'settles into creamy sandalwood and cedar' â€” mild base temporal; notes are base-accurate. Founder awareness only.",
                                           "resolved":  false
                                       }
                                   ],
@@ -3584,7 +3584,7 @@
                                           "reviewer":  "Founder",
                                           "timestamp":  "2026-08-22T00:00:00.000Z",
                                           "section":  "editorial",
-                                          "note":  "Correction applied: description 'leather-touched heart' rewritten — Leather is in base tier, not heart. Tier contradiction resolved.",
+                                          "note":  "Correction applied: description 'leather-touched heart' rewritten â€” Leather is in base tier, not heart. Tier contradiction resolved.",
                                           "resolved":  true
                                       },
                                       {
@@ -3592,7 +3592,7 @@
                                           "reviewer":  "Founder",
                                           "timestamp":  "2026-08-22T00:00:00.000Z",
                                           "section":  "editorial",
-                                          "note":  "ADVISORY: recommendedFor[1] 'commands presence' — indirect projection-adjacent language; Founder awareness only.",
+                                          "note":  "ADVISORY: recommendedFor[1] 'commands presence' â€” indirect projection-adjacent language; Founder awareness only.",
                                           "resolved":  false
                                       }
                                   ],
@@ -3621,7 +3621,7 @@
                                           "reviewer":  "Founder",
                                           "timestamp":  "2026-08-22T00:00:00.000Z",
                                           "section":  "editorial",
-                                          "note":  "ADVISORY: description 'skin-like warmth' — texture/sillage-adjacent descriptor; Founder awareness only.",
+                                          "note":  "ADVISORY: description 'skin-like warmth' â€” texture/sillage-adjacent descriptor; Founder awareness only.",
                                           "resolved":  false
                                       }
                                   ],
@@ -3650,7 +3650,7 @@
                                           "reviewer":  "Founder",
                                           "timestamp":  "2026-08-22T00:00:00.000Z",
                                           "section":  "editorial",
-                                          "note":  "ADVISORY: subtitle 'Powdery Floral Elegance' duplicates signatureStyle[0] exactly — minor naming redundancy.",
+                                          "note":  "ADVISORY: subtitle 'Powdery Floral Elegance' duplicates signatureStyle[0] exactly â€” minor naming redundancy.",
                                           "resolved":  false
                                       },
                                       {
@@ -3658,7 +3658,7 @@
                                           "reviewer":  "Founder",
                                           "timestamp":  "2026-08-22T05:00:00.000Z",
                                           "section":  "relationships",
-                                          "note":  "EP-CAT-P14B correction: relationship pointer 'j-adore-inspired' → 'j'adore-inspired' — slug used hyphen instead of apostrophe; native record is j'adore-inspired.ts. Relationship content preserved; pointer corrected to match native registry.",
+                                          "note":  "EP-CAT-P14B correction: relationship pointer 'j-adore-inspired' â†’ 'j'adore-inspired' â€” slug used hyphen instead of apostrophe; native record is j'adore-inspired.ts. Relationship content preserved; pointer corrected to match native registry.",
                                           "resolved":  true
                                       }
                                   ],
@@ -3709,7 +3709,7 @@
                                           "reviewer":  "Founder",
                                           "timestamp":  "2026-08-22T00:00:00.000Z",
                                           "section":  "editorial",
-                                          "note":  "Correction applied: description placed Grey Amber in base tier — Grey Amber is in heart. Rewritten to reference Oakmoss and Tonka Beans as base anchors.",
+                                          "note":  "Correction applied: description placed Grey Amber in base tier â€” Grey Amber is in heart. Rewritten to reference Oakmoss and Tonka Beans as base anchors.",
                                           "resolved":  true
                                       },
                                       {
@@ -3717,7 +3717,7 @@
                                           "reviewer":  "Founder",
                                           "timestamp":  "2026-08-22T00:00:00.000Z",
                                           "section":  "editorial",
-                                          "note":  "Correction applied: recommendedFor[1] 'that projects clarity and sophistication' rewritten to 'with clarity and sophistication' — projection claim removed.",
+                                          "note":  "Correction applied: recommendedFor[1] 'that projects clarity and sophistication' rewritten to 'with clarity and sophistication' â€” projection claim removed.",
                                           "resolved":  true
                                       }
                                   ],
@@ -3746,7 +3746,7 @@
                                           "reviewer":  "Founder",
                                           "timestamp":  "2026-08-22T00:00:00.000Z",
                                           "section":  "editorial",
-                                          "note":  "Correction applied: description 'settle into skin like a second shadow' rewritten to 'warm the base with dark, unhurried richness' — skin sillage language removed.",
+                                          "note":  "Correction applied: description 'settle into skin like a second shadow' rewritten to 'warm the base with dark, unhurried richness' â€” skin sillage language removed.",
                                           "resolved":  true
                                       }
                                   ],
@@ -3775,7 +3775,7 @@
                                           "reviewer":  "Founder",
                                           "timestamp":  "2026-08-22T00:00:00.000Z",
                                           "section":  "editorial",
-                                          "note":  "Correction applied: description 'Vanilla and amber settle into skin like embers' rewritten to 'Vanilla and amber deepen into a smouldering base' — skin sillage language removed.",
+                                          "note":  "Correction applied: description 'Vanilla and amber settle into skin like embers' rewritten to 'Vanilla and amber deepen into a smouldering base' â€” skin sillage language removed.",
                                           "resolved":  true
                                       },
                                       {
@@ -3783,7 +3783,7 @@
                                           "reviewer":  "Founder",
                                           "timestamp":  "2026-08-22T00:00:00.000Z",
                                           "section":  "editorial",
-                                          "note":  "ADVISORY: subtitle 'Spiced Leather Warmth' duplicates signatureStyle[0] exactly — minor naming redundancy.",
+                                          "note":  "ADVISORY: subtitle 'Spiced Leather Warmth' duplicates signatureStyle[0] exactly â€” minor naming redundancy.",
                                           "resolved":  false
                                       }
                                   ],
@@ -3812,7 +3812,7 @@
                                           "reviewer":  "Founder",
                                           "timestamp":  "2026-08-22T00:00:00.000Z",
                                           "section":  "editorial",
-                                          "note":  "ADVISORY: recommendedFor references 'projection fatigue' — indirect projection reference; Founder awareness only.",
+                                          "note":  "ADVISORY: recommendedFor references 'projection fatigue' â€” indirect projection reference; Founder awareness only.",
                                           "resolved":  false
                                       }
                                   ],
@@ -3841,7 +3841,7 @@
                                           "reviewer":  "Founder",
                                           "timestamp":  "2026-08-22T00:00:00.000Z",
                                           "section":  "editorial",
-                                          "note":  "Correction applied: description 'from first spray to final fade' rewritten to 'complete and unhurried' — evaporation rate/longevity claim removed.",
+                                          "note":  "Correction applied: description 'from first spray to final fade' rewritten to 'complete and unhurried' â€” evaporation rate/longevity claim removed.",
                                           "resolved":  true
                                       },
                                       {
@@ -3849,7 +3849,7 @@
                                           "reviewer":  "Founder",
                                           "timestamp":  "2026-08-22T00:00:00.000Z",
                                           "section":  "editorial",
-                                          "note":  "ADVISORY: recommendedFor references 'projection fatigue' — indirect projection reference; Founder awareness only.",
+                                          "note":  "ADVISORY: recommendedFor references 'projection fatigue' â€” indirect projection reference; Founder awareness only.",
                                           "resolved":  false
                                       }
                                   ],
@@ -3878,7 +3878,7 @@
                                           "reviewer":  "Founder",
                                           "timestamp":  "2026-08-22T00:00:00.000Z",
                                           "section":  "editorial",
-                                          "note":  "Correction applied: UNORDERED_GOVERNED_NOTES — description 'opens like morning light on water' rewritten to remove temporal sequencing. Notes are all in heart tier; no top-note opening exists.",
+                                          "note":  "Correction applied: UNORDERED_GOVERNED_NOTES â€” description 'opens like morning light on water' rewritten to remove temporal sequencing. Notes are all in heart tier; no top-note opening exists.",
                                           "resolved":  true
                                       },
                                       {
@@ -3886,7 +3886,7 @@
                                           "reviewer":  "Founder",
                                           "timestamp":  "2026-08-22T03:00:00.000Z",
                                           "section":  "editorial",
-                                          "note":  "Correction applied (P16 validation): UNORDERED_GOVERNED_NOTES — description residual 'floral heart' tier claim rewritten to 'this brightness' — tier placement language must not appear in UNORDERED copy.",
+                                          "note":  "Correction applied (P16 validation): UNORDERED_GOVERNED_NOTES â€” description residual 'floral heart' tier claim rewritten to 'this brightness' â€” tier placement language must not appear in UNORDERED copy.",
                                           "resolved":  true
                                       }
                                   ],
@@ -3915,7 +3915,7 @@
                                           "reviewer":  "Founder",
                                           "timestamp":  "2026-08-22T00:00:00.000Z",
                                           "section":  "editorial",
-                                          "note":  "Correction applied: recommendedFor[0] 'without reapplication' removed — longevity/reapplication claim.",
+                                          "note":  "Correction applied: recommendedFor[0] 'without reapplication' removed â€” longevity/reapplication claim.",
                                           "resolved":  true
                                       },
                                       {
@@ -3923,7 +3923,7 @@
                                           "reviewer":  "Founder",
                                           "timestamp":  "2026-08-22T00:00:00.000Z",
                                           "section":  "editorial",
-                                          "note":  "ADVISORY: subtitle 'Luminous White Floral' duplicates signatureStyle[0] exactly — minor naming redundancy.",
+                                          "note":  "ADVISORY: subtitle 'Luminous White Floral' duplicates signatureStyle[0] exactly â€” minor naming redundancy.",
                                           "resolved":  false
                                       }
                                   ],
@@ -3952,7 +3952,7 @@
                                           "reviewer":  "Founder",
                                           "timestamp":  "2026-08-22T00:00:00.000Z",
                                           "section":  "editorial",
-                                          "note":  "Correction applied: UNORDERED_GOVERNED_NOTES — description 'Grapefruit opens with bright, zesty intensity' rewritten; notes are all in heart tier. No top-note opening exists.",
+                                          "note":  "Correction applied: UNORDERED_GOVERNED_NOTES â€” description 'Grapefruit opens with bright, zesty intensity' rewritten; notes are all in heart tier. No top-note opening exists.",
                                           "resolved":  true
                                       }
                                   ],
@@ -3981,7 +3981,7 @@
                                           "reviewer":  "Founder",
                                           "timestamp":  "2026-08-22T00:00:00.000Z",
                                           "section":  "editorial",
-                                          "note":  "ADVISORY: description 'skin-warm' — texture descriptor; mild, Founder awareness only.",
+                                          "note":  "ADVISORY: description 'skin-warm' â€” texture descriptor; mild, Founder awareness only.",
                                           "resolved":  false
                                       }
                                   ],
@@ -4010,7 +4010,7 @@
                                           "reviewer":  "Founder",
                                           "timestamp":  "2026-08-22T00:00:00.000Z",
                                           "section":  "editorial",
-                                          "note":  "Correction applied: recommendedFor[2] 'values moderate projection over bold statements' rewritten to 'prefers understated elegance over bold statements' — projection claim removed.",
+                                          "note":  "Correction applied: recommendedFor[2] 'values moderate projection over bold statements' rewritten to 'prefers understated elegance over bold statements' â€” projection claim removed.",
                                           "resolved":  true
                                       }
                                   ],
@@ -4039,7 +4039,7 @@
                                           "reviewer":  "Founder",
                                           "timestamp":  "2026-08-22T00:00:00.000Z",
                                           "section":  "editorial",
-                                          "note":  "Correction applied: description 'skin-like base' rewritten to 'warm the base with creamy depth' — skin sillage language removed.",
+                                          "note":  "Correction applied: description 'skin-like base' rewritten to 'warm the base with creamy depth' â€” skin sillage language removed.",
                                           "resolved":  true
                                       }
                                   ],
@@ -4068,7 +4068,7 @@
                                           "reviewer":  "Founder",
                                           "timestamp":  "2026-08-22T00:00:00.000Z",
                                           "section":  "editorial",
-                                          "note":  "ADVISORY: recommendedFor 'breathes rather than announces' — inverse projection reference; Founder awareness only.",
+                                          "note":  "ADVISORY: recommendedFor 'breathes rather than announces' â€” inverse projection reference; Founder awareness only.",
                                           "resolved":  false
                                       }
                                   ],
@@ -4097,7 +4097,7 @@
                                           "reviewer":  "Founder",
                                           "timestamp":  "2026-08-22T00:00:00.000Z",
                                           "section":  "editorial",
-                                          "note":  "Correction applied: description placed Cambodian Oud in heart tier — Oud is in top. Description rewritten to show pineapple and oud opening together into leather/birch/cinnamon heart.",
+                                          "note":  "Correction applied: description placed Cambodian Oud in heart tier â€” Oud is in top. Description rewritten to show pineapple and oud opening together into leather/birch/cinnamon heart.",
                                           "resolved":  true
                                       },
                                       {
@@ -4105,7 +4105,7 @@
                                           "reviewer":  "Founder",
                                           "timestamp":  "2026-08-22T00:00:00.000Z",
                                           "section":  "editorial",
-                                          "note":  "ADVISORY: recommendedFor 'commands attention' — indirect projection-adjacent language; Founder awareness only.",
+                                          "note":  "ADVISORY: recommendedFor 'commands attention' â€” indirect projection-adjacent language; Founder awareness only.",
                                           "resolved":  false
                                       }
                                   ],
@@ -4134,7 +4134,7 @@
                                           "reviewer":  "Founder",
                                           "timestamp":  "2026-08-22T00:00:00.000Z",
                                           "section":  "editorial",
-                                          "note":  "ADVISORY: subtitle 'Ritual and Resin' near-collision with armani-prive-oud-royal-inspired subtitle 'Ritual and Resin' — deduplicate before promotion.",
+                                          "note":  "ADVISORY: subtitle 'Ritual and Resin' near-collision with armani-prive-oud-royal-inspired subtitle 'Ritual and Resin' â€” deduplicate before promotion.",
                                           "resolved":  true
                                       },
                                       {
@@ -4142,7 +4142,7 @@
                                           "reviewer":  "Founder",
                                           "timestamp":  "2026-08-22T04:00:00.000Z",
                                           "section":  "editorial",
-                                          "note":  "EP-CAT-P13-R1: Founder decision — outlands-inspired subtitle changed from 'Ritual and Resin' to 'Wild Frontier'. armani-prive-oud-royal-inspired subtitle 'Ritual & Resin' retained. Collision resolved. No evidence fields modified.",
+                                          "note":  "EP-CAT-P13-R1: Founder decision â€” outlands-inspired subtitle changed from 'Ritual and Resin' to 'Wild Frontier'. armani-prive-oud-royal-inspired subtitle 'Ritual & Resin' retained. Collision resolved. No evidence fields modified.",
                                           "resolved":  true
                                       },
                                       {
@@ -4150,7 +4150,7 @@
                                           "reviewer":  "Founder",
                                           "timestamp":  "2026-08-22T00:00:00.000Z",
                                           "section":  "editorial",
-                                          "note":  "ADVISORY: recommendedFor 'command attention' — indirect projection-adjacent language; Founder awareness only.",
+                                          "note":  "ADVISORY: recommendedFor 'command attention' â€” indirect projection-adjacent language; Founder awareness only.",
                                           "resolved":  false
                                       }
                                   ],
@@ -4179,7 +4179,7 @@
                                           "reviewer":  "Founder",
                                           "timestamp":  "2026-08-22T00:00:00.000Z",
                                           "section":  "editorial",
-                                          "note":  "Correction applied: recommendedFor[0] 'feels like a signature second skin' rewritten to 'with timeless character' — skin sillage language removed.",
+                                          "note":  "Correction applied: recommendedFor[0] 'feels like a signature second skin' rewritten to 'with timeless character' â€” skin sillage language removed.",
                                           "resolved":  true
                                       },
                                       {
@@ -4187,7 +4187,7 @@
                                           "reviewer":  "Founder",
                                           "timestamp":  "2026-08-22T00:00:00.000Z",
                                           "section":  "editorial",
-                                          "note":  "Correction applied: recommendedFor[2] 'lingers with sophistication' rewritten to 'with sophistication' — FORBIDDEN_TERM 'lingers' removed.",
+                                          "note":  "Correction applied: recommendedFor[2] 'lingers with sophistication' rewritten to 'with sophistication' â€” FORBIDDEN_TERM 'lingers' removed.",
                                           "resolved":  true
                                       },
                                       {
@@ -4195,7 +4195,7 @@
                                           "reviewer":  "Founder",
                                           "timestamp":  "2026-08-22T00:00:00.000Z",
                                           "section":  "editorial",
-                                          "note":  "ADVISORY: description 'feels like silk against skin' — texture metaphor, mild; Founder awareness only.",
+                                          "note":  "ADVISORY: description 'feels like silk against skin' â€” texture metaphor, mild; Founder awareness only.",
                                           "resolved":  false
                                       }
                                   ],
@@ -4224,7 +4224,7 @@
                                           "reviewer":  "Founder",
                                           "timestamp":  "2026-08-22T00:00:00.000Z",
                                           "section":  "editorial",
-                                          "note":  "Correction applied: recommendedFor[1] 'throughout the day' removed — FORBIDDEN_TERM longevity claim.",
+                                          "note":  "Correction applied: recommendedFor[1] 'throughout the day' removed â€” FORBIDDEN_TERM longevity claim.",
                                           "resolved":  true
                                       },
                                       {
@@ -4232,7 +4232,7 @@
                                           "reviewer":  "Founder",
                                           "timestamp":  "2026-08-22T00:00:00.000Z",
                                           "section":  "editorial",
-                                          "note":  "ADVISORY: subtitle 'Warm Woody Sensual' duplicates signatureStyle[0] exactly — minor naming redundancy.",
+                                          "note":  "ADVISORY: subtitle 'Warm Woody Sensual' duplicates signatureStyle[0] exactly â€” minor naming redundancy.",
                                           "resolved":  false
                                       }
                                   ],
@@ -4261,7 +4261,7 @@
                                           "reviewer":  "Founder",
                                           "timestamp":  "2026-08-22T00:00:00.000Z",
                                           "section":  "editorial",
-                                          "note":  "BRAND_NARRATIVE_ONLY path (EditorialProducer@1.2.0-narrative): Xerjoff withholds official notes. notesEvidenceLocked:true. Correction applied: description 'settles into skin like a private luxury' rewritten — skin sillage language removed.",
+                                          "note":  "BRAND_NARRATIVE_ONLY path (EditorialProducer@1.2.0-narrative): Xerjoff withholds official notes. notesEvidenceLocked:true. Correction applied: description 'settles into skin like a private luxury' rewritten â€” skin sillage language removed.",
                                           "resolved":  true
                                       }
                                   ],
@@ -4290,7 +4290,7 @@
                                           "reviewer":  "Founder",
                                           "timestamp":  "2026-08-22T00:00:00.000Z",
                                           "section":  "editorial",
-                                          "note":  "Correction applied: description 'skin-close finish' rewritten to 'intimate finish' — skin sillage language removed.",
+                                          "note":  "Correction applied: description 'skin-close finish' rewritten to 'intimate finish' â€” skin sillage language removed.",
                                           "resolved":  true
                                       },
                                       {
@@ -4298,7 +4298,7 @@
                                           "reviewer":  "Founder",
                                           "timestamp":  "2026-08-22T00:00:00.000Z",
                                           "section":  "editorial",
-                                          "note":  "Correction applied: recommendedFor[2] 'skin-close elegance over bold projection' rewritten to 'understated elegance over bold statements' — skin sillage and projection claims removed.",
+                                          "note":  "Correction applied: recommendedFor[2] 'skin-close elegance over bold projection' rewritten to 'understated elegance over bold statements' â€” skin sillage and projection claims removed.",
                                           "resolved":  true
                                       }
                                   ],
@@ -4307,6 +4307,446 @@
                                          "reviewer":  "Founder",
                                          "timestamp":  "2026-08-22T00:00:00.000Z",
                                          "reason":  "EP-CAT-P13: Founder editorial review approved. All governance violations corrected."
+                                     }
+                    },
+                    {
+                        "slug":  "creed-delphinus-inspired",
+                        "name":  "Creed Delphinus Inspired",
+                        "collection":  "Elite",
+                        "factoryVersion":  "0.5.0",
+                        "promptVersions":  "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+                        "validationStatus":  "PASS",
+                        "status":  "approved",
+                        "addedAt":  "2026-08-26T00:00:00.000Z",
+                        "reviewStartedAt":  null,
+                        "decidedAt":  "2026-08-26T00:00:00.000Z",
+                        "reviewer":  "Founder",
+                        "notes":  [
+
+                                  ],
+                        "decision":  {
+                                         "decision":  "approved",
+                                         "reviewer":  "Founder",
+                                         "timestamp":  "2026-08-26T00:00:00.000Z",
+                                         "reason":  "EP-CAT-P18F: Founder editorial review approved. Wave 4 governance review complete."
+                                     }
+                    },
+                    {
+                        "slug":  "aqua-allegoria-rosa-verde-inspired",
+                        "name":  "Aqua Allegoria Rosa Verde Inspired",
+                        "collection":  "Elite",
+                        "factoryVersion":  "0.5.0",
+                        "promptVersions":  "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+                        "validationStatus":  "PASS",
+                        "status":  "approved",
+                        "addedAt":  "2026-08-26T00:00:00.000Z",
+                        "reviewStartedAt":  null,
+                        "decidedAt":  "2026-08-26T00:00:00.000Z",
+                        "reviewer":  "Founder",
+                        "notes":  [
+
+                                  ],
+                        "decision":  {
+                                         "decision":  "approved",
+                                         "reviewer":  "Founder",
+                                         "timestamp":  "2026-08-26T00:00:00.000Z",
+                                         "reason":  "EP-CAT-P18F: Founder editorial review approved. Wave 4 governance review complete."
+                                     }
+                    },
+                    {
+                        "slug":  "vanilla-powder-inspired",
+                        "name":  "Vanilla Powder Inspired",
+                        "collection":  "Elite",
+                        "factoryVersion":  "0.5.0",
+                        "promptVersions":  "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+                        "validationStatus":  "PASS",
+                        "status":  "approved",
+                        "addedAt":  "2026-08-26T00:00:00.000Z",
+                        "reviewStartedAt":  null,
+                        "decidedAt":  "2026-08-26T00:00:00.000Z",
+                        "reviewer":  "Founder",
+                        "notes":  [
+
+                                  ],
+                        "decision":  {
+                                         "decision":  "approved",
+                                         "reviewer":  "Founder",
+                                         "timestamp":  "2026-08-26T00:00:00.000Z",
+                                         "reason":  "EP-CAT-P18F: Founder editorial review approved. Wave 4 governance review complete."
+                                     }
+                    },
+                    {
+                        "slug":  "beach-blossom-inspired",
+                        "name":  "Beach Blossom Inspired",
+                        "collection":  "Elite",
+                        "factoryVersion":  "0.5.0",
+                        "promptVersions":  "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+                        "validationStatus":  "PASS",
+                        "status":  "approved",
+                        "addedAt":  "2026-08-26T00:00:00.000Z",
+                        "reviewStartedAt":  null,
+                        "decidedAt":  "2026-08-26T00:00:00.000Z",
+                        "reviewer":  "Founder",
+                        "notes":  [
+
+                                  ],
+                        "decision":  {
+                                         "decision":  "approved",
+                                         "reviewer":  "Founder",
+                                         "timestamp":  "2026-08-26T00:00:00.000Z",
+                                         "reason":  "EP-CAT-P18F: Founder editorial review approved. Wave 4 governance review complete."
+                                     }
+                    },
+                    {
+                        "slug":  "ck-one-inspired",
+                        "name":  "CK One Inspired",
+                        "collection":  "Elite",
+                        "factoryVersion":  "0.5.0",
+                        "promptVersions":  "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+                        "validationStatus":  "PASS",
+                        "status":  "approved",
+                        "addedAt":  "2026-08-26T00:00:00.000Z",
+                        "reviewStartedAt":  null,
+                        "decidedAt":  "2026-08-26T00:00:00.000Z",
+                        "reviewer":  "Founder",
+                        "notes":  [
+
+                                  ],
+                        "decision":  {
+                                         "decision":  "approved",
+                                         "reviewer":  "Founder",
+                                         "timestamp":  "2026-08-26T00:00:00.000Z",
+                                         "reason":  "EP-CAT-P18F: Founder editorial review approved. Wave 4 governance review complete."
+                                     }
+                    },
+                    {
+                        "slug":  "oud-cadenza-inspired",
+                        "name":  "Oud Cadenza Inspired",
+                        "collection":  "Elite",
+                        "factoryVersion":  "0.5.0",
+                        "promptVersions":  "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+                        "validationStatus":  "PASS",
+                        "status":  "approved",
+                        "addedAt":  "2026-08-26T00:00:00.000Z",
+                        "reviewStartedAt":  null,
+                        "decidedAt":  "2026-08-26T00:00:00.000Z",
+                        "reviewer":  "Founder",
+                        "notes":  [
+
+                                  ],
+                        "decision":  {
+                                         "decision":  "approved",
+                                         "reviewer":  "Founder",
+                                         "timestamp":  "2026-08-26T00:00:00.000Z",
+                                         "reason":  "EP-CAT-P18F: Founder editorial review approved. Wave 4 governance review complete."
+                                     }
+                    },
+                    {
+                        "slug":  "cool-water-inspired",
+                        "name":  "Cool Water Inspired",
+                        "collection":  "Skye",
+                        "factoryVersion":  "0.5.0",
+                        "promptVersions":  "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+                        "validationStatus":  "PASS",
+                        "status":  "approved",
+                        "addedAt":  "2026-08-26T00:00:00.000Z",
+                        "reviewStartedAt":  null,
+                        "decidedAt":  "2026-08-26T00:00:00.000Z",
+                        "reviewer":  "Founder",
+                        "notes":  [
+
+                                  ],
+                        "decision":  {
+                                         "decision":  "approved",
+                                         "reviewer":  "Founder",
+                                         "timestamp":  "2026-08-26T00:00:00.000Z",
+                                         "reason":  "EP-CAT-P18F: Founder editorial review approved. Wave 4 governance review complete."
+                                     }
+                    },
+                    {
+                        "slug":  "dylan-blue-inspired",
+                        "name":  "Dylan Blue Inspired",
+                        "collection":  "Skye",
+                        "factoryVersion":  "0.5.0",
+                        "promptVersions":  "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+                        "validationStatus":  "PASS",
+                        "status":  "approved",
+                        "addedAt":  "2026-08-26T00:00:00.000Z",
+                        "reviewStartedAt":  null,
+                        "decidedAt":  "2026-08-26T00:00:00.000Z",
+                        "reviewer":  "Founder",
+                        "notes":  [
+
+                                  ],
+                        "decision":  {
+                                         "decision":  "approved",
+                                         "reviewer":  "Founder",
+                                         "timestamp":  "2026-08-26T00:00:00.000Z",
+                                         "reason":  "EP-CAT-P18F: Founder editorial review approved. Wave 4 governance review complete."
+                                     }
+                    },
+                    {
+                        "slug":  "polo-blue-inspired",
+                        "name":  "Polo Blue Inspired",
+                        "collection":  "Skye",
+                        "factoryVersion":  "0.5.0",
+                        "promptVersions":  "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+                        "validationStatus":  "PASS",
+                        "status":  "approved",
+                        "addedAt":  "2026-08-26T00:00:00.000Z",
+                        "reviewStartedAt":  null,
+                        "decidedAt":  "2026-08-26T00:00:00.000Z",
+                        "reviewer":  "Founder",
+                        "notes":  [
+
+                                  ],
+                        "decision":  {
+                                         "decision":  "approved",
+                                         "reviewer":  "Founder",
+                                         "timestamp":  "2026-08-26T00:00:00.000Z",
+                                         "reason":  "EP-CAT-P18F: Founder editorial review approved. Wave 4 governance review complete."
+                                     }
+                    },
+                    {
+                        "slug":  "prada-paradigme-inspired",
+                        "name":  "Prada Paradigme Inspired",
+                        "collection":  "Skye",
+                        "factoryVersion":  "0.5.0",
+                        "promptVersions":  "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+                        "validationStatus":  "PASS",
+                        "status":  "approved",
+                        "addedAt":  "2026-08-26T00:00:00.000Z",
+                        "reviewStartedAt":  null,
+                        "decidedAt":  "2026-08-26T00:00:00.000Z",
+                        "reviewer":  "Founder",
+                        "notes":  [
+
+                                  ],
+                        "decision":  {
+                                         "decision":  "approved",
+                                         "reviewer":  "Founder",
+                                         "timestamp":  "2026-08-26T00:00:00.000Z",
+                                         "reason":  "EP-CAT-P18F: Founder editorial review approved. Wave 4 governance review complete."
+                                     }
+                    },
+                    {
+                        "slug":  "legend-blue-inspired",
+                        "name":  "Legend Blue Inspired",
+                        "collection":  "Skye",
+                        "factoryVersion":  "0.5.0",
+                        "promptVersions":  "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+                        "validationStatus":  "PASS",
+                        "status":  "approved",
+                        "addedAt":  "2026-08-26T00:00:00.000Z",
+                        "reviewStartedAt":  null,
+                        "decidedAt":  "2026-08-26T00:00:00.000Z",
+                        "reviewer":  "Founder",
+                        "notes":  [
+
+                                  ],
+                        "decision":  {
+                                         "decision":  "approved",
+                                         "reviewer":  "Founder",
+                                         "timestamp":  "2026-08-26T00:00:00.000Z",
+                                         "reason":  "EP-CAT-P18F: Founder editorial review approved. Wave 4 governance review complete."
+                                     }
+                    },
+                    {
+                        "slug":  "blue-noir-inspired",
+                        "name":  "Blue Noir Inspired",
+                        "collection":  "Skye",
+                        "factoryVersion":  "0.5.0",
+                        "promptVersions":  "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+                        "validationStatus":  "PASS",
+                        "status":  "approved",
+                        "addedAt":  "2026-08-26T00:00:00.000Z",
+                        "reviewStartedAt":  null,
+                        "decidedAt":  "2026-08-26T00:00:00.000Z",
+                        "reviewer":  "Founder",
+                        "notes":  [
+
+                                  ],
+                        "decision":  {
+                                         "decision":  "approved",
+                                         "reviewer":  "Founder",
+                                         "timestamp":  "2026-08-26T00:00:00.000Z",
+                                         "reason":  "EP-CAT-P18F: Founder editorial review approved. Wave 4 governance review complete."
+                                     }
+                    },
+                    {
+                        "slug":  "bvlgari-aqva-marine-inspired",
+                        "name":  "Bvlgari Aqva Marine Inspired",
+                        "collection":  "Skye",
+                        "factoryVersion":  "0.5.0",
+                        "promptVersions":  "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+                        "validationStatus":  "PASS",
+                        "status":  "approved",
+                        "addedAt":  "2026-08-26T00:00:00.000Z",
+                        "reviewStartedAt":  null,
+                        "decidedAt":  "2026-08-26T00:00:00.000Z",
+                        "reviewer":  "Founder",
+                        "notes":  [
+
+                                  ],
+                        "decision":  {
+                                         "decision":  "approved",
+                                         "reviewer":  "Founder",
+                                         "timestamp":  "2026-08-26T00:00:00.000Z",
+                                         "reason":  "EP-CAT-P18F: Founder editorial review approved. Wave 4 governance review complete."
+                                     }
+                    },
+                    {
+                        "slug":  "dkny-be-delicious-green-inspired",
+                        "name":  "DKNY Be Delicious Green Inspired",
+                        "collection":  "Rose",
+                        "factoryVersion":  "0.5.0",
+                        "promptVersions":  "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+                        "validationStatus":  "PASS",
+                        "status":  "approved",
+                        "addedAt":  "2026-08-26T00:00:00.000Z",
+                        "reviewStartedAt":  null,
+                        "decidedAt":  "2026-08-26T00:00:00.000Z",
+                        "reviewer":  "Founder",
+                        "notes":  [
+
+                                  ],
+                        "decision":  {
+                                         "decision":  "approved",
+                                         "reviewer":  "Founder",
+                                         "timestamp":  "2026-08-26T00:00:00.000Z",
+                                         "reason":  "EP-CAT-P18F: Founder editorial review approved. Wave 4 governance review complete."
+                                     }
+                    },
+                    {
+                        "slug":  "clinique-happy-inspired",
+                        "name":  "Clinique Happy Inspired",
+                        "collection":  "Rose",
+                        "factoryVersion":  "0.5.0",
+                        "promptVersions":  "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+                        "validationStatus":  "PASS",
+                        "status":  "approved",
+                        "addedAt":  "2026-08-26T00:00:00.000Z",
+                        "reviewStartedAt":  null,
+                        "decidedAt":  "2026-08-26T00:00:00.000Z",
+                        "reviewer":  "Founder",
+                        "notes":  [
+
+                                  ],
+                        "decision":  {
+                                         "decision":  "approved",
+                                         "reviewer":  "Founder",
+                                         "timestamp":  "2026-08-26T00:00:00.000Z",
+                                         "reason":  "EP-CAT-P18F: Founder editorial review approved. Wave 4 governance review complete."
+                                     }
+                    },
+                    {
+                        "slug":  "narciso-pure-musc-inspired",
+                        "name":  "Narciso Pure Musc Inspired",
+                        "collection":  "Rose",
+                        "factoryVersion":  "0.5.0",
+                        "promptVersions":  "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+                        "validationStatus":  "PASS",
+                        "status":  "approved",
+                        "addedAt":  "2026-08-26T00:00:00.000Z",
+                        "reviewStartedAt":  null,
+                        "decidedAt":  "2026-08-26T00:00:00.000Z",
+                        "reviewer":  "Founder",
+                        "notes":  [
+
+                                  ],
+                        "decision":  {
+                                         "decision":  "approved",
+                                         "reviewer":  "Founder",
+                                         "timestamp":  "2026-08-26T00:00:00.000Z",
+                                         "reason":  "EP-CAT-P18F: Founder editorial review approved. Wave 4 governance review complete."
+                                     }
+                    },
+                    {
+                        "slug":  "dylan-blue-pour-femme-inspired",
+                        "name":  "Dylan Blue Pour Femme Inspired",
+                        "collection":  "Rose",
+                        "factoryVersion":  "0.5.0",
+                        "promptVersions":  "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+                        "validationStatus":  "PASS",
+                        "status":  "approved",
+                        "addedAt":  "2026-08-26T00:00:00.000Z",
+                        "reviewStartedAt":  null,
+                        "decidedAt":  "2026-08-26T00:00:00.000Z",
+                        "reviewer":  "Founder",
+                        "notes":  [
+
+                                  ],
+                        "decision":  {
+                                         "decision":  "approved",
+                                         "reviewer":  "Founder",
+                                         "timestamp":  "2026-08-26T00:00:00.000Z",
+                                         "reason":  "EP-CAT-P18F: Founder editorial review approved. Wave 4 governance review complete."
+                                     }
+                    },
+                    {
+                        "slug":  "cherry-in-the-air-inspired",
+                        "name":  "Cherry In The Air Inspired",
+                        "collection":  "Rose",
+                        "factoryVersion":  "0.5.0",
+                        "promptVersions":  "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+                        "validationStatus":  "PASS",
+                        "status":  "approved",
+                        "addedAt":  "2026-08-26T00:00:00.000Z",
+                        "reviewStartedAt":  null,
+                        "decidedAt":  "2026-08-26T00:00:00.000Z",
+                        "reviewer":  "Founder",
+                        "notes":  [
+
+                                  ],
+                        "decision":  {
+                                         "decision":  "approved",
+                                         "reviewer":  "Founder",
+                                         "timestamp":  "2026-08-26T00:00:00.000Z",
+                                         "reason":  "EP-CAT-P18F: Founder editorial review approved. Wave 4 governance review complete."
+                                     }
+                    },
+                    {
+                        "slug":  "chloe-original-inspired",
+                        "name":  "Chloe Original Inspired",
+                        "collection":  "Rose",
+                        "factoryVersion":  "0.5.0",
+                        "promptVersions":  "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+                        "validationStatus":  "PASS",
+                        "status":  "approved",
+                        "addedAt":  "2026-08-26T00:00:00.000Z",
+                        "reviewStartedAt":  null,
+                        "decidedAt":  "2026-08-26T00:00:00.000Z",
+                        "reviewer":  "Founder",
+                        "notes":  [
+
+                                  ],
+                        "decision":  {
+                                         "decision":  "approved",
+                                         "reviewer":  "Founder",
+                                         "timestamp":  "2026-08-26T00:00:00.000Z",
+                                         "reason":  "EP-CAT-P18F: Founder editorial review approved. Wave 4 governance review complete."
+                                     }
+                    },
+                    {
+                        "slug":  "gucci-flora-inspired",
+                        "name":  "Gucci Flora Inspired",
+                        "collection":  "Rose",
+                        "factoryVersion":  "0.5.0",
+                        "promptVersions":  "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+                        "validationStatus":  "PASS",
+                        "status":  "approved",
+                        "addedAt":  "2026-08-26T00:00:00.000Z",
+                        "reviewStartedAt":  null,
+                        "decidedAt":  "2026-08-26T00:00:00.000Z",
+                        "reviewer":  "Founder",
+                        "notes":  [
+
+                                  ],
+                        "decision":  {
+                                         "decision":  "approved",
+                                         "reviewer":  "Founder",
+                                         "timestamp":  "2026-08-26T00:00:00.000Z",
+                                         "reason":  "EP-CAT-P18F: Founder editorial review approved. Wave 4 governance review complete."
                                      }
                     }
                 ]
