@@ -10,15 +10,15 @@
  * Does NOT call any AI provider. Does NOT generate any drafts.
  * Does NOT modify any files. Read-only validation only.
  *
- * Current governance state (P18C_PARTIAL):
+ * Current governance state (P18C_R1_PASS_WAVE4_20_OF_20_EVIDENCE_LOCKED):
  *   - 20 entries total (ROSE=7, SKYE=7, ELITE=6)
- *   - 19 READY entries
- *   - 1 FOUNDER_DECISION_REQUIRED (LADIES-127 Gucci Flora — identity ambiguous)
+ *   - 20 READY entries (all Founder decisions resolved in EP-CAT-P18C-R1)
+ *   - 0 FOUNDER_DECISION_REQUIRED
  *   - 0 BRAND_NARRATIVE_ONLY
  *   - 1 UNORDERED_GOVERNED_NOTES entry: Jo Malone Beach Blossom (heartNotes only)
- *   - OUD_GAP_PROVEN: Maison Crivelli Oud Cadenza — Agarwood confirmed in heart notes
- *   - FAMILY_GAP_MISMATCH: Creed Delphinus — Oriental Floral, NOT Aquatic/Fresh
- *   - Pending Founder decisions: Gucci Flora identity, Creed Delphinus gap strategy
+ *   - OUD_GAP_PROVEN_HIGH: Maison Crivelli Oud Cadenza — Agarwood confirmed (Fragrantica + Harrods, HIGH)
+ *   - ASSORTMENT_GAP_MISMATCH_INFORMATIONAL: Creed Delphinus Oriental Floral — Founder RETAIN
+ *   - Gucci Flora: Founder confirmed Option B — Flora Gorgeous Gardenia EDP 2021
  */
 
 import assert from "node:assert/strict";
@@ -90,7 +90,7 @@ function find(keyPrefix: string): ResearchEntry {
 
 // ── Section 1: Structure and counts ──────────────────────────────────────────
 
-console.log("\n  Wave 4 Research Governance Validator\n  EP-CAT-P18C\n");
+console.log("\n  Wave 4 Research Governance Validator\n  EP-CAT-P18C-R1\n");
 console.log("  ─── Section 1: Structure and counts ───\n");
 
 test("W4-V1 — batchId is wave-4-2026", () => {
@@ -120,16 +120,14 @@ test("W4-V5 — ELITE collection has exactly 6 entries", () => {
 
 console.log("\n  ─── Section 2: Evidence status distribution ───\n");
 
-test("W4-V6 — 19 entries have evidenceStatus READY", () => {
+test("W4-V6 — 20 entries have evidenceStatus READY (all Founder decisions resolved R1)", () => {
   const ready = entries.filter(e => e.evidenceStatus === "READY");
-  assert.equal(ready.length, 19, `Expected 19 READY entries, got ${ready.length}`);
+  assert.equal(ready.length, 20, `Expected 20 READY entries, got ${ready.length}`);
 });
 
-test("W4-V7 — exactly 1 FOUNDER_DECISION_REQUIRED entry (LADIES-127 Gucci Flora — P18C partial)", () => {
+test("W4-V7 — 0 FOUNDER_DECISION_REQUIRED entries (all resolved in EP-CAT-P18C-R1)", () => {
   const fdr = entries.filter(e => e.evidenceStatus === "FOUNDER_DECISION_REQUIRED");
-  assert.equal(fdr.length, 1, `Expected 1 FOUNDER_DECISION_REQUIRED entry, got ${fdr.length}`);
-  assert.ok(fdr[0]._sourceKey.includes("LADIES-127"),
-    `FOUNDER_DECISION_REQUIRED entry must be LADIES-127 (Gucci Flora), got ${fdr[0]._sourceKey}`);
+  assert.equal(fdr.length, 0, `Expected 0 FOUNDER_DECISION_REQUIRED entries (all resolved in R1), got ${fdr.length}`);
 });
 
 test("W4-V8 — 0 entries have evidenceStatus BRAND_NARRATIVE_ONLY", () => {
@@ -142,27 +140,30 @@ test("W4-V9 — 0 entries have evidenceStatus BLOCKED", () => {
   assert.equal(blocked.length, 0, `Expected 0 BLOCKED entries, got ${blocked.length}`);
 });
 
-// ── Section 3: FOUNDER_DECISION_REQUIRED — Gucci Flora identity ───────────────
+// ── Section 3: Gucci Flora Gorgeous Gardenia resolution (R1) ─────────────────
 
-console.log("\n  ─── Section 3: Gucci Flora identity governance ───\n");
+console.log("\n  ─── Section 3: Gucci Flora Gorgeous Gardenia resolution (R1) ───\n");
 
-test("W4-V10 — Gucci Flora researchRequired is true (active hold)", () => {
+test("W4-V10 — Gucci Flora researchRequired is false (Founder Option B applied R1)", () => {
   const entry = find("LADIES-127");
-  assert.equal(entry.researchRequired, true,
-    "Gucci Flora must have researchRequired: true (awaiting Founder decision)");
+  assert.equal(entry.researchRequired, false,
+    "Gucci Flora must have researchRequired: false — Founder confirmed Option B in R1");
 });
 
-test("W4-V11 — Gucci Flora canonicalName is null (not yet assigned)", () => {
+test("W4-V11 — Gucci Flora canonicalName is 'Flora Gorgeous Gardenia' (Founder Option B R1)", () => {
   const entry = find("LADIES-127");
-  assert.equal(entry.canonicalName, null,
-    "Gucci Flora canonicalName must be null until Founder confirms identity");
+  assert.equal(entry.canonicalName, "Flora Gorgeous Gardenia",
+    `Gucci Flora canonicalName must be 'Flora Gorgeous Gardenia' (Founder Option B), got '${entry.canonicalName}'`);
 });
 
-test("W4-V12 — Gucci Flora notes are empty (cannot assign without identity confirmation)", () => {
+test("W4-V12 — Gucci Flora notes populated — Flora Gorgeous Gardenia composition (R1)", () => {
   const entry = find("LADIES-127");
-  assert.deepEqual(entry.topNotes, [], "Gucci Flora topNotes must be [] (pending identity)");
-  assert.deepEqual(entry.heartNotes, [], "Gucci Flora heartNotes must be [] (pending identity)");
-  assert.deepEqual(entry.baseNotes, [], "Gucci Flora baseNotes must be [] (pending identity)");
+  assert.ok(entry.topNotes.length > 0,
+    "Gucci Flora topNotes must be populated (Founder Option B resolved)");
+  assert.ok(entry.heartNotes.includes("Gardenia"),
+    "Gucci Flora heartNotes must include 'Gardenia' (canonical Flora Gorgeous Gardenia note)");
+  assert.ok(entry.baseNotes.includes("Brown Sugar"),
+    "Gucci Flora baseNotes must include 'Brown Sugar' (canonical Flora Gorgeous Gardenia base)");
 });
 
 // ── Section 4: Notes population for READY entries ─────────────────────────────
@@ -247,15 +248,15 @@ test("W4-V21 — Oud Cadenza fragranceFamily is Oriental Woody (Oud-family class
   );
 });
 
-test("W4-V22 — governance.specialGovernanceFlags contains OUD_GAP_STATUS key", () => {
+test("W4-V22 — governance.specialGovernanceFlags OUD_GAP_STATUS reads OUD_GAP_PROVEN_HIGH (R1 tier audit)", () => {
   assert.ok(
     "OUD_GAP_STATUS" in raw.governance.specialGovernanceFlags,
     "specialGovernanceFlags must contain OUD_GAP_STATUS key"
   );
   const oudStatus = raw.governance.specialGovernanceFlags["OUD_GAP_STATUS"];
   assert.ok(
-    oudStatus.includes("OUD_GAP_PROVEN_AUTHORITATIVE"),
-    "OUD_GAP_STATUS must read OUD_GAP_PROVEN_AUTHORITATIVE"
+    oudStatus.includes("OUD_GAP_PROVEN_HIGH"),
+    "OUD_GAP_STATUS must read OUD_GAP_PROVEN_HIGH (R1 tier audit corrected from AUTHORITATIVE)"
   );
 });
 
@@ -441,6 +442,37 @@ test("W4-V45 — all proposedSlug values end with '-inspired'", () => {
     `${nonCompliant.length} entries have proposedSlug not ending in '-inspired': ${nonCompliant.map(e => e._sourceKey).join(", ")}`);
 });
 
+// ── Section 14: R1 Founder decision governance gates ─────────────────────────
+
+console.log("\n  ─── Section 14: R1 Founder decision governance gates ───\n");
+
+test("W4-V46 — Gucci Flora evidenceStatus is READY (Founder Option B applied R1)", () => {
+  const entry = find("LADIES-127");
+  assert.equal(entry.evidenceStatus, "READY",
+    `Gucci Flora must be READY after R1 resolution. Got '${entry.evidenceStatus}'`);
+});
+
+test("W4-V47 — Gucci Flora launchYear is 2021 (Flora Gorgeous Gardenia canonical year)", () => {
+  const entry = find("LADIES-127");
+  assert.equal(entry.launchYear, 2021,
+    `Gucci Flora launchYear must be 2021 (Gorgeous Gardenia EDP), got ${entry.launchYear}`);
+});
+
+test("W4-V48 — FAMILY_GAP_MISMATCH flag reflects ASSORTMENT_GAP_MISMATCH_INFORMATIONAL Founder RETAIN decision", () => {
+  const gapFlag = raw.governance.specialGovernanceFlags["FAMILY_GAP_MISMATCH_CREED_DELPHINUS"];
+  assert.ok(
+    gapFlag !== undefined && gapFlag.includes("ASSORTMENT_GAP_MISMATCH_INFORMATIONAL"),
+    "FAMILY_GAP_MISMATCH_CREED_DELPHINUS must read ASSORTMENT_GAP_MISMATCH_INFORMATIONAL (Founder RETAIN R1)"
+  );
+});
+
+test("W4-V49 — readySummary FOUNDER_DECISION_REQUIRED is empty array (all resolved R1)", () => {
+  const fdr = (raw as unknown as { governance: { readySummary: { FOUNDER_DECISION_REQUIRED: unknown[] } } })
+    .governance.readySummary?.FOUNDER_DECISION_REQUIRED;
+  assert.ok(Array.isArray(fdr) && fdr.length === 0,
+    `readySummary.FOUNDER_DECISION_REQUIRED must be empty array after R1. Got: ${JSON.stringify(fdr)}`);
+});
+
 // ── Summary ───────────────────────────────────────────────────────────────────
 
 console.log(`\n${"─".repeat(56)}`);
@@ -450,13 +482,10 @@ if (failed > 0) {
   process.exit(1);
 } else {
   console.log(`\n  PASS — all ${passed} Wave 4 governance validation checks passed.\n`);
-  console.log("  Wave 4 research governance: VERIFIED (P18C_PARTIAL)");
-  console.log("  19 entries READY for factory staging.");
-  console.log("  1 entry (LADIES-127 Gucci Flora) FOUNDER_DECISION_REQUIRED.");
-  console.log("  Pending Founder decisions before P18D staging:");
-  console.log("    1. Gucci Flora identity: Option A (Flora by Gucci 2009 EDT) or Option B (Flora Gorgeous Gardenia 2021 EDP) [RECOMMENDATION: Option B]");
-  console.log("    2. Creed Delphinus gap strategy: Accept Oriental Floral or replace with Aquatic candidate");
-  console.log("    3. Jo Malone Beach Blossom: Confirm supplier has permanent catalogue (not limited edition only)");
-  console.log("    4. Escada Cherry in the Air: Confirm 2013 edition availability");
-  console.log("    5. Bleu Noir subtitle: Confirm update from 'Blue Noir' to 'for Him Bleu Noir' in wave-4-catalogue.ts\n");
+  console.log("  Wave 4 research governance: VERIFIED (P18C_R1_PASS_WAVE4_20_OF_20_EVIDENCE_LOCKED)");
+  console.log("  20 entries READY for factory staging.");
+  console.log("  0 entries FOUNDER_DECISION_REQUIRED — all Founder decisions resolved in EP-CAT-P18C-R1.\n");
+  console.log("  Catalogue corrections pending before P18D staging:");
+  console.log("    1. MEN-151 Bleu Noir: subtitle correction 'Blue Noir' → 'for Him Bleu Noir' in wave-4-catalogue.ts");
+  console.log("    2. LADIES-127 Gucci Flora: subtitle correction 'Inspired by Gucci Flora' → 'Inspired by Gucci Flora Gorgeous Gardenia' in wave-4-catalogue.ts\n");
 }

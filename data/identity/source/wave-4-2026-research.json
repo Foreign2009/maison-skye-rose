@@ -1,9 +1,12 @@
 {
   "batchId": "wave-4-2026",
-  "description": "Wave 4 — August 2026 research scope manifest. 20 entries: ROSE (7), SKYE (7), ELITE (6). External research conducted in EP-CAT-P18C (2026-08-25). 19 entries READY; 1 entry FOUNDER_DECISION_REQUIRED (LADIES-127 Gucci Flora — identity ambiguous between original 2009 EDT discontinued and Flora Gorgeous Gardenia EDP 2021 current flagship). Episode classified P18C_PARTIAL pending Founder decision on Gucci Flora identity. OUD_GAP_PROVEN: Maison Crivelli Oud Cadenza confirmed Agarwood (Oud) in heart notes from Fragrantica evidence. FAMILY_GAP_MISMATCH noted for Creed Delphinus: P18A targeted Aquatic/Fresh gap but evidence confirms Oriental Floral family. Jo Malone Beach Blossom confirmed LIMITED EDITION (2025).",
+  "description": "Wave 4 — August 2026 research scope manifest. 20 entries: ROSE (7), SKYE (7), ELITE (6). External research conducted in EP-CAT-P18C (2026-08-25); Founder decisions resolved in EP-CAT-P18C-R1 (2026-08-26). 20 entries READY. Episode classified P18C_R1_PASS_WAVE4_20_OF_20_EVIDENCE_LOCKED. OUD_GAP_PROVEN_HIGH: Maison Crivelli Oud Cadenza Agarwood (Oud) confirmed from Fragrantica and Harrods (HIGH sources). ASSORTMENT_GAP_MISMATCH_INFORMATIONAL: Creed Delphinus Oriental Floral — Founder confirmed RETAIN. Jo Malone Beach Blossom and Escada Cherry in the Air: Founder confirmed RETAIN. Gucci Flora: Founder confirmed Option B — Flora Gorgeous Gardenia EDP 2021.",
   "governance": {
-    "phase": "EP-CAT-P18C",
+    "phase": "EP-CAT-P18C-R1",
     "authorizedBy": "Founder — Wave 4 Research Authorization EP-CAT-P18C 2026-08-25",
+    "r1AuthorizedBy": "Founder — Wave 4 Decision Resolution EP-CAT-P18C-R1 2026-08-26",
+    "r1CompletedBy": "Claude Code — EP-CAT-P18C-R1 Founder Decision Resolution",
+    "r1CompletedDate": "2026-08-26",
     "researchedBy": "Claude Code — EP-CAT-P18C Wave 4 Research Campaign",
     "researchDate": "2026-08-25",
     "sourcePolicyTiers": {
@@ -40,24 +43,25 @@
         "LADIES-204-Narciso Pure Musc",
         "LADIES-275-Versace Dylan Blue",
         "LADIES-117-Escada Cherry In The Air",
-        "LADIES-70-Chloe Original"
+        "LADIES-70-Chloe Original",
+        "LADIES-127-Gucci Flora Gorgeous Gardenia"
       ],
-      "FOUNDER_DECISION_REQUIRED": ["LADIES-127-Gucci Flora"],
+      "FOUNDER_DECISION_REQUIRED": [],
       "BRAND_NARRATIVE_ONLY": [],
       "RESEARCH_REQUIRED": [],
       "BLOCKED": []
     },
     "specialGovernanceFlags": {
-      "OUD_GAP_STATUS": "OUD_GAP_PROVEN_AUTHORITATIVE — Agarwood (Oud) confirmed in heart notes of Maison Crivelli Oud Cadenza per Fragrantica evidence. Oriental Woody family confirmed. Oud-family classification approved for P18D staging.",
-      "FAMILY_GAP_MISMATCH_CREED_DELPHINUS": "P18A selected Creed Delphinus to fill Aquatic/Fresh gap in Elite. Research confirms fragranceFamily is Oriental Floral (Fragrantica), not Aquatic. Notes: Almond, Incense, Orris, Vanilla, Leather, Amberwood — a warm Oriental composition. This does NOT fill the Aquatic gap. Founder decision required on whether to (A) retain Creed Delphinus as a quality Elite addition outside the Aquatic gap objective, or (B) replace with an evidence-confirmed Aquatic candidate from Wave 4 reserves. Identity and notes are READY regardless of gap classification.",
-      "JO_MALONE_LIMITED_EDITION": "Beach Blossom Cologne is listed as 'Limited Edition' on Fragrantica (2025 launch). If this product's availability is temporary, the record may need substitution with a permanent Jo Malone offering. Founder decision recommended before promotion.",
-      "ESCADA_LIMITED_EDITION": "Cherry in the Air is part of Escada's annual limited-edition summer series (running since 1993). Each year's release is a different product; the 2013 edition is unlikely to be newly available from the supplier. Founder should confirm supplier's availability refers to the 2013 original or a current flanker.",
+      "OUD_GAP_STATUS": "OUD_GAP_PROVEN_HIGH — Agarwood (Oud) confirmed in heart notes of Maison Crivelli Oud Cadenza per Fragrantica (HIGH, reference database) and Harrods (HIGH, authorized retailer). No official Maison Crivelli brand page directly accessed. R1 tier audit: previous AUTHORITATIVE classification corrected to HIGH per source tier governance. Oriental Woody family confirmed. Oud-family classification approved for P18D staging.",
+      "FAMILY_GAP_MISMATCH_CREED_DELPHINUS": "ASSORTMENT_GAP_MISMATCH_INFORMATIONAL — Founder confirmed RETAIN (EP-CAT-P18C-R1 2026-08-26). Creed Delphinus is Oriental Floral (Fragrantica confirmed), not Aquatic. P18A targeted Aquatic/Fresh gap in Elite — that gap remains unfilled by Wave 4. Creed Delphinus accepted as a quality Oriental Floral Elite addition. Gap mismatch is advisory only — does not block P18D staging.",
+      "JO_MALONE_LIMITED_EDITION": "FOUNDER_CONFIRMED_RETAIN (EP-CAT-P18C-R1 2026-08-26). Supplier lists Beach Blossom as SUPPLIER_LISTED — identical availability status to all other Wave 4 records. Fragrantica 'Limited Edition' tag is an external catalogue classification that does not prevent supplier sourcing. Availability risk noted; Beach Blossom proceeds to P18D staging.",
+      "ESCADA_LIMITED_EDITION": "FOUNDER_CONFIRMED_RETAIN (EP-CAT-P18C-R1 2026-08-26). Supplier name 'Escada Cherry In The Air' specifically identifies the 2013 edition — this product name is unique to the 2013 release in the Escada annual summer series. Supplier evidence locks the 2013 identity. Cherry in the Air proceeds to P18D staging.",
       "NARCISO_BLUE_NOIR_SPELLING": "Supplier uses English 'Blue Noir'; canonical Narciso Rodriguez product name is French 'Bleu Noir' (for Him Bleu Noir). Wave-4-catalogue.ts subtitle currently reads 'Inspired by Narciso Rodriguez Blue Noir' — correct spelling 'Bleu Noir' required in subtitle before promotion. Intake title 'Blue Noir Inspired' uses English per slug derivation convention; subtitle correction needed in P18D staging.",
-      "GUCCI_FLORA_IDENTITY": "FOUNDER_DECISION_REQUIRED. Supplier 'LADIES-127-Gucci Flora' does not specify which Flora product. Original Flora by Gucci EDT (2009) is reportedly discontinued. Current flagship is Flora Gorgeous Gardenia EDP (2021). Recommend Option B. See LADIES-127 entry for full options."
+      "GUCCI_FLORA_IDENTITY": "FOUNDER_CONFIRMED_OPTION_B (EP-CAT-P18C-R1 2026-08-26). Flora Gorgeous Gardenia Eau de Parfum (2021) confirmed as canonical identity. Notes from Fragrantica (HIGH): top Pear Blossom/Red Berries/Italian Mandarin, heart Gardenia/Jasmine/Frangipani, base Brown Sugar/Patchouli. Perfumer: Honorine Blanc. Fragrance Foundation Women's Prestige award 2022. Subtitle correction required in wave-4-catalogue.ts: 'Inspired by Gucci Flora' → 'Inspired by Gucci Flora Gorgeous Gardenia'."
     },
     "catalogueSubtitleCorrections": [
       "MEN-151-Blue Noir by Narciso Rodriquez: wave-4-catalogue.ts subtitle must be updated from 'Inspired by Narciso Rodriguez Blue Noir' to 'Inspired by Narciso Rodriguez for Him Bleu Noir' (canonical French name) before P18D staging.",
-      "LADIES-127-Gucci Flora: wave-4-catalogue.ts subtitle 'Inspired by Gucci Flora' must be updated to reflect Founder decision on exact product (Option A: 'Inspired by Flora by Gucci' or Option B: 'Inspired by Gucci Flora Gorgeous Gardenia') before P18D staging."
+      "LADIES-127-Gucci Flora: wave-4-catalogue.ts subtitle must be updated from 'Inspired by Gucci Flora' to 'Inspired by Gucci Flora Gorgeous Gardenia' before P18D staging. Founder confirmed Option B (Flora Gorgeous Gardenia EDP 2021) in EP-CAT-P18C-R1."
     ]
   },
   "entries": [
@@ -84,7 +88,7 @@
       "sourceNotes": "Notes researched EP-CAT-P18C from Fragrantica search snippet (HIGH). Official Creed site returns 403. Family confirmed Oriental Floral (not Aquatic). P18A intended this to fill Aquatic/Fresh Elite gap — evidence contradicts that classification. Founder decision required: (A) retain as quality Elite addition (gap mismatch accepted), or (B) replace with evidence-confirmed Aquatic candidate. Identity distinct from all five native Creed records confirmed. Part of 'The Oriental Universe' collection.",
       "possibleNameIssue": false,
       "nameIssueExplanation": null,
-      "conflicts": ["P18A gap classification (Aquatic/Fresh) contradicted by fragranceFamily evidence (Oriental Floral)"],
+      "conflicts": ["ASSORTMENT_GAP_MISMATCH_INFORMATIONAL: P18A targeted Aquatic/Fresh Elite gap but Creed Delphinus is Oriental Floral. Founder confirmed RETAIN (EP-CAT-P18C-R1 2026-08-26). Advisory only."],
       "evidenceSources": [
         "https://www.fragrantica.com/perfume/Creed/Delphinus-95970.html",
         "https://colognecurators.com/products/creed-delphinus-edp",
@@ -177,7 +181,7 @@
       "sourceNotes": "UNORDERED_GOVERNED_NOTES applied — Jo Malone presents as flat bouquet; all four notes placed in heartNotes[] per Wave 2/3 governance precedent. Official notes per Fragrantica (HIGH): Lime, Mint, Coconut Water, Tonka Bean. Jo Malone official URL (jomalone.com/product/25946/132420/) confirmed but returned 403 on WebFetch — product existence verified via Kohl's, Nordstrom, Sephora, Macy's official retailer listings. Fragrantica classifies as 'Limited Edition'. Jo Malone does not disclose perfumer. Brand narrative: 'A summer escape to the Seychelles — rare coco de mer. Refreshing twist of coconut water on the breeze, lime and mint, wrapped in tonka bean.'",
       "possibleNameIssue": false,
       "nameIssueExplanation": null,
-      "conflicts": ["Fragrantica classifies as 'Limited Edition' — permanent availability unconfirmed"],
+      "conflicts": ["Fragrantica classifies as 'Limited Edition' — Founder confirmed RETAIN (EP-CAT-P18C-R1 2026-08-26). Advisory only."],
       "evidenceSources": [
         "https://www.fragrantica.com/perfume/Jo-Malone-London/Beach-Blossom-Limited-Edition-103305.html",
         "https://www.kohls.com/product/prd-7567555/jo-malone-london-beach-blossom-cologne-with-coconut-water-and-vanilla-travel-spray.jsp",
@@ -612,7 +616,7 @@
       "sourceNotes": "Notes from Fragrantica (HIGH). Confirmed by multiple retailer listings (LaBellePerfumes, ForeverLux, PerfumeAndrea). EDT concentration confirmed across all sources. 'Daim' = suede accord (French). Escada summer series note: different product each year since 1993. Supplier should confirm current stock is the 2013 Cherry in the Air and not a different year's release. Distinct from all native Escada records confirmed.",
       "possibleNameIssue": false,
       "nameIssueExplanation": null,
-      "conflicts": ["Part of annual limited-edition summer series — supplier availability should be confirmed for 2013 edition specifically"],
+      "conflicts": ["Part of annual limited-edition summer series — Founder confirmed RETAIN (EP-CAT-P18C-R1 2026-08-26). Supplier name 'Escada Cherry In The Air' locks 2013 edition identity. Advisory only."],
       "evidenceSources": [
         "https://www.fragrantica.com/perfume/Escada/Cherry-in-the-Air-17129.html",
         "https://www.theperfumegirl.com/perfumes/fragrances/escada/escada-cherry-in-the-air/",
@@ -655,34 +659,33 @@
       "_collection": "ROSE",
       "_sourceKey": "LADIES-127-Gucci Flora",
       "supplierName": "Gucci Flora",
-      "evidenceStatus": "FOUNDER_DECISION_REQUIRED",
-      "researchRequired": true,
-      "founderDecision": null,
-      "researchNotes": "IDENTITY_AMBIGUOUS. Supplier 'Gucci Flora' does not specify which Flora product. Two candidates identified: Option A: Flora by Gucci EDT (2009, Firmenich) — reportedly discontinued. Option B: Flora Gorgeous Gardenia EDP (2021, Honorine Blanc/Alberto Morillas) — current flagship, widely available. Given that Option A is discontinued and the supplier lists this as a current stock item (NEW_SUPPLIER_CANDIDATE, AVAILABLE), Option B is the most likely intent. RECOMMENDATION: Option B (Flora Gorgeous Gardenia EDP 2021). Founder decision required to confirm.",
-      "canonicalName": null,
+      "evidenceStatus": "READY",
+      "researchRequired": false,
+      "founderDecision": "FOUNDER_CONFIRMED_OPTION_B: Flora Gorgeous Gardenia Eau de Parfum (2021). Authorized by Founder EP-CAT-P18C-R1 2026-08-26.",
+      "researchNotes": "IDENTITY_RESOLVED. Founder confirmed Option B: Flora Gorgeous Gardenia EDP (2021). Supplier 'Gucci Flora' resolved to current flagship. Notes researched from Fragrantica (HIGH) confirmed in EP-CAT-P18C-R1. Fragrance Foundation Women's Prestige award 2022. Catalogue subtitle correction required before P18D staging: 'Inspired by Gucci Flora' → 'Inspired by Gucci Flora Gorgeous Gardenia'.",
+      "canonicalName": "Flora Gorgeous Gardenia",
       "brand": "Gucci",
-      "launchYear": null,
-      "concentration": null,
+      "launchYear": 2021,
+      "concentration": "Eau de Parfum",
       "marketedGender": "female",
-      "fragranceFamily": null,
-      "topNotes": [],
-      "heartNotes": [],
-      "baseNotes": [],
+      "fragranceFamily": "Floral Fruity",
+      "topNotes": ["Pear Blossom", "Red Berries", "Italian Mandarin"],
+      "heartNotes": ["Gardenia", "Jasmine", "Frangipani"],
+      "baseNotes": ["Brown Sugar", "Patchouli"],
       "mainAccords": [],
-      "perfumer": null,
-      "sourceConfidence": null,
+      "perfumer": "Honorine Blanc",
+      "sourceConfidence": "HIGH",
       "founderSupplied": false,
-      "sourceNotes": "OPTION A — Flora by Gucci EDT (2009): launchYear 2009, concentration EDT, family Floral, top Peony/Citruses/Mandarin Orange, heart Osmanthus/Rose, base Sandalwood/Pink Pepper/Patchouli. Perfumers: Firmenich house. Reportedly discontinued as of recent years. OPTION B — Flora Gorgeous Gardenia EDP (2021): launchYear 2021, concentration EDP, family Floral Fruity, top Pear Blossom/Red Berries/Italian Mandarin, heart Gardenia/Jasmine/Frangipani, base Brown Sugar/Patchouli. Perfumers: Honorine Blanc, Alberto Morillas. Current flagship, backed by major Miley Cyrus campaign. Available at Nordstrom, Sephora, gucci.com. RECOMMENDATION: Option B. If Founder confirms Option B, wave-4-catalogue.ts subtitle should be updated from 'Inspired by Gucci Flora' to 'Inspired by Gucci Flora Gorgeous Gardenia'.",
+      "sourceNotes": "Notes from Fragrantica (HIGH) — EP-CAT-P18C-R1 research. Fragrantica page confirmed: fragrantica.com/perfume/Gucci/Flora-Gorgeous-Gardenia-68578.html. Top: Pear Blossom, Red Berries, Italian Mandarin. Heart: Gardenia, Jasmine, Frangipani. Base: Brown Sugar, Patchouli. Perfumer: Honorine Blanc. Vivir review corroborates. Family: Floral Fruity. Concentration: EDP. Gender: female. Fragrance Foundation Women's Prestige award 2022. Major Miley Cyrus campaign launch. Available at Nordstrom, Sephora, and Gucci official channels. Option A (Flora by Gucci EDT 2009) considered and rejected — reportedly discontinued, option not pursued after Founder confirmed Option B.",
       "possibleNameIssue": true,
-      "nameIssueExplanation": "Supplier 'Gucci Flora' is ambiguous across multiple Gucci Flora products. Founder decision required to identify the exact canonical product before notes can be assigned.",
+      "nameIssueExplanation": "Supplier 'Gucci Flora' resolved to canonical 'Flora Gorgeous Gardenia'. wave-4-catalogue.ts subtitle must be corrected from 'Inspired by Gucci Flora' to 'Inspired by Gucci Flora Gorgeous Gardenia' before P18D staging.",
       "conflicts": [
-        "Option A (Flora by Gucci 2009 EDT) reportedly discontinued — supplier availability unlikely for this product",
-        "Option B (Flora Gorgeous Gardenia 2021 EDP) is current flagship — strongly recommended but requires Founder confirmation"
+        "Catalogue subtitle correction pending: wave-4-catalogue.ts subtitle must be updated from 'Inspired by Gucci Flora' to 'Inspired by Gucci Flora Gorgeous Gardenia' before P18D staging."
       ],
       "evidenceSources": [
-        "https://www.fragrantica.com/perfume/Gucci/Flora-by-Gucci-Eau-de-Toilette-5226.html",
         "https://www.fragrantica.com/perfume/Gucci/Flora-Gorgeous-Gardenia-68578.html",
-        "https://vivir.com/article/gucci-flora-gorgeous-gardenia-edp-review"
+        "https://vivir.com/article/gucci-flora-gorgeous-gardenia-edp-review",
+        "https://www.fragrantica.com/perfume/Gucci/Flora-by-Gucci-Eau-de-Toilette-5226.html"
       ],
       "proposedSlug": "gucci-flora-inspired"
     }
