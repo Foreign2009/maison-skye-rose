@@ -3350,6 +3350,83 @@ test("T-C5-CE-07 — with relevant family signal, at least one STRONG_MATCH or G
   assert.ok(hasMatch, "At least one STRONG_MATCH or GOOD_MATCH expected when family signal matches catalogue");
 });
 
+// ── EP-AI-C5: Supplement tests to reach 65+ minimum (T-C5-SUP) ───────────────
+
+console.log("\n── C5-SUP. Supplementary Constraint Tests ────────────────────────");
+
+test("T-C5-SUP-01 — computeProfileCompleteness returns valid ConfidenceLevel types only", () => {
+  const p = makeProfile({ preferredFamilies: { value: ["Floral"], confidence: "HIGH" } });
+  const r = computeProfileCompleteness(p);
+  assert.ok(["LOW", "MEDIUM", "HIGH"].includes(r.level),
+    `level must be LOW|MEDIUM|HIGH, got: ${r.level}`);
+});
+
+test("T-C5-SUP-02 — missingDimensions excludes dimensions already present in profile", () => {
+  const p = makeProfile({
+    preferredGender:    { value: "female", confidence: "HIGH" },
+    preferredFamilies:  { value: ["Floral"], confidence: "HIGH" },
+    preferredOccasions: { value: ["daily"], confidence: "HIGH" },
+    preferredNotes:     { value: ["rose"], confidence: "HIGH" },
+    preferredSeasons:   { value: ["summer"], confidence: "HIGH" },
+  });
+  const r = computeProfileCompleteness(p);
+  const keys = r.missingDimensions.map((d) => d.key);
+  assert.ok(!keys.includes("gender"),   "gender should not be missing when set");
+  assert.ok(!keys.includes("family"),   "family should not be missing when set");
+  assert.ok(!keys.includes("occasion"), "occasion should not be missing when set");
+  assert.ok(!keys.includes("notes"),    "notes should not be missing when set");
+  assert.ok(!keys.includes("season"),   "season should not be missing when set");
+});
+
+test("T-C5-SUP-03 — CLARIFICATION FOCUS section appears in context when plan has consultationReadinessQuestion", () => {
+  const planWithQ = {
+    ...BASE_PLAN,
+    consultationReadinessQuestion: "What occasions do you have in mind?",
+  };
+  const retrieval = { fragrances: mkcCatalogue.slice(0, 2), articles: [] };
+  const ctx = buildContext(retrieval, EMPTY_STATE, planWithQ);
+  const rendered = renderContext(ctx);
+  assert.ok(rendered.includes("CLARIFICATION FOCUS"),
+    "CLARIFICATION FOCUS section should appear when consultationReadinessQuestion is set");
+  assert.ok(rendered.includes("What occasions do you have in mind?"),
+    "The actual question text should appear in CLARIFICATION FOCUS");
+});
+
+test("T-C5-SUP-04 — CLARIFICATION FOCUS absent when no consultationReadinessQuestion", () => {
+  const retrieval = { fragrances: mkcCatalogue.slice(0, 2), articles: [] };
+  const ctx = buildContext(retrieval, EMPTY_STATE, BASE_PLAN);
+  const rendered = renderContext(ctx);
+  assert.ok(!rendered.includes("CLARIFICATION FOCUS"),
+    "CLARIFICATION FOCUS should not appear without consultationReadinessQuestion");
+});
+
+test("T-C5-SUP-05 — profile-aware follow-ups filter suggestions that propose avoided families", () => {
+  const profile = makeProfile({
+    avoidedFamilies: { value: ["oriental", "amber"], confidence: "HIGH" },
+  });
+  const plan = { ...BASE_PLAN, nextIntent: "seasonal" as const };
+  const retrieval = { fragrances: mkcCatalogue.slice(0, 2), articles: [] };
+  const planned = planResponse("Great fragrance for you.", "seasonal", retrieval, plan, profile);
+  // "Find something warmer" and "for cooler weather" map to warm/oriental families — should be filtered
+  const noWarm = planned.followUpSuggestions.every((s) =>
+    !s.toLowerCase().includes("warmer") && !s.toLowerCase().includes("cooler weather")
+  );
+  assert.ok(noWarm,
+    `Follow-ups should not suggest warm directions when oriental/amber are avoided: [${planned.followUpSuggestions.join(", ")}]`);
+});
+
+test("T-C5-SUP-06 — pool exhaustion does not throw when fragrances array is empty and profile is undefined", () => {
+  const exhaustedRetrieval = {
+    fragrances:    [] as typeof mkcCatalogue,
+    articles:      [],
+    poolExhausted: true,
+  };
+  assert.doesNotThrow(() => {
+    const ctx = buildContext(exhaustedRetrieval, EMPTY_STATE, BASE_PLAN);
+    renderContext(ctx);
+  }, "buildContext should not throw when fragrances is empty and poolExhausted is true");
+});
+
 // ── Summary ───────────────────────────────────────────────────────────────────
 
 const total = passed + failed;
