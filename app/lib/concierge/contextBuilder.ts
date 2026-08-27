@@ -769,9 +769,22 @@ function buildComparisonIntelligenceSection(
     { key: "versatility", label: "Versatility" },
   ];
 
-  // Detect which dimension the guest explicitly asked about in their message
+  // Tier 1: detect which dimension the guest explicitly asked about this turn
   const msgLower = (rawMessage ?? "").toLowerCase();
   const explicitDim = DIMS.find((d) => msgLower.includes(d.key.toLowerCase()))?.key ?? null;
+
+  // Tier 2: derive a preferred dimension from the guest's accumulated family preferences.
+  // Conservative — maps only Maison family vocabulary that clearly aligns with a numeric
+  // MKC intelligence field. Unlisted families (e.g. Floral, Woody) fall through to tier 3.
+  const FAMILY_TO_DIM: Array<{ families: string[]; dim: string }> = [
+    { families: ["citrus", "aquatic", "fresh", "green"], dim: "freshness" },
+    { families: ["oriental", "amber"],                   dim: "warmth"    },
+    { families: ["gourmand"],                            dim: "sweetness" },
+  ];
+  const guestFamilies = (profile?.preferredFamilies?.value ?? []).map((f) => f.toLowerCase());
+  const profileDim = FAMILY_TO_DIM.find((entry) =>
+    guestFamilies.some((gf) => entry.families.some((f) => gf.includes(f) || f.includes(gf)))
+  )?.dim ?? null;
 
   // Compute spread for each dimension across the two primary fragrances
   const f0 = fragrances[0];
@@ -781,8 +794,10 @@ function buildComparisonIntelligenceSection(
     const v0 = (f0 as Record<string, unknown>)[d.key];
     const v1 = (f1 as Record<string, unknown>)[d.key];
     const spread = typeof v0 === "number" && typeof v1 === "number" ? Math.abs(v0 - v1) : 0;
-    // Priority: explicit guest question first, then spread
-    const priority = d.key === explicitDim ? 100 : spread;
+    // Priority: tier 1 (explicit current-turn question) > tier 2 (known preferences) > tier 3 (spread)
+    const priority = d.key === explicitDim ? 100
+                   : d.key === profileDim  ? 50
+                   : spread;
     return { ...d, spread, priority };
   });
 

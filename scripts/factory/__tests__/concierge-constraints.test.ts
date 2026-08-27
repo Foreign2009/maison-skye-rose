@@ -3088,6 +3088,184 @@ test("T-C5-K-06 — explicit dimension mention in rawMessage → that dimension 
   }
 });
 
+// ── EP-AI-C5-V-R1: Comparison Intelligence — Tier 2 Preference-Aware (C5-D-001 fix) ──
+
+console.log("\n── C5-K-R1. Comparison Intelligence Tier 2 ─────────────────────");
+
+test("T-C5-K-R1-01 — explicit freshness question prioritizes freshness (tier 1)", () => {
+  const retrieval = { fragrances: mkcCatalogue.slice(0, 2), articles: [] };
+  const plan = { ...BASE_PLAN, requiresComparison: true, nextIntent: "comparison" as const };
+  const ctx = buildContext(retrieval, EMPTY_STATE, plan, undefined, null, null, null, "which one has more freshness?");
+  const rendered = renderContext(ctx);
+  const sectionStart = rendered.indexOf("COMPARISON INTELLIGENCE FOCUS");
+  assert.ok(sectionStart > 0, "COMPARISON INTELLIGENCE FOCUS section must be present");
+  const freshnessPos = rendered.indexOf("Freshness:", sectionStart);
+  assert.ok(freshnessPos > 0, "Freshness must appear when guest asks about freshness");
+  for (const label of ["Sweetness:", "Warmth:", "Intensity:", "Versatility:"]) {
+    const pos = rendered.indexOf(label, sectionStart);
+    if (pos > 0) assert.ok(freshnessPos < pos, `Freshness (tier 1) must appear before ${label}`);
+  }
+});
+
+test("T-C5-K-R1-02 — explicit sweetness question prioritizes sweetness (tier 1)", () => {
+  const retrieval = { fragrances: mkcCatalogue.slice(0, 2), articles: [] };
+  const plan = { ...BASE_PLAN, requiresComparison: true, nextIntent: "comparison" as const };
+  const ctx = buildContext(retrieval, EMPTY_STATE, plan, undefined, null, null, null, "which has more sweetness?");
+  const rendered = renderContext(ctx);
+  const sectionStart = rendered.indexOf("COMPARISON INTELLIGENCE FOCUS");
+  assert.ok(sectionStart > 0, "Section must be present");
+  const sweetnessPos = rendered.indexOf("Sweetness:", sectionStart);
+  assert.ok(sweetnessPos > 0, "Sweetness must appear when guest asks about sweetness");
+  for (const label of ["Freshness:", "Warmth:", "Intensity:", "Versatility:"]) {
+    const pos = rendered.indexOf(label, sectionStart);
+    if (pos > 0) assert.ok(sweetnessPos < pos, `Sweetness (tier 1) must appear before ${label}`);
+  }
+});
+
+test("T-C5-K-R1-03 — fresh family profile → freshness prioritized via tier 2", () => {
+  const retrieval = { fragrances: mkcCatalogue.slice(0, 2), articles: [] };
+  const plan = { ...BASE_PLAN, requiresComparison: true, nextIntent: "comparison" as const };
+  const state = { ...EMPTY_STATE, profile: makeProfile({ preferredFamilies: { value: ["Citrus"], confidence: "HIGH" } }) };
+  const ctx = buildContext(retrieval, state, plan);
+  const rendered = renderContext(ctx);
+  const sectionStart = rendered.indexOf("COMPARISON INTELLIGENCE FOCUS");
+  assert.ok(sectionStart > 0, "Section must be present");
+  const freshnessPos = rendered.indexOf("Freshness:", sectionStart);
+  assert.ok(freshnessPos > 0, "Freshness must appear via tier 2 for Citrus profile");
+  // Tier 2 priority (50) always beats tier 3 spread (max 5 on a 0–5 scale)
+  for (const label of ["Sweetness:", "Warmth:", "Intensity:", "Versatility:"]) {
+    const pos = rendered.indexOf(label, sectionStart);
+    if (pos > 0) assert.ok(freshnessPos < pos, `Freshness (tier 2, priority 50) must appear before ${label} (tier 3, max 5)`);
+  }
+});
+
+test("T-C5-K-R1-04 — warm family profile → warmth prioritized via tier 2", () => {
+  const retrieval = { fragrances: mkcCatalogue.slice(0, 2), articles: [] };
+  const plan = { ...BASE_PLAN, requiresComparison: true, nextIntent: "comparison" as const };
+  const state = { ...EMPTY_STATE, profile: makeProfile({ preferredFamilies: { value: ["Oriental"], confidence: "HIGH" } }) };
+  const ctx = buildContext(retrieval, state, plan);
+  const rendered = renderContext(ctx);
+  const sectionStart = rendered.indexOf("COMPARISON INTELLIGENCE FOCUS");
+  assert.ok(sectionStart > 0, "Section must be present");
+  const warmthPos = rendered.indexOf("Warmth:", sectionStart);
+  assert.ok(warmthPos > 0, "Warmth must appear via tier 2 for Oriental profile");
+  for (const label of ["Freshness:", "Sweetness:", "Intensity:", "Versatility:"]) {
+    const pos = rendered.indexOf(label, sectionStart);
+    if (pos > 0) assert.ok(warmthPos < pos, `Warmth (tier 2) must appear before ${label} (tier 3)`);
+  }
+});
+
+test("T-C5-K-R1-05 — gourmand family profile → sweetness prioritized via tier 2", () => {
+  const retrieval = { fragrances: mkcCatalogue.slice(0, 2), articles: [] };
+  const plan = { ...BASE_PLAN, requiresComparison: true, nextIntent: "comparison" as const };
+  const state = { ...EMPTY_STATE, profile: makeProfile({ preferredFamilies: { value: ["Gourmand"], confidence: "HIGH" } }) };
+  const ctx = buildContext(retrieval, state, plan);
+  const rendered = renderContext(ctx);
+  const sectionStart = rendered.indexOf("COMPARISON INTELLIGENCE FOCUS");
+  assert.ok(sectionStart > 0, "Section must be present");
+  const sweetnessPos = rendered.indexOf("Sweetness:", sectionStart);
+  assert.ok(sweetnessPos > 0, "Sweetness must appear via tier 2 for Gourmand profile");
+  for (const label of ["Freshness:", "Warmth:", "Intensity:", "Versatility:"]) {
+    const pos = rendered.indexOf(label, sectionStart);
+    if (pos > 0) assert.ok(sweetnessPos < pos, `Sweetness (tier 2) must appear before ${label} (tier 3)`);
+  }
+});
+
+test("T-C5-K-R1-06 — explicit dimension overrides conflicting profile preference (tier 1 > tier 2)", () => {
+  const retrieval = { fragrances: mkcCatalogue.slice(0, 2), articles: [] };
+  const plan = { ...BASE_PLAN, requiresComparison: true, nextIntent: "comparison" as const };
+  // Profile implies warmth (Oriental/Amber) — but guest explicitly asks about freshness
+  const state = { ...EMPTY_STATE, profile: makeProfile({ preferredFamilies: { value: ["Oriental", "Amber"], confidence: "HIGH" } }) };
+  const ctx = buildContext(retrieval, state, plan, undefined, null, null, null, "which has more freshness?");
+  const rendered = renderContext(ctx);
+  const sectionStart = rendered.indexOf("COMPARISON INTELLIGENCE FOCUS");
+  assert.ok(sectionStart > 0, "Section must be present");
+  const freshnessPos = rendered.indexOf("Freshness:", sectionStart);
+  const warmthPos    = rendered.indexOf("Warmth:",    sectionStart);
+  assert.ok(freshnessPos > 0, "Freshness (tier 1) must appear when guest asks explicitly");
+  if (warmthPos > 0) {
+    assert.ok(freshnessPos < warmthPos,
+      "Freshness (tier 1, priority 100) must appear before Warmth (tier 2, priority 50)");
+  }
+});
+
+test("T-C5-K-R1-07 — non-mappable family profile (Floral) falls back to spread ordering (tier 3)", () => {
+  const retrieval = { fragrances: mkcCatalogue.slice(0, 2), articles: [] };
+  const plan = { ...BASE_PLAN, requiresComparison: true, nextIntent: "comparison" as const };
+  // Floral is not in FAMILY_TO_DIM — tier 2 produces null, falls to spread (tier 3)
+  const state = { ...EMPTY_STATE, profile: makeProfile({ preferredFamilies: { value: ["Floral"], confidence: "HIGH" } }) };
+  const ctx = buildContext(retrieval, state, plan);
+  const rendered = renderContext(ctx);
+  assert.ok(rendered.includes("COMPARISON INTELLIGENCE FOCUS"),
+    "Section must be present even when profile family has no dimension mapping");
+  assert.ok(rendered.includes("Key dimensions"),
+    "Section must contain dimension labels when falling back to tier 3");
+});
+
+test("T-C5-K-R1-08 — undefined profile preserves tier 3 spread behavior", () => {
+  const retrieval = { fragrances: mkcCatalogue.slice(0, 2), articles: [] };
+  const plan = { ...BASE_PLAN, requiresComparison: true, nextIntent: "comparison" as const };
+  const ctx = buildContext(retrieval, EMPTY_STATE, plan);
+  const rendered = renderContext(ctx);
+  assert.ok(rendered.includes("COMPARISON INTELLIGENCE FOCUS"),
+    "Section must be present with undefined profile");
+  assert.ok(rendered.includes("Key dimensions"),
+    "Section must contain dimension labels with undefined profile");
+});
+
+test("T-C5-K-R1-09 — preference mapping does not change candidate presence in context", () => {
+  const candidates = mkcCatalogue.slice(0, 2);
+  const retrieval  = { fragrances: candidates, articles: [] };
+  const plan = { ...BASE_PLAN, requiresComparison: true, nextIntent: "comparison" as const };
+  const stateNoProfile   = EMPTY_STATE;
+  const stateWithProfile = { ...EMPTY_STATE, profile: makeProfile({ preferredFamilies: { value: ["Citrus"], confidence: "HIGH" } }) };
+  const renderedA = renderContext(buildContext(retrieval, stateNoProfile,   plan));
+  const renderedB = renderContext(buildContext(retrieval, stateWithProfile, plan));
+  for (const f of candidates) {
+    assert.ok(renderedA.includes(f.name), `${f.name} must appear without profile`);
+    assert.ok(renderedB.includes(f.name), `${f.name} must appear with Citrus profile`);
+  }
+  // Tier 2 fires for Citrus → freshness should appear first in B's comparison section
+  const sectionStartB = renderedB.indexOf("COMPARISON INTELLIGENCE FOCUS");
+  assert.ok(renderedB.indexOf("Freshness:", sectionStartB) > 0,
+    "Freshness should be prioritized via tier 2 in context with Citrus profile");
+  // Slug appears the same number of times (candidate integrity)
+  const slugCounts = (rendered: string) =>
+    candidates.reduce<Record<string, number>>((acc, f) => {
+      acc[f.slug] = (rendered.match(new RegExp(f.slug, "g")) ?? []).length;
+      return acc;
+    }, {});
+  const countsA = slugCounts(renderedA);
+  const countsB = slugCounts(renderedB);
+  for (const f of candidates) {
+    assert.equal(countsA[f.slug], countsB[f.slug],
+      `Candidate ${f.slug} must appear the same number of times regardless of profile`);
+  }
+});
+
+test("T-C5-K-R1-10 — zero-note fragrance in comparison: section shows intelligence scores only", () => {
+  const zeroNote = mkcCatalogue.find(
+    (k) => k.notes.top.length === 0 && k.notes.heart.length === 0 && k.notes.base.length === 0
+  );
+  const f0 = zeroNote ?? mkcCatalogue[0];
+  const f1 = mkcCatalogue.find((k) => k.slug !== f0.slug) ?? mkcCatalogue[1];
+  const retrieval = { fragrances: [f0, f1], articles: [] };
+  const plan = { ...BASE_PLAN, requiresComparison: true, nextIntent: "comparison" as const };
+  const ctx = buildContext(retrieval, EMPTY_STATE, plan);
+  const rendered = renderContext(ctx);
+  const sectionStart = rendered.indexOf("COMPARISON INTELLIGENCE FOCUS");
+  assert.ok(sectionStart > 0, "Section must be present for zero-note fragrance comparison");
+  const sectionEnd = rendered.indexOf("\n===", sectionStart + 1);
+  const sectionContent = sectionEnd > 0 ? rendered.slice(sectionStart, sectionEnd) : rendered.slice(sectionStart);
+  // Comparison section must contain at least one intelligence dimension
+  const hasDim = ["Sweetness:", "Freshness:", "Warmth:", "Intensity:", "Versatility:"]
+    .some((l) => sectionContent.includes(l));
+  assert.ok(hasDim, "Comparison section must contain intelligence dimension labels");
+  // Must not contain product markers or note descriptions (evidence-lock)
+  assert.ok(!sectionContent.includes("[PRODUCT:"), "Comparison section must not embed product markers");
+  assert.ok(!sectionContent.toLowerCase().includes("notes:"), "Comparison section must not contain note descriptions");
+});
+
 // ── EP-AI-C5: Pool Exhaustion (T-C5-X) ───────────────────────────────────────
 
 console.log("\n── C5-X. Pool Exhaustion ────────────────────────────────────────");
