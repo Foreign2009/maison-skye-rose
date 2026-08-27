@@ -18,7 +18,7 @@ import type { UnifiedCustomerProfile } from "../customer/profile/UnifiedCustomer
 import type { SearchIndex } from "../search/types";
 import type { FragranceKnowledge } from "../mkc/types";
 import type { AcademyArticle } from "../academy/types";
-import type { ConversationContext, ConversationState, ConversationProfile, ConsultationRole, ExplorationTarget } from "./types";
+import type { ConversationContext, ConversationState, ConversationProfile, ConsultationRole, ExplorationTarget, ConfidenceClassification } from "./types";
 import type { ResolvedIntent } from "./intentResolver";
 import type { RetrievalContext, AnchoredMeta } from "./contextBuilder";
 import { planCollection } from "./collectionPlanner";
@@ -420,9 +420,27 @@ const VARIETY_SIGNALS = [
   "none of those", "none of these",
 ];
 
+// ── Confidence classification (EP-AI-C5) ──────────────────────────────────────
+// Classifies each candidate by how strongly its fit score reflects known signals.
+// Separate from profile completeness — this is candidate-specific, not session-wide.
+// Thresholds: STRONG_MATCH ≥ 0.35, GOOD_MATCH ≥ 0.10, EXPLORATORY < 0.10.
+
+function computeConfidenceClassifications(
+  candidates: FragranceKnowledge[],
+  signals:    FitSignals,
+  profile:    ConversationProfile | undefined,
+): ConfidenceClassification[] {
+  return candidates.map((k) => {
+    const fit = scoreFit(k, signals, profile);
+    if (fit >= 0.35) return "STRONG_MATCH";
+    if (fit >= 0.10) return "GOOD_MATCH";
+    return "EXPLORATORY";
+  });
+}
+
 // ── Exported scoring helpers (EP-AI-C2-R1) ────────────────────────────────────
 // Exported for deterministic evaluation harness — do not inline.
-export { scoreFit, applyFamilyDiversity, applySameBrandPenalty, assignRecommendationRoles };
+export { scoreFit, applyFamilyDiversity, applySameBrandPenalty, assignRecommendationRoles, computeConfidenceClassifications };
 export type { FitSignals };
 
 // ── Gender constraint helpers (EP-AI-C1) ─────────────────────────────────────
@@ -899,7 +917,16 @@ export function planRetrieval(
   // the final ranked shortlist rather than any intermediate order.
   const fragranceRoles = assignRecommendationRoles(fragrances, fitSignals, profile);
 
-  return { fragrances, articles, collectionName, fragranceRoles, anchoredMeta };
+  // ── Confidence classifications (EP-AI-C5) ────────────────────────────────────
+  // Derived from fit score against known signals for each final candidate.
+  const confidenceClassifications = computeConfidenceClassifications(fragrances, fitSignals, profile);
+
+  // ── Pool exhaustion detection (EP-AI-C5) ─────────────────────────────────────
+  // Fires when fewer than 2 eligible candidates remain after all constraints.
+  // Signals context builder to instruct the LLM to handle it conversationally.
+  const poolExhausted = fragrances.length < 2;
+
+  return { fragrances, articles, collectionName, fragranceRoles, anchoredMeta, confidenceClassifications, poolExhausted };
 }
 
 /**

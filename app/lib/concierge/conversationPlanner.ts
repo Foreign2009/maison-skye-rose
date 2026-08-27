@@ -9,6 +9,7 @@
 
 import type { ConversationIntent, ConversationState } from "./types";
 import { NONE_OF_THOSE_SIGNALS } from "./rejectionDetector";
+import { computeProfileCompleteness } from "./profileCompletenessEngine";
 
 // ── Plan types ────────────────────────────────────────────────────────────────
 
@@ -24,13 +25,15 @@ export type ConversationAction =
   | "anchored_refinement";
 
 export interface ConversationPlan {
-  action:                ConversationAction;
-  reason:                string;
-  requiresRetrieval:     boolean;
-  requiresComparison:    boolean;
-  requiresClarification: boolean;
-  reuseRecommendations:  boolean;
-  nextIntent:            ConversationIntent;
+  action:                      ConversationAction;
+  reason:                      string;
+  requiresRetrieval:           boolean;
+  requiresComparison:          boolean;
+  requiresClarification:       boolean;
+  reuseRecommendations:        boolean;
+  nextIntent:                  ConversationIntent;
+  // EP-AI-C5: set when question fatigue gate fires — hybrid recommend + one question
+  consultationReadinessQuestion?: string;
 }
 
 // ── Pattern sets ──────────────────────────────────────────────────────────────
@@ -320,6 +323,32 @@ export function planConversation(
       requiresClarification: true,
       reuseRecommendations:  false,
       nextIntent:            "clarification",
+    };
+  }
+
+  // ── 6.5 Question fatigue gate (EP-AI-C5) ────────────────────────────────────
+  // After 2 explicit clarification turns, stop withholding recommendations and
+  // instead use a hybrid approach: retrieve candidates AND embed one targeted
+  // question in context. Profile must be LOW completeness and the message must
+  // not carry enough signal to skip the gate entirely.
+  // NOTE: isUnclear already returned "clarification" above if this is turn 1
+  // with no signals — this gate only fires on subsequent low-signal turns.
+  const clarificationCount = state.clarificationTurnCount ?? 0;
+  const readiness          = hasTurns ? computeProfileCompleteness(state.profile) : null;
+  const profileIsLow       = readiness?.level === "LOW";
+  const questionFatigueGate = hasTurns && !hasPreviousRecs && profileIsLow &&
+    !hasDiscoverySignal(q) && clarificationCount < 2;
+
+  if (questionFatigueGate && readiness?.clarificationFocus) {
+    return {
+      action:                      "new_search",
+      reason:                      "Profile still LOW — hybrid: retrieve candidates and include one targeted question",
+      requiresRetrieval:           true,
+      requiresComparison:          false,
+      requiresClarification:       false,
+      reuseRecommendations:        false,
+      nextIntent:                  "general_discovery",
+      consultationReadinessQuestion: readiness.clarificationFocus,
     };
   }
 

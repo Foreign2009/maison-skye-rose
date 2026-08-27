@@ -53,7 +53,15 @@ export interface ConversationState {
   profile?:                 ConversationProfile;
   // Living consultation plan — evolves with each refinement, never persisted (EP18-P1)
   consultationPlan?:        ConsultationPlan;
+  // EP-AI-C5: consultation intelligence tracking — session-scoped, never persisted
+  clarificationTurnCount?:  number;  // how many explicit clarification turns have occurred
 }
+
+// ── Candidate confidence classification (EP-AI-C5) ────────────────────────────
+// How strongly a specific fragrance matches the signals we actually know.
+// Derived from fit score in retrievalPlanner — completely separate from
+// profile completeness (how much information we know about the guest).
+export type ConfidenceClassification = "STRONG_MATCH" | "GOOD_MATCH" | "EXPLORATORY";
 
 // ── Conversation profile (EP17-P2) ────────────────────────────────────────────
 
@@ -161,12 +169,13 @@ export interface FormattedArticle {
 }
 
 export interface SessionUpdates {
-  selectedSlug?:    string;
-  comparisonSlugs?: string[];
-  lastArticleSlug?: string;
-  lastCollection?:  string;
-  profile?:          ConversationProfile;
-  consultationPlan?: ConsultationPlan;
+  selectedSlug?:           string;
+  comparisonSlugs?:        string[];
+  lastArticleSlug?:        string;
+  lastCollection?:         string;
+  profile?:                ConversationProfile;
+  consultationPlan?:       ConsultationPlan;
+  clarificationTurnCount?: number;  // EP-AI-C5
 }
 
 export interface FormattedResponse {

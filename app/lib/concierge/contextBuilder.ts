@@ -11,7 +11,7 @@
 
 import type { FragranceKnowledge } from "../mkc/types";
 import type { AcademyArticle }     from "../academy/types";
-import type { ConversationState, ConversationIntent, ConversationProfile, RefinementState, ExplorationTarget } from "./types";
+import type { ConversationState, ConversationIntent, ConversationProfile, RefinementState, ExplorationTarget, ConfidenceClassification } from "./types";
 import type { ConversationPlan }   from "./conversationPlanner";
 import type { ConciergeCustomerContext } from "./customerAdapter";
 import { getCurrentSeason }                         from "../discovery";
@@ -33,11 +33,13 @@ export interface AnchoredMeta {
 }
 
 export interface RetrievalContext {
-  fragrances:       FragranceKnowledge[];
-  articles:         AcademyArticle[];
-  collectionName?:  string;
-  fragranceRoles?:  string[];  // deterministic role labels (EP-AI-C2-R1)
-  anchoredMeta?:    AnchoredMeta;  // EP-AI-C4: anchored refinement metadata
+  fragrances:                FragranceKnowledge[];
+  articles:                  AcademyArticle[];
+  collectionName?:           string;
+  fragranceRoles?:           string[];             // deterministic role labels (EP-AI-C2-R1)
+  anchoredMeta?:             AnchoredMeta;         // EP-AI-C4: anchored refinement metadata
+  confidenceClassifications?: ConfidenceClassification[];  // EP-AI-C5: per-candidate fit confidence
+  poolExhausted?:            boolean;              // EP-AI-C5: fewer than 2 eligible candidates after all filters
 }
 
 export interface PromptSection {
@@ -160,9 +162,10 @@ function buildRelationshipBlock(k: FragranceKnowledge): string | null {
 }
 
 function buildFragranceSection(
-  fragrances: FragranceKnowledge[],
-  reuseMode: boolean,
-  fragranceRoles?: string[],
+  fragrances:                FragranceKnowledge[],
+  reuseMode:                 boolean,
+  fragranceRoles?:           string[],
+  confidenceClassifications?: ConfidenceClassification[],
 ): PromptSection {
   if (fragrances.length === 0) return { label: "", content: "" };
 
@@ -172,10 +175,11 @@ function buildFragranceSection(
   // Description → Mood → Wardrobe Role → Vibe → Occasions → Notes → Intelligence
   const content = fragrances
     .map((k, i) => {
-      const role = fragranceRoles?.[i];
-      const header = role
-        ? `${i + 1}. ${k.name} [slug: ${k.slug}] — [${role}]`
-        : `${i + 1}. ${k.name} [slug: ${k.slug}]`;
+      const role       = fragranceRoles?.[i];
+      const confidence = confidenceClassifications?.[i];
+      const roleTag    = role ? ` — [${role}]` : "";
+      const confTag    = confidence ? ` [${confidence}]` : "";
+      const header     = `${i + 1}. ${k.name} [slug: ${k.slug}]${roleTag}${confTag}`;
       const lines: string[] = [header];
       const quality = getKnowledgeQuality(k.slug);
 
@@ -663,6 +667,145 @@ function buildCustomerAwarenessSection(
   return { label: "CUSTOMER AWARENESS", content: parts.join("\n") };
 }
 
+// ── EP-AI-C5 section builders ─────────────────────────────────────────────────
+
+// Rejected products: complete list (no cap), compact representation.
+// Purpose: prose suppression — instructs the LLM never to recommend these.
+// The hard filter in retrievalPlanner is the authoritative exclusion gate;
+// this section adds prose-level suppression for the LLM.
+function buildRejectedProductsSection(profile: ConversationProfile | undefined): PromptSection {
+  const slugs = profile?.rejectedSlugs ?? [];
+  if (slugs.length === 0) return { label: "", content: "" };
+
+  const lines = slugs.map((slug) => {
+    const name = getKnowledgeSummary(slug)?.name;
+    return name ? `• ${name} (${slug})` : `• ${slug}`;
+  });
+
+  return {
+    label:   "REJECTED PRODUCTS",
+    content: `Do not recommend any of the following. They were explicitly declined by the guest this session.\n${lines.join("\n")}`,
+  };
+}
+
+// Consultation stage: derived from existing state — no new persistent field.
+function deriveConsultationStage(state: ConversationState): string {
+  if (state.turns.length === 0) return "Starting consultation";
+  if (state.consultationPlan && (state.consultationPlan.roles.length > 0)) {
+    return "Collection consultation in progress";
+  }
+  if ((state.lastRecommendationSlugs ?? []).length > 0) return "Following up on recommendations";
+  return "Exploring preferences";
+}
+
+function buildConsultationStageSection(state: ConversationState): PromptSection {
+  return {
+    label:   "CONSULTATION STAGE",
+    content: deriveConsultationStage(state),
+  };
+}
+
+// Consultation readiness: when the question fatigue gate fires, embed one
+// targeted question as a directive so the LLM appends it after recommending.
+function buildConsultationReadinessSection(plan: ConversationPlan): PromptSection {
+  if (!plan.consultationReadinessQuestion) return { label: "", content: "" };
+  return {
+    label:   "CLARIFICATION FOCUS",
+    content: `After presenting your recommendation(s), end with this question (adapted naturally to your voice):\n"${plan.consultationReadinessQuestion}"`,
+  };
+}
+
+// Pool exhaustion: fewer than 2 valid candidates after all constraint filters.
+function buildPoolExhaustionSection(
+  retrieval: RetrievalContext,
+  profile:   ConversationProfile | undefined,
+): PromptSection {
+  if (!retrieval.poolExhausted) return { label: "", content: "" };
+
+  const avoidedFamilies = (profile?.avoidedFamilies?.value ?? []);
+  const preferredGender = profile?.preferredGender?.value;
+  const hasRejections   = (profile?.rejectedSlugs ?? []).length > 0;
+
+  const constraintHints: string[] = [];
+  if (avoidedFamilies.length > 0) constraintHints.push(`avoided families: ${avoidedFamilies.join(", ")}`);
+  if (preferredGender)             constraintHints.push(`gender preference: ${preferredGender}`);
+  if (hasRejections)               constraintHints.push("previously declined fragrances");
+
+  const constraintDesc = constraintHints.length > 0
+    ? `Likely constraint(s): ${constraintHints.join("; ")}.`
+    : "";
+
+  return {
+    label:   "POOL EXHAUSTION",
+    content: [
+      "The current constraints have narrowed the catalogue to fewer than 2 eligible candidates.",
+      constraintDesc,
+      "Acknowledge this honestly to the guest.",
+      "Identify which single constraint caused the narrowing and ask their permission to relax it — for example: \"If you're open to exploring outside [family], I can open up a wider selection.\"",
+      "Also mention the Scent Finder quiz (/quiz) as an alternative way to discover options.",
+      "Do not automatically relax any constraint without the guest's explicit agreement.",
+    ].filter(Boolean).join("\n"),
+  };
+}
+
+// Comparison intelligence: preference-aware priority so the most relevant
+// intelligence differences appear first in the comparison prompt.
+// Priority: (1) guest explicitly asked about a dimension, (2) dimensions with
+// the largest spread across the candidates, (3) all remaining dimensions.
+function buildComparisonIntelligenceSection(
+  fragrances:  FragranceKnowledge[],
+  rawMessage:  string | undefined,
+  profile:     ConversationProfile | undefined,
+  isComparison: boolean,
+): PromptSection {
+  if (!isComparison || fragrances.length < 2) return { label: "", content: "" };
+
+  type Dim = { key: string; label: string };
+  const DIMS: Dim[] = [
+    { key: "sweetness",   label: "Sweetness"   },
+    { key: "freshness",   label: "Freshness"   },
+    { key: "warmth",      label: "Warmth"      },
+    { key: "intensity",   label: "Intensity"   },
+    { key: "versatility", label: "Versatility" },
+  ];
+
+  // Detect which dimension the guest explicitly asked about in their message
+  const msgLower = (rawMessage ?? "").toLowerCase();
+  const explicitDim = DIMS.find((d) => msgLower.includes(d.key.toLowerCase()))?.key ?? null;
+
+  // Compute spread for each dimension across the two primary fragrances
+  const f0 = fragrances[0];
+  const f1 = fragrances[1];
+  type ScoredDim = Dim & { spread: number; priority: number };
+  const scored: ScoredDim[] = DIMS.map((d) => {
+    const v0 = (f0 as Record<string, unknown>)[d.key];
+    const v1 = (f1 as Record<string, unknown>)[d.key];
+    const spread = typeof v0 === "number" && typeof v1 === "number" ? Math.abs(v0 - v1) : 0;
+    // Priority: explicit guest question first, then spread
+    const priority = d.key === explicitDim ? 100 : spread;
+    return { ...d, spread, priority };
+  });
+
+  scored.sort((a, b) => b.priority - a.priority);
+
+  const lines = scored.slice(0, 3).map((d) => {
+    const vals = fragrances.slice(0, 2).map((f) => {
+      const v = (f as Record<string, unknown>)[d.key];
+      return `${f.name}: ${typeof v === "number" ? `${v}/5` : "—"}`;
+    });
+    return `${d.label}: ${vals.join(" vs ")}`;
+  });
+
+  return {
+    label:   "COMPARISON INTELLIGENCE FOCUS",
+    content: `Key dimensions for this comparison (most relevant first):\n${lines.join("\n")}\nAddress the guest's explicit question about these dimensions first.`,
+  };
+}
+
+// ── Modified buildFragranceSection: embeds confidence classification tags ─────
+// STRONG_MATCH / GOOD_MATCH / EXPLORATORY is injected after the role tag so
+// the LLM can calibrate its confidence language without needing to compute fit.
+
 // ── Public API ────────────────────────────────────────────────────────────────
 
 export function buildContext(
@@ -673,22 +816,38 @@ export function buildContext(
   refinement?:        RefinementState | null,
   explorationTarget?: ExplorationTarget | null,
   customerCtx?:       ConciergeCustomerContext | null,
+  rawMessage?:        string,   // EP-AI-C5: used for preference-aware comparison intelligence
 ): BuiltContext {
   const sections: PromptSection[] = [
     buildSeasonalContextSection(),
+    buildConsultationStageSection(state),                                        // EP-AI-C5
     buildConversationContextSection(state),
     buildProfileSection(state.profile),
+    buildRejectedProductsSection(state.profile),                                // EP-AI-C5
     customerCtx ? buildCustomerAwarenessSection(customerCtx) : { label: "", content: "" },
     buildWardrobeSection(state.profile),
     buildCollectionSection(state.profile),
-    buildConsultationPlanSection(state, refinement, explorationTarget),        // EP18-P1/P2
+    buildConsultationPlanSection(state, refinement, explorationTarget),         // EP18-P1/P2
     buildGoalSection(plan, state, effectiveIntent),
     buildPreviousRecommendationsSection(state, retrieval.fragrances),
-    buildFragranceSection(retrieval.fragrances, plan.reuseRecommendations, retrieval.fragranceRoles),
+    buildFragranceSection(
+      retrieval.fragrances,
+      plan.reuseRecommendations,
+      retrieval.fragranceRoles,
+      retrieval.confidenceClassifications,                                       // EP-AI-C5
+    ),
     retrieval.collectionName
       ? { label: "FEATURED COLLECTION", content: retrieval.collectionName }
       : { label: "", content: "" },
     buildArticleSection(retrieval.articles),
+    buildComparisonIntelligenceSection(                                          // EP-AI-C5
+      retrieval.fragrances,
+      rawMessage,
+      state.profile,
+      plan.requiresComparison,
+    ),
+    buildPoolExhaustionSection(retrieval, state.profile),                       // EP-AI-C5
+    buildConsultationReadinessSection(plan),                                    // EP-AI-C5
     buildInstructionsSection(plan, state, effectiveIntent, refinement, explorationTarget, retrieval.anchoredMeta), // EP18-P1/P2 / EP-AI-C4
   ].filter((s) => s.label && s.content);
 

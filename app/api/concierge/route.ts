@@ -244,7 +244,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       profile: updatedProfile,
       ...(contextSelectedSlug ? { selectedSlug: contextSelectedSlug } : {}),
     };
-    const builtContext     = buildContext(retrieval, stateForContext, plan, effectiveIntent, activeRefinement, explorationTarget, customerCtx);
+    const builtContext     = buildContext(retrieval, stateForContext, plan, effectiveIntent, activeRefinement, explorationTarget, customerCtx, message);
     const contextContent = renderContext(builtContext);
 
     // 4. Build system prompt
@@ -267,7 +267,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     const content = safe ? rawContent : SAFE_FALLBACK;
 
     // 8. Plan and format response
-    const planned   = planResponse(content, effectiveIntent, retrieval, plan);
+    const planned   = planResponse(content, effectiveIntent, retrieval, plan, updatedProfile);
     const formatted = formatResponse(planned);
 
     // 8b. Build or evolve the consultation plan (EP18-P1/P2)
@@ -291,6 +291,17 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     //   anchored_refinement → anchor slug (the fragrance the guest referenced)
     //   ordinal resolved    → the specifically referenced fragrance
     //   otherwise           → first validated recommendation from this turn
+    // EP-AI-C5: track how many explicit clarification turns have occurred this session.
+    // Increment when: (a) plan.action === "clarification" (pure clarification turn),
+    // or (b) plan.consultationReadinessQuestion is set (hybrid fatigue-gate turn).
+    // Carry forward when: neither applies.
+    const prevClarificationCount = state.clarificationTurnCount ?? 0;
+    const isExplicitClarificationTurn =
+      plan.action === "clarification" || !!plan.consultationReadinessQuestion;
+    const nextClarificationCount = isExplicitClarificationTurn
+      ? prevClarificationCount + 1
+      : prevClarificationCount;
+
     const sessionUpdates: SessionUpdates = {
       selectedSlug: plan.action === "anchored_refinement"
         ? (anchorSlug ?? planned.recommendedSlugs[0])
@@ -300,8 +311,9 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       comparisonSlugs: plan.requiresComparison
         ? planned.recommendedSlugs.slice(0, 2)
         : state.comparisonSlugs,
-      profile:         updatedProfile,
+      profile:               updatedProfile,
       consultationPlan,
+      clarificationTurnCount: nextClarificationCount,  // EP-AI-C5
     };
 
     const response: FormattedResponse = { ...formatted, sessionUpdates };

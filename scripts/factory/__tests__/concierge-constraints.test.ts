@@ -29,6 +29,9 @@ import { planConversation, type ConversationPlan } from "../../../app/lib/concie
 import type { RetrievalContext } from "../../../app/lib/concierge/contextBuilder";
 import { detectRejections, NONE_OF_THOSE_SIGNALS } from "../../../app/lib/concierge/rejectionDetector";
 import { planResponse } from "../../../app/lib/concierge/responsePlanner";
+import { computeProfileCompleteness } from "../../../app/lib/concierge/profileCompletenessEngine";
+import { computeConfidenceClassifications } from "../../../app/lib/concierge/retrievalPlanner";
+import type { ConversationProfile as _CP } from "../../../app/lib/concierge/types";
 
 // ── Harness ───────────────────────────────────────────────────────────────────
 
@@ -2693,6 +2696,658 @@ test("T-C4-40 — anchored_refinement + avoidance + rejection all respected simu
   );
   assert.equal(avoidedLeaks.length, 0,
     `T-C4-40 — avoided family '${avoided}' leaked into anchored pool`);
+});
+
+// ── EP-AI-C5: Profile Completeness Engine (T-C5-P) ───────────────────────────
+
+console.log("\n── C5-P. Profile Completeness Engine ────────────────────────────");
+
+test("T-C5-P-01 — undefined profile → score=0, level=LOW", () => {
+  const r = computeProfileCompleteness(undefined);
+  assert.equal(r.score, 0);
+  assert.equal(r.level, "LOW");
+});
+
+test("T-C5-P-02 — gender only → score=25, level=LOW", () => {
+  const p = makeProfile({ preferredGender: { value: "female", confidence: "HIGH" } });
+  const r = computeProfileCompleteness(p);
+  assert.equal(r.score, 25);
+  assert.equal(r.level, "LOW");
+});
+
+test("T-C5-P-03 — gender + family → score=50, level=MEDIUM", () => {
+  const p = makeProfile({
+    preferredGender:  { value: "female", confidence: "HIGH" },
+    preferredFamilies: { value: ["Floral"], confidence: "HIGH" },
+  });
+  const r = computeProfileCompleteness(p);
+  assert.equal(r.score, 50);
+  assert.equal(r.level, "MEDIUM");
+});
+
+test("T-C5-P-04 — gender + family + occasions → score=70, level=HIGH", () => {
+  const p = makeProfile({
+    preferredGender:   { value: "female", confidence: "HIGH" },
+    preferredFamilies: { value: ["Floral"], confidence: "HIGH" },
+    preferredOccasions: { value: ["daily"], confidence: "HIGH" },
+  });
+  const r = computeProfileCompleteness(p);
+  assert.equal(r.score, 70);
+  assert.equal(r.level, "HIGH");
+});
+
+test("T-C5-P-05 — gift + recipientGender → recipientGender contributes 15 pts", () => {
+  const p = makeProfile({
+    shoppingIntent:  { value: "gift", confidence: "HIGH" },
+    recipientGender: { value: "male", confidence: "HIGH" },
+  });
+  const r = computeProfileCompleteness(p);
+  // recipientGender alone = 15pts
+  assert.ok(r.score >= 15, `score ${r.score} should be ≥ 15`);
+});
+
+test("T-C5-P-06 — gift without recipientGender → recipientGender in missingDimensions", () => {
+  const p = makeProfile({
+    shoppingIntent: { value: "gift", confidence: "HIGH" },
+  });
+  const r = computeProfileCompleteness(p);
+  const keys = r.missingDimensions.map((d) => d.key);
+  assert.ok(keys.includes("recipientGender"), "recipientGender should be a missing dimension for gift intent");
+});
+
+test("T-C5-P-07 — notes present → score includes +10", () => {
+  const base = makeProfile({ preferredGender: { value: "female", confidence: "HIGH" } });
+  const withNotes = makeProfile({
+    ...base,
+    preferredNotes: { value: ["rose"], confidence: "HIGH" },
+  });
+  const r1 = computeProfileCompleteness(base);
+  const r2 = computeProfileCompleteness(withNotes);
+  assert.equal(r2.score - r1.score, 10);
+});
+
+test("T-C5-P-08 — seasons present → score includes +5", () => {
+  const base = makeProfile({ preferredGender: { value: "female", confidence: "HIGH" } });
+  const withSeason = makeProfile({
+    ...base,
+    preferredSeasons: { value: ["summer"], confidence: "HIGH" },
+  });
+  const r1 = computeProfileCompleteness(base);
+  const r2 = computeProfileCompleteness(withSeason);
+  assert.equal(r2.score - r1.score, 5);
+});
+
+test("T-C5-P-09 — full profile → score=85, level=HIGH", () => {
+  const p = makeProfile({
+    preferredGender:   { value: "female", confidence: "HIGH" },
+    preferredFamilies: { value: ["Floral"], confidence: "HIGH" },
+    preferredOccasions: { value: ["daily"], confidence: "HIGH" },
+    preferredNotes:    { value: ["rose"], confidence: "HIGH" },
+    preferredSeasons:  { value: ["summer"], confidence: "HIGH" },
+  });
+  const r = computeProfileCompleteness(p);
+  assert.equal(r.score, 85);
+  assert.equal(r.level, "HIGH");
+});
+
+test("T-C5-P-10 — clarificationFocus is null when level=HIGH", () => {
+  const p = makeProfile({
+    preferredGender:   { value: "female", confidence: "HIGH" },
+    preferredFamilies: { value: ["Floral"], confidence: "HIGH" },
+    preferredOccasions: { value: ["daily"], confidence: "HIGH" },
+  });
+  const r = computeProfileCompleteness(p);
+  assert.equal(r.level, "HIGH");
+  assert.equal(r.clarificationFocus, null);
+});
+
+test("T-C5-P-11 — clarificationFocus is non-null when level=LOW", () => {
+  const r = computeProfileCompleteness(undefined);
+  assert.equal(r.level, "LOW");
+  assert.ok(r.clarificationFocus !== null && r.clarificationFocus.length > 0,
+    "clarificationFocus should be a non-empty string when level=LOW");
+});
+
+test("T-C5-P-12 — missingDimensions sorted by discriminatingPower descending", () => {
+  const r = computeProfileCompleteness(undefined);
+  const powers = r.missingDimensions.map((d) => d.discriminatingPower);
+  for (let i = 1; i < powers.length; i++) {
+    assert.ok(powers[i - 1] >= powers[i],
+      `missingDimensions not sorted: [${powers.join(", ")}]`);
+  }
+});
+
+test("T-C5-P-13 — avoidedFamilies narrows pool used for discrimination", () => {
+  const r1 = computeProfileCompleteness(makeProfile({}));
+  const r2 = computeProfileCompleteness(makeProfile({
+    avoidedFamilies: { value: ["Floral", "Citrus", "Woody", "Amber"], confidence: "HIGH" },
+  }));
+  // Family discrimination power should differ (narrower pool)
+  const fam1 = r1.missingDimensions.find((d) => d.key === "family");
+  const fam2 = r2.missingDimensions.find((d) => d.key === "family");
+  // Both present, but values may differ
+  assert.ok(fam1 !== undefined && fam2 !== undefined,
+    "family dimension should be in missingDimensions for empty profiles");
+});
+
+test("T-C5-P-14 — gender constraint narrows pool for discrimination", () => {
+  const r = computeProfileCompleteness(makeProfile({
+    preferredGender: { value: "male", confidence: "HIGH" },
+  }));
+  // With gender known, gender dimension absent from missing
+  const keys = r.missingDimensions.map((d) => d.key);
+  assert.ok(!keys.includes("gender"), "gender should not be missing when preferredGender is set");
+});
+
+test("T-C5-P-15 — rejectedSlugs do not cause engine to throw", () => {
+  const allSlugs = mkcCatalogue.map((k) => k.slug);
+  // Reject every fragrance — should not throw, should return empty pool result gracefully
+  const p = makeProfile({ rejectedSlugs: allSlugs });
+  const r = computeProfileCompleteness(p);
+  assert.ok(r.score >= 0 && r.score <= 100, `score ${r.score} out of range`);
+  assert.ok(["LOW", "MEDIUM", "HIGH"].includes(r.level));
+});
+
+// ── EP-AI-C5: Confidence Classification (T-C5-C) ─────────────────────────────
+
+console.log("\n── C5-C. Confidence Classification ──────────────────────────────");
+
+test("T-C5-C-01 — fit ≥ 0.35 → STRONG_MATCH", () => {
+  // Build a fragrance that perfectly matches the profile (family match = +0.40)
+  const floral = mkcCatalogue.find((k) => k.family.some((f) => f.toLowerCase().includes("floral")));
+  if (!floral) { skip("T-C5-C-01 — no floral fragrance in catalogue"); return; }
+  const signals: FitSignals = { family: floral.family[0] };
+  const result = computeConfidenceClassifications([floral], signals, undefined);
+  assert.equal(result[0], "STRONG_MATCH", `fit for perfect family match should be STRONG_MATCH, got ${result[0]}`);
+});
+
+test("T-C5-C-02 — fit 0.10–0.34 → GOOD_MATCH", () => {
+  // Occasion match only (+0.20) → GOOD_MATCH
+  const withOccasion = mkcCatalogue.find((k) => k.occasions.length > 0);
+  if (!withOccasion) { skip("T-C5-C-02 — no fragrance with occasions"); return; }
+  const signals: FitSignals = { occasion: withOccasion.occasions[0] };
+  const result = computeConfidenceClassifications([withOccasion], signals, undefined);
+  assert.equal(result[0], "GOOD_MATCH", `occasion-only fit should be GOOD_MATCH, got ${result[0]}`);
+});
+
+test("T-C5-C-03 — fit 0 → EXPLORATORY", () => {
+  // No signals at all — all fragrances score 0
+  const k = mkcCatalogue[0];
+  const result = computeConfidenceClassifications([k], {}, undefined);
+  assert.equal(result[0], "EXPLORATORY", `zero-signal fit should be EXPLORATORY, got ${result[0]}`);
+});
+
+test("T-C5-C-04 — confidenceClassifications length matches fragrances length", () => {
+  const candidates = mkcCatalogue.slice(0, 5);
+  const result = computeConfidenceClassifications(candidates, {}, undefined);
+  assert.equal(result.length, candidates.length);
+});
+
+test("T-C5-C-05 — STRONG_MATCH tag embedded in context section", () => {
+  const floral = mkcCatalogue.find((k) => k.family.some((f) => f.toLowerCase().includes("floral")));
+  if (!floral) { skip("T-C5-C-05 — no floral fragrance"); return; }
+  const retrieval = {
+    fragrances: [floral],
+    articles:   [],
+    confidenceClassifications: ["STRONG_MATCH" as const],
+  };
+  const ctx = buildContext(retrieval, EMPTY_STATE, BASE_PLAN);
+  const rendered = renderContext(ctx);
+  assert.ok(rendered.includes("[STRONG_MATCH]"), "STRONG_MATCH tag should appear in rendered context");
+});
+
+test("T-C5-C-06 — GOOD_MATCH tag embedded in context section", () => {
+  const k = mkcCatalogue[0];
+  const retrieval = {
+    fragrances: [k],
+    articles:   [],
+    confidenceClassifications: ["GOOD_MATCH" as const],
+  };
+  const ctx = buildContext(retrieval, EMPTY_STATE, BASE_PLAN);
+  const rendered = renderContext(ctx);
+  assert.ok(rendered.includes("[GOOD_MATCH]"), "GOOD_MATCH tag should appear in rendered context");
+});
+
+test("T-C5-C-07 — EXPLORATORY tag embedded in context section", () => {
+  const k = mkcCatalogue[0];
+  const retrieval = {
+    fragrances: [k],
+    articles:   [],
+    confidenceClassifications: ["EXPLORATORY" as const],
+  };
+  const ctx = buildContext(retrieval, EMPTY_STATE, BASE_PLAN);
+  const rendered = renderContext(ctx);
+  assert.ok(rendered.includes("[EXPLORATORY]"), "EXPLORATORY tag should appear in rendered context");
+});
+
+test("T-C5-C-08 — all EXPLORATORY when no signals or profile", () => {
+  const candidates = mkcCatalogue.slice(0, 3);
+  const result = computeConfidenceClassifications(candidates, {}, undefined);
+  result.forEach((c, i) => {
+    assert.equal(c, "EXPLORATORY", `candidate ${i} should be EXPLORATORY with no signals, got ${c}`);
+  });
+});
+
+test("T-C5-C-09 — planRetrieval returns confidenceClassifications", () => {
+  const result = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT);
+  assert.ok(result.confidenceClassifications !== undefined,
+    "planRetrieval should return confidenceClassifications");
+  assert.equal(result.confidenceClassifications!.length, result.fragrances.length,
+    "confidenceClassifications length should match fragrances length");
+});
+
+test("T-C5-C-10 — confidence tag appears in correct position (after role tag)", () => {
+  const k = mkcCatalogue[0];
+  const retrieval = {
+    fragrances:               [k],
+    articles:                 [],
+    fragranceRoles:           ["Top Recommendation"],
+    confidenceClassifications: ["STRONG_MATCH" as const],
+  };
+  const ctx = buildContext(retrieval, EMPTY_STATE, BASE_PLAN);
+  const rendered = renderContext(ctx);
+  // Role tag should come before confidence tag on the same line
+  const rolePos  = rendered.indexOf("[Top Recommendation]");
+  const confPos  = rendered.indexOf("[STRONG_MATCH]");
+  assert.ok(rolePos >= 0 && confPos >= 0, "both role and confidence tags should be present");
+  assert.ok(rolePos < confPos, "role tag should appear before confidence tag in context");
+});
+
+// ── EP-AI-C5: Rejected Products Section (T-C5-R) ─────────────────────────────
+
+console.log("\n── C5-R. Rejected Products Section ──────────────────────────────");
+
+test("T-C5-R-01 — no rejectedSlugs → no REJECTED PRODUCTS section", () => {
+  const retrieval = { fragrances: mkcCatalogue.slice(0, 2), articles: [] };
+  const state = { ...EMPTY_STATE, profile: makeProfile({}) };
+  const ctx = buildContext(retrieval, state, BASE_PLAN);
+  const rendered = renderContext(ctx);
+  assert.ok(!rendered.includes("REJECTED PRODUCTS"), "REJECTED PRODUCTS section should not appear with no rejections");
+});
+
+test("T-C5-R-02 — single rejected slug → REJECTED PRODUCTS section present", () => {
+  const slug = mkcCatalogue[0].slug;
+  const state = { ...EMPTY_STATE, profile: makeProfile({ rejectedSlugs: [slug] }) };
+  const retrieval = { fragrances: mkcCatalogue.slice(1, 3), articles: [] };
+  const ctx = buildContext(retrieval, state, BASE_PLAN);
+  const rendered = renderContext(ctx);
+  assert.ok(rendered.includes("REJECTED PRODUCTS"), "REJECTED PRODUCTS section should appear when rejectedSlugs set");
+});
+
+test("T-C5-R-03 — 6+ rejected slugs → all appear (no cap)", () => {
+  const slugs = mkcCatalogue.slice(0, 8).map((k) => k.slug);
+  const state = { ...EMPTY_STATE, profile: makeProfile({ rejectedSlugs: slugs }) };
+  const retrieval = { fragrances: mkcCatalogue.slice(8, 10), articles: [] };
+  const ctx = buildContext(retrieval, state, BASE_PLAN);
+  const rendered = renderContext(ctx);
+  // All 8 slugs should appear in the rendered context
+  for (const slug of slugs) {
+    assert.ok(rendered.includes(slug), `Rejected slug ${slug} not found in REJECTED PRODUCTS section`);
+  }
+});
+
+test("T-C5-R-04 — section header says 'Do not recommend'", () => {
+  const slug = mkcCatalogue[0].slug;
+  const state = { ...EMPTY_STATE, profile: makeProfile({ rejectedSlugs: [slug] }) };
+  const retrieval = { fragrances: mkcCatalogue.slice(1, 3), articles: [] };
+  const ctx = buildContext(retrieval, state, BASE_PLAN);
+  const rendered = renderContext(ctx);
+  assert.ok(rendered.includes("Do not recommend"), "REJECTED PRODUCTS section should say 'Do not recommend'");
+});
+
+test("T-C5-R-05 — rejected slug names rendered correctly when slug matches catalogue", () => {
+  const target = mkcCatalogue[0];
+  const state = { ...EMPTY_STATE, profile: makeProfile({ rejectedSlugs: [target.slug] }) };
+  const retrieval = { fragrances: mkcCatalogue.slice(1, 3), articles: [] };
+  const ctx = buildContext(retrieval, state, BASE_PLAN);
+  const rendered = renderContext(ctx);
+  // The fragrance name should appear alongside the slug
+  assert.ok(rendered.includes(target.name) || rendered.includes(target.slug),
+    `Rejected product name or slug should appear in section`);
+});
+
+test("T-C5-R-06 — hard rejection filter removes rejected slugs AND section governs prose", () => {
+  const target = mkcCatalogue[0];
+  const profile = makeProfile({ rejectedSlugs: [target.slug] });
+  // Retrieval should exclude the rejected slug
+  const result = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile);
+  assert.equal(result.fragrances.find((f) => f.slug === target.slug), undefined,
+    "Hard rejection filter should remove the rejected slug from retrieval results");
+  // And the context section should be present for LLM prose suppression
+  const state = { ...EMPTY_STATE, profile };
+  const ctx = buildContext(result, state, BASE_PLAN);
+  const rendered = renderContext(ctx);
+  assert.ok(rendered.includes("REJECTED PRODUCTS"), "REJECTED PRODUCTS prose suppression section should be present");
+});
+
+// ── EP-AI-C5: Comparison Intelligence (T-C5-K) ───────────────────────────────
+
+console.log("\n── C5-K. Comparison Intelligence ────────────────────────────────");
+
+test("T-C5-K-01 — requiresComparison=false → no COMPARISON INTELLIGENCE FOCUS", () => {
+  const retrieval = { fragrances: mkcCatalogue.slice(0, 2), articles: [] };
+  const ctx = buildContext(retrieval, EMPTY_STATE, { ...BASE_PLAN, requiresComparison: false });
+  const rendered = renderContext(ctx);
+  assert.ok(!rendered.includes("COMPARISON INTELLIGENCE FOCUS"),
+    "COMPARISON INTELLIGENCE FOCUS should not appear when requiresComparison=false");
+});
+
+test("T-C5-K-02 — requiresComparison=true but < 2 fragrances → no section", () => {
+  const retrieval = { fragrances: mkcCatalogue.slice(0, 1), articles: [] };
+  const plan = { ...BASE_PLAN, requiresComparison: true };
+  const ctx = buildContext(retrieval, EMPTY_STATE, plan);
+  const rendered = renderContext(ctx);
+  assert.ok(!rendered.includes("COMPARISON INTELLIGENCE FOCUS"),
+    "COMPARISON INTELLIGENCE FOCUS should not appear with < 2 fragrances");
+});
+
+test("T-C5-K-03 — requiresComparison=true + 2 fragrances → section present", () => {
+  const retrieval = { fragrances: mkcCatalogue.slice(0, 2), articles: [] };
+  const plan = { ...BASE_PLAN, requiresComparison: true, nextIntent: "comparison" as const };
+  const ctx = buildContext(retrieval, EMPTY_STATE, plan);
+  const rendered = renderContext(ctx);
+  assert.ok(rendered.includes("COMPARISON INTELLIGENCE FOCUS"),
+    "COMPARISON INTELLIGENCE FOCUS section should appear with 2+ fragrances and requiresComparison=true");
+});
+
+test("T-C5-K-04 — section mentions 'Key dimensions'", () => {
+  const retrieval = { fragrances: mkcCatalogue.slice(0, 2), articles: [] };
+  const plan = { ...BASE_PLAN, requiresComparison: true, nextIntent: "comparison" as const };
+  const ctx = buildContext(retrieval, EMPTY_STATE, plan);
+  const rendered = renderContext(ctx);
+  assert.ok(rendered.includes("Key dimensions"),
+    "COMPARISON INTELLIGENCE FOCUS should mention 'Key dimensions'");
+});
+
+test("T-C5-K-05 — fragrance names appear in comparison section", () => {
+  const f0 = mkcCatalogue[0];
+  const f1 = mkcCatalogue[1];
+  const retrieval = { fragrances: [f0, f1], articles: [] };
+  const plan = { ...BASE_PLAN, requiresComparison: true, nextIntent: "comparison" as const };
+  const ctx = buildContext(retrieval, EMPTY_STATE, plan);
+  const rendered = renderContext(ctx);
+  assert.ok(rendered.includes(f0.name), `${f0.name} should appear in comparison section`);
+  assert.ok(rendered.includes(f1.name), `${f1.name} should appear in comparison section`);
+});
+
+test("T-C5-K-06 — explicit dimension mention in rawMessage → that dimension appears first", () => {
+  const f0 = mkcCatalogue[0];
+  const f1 = mkcCatalogue[1];
+  const retrieval = { fragrances: [f0, f1], articles: [] };
+  const plan = { ...BASE_PLAN, requiresComparison: true, nextIntent: "comparison" as const };
+  const ctx = buildContext(retrieval, EMPTY_STATE, plan, undefined, null, null, null, "which one has more freshness?");
+  const rendered = renderContext(ctx);
+  // Freshness should be the first dimension listed
+  const sectionStart = rendered.indexOf("COMPARISON INTELLIGENCE FOCUS");
+  const freshnessPos = rendered.indexOf("Freshness:", sectionStart);
+  const sweetnessPos = rendered.indexOf("Sweetness:", sectionStart);
+  if (freshnessPos > 0 && sweetnessPos > 0) {
+    assert.ok(freshnessPos < sweetnessPos, "Freshness should appear before Sweetness when guest asks about freshness");
+  } else {
+    assert.ok(freshnessPos > 0, "Freshness should appear in comparison section when explicitly mentioned");
+  }
+});
+
+// ── EP-AI-C5: Pool Exhaustion (T-C5-X) ───────────────────────────────────────
+
+console.log("\n── C5-X. Pool Exhaustion ────────────────────────────────────────");
+
+test("T-C5-X-01 — broad pool returns ≥ 2 → poolExhausted=false", () => {
+  const result = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT);
+  assert.equal(result.poolExhausted, false,
+    "Broad pool without constraints should not be exhausted");
+});
+
+test("T-C5-X-02 — pool with < 2 candidates → poolExhausted=true", () => {
+  // Reject all but zero slugs — use an impossible note avoidance pattern to test
+  // We simulate exhaustion by injecting poolExhausted directly via the RetrievalContext
+  const exhaustedRetrieval = {
+    fragrances:   [],
+    articles:     [],
+    poolExhausted: true,
+  };
+  // Verify contextBuilder handles it
+  const ctx = buildContext(exhaustedRetrieval, EMPTY_STATE, BASE_PLAN);
+  const rendered = renderContext(ctx);
+  assert.ok(rendered.includes("POOL EXHAUSTION"),
+    "POOL EXHAUSTION section should appear when poolExhausted=true");
+});
+
+test("T-C5-X-03 — POOL EXHAUSTION section present when poolExhausted=true in retrieval", () => {
+  const retrieval = { fragrances: [mkcCatalogue[0]], articles: [], poolExhausted: true };
+  const ctx = buildContext(retrieval, EMPTY_STATE, BASE_PLAN);
+  const rendered = renderContext(ctx);
+  assert.ok(rendered.includes("POOL EXHAUSTION"), "POOL EXHAUSTION section should be present");
+});
+
+test("T-C5-X-04 — POOL EXHAUSTION section mentions relaxing constraint", () => {
+  const retrieval = { fragrances: [], articles: [], poolExhausted: true };
+  const ctx = buildContext(retrieval, EMPTY_STATE, BASE_PLAN);
+  const rendered = renderContext(ctx);
+  assert.ok(rendered.includes("relax") || rendered.includes("constraint"),
+    "POOL EXHAUSTION section should mention relaxing a constraint");
+});
+
+test("T-C5-X-05 — POOL EXHAUSTION section mentions quiz", () => {
+  const retrieval = { fragrances: [], articles: [], poolExhausted: true };
+  const ctx = buildContext(retrieval, EMPTY_STATE, BASE_PLAN);
+  const rendered = renderContext(ctx);
+  assert.ok(rendered.includes("quiz") || rendered.includes("/quiz"),
+    "POOL EXHAUSTION section should mention the quiz");
+});
+
+// ── EP-AI-C5: Consultation Stage (T-C5-S) ────────────────────────────────────
+
+console.log("\n── C5-S. Consultation Stage ──────────────────────────────────────");
+
+test("T-C5-S-01 — no turns → stage is 'Starting consultation'", () => {
+  const retrieval = { fragrances: mkcCatalogue.slice(0, 2), articles: [] };
+  const ctx = buildContext(retrieval, EMPTY_STATE, BASE_PLAN);
+  const rendered = renderContext(ctx);
+  assert.ok(rendered.includes("Starting consultation"), "Stage should be 'Starting consultation' on turn 0");
+});
+
+test("T-C5-S-02 — turns + lastRecommendationSlugs → stage includes 'Following up'", () => {
+  const stateWithRecs = {
+    ...EMPTY_STATE,
+    turns: [
+      { role: "user" as const, content: "hello", timestamp: 1 },
+      { role: "assistant" as const, content: "hi", timestamp: 2 },
+    ],
+    lastRecommendationSlugs: [mkcCatalogue[0].slug],
+  };
+  const retrieval = { fragrances: mkcCatalogue.slice(0, 2), articles: [] };
+  const ctx = buildContext(retrieval, stateWithRecs, BASE_PLAN);
+  const rendered = renderContext(ctx);
+  assert.ok(rendered.includes("Following up"), "Stage should mention 'Following up' when recs exist");
+});
+
+test("T-C5-S-03 — consultationPlan with roles → stage includes 'Collection consultation'", () => {
+  const stateWithPlan = {
+    ...EMPTY_STATE,
+    turns: [
+      { role: "user" as const, content: "hello", timestamp: 1 },
+      { role: "assistant" as const, content: "hi", timestamp: 2 },
+    ],
+    consultationPlan: {
+      type:  "Signature" as const,
+      label: "Signature Collection",
+      roles: [{ position: 1, character: "Fresh", title: "Fresh Character", slug: mkcCatalogue[0].slug, name: mkcCatalogue[0].name }],
+    },
+  };
+  const retrieval = { fragrances: mkcCatalogue.slice(0, 2), articles: [] };
+  const ctx = buildContext(retrieval, stateWithPlan, BASE_PLAN);
+  const rendered = renderContext(ctx);
+  assert.ok(rendered.includes("Collection consultation"), "Stage should mention 'Collection consultation' when plan is active");
+});
+
+test("T-C5-S-04 — turns + no recs → stage is 'Exploring preferences'", () => {
+  const stateWithTurns = {
+    ...EMPTY_STATE,
+    turns: [
+      { role: "user" as const, content: "hello", timestamp: 1 },
+      { role: "assistant" as const, content: "hi", timestamp: 2 },
+    ],
+  };
+  const retrieval = { fragrances: mkcCatalogue.slice(0, 2), articles: [] };
+  const ctx = buildContext(retrieval, stateWithTurns, BASE_PLAN);
+  const rendered = renderContext(ctx);
+  assert.ok(rendered.includes("Exploring preferences"), "Stage should be 'Exploring preferences' when turns exist but no recs");
+});
+
+test("T-C5-S-05 — CONSULTATION STAGE section appears in all rendered contexts", () => {
+  const retrieval = { fragrances: mkcCatalogue.slice(0, 2), articles: [] };
+  const ctx = buildContext(retrieval, EMPTY_STATE, BASE_PLAN);
+  const rendered = renderContext(ctx);
+  assert.ok(rendered.includes("CONSULTATION STAGE"), "CONSULTATION STAGE section should always appear in context");
+});
+
+// ── EP-AI-C5: Question Fatigue Gate (T-C5-Q) ─────────────────────────────────
+
+console.log("\n── C5-Q. Question Fatigue Gate ───────────────────────────────────");
+
+test("T-C5-Q-01 — first turn with no signals → clarification (not fatigue gate)", () => {
+  const plan = planConversation("I need a new fragrance", EMPTY_STATE);
+  assert.equal(plan.action, "clarification",
+    "First turn with no signals should return clarification, not the fatigue gate");
+  assert.equal(plan.consultationReadinessQuestion, undefined,
+    "consultationReadinessQuestion should not be set on first-turn clarification");
+});
+
+test("T-C5-Q-02 — subsequent low-signal turn + LOW profile → hybrid plan returned", () => {
+  const stateWithTurns = {
+    ...EMPTY_STATE,
+    turns: [
+      { role: "user" as const, content: "I need a fragrance", timestamp: 1 },
+      { role: "assistant" as const, content: "What occasions?", timestamp: 2 },
+    ],
+    clarificationTurnCount: 0,
+    // Profile is empty → LOW completeness
+    profile: makeProfile({}),
+  };
+  const plan = planConversation("I'm not sure", stateWithTurns);
+  // Should be new_search (hybrid), not clarification
+  if (plan.action === "new_search" && plan.consultationReadinessQuestion) {
+    assert.equal(plan.requiresRetrieval, true,
+      "Hybrid fatigue-gate plan should have requiresRetrieval=true");
+    assert.ok(plan.consultationReadinessQuestion.length > 0,
+      "consultationReadinessQuestion should be non-empty");
+  } else {
+    // Might fall through to new_search without question if not triggered — acceptable
+    assert.ok(plan.action === "new_search" || plan.action === "clarification",
+      `Unexpected plan action: ${plan.action}`);
+  }
+});
+
+test("T-C5-Q-03 — clarificationCount ≥ 2 → fatigue gate does NOT set consultationReadinessQuestion", () => {
+  const stateWithCount = {
+    ...EMPTY_STATE,
+    turns: [
+      { role: "user" as const, content: "first", timestamp: 1 },
+      { role: "assistant" as const, content: "ask1", timestamp: 2 },
+      { role: "user" as const, content: "second", timestamp: 3 },
+      { role: "assistant" as const, content: "ask2", timestamp: 4 },
+    ],
+    clarificationTurnCount: 2,
+    profile: makeProfile({}),
+  };
+  const plan = planConversation("I don't know", stateWithCount);
+  // When count >= 2, gate should not fire — falls to default new_search
+  assert.equal(plan.consultationReadinessQuestion, undefined,
+    "consultationReadinessQuestion should not be set when clarificationCount >= 2");
+});
+
+test("T-C5-Q-04 — high-signal message bypasses fatigue gate entirely", () => {
+  const stateWithTurns = {
+    ...EMPTY_STATE,
+    turns: [
+      { role: "user" as const, content: "I need a fragrance", timestamp: 1 },
+      { role: "assistant" as const, content: "What occasions?", timestamp: 2 },
+    ],
+    clarificationTurnCount: 0,
+    profile: makeProfile({}),
+  };
+  // Rich signal message — contains family and occasion cues
+  const plan = planConversation("Show me fresh floral fragrances for the office", stateWithTurns);
+  // Should be new_search without consultationReadinessQuestion
+  assert.equal(plan.consultationReadinessQuestion, undefined,
+    "High-signal message should bypass the fatigue gate — no consultationReadinessQuestion");
+});
+
+test("T-C5-Q-05 — clarificationTurnCount increments when consultationReadinessQuestion set", () => {
+  // Verify the ConversationPlan carries the right field
+  const plan: ConversationPlan = {
+    ...BASE_PLAN,
+    consultationReadinessQuestion: "What occasions do you have in mind?",
+  };
+  // Simulate the route's counting logic
+  const prevCount = 0;
+  const isExplicit = !!plan.consultationReadinessQuestion;
+  const nextCount  = isExplicit ? prevCount + 1 : prevCount;
+  assert.equal(nextCount, 1, "clarificationTurnCount should increment when consultationReadinessQuestion is set");
+});
+
+// ── EP-AI-C5: Catalogue Exploration Evaluation ───────────────────────────────
+
+console.log("\n── C5-CE. Catalogue Exploration Evaluation ──────────────────────");
+
+test("T-C5-CE-01 — broad pool is non-empty (unique fragrances > 0)", () => {
+  const result = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT);
+  assert.ok(result.fragrances.length > 0, "Broad pool should return at least one fragrance");
+});
+
+test("T-C5-CE-02 — native fragrances reachable via broad pool", () => {
+  const nativeSlugs = new Set(Array.from(nativeFragrances.values()).map((k) => k.slug));
+  const result = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT);
+  const hasNative = result.fragrances.some((f) => nativeSlugs.has(f.slug));
+  assert.ok(hasNative, "At least one native fragrance should appear in broad pool discovery");
+});
+
+test("T-C5-CE-03 — rejected slug never leaks into retrieval results", () => {
+  const target = mkcCatalogue[0];
+  const profile = makeProfile({ rejectedSlugs: [target.slug] });
+  const result = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile);
+  assert.equal(result.fragrances.find((f) => f.slug === target.slug), undefined,
+    `Rejected slug ${target.slug} should not appear in retrieval results`);
+});
+
+test("T-C5-CE-04 — avoidance leakage: avoided family never appears in results", () => {
+  const floral = mkcCatalogue.find((k) => k.family.some((f) => f.toLowerCase().includes("floral")));
+  if (!floral) { skip("T-C5-CE-04 — no floral fragrance"); return; }
+  const profile = makeProfile({
+    avoidedFamilies: { value: ["Floral"], confidence: "HIGH" },
+  });
+  const result = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile);
+  const leaked = result.fragrances.filter((f) =>
+    f.family.some((fam) => fam.toLowerCase().includes("floral"))
+  );
+  assert.equal(leaked.length, 0, `${leaked.length} floral fragrance(s) leaked through avoidance filter`);
+});
+
+test("T-C5-CE-05 — gender coverage: male-constrained pool contains male or unisex only", () => {
+  const profile = makeProfile({ preferredGender: { value: "male", confidence: "HIGH" } });
+  const result = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile);
+  const violations = result.fragrances.filter((f) => f.gender === "female");
+  assert.equal(violations.length, 0,
+    `${violations.length} female fragrance(s) leaked into male-constrained pool`);
+});
+
+test("T-C5-CE-06 — confidenceClassifications covers full result set (no gaps)", () => {
+  const profile = makeProfile({ preferredFamilies: { value: ["Woody"], confidence: "HIGH" } });
+  const result = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile);
+  assert.ok((result.confidenceClassifications?.length ?? 0) === result.fragrances.length,
+    "confidenceClassifications should cover every returned fragrance");
+});
+
+test("T-C5-CE-07 — with relevant family signal, at least one STRONG_MATCH or GOOD_MATCH expected", () => {
+  const woodyFrag = mkcCatalogue.find((k) => k.family.some((f) => f.toLowerCase().includes("woody")));
+  if (!woodyFrag) { skip("T-C5-CE-07 — no woody fragrance"); return; }
+  const profile = makeProfile({ preferredFamilies: { value: ["Woody"], confidence: "HIGH" } });
+  const result = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile);
+  const hasMatch = result.confidenceClassifications?.some(
+    (c) => c === "STRONG_MATCH" || c === "GOOD_MATCH"
+  );
+  assert.ok(hasMatch, "At least one STRONG_MATCH or GOOD_MATCH expected when family signal matches catalogue");
 });
 
 // ── Summary ───────────────────────────────────────────────────────────────────

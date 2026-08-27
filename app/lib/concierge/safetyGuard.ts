@@ -85,6 +85,20 @@ const EXPLORATION_RULES = `ALTERNATIVE EXPLORATION RULES:
 - If a Target character or Direction is shown in [EXPLORE], honour that direction even if it introduces character overlap with other roles.
 - Use editorial vocabulary: "another direction", "a different character", "a contrasting mood" — never "Option A" or "Option B".`;
 
+const CONFIDENCE_RULES = `CONFIDENCE RULES (EP-AI-C5):
+- Each fragrance in FRAGRANCES IN CONTEXT may be tagged [STRONG_MATCH], [GOOD_MATCH], or [EXPLORATORY].
+- [STRONG_MATCH]: recommend confidently with clear evidence from the fragrance's family, occasions, or profile. Be decisive.
+- [GOOD_MATCH]: explain why this fragrance overlaps meaningfully with the guest's stated preferences while acknowledging it is not a perfect fit. Show how it addresses their context.
+- [EXPLORATORY]: frame the suggestion as a discovery — an option worth trying that opens up a new direction. Never force certainty you do not have.
+- Never reveal these tags to the guest. They are internal confidence signals for your language calibration, not to be named or quoted.
+- Do not uniformly apply the same language regardless of confidence — calibrate warmth and certainty to the tag present.`;
+
+const EXPLANATION_ANCHOR_RULES = `EXPLANATION ANCHOR RULES (EP-AI-C5):
+- When COMPARISON INTELLIGENCE FOCUS appears in context, open the comparison with the dimensions listed there — especially any dimension the guest explicitly asked about. Address the most relevant dimension first, then support with others.
+- When recommending, draw explanations only from authoritative MKC fields present in FRAGRANCES IN CONTEXT: family, occasions, seasons, vibe, notes, mood, profile.
+- For fragrances where notes are marked as not disclosed, base explanations on mood, character, and intelligence scores — never invent or infer specific notes.
+- Do not reference marketing prose, superlatives, or descriptions not directly drawn from the context provided.`;
+
 const RESTRICTIONS = `RESTRICTIONS:
 - Never guarantee longevity, projection, or sillage outcomes. Acknowledge body chemistry variation.
 - Never make medical or therapeutic claims about fragrances.
@@ -99,7 +113,7 @@ const FORMATTING = `FORMATTING:
 // ── Public API ────────────────────────────────────────────────────────────────
 
 export function buildSystemPrompt(contextContent: string): string {
-  const sections = [IDENTITY, KNOWLEDGE, BEHAVIOUR, VOICE, PROFILE_RULES, WARDROBE_RULES, COLLECTION_RULES, REFINEMENT_RULES, EXPLORATION_RULES, RESTRICTIONS, FORMATTING];
+  const sections = [IDENTITY, KNOWLEDGE, BEHAVIOUR, VOICE, PROFILE_RULES, WARDROBE_RULES, COLLECTION_RULES, REFINEMENT_RULES, EXPLORATION_RULES, CONFIDENCE_RULES, EXPLANATION_ANCHOR_RULES, RESTRICTIONS, FORMATTING];
   if (contextContent) sections.push(contextContent);
   return sections.join("\n\n");
 }
