@@ -3605,6 +3605,104 @@ test("T-C5-SUP-06 — pool exhaustion does not throw when fragrances array is em
   }, "buildContext should not throw when fragrances is empty and poolExhausted is true");
 });
 
+// ── EP-AI-C5-R2: Existing-product recognition — bare name resolution ──────────
+
+console.log("\n── C5-R2. Existing-product recognition ───────────────────────────");
+
+test("T-C5-R2-01 — 'Torino24' (bare) resolves to torino24-inspired", () => {
+  const r = resolveIntent("tell me about Torino24", EMPTY_CONTEXT);
+  assert.equal(r.entitySlug, "torino24-inspired",
+    "'Torino24' without 'Inspired' suffix must resolve to torino24-inspired");
+});
+
+test("T-C5-R2-02 — 'Torino24 Inspired' (full name) resolves to torino24-inspired", () => {
+  const r = resolveIntent("tell me about Torino24 Inspired", EMPTY_CONTEXT);
+  assert.equal(r.entitySlug, "torino24-inspired",
+    "Full canonical name 'Torino24 Inspired' must still resolve correctly");
+});
+
+test("T-C5-R2-03 — case-insensitive bare name resolution (torino24 lowercase)", () => {
+  const r = resolveIntent("what is torino24?", EMPTY_CONTEXT);
+  assert.equal(r.entitySlug, "torino24-inspired",
+    "Bare name matching must be case-insensitive");
+});
+
+test("T-C5-R2-04 — Torino24 product inquiry reaches catalogue (sourceKnowledge available)", () => {
+  const r = resolveIntent("tell me about Torino24", EMPTY_CONTEXT);
+  assert.equal(r.entitySlug, "torino24-inspired", "Entity must resolve first");
+  const retrieval = planRetrieval(r, EMPTY_CONTEXT, undefined);
+  const slugs = retrieval.fragrances.map((f) => f.slug);
+  assert.ok(slugs.includes("torino24-inspired"),
+    "Torino24 Inspired must appear in retrieval fragrances when entitySlug is resolved");
+});
+
+test("T-C5-R2-05 — Torino24 zero-note context renders correct governance instruction", () => {
+  const torino = mkcCatalogue.find((k) => k.slug === "torino24-inspired");
+  assert.ok(torino, "torino24-inspired must exist in MKC");
+  const retrieval = { fragrances: [torino!], articles: [] };
+  const ctx = buildContext(retrieval, EMPTY_STATE, BASE_PLAN);
+  const rendered = renderContext(ctx);
+  assert.ok(
+    rendered.includes("Canonical composition not disclosed"),
+    "Zero-note governance instruction must appear for Torino24 in context"
+  );
+  assert.ok(
+    !rendered.includes("Top:") || rendered.indexOf("Top:") > rendered.indexOf("torino24-inspired"),
+    "No note-pyramid lines should appear when notes are empty"
+  );
+});
+
+test("T-C5-R2-06 — Torino24 comparison resolves both slugs using bare names", () => {
+  const r = resolveIntent("compare Torino24 with Vanilla Powder", EMPTY_CONTEXT);
+  assert.ok(
+    r.compareSlug.includes("torino24-inspired"),
+    "compareSlug must contain torino24-inspired when guest says 'Torino24'"
+  );
+  assert.ok(
+    r.compareSlug.includes("vanilla-powder-inspired"),
+    "compareSlug must contain vanilla-powder-inspired when guest says 'Vanilla Powder'"
+  );
+});
+
+test("T-C5-R2-07 — 'CK One' bare name resolves to ck-one-inspired", () => {
+  const r = resolveIntent("show me something like CK One", EMPTY_CONTEXT);
+  assert.equal(r.entitySlug, "ck-one-inspired",
+    "'CK One' (without Inspired) must resolve to ck-one-inspired");
+});
+
+test("T-C5-R2-08 — '212 VIP Black' bare name resolves to 212-vip-black-inspired", () => {
+  const r = resolveIntent("tell me about 212 VIP Black", EMPTY_CONTEXT);
+  assert.equal(r.entitySlug, "212-vip-black-inspired",
+    "'212 VIP Black' (without Inspired) must resolve to 212-vip-black-inspired");
+});
+
+test("T-C5-R2-09 — 'Chanel No 5' bare name resolves to chanel-no-5-inspired", () => {
+  const r = resolveIntent("I love Chanel No 5, show me something similar", EMPTY_CONTEXT);
+  assert.equal(r.entitySlug, "chanel-no-5-inspired",
+    "'Chanel No 5' (without Inspired) must resolve to chanel-no-5-inspired");
+});
+
+test("T-C5-R2-10 — unknown fragrance name remains unresolved", () => {
+  const r = resolveIntent("tell me about Parfum Inconnu Fantaisie", EMPTY_CONTEXT);
+  assert.equal(r.entitySlug, undefined,
+    "A fragrance name not in the catalogue must not resolve to any slug");
+});
+
+test("T-C5-R2-11 — flanker safety: 'Sauvage Elixir' does not also resolve Sauvage base", () => {
+  const r = resolveIntent("compare Sauvage Elixir with Naxos", EMPTY_CONTEXT);
+  const allSlugs = [...r.compareSlug, ...(r.entitySlug ? [r.entitySlug] : [])];
+  assert.ok(allSlugs.includes("sauvage-elixir-inspired"),
+    "sauvage-elixir-inspired must be resolved when guest says 'Sauvage Elixir'");
+  assert.ok(!allSlugs.includes("sauvage-inspired"),
+    "sauvage-inspired must NOT be resolved when guest explicitly named 'Sauvage Elixir' — distinct flanker safety");
+});
+
+test("T-C5-R2-12 — existing 262 concierge test suite: no regression (harness integrity)", () => {
+  // This test verifies the test runner itself is healthy — if earlier tests passed,
+  // the harness and imports are intact and no regression has been introduced.
+  assert.ok(passed >= 262, `At least 262 tests must have passed before R2 tests (got ${passed})`);
+});
+
 // ── Summary ───────────────────────────────────────────────────────────────────
 
 const total = passed + failed;

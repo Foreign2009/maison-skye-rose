@@ -30,16 +30,56 @@ export interface ResolvedIntent {
 
 // ── Entity extraction ─────────────────────────────────────────────────────────
 
+// Suffixes Maison appends to inspired products in canonical names.
+// Stripping these reveals the natural product name a guest would use.
+const MAISON_PRODUCT_SUFFIXES = [" Inspired", " Eau de Parfum", " EDP", " Eau de Toilette", " EDT"];
+
+function stripMaisonSuffix(name: string): string {
+  for (const suffix of MAISON_PRODUCT_SUFFIXES) {
+    if (name.endsWith(suffix)) return name.slice(0, -suffix.length);
+  }
+  return name;
+}
+
 function extractFragranceSlugs(q: string): string[] {
-  // Sort by name length (longest first) to prevent substring matches
-  const sortedNames = [...catalogueMaps.byName.keys()].sort((a, b) => b.length - a.length);
-  const found: string[] = [];
-  for (const name of sortedNames) {
-    if (q.includes(name.toLowerCase())) {
-      const k = catalogueMaps.byName.get(name);
-      if (k && !found.includes(k.slug)) found.push(k.slug);
+  // Build a combined lookup: full canonical names + bare names (Maison suffix stripped).
+  // Sorting longest-first ensures specific flanker names ("Sauvage Elixir") are matched
+  // before their shorter prefixes ("Sauvage"), preventing phantom disambiguation.
+  type Entry = { key: string; slug: string };
+  const seenKeys = new Set<string>();
+  const entries: Entry[] = [];
+
+  for (const [name, frag] of catalogueMaps.byName) {
+    const fullKey = name.toLowerCase();
+    if (!seenKeys.has(fullKey)) {
+      entries.push({ key: fullKey, slug: frag.slug });
+      seenKeys.add(fullKey);
+    }
+    const bare = stripMaisonSuffix(name);
+    if (bare !== name) {
+      const bareKey = bare.toLowerCase();
+      if (!seenKeys.has(bareKey)) {
+        entries.push({ key: bareKey, slug: frag.slug });
+        seenKeys.add(bareKey);
+      }
     }
   }
+
+  entries.sort((a, b) => b.key.length - a.key.length);
+
+  const found: string[] = [];
+  const matchedKeys: string[] = [];
+
+  for (const { key, slug } of entries) {
+    if (!q.includes(key)) continue;
+    if (found.includes(slug)) continue;
+    // Flanker safety: if a longer already-matched key starts with this key,
+    // this is a prefix-overlap — skip to prevent collapsing distinct flankers.
+    if (matchedKeys.some((mk) => mk.startsWith(key) && mk.length > key.length)) continue;
+    found.push(slug);
+    matchedKeys.push(key);
+  }
+
   return found;
 }
 
