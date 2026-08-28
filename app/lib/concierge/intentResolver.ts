@@ -41,6 +41,13 @@ function stripMaisonSuffix(name: string): string {
   return name;
 }
 
+// Normalizes user-input punctuation for entity matching.
+// Periods are replaced with spaces so "No. 5" and "No.5" both match bare key "No 5".
+// Apostrophes, hyphens, and other identity-significant characters are preserved.
+function normalizeInputForEntityMatch(s: string): string {
+  return s.replace(/\./g, " ").replace(/\s+/g, " ").trim();
+}
+
 function extractFragranceSlugs(q: string): string[] {
   // Build a combined lookup: full canonical names + bare names (Maison suffix stripped).
   // Sorting longest-first ensures specific flanker names ("Sauvage Elixir") are matched
@@ -67,11 +74,12 @@ function extractFragranceSlugs(q: string): string[] {
 
   entries.sort((a, b) => b.key.length - a.key.length);
 
+  const qNorm = normalizeInputForEntityMatch(q);
   const found: string[] = [];
   const matchedKeys: string[] = [];
 
   for (const { key, slug } of entries) {
-    if (!q.includes(key)) continue;
+    if (!qNorm.includes(key)) continue;
     if (found.includes(slug)) continue;
     // Flanker safety: if a longer already-matched key starts with this key,
     // this is a prefix-overlap — skip to prevent collapsing distinct flankers.

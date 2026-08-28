@@ -4015,6 +4015,118 @@ test("T-C5-R3-36 — harness integrity: 274 baseline tests unaffected by R3 impl
     `At least 274 tests must have passed before R3 verdict — regression check (got ${passed})`);
 });
 
+// ── EP-AI-C5-R3.1: Input-side entity punctuation normalization ────────────────
+// Verifies that extractFragranceSlugs resolves entity slugs when the user writes
+// period-containing forms: "Chanel No. 5", "Chanel No.5", trailing sentence
+// periods, comparison contexts, and flanker safety is preserved.
+
+test("T-C5-R3.1-01 — Chanel No 5 (no period) still resolves entity — R3.1 regression", () => {
+  const r = resolveIntent("Tell me about Chanel No 5", EMPTY_CONTEXT);
+  assert.equal(r.entitySlug, "chanel-no-5-inspired",
+    "Canonical no-period form must continue to resolve chanel-no-5-inspired after R3.1");
+});
+
+test("T-C5-R3.1-02 — Chanel No. 5 (standard period form) resolves entity", () => {
+  const r = resolveIntent("Tell me about Chanel No. 5", EMPTY_CONTEXT);
+  assert.equal(r.entitySlug, "chanel-no-5-inspired",
+    "Period-form 'Chanel No. 5' must resolve chanel-no-5-inspired via input normalization");
+});
+
+test("T-C5-R3.1-03 — Chanel No.5 (concatenated, no space) resolves entity", () => {
+  const r = resolveIntent("Tell me about Chanel No.5", EMPTY_CONTEXT);
+  assert.equal(r.entitySlug, "chanel-no-5-inspired",
+    "Concatenated form 'Chanel No.5' must resolve chanel-no-5-inspired — period→space expands it");
+});
+
+test("T-C5-R3.1-04 — sentence 'Tell me about Chanel No. 5.' (trailing period) resolves", () => {
+  const r = resolveIntent("Tell me about Chanel No. 5.", EMPTY_CONTEXT);
+  assert.equal(r.entitySlug, "chanel-no-5-inspired",
+    "Trailing sentence period must not prevent entity resolution");
+});
+
+test("T-C5-R3.1-05 — 'Tell me about Chanel No.5.' (compressed + trailing) resolves", () => {
+  const r = resolveIntent("Tell me about Chanel No.5.", EMPTY_CONTEXT);
+  assert.equal(r.entitySlug, "chanel-no-5-inspired",
+    "Compressed period form with trailing sentence period must resolve chanel-no-5-inspired");
+});
+
+test("T-C5-R3.1-06 — 'What are the notes in Chanel No. 5?' resolves entity", () => {
+  const r = resolveIntent("What are the notes in Chanel No. 5?", EMPTY_CONTEXT);
+  assert.equal(r.entitySlug, "chanel-no-5-inspired",
+    "Period-form in question context must resolve entity for education intent");
+});
+
+test("T-C5-R3.1-07 — comparison: 'Compare Chanel No. 5 and Sauvage' resolves both slugs", () => {
+  const r = resolveIntent("Compare Chanel No. 5 and Sauvage", EMPTY_CONTEXT);
+  const allSlugs = [...r.compareSlug, ...(r.entitySlug ? [r.entitySlug] : [])];
+  assert.ok(
+    allSlugs.includes("chanel-no-5-inspired"),
+    "Period-form Chanel No. 5 must resolve in comparison context"
+  );
+  assert.ok(
+    allSlugs.includes("sauvage-inspired"),
+    "Sauvage must also resolve in the same comparison message"
+  );
+});
+
+test("T-C5-R3.1-08 — flanker safety: 'Sauvage Elixir.' (trailing period) resolves to elixir, not base", () => {
+  const r = resolveIntent("Tell me about Sauvage Elixir.", EMPTY_CONTEXT);
+  assert.equal(r.entitySlug, "sauvage-elixir-inspired",
+    "Trailing period must not prevent Sauvage Elixir from resolving to its own slug");
+  const allSlugs = [...(r.entitySlug ? [r.entitySlug] : []), ...r.compareSlug];
+  assert.ok(
+    !allSlugs.includes("sauvage-inspired"),
+    "Flanker safety: base Sauvage must not bleed through when Sauvage Elixir is the entity"
+  );
+});
+
+test("T-C5-R3.1-09 — unknown product with periods returns no entity slug", () => {
+  const r = resolveIntent("Tell me about Parfum Inconnu No. 3.", EMPTY_CONTEXT);
+  assert.equal(r.entitySlug, undefined,
+    "Unknown product with periods must not match any catalogue entity");
+});
+
+test("T-C5-R3.1-10 — apostrophe names unaffected: Prada L'Homme still resolves", () => {
+  const r = resolveIntent("Tell me about Prada L'Homme", EMPTY_CONTEXT);
+  assert.equal(r.entitySlug, "prada-l'homme-inspired",
+    "Apostrophe in product name must not be disrupted by period normalization");
+});
+
+test("T-C5-R3.1-11 — apostrophe names unaffected: Terre d'Hermes still resolves", () => {
+  const r = resolveIntent("What notes are in Terre d'Hermes", EMPTY_CONTEXT);
+  assert.equal(r.entitySlug, "terre-d'hermes-inspired",
+    "Apostrophe-containing 'Terre d'Hermes' must resolve after period normalization is added");
+});
+
+test("T-C5-R3.1-12 — Torino24 (no period) still resolves — R3 regression from R3.1", () => {
+  const r = resolveIntent("What notes are in Torino24", EMPTY_CONTEXT);
+  assert.equal(r.entitySlug, "torino24-inspired",
+    "R3 entity Torino24 must continue to resolve after R3.1 normalization change");
+});
+
+test("T-C5-R3.1-13 — CK One still resolves — R3.1 regression", () => {
+  const r = resolveIntent("Tell me about CK One", EMPTY_CONTEXT);
+  assert.equal(r.entitySlug, "ck-one-inspired",
+    "R3 entity CK One must continue to resolve after R3.1 changes");
+});
+
+test("T-C5-R3.1-14 — 212 VIP Black still resolves — R3.1 regression", () => {
+  const r = resolveIntent("Tell me about 212 VIP Black", EMPTY_CONTEXT);
+  assert.equal(r.entitySlug, "212-vip-black-inspired",
+    "R3 entity 212 VIP Black must continue to resolve after R3.1 changes");
+});
+
+test("T-C5-R3.1-15 — planConversation routes period-form entity query to retrieval path", () => {
+  const p = planConversation("What notes are in Chanel No. 5?", EMPTY_STATE);
+  assert.equal(p.requiresRetrieval, true,
+    "Period-form entity query must route to a retrieval path, not clarification");
+});
+
+test("T-C5-R3.1-16 — harness integrity: 310 baseline+R3 tests unaffected by R3.1 implementation", () => {
+  assert.ok(passed >= 310,
+    `At least 310 tests must have passed before R3.1 verdict — regression check (got ${passed})`);
+});
+
 // ── Summary ───────────────────────────────────────────────────────────────────
 
 const total = passed + failed;
