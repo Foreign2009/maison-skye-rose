@@ -56,7 +56,7 @@ const COMPARISON_PATTERNS = [
 ];
 
 const EDUCATION_PATTERNS = [
-  "what is ", "what are ", "explain ", "teach me", "how does ", "why does ",
+  "what is ", "what are ", "what notes", "explain ", "teach me", "how does ", "why does ",
   "tell me about ", "how do ", "what makes ", "what's the difference between",
 ];
 

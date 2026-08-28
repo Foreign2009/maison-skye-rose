@@ -14,7 +14,7 @@ import type { IntentSignals } from "../intentParser";
 // ── Intent trigger phrases ────────────────────────────────────────────────────
 
 const COMPARISON_TRIGGERS  = [" vs ", " versus ", "compare", "difference between", "vs.", "which is better", "which one"];
-const EDUCATION_TRIGGERS   = ["what is ", "what are ", "explain ", "teach me", "how does", "why does", "tell me about", "how do", "what makes", "what's the difference between"];
+const EDUCATION_TRIGGERS   = ["what is ", "what are ", "what notes", "explain ", "teach me", "how does", "why does", "tell me about", "how do", "what makes", "what's the difference between"];
 const GIFT_TRIGGERS        = ["gift", "present", "for my ", "someone else", "for her", "for him", "for them", "buying for", "mother", "father", "partner", "friend"];
 const SIMILAR_TRIGGERS     = ["similar to", "like ", "reminds me of", "same as", "alternatives to", "dupe for", "smells like", "something like"];
 const SEASONAL_TRIGGERS    = ["in summer", "for summer", "in winter", "for winter", "in spring", "for spring", "in autumn", "for autumn", "summer ", "winter ", "autumn ", "spring "];

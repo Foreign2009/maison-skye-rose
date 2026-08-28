@@ -3703,6 +3703,318 @@ test("T-C5-R2-12 — existing 262 concierge test suite: no regression (harness i
   assert.ok(passed >= 262, `At least 262 tests must have passed before R2 tests (got ${passed})`);
 });
 
+// ── EP-AI-C5-R3: Catalogue Entity Retrieval Boundary Repair ──────────────────
+// Repairs three production defects discovered during R2 live acceptance:
+// A: "What notes are in Torino24?" → notes pattern now routes to governed retrieval
+// B: "Tell me about Chanel No 5." → planResponse Precedence 2 matches bare name
+// C: "Compare CK One with 212 VIP Black." → both bare names match in planResponse
+// Plus: entity gate prerequisites, unknown boundary, flanker safety, regressions.
+
+console.log("\n── EP-AI-C5-R3: Catalogue Entity Retrieval Boundary Repair ─────────────");
+
+// ── Phase 5: Notes question repair (planConversation) ────────────────────────
+
+test("T-C5-R3-01 — 'What notes are in Torino24?' does not route to clarification", () => {
+  const p = planConversation("What notes are in Torino24?", EMPTY_STATE);
+  assert.notEqual(p.action, "clarification",
+    "Education pattern 'what notes' must prevent clarification routing when entity is present");
+});
+
+test("T-C5-R3-02 — 'What notes are in Torino24?' sets requiresRetrieval = true", () => {
+  const p = planConversation("What notes are in Torino24?", EMPTY_STATE);
+  assert.equal(p.requiresRetrieval, true,
+    "'What notes' education pattern must engage retrieval on fresh session");
+});
+
+test("T-C5-R3-03 — 'What notes does Torino24 have?' does not route to clarification", () => {
+  const p = planConversation("What notes does Torino24 have?", EMPTY_STATE);
+  assert.notEqual(p.action, "clarification",
+    "Education pattern 'what notes' must cover 'have' phrasing variation");
+});
+
+// ── Phase 5: Notes question repair (intentResolver) ──────────────────────────
+
+test("T-C5-R3-04 — resolveIntent 'What notes are in Torino24?' → intent = education", () => {
+  const r = resolveIntent("What notes are in Torino24?", EMPTY_CONTEXT);
+  assert.equal(r.intent, "education",
+    "EDUCATION_TRIGGERS 'what notes' must classify 'What notes are in X?' as education");
+});
+
+test("T-C5-R3-05 — resolveIntent 'What notes are in Torino24?' → entitySlug = torino24-inspired", () => {
+  const r = resolveIntent("What notes are in Torino24?", EMPTY_CONTEXT);
+  assert.equal(r.entitySlug, "torino24-inspired",
+    "Entity extraction must resolve bare name 'Torino24' to torino24-inspired");
+});
+
+test("T-C5-R3-06 — resolveIntent 'What notes does Torino24 have?' → intent = education", () => {
+  const r = resolveIntent("What notes does Torino24 have?", EMPTY_CONTEXT);
+  assert.equal(r.intent, "education",
+    "EDUCATION_TRIGGERS 'what notes' must match 'what notes does' phrasing variant");
+});
+
+test("T-C5-R3-07 — resolveIntent 'What notes does Torino24 have?' → entitySlug = torino24-inspired", () => {
+  const r = resolveIntent("What notes does Torino24 have?", EMPTY_CONTEXT);
+  assert.equal(r.entitySlug, "torino24-inspired",
+    "Bare name resolution must work for 'have' phrasing variant");
+});
+
+test("T-C5-R3-08 — Torino24 entity authority: resolved entity exists in catalogue", () => {
+  const r = resolveIntent("What notes are in Torino24?", EMPTY_CONTEXT);
+  assert.ok(r.entitySlug, "entitySlug must be defined");
+  const entry = mkcCatalogue.find((k) => k.slug === r.entitySlug);
+  assert.ok(entry, `${r.entitySlug} must exist in MKC so the entity gate can retrieve governed context`);
+});
+
+// ── Phase 5: Retrieval — notes question reaches governed context ──────────────
+
+test("T-C5-R3-09 — notes question: planRetrieval includes torino24-inspired in fragrances", () => {
+  const r = resolveIntent("What notes are in Torino24?", EMPTY_CONTEXT);
+  assert.equal(r.entitySlug, "torino24-inspired");
+  const retrieval = planRetrieval(r, EMPTY_CONTEXT, undefined);
+  const slugs = retrieval.fragrances.map((f) => f.slug);
+  assert.ok(slugs.includes("torino24-inspired"),
+    "torino24-inspired must appear in retrieval fragrances when entity resolves for education");
+});
+
+// ── Phase 6: Known product education repair (Chanel No 5) ────────────────────
+
+test("T-C5-R3-10 — 'Tell me about Chanel No 5.' sets requiresRetrieval = true", () => {
+  const p = planConversation("Tell me about Chanel No 5.", EMPTY_STATE);
+  assert.equal(p.requiresRetrieval, true,
+    "'Tell me about' education pattern must engage retrieval");
+});
+
+test("T-C5-R3-11 — resolveIntent 'Tell me about Chanel No 5.' → entitySlug = chanel-no-5-inspired", () => {
+  const r = resolveIntent("Tell me about Chanel No 5.", EMPTY_CONTEXT);
+  assert.equal(r.entitySlug, "chanel-no-5-inspired",
+    "Bare name 'Chanel No 5' must resolve to chanel-no-5-inspired");
+});
+
+test("T-C5-R3-12 — chanel-no-5-inspired exists in catalogue (sourceKnowledge available)", () => {
+  const entry = mkcCatalogue.find((k) => k.slug === "chanel-no-5-inspired");
+  assert.ok(entry, "chanel-no-5-inspired must exist in MKC for education context to include governed data");
+});
+
+test("T-C5-R3-13 — Chanel No 5 education: planRetrieval includes governed record", () => {
+  const r = resolveIntent("Tell me about Chanel No 5.", EMPTY_CONTEXT);
+  const retrieval = planRetrieval(r, EMPTY_CONTEXT, undefined);
+  const slugs = retrieval.fragrances.map((f) => f.slug);
+  assert.ok(slugs.includes("chanel-no-5-inspired"),
+    "chanel-no-5-inspired must appear in retrieval fragrances for education intent");
+});
+
+// ── Phase 7: Known product comparison repair (CK One vs 212 VIP Black) ───────
+
+test("T-C5-R3-14 — 'Compare CK One with 212 VIP Black.' sets requiresRetrieval = true", () => {
+  const p = planConversation("Compare CK One with 212 VIP Black.", EMPTY_STATE);
+  assert.equal(p.requiresRetrieval, true,
+    "Comparison pattern must engage retrieval");
+});
+
+test("T-C5-R3-15 — resolveIntent 'Compare CK One with 212 VIP Black.' → compareSlug includes ck-one-inspired", () => {
+  const r = resolveIntent("Compare CK One with 212 VIP Black.", EMPTY_CONTEXT);
+  assert.ok(r.compareSlug.includes("ck-one-inspired"),
+    "'CK One' bare name must resolve to ck-one-inspired in comparison context");
+});
+
+test("T-C5-R3-16 — resolveIntent 'Compare CK One with 212 VIP Black.' → compareSlug includes 212-vip-black-inspired", () => {
+  const r = resolveIntent("Compare CK One with 212 VIP Black.", EMPTY_CONTEXT);
+  assert.ok(r.compareSlug.includes("212-vip-black-inspired"),
+    "'212 VIP Black' bare name must resolve to 212-vip-black-inspired in comparison context");
+});
+
+test("T-C5-R3-17 — both CK One and 212 VIP Black resolve (compareSlug.length ≥ 2)", () => {
+  const r = resolveIntent("Compare CK One with 212 VIP Black.", EMPTY_CONTEXT);
+  assert.ok(r.compareSlug.length >= 2,
+    "Both entities must resolve for comparison context to include both governed records");
+});
+
+test("T-C5-R3-18 — both comparison slugs exist in catalogue", () => {
+  const ckOne = mkcCatalogue.find((k) => k.slug === "ck-one-inspired");
+  const vip   = mkcCatalogue.find((k) => k.slug === "212-vip-black-inspired");
+  assert.ok(ckOne, "ck-one-inspired must exist in MKC");
+  assert.ok(vip,   "212-vip-black-inspired must exist in MKC");
+});
+
+test("T-C5-R3-19 — CK One vs 212 VIP Black comparison: planRetrieval includes both records", () => {
+  const r = resolveIntent("Compare CK One with 212 VIP Black.", EMPTY_CONTEXT);
+  const retrieval = planRetrieval(r, EMPTY_CONTEXT, undefined);
+  const slugs = retrieval.fragrances.map((f) => f.slug);
+  assert.ok(slugs.includes("ck-one-inspired"), "ck-one-inspired must be in retrieval fragrances");
+  assert.ok(slugs.includes("212-vip-black-inspired"), "212-vip-black-inspired must be in retrieval fragrances");
+});
+
+// ── Phase 8: Unknown entity boundary ─────────────────────────────────────────
+
+test("T-C5-R3-20 — unknown product 'Parfum Fantaisie Inconnue' stays unresolved", () => {
+  const r = resolveIntent("What notes are in Parfum Fantaisie Inconnue?", EMPTY_CONTEXT);
+  assert.equal(r.entitySlug, undefined,
+    "A product not in the catalogue must not resolve — no fabricated slugs");
+});
+
+test("T-C5-R3-21 — unknown product stays unresolved even when 'what notes' education pattern fires", () => {
+  // "Parfum Inconnu Fantaisie" is confirmed absent from MKC (T-C5-R2-10).
+  // This additionally verifies the 'what notes' pattern does not fabricate slugs.
+  const r = resolveIntent("What notes are in Parfum Inconnu Fantaisie?", EMPTY_CONTEXT);
+  assert.equal(r.entitySlug, undefined,
+    "Confirmed-unknown product must not resolve even when education pattern fires");
+});
+
+test("T-C5-R3-22 — partial comparison: only known slug resolves, no fabricated slug for unknown", () => {
+  const r = resolveIntent("Compare Torino24 with Parfum Fantaisie Inconnue", EMPTY_CONTEXT);
+  const allSlugs = [...r.compareSlug, ...(r.entitySlug ? [r.entitySlug] : [])];
+  assert.ok(allSlugs.some((s) => s === "torino24-inspired"),
+    "Known entity 'Torino24' must still resolve in a partial comparison");
+  assert.ok(
+    allSlugs.every((s) => mkcCatalogue.some((k) => k.slug === s)),
+    "Every resolved slug must exist in MKC — no fabricated slugs from unknown entity"
+  );
+});
+
+// ── Phase 10: Flanker safety (additional pairs) ───────────────────────────────
+
+test("T-C5-R3-23 — flanker B: 'bleu de chanel l'exclusif' resolves L'Exclusif variant", () => {
+  const r = resolveIntent("tell me about bleu de chanel l'exclusif", EMPTY_CONTEXT);
+  const allSlugs = [...(r.entitySlug ? [r.entitySlug] : []), ...r.compareSlug];
+  assert.ok(
+    allSlugs.includes("bleu-de-chanel-l'exclusif-inspired"),
+    "L'Exclusif variant must resolve when guest names it explicitly"
+  );
+});
+
+test("T-C5-R3-24 — flanker B: L'Exclusif name does not resolve base Bleu de Chanel", () => {
+  const r = resolveIntent("tell me about bleu de chanel l'exclusif", EMPTY_CONTEXT);
+  const allSlugs = [...(r.entitySlug ? [r.entitySlug] : []), ...r.compareSlug];
+  assert.ok(
+    !allSlugs.includes("bleu-de-chanel-inspired"),
+    "Base 'bleu-de-chanel-inspired' must NOT resolve when guest named the L'Exclusif variant — flanker safety"
+  );
+});
+
+test("T-C5-R3-25 — flanker B: 'bleu de chanel' alone resolves base variant only", () => {
+  const r = resolveIntent("tell me about bleu de chanel", EMPTY_CONTEXT);
+  const allSlugs = [...(r.entitySlug ? [r.entitySlug] : []), ...r.compareSlug];
+  assert.ok(
+    allSlugs.includes("bleu-de-chanel-inspired"),
+    "'Bleu de Chanel' alone must resolve bleu-de-chanel-inspired"
+  );
+});
+
+test("T-C5-R3-26 — flanker C: 'Sauvage' alone resolves sauvage-inspired (base, not elixir)", () => {
+  const r = resolveIntent("tell me about Sauvage", EMPTY_CONTEXT);
+  const allSlugs = [...(r.entitySlug ? [r.entitySlug] : []), ...r.compareSlug];
+  assert.ok(
+    allSlugs.includes("sauvage-inspired"),
+    "'Sauvage' alone must resolve sauvage-inspired"
+  );
+  assert.ok(
+    !allSlugs.includes("sauvage-elixir-inspired"),
+    "'Sauvage' alone must NOT resolve sauvage-elixir-inspired — flanker safety"
+  );
+});
+
+// ── planResponse Precedence 2: bare-name + punctuation normalisation ──────────
+
+test("T-C5-R3-27 — planResponse: 'Chanel No. 5' (with period) matches 'Chanel No 5 Inspired'", () => {
+  const entry = mkcCatalogue.find((k) => k.slug === "chanel-no-5-inspired");
+  assert.ok(entry, "chanel-no-5-inspired must be in catalogue");
+  const retrieval: RetrievalContext = { fragrances: [entry!], articles: [] };
+  const prose = "Chanel No. 5 is a classic floral aldehyde with jasmine and rose at its heart.";
+  const result = planResponse(prose, "education", retrieval, BASE_PLAN);
+  assert.ok(
+    result.recommendedSlugs.includes("chanel-no-5-inspired"),
+    "planResponse Precedence 2 must match 'Chanel No. 5' (period variant) against canonical 'Chanel No 5 Inspired'"
+  );
+});
+
+test("T-C5-R3-28 — planResponse: 'CK One' (no Inspired) matches 'CK One Inspired'", () => {
+  const entry = mkcCatalogue.find((k) => k.slug === "ck-one-inspired");
+  assert.ok(entry, "ck-one-inspired must be in catalogue");
+  const retrieval: RetrievalContext = { fragrances: [entry!], articles: [] };
+  const prose = "CK One is a fresh aquatic fragrance known for its unisex character and clean citrus opening.";
+  const result = planResponse(prose, "education", retrieval, BASE_PLAN);
+  assert.ok(
+    result.recommendedSlugs.includes("ck-one-inspired"),
+    "planResponse Precedence 2 must match bare name 'CK One' against canonical 'CK One Inspired'"
+  );
+});
+
+test("T-C5-R3-29 — planResponse: full canonical name still matches (Precedence 2 regression)", () => {
+  const entry = mkcCatalogue.find((k) => k.slug === "ck-one-inspired");
+  assert.ok(entry, "ck-one-inspired must be in catalogue");
+  const retrieval: RetrievalContext = { fragrances: [entry!], articles: [] };
+  const prose = "CK One Inspired is our interpretation of the iconic unisex aquatic.";
+  const result = planResponse(prose, "education", retrieval, BASE_PLAN);
+  assert.ok(
+    result.recommendedSlugs.includes("ck-one-inspired"),
+    "Full canonical name 'CK One Inspired' must still match — no regression from suffix-strip logic"
+  );
+});
+
+test("T-C5-R3-30 — planResponse comparison: both bare names resolve to product cards", () => {
+  const ckOne = mkcCatalogue.find((k) => k.slug === "ck-one-inspired");
+  const vip   = mkcCatalogue.find((k) => k.slug === "212-vip-black-inspired");
+  assert.ok(ckOne && vip, "both entries must be in catalogue");
+  const retrieval: RetrievalContext = { fragrances: [ckOne!, vip!], articles: [] };
+  const prose = "CK One leans fresh and citrusy while 212 VIP Black goes in a bolder, woodier direction.";
+  const result = planResponse(prose, "comparison", retrieval, BASE_PLAN);
+  assert.ok(
+    result.recommendedSlugs.includes("ck-one-inspired"),
+    "planResponse must resolve 'CK One' bare name to ck-one-inspired card"
+  );
+  assert.ok(
+    result.recommendedSlugs.includes("212-vip-black-inspired"),
+    "planResponse must resolve '212 VIP Black' bare name to 212-vip-black-inspired card"
+  );
+});
+
+test("T-C5-R3-31 — planResponse: Torino24 bare name matches 'Torino24 Inspired' in context", () => {
+  const entry = mkcCatalogue.find((k) => k.slug === "torino24-inspired");
+  assert.ok(entry, "torino24-inspired must be in catalogue");
+  const retrieval: RetrievalContext = { fragrances: [entry!], articles: [] };
+  const prose = "Torino24 is a sophisticated vetiver and tobacco composition with remarkable longevity.";
+  const result = planResponse(prose, "education", retrieval, BASE_PLAN);
+  assert.ok(
+    result.recommendedSlugs.includes("torino24-inspired"),
+    "planResponse Precedence 2 must match bare name 'Torino24' against 'Torino24 Inspired'"
+  );
+});
+
+// ── Phase 16: Regression — R3 repairs must not break R2 behaviour ────────────
+
+test("T-C5-R3-32 — regression: 'what is' education trigger intact after 'what notes' addition", () => {
+  const r = resolveIntent("What is oud?", EMPTY_CONTEXT);
+  assert.equal(r.intent, "education",
+    "Pre-existing 'what is' EDUCATION_TRIGGERS entry must remain intact");
+});
+
+test("T-C5-R3-33 — regression: 'tell me about' education trigger unaffected", () => {
+  const r = resolveIntent("Tell me about floral fragrances", EMPTY_CONTEXT);
+  assert.equal(r.intent, "education",
+    "Pre-existing 'tell me about' trigger must remain intact after R3 edits");
+});
+
+test("T-C5-R3-34 — regression: EDUCATION_PATTERNS 'tell me about' still routes planConversation", () => {
+  const p = planConversation("Tell me about woody fragrances", EMPTY_STATE);
+  assert.notEqual(p.action, "clarification",
+    "Existing EDUCATION_PATTERNS entries must not be disrupted by 'what notes' addition");
+  assert.equal(p.requiresRetrieval, true,
+    "Education pattern must set requiresRetrieval = true");
+});
+
+test("T-C5-R3-35 — regression: Torino24 bare name entity resolution unchanged from R2", () => {
+  const r = resolveIntent("show me something like Torino24", EMPTY_CONTEXT);
+  assert.equal(r.entitySlug, "torino24-inspired",
+    "Bare name resolution introduced in R2 must remain intact after R3 edits");
+});
+
+// ── Harness integrity ─────────────────────────────────────────────────────────
+
+test("T-C5-R3-36 — harness integrity: 274 baseline tests unaffected by R3 implementation", () => {
+  assert.ok(passed >= 274,
+    `At least 274 tests must have passed before R3 verdict — regression check (got ${passed})`);
+});
+
 // ── Summary ───────────────────────────────────────────────────────────────────
 
 const total = passed + failed;

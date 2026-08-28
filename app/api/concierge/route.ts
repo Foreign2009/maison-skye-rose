@@ -187,7 +187,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       : null;
 
     // 1. Conversation planning — decide action before retrieval
-    const plan = planConversation(message, state);
+    let plan = planConversation(message, state);
 
     // 1b. Detect exploration target when planning routes to alternative exploration (EP18-P2)
     const explorationTarget = (plan.action === "alternative_exploration" && state.consultationPlan)
@@ -205,8 +205,19 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     let retrieval;
     let resolvedIntent;
 
+    // Entity-authority gate (EP-AI-C5-R3): if the planner chose clarification
+    // but the message contains a resolvable entity slug or comparison pair, override
+    // to new_search so the entity is not silently lost ("What notes are in Torino24?").
+    if (!plan.requiresRetrieval && plan.action === "clarification") {
+      const preResolved = resolveIntent(message, state.context);
+      if (preResolved.entitySlug || preResolved.compareSlug.length >= 2) {
+        plan = { ...plan, action: "new_search", requiresRetrieval: true, requiresClarification: false };
+        resolvedIntent = preResolved;
+      }
+    }
+
     if (plan.requiresRetrieval) {
-      resolvedIntent = resolveIntent(message, state.context);
+      if (!resolvedIntent) resolvedIntent = resolveIntent(message, state.context);
 
       // EP-AI-C4: override intent so planRetrieval routes to anchored_refinement case
       if (plan.action === "anchored_refinement") {

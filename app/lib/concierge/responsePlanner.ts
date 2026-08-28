@@ -17,6 +17,25 @@ import type { ConversationPlan }   from "./conversationPlanner";
 const PRODUCT_RE = /\[PRODUCT:([a-z0-9-]+)\]/g;
 const ARTICLE_RE = /\[ARTICLE:([a-z0-9-]+)\]/g;
 
+// ── Precedence-2 bare-name matching helpers ───────────────────────────────────
+// Allows "Chanel No. 5" in prose to match canonical "Chanel No 5 Inspired",
+// and "CK One" to match "CK One Inspired", without false positives.
+
+const PROSE_NAME_SUFFIXES = [" Inspired", " Eau de Parfum", " EDP", " Eau de Toilette", " EDT"];
+
+function stripProseSuffix(name: string): string {
+  const lower = name.toLowerCase();
+  for (const s of PROSE_NAME_SUFFIXES) {
+    if (lower.endsWith(s.toLowerCase())) return name.slice(0, -s.length);
+  }
+  return name;
+}
+
+// Removes periods and collapses whitespace so "No. 5" ≡ "No 5".
+function normalizeForProseMatch(s: string): string {
+  return s.toLowerCase().replace(/\./g, "").replace(/\s+/g, " ").trim();
+}
+
 // ── Contextual follow-up generation ──────────────────────────────────────────
 
 // ── Static follow-up pools ────────────────────────────────────────────────────
@@ -165,11 +184,16 @@ export function planResponse(
   let finalSlugs: string[] = rawSlugs.filter((s) => validFragranceSlugs.has(s));
 
   if (finalSlugs.length === 0) {
-    // Precedence 2: exact product-name match in prose (case-insensitive)
-    // After marker stripping, fragrance names appear naturally in the content.
-    const contentLower = content.toLowerCase();
-    const nameMatched  = retrieval.fragrances
-      .filter((f) => contentLower.includes(f.name.toLowerCase()))
+    // Precedence 2: product-name match in prose — full canonical name OR bare name (suffix-stripped),
+    // both normalized for punctuation ("No. 5" ≡ "No 5"). Minimum 5-char bare name to avoid
+    // false positives from very short product identifiers.
+    const normContent = normalizeForProseMatch(content);
+    const nameMatched = retrieval.fragrances
+      .filter((f) => {
+        if (normContent.includes(normalizeForProseMatch(f.name))) return true;
+        const bare = stripProseSuffix(f.name);
+        return bare !== f.name && bare.length >= 5 && normContent.includes(normalizeForProseMatch(bare));
+      })
       .map((f) => f.slug);
 
     if (nameMatched.length > 0) {
