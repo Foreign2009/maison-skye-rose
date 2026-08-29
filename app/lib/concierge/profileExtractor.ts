@@ -178,7 +178,13 @@ function extractShoppingContext(q: string): Partial<ConversationProfile> {
   const out: Partial<ConversationProfile> = {};
 
   // Self — explicit statements only
-  if (/\bfor (my)?self\b/.test(q) || /\bfor me\b/.test(q) || /\bi'?ll? (be )?wear/.test(q)) {
+  // "back to me" covers natural pivot phrases like "Now back to me." / "And back to me."
+  if (
+    /\bfor (my)?self\b/.test(q) ||
+    /\bfor me\b/.test(q)        ||
+    /\bi'?ll? (be )?wear/.test(q) ||
+    /\bback to me\b/.test(q)
+  ) {
     out.shoppingIntent = { value: "self", confidence: "HIGH" };
     return out;
   }
@@ -394,16 +400,22 @@ export function extractProfile(
   if (!shopping.shoppingIntent || shopping.shoppingIntent.value === "self") {
     // EP-AI-C6-P1: expanded to cover natural product-type vocabulary
     // (men's/women's scent|perfume|cologne) in addition to "fragrance".
-    // "cologne for myself" is also captured as a self-referential masculine signal.
-    const MALE_PATTERN   = /\bfor men\b|\bmasculine fragrances?\b|\bmen'?s (?:fragrances?|scents?|perfumes?|colognes?|aftershave)\b|\bi'?m (?:a )?(?:man|male|guy)\b|\bi am (?:a )?(?:man|male|guy)\b|\bas a (?:man|male|guy)\b|\bcologne for (?:my)?self\b/;
+    const MALE_PATTERN   = /\bfor men\b|\bmasculine fragrances?\b|\bmen'?s (?:fragrances?|scents?|perfumes?|colognes?|aftershave)\b|\bi'?m (?:a )?(?:man|male|guy)\b|\bi am (?:a )?(?:man|male|guy)\b|\bas a (?:man|male|guy)\b/;
     const FEMALE_PATTERN = /\bfor women\b|\bfeminine fragrances?\b|\bwomen'?s (?:fragrances?|scents?|perfumes?|colognes?)\b|\bi'?m (?:a )?(?:woman|female|girl|lady)\b|\bi am (?:a )?(?:woman|female|girl|lady)\b|\bas a (?:woman|female|girl|lady)\b/;
     const UNISEX_PATTERN = /\bgender doesn'?t matter\b|\bunisex fragrances?\b|\bshow me unisex\b|\bi don'?t (?:mind|care)(?: (?:about|the))? gender\b|\bfor anyone\b/;
+    // Inference-only: "cologne for myself" signals a masculine shopping context but
+    // must not override an explicit gender identity already established this session.
+    // Applied last and only when preferredGender is not yet set.
+    const MALE_INFERENCE = /\bcologne for (?:my)?self\b/;
+
     if (MALE_PATTERN.test(q)) {
       profile.preferredGender = { value: "male", confidence: "HIGH" };
     } else if (FEMALE_PATTERN.test(q)) {
       profile.preferredGender = { value: "female", confidence: "HIGH" };
     } else if (UNISEX_PATTERN.test(q)) {
       profile.preferredGender = { value: "unisex", confidence: "HIGH" };
+    } else if (!profile.preferredGender && MALE_INFERENCE.test(q)) {
+      profile.preferredGender = { value: "male", confidence: "HIGH" };
     }
   }
 

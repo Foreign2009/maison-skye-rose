@@ -4551,6 +4551,580 @@ test("C6-G40 — buildSystemPrompt includes never-assume-gender rule (E-02 safet
     "System prompt must include explicit \"Never assume a guest's gender\" rule (E-02)");
 });
 
+// ── Section 22: EP-AI-C6-P1-V — Gender Integrity Acceptance ─────────────────
+
+console.log("\n── 22. EP-AI-C6-P1-V Acceptance Coverage ────────────────────────────");
+
+// ── V01–V16: Natural gender extraction (original required phrases) ────────────
+
+test("C6-V01 — \"I'm male.\" → male preferred gender", () => {
+  const p = extractProfile("I'm male.", undefined);
+  assert.equal(p.preferredGender?.value, "male", "C6-V01: I'm male. must yield male");
+});
+
+test("C6-V02 — \"I'm a man.\" → male preferred gender", () => {
+  const p = extractProfile("I'm a man.", undefined);
+  assert.equal(p.preferredGender?.value, "male", "C6-V02: I'm a man. must yield male");
+});
+
+test("C6-V03 — \"I'm a guy.\" → male preferred gender", () => {
+  const p = extractProfile("I'm a guy.", undefined);
+  assert.equal(p.preferredGender?.value, "male", "C6-V03: I'm a guy. must yield male");
+});
+
+test("C6-V04 — \"For me — I'm male.\" → male preferred gender", () => {
+  const p = extractProfile("For me — I'm male.", undefined);
+  assert.equal(p.preferredGender?.value, "male", "C6-V04: For me — I'm male. must yield male");
+});
+
+test("C6-V05 — \"I'm looking for a men's fragrance.\" → male preferred gender", () => {
+  const p = extractProfile("I'm looking for a men's fragrance.", undefined);
+  assert.equal(p.preferredGender?.value, "male", "C6-V05: men's fragrance must yield male");
+});
+
+test("C6-V06 — \"I want a men's scent.\" → male preferred gender", () => {
+  const p = extractProfile("I want a men's scent.", undefined);
+  assert.equal(p.preferredGender?.value, "male", "C6-V06: men's scent must yield male");
+});
+
+test("C6-V07 — \"Show me men's perfume.\" → male preferred gender", () => {
+  const p = extractProfile("Show me men's perfume.", undefined);
+  assert.equal(p.preferredGender?.value, "male", "C6-V07: men's perfume must yield male");
+});
+
+test("C6-V08 — \"I want a masculine fragrance.\" → male preferred gender", () => {
+  const p = extractProfile("I want a masculine fragrance.", undefined);
+  assert.equal(p.preferredGender?.value, "male", "C6-V08: masculine fragrance must yield male");
+});
+
+test("C6-V09 — \"I'm looking for cologne for myself.\" → male (intentional inference, no prior)", () => {
+  const p = extractProfile("I'm looking for cologne for myself.", undefined);
+  assert.equal(p.preferredGender?.value, "male",
+    "C6-V09: cologne for myself with no prior identity is a masculine inference signal");
+});
+
+test("C6-V10 — \"I'm female.\" → female preferred gender", () => {
+  const p = extractProfile("I'm female.", undefined);
+  assert.equal(p.preferredGender?.value, "female", "C6-V10: I'm female. must yield female");
+});
+
+test("C6-V11 — \"I'm a woman.\" → female preferred gender", () => {
+  const p = extractProfile("I'm a woman.", undefined);
+  assert.equal(p.preferredGender?.value, "female", "C6-V11: I'm a woman. must yield female");
+});
+
+test("C6-V12 — \"For me — I'm female.\" → female preferred gender", () => {
+  const p = extractProfile("For me — I'm female.", undefined);
+  assert.equal(p.preferredGender?.value, "female", "C6-V12: For me — I'm female. must yield female");
+});
+
+test("C6-V13 — \"I'm looking for a women's fragrance.\" → female preferred gender", () => {
+  const p = extractProfile("I'm looking for a women's fragrance.", undefined);
+  assert.equal(p.preferredGender?.value, "female", "C6-V13: women's fragrance must yield female");
+});
+
+test("C6-V14 — \"I want a women's scent.\" → female preferred gender", () => {
+  const p = extractProfile("I want a women's scent.", undefined);
+  assert.equal(p.preferredGender?.value, "female", "C6-V14: women's scent must yield female");
+});
+
+test("C6-V15 — \"Show me women's perfume.\" → female preferred gender", () => {
+  const p = extractProfile("Show me women's perfume.", undefined);
+  assert.equal(p.preferredGender?.value, "female", "C6-V15: women's perfume must yield female");
+});
+
+test("C6-V16 — \"I want a feminine fragrance.\" → female preferred gender", () => {
+  const p = extractProfile("I want a feminine fragrance.", undefined);
+  assert.equal(p.preferredGender?.value, "female", "C6-V16: feminine fragrance must yield female");
+});
+
+// ── V17–V22: Cologne semantic safety audit ────────────────────────────────────
+
+test("C6-V17 — \"Tell me about this cologne.\" → no guest gender inferred", () => {
+  const p = extractProfile("Tell me about this cologne.", undefined);
+  assert.equal(p.preferredGender, undefined,
+    "C6-V17: generic cologne mention must NOT set guest gender");
+});
+
+test("C6-V18 — \"Do you have any unisex colognes?\" → no guest gender inferred", () => {
+  const p = extractProfile("Do you have any unisex colognes?", undefined);
+  assert.equal(p.preferredGender, undefined,
+    "C6-V18: unisex colognes must NOT set guest gender to male");
+});
+
+test("C6-V19 — \"I'm buying cologne for my wife.\" → recipient female, guest gender unset", () => {
+  const p = extractProfile("I'm buying cologne for my wife.", undefined);
+  assert.equal(p.shoppingIntent?.value, "gift",   "C6-V19: must detect gift intent");
+  assert.equal(p.recipientGender?.value, "female", "C6-V19: recipient must be female");
+  assert.equal(p.preferredGender, undefined,
+    "C6-V19: cologne must NOT set guest identity to male when buying for wife");
+});
+
+test("C6-V20 — \"I'm female and I like cologne.\" → female wins, no male override", () => {
+  const p = extractProfile("I'm female and I like cologne.", undefined);
+  assert.equal(p.preferredGender?.value, "female",
+    "C6-V20: explicit female identity must win over cologne mention");
+});
+
+test("C6-V21 — \"I want a cologne.\" → no guest gender inferred", () => {
+  const p = extractProfile("I want a cologne.", undefined);
+  assert.equal(p.preferredGender, undefined,
+    "C6-V21: generic product vocabulary alone must not infer guest gender");
+});
+
+test("C6-V22a — \"I'm looking for cologne for myself.\" (no prior) → male (intentional)", () => {
+  const p = extractProfile("I'm looking for cologne for myself.", undefined);
+  assert.equal(p.preferredGender?.value, "male",
+    "C6-V22a: cologne for myself with no prior identity signals masculine shopping intent");
+});
+
+test("C6-V22b — prior female + \"cologne for myself\" → female identity preserved", () => {
+  const prior = extractProfile("I'm a woman.", undefined);
+  const after  = extractProfile("I'm looking for cologne for myself.", prior);
+  assert.equal(after.preferredGender?.value, "female",
+    "C6-V22b: cologne for myself must NOT override an established female identity (BP-04 safety)");
+});
+
+test("C6-V22c — single turn \"I'm female and I'm looking for cologne for myself.\" → female wins", () => {
+  const p = extractProfile("I'm female and I'm looking for cologne for myself.", undefined);
+  assert.equal(p.preferredGender?.value, "female",
+    "C6-V22c: explicit female identity in same message must override cologne inference");
+});
+
+// ── V23–V24: Multi-turn profile persistence ───────────────────────────────────
+
+test("C6-V23 — male persists across irrelevant second turn", () => {
+  const t1 = extractProfile("I'm male.", undefined);
+  assert.equal(t1.preferredGender?.value, "male", "C6-V23: T1 must be male");
+  const t2 = extractProfile("Something fresh.", t1);
+  assert.equal(t2.preferredGender?.value, "male",  "C6-V23: male must persist in T2");
+  assert.equal(getEffectiveGenderConstraint(t2), "male",
+    "C6-V23: effective constraint must be male after T2");
+});
+
+test("C6-V24 — female persists across irrelevant second turn", () => {
+  const t1 = extractProfile("I'm female.", undefined);
+  assert.equal(t1.preferredGender?.value, "female", "C6-V24: T1 must be female");
+  const t2 = extractProfile("Something woody.", t1);
+  assert.equal(t2.preferredGender?.value, "female",  "C6-V24: female must persist in T2");
+  assert.equal(getEffectiveGenderConstraint(t2), "female",
+    "C6-V24: effective constraint must be female after T2");
+});
+
+// ── V25–V27: Gift/self target pivots ─────────────────────────────────────────
+
+test("C6-V25 — male → gift-female → female → back-to-male pivot sequence", () => {
+  // T1: guest is male
+  let p = extractProfile("I'm male.", undefined);
+  assert.equal(getEffectiveGenderConstraint(p), "male", "C6-V25 T1: male self target");
+
+  // T2: shopping for wife → effective target becomes female
+  p = extractProfile("I'm shopping for my wife.", p);
+  assert.equal(p.shoppingIntent?.value, "gift",    "C6-V25 T2: gift detected");
+  assert.equal(p.recipientGender?.value, "female", "C6-V25 T2: recipient female");
+  assert.equal(p.preferredGender?.value, "male",   "C6-V25 T2: guest identity preserved");
+  assert.equal(getEffectiveGenderConstraint(p), "female", "C6-V25 T2: effective target female");
+
+  // T3: no shopping pivot → effective target stays female
+  p = extractProfile("Something floral.", p);
+  assert.equal(getEffectiveGenderConstraint(p), "female", "C6-V25 T3: effective target still female");
+
+  // T4: explicit self pivot → effective target returns to male
+  p = extractProfile("Now back to something for me.", p);
+  assert.equal(p.shoppingIntent?.value, "self", "C6-V25 T4: self intent restored");
+  assert.equal(getEffectiveGenderConstraint(p), "male",   "C6-V25 T4: effective target male");
+});
+
+test("C6-V26 — female → gift-male → male → back-to-female pivot sequence", () => {
+  // T1: guest is female
+  let p = extractProfile("I'm female.", undefined);
+  assert.equal(getEffectiveGenderConstraint(p), "female", "C6-V26 T1: female self target");
+
+  // T2: shopping for husband → effective target becomes male
+  p = extractProfile("I'm shopping for my husband.", p);
+  assert.equal(p.recipientGender?.value, "male", "C6-V26 T2: recipient male");
+  assert.equal(getEffectiveGenderConstraint(p), "male",   "C6-V26 T2: effective target male");
+
+  // T3: no shopping pivot → effective target stays male
+  p = extractProfile("Something woody.", p);
+  assert.equal(getEffectiveGenderConstraint(p), "male",   "C6-V26 T3: effective target still male");
+
+  // T4: natural self pivot → effective target returns to female
+  p = extractProfile("Now back to me.", p);
+  assert.equal(p.shoppingIntent?.value, "self", "C6-V26 T4: self intent restored via back-to-me");
+  assert.equal(getEffectiveGenderConstraint(p), "female", "C6-V26 T4: effective target female");
+});
+
+test("C6-V27 — gift shopping with no prior guest gender → self pivot keeps gender undefined", () => {
+  // T1: gift without guest gender
+  let p = extractProfile("I'm shopping for my wife.", undefined);
+  assert.equal(p.shoppingIntent?.value, "gift",    "C6-V27 T1: gift intent");
+  assert.equal(p.recipientGender?.value, "female", "C6-V27 T1: recipient female");
+  assert.equal(p.preferredGender, undefined,       "C6-V27 T1: guest gender undefined");
+  assert.equal(getEffectiveGenderConstraint(p), "female", "C6-V27 T1: effective target female");
+
+  // T2: pivot to self — guest gender must NOT be invented
+  p = extractProfile("Now something for me.", p);
+  assert.equal(p.shoppingIntent?.value, "self", "C6-V27 T2: self intent");
+  assert.equal(p.preferredGender, undefined,    "C6-V27 T2: guest gender must remain undefined");
+  assert.equal(getEffectiveGenderConstraint(p), null,
+    "C6-V27 T2: no gender constraint — guest gender was never stated");
+});
+
+// ── V28–V35: Hard recommendation boundary ─────────────────────────────────────
+
+test("C6-V28 — male personal recommendation → zero female-only products", () => {
+  const result = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, MALE_PROFILE);
+  assert.ok(result.fragrances.length > 0, "C6-V28: must have results");
+  const leak = result.fragrances.filter((f) => f.gender === "female");
+  assert.equal(leak.length, 0, `C6-V28: zero female-only for male guest (got: ${leak.map(f=>f.slug).join(",")})`);
+});
+
+test("C6-V29 — female personal recommendation → zero male-only products", () => {
+  const result = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, FEMALE_PROFILE);
+  assert.ok(result.fragrances.length > 0, "C6-V29: must have results");
+  const leak = result.fragrances.filter((f) => f.gender === "male");
+  assert.equal(leak.length, 0, `C6-V29: zero male-only for female guest (got: ${leak.map(f=>f.slug).join(",")})`);
+});
+
+test("C6-V30 — male + vanilla → female-only vanilla products cannot leak due to strong score", () => {
+  const resolved: ResolvedIntent = { intent: "general_discovery", signals: { family: "vanilla" }, entitySlug: undefined, compareSlug: [] };
+  const result = planRetrieval(resolved, EMPTY_CONTEXT, MALE_PROFILE);
+  const leak = result.fragrances.filter((f) => f.gender === "female");
+  assert.equal(leak.length, 0, `C6-V30: vanilla signal must not produce female-only results for male guest`);
+});
+
+test("C6-V31 — male + general discovery → zero female-only products", () => {
+  const result = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, MALE_PROFILE);
+  const leak = result.fragrances.filter((f) => f.gender === "female");
+  assert.equal(leak.length, 0, `C6-V31: zero female-only for male general discovery`);
+});
+
+test("C6-V32 — female + general discovery → zero male-only products", () => {
+  const result = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, FEMALE_PROFILE);
+  const leak = result.fragrances.filter((f) => f.gender === "male");
+  assert.equal(leak.length, 0, `C6-V32: zero male-only for female general discovery`);
+});
+
+test("C6-V33 — male + session diversity (excludeSlugs) → zero female-only products", () => {
+  // Simulate a prior turn that saw some male slugs
+  const excludeSlugs = new Set(
+    mkcCatalogue.filter((k) => k.gender === "male").slice(0, 5).map((k) => k.slug)
+  );
+  const result = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, MALE_PROFILE, undefined, undefined, null, excludeSlugs);
+  const leak = result.fragrances.filter((f) => f.gender === "female");
+  assert.equal(leak.length, 0, `C6-V33: session diversity must not leak female-only for male guest`);
+});
+
+test("C6-V34 — male + rejected previous set → zero female-only products", () => {
+  const maleProfile = makeProfile({
+    preferredGender: { value: "male",  confidence: "HIGH" },
+    rejectedSlugs:   mkcCatalogue.filter((k) => k.gender === "male").slice(0, 3).map((k) => k.slug),
+  });
+  const result = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, maleProfile);
+  const leak = result.fragrances.filter((f) => f.gender === "female");
+  assert.equal(leak.length, 0, `C6-V34: rejected slugs fallback must not leak female-only for male guest`);
+});
+
+test("C6-V35 — male + hidden gem request → zero female-only products", () => {
+  const rawMessage = "something less obvious";
+  const result = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, MALE_PROFILE, undefined, undefined, null, undefined, rawMessage);
+  const leak = result.fragrances.filter((f) => f.gender === "female");
+  assert.equal(leak.length, 0, `C6-V35: hidden gem path must not leak female-only for male guest`);
+});
+
+// ── V36–V38: Explicit entity authority ───────────────────────────────────────
+
+test("C6-V36 — male guest, education Delina (female) → Delina retrieved (entity authority)", () => {
+  const resolved: ResolvedIntent = {
+    intent: "education", signals: {},
+    entitySlug: "delina-inspired", compareSlug: [],
+  };
+  const result = planRetrieval(resolved, EMPTY_CONTEXT, MALE_PROFILE);
+  assert.ok(result.fragrances.some((f) => f.slug === "delina-inspired"),
+    "C6-V36: Delina must be retrievable for education even for male guest (entity authority)");
+});
+
+test("C6-V37 — male guest, comparison Sauvage vs Delina → both retrieved", () => {
+  const resolved: ResolvedIntent = {
+    intent: "comparison", signals: {},
+    entitySlug: "sauvage-inspired", compareSlug: ["sauvage-inspired", "delina-inspired"],
+  };
+  const result = planRetrieval(resolved, EMPTY_CONTEXT, MALE_PROFILE);
+  assert.ok(result.fragrances.some((f) => f.slug === "sauvage-inspired"),
+    "C6-V37: Sauvage must be retrieved for comparison");
+  assert.ok(result.fragrances.some((f) => f.slug === "delina-inspired"),
+    "C6-V37: Delina must be retrieved for comparison despite guest being male (entity authority)");
+});
+
+test("C6-V38 — after comparison, general discovery still male/unisex only", () => {
+  // This simulates the turn AFTER the comparison: no entity context, fresh general search
+  const result = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, MALE_PROFILE);
+  const leak = result.fragrances.filter((f) => f.gender === "female");
+  assert.equal(leak.length, 0,
+    "C6-V38: general discovery after comparison must not leak female-only for male guest");
+});
+
+// ── V39–V42: Cache and source re-add ─────────────────────────────────────────
+
+test("C6-V39 — female-target cache → pivot to male → female-only excluded", () => {
+  const state: ConversationState = {
+    sessionId: "test", turns: [], context: {},
+    lastRecommendationSlugs: [C6_FEMALE_SLUG, C6_MALE_SLUG],
+  };
+  const result = buildCachedRetrieval(state, MALE_PROFILE);
+  assert.ok(!result.fragrances.some((f) => f.slug === C6_FEMALE_SLUG),
+    "C6-V39: female-only cached slug must be excluded when target pivots to male");
+  assert.ok(result.fragrances.some((f) => f.slug === C6_MALE_SLUG),
+    "C6-V39: male cached slug must be preserved");
+});
+
+test("C6-V40 — male-target cache → pivot to female → male-only excluded", () => {
+  const state: ConversationState = {
+    sessionId: "test", turns: [], context: {},
+    lastRecommendationSlugs: [C6_MALE_SLUG, C6_FEMALE_SLUG],
+  };
+  const result = buildCachedRetrieval(state, FEMALE_PROFILE);
+  assert.ok(!result.fragrances.some((f) => f.slug === C6_MALE_SLUG),
+    "C6-V40: male-only cached slug must be excluded when target pivots to female");
+  assert.ok(result.fragrances.some((f) => f.slug === C6_FEMALE_SLUG),
+    "C6-V40: female cached slug must be preserved");
+});
+
+test("C6-V41 — system source re-add: similar_to off-gender source → source excluded (gender enforcement)", () => {
+  const resolved: ResolvedIntent = {
+    intent: "similar_to", signals: {},
+    entitySlug: C6_FEMALE_SLUG, compareSlug: [],
+  };
+  const result = planRetrieval(resolved, EMPTY_CONTEXT, MALE_PROFILE);
+  assert.ok(!result.fragrances.some((f) => f.slug === C6_FEMALE_SLUG),
+    "C6-V41: source re-add must be blocked for off-gender source on similar_to (BP-02 gender enforcement)");
+});
+
+test("C6-V42 — named opposite-gender entity: education → catalogue discussion preserved (entity authority)", () => {
+  const resolved: ResolvedIntent = {
+    intent: "education", signals: {},
+    entitySlug: C6_FEMALE_SLUG, compareSlug: [],
+  };
+  const result = planRetrieval(resolved, EMPTY_CONTEXT, MALE_PROFILE);
+  assert.ok(result.fragrances.some((f) => f.slug === C6_FEMALE_SLUG),
+    "C6-V42: opposite-gender entity must be retrievable for education (entity authority for catalogue discussion)");
+});
+
+// ── V43–V44: Pool exhaustion ──────────────────────────────────────────────────
+
+test("C6-V43 — male + narrow avoidances → gender boundary never relaxes to female-only", () => {
+  // Avoid many families to create a narrow pool
+  const profile = makeProfile({
+    preferredGender:  { value: "male",    confidence: "HIGH" },
+    avoidedFamilies:  { value: ["Woody", "Citrus", "Aquatic", "Amber", "Sweet"], confidence: "HIGH" },
+  });
+  const result = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile);
+  const leak = result.fragrances.filter((f) => f.gender === "female");
+  assert.equal(leak.length, 0,
+    "C6-V43: gender boundary must never relax to female-only even with narrow male pool");
+});
+
+test("C6-V44 — female + narrow avoidances → gender boundary never relaxes to male-only", () => {
+  const profile = makeProfile({
+    preferredGender:  { value: "female",  confidence: "HIGH" },
+    avoidedFamilies:  { value: ["Woody", "Citrus", "Aquatic", "Amber", "Sweet"], confidence: "HIGH" },
+  });
+  const result = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile);
+  const leak = result.fragrances.filter((f) => f.gender === "male");
+  assert.equal(leak.length, 0,
+    "C6-V44: gender boundary must never relax to male-only even with narrow female pool");
+});
+
+// ── Catalogue-wide eligibility assertions ─────────────────────────────────────
+
+test("C6-CAT-01 — catalogue total: 222 native records (STOP if different)", () => {
+  assert.equal(mkcCatalogue.length, 222,
+    `C6-CAT-01: expected 222 total native records — STOP if this fails (catalogue mutation suspected)`);
+});
+
+test("C6-CAT-02 — catalogue male count: 94 records", () => {
+  const count = mkcCatalogue.filter((k) => k.gender === "male").length;
+  assert.equal(count, 94, `C6-CAT-02: expected 94 male records, got ${count}`);
+});
+
+test("C6-CAT-03 — catalogue female count: 89 records", () => {
+  const count = mkcCatalogue.filter((k) => k.gender === "female").length;
+  assert.equal(count, 89, `C6-CAT-03: expected 89 female records, got ${count}`);
+});
+
+test("C6-CAT-04 — catalogue unisex count: 39 records", () => {
+  const count = mkcCatalogue.filter((k) => k.gender === "unisex").length;
+  assert.equal(count, 39, `C6-CAT-04: expected 39 unisex records, got ${count}`);
+});
+
+test("C6-CAT-05 — male target eligible: 133 records (male + unisex)", () => {
+  const eligible = mkcCatalogue.filter((k) => k.gender === "male" || k.gender === "unisex").length;
+  assert.equal(eligible, 133, `C6-CAT-05: expected 133 male-eligible records, got ${eligible}`);
+});
+
+test("C6-CAT-06 — female target eligible: 128 records (female + unisex)", () => {
+  const eligible = mkcCatalogue.filter((k) => k.gender === "female" || k.gender === "unisex").length;
+  assert.equal(eligible, 128, `C6-CAT-06: expected 128 female-eligible records, got ${eligible}`);
+});
+
+test("C6-CAT-07 — male target excludes all 89 female-only records", () => {
+  const excluded = mkcCatalogue.filter((k) => k.gender === "female");
+  const constraint = applyGenderConstraint(excluded, "male");
+  assert.equal(constraint.length, 0,
+    "C6-CAT-07: applyGenderConstraint(male) must exclude all 89 female-only records");
+});
+
+test("C6-CAT-08 — female target excludes all 94 male-only records", () => {
+  const excluded = mkcCatalogue.filter((k) => k.gender === "male");
+  const constraint = applyGenderConstraint(excluded, "female");
+  assert.equal(constraint.length, 0,
+    "C6-CAT-08: applyGenderConstraint(female) must exclude all 94 male-only records");
+});
+
+// ── Prose/context governance ───────────────────────────────────────────────────
+
+test("C6-GOV-01 — male target: GENDER ELIGIBILITY content specifies male or unisex", () => {
+  const ctx = buildTestContext(MALE_PROFILE);
+  assert.ok(ctx.includes("male or unisex"),
+    "C6-GOV-01: GENDER ELIGIBILITY for male guest must instruct 'male or unisex' scope");
+});
+
+test("C6-GOV-02 — female target: GENDER ELIGIBILITY content specifies female or unisex", () => {
+  const ctx = buildTestContext(FEMALE_PROFILE);
+  assert.ok(ctx.includes("female or unisex"),
+    "C6-GOV-02: GENDER ELIGIBILITY for female guest must instruct 'female or unisex' scope");
+});
+
+test("C6-GOV-03 — male target: GENDER ELIGIBILITY forbids opposite-gender recommendations", () => {
+  const ctx = buildTestContext(MALE_PROFILE);
+  assert.ok(ctx.includes("opposite gender"),
+    "C6-GOV-03: GENDER ELIGIBILITY must explicitly prohibit opposite-gender recommendations");
+});
+
+test("C6-GOV-04 — no gender stated: GENDER ELIGIBILITY absent (no invented constraint)", () => {
+  const ctx = buildTestContext(undefined);
+  assert.ok(!ctx.includes("GENDER ELIGIBILITY"),
+    "C6-GOV-04: without stated gender, GENDER ELIGIBILITY must not appear (no invented constraint)");
+});
+
+test("C6-GOV-05 — system prompt: never-assume rule present", () => {
+  const prompt = buildSystemPrompt("");
+  assert.ok(prompt.includes("Never assume a guest's gender"),
+    "C6-GOV-05: system prompt must contain never-assume-gender rule");
+});
+
+test("C6-GOV-06 — system prompt: explicitly honour GENDER ELIGIBILITY when present", () => {
+  const prompt = buildSystemPrompt("");
+  assert.ok(prompt.includes("GENDER ELIGIBILITY"),
+    "C6-GOV-06: system prompt must reference GENDER ELIGIBILITY so LLM knows to honour it");
+});
+
+// ── End-to-end local acceptance scenarios A–K ─────────────────────────────────
+
+// These test deterministic context and retrieval safety (not LLM prose output).
+
+test("C6-E2E-A — male + fresh → all retrieved fragrances male/unisex, no female-only card possible", () => {
+  const profile = extractProfile("I'm male. Recommend something fresh for me.", undefined);
+  assert.equal(getEffectiveGenderConstraint(profile), "male", "C6-E2E-A: effective constraint male");
+  const resolved: ResolvedIntent = { intent: "general_discovery", signals: { family: "fresh" }, entitySlug: undefined, compareSlug: [] };
+  const result = planRetrieval(resolved, EMPTY_CONTEXT, profile);
+  const leak = result.fragrances.filter((f) => f.gender === "female");
+  assert.equal(leak.length, 0, "C6-E2E-A: no female-only in retrieval for male guest");
+});
+
+test("C6-E2E-B — female + woody → all retrieved fragrances female/unisex, no male-only card possible", () => {
+  const profile = extractProfile("I'm female. Recommend something woody for me.", undefined);
+  assert.equal(getEffectiveGenderConstraint(profile), "female", "C6-E2E-B: effective constraint female");
+  const resolved: ResolvedIntent = { intent: "general_discovery", signals: { family: "woody" }, entitySlug: undefined, compareSlug: [] };
+  const result = planRetrieval(resolved, EMPTY_CONTEXT, profile);
+  const leak = result.fragrances.filter((f) => f.gender === "male");
+  assert.equal(leak.length, 0, "C6-E2E-B: no male-only in retrieval for female guest");
+});
+
+test("C6-E2E-C — male target persists across four turns", () => {
+  let p = extractProfile("I'm male.", undefined);
+  assert.equal(getEffectiveGenderConstraint(p), "male", "C6-E2E-C T1");
+  p = extractProfile("Give me something for date night.", p);
+  assert.equal(getEffectiveGenderConstraint(p), "male", "C6-E2E-C T2");
+  p = extractProfile("Give me another option.", p);
+  assert.equal(getEffectiveGenderConstraint(p), "male", "C6-E2E-C T3");
+  p = extractProfile("Something different again.", p);
+  assert.equal(getEffectiveGenderConstraint(p), "male", "C6-E2E-C T4: male constraint persists");
+  const result = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, p);
+  const leak = result.fragrances.filter((f) => f.gender === "female");
+  assert.equal(leak.length, 0, "C6-E2E-C: zero female-only recommendation leakage across turns");
+});
+
+test("C6-E2E-D — male → gift-female → female → back-to-male retrieval boundary", () => {
+  let p = extractProfile("I'm male.", undefined);
+  p = extractProfile("I'm shopping for my wife.", p);
+  assert.equal(getEffectiveGenderConstraint(p), "female", "C6-E2E-D T2: female target");
+  p = extractProfile("Something floral.", p);
+  assert.equal(getEffectiveGenderConstraint(p), "female", "C6-E2E-D T3: still female target");
+  p = extractProfile("Now back to something for me.", p);
+  assert.equal(getEffectiveGenderConstraint(p), "male", "C6-E2E-D T4: male target restored");
+  const result = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, p);
+  const leak = result.fragrances.filter((f) => f.gender === "female");
+  assert.equal(leak.length, 0, "C6-E2E-D T4: zero female-only in male-target retrieval");
+});
+
+test("C6-E2E-E — male guest, education Delina → Delina retrievable, guest stays male", () => {
+  const p = extractProfile("I'm male. Tell me about Delina.", undefined);
+  assert.equal(getEffectiveGenderConstraint(p), "male", "C6-E2E-E: guest is male");
+  const resolved: ResolvedIntent = { intent: "education", signals: {}, entitySlug: "delina-inspired", compareSlug: [] };
+  const result = planRetrieval(resolved, EMPTY_CONTEXT, p);
+  assert.ok(result.fragrances.some((f) => f.slug === "delina-inspired"),
+    "C6-E2E-E: Delina must be retrievable for education (entity authority — no false absence)");
+});
+
+test("C6-E2E-F — male guest, compare Sauvage vs Delina → both retrieved", () => {
+  const p = extractProfile("I'm male. Compare Sauvage with Delina.", undefined);
+  assert.equal(getEffectiveGenderConstraint(p), "male", "C6-E2E-F: guest is male");
+  const resolved: ResolvedIntent = {
+    intent: "comparison", signals: {},
+    entitySlug: "sauvage-inspired", compareSlug: ["sauvage-inspired", "delina-inspired"],
+  };
+  const result = planRetrieval(resolved, EMPTY_CONTEXT, p);
+  assert.ok(result.fragrances.some((f) => f.slug === "sauvage-inspired"), "C6-E2E-F: Sauvage retrieved");
+  assert.ok(result.fragrances.some((f) => f.slug === "delina-inspired"),  "C6-E2E-F: Delina retrieved (entity authority)");
+});
+
+test("C6-E2E-G — after comparison, new general recommendations male/unisex only", () => {
+  const p = extractProfile("I'm male.", undefined);
+  const result = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, p);
+  const leak = result.fragrances.filter((f) => f.gender === "female");
+  assert.equal(leak.length, 0,
+    "C6-E2E-G: general discovery for male guest after comparison must be male/unisex only");
+});
+
+test("C6-E2E-H — male + vanilla + surprise → no female-only leak from strong score", () => {
+  const p = extractProfile("I'm male. I like vanilla. Surprise me.", undefined);
+  assert.equal(getEffectiveGenderConstraint(p), "male", "C6-E2E-H: guest is male");
+  const resolved: ResolvedIntent = { intent: "general_discovery", signals: { family: "vanilla" }, entitySlug: undefined, compareSlug: [] };
+  const result = planRetrieval(resolved, EMPTY_CONTEXT, p);
+  const leak = result.fragrances.filter((f) => f.gender === "female");
+  assert.equal(leak.length, 0, "C6-E2E-H: vanilla score must not leak female-only for male guest");
+});
+
+test("C6-E2E-I — \"What notes are in Torino24?\" → Torino24 resolved, no false absence", () => {
+  const resolved = resolveIntent("What notes are in Torino24?", EMPTY_CONTEXT);
+  assert.equal(resolved.entitySlug, "torino24-inspired",
+    "C6-E2E-I: Torino24 must resolve to torino24-inspired (native record)");
+});
+
+test("C6-E2E-J — \"Tell me about Chanel No.5.\" → chanel-no-5-inspired resolved", () => {
+  const resolved = resolveIntent("Tell me about Chanel No.5.", EMPTY_CONTEXT);
+  assert.equal(resolved.entitySlug, "chanel-no-5-inspired",
+    "C6-E2E-J: Chanel No.5 must resolve (no false absence)");
+});
+
+test("C6-E2E-K — \"Compare CK One with 212 VIP Black.\" → both records retrieved", () => {
+  const resolved = resolveIntent("Compare CK One with 212 VIP Black.", EMPTY_CONTEXT);
+  assert.ok(resolved.compareSlug.includes("ck-one-inspired"),       "C6-E2E-K: CK One resolved");
+  assert.ok(resolved.compareSlug.includes("212-vip-black-inspired"), "C6-E2E-K: 212 VIP Black resolved");
+});
+
 // ── Summary ───────────────────────────────────────────────────────────────────
 
 const total = passed + failed;
