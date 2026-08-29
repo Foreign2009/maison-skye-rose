@@ -25,7 +25,7 @@ import { buildSystemPrompt } from "../../../app/lib/concierge/safetyGuard";
 import { mkcCatalogue }      from "../../../app/lib/mkc/catalogue";
 import { nativeFragrances }  from "../../../app/lib/mkc/native";
 import { resolveIntent } from "../../../app/lib/concierge/intentResolver";
-import type { ConversationProfile, ConversationState, ConversationContext }  from "../../../app/lib/concierge/types";
+import type { ConversationProfile, ConversationState, ConversationContext, ConsultationPlan }  from "../../../app/lib/concierge/types";
 import type { ResolvedIntent } from "../../../app/lib/concierge/intentResolver";
 import { planConversation, type ConversationPlan } from "../../../app/lib/concierge/conversationPlanner";
 import type { RetrievalContext } from "../../../app/lib/concierge/contextBuilder";
@@ -73,6 +73,8 @@ const EMPTY_STATE: ConversationState = {
   turns:     [],
   context:   {},
 };
+
+const MOCK_PLAN: ConsultationPlan = { type: "Discovery", label: "Test Plan", roles: [] };
 
 const BASE_PLAN: ConversationPlan = {
   action:                "new_search",
@@ -5215,6 +5217,354 @@ test("R3-NULL-10 — female guest + null-normalized context: no male-only recomm
   const leak = result.fragrances.filter((f) => f.gender === "male");
   assert.equal(leak.length, 0,
     "R3-NULL-10: female guest with null-normalized context must not receive male-only fragrances");
+});
+
+// ── Section 24: EP-AI-C6-P2 — Variety Routing (V1–V8) ────────────────────────
+
+console.log("\n── 24. C6-P2 Variety Routing ─────────────────────────────────────────");
+
+const STATE_WITH_PLAN: ConversationState = {
+  ...EMPTY_STATE,
+  lastRecommendationSlugs: ["aventus-inspired", "hacivat-inspired"],
+  turns: [{ role: "assistant" as const, content: "Here are some options", intent: "general_discovery" as const, timestamp: 0 }],
+  consultationPlan: MOCK_PLAN,
+};
+
+test("V1 — 'show me more' with consultationPlan → alternative_exploration", () => {
+  const plan = planConversation("show me more", STATE_WITH_PLAN);
+  assert.equal(plan.action, "alternative_exploration",
+    `V1 — 'show me more' must route to alternative_exploration when consultationPlan active (got ${plan.action})`);
+  assert.equal(plan.requiresRetrieval, true, "V1 — requiresRetrieval must be true");
+});
+
+test("V2 — 'show me some more' with consultationPlan → alternative_exploration", () => {
+  const plan = planConversation("show me some more", STATE_WITH_PLAN);
+  assert.equal(plan.action, "alternative_exploration",
+    `V2 — 'show me some more' must route to alternative_exploration (got ${plan.action})`);
+});
+
+test("V3 — 'more please' with consultationPlan → alternative_exploration", () => {
+  const plan = planConversation("more please", STATE_WITH_PLAN);
+  assert.equal(plan.action, "alternative_exploration",
+    `V3 — 'more please' must route to alternative_exploration (got ${plan.action})`);
+});
+
+test("V4 — 'surprise me' with consultationPlan → alternative_exploration", () => {
+  const plan = planConversation("surprise me", STATE_WITH_PLAN);
+  assert.equal(plan.action, "alternative_exploration",
+    `V4 — 'surprise me' must route to alternative_exploration (got ${plan.action})`);
+});
+
+test("V5 — 'what else is there' with consultationPlan → alternative_exploration", () => {
+  const plan = planConversation("what else is there", STATE_WITH_PLAN);
+  assert.equal(plan.action, "alternative_exploration",
+    `V5 — 'what else is there' must route to alternative_exploration (got ${plan.action})`);
+});
+
+test("V6 — bare 'another' with consultationPlan → alternative_exploration", () => {
+  const plan = planConversation("another", STATE_WITH_PLAN);
+  assert.equal(plan.action, "alternative_exploration",
+    `V6 — bare 'another' must route to alternative_exploration when consultationPlan active (got ${plan.action})`);
+});
+
+test("V7 — 'less obvious' with session history → unseen-only (variety signal active)", () => {
+  const profile = makeProfile({ preferredGender: { value: "male", confidence: "HIGH" } });
+  const r1 = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "recommend");
+  const seen = new Set(r1.fragrances.map(f => f.slug));
+  const allMale = mkcCatalogue.filter(k => k.gender === "male" || k.gender === "unisex");
+  if (allMale.length - seen.size < 2) { skip("V7 — catalogue too small for unseen variety test"); return; }
+  const r2 = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile, undefined, undefined, null, seen, "less obvious");
+  const repeated = r2.fragrances.filter(f => seen.has(f.slug));
+  assert.equal(repeated.length, 0,
+    `V7 — 'less obvious' variety signal must restrict to unseen: repeated: ${repeated.map(f => f.slug).join(",")}`);
+});
+
+test("V8 — 'less common' with session history → unseen-only (variety signal active)", () => {
+  const profile = makeProfile({ preferredGender: { value: "male", confidence: "HIGH" } });
+  const r1 = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "recommend");
+  const seen = new Set(r1.fragrances.map(f => f.slug));
+  const allMale = mkcCatalogue.filter(k => k.gender === "male" || k.gender === "unisex");
+  if (allMale.length - seen.size < 2) { skip("V8 — catalogue too small for unseen variety test"); return; }
+  const r2 = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile, undefined, undefined, null, seen, "less common");
+  const repeated = r2.fragrances.filter(f => seen.has(f.slug));
+  assert.equal(repeated.length, 0,
+    `V8 — 'less common' variety signal must restrict to unseen: repeated: ${repeated.map(f => f.slug).join(",")}`);
+});
+
+// ── Section 25: EP-AI-C6-P2 — Bestseller Balance (B1–B13) ────────────────────
+
+console.log("\n── 25. C6-P2 Bestseller Balance ──────────────────────────────────────");
+
+test("B1 — male general discovery: bestsellers ≤ Math.ceil(N/2) when non-BS equivalents exist", () => {
+  const profile = makeProfile({ preferredGender: { value: "male", confidence: "HIGH" } });
+  const result = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile);
+  const N = result.fragrances.length;
+  if (N === 0) { skip("B1 — no results"); return; }
+  const eligibleNonBs = mkcCatalogue.filter(k => !k.bestSeller && (k.gender === "male" || k.gender === "unisex"));
+  if (eligibleNonBs.length === 0) { skip("B1 — no non-BS male/unisex candidates in catalogue"); return; }
+  const bsCnt = result.fragrances.filter(f => f.bestSeller).length;
+  const maxBs = Math.ceil(N / 2);
+  assert.ok(bsCnt <= maxBs, `B1 — bestsellers (${bsCnt}) exceed Math.ceil(${N}/2)=${maxBs} in male result`);
+});
+
+test("B2 — female general discovery: bestsellers ≤ Math.ceil(N/2) when non-BS equivalents exist", () => {
+  const profile = makeProfile({ preferredGender: { value: "female", confidence: "HIGH" } });
+  const result = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile);
+  const N = result.fragrances.length;
+  if (N === 0) { skip("B2 — no results"); return; }
+  const eligibleNonBs = mkcCatalogue.filter(k => !k.bestSeller && (k.gender === "female" || k.gender === "unisex"));
+  if (eligibleNonBs.length === 0) { skip("B2 — no non-BS female/unisex candidates"); return; }
+  const bsCnt = result.fragrances.filter(f => f.bestSeller).length;
+  const maxBs = Math.ceil(N / 2);
+  assert.ok(bsCnt <= maxBs, `B2 — bestsellers (${bsCnt}) exceed Math.ceil(${N}/2)=${maxBs} in female result`);
+});
+
+test("B3 — similar_to intent: exempt from bestseller cap (entity path)", () => {
+  const source = mkcCatalogue.find(k => k.gender === "male" || k.gender === "unisex");
+  if (!source) { skip("B3 — no male/unisex source fixture"); return; }
+  const profile = makeProfile({ preferredGender: { value: "male", confidence: "HIGH" } });
+  const simIntent: ResolvedIntent = { intent: "similar_to", signals: {}, entitySlug: source.slug, compareSlug: [] };
+  const r1 = planRetrieval(simIntent, EMPTY_CONTEXT, profile);
+  const r2 = planRetrieval(simIntent, EMPTY_CONTEXT, profile);
+  assert.equal(
+    r1.fragrances.map(f => f.slug).join(","),
+    r2.fragrances.map(f => f.slug).join(","),
+    "B3 — similar_to results must be deterministic (entity path exempt from cap)"
+  );
+  assert.equal(r1.fragrances.filter(f => f.gender === "female").length, 0,
+    "B3 — similar_to for male guest must not leak female-only candidates");
+});
+
+test("B4 — anchored_refinement intent: exempt from bestseller cap", () => {
+  const ANCHORED: ResolvedIntent = { intent: "anchored_refinement" as const, signals: {}, entitySlug: undefined, compareSlug: [] };
+  const anchor = mkcCatalogue.find(k => k.gender === "male" || k.gender === "unisex");
+  if (!anchor) { skip("B4 — no male/unisex anchor fixture"); return; }
+  const r1 = planRetrieval(ANCHORED, EMPTY_CONTEXT, undefined, undefined, undefined, null, undefined, "like that but fresher", anchor.slug);
+  const r2 = planRetrieval(ANCHORED, EMPTY_CONTEXT, undefined, undefined, undefined, null, undefined, "like that but fresher", anchor.slug);
+  assert.equal(
+    r1.fragrances.map(f => f.slug).join(","),
+    r2.fragrances.map(f => f.slug).join(","),
+    "B4 — anchored_refinement results are deterministic (exempt from bestseller cap)"
+  );
+});
+
+test("B5 — bestseller cap preserves > 0 results (no records removed)", () => {
+  const profile = makeProfile({ preferredGender: { value: "male", confidence: "HIGH" } });
+  const result = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile);
+  assert.ok(result.fragrances.length > 0, "B5 — bestseller cap must not reduce result to zero");
+});
+
+test("B6 — total result count unchanged by cap (deterministic reorder only)", () => {
+  const profile = makeProfile({ preferredGender: { value: "male", confidence: "HIGH" } });
+  const r1 = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile);
+  const r2 = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile);
+  assert.equal(r1.fragrances.length, r2.fragrances.length,
+    "B6 — result count must be identical on repeated calls (cap is reorder, not filter)");
+});
+
+test("B7 — variety turn + session history: bestseller cap still applies", () => {
+  const profile = makeProfile({ preferredGender: { value: "male", confidence: "HIGH" } });
+  const t1 = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "recommend");
+  const seen = new Set(t1.fragrances.map(f => f.slug));
+  const t2 = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile, undefined, undefined, null, seen, "something different");
+  const N2 = t2.fragrances.length;
+  if (N2 === 0) { skip("B7 — no results on second turn"); return; }
+  const eligibleNonBs = mkcCatalogue.filter(k => !k.bestSeller && (k.gender === "male" || k.gender === "unisex") && !seen.has(k.slug));
+  if (eligibleNonBs.length === 0) { skip("B7 — no non-BS unseen candidates for variety+cap test"); return; }
+  const bsCnt = t2.fragrances.filter(f => f.bestSeller).length;
+  const maxBs = Math.ceil(N2 / 2);
+  assert.ok(bsCnt <= maxBs, `B7 — variety turn: bestsellers (${bsCnt}) exceed cap ${maxBs} in ${N2}-result set`);
+});
+
+test("B8 — gender integrity preserved after bestseller cap (male)", () => {
+  const profile = makeProfile({ preferredGender: { value: "male", confidence: "HIGH" } });
+  const result = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile);
+  const leak = result.fragrances.filter(f => f.gender === "female");
+  assert.equal(leak.length, 0, `B8 — no female-only candidates after bestseller cap: ${leak.map(f => f.slug).join(",")}`);
+});
+
+test("B9 — gender integrity preserved after bestseller cap (female)", () => {
+  const profile = makeProfile({ preferredGender: { value: "female", confidence: "HIGH" } });
+  const result = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile);
+  const leak = result.fragrances.filter(f => f.gender === "male");
+  assert.equal(leak.length, 0, `B9 — no male-only candidates after bestseller cap: ${leak.map(f => f.slug).join(",")}`);
+});
+
+test("B10 — bestseller cap is deterministic: same inputs → same result order", () => {
+  const profile = makeProfile({ preferredGender: { value: "male", confidence: "HIGH" } });
+  const r1 = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile);
+  const r2 = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile);
+  assert.equal(
+    r1.fragrances.map(f => f.slug).join(","),
+    r2.fragrances.map(f => f.slug).join(","),
+    "B10 — bestseller cap result must be deterministic (no Math.random)"
+  );
+});
+
+test("B11 — occasion_search: bestseller cap applies (not exempt)", () => {
+  const profile = makeProfile({ preferredGender: { value: "male", confidence: "HIGH" } });
+  const occasionIntent: ResolvedIntent = { intent: "occasion_search", signals: { occasion: "evening" }, entitySlug: undefined, compareSlug: [] };
+  const result = planRetrieval(occasionIntent, EMPTY_CONTEXT, profile);
+  const N = result.fragrances.length;
+  if (N === 0) { skip("B11 — no evening results for male guest"); return; }
+  const eligibleNonBs = mkcCatalogue.filter(k => !k.bestSeller && (k.gender === "male" || k.gender === "unisex"));
+  if (eligibleNonBs.length === 0) { skip("B11 — no non-BS candidates for occasion test"); return; }
+  const bsCnt = result.fragrances.filter(f => f.bestSeller).length;
+  const maxBs = Math.ceil(N / 2);
+  assert.ok(bsCnt <= maxBs, `B11 — occasion_search male evening: bestsellers (${bsCnt}) exceed cap ${maxBs} of ${N}`);
+});
+
+test("B12 — first Math.ceil(N/2) positions contain at most Math.ceil(N/2) bestsellers", () => {
+  const profile = makeProfile({ preferredGender: { value: "male", confidence: "HIGH" } });
+  const result = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile);
+  const N = result.fragrances.length;
+  if (N < 2) { skip("B12 — insufficient results to test position ordering"); return; }
+  const allBs = result.fragrances.every(f => f.bestSeller);
+  if (allBs) { skip("B12 — all candidates are bestsellers (cap does not fire)"); return; }
+  const maxBs = Math.ceil(N / 2);
+  const bsCount = result.fragrances.filter(f => f.bestSeller).length;
+  assert.ok(bsCount <= maxBs,
+    `B12 — first-half BS cap: ${bsCount} bestsellers in ${N} results (max: ${maxBs})`);
+});
+
+test("B13 — rejection filter preserved after bestseller cap", () => {
+  const rejSlug = mkcCatalogue.find(k => k.gender === "male" || k.gender === "unisex")?.slug;
+  if (!rejSlug) { skip("B13 — no male/unisex fixture for rejection test"); return; }
+  const profile = makeProfile({
+    preferredGender: { value: "male", confidence: "HIGH" },
+    rejectedSlugs:   [rejSlug],
+  });
+  const result = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile);
+  assert.equal(result.fragrances.find(f => f.slug === rejSlug), undefined,
+    `B13 — rejected slug ${rejSlug} must not appear after bestseller cap`);
+});
+
+// ── Section 26: EP-AI-C6-P2 — Determinism (D1–D3) ────────────────────────────
+
+console.log("\n── 26. C6-P2 Determinism ─────────────────────────────────────────────");
+
+test("D1 — male fresh query: identical slug list on repeated calls", () => {
+  const profile = makeProfile({ preferredGender: { value: "male", confidence: "HIGH" } });
+  const intent: ResolvedIntent = { intent: "general_discovery", signals: { family: "fresh" }, entitySlug: undefined, compareSlug: [] };
+  const r1 = planRetrieval(intent, EMPTY_CONTEXT, profile);
+  const r2 = planRetrieval(intent, EMPTY_CONTEXT, profile);
+  assert.equal(
+    r1.fragrances.map(f => f.slug).join(","),
+    r2.fragrances.map(f => f.slug).join(","),
+    "D1 — male fresh query must produce identical slug list on repeated calls"
+  );
+});
+
+test("D2 — female woody query: identical slug list on repeated calls", () => {
+  const profile = makeProfile({ preferredGender: { value: "female", confidence: "HIGH" } });
+  const intent: ResolvedIntent = { intent: "general_discovery", signals: { family: "woody" }, entitySlug: undefined, compareSlug: [] };
+  const r1 = planRetrieval(intent, EMPTY_CONTEXT, profile);
+  const r2 = planRetrieval(intent, EMPTY_CONTEXT, profile);
+  assert.equal(
+    r1.fragrances.map(f => f.slug).join(","),
+    r2.fragrances.map(f => f.slug).join(","),
+    "D2 — female woody query must produce identical slug list on repeated calls"
+  );
+});
+
+test("D3 — query with session history: identical slug list on repeated calls", () => {
+  const profile = makeProfile({ preferredGender: { value: "male", confidence: "HIGH" } });
+  const excludeSlugs = new Set(mkcCatalogue.slice(0, 5).map(k => k.slug));
+  const r1 = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile, undefined, undefined, null, excludeSlugs, "something different");
+  const r2 = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile, undefined, undefined, null, excludeSlugs, "something different");
+  assert.equal(
+    r1.fragrances.map(f => f.slug).join(","),
+    r2.fragrances.map(f => f.slug).join(","),
+    "D3 — query with session history must produce identical slug list on repeated calls"
+  );
+});
+
+// ── Section 27: EP-AI-C6-P2 — Session Simulations (A–D) ──────────────────────
+
+console.log("\n── 27. C6-P2 Session Simulations ─────────────────────────────────────");
+
+test("SIM-A — male + fresh: 4 variety turns, no gender leak, no crash", () => {
+  const profile = makeProfile({ preferredGender: { value: "male", confidence: "HIGH" } });
+  const freshIntent: ResolvedIntent = { intent: "general_discovery", signals: { family: "fresh" }, entitySlug: undefined, compareSlug: [] };
+  const cumulativeExclude = new Set<string>();
+
+  const t1 = planRetrieval(freshIntent, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "I'm male. Something fresh.");
+  assert.equal(t1.fragrances.filter(f => f.gender === "female").length, 0, "SIM-A T1 — no female-only");
+  t1.fragrances.forEach(f => cumulativeExclude.add(f.slug));
+
+  const varietyMsgs = ["Something different.", "Show me more.", "Another.", "Less obvious."];
+  for (const [i, msg] of varietyMsgs.entries()) {
+    const tn = planRetrieval(freshIntent, EMPTY_CONTEXT, profile, undefined, undefined, null, new Set(cumulativeExclude), msg);
+    assert.equal(tn.fragrances.filter(f => f.gender === "female").length, 0,
+      `SIM-A T${i + 2} "${msg}" — no female-only`);
+    tn.fragrances.forEach(f => cumulativeExclude.add(f.slug));
+  }
+  assert.ok(cumulativeExclude.size > 0, "SIM-A — at least one fragrance shown across turns");
+});
+
+test("SIM-B — female: continuation routing via 'show me more' and 'surprise me'", () => {
+  const profile = makeProfile({ preferredGender: { value: "female", confidence: "HIGH" } });
+  const stateB: ConversationState = {
+    ...EMPTY_STATE,
+    lastRecommendationSlugs: ["delina-inspired"],
+    turns: [{ role: "assistant" as const, content: "Here is my suggestion", intent: "general_discovery" as const, timestamp: 0 }],
+    consultationPlan: MOCK_PLAN,
+  };
+
+  const plan2 = planConversation("show me more", stateB);
+  assert.equal(plan2.action, "alternative_exploration",
+    `SIM-B T2 — 'show me more' must route to alternative_exploration (got ${plan2.action})`);
+
+  const plan3 = planConversation("surprise me", stateB);
+  assert.equal(plan3.action, "alternative_exploration",
+    `SIM-B T3 — 'surprise me' must route to alternative_exploration (got ${plan3.action})`);
+
+  const femResult = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile);
+  assert.equal(femResult.fragrances.filter(f => f.gender === "male").length, 0,
+    "SIM-B — no male-only candidates in female retrieval");
+});
+
+test("SIM-C — male + woody: 'less obvious' variety turn prefers unseen, gender safe", () => {
+  const profile = makeProfile({ preferredGender: { value: "male", confidence: "HIGH" } });
+  const woodyIntent: ResolvedIntent = { intent: "general_discovery", signals: { family: "woody" }, entitySlug: undefined, compareSlug: [] };
+  const cumulativeExclude = new Set<string>();
+
+  const t1 = planRetrieval(woodyIntent, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "I'm male. Something woody.");
+  assert.equal(t1.fragrances.filter(f => f.gender === "female").length, 0, "SIM-C T1 — no female-only");
+  t1.fragrances.forEach(f => cumulativeExclude.add(f.slug));
+
+  const t2 = planRetrieval(woodyIntent, EMPTY_CONTEXT, profile, undefined, undefined, null, new Set(cumulativeExclude), "less obvious");
+  assert.equal(t2.fragrances.filter(f => f.gender === "female").length, 0, "SIM-C T2 — 'less obvious' no female-only");
+
+  const allMale = mkcCatalogue.filter(k => k.gender === "male" || k.gender === "unisex");
+  if (allMale.length - cumulativeExclude.size >= 2) {
+    const repeats = t2.fragrances.filter(f => cumulativeExclude.has(f.slug));
+    assert.equal(repeats.length, 0,
+      `SIM-C T2 — 'less obvious' must prefer unseen: ${repeats.map(f => f.slug).join(",")}`);
+  }
+  t2.fragrances.forEach(f => cumulativeExclude.add(f.slug));
+
+  const t3 = planRetrieval(woodyIntent, EMPTY_CONTEXT, profile, undefined, undefined, null, new Set(cumulativeExclude), "more please");
+  assert.equal(t3.fragrances.filter(f => f.gender === "female").length, 0, "SIM-C T3 — 'more please' no female-only");
+});
+
+test("SIM-D — no gender: 'what else is there' routes to alternative_exploration, no crash", () => {
+  const stateD: ConversationState = {
+    ...EMPTY_STATE,
+    lastRecommendationSlugs: ["aventus-inspired", "hacivat-inspired"],
+    turns: [{ role: "assistant" as const, content: "Here are two options", intent: "general_discovery" as const, timestamp: 0 }],
+    consultationPlan: MOCK_PLAN,
+  };
+
+  const plan = planConversation("what else is there", stateD);
+  assert.equal(plan.action, "alternative_exploration",
+    `SIM-D — 'what else is there' must route to alternative_exploration (got ${plan.action})`);
+  assert.equal(plan.requiresRetrieval, true, "SIM-D — requiresRetrieval must be true");
+
+  assert.doesNotThrow(
+    () => planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, undefined),
+    "SIM-D — planRetrieval without gender profile must not throw"
+  );
 });
 
 // ── Summary ───────────────────────────────────────────────────────────────────

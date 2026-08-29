@@ -418,6 +418,8 @@ const VARIETY_SIGNALS = [
   "different fragrances", "something different", "other fragrances",
   "different ones", "other ones", "show me other",
   "none of those", "none of these",
+  // EP-AI-C6-P2-A: hidden-gem variety — prefer unseen when session history exists
+  "less obvious", "less common", "more obscure", "a hidden gem",
 ];
 
 // ── Confidence classification (EP-AI-C5) ──────────────────────────────────────
@@ -820,6 +822,7 @@ export function planRetrieval(
     // only reorders so the top slice has family and brand variety.
     fragrances = applyFamilyDiversity(fragrances);
     fragrances = applySameBrandPenalty(fragrances);
+
   }
 
   // ── Session-wide diversity (RELEVANCE > NOVELTY) ─────────────────────────────
@@ -858,6 +861,49 @@ export function planRetrieval(
         .slice(0, fragrances.length);
       if (broader.length > 0) fragrances = broader;
       // Final fallback: recycle only when constrained catalogue is itself exhausted.
+    }
+  }
+
+  // ── EP-AI-C6-P2-C: Bounded bestseller representation ──────────────────────────
+  // Placed after session diversity so it covers both the standard path and the
+  // broad-catalogue fallback (which bypasses buildBroadPool's ordering). In flat-band
+  // results the absolute bestSeller tie-breaker in sortByQuality sweeps every slot;
+  // this cap limits bestsellers to Math.ceil(N/2) by pulling non-bestseller equivalents
+  // from the eligible catalogue (same fit band ≤ 0.05). Excluded: similar_to,
+  // anchored_refinement, comparison — entity relevance must be preserved.
+  if (
+    intent !== "similar_to" &&
+    intent !== "anchored_refinement" &&
+    intent !== "comparison" &&
+    fragrances.length > 0
+  ) {
+    const N     = fragrances.length;
+    const maxBs = Math.ceil(N / 2);
+    const bsCnt = fragrances.filter((f) => f.bestSeller).length;
+    if (bsCnt > maxBs) {
+      const topFit      = scoreFit(fragrances[0], fitSignals, profile);
+      const alreadyIn   = new Set(fragrances.map((f) => f.slug));
+      const rejectedSet = new Set(profile?.rejectedSlugs ?? []);
+      // Pull non-bestseller equivalents crowded out by the bestSeller tie-breaker.
+      // Also exclude the session-wide seen set so recycled candidates are not promoted.
+      const eligibleNonBs = mkcCatalogue
+        .filter((k) =>
+          !k.bestSeller &&
+          !alreadyIn.has(k.slug) &&
+          !rejectedSet.has(k.slug) &&
+          !(excludeSlugs?.has(k.slug)) &&
+          (!genderConstraint || k.gender === genderConstraint || k.gender === "unisex") &&
+          Math.abs(scoreFit(k, fitSignals, profile) - topFit) <= 0.05,
+        )
+        .sort(makeFitComparator(fitSignals, profile));
+      if (eligibleNonBs.length > 0) {
+        const bsList    = fragrances.filter((f) => f.bestSeller);
+        const nonBsList = fragrances.filter((f) => !f.bestSeller);
+        const allowedBs = bsList.slice(0, maxBs);
+        const demotedBs = bsList.slice(maxBs);
+        const fill      = eligibleNonBs.slice(0, demotedBs.length);
+        fragrances      = [...nonBsList, ...allowedBs, ...fill, ...demotedBs].slice(0, N);
+      }
     }
   }
 

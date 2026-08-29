@@ -82,6 +82,9 @@ const ALTERNATIVE_EXPLORATION_PATTERNS = [
   // Intelligence direction exploration
   "less sweet", "less heavy", "less intense", "less dark",
   "softer", "subtler",
+  // EP-AI-C6-P2-B: natural continuation within active consultation
+  "show me more", "show me some more", "more please",
+  "surprise me", "what else is there", "another",
 ];
 
 // Refinement signals — preference updates against an active consultation (EP18-P1)
