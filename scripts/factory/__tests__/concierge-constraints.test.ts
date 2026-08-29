@@ -25,7 +25,7 @@ import { buildSystemPrompt } from "../../../app/lib/concierge/safetyGuard";
 import { mkcCatalogue }      from "../../../app/lib/mkc/catalogue";
 import { nativeFragrances }  from "../../../app/lib/mkc/native";
 import { resolveIntent } from "../../../app/lib/concierge/intentResolver";
-import type { ConversationProfile, ConversationState }  from "../../../app/lib/concierge/types";
+import type { ConversationProfile, ConversationState, ConversationContext }  from "../../../app/lib/concierge/types";
 import type { ResolvedIntent } from "../../../app/lib/concierge/intentResolver";
 import { planConversation, type ConversationPlan } from "../../../app/lib/concierge/conversationPlanner";
 import type { RetrievalContext } from "../../../app/lib/concierge/contextBuilder";
@@ -5123,6 +5123,98 @@ test("C6-E2E-K — \"Compare CK One with 212 VIP Black.\" → both records retri
   const resolved = resolveIntent("Compare CK One with 212 VIP Black.", EMPTY_CONTEXT);
   assert.ok(resolved.compareSlug.includes("ck-one-inspired"),       "C6-E2E-K: CK One resolved");
   assert.ok(resolved.compareSlug.includes("212-vip-black-inspired"), "C6-E2E-K: 212 VIP Black resolved");
+});
+
+// ── Section 23: EP-AI-C6-P1-R3 — Null Context Boundary ──────────────────────
+
+console.log("\n── 23. R3-NULL — Null Context Boundary ─────────────────────────────");
+
+// The production failure: state.context = null from a direct API caller reached
+// resolveIntent(message, state.context) → crash at context.mentionedSlug (line 113).
+// The repair: route.ts normalizes at the API boundary:
+//   const context: ConversationContext = state.context ?? {};
+// These tests verify the normalized form is safe for every pipeline function.
+
+test("R3-NULL-01 — null context normalized to {} does not throw in resolveIntent", () => {
+  const rawContext = null as unknown as ConversationContext;
+  const context: ConversationContext = rawContext ?? {};
+  assert.doesNotThrow(
+    () => resolveIntent("I'm male. Recommend something fresh for me.", context),
+    "R3-NULL-01: production payload (context: null) must not throw after normalization",
+  );
+});
+
+test("R3-NULL-02 — undefined context normalized to {} does not throw in resolveIntent", () => {
+  const rawContext = undefined as unknown as ConversationContext;
+  const context: ConversationContext = rawContext ?? {};
+  assert.doesNotThrow(
+    () => resolveIntent("Something woody for everyday wear.", context),
+    "R3-NULL-02: undefined context must not throw after normalization",
+  );
+});
+
+test("R3-NULL-03 — empty object context (baseline) does not throw", () => {
+  assert.doesNotThrow(
+    () => resolveIntent("What notes are in Sauvage?", {}),
+    "R3-NULL-03: empty object context must not throw",
+  );
+});
+
+test("R3-NULL-04 — null normalization produces empty object (not null)", () => {
+  const rawContext = null as unknown as ConversationContext;
+  const context: ConversationContext = rawContext ?? {};
+  assert.deepEqual(context, {}, "R3-NULL-04: null ?? {} must produce {}");
+});
+
+test("R3-NULL-05 — valid context is preserved by normalization", () => {
+  const prior: ConversationContext = { mentionedSlug: "aventus-inspired", occasion: "evening" };
+  const context: ConversationContext = prior ?? {};
+  assert.equal(context.mentionedSlug, "aventus-inspired", "R3-NULL-05: mentionedSlug preserved");
+  assert.equal(context.occasion, "evening",               "R3-NULL-05: occasion preserved");
+});
+
+test("R3-NULL-06 — entity request with null-normalized context resolves correctly", () => {
+  const rawContext = null as unknown as ConversationContext;
+  const context: ConversationContext = rawContext ?? {};
+  const result = resolveIntent("Tell me about Aventus.", context);
+  assert.equal(result.entitySlug, "aventus-inspired",
+    "R3-NULL-06: entity must resolve with null-normalized context");
+});
+
+test("R3-NULL-07 — Torino24 entity with null-normalized context resolves correctly", () => {
+  const rawContext = null as unknown as ConversationContext;
+  const context: ConversationContext = rawContext ?? {};
+  const result = resolveIntent("What notes are in Torino24?", context);
+  assert.equal(result.entitySlug, "torino24-inspired",
+    "R3-NULL-07: Torino24 must resolve with null-normalized context");
+});
+
+test("R3-NULL-08 — comparison with null-normalized context resolves both slugs", () => {
+  const rawContext = null as unknown as ConversationContext;
+  const context: ConversationContext = rawContext ?? {};
+  const result = resolveIntent("Compare Sauvage with Hacivat.", context);
+  assert.ok(result.compareSlug.length >= 2,
+    "R3-NULL-08: both comparison slugs must resolve with null-normalized context");
+});
+
+test("R3-NULL-09 — male guest + null-normalized context: no female-only recommendations", () => {
+  const rawContext = null as unknown as ConversationContext;
+  const context: ConversationContext = rawContext ?? {};
+  const p = extractProfile("I'm male. Something fresh.", undefined);
+  const result = planRetrieval(GENERAL_INTENT, context, p);
+  const leak = result.fragrances.filter((f) => f.gender === "female");
+  assert.equal(leak.length, 0,
+    "R3-NULL-09: male guest with null-normalized context must not receive female-only fragrances");
+});
+
+test("R3-NULL-10 — female guest + null-normalized context: no male-only recommendations", () => {
+  const rawContext = null as unknown as ConversationContext;
+  const context: ConversationContext = rawContext ?? {};
+  const p = extractProfile("I'm female. Something floral.", undefined);
+  const result = planRetrieval(GENERAL_INTENT, context, p);
+  const leak = result.fragrances.filter((f) => f.gender === "male");
+  assert.equal(leak.length, 0,
+    "R3-NULL-10: female guest with null-normalized context must not receive male-only fragrances");
 });
 
 // ── Summary ───────────────────────────────────────────────────────────────────

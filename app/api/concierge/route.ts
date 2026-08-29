@@ -32,7 +32,7 @@ import { detectRejections }                                                     
 import { buildConsultationPlan, evolveConsultationPlan, detectAffectedRoles, detectExplorationTarget } from "../../lib/concierge/consultationTracker";
 import { adaptCustomerProfile }                from "../../lib/concierge/customerAdapter";
 import { catalogueMaps }                       from "../../lib/discovery";
-import type { ConversationState, SessionUpdates, FormattedResponse, ConsultationPlan }                 from "../../lib/concierge/types";
+import type { ConversationState, ConversationContext, SessionUpdates, FormattedResponse, ConsultationPlan } from "../../lib/concierge/types";
 import type { UnifiedCustomerProfile }         from "../../lib/customer/profile/UnifiedCustomerProfile";
 
 // ── Model configuration ───────────────────────────────────────────────────────
@@ -119,6 +119,11 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     if (!message?.trim() || !state) {
       return NextResponse.json({ error: "message and state are required" }, { status: 400 });
     }
+
+    // Normalize null context to an empty context object at the API boundary.
+    // ConversationState.context is typed non-nullable; direct API callers may
+    // send null (semantically equivalent to an empty context — no prior signals).
+    const context: ConversationContext = state.context ?? {};
 
     // Assemble unified customer profile from browser-persisted state (optional)
     const unifiedProfile = body.browserProfile
@@ -209,7 +214,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     // but the message contains a resolvable entity slug or comparison pair, override
     // to new_search so the entity is not silently lost ("What notes are in Torino24?").
     if (!plan.requiresRetrieval && plan.action === "clarification") {
-      const preResolved = resolveIntent(message, state.context);
+      const preResolved = resolveIntent(message, context);
       if (preResolved.entitySlug || preResolved.compareSlug.length >= 2) {
         plan = { ...plan, action: "new_search", requiresRetrieval: true, requiresClarification: false };
         resolvedIntent = preResolved;
@@ -217,7 +222,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     }
 
     if (plan.requiresRetrieval) {
-      if (!resolvedIntent) resolvedIntent = resolveIntent(message, state.context);
+      if (!resolvedIntent) resolvedIntent = resolveIntent(message, context);
 
       // EP-AI-C4: override intent so planRetrieval routes to anchored_refinement case
       if (plan.action === "anchored_refinement") {
@@ -228,7 +233,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       const refinementRoles = plan.action === "refinement" ? refinement?.affectedRoles : undefined;
       retrieval = planRetrieval(
         resolvedIntent,
-        state.context,
+        context,
         updatedProfile,
         refinementRoles,
         explorationTarget ?? undefined,
@@ -254,6 +259,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     const contextSelectedSlug = anchorSlug ?? resolvedOrdinalSlug;
     const stateForContext: typeof state = {
       ...state,
+      context,
       profile: updatedProfile,
       ...(contextSelectedSlug ? { selectedSlug: contextSelectedSlug } : {}),
     };
