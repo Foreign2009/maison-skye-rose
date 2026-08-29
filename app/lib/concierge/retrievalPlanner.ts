@@ -769,14 +769,27 @@ export function planRetrieval(
     }
   }
 
-  // ── Gender constraint — hard filter (EP-AI-C1) ───────────────────────────────
-  // Applied post-retrieval across all intents except comparison (customer specified
-  // fragrances by name). NEVER restores opposite-gender candidates on zero match.
-  if (intent !== "comparison") {
-    const genderConstraint = getEffectiveGenderConstraint(profile);
+  // ── Gender constraint — hard filter (EP-AI-C1 / EP-AI-C6-P1) ────────────────
+  // Applied post-retrieval for ALL intents. For comparison, named entity slugs
+  // retain authority (guest explicitly requested the comparison) — only
+  // supplemental candidates are filtered. NEVER restores opposite-gender
+  // candidates on zero match.
+  const genderConstraint = getEffectiveGenderConstraint(profile);
+  if (intent === "comparison" && genderConstraint) {
+    // Entity authority: named comparison slugs pass the gender filter unconditionally.
+    // Any supplemental candidates added to the comparison context are constrained.
+    const entitySlugsForGender: Set<string> = new Set(
+      compareSlug.length >= 2
+        ? compareSlug
+        : ([entitySlug, context.compareSlug?.[0]].filter(Boolean) as string[])
+    );
+    const entities    = fragrances.filter((f) =>  entitySlugsForGender.has(f.slug));
+    const supplements = fragrances.filter((f) => !entitySlugsForGender.has(f.slug));
+    fragrances = [...entities, ...applyGenderConstraint(supplements, genderConstraint)];
+  } else {
     fragrances = applyGenderConstraint(fragrances, genderConstraint);
 
-    // ── Minimum breadth guarantee (EP-AI-C2) ──────────────────────────────────
+    // ── Minimum breadth guarantee (EP-AI-C2) ────────────────────────────────
     // When a gender constraint is active and the retrieval returned fewer than
     // three candidates, supplement from the broader eligible catalogue WITHOUT
     // relaxing the gender constraint. Signal-based paths can narrow the pool
@@ -889,11 +902,13 @@ export function planRetrieval(
     });
   }
 
-  // ── Source knowledge re-add (EP-AI-C3 / EP-AI-C4-P0) ─────────────────────────
+  // ── Source knowledge re-add (EP-AI-C3 / EP-AI-C4-P0 / EP-AI-C6-P1) ──────────
   // sourceKnowledge remains available as reference context for the LLM via
   // state.context / conversation history. It may only enter the final candidate
   // list (resp.fragrances) when it passes all guest constraints — rejectedSlugs,
-  // avoidedFamilies, and avoidedNotes (EP-AI-C4-P0).
+  // avoidedFamilies, avoidedNotes (EP-AI-C4-P0), and gender (EP-AI-C6-P1).
+  // Entity authority exception: education and comparison intents explicitly name
+  // this fragrance, so the gender constraint is waived for those intents only.
   const rejectedSourceSlug = profileRejectedSlugs.includes(sourceKnowledge?.slug ?? "");
   const sourceViolatesFamily = profileAvoidedFamilies.some((af) =>
     (sourceKnowledge?.family ?? []).some((f) => f.toLowerCase().includes(af) || af.includes(f.toLowerCase()))
@@ -902,12 +917,20 @@ export function planRetrieval(
     [...(sourceKnowledge?.notes.top ?? []), ...(sourceKnowledge?.notes.heart ?? []), ...(sourceKnowledge?.notes.base ?? [])]
       .some((n) => n.toLowerCase().includes(an) || an.includes(n.toLowerCase()))
   );
+  const sourceEntityAuthority = intent === "education" || intent === "comparison";
+  const sourceViolatesGender =
+    !sourceEntityAuthority &&
+    genderConstraint !== null &&
+    sourceKnowledge !== undefined &&
+    sourceKnowledge.gender !== genderConstraint &&
+    sourceKnowledge.gender !== "unisex";
   if (
     sourceKnowledge &&
     !fragrances.find((f) => f.slug === sourceKnowledge.slug) &&
     !rejectedSourceSlug &&
     !sourceViolatesFamily &&
-    !sourceViolatesNotes
+    !sourceViolatesNotes &&
+    !sourceViolatesGender
   ) {
     fragrances = [sourceKnowledge, ...fragrances].slice(0, 6);
   }
@@ -933,11 +956,22 @@ export function planRetrieval(
  * Reconstructs a RetrievalContext from cached ConversationState without
  * performing a new catalogue search. Used when ConversationPlanner returns
  * reuseRecommendations = true.
+ *
+ * EP-AI-C6-P1: accepts the current profile to enforce gender eligibility on
+ * cached slugs. A Gift→self transition or late gender declaration would otherwise
+ * surface off-gender fragrances from a prior cache entry.
  */
-export function buildCachedRetrieval(state: ConversationState): RetrievalContext {
-  const fragrances = (state.lastRecommendationSlugs ?? [])
-    .map((slug) => catalogueMaps.bySlug.get(slug))
-    .filter((k): k is FragranceKnowledge => !!k);
+export function buildCachedRetrieval(
+  state:    ConversationState,
+  profile?: ConversationProfile,
+): RetrievalContext {
+  const genderConstraint = getEffectiveGenderConstraint(profile);
+  const fragrances = applyGenderConstraint(
+    (state.lastRecommendationSlugs ?? [])
+      .map((slug) => catalogueMaps.bySlug.get(slug))
+      .filter((k): k is FragranceKnowledge => !!k),
+    genderConstraint,
+  );
 
   const articles = state.lastArticleSlug
     ? [academyCatalogue.find((a) => a.slug === state.lastArticleSlug)].filter(

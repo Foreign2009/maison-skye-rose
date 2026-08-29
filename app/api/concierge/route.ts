@@ -238,8 +238,10 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
         anchorSlug,
       );
     } else {
-      // Reuse cached recommendations without a new catalogue search
-      retrieval = buildCachedRetrieval(state);
+      // Reuse cached recommendations without a new catalogue search.
+      // EP-AI-C6-P1: pass updatedProfile so gender eligibility is enforced on
+      // the cached slug list (BP-01 — gift→self / late-gender transitions).
+      retrieval = buildCachedRetrieval(state, updatedProfile);
     }
 
     // Determine the effective intent for response planning

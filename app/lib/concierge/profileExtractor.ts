@@ -392,8 +392,11 @@ export function extractProfile(
 
   // ── 7. Preferred gender (only when shopping for self or unspecified) ──────
   if (!shopping.shoppingIntent || shopping.shoppingIntent.value === "self") {
-    const MALE_PATTERN   = /\bfor men\b|\bmasculine fragrances?\b|\bmen'?s fragrances?\b|\bi'?m (?:a )?(?:man|male|guy)\b|\bi am (?:a )?(?:man|male|guy)\b|\bas a (?:man|male|guy)\b/;
-    const FEMALE_PATTERN = /\bfor women\b|\bfeminine fragrances?\b|\bwomen'?s fragrances?\b|\bi'?m (?:a )?(?:woman|female|girl|lady)\b|\bi am (?:a )?(?:woman|female|girl|lady)\b|\bas a (?:woman|female|girl|lady)\b/;
+    // EP-AI-C6-P1: expanded to cover natural product-type vocabulary
+    // (men's/women's scent|perfume|cologne) in addition to "fragrance".
+    // "cologne for myself" is also captured as a self-referential masculine signal.
+    const MALE_PATTERN   = /\bfor men\b|\bmasculine fragrances?\b|\bmen'?s (?:fragrances?|scents?|perfumes?|colognes?|aftershave)\b|\bi'?m (?:a )?(?:man|male|guy)\b|\bi am (?:a )?(?:man|male|guy)\b|\bas a (?:man|male|guy)\b|\bcologne for (?:my)?self\b/;
+    const FEMALE_PATTERN = /\bfor women\b|\bfeminine fragrances?\b|\bwomen'?s (?:fragrances?|scents?|perfumes?|colognes?)\b|\bi'?m (?:a )?(?:woman|female|girl|lady)\b|\bi am (?:a )?(?:woman|female|girl|lady)\b|\bas a (?:woman|female|girl|lady)\b/;
     const UNISEX_PATTERN = /\bgender doesn'?t matter\b|\bunisex fragrances?\b|\bshow me unisex\b|\bi don'?t (?:mind|care)(?: (?:about|the))? gender\b|\bfor anyone\b/;
     if (MALE_PATTERN.test(q)) {
       profile.preferredGender = { value: "male", confidence: "HIGH" };

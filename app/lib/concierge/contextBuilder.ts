@@ -688,6 +688,46 @@ function buildRejectedProductsSection(profile: ConversationProfile | undefined):
   };
 }
 
+// EP-AI-C6-P1: Gender eligibility — prose-level guard to prevent the LLM from
+// recommending off-gender fragrances even when context sections appear to permit it.
+// Complements the hard catalogue filter in retrievalPlanner — the hard filter is
+// the authoritative gate; this section adds an explicit instruction layer.
+function buildGenderEligibilitySection(profile: ConversationProfile | undefined): PromptSection {
+  if (!profile) return { label: "", content: "" };
+
+  const shoppingFor = profile.shoppingIntent?.value;
+  const preferred   = profile.preferredGender?.value;
+  const recipient   = profile.recipientGender?.value;
+
+  // Gift path: constraint is recipient gender
+  if (shoppingFor === "gift" && recipient && recipient !== "unisex") {
+    return {
+      label:   "GENDER ELIGIBILITY",
+      content: [
+        `The guest is shopping for a gift. The recipient is ${recipient}.`,
+        `Only recommend fragrances that are ${recipient} or unisex.`,
+        `Do not recommend fragrances marketed to the opposite gender.`,
+        `Never assume the recipient's gender has changed unless the guest explicitly states it.`,
+      ].join("\n"),
+    };
+  }
+
+  // Self path: constraint is preferred gender
+  if ((!shoppingFor || shoppingFor === "self") && preferred && preferred !== "unisex") {
+    return {
+      label:   "GENDER ELIGIBILITY",
+      content: [
+        `The guest has identified as ${preferred}.`,
+        `Only recommend fragrances that are ${preferred} or unisex.`,
+        `Do not recommend fragrances marketed to the opposite gender.`,
+        `Never assume the guest's gender has changed unless they explicitly state it.`,
+      ].join("\n"),
+    };
+  }
+
+  return { label: "", content: "" };
+}
+
 // Consultation stage: derived from existing state — no new persistent field.
 function deriveConsultationStage(state: ConversationState): string {
   if (state.turns.length === 0) return "Starting consultation";
@@ -839,6 +879,7 @@ export function buildContext(
     buildConversationContextSection(state),
     buildProfileSection(state.profile),
     buildRejectedProductsSection(state.profile),                                // EP-AI-C5
+    buildGenderEligibilitySection(state.profile),                               // EP-AI-C6-P1
     customerCtx ? buildCustomerAwarenessSection(customerCtx) : { label: "", content: "" },
     buildWardrobeSection(state.profile),
     buildCollectionSection(state.profile),
