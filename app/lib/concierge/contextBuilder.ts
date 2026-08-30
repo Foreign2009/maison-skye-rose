@@ -253,11 +253,20 @@ function buildInstructionsSection(
 ): PromptSection {
   const instructions: string[] = [];
 
-  // Change G: Semantic multi-option card target — only when the guest explicitly
-  // asked for multiple options (plural nouns, explicit counts, "show me options").
-  // "Give me something woody" and "Give me one recommendation" do NOT trigger this.
+  // Change G / R1: Semantic multi-option card target injection.
+  // Primary: explicit count or plural signal in the current message (detectCardTarget).
+  // Fallback: when no explicit signal is present but the profile carries an active
+  // discovery brief (preferredFamilies + preferredSeasons both set), inherit card
+  // target 5 — handles short gender-pivot turns ("and female") that continue an
+  // established seasonal consultation. Guards: academy_lookup and reuseRecommendations
+  // have their own framing and are excluded.
   if (rawMessage && !plan.requiresComparison && !plan.requiresClarification) {
-    const cardTarget = detectCardTarget(rawMessage);
+    let cardTarget = detectCardTarget(rawMessage);
+    if (cardTarget === null && !plan.reuseRecommendations && plan.action !== "academy_lookup" && state.profile) {
+      const hasFamilies = (state.profile.preferredFamilies?.value.length ?? 0) > 0;
+      const hasSeasons  = (state.profile.preferredSeasons?.value.length  ?? 0) > 0;
+      if (hasFamilies && hasSeasons) cardTarget = 5;
+    }
     if (cardTarget !== null) {
       instructions.push(
         `Present up to ${cardTarget} meaningfully differentiated fragrances. Each option should offer a distinct character or mood.`
@@ -707,18 +716,22 @@ function buildCustomerAwarenessSection(
   return { label: "CUSTOMER AWARENESS", content: parts.join("\n") };
 }
 
-// ── EP-AI-C6-P3 Change G: Semantic multi-option card target ──────────────────
+// ── EP-AI-C6-P3 Change G / R1: Semantic multi-option card target ──────────────
 
 // Patterns that signal a plural / multi-option discovery request.
-// Must be specific enough that "give me something woody" does NOT trigger five-card.
+// "give me something woody" and "give me one recommendation" must NOT trigger five-card.
 const MULTI_OPTION_PATTERNS: RegExp[] = [
-  // Explicit count 2-9: "give me 5 fragrances", "show me 3 options"
-  /\b[2-9]\s+(?:fragrances?|scents?|perfumes?|options?|recommendations?|choices?|picks?)\b/i,
   // Explicit plurality markers before the noun: "some options", "a few summer fragrances"
   // Allows up to 3 intervening adjective words (e.g. "a few fresh summer scents")
   /\b(?:some|a few|several|multiple|different|various)\s+(?:\w+\s+){0,3}(?:fragrances?|scents?|perfumes?|options?|recommendations?|choices?|picks?)\b/i,
   // Explicit multi-option imperative: "give me options", "show me alternatives"
   /\b(?:give me|show me|list|get me|find me)\s+(?:options?|alternatives?|recommendations?|choices?|picks?|a selection)\b/i,
+  // Imperative discovery targeting a plural noun: "give me fresh fragrances",
+  // "list fresh fragrances for women", "give me the fresh summer vibes listed male fragrances".
+  // Requires at least one qualifying word between the imperative and the plural noun.
+  /\b(?:give me|show me|list|get me|find me)\b(?:\s+\S+){1,10}\s+(?:fragrances|scents|perfumes)\b/i,
+  // Question form with plural noun: "what fresh fragrances do you recommend?"
+  /\b(?:what|which|any)\s+(?:\w+\s+){0,4}(?:fragrances|scents|perfumes)\b/i,
 ];
 
 // Patterns that assert a singular request — override any multi-option signal.
@@ -731,9 +744,17 @@ const SINGULAR_OVERRIDE_PATTERNS: RegExp[] = [
 export function detectCardTarget(rawMessage: string): number | null {
   if (SINGULAR_OVERRIDE_PATTERNS.some((p) => p.test(rawMessage))) return null;
 
-  // Explicit count up to 5
-  const countMatch = rawMessage.match(/\b([2-9])\s+(?:fragrances?|scents?|perfumes?|options?|recommendations?|choices?|picks?)\b/i);
-  if (countMatch) return Math.min(parseInt(countMatch[1], 10), 5);
+  // Explicit count [1-9] or the word "one" with up to 3 intervening adjective words.
+  // Handles: "give me 5 summer fragrances", "show me 4 fresh woody fragrances",
+  //          "give me one summer fragrance" → 1.
+  const countMatch = rawMessage.match(
+    /\b(one|[1-9])\s+(?:\w+\s+){0,3}(?:fragrances?|scents?|perfumes?|options?|recommendations?|choices?|picks?)\b/i
+  );
+  if (countMatch) {
+    const raw   = countMatch[1].toLowerCase();
+    const count = raw === "one" ? 1 : parseInt(raw, 10);
+    return Math.min(count, 5);
+  }
 
   if (MULTI_OPTION_PATTERNS.some((p) => p.test(rawMessage))) return 5;
 

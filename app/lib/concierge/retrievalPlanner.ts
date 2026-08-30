@@ -777,6 +777,43 @@ export function planRetrieval(
         }
       }
 
+      // Active discovery brief continuation (EP-AI-C6-P3-R1)
+      // When profile carries both preferredFamilies and preferredSeasons from a prior
+      // seasonal consultation, apply the same seasonal filter on continuation turns
+      // (e.g. "and female" gender pivot). Prevents off-season fragrances entering via
+      // the unconstrained broad pool. Does not fire when collectionType, explorationTarget,
+      // or affectedRoles have already handled the retrieval above.
+      const hasActiveBrief =
+        (profile?.preferredFamilies?.value.length ?? 0) > 0 &&
+        (profile?.preferredSeasons?.value.length  ?? 0) > 0;
+
+      if (hasActiveBrief && profile?.preferredSeasons) {
+        const profileSeasonRaw = profile.preferredSeasons.value[0];
+        const seasonKws: Record<string, string> = {
+          summer: "Summer", winter: "Winter", spring: "Spring", autumn: "Autumn", fall: "Autumn",
+        };
+        let briefSeason = "All Season";
+        for (const [kw, val] of Object.entries(seasonKws)) {
+          if (profileSeasonRaw.toLowerCase().includes(kw)) { briefSeason = val; break; }
+        }
+        if (briefSeason !== "All Season") {
+          const genderForBrief  = getEffectiveGenderConstraint(profile);
+          const avoidedForBrief = (profile?.avoidedFamilies?.value ?? []).map((f) => f.toLowerCase());
+          fragrances = mkcCatalogue
+            .filter((k) => {
+              if (k.season !== briefSeason && k.season !== "All Season") return false;
+              if (genderForBrief && k.gender !== genderForBrief && k.gender !== "unisex") return false;
+              if (avoidedForBrief.some((af) =>
+                k.family.some((f) => f.toLowerCase().includes(af) || af.includes(f.toLowerCase()))
+              )) return false;
+              return true;
+            })
+            .sort(makeFitComparator(fitSignals, profile))
+            .slice(0, 8);
+          break;
+        }
+      }
+
       // Explicit long-tail / hidden-gem discovery request
       if (rawMessage && HIDDEN_GEM_SIGNALS.some((p) => rawMessage.toLowerCase().includes(p))) {
         fragrances = getCollection("hidden-gems").slice(0, 4);

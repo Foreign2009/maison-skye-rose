@@ -8,6 +8,8 @@
  */
 
 import assert from "node:assert/strict";
+import fs from "node:fs";
+import path from "node:path";
 import { extractProfile }    from "../../../app/lib/concierge/profileExtractor";
 import {
   planRetrieval,
@@ -20,7 +22,7 @@ import {
   assignRecommendationRoles,
 } from "../../../app/lib/concierge/retrievalPlanner";
 import type { FitSignals } from "../../../app/lib/concierge/retrievalPlanner";
-import { buildContext, renderContext } from "../../../app/lib/concierge/contextBuilder";
+import { buildContext, renderContext, detectCardTarget } from "../../../app/lib/concierge/contextBuilder";
 import { buildSystemPrompt } from "../../../app/lib/concierge/safetyGuard";
 import { mkcCatalogue }      from "../../../app/lib/mkc/catalogue";
 import { nativeFragrances }  from "../../../app/lib/mkc/native";
@@ -5569,7 +5571,6 @@ test("SIM-D — no gender: 'what else is there' routes to alternative_exploratio
 
 // ── EP-AI-C6-P3: Season retrieval (S1-S8) ────────────────────────────────────
 
-import { detectCardTarget } from "../../../app/lib/concierge/contextBuilder";
 import { getCurrentSeason } from "../../../app/lib/discovery";
 
 console.log("\n── EP-AI-C6-P3: S — Season Retrieval ────────────────────────────────");
@@ -5873,15 +5874,182 @@ test("Q3 — poolExhausted=false → no POOL EXHAUSTION section", () => {
   assert.ok(!rendered.includes("POOL EXHAUSTION"), "Q3 — no POOL EXHAUSTION when pool not exhausted");
 });
 
-// ── EP-AI-C6-P3: WhatsApp UI collision (UI1-UI5) — component tests ────────────
+// ── EP-AI-C6-P3-R1: CT1-CT15 (detectCardTarget contract) ─────────────────────
 
-console.log("\n── EP-AI-C6-P3: UI — WhatsApp Collision (component, skipped) ─────────");
+console.log("\n── EP-AI-C6-P3-R1: CT — Card Target Contract ──────────────────────────");
 
-skip("UI1 — FloatingWhatsApp renders null when isOpen=true");
-skip("UI2 — FloatingWhatsApp renders the button when isOpen=false");
-skip("UI3 — FloatingWhatsApp disappears when Concierge opens");
-skip("UI4 — FloatingWhatsApp reappears when Concierge closes");
-skip("UI5 — FloatingWhatsApp uses useConcierge() hook (import verified via build)");
+test("CT1  — 'give me the fresh summer vibes listed male fragrances' → 5", () => {
+  assert.equal(detectCardTarget("give me the fresh summer vibes listed male fragrances"), 5);
+});
+test("CT2  — 'give me fresh summer female fragrances' → 5", () => {
+  assert.equal(detectCardTarget("give me fresh summer female fragrances"), 5);
+});
+test("CT3  — 'list fresh fragrances for women' → 5", () => {
+  assert.equal(detectCardTarget("list fresh fragrances for women"), 5);
+});
+test("CT4  — 'show me fresh summer fragrances' → 5", () => {
+  assert.equal(detectCardTarget("show me fresh summer fragrances"), 5);
+});
+test("CT5  — 'show me some fresh summer fragrances' → 5", () => {
+  assert.equal(detectCardTarget("show me some fresh summer fragrances"), 5);
+});
+test("CT6  — 'what fresh fragrances do you recommend?' → 5", () => {
+  assert.equal(detectCardTarget("what fresh fragrances do you recommend?"), 5);
+});
+test("CT7  — 'give me 5 summer fragrances for men' → 5", () => {
+  assert.equal(detectCardTarget("give me 5 summer fragrances for men"), 5);
+});
+test("CT8  — 'give me 4 fresh woody fragrances' → 4", () => {
+  assert.equal(detectCardTarget("give me 4 fresh woody fragrances"), 4);
+});
+test("CT9  — 'give me 3 summer options' → 3", () => {
+  assert.equal(detectCardTarget("give me 3 summer options"), 3);
+});
+test("CT10 — 'give me 2 male fragrances' → 2", () => {
+  assert.equal(detectCardTarget("give me 2 male fragrances"), 2);
+});
+test("CT11 — 'give me one summer fragrance' → 1", () => {
+  assert.equal(detectCardTarget("give me one summer fragrance"), 1);
+});
+test("CT12 — 'give me something woody' → null", () => {
+  assert.equal(detectCardTarget("give me something woody"), null);
+});
+test("CT13 — 'recommend a fragrance' → null", () => {
+  assert.equal(detectCardTarget("recommend a fragrance"), null);
+});
+test("CT14 — 'tell me about Aventus' → null", () => {
+  assert.equal(detectCardTarget("tell me about Aventus"), null);
+});
+test("CT15 — 'compare Sauvage and Delina' → null", () => {
+  assert.equal(detectCardTarget("compare Sauvage and Delina"), null);
+});
+
+// ── EP-AI-C6-P3-R1: TP1-TP7 (target pivot seasonal preservation) ─────────────
+
+console.log("\n── EP-AI-C6-P3-R1: TP — Target Pivot Seasonal Preservation ─────────────");
+
+const TP_FRESH_SUMMER_FEMALE = makeProfile({
+  preferredFamilies: { value: ["Fresh"], confidence: "HIGH" },
+  preferredSeasons:  { value: ["Summer"], confidence: "HIGH" },
+  preferredGender:   { value: "female", confidence: "HIGH" },
+});
+
+const TP_WOODY_WINTER_FEMALE = makeProfile({
+  preferredFamilies: { value: ["Woody"], confidence: "HIGH" },
+  preferredSeasons:  { value: ["Winter"], confidence: "HIGH" },
+  preferredGender:   { value: "female", confidence: "HIGH" },
+});
+
+// TP1: Founder T1 male Fresh+Summer → T2 "and female" pivot → retrieval stays Summer
+test("TP1 — T1 male Fresh+Summer → T2 female pivot → retrieval stays Summer only", () => {
+  const result = planRetrieval(
+    GENERAL_INTENT, EMPTY_CONTEXT, TP_FRESH_SUMMER_FEMALE,
+    undefined, undefined, null, undefined, "and female",
+  );
+  const offSeason = result.fragrances.filter(
+    (f) => f.season !== "Summer" && f.season !== "All Season",
+  );
+  assert.equal(offSeason.length, 0,
+    `TP1 FAIL — off-season fragrances in pivot result: ${offSeason.map((f) => `${f.slug}(${f.season})`).join(", ")}`);
+});
+
+// TP2: Inverse female Fresh+Summer → male pivot → retrieval stays Summer
+test("TP2 — T1 female Fresh+Summer → male pivot → retrieval stays Summer only", () => {
+  const pivotProfile = makeProfile({
+    preferredFamilies: { value: ["Fresh"], confidence: "HIGH" },
+    preferredSeasons:  { value: ["Summer"], confidence: "HIGH" },
+    preferredGender:   { value: "male", confidence: "HIGH" },
+  });
+  const result = planRetrieval(
+    GENERAL_INTENT, EMPTY_CONTEXT, pivotProfile,
+    undefined, undefined, null, undefined, "and male",
+  );
+  const offSeason = result.fragrances.filter(
+    (f) => f.season !== "Summer" && f.season !== "All Season",
+  );
+  assert.equal(offSeason.length, 0,
+    `TP2 FAIL — off-season fragrances: ${offSeason.map((f) => `${f.slug}(${f.season})`).join(", ")}`);
+});
+
+// TP3: Woody+Winter → retrieval stays Winter/AllSeason
+test("TP3 — Woody+Winter brief + female pivot → retrieval stays Winter/AllSeason only", () => {
+  const result = planRetrieval(
+    GENERAL_INTENT, EMPTY_CONTEXT, TP_WOODY_WINTER_FEMALE,
+    undefined, undefined, null, undefined, "and female",
+  );
+  const offSeason = result.fragrances.filter(
+    (f) => f.season !== "Winter" && f.season !== "All Season",
+  );
+  assert.equal(offSeason.length, 0,
+    `TP3 FAIL — off-season fragrances: ${offSeason.map((f) => `${f.slug}(${f.season})`).join(", ")}`);
+});
+
+// TP4: Female only (no families, no seasons) → hasActiveBrief=false → standard path
+test("TP4 — female without active brief (no families) → hasActiveBrief=false → standard path fires", () => {
+  const profile = makeProfile({ preferredGender: { value: "female", confidence: "HIGH" } });
+  const hasFamilies = (profile?.preferredFamilies?.value?.length ?? 0) > 0;
+  const hasSeasons  = (profile?.preferredSeasons?.value?.length  ?? 0) > 0;
+  assert.equal(hasFamilies && hasSeasons, false, "TP4: hasActiveBrief must be false when no families");
+  const result = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "female fragrances");
+  assert.ok(result.fragrances.length > 0, "TP4: standard path must return fragrances");
+});
+
+// TP5: "now for my wife" → gift intent (gift case in switch, not default)
+test("TP5 — 'now for my wife' → resolveIntent returns gift intent", () => {
+  const r = resolveIntent("now for my wife", EMPTY_CONTEXT);
+  assert.equal(r.intent, "gift", `TP5 FAIL — expected intent='gift', got '${r.intent}'`);
+});
+
+// TP6: "now for my husband" → gift intent
+test("TP6 — 'now for my husband' → resolveIntent returns gift intent", () => {
+  const r = resolveIntent("now for my husband", EMPTY_CONTEXT);
+  assert.equal(r.intent, "gift", `TP6 FAIL — expected intent='gift', got '${r.intent}'`);
+});
+
+// TP7: Profile with seasons but no families → hasActiveBrief=false
+test("TP7 — seasons without families → hasActiveBrief=false → standard path fires", () => {
+  const profile = makeProfile({ preferredSeasons: { value: ["Summer"], confidence: "HIGH" } });
+  const hasFamilies = (profile?.preferredFamilies?.value?.length ?? 0) > 0;
+  const hasSeasons  = (profile?.preferredSeasons?.value?.length  ?? 0) > 0;
+  assert.equal(hasFamilies && hasSeasons, false, "TP7: hasActiveBrief must be false when no families");
+  const result = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "something fresh");
+  assert.ok(result.fragrances.length > 0, "TP7: standard path must return fragrances");
+});
+
+// ── EP-AI-C6-P3: WhatsApp UI collision — structural verification ──────────────
+
+console.log("\n── EP-AI-C6-P3: UI — WhatsApp Collision (structural) ─────────────────");
+
+const WA_FILE = path.resolve("app/components/FloatingWhatsApp.tsx");
+const waSource = fs.readFileSync(WA_FILE, "utf-8");
+
+test("UI1 [STRUCTURAL] — FloatingWhatsApp contains 'if (isOpen) return null' guard", () => {
+  assert.ok(
+    waSource.includes("if (isOpen) return null"),
+    "UI1 FAIL — guard not found: if (isOpen) return null",
+  );
+});
+
+test("UI2 [STRUCTURAL] — FloatingWhatsApp imports useConcierge from ConciergeContext", () => {
+  assert.ok(
+    waSource.includes("useConcierge"),
+    "UI2 FAIL — useConcierge not found in FloatingWhatsApp.tsx",
+  );
+  assert.ok(
+    waSource.includes("ConciergeContext"),
+    "UI2 FAIL — ConciergeContext not found in FloatingWhatsApp.tsx",
+  );
+});
+
+test("UI3 [STRUCTURAL] — FloatingWhatsApp is a client component ('use client' directive)", () => {
+  assert.ok(
+    waSource.includes('"use client"') || waSource.includes("'use client'"),
+    "UI3 FAIL — 'use client' directive not found",
+  );
+});
+
+skip("UI4 — FloatingWhatsApp disappears when Concierge opens (runtime, requires browser)");
+skip("UI5 — FloatingWhatsApp reappears when Concierge closes (runtime, requires browser)");
 
 // ── Summary ───────────────────────────────────────────────────────────────────
 
