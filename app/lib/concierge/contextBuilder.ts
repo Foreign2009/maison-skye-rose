@@ -249,8 +249,21 @@ function buildInstructionsSection(
   refinement?:        RefinementState | null,
   explorationTarget?: ExplorationTarget | null,
   anchoredMeta?:      AnchoredMeta,
+  rawMessage?:        string,  // EP-AI-C6-P3 Change G
 ): PromptSection {
   const instructions: string[] = [];
+
+  // Change G: Semantic multi-option card target — only when the guest explicitly
+  // asked for multiple options (plural nouns, explicit counts, "show me options").
+  // "Give me something woody" and "Give me one recommendation" do NOT trigger this.
+  if (rawMessage && !plan.requiresComparison && !plan.requiresClarification) {
+    const cardTarget = detectCardTarget(rawMessage);
+    if (cardTarget !== null) {
+      instructions.push(
+        `Present up to ${cardTarget} meaningfully differentiated fragrances. Each option should offer a distinct character or mood.`
+      );
+    }
+  }
 
   // ── Anchored refinement instructions (EP-AI-C4) ──────────────────────────────
   // Must fire first so the anchor context frames all other instructions.
@@ -605,11 +618,38 @@ function buildConsultationPlanSection(
   return { label: "CONSULTATION PLAN", content: lines.join("\n").trim() };
 }
 
-function buildSeasonalContextSection(): PromptSection {
-  const season = getCurrentSeason();
+// Bare season keywords → canonical season name (EP-AI-C6-P3 Change D)
+const SEASON_KEYWORD_MAP: Record<string, string> = {
+  summer: "Summer",
+  winter: "Winter",
+  spring: "Spring",
+  autumn: "Autumn",
+  fall:   "Autumn",
+};
+
+function buildSeasonalContextSection(rawMessage?: string): PromptSection {
+  const calendarSeason = getCurrentSeason();
+
+  // Change D: when the guest explicitly requested a season that differs from the
+  // current calendar season, state both and make the guest request the priority.
+  if (rawMessage) {
+    const msgLower = rawMessage.toLowerCase();
+    for (const [kw, guestSeason] of Object.entries(SEASON_KEYWORD_MAP)) {
+      if (msgLower.includes(kw)) {
+        if (guestSeason !== calendarSeason) {
+          return {
+            label:   "CURRENT SEASON",
+            content: `${calendarSeason} (South Africa) — the guest has specifically requested ${guestSeason} fragrances. Prioritise ${guestSeason} recommendations regardless of current calendar season.`,
+          };
+        }
+        break; // guest requested same season as calendar — fall through to normal path
+      }
+    }
+  }
+
   return {
     label:   "CURRENT SEASON",
-    content: `${season} (South Africa). When relevant, favour fragrances and recommendations suited to this season.`,
+    content: `${calendarSeason} (South Africa). When relevant, favour fragrances and recommendations suited to this season.`,
   };
 }
 
@@ -665,6 +705,39 @@ function buildCustomerAwarenessSection(
   if (parts.length <= 1) return { label: "", content: "" };
 
   return { label: "CUSTOMER AWARENESS", content: parts.join("\n") };
+}
+
+// ── EP-AI-C6-P3 Change G: Semantic multi-option card target ──────────────────
+
+// Patterns that signal a plural / multi-option discovery request.
+// Must be specific enough that "give me something woody" does NOT trigger five-card.
+const MULTI_OPTION_PATTERNS: RegExp[] = [
+  // Explicit count 2-9: "give me 5 fragrances", "show me 3 options"
+  /\b[2-9]\s+(?:fragrances?|scents?|perfumes?|options?|recommendations?|choices?|picks?)\b/i,
+  // Explicit plurality markers before the noun: "some options", "a few summer fragrances"
+  // Allows up to 3 intervening adjective words (e.g. "a few fresh summer scents")
+  /\b(?:some|a few|several|multiple|different|various)\s+(?:\w+\s+){0,3}(?:fragrances?|scents?|perfumes?|options?|recommendations?|choices?|picks?)\b/i,
+  // Explicit multi-option imperative: "give me options", "show me alternatives"
+  /\b(?:give me|show me|list|get me|find me)\s+(?:options?|alternatives?|recommendations?|choices?|picks?|a selection)\b/i,
+];
+
+// Patterns that assert a singular request — override any multi-option signal.
+const SINGULAR_OVERRIDE_PATTERNS: RegExp[] = [
+  /\b(?:just\s+)?one\s+(?:fragrance|scent|recommendation|option|pick)\b/i,
+  /\bthe best\s+(?:one|fragrance|option|scent)\b/i,
+  /\bsingle\s+(?:fragrance|scent|recommendation)\b/i,
+];
+
+export function detectCardTarget(rawMessage: string): number | null {
+  if (SINGULAR_OVERRIDE_PATTERNS.some((p) => p.test(rawMessage))) return null;
+
+  // Explicit count up to 5
+  const countMatch = rawMessage.match(/\b([2-9])\s+(?:fragrances?|scents?|perfumes?|options?|recommendations?|choices?|picks?)\b/i);
+  if (countMatch) return Math.min(parseInt(countMatch[1], 10), 5);
+
+  if (MULTI_OPTION_PATTERNS.some((p) => p.test(rawMessage))) return 5;
+
+  return null;
 }
 
 // ── EP-AI-C5 section builders ─────────────────────────────────────────────────
@@ -874,7 +947,7 @@ export function buildContext(
   rawMessage?:        string,   // EP-AI-C5: used for preference-aware comparison intelligence
 ): BuiltContext {
   const sections: PromptSection[] = [
-    buildSeasonalContextSection(),
+    buildSeasonalContextSection(rawMessage),  // EP-AI-C6-P3 Change D
     buildConsultationStageSection(state),                                        // EP-AI-C5
     buildConversationContextSection(state),
     buildProfileSection(state.profile),
@@ -904,7 +977,7 @@ export function buildContext(
     ),
     buildPoolExhaustionSection(retrieval, state.profile),                       // EP-AI-C5
     buildConsultationReadinessSection(plan),                                    // EP-AI-C5
-    buildInstructionsSection(plan, state, effectiveIntent, refinement, explorationTarget, retrieval.anchoredMeta), // EP18-P1/P2 / EP-AI-C4
+    buildInstructionsSection(plan, state, effectiveIntent, refinement, explorationTarget, retrieval.anchoredMeta, rawMessage), // EP18-P1/P2 / EP-AI-C4 / EP-AI-C6-P3
   ].filter((s) => s.label && s.content);
 
   const fullText      = sections.map((s) => `=== ${s.label} ===\n${s.content}`).join("\n\n");

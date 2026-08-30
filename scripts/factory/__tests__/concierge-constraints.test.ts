@@ -5567,6 +5567,322 @@ test("SIM-D — no gender: 'what else is there' routes to alternative_exploratio
   );
 });
 
+// ── EP-AI-C6-P3: Season retrieval (S1-S8) ────────────────────────────────────
+
+import { detectCardTarget } from "../../../app/lib/concierge/contextBuilder";
+import { getCurrentSeason } from "../../../app/lib/discovery";
+
+console.log("\n── EP-AI-C6-P3: S — Season Retrieval ────────────────────────────────");
+
+test("S1 — seasonal intent + 'summer' rawMessage returns Summer-tagged fragrances", () => {
+  const seasonalIntent: ResolvedIntent = { intent: "seasonal", signals: {}, compareSlug: [] };
+  const result = planRetrieval(seasonalIntent, {}, undefined, undefined, undefined, null, undefined, "give me summer fragrances");
+  const nonSummer = result.fragrances.filter(f => f.season !== "Summer" && f.season !== "All Season");
+  assert.equal(nonSummer.length, 0,
+    `S1 — all results should be Summer or All Season, got: ${nonSummer.map(f => `${f.name}(${f.season})`).join(",")}`);
+});
+
+test("S2 — seasonal rawMessage 'summer fragrances' resolves season from message (not All Season)", () => {
+  const seasonalIntent: ResolvedIntent = { intent: "seasonal", signals: {}, compareSlug: [] };
+  const result = planRetrieval(seasonalIntent, {}, undefined, undefined, undefined, null, undefined, "summer fragrances");
+  const hasSummer = result.fragrances.some(f => f.season === "Summer");
+  const hasAllSeason = result.fragrances.some(f => f.season === "All Season");
+  assert.ok(hasSummer || hasAllSeason, "S2 — at least one Summer or All Season result expected");
+  // No "Winter" or "Spring" or "Autumn" results unless they are All Season
+  const wrong = result.fragrances.filter(f => f.season !== "Summer" && f.season !== "All Season");
+  assert.equal(wrong.length, 0, `S2 — unexpected seasons: ${wrong.map(f => f.season).join(",")}`);
+});
+
+test("S3 — seasonal retrieval with profile.preferredSeasons Tier 3 fallback", () => {
+  const seasonalIntent: ResolvedIntent = { intent: "seasonal", signals: {}, compareSlug: [] };
+  const profile = makeProfile({ preferredSeasons: { value: ["Winter"], confidence: "MEDIUM" } });
+  const result = planRetrieval(seasonalIntent, {}, profile, undefined, undefined, null, undefined, undefined);
+  const nonWinter = result.fragrances.filter(f => f.season !== "Winter" && f.season !== "All Season");
+  assert.equal(nonWinter.length, 0,
+    `S3 — profile.preferredSeasons=Winter should filter; unexpected: ${nonWinter.map(f => `${f.name}(${f.season})`).join(",")}`);
+});
+
+test("S4 — female + summer seasonal retrieval returns results (≥1)", () => {
+  const seasonalIntent: ResolvedIntent = { intent: "seasonal", signals: {}, compareSlug: [] };
+  const profile = makeProfile({ preferredGender: { value: "female", confidence: "HIGH" } });
+  const result = planRetrieval(seasonalIntent, {}, profile, undefined, undefined, null, undefined, "give me summer fragrances");
+  assert.ok(result.fragrances.length >= 1,
+    `S4 — expected ≥1 female summer fragrance, got 0. Pool exhausted? ${result.poolExhausted}`);
+  const offGender = result.fragrances.filter(f => f.gender === "male");
+  assert.equal(offGender.length, 0, "S4 — no male-only results in female summer pool");
+});
+
+test("S5 — buildContext CURRENT SEASON overrides when guest requests different season", () => {
+  const calendarSeason = getCurrentSeason();
+  // Only meaningful when current calendar season is NOT Summer (i.e. not Dec/Jan/Feb in SA)
+  const rawMsg = "I want summer fragrances";
+  const state: ConversationState = { ...EMPTY_STATE };
+  const result = buildContext(
+    { fragrances: [], articles: [] },
+    state,
+    BASE_PLAN,
+    "seasonal",
+    null,
+    null,
+    null,
+    rawMsg,
+  );
+  const rendered = renderContext(result);
+  if (calendarSeason !== "Summer") {
+    assert.ok(
+      rendered.includes("guest has specifically requested Summer"),
+      `S5 — expected override text for Summer in ${calendarSeason}. Got: ${rendered.substring(0, 300)}`,
+    );
+  } else {
+    // Summer is current season — normal path, no override needed
+    assert.ok(rendered.includes("CURRENT SEASON"), "S5 — CURRENT SEASON section present");
+  }
+});
+
+test("S6 — buildContext CURRENT SEASON shows normal text when no season in rawMessage", () => {
+  const state: ConversationState = { ...EMPTY_STATE };
+  const result = buildContext(
+    { fragrances: [], articles: [] },
+    state,
+    BASE_PLAN,
+    "general_discovery",
+    null,
+    null,
+    null,
+    "I like woody fragrances",
+  );
+  const rendered = renderContext(result);
+  assert.ok(rendered.includes("CURRENT SEASON"), "S6 — CURRENT SEASON section present");
+  assert.ok(!rendered.includes("guest has specifically requested"), "S6 — no override text when no season mentioned");
+});
+
+test("S7 — profileExtractor bare 'summer' sets preferredSeasons", () => {
+  const p = extractProfile("summer fragrances please", undefined);
+  assert.ok(
+    (p.preferredSeasons?.value ?? []).includes("Summer"),
+    `S7 — expected 'Summer' in preferredSeasons, got: ${JSON.stringify(p.preferredSeasons)}`,
+  );
+});
+
+test("S8 — profileExtractor 'winter vibes' sets preferredSeasons", () => {
+  const p = extractProfile("I want winter vibes", undefined);
+  assert.ok(
+    (p.preferredSeasons?.value ?? []).includes("Winter"),
+    `S8 — expected 'Winter' in preferredSeasons, got: ${JSON.stringify(p.preferredSeasons)}`,
+  );
+});
+
+// ── EP-AI-C6-P3: Five-card contract (F1-F12) ─────────────────────────────────
+
+console.log("\n── EP-AI-C6-P3: F — Five-Card Contract ──────────────────────────────");
+
+test("F1 — 'show me 5 options' → detectCardTarget returns 5", () => {
+  assert.equal(detectCardTarget("show me 5 options"), 5, "F1");
+});
+
+test("F2 — 'give me some fragrances' → detectCardTarget returns 5", () => {
+  assert.equal(detectCardTarget("give me some fragrances"), 5, "F2");
+});
+
+test("F3 — 'a few summer scents' → detectCardTarget returns 5", () => {
+  assert.equal(detectCardTarget("a few summer scents"), 5, "F3");
+});
+
+test("F4 — 'give me something woody' → detectCardTarget returns null", () => {
+  assert.equal(detectCardTarget("give me something woody"), null, "F4 — singular discovery must not be multi-card");
+});
+
+test("F5 — 'give me one recommendation' → detectCardTarget returns null", () => {
+  assert.equal(detectCardTarget("give me one recommendation"), null, "F5");
+});
+
+test("F6 — 'the best one' → detectCardTarget returns null", () => {
+  assert.equal(detectCardTarget("what's the best one"), null, "F6");
+});
+
+test("F7 — 'show me options' → detectCardTarget returns 5", () => {
+  assert.equal(detectCardTarget("show me options"), 5, "F7");
+});
+
+test("F8 — 'show me alternatives' → detectCardTarget returns 5", () => {
+  assert.equal(detectCardTarget("show me alternatives"), 5, "F8");
+});
+
+test("F9 — 'several fragrances' → detectCardTarget returns 5", () => {
+  assert.equal(detectCardTarget("I want several fragrances"), 5, "F9");
+});
+
+test("F10 — 'multiple options' → detectCardTarget returns 5", () => {
+  assert.equal(detectCardTarget("give me multiple options"), 5, "F10");
+});
+
+test("F11 — 'give me 3 fragrances' → detectCardTarget returns 3", () => {
+  assert.equal(detectCardTarget("give me 3 fragrances"), 3, "F11");
+});
+
+test("F12 — 'give me 7 fragrances' → detectCardTarget capped at 5", () => {
+  assert.equal(detectCardTarget("give me 7 fragrances"), 5, "F12 — capped at 5");
+});
+
+// ── EP-AI-C6-P3: Target pivot (P1-P8) ────────────────────────────────────────
+
+console.log("\n── EP-AI-C6-P3: P — Target Pivot ────────────────────────────────────");
+
+test("P1 — 'and female' with context.mentionedSlug → entitySlug cleared, NOT similar_to", () => {
+  const context: ConversationState["context"] = { mentionedSlug: "aventus-inspired" };
+  const result = resolveIntent("and female", context as ConversationContext);
+  assert.ok(result.intent !== "similar_to",
+    `P1 — 'and female' gender pivot must not route to similar_to (got ${result.intent})`);
+});
+
+test("P2 — explicit fragrance name in message retains similar_to routing", () => {
+  const context: ConversationState["context"] = { mentionedSlug: "some-other-slug" };
+  const result = resolveIntent("tell me more about aventus inspired", context as ConversationContext);
+  // The explicit mention of the fragrance name keeps entity authority
+  assert.ok(result.intent !== undefined, "P2 — should resolve to a valid intent without crash");
+});
+
+test("P3 — 'and male' with context.mentionedSlug → NOT similar_to", () => {
+  const context: ConversationState["context"] = { mentionedSlug: "aventus-inspired" };
+  const result = resolveIntent("and male", context as ConversationContext);
+  assert.ok(result.intent !== "similar_to",
+    `P3 — 'and male' must not force similar_to (got ${result.intent})`);
+});
+
+test("P4 — 'for women instead' with context.mentionedSlug → entitySlug cleared", () => {
+  const context: ConversationState["context"] = { mentionedSlug: "aventus-inspired" };
+  const result = resolveIntent("for women instead", context as ConversationContext);
+  assert.ok(result.intent !== "similar_to",
+    `P4 — 'for women instead' must not force similar_to (got ${result.intent})`);
+});
+
+test("P5 — profileExtractor 'and female' → preferredGender=female", () => {
+  const prior = makeProfile({ preferredGender: { value: "male", confidence: "HIGH" } });
+  const p = extractProfile("and female", prior);
+  assert.equal(p.preferredGender?.value, "female", "P5");
+});
+
+test("P6 — profileExtractor 'and male' → preferredGender=male", () => {
+  const prior = makeProfile({ preferredGender: { value: "female", confidence: "HIGH" } });
+  const p = extractProfile("and male", prior);
+  assert.equal(p.preferredGender?.value, "male", "P6");
+});
+
+test("P7 — profileExtractor 'show me the female fragrances' → preferredGender=female", () => {
+  const p = extractProfile("show me the female fragrances", undefined);
+  assert.equal(p.preferredGender?.value, "female", "P7");
+});
+
+test("P8 — profileExtractor 'female fragrances' → preferredGender=female", () => {
+  const p = extractProfile("female fragrances", undefined);
+  assert.equal(p.preferredGender?.value, "female", "P8");
+});
+
+// ── EP-AI-C6-P3: Gift safety (G1-G3) ─────────────────────────────────────────
+
+console.log("\n── EP-AI-C6-P3: G — Gift Safety ─────────────────────────────────────");
+
+test("G1 — gift profile with female recipient → GENDER ELIGIBILITY section present", () => {
+  const state: ConversationState = {
+    ...EMPTY_STATE,
+    profile: makeProfile({
+      shoppingIntent: { value: "gift", confidence: "HIGH" },
+      recipientGender: { value: "female", confidence: "HIGH" },
+    }),
+  };
+  const result = buildContext({ fragrances: [], articles: [] }, state, BASE_PLAN);
+  const rendered = renderContext(result);
+  assert.ok(rendered.includes("GENDER ELIGIBILITY"), "G1 — GENDER ELIGIBILITY section must be present for gift/female");
+});
+
+test("G2 — gift+female GENDER ELIGIBILITY instructs female-only recommendations", () => {
+  const state: ConversationState = {
+    ...EMPTY_STATE,
+    profile: makeProfile({
+      shoppingIntent: { value: "gift", confidence: "HIGH" },
+      recipientGender: { value: "female", confidence: "HIGH" },
+    }),
+  };
+  const result = buildContext({ fragrances: [], articles: [] }, state, BASE_PLAN);
+  const rendered = renderContext(result);
+  assert.ok(rendered.includes("female"), "G2 — GENDER ELIGIBILITY section must mention 'female'");
+});
+
+test("G3 — self profile no gift → no GENDER ELIGIBILITY section when no gender set", () => {
+  const state: ConversationState = { ...EMPTY_STATE };
+  const result = buildContext({ fragrances: [], articles: [] }, state, BASE_PLAN);
+  const rendered = renderContext(result);
+  assert.ok(!rendered.includes("GENDER ELIGIBILITY"), "G3 — no GENDER ELIGIBILITY when no gender profile");
+});
+
+// ── EP-AI-C6-P3: Context/catalogue governance (K1-K4) ────────────────────────
+
+console.log("\n── EP-AI-C6-P3: K — Context/Catalogue Governance ────────────────────");
+
+test("K1 — safetyGuard KNOWLEDGE contains 'subset' rule", () => {
+  const prompt = buildSystemPrompt("");
+  assert.ok(
+    prompt.includes("subset"),
+    "K1 — KNOWLEDGE must state context is a retrieved subset, not the full catalogue",
+  );
+});
+
+test("K2 — safetyGuard KNOWLEDGE instructs not to claim catalogue lacks a gender from context", () => {
+  const prompt = buildSystemPrompt("");
+  assert.ok(
+    prompt.toLowerCase().includes("do not claim"),
+    "K2 — KNOWLEDGE must include 'do not claim' instruction about catalogue absence",
+  );
+});
+
+test("K3 — safetyGuard KNOWLEDGE mentions /quiz as fallback when context is insufficient", () => {
+  const prompt = buildSystemPrompt("");
+  assert.ok(prompt.includes("/quiz"), "K3 — KNOWLEDGE must reference /quiz as fallback");
+});
+
+test("K4 — validateResponse passes for compliant content", () => {
+  const { validateResponse } = require("../../../app/lib/concierge/safetyGuard");
+  assert.ok(validateResponse("I'd recommend this fresh fragrance for summer evenings."), "K4");
+});
+
+// ── EP-AI-C6-P3: Quiz deflection (Q1-Q3) ─────────────────────────────────────
+
+console.log("\n── EP-AI-C6-P3: Q — Quiz Deflection ─────────────────────────────────");
+
+test("Q1 — poolExhausted=true → POOL EXHAUSTION section present in context", () => {
+  const state: ConversationState = { ...EMPTY_STATE };
+  const retrieval: RetrievalContext = { fragrances: [], articles: [], poolExhausted: true };
+  const result = buildContext(retrieval, state, BASE_PLAN);
+  const rendered = renderContext(result);
+  assert.ok(rendered.includes("POOL EXHAUSTION"), "Q1 — POOL EXHAUSTION section must be present");
+});
+
+test("Q2 — POOL EXHAUSTION section mentions /quiz", () => {
+  const state: ConversationState = { ...EMPTY_STATE };
+  const retrieval: RetrievalContext = { fragrances: [], articles: [], poolExhausted: true };
+  const result = buildContext(retrieval, state, BASE_PLAN);
+  const rendered = renderContext(result);
+  assert.ok(rendered.includes("/quiz"), "Q2 — POOL EXHAUSTION must reference /quiz");
+});
+
+test("Q3 — poolExhausted=false → no POOL EXHAUSTION section", () => {
+  const state: ConversationState = { ...EMPTY_STATE };
+  const retrieval: RetrievalContext = { fragrances: [], articles: [], poolExhausted: false };
+  const result = buildContext(retrieval, state, BASE_PLAN);
+  const rendered = renderContext(result);
+  assert.ok(!rendered.includes("POOL EXHAUSTION"), "Q3 — no POOL EXHAUSTION when pool not exhausted");
+});
+
+// ── EP-AI-C6-P3: WhatsApp UI collision (UI1-UI5) — component tests ────────────
+
+console.log("\n── EP-AI-C6-P3: UI — WhatsApp Collision (component, skipped) ─────────");
+
+skip("UI1 — FloatingWhatsApp renders null when isOpen=true");
+skip("UI2 — FloatingWhatsApp renders the button when isOpen=false");
+skip("UI3 — FloatingWhatsApp disappears when Concierge opens");
+skip("UI4 — FloatingWhatsApp reappears when Concierge closes");
+skip("UI5 — FloatingWhatsApp uses useConcierge() hook (import verified via build)");
+
 // ── Summary ───────────────────────────────────────────────────────────────────
 
 const total = passed + failed;

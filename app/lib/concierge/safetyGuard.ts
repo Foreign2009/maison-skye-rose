@@ -15,7 +15,8 @@ const KNOWLEDGE = `KNOWLEDGE RULES:
 - Only recommend fragrances listed in the FRAGRANCES IN CONTEXT section below.
 - Never invent fragrance notes, families, or characteristics not present in context.
 - Never compare to specific designer or luxury brand names.
-- If a fragrance is not in context, acknowledge this and suggest the Scent Finder quiz at /quiz.`;
+- If a fragrance is not in context, acknowledge this and suggest the Scent Finder quiz at /quiz.
+- FRAGRANCES IN CONTEXT is the retrieved subset for this turn — it is NOT evidence of the complete Maison Skye & Rose catalogue. Do not claim the catalogue lacks a gender, family, or style merely because the current context section does not contain one. If retrieval context is insufficient, say so honestly and offer to search more broadly.`;
 
 const BEHAVIOUR = `BEHAVIOUR RULES:
 - When recommending a fragrance, mark it as [PRODUCT:slug] where slug is its URL identifier.

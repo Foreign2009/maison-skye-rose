@@ -101,12 +101,15 @@ export function resolveIntent(message: string, context: ConversationContext): Re
   const mentionedSlugs = extractFragranceSlugs(q);
   let entitySlug: string | undefined;
   let compareSlug: string[] = [];
+  let entityFromMessage = false; // true when entity resolved from current message, not context fallback
 
   if (mentionedSlugs.length === 1) {
     entitySlug = mentionedSlugs[0];
+    entityFromMessage = true;
   } else if (mentionedSlugs.length >= 2) {
     compareSlug  = mentionedSlugs.slice(0, 2);
     [entitySlug] = compareSlug;
+    entityFromMessage = true;
   }
 
   // Fall back to context entity if none found in this message
@@ -132,8 +135,18 @@ export function resolveIntent(message: string, context: ConversationContext): Re
     return { intent: "similar_to", signals, entitySlug, compareSlug: [] };
   }
 
+  // Gender target pivot guard: when entitySlug comes only from context.mentionedSlug (not the
+  // current message) and the message is a clear gender target pivot ("and female", "for women
+  // instead", "and male"), the implicit PDP anchor must NOT force similar_to. Clear the
+  // context-inherited entitySlug so routing falls through to seasonal or general_discovery.
+  // Explicit fragrance names in the message retain full entity authority.
+  const isGenderPivotOnly = !entityFromMessage && /\b(and female|and male|for women|for men|for female|for male|female fragrances?|male fragrances?|what about female|what about male|show me (?:the )?(?:female|male|women'?s|men'?s))\b/.test(q);
   if (entitySlug && !signals.occasion && !signals.family) {
-    return { intent: "similar_to", signals, entitySlug, compareSlug: [] };
+    if (isGenderPivotOnly) {
+      entitySlug = undefined; // release context anchor — fall through to seasonal/discovery
+    } else {
+      return { intent: "similar_to", signals, entitySlug, compareSlug: [] };
+    }
   }
 
   if (SEASONAL_TRIGGERS.some((t) => q.includes(t)) || signals.occasion?.match(/summer|winter|spring|autumn/i)) {

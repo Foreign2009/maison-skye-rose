@@ -581,11 +581,17 @@ export function planRetrieval(
     }
 
     case "seasonal": {
-      // Determine season from signals or current hemisphere season
+      // Determine the guest-requested season using a three-tier priority:
+      // 1. signals.occasion (from fragranceOccasions vocab — e.g. "Summer Days")
+      // 2. rawMessage bare keyword — "summer fragrances", "fresh summer vibes", "winter scents"
+      // 3. profile.preferredSeasons — accumulated across turns (preserves season on target pivot)
+      // Defaults to "All Season" only when none of the above resolve a season.
       const seasonKeywords: Record<string, string> = {
         summer: "Summer", winter: "Winter", spring: "Spring", autumn: "Autumn", fall: "Autumn",
       };
       let season = "All Season";
+
+      // Tier 1: signals.occasion (e.g. "Summer Days" in fragranceOccasions)
       for (const [kw, val] of Object.entries(seasonKeywords)) {
         if (resolved.signals.occasion?.toLowerCase().includes(kw) ||
             (typeof context.season === "string" && context.season.toLowerCase() === kw)) {
@@ -594,10 +600,48 @@ export function planRetrieval(
         }
       }
 
+      // Tier 2: raw message — parse bare season keyword directly
+      // Handles: "summer fragrances", "fresh summer vibes", "winter scents", etc.
+      if (season === "All Season" && rawMessage) {
+        const msgLower = rawMessage.toLowerCase();
+        for (const [kw, val] of Object.entries(seasonKeywords)) {
+          if (msgLower.includes(kw)) {
+            season = val;
+            break;
+          }
+        }
+      }
+
+      // Tier 3: accumulated profile preferred season (cross-turn persistence)
+      // Preserves the requested season when a target pivot ("and female") follows a seasonal turn.
+      if (season === "All Season") {
+        const profileSeason = (profile?.preferredSeasons?.value ?? [])[0];
+        if (profileSeason) {
+          for (const [kw, val] of Object.entries(seasonKeywords)) {
+            if (profileSeason.toLowerCase().includes(kw)) {
+              season = val;
+              break;
+            }
+          }
+        }
+      }
+
+      // Build a gender- and avoidance-aware candidate pool before sorting and slicing so the
+      // slice count is not degraded by the post-switch gender filter. This ensures the
+      // five-card contract can be met when ≥5 relevant governed candidates exist.
+      const genderForSeasonal = getEffectiveGenderConstraint(profile);
+      const avoidedForSeasonal = (profile?.avoidedFamilies?.value ?? []).map((f) => f.toLowerCase());
       fragrances = mkcCatalogue
-        .filter((k) => k.season === season || k.season === "All Season")
-        .sort(sortByQuality)
-        .slice(0, 5);
+        .filter((k) => {
+          if (k.season !== season && k.season !== "All Season") return false;
+          if (genderForSeasonal && k.gender !== genderForSeasonal && k.gender !== "unisex") return false;
+          if (avoidedForSeasonal.some((af) =>
+            k.family.some((f) => f.toLowerCase().includes(af) || af.includes(f.toLowerCase()))
+          )) return false;
+          return true;
+        })
+        .sort(makeFitComparator(fitSignals, profile))
+        .slice(0, 8);
 
       articles = articlesBySlug(["choosing-your-season-scent"]);
       break;
@@ -875,6 +919,7 @@ export function planRetrieval(
     intent !== "similar_to" &&
     intent !== "anchored_refinement" &&
     intent !== "comparison" &&
+    intent !== "seasonal" &&  // seasonal uses makeFitComparator — cap would pull unconstrained catalogue
     fragrances.length > 0
   ) {
     const N     = fragrances.length;

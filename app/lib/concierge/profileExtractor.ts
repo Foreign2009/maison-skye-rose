@@ -170,6 +170,12 @@ const SEASON_PATTERNS: Array<[RegExp, string]> = [
   [/\b(for|in) winter\b/,          "Winter"],
   [/\b(for|in) spring\b/,          "Spring"],
   [/\b(for|in) (autumn|fall)\b/,   "Autumn"],
+  // Bare seasonal discovery: "summer fragrances", "fresh summer vibes", "summer scents"
+  // Captures guest-requested season so it persists across target pivots ("and female").
+  [/\bsummer\b/,                   "Summer"],
+  [/\bwinter\b/,                   "Winter"],
+  [/\bspring\b/,                   "Spring"],
+  [/\b(autumn|fall)\b/,            "Autumn"],
 ];
 
 // ── Shopping context extraction ───────────────────────────────────────────────
@@ -321,6 +327,34 @@ function extractCollectionSize(q: string): number | undefined {
   return undefined;
 }
 
+// ── Imperative discovery extraction (EP-AI-C6-P3) ────────────────────────────
+// When a guest uses an imperative discovery phrase ("give me fresh summer fragrances",
+// "show me some woody options"), the adjective qualifiers ARE the desired families —
+// but the polarity system misses them because there is no explicit positive trigger
+// ("I love", "I prefer") before the term. This pass extracts family terms from the
+// phrase preceding the target noun ("fragrances", "scents", "options") in imperative
+// discovery sentences. Negation words in the phrase suppress extraction to prevent
+// "give me non-fresh fragrances" from adding Fresh to preferred.
+
+const IMPERATIVE_DISC_RE = /\b(?:give me|show me|list|get me|find me)\s+(?:some\s+|a few\s+)?(?:the\s+)?(.{0,80}?)\s*\b(?:fragrances?|scents?|perfumes?|options?)\b/i;
+const DISCOVERY_NEGATION_WORDS = ["no ", "not ", "non-", "without ", "less ", "avoid", "aren't", "don't", "isn't", "nothing"];
+
+function extractImperativeDiscoveryFamilies(message: string): string[] {
+  const match = message.match(IMPERATIVE_DISC_RE);
+  if (!match || !match[1]) return [];
+  const phrase = match[1].toLowerCase().trim();
+  if (!phrase) return [];
+  if (DISCOVERY_NEGATION_WORDS.some((w) => phrase.includes(w))) return [];
+  const found: string[] = [];
+  for (const { term, kind } of VOCAB) {
+    if (kind === "family" && phrase.includes(term)) {
+      const label = capitalize(term);
+      if (!found.includes(label)) found.push(label);
+    }
+  }
+  return found;
+}
+
 // ── Public API ────────────────────────────────────────────────────────────────
 
 /**
@@ -362,6 +396,16 @@ export function extractProfile(
     profile.avoidedNotes   = mergeList(profile.avoidedNotes, avoidNotes, "HIGH");
   }
 
+  // ── 1b. Imperative discovery families (EP-AI-C6-P3) ──────────────────────
+  // Captures family adjectives from "give me fresh summer fragrances" style phrases
+  // where there is no explicit positive trigger before the family term.
+  // Confidence: MEDIUM — inferred from discovery context, not explicit preference.
+  const discoveryFamilies = extractImperativeDiscoveryFamilies(message);
+  if (discoveryFamilies.length > 0) {
+    profile.avoidedFamilies  = removeFromList(profile.avoidedFamilies, discoveryFamilies);
+    profile.preferredFamilies = mergeList(profile.preferredFamilies, discoveryFamilies, "MEDIUM");
+  }
+
   // ── 2. Occasions (additive) ───────────────────────────────────────────────
   const newOccasions = OCCASION_PATTERNS
     .filter(([p]) => p.test(q))
@@ -400,8 +444,10 @@ export function extractProfile(
   if (!shopping.shoppingIntent || shopping.shoppingIntent.value === "self") {
     // EP-AI-C6-P1: expanded to cover natural product-type vocabulary
     // (men's/women's scent|perfume|cologne) in addition to "fragrance".
-    const MALE_PATTERN   = /\bfor men\b|\bmasculine fragrances?\b|\bmen'?s (?:fragrances?|scents?|perfumes?|colognes?|aftershave)\b|\bi'?m (?:a )?(?:man|male|guy)\b|\bi am (?:a )?(?:man|male|guy)\b|\bas a (?:man|male|guy)\b/;
-    const FEMALE_PATTERN = /\bfor women\b|\bfeminine fragrances?\b|\bwomen'?s (?:fragrances?|scents?|perfumes?|colognes?)\b|\bi'?m (?:a )?(?:woman|female|girl|lady)\b|\bi am (?:a )?(?:woman|female|girl|lady)\b|\bas a (?:woman|female|girl|lady)\b/;
+    // EP-AI-C6-P3: further expanded to capture gender target pivots:
+    // "and male", "and female", "for female", "male fragrances", etc.
+    const MALE_PATTERN   = /\bfor men\b|\bmasculine fragrances?\b|\bmen'?s (?:fragrances?|scents?|perfumes?|colognes?|aftershave|ones?)\b|\bi'?m (?:a )?(?:man|male|guy)\b|\bi am (?:a )?(?:man|male|guy)\b|\bas a (?:man|male|guy)\b|\band male\b|\bfor male\b|\bmale fragrances?\b|\bgive me male\b|\bshow me (?:the )?(?:male|men'?s)\b/;
+    const FEMALE_PATTERN = /\bfor women\b|\bfeminine fragrances?\b|\bwomen'?s (?:fragrances?|scents?|perfumes?|colognes?|ones?)\b|\bi'?m (?:a )?(?:woman|female|girl|lady)\b|\bi am (?:a )?(?:woman|female|girl|lady)\b|\bas a (?:woman|female|girl|lady)\b|\band female\b|\bfor female\b|\bfemale fragrances?\b|\bgive me female\b|\bshow me (?:the )?(?:female|women'?s)\b|\bwhat about female\b|\bfor women instead\b/;
     const UNISEX_PATTERN = /\bgender doesn'?t matter\b|\bunisex fragrances?\b|\bshow me unisex\b|\bi don'?t (?:mind|care)(?: (?:about|the))? gender\b|\bfor anyone\b/;
     // Inference-only: "cologne for myself" signals a masculine shopping context but
     // must not override an explicit gender identity already established this session.

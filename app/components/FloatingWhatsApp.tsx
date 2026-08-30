@@ -2,8 +2,12 @@
 
 import { MessageCircle } from "lucide-react";
 import { brand } from "../data/brand";
+import { useConcierge } from "../context/ConciergeContext";
 
 export default function FloatingWhatsApp() {
+  const { isOpen } = useConcierge();
+  if (isOpen) return null;
+
   return (
     <a
       href={brand.social.whatsappLink}
