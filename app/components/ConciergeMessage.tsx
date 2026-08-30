@@ -44,7 +44,7 @@ export default function ConciergeMessage({
       {/* Product cards (assistant only) */}
       {isAssistant && message.fragrances && message.fragrances.length > 0 && (
         <div className="w-full space-y-2">
-          {message.fragrances.slice(0, 3).map((f) => (
+          {message.fragrances.slice(0, 5).map((f) => (
             <ConciergeProductCard
               key={f.slug}
               fragrance={f}

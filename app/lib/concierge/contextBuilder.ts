@@ -40,6 +40,7 @@ export interface RetrievalContext {
   anchoredMeta?:             AnchoredMeta;         // EP-AI-C4: anchored refinement metadata
   confidenceClassifications?: ConfidenceClassification[];  // EP-AI-C5: per-candidate fit confidence
   poolExhausted?:            boolean;              // EP-AI-C5: fewer than 2 eligible candidates after all filters
+  cardTarget?:               number;              // EP-AI-C6-P3-R2: set by buildContext, read by planResponse for server-side guarantee
 }
 
 export interface PromptSection {
@@ -243,34 +244,37 @@ function buildArticleSection(articles: AcademyArticle[]): PromptSection {
 }
 
 function buildInstructionsSection(
-  plan:               ConversationPlan,
-  state:              ConversationState,
-  effectiveIntent?:   ConversationIntent,
-  refinement?:        RefinementState | null,
-  explorationTarget?: ExplorationTarget | null,
-  anchoredMeta?:      AnchoredMeta,
-  rawMessage?:        string,  // EP-AI-C6-P3 Change G
+  plan:                   ConversationPlan,
+  state:                  ConversationState,
+  effectiveIntent?:       ConversationIntent,
+  refinement?:            RefinementState | null,
+  explorationTarget?:     ExplorationTarget | null,
+  anchoredMeta?:          AnchoredMeta,
+  rawMessage?:            string,
+  contextFragranceCount?: number,  // EP-AI-C6-P3-R2: fragrances available in context
 ): PromptSection {
   const instructions: string[] = [];
 
-  // Change G / R1: Semantic multi-option card target injection.
-  // Primary: explicit count or plural signal in the current message (detectCardTarget).
-  // Fallback: when no explicit signal is present but the profile carries an active
-  // discovery brief (preferredFamilies + preferredSeasons both set), inherit card
-  // target 5 — handles short gender-pivot turns ("and female") that continue an
-  // established seasonal consultation. Guards: academy_lookup and reuseRecommendations
-  // have their own framing and are excluded.
+  // EP-AI-C6-P3-R2 (Repair D): Exact count + prose economy instruction.
+  // Uses computeCardTarget (shared with buildContext server-side guarantee).
+  // When context holds >= N governed candidates: "EXACTLY N" is authoritative.
+  // When context holds < N governed candidates: present all available.
+  // Prose economy fires for N >= 4 to keep five-card responses panel-friendly.
   if (rawMessage && !plan.requiresComparison && !plan.requiresClarification) {
-    let cardTarget = detectCardTarget(rawMessage);
-    if (cardTarget === null && !plan.reuseRecommendations && plan.action !== "academy_lookup" && state.profile) {
-      const hasFamilies = (state.profile.preferredFamilies?.value.length ?? 0) > 0;
-      const hasSeasons  = (state.profile.preferredSeasons?.value.length  ?? 0) > 0;
-      if (hasFamilies && hasSeasons) cardTarget = 5;
-    }
+    const cardTarget = computeCardTarget(rawMessage, plan, state);
     if (cardTarget !== null) {
-      instructions.push(
-        `Present up to ${cardTarget} meaningfully differentiated fragrances. Each option should offer a distinct character or mood.`
-      );
+      if (typeof contextFragranceCount === "number" && contextFragranceCount > 0 && contextFragranceCount < cardTarget) {
+        instructions.push(
+          `Present all ${contextFragranceCount} available fragrances from FRAGRANCES IN CONTEXT. Each should offer a distinct character or mood.`
+        );
+      } else {
+        const prose = cardTarget >= 4
+          ? ` Be concise: one short opening sentence maximum, one concise distinguishing sentence per fragrance, one short closing sentence maximum.`
+          : ` Each option should offer a distinct character or mood.`;
+        instructions.push(
+          `Present EXACTLY ${cardTarget} fragrances from FRAGRANCES IN CONTEXT. Each must be distinct.${prose}`
+        );
+      }
     }
   }
 
@@ -716,6 +720,27 @@ function buildCustomerAwarenessSection(
   return { label: "CUSTOMER AWARENESS", content: parts.join("\n") };
 }
 
+// ── EP-AI-C6-P3-R2: Card target computation helper ───────────────────────────
+// Shared between buildInstructionsSection (prompt text) and buildContext
+// (server-side guarantee via retrieval.cardTarget mutation).
+function computeCardTarget(
+  rawMessage: string | undefined,
+  plan:       ConversationPlan,
+  state:      ConversationState,
+): number | null {
+  if (!rawMessage || plan.requiresComparison || plan.requiresClarification) return null;
+
+  let target = detectCardTarget(rawMessage);
+
+  if (target === null && !plan.reuseRecommendations && plan.action !== "academy_lookup" && state.profile) {
+    const hasFamilies = (state.profile.preferredFamilies?.value.length ?? 0) > 0;
+    const hasSeasons  = (state.profile.preferredSeasons?.value.length  ?? 0) > 0;
+    if (hasFamilies && hasSeasons) target = 5;
+  }
+
+  return target;
+}
+
 // ── EP-AI-C6-P3 Change G / R1: Semantic multi-option card target ──────────────
 
 // Patterns that signal a plural / multi-option discovery request.
@@ -965,8 +990,16 @@ export function buildContext(
   refinement?:        RefinementState | null,
   explorationTarget?: ExplorationTarget | null,
   customerCtx?:       ConciergeCustomerContext | null,
-  rawMessage?:        string,   // EP-AI-C5: used for preference-aware comparison intelligence
+  rawMessage?:        string,
 ): BuiltContext {
+  // EP-AI-C6-P3-R2: Store card target on retrieval so planResponse can apply the
+  // server-side guarantee without requiring route.ts changes. retrieval is the same
+  // object reference passed to both buildContext and planResponse in the API route.
+  const computedCardTarget = computeCardTarget(rawMessage, plan, state);
+  if (computedCardTarget !== null) {
+    retrieval.cardTarget = computedCardTarget;
+  }
+
   const sections: PromptSection[] = [
     buildSeasonalContextSection(rawMessage),  // EP-AI-C6-P3 Change D
     buildConsultationStageSection(state),                                        // EP-AI-C5
@@ -998,7 +1031,7 @@ export function buildContext(
     ),
     buildPoolExhaustionSection(retrieval, state.profile),                       // EP-AI-C5
     buildConsultationReadinessSection(plan),                                    // EP-AI-C5
-    buildInstructionsSection(plan, state, effectiveIntent, refinement, explorationTarget, retrieval.anchoredMeta, rawMessage), // EP18-P1/P2 / EP-AI-C4 / EP-AI-C6-P3
+    buildInstructionsSection(plan, state, effectiveIntent, refinement, explorationTarget, retrieval.anchoredMeta, rawMessage, retrieval.fragrances.length), // EP18-P1/P2 / EP-AI-C4 / EP-AI-C6-P3-R2
   ].filter((s) => s.label && s.content);
 
   const fullText      = sections.map((s) => `=== ${s.label} ===\n${s.content}`).join("\n\n");

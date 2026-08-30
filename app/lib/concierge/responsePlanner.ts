@@ -14,7 +14,10 @@ import type { ConversationPlan }   from "./conversationPlanner";
 
 // ── Marker patterns ───────────────────────────────────────────────────────────
 
-const PRODUCT_RE = /\[PRODUCT:([a-z0-9-]+)\]/g;
+// EP-AI-C6-P3-R2 Repair A: character class extended to include apostrophe (U+0027).
+// 11 canonical MKC slugs contain apostrophes (e.g. voyage-d'hermes-inspired).
+// Audit of all 222 MKC slugs confirms only [a-z0-9'-] chars appear in slugs.
+const PRODUCT_RE = /\[PRODUCT:([a-z0-9'-]+)\]/g;
 const ARTICLE_RE = /\[ARTICLE:([a-z0-9-]+)\]/g;
 
 // ── Precedence-2 bare-name matching helpers ───────────────────────────────────
@@ -164,6 +167,15 @@ export function planResponse(
     return "";
   });
 
+  // Repair B: final safety sweep — strip any residual internal control markers not
+  // matched by the primary parsers (e.g. apostrophe-slug variants missed by PRODUCT_RE
+  // before the R2 fix, unknown slugs, markdown-adjacent forms). Uses [^\]]* to catch
+  // any slug content. Must run after primary extraction so valid slugs are already
+  // captured and only unresolved syntax remains.
+  content = content
+    .replace(/\[PRODUCT:[^\]]*\]/g, "")
+    .replace(/\[ARTICLE:[^\]]*\]/g, "");
+
   if (articleSlugs.length === 0 && retrieval.articles.length > 0) {
     retrieval.articles.slice(0, 2).forEach((a) => articleSlugs.push(a.slug));
   }
@@ -203,6 +215,25 @@ export function planResponse(
       finalSlugs = [retrieval.fragrances[0].slug];
     }
     // Precedence 4: no card (finalSlugs stays [])
+  }
+
+  // EP-AI-C6-P3-R2: Server-side card guarantee (Repair D — deterministic fill).
+  // cardTarget is set on retrieval by buildContext (via computeCardTarget) before
+  // this function is called. Two directions:
+  //   Over-emission: LLM emits more valid markers than target → cap to target.
+  //   Under-emission: LLM emits fewer valid markers but governed context has enough → fill.
+  // Invariant: model-selected valid cards come first; deterministic fill preserves
+  // governed candidate order. Never fabricates products; only uses retrieval.fragrances.
+  const cardTarget = retrieval.cardTarget ?? null;
+  if (cardTarget !== null) {
+    if (finalSlugs.length > cardTarget) {
+      finalSlugs = finalSlugs.slice(0, cardTarget);
+    } else if (finalSlugs.length < cardTarget && retrieval.fragrances.length >= cardTarget) {
+      for (const f of retrieval.fragrances) {
+        if (finalSlugs.length >= cardTarget) break;
+        if (!finalSlugs.includes(f.slug)) finalSlugs.push(f.slug);
+      }
+    }
   }
 
   const hasRecs             = retrieval.fragrances.length > 0;

@@ -6051,6 +6051,412 @@ test("UI3 [STRUCTURAL] — FloatingWhatsApp is a client component ('use client' 
 skip("UI4 — FloatingWhatsApp disappears when Concierge opens (runtime, requires browser)");
 skip("UI5 — FloatingWhatsApp reappears when Concierge closes (runtime, requires browser)");
 
+// ── EP-AI-C6-P3-R2: Marker parsing — apostrophe slug matrix ──────────────────
+
+console.log("\n── EP-AI-C6-P3-R2: CT-A — Apostrophe Slug Parsing ───────────────────────");
+
+// Minimal planResponse helper: uses mkcCatalogue frags so validity check passes.
+function makeApostropheRetrieval(slug: string): RetrievalContext {
+  const frag = mkcCatalogue.find((f) => f.slug === slug);
+  return {
+    fragrances: frag ? [frag] : [],
+    articles:   [],
+  };
+}
+
+function parseSlug(marker: string, slug: string): string[] {
+  const retrieval = makeApostropheRetrieval(slug);
+  const plan = planConversation("tell me about this fragrance", EMPTY_STATE);
+  const result = planResponse(marker, "general_discovery", retrieval, plan);
+  return result.recommendedSlugs;
+}
+
+// Canonical slug grammar: [a-z0-9'-]+
+// 11 MKC slugs contain apostrophes — all must parse correctly.
+const APOSTROPHE_SLUGS = [
+  "voyage-d'hermes-inspired",
+  "terre-d'hermes-inspired",
+  "twilly-d'hermes-inspired",
+  "l'immensite-inspired",
+  "bois-d'argent-inspired",
+  "bleu-de-chanel-l'exclusif-inspired",
+  "j'adore-inspired",
+  "prada-l'homme-inspired",
+  "love-don't-be-shy-inspired",
+  "rose-n'-roses-inspired",
+  "rose-of-no-man's-land-inspired",
+];
+
+APOSTROPHE_SLUGS.forEach((slug, i) => {
+  const tag = `CT-A${i + 1}`.padEnd(7);
+  test(`${tag} — [PRODUCT:${slug}] extracts slug correctly`, () => {
+    const marker = `[PRODUCT:${slug}]`;
+    const slugs = parseSlug(marker, slug);
+    assert.ok(
+      slugs.includes(slug) || mkcCatalogue.find((f) => f.slug === slug) === undefined,
+      `${tag} FAIL — slug '${slug}' not in result (slugs: ${slugs.join(",")})`
+    );
+  });
+});
+
+test("CT-A12 — ordinary slug [PRODUCT:sauvage-inspired] still works", () => {
+  const slugs = parseSlug("[PRODUCT:sauvage-inspired]", "sauvage-inspired");
+  assert.ok(slugs.includes("sauvage-inspired"), `CT-A12 FAIL — sauvage-inspired not extracted`);
+});
+
+// ── EP-AI-C6-P3-R2: CT-M — Markdown-adjacent marker safety ───────────────────
+
+console.log("\n── EP-AI-C6-P3-R2: CT-M — Markdown-Adjacent Marker Safety ───────────────");
+
+// All 6 markdown-adjacent forms from the directive.
+// Marker must be extracted (slug captured), not leaked to prose.
+const VOYAGE_SLUG = "voyage-d'hermes-inspired";
+const voyageRetrieval = makeApostropheRetrieval(VOYAGE_SLUG);
+const basePlan = planConversation("tell me about this fragrance", EMPTY_STATE);
+
+function markdownTest(label: string, content: string): void {
+  const result = planResponse(content, "general_discovery", voyageRetrieval, basePlan);
+  // Marker must not appear in prose
+  assert.ok(
+    !result.content.includes("[PRODUCT:"),
+    `${label} FAIL — raw PRODUCT marker leaked to prose: "${result.content}"`
+  );
+  // Slug must be extracted (when it is valid in retrieval)
+  assert.ok(
+    result.recommendedSlugs.includes(VOYAGE_SLUG),
+    `${label} FAIL — slug not extracted from: "${content}"`
+  );
+}
+
+test("CT-M1 — clean marker [PRODUCT:voyage-d'hermes-inspired]", () =>
+  markdownTest("CT-M1", `[PRODUCT:${VOYAGE_SLUG}]`));
+test("CT-M2 — trailing asterisk [PRODUCT:voyage-d'hermes-inspired]*", () =>
+  markdownTest("CT-M2", `[PRODUCT:${VOYAGE_SLUG}]*`));
+test("CT-M3 — double trailing asterisk [PRODUCT:voyage-d'hermes-inspired]**", () =>
+  markdownTest("CT-M3", `[PRODUCT:${VOYAGE_SLUG}]**`));
+test("CT-M4 — bold-wrapped **[PRODUCT:voyage-d'hermes-inspired]**", () =>
+  markdownTest("CT-M4", `**[PRODUCT:${VOYAGE_SLUG}]**`));
+test("CT-M5 — trailing period [PRODUCT:voyage-d'hermes-inspired].", () =>
+  markdownTest("CT-M5", `Prose [PRODUCT:${VOYAGE_SLUG}]. More prose.`));
+test("CT-M6 — trailing comma [PRODUCT:voyage-d'hermes-inspired],", () =>
+  markdownTest("CT-M6", `Prose [PRODUCT:${VOYAGE_SLUG}], more.`));
+
+// ── EP-AI-C6-P3-R2: CT-S — Raw control marker sanitation ──────────────────────
+
+console.log("\n── EP-AI-C6-P3-R2: CT-S — Raw Marker Sanitation ────────────────────────");
+
+const emptyRetrieval: RetrievalContext = { fragrances: [], articles: [] };
+const sanitPlan = planConversation("tell me about this fragrance", EMPTY_STATE);
+
+test("CT-S1 — unknown PRODUCT slug: marker stripped, no phantom card, prose preserved", () => {
+  const content = "Here is a suggestion [PRODUCT:nonexistent-slug-xyz] for you.";
+  const result = planResponse(content, "general_discovery", emptyRetrieval, sanitPlan);
+  assert.ok(!result.content.includes("[PRODUCT:"), `CT-S1 FAIL — raw marker leaked: "${result.content}"`);
+  assert.equal(result.recommendedSlugs.length, 0, "CT-S1 FAIL — phantom card created");
+  assert.ok(result.content.includes("Here is a suggestion") || result.content.includes("for you"),
+    `CT-S1 FAIL — surrounding prose was destroyed: "${result.content}"`);
+});
+
+test("CT-S2 — malformed PRODUCT marker (no closing bracket) is not a marker", () => {
+  const content = "Here is [PRODUCT:sauvage-inspired without closing.";
+  const result = planResponse(content, "general_discovery", emptyRetrieval, sanitPlan);
+  // No valid marker → no card
+  assert.equal(result.recommendedSlugs.length, 0, "CT-S2 FAIL — malformed marker created phantom card");
+});
+
+test("CT-S3 — ARTICLE marker stripped from prose, no raw marker visible", () => {
+  const content = "Read this article [ARTICLE:the-art-of-layering] for more.";
+  const result = planResponse(content, "education", emptyRetrieval, sanitPlan);
+  assert.ok(!result.content.includes("[ARTICLE:"), `CT-S3 FAIL — raw ARTICLE marker leaked`);
+});
+
+// ── EP-AI-C6-P3-R2: SSG — Server-side card guarantee ─────────────────────────
+
+console.log("\n── EP-AI-C6-P3-R2: SSG — Server-Side Card Guarantee ────────────────────");
+
+// Build a governed retrieval set with 8 fragrances (deterministic slice from catalogue)
+const SSG_FRAGS = mkcCatalogue.slice(0, 8);
+const SSG_SLUGS = SSG_FRAGS.map((f) => f.slug);
+const ssgPlan   = planConversation("give me 5 summer fragrances", EMPTY_STATE);
+
+// Helper: build retrieval with explicit cardTarget (bypassing buildContext for isolation)
+function ssgRetrieval(n: number | undefined, fragsOverride?: typeof SSG_FRAGS): RetrievalContext {
+  return {
+    fragrances: fragsOverride ?? SSG_FRAGS,
+    articles:   [],
+    cardTarget: n,
+  };
+}
+
+// SSG-U1: Under-emission — target=5, LLM emits only 2 valid markers, fill to 5
+test("SSG-U1 — target=5, 2 valid markers emitted, 8 governed → server fills to 5", () => {
+  const content = `Here are two options [PRODUCT:${SSG_SLUGS[0]}] and [PRODUCT:${SSG_SLUGS[1]}].`;
+  const result = planResponse(content, "general_discovery", ssgRetrieval(5), ssgPlan);
+  assert.equal(result.recommendedSlugs.length, 5,
+    `SSG-U1 FAIL — expected 5 slugs, got ${result.recommendedSlugs.length}: ${result.recommendedSlugs.join(",")}`);
+  // Model-selected markers come first
+  assert.equal(result.recommendedSlugs[0], SSG_SLUGS[0], "SSG-U1 FAIL — model-selected slug 0 not first");
+  assert.equal(result.recommendedSlugs[1], SSG_SLUGS[1], "SSG-U1 FAIL — model-selected slug 1 not second");
+  // All 5 must be distinct
+  const unique = new Set(result.recommendedSlugs);
+  assert.equal(unique.size, 5, "SSG-U1 FAIL — duplicates in result");
+});
+
+// SSG-U2: Zero-emission — target=5, LLM emits 0 valid markers, 8 governed → fill to 5
+test("SSG-U2 — target=5, 0 markers emitted, 8 governed → server fills to 5 deterministically", () => {
+  const content = "Here are some great summer fragrances for you.";
+  const result = planResponse(content, "general_discovery", ssgRetrieval(5), ssgPlan);
+  assert.equal(result.recommendedSlugs.length, 5,
+    `SSG-U2 FAIL — expected 5, got ${result.recommendedSlugs.length}`);
+  const unique = new Set(result.recommendedSlugs);
+  assert.equal(unique.size, 5, "SSG-U2 FAIL — duplicates in zero-emission fill");
+});
+
+// SSG-O1: Over-emission — target=3, LLM emits 5 valid markers → cap to 3
+test("SSG-O1 — target=3, 5 valid markers emitted → capped to 3", () => {
+  const content = SSG_SLUGS.slice(0, 5).map((s) => `[PRODUCT:${s}]`).join(" ");
+  const result = planResponse(content, "general_discovery", ssgRetrieval(3), ssgPlan);
+  assert.equal(result.recommendedSlugs.length, 3,
+    `SSG-O1 FAIL — expected 3, got ${result.recommendedSlugs.length}`);
+});
+
+// SSG-D1: Duplicate markers — target=5, LLM emits same slug 3 times + 1 other → fill to 5 distinct
+test("SSG-D1 — target=5, duplicate markers + 8 governed → 5 distinct filled", () => {
+  const dupe = SSG_SLUGS[0];
+  const content = `[PRODUCT:${dupe}] intro [PRODUCT:${dupe}] again [PRODUCT:${SSG_SLUGS[1]}].`;
+  const result = planResponse(content, "general_discovery", ssgRetrieval(5), ssgPlan);
+  assert.equal(result.recommendedSlugs.length, 5,
+    `SSG-D1 FAIL — expected 5 distinct, got ${result.recommendedSlugs.length}`);
+  const unique = new Set(result.recommendedSlugs);
+  assert.equal(unique.size, 5, "SSG-D1 FAIL — duplicates in deduped+filled result");
+});
+
+// SSG-AC1: Academy card independence — target=5 products + 1 article → 5 product + 1 article
+test("SSG-AC1 — target=5 products + ARTICLE marker → 5 product cards, article independent", () => {
+  const content = [
+    ...SSG_SLUGS.slice(0, 2).map((s) => `[PRODUCT:${s}]`),
+    "[ARTICLE:the-art-of-layering]",
+  ].join(" ");
+  const academyRetrieval: RetrievalContext = {
+    fragrances: SSG_FRAGS,
+    articles:   [],
+    cardTarget: 5,
+  };
+  const plan = planConversation("give me 5 summer fragrances", EMPTY_STATE);
+  const result = planResponse(content, "general_discovery", academyRetrieval, plan);
+  assert.equal(result.recommendedSlugs.length, 5, `SSG-AC1 FAIL — expected 5 product slugs`);
+  // Article slug does not consume a product slot
+  const productSlugsIncludeArticle = result.recommendedSlugs.includes("the-art-of-layering");
+  assert.ok(!productSlugsIncludeArticle, "SSG-AC1 FAIL — article slug ended up in product slots");
+});
+
+// SSG-NF: No fill when governed context has fewer candidates than target
+// fill condition is retrieval.fragrances.length >= cardTarget; 2 < 5 → fill does NOT fire
+// Without markers and P3 not firing (frags.length !== 1), result is 0 (no fabrication).
+test("SSG-NF — target=5, 2 governed candidates + 2 markers → fill skipped (2 < target), 2 cards", () => {
+  const twoFrag = SSG_FRAGS.slice(0, 2);
+  const [s0, s1] = twoFrag.map((f) => f.slug);
+  const content = `[PRODUCT:${s0}] and [PRODUCT:${s1}]`; // 2 markers
+  const result = planResponse(content, "general_discovery", ssgRetrieval(5, twoFrag), ssgPlan);
+  // Fill condition: 2 < 5 → fill skipped → model-emitted 2 cards only (no fabrication)
+  assert.equal(result.recommendedSlugs.length, 2,
+    `SSG-NF FAIL — expected 2 (fill skipped: candidates<target), got ${result.recommendedSlugs.length}`);
+});
+
+// SSG-NC: No cardTarget → no guarantee fires → default behavior preserved
+test("SSG-NC — no cardTarget set → server-side guarantee does not fire", () => {
+  const content = `[PRODUCT:${SSG_SLUGS[0]}] and [PRODUCT:${SSG_SLUGS[1]}].`;
+  const retrieval: RetrievalContext = { fragrances: SSG_FRAGS, articles: [] }; // no cardTarget
+  const result = planResponse(content, "general_discovery", retrieval, ssgPlan);
+  // Only the 2 emitted markers should be in result (no fill because cardTarget is undefined)
+  assert.equal(result.recommendedSlugs.length, 2,
+    `SSG-NC FAIL — expected 2 (no fill), got ${result.recommendedSlugs.length}`);
+});
+
+// ── EP-AI-C6-P3-R2: buildContext → retrieval.cardTarget mutation ───────────────
+
+console.log("\n── EP-AI-C6-P3-R2: BC — buildContext cardTarget mutation ────────────────");
+
+test("BC1 — buildContext sets retrieval.cardTarget for explicit count message", () => {
+  const retrieval: RetrievalContext = { fragrances: SSG_FRAGS, articles: [] };
+  const state = { ...EMPTY_STATE, profile: undefined };
+  const plan = planConversation("give me 5 summer fragrances", state);
+  buildContext(retrieval, state, plan, "general_discovery", null, null, null, "give me 5 summer fragrances");
+  assert.equal(retrieval.cardTarget, 5, `BC1 FAIL — expected cardTarget=5, got ${retrieval.cardTarget}`);
+});
+
+test("BC2 — buildContext sets retrieval.cardTarget=null for comparison (no mutation)", () => {
+  const retrieval: RetrievalContext = { fragrances: SSG_FRAGS, articles: [] };
+  const state = { ...EMPTY_STATE };
+  const plan = planConversation("compare Sauvage and Delina", state);
+  buildContext(retrieval, state, plan, "comparison", null, null, null, "compare Sauvage and Delina");
+  assert.equal(retrieval.cardTarget, undefined, `BC2 FAIL — comparison should not set cardTarget`);
+});
+
+test("BC3 — buildContext sets retrieval.cardTarget for active brief pivot ('and female')", () => {
+  const profileWithBrief: ConversationProfile = {
+    preferredFamilies: { value: ["Fresh"], confidence: "HIGH" },
+    preferredSeasons:  { value: ["Summer"], confidence: "HIGH" },
+  };
+  const stateWithProfile: ConversationState = { ...EMPTY_STATE, profile: profileWithBrief };
+  const retrieval: RetrievalContext = { fragrances: SSG_FRAGS, articles: [] };
+  const plan = planConversation("and female", stateWithProfile);
+  buildContext(retrieval, stateWithProfile, plan, "general_discovery", null, null, null, "and female");
+  assert.equal(retrieval.cardTarget, 5, `BC3 FAIL — active brief pivot should set cardTarget=5`);
+});
+
+// ── EP-AI-C6-P3-R2: R — Render contract (structural) ─────────────────────────
+
+console.log("\n── EP-AI-C6-P3-R2: R — Render Contract (structural) ────────────────────");
+
+const CM_FILE   = path.resolve("app/components/ConciergeMessage.tsx");
+const cmSource  = fs.readFileSync(CM_FILE, "utf-8");
+
+test("R1 [STRUCTURAL] — ConciergeMessage uses slice(0, 5) not slice(0, 3) for product cards", () => {
+  assert.ok(
+    cmSource.includes("fragrances.slice(0, 5)"),
+    "R1 FAIL — render cap is still slice(0, 3); expected slice(0, 5)"
+  );
+  assert.ok(
+    !cmSource.includes("fragrances.slice(0, 3)"),
+    "R1 FAIL — old slice(0, 3) still present"
+  );
+});
+
+test("R2 [STRUCTURAL] — ConciergeMessage slice cap is 5 (allows 1, 2, 3, 4, 5)", () => {
+  // slice(0, 5) guarantees any array of length 1..5 renders in full
+  const sliceMatch = cmSource.match(/fragrances\.slice\(0,\s*(\d+)\)/);
+  const cap = sliceMatch ? parseInt(sliceMatch[1], 10) : 0;
+  assert.ok(cap >= 5, `R2 FAIL — render cap is ${cap}, must be >= 5`);
+});
+
+test("R3 [STRUCTURAL] — Article slice is independent of product slice", () => {
+  // Article cards use a separate slice that should not interfere with product card count
+  const articleSlice = cmSource.match(/articles\.slice\(0,\s*(\d+)\)/);
+  if (articleSlice) {
+    const articleCap = parseInt(articleSlice[1], 10);
+    assert.ok(articleCap <= 5, `R3 FAIL — unexpected article cap ${articleCap}`);
+  }
+  // Verify products and articles are in separate DOM containers
+  assert.ok(
+    cmSource.includes("fragrances.slice") && cmSource.includes("articles.slice"),
+    "R3 FAIL — product and article slices not both present"
+  );
+});
+
+// ── EP-AI-C6-P3-R2: Founder T1/T2 integration ────────────────────────────────
+
+console.log("\n── EP-AI-C6-P3-R2: T — Founder T1/T2 Integration ───────────────────────");
+
+const T1_MSG  = "give me the fresh summer vibes listed male fragrances";
+const T2_MSG  = "and female";
+
+const TP_FRESH_SUMMER_MALE: ConversationProfile = {
+  preferredFamilies: { value: ["Fresh"], confidence: "HIGH" },
+  preferredSeasons:  { value: ["Summer"], confidence: "HIGH" },
+  preferredGender:   { value: "male", confidence: "HIGH" },
+};
+
+// T1: detectCardTarget fires correctly
+test("T1-A — T1 message → detectCardTarget = 5", () => {
+  assert.equal(detectCardTarget(T1_MSG), 5, `T1-A FAIL — expected 5`);
+});
+
+// T1: planRetrieval returns ≥5 governed candidates for T1
+test("T1-B — T1 planRetrieval → >= 5 Fresh/Summer/male governed candidates", () => {
+  const t1Intent = resolveIntent(T1_MSG, EMPTY_CONTEXT);
+  const t1Retrieval = planRetrieval(
+    t1Intent, EMPTY_CONTEXT, TP_FRESH_SUMMER_MALE,
+    undefined, undefined, null, undefined, T1_MSG,
+  );
+  assert.ok(
+    t1Retrieval.fragrances.length >= 5,
+    `T1-B FAIL — got ${t1Retrieval.fragrances.length} governed candidates (need ≥5 for five-card contract)`
+  );
+});
+
+// T1: buildContext sets cardTarget=5 on retrieval
+test("T1-C — T1 buildContext → retrieval.cardTarget = 5", () => {
+  const t1State: ConversationState = { ...EMPTY_STATE, profile: TP_FRESH_SUMMER_MALE };
+  const t1Intent = resolveIntent(T1_MSG, EMPTY_CONTEXT);
+  const t1Retrieval = planRetrieval(
+    t1Intent, EMPTY_CONTEXT, TP_FRESH_SUMMER_MALE,
+    undefined, undefined, null, undefined, T1_MSG,
+  );
+  const t1Plan = planConversation(T1_MSG, t1State);
+  buildContext(t1Retrieval, t1State, t1Plan, "general_discovery", null, null, null, T1_MSG);
+  assert.equal(t1Retrieval.cardTarget, 5, `T1-C FAIL — cardTarget=${t1Retrieval.cardTarget}`);
+});
+
+// T1: Even if LLM under-emits, response plan fills to 5
+test("T1-D — T1 server-side guarantee: LLM emits 2 markers → response plan = 5 distinct", () => {
+  const t1State: ConversationState = { ...EMPTY_STATE, profile: TP_FRESH_SUMMER_MALE };
+  const t1Intent = resolveIntent(T1_MSG, EMPTY_CONTEXT);
+  const t1Retrieval = planRetrieval(
+    t1Intent, EMPTY_CONTEXT, TP_FRESH_SUMMER_MALE,
+    undefined, undefined, null, undefined, T1_MSG,
+  );
+  const t1Plan = planConversation(T1_MSG, t1State);
+  buildContext(t1Retrieval, t1State, t1Plan, "general_discovery", null, null, null, T1_MSG);
+  // Simulate LLM under-emission: only 2 markers in response
+  const slug0 = t1Retrieval.fragrances[0].slug;
+  const slug1 = t1Retrieval.fragrances[1].slug;
+  const mockLLMContent = `Here are two fresh options [PRODUCT:${slug0}] and [PRODUCT:${slug1}].`;
+  const planned = planResponse(mockLLMContent, "general_discovery", t1Retrieval, t1Plan, TP_FRESH_SUMMER_MALE);
+  assert.equal(planned.recommendedSlugs.length, 5,
+    `T1-D FAIL — expected 5, got ${planned.recommendedSlugs.length}: ${planned.recommendedSlugs.join(",")}`);
+  const unique = new Set(planned.recommendedSlugs);
+  assert.equal(unique.size, 5, "T1-D FAIL — duplicate slugs in result");
+});
+
+// T2: female pivot inherits cardTarget=5 via active brief
+test("T2-A — T2 pivot 'and female' with active brief → detectCardTarget=null, inherits 5", () => {
+  const t2Profile: ConversationProfile = {
+    preferredFamilies: { value: ["Fresh"], confidence: "HIGH" },
+    preferredSeasons:  { value: ["Summer"], confidence: "HIGH" },
+    preferredGender:   { value: "female", confidence: "HIGH" },
+  };
+  const t2State: ConversationState = { ...EMPTY_STATE, profile: t2Profile };
+  const t2Retrieval: RetrievalContext = { fragrances: SSG_FRAGS, articles: [] };
+  const t2Plan = planConversation(T2_MSG, t2State);
+  buildContext(t2Retrieval, t2State, t2Plan, "general_discovery", null, null, null, T2_MSG);
+  assert.equal(t2Retrieval.cardTarget, 5, `T2-A FAIL — expected inherited cardTarget=5, got ${t2Retrieval.cardTarget}`);
+});
+
+// ── EP-AI-C6-P3-R2: Regression: default 2-3 behavior (no cardTarget) ─────────
+
+console.log("\n── EP-AI-C6-P3-R2: REG — Regression: Default 2–3 Behavior ─────────────");
+
+test("REG1 — 'give me something woody' → SSG does not fire (no cardTarget) → 2 markers pass through", () => {
+  const [s0, s1] = SSG_SLUGS;
+  const content = `[PRODUCT:${s0}] and [PRODUCT:${s1}]`;
+  const retrieval: RetrievalContext = { fragrances: SSG_FRAGS, articles: [] };
+  const plan = planConversation("give me something woody", EMPTY_STATE);
+  // No buildContext call → retrieval.cardTarget is undefined
+  const result = planResponse(content, "general_discovery", retrieval, plan);
+  assert.equal(result.recommendedSlugs.length, 2, `REG1 FAIL — expected 2, got ${result.recommendedSlugs.length}`);
+});
+
+test("REG2 — 'tell me about Aventus' → entity behavior, no cardTarget fill", () => {
+  const aventus = mkcCatalogue.find((f) => f.slug === "aventus-inspired");
+  if (!aventus) return; // skip if not found
+  const retrieval: RetrievalContext = { fragrances: [aventus], articles: [] };
+  const content = `[PRODUCT:aventus-inspired]`;
+  const plan = planConversation("tell me about Aventus", EMPTY_STATE);
+  const result = planResponse(content, "similar_to", retrieval, plan);
+  assert.equal(result.recommendedSlugs.length, 1, `REG2 FAIL — entity should return 1 card`);
+});
+
+test("REG3 — comparison: no cardTarget fill, returns comparison slugs", () => {
+  const [s0, s1] = SSG_SLUGS;
+  const content = `[PRODUCT:${s0}] versus [PRODUCT:${s1}]`;
+  const retrieval: RetrievalContext = { fragrances: SSG_FRAGS, articles: [] };
+  const compPlan = planConversation("compare these two", EMPTY_STATE);
+  const result = planResponse(content, "comparison", retrieval, compPlan);
+  // Comparison has no cardTarget → no fill beyond what was emitted
+  assert.equal(result.recommendedSlugs.length, 2, `REG3 FAIL — comparison should return 2`);
+});
+
 // ── Summary ───────────────────────────────────────────────────────────────────
 
 const total = passed + failed;
