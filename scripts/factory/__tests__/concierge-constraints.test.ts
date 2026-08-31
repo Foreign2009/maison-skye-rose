@@ -6475,9 +6475,9 @@ const GP_FEMALE_PROFILE: ConversationProfile = {
 };
 
 // GP-F: all required female pivot phrases → preferredGender = female (from male state)
+// R3.1: "and lady" / "and ladies" removed from this positive set — see GP-FP5/FP6/FP7.
 const GP_FEMALE_PHRASES: string[] = [
   "and female", "and females", "and woman", "and women",
-  "and lady", "and ladies",
   "for a woman", "female options", "women options", "women fragrances",
 ];
 for (const phrase of GP_FEMALE_PHRASES) {
@@ -6537,6 +6537,22 @@ test("GP-FP4 — 'the woman who created this fragrance' must NOT pivot from male
   const r = extractProfile("tell me about the woman who created this fragrance", GP_MALE_PROFILE);
   assert.equal(r.preferredGender?.value, "male",
     `GP-FP4 — 'the woman' without 'and' should not pivot; got ${r.preferredGender?.value}`);
+});
+// GP-FP5/6/7: R3.1 — lady/ladies removed from new "and X" pivot alternative (R3-V false positive)
+test("GP-FP5 — 'and lady' must NOT newly pivot from male (R3.1: lady removed from pivot vocab)", () => {
+  const r = extractProfile("and lady", GP_MALE_PROFILE);
+  assert.equal(r.preferredGender?.value, "male",
+    `GP-FP5 — 'and lady' should not pivot via R3 alternative; got ${r.preferredGender?.value}`);
+});
+test("GP-FP6 — 'and ladies' must NOT newly pivot from male (R3.1: ladies removed from pivot vocab)", () => {
+  const r = extractProfile("and ladies", GP_MALE_PROFILE);
+  assert.equal(r.preferredGender?.value, "male",
+    `GP-FP6 — 'and ladies' should not pivot via R3 alternative; got ${r.preferredGender?.value}`);
+});
+test("GP-FP7 — 'compare men's and ladies fragrances' must NOT pivot from male (R3.1 false-positive fix)", () => {
+  const r = extractProfile("compare men's and ladies fragrances", GP_MALE_PROFILE);
+  assert.equal(r.preferredGender?.value, "male",
+    `GP-FP7 — comparison prose with 'ladies' should not pivot via R3; got ${r.preferredGender?.value}`);
 });
 
 // GP-3T: three-turn pivot sequence — Founder defect scenario (R3-P0 root cause)

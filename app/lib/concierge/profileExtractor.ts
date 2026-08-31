@@ -448,13 +448,13 @@ export function extractProfile(
     // "and male", "and female", "for female", "male fragrances", etc.
     // EP-AI-C6-P3-R3: natural-language pivot forms — "and men/man/males",
     // "for a man", "men options/fragrances", "male options" (male);
-    // "and women/woman/females/lady/ladies", "for a woman", "women options/fragrances",
-    // "female options" (female). Possessive forms ("and men's", "and women's") are
-    // guarded by (?!'?s) to prevent false positives in comparison/discussion prose
-    // ("compare men's and women's fragrances"). "and guy/guys" excluded — "guys" is
-    // gender-neutral in contemporary usage and produced ambiguous results in testing.
+    // "and women/woman/females", "for a woman", "women options/fragrances",
+    // "female options" (female). Possessive forms guarded by (?!'?s).
+    // EP-AI-C6-P3-R3.1: removed lady/ladies from the new "and X" category-pivot
+    // alternative — "compare men's and ladies fragrances" produced a false positive
+    // in R3-V. "and guy/guys" excluded — gender-neutral in contemporary usage.
     const MALE_PATTERN   = /\bfor men\b|\bmasculine fragrances?\b|\bmen'?s (?:fragrances?|scents?|perfumes?|colognes?|aftershave|ones?)\b|\bi'?m (?:a )?(?:man|male|guy)\b|\bi am (?:a )?(?:man|male|guy)\b|\bas a (?:man|male|guy)\b|\band male\b|\bfor male\b|\bmale fragrances?\b|\bgive me male\b|\bshow me (?:the )?(?:male|men'?s)\b|\band (?:men|man|males?)\b(?!'?s)|\bfor a man\b|\bmen(?:'?s)? options?\b|\bmale options?\b|\bmen fragrances?\b/;
-    const FEMALE_PATTERN = /\bfor women\b|\bfeminine fragrances?\b|\bwomen'?s (?:fragrances?|scents?|perfumes?|colognes?|ones?)\b|\bi'?m (?:a )?(?:woman|female|girl|lady)\b|\bi am (?:a )?(?:woman|female|girl|lady)\b|\bas a (?:woman|female|girl|lady)\b|\band female\b|\bfor female\b|\bfemale fragrances?\b|\bgive me female\b|\bshow me (?:the )?(?:female|women'?s)\b|\bwhat about female\b|\bfor women instead\b|\band (?:women|woman|females?|lady|ladies)\b(?!'?s)|\bfor a woman\b|\bwomen(?:'?s)? options?\b|\bfemale options?\b|\bwomen fragrances?\b/;
+    const FEMALE_PATTERN = /\bfor women\b|\bfeminine fragrances?\b|\bwomen'?s (?:fragrances?|scents?|perfumes?|colognes?|ones?)\b|\bi'?m (?:a )?(?:woman|female|girl|lady)\b|\bi am (?:a )?(?:woman|female|girl|lady)\b|\bas a (?:woman|female|girl|lady)\b|\band female\b|\bfor female\b|\bfemale fragrances?\b|\bgive me female\b|\bshow me (?:the )?(?:female|women'?s)\b|\bwhat about female\b|\bfor women instead\b|\band (?:women|woman|females?)\b(?!'?s)|\bfor a woman\b|\bwomen(?:'?s)? options?\b|\bfemale options?\b|\bwomen fragrances?\b/;
     const UNISEX_PATTERN = /\bgender doesn'?t matter\b|\bunisex fragrances?\b|\bshow me unisex\b|\bi don'?t (?:mind|care)(?: (?:about|the))? gender\b|\bfor anyone\b/;
     // Inference-only: "cologne for myself" signals a masculine shopping context but
     // must not override an explicit gender identity already established this session.
