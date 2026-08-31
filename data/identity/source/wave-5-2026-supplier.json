@@ -1,0 +1,135 @@
+{
+  "batchId": "wave-5-2026",
+  "description": "Wave 5 — August 2026 supplier intake candidates selected for MKC registration. 20 identities: ELITE (6), ROSE (7), SKYE (7). Sourced from fragrance-list-2026-08.json via the August 2026 normalized pool. All 20 candidates verified absent from MKC (222 native records) and from Waves 1–4 source files. CATALOGUE-W5-P0 gap analysis completed 2026-08-31; CATALOGUE-W5-P1 research authorized same date.",
+  "governance": {
+    "phase": "CATALOGUE-W5-P1",
+    "authorizedBy": "Founder — Wave 5 Research Authorization CATALOGUE-W5-P1 2026-08-31",
+    "rawSourceFile": "data/supplier/raw/fragrance-list-2026-08.json",
+    "normalizedSourceFile": "data/supplier/normalized/fragrance-list-2026-08-normalized.json",
+    "dispositionFile": "data/supplier/decisions/fragrance-list-2026-08-dispositions.json",
+    "researchFile": "data/identity/source/wave-5-2026-research.json",
+    "note": "supplierName values are exact from the normalized source file (supplierNameExact field). Where supplier text contains misspellings, accent omissions, or brand abbreviations, the canonical identity is resolved in the paired research file. Two entries carry brand-disambiguation requirements: MEN-41-Chrome (brand must be confirmed as Azzaro in generation brief); MEN-7-212 CH Bad Boy (product is Carolina Herrera Bad Boy, not 212-series). Two entries carry Jo Malone unordered bouquet governance: UNISEX-26 and UNISEX-62 — notes recorded in heartNotes[] only per Wave 2/3/4 precedent."
+  },
+  "entries": [
+    {
+      "supplierName": "Earl Grey & Cucumber by Jo Malone",
+      "supplierCategory": "UNISEX",
+      "sourceReference": "UNISEX-26-Earl Grey & Cucumber by Jo Malone",
+      "note": "Collection: ELITE. Jo Malone London governance: notes presented as unordered bouquet — heartNotes[] only, per Wave 2/3/4 precedent. Canonical identity: Jo Malone London Earl Grey & Cucumber Cologne (2022 current formulation). Identity confirmed from jomalone.com official URL and Fragrantica."
+    },
+    {
+      "supplierName": "Jo Malone / Myrrh & Tonka",
+      "supplierCategory": "UNISEX",
+      "sourceReference": "UNISEX-62-Jo Malone / Myrrh & Tonka",
+      "note": "Collection: ELITE. Jo Malone London governance: notes presented as unordered bouquet — heartNotes[] only, per Wave 2/3/4 precedent. Canonical identity: Jo Malone London Myrrh & Tonka Cologne (2016). Identity confirmed from Fragrantica."
+    },
+    {
+      "supplierName": "CK Everyone",
+      "supplierCategory": "UNISEX",
+      "sourceReference": "UNISEX-18-CK Everyone",
+      "note": "Collection: ELITE. Canonical identity: Calvin Klein CK Everyone Eau de Toilette (2020). Original EDT (not 2022 EDP). Brand: Calvin Klein. Research required for notes confirmation."
+    },
+    {
+      "supplierName": "Greenley by Parfums de Marly",
+      "supplierCategory": "UNISEX",
+      "sourceReference": "UNISEX-28-Greenley by Parfums de Marly",
+      "note": "Collection: ELITE. Canonical identity: Parfums de Marly Greenley EDP (2020). No Parfums de Marly identity currently in Elite collection. Research required."
+    },
+    {
+      "supplierName": "Smoking Hot by Kilian",
+      "supplierCategory": "UNISEX",
+      "sourceReference": "UNISEX-44-Smoking Hot by Kilian",
+      "note": "Collection: ELITE. Canonical identity: By Kilian Smoking Hot (2023). Brand: By Kilian / Kilian Paris. Existing Kilian records in Elite: angels-share-inspired, angels-share-paradis-inspired, gold-oud-inspired, rose-oud-inspired. Smoking Hot is a distinct product (Woody/Smoky/Apple Tobacco character). Research required."
+    },
+    {
+      "supplierName": "Les Sables Roses by Louis Vuitton",
+      "supplierCategory": "UNISEX",
+      "sourceReference": "UNISEX-67-Les Sables Roses by Louis Vuitton",
+      "note": "Collection: ELITE. Canonical identity: Louis Vuitton Les Sables Roses EDP (2019). Accent note: supplier omits accent; canonical name is 'Les Sablés Roses' per some sources, 'Les Sables Roses' per Fragrantica. No LV identity currently in Elite. Research required."
+    },
+    {
+      "supplierName": "Dolce & Gabbana The One",
+      "supplierCategory": "LADIES",
+      "sourceReference": "LADIES-108-Dolce & Gabbana The One",
+      "note": "Collection: ROSE. Canonical identity: Dolce & Gabbana The One EDP (2006, women's). Supplier LADIES section placement confirms female. Distinct from SK-1 (MEN-60-Dolce & Gabanna The One, male). Proposed slug: the-one-pour-femme-inspired — must be distinct from the-one-pour-homme-inspired (Skye). Research required."
+    },
+    {
+      "supplierName": "Angel",
+      "supplierCategory": "LADIES",
+      "sourceReference": "LADIES-15-Angel",
+      "note": "Collection: ROSE. Name note: supplier text is brand-less ('Angel'). Canonical identity: Thierry Mugler Angel EDP (1992). 'Angel' at this commercial tier is unambiguously Mugler Angel. Generation brief must specify brand = Mugler. Existing Mugler records: alien-inspired (Rose), alien-man-inspired (Skye), amen-fantasm-inspired (Skye). Angel is distinct. Research required."
+    },
+    {
+      "supplierName": "Daisy",
+      "supplierCategory": "LADIES",
+      "sourceReference": "LADIES-90-Daisy",
+      "note": "Collection: ROSE. Name note: supplier text is brand-less ('Daisy'). Canonical identity: Marc Jacobs Daisy EDT (2007). 'Daisy' at this commercial tier is overwhelmingly identified as Marc Jacobs Daisy. Generation brief must specify brand = Marc Jacobs. No Marc Jacobs identity currently in catalogue. Research required."
+    },
+    {
+      "supplierName": "Chanel Allure",
+      "supplierCategory": "LADIES",
+      "sourceReference": "LADIES-62-Chanel Allure",
+      "note": "Collection: ROSE. Canonical identity: Chanel Allure (women's). Concentration note: Allure has two principal versions: EDT (1996) and EDP (1999). Supplier text 'Chanel Allure' without qualifier. Both concentrations are widely sold and have closely related compositions. EDP selected as canonical for greater retail prevalence. Perfumer: Jacques Polge. Distinct from allure-homme-sport-inspired (Skye, Wave 1). Research required."
+    },
+    {
+      "supplierName": "Ange ou Demon",
+      "supplierCategory": "LADIES",
+      "sourceReference": "LADIES-14-Ange ou Demon",
+      "note": "Collection: ROSE. Accent note: supplier omits accent; canonical product name: 'Ange ou Démon' by Givenchy. Canonical identity: Givenchy Ange ou Démon EDP (2006). Givenchy represented in Skye (gentleman-edt-inspired, Wave 1) — Ange ou Démon adds Givenchy women's representation to Rose. Research required."
+    },
+    {
+      "supplierName": "Amor Amor",
+      "supplierCategory": "LADIES",
+      "sourceReference": "LADIES-12-Amor Amor",
+      "note": "Collection: ROSE. Canonical identity: Cacharel Amor Amor EDT (2003). No Cacharel identity currently in catalogue. Research required."
+    },
+    {
+      "supplierName": "Dolce / Dolce & Gabbana",
+      "supplierCategory": "LADIES",
+      "sourceReference": "LADIES-110-Dolce / Dolce & Gabbana",
+      "note": "Collection: ROSE. Name note: supplier convention 'Dolce / Dolce & Gabbana' = product/brand. Canonical identity: Dolce by Dolce & Gabbana EDP (2014). Distinct from devotion-inspired (existing Rose record, D&G Devotion inspired) and the-one-pour-femme-inspired (RO-1, this wave). White Floral character — different family from The One's Oriental Floral. Research required."
+    },
+    {
+      "supplierName": "Dolce & Gabanna The One",
+      "supplierCategory": "MEN",
+      "sourceReference": "MEN-60-Dolce & Gabanna The One",
+      "note": "Collection: SKYE. Name correction: supplier misspells 'Gabanna'; canonical brand: 'Dolce & Gabbana'. Canonical identity: Dolce & Gabbana The One for Men EDT (2008). Distinct from RO-1 (LADIES-108, women's The One). Proposed slug: the-one-pour-homme-inspired. Research required."
+    },
+    {
+      "supplierName": "Azzaro Wanted",
+      "supplierCategory": "MEN",
+      "sourceReference": "MEN-24-Azzaro Wanted",
+      "note": "Collection: SKYE. Canonical identity: Azzaro Wanted EDT (2016). Distinct from existing azzaro-most-wanted-inspired (Most Wanted by Azzaro, 2021 — different product). Research required."
+    },
+    {
+      "supplierName": "Chrome",
+      "supplierCategory": "MEN",
+      "sourceReference": "MEN-41-Chrome",
+      "note": "Collection: SKYE. Name note: supplier text is brand-less ('Chrome'). Canonical identity: Azzaro Chrome EDT (1996). 'Chrome' at this commercial tier is overwhelmingly identified as Azzaro Chrome. Generation brief must specify brand = Azzaro. Normalization confidence in source file: LOW (brand-less text) — Azzaro brand annotation required. Research required."
+    },
+    {
+      "supplierName": "Huggo Boss The Scent",
+      "supplierCategory": "MEN",
+      "sourceReference": "MEN-80-Huggo Boss The Scent",
+      "note": "Collection: SKYE. Name correction: supplier spells 'Huggo'; canonical brand: 'Hugo Boss'. Canonical identity: Hugo Boss Boss The Scent for Him EDT (2015). Research required."
+    },
+    {
+      "supplierName": "Ralph's Club by Ralph Lauren",
+      "supplierCategory": "MEN",
+      "sourceReference": "MEN-123-Ralph's Club by Ralph Lauren",
+      "note": "Collection: SKYE. Canonical identity: Ralph Lauren Ralph's Club EDP (2021). No Ralph Lauren identity currently in Skye (Polo Blue added via Wave 4 research; also from same house). This is the EDP — distinct from the later EDT (2024) and Parfum (2022). Research required."
+    },
+    {
+      "supplierName": "212 CH Bad Boy",
+      "supplierCategory": "MEN",
+      "sourceReference": "MEN-7-212 CH Bad Boy",
+      "note": "Collection: SKYE. Name note: supplier prefix '212 CH' is shorthand for the Carolina Herrera brand (not the 212-series product). Product is Carolina Herrera Bad Boy EDP (2019) — NOT from the 212 line. Generation brief must explicitly specify: product = Carolina Herrera Bad Boy EDP (2019), brand = Carolina Herrera (not 212-series). CH is represented: 212-vip-black-inspired (Skye, Wave 3), very-good-girl-inspired (Rose), very-good-girl-elixir-inspired (Rose, Wave 1). Bad Boy is distinct. Research required."
+    },
+    {
+      "supplierName": "Uomo by Zegna",
+      "supplierCategory": "MEN",
+      "sourceReference": "MEN-5-Uomo by Zegna",
+      "note": "Collection: SKYE. Canonical identity: Ermenegildo Zegna Uomo EDT (2013). FD-3 RESOLVED: 'Uomo by Zegna' without qualifier = the original 2013 EDT (single canonical product at that name). Uomo Absolute (2014) is a separate flanker with different character. No Zegna identity currently in catalogue. Research required."
+    }
+  ]
+}

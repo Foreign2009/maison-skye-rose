@@ -1,0 +1,671 @@
+{
+  "batchId": "wave-5-2026",
+  "description": "Wave 5 — August 2026 fragrance identity research. Evidence-locked source data for 20 MKC candidates: ELITE (6), SKYE (7), ROSE (7). All identities verified as absent from the 222-record native MKC and from Waves 1–4 source files. Research conducted 2026-08-31. All note pyramids sourced from Fragrantica (HIGH) and, where applicable, official brand websites (AUTHORITATIVE). LLM general knowledge is not admissible.",
+  "governance": {
+    "phase": "CATALOGUE-W5-P1",
+    "authorizedBy": "Founder — Wave 5 Research Authorization CATALOGUE-W5-P1 2026-08-31",
+    "supplierFile": "data/identity/source/wave-5-2026-supplier.json",
+    "note": "LLM general knowledge is NOT admissible as a governed source. All claims must be traceable to a named external source. Fragrantica pages were accessed via WebFetch/WebSearch during the CATALOGUE-W5-P1 research episode on 2026-08-31. Official brand website URLs confirmed as AUTHORITATIVE per Wave 2/3/4 precedent (even where WebFetch returns 403/blocked, URL confirmation = AUTHORITATIVE tier).",
+    "joMaloneGovernance": "Jo Malone London notes are presented as an unordered bouquet (not a top/heart/base pyramid) — all notes recorded in heartNotes[] only; topNotes[] and baseNotes[] remain empty. Per Wave 2/3/4 precedent. Applies to: UNISEX-26-Earl Grey & Cucumber by Jo Malone (EL-1), UNISEX-62-Jo Malone / Myrrh & Tonka (EL-2).",
+    "founderDecisions": {
+      "FD-1": "D&G The One for Men (SK-1, MEN-60): Supplier text lacks concentration qualifier. Research confirms The One for Men EDT (2008) as the canonical entry; the EDP (2015) is a later release. EDT selected. INFORMATIONAL — not blocking. Status: READY.",
+      "FD-2": "Azzaro Chrome (SK-3, MEN-41): Supplier text is brand-less ('Chrome'). Research confirms identity as Azzaro Chrome EDT (1996) via Fragrantica market dominance analysis. Brand annotation required in generation brief. INFORMATIONAL — not blocking. Status: READY.",
+      "FD-3": "Uomo by Zegna (SK-7, MEN-5): 'Uomo by Zegna' without qualifier. Research confirms: Fragrantica lists exactly one product named 'Uomo' by Ermenegildo Zegna (2013 EDT). Uomo Absolute (2014) is a separately named flanker. No ambiguity. RESOLVED. Status: READY.",
+      "FD-4": "Chanel Allure concentration (RO-4, LADIES-62): Supplier text 'Chanel Allure' without qualifier. Two principal Fragrantica entries: Allure EDT (1996) and Allure EDP (1999). EDP selected as canonical for greater retail prevalence and richer composition. INFORMATIONAL — not blocking. Status: READY.",
+      "FD-5": "Devotion identity (LADIES-105, separate from Wave 5): MKC native record 'devotion-inspired' confirmed as D&G Devotion inspired (brand: Maison Skye & Rose, name: Devotion Inspired). LADIES-105 is therefore DUPLICATE_EXISTING_MKC. Excluded from Wave 5. RESOLVED. Not present in this batch."
+    },
+    "sourceTierDefinitions": {
+      "AUTHORITATIVE": "Official brand websites (brand.com, brand.co.uk, brand.com.au, etc.) — highest tier. URL confirmed = AUTHORITATIVE regardless of WebFetch access result.",
+      "HIGH": "Fragrantica, Basenotes, Parfumo, major authorized retailers (e.g., Sephora, Selfridges, Harrods).",
+      "MEDIUM": "Aggregator sites, review sites, secondary retailers.",
+      "LLM": "NOT ADMISSIBLE as a governed source."
+    }
+  },
+  "entries": [
+    {
+      "_collection": "ELITE",
+      "_sourceKey": "UNISEX-26-Earl Grey & Cucumber by Jo Malone",
+      "supplierName": "Earl Grey & Cucumber by Jo Malone",
+      "evidenceStatus": "READY",
+      "canonicalName": "Earl Grey & Cucumber",
+      "brand": "Jo Malone London",
+      "launchYear": 2022,
+      "concentration": "Cologne",
+      "marketedGender": "unisex",
+      "fragranceFamily": ["Tea", "Citrus", "Green"],
+      "topNotes": [],
+      "heartNotes": ["Earl Grey Tea", "Bergamot", "Cucumber", "Beeswax", "Musk", "Vanilla"],
+      "baseNotes": [],
+      "mainAccords": ["Tea", "Fresh", "Citrus", "Green"],
+      "perfumer": null,
+      "sourceConfidence": "AUTHORITATIVE",
+      "founderSupplied": true,
+      "sourceNotes": "Jo Malone unordered bouquet governance applied — all notes recorded in heartNotes[] only; topNotes[] and baseNotes[] are intentionally empty per Wave 2/3/4 precedent. Notes sourced from Fragrantica (HIGH) and confirmed against jomalone.com official product page (AUTHORITATIVE). Version: 2022 current commercial formulation (reformulation of original 2011 Tea Collection entry). The 2022 version is the current offering. Perfumer not publicly disclosed by Jo Malone London for this variant.",
+      "possibleNameIssue": false,
+      "nameIssueExplanation": null,
+      "conflicts": [],
+      "evidenceSources": [
+        {
+          "type": "AUTHORITATIVE",
+          "description": "Jo Malone London official product page — Earl Grey & Cucumber Cologne",
+          "url": "https://www.jomalone.com/en-gb/products/earl-grey-and-cucumber-cologne"
+        },
+        {
+          "type": "HIGH",
+          "description": "Fragrantica — Jo Malone London Earl Grey & Cucumber (2022)",
+          "url": "https://www.fragrantica.com/perfume/Jo-Malone-London/Earl-Grey-Cucumber-79437.html"
+        }
+      ],
+      "proposedSlug": "earl-grey-cucumber-inspired"
+    },
+    {
+      "_collection": "ELITE",
+      "_sourceKey": "UNISEX-62-Jo Malone / Myrrh & Tonka",
+      "supplierName": "Jo Malone / Myrrh & Tonka",
+      "evidenceStatus": "READY",
+      "canonicalName": "Myrrh & Tonka",
+      "brand": "Jo Malone London",
+      "launchYear": 2016,
+      "concentration": "Cologne Intense",
+      "marketedGender": "unisex",
+      "fragranceFamily": ["Amber", "Warm Spicy", "Balsamic"],
+      "topNotes": [],
+      "heartNotes": ["Myrrh", "Tonka Bean", "Lavender", "Almond", "Vanilla", "Benzoin", "Amber"],
+      "baseNotes": [],
+      "mainAccords": ["Amber", "Warm Spicy", "Balsamic", "Sweet"],
+      "perfumer": null,
+      "sourceConfidence": "HIGH",
+      "founderSupplied": true,
+      "sourceNotes": "Jo Malone unordered bouquet governance applied — all notes recorded in heartNotes[] only; topNotes[] and baseNotes[] are intentionally empty per Wave 2/3/4 precedent. Notes sourced from Fragrantica (HIGH). Concentration: Cologne Intense (Jo Malone's intensified concentration line). Perfumer not publicly disclosed by Jo Malone London.",
+      "possibleNameIssue": false,
+      "nameIssueExplanation": null,
+      "conflicts": [],
+      "evidenceSources": [
+        {
+          "type": "HIGH",
+          "description": "Fragrantica — Jo Malone London Myrrh & Tonka (2016)",
+          "url": "https://www.fragrantica.com/perfume/Jo-Malone-London/Myrrh-Tonka-42027.html"
+        },
+        {
+          "type": "AUTHORITATIVE",
+          "description": "Jo Malone London official product page — Myrrh & Tonka Cologne Intense",
+          "url": "https://www.jomalone.com/en-gb/products/myrrh-tonka-cologne-intense"
+        }
+      ],
+      "proposedSlug": "myrrh-tonka-inspired"
+    },
+    {
+      "_collection": "ELITE",
+      "_sourceKey": "UNISEX-18-CK Everyone",
+      "supplierName": "CK Everyone",
+      "evidenceStatus": "READY",
+      "canonicalName": "CK Everyone",
+      "brand": "Calvin Klein",
+      "launchYear": 2020,
+      "concentration": "Eau de Toilette",
+      "marketedGender": "unisex",
+      "fragranceFamily": ["Fresh", "Aromatic", "Woody"],
+      "topNotes": ["Orange", "Bergamot", "Cedar Leaf"],
+      "heartNotes": ["Iris", "Cotton", "White Musk"],
+      "baseNotes": ["Sandalwood", "Ambrette Seeds", "Musk"],
+      "mainAccords": ["Fresh", "Woody", "Citrus", "Musk"],
+      "perfumer": "Alberto Morillas, Ann Gottlieb",
+      "sourceConfidence": "HIGH",
+      "founderSupplied": true,
+      "sourceNotes": "Canonical identity: Calvin Klein CK Everyone EDT (2020), the original CK Everyone release. The CK Everyone EDP (2022) is a later release; EDT selected as primary unless founder specifies EDP. Notes sourced from Fragrantica (HIGH). CK Everyone is positioned as a sustainable, inclusive fragrance — Fresh Woody character. No concentration qualifier in supplier text; EDT confirmed as the original and most widely distributed version.",
+      "possibleNameIssue": false,
+      "nameIssueExplanation": null,
+      "conflicts": [],
+      "evidenceSources": [
+        {
+          "type": "HIGH",
+          "description": "Fragrantica — Calvin Klein CK Everyone Eau de Toilette (2020)",
+          "url": "https://www.fragrantica.com/perfume/Calvin-Klein/CK-Everyone-Eau-de-Toilette-59021.html"
+        },
+        {
+          "type": "AUTHORITATIVE",
+          "description": "Calvin Klein official fragrance page — CK Everyone EDT",
+          "url": "https://www.calvinklein.us/fragrance/ck-everyone"
+        }
+      ],
+      "proposedSlug": "ck-everyone-inspired"
+    },
+    {
+      "_collection": "ELITE",
+      "_sourceKey": "UNISEX-28-Greenley by Parfums de Marly",
+      "supplierName": "Greenley by Parfums de Marly",
+      "evidenceStatus": "READY",
+      "canonicalName": "Greenley",
+      "brand": "Parfums de Marly",
+      "launchYear": 2020,
+      "concentration": "Eau de Parfum",
+      "marketedGender": "unisex",
+      "fragranceFamily": ["Fresh", "Floral", "Citrus"],
+      "topNotes": ["Bergamot", "Lemon", "Petitgrain"],
+      "heartNotes": ["Rose", "Iris", "Violet"],
+      "baseNotes": ["Sandalwood", "Vetiver", "White Musk"],
+      "mainAccords": ["Fresh", "Floral", "Citrus", "Woody"],
+      "perfumer": null,
+      "sourceConfidence": "HIGH",
+      "founderSupplied": true,
+      "sourceNotes": "Canonical identity: Parfums de Marly Greenley EDP (2020). Year correction from P0 report: P0 indicated 2019; Fragrantica confirms launch year 2020 — corrected here. Notes sourced from Fragrantica (HIGH). First Parfums de Marly identity in the Elite collection. Green-Fresh Floral character reflective of the 'Greenley' name.",
+      "possibleNameIssue": false,
+      "nameIssueExplanation": null,
+      "conflicts": [],
+      "evidenceSources": [
+        {
+          "type": "HIGH",
+          "description": "Fragrantica — Parfums de Marly Greenley EDP (2020)",
+          "url": "https://www.fragrantica.com/perfume/Parfums-de-Marly/Greenley-62101.html"
+        }
+      ],
+      "proposedSlug": "greenley-inspired"
+    },
+    {
+      "_collection": "ELITE",
+      "_sourceKey": "UNISEX-44-Smoking Hot by Kilian",
+      "supplierName": "Smoking Hot by Kilian",
+      "evidenceStatus": "READY",
+      "canonicalName": "Smoking Hot",
+      "brand": "By Kilian",
+      "launchYear": 2023,
+      "concentration": "Eau de Parfum",
+      "marketedGender": "unisex",
+      "fragranceFamily": ["Woody", "Tobacco", "Fruity"],
+      "topNotes": ["Apple", "Red Apple"],
+      "heartNotes": ["Tobacco", "Birch"],
+      "baseNotes": ["Leather", "Vetiver", "Guaiac Wood", "Styrax"],
+      "mainAccords": ["Tobacco", "Woody", "Fruity", "Smoky", "Leather"],
+      "perfumer": null,
+      "sourceConfidence": "HIGH",
+      "founderSupplied": true,
+      "sourceNotes": "Canonical identity: By Kilian Smoking Hot EDP (2023). Year correction from P0 report: P0 approximated 2021; Fragrantica confirms launch year 2023 — corrected here. Notes sourced from Fragrantica (HIGH). Apple-Tobacco-Leather character. Existing By Kilian records in Elite: angels-share-inspired, angels-share-paradis-inspired, gold-oud-inspired, rose-oud-inspired. Smoking Hot is a distinct product with a wholly different olfactive character (Woody Tobacco vs. Amber/Oud for the Oud entries). Generation brief must specify brand = By Kilian (not 'Kilian' alone, to maintain consistent brand naming).",
+      "possibleNameIssue": false,
+      "nameIssueExplanation": null,
+      "conflicts": [],
+      "evidenceSources": [
+        {
+          "type": "HIGH",
+          "description": "Fragrantica — By Kilian Smoking Hot EDP (2023)",
+          "url": "https://www.fragrantica.com/perfume/By-Kilian/Smoking-Hot-84413.html"
+        }
+      ],
+      "proposedSlug": "smoking-hot-inspired"
+    },
+    {
+      "_collection": "ELITE",
+      "_sourceKey": "UNISEX-67-Les Sables Roses by Louis Vuitton",
+      "supplierName": "Les Sables Roses by Louis Vuitton",
+      "evidenceStatus": "READY",
+      "canonicalName": "Les Sables Roses",
+      "brand": "Louis Vuitton",
+      "launchYear": 2019,
+      "concentration": "Eau de Parfum",
+      "marketedGender": "unisex",
+      "fragranceFamily": ["Floral Rose", "Amber", "Woody"],
+      "topNotes": ["Pink Pepper"],
+      "heartNotes": ["Rose de Mai", "Turkish Rose"],
+      "baseNotes": ["Sandalwood", "Oud", "Amber", "White Musk"],
+      "mainAccords": ["Rose", "Amber", "Woody", "Oud", "Spicy"],
+      "perfumer": "Jacques Cavallier Belletrud",
+      "sourceConfidence": "HIGH",
+      "founderSupplied": true,
+      "sourceNotes": "Canonical identity: Louis Vuitton Les Sables Roses EDP (2019). Accent note: supplier text 'Les Sables Roses' omits accent; Fragrantica lists as 'Les Sables Roses'; some sources and the official LV site list as 'Les Sablés Roses'. Generation brief should use 'Les Sables Roses' (no accent) consistent with Fragrantica and common commercial usage, unless founder prefers accented form. Notes sourced from Fragrantica (HIGH). Perfumer: Jacques Cavallier Belletrud is Louis Vuitton's exclusive in-house master perfumer — confirmed HIGH. First Louis Vuitton identity in the Elite collection.",
+      "possibleNameIssue": true,
+      "nameIssueExplanation": "Accent on canonical name: 'Les Sables Roses' (Fragrantica, no accent) vs. 'Les Sablés Roses' (some LV official materials). Slug: les-sables-roses-inspired (no accent in slug per standard slug convention). Name field in MKC record: recommend 'Les Sables Roses Inspired' (no accent, consistent with Fragrantica canonical form).",
+      "conflicts": [],
+      "evidenceSources": [
+        {
+          "type": "HIGH",
+          "description": "Fragrantica — Louis Vuitton Les Sables Roses EDP (2019)",
+          "url": "https://www.fragrantica.com/perfume/Louis-Vuitton/Les-Sables-Roses-55040.html"
+        },
+        {
+          "type": "AUTHORITATIVE",
+          "description": "Louis Vuitton official fragrance page — Les Sables Roses",
+          "url": "https://eu.louisvuitton.com/eng-e1/products/les-sables-roses-nvprod1940091v"
+        }
+      ],
+      "proposedSlug": "les-sables-roses-inspired"
+    },
+    {
+      "_collection": "SKYE",
+      "_sourceKey": "MEN-60-Dolce & Gabanna The One",
+      "supplierName": "Dolce & Gabanna The One",
+      "evidenceStatus": "READY",
+      "canonicalName": "The One for Men",
+      "brand": "Dolce & Gabbana",
+      "launchYear": 2008,
+      "concentration": "Eau de Toilette",
+      "marketedGender": "male",
+      "fragranceFamily": ["Oriental", "Woody", "Spicy"],
+      "topNotes": ["Grapefruit", "Basil", "Coriander", "Cardamom"],
+      "heartNotes": ["Ginger", "Orange Blossom", "Geranium"],
+      "baseNotes": ["Cedarwood", "Vetiver", "Amber", "Tobacco", "Musk"],
+      "mainAccords": ["Oriental", "Woody", "Spicy", "Amber", "Tobacco"],
+      "perfumer": "Olivier Polge",
+      "sourceConfidence": "HIGH",
+      "founderSupplied": true,
+      "sourceNotes": "Name correction: supplier text misspells 'Gabanna'; canonical brand: 'Dolce & Gabbana'. FD-1 (informational): Supplier text lacks concentration qualifier. D&G The One for Men was released as EDT (2008) and EDP (2015). EDT selected as canonical — the original and primary commercial release. Notes sourced from Fragrantica (HIGH). Proposed slug the-one-pour-homme-inspired is the male pair to RO-1's the-one-pour-femme-inspired; both confirmed SAFE from MKC collision audit.",
+      "possibleNameIssue": true,
+      "nameIssueExplanation": "Supplier misspelling ('Gabanna' → 'Gabbana'). Generation brief must specify correct brand: 'Dolce & Gabbana'. Also see FD-1: concentration not specified in supplier text; EDT (2008) selected as canonical.",
+      "conflicts": [],
+      "evidenceSources": [
+        {
+          "type": "HIGH",
+          "description": "Fragrantica — Dolce & Gabbana The One for Men EDT (2008)",
+          "url": "https://www.fragrantica.com/perfume/Dolce-Gabbana/The-One-for-Men-2056.html"
+        }
+      ],
+      "proposedSlug": "the-one-pour-homme-inspired"
+    },
+    {
+      "_collection": "SKYE",
+      "_sourceKey": "MEN-24-Azzaro Wanted",
+      "supplierName": "Azzaro Wanted",
+      "evidenceStatus": "READY",
+      "canonicalName": "Azzaro Wanted",
+      "brand": "Azzaro",
+      "launchYear": 2016,
+      "concentration": "Eau de Toilette",
+      "marketedGender": "male",
+      "fragranceFamily": ["Woody", "Aromatic", "Spicy"],
+      "topNotes": ["Cardamom", "Grapefruit", "Star Anise"],
+      "heartNotes": ["Juniper Berries", "Suede"],
+      "baseNotes": ["Vetiver", "Guaiac Wood", "Amberwood"],
+      "mainAccords": ["Woody", "Aromatic", "Spicy", "Amber"],
+      "perfumer": "Olivier Pescheux, Dominique Ropion",
+      "sourceConfidence": "HIGH",
+      "founderSupplied": true,
+      "sourceNotes": "Canonical identity: Azzaro Wanted EDT (2016). Confirmed distinct from existing MKC record azzaro-most-wanted-inspired (Azzaro Most Wanted, 2021 — entirely different product with different name, character, and year). Notes sourced from Fragrantica (HIGH). Azzaro is also present in the Skye collection via SK-3 (Chrome) in this wave — two distinct Azzaro Skye identities is appropriate given significant product differentiation.",
+      "possibleNameIssue": false,
+      "nameIssueExplanation": null,
+      "conflicts": [],
+      "evidenceSources": [
+        {
+          "type": "HIGH",
+          "description": "Fragrantica — Azzaro Wanted EDT (2016)",
+          "url": "https://www.fragrantica.com/perfume/Azzaro/Wanted-38686.html"
+        }
+      ],
+      "proposedSlug": "azzaro-wanted-inspired"
+    },
+    {
+      "_collection": "SKYE",
+      "_sourceKey": "MEN-41-Chrome",
+      "supplierName": "Chrome",
+      "evidenceStatus": "READY",
+      "canonicalName": "Chrome",
+      "brand": "Azzaro",
+      "launchYear": 1996,
+      "concentration": "Eau de Toilette",
+      "marketedGender": "male",
+      "fragranceFamily": ["Aromatic", "Aquatic", "Fresh"],
+      "topNotes": ["Bergamot", "Lemon", "Pineapple", "Water Notes", "Rosemary", "Cyclamen"],
+      "heartNotes": ["Jasmine", "Cedar", "Coriander", "Oakmoss"],
+      "baseNotes": ["Tonka Bean", "Oakmoss", "Musk", "Sandalwood", "Vetiver"],
+      "mainAccords": ["Aquatic", "Fresh", "Aromatic", "Woody"],
+      "perfumer": "Gérard Haury",
+      "sourceConfidence": "HIGH",
+      "founderSupplied": true,
+      "sourceNotes": "FD-2 (informational): Supplier text is brand-less ('Chrome'). Research confirmed identity as Azzaro Chrome EDT (1996) via Fragrantica — 'Chrome' at this commercial tier has overwhelming market dominance as Azzaro Chrome, with no commercially significant same-named fragrance at comparable tier. Brand annotation REQUIRED in generation brief: brand = 'Azzaro'. Notes sourced from Fragrantica (HIGH). Note: normalization confidence for this supplier row was LOW due to brand-less text — resolved here.",
+      "possibleNameIssue": true,
+      "nameIssueExplanation": "Supplier text is brand-less. Brand confirmed as Azzaro from research. Generation brief must specify brand = 'Azzaro'. See FD-2.",
+      "conflicts": [],
+      "evidenceSources": [
+        {
+          "type": "HIGH",
+          "description": "Fragrantica — Azzaro Chrome EDT (1996)",
+          "url": "https://www.fragrantica.com/perfume/Azzaro/Chrome-788.html"
+        }
+      ],
+      "proposedSlug": "azzaro-chrome-inspired"
+    },
+    {
+      "_collection": "SKYE",
+      "_sourceKey": "MEN-80-Huggo Boss The Scent",
+      "supplierName": "Huggo Boss The Scent",
+      "evidenceStatus": "READY",
+      "canonicalName": "Boss The Scent",
+      "brand": "Hugo Boss",
+      "launchYear": 2015,
+      "concentration": "Eau de Toilette",
+      "marketedGender": "male",
+      "fragranceFamily": ["Oriental", "Woody", "Aromatic"],
+      "topNotes": ["Ginger", "Maniguette Pepper"],
+      "heartNotes": ["Osmanthus"],
+      "baseNotes": ["Leather"],
+      "mainAccords": ["Woody", "Aromatic", "Spicy", "Leather", "Oriental"],
+      "perfumer": "Ilias Ermenidis",
+      "sourceConfidence": "HIGH",
+      "founderSupplied": true,
+      "sourceNotes": "Name correction: supplier spells 'Huggo'; canonical brand: 'Hugo Boss'. Canonical product name: 'Boss The Scent for Him' (full official name) or commonly 'Boss The Scent'. Notes sourced from Fragrantica (HIGH). Boss The Scent is known for a minimal, bold composition: ginger spice, osmanthus florals, leather. First Hugo Boss identity in the Skye collection.",
+      "possibleNameIssue": true,
+      "nameIssueExplanation": "Supplier misspelling ('Huggo' → 'Hugo'). Generation brief must specify correct brand: 'Hugo Boss'. Canonical product name: 'Boss The Scent'.",
+      "conflicts": [],
+      "evidenceSources": [
+        {
+          "type": "HIGH",
+          "description": "Fragrantica — Hugo Boss Boss The Scent for Him EDT (2015)",
+          "url": "https://www.fragrantica.com/perfume/Hugo-Boss/Boss-The-Scent-31445.html"
+        }
+      ],
+      "proposedSlug": "boss-the-scent-inspired"
+    },
+    {
+      "_collection": "SKYE",
+      "_sourceKey": "MEN-123-Ralph's Club by Ralph Lauren",
+      "supplierName": "Ralph's Club by Ralph Lauren",
+      "evidenceStatus": "READY",
+      "canonicalName": "Ralph's Club",
+      "brand": "Ralph Lauren",
+      "launchYear": 2021,
+      "concentration": "Eau de Parfum",
+      "marketedGender": "male",
+      "fragranceFamily": ["Aromatic", "Amber", "Woody"],
+      "topNotes": ["Apple", "Pink Pepper", "Bergamot"],
+      "heartNotes": ["Iris", "Rose"],
+      "baseNotes": ["Cedarwood", "Patchouli", "Sandalwood", "Amber", "Musk"],
+      "mainAccords": ["Aromatic", "Fougère", "Amber", "Woody", "Floral"],
+      "perfumer": null,
+      "sourceConfidence": "HIGH",
+      "founderSupplied": true,
+      "sourceNotes": "Canonical identity: Ralph Lauren Ralph's Club EDP (2021). This is the EDP — the primary launch formulation. A later EDT (2024) and Parfum (2022) also exist; EDP is correct as the original commercial release. Ralph Lauren is represented in the Skye collection (Polo Blue, added via Wave 4); Ralph's Club is a distinct product with a different olfactive character. Notes sourced from Fragrantica (HIGH).",
+      "possibleNameIssue": false,
+      "nameIssueExplanation": null,
+      "conflicts": [],
+      "evidenceSources": [
+        {
+          "type": "HIGH",
+          "description": "Fragrantica — Ralph Lauren Ralph's Club EDP (2021)",
+          "url": "https://www.fragrantica.com/perfume/Ralph-Lauren/Ralph-s-Club-68282.html"
+        }
+      ],
+      "proposedSlug": "ralphs-club-inspired"
+    },
+    {
+      "_collection": "SKYE",
+      "_sourceKey": "MEN-7-212 CH Bad Boy",
+      "supplierName": "212 CH Bad Boy",
+      "evidenceStatus": "READY",
+      "canonicalName": "Bad Boy",
+      "brand": "Carolina Herrera",
+      "launchYear": 2019,
+      "concentration": "Eau de Parfum",
+      "marketedGender": "male",
+      "fragranceFamily": ["Amber", "Woody", "Spicy"],
+      "topNotes": ["Cardamom", "Black Pepper", "Bergamot"],
+      "heartNotes": ["Sage", "Lavender"],
+      "baseNotes": ["Cacao", "Vetiver", "Leather", "Papyrus", "Tonka Bean"],
+      "mainAccords": ["Amber", "Woody", "Spicy", "Leather", "Smoky"],
+      "perfumer": "Louise Turner",
+      "sourceConfidence": "HIGH",
+      "founderSupplied": true,
+      "sourceNotes": "CRITICAL name disambiguation: Supplier prefix '212 CH' is shorthand for the Carolina Herrera brand within the supplier catalogue — it does NOT indicate the 212-series product. Product confirmed as Carolina Herrera Bad Boy EDP (2019), wholly distinct from the 212 product line (212 VIP Black is already in MKC as 212-vip-black-inspired). Generation brief MUST specify: product = 'Bad Boy', brand = 'Carolina Herrera' (not '212 Bad Boy', not '212-series'). Carolina Herrera is represented: 212-vip-black-inspired (Skye, Wave 3), very-good-girl-inspired (Rose), very-good-girl-elixir-inspired (Rose, Wave 1). Bad Boy is a distinct product. Notes sourced from Fragrantica (HIGH).",
+      "possibleNameIssue": true,
+      "nameIssueExplanation": "Supplier prefix '212 CH' may mislead generation into associating this with the 212 product line. Product is Carolina Herrera Bad Boy EDP (2019), NOT a 212-series product. See sourceNotes for required generation brief specification.",
+      "conflicts": [],
+      "evidenceSources": [
+        {
+          "type": "HIGH",
+          "description": "Fragrantica — Carolina Herrera Bad Boy EDP (2019)",
+          "url": "https://www.fragrantica.com/perfume/Carolina-Herrera/Bad-Boy-55449.html"
+        }
+      ],
+      "proposedSlug": "bad-boy-inspired"
+    },
+    {
+      "_collection": "SKYE",
+      "_sourceKey": "MEN-5-Uomo by Zegna",
+      "supplierName": "Uomo by Zegna",
+      "evidenceStatus": "READY",
+      "canonicalName": "Uomo",
+      "brand": "Ermenegildo Zegna",
+      "launchYear": 2013,
+      "concentration": "Eau de Toilette",
+      "marketedGender": "male",
+      "fragranceFamily": ["Woody", "Aromatic", "Citrus"],
+      "topNotes": ["Bergamot", "Mandarin Orange", "Juniper Berries", "Pink Pepper"],
+      "heartNotes": ["Iris", "Violet", "Cedar"],
+      "baseNotes": ["Vetiver", "Sandalwood", "Patchouli", "Amber"],
+      "mainAccords": ["Woody", "Aromatic", "Citrus", "Fresh", "Floral"],
+      "perfumer": null,
+      "sourceConfidence": "HIGH",
+      "founderSupplied": true,
+      "sourceNotes": "FD-3 RESOLVED: 'Uomo by Zegna' without qualifier = Ermenegildo Zegna Uomo EDT (2013). Fragrantica lists exactly one product named 'Uomo' by Ermenegildo Zegna — the 2013 EDT. 'Uomo Absolute' (2014) is a separately named product. No ambiguity remains. First Ermenegildo Zegna identity in the catalogue. Notes sourced from Fragrantica (HIGH).",
+      "possibleNameIssue": false,
+      "nameIssueExplanation": null,
+      "conflicts": [],
+      "evidenceSources": [
+        {
+          "type": "HIGH",
+          "description": "Fragrantica — Ermenegildo Zegna Uomo EDT (2013)",
+          "url": "https://www.fragrantica.com/perfume/Ermenegildo-Zegna/Uomo-17125.html"
+        }
+      ],
+      "proposedSlug": "uomo-by-zegna-inspired"
+    },
+    {
+      "_collection": "ROSE",
+      "_sourceKey": "LADIES-108-Dolce & Gabbana The One",
+      "supplierName": "Dolce & Gabbana The One",
+      "evidenceStatus": "READY",
+      "canonicalName": "The One",
+      "brand": "Dolce & Gabbana",
+      "launchYear": 2006,
+      "concentration": "Eau de Parfum",
+      "marketedGender": "female",
+      "fragranceFamily": ["Floral", "Oriental", "Fruity"],
+      "topNotes": ["Litchi", "Mandarin Orange", "Bergamot", "Peach"],
+      "heartNotes": ["Lily", "Jasmine", "Lily of the Valley"],
+      "baseNotes": ["Musk", "Vetiver", "Amber"],
+      "mainAccords": ["Floral", "Oriental", "Fruity", "Amber"],
+      "perfumer": "Olivier Polge",
+      "sourceConfidence": "HIGH",
+      "founderSupplied": true,
+      "sourceNotes": "Canonical identity: D&G The One for Women EDP (2006). LADIES section placement in supplier catalogue confirms female. Pair to SK-1 (The One for Men EDT, 2008 — Skye collection). Two distinct products: different years, different compositions, different genders. Slug assignment: the-one-pour-femme-inspired (RO-1) and the-one-pour-homme-inspired (SK-1) — both confirmed SAFE from MKC slug collision audit. Notes sourced from Fragrantica (HIGH).",
+      "possibleNameIssue": false,
+      "nameIssueExplanation": null,
+      "conflicts": [],
+      "evidenceSources": [
+        {
+          "type": "HIGH",
+          "description": "Fragrantica — Dolce & Gabbana The One EDP (2006, women's)",
+          "url": "https://www.fragrantica.com/perfume/Dolce-Gabbana/The-One-698.html"
+        }
+      ],
+      "proposedSlug": "the-one-pour-femme-inspired"
+    },
+    {
+      "_collection": "ROSE",
+      "_sourceKey": "LADIES-15-Angel",
+      "supplierName": "Angel",
+      "evidenceStatus": "READY",
+      "canonicalName": "Angel",
+      "brand": "Mugler",
+      "launchYear": 1992,
+      "concentration": "Eau de Parfum",
+      "marketedGender": "female",
+      "fragranceFamily": ["Oriental", "Gourmand", "Sweet"],
+      "topNotes": ["Melon", "Bergamot", "Coconut", "Cotton Candy", "Cassis"],
+      "heartNotes": ["Honey", "Apricot", "Blackberry", "Jasmine", "Lily of the Valley", "Red Berries"],
+      "baseNotes": ["Patchouli", "Chocolate", "Caramel", "Musk", "Vanilla", "Amber", "Sandalwood"],
+      "mainAccords": ["Patchouli", "Gourmand", "Sweet", "Oriental", "Vanilla"],
+      "perfumer": "Olivier Cresp",
+      "sourceConfidence": "HIGH",
+      "founderSupplied": true,
+      "sourceNotes": "Supplier text is brand-less ('Angel'). Canonical identity: Mugler Angel EDP (1992) — at this commercial tier, 'Angel' is unambiguously Mugler Angel. Generation brief must specify brand = 'Mugler' (formerly marketed as Thierry Mugler; brand now uses 'Mugler' alone). Existing Mugler records in Rose: alien-inspired. Existing Mugler records in Skye: alien-man-inspired, amen-fantasm-inspired. Angel is a distinct product. Notes sourced from Fragrantica (HIGH). Iconic gourmand-patchouli character — one of the most commercially significant fragrances in category.",
+      "possibleNameIssue": true,
+      "nameIssueExplanation": "Supplier text is brand-less. Brand confirmed as Mugler from research. Generation brief must specify brand = 'Mugler'.",
+      "conflicts": [],
+      "evidenceSources": [
+        {
+          "type": "HIGH",
+          "description": "Fragrantica — Thierry Mugler Angel EDP (1992)",
+          "url": "https://www.fragrantica.com/perfume/Thierry-Mugler/Angel-704.html"
+        }
+      ],
+      "proposedSlug": "angel-inspired"
+    },
+    {
+      "_collection": "ROSE",
+      "_sourceKey": "LADIES-90-Daisy",
+      "supplierName": "Daisy",
+      "evidenceStatus": "READY",
+      "canonicalName": "Daisy",
+      "brand": "Marc Jacobs",
+      "launchYear": 2007,
+      "concentration": "Eau de Toilette",
+      "marketedGender": "female",
+      "fragranceFamily": ["Floral", "Fresh", "Fruity"],
+      "topNotes": ["Strawberry", "Violet Leaves", "Ruby Red Grapefruit"],
+      "heartNotes": ["Violet", "Jasmine", "Gardenia"],
+      "baseNotes": ["Musk", "Vanilla", "Sandalwood", "White Woods"],
+      "mainAccords": ["Floral", "Fresh", "Fruity", "Powdery", "Sweet"],
+      "perfumer": "Alberto Morillas",
+      "sourceConfidence": "HIGH",
+      "founderSupplied": true,
+      "sourceNotes": "Supplier text is brand-less ('Daisy'). Canonical identity: Marc Jacobs Daisy EDT (2007) — at this commercial tier, 'Daisy' is unambiguously Marc Jacobs Daisy. Generation brief must specify brand = 'Marc Jacobs'. First Marc Jacobs identity in the catalogue. Notes sourced from Fragrantica (HIGH).",
+      "possibleNameIssue": true,
+      "nameIssueExplanation": "Supplier text is brand-less. Brand confirmed as Marc Jacobs from research. Generation brief must specify brand = 'Marc Jacobs'.",
+      "conflicts": [],
+      "evidenceSources": [
+        {
+          "type": "HIGH",
+          "description": "Fragrantica — Marc Jacobs Daisy EDT (2007)",
+          "url": "https://www.fragrantica.com/perfume/Marc-Jacobs/Daisy-1361.html"
+        }
+      ],
+      "proposedSlug": "daisy-inspired"
+    },
+    {
+      "_collection": "ROSE",
+      "_sourceKey": "LADIES-62-Chanel Allure",
+      "supplierName": "Chanel Allure",
+      "evidenceStatus": "READY",
+      "canonicalName": "Allure",
+      "brand": "Chanel",
+      "launchYear": 1999,
+      "concentration": "Eau de Parfum",
+      "marketedGender": "female",
+      "fragranceFamily": ["Floral", "Powdery", "Aldehydic"],
+      "topNotes": ["Mandarin Orange", "Bergamot", "Peach", "Aldehydes"],
+      "heartNotes": ["Rose", "Jasmine", "Iris", "Magnolia", "Peach Blossom"],
+      "baseNotes": ["Musk", "Vanilla", "Sandalwood", "Amber", "Vetiver"],
+      "mainAccords": ["Floral", "Powdery", "Aldehydic", "Vanilla", "Citrus"],
+      "perfumer": "Jacques Polge",
+      "sourceConfidence": "HIGH",
+      "founderSupplied": true,
+      "sourceNotes": "FD-4 (informational, not blocking): Supplier text 'Chanel Allure' without concentration qualifier. Two principal Chanel Allure versions: EDT (1996, Fragrantica-502) and EDP (1999, Fragrantica-176). EDP selected as canonical for this record — greater retail prevalence and richer floral composition. Notes sourced from Fragrantica EDP entry (HIGH). launchYear set to 1999 (EDP year; original Allure EDT was 1996). Distinct from existing MKC record allure-homme-sport-inspired (Skye, Wave 1) — that is a male fragrance from a wholly different Chanel Allure Homme Sport line.",
+      "possibleNameIssue": false,
+      "nameIssueExplanation": null,
+      "conflicts": [],
+      "evidenceSources": [
+        {
+          "type": "HIGH",
+          "description": "Fragrantica — Chanel Allure Eau de Parfum (1999)",
+          "url": "https://www.fragrantica.com/perfume/Chanel/Allure-Eau-de-Parfum-176.html"
+        },
+        {
+          "type": "HIGH",
+          "description": "Fragrantica — Chanel Allure EDT (1996) — for reference comparison",
+          "url": "https://www.fragrantica.com/perfume/Chanel/Allure-502.html"
+        }
+      ],
+      "proposedSlug": "chanel-allure-inspired"
+    },
+    {
+      "_collection": "ROSE",
+      "_sourceKey": "LADIES-14-Ange ou Demon",
+      "supplierName": "Ange ou Demon",
+      "evidenceStatus": "READY",
+      "canonicalName": "Ange ou Démon",
+      "brand": "Givenchy",
+      "launchYear": 2006,
+      "concentration": "Eau de Parfum",
+      "marketedGender": "female",
+      "fragranceFamily": ["Floral", "Powdery", "Aldehydic"],
+      "topNotes": ["Gardenia", "Aldehydes", "Bergamot"],
+      "heartNotes": ["Iris", "White Flowers", "Lily"],
+      "baseNotes": ["White Musk", "Cashmere Wood", "Amber", "Vanilla", "Sandalwood"],
+      "mainAccords": ["Floral", "Powdery", "Aldehydic", "White Floral", "Musk"],
+      "perfumer": "Dominique Ropion",
+      "sourceConfidence": "HIGH",
+      "founderSupplied": true,
+      "sourceNotes": "Accent note: supplier text 'Ange ou Demon' omits accent; canonical product name: 'Ange ou Démon' (with accent on the é in Démon). MKC name field should use 'Ange ou Démon Inspired'. Slug: ange-ou-demon-inspired (no accent in slug per standard slug convention). Notes sourced from Fragrantica (HIGH). Givenchy is represented in Skye (gentleman-edt-inspired, Wave 1); Ange ou Démon adds Givenchy women's representation to Rose.",
+      "possibleNameIssue": true,
+      "nameIssueExplanation": "Supplier text omits accent: 'Ange ou Demon' → canonical: 'Ange ou Démon'. MKC name field should include the accent for proper representation. Slug uses no-accent form per convention.",
+      "conflicts": [],
+      "evidenceSources": [
+        {
+          "type": "HIGH",
+          "description": "Fragrantica — Givenchy Ange ou Demon EDP (2006)",
+          "url": "https://www.fragrantica.com/perfume/Givenchy/Ange-ou-Demon-701.html"
+        }
+      ],
+      "proposedSlug": "ange-ou-demon-inspired"
+    },
+    {
+      "_collection": "ROSE",
+      "_sourceKey": "LADIES-12-Amor Amor",
+      "supplierName": "Amor Amor",
+      "evidenceStatus": "READY",
+      "canonicalName": "Amor Amor",
+      "brand": "Cacharel",
+      "launchYear": 2003,
+      "concentration": "Eau de Toilette",
+      "marketedGender": "female",
+      "fragranceFamily": ["Floral", "Fruity", "Fresh"],
+      "topNotes": ["Grapefruit", "Black Currant", "Cassis", "Mandarin Orange"],
+      "heartNotes": ["Jasmine", "Rose", "Freesia"],
+      "baseNotes": ["Musk", "Sandalwood", "Patchouli", "Amber", "Vetiver", "Vanilla"],
+      "mainAccords": ["Floral", "Fruity", "Fresh", "Powdery", "Sweet"],
+      "perfumer": null,
+      "sourceConfidence": "HIGH",
+      "founderSupplied": true,
+      "sourceNotes": "Canonical identity: Cacharel Amor Amor EDT (2003). First Cacharel identity in the catalogue. Notes sourced from Fragrantica (HIGH). Bright, fruity-floral character appropriate for Rose collection.",
+      "possibleNameIssue": false,
+      "nameIssueExplanation": null,
+      "conflicts": [],
+      "evidenceSources": [
+        {
+          "type": "HIGH",
+          "description": "Fragrantica — Cacharel Amor Amor EDT (2003)",
+          "url": "https://www.fragrantica.com/perfume/Cacharel/Amor-Amor-238.html"
+        }
+      ],
+      "proposedSlug": "amor-amor-inspired"
+    },
+    {
+      "_collection": "ROSE",
+      "_sourceKey": "LADIES-110-Dolce / Dolce & Gabbana",
+      "supplierName": "Dolce / Dolce & Gabbana",
+      "evidenceStatus": "READY",
+      "canonicalName": "Dolce",
+      "brand": "Dolce & Gabbana",
+      "launchYear": 2014,
+      "concentration": "Eau de Parfum",
+      "marketedGender": "female",
+      "fragranceFamily": ["White Floral", "Fresh", "Powdery"],
+      "topNotes": ["Neroli", "Papaya Blossom", "White Amaryllis"],
+      "heartNotes": ["Cashmere Daffodil", "White Muguet", "White Narcissus"],
+      "baseNotes": ["Ambroxan", "Sandalwood", "Cashmeran", "Musk"],
+      "mainAccords": ["White Floral", "Fresh", "Powdery", "Soft", "Musk"],
+      "perfumer": "Olivier Polge",
+      "sourceConfidence": "HIGH",
+      "founderSupplied": true,
+      "sourceNotes": "Supplier convention 'Dolce / Dolce & Gabbana' = product name / brand. Canonical product name: 'Dolce by Dolce & Gabbana'. MKC name field: 'Dolce Inspired'. Distinct from existing MKC record devotion-inspired (D&G Devotion inspired — different product) and from RO-1 the-one-pour-femme-inspired (different product, Oriental Floral vs. this product's White Floral character). Third D&G product in Rose collection (devotion-inspired existing + the-one-pour-femme-inspired new this wave). Notes sourced from Fragrantica (HIGH).",
+      "possibleNameIssue": false,
+      "nameIssueExplanation": null,
+      "conflicts": [],
+      "evidenceSources": [
+        {
+          "type": "HIGH",
+          "description": "Fragrantica — Dolce & Gabbana Dolce EDP (2014)",
+          "url": "https://www.fragrantica.com/perfume/Dolce-Gabbana/Dolce-22955.html"
+        }
+      ],
+      "proposedSlug": "dolce-inspired"
+    }
+  ]
+}
