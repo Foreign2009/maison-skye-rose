@@ -6457,6 +6457,116 @@ test("REG3 — comparison: no cardTarget fill, returns comparison slugs", () => 
   assert.equal(result.recommendedSlugs.length, 2, `REG3 FAIL — comparison should return 2`);
 });
 
+// ── Section GP: Natural Gender Pivot Vocabulary (EP-AI-C6-P3-R3) ─────────────
+//
+// Verifies the expanded MALE_PATTERN / FEMALE_PATTERN vocabulary added in R3.
+// Covers: new female/male pivot phrases, possessive guard ((?!'?s)), preservation
+// of non-gender profile slots, Founder defect sequence, and gift gate protection.
+
+const GP_MALE_PROFILE: ConversationProfile = {
+  preferredGender:   { value: "male",   confidence: "HIGH" },
+  preferredFamilies: { value: ["Fresh"], confidence: "MEDIUM" },
+  preferredSeasons:  { value: ["Summer"], confidence: "HIGH" },
+};
+const GP_FEMALE_PROFILE: ConversationProfile = {
+  preferredGender:   { value: "female", confidence: "HIGH" },
+  preferredFamilies: { value: ["Fresh"], confidence: "MEDIUM" },
+  preferredSeasons:  { value: ["Summer"], confidence: "HIGH" },
+};
+
+// GP-F: all required female pivot phrases → preferredGender = female (from male state)
+const GP_FEMALE_PHRASES: string[] = [
+  "and female", "and females", "and woman", "and women",
+  "and lady", "and ladies",
+  "for a woman", "female options", "women options", "women fragrances",
+];
+for (const phrase of GP_FEMALE_PHRASES) {
+  test(`GP-F "${phrase}" → preferredGender = female`, () => {
+    const r = extractProfile(phrase, GP_MALE_PROFILE);
+    assert.equal(r.preferredGender?.value, "female",
+      `GP-F "${phrase}" — expected female, got ${r.preferredGender?.value}`);
+  });
+}
+
+// GP-M: all required male pivot phrases → preferredGender = male (from female state)
+const GP_MALE_PHRASES: string[] = [
+  "and male", "and males", "and man", "and men",
+  "for a man", "male options", "men options", "men fragrances",
+];
+for (const phrase of GP_MALE_PHRASES) {
+  test(`GP-M "${phrase}" → preferredGender = male`, () => {
+    const r = extractProfile(phrase, GP_FEMALE_PROFILE);
+    assert.equal(r.preferredGender?.value, "male",
+      `GP-M "${phrase}" — expected male, got ${r.preferredGender?.value}`);
+  });
+}
+
+// GP-PRES: non-gender profile slots must survive a gender pivot
+test("GP-PRES-F — Fresh+Summer preserved after 'and women' pivot", () => {
+  const r = extractProfile("and women", GP_MALE_PROFILE);
+  assert.ok(r.preferredFamilies?.value.includes("Fresh"), "GP-PRES-F — Fresh lost after female pivot");
+  assert.ok(r.preferredSeasons?.value.includes("Summer"), "GP-PRES-F — Summer lost after female pivot");
+});
+test("GP-PRES-M — Fresh+Summer preserved after 'and men' pivot", () => {
+  const r = extractProfile("and men", GP_FEMALE_PROFILE);
+  assert.ok(r.preferredFamilies?.value.includes("Fresh"), "GP-PRES-M — Fresh lost after male pivot");
+  assert.ok(r.preferredSeasons?.value.includes("Summer"), "GP-PRES-M — Summer lost after male pivot");
+});
+
+// GP-FP: possessives and discussion phrases must NOT trigger a gender pivot via R3 additions.
+// FP1/FP3 use inputs outside the scope of existing FEMALE_PATTERN alternatives so that only
+// the new R3 "and X" alternative could potentially fire — verifying the (?!'?s) guard works.
+// Note: "and women's fragrances" fires via the EXISTING \bwomen'?s fragrances?\b alternative
+// (pre-R3 behavior) — that is intentional and is not a regression introduced by R3.
+test("GP-FP1 — 'and women's approach' must NOT pivot from male (R3 possessive guard, outside existing scope)", () => {
+  const r = extractProfile("and women's approach", GP_MALE_PROFILE);
+  assert.equal(r.preferredGender?.value, "male",
+    `GP-FP1 — possessive 'and women's' should not fire R3 alternative; got ${r.preferredGender?.value}`);
+});
+test("GP-FP2 — 'and men's notes' must NOT pivot from female (possessive guard)", () => {
+  const r = extractProfile("and men's notes", GP_FEMALE_PROFILE);
+  assert.equal(r.preferredGender?.value, "female",
+    `GP-FP2 — possessive 'and men's' should not pivot; got ${r.preferredGender?.value}`);
+});
+test("GP-FP3 — 'the men's and women's boutique' must NOT pivot from male (possessives, outside existing scope)", () => {
+  const r = extractProfile("the men's and women's boutique", GP_MALE_PROFILE);
+  assert.equal(r.preferredGender?.value, "male",
+    `GP-FP3 — possessive 'and women's' (non-fragrance noun) should not fire R3 alternative; got ${r.preferredGender?.value}`);
+});
+test("GP-FP4 — 'the woman who created this fragrance' must NOT pivot from male (no 'and' prefix)", () => {
+  const r = extractProfile("tell me about the woman who created this fragrance", GP_MALE_PROFILE);
+  assert.equal(r.preferredGender?.value, "male",
+    `GP-FP4 — 'the woman' without 'and' should not pivot; got ${r.preferredGender?.value}`);
+});
+
+// GP-3T: three-turn pivot sequence — Founder defect scenario (R3-P0 root cause)
+test("GP-3T-T1 — 'give me fresh summer male fragrances' → male (initial profile)", () => {
+  const r = extractProfile("give me fresh summer male fragrances", {});
+  assert.equal(r.preferredGender?.value, "male", `GP-3T-T1 — expected male`);
+});
+test("GP-3T-T2 — 'and women' from male profile → female (Founder defect: was MISS)", () => {
+  const r = extractProfile("and women", GP_MALE_PROFILE);
+  assert.equal(r.preferredGender?.value, "female", `GP-3T-T2 — expected female`);
+});
+test("GP-3T-T3 — 'and men' from female profile → male (reverse pivot)", () => {
+  const r = extractProfile("and men", GP_FEMALE_PROFILE);
+  assert.equal(r.preferredGender?.value, "male", `GP-3T-T3 — expected male`);
+});
+
+// GP-GS: gift semantic — MALE_PATTERN/FEMALE_PATTERN gate must not fire for gift turns
+// extractShoppingContext detects relationship words → shoppingIntent = "gift"
+// → gender extraction step is skipped → self preferredGender is unchanged.
+test("GP-GS-A — 'something for my wife' must not change male self-profile gender", () => {
+  const r = extractProfile("something for my wife", GP_MALE_PROFILE);
+  assert.equal(r.preferredGender?.value, "male",
+    `GP-GS-A — gift turn should not overwrite self preferredGender; got ${r.preferredGender?.value}`);
+});
+test("GP-GS-B — 'something for my husband' must not change female self-profile gender", () => {
+  const r = extractProfile("something for my husband", GP_FEMALE_PROFILE);
+  assert.equal(r.preferredGender?.value, "female",
+    `GP-GS-B — gift turn should not overwrite self preferredGender; got ${r.preferredGender?.value}`);
+});
+
 // ── Summary ───────────────────────────────────────────────────────────────────
 
 const total = passed + failed;
