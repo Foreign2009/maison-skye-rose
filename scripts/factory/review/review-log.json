@@ -4503,6 +4503,286 @@
       "slug": "uomo-by-zegna-inspired",
       "reviewer": "system",
       "details": "validation:FAIL  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-09-02T18:21:24.794Z",
+      "action": "review_started",
+      "slug": "earl-grey-cucumber-inspired",
+      "reviewer": "Founder",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-09-02T18:21:26.876Z",
+      "action": "review_started",
+      "slug": "myrrh-tonka-inspired",
+      "reviewer": "Founder",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-09-02T18:21:28.863Z",
+      "action": "review_started",
+      "slug": "ck-everyone-inspired",
+      "reviewer": "Founder",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-09-02T18:21:30.962Z",
+      "action": "review_started",
+      "slug": "greenley-inspired",
+      "reviewer": "Founder",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-09-02T18:21:32.995Z",
+      "action": "review_started",
+      "slug": "smoking-hot-inspired",
+      "reviewer": "Founder",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-09-02T18:21:35.228Z",
+      "action": "review_started",
+      "slug": "les-sables-roses-inspired",
+      "reviewer": "Founder",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-09-02T18:21:37.851Z",
+      "action": "review_started",
+      "slug": "the-one-pour-homme-inspired",
+      "reviewer": "Founder",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-09-02T18:21:40.586Z",
+      "action": "review_started",
+      "slug": "azzaro-wanted-inspired",
+      "reviewer": "Founder",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-09-02T18:21:43.258Z",
+      "action": "review_started",
+      "slug": "azzaro-chrome-inspired",
+      "reviewer": "Founder",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-09-02T18:21:45.218Z",
+      "action": "review_started",
+      "slug": "boss-the-scent-inspired",
+      "reviewer": "Founder",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-09-02T18:21:47.259Z",
+      "action": "review_started",
+      "slug": "ralph's-club-inspired",
+      "reviewer": "Founder",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-09-02T18:21:49.924Z",
+      "action": "review_started",
+      "slug": "bad-boy-inspired",
+      "reviewer": "Founder",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-09-02T18:21:51.921Z",
+      "action": "review_started",
+      "slug": "uomo-by-zegna-inspired",
+      "reviewer": "Founder",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-09-02T18:21:53.940Z",
+      "action": "review_started",
+      "slug": "the-one-pour-femme-inspired",
+      "reviewer": "Founder",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-09-02T18:21:55.989Z",
+      "action": "review_started",
+      "slug": "angel-inspired",
+      "reviewer": "Founder",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-09-02T18:21:58.641Z",
+      "action": "review_started",
+      "slug": "daisy-inspired",
+      "reviewer": "Founder",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-09-02T18:22:00.634Z",
+      "action": "review_started",
+      "slug": "chanel-allure-inspired",
+      "reviewer": "Founder",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-09-02T18:22:02.693Z",
+      "action": "review_started",
+      "slug": "ange-ou-demon-inspired",
+      "reviewer": "Founder",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-09-02T18:22:04.630Z",
+      "action": "review_started",
+      "slug": "amor-amor-inspired",
+      "reviewer": "Founder",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-09-02T18:22:07.368Z",
+      "action": "review_started",
+      "slug": "dolce-inspired",
+      "reviewer": "Founder",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-09-02T18:22:42.190Z",
+      "action": "approved",
+      "slug": "earl-grey-cucumber-inspired",
+      "reviewer": "Founder",
+      "details": "Jo Malone bouquet governance PASS (all notes in heart). Evidence-locked. Clean tea aromatic prose. No claim violations. Subtitle unique. Relationships verified."
+    },
+    {
+      "timestamp": "2026-09-02T18:22:44.227Z",
+      "action": "approved",
+      "slug": "myrrh-tonka-inspired",
+      "reviewer": "Founder",
+      "details": "Jo Malone bouquet governance PASS (all notes in heart). Evidence-locked. Resinous warmth prose clean. No claim violations. Subtitle unique."
+    },
+    {
+      "timestamp": "2026-09-02T18:22:46.978Z",
+      "action": "approved",
+      "slug": "ck-everyone-inspired",
+      "reviewer": "Founder",
+      "details": "P3 slug repair applied: acqua-di-gio corrected to aqua-di-gio. Evidence-locked. Clean unisex fresh prose. No claim violations."
+    },
+    {
+      "timestamp": "2026-09-02T18:22:49.679Z",
+      "action": "approved",
+      "slug": "greenley-inspired",
+      "reviewer": "Founder",
+      "details": "P3 subtitle collision repair applied: Crystalline Iris Fresh (was Luminous Green Floral, collided with dkny-be-delicious-green). Evidence-locked. Clean floral fresh prose."
+    },
+    {
+      "timestamp": "2026-09-02T18:22:51.795Z",
+      "action": "approved",
+      "slug": "smoking-hot-inspired",
+      "reviewer": "Founder",
+      "details": "Evidence-locked woody tobacco notes verified. Minimal apple top is evidence-accurate. Clean introspective prose. No claim violations."
+    },
+    {
+      "timestamp": "2026-09-02T18:22:53.850Z",
+      "action": "approved",
+      "slug": "les-sables-roses-inspired",
+      "reviewer": "Founder",
+      "details": "P3 subtitle quality repair applied: Spiced Rose Desert (was Warm Rose Amber, duplicated mood field). Evidence-locked rose oud. Clean unisex floral oriental."
+    },
+    {
+      "timestamp": "2026-09-02T18:23:12.344Z",
+      "action": "approved",
+      "slug": "the-one-pour-homme-inspired",
+      "reviewer": "Founder",
+      "details": "P3 longevity claim removed (lasting power). Evidence-locked warm spiced oriental. Clean masculine prose. Relationships verified."
+    },
+    {
+      "timestamp": "2026-09-02T18:23:14.369Z",
+      "action": "approved",
+      "slug": "azzaro-wanted-inspired",
+      "reviewer": "Founder",
+      "details": "No defects found in P3. Evidence-locked woody aromatic. Clean confident masculine prose. Subtitle unique. No claim violations."
+    },
+    {
+      "timestamp": "2026-09-02T18:23:16.560Z",
+      "action": "approved",
+      "slug": "azzaro-chrome-inspired",
+      "reviewer": "Founder",
+      "details": "P3 subtitle collision repair applied: Fresh Mineral Depth (was Aquatic Clarity, collided with leau-dissey and polo-blue). Oakmoss in heart+base evidence-locked governance PASS."
+    },
+    {
+      "timestamp": "2026-09-02T18:23:19.168Z",
+      "action": "approved",
+      "slug": "boss-the-scent-inspired",
+      "reviewer": "Founder",
+      "details": "P3 subtitle quality repair applied: Ginger & Leather (was Bold Spiced Leather, duplicated mood/signatureStyle). Minimal note pyramid (Osmanthus heart, Leather base) is evidence-accurate per notesEvidenceLocked."
+    },
+    {
+      "timestamp": "2026-09-02T18:23:21.317Z",
+      "action": "approved",
+      "slug": "ralph's-club-inspired",
+      "reviewer": "Founder",
+      "details": "P3 repairs applied: longevity claim removed (without reapplication), subtitle repaired (Dusk Club Amber), queue name corrected. Evidence-locked aromatic fougere. Clean."
+    },
+    {
+      "timestamp": "2026-09-02T18:23:23.676Z",
+      "action": "approved",
+      "slug": "bad-boy-inspired",
+      "reviewer": "Founder",
+      "details": "P3 subtitle quality repair applied: Spiced Shadow (was Dark Spiced Amber, duplicated mood/signatureStyle). Evidence-locked amber woody. No claim violations."
+    },
+    {
+      "timestamp": "2026-09-02T18:23:25.736Z",
+      "action": "approved",
+      "slug": "uomo-by-zegna-inspired",
+      "reviewer": "Founder",
+      "details": "No defects found in P3. Evidence-locked refined woody aromatic. Excellent descriptive prose. No claim violations. All relationships verified."
+    },
+    {
+      "timestamp": "2026-09-02T18:23:58.373Z",
+      "action": "approved",
+      "slug": "the-one-pour-femme-inspired",
+      "reviewer": "Founder",
+      "details": "P3 subtitle collision repair applied: Creamy Floral Oriental (was Soft Luminosity, collided with chloe-original and valaya-exclusif). Lily of the Valley spelling PASS. Evidence-locked."
+    },
+    {
+      "timestamp": "2026-09-02T18:24:00.383Z",
+      "action": "approved",
+      "slug": "angel-inspired",
+      "reviewer": "Founder",
+      "details": "P3 subtitle collision repair applied: Dark Honey Patchouli (was Velvet Sweetness, collided with burberry-her). Lily of the Valley spelling PASS. Evidence-locked gourmand oriental."
+    },
+    {
+      "timestamp": "2026-09-02T18:24:02.349Z",
+      "action": "approved",
+      "slug": "daisy-inspired",
+      "reviewer": "Founder",
+      "details": "No defects found in P3. Evidence-locked spring floral fresh. Clean youthful prose. Subtitle Luminous Innocence unique. All relationships verified."
+    },
+    {
+      "timestamp": "2026-09-02T18:24:05.653Z",
+      "action": "approved",
+      "slug": "chanel-allure-inspired",
+      "reviewer": "Founder",
+      "details": "WardrobePartners cross-gender reviewed in P3-R1: spicebomb-extreme and sauvage are valid complementary pairings per established governance (armani-si precedent). Evidence-locked floral aldehyde. No claim violations."
+    },
+    {
+      "timestamp": "2026-09-02T18:24:07.708Z",
+      "action": "approved",
+      "slug": "ange-ou-demon-inspired",
+      "reviewer": "Founder",
+      "details": "All 4 P3 repairs applied: name accent restored (Ange ou Demon), Gardenia correctly placed as top-note opening in description, j-adore slug corrected to j'adore-inspired, subtitle Luminous Aldehyde (no collision, no repetition). Evidence-locked."
+    },
+    {
+      "timestamp": "2026-09-02T18:24:09.682Z",
+      "action": "approved",
+      "slug": "amor-amor-inspired",
+      "reviewer": "Founder",
+      "details": "No defects found in P3. Evidence-locked fruity floral. Clean summer editorial prose. Radiant Warmth subtitle unique. All relationships verified."
+    },
+    {
+      "timestamp": "2026-09-02T18:24:12.383Z",
+      "action": "approved",
+      "slug": "dolce-inspired",
+      "reviewer": "Founder",
+      "details": "P3 subtitle collision repair applied: White Muguet Bloom (was Soft Luminescence, collided with rolling-in-love). Evidence-locked white floral. Excellent airy prose."
     }
   ]
 }
