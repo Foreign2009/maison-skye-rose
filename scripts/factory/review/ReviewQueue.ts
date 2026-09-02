@@ -40,7 +40,9 @@ function parseCollection(content: string): ReviewRecord["collection"] {
 }
 
 function parseName(content: string, slug: string): string {
-  const match = content.match(/name\s*:\s*["'](.+?)["']/);
+  // Use [^"]+ so apostrophes inside double-quoted names are captured correctly.
+  // The previous ["']…["'] character class caused "Ralph's Club" to truncate at the apostrophe.
+  const match = content.match(/name\s*:\s*"([^"]+)"/);
   return match?.[1] ?? slug;
 }
 

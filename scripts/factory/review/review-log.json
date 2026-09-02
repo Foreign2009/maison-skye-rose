@@ -4363,6 +4363,146 @@
       "slug": "gucci-flora-inspired",
       "reviewer": "Founder",
       "details": "promotionId:O4y1zlcqeTf9  nativePath:app/lib/mkc/native/gucci-flora-inspired.ts"
+    },
+    {
+      "timestamp": "2026-09-02T17:59:34.047Z",
+      "action": "added_to_queue",
+      "slug": "amor-amor-inspired",
+      "reviewer": "system",
+      "details": "validation:FAIL  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-09-02T17:59:34.056Z",
+      "action": "added_to_queue",
+      "slug": "ange-ou-demon-inspired",
+      "reviewer": "system",
+      "details": "validation:FAIL  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-09-02T17:59:34.066Z",
+      "action": "added_to_queue",
+      "slug": "angel-inspired",
+      "reviewer": "system",
+      "details": "validation:FAIL  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-09-02T17:59:34.099Z",
+      "action": "added_to_queue",
+      "slug": "azzaro-chrome-inspired",
+      "reviewer": "system",
+      "details": "validation:FAIL  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-09-02T17:59:34.108Z",
+      "action": "added_to_queue",
+      "slug": "azzaro-wanted-inspired",
+      "reviewer": "system",
+      "details": "validation:FAIL  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-09-02T17:59:34.117Z",
+      "action": "added_to_queue",
+      "slug": "bad-boy-inspired",
+      "reviewer": "system",
+      "details": "validation:FAIL  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-09-02T17:59:34.166Z",
+      "action": "added_to_queue",
+      "slug": "boss-the-scent-inspired",
+      "reviewer": "system",
+      "details": "validation:FAIL  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-09-02T17:59:34.204Z",
+      "action": "added_to_queue",
+      "slug": "chanel-allure-inspired",
+      "reviewer": "system",
+      "details": "validation:FAIL  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-09-02T17:59:34.224Z",
+      "action": "added_to_queue",
+      "slug": "ck-everyone-inspired",
+      "reviewer": "system",
+      "details": "validation:FAIL  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-09-02T17:59:34.253Z",
+      "action": "added_to_queue",
+      "slug": "daisy-inspired",
+      "reviewer": "system",
+      "details": "validation:FAIL  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-09-02T17:59:34.280Z",
+      "action": "added_to_queue",
+      "slug": "dolce-inspired",
+      "reviewer": "system",
+      "details": "validation:FAIL  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-09-02T17:59:34.299Z",
+      "action": "added_to_queue",
+      "slug": "earl-grey-cucumber-inspired",
+      "reviewer": "system",
+      "details": "validation:FAIL  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-09-02T17:59:34.371Z",
+      "action": "added_to_queue",
+      "slug": "greenley-inspired",
+      "reviewer": "system",
+      "details": "validation:FAIL  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-09-02T17:59:34.437Z",
+      "action": "added_to_queue",
+      "slug": "les-sables-roses-inspired",
+      "reviewer": "system",
+      "details": "validation:FAIL  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-09-02T17:59:34.473Z",
+      "action": "added_to_queue",
+      "slug": "myrrh-tonka-inspired",
+      "reviewer": "system",
+      "details": "validation:FAIL  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-09-02T17:59:34.532Z",
+      "action": "added_to_queue",
+      "slug": "ralph's-club-inspired",
+      "reviewer": "system",
+      "details": "validation:FAIL  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-09-02T17:59:34.570Z",
+      "action": "added_to_queue",
+      "slug": "smoking-hot-inspired",
+      "reviewer": "system",
+      "details": "validation:FAIL  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-09-02T17:59:34.583Z",
+      "action": "added_to_queue",
+      "slug": "the-one-pour-femme-inspired",
+      "reviewer": "system",
+      "details": "validation:FAIL  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-09-02T17:59:34.592Z",
+      "action": "added_to_queue",
+      "slug": "the-one-pour-homme-inspired",
+      "reviewer": "system",
+      "details": "validation:FAIL  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-09-02T17:59:34.614Z",
+      "action": "added_to_queue",
+      "slug": "uomo-by-zegna-inspired",
+      "reviewer": "system",
+      "details": "validation:FAIL  factory:0.5.0"
     }
   ]
 }

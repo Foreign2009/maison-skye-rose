@@ -81,7 +81,7 @@ export const lesSablesRosesInspired: FragranceKnowledge = {
   newArrival    : false,
 
   // ── Education ───────────────────────────────────────────────────────────────
-  subtitle      : "Warm Rose Amber",
+  subtitle      : "Spiced Rose Desert",
   description   : "Pink pepper ignites against a heart of layered rose—creamy, slightly spiced, utterly luxurious. Sandalwood and oud ground the composition in amber and white musk, creating a warm second skin that feels both intimate and mysteriously textured.",
   academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances", "what-makes-a-signature-scent"],
   academyCategories: ["fragrance-families", "the-note-pyramid", "wear-and-application"],

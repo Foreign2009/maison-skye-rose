@@ -68,7 +68,7 @@ export const theOnePourHommeInspired: FragranceKnowledge = {
   recommendedFor: [
     "Men seeking a sophisticated warm spice signature that transitions seamlessly from office to evening occasions.",
     "Those who appreciate tobacco and cedarwood depth balanced with bright citrus and spice complexity.",
-    "Anyone building a curated fragrance collection who wants an autumn-ready woody oriental with moderate projection and lasting power.",
+    "Anyone building a curated fragrance collection who wants an autumn-ready woody oriental with depth and versatility.",
     "Men who prefer layered sophistication over one-note freshness and value warm amber and vetiver foundations.",
   ],
 

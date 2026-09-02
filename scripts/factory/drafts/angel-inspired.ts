@@ -102,7 +102,7 @@ export const angelInspired: FragranceKnowledge = {
   newArrival    : false,
 
   // ── Education ───────────────────────────────────────────────────────────────
-  subtitle      : "Velvet Sweetness",
+  subtitle      : "Dark Honey Patchouli",
   description   : "A voluptuous embrace of honeyed stone fruit and dark patchouli, laced with whispers of caramel and sandalwood. Cotton candy brightness dissolves into a cocoa-dusted warmth that settles on skin like cashmere, amber and musk creating an enveloping sensuality beneath.",
   academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances", "choosing-your-season-scent"],
   academyCategories: ["fragrance-families", "the-note-pyramid", "occasions-and-style"],

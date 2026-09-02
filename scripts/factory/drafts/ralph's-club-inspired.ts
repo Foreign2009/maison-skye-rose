@@ -67,7 +67,7 @@ export const ralphsClubInspired: FragranceKnowledge = {
   recommendedFor: [
     "Men seeking a sophisticated aromatic signature that bridges professional polish and evening refinement.",
     "Those who appreciate warm amber and soft florals balanced with spice — never sweet, always composed.",
-    "Anyone building a signature wardrobe who wants one fragrance that works from office to dinner without reapplication.",
+    "Anyone building a signature wardrobe who wants one fragrance that works from office to dinner with quiet authority.",
   ],
 
   // ── Merchandising ───────────────────────────────────────────────────────────
@@ -85,7 +85,7 @@ export const ralphsClubInspired: FragranceKnowledge = {
   newArrival    : false,
 
   // ── Education ───────────────────────────────────────────────────────────────
-  subtitle      : "Warm Aromatic Amber",
+  subtitle      : "Dusk Club Amber",
   description   : "Pink pepper and apple open with bright citrus snap, then unfold into a soft iris and rose heart that feels like skin rather than florals. Cedarwood, patchouli, and warm amber ground the composition in a quiet, masculine sensuality—the scent of an unhurried evening.",
   academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances", "what-makes-a-signature-scent"],
   academyCategories: ["fragrance-families", "the-note-pyramid", "wear-and-application"],

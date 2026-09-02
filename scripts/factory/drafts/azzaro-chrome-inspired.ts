@@ -92,7 +92,7 @@ export const azzaroChromeInspired: FragranceKnowledge = {
   newArrival    : false,
 
   // ── Education ───────────────────────────────────────────────────────────────
-  subtitle      : "Aquatic Clarity",
+  subtitle      : "Fresh Mineral Depth",
   description   : "Bergamot and lemon pierce through water-bright air, sharpened by rosemary into something mineral and clean. Jasmine softens the heart while cedar and oakmoss anchor the composition—a fragrance that feels like morning light on skin, crisp yet grounded.",
   academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "choosing-your-season-scent", "how-to-wear-fragrance"],
   academyCategories: ["fragrance-families", "the-note-pyramid", "occasions-and-style"],

@@ -81,7 +81,7 @@ export const greenleyInspired: FragranceKnowledge = {
   newArrival    : false,
 
   // ── Education ───────────────────────────────────────────────────────────────
-  subtitle      : "Luminous Green Floral",
+  subtitle      : "Crystalline Iris Fresh",
   description   : "Bergamot and petitgrain open with crystalline brightness, then iris and rose emerge as soft, powdered florals against a whisper of violet. Sandalwood and vetiver anchor the composition with quiet green warmth, creating a fragrance that feels both luminous and grounded.",
   academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "choosing-your-season-scent", "how-to-wear-fragrance"],
   academyCategories: ["fragrance-families", "the-note-pyramid", "occasions-and-style"],

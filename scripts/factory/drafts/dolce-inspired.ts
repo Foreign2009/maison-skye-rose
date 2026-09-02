@@ -81,7 +81,7 @@ export const dolceInspired: FragranceKnowledge = {
   newArrival    : false,
 
   // ── Education ───────────────────────────────────────────────────────────────
-  subtitle      : "Soft Luminescence",
+  subtitle      : "White Muguet Bloom",
   description   : "White amaryllis and neroli open into a luminous heart of muguet and daffodil, their creamy petals hovering above a soft base of sandalwood and ambroxan. The composition breathes—airy yet substantial, innocent yet sensual.",
   academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "what-makes-a-signature-scent", "how-to-layer-fragrances"],
   academyCategories: ["fragrance-families", "the-note-pyramid", "wear-and-application"],

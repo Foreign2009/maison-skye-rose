@@ -111,7 +111,7 @@ export const ckEveryoneInspired: FragranceKnowledge = {
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["acqua-di-gio-inspired", "y-inspired"],
+    alternatives:     ["aqua-di-gio-inspired", "y-inspired"],
     wardrobePartners: ["baccarat-rouge-540-inspired"],
   },
 };

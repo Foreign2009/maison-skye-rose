@@ -81,7 +81,7 @@ export const theOnePourFemmeInspired: FragranceKnowledge = {
   newArrival    : false,
 
   // ── Education ───────────────────────────────────────────────────────────────
-  subtitle      : "Soft Luminosity",
+  subtitle      : "Creamy Floral Oriental",
   description   : "Mandarin and litchi open with luminous warmth, giving way to a heart of jasmine and lily that feels both creamy and translucent. Amber and musk create a soft, skin-close base that settles into something intimate and unhurried.",
   academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances", "what-makes-a-signature-scent"],
   academyCategories: ["fragrance-families", "the-note-pyramid", "wear-and-application"],

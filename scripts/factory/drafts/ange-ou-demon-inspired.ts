@@ -25,7 +25,7 @@ export const angeOuDemonInspired: FragranceKnowledge = {
   id            : "ange-ou-demon-inspired",
   slug          : "ange-ou-demon-inspired",
   brand         : "Maison Skye & Rose",
-  name          : "Ange Ou Demon Inspired",
+  name          : "Ange ou Démon Inspired",
   collection    : "Rose",
   catalogVersion: "1.0",
   status        : "active",
@@ -86,8 +86,8 @@ export const angeOuDemonInspired: FragranceKnowledge = {
   newArrival    : false,
 
   // ── Education ───────────────────────────────────────────────────────────────
-  subtitle      : "Ethereal White Floral",
-  description   : "Aldehydes open into a luminous white floral heart of gardenia, iris, and lily—a crystalline interpretation of ethereal femininity. White musk and cashmere wood anchor the composition in soft amber and vanilla, creating a fragrance that hovers between angelic whisper and sensual depth.",
+  subtitle      : "Luminous Aldehyde",
+  description   : "Gardenia and aldehydes open with crystalline brightness, a shimmer of white petals that yields to a luminous heart of iris and lily. White musk and cashmere wood anchor the composition in soft amber and vanilla, creating a fragrance that hovers between angelic whisper and sensual depth.",
   academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances", "what-makes-a-signature-scent"],
   academyCategories: ["fragrance-families", "the-note-pyramid", "wear-and-application"],
   educationTags : [
@@ -117,7 +117,7 @@ export const angeOuDemonInspired: FragranceKnowledge = {
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["j-adore-inspired", "chanel-no-5-inspired", "alien-inspired"],
+    alternatives:     ["j'adore-inspired", "chanel-no-5-inspired", "alien-inspired"],
     wardrobePartners: ["black-opium-inspired", "hypnotic-poison-inspired"],
   },
 };

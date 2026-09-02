@@ -79,7 +79,7 @@ export const bossTheScentInspired: FragranceKnowledge = {
   newArrival    : false,
 
   // ── Education ───────────────────────────────────────────────────────────────
-  subtitle      : "Bold Spiced Leather",
+  subtitle      : "Ginger & Leather",
   description   : "Ginger and maniguette pepper ignite a spiced opening that immediately commands attention. Osmanthus blooms softly beneath, a floral counterpoint to the leather base that anchors the composition—earthy, tactile, uncompromising.",
   academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances", "what-makes-a-signature-scent"],
   academyCategories: ["fragrance-families", "the-note-pyramid", "wear-and-application"],

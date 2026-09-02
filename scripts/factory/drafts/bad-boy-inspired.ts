@@ -85,7 +85,7 @@ export const badBoyInspired: FragranceKnowledge = {
   newArrival    : false,
 
   // ── Education ───────────────────────────────────────────────────────────────
-  subtitle      : "Dark Spiced Amber",
+  subtitle      : "Spiced Shadow",
   description   : "Dark cardamom and black pepper ignite against cool bergamot, then settle into a contemplative heart of sage and lavender. Cacao and leather unfold beneath, grounded by vetiver and tonka—a fragrance that moves between spice and shadow, restless and deliberately composed.",
   academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances", "choosing-your-season-scent"],
   academyCategories: ["fragrance-families", "the-note-pyramid", "wear-and-application"],
