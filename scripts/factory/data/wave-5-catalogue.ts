@@ -66,8 +66,9 @@ import type { DisplayFragrance } from "../../../app/lib/knowledgeAdapter";
 // Canonical retail pricing. Required field — cannot be omitted on DisplayFragrance.
 const PRICES = { "5ml": 60, "10ml": 100, "30ml": 250 } as const;
 
-// Factory-staging image placeholders. No product photography for pre-promoted identities.
-const IMAGES = { "5ml": "", "10ml": "", "30ml": "" } as const;
+// Governed bottle imagery: Skye + non-floral Elite = BLUE_IMAGES; Rose + floral Elite = PINK_IMAGES.
+const BLUE_IMAGES = { "5ml": "/images/blue-5ml.png", "10ml": "/images/blue-10ml.png", "30ml": "/images/glass-blue-30ml.png" } as const;
+const PINK_IMAGES = { "5ml": "/images/pink-5ml.png", "10ml": "/images/pink-10ml.png", "30ml": "/images/glass-pink-30ml.png" } as const;
 
 // ── ELITE (6) ────────────────────────────────────────────────────────────────
 
@@ -90,7 +91,7 @@ const elite: DisplayFragrance[] = [
     bestSeller:          false,
     newArrival:          false,
     prices:              PRICES,
-    images:              IMAGES,
+    images:              BLUE_IMAGES,
     notesEvidenceLocked: true,
     notesStructured: {
       top:   [],
@@ -116,7 +117,7 @@ const elite: DisplayFragrance[] = [
     bestSeller:          false,
     newArrival:          false,
     prices:              PRICES,
-    images:              IMAGES,
+    images:              BLUE_IMAGES,
     notesEvidenceLocked: true,
     notesStructured: {
       top:   [],
@@ -140,7 +141,7 @@ const elite: DisplayFragrance[] = [
     bestSeller:          false,
     newArrival:          false,
     prices:              PRICES,
-    images:              IMAGES,
+    images:              BLUE_IMAGES,
     notesEvidenceLocked: true,
     notesStructured: {
       top:   ["Orange", "Bergamot", "Cedar Leaf"],
@@ -164,7 +165,7 @@ const elite: DisplayFragrance[] = [
     bestSeller:          false,
     newArrival:          false,
     prices:              PRICES,
-    images:              IMAGES,
+    images:              PINK_IMAGES,
     notesEvidenceLocked: true,
     notesStructured: {
       top:   ["Bergamot", "Lemon", "Petitgrain"],
@@ -188,7 +189,7 @@ const elite: DisplayFragrance[] = [
     bestSeller:          false,
     newArrival:          false,
     prices:              PRICES,
-    images:              IMAGES,
+    images:              BLUE_IMAGES,
     notesEvidenceLocked: true,
     notesStructured: {
       top:   ["Apple", "Red Apple"],
@@ -214,7 +215,7 @@ const elite: DisplayFragrance[] = [
     bestSeller:          false,
     newArrival:          false,
     prices:              PRICES,
-    images:              IMAGES,
+    images:              PINK_IMAGES,
     notesEvidenceLocked: true,
     notesStructured: {
       top:   ["Pink Pepper"],
@@ -244,7 +245,7 @@ const skye: DisplayFragrance[] = [
     bestSeller:          false,
     newArrival:          false,
     prices:              PRICES,
-    images:              IMAGES,
+    images:              BLUE_IMAGES,
     notesEvidenceLocked: true,
     notesStructured: {
       top:   ["Grapefruit", "Basil", "Coriander", "Cardamom"],
@@ -268,7 +269,7 @@ const skye: DisplayFragrance[] = [
     bestSeller:          false,
     newArrival:          false,
     prices:              PRICES,
-    images:              IMAGES,
+    images:              BLUE_IMAGES,
     notesEvidenceLocked: true,
     notesStructured: {
       top:   ["Cardamom", "Grapefruit", "Star Anise"],
@@ -292,7 +293,7 @@ const skye: DisplayFragrance[] = [
     bestSeller:          false,
     newArrival:          false,
     prices:              PRICES,
-    images:              IMAGES,
+    images:              BLUE_IMAGES,
     notesEvidenceLocked: true,
     notesStructured: {
       top:   ["Bergamot", "Lemon", "Pineapple", "Water Notes", "Rosemary", "Cyclamen"],
@@ -316,7 +317,7 @@ const skye: DisplayFragrance[] = [
     bestSeller:          false,
     newArrival:          false,
     prices:              PRICES,
-    images:              IMAGES,
+    images:              BLUE_IMAGES,
     notesEvidenceLocked: true,
     notesStructured: {
       top:   ["Ginger", "Maniguette Pepper"],
@@ -340,7 +341,7 @@ const skye: DisplayFragrance[] = [
     bestSeller:          false,
     newArrival:          false,
     prices:              PRICES,
-    images:              IMAGES,
+    images:              BLUE_IMAGES,
     notesEvidenceLocked: true,
     notesStructured: {
       top:   ["Apple", "Pink Pepper", "Bergamot"],
@@ -364,7 +365,7 @@ const skye: DisplayFragrance[] = [
     bestSeller:          false,
     newArrival:          false,
     prices:              PRICES,
-    images:              IMAGES,
+    images:              BLUE_IMAGES,
     notesEvidenceLocked: true,
     notesStructured: {
       top:   ["Cardamom", "Black Pepper", "Bergamot"],
@@ -388,7 +389,7 @@ const skye: DisplayFragrance[] = [
     bestSeller:          false,
     newArrival:          false,
     prices:              PRICES,
-    images:              IMAGES,
+    images:              BLUE_IMAGES,
     notesEvidenceLocked: true,
     notesStructured: {
       top:   ["Bergamot", "Mandarin Orange", "Juniper Berries", "Pink Pepper"],
@@ -417,7 +418,7 @@ const rose: DisplayFragrance[] = [
     bestSeller:          false,
     newArrival:          false,
     prices:              PRICES,
-    images:              IMAGES,
+    images:              PINK_IMAGES,
     notesEvidenceLocked: true,
     notesStructured: {
       top:   ["Litchi", "Mandarin Orange", "Bergamot", "Peach"],
@@ -442,7 +443,7 @@ const rose: DisplayFragrance[] = [
     bestSeller:          false,
     newArrival:          false,
     prices:              PRICES,
-    images:              IMAGES,
+    images:              PINK_IMAGES,
     notesEvidenceLocked: true,
     notesStructured: {
       top:   ["Melon", "Bergamot", "Coconut", "Cotton Candy", "Cassis"],
@@ -467,7 +468,7 @@ const rose: DisplayFragrance[] = [
     bestSeller:          false,
     newArrival:          false,
     prices:              PRICES,
-    images:              IMAGES,
+    images:              PINK_IMAGES,
     notesEvidenceLocked: true,
     notesStructured: {
       top:   ["Strawberry", "Violet Leaves", "Ruby Red Grapefruit"],
@@ -491,7 +492,7 @@ const rose: DisplayFragrance[] = [
     bestSeller:          false,
     newArrival:          false,
     prices:              PRICES,
-    images:              IMAGES,
+    images:              PINK_IMAGES,
     notesEvidenceLocked: true,
     notesStructured: {
       top:   ["Mandarin Orange", "Bergamot", "Peach", "Aldehydes"],
@@ -516,7 +517,7 @@ const rose: DisplayFragrance[] = [
     bestSeller:          false,
     newArrival:          false,
     prices:              PRICES,
-    images:              IMAGES,
+    images:              PINK_IMAGES,
     notesEvidenceLocked: true,
     notesStructured: {
       top:   ["Gardenia", "Aldehydes", "Bergamot"],
@@ -540,7 +541,7 @@ const rose: DisplayFragrance[] = [
     bestSeller:          false,
     newArrival:          false,
     prices:              PRICES,
-    images:              IMAGES,
+    images:              PINK_IMAGES,
     notesEvidenceLocked: true,
     notesStructured: {
       top:   ["Grapefruit", "Black Currant", "Cassis", "Mandarin Orange"],
@@ -566,7 +567,7 @@ const rose: DisplayFragrance[] = [
     bestSeller:          false,
     newArrival:          false,
     prices:              PRICES,
-    images:              IMAGES,
+    images:              PINK_IMAGES,
     notesEvidenceLocked: true,
     notesStructured: {
       top:   ["Neroli", "Papaya Blossom", "White Amaryllis"],

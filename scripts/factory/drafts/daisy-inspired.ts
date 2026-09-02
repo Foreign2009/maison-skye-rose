@@ -73,9 +73,9 @@ export const daisyInspired: FragranceKnowledge = {
     "30ml": 250,
   },
   images: {
-    "5ml":  "",  // FACTORY_ERROR: IMAGE_MISSING — image path for 5ml is required
-    "10ml": "",  // FACTORY_ERROR: IMAGE_MISSING — image path for 10ml is required
-    "30ml": "",  // FACTORY_ERROR: IMAGE_MISSING — image path for 30ml is required
+    "5ml":  "/images/pink-5ml.png",
+    "10ml": "/images/pink-10ml.png",
+    "30ml": "/images/glass-pink-30ml.png",
   },
   bestSeller    : false,
   newArrival    : false,
