@@ -117,7 +117,7 @@ export const bloomInspired: FragranceKnowledge = {
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["alien-inspired", "my-way-inspired"],
+    alternatives:     ["alien-inspired", "my-way-inspired", "dolce-inspired"],
     wardrobePartners: ["delina-inspired"],
   },
 };

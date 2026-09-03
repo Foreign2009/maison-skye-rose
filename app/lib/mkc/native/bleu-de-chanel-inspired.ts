@@ -87,7 +87,7 @@ export const bleuDeChanelInspired: FragranceKnowledge = {
 
   // ── Relationships ─────────────────────────────────────────────────────────────
   relationships: {
-    wardrobePartners: ["miss-dior-inspired", "chance-eau-tendre-inspired", "prada-paradoxe-inspired", "good-girl-inspired", "soleil-blanc-inspired", "oud-bergamot-inspired", "la-belle-inspired", "gucci-guilty-pour-femme-inspired", "eladaria-inspired", "le-male-inspired", "burberry-london-inspired", "bvlgari-black-inspired"],
+    wardrobePartners: ["miss-dior-inspired", "chance-eau-tendre-inspired", "prada-paradoxe-inspired", "good-girl-inspired", "soleil-blanc-inspired", "oud-bergamot-inspired", "la-belle-inspired", "gucci-guilty-pour-femme-inspired", "eladaria-inspired", "le-male-inspired", "burberry-london-inspired", "bvlgari-black-inspired", "the-one-pour-homme-inspired", "azzaro-wanted-inspired", "boss-the-scent-inspired"],
     alternatives: ["l'immensite-inspired", "dior-homme-sport-inspired", "eros-flame-inspired", "gucci-guilty-pour-homme-inspired", "eros-energy-inspired", "cinque-terre-inspired", "light-blue-pour-homme-inspired", "eternity-inspired", "lacoste-blanc-inspired"],
   },
 

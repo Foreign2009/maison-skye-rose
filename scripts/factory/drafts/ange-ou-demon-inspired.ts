@@ -25,7 +25,7 @@ export const angeOuDemonInspired: FragranceKnowledge = {
   id            : "ange-ou-demon-inspired",
   slug          : "ange-ou-demon-inspired",
   brand         : "Maison Skye & Rose",
-  name          : "Ange ou Démon Inspired",
+  name          : "Ange ou Demon Inspired",
   collection    : "Rose",
   catalogVersion: "1.0",
   status        : "active",

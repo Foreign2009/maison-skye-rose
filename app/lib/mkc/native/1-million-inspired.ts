@@ -85,7 +85,7 @@ export const oneMillionInspired: FragranceKnowledge = {
 
   // ── Relationships ─────────────────────────────────────────────────────────────
   relationships: {
-    alternatives: ["azzaro-most-wanted-inspired", "amen-fantasm-inspired"],
+    alternatives: ["azzaro-most-wanted-inspired", "amen-fantasm-inspired", "boss-the-scent-inspired", "bad-boy-inspired"],
     wardrobePartners: ["lady-million-inspired"],
   },
 

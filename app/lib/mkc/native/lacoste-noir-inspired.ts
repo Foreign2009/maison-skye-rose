@@ -117,7 +117,7 @@ export const lacosteNoirInspired: FragranceKnowledge = {
   // â”€â”€ Relationships â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["sauvage-elixir-inspired", "valentino-uomo-born-in-roma-inspired"],
+    alternatives:     ["sauvage-elixir-inspired", "valentino-uomo-born-in-roma-inspired", "uomo-by-zegna-inspired"],
     wardrobePartners: ["spicebomb-extreme-inspired"],
   },
 };

@@ -138,6 +138,6 @@ export const tomFordNoirInspired: FragranceKnowledge = {
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
     alternatives:     ["prada-l'homme-inspired", "gentleman-edt-inspired", "bvlgari-black-inspired"],
-    wardrobePartners: ["spicebomb-extreme-inspired", "oud-wood-inspired"],
+    wardrobePartners: ["spicebomb-extreme-inspired", "oud-wood-inspired", "myrrh-tonka-inspired"],
   },
 };

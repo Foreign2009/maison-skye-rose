@@ -102,6 +102,6 @@ export const laVieEstBelleInspired: FragranceKnowledge = {
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
     alternatives:     ["delina-inspired", "hypnotic-poison-inspired", "bianco-latte-inspired", "devotion-inspired", "mon-guerlain-inspired", "lady-million-inspired", "la-belle-inspired"],
-    wardrobePartners: ["ultra-male-inspired", "layton-inspired", "fresh-blossom-inspired"],
+    wardrobePartners: ["ultra-male-inspired", "layton-inspired", "fresh-blossom-inspired", "daisy-inspired"],
   },
 };

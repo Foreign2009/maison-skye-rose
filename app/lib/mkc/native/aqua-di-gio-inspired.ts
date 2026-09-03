@@ -88,7 +88,7 @@ export const aquaDiGioInspired: FragranceKnowledge = {
   // ── Relationships ─────────────────────────────────────────────────────────────
   relationships: {
     evolutions: ["acqua-di-gio-profondo-inspired", "acqua-di-gio-parfum-inspired"],
-    alternatives: ["afternoon-swim-inspired", "l'immensite-inspired", "pacific-chill-inspired", "silver-mountain-water-inspired", "torino21-inspired", "bvlgari-aqua-inspired", "dior-homme-sport-inspired", "h24-herbes-vives-inspired", "leau-dissey-pour-homme-inspired", "eros-energy-inspired", "light-blue-pour-homme-inspired", "aqva-amara-inspired", "ck-one-inspired", "cool-water-inspired", "dylan-blue-inspired", "polo-blue-inspired", "bvlgari-aqva-marine-inspired"],
+    alternatives: ["afternoon-swim-inspired", "l'immensite-inspired", "pacific-chill-inspired", "silver-mountain-water-inspired", "torino21-inspired", "bvlgari-aqua-inspired", "dior-homme-sport-inspired", "h24-herbes-vives-inspired", "leau-dissey-pour-homme-inspired", "eros-energy-inspired", "light-blue-pour-homme-inspired", "aqva-amara-inspired", "ck-one-inspired", "cool-water-inspired", "dylan-blue-inspired", "polo-blue-inspired", "bvlgari-aqva-marine-inspired", "ck-everyone-inspired", "azzaro-chrome-inspired"],
     wardrobePartners: ["erba-pura-inspired", "scandal-pour-homme-inspired"],
   },
 

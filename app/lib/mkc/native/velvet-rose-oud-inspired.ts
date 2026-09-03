@@ -112,7 +112,7 @@ export const velvetRoseOudInspired: FragranceKnowledge = {
   // â”€â”€ Relationships â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["rose-oud-inspired", "oud-mood-inspired"],
+    alternatives:     ["rose-oud-inspired", "oud-mood-inspired", "les-sables-roses-inspired"],
     wardrobePartners: ["baccarat-rouge-540-inspired"],
   },
 };

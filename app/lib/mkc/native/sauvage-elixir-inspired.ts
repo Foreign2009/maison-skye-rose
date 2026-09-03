@@ -88,7 +88,7 @@ export const sauvageElixirInspired: FragranceKnowledge = {
   relationships: {
     evolutionOf: "sauvage-inspired",
     wardrobePartners: ["carlisle-inspired", "creed-green-irish-tweed-inspired", "ombre-nomade-inspired", "torino21-inspired", "eros-flame-inspired", "spicebomb-dark-leather-inspired", "tobacco-vanille-inspired", "voyage-d'hermes-inspired", "polo-black-inspired", "amen-fantasm-inspired", "egoiste-platinum-inspired", "oud-cadenza-inspired"],
-    alternatives: ["oud-for-greatness-inspired", "gris-charnel-inspired", "alien-man-inspired", "allure-homme-sport-inspired", "decision-inspired", "invictus-victory-absolu-inspired", "lacoste-noir-inspired", "phantom-inspired", "boss-bottled-elixir-inspired", "fahrenheit-inspired", "bois-pacifique-inspired", "blue-noir-inspired"],
+    alternatives: ["oud-for-greatness-inspired", "gris-charnel-inspired", "alien-man-inspired", "allure-homme-sport-inspired", "decision-inspired", "invictus-victory-absolu-inspired", "lacoste-noir-inspired", "phantom-inspired", "boss-bottled-elixir-inspired", "fahrenheit-inspired", "bois-pacifique-inspired", "blue-noir-inspired", "the-one-pour-homme-inspired", "azzaro-wanted-inspired"],
   },
 
   // ── Intelligence ─────────────────────────────────────────────────────────────

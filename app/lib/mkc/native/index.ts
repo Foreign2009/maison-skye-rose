@@ -232,6 +232,26 @@ import { dylanBluePourFemmeInspired } from "./dylan-blue-pour-femme-inspired";
 import { cherryInTheAirInspired } from "./cherry-in-the-air-inspired";
 import { chloeOriginalInspired } from "./chloe-original-inspired";
 import { gucciFloraInspired } from "./gucci-flora-inspired";
+import { earlGreyCucumberInspired } from "./earl-grey-cucumber-inspired";
+import { myrrhTonkaInspired } from "./myrrh-tonka-inspired";
+import { ckEveryoneInspired } from "./ck-everyone-inspired";
+import { greenleyInspired } from "./greenley-inspired";
+import { smokingHotInspired } from "./smoking-hot-inspired";
+import { lesSablesRosesInspired } from "./les-sables-roses-inspired";
+import { theOnePourHommeInspired } from "./the-one-pour-homme-inspired";
+import { azzaroWantedInspired } from "./azzaro-wanted-inspired";
+import { azzaroChromeInspired } from "./azzaro-chrome-inspired";
+import { bossTheScentInspired } from "./boss-the-scent-inspired";
+import { ralphsClubInspired } from "./ralph's-club-inspired";
+import { badBoyInspired } from "./bad-boy-inspired";
+import { uomoByZegnaInspired } from "./uomo-by-zegna-inspired";
+import { theOnePourFemmeInspired } from "./the-one-pour-femme-inspired";
+import { angelInspired } from "./angel-inspired";
+import { daisyInspired } from "./daisy-inspired";
+import { chanelAllureInspired } from "./chanel-allure-inspired";
+import { angeOuDemonInspired } from "./ange-ou-demon-inspired";
+import { amorAmorInspired } from "./amor-amor-inspired";
+import { dolceInspired } from "./dolce-inspired";
 
 export const nativeFragrances = new Map<string, FragranceKnowledge>([
   ["sauvage-inspired",              sauvageInspired],
@@ -456,4 +476,24 @@ export const nativeFragrances = new Map<string, FragranceKnowledge>([
   ["cherry-in-the-air-inspired", cherryInTheAirInspired],
   ["chloe-original-inspired", chloeOriginalInspired],
   ["gucci-flora-inspired", gucciFloraInspired],
+  ["earl-grey-cucumber-inspired", earlGreyCucumberInspired],
+  ["myrrh-tonka-inspired", myrrhTonkaInspired],
+  ["ck-everyone-inspired", ckEveryoneInspired],
+  ["greenley-inspired", greenleyInspired],
+  ["smoking-hot-inspired", smokingHotInspired],
+  ["les-sables-roses-inspired", lesSablesRosesInspired],
+  ["the-one-pour-homme-inspired", theOnePourHommeInspired],
+  ["azzaro-wanted-inspired", azzaroWantedInspired],
+  ["azzaro-chrome-inspired", azzaroChromeInspired],
+  ["boss-the-scent-inspired", bossTheScentInspired],
+  ["ralph's-club-inspired", ralphsClubInspired],
+  ["bad-boy-inspired", badBoyInspired],
+  ["uomo-by-zegna-inspired", uomoByZegnaInspired],
+  ["the-one-pour-femme-inspired", theOnePourFemmeInspired],
+  ["angel-inspired", angelInspired],
+  ["daisy-inspired", daisyInspired],
+  ["chanel-allure-inspired", chanelAllureInspired],
+  ["ange-ou-demon-inspired", angeOuDemonInspired],
+  ["amor-amor-inspired", amorAmorInspired],
+  ["dolce-inspired", dolceInspired],
 ]);

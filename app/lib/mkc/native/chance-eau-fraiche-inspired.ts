@@ -93,7 +93,7 @@ export const chanceEauFraicheInspired: FragranceKnowledge = {
 
   // ── Relationships ─────────────────────────────────────────────────────────────
   relationships: {
-    alternatives:     ["chance-eau-tendre-inspired", "chance-inspired", "light-blue-inspired", "omnia-green-jade-inspired", "libre-flowers-flames-florale-inspired", "dylan-purple-inspired", "fig-lotus-flower-inspired", "aqua-allegoria-rosa-verde-inspired", "clinique-happy-inspired", "dylan-blue-pour-femme-inspired"],
+    alternatives:     ["chance-eau-tendre-inspired", "chance-inspired", "light-blue-inspired", "omnia-green-jade-inspired", "libre-flowers-flames-florale-inspired", "dylan-purple-inspired", "fig-lotus-flower-inspired", "aqua-allegoria-rosa-verde-inspired", "clinique-happy-inspired", "dylan-blue-pour-femme-inspired", "daisy-inspired"],
     wardrobePartners: ["coco-mademoiselle-inspired", "poison-girl-inspired", "devotion-inspired", "scandal-inspired", "crazy-in-love-inspired"],
   },
 

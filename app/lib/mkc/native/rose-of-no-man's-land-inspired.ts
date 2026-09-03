@@ -111,7 +111,7 @@ export const roseOfNoMansLandInspired: FragranceKnowledge = {
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["delina-inspired", "chance-eau-tendre-inspired"],
+    alternatives:     ["delina-inspired", "chance-eau-tendre-inspired", "les-sables-roses-inspired"],
     wardrobePartners: ["baccarat-rouge-540-inspired", "mon-paris-inspired"],
   },
 };

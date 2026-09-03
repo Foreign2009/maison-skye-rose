@@ -108,7 +108,7 @@ export const cocoMademoiselleInspired: FragranceKnowledge = {
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["delina-inspired", "chance-inspired", "light-blue-inspired", "omnia-green-jade-inspired", "rose-n'-roses-inspired", "idole-inspired", "narciso-rodriguez-for-her-inspired", "chanel-no-5-inspired", "a-la-rose-inspired", "aqua-allegoria-rosa-verde-inspired", "clinique-happy-inspired"],
-    wardrobePartners: ["sauvage-inspired", "chance-eau-fraiche-inspired", "fresh-blossom-inspired", "my-way-ylang-inspired", "taif-rose-inspired", "gucci-flora-inspired"],
+    alternatives:     ["delina-inspired", "chance-inspired", "light-blue-inspired", "omnia-green-jade-inspired", "rose-n'-roses-inspired", "idole-inspired", "narciso-rodriguez-for-her-inspired", "chanel-no-5-inspired", "a-la-rose-inspired", "aqua-allegoria-rosa-verde-inspired", "clinique-happy-inspired", "greenley-inspired", "daisy-inspired", "chanel-allure-inspired"],
+    wardrobePartners: ["sauvage-inspired", "chance-eau-fraiche-inspired", "fresh-blossom-inspired", "my-way-ylang-inspired", "taif-rose-inspired", "gucci-flora-inspired", "angel-inspired"],
   },
 };

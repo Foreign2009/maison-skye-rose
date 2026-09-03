@@ -129,7 +129,7 @@ export const chanelNo5Inspired: FragranceKnowledge = {
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["j'adore-inspired", "miss-dior-inspired", "coco-mademoiselle-inspired"],
+    alternatives:     ["j'adore-inspired", "miss-dior-inspired", "coco-mademoiselle-inspired", "ange-ou-demon-inspired"],
     wardrobePartners: ["black-opium-inspired", "hypnotic-poison-inspired"],
   },
 };

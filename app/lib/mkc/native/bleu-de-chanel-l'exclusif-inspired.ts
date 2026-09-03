@@ -109,6 +109,6 @@ export const bleuDeChanelLexclusifInspired: FragranceKnowledge = {
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
     alternatives:     ["armani-code-parfum-inspired", "valentino-uomo-born-in-roma-inspired", "blue-noir-inspired"],
-    wardrobePartners: ["spicebomb-extreme-inspired"],
+    wardrobePartners: ["spicebomb-extreme-inspired", "smoking-hot-inspired"],
   },
 };

@@ -108,7 +108,7 @@ export const grisCharnelInspired: FragranceKnowledge = {
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["sauvage-elixir-inspired", "prada-l'homme-inspired"],
+    alternatives:     ["sauvage-elixir-inspired", "prada-l'homme-inspired", "earl-grey-cucumber-inspired"],
     wardrobePartners: ["baccarat-rouge-540-inspired", "spicebomb-extreme-inspired"],
   },
 };

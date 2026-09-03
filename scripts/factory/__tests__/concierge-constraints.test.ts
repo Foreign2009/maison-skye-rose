@@ -4942,34 +4942,34 @@ test("C6-V44 — female + narrow avoidances → gender boundary never relaxes to
 
 // ── Catalogue-wide eligibility assertions ─────────────────────────────────────
 
-test("C6-CAT-01 — catalogue total: 222 native records (STOP if different)", () => {
-  assert.equal(mkcCatalogue.length, 222,
-    `C6-CAT-01: expected 222 total native records — STOP if this fails (catalogue mutation suspected)`);
+test("C6-CAT-01 — catalogue total: 242 native records (STOP if different)", () => {
+  assert.equal(mkcCatalogue.length, 242,
+    `C6-CAT-01: expected 242 total native records — STOP if this fails (catalogue mutation suspected)`);
 });
 
-test("C6-CAT-02 — catalogue male count: 94 records", () => {
+test("C6-CAT-02 — catalogue male count: 101 records", () => {
   const count = mkcCatalogue.filter((k) => k.gender === "male").length;
-  assert.equal(count, 94, `C6-CAT-02: expected 94 male records, got ${count}`);
+  assert.equal(count, 101, `C6-CAT-02: expected 101 male records, got ${count}`);
 });
 
-test("C6-CAT-03 — catalogue female count: 89 records", () => {
+test("C6-CAT-03 — catalogue female count: 96 records", () => {
   const count = mkcCatalogue.filter((k) => k.gender === "female").length;
-  assert.equal(count, 89, `C6-CAT-03: expected 89 female records, got ${count}`);
+  assert.equal(count, 96, `C6-CAT-03: expected 96 female records, got ${count}`);
 });
 
-test("C6-CAT-04 — catalogue unisex count: 39 records", () => {
+test("C6-CAT-04 — catalogue unisex count: 45 records", () => {
   const count = mkcCatalogue.filter((k) => k.gender === "unisex").length;
-  assert.equal(count, 39, `C6-CAT-04: expected 39 unisex records, got ${count}`);
+  assert.equal(count, 45, `C6-CAT-04: expected 45 unisex records, got ${count}`);
 });
 
-test("C6-CAT-05 — male target eligible: 133 records (male + unisex)", () => {
+test("C6-CAT-05 — male target eligible: 146 records (male + unisex)", () => {
   const eligible = mkcCatalogue.filter((k) => k.gender === "male" || k.gender === "unisex").length;
-  assert.equal(eligible, 133, `C6-CAT-05: expected 133 male-eligible records, got ${eligible}`);
+  assert.equal(eligible, 146, `C6-CAT-05: expected 146 male-eligible records, got ${eligible}`);
 });
 
-test("C6-CAT-06 — female target eligible: 128 records (female + unisex)", () => {
+test("C6-CAT-06 — female target eligible: 141 records (female + unisex)", () => {
   const eligible = mkcCatalogue.filter((k) => k.gender === "female" || k.gender === "unisex").length;
-  assert.equal(eligible, 128, `C6-CAT-06: expected 128 female-eligible records, got ${eligible}`);
+  assert.equal(eligible, 141, `C6-CAT-06: expected 141 female-eligible records, got ${eligible}`);
 });
 
 test("C6-CAT-07 — male target excludes all 89 female-only records", () => {

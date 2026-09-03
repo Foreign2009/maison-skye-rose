@@ -102,7 +102,7 @@ export const alienInspired: FragranceKnowledge = {
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["baccarat-rouge-540-inspired", "bloom-inspired"],
-    wardrobePartners: ["coach-floral-inspired", "light-blue-inspired", "mon-guerlain-inspired", "twilly-d'hermes-inspired", "black-opium-over-red-inspired", "black-orchid-inspired", "angels-share-paradis-inspired", "la-nuit-tresor-inspired", "gucci-bamboo-inspired", "eden-sparkling-lychee-inspired", "my-way-nectar-inspired", "gabrielle-inspired"],
+    alternatives:     ["baccarat-rouge-540-inspired", "bloom-inspired", "ange-ou-demon-inspired", "dolce-inspired"],
+    wardrobePartners: ["coach-floral-inspired", "light-blue-inspired", "mon-guerlain-inspired", "twilly-d'hermes-inspired", "black-opium-over-red-inspired", "black-orchid-inspired", "angels-share-paradis-inspired", "la-nuit-tresor-inspired", "gucci-bamboo-inspired", "eden-sparkling-lychee-inspired", "my-way-nectar-inspired", "gabrielle-inspired", "angel-inspired"],
   },
 };

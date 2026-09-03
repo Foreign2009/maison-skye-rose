@@ -105,6 +105,6 @@ export const goodGirlInspired: FragranceKnowledge = {
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
     alternatives:     ["ultra-male-inspired", "stronger-with-you-intensely-inspired", "very-good-girl-elixir-inspired"],
-    wardrobePartners: ["bleu-de-chanel-inspired", "narciso-rouge-inspired", "attrape-reves-inspired", "dylan-blue-pour-femme-inspired"],
+    wardrobePartners: ["bleu-de-chanel-inspired", "narciso-rouge-inspired", "attrape-reves-inspired", "dylan-blue-pour-femme-inspired", "dolce-inspired"],
   },
 };
