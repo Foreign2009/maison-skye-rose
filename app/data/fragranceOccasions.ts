@@ -8,4 +8,7 @@ export const fragranceOccasions = [
   "Vacation",
   "Summer Days",
   "Winter Evenings",
+  "Casual",
+  "Formal",
+  "Travel",
 ];

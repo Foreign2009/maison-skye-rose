@@ -6723,6 +6723,108 @@ test("T-YR-08 — identical seasonal input produces deterministic result", () =>
     `T-YR-08 — non-deterministic: R1=[${slugs1}] R2=[${slugs2}]`);
 });
 
+// ── Section 23: CONCIERGE-VOCAB-P1 — Parser Vocabulary Regression ────────────
+//
+// Verifies each term added in CONCIERGE-VOCAB-P1 is correctly recognized by
+// parseIntent via resolveIntent. A failure here means the term was added to the
+// vocabulary file but the parser is not surfacing it in signals — indicating a
+// regression in matchFirst ordering or the vocabulary export itself.
+
+console.log("\n── 23. CONCIERGE-VOCAB-P1 Parser Vocabulary Regression ─────────────");
+
+// ── P1-VR-01 through P1-VR-08: New vibe terms ────────────────────────────────
+
+test("P1-VR-01 — 'warm' query extracts Warm vibe signal", () => {
+  const r = resolveIntent("something warm and cozy", {});
+  assert.equal(r.signals.vibe, "Warm",
+    `P1-VR-01: expected vibe=Warm, got vibe=${r.signals.vibe ?? "(none)"}`);
+});
+
+test("P1-VR-02 — 'bright' query extracts Bright vibe signal", () => {
+  const r = resolveIntent("something bright and energetic", {});
+  assert.equal(r.signals.vibe, "Bright",
+    `P1-VR-02: expected vibe=Bright, got vibe=${r.signals.vibe ?? "(none)"}`);
+});
+
+test("P1-VR-03 — 'magnetic' query extracts Magnetic vibe signal", () => {
+  const r = resolveIntent("a magnetic signature scent", {});
+  assert.equal(r.signals.vibe, "Magnetic",
+    `P1-VR-03: expected vibe=Magnetic, got vibe=${r.signals.vibe ?? "(none)"}`);
+});
+
+test("P1-VR-04 — 'soft' query extracts Soft vibe signal", () => {
+  const r = resolveIntent("a soft scent for morning", {});
+  assert.equal(r.signals.vibe, "Soft",
+    `P1-VR-04: expected vibe=Soft, got vibe=${r.signals.vibe ?? "(none)"}`);
+});
+
+test("P1-VR-05 — 'luminous' query extracts Luminous vibe signal", () => {
+  const r = resolveIntent("something luminous and warm", {});
+  assert.equal(r.signals.vibe, "Luminous",
+    `P1-VR-05: expected vibe=Luminous, got vibe=${r.signals.vibe ?? "(none)"} (Luminous=8 chars must precede Warm=4 chars)`);
+});
+
+test("P1-VR-06 — 'luxurious' query extracts Luxurious vibe signal", () => {
+  const r = resolveIntent("a luxurious oud experience", {});
+  assert.equal(r.signals.vibe, "Luxurious",
+    `P1-VR-06: expected vibe=Luxurious, got vibe=${r.signals.vibe ?? "(none)"}`);
+});
+
+test("P1-VR-07 — 'mature' query extracts Mature vibe signal", () => {
+  const r = resolveIntent("something for a mature gentleman", {});
+  assert.equal(r.signals.vibe, "Mature",
+    `P1-VR-07: expected vibe=Mature, got vibe=${r.signals.vibe ?? "(none)"}`);
+});
+
+test("P1-VR-08 — 'intense' query extracts Intense vibe signal", () => {
+  const r = resolveIntent("an intense fragrance", {});
+  assert.equal(r.signals.vibe, "Intense",
+    `P1-VR-08: expected vibe=Intense, got vibe=${r.signals.vibe ?? "(none)"}`);
+});
+
+// ── P1-OR-01 through P1-OR-03: New occasion terms ────────────────────────────
+
+test("P1-OR-01 — 'casual' query extracts Casual occasion signal", () => {
+  const r = resolveIntent("something casual and relaxed", {});
+  assert.equal(r.signals.occasion, "Casual",
+    `P1-OR-01: expected occasion=Casual, got occasion=${r.signals.occasion ?? "(none)"}`);
+});
+
+test("P1-OR-02 — 'formal' query extracts Formal occasion signal", () => {
+  const r = resolveIntent("something for a formal occasion", {});
+  assert.equal(r.signals.occasion, "Formal",
+    `P1-OR-02: expected occasion=Formal, got occasion=${r.signals.occasion ?? "(none)"}`);
+});
+
+test("P1-OR-03 — 'travel' query extracts Travel occasion signal", () => {
+  const r = resolveIntent("a travel friendly fragrance", {});
+  assert.equal(r.signals.occasion, "Travel",
+    `P1-OR-03: expected occasion=Travel, got occasion=${r.signals.occasion ?? "(none)"}`);
+});
+
+// ── P1-SI-01 through P1-SI-03: Substring isolation — no false positives ──────
+
+test("P1-SI-01 — 'luxurious' does not double-signal as 'Luxury'", () => {
+  // 'luxurious' contains substring 'luxuri' but NOT 'luxury' — Luxurious should win
+  const r = resolveIntent("a luxurious experience", {});
+  assert.equal(r.signals.vibe, "Luxurious",
+    `P1-SI-01: expected Luxurious (9 chars beats Luxury 6 chars), got ${r.signals.vibe ?? "(none)"}`);
+});
+
+test("P1-SI-02 — 'soft' in query does not match 'Sophisticated'", () => {
+  // 'sophisticated' does not contain 'soft' as substring — confirmed safe
+  const r = resolveIntent("a soft evening scent", {});
+  assert.equal(r.signals.vibe, "Soft",
+    `P1-SI-02: expected Soft, got ${r.signals.vibe ?? "(none)"} (Sophisticated must not false-positive on 'soft')`);
+});
+
+test("P1-SI-03 — adding Casual does not interfere with Weekend detection", () => {
+  // 'weekend' (7 chars) > 'casual' (6 chars); Weekend must win when both present
+  const r = resolveIntent("something for a casual weekend", {});
+  assert.equal(r.signals.occasion, "Weekend",
+    `P1-SI-03: expected Weekend to win over Casual (longer), got ${r.signals.occasion ?? "(none)"}`);
+});
+
 // ── Summary ───────────────────────────────────────────────────────────────────
 
 const total = passed + failed;

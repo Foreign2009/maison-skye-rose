@@ -15,6 +15,15 @@ export const fragranceVibes = [
   "Modern",
   "Wealthy",
   "Old Money",
+  // Mood, texture & appeal — aligned to MKC semantic values
+  "Warm",
+  "Bright",
+  "Magnetic",
+  "Soft",
+  "Luminous",
+  "Luxurious",
+  "Mature",
+  "Intense",
   // Rose & Elite — feminine and expressive characters
   "Feminine",
   "Sensual",
