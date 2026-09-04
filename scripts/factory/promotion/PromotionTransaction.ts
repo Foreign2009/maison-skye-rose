@@ -134,6 +134,18 @@ function rollback(backup: Backup, slug: string, symbol: string): void {
   }
 }
 
+// ── Guard helper ─────────────────────────────────────────────────────────────
+
+/**
+ * Pure guard decision: should normal promotion be blocked because a native
+ * MKC file already exists and the operator has not asserted --force?
+ *
+ * Exported for regression testing only — do not call outside PromotionTransaction.
+ */
+export function shouldBlockNativeOverwrite(nativeExists: boolean, force: boolean): boolean {
+  return !force && nativeExists;
+}
+
 // ── Main transaction ──────────────────────────────────────────────────────────
 
 export async function promoteSingle(
@@ -197,6 +209,25 @@ export async function promoteSingle(
   }
 
   const nativePath = path.join(NATIVE_DIR, `${slug}.ts`);
+
+  // ── 4.5 Native existence guard ────────────────────────────────────────────
+  // Normal promotion must never overwrite an existing native MKC record.
+  // This guard fires before any registry write, log entry, or file mutation.
+  // Use --force only when intentional native replacement is required and the
+  // draft has been fully reconciled with the existing native record.
+  if (shouldBlockNativeOverwrite(existsSync(nativePath), force)) {
+    return {
+      ...fail(
+        "native_exists",
+        `${name} already has a native MKC record ` +
+        `(${path.relative(process.cwd(), nativePath).replace(/\\/g, "/")}). ` +
+        `Normal promotion cannot overwrite an existing native record. ` +
+        `Use --force only if intentional replacement is required and ` +
+        `the draft has been fully reconciled with the native record.`,
+      ),
+      name,
+    };
+  }
 
   // ── 5. Backup ─────────────────────────────────────────────────────────────
   const backup: Backup = {

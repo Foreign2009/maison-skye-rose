@@ -31,6 +31,7 @@ export type PromotionOutcome =
   | "review_required"
   | "no_draft"
   | "already_promoted"
+  | "native_exists"
   | "validation_failed"
   | "build_failed"
   | "rolled_back"
