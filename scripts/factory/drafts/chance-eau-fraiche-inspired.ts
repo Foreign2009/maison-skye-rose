@@ -112,14 +112,9 @@ export const chanceEauFraicheInspired: FragranceKnowledge = {
   versatility   : 3,
   popularity    : 5,
 
-  // ── Relationships (not populated) ───────────────────────────────────────────
-  // Re-run the factory with an ANTHROPIC_API_KEY to generate relationship suggestions.
-  //
-  // To implement manually, add a relationships block:
-  //   relationships: {
-  //     alternatives:     [],  // slugs of comparable alternatives — must be symmetric
-  //     wardrobePartners: [],  // slugs to own alongside this — must be symmetric
-  //   },
-  //
-  // IMPORTANT: All relationship fields require reciprocal entries in referenced records.
+  // ── Relationships ───────────────────────────────────────────────────────────
+  relationships: {
+    alternatives:     ["chance-eau-tendre-inspired", "chance-inspired", "light-blue-inspired", "omnia-green-jade-inspired", "libre-flowers-flames-florale-inspired", "dylan-purple-inspired", "fig-lotus-flower-inspired", "aqua-allegoria-rosa-verde-inspired", "clinique-happy-inspired", "dylan-blue-pour-femme-inspired", "daisy-inspired"],
+    wardrobePartners: ["coco-mademoiselle-inspired", "poison-girl-inspired", "devotion-inspired", "scandal-inspired", "crazy-in-love-inspired"],
+  },
 };

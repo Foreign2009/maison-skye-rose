@@ -5940,21 +5940,23 @@ const TP_WOODY_WINTER_FEMALE = makeProfile({
   preferredGender:   { value: "female", confidence: "HIGH" },
 });
 
-// TP1: Founder T1 male Fresh+Summer → T2 "and female" pivot → retrieval stays Summer
-test("TP1 — T1 male Fresh+Summer → T2 female pivot → retrieval stays Summer only", () => {
+// TP1: Founder T1 male Fresh+Summer → T2 "and female" pivot → retrieval stays Summer/universal
+// Year-Round is a universal season (EP-CATALOGUE-QUALITY-P1): included alongside All Season.
+test("TP1 — T1 male Fresh+Summer → T2 female pivot → retrieval stays Summer/universal only", () => {
   const result = planRetrieval(
     GENERAL_INTENT, EMPTY_CONTEXT, TP_FRESH_SUMMER_FEMALE,
     undefined, undefined, null, undefined, "and female",
   );
   const offSeason = result.fragrances.filter(
-    (f) => f.season !== "Summer" && f.season !== "All Season",
+    (f) => f.season !== "Summer" && f.season !== "All Season" && f.season !== "Year-Round",
   );
   assert.equal(offSeason.length, 0,
     `TP1 FAIL — off-season fragrances in pivot result: ${offSeason.map((f) => `${f.slug}(${f.season})`).join(", ")}`);
 });
 
-// TP2: Inverse female Fresh+Summer → male pivot → retrieval stays Summer
-test("TP2 — T1 female Fresh+Summer → male pivot → retrieval stays Summer only", () => {
+// TP2: Inverse female Fresh+Summer → male pivot → retrieval stays Summer/universal
+// Year-Round is a universal season (EP-CATALOGUE-QUALITY-P1): included alongside All Season.
+test("TP2 — T1 female Fresh+Summer → male pivot → retrieval stays Summer/universal only", () => {
   const pivotProfile = makeProfile({
     preferredFamilies: { value: ["Fresh"], confidence: "HIGH" },
     preferredSeasons:  { value: ["Summer"], confidence: "HIGH" },
@@ -5965,20 +5967,21 @@ test("TP2 — T1 female Fresh+Summer → male pivot → retrieval stays Summer o
     undefined, undefined, null, undefined, "and male",
   );
   const offSeason = result.fragrances.filter(
-    (f) => f.season !== "Summer" && f.season !== "All Season",
+    (f) => f.season !== "Summer" && f.season !== "All Season" && f.season !== "Year-Round",
   );
   assert.equal(offSeason.length, 0,
     `TP2 FAIL — off-season fragrances: ${offSeason.map((f) => `${f.slug}(${f.season})`).join(", ")}`);
 });
 
-// TP3: Woody+Winter → retrieval stays Winter/AllSeason
-test("TP3 — Woody+Winter brief + female pivot → retrieval stays Winter/AllSeason only", () => {
+// TP3: Woody+Winter → retrieval stays Winter/universal
+// Year-Round is a universal season (EP-CATALOGUE-QUALITY-P1): included alongside All Season.
+test("TP3 — Woody+Winter brief + female pivot → retrieval stays Winter/universal only", () => {
   const result = planRetrieval(
     GENERAL_INTENT, EMPTY_CONTEXT, TP_WOODY_WINTER_FEMALE,
     undefined, undefined, null, undefined, "and female",
   );
   const offSeason = result.fragrances.filter(
-    (f) => f.season !== "Winter" && f.season !== "All Season",
+    (f) => f.season !== "Winter" && f.season !== "All Season" && f.season !== "Year-Round",
   );
   assert.equal(offSeason.length, 0,
     `TP3 FAIL — off-season fragrances: ${offSeason.map((f) => `${f.slug}(${f.season})`).join(", ")}`);
@@ -6581,6 +6584,143 @@ test("GP-GS-B — 'something for my husband' must not change female self-profile
   const r = extractProfile("something for my husband", GP_FEMALE_PROFILE);
   assert.equal(r.preferredGender?.value, "female",
     `GP-GS-B — gift turn should not overwrite self preferredGender; got ${r.preferredGender?.value}`);
+});
+
+// ── Section YR: Year-Round Season Semantics (EP-CATALOGUE-QUALITY-P1) ────────
+// Regression coverage for the isUniversalSeason() change in retrievalPlanner.ts.
+// "All Season" and "Year-Round" are both universal-season values; either qualifies
+// a record for any specific-season retrieval query.
+
+console.log("\n── YR: Year-Round Season Semantics (CATALOGUE-QUALITY-P1) ──────────────");
+
+test("T-YR-01 — Year-Round candidates not filtered as off-season for Summer query", () => {
+  const yearRoundFemale = mkcCatalogue.filter(
+    k => k.season === "Year-Round" && (k.gender === "female" || k.gender === "unisex"),
+  );
+  assert.ok(yearRoundFemale.length > 0, "T-YR-01 — fixture: no Year-Round female/unisex records in catalogue");
+  const profile = makeProfile({
+    preferredFamilies: { value: ["Floral"], confidence: "HIGH" },
+    preferredSeasons:  { value: ["Summer"], confidence: "HIGH" },
+    preferredGender:   { value: "female", confidence: "HIGH" },
+  });
+  const result = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "summer floral");
+  const offSeason = result.fragrances.filter(
+    f => f.season !== "Summer" && f.season !== "All Season" && f.season !== "Year-Round",
+  );
+  assert.equal(offSeason.length, 0,
+    `T-YR-01 — off-season records in Summer result: ${offSeason.map(f => `${f.slug}(${f.season})`).join(", ")}`);
+});
+
+test("T-YR-02 — Year-Round candidates not filtered as off-season for Winter query", () => {
+  const yearRoundFemale = mkcCatalogue.filter(
+    k => k.season === "Year-Round" && (k.gender === "female" || k.gender === "unisex"),
+  );
+  assert.ok(yearRoundFemale.length > 0, "T-YR-02 — fixture: no Year-Round female/unisex records");
+  const profile = makeProfile({
+    preferredFamilies: { value: ["Gourmand"], confidence: "HIGH" },
+    preferredSeasons:  { value: ["Winter"], confidence: "HIGH" },
+    preferredGender:   { value: "female", confidence: "HIGH" },
+  });
+  const result = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "winter gourmand");
+  const offSeason = result.fragrances.filter(
+    f => f.season !== "Winter" && f.season !== "All Season" && f.season !== "Year-Round",
+  );
+  assert.equal(offSeason.length, 0,
+    `T-YR-02 — off-season records in Winter result: ${offSeason.map(f => `${f.slug}(${f.season})`).join(", ")}`);
+});
+
+test("T-YR-03 — Year-Round candidates not filtered as off-season for Spring query", () => {
+  const profile = makeProfile({
+    preferredFamilies: { value: ["Floral"], confidence: "HIGH" },
+    preferredSeasons:  { value: ["Spring"], confidence: "HIGH" },
+    preferredGender:   { value: "female", confidence: "HIGH" },
+  });
+  const result = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "spring floral");
+  const offSeason = result.fragrances.filter(
+    f => f.season !== "Spring" && f.season !== "All Season" && f.season !== "Year-Round",
+  );
+  assert.equal(offSeason.length, 0,
+    `T-YR-03 — off-season records in Spring result: ${offSeason.map(f => `${f.slug}(${f.season})`).join(", ")}`);
+});
+
+test("T-YR-04 — Year-Round candidates not filtered as off-season for Autumn query", () => {
+  const profile = makeProfile({
+    preferredFamilies: { value: ["Woody"], confidence: "HIGH" },
+    preferredSeasons:  { value: ["Autumn"], confidence: "HIGH" },
+    preferredGender:   { value: "male", confidence: "HIGH" },
+  });
+  const result = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "autumn woody");
+  const offSeason = result.fragrances.filter(
+    f => f.season !== "Autumn" && f.season !== "All Season" && f.season !== "Year-Round",
+  );
+  assert.equal(offSeason.length, 0,
+    `T-YR-04 — off-season records in Autumn result: ${offSeason.map(f => `${f.slug}(${f.season})`).join(", ")}`);
+});
+
+test("T-YR-05 — All Season candidates continue to qualify for Summer (non-regression)", () => {
+  const allSeasonFemale = mkcCatalogue.filter(
+    k => k.season === "All Season" && (k.gender === "female" || k.gender === "unisex"),
+  );
+  assert.ok(allSeasonFemale.length > 0, "T-YR-05 — fixture: no All Season female/unisex records");
+  const profile = makeProfile({
+    preferredFamilies: { value: ["Floral"], confidence: "HIGH" },
+    preferredSeasons:  { value: ["Summer"], confidence: "HIGH" },
+    preferredGender:   { value: "female", confidence: "HIGH" },
+  });
+  const result = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "summer floral");
+  // All Season records must remain eligible — no regression
+  const offSeason = result.fragrances.filter(
+    f => f.season !== "Summer" && f.season !== "All Season" && f.season !== "Year-Round",
+  );
+  assert.equal(offSeason.length, 0,
+    `T-YR-05 — off-season records leaked: ${offSeason.map(f => `${f.slug}(${f.season})`).join(", ")}`);
+});
+
+test("T-YR-06 — wrong-season record does NOT become universal due to Year-Round support", () => {
+  const springOnly = mkcCatalogue.find(
+    k => k.season === "Spring" && (k.gender === "female" || k.gender === "unisex"),
+  );
+  if (!springOnly) { skip("T-YR-06 — no Spring-only fixture in catalogue"); return; }
+  const profile = makeProfile({
+    preferredFamilies: { value: ["Floral"], confidence: "HIGH" },
+    preferredSeasons:  { value: ["Winter"], confidence: "HIGH" },
+    preferredGender:   { value: "female", confidence: "HIGH" },
+  });
+  const result = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "winter floral");
+  // Spring-only records must NOT appear in a Winter seasonal result
+  const springInWinter = result.fragrances.filter(f => f.season === "Spring");
+  assert.equal(springInWinter.length, 0,
+    `T-YR-06 — Spring-only records in Winter result: ${springInWinter.map(f => `${f.slug}(${f.season})`).join(", ")}`);
+});
+
+test("T-YR-07 — gender hard constraint is enforced even when Year-Round candidates exist", () => {
+  const yearRoundFemale = mkcCatalogue.filter(k => k.season === "Year-Round" && k.gender === "female");
+  assert.ok(yearRoundFemale.length > 0, "T-YR-07 — fixture: no Year-Round female records");
+  // Male-constrained profile: Year-Round female records must not leak
+  const profile = makeProfile({
+    preferredFamilies: { value: ["Floral"], confidence: "HIGH" },
+    preferredSeasons:  { value: ["Summer"], confidence: "HIGH" },
+    preferredGender:   { value: "male", confidence: "HIGH" },
+  });
+  const result = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "summer floral for me");
+  const females = result.fragrances.filter(f => f.gender === "female");
+  assert.equal(females.length, 0,
+    `T-YR-07 — female Year-Round candidates leaked under male constraint: ${females.map(f => `${f.slug}(${f.season})`).join(", ")}`);
+});
+
+test("T-YR-08 — identical seasonal input produces deterministic result", () => {
+  const profile = makeProfile({
+    preferredFamilies: { value: ["Floral"], confidence: "HIGH" },
+    preferredSeasons:  { value: ["Summer"], confidence: "HIGH" },
+    preferredGender:   { value: "female", confidence: "HIGH" },
+  });
+  const msg = "summer florals please";
+  const r1 = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, msg);
+  const r2 = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, msg);
+  const slugs1 = r1.fragrances.map(f => f.slug).join(",");
+  const slugs2 = r2.fragrances.map(f => f.slug).join(",");
+  assert.equal(slugs1, slugs2,
+    `T-YR-08 — non-deterministic: R1=[${slugs1}] R2=[${slugs2}]`);
 });
 
 // ── Summary ───────────────────────────────────────────────────────────────────

@@ -100,20 +100,15 @@ export const devotionInspired: FragranceKnowledge = {
   // ── Intelligence ────────────────────────────────────────────────────────────
   // Approximated from profile + season. Calibrated by Intelligence Producer in P2.
   sweetness     : 4,
-  freshness     : 5,
+  freshness     : 3,
   warmth        : 4,
   intensity     : 4,
   versatility   : 2,
   popularity    : 5,
 
-  // ── Relationships (not populated) ───────────────────────────────────────────
-  // Re-run the factory with an ANTHROPIC_API_KEY to generate relationship suggestions.
-  //
-  // To implement manually, add a relationships block:
-  //   relationships: {
-  //     alternatives:     [],  // slugs of comparable alternatives — must be symmetric
-  //     wardrobePartners: [],  // slugs to own alongside this — must be symmetric
-  //   },
-  //
-  // IMPORTANT: All relationship fields require reciprocal entries in referenced records.
+  // ── Relationships ───────────────────────────────────────────────────────────
+  relationships: {
+    alternatives:     ["bianco-latte-inspired", "la-vie-est-belle-inspired"],
+    wardrobePartners: ["chance-eau-fraiche-inspired", "delina-inspired"],
+  },
 };

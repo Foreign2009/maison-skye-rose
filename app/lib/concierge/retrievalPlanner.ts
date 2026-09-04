@@ -153,6 +153,13 @@ function getIntelligenceScore(k: FragranceKnowledge, dimension: string): number 
   return typeof val === "number" ? val : null;
 }
 
+// ── Season semantics helper ────────────────────────────────────────────────────
+// "All Season" and "Year-Round" both mean universally suitable; either value
+// qualifies a record for any specific-season retrieval query.
+function isUniversalSeason(season: string): boolean {
+  return season === "All Season" || season === "Year-Round";
+}
+
 // ── Quality-aware sort (EP25-P3) ───────────────────────────────────────────────
 // Bestseller priority is preserved. Knowledge quality breaks ties before
 // popularity, biasing the context window toward knowledge-rich records.
@@ -633,7 +640,7 @@ export function planRetrieval(
       const avoidedForSeasonal = (profile?.avoidedFamilies?.value ?? []).map((f) => f.toLowerCase());
       fragrances = mkcCatalogue
         .filter((k) => {
-          if (k.season !== season && k.season !== "All Season") return false;
+          if (k.season !== season && !isUniversalSeason(k.season)) return false;
           if (genderForSeasonal && k.gender !== genderForSeasonal && k.gender !== "unisex") return false;
           if (avoidedForSeasonal.some((af) =>
             k.family.some((f) => f.toLowerCase().includes(af) || af.includes(f.toLowerCase()))
@@ -801,7 +808,7 @@ export function planRetrieval(
           const avoidedForBrief = (profile?.avoidedFamilies?.value ?? []).map((f) => f.toLowerCase());
           fragrances = mkcCatalogue
             .filter((k) => {
-              if (k.season !== briefSeason && k.season !== "All Season") return false;
+              if (k.season !== briefSeason && !isUniversalSeason(k.season)) return false;
               if (genderForBrief && k.gender !== genderForBrief && k.gender !== "unisex") return false;
               if (avoidedForBrief.some((af) =>
                 k.family.some((f) => f.toLowerCase().includes(af) || af.includes(f.toLowerCase()))

@@ -217,15 +217,15 @@
       "validationStatus": "PASS",
       "status": "needs_regeneration",
       "addedAt": "2026-07-13T18:44:40.004Z",
-      "reviewStartedAt": null,
-      "decidedAt": "2026-07-13T18:52:54.760Z",
-      "reviewer": "Adi",
+      "reviewStartedAt": "2026-09-03T20:00:22.135Z",
+      "decidedAt": "2026-09-04T17:01:39.187Z",
+      "reviewer": "system",
       "notes": [],
       "decision": {
         "decision": "needs_regeneration",
-        "reviewer": "Adi",
-        "timestamp": "2026-07-13T18:52:54.760Z",
-        "reason": "Missing relationships block â€” factory left alternatives and wardrobePartners empty"
+        "reviewer": "system",
+        "timestamp": "2026-09-04T17:01:39.186Z",
+        "reason": "LEGACY_NATIVE_GOVERNANCE: draft is factory-generated v0.5.0 against existing native; notes/profile/season/intelligence diverge materially from calibrated native. Draft unsafe for re-promotion. Native is healthy; only draft governance requires correction."
       }
     },
     {
@@ -346,15 +346,15 @@
       "validationStatus": "PASS",
       "status": "needs_regeneration",
       "addedAt": "2026-07-13T18:44:40.016Z",
-      "reviewStartedAt": null,
-      "decidedAt": "2026-07-13T18:52:57.352Z",
-      "reviewer": "Adi",
+      "reviewStartedAt": "2026-09-03T20:00:24.613Z",
+      "decidedAt": "2026-09-04T17:01:51.236Z",
+      "reviewer": "system",
       "notes": [],
       "decision": {
         "decision": "needs_regeneration",
-        "reviewer": "Adi",
-        "timestamp": "2026-07-13T18:52:57.351Z",
-        "reason": "Missing relationships block â€” factory left alternatives and wardrobePartners empty"
+        "reviewer": "system",
+        "timestamp": "2026-09-04T17:01:51.234Z",
+        "reason": "LEGACY_NATIVE_GOVERNANCE: draft is factory-generated v0.5.0 against existing native; notes are entirely different from calibrated native (grapefruit/yuzu/jasmine sambac vs citron/bergamot/hyacinth/freesia/cedar/vetiver). Draft unsafe for re-promotion. Native is healthy."
       }
     },
     {
@@ -484,15 +484,15 @@
       "validationStatus": "PASS",
       "status": "needs_regeneration",
       "addedAt": "2026-07-13T18:44:40.029Z",
-      "reviewStartedAt": null,
-      "decidedAt": "2026-07-13T18:52:59.799Z",
-      "reviewer": "Adi",
+      "reviewStartedAt": "2026-09-03T20:00:29.490Z",
+      "decidedAt": "2026-09-04T17:02:12.532Z",
+      "reviewer": "system",
       "notes": [],
       "decision": {
         "decision": "needs_regeneration",
-        "reviewer": "Adi",
-        "timestamp": "2026-07-13T18:52:59.799Z",
-        "reason": "Missing relationships block; freshness:5 inconsistent with Winter Vanilla Citrus + Rum profile"
+        "reviewer": "system",
+        "timestamp": "2026-09-04T17:02:12.531Z",
+        "reason": "LEGACY_NATIVE_GOVERNANCE: draft is factory-generated v0.5.0 against existing native; 4 intelligence fields diverge from calibrated native (warmth 4 vs 3, intensity 4 vs 3, versatility 2 vs 4, popularity 5 vs 6). P1 corrected freshness only. Draft unsafe for re-promotion. Native is healthy."
       }
     },
     {
@@ -737,15 +737,15 @@
       "validationStatus": "PASS",
       "status": "needs_regeneration",
       "addedAt": "2026-07-13T18:44:40.051Z",
-      "reviewStartedAt": null,
-      "decidedAt": "2026-07-13T18:53:02.143Z",
-      "reviewer": "Adi",
+      "reviewStartedAt": "2026-09-03T20:00:27.039Z",
+      "decidedAt": "2026-09-04T17:02:01.825Z",
+      "reviewer": "system",
       "notes": [],
       "decision": {
         "decision": "needs_regeneration",
-        "reviewer": "Adi",
-        "timestamp": "2026-07-13T18:53:02.139Z",
-        "reason": "Missing relationships block â€” factory left alternatives and wardrobePartners empty"
+        "reviewer": "system",
+        "timestamp": "2026-09-04T17:02:01.824Z",
+        "reason": "LEGACY_NATIVE_GOVERNANCE: draft is factory-generated v0.5.0 against existing native; notes are entirely different from calibrated native (vanilla/bergamot/pink pepper top vs bitter almond/plum/apricot; projection moderate vs strong; warmth 2 vs 4). Draft unsafe for re-promotion. Native is healthy."
       }
     },
     {

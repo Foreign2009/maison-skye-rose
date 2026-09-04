@@ -107,14 +107,9 @@ export const biancoLatteInspired: FragranceKnowledge = {
   versatility   : 2,
   popularity    : 10,
 
-  // ── Relationships (not populated) ───────────────────────────────────────────
-  // Re-run the factory with an ANTHROPIC_API_KEY to generate relationship suggestions.
-  //
-  // To implement manually, add a relationships block:
-  //   relationships: {
-  //     alternatives:     [],  // slugs of comparable alternatives — must be symmetric
-  //     wardrobePartners: [],  // slugs to own alongside this — must be symmetric
-  //   },
-  //
-  // IMPORTANT: All relationship fields require reciprocal entries in referenced records.
+  // ── Relationships ───────────────────────────────────────────────────────────
+  relationships: {
+    alternatives:     ["love-don't-be-shy-inspired", "la-vie-est-belle-inspired", "devotion-inspired", "attrape-reves-inspired"],
+    wardrobePartners: ["delina-inspired"],
+  },
 };

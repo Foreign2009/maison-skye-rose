@@ -106,14 +106,9 @@ export const hypnoticPoisonInspired: FragranceKnowledge = {
   versatility   : 2,
   popularity    : 10,
 
-  // ── Relationships (not populated) ───────────────────────────────────────────
-  // Re-run the factory with an ANTHROPIC_API_KEY to generate relationship suggestions.
-  //
-  // To implement manually, add a relationships block:
-  //   relationships: {
-  //     alternatives:     [],  // slugs of comparable alternatives — must be symmetric
-  //     wardrobePartners: [],  // slugs to own alongside this — must be symmetric
-  //   },
-  //
-  // IMPORTANT: All relationship fields require reciprocal entries in referenced records.
+  // ── Relationships ───────────────────────────────────────────────────────────
+  relationships: {
+    alternatives:     ["black-opium-inspired", "delina-exclusif-inspired", "la-vie-est-belle-inspired", "love-don't-be-shy-inspired", "poison-girl-inspired", "black-opium-over-red-inspired", "khamrah-inspired", "very-good-girl-elixir-inspired", "dark-vanilla-inspired", "changing-constance-inspired", "angel-inspired"],
+    wardrobePartners: ["delina-inspired", "baccarat-rouge-540-inspired", "gucci-bamboo-inspired", "eden-sparkling-lychee-inspired", "chanel-no-5-inspired", "creed-delphinus-inspired", "ange-ou-demon-inspired"],
+  },
 };

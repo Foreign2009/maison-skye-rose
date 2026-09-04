@@ -4923,6 +4923,118 @@
       "slug": "dolce-inspired",
       "reviewer": "Founder",
       "details": "promotionId:ZPeEB2cpYqiG  nativePath:app/lib/mkc/native/dolce-inspired.ts"
+    },
+    {
+      "timestamp": "2026-09-03T19:59:56.225Z",
+      "action": "reset_to_pending",
+      "slug": "bianco-latte-inspired",
+      "reviewer": "system",
+      "details": "Queued for re-review after regeneration"
+    },
+    {
+      "timestamp": "2026-09-03T20:00:06.274Z",
+      "action": "reset_to_pending",
+      "slug": "chance-eau-fraiche-inspired",
+      "reviewer": "system",
+      "details": "Queued for re-review after regeneration"
+    },
+    {
+      "timestamp": "2026-09-03T20:00:08.724Z",
+      "action": "reset_to_pending",
+      "slug": "hypnotic-poison-inspired",
+      "reviewer": "system",
+      "details": "Queued for re-review after regeneration"
+    },
+    {
+      "timestamp": "2026-09-03T20:00:11.137Z",
+      "action": "reset_to_pending",
+      "slug": "devotion-inspired",
+      "reviewer": "system",
+      "details": "Queued for re-review after regeneration"
+    },
+    {
+      "timestamp": "2026-09-03T20:00:22.145Z",
+      "action": "review_started",
+      "slug": "bianco-latte-inspired",
+      "reviewer": "Adi",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-09-03T20:00:24.621Z",
+      "action": "review_started",
+      "slug": "chance-eau-fraiche-inspired",
+      "reviewer": "Adi",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-09-03T20:00:27.049Z",
+      "action": "review_started",
+      "slug": "hypnotic-poison-inspired",
+      "reviewer": "Adi",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-09-03T20:00:29.498Z",
+      "action": "review_started",
+      "slug": "devotion-inspired",
+      "reviewer": "Adi",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-09-03T20:00:39.754Z",
+      "action": "approved",
+      "slug": "bianco-latte-inspired",
+      "reviewer": "Adi",
+      "details": "Relationships added deterministically from native record via RelationshipSynchronizer output. No content invented. Original complaint resolved."
+    },
+    {
+      "timestamp": "2026-09-03T20:00:50.883Z",
+      "action": "approved",
+      "slug": "chance-eau-fraiche-inspired",
+      "reviewer": "Adi",
+      "details": "Relationships added deterministically from native record via RelationshipSynchronizer output. No content invented. Original complaint resolved."
+    },
+    {
+      "timestamp": "2026-09-03T20:00:53.951Z",
+      "action": "approved",
+      "slug": "hypnotic-poison-inspired",
+      "reviewer": "Adi",
+      "details": "Relationships added deterministically from native record via RelationshipSynchronizer output. No content invented. Original complaint resolved."
+    },
+    {
+      "timestamp": "2026-09-03T20:00:56.406Z",
+      "action": "approved",
+      "slug": "devotion-inspired",
+      "reviewer": "Adi",
+      "details": "freshness corrected from 5 to 3 matching native. Relationships added deterministically from native record. warmth divergence is acknowledged but was not the complaint subject."
+    },
+    {
+      "timestamp": "2026-09-04T17:01:39.195Z",
+      "action": "needs_regeneration",
+      "slug": "bianco-latte-inspired",
+      "reviewer": "system",
+      "details": "LEGACY_NATIVE_GOVERNANCE: draft is factory-generated v0.5.0 against existing native; notes/profile/season/intelligence diverge materially from calibrated native. Draft unsafe for re-promotion. Native is healthy; only draft governance requires correction."
+    },
+    {
+      "timestamp": "2026-09-04T17:01:51.247Z",
+      "action": "needs_regeneration",
+      "slug": "chance-eau-fraiche-inspired",
+      "reviewer": "system",
+      "details": "LEGACY_NATIVE_GOVERNANCE: draft is factory-generated v0.5.0 against existing native; notes are entirely different from calibrated native (grapefruit/yuzu/jasmine sambac vs citron/bergamot/hyacinth/freesia/cedar/vetiver). Draft unsafe for re-promotion. Native is healthy."
+    },
+    {
+      "timestamp": "2026-09-04T17:02:01.833Z",
+      "action": "needs_regeneration",
+      "slug": "hypnotic-poison-inspired",
+      "reviewer": "system",
+      "details": "LEGACY_NATIVE_GOVERNANCE: draft is factory-generated v0.5.0 against existing native; notes are entirely different from calibrated native (vanilla/bergamot/pink pepper top vs bitter almond/plum/apricot; projection moderate vs strong; warmth 2 vs 4). Draft unsafe for re-promotion. Native is healthy."
+    },
+    {
+      "timestamp": "2026-09-04T17:02:12.540Z",
+      "action": "needs_regeneration",
+      "slug": "devotion-inspired",
+      "reviewer": "system",
+      "details": "LEGACY_NATIVE_GOVERNANCE: draft is factory-generated v0.5.0 against existing native; 4 intelligence fields diverge from calibrated native (warmth 4 vs 3, intensity 4 vs 3, versatility 2 vs 4, popularity 5 vs 6). P1 corrected freshness only. Draft unsafe for re-promotion. Native is healthy."
     }
   ]
 }
