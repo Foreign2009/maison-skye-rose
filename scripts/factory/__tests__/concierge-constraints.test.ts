@@ -1032,26 +1032,31 @@ test("T-C2-23 — 3-turn male session: turn 3 still produces candidates", () => 
 
 // ── Group F: Minimum guarantee safety net ─────────────────────────────────────
 
-test("T-C2-24 — male + occasion signal: ≥3 candidates including minimum guarantee", () => {
+test("T-C2-24 — male + occasion signal: ≥3 candidates with hard occasion constraint (canonical occasion)", () => {
+  // Uses canonical occasion "Formal" (27 male-eligible records). The hard occasion
+  // constraint introduced in CONCIERGE-OCCASION-SIGNALS-P1-R4 means non-canonical
+  // occasion values (which cannot be produced by the intentParser) filter everything out.
+  // Production flow always yields canonical occasions via parseIntent.
   const profile = makeProfile({ preferredGender: { value: "male", confidence: "HIGH" } });
-  const intent: ResolvedIntent = { intent: "occasion_search", signals: { occasion: "evening event" }, entitySlug: undefined, compareSlug: [] };
-  const result = planRetrieval(intent, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "something for an evening event");
+  const intent: ResolvedIntent = { intent: "occasion_search", signals: { occasion: "Formal" }, entitySlug: undefined, compareSlug: [] };
+  const result = planRetrieval(intent, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "something formal for men");
   const females = result.fragrances.filter(f => f.gender === "female");
   assert.ok(result.fragrances.length >= 3,
-    `T-C2-24 — expected ≥3 candidates for male evening intent, got ${result.fragrances.length}`);
+    `T-C2-24 — expected ≥3 candidates for male Formal intent, got ${result.fragrances.length}`);
   assert.equal(females.length, 0,
-    `T-C2-24 — female candidates in male occasion result: ${females.map(f => f.slug).join(", ")}`);
+    `T-C2-24 — female candidates in male Formal result: ${females.map(f => f.slug).join(", ")}`);
 });
 
-test("T-C2-25 — female + occasion signal: ≥3 candidates including minimum guarantee", () => {
+test("T-C2-25 — female + occasion signal: ≥3 candidates with hard occasion constraint (canonical occasion)", () => {
+  // Uses canonical occasion "Evening" (86 female-eligible records).
   const profile = makeProfile({ preferredGender: { value: "female", confidence: "HIGH" } });
-  const intent: ResolvedIntent = { intent: "occasion_search", signals: { occasion: "summer outdoor" }, entitySlug: undefined, compareSlug: [] };
-  const result = planRetrieval(intent, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "something for a summer event");
+  const intent: ResolvedIntent = { intent: "occasion_search", signals: { occasion: "Evening" }, entitySlug: undefined, compareSlug: [] };
+  const result = planRetrieval(intent, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "something for a female evening");
   const males = result.fragrances.filter(f => f.gender === "male");
   assert.ok(result.fragrances.length >= 3,
-    `T-C2-25 — expected ≥3 candidates for female occasion intent, got ${result.fragrances.length}`);
+    `T-C2-25 — expected ≥3 candidates for female Evening intent, got ${result.fragrances.length}`);
   assert.equal(males.length, 0,
-    `T-C2-25 — male candidates in female occasion result: ${males.map(f => f.slug).join(", ")}`);
+    `T-C2-25 — male candidates in female Evening result: ${males.map(f => f.slug).join(", ")}`);
 });
 
 test("T-C2-26 — no gender constraint: retrieval returns candidates without restriction", () => {
@@ -7159,6 +7164,391 @@ test("P1-ST-02 — similar_to explicit: source NOT in excludeSlugs IS re-added a
     "P1-ST-02: source must be in results when not excluded");
   assert.equal(result.fragrances.findIndex(f => f.slug === "y-inspired"), 0,
     "P1-ST-02: source must be at pos 0 when not excluded (source re-add behavior preserved)");
+});
+
+// ── Section: OS-P1 — Compound Occasion Retrieval (CONCIERGE-OCCASION-SIGNALS-P1) ────
+
+console.log("\n── OS-P1: Compound Occasion Retrieval ────────────────────────────");
+
+test("OS-P1-01 — 'intense evening' routes to occasion_search with vibe=Intense and occasion=Evening parsed", () => {
+  const r = resolveIntent("an intense evening fragrance", {});
+  assert.equal(r.intent, "occasion_search",
+    `OS-P1-01: expected occasion_search, got ${r.intent}`);
+  assert.equal(r.signals.vibe, "Intense",
+    `OS-P1-01: expected vibe=Intense, got ${r.signals.vibe ?? "(none)"}`);
+  assert.equal(r.signals.occasion, "Evening",
+    `OS-P1-01: expected occasion=Evening, got ${r.signals.occasion ?? "(none)"}`);
+});
+
+test("OS-P1-02 — 'intense evening' compound query surfaces ≥1 Intense+Evening candidate", () => {
+  const r = resolveIntent("an intense evening fragrance", {});
+  const result = planRetrieval(r, EMPTY_CONTEXT, undefined, undefined, undefined, null, undefined, "an intense evening fragrance");
+  const intensePlusEvening = result.fragrances.filter(f =>
+    f.vibe.includes("Intense") && f.occasions.includes("Evening")
+  );
+  assert.ok(intensePlusEvening.length >= 1,
+    `OS-P1-02: expected ≥1 Intense+Evening candidate, got 0. Top: [${result.fragrances.slice(0,3).map(f=>f.slug).join(", ")}]`);
+});
+
+test("OS-P1-03 — pure occasion 'an evening fragrance' retains valid occasion_search behavior", () => {
+  const r = resolveIntent("an evening fragrance", {});
+  assert.equal(r.intent, "occasion_search",
+    `OS-P1-03: expected occasion_search, got ${r.intent}`);
+  assert.equal(r.signals.occasion, "Evening",
+    `OS-P1-03: expected occasion=Evening, got ${r.signals.occasion ?? "(none)"}`);
+  assert.equal(r.signals.vibe, undefined,
+    `OS-P1-03: pure occasion must not parse a vibe, got ${r.signals.vibe}`);
+  const result = planRetrieval(r, EMPTY_CONTEXT, undefined, undefined, undefined, null, undefined, "an evening fragrance");
+  assert.ok(result.fragrances.length >= 1,
+    "OS-P1-03: pure occasion query must return candidates");
+  const withEvening = result.fragrances.filter(f => f.occasions.includes("Evening"));
+  assert.ok(withEvening.length >= 1,
+    "OS-P1-03: returned candidates must include Evening occasion records");
+});
+
+test("OS-P1-04 — pure occasion query returns only Evening-tagged candidates (backward compat)", () => {
+  const r = resolveIntent("an evening fragrance", {});
+  const result = planRetrieval(r, EMPTY_CONTEXT, undefined, undefined, undefined, null, undefined, "an evening fragrance");
+  const allEvening = result.fragrances.every(f => f.occasions.includes("Evening"));
+  assert.ok(allEvening,
+    `OS-P1-04: all candidates must be Evening-tagged for pure occasion query. Non-evening: [${result.fragrances.filter(f=>!f.occasions.includes("Evening")).map(f=>f.slug).join(", ")}]`);
+});
+
+test("OS-P1-05 — compound vibe+occasion 'warm evening' returns candidates from occasion_search", () => {
+  const r = resolveIntent("a warm evening fragrance", {});
+  assert.equal(r.intent, "occasion_search",
+    `OS-P1-05: expected occasion_search, got ${r.intent}`);
+  assert.equal(r.signals.vibe, "Warm",
+    `OS-P1-05: expected vibe=Warm, got ${r.signals.vibe ?? "(none)"}`);
+  assert.equal(r.signals.occasion, "Evening",
+    `OS-P1-05: expected occasion=Evening, got ${r.signals.occasion ?? "(none)"}`);
+  const result = planRetrieval(r, EMPTY_CONTEXT, undefined, undefined, undefined, null, undefined, "a warm evening fragrance");
+  assert.ok(result.fragrances.length >= 1,
+    "OS-P1-05: compound vibe+occasion query must return candidates");
+  const allEvening = result.fragrances.every(f => f.occasions.includes("Evening"));
+  assert.ok(allEvening,
+    "OS-P1-05: all candidates must be Evening-tagged even with secondary vibe signal");
+});
+
+test("OS-P1-06 — compound family+occasion 'floral evening' surfaces ≥1 Floral candidate", () => {
+  const r = resolveIntent("a floral evening fragrance", {});
+  assert.equal(r.intent, "occasion_search",
+    `OS-P1-06: expected occasion_search, got ${r.intent}`);
+  assert.equal(r.signals.family, "Floral",
+    `OS-P1-06: expected family=Floral, got ${r.signals.family ?? "(none)"}`);
+  assert.equal(r.signals.occasion, "Evening",
+    `OS-P1-06: expected occasion=Evening, got ${r.signals.occasion ?? "(none)"}`);
+  const result = planRetrieval(r, EMPTY_CONTEXT, undefined, undefined, undefined, null, undefined, "a floral evening fragrance");
+  const floralCandidates = result.fragrances.filter(f => f.family.includes("Floral"));
+  assert.ok(floralCandidates.length >= 1,
+    `OS-P1-06: compound family+occasion must surface ≥1 Floral candidate. Got: [${result.fragrances.map(f=>`${f.slug}(${f.family.join("/")})`).join(", ")}]`);
+});
+
+test("OS-P1-07 — male hard constraint preserved: compound occasion_search returns no female-only records", () => {
+  const r = resolveIntent("an intense evening fragrance", {});
+  const profile = makeProfile({ preferredGender: { value: "male", confidence: "HIGH" } });
+  const result = planRetrieval(r, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "an intense evening fragrance");
+  const femaleOnly = result.fragrances.filter(f => f.gender === "female");
+  assert.equal(femaleOnly.length, 0,
+    `OS-P1-07: male profile must exclude female-only records. Found: [${femaleOnly.map(f=>f.slug).join(", ")}]`);
+  assert.ok(result.fragrances.length >= 1,
+    "OS-P1-07: male-constrained compound query must still return candidates");
+});
+
+test("OS-P1-08 — gender+vibe+occasion: 'intense evening for men' returns male/unisex only", () => {
+  const r = resolveIntent("an intense evening fragrance for men", {});
+  const profile = makeProfile({ preferredGender: { value: "male", confidence: "HIGH" } });
+  const result = planRetrieval(r, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "an intense evening fragrance for men");
+  const females = result.fragrances.filter(f => f.gender === "female");
+  assert.equal(females.length, 0,
+    `OS-P1-08: female-only records must be excluded for male profile. Found: [${females.map(f=>f.slug).join(", ")}]`);
+  assert.ok(result.fragrances.length >= 1,
+    "OS-P1-08: male gender+vibe+occasion must return ≥1 candidate");
+});
+
+test("OS-P1-09 — no cross-gender leakage: female Intense record absent from male-constrained compound result", () => {
+  // libre-le-parfum-inspired is gender=female and carries Intense vibe + Evening occasion
+  const libreInCatalogue = mkcCatalogue.find(k => k.slug === "libre-le-parfum-inspired");
+  if (!libreInCatalogue) { skip("OS-P1-09 — libre-le-parfum-inspired not found in catalogue"); return; }
+  assert.equal(libreInCatalogue.gender, "female",
+    "OS-P1-09: fixture expects libre-le-parfum to be female");
+  const r = resolveIntent("an intense evening fragrance", {});
+  const profile = makeProfile({ preferredGender: { value: "male", confidence: "HIGH" } });
+  const result = planRetrieval(r, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "an intense evening fragrance");
+  const libreInResult = result.fragrances.some(f => f.slug === "libre-le-parfum-inspired");
+  assert.equal(libreInResult, false,
+    "OS-P1-09: female-only Intense+Evening record must not appear in male-constrained compound result");
+});
+
+test("OS-P1-10 — compound occasion_search returns ≥1 candidate (no empty-pool fallback for valid compound queries)", () => {
+  const r = resolveIntent("an intense evening fragrance", {});
+  const result = planRetrieval(r, EMPTY_CONTEXT, undefined, undefined, undefined, null, undefined, "an intense evening fragrance");
+  assert.ok(result.fragrances.length >= 1,
+    `OS-P1-10: compound occasion_search must return ≥1 candidate, got 0`);
+});
+
+test("OS-P1-11 — P1 regression: 'cozy' must not ghost-match Y entity after occasion-search change", () => {
+  const r = resolveIntent("something warm and cozy", {});
+  assert.notEqual(r.entitySlug, "y-inspired",
+    "OS-P1-11: 'cozy' must not ghost-match Y (P1 word-boundary fix must remain active post occasion-search change)");
+});
+
+test("OS-P1-12 — P1 regression: 'travel-friendly' does not route to gift after occasion-search change", () => {
+  const r = resolveIntent("a travel-friendly evening fragrance", {});
+  assert.notEqual(r.intent, "gift",
+    `OS-P1-12: 'travel-friendly' must not route to gift post occasion-search change, got ${r.intent}`);
+});
+
+test("OS-P1-13 — P1 regression: excluded similar_to source not re-added as card (P1 guard unaffected)", () => {
+  const excluded = new Set(["aventus-inspired"]);
+  const r = resolveIntent("something similar to aventus", {});
+  const result = planRetrieval(r, {}, {}, undefined, undefined, null, excluded, "something similar to aventus");
+  assert.equal(result.fragrances.some(f => f.slug === "aventus-inspired"), false,
+    "OS-P1-13: excluded similar_to source must not appear as recommendation card");
+  assert.ok(result.fragrances.length >= 1,
+    "OS-P1-13: similar_to must still return alternatives after P1 guard");
+});
+
+test("OS-P1-14 — P1 regression: anchored_refinement unaffected by occasion-search change", () => {
+  const excluded = new Set(["aventus-inspired"]);
+  const result = planRetrieval(
+    { intent: "anchored_refinement" as const, signals: {}, entitySlug: undefined, compareSlug: [] },
+    {}, { preferredGender: { value: "male", confidence: "HIGH" } },
+    undefined, undefined, null, excluded, "something lighter", "aventus-inspired"
+  );
+  assert.ok(result.fragrances.length >= 1,
+    `OS-P1-14: anchored_refinement must return candidates, got ${result.fragrances.length}`);
+  assert.equal(result.fragrances.some(f => f.slug === "aventus-inspired"), false,
+    "OS-P1-14: anchor must not appear in anchored_refinement pool");
+});
+
+test("OS-P1-15 — P1 regression: explicit similar_to entity resolution unchanged after occasion-search change", () => {
+  const r = resolveIntent("something similar to Y", {});
+  assert.equal(r.intent, "similar_to",
+    `OS-P1-15: explicit similar_to must route correctly, got ${r.intent}`);
+  assert.equal(r.entitySlug, "y-inspired",
+    `OS-P1-15: entitySlug must resolve to y-inspired, got ${r.entitySlug}`);
+  const result = planRetrieval(r, {}, {}, undefined, undefined, null, undefined, "something similar to Y");
+  assert.ok(result.fragrances.some(f => f.slug === "y-inspired"),
+    "OS-P1-15: y-inspired must appear in results when not excluded");
+  assert.equal(result.fragrances.findIndex(f => f.slug === "y-inspired"), 0,
+    "OS-P1-15: y-inspired must be at pos 0 (source re-add behavior unchanged)");
+});
+
+// ── Section: OS-P1-R4 — Exact Occasion Constraint (CONCIERGE-OCCASION-SIGNALS-P1-R4) ────
+
+console.log("\n── OS-P1-R4: Exact Occasion Constraint ──────────────────────────");
+
+test("OS-P1-16 — pure Formal: every returned record carries Formal occasion", () => {
+  const r = resolveIntent("a formal fragrance", {});
+  assert.equal(r.intent, "occasion_search", "OS-P1-16: must route to occasion_search");
+  const result = planRetrieval(r, EMPTY_CONTEXT, undefined, undefined, undefined, null, undefined, "a formal fragrance");
+  assert.ok(result.fragrances.length > 0, "OS-P1-16: must return ≥1 candidate");
+  const offFormal = result.fragrances.filter(f =>
+    !f.occasions.some(o => o.toLowerCase() === "formal")
+  );
+  assert.equal(offFormal.length, 0,
+    `OS-P1-16: off-Formal records in pure Formal result: [${offFormal.map(f => f.slug).join(", ")}]`);
+});
+
+test("OS-P1-17 — Floral + Formal: every returned record carries Formal occasion", () => {
+  const r = resolveIntent("a floral formal fragrance", {});
+  const result = planRetrieval(r, EMPTY_CONTEXT, undefined, undefined, undefined, null, undefined, "a floral formal fragrance");
+  const offFormal = result.fragrances.filter(f =>
+    !f.occasions.some(o => o.toLowerCase() === "formal")
+  );
+  assert.equal(offFormal.length, 0,
+    `OS-P1-17: off-Formal records in Floral+Formal result: [${offFormal.map(f => f.slug).join(", ")}]`);
+  const formalCount = result.fragrances.filter(f =>
+    f.occasions.some(o => o.toLowerCase() === "formal")
+  ).length;
+  assert.ok(formalCount >= 1, `OS-P1-17: must return ≥1 Formal candidate, got ${formalCount}`);
+});
+
+test("OS-P1-18 — Woody + Formal: every returned record carries Formal occasion", () => {
+  const r = resolveIntent("a woody formal fragrance", {});
+  const result = planRetrieval(r, EMPTY_CONTEXT, undefined, undefined, undefined, null, undefined, "a woody formal fragrance");
+  const offFormal = result.fragrances.filter(f =>
+    !f.occasions.some(o => o.toLowerCase() === "formal")
+  );
+  assert.equal(offFormal.length, 0,
+    `OS-P1-18: off-Formal records in Woody+Formal result: [${offFormal.map(f => f.slug).join(", ")}]`);
+});
+
+test("OS-P1-19 — Luxurious + Formal: every returned record carries Formal occasion", () => {
+  const r = resolveIntent("a luxurious formal fragrance", {});
+  const result = planRetrieval(r, EMPTY_CONTEXT, undefined, undefined, undefined, null, undefined, "a luxurious formal fragrance");
+  const offFormal = result.fragrances.filter(f =>
+    !f.occasions.some(o => o.toLowerCase() === "formal")
+  );
+  assert.equal(offFormal.length, 0,
+    `OS-P1-19: off-Formal records in Luxurious+Formal result: [${offFormal.map(f => f.slug).join(", ")}]`);
+});
+
+test("OS-P1-20 — Intense + Evening: all records carry Evening AND ≥1 carries vibe Intense", () => {
+  const r = resolveIntent("an intense evening fragrance", {});
+  const result = planRetrieval(r, EMPTY_CONTEXT, undefined, undefined, undefined, null, undefined, "an intense evening fragrance");
+  const offEvening = result.fragrances.filter(f =>
+    !f.occasions.some(o => o.toLowerCase() === "evening")
+  );
+  assert.equal(offEvening.length, 0,
+    `OS-P1-20: off-Evening records in Intense+Evening result: [${offEvening.map(f => f.slug).join(", ")}]`);
+  const intenseCandidates = result.fragrances.filter(f =>
+    f.vibe.some(v => v.toLowerCase() === "intense")
+  );
+  assert.ok(intenseCandidates.length >= 1,
+    `OS-P1-20: expected ≥1 Intense-vibe record in result, got 0. Top: [${result.fragrances.slice(0,3).map(f=>f.slug).join(", ")}]`);
+});
+
+test("OS-P1-21 — Woody + Travel: every returned record carries Travel; fewer than 5 acceptable when catalogue depth < 5", () => {
+  const r = resolveIntent("a woody travel fragrance", {});
+  const result = planRetrieval(r, EMPTY_CONTEXT, undefined, undefined, undefined, null, undefined, "a woody travel fragrance");
+  const offTravel = result.fragrances.filter(f =>
+    !f.occasions.some(o => o.toLowerCase() === "travel")
+  );
+  assert.equal(offTravel.length, 0,
+    `OS-P1-21: off-Travel records in Woody+Travel result: [${offTravel.map(f => f.slug).join(", ")}]`);
+  // Catalogue depth: 4 Woody+Travel records exist — fewer than 5 is expected and acceptable.
+  assert.ok(result.fragrances.length >= 1,
+    `OS-P1-21: expected ≥1 Travel candidate, got 0`);
+});
+
+test("OS-P1-22 — female + Travel: no off-Travel female record injected by minimum breadth; zero or poolExhausted acceptable", () => {
+  // Travel catalogue has 0 female-eligible records. Hard occasion + gender means the
+  // minimum breadth supplement also finds 0 eligible records. poolExhausted fires.
+  const profile = makeProfile({ preferredGender: { value: "female", confidence: "HIGH" } });
+  const intent: ResolvedIntent = { intent: "occasion_search", signals: { occasion: "Travel" }, entitySlug: undefined, compareSlug: [] };
+  const result = planRetrieval(intent, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "a travel fragrance for women");
+  const offTravel = result.fragrances.filter(f =>
+    !f.occasions.some(o => o.toLowerCase() === "travel")
+  );
+  assert.equal(offTravel.length, 0,
+    `OS-P1-22: off-Travel records injected into female Travel result: [${offTravel.map(f => f.slug).join(", ")}]`);
+  const femaleViolations = result.fragrances.filter(f => f.gender === "male");
+  assert.equal(femaleViolations.length, 0,
+    `OS-P1-22: male records in female-constrained result: [${femaleViolations.map(f => f.slug).join(", ")}]`);
+});
+
+test("OS-P1-23 — minimum breadth: supplement cannot reintroduce off-occasion records for occasion_search", () => {
+  // Travel × female = 0 catalogue records proves the min-breadth supplement is occasion-guarded:
+  // it cannot inject off-Travel female records merely to reach 3 cards.
+  const profile = makeProfile({ preferredGender: { value: "female", confidence: "HIGH" } });
+  const intent: ResolvedIntent = { intent: "occasion_search", signals: { occasion: "Travel" }, entitySlug: undefined, compareSlug: [] };
+  const result = planRetrieval(intent, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "travel for women");
+  // All records must carry Travel — no off-occasion supplement allowed
+  result.fragrances.forEach((f, i) => {
+    const hasTravel = f.occasions.some(o => o.toLowerCase() === "travel");
+    assert.ok(hasTravel,
+      `OS-P1-23: record at position ${i} (${f.slug}) does not carry Travel — off-occasion supplement leaked`);
+  });
+  // Minimum breadth must not have padded with unrelated female records
+  const offTravel = result.fragrances.filter(f => !f.occasions.some(o => o.toLowerCase() === "travel"));
+  assert.equal(offTravel.length, 0,
+    `OS-P1-23: ${offTravel.length} off-Travel record(s) injected by min-breadth: [${offTravel.map(f=>f.slug).join(", ")}]`);
+});
+
+test("OS-P1-24 — session broader fallback: records drawn from broader catalogue must still match occasion", () => {
+  // When all primary candidates have been seen, the session diversity broader fallback
+  // draws from mkcCatalogue. With the occasion guard this must also respect Formal.
+  const r = resolveIntent("a formal fragrance", {});
+  const turn1 = planRetrieval(r, EMPTY_CONTEXT, undefined, undefined, undefined, null, undefined, "a formal fragrance");
+  const seenAfterTurn1 = new Set(turn1.fragrances.map(f => f.slug));
+  // Run turn 2 with turn-1 records excluded — triggers session diversity
+  const turn2 = planRetrieval(r, EMPTY_CONTEXT, undefined, undefined, undefined, null, seenAfterTurn1, "a formal fragrance");
+  const offFormal = turn2.fragrances.filter(f =>
+    !f.occasions.some(o => o.toLowerCase() === "formal")
+  );
+  assert.equal(offFormal.length, 0,
+    `OS-P1-24: off-Formal records from session diversity broader fallback: [${offFormal.map(f => f.slug).join(", ")}]`);
+});
+
+test("OS-P1-25 — source re-add: off-occasion sourceKnowledge must NOT be inserted as recommendation card", () => {
+  // sauvage-inspired does not carry Formal occasion. It must not appear in Formal results
+  // even when passed as entitySlug for source re-add.
+  const intent: ResolvedIntent = {
+    intent: "occasion_search",
+    signals: { occasion: "Formal" },
+    entitySlug: "sauvage-inspired",
+    compareSlug: [],
+  };
+  const result = planRetrieval(intent, EMPTY_CONTEXT, undefined, undefined, undefined, null, undefined, "formal fragrance");
+  assert.ok(!result.fragrances.some(f => f.slug === "sauvage-inspired"),
+    "OS-P1-25: off-occasion source (sauvage-inspired, no Formal) must not be re-added as recommendation card");
+  const offFormal = result.fragrances.filter(f =>
+    !f.occasions.some(o => o.toLowerCase() === "formal")
+  );
+  assert.equal(offFormal.length, 0,
+    `OS-P1-25: off-Formal records in result despite source guard: [${offFormal.map(f => f.slug).join(", ")}]`);
+});
+
+test("OS-P1-26 — source re-add control: occasion-matching sourceKnowledge may still be inserted", () => {
+  // black-orchid-inspired carries Formal occasion. It should be eligible for source re-add.
+  const intent: ResolvedIntent = {
+    intent: "occasion_search",
+    signals: { occasion: "Formal" },
+    entitySlug: "black-orchid-inspired",
+    compareSlug: [],
+  };
+  const result = planRetrieval(intent, EMPTY_CONTEXT, undefined, undefined, undefined, null, undefined, "formal fragrance");
+  // black-orchid-inspired carries Formal → source re-add guard must not block it
+  // (it may or may not appear depending on whether it was already in the pool)
+  const allFormal = result.fragrances.every(f =>
+    f.occasions.some(o => o.toLowerCase() === "formal")
+  );
+  assert.ok(allFormal,
+    `OS-P1-26: off-Formal records in result with Formal source: [${result.fragrances.filter(f => !f.occasions.some(o => o.toLowerCase() === "formal")).map(f=>f.slug).join(", ")}]`);
+  assert.ok(result.fragrances.length >= 1, "OS-P1-26: must return ≥1 candidate");
+});
+
+test("OS-P1-27 — pure Evening remains occasion-pure", () => {
+  const r = resolveIntent("an evening fragrance", {});
+  const result = planRetrieval(r, EMPTY_CONTEXT, undefined, undefined, undefined, null, undefined, "an evening fragrance");
+  const offEvening = result.fragrances.filter(f =>
+    !f.occasions.some(o => o.toLowerCase() === "evening")
+  );
+  assert.equal(offEvening.length, 0,
+    `OS-P1-27: off-Evening records in pure Evening result: [${offEvening.map(f => f.slug).join(", ")}]`);
+  assert.ok(result.fragrances.length >= 1, "OS-P1-27: must return ≥1 Evening candidate");
+});
+
+test("OS-P1-28 — Casual compound remains occasion-pure", () => {
+  const r = resolveIntent("a bright casual fragrance", {});
+  const result = planRetrieval(r, EMPTY_CONTEXT, undefined, undefined, undefined, null, undefined, "a bright casual fragrance");
+  const offCasual = result.fragrances.filter(f =>
+    !f.occasions.some(o => o.toLowerCase() === "casual")
+  );
+  assert.equal(offCasual.length, 0,
+    `OS-P1-28: off-Casual records in Casual compound result: [${offCasual.map(f => f.slug).join(", ")}]`);
+});
+
+test("OS-P1-29 — hard gender + hard occasion: male request returns no female-only and no off-occasion records", () => {
+  const profile = makeProfile({ preferredGender: { value: "male", confidence: "HIGH" } });
+  const r = resolveIntent("an intense evening fragrance for men", {});
+  const result = planRetrieval(r, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "an intense evening fragrance for men");
+  const femaleViolations = result.fragrances.filter(f => f.gender === "female");
+  assert.equal(femaleViolations.length, 0,
+    `OS-P1-29: female-only records in male Evening result: [${femaleViolations.map(f=>f.slug).join(", ")}]`);
+  const offEvening = result.fragrances.filter(f =>
+    !f.occasions.some(o => o.toLowerCase() === "evening")
+  );
+  assert.equal(offEvening.length, 0,
+    `OS-P1-29: off-Evening records in male Evening result: [${offEvening.map(f=>f.slug).join(", ")}]`);
+  assert.ok(result.fragrances.length >= 1, "OS-P1-29: must return ≥1 male Evening candidate");
+});
+
+test("OS-P1-30 — hard gender + hard occasion: female request returns no male-only and no off-occasion records", () => {
+  const profile = makeProfile({ preferredGender: { value: "female", confidence: "HIGH" } });
+  const r = resolveIntent("a floral formal fragrance for women", {});
+  const result = planRetrieval(r, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "a floral formal fragrance for women");
+  const maleViolations = result.fragrances.filter(f => f.gender === "male");
+  assert.equal(maleViolations.length, 0,
+    `OS-P1-30: male-only records in female Formal result: [${maleViolations.map(f=>f.slug).join(", ")}]`);
+  const offFormal = result.fragrances.filter(f =>
+    !f.occasions.some(o => o.toLowerCase() === "formal")
+  );
+  assert.equal(offFormal.length, 0,
+    `OS-P1-30: off-Formal records in female Formal result: [${offFormal.map(f=>f.slug).join(", ")}]`);
+  assert.ok(result.fragrances.length >= 1, "OS-P1-30: must return ≥1 female Formal candidate");
 });
 
 // ── Summary ───────────────────────────────────────────────────────────────────

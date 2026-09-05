@@ -251,6 +251,14 @@ function makeFitComparator(
   };
 }
 
+// ── Occasion constraint helper (CONCIERGE-OCCASION-SIGNALS-P1) ──────────────
+// Exact canonical occasion equality, case-insensitive. Used to enforce the
+// occasion_search hard constraint at the primary pool and every subsequent
+// candidate injection point (min-breadth, session-diversity, source re-add).
+function matchesOccasion(k: FragranceKnowledge, occasion: string): boolean {
+  return k.occasions.some((o) => o.toLowerCase() === occasion.toLowerCase());
+}
+
 // ── Diversity controls (EP-AI-C2-R1) ─────────────────────────────────────────
 // Applied after gender filter. These functions reorder candidates — they never
 // exclude eligible records. Fit order and gender constraint are always preserved.
@@ -375,8 +383,16 @@ function articlesBySlug(slugs: (string | undefined)[]): AcademyArticle[] {
     .filter((a): a is AcademyArticle => !!a);
 }
 
-function fragrancesByQuery(rawQuery: string, limit = 5): FragranceKnowledge[] {
-  const groups = search(rawQuery, getSearchIndex());
+function fragrancesByQuery(
+  rawQuery: string,
+  limit = 5,
+  searchGroupLimit?: number,
+): FragranceKnowledge[] {
+  const groups = search(
+    rawQuery,
+    getSearchIndex(),
+    searchGroupLimit !== undefined ? { fragrance: searchGroupLimit } : undefined,
+  );
   const fragGroup = groups.find((g) => g.type === "fragrance");
   if (!fragGroup) return [];
   return fragGroup.matches
@@ -573,7 +589,24 @@ export function planRetrieval(
 
     case "occasion_search": {
       const occasion = signals.occasion ?? context.occasion ?? "";
-      fragrances = fragrancesByQuery(occasion, 5);
+      const occQuery = [occasion, signals.vibe, signals.family].filter(Boolean).join(" ");
+      const hasSecondarySignal = Boolean(signals.vibe || signals.family);
+      // Compound occasion: expand internal search pool so secondary-signal candidates
+      // (e.g. vibe=Intense) can surface past the bestseller ceiling of MAX_PER_GROUP=8.
+      // Pure occasion requests use the standard pool — hasSecondarySignal guard ensures
+      // no behavioral change for "an evening fragrance" style queries.
+      fragrances = hasSecondarySignal
+        ? fragrancesByQuery(occQuery, 20, 20)
+        : fragrancesByQuery(occQuery, 5);
+
+      // Hard occasion constraint: every recommendation from occasion_search must
+      // carry the resolved occasion. The BM25 search engine scores secondary tokens
+      // (Floral, Woody) independently of occasion membership — this filter closes
+      // that gap. Applied to both pure and compound paths. No-op for Evening
+      // (all pool members already carry Evening). Fixes Formal/sparse precision.
+      if (occasion) {
+        fragrances = fragrances.filter((f) => matchesOccasion(f, occasion));
+      }
 
       const matchedSpec = COLLECTION_SPECS.find((s) =>
         s.tags.some((t) => t.toLowerCase().includes(occasion.toLowerCase())) ||
@@ -859,6 +892,13 @@ export function planRetrieval(
     }
   }
 
+  // Resolved occasion for hard-constraint enforcement across all downstream
+  // candidate injection points (min-breadth, session-diversity, source re-add).
+  // Non-empty only when intent === "occasion_search" so guards are zero-cost
+  // for all other intents (empty string → matchesOccasion never consulted).
+  const resolvedOccasion =
+    intent === "occasion_search" ? (signals.occasion ?? context.occasion ?? "") : "";
+
   // ── Gender constraint — hard filter (EP-AI-C1 / EP-AI-C6-P1) ────────────────
   // Applied post-retrieval for ALL intents. For comparison, named entity slugs
   // retain authority (guest explicitly requested the comparison) — only
@@ -893,7 +933,11 @@ export function planRetrieval(
         .filter(
           (k) =>
             (k.gender === genderConstraint || k.gender === "unisex") &&
-            !alreadyIn.has(k.slug)
+            !alreadyIn.has(k.slug) &&
+            // occasion_search hard constraint: supplement must also carry the occasion
+            // so minimum-breadth cannot reintroduce off-occasion records. When no
+            // eligible occasion+gender records exist, poolExhausted fires instead.
+            (!resolvedOccasion || matchesOccasion(k, resolvedOccasion))
         )
         .sort(
           isHiddenGemRequest
@@ -943,12 +987,16 @@ export function planRetrieval(
       const broader = mkcCatalogue
         .filter((k) =>
           !excludeSlugs.has(k.slug) &&
-          (!genderConstraint || k.gender === genderConstraint || k.gender === "unisex")
+          (!genderConstraint || k.gender === genderConstraint || k.gender === "unisex") &&
+          // occasion_search: session-diversity draw must also respect the occasion
+          // so all-seen turns do not substitute off-occasion fresh records.
+          (!resolvedOccasion || matchesOccasion(k, resolvedOccasion))
         )
         .sort(makeFitComparator(fitSignals, profile))
         .slice(0, fragrances.length);
       if (broader.length > 0) fragrances = broader;
       // Final fallback: recycle only when constrained catalogue is itself exhausted.
+      // Recycled records are already occasion-valid (from the primary pool). Safe.
     }
   }
 
@@ -1065,6 +1113,14 @@ export function planRetrieval(
   // where accidental entity extraction triggers source re-add for a previously
   // shown fragrance — from bypassing session diversity on discovery/refinement turns.
   const sourceInSessionExcludes = !!excludeSlugs?.has(sourceKnowledge?.slug ?? "") && !sourceEntityAuthority;
+  // occasion_search: sourceKnowledge may only enter the recommendation list if
+  // it also carries the resolved occasion. sourceKnowledge remains available
+  // as informational/contextual data regardless — this guard governs card
+  // eligibility only. education and comparison entity authority is unchanged.
+  const sourceViolatesOccasion =
+    !!resolvedOccasion &&
+    !!sourceKnowledge &&
+    !matchesOccasion(sourceKnowledge, resolvedOccasion);
   if (
     sourceKnowledge &&
     !fragrances.find((f) => f.slug === sourceKnowledge.slug) &&
@@ -1072,6 +1128,7 @@ export function planRetrieval(
     !sourceViolatesFamily &&
     !sourceViolatesNotes &&
     !sourceViolatesGender &&
+    !sourceViolatesOccasion &&
     !sourceInSessionExcludes
   ) {
     fragrances = [sourceKnowledge, ...fragrances].slice(0, 6);

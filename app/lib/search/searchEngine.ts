@@ -244,7 +244,11 @@ function buildEmptyGroups(index: SearchIndex): SearchGroup[] {
 
 // ── Public API ────────────────────────────────────────────────────────────────
 
-export function search(raw: string, index: SearchIndex): SearchGroup[] {
+export function search(
+  raw: string,
+  index: SearchIndex,
+  groupLimitOverrides?: Partial<Record<string, number>>,
+): SearchGroup[] {
   const query = buildQuery(raw);
 
   if (!query.normalized) {
@@ -272,8 +276,9 @@ export function search(raw: string, index: SearchIndex): SearchGroup[] {
 
   const groups: SearchGroup[] = [];
   for (const type of TYPE_ORDER) {
-    const all     = byType.get(type) ?? [];
-    const limited = all.sort((a, b) => b.score - a.score).slice(0, MAX_PER_GROUP[type]);
+    const all        = byType.get(type) ?? [];
+    const groupLimit = groupLimitOverrides?.[type] ?? MAX_PER_GROUP[type];
+    const limited    = all.sort((a, b) => b.score - a.score).slice(0, groupLimit);
 
     if (limited.length > 0) {
       groups.push({
