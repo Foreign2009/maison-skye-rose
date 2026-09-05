@@ -1059,13 +1059,20 @@ export function planRetrieval(
     sourceKnowledge !== undefined &&
     sourceKnowledge.gender !== genderConstraint &&
     sourceKnowledge.gender !== "unisex";
+  // SESSION_AVOIDANCE: suppress re-add when the source slug has already been shown
+  // in this session (excludeSlugs), unless the intent grants explicit-reference
+  // authority (education, comparison). This prevents ghost entity matches —
+  // where accidental entity extraction triggers source re-add for a previously
+  // shown fragrance — from bypassing session diversity on discovery/refinement turns.
+  const sourceInSessionExcludes = !!excludeSlugs?.has(sourceKnowledge?.slug ?? "") && !sourceEntityAuthority;
   if (
     sourceKnowledge &&
     !fragrances.find((f) => f.slug === sourceKnowledge.slug) &&
     !rejectedSourceSlug &&
     !sourceViolatesFamily &&
     !sourceViolatesNotes &&
-    !sourceViolatesGender
+    !sourceViolatesGender &&
+    !sourceInSessionExcludes
   ) {
     fragrances = [sourceKnowledge, ...fragrances].slice(0, 6);
   }

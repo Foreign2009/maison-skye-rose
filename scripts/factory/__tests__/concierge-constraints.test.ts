@@ -6825,6 +6825,342 @@ test("P1-SI-03 — adding Casual does not interfere with Weekend detection", () 
     `P1-SI-03: expected Weekend to win over Casual (longer), got ${r.signals.occasion ?? "(none)"}`);
 });
 
+// ── CONCIERGE-RANKING-P1: Entity boundary, session exclusion & gift routing ───
+// Regression coverage for three proven software defects fixed in P1.
+// Reference: CONCIERGE-RANKING-P0 final report, items 9–13.
+
+// P1-EB-01 through P1-EB-07: Entity boundary — "Y" word-boundary guard
+// -------------------------------------------------------------------
+
+test("P1-EB-01 — 'warm and cozy' does not ghost-match Y as entity", () => {
+  const r = resolveIntent("something warm and cozy", {});
+  assert.equal(r.entitySlug, undefined,
+    `P1-EB-01: 'cozy' contains 'y' as substring — must NOT resolve Y entity, got entitySlug=${r.entitySlug}`);
+});
+
+test("P1-EB-02 — 'woody fragrance' does not ghost-match Y as entity", () => {
+  const r = resolveIntent("woody fragrance", {});
+  assert.equal(r.entitySlug, undefined,
+    `P1-EB-02: 'woody' ends with 'y' — must NOT resolve Y entity, got entitySlug=${r.entitySlug}`);
+});
+
+test("P1-EB-03 — 'daytime fragrance' does not ghost-match Y as entity", () => {
+  const r = resolveIntent("a daytime fragrance", {});
+  assert.equal(r.entitySlug, undefined,
+    `P1-EB-03: 'daytime' contains 'y' — must NOT resolve Y entity, got entitySlug=${r.entitySlug}`);
+});
+
+test("P1-EB-04 — 'spicy oriental' does not ghost-match Y as entity", () => {
+  const r = resolveIntent("a spicy oriental", {});
+  assert.equal(r.entitySlug, undefined,
+    `P1-EB-04: 'spicy' ends with 'y' — must NOT resolve Y entity, got entitySlug=${r.entitySlug}`);
+});
+
+test("P1-EB-05 — 'show me Y' still resolves legitimate Y entity", () => {
+  const r = resolveIntent("show me Y", {});
+  assert.equal(r.entitySlug, "y-inspired",
+    `P1-EB-05: explicit standalone 'Y' must resolve Y entity, got entitySlug=${r.entitySlug ?? "(none)"}`);
+});
+
+test("P1-EB-06 — 'Y fragrance' still resolves legitimate Y entity", () => {
+  const r = resolveIntent("Y fragrance", {});
+  assert.equal(r.entitySlug, "y-inspired",
+    `P1-EB-06: 'Y' as first word must resolve Y entity, got entitySlug=${r.entitySlug ?? "(none)"}`);
+});
+
+test("P1-EB-07 — 'Y Inspired' still resolves legitimate Y entity", () => {
+  const r = resolveIntent("Y Inspired is a great fragrance", {});
+  assert.equal(r.entitySlug, "y-inspired",
+    `P1-EB-07: full canonical 'Y Inspired' must resolve Y entity, got entitySlug=${r.entitySlug ?? "(none)"}`);
+});
+
+test("P1-EB-08 — 'warm and cozy' routes to general_discovery, not similar_to", () => {
+  const r = resolveIntent("something warm and cozy", {});
+  assert.notEqual(r.intent, "similar_to",
+    `P1-EB-08: ghost Y entity caused similar_to routing — after fix intent must not be similar_to, got ${r.intent}`);
+});
+
+test("P1-EB-09 — 'woody fragrance' routes to general_discovery, not similar_to", () => {
+  const r = resolveIntent("woody fragrance", {});
+  assert.notEqual(r.intent, "similar_to",
+    `P1-EB-09: ghost Y entity caused similar_to routing — after fix intent must not be similar_to, got ${r.intent}`);
+});
+
+// P1-GR-01 through P1-GR-08: Gift routing — "friend" boundary fix
+// -------------------------------------------------------------------
+
+test("P1-GR-01 — 'travel-friendly fragrance' does not route to gift due to 'friendly'", () => {
+  const r = resolveIntent("a travel-friendly fragrance", {});
+  assert.notEqual(r.intent, "gift",
+    `P1-GR-01: 'friendly' contains 'friend' as substring — must NOT route to gift, got intent=${r.intent}`);
+});
+
+test("P1-GR-02 — 'friendly and fresh' does not route to gift", () => {
+  const r = resolveIntent("something friendly and fresh", {});
+  assert.notEqual(r.intent, "gift",
+    `P1-GR-02: 'friendly' must not trigger gift intent, got intent=${r.intent}`);
+});
+
+test("P1-GR-03 — 'something for a friend' routes to gift", () => {
+  const r = resolveIntent("something for a friend", {});
+  assert.equal(r.intent, "gift",
+    `P1-GR-03: explicit 'for a friend' must route to gift, got intent=${r.intent}`);
+});
+
+test("P1-GR-04 — 'a fragrance for my friend' routes to gift", () => {
+  const r = resolveIntent("a fragrance for my friend", {});
+  assert.equal(r.intent, "gift",
+    `P1-GR-04: 'for my friend' must route to gift, got intent=${r.intent}`);
+});
+
+test("P1-GR-05 — 'gift for a friend' routes to gift", () => {
+  const r = resolveIntent("gift for a friend", {});
+  assert.equal(r.intent, "gift",
+    `P1-GR-05: 'gift for a friend' must route to gift, got intent=${r.intent}`);
+});
+
+test("P1-GR-06 — 'my friend might like this' routes to gift", () => {
+  const r = resolveIntent("my friend might like this fragrance", {});
+  assert.equal(r.intent, "gift",
+    `P1-GR-06: 'my friend' must route to gift, got intent=${r.intent}`);
+});
+
+test("P1-GR-07 — 'a friend of mine' routes to gift", () => {
+  const r = resolveIntent("a friend of mine is looking for a fragrance", {});
+  assert.equal(r.intent, "gift",
+    `P1-GR-07: 'a friend' must route to gift, got intent=${r.intent}`);
+});
+
+test("P1-GR-08 — 'travel-friendly' still extracts Travel occasion signal", () => {
+  const r = resolveIntent("a travel-friendly fragrance", {});
+  assert.equal(r.signals.occasion, "Travel",
+    `P1-GR-08: 'travel-friendly' must extract Travel occasion (not route to gift), got occasion=${r.signals.occasion ?? "(none)"}`);
+});
+
+// P1-SE-01 through P1-SE-06: Session exclusion — source re-add guard
+// -------------------------------------------------------------------
+
+test("P1-SE-01 — source re-add does not reinsert previously seen source slug", () => {
+  // Simulate: y-inspired was shown in a prior turn → in excludeSlugs.
+  // Subsequent general_discovery turn — source re-add must not bring y-inspired back to pos=0.
+  const MALE_PROFILE: ConversationProfile = { preferredGender: { value: "male", confidence: "HIGH" } };
+  const excludeSlugs = new Set(["y-inspired"]);
+  const r = resolveIntent("something warm and woody", { mentionedSlug: "y-inspired" });
+  const result = planRetrieval(r, { mentionedSlug: "y-inspired" }, MALE_PROFILE,
+    undefined, undefined, null, excludeSlugs, "something warm and woody");
+  const yPos = result.fragrances.findIndex(f => f.slug === "y-inspired");
+  assert.notEqual(yPos, 0,
+    `P1-SE-01: y-inspired is in excludeSlugs — source re-add must not place it at pos=0, got pos=${yPos}`);
+});
+
+test("P1-SE-02 — excluded source slug is not at position 0 after multi-turn ghost entity match", () => {
+  // Reproduce the P0 defect: warm and cozy query, y-inspired previously excluded
+  const MALE_PROFILE: ConversationProfile = { preferredGender: { value: "male", confidence: "HIGH" } };
+  const excludeSlugs = new Set(["y-inspired"]);
+  const r = resolveIntent("something warm and cozy", {});
+  // After Fix 1: entitySlug should be undefined → no source re-add possible
+  const result = planRetrieval(r, {}, MALE_PROFILE, undefined, undefined, null, excludeSlugs, "something warm and cozy");
+  const yAtPos0 = result.fragrances.length > 0 && result.fragrances[0].slug === "y-inspired";
+  assert.equal(yAtPos0, false,
+    `P1-SE-02: y-inspired must not be at pos=0 (either ghost entity or source re-add), got fragrances[0]=${result.fragrances[0]?.slug}`);
+});
+
+test("P1-SE-03 — comparison intent preserves entity presence regardless of excludeSlugs", () => {
+  // Comparison is an explicit-reference intent: the guest named the fragrance deliberately.
+  // Both comparison subjects must appear even if previously shown.
+  const MALE_PROFILE: ConversationProfile = { preferredGender: { value: "male", confidence: "HIGH" } };
+  const excludeSlugs = new Set(["y-inspired", "sauvage-inspired"]);
+  const r = resolveIntent("compare Y versus Sauvage", {});
+  assert.equal(r.intent, "comparison",
+    `P1-SE-03 precondition: intent must be comparison, got ${r.intent}`);
+  const result = planRetrieval(r, {}, MALE_PROFILE, undefined, undefined, null, excludeSlugs, "compare Y versus Sauvage");
+  const hasYorSauvage = result.fragrances.some(f => f.slug === "y-inspired" || f.slug === "sauvage-inspired");
+  assert.equal(hasYorSauvage, true,
+    `P1-SE-03: comparison intent must include comparison subjects regardless of excludeSlugs`);
+});
+
+test("P1-SE-04 — six-turn male session: no ghost entity repeats at position 0", () => {
+  // Reproduce the P0-confirmed multi-turn sequence. After fixes:
+  // - T1 'warm and cozy' must not create a ghost Y entity
+  // - T4 'woody fragrance' must not create a ghost Y entity
+  // Any repeat at position 0 from ghost source re-add is a regression.
+  const MALE_PROFILE: ConversationProfile = { preferredGender: { value: "male", confidence: "HIGH" } };
+  const SESSION_TURNS = [
+    "something warm and cozy",
+    "show me something different",
+    "none of those — something bolder",
+    "what about a woody fragrance instead",
+    "something more luxurious",
+    "something for a formal event",
+  ];
+  const excludeSlugs = new Set<string>();
+  const seenSlugs    = new Set<string>();
+  let ghostRepeatAtPos0 = false;
+
+  for (const msg of SESSION_TURNS) {
+    const r = resolveIntent(msg, {});
+    const result = planRetrieval(r, {}, MALE_PROFILE, undefined, undefined, null, excludeSlugs, msg);
+    if (result.fragrances.length > 0) {
+      const pos0 = result.fragrances[0].slug;
+      if (seenSlugs.has(pos0)) {
+        // A repeat at position 0 from source re-add of a ghost entity
+        // is only a regression if the intent is NOT comparison
+        if (r.intent !== "comparison") {
+          ghostRepeatAtPos0 = true;
+        }
+      }
+    }
+    for (const f of result.fragrances) {
+      seenSlugs.add(f.slug);
+      excludeSlugs.add(f.slug);
+    }
+  }
+
+  assert.equal(ghostRepeatAtPos0, false,
+    `P1-SE-04: ghost entity source re-add produced a repeat at pos=0 in the 6-turn session`);
+});
+
+// P1-NR-01 through P1-NR-06: Non-regressions — critical existing behaviors preserved
+// -------------------------------------------------------------------
+
+test("P1-NR-01 — gender hard constraint: male profile filters female-only records", () => {
+  const MALE_PROFILE: ConversationProfile = { preferredGender: { value: "male", confidence: "HIGH" } };
+  const r = resolveIntent("recommend a fragrance", {});
+  const result = planRetrieval(r, {}, MALE_PROFILE, undefined, undefined, null, undefined, "recommend a fragrance");
+  const femaleOnly = result.fragrances.filter(f => f.gender === "female");
+  assert.equal(femaleOnly.length, 0,
+    `P1-NR-01: male profile must filter female-only records, found ${femaleOnly.map(f=>f.slug).join(",")}`);
+});
+
+test("P1-NR-02 — variety request (none-of-those) hard-excludes seen records", () => {
+  const r = resolveIntent("none of those — show me something completely different", {});
+  const seenSlugs = new Set(["y-inspired", "sauvage-inspired", "aventus-inspired"]);
+  const result = planRetrieval(r, {}, undefined, undefined, undefined, null, seenSlugs, "none of those");
+  const seenInResult = result.fragrances.filter(f => seenSlugs.has(f.slug));
+  // Variety path hard-excludes seen slugs when unseen.length >= 2
+  const unseenCount = result.fragrances.filter(f => !seenSlugs.has(f.slug)).length;
+  if (unseenCount >= 2) {
+    assert.equal(seenInResult.length, 0,
+      `P1-NR-02: variety request must hard-exclude seen slugs when unseen >= 2, found seen: ${seenInResult.map(f=>f.slug).join(",")}`);
+  } else {
+    // Pool exhaustion fallback — acceptable to recycle
+    assert.ok(true, "P1-NR-02: pool exhausted — recycling is acceptable");
+  }
+});
+
+test("P1-NR-03 — explicit named fragrance 'compare Y vs Sauvage' resolves both entities", () => {
+  const r = resolveIntent("compare Y vs Sauvage", {});
+  assert.equal(r.intent, "comparison",
+    `P1-NR-03: intent must be comparison, got ${r.intent}`);
+  const hasY      = r.compareSlug.includes("y-inspired") || r.entitySlug === "y-inspired";
+  const hasSauvage = r.compareSlug.includes("sauvage-inspired") || r.entitySlug === "sauvage-inspired";
+  assert.ok(hasY,      `P1-NR-03: Y must be in compareSlug or entitySlug`);
+  assert.ok(hasSauvage, `P1-NR-03: Sauvage must be in compareSlug or entitySlug`);
+});
+
+test("P1-NR-04 — explicit named fragrance resolves correctly despite having 'y' in context", () => {
+  // Sauvage-inspired has no 'y' issue; resolving it alongside Y must not confuse entity
+  const r = resolveIntent("something similar to Sauvage", {});
+  assert.equal(r.entitySlug, "sauvage-inspired",
+    `P1-NR-04: 'Sauvage' must resolve sauvage-inspired, got ${r.entitySlug}`);
+  assert.equal(r.intent, "similar_to",
+    `P1-NR-04: must route to similar_to, got ${r.intent}`);
+});
+
+test("P1-NR-05 — Travel occasion routing preserved after gift trigger fix", () => {
+  const r = resolveIntent("something travel friendly for summer", {});
+  // Must extract Travel occasion, must NOT route to gift
+  assert.notEqual(r.intent, "gift",
+    `P1-NR-05: travel query must not route to gift after friend fix, got ${r.intent}`);
+  assert.equal(r.signals.occasion, "Travel",
+    `P1-NR-05: must extract Travel occasion, got ${r.signals.occasion ?? "(none)"}`);
+});
+
+test("P1-NR-06 — ordinal reference 'the first one' does not ghost-match any entity", () => {
+  const r = resolveIntent("I'll take the first one", {});
+  // Ordinal references contain no fragrance names — no entity should be extracted
+  assert.equal(r.entitySlug, undefined,
+    `P1-NR-06: ordinal 'first one' must not resolve an entity, got ${r.entitySlug}`);
+});
+
+// P1-AR-01 through P1-AR-02: anchored_refinement architecture (R1-6)
+// Proves P1 guard has zero adverse effect on anchored_refinement turns.
+// -------------------------------------------------------------------
+
+test("P1-AR-01 — anchored_refinement: anchor in excludeSlugs is NOT in fragrances (buildAnchoredPool)", () => {
+  // aventus-inspired was shown in a prior turn → in excludeSlugs.
+  // Guest refines from it ("something lighter") → anchored_refinement, anchorSlug=aventus-inspired.
+  // buildAnchoredPool explicitly excludes the anchor by design; P1 guard is a no-op (sourceKnowledge=undefined).
+  const excludedSet = new Set(["aventus-inspired", "bleu-de-chanel-inspired"]);
+  const resolved = resolveIntent("something lighter please", {});
+  const result = planRetrieval(
+    { intent: "anchored_refinement" as const, signals: resolved.signals, entitySlug: undefined, compareSlug: [] },
+    {},
+    { preferredGender: { value: "male", confidence: "HIGH" } },
+    undefined, undefined, null,
+    excludedSet,
+    "something lighter please",
+    "aventus-inspired"
+  );
+  assert.equal(result.fragrances.some(f => f.slug === "aventus-inspired"), false,
+    "P1-AR-01: anchor must NOT appear in fragrances — buildAnchoredPool excludes it");
+  assert.ok(result.fragrances.length >= 3,
+    `P1-AR-01: pool must have alternatives, got ${result.fragrances.length}`);
+});
+
+test("P1-AR-02 — anchored_refinement: sourceInSessionExcludes is no-op when entitySlug is undefined", () => {
+  // When the guest says "something lighter" (no fragrance name), entitySlug=undefined.
+  // sourceKnowledge=undefined → excludeSlugs.has("")=false → guard never fires.
+  // The pool still returns candidates (anchored refinement pool is non-empty).
+  const excludedSet = new Set(["aventus-inspired"]);
+  const resolved = resolveIntent("something lighter please", {});
+  const result = planRetrieval(
+    { intent: "anchored_refinement" as const, signals: resolved.signals, entitySlug: undefined, compareSlug: [] },
+    {},
+    {},
+    undefined, undefined, null,
+    excludedSet,
+    "something lighter please",
+    "aventus-inspired"
+  );
+  // Pool should be non-empty — no session context means no reorder beyond anchor exclusion
+  assert.ok(result.fragrances.length > 0,
+    `P1-AR-02: anchored pool must not be empty, got ${result.fragrances.length}`);
+  assert.equal(result.fragrances.some(f => f.slug === "aventus-inspired"), false,
+    "P1-AR-02: anchor excluded by buildAnchoredPool design, not by P1 guard");
+});
+
+// P1-ST-01 through P1-ST-02: explicit similar_to source re-add semantics (R1-6)
+// Proves SOURCE_CONTEXT_AUTHORITY preserved; RECOMMENDATION_CARD_REPEAT suppressed.
+// -------------------------------------------------------------------
+
+test("P1-ST-01 — similar_to explicit: source in excludeSlugs is NOT re-added as card (P1 guard)", () => {
+  // y-inspired was shown in T1 → in excludeSlugs.
+  // Guest says "something similar to Y" → similar_to, entitySlug=y-inspired.
+  // getSimilarFragrances(sourceKnowledge) still computes alternatives using Y's data.
+  // Source re-add block: sourceInSessionExcludes=true → Y not prepended as card.
+  const excluded = new Set(["y-inspired"]);
+  const resolved = resolveIntent("something similar to Y", {});
+  assert.equal(resolved.intent, "similar_to", `P1-ST-01: intent must be similar_to, got ${resolved.intent}`);
+  assert.equal(resolved.entitySlug, "y-inspired", `P1-ST-01: entitySlug must be y-inspired, got ${resolved.entitySlug}`);
+  const result = planRetrieval(resolved, {}, {}, undefined, undefined, null, excluded, "something similar to Y");
+  assert.equal(result.fragrances.some(f => f.slug === "y-inspired"), false,
+    "P1-ST-01: source must NOT appear as card when in excludeSlugs (RECOMMENDATION_CARD_REPEAT suppressed)");
+  assert.ok(result.fragrances.length >= 3,
+    `P1-ST-01: getSimilarFragrances must return alternatives; got ${result.fragrances.length}`);
+});
+
+test("P1-ST-02 — similar_to explicit: source NOT in excludeSlugs IS re-added at pos 0 (control)", () => {
+  // First time asking "similar to Y" — Y is not in excludeSlugs.
+  // Source re-add fires normally: sourceInSessionExcludes=false → Y prepended at pos 0.
+  const resolved = resolveIntent("something similar to Y", {});
+  const result = planRetrieval(resolved, {}, {}, undefined, undefined, null, undefined, "something similar to Y");
+  assert.equal(result.fragrances.some(f => f.slug === "y-inspired"), true,
+    "P1-ST-02: source must be in results when not excluded");
+  assert.equal(result.fragrances.findIndex(f => f.slug === "y-inspired"), 0,
+    "P1-ST-02: source must be at pos 0 when not excluded (source re-add behavior preserved)");
+});
+
 // ── Summary ───────────────────────────────────────────────────────────────────
 
 const total = passed + failed;

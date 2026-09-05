@@ -15,7 +15,9 @@ import type { IntentSignals } from "../intentParser";
 
 const COMPARISON_TRIGGERS  = [" vs ", " versus ", "compare", "difference between", "vs.", "which is better", "which one"];
 const EDUCATION_TRIGGERS   = ["what is ", "what are ", "what notes", "explain ", "teach me", "how does", "why does", "tell me about", "how do", "what makes", "what's the difference between"];
-const GIFT_TRIGGERS        = ["gift", "present", "for my ", "someone else", "for her", "for him", "for them", "buying for", "mother", "father", "partner", "friend"];
+// "friend" as a bare substring matches inside "travel-friendly"; use specific
+// phrase forms so the trigger requires the word to appear as part of gift language.
+const GIFT_TRIGGERS        = ["gift", "present", "for my ", "someone else", "for her", "for him", "for them", "buying for", "mother", "father", "partner", "for a friend", "my friend", "a friend", "friend's"];
 const SIMILAR_TRIGGERS     = ["similar to", "like ", "reminds me of", "same as", "alternatives to", "dupe for", "smells like", "something like"];
 const SEASONAL_TRIGGERS    = ["in summer", "for summer", "in winter", "for winter", "in spring", "for spring", "in autumn", "for autumn", "summer ", "winter ", "autumn ", "spring "];
 
@@ -46,6 +48,18 @@ function stripMaisonSuffix(name: string): string {
 // Apostrophes, hyphens, and other identity-significant characters are preserved.
 function normalizeInputForEntityMatch(s: string): string {
   return s.replace(/\./g, " ").replace(/\s+/g, " ").trim();
+}
+
+// Very short entity keys (≤ 2 chars, e.g. "y" from "Y Inspired") match as a plain
+// substring inside common words ("cozy", "woody") creating ghost entity matches.
+// Require a word boundary for short keys so "y" is only resolved when it appears
+// as a standalone token. Longer keys keep the existing substring check.
+function entityKeyFoundInQuery(key: string, qNorm: string): boolean {
+  if (key.length <= 2) {
+    const escaped = key.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    return new RegExp(`\\b${escaped}\\b`).test(qNorm);
+  }
+  return qNorm.includes(key);
 }
 
 function extractFragranceSlugs(q: string): string[] {
@@ -79,7 +93,7 @@ function extractFragranceSlugs(q: string): string[] {
   const matchedKeys: string[] = [];
 
   for (const { key, slug } of entries) {
-    if (!qNorm.includes(key)) continue;
+    if (!entityKeyFoundInQuery(key, qNorm)) continue;
     if (found.includes(slug)) continue;
     // Flanker safety: if a longer already-matched key starts with this key,
     // this is a prefix-overlap — skip to prevent collapsing distinct flankers.
