@@ -34,6 +34,7 @@ import type { RetrievalContext } from "../../../app/lib/concierge/contextBuilder
 import { detectRejections, NONE_OF_THOSE_SIGNALS } from "../../../app/lib/concierge/rejectionDetector";
 import { planResponse } from "../../../app/lib/concierge/responsePlanner";
 import { computeProfileCompleteness } from "../../../app/lib/concierge/profileCompletenessEngine";
+import { buildSearchIndex } from "../../../app/lib/search/indexBuilder";
 import { computeConfidenceClassifications } from "../../../app/lib/concierge/retrievalPlanner";
 import type { ConversationProfile as _CP } from "../../../app/lib/concierge/types";
 
@@ -7549,6 +7550,89 @@ test("OS-P1-30 — hard gender + hard occasion: female request returns no male-o
   assert.equal(offFormal.length, 0,
     `OS-P1-30: off-Formal records in female Formal result: [${offFormal.map(f=>f.slug).join(", ")}]`);
   assert.ok(result.fragrances.length >= 1, "OS-P1-30: must return ≥1 female Formal candidate");
+});
+
+// ── MERCHANDISING-FEATURED-P1 — Featured semantic contract ────────────────────
+
+test("FT-01 — approved featured non-BS record receives searchWeight 80", () => {
+  const idx = buildSearchIndex();
+  const APPROVED_FEATURED = [
+    "oriana-inspired", "guidance-inspired", "invictus-inspired",
+    "wood-sage-sea-salt-inspired",
+  ];
+  for (const slug of APPROVED_FEATURED) {
+    const doc = idx.documents.find((d) => d.slug === slug);
+    assert.ok(doc, `FT-01: ${slug} not found in search index`);
+    assert.equal(doc.searchWeight, 80,
+      `FT-01: ${slug} expected searchWeight 80, got ${doc.searchWeight}`);
+  }
+});
+
+test("FT-02 — bestSeller outranks featured: BS record searchWeight = 100", () => {
+  const idx = buildSearchIndex();
+  // aventus-inspired is bestSeller=true AND featured=true (pre-existing)
+  const doc = idx.documents.find((d) => d.slug === "aventus-inspired");
+  assert.ok(doc, "FT-02: aventus-inspired not in index");
+  assert.equal(doc.searchWeight, 100,
+    `FT-02: BS+featured record must use BS weight 100, got ${doc.searchWeight}`);
+});
+
+test("FT-03 — ordinary non-BS non-featured record remains below 80", () => {
+  const idx = buildSearchIndex();
+  // black-orchid-inspired: unisex, non-BS, not in SET-12, pop=5 → weight=53
+  const doc = idx.documents.find((d) => d.slug === "black-orchid-inspired");
+  assert.ok(doc, "FT-03: black-orchid-inspired not in index");
+  assert.ok((doc.searchWeight ?? 0) < 80,
+    `FT-03: non-featured non-BS must be < 80, got ${doc.searchWeight}`);
+});
+
+test("FT-04 — featured does not alter gender eligibility: female featured record excluded from male constraint", () => {
+  // oriana-inspired is featured + female — must not appear in male-constrained result
+  const profile = makeProfile({ preferredGender: { value: "male", confidence: "HIGH" } });
+  const result = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, profile,
+    undefined, undefined, null, undefined, "a sophisticated fragrance");
+  const orianaInResult = result.fragrances.find((f) => f.slug === "oriana-inspired");
+  assert.equal(orianaInResult, undefined,
+    "FT-04: female featured record (oriana) must not appear in male-constrained result");
+});
+
+test("FT-05 — featured does not alter occasion eligibility: featured record not carrying occasion must not appear in occasion_search", () => {
+  // oriana-inspired is featured but does not carry Travel occasion
+  const profile = makeProfile({ preferredGender: { value: "female", confidence: "HIGH" } });
+  const r = resolveIntent("a travel fragrance for women", {});
+  const result = planRetrieval(r, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "a travel fragrance for women");
+  const featuredOffTravel = result.fragrances.filter(
+    (f) => f.featured === true && !f.occasions.some((o) => o.toLowerCase() === "travel")
+  );
+  assert.equal(featuredOffTravel.length, 0,
+    `FT-05: featured records without Travel occasion must not appear in Travel occasion_search: [${featuredOffTravel.map(f=>f.slug).join(", ")}]`);
+});
+
+test("FT-06 — featured does not bypass session exclusion: excluded featured slug absent from result", () => {
+  // Exclude oriana-inspired via excludeSlugs — must not reappear even though featured
+  const excluded = new Set(["oriana-inspired"]);
+  const result = planRetrieval(GENERAL_INTENT, EMPTY_CONTEXT, undefined,
+    undefined, undefined, null, excluded, "a sophisticated fragrance");
+  const reappeared = result.fragrances.find((f) => f.slug === "oriana-inspired");
+  assert.equal(reappeared, undefined,
+    "FT-06: featured slug in excludeSlugs must not reappear in result");
+});
+
+test("FT-07 — featured records are excluded from hidden-gem eligible pool", () => {
+  // Hidden-gem logic: notBestSeller AND NOT featured
+  const hiddenGemEligible = mkcCatalogue.filter((k) => !k.bestSeller && !k.featured);
+  const APPROVED_FEATURED_SLUGS = [
+    "oriana-inspired","flowerbomb-inspired","libre-intense-inspired",
+    "libre-le-parfum-inspired","guidance-inspired","prada-paradoxe-inspired",
+    "armani-si-inspired","wood-sage-sea-salt-inspired","royal-oud-inspired",
+    "gris-charnel-inspired","angels-share-paradis-inspired","invictus-inspired",
+  ];
+  for (const slug of APPROVED_FEATURED_SLUGS) {
+    const inPool = hiddenGemEligible.find((k) => k.slug === slug);
+    assert.equal(inPool, undefined,
+      `FT-07: featured record ${slug} must not be in hidden-gem eligible pool`);
+  }
+  assert.ok(hiddenGemEligible.length > 0, "FT-07: hidden-gem pool must remain non-empty after SET-12");
 });
 
 // ── Summary ───────────────────────────────────────────────────────────────────

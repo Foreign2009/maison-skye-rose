@@ -63,6 +63,7 @@ export const flowerbombInspired: FragranceKnowledge = {
   },
   bestSeller    : false,
   newArrival    : false,
+  featured      : true,
 
   // ── Education ───────────────────────────────────────────────────────────────
   subtitle      : "Blooming Seduction",

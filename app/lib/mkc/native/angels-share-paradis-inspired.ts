@@ -85,6 +85,7 @@ export const angelsShareParadisInspired: FragranceKnowledge = {
   },
   bestSeller    : false,
   newArrival    : false,
+  featured      : true,
 
   // â”€â”€ Education â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   subtitle      : "Liquid Gold",

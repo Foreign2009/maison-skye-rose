@@ -58,6 +58,7 @@ export const grisCharnelInspired: FragranceKnowledge = {
   },
   bestSeller    : false,
   newArrival    : false,
+  featured      : true,
 
   // ── Education ───────────────────────────────────────────────────────────────
   subtitle      : "Creamy Depth",

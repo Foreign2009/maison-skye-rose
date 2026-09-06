@@ -49,6 +49,7 @@ export const invictusInspired: FragranceKnowledge = {
   },
   bestSeller: false,
   newArrival: false,
+  featured:   true,
 
   // ── Education ────────────────────────────────────────────────────────────────
   subtitle: "Victory Energy",

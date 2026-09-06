@@ -84,6 +84,7 @@ export const orianaInspired: FragranceKnowledge = {
   },
   bestSeller    : false,
   newArrival    : false,
+  featured      : true,
 
   // ── Education ───────────────────────────────────────────────────────────────
   subtitle      : "Soft Sweetness",

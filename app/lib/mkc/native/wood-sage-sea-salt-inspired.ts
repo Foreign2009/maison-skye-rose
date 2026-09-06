@@ -79,6 +79,7 @@ export const woodSageSeaSaltInspired: FragranceKnowledge = {
   },
   bestSeller    : false,
   newArrival    : false,
+  featured      : true,
 
   // ── Education ───────────────────────────────────────────────────────────────
   subtitle      : "Coastal Clarity",

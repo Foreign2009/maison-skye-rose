@@ -57,6 +57,7 @@ export const libreIntenseInspired: FragranceKnowledge = {
   },
   bestSeller    : false,
   newArrival    : false,
+  featured      : true,
 
   // ── Education ───────────────────────────────────────────────────────────────
   subtitle      : "Addictive Elegance",

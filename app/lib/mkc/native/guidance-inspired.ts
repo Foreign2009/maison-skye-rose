@@ -57,6 +57,7 @@ export const guidanceInspired: FragranceKnowledge = {
   },
   bestSeller    : false,
   newArrival    : true,
+  featured      : true,
 
   // ── Education ───────────────────────────────────────────────────────────────
   subtitle      : "Radiant Depth",
