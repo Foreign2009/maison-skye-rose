@@ -181,7 +181,8 @@ function applyIntentBoosts(
     signals.vibe &&
     doc.keywords.some((k) => k.includes(signals.vibe!.toLowerCase()))
   ) {
-    score += 20;
+    // Boosted to 30 (from 20) so explicit vibe intent can compete with bestseller searchWeight floor
+    score += 30;
     matchedFields.push("vibe:intent");
   }
 

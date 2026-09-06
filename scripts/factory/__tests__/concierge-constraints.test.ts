@@ -7810,6 +7810,79 @@ test("VT-17 — Refined does not parse as a scentCharacter", () => {
     `VT-17: Refined must extract as vibe; got vibe=${signals.vibe ?? "undefined"}`);
 });
 
+// ── CONCIERGE-VIBE-RANKING-P1 — Explicit vibe intent ranking contract ─────────
+
+console.log("\n── VRANK. Vibe Ranking P1: Bare-Query Tagged Retrieval ─────────────");
+
+// VRANK-01 through VRANK-05 establish behavior under CONTRACT B:
+// explicit vibe should materially influence ranking without guaranteeing every slot.
+// Tested with bare vibe queries — the structural gap closed by P1.
+
+test("VRANK-01 — 'something youthful': parses Youthful and ≥1 Youthful-tagged record surfaces", () => {
+  const r = resolveIntent("something youthful", {});
+  const profile = extractProfile("something youthful", undefined);
+  const result = planRetrieval(r, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "something youthful");
+  const tagged = result.fragrances.filter(f =>
+    mkcCatalogue.some(k => k.slug === f.slug && k.vibe.some(v => v.toLowerCase() === "youthful"))
+  );
+  console.log(`     VRANK-01 vibe=${r.signals.vibe} slugs=${result.fragrances.map(f=>f.slug).slice(0,4).join(", ")} tagged=${tagged.length}`);
+  assert.equal(r.signals.vibe, "Youthful", `VRANK-01: expected vibe=Youthful, got ${r.signals.vibe}`);
+  assert.ok(tagged.length >= 1,
+    `VRANK-01: expected ≥1 Youthful-tagged record in bare-query result; got none. Slugs: ${result.fragrances.map(f=>f.slug).join(", ")}`);
+});
+
+test("VRANK-02 — 'something grounded': parses Grounded and ≥1 Grounded-tagged record surfaces", () => {
+  const r = resolveIntent("something grounded", {});
+  const profile = extractProfile("something grounded", undefined);
+  const result = planRetrieval(r, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "something grounded");
+  const tagged = result.fragrances.filter(f =>
+    mkcCatalogue.some(k => k.slug === f.slug && k.vibe.some(v => v.toLowerCase() === "grounded"))
+  );
+  console.log(`     VRANK-02 vibe=${r.signals.vibe} slugs=${result.fragrances.map(f=>f.slug).slice(0,4).join(", ")} tagged=${tagged.length}`);
+  assert.equal(r.signals.vibe, "Grounded", `VRANK-02: expected vibe=Grounded, got ${r.signals.vibe}`);
+  assert.ok(tagged.length >= 1,
+    `VRANK-02: expected ≥1 Grounded-tagged record in bare-query result; got none. Slugs: ${result.fragrances.map(f=>f.slug).join(", ")}`);
+});
+
+test("VRANK-03 — 'something earthy': parses Earthy and ≥1 Earthy-tagged record surfaces", () => {
+  const r = resolveIntent("something earthy", {});
+  const profile = extractProfile("something earthy", undefined);
+  const result = planRetrieval(r, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "something earthy");
+  const tagged = result.fragrances.filter(f =>
+    mkcCatalogue.some(k => k.slug === f.slug && k.vibe.some(v => v.toLowerCase() === "earthy"))
+  );
+  console.log(`     VRANK-03 vibe=${r.signals.vibe} slugs=${result.fragrances.map(f=>f.slug).slice(0,4).join(", ")} tagged=${tagged.length}`);
+  assert.equal(r.signals.vibe, "Earthy", `VRANK-03: expected vibe=Earthy, got ${r.signals.vibe}`);
+  assert.ok(tagged.length >= 1,
+    `VRANK-03: expected ≥1 Earthy-tagged record in bare-query result; got none. Slugs: ${result.fragrances.map(f=>f.slug).join(", ")}`);
+});
+
+test("VRANK-04 — 'something energetic': parses Energetic and ≥1 Energetic-tagged record surfaces", () => {
+  const r = resolveIntent("something energetic", {});
+  const profile = extractProfile("something energetic", undefined);
+  const result = planRetrieval(r, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "something energetic");
+  const tagged = result.fragrances.filter(f =>
+    mkcCatalogue.some(k => k.slug === f.slug && k.vibe.some(v => v.toLowerCase() === "energetic"))
+  );
+  console.log(`     VRANK-04 vibe=${r.signals.vibe} slugs=${result.fragrances.map(f=>f.slug).slice(0,4).join(", ")} tagged=${tagged.length}`);
+  assert.equal(r.signals.vibe, "Energetic", `VRANK-04: expected vibe=Energetic, got ${r.signals.vibe}`);
+  assert.ok(tagged.length >= 1,
+    `VRANK-04: expected ≥1 Energetic-tagged record in bare-query result; got none. Slugs: ${result.fragrances.map(f=>f.slug).join(", ")}`);
+});
+
+test("VRANK-05 — 'something refined': parses Refined and ≥1 Refined-tagged record surfaces", () => {
+  const r = resolveIntent("something refined", {});
+  const profile = extractProfile("something refined", undefined);
+  const result = planRetrieval(r, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "something refined");
+  const tagged = result.fragrances.filter(f =>
+    mkcCatalogue.some(k => k.slug === f.slug && k.vibe.some(v => v.toLowerCase() === "refined"))
+  );
+  console.log(`     VRANK-05 vibe=${r.signals.vibe} slugs=${result.fragrances.map(f=>f.slug).slice(0,4).join(", ")} tagged=${tagged.length}`);
+  assert.equal(r.signals.vibe, "Refined", `VRANK-05: expected vibe=Refined, got ${r.signals.vibe}`);
+  assert.ok(tagged.length >= 1,
+    `VRANK-05: expected ≥1 Refined-tagged record in bare-query result; got none. Slugs: ${result.fragrances.map(f=>f.slug).join(", ")}`);
+});
+
 // ── Summary ───────────────────────────────────────────────────────────────────
 
 const total = passed + failed;
