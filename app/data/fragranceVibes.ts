@@ -29,4 +29,10 @@ export const fragranceVibes = [
   "Sensual",
   "Delicate",
   "Flirtatious",
+  // Discovery & character — targeted retrieval signals
+  "Refined",
+  "Energetic",
+  "Grounded",
+  "Youthful",
+  "Earthy",
 ];

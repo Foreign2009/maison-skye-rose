@@ -6747,7 +6747,9 @@ test("P1-VR-01 — 'warm' query extracts Warm vibe signal", () => {
 });
 
 test("P1-VR-02 — 'bright' query extracts Bright vibe signal", () => {
-  const r = resolveIntent("something bright and energetic", {});
+  // Query updated: "energetic" is now a recognized vibe (9 chars, longer than "Bright" 6 chars),
+  // so it wins matchFirst when both appear together. Use a collision-free query.
+  const r = resolveIntent("something bright and uplifting", {});
   assert.equal(r.signals.vibe, "Bright",
     `P1-VR-02: expected vibe=Bright, got vibe=${r.signals.vibe ?? "(none)"}`);
 });
@@ -7633,6 +7635,179 @@ test("FT-07 — featured records are excluded from hidden-gem eligible pool", ()
       `FT-07: featured record ${slug} must not be in hidden-gem eligible pool`);
   }
   assert.ok(hiddenGemEligible.length > 0, "FT-07: hidden-gem pool must remain non-empty after SET-12");
+});
+
+// ── CONCIERGE-VOCAB-P2-P1 — Five-vibe semantic contract ──────────────────────
+
+console.log("\n── VT. Vocab P2-P1: Five New Vibe Signals ──────────────────────────");
+
+// ── A. Exact vibe extraction ──────────────────────────────────────────────────
+
+test("VT-01 — 'something refined' extracts vibe=Refined from parser", () => {
+  const { signals } = resolveIntent("something refined", {});
+  assert.equal(signals.vibe, "Refined",
+    `VT-01: expected vibe=Refined, got vibe=${signals.vibe ?? "undefined"}`);
+});
+
+test("VT-02 — 'something energetic' extracts vibe=Energetic from parser", () => {
+  const { signals } = resolveIntent("something energetic", {});
+  assert.equal(signals.vibe, "Energetic",
+    `VT-02: expected vibe=Energetic, got vibe=${signals.vibe ?? "undefined"}`);
+});
+
+test("VT-03 — 'something grounded' extracts vibe=Grounded from parser", () => {
+  const { signals } = resolveIntent("something grounded", {});
+  assert.equal(signals.vibe, "Grounded",
+    `VT-03: expected vibe=Grounded, got vibe=${signals.vibe ?? "undefined"}`);
+});
+
+test("VT-04 — 'something youthful' extracts vibe=Youthful from parser", () => {
+  const { signals } = resolveIntent("something youthful", {});
+  assert.equal(signals.vibe, "Youthful",
+    `VT-04: expected vibe=Youthful, got vibe=${signals.vibe ?? "undefined"}`);
+});
+
+test("VT-05 — 'something earthy' extracts vibe=Earthy from parser", () => {
+  const { signals } = resolveIntent("something earthy", {});
+  assert.equal(signals.vibe, "Earthy",
+    `VT-05: expected vibe=Earthy, got vibe=${signals.vibe ?? "undefined"}`);
+});
+
+// ── B. Gender compound safety ─────────────────────────────────────────────────
+
+test("VT-06 — 'something energetic for men': zero female-only recommendations", () => {
+  const r = resolveIntent("something energetic for men", {});
+  const profile = extractProfile("something energetic for men", undefined);
+  const result = planRetrieval(r, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "something energetic for men");
+  const females = result.fragrances.filter(f => f.gender === "female");
+  assert.equal(signals_vibe_from(r, "Energetic"), true,
+    "VT-06: vibe=Energetic must be extracted from this query");
+  assert.equal(females.length, 0,
+    `VT-06: female-only candidates in male energetic result: ${females.map(f => f.slug).join(", ")}`);
+});
+
+test("VT-07 — 'something youthful for women': zero male-only recommendations", () => {
+  const r = resolveIntent("something youthful for women", {});
+  const profile = extractProfile("something youthful for women", undefined);
+  const result = planRetrieval(r, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "something youthful for women");
+  const males = result.fragrances.filter(f => f.gender === "male");
+  assert.equal(signals_vibe_from(r, "Youthful"), true,
+    "VT-07: vibe=Youthful must be extracted from this query");
+  assert.equal(males.length, 0,
+    `VT-07: male-only candidates in female youthful result: ${males.map(f => f.slug).join(", ")}`);
+});
+
+// ── C. Targeted retrieval — semantically tagged records surface ───────────────
+
+function signals_vibe_from(r: ResolvedIntent, expected: string): boolean {
+  return r.signals.vibe?.toLowerCase() === expected.toLowerCase();
+}
+
+test("VT-08 — Refined query: ≥1 MKC-tagged Refined record surfaces in production path", () => {
+  const r = resolveIntent("a refined fragrance", {});
+  const profile = extractProfile("a refined fragrance", undefined);
+  const result = planRetrieval(r, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "a refined fragrance");
+  const refinedTagged = result.fragrances.filter(f =>
+    mkcCatalogue.some(k => k.slug === f.slug && k.vibe.some(v => v.toLowerCase() === "refined"))
+  );
+  console.log(`     VT-08 vibe=${r.signals.vibe} slugs=${result.fragrances.map(f=>f.slug).slice(0,4).join(", ")} tagged=${refinedTagged.length}`);
+  assert.ok(refinedTagged.length >= 1,
+    `VT-08: expected ≥1 Refined-tagged record in result; got none. Slugs: ${result.fragrances.map(f=>f.slug).join(", ")}`);
+});
+
+test("VT-09 — Energetic query: ≥1 MKC-tagged Energetic record surfaces in production path", () => {
+  const r = resolveIntent("an energetic fragrance for men", {});
+  const profile = extractProfile("an energetic fragrance for men", undefined);
+  const result = planRetrieval(r, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "an energetic fragrance for men");
+  const tagged = result.fragrances.filter(f =>
+    mkcCatalogue.some(k => k.slug === f.slug && k.vibe.some(v => v.toLowerCase() === "energetic"))
+  );
+  console.log(`     VT-09 vibe=${r.signals.vibe} slugs=${result.fragrances.map(f=>f.slug).slice(0,4).join(", ")} tagged=${tagged.length}`);
+  assert.ok(tagged.length >= 1,
+    `VT-09: expected ≥1 Energetic-tagged record in result; got none. Slugs: ${result.fragrances.map(f=>f.slug).join(", ")}`);
+});
+
+test("VT-10 — Grounded query: ≥1 MKC-tagged Grounded record surfaces in production path", () => {
+  const r = resolveIntent("a grounded fragrance for men", {});
+  const profile = extractProfile("a grounded fragrance for men", undefined);
+  const result = planRetrieval(r, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "a grounded fragrance for men");
+  const tagged = result.fragrances.filter(f =>
+    mkcCatalogue.some(k => k.slug === f.slug && k.vibe.some(v => v.toLowerCase() === "grounded"))
+  );
+  console.log(`     VT-10 vibe=${r.signals.vibe} slugs=${result.fragrances.map(f=>f.slug).slice(0,4).join(", ")} tagged=${tagged.length}`);
+  assert.ok(tagged.length >= 1,
+    `VT-10: expected ≥1 Grounded-tagged record in result; got none. Slugs: ${result.fragrances.map(f=>f.slug).join(", ")}`);
+});
+
+test("VT-11 — Youthful+Floral compound query: ≥1 MKC-tagged Youthful record surfaces in production path", () => {
+  // Compound query required: bare "Youthful" queries are dominated by BS records (sw=100,
+  // score≈102 via popularity×0.2) which crowd the MAX_PER_GROUP=8 fragrance slots before
+  // Youthful-tagged non-BS records (score≈93) can appear. Adding a family signal lifts
+  // Youthful+Floral tagged records to score≈163, surfacing them above non-Floral BS records.
+  const q = "a youthful floral fragrance for women";
+  const r = resolveIntent(q, {});
+  const profile = extractProfile(q, undefined);
+  const result = planRetrieval(r, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, q);
+  const tagged = result.fragrances.filter(f =>
+    mkcCatalogue.some(k => k.slug === f.slug && k.vibe.some(v => v.toLowerCase() === "youthful"))
+  );
+  console.log(`     VT-11 vibe=${r.signals.vibe} family=${r.signals.family} slugs=${result.fragrances.map(f=>f.slug).slice(0,4).join(", ")} tagged=${tagged.length}`);
+  assert.ok(tagged.length >= 1,
+    `VT-11: expected ≥1 Youthful-tagged record with compound vibe+floral query; got none. Slugs: ${result.fragrances.map(f=>f.slug).join(", ")}`);
+});
+
+test("VT-12 — Earthy query: ≥1 MKC-tagged Earthy record surfaces in production path", () => {
+  const r = resolveIntent("an earthy fragrance for men", {});
+  const profile = extractProfile("an earthy fragrance for men", undefined);
+  const result = planRetrieval(r, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined, "an earthy fragrance for men");
+  const tagged = result.fragrances.filter(f =>
+    mkcCatalogue.some(k => k.slug === f.slug && k.vibe.some(v => v.toLowerCase() === "earthy"))
+  );
+  console.log(`     VT-12 vibe=${r.signals.vibe} slugs=${result.fragrances.map(f=>f.slug).slice(0,4).join(", ")} tagged=${tagged.length}`);
+  assert.ok(tagged.length >= 1,
+    `VT-12: expected ≥1 Earthy-tagged record in result; got none. Slugs: ${result.fragrances.map(f=>f.slug).join(", ")}`);
+});
+
+// ── D. Collision regression ───────────────────────────────────────────────────
+
+test("VT-13 — Grounded does not parse as Woody family", () => {
+  const { signals } = resolveIntent("a grounded fragrance", {});
+  assert.equal(signals.family, undefined,
+    `VT-13: Grounded must not extract as a family; got family=${signals.family}`);
+  assert.equal(signals.vibe, "Grounded",
+    `VT-13: Grounded must extract as vibe; got vibe=${signals.vibe ?? "undefined"}`);
+});
+
+test("VT-14 — Earthy does not parse as Woody family", () => {
+  const { signals } = resolveIntent("an earthy fragrance", {});
+  assert.equal(signals.family, undefined,
+    `VT-14: Earthy must not extract as a family; got family=${signals.family}`);
+  assert.equal(signals.vibe, "Earthy",
+    `VT-14: Earthy must extract as vibe; got vibe=${signals.vibe ?? "undefined"}`);
+});
+
+test("VT-15 — Energetic does not parse as Fresh family", () => {
+  const { signals } = resolveIntent("an energetic fragrance", {});
+  assert.equal(signals.family, undefined,
+    `VT-15: Energetic must not extract as a family; got family=${signals.family}`);
+  assert.equal(signals.vibe, "Energetic",
+    `VT-15: Energetic must extract as vibe; got vibe=${signals.vibe ?? "undefined"}`);
+});
+
+test("VT-16 — Youthful does not parse as Fresh or Fruity family", () => {
+  const { signals } = resolveIntent("a youthful fragrance", {});
+  assert.equal(signals.family, undefined,
+    `VT-16: Youthful must not extract as a family; got family=${signals.family}`);
+  assert.equal(signals.vibe, "Youthful",
+    `VT-16: Youthful must extract as vibe; got vibe=${signals.vibe ?? "undefined"}`);
+});
+
+test("VT-17 — Refined does not parse as a scentCharacter", () => {
+  const { signals } = resolveIntent("a refined fragrance", {});
+  assert.equal(signals.character, undefined,
+    `VT-17: Refined must not extract as scentCharacter; got character=${signals.character ?? "undefined"}`);
+  assert.equal(signals.vibe, "Refined",
+    `VT-17: Refined must extract as vibe; got vibe=${signals.vibe ?? "undefined"}`);
 });
 
 // ── Summary ───────────────────────────────────────────────────────────────────
