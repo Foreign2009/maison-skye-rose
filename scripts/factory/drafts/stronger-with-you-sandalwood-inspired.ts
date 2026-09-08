@@ -59,7 +59,7 @@ export const strongerWithYouSandalwoodInspired: FragranceKnowledge = {
   seasons       : ["Autumn", "Winter"],
   signatureStyle: ["Warm Woody Signature", "Balanced Oriental", "Spiced Elegance"],
   recommendedFor: [
-    "Men who want a warm, spiced signature that evolves throughout the day and deepens with wear",
+    "Men who want a warm, spiced signature with genuine aromatic complexity and quiet authority",
     "Those seeking an approachable woody fragrance that bridges office professionalism and intimate evenings",
     "Anyone drawn to saffron and sandalwood but preferring balanced warmth over heavy oriental intensity",
     "Men building a refined collection who need a versatile autumn anchor that pairs with fresher daytime fragrances",
@@ -81,7 +81,7 @@ export const strongerWithYouSandalwoodInspired: FragranceKnowledge = {
 
   // ── Education ───────────────────────────────────────────────────────────────
   subtitle      : "Warm Spiced Woody",
-  description   : "Saffron unfolds into a spiced heart of lavender and chestnut, grounding into creamy sandalwood and cedarwood. Warm, woody, and quietly confident—a fragrance that deepens as the day ages.",
+  description   : "Saffron unfolds into a spiced heart of lavender and chestnut, grounding into creamy sandalwood and cedarwood. Warm, woody, and quietly confident—a fragrance that balances saffron's luminosity with the creamy depth of sandalwood.",
   academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances", "what-makes-a-signature-scent"],
   academyCategories: ["fragrance-families", "the-note-pyramid", "wear-and-application"],
   educationTags : [

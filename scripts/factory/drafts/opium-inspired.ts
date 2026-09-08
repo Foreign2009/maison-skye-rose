@@ -75,7 +75,7 @@ export const opiumInspired: FragranceKnowledge = {
   seasons       : ["Autumn", "Winter"],
   signatureStyle: ["Bold Spiced Oriental", "Sensual Rose Statement", "Warm Resinous Luxury"],
   recommendedFor: [
-    "Women who command attention with bold spiced florals and want a signature that lingers in memory",
+    "Women who command attention with bold spiced florals and want a signature that stays in memory",
     "Those seeking an evening or date fragrance that balances sensuality with sophisticated warmth",
     "Anyone drawn to rich orientals with rose and myrrh—complex enough for repeated discovery",
   ],

@@ -87,7 +87,7 @@ export const lightBlueCapriInLoveInspired: FragranceKnowledge = {
 
   // ── Education ───────────────────────────────────────────────────────────────
   subtitle      : "Luminous Floral",
-  description   : "Jasmine tea opens into a sun-bright apple heart, creating a floral composition that feels both luminous and intimate. The fragrance settles into a warm, woody base that grounds its airy top notes without diminishing their clarity.",
+  description   : "Jasmine tea opens into a sun-bright apple heart, creating a floral composition that feels both luminous and intimate. The fragrance settles into a warm floral base that grounds its airy top notes without diminishing their clarity.",
   academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "choosing-your-season-scent", "how-to-layer-fragrances"],
   academyCategories: ["fragrance-families", "the-note-pyramid", "occasions-and-style"],
   educationTags : [

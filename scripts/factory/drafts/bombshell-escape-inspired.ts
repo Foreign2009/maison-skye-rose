@@ -56,7 +56,7 @@ export const bombshellEscapeInspired: FragranceKnowledge = {
     "Warm",
     "Playful",
   ],
-  occasions     : ["Daily Wear", "Vacation", "Weekend", "Casual"],
+  occasions     : ["Daily Wear", "Weekend", "Casual"],
   seasons       : ["Summer"],
   signatureStyle: ["Tropical Feminine Fresh", "Summer Signature", "Bright Floral Fruity"],
   recommendedFor: [

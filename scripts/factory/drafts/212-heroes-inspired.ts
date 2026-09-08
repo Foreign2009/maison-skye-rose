@@ -62,7 +62,7 @@ export const _212HeroesInspired: FragranceKnowledge = {
   recommendedFor: [
     "Men who want a bold aromatic statement that refuses to blend into the background—sharp, herbal, and confidently unconventional.",
     "Those seeking a spring fragrance with genuine personality, where pear and ginger lead into leather and sage rather than fade into sweetness.",
-    "Anyone building a signature collection who values herbal complexity and moderate projection for daily wear that still commands respect.",
+    "Anyone building a signature collection who values herbal complexity and confident character for daily wear that still commands respect.",
   ],
 
   // ── Merchandising ───────────────────────────────────────────────────────────

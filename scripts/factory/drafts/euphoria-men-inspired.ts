@@ -62,7 +62,7 @@ export const euphoriaMenInspired: FragranceKnowledge = {
   recommendedFor: [
     "Men seeking a warm, spiced signature that bridges professional polish and evening sophistication.",
     "Those who want aromatic depth without sweetness—grounded by cedar, suede, and dark basil.",
-    "Anyone drawn to autumn and winter warmth who appreciates balanced projection for office and intimate settings.",
+    "Anyone drawn to autumn and winter warmth who appreciates dark aromatic depth for office and intimate settings.",
   ],
 
   // ── Merchandising ───────────────────────────────────────────────────────────
