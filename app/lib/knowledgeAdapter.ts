@@ -26,6 +26,10 @@ export type DisplayFragrance = {
   // Authoritative structured notes for evidence-locked fragrances.
   // Overrides the flat notes[] array for top/heart/base distribution in scaffold.
   notesStructured?: { top: string[]; heart: string[]; base: string[] };
+  // Explicit evidence-backed gender override for factory staging records.
+  // When set, takes precedence over the collection-derived fallback in adaptFragrance().
+  // Production catalogue records do not carry this field.
+  gender?: "male" | "female" | "unisex";
 };
 
 // ── Module constants ──────────────────────────────────────────────────────────
@@ -212,12 +216,14 @@ export function adaptFragrance(f: DisplayFragrance): Fragrance {
     name:   f.title,
     brand:  "Maison Skye & Rose",
 
-    // Inferred from collection. Highest scorer weight (+25). Known approximation risk: Elite → unisex
-    // means all Elite products score 0 on gender dimension regardless of query.
+    // Explicit evidence-backed gender preferred; collection-derived fallback when not set.
+    // Highest scorer weight (+25). Factory staging records may carry DisplayFragrance.gender
+    // to override the collection default (e.g. Elite + evidence-backed female identity).
     gender:
-      f.collection === "Skye"  ? "male"   :
-      f.collection === "Rose"  ? "female" :
-      "unisex",
+      f.gender ??
+      (f.collection === "Skye"  ? "male"   :
+       f.collection === "Rose"  ? "female" :
+       "unisex"),
 
     family:  extractFamilies(normalised),
 

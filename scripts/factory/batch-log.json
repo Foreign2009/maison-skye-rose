@@ -2,6 +2,72 @@
   "version": "1.0",
   "batches": [
     {
+      "batchId": "2026-09-07T19-16-00",
+      "startedAt": "2026-09-07T19:16:00.856Z",
+      "completedAt": "2026-09-07T19:16:15.110Z",
+      "config": {
+        "maxConcurrency": 1,
+        "dryRun": false,
+        "force": true
+      },
+      "report": {
+        "batchId": "2026-09-07T19-16-00",
+        "startedAt": "2026-09-07T19:16:00.856Z",
+        "completedAt": "2026-09-07T19:16:15.110Z",
+        "durationMs": 14254,
+        "total": 1,
+        "generated": 1,
+        "skipped": 0,
+        "failed": 0,
+        "tokenUsage": {
+          "promptTokens": 12051,
+          "completionTokens": 968,
+          "totalTokens": 13019
+        },
+        "estimatedCostUsd": 0.013512800000000002,
+        "validationSummary": {
+          "pass": 1,
+          "passWithWarnings": 0,
+          "fail": 0,
+          "unknown": 0
+        },
+        "failures": []
+      }
+    },
+    {
+      "batchId": "2026-09-07T18-25-13",
+      "startedAt": "2026-09-07T18:25:13.977Z",
+      "completedAt": "2026-09-07T18:28:03.188Z",
+      "config": {
+        "maxConcurrency": 1,
+        "dryRun": false,
+        "force": false
+      },
+      "report": {
+        "batchId": "2026-09-07T18-25-13",
+        "startedAt": "2026-09-07T18:25:13.977Z",
+        "completedAt": "2026-09-07T18:28:03.188Z",
+        "durationMs": 169211,
+        "total": 13,
+        "generated": 13,
+        "skipped": 0,
+        "failed": 0,
+        "tokenUsage": {
+          "promptTokens": 155853,
+          "completionTokens": 11853,
+          "totalTokens": 167706
+        },
+        "estimatedCostUsd": 0.17209440000000004,
+        "validationSummary": {
+          "pass": 13,
+          "passWithWarnings": 0,
+          "fail": 0,
+          "unknown": 0
+        },
+        "failures": []
+      }
+    },
+    {
       "batchId": "2026-09-02T17-24-21",
       "startedAt": "2026-09-02T17:24:21.388Z",
       "completedAt": "2026-09-02T17:28:36.349Z",
