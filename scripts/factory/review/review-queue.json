@@ -4920,6 +4920,266 @@
         "timestamp": "2026-09-02T18:23:25.727Z",
         "reason": "No defects found in P3. Evidence-locked refined woody aromatic. Excellent descriptive prose. No claim violations. All relationships verified."
       }
+    },
+    {
+      "slug": "matiere-noire-inspired",
+      "name": "Matiere Noire Inspired",
+      "collection": "Elite",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-09-08T19:56:54.325Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-09-08T19:58:50.862Z",
+      "reviewer": "adnaan",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "adnaan",
+        "timestamp": "2026-09-08T19:58:50.862Z",
+        "reason": "Wave 6 editorial and evidence review completed; P4 corrections validated."
+      }
+    },
+    {
+      "slug": "versace-rose-flamboyante-inspired",
+      "name": "Versace Rose Flamboyante Inspired",
+      "collection": "Elite",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-09-08T19:56:57.367Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-09-08T19:58:53.920Z",
+      "reviewer": "adnaan",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "adnaan",
+        "timestamp": "2026-09-08T19:58:53.919Z",
+        "reason": "Wave 6 editorial and evidence review completed; P4 corrections validated."
+      }
+    },
+    {
+      "slug": "tobacco-honey-inspired",
+      "name": "Tobacco Honey Inspired",
+      "collection": "Elite",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-09-08T19:57:01.141Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-09-08T19:58:56.903Z",
+      "reviewer": "adnaan",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "adnaan",
+        "timestamp": "2026-09-08T19:58:56.902Z",
+        "reason": "Wave 6 editorial and evidence review completed; P4 corrections validated."
+      }
+    },
+    {
+      "slug": "oud-bouquet-inspired",
+      "name": "Oud Bouquet Inspired",
+      "collection": "Elite",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-09-08T19:57:04.617Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-09-08T19:59:00.507Z",
+      "reviewer": "adnaan",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "adnaan",
+        "timestamp": "2026-09-08T19:59:00.505Z",
+        "reason": "Wave 6 editorial and evidence review completed; P4 corrections validated."
+      }
+    },
+    {
+      "slug": "kouros-silver-inspired",
+      "name": "Kouros Silver Inspired",
+      "collection": "Skye",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-09-08T19:57:07.889Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-09-08T19:59:04.152Z",
+      "reviewer": "adnaan",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "adnaan",
+        "timestamp": "2026-09-08T19:59:04.151Z",
+        "reason": "Wave 6 editorial and evidence review completed; P4 corrections validated."
+      }
+    },
+    {
+      "slug": "212-heroes-inspired",
+      "name": "212 Heroes Inspired",
+      "collection": "Skye",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-09-08T19:57:11.359Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-09-08T19:59:07.824Z",
+      "reviewer": "adnaan",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "adnaan",
+        "timestamp": "2026-09-08T19:59:07.823Z",
+        "reason": "Wave 6 editorial and evidence review completed; P4 corrections validated."
+      }
+    },
+    {
+      "slug": "stronger-with-you-sandalwood-inspired",
+      "name": "Stronger With You Sandalwood Inspired",
+      "collection": "Skye",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-09-08T19:57:14.900Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-09-08T19:59:11.523Z",
+      "reviewer": "adnaan",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "adnaan",
+        "timestamp": "2026-09-08T19:59:11.522Z",
+        "reason": "Wave 6 editorial and evidence review completed; P4 corrections validated."
+      }
+    },
+    {
+      "slug": "euphoria-men-inspired",
+      "name": "Euphoria Men Inspired",
+      "collection": "Skye",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-09-08T19:57:18.561Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-09-08T19:59:15.272Z",
+      "reviewer": "adnaan",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "adnaan",
+        "timestamp": "2026-09-08T19:59:15.271Z",
+        "reason": "Wave 6 editorial and evidence review completed; P4 corrections validated."
+      }
+    },
+    {
+      "slug": "light-blue-capri-in-love-inspired",
+      "name": "Light Blue Capri In Love Inspired",
+      "collection": "Rose",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-09-08T19:57:22.226Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-09-08T19:59:18.982Z",
+      "reviewer": "adnaan",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "adnaan",
+        "timestamp": "2026-09-08T19:59:18.982Z",
+        "reason": "Wave 6 editorial and evidence review completed; P4 corrections validated."
+      }
+    },
+    {
+      "slug": "jasmin-noir-inspired",
+      "name": "Jasmin Noir Inspired",
+      "collection": "Rose",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-09-08T19:57:25.955Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-09-08T19:59:22.539Z",
+      "reviewer": "adnaan",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "adnaan",
+        "timestamp": "2026-09-08T19:59:22.537Z",
+        "reason": "Wave 6 editorial and evidence review completed; P4 corrections validated."
+      }
+    },
+    {
+      "slug": "cloud-inspired",
+      "name": "Cloud Inspired",
+      "collection": "Rose",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-09-08T19:57:29.492Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-09-08T19:59:26.151Z",
+      "reviewer": "adnaan",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "adnaan",
+        "timestamp": "2026-09-08T19:59:26.150Z",
+        "reason": "Wave 6 editorial and evidence review completed; P4 corrections validated."
+      }
+    },
+    {
+      "slug": "bombshell-escape-inspired",
+      "name": "Bombshell Escape Inspired",
+      "collection": "Rose",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-09-08T19:57:33.185Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-09-08T19:59:29.778Z",
+      "reviewer": "adnaan",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "adnaan",
+        "timestamp": "2026-09-08T19:59:29.776Z",
+        "reason": "Wave 6 editorial and evidence review completed; P4 corrections validated."
+      }
+    },
+    {
+      "slug": "opium-inspired",
+      "name": "Opium Inspired",
+      "collection": "Rose",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-09-08T19:57:36.786Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-09-08T19:59:33.365Z",
+      "reviewer": "adnaan",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "adnaan",
+        "timestamp": "2026-09-08T19:59:33.363Z",
+        "reason": "Wave 6 editorial and evidence review completed; P4 corrections validated."
+      }
     }
   ]
 }

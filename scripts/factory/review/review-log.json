@@ -5035,6 +5035,188 @@
       "slug": "devotion-inspired",
       "reviewer": "system",
       "details": "LEGACY_NATIVE_GOVERNANCE: draft is factory-generated v0.5.0 against existing native; 4 intelligence fields diverge from calibrated native (warmth 4 vs 3, intensity 4 vs 3, versatility 2 vs 4, popularity 5 vs 6). P1 corrected freshness only. Draft unsafe for re-promotion. Native is healthy."
+    },
+    {
+      "timestamp": "2026-09-08T19:56:54.334Z",
+      "action": "added_to_queue",
+      "slug": "matiere-noire-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-09-08T19:56:57.377Z",
+      "action": "added_to_queue",
+      "slug": "versace-rose-flamboyante-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-09-08T19:57:01.149Z",
+      "action": "added_to_queue",
+      "slug": "tobacco-honey-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-09-08T19:57:04.625Z",
+      "action": "added_to_queue",
+      "slug": "oud-bouquet-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-09-08T19:57:07.899Z",
+      "action": "added_to_queue",
+      "slug": "kouros-silver-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-09-08T19:57:11.369Z",
+      "action": "added_to_queue",
+      "slug": "212-heroes-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-09-08T19:57:14.908Z",
+      "action": "added_to_queue",
+      "slug": "stronger-with-you-sandalwood-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-09-08T19:57:18.570Z",
+      "action": "added_to_queue",
+      "slug": "euphoria-men-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-09-08T19:57:22.237Z",
+      "action": "added_to_queue",
+      "slug": "light-blue-capri-in-love-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-09-08T19:57:25.964Z",
+      "action": "added_to_queue",
+      "slug": "jasmin-noir-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-09-08T19:57:29.500Z",
+      "action": "added_to_queue",
+      "slug": "cloud-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-09-08T19:57:33.195Z",
+      "action": "added_to_queue",
+      "slug": "bombshell-escape-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-09-08T19:57:36.795Z",
+      "action": "added_to_queue",
+      "slug": "opium-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-09-08T19:58:50.871Z",
+      "action": "approved",
+      "slug": "matiere-noire-inspired",
+      "reviewer": "adnaan",
+      "details": "Wave 6 editorial and evidence review completed; P4 corrections validated."
+    },
+    {
+      "timestamp": "2026-09-08T19:58:53.929Z",
+      "action": "approved",
+      "slug": "versace-rose-flamboyante-inspired",
+      "reviewer": "adnaan",
+      "details": "Wave 6 editorial and evidence review completed; P4 corrections validated."
+    },
+    {
+      "timestamp": "2026-09-08T19:58:56.912Z",
+      "action": "approved",
+      "slug": "tobacco-honey-inspired",
+      "reviewer": "adnaan",
+      "details": "Wave 6 editorial and evidence review completed; P4 corrections validated."
+    },
+    {
+      "timestamp": "2026-09-08T19:59:00.515Z",
+      "action": "approved",
+      "slug": "oud-bouquet-inspired",
+      "reviewer": "adnaan",
+      "details": "Wave 6 editorial and evidence review completed; P4 corrections validated."
+    },
+    {
+      "timestamp": "2026-09-08T19:59:04.160Z",
+      "action": "approved",
+      "slug": "kouros-silver-inspired",
+      "reviewer": "adnaan",
+      "details": "Wave 6 editorial and evidence review completed; P4 corrections validated."
+    },
+    {
+      "timestamp": "2026-09-08T19:59:07.834Z",
+      "action": "approved",
+      "slug": "212-heroes-inspired",
+      "reviewer": "adnaan",
+      "details": "Wave 6 editorial and evidence review completed; P4 corrections validated."
+    },
+    {
+      "timestamp": "2026-09-08T19:59:11.532Z",
+      "action": "approved",
+      "slug": "stronger-with-you-sandalwood-inspired",
+      "reviewer": "adnaan",
+      "details": "Wave 6 editorial and evidence review completed; P4 corrections validated."
+    },
+    {
+      "timestamp": "2026-09-08T19:59:15.280Z",
+      "action": "approved",
+      "slug": "euphoria-men-inspired",
+      "reviewer": "adnaan",
+      "details": "Wave 6 editorial and evidence review completed; P4 corrections validated."
+    },
+    {
+      "timestamp": "2026-09-08T19:59:18.991Z",
+      "action": "approved",
+      "slug": "light-blue-capri-in-love-inspired",
+      "reviewer": "adnaan",
+      "details": "Wave 6 editorial and evidence review completed; P4 corrections validated."
+    },
+    {
+      "timestamp": "2026-09-08T19:59:22.549Z",
+      "action": "approved",
+      "slug": "jasmin-noir-inspired",
+      "reviewer": "adnaan",
+      "details": "Wave 6 editorial and evidence review completed; P4 corrections validated."
+    },
+    {
+      "timestamp": "2026-09-08T19:59:26.159Z",
+      "action": "approved",
+      "slug": "cloud-inspired",
+      "reviewer": "adnaan",
+      "details": "Wave 6 editorial and evidence review completed; P4 corrections validated."
+    },
+    {
+      "timestamp": "2026-09-08T19:59:29.788Z",
+      "action": "approved",
+      "slug": "bombshell-escape-inspired",
+      "reviewer": "adnaan",
+      "details": "Wave 6 editorial and evidence review completed; P4 corrections validated."
+    },
+    {
+      "timestamp": "2026-09-08T19:59:33.373Z",
+      "action": "approved",
+      "slug": "opium-inspired",
+      "reviewer": "adnaan",
+      "details": "Wave 6 editorial and evidence review completed; P4 corrections validated."
     }
   ]
 }
