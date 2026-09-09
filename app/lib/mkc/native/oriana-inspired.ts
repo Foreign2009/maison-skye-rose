@@ -117,7 +117,7 @@ export const orianaInspired: FragranceKnowledge = {
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["delina-inspired", "burberry-her-inspired", "mon-paris-inspired", "scandal-inspired", "la-nuit-tresor-inspired", "torino24-inspired", "attrape-reves-inspired"],
+    alternatives:     ["delina-inspired", "burberry-her-inspired", "mon-paris-inspired", "scandal-inspired", "la-nuit-tresor-inspired", "torino24-inspired", "attrape-reves-inspired", "cloud-inspired"],
     wardrobePartners: ["blanche-bete-inspired", "love-don't-be-shy-inspired"],
   },
 };

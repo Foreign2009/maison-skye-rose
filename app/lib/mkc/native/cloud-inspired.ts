@@ -1,7 +1,7 @@
 // ═════════════════════════════════════════════════════════════════
-// FACTORY DRAFT — rose-oud-inspired
+// FACTORY DRAFT — cloud-inspired
 // ─────────────────────────────────────────────────────────────────
-// Generated:         2026-08-16T17:08:42.738Z
+// Generated:         2026-09-07T18:27:38.407Z
 // Factory version:   0.5.0
 // Prompt versions:   EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0
 // Validation status: PASS  [0 error(s), 0 warning(s)]
@@ -20,49 +20,49 @@
 
 import type { FragranceKnowledge } from "../types";
 
-export const roseOudInspired: FragranceKnowledge = {
+export const cloudInspired: FragranceKnowledge = {
   // ── Identity ──────────────────────────────────────────────────────────────────
-  id            : "rose-oud-inspired",
-  slug          : "rose-oud-inspired",
+  id            : "cloud-inspired",
+  slug          : "cloud-inspired",
   brand         : "Maison Skye & Rose",
-  name          : "Rose Oud Inspired",
-  collection    : "Elite",
+  name          : "Cloud Inspired",
+  collection    : "Rose",
   catalogVersion: "1.0",
   status        : "active",
 
   // ── Classification ────────────────────────────────────────────────────────────
-  gender        : "unisex",
-  family        : ["Floral"],
-  scentCharacter: "Balanced Signature",
+  gender        : "female",
+  family        : ["Gourmand", "Floral"],
+  scentCharacter: "Rich & Full-Bodied",
   projection    : "moderate",
 
   // ── Composition ─────────────────────────────────────────────────────────────
-  profile       : "Oriental Floral",
-  season        : "Winter",
+  profile       : "Gourmand Floral",
+  season        : "Spring",
   notes: {
-    top:   ["Bulgarian Rose", "Saffron", "Cinnamon"],
-    heart: ["Tincture of Rose", "Litchi"],
-    base:  ["Agarwood (Oud)", "Cypriol Oil/Nagarmotha", "Cedarwood"],
+    top:   ["Bergamot", "Pear", "Lavender"],
+    heart: ["Coconut", "Whipped Cream", "Praline", "Vanilla Orchid"],
+    base:  ["Woody Notes", "Musk"],
   },
-  mood          : "Smoky Romantic Oriental",
+  notesEvidenceLocked: true,
+  mood          : "Sweet Dreamy Feminine",
 
   // ── Discovery ───────────────────────────────────────────────────────────────
   vibe          : [
-    "Romantic",
-    "Sophisticated",
-    "Sensual",
-    "Mysterious",
+    "Feminine",
+    "Dreamy",
+    "Sweet",
+    "Elegant",
+    "Soft",
     "Warm",
-    "Luxurious",
   ],
-  occasions     : ["Date Night", "Evening", "Formal", "Weekend"],
-  seasons       : ["Winter", "Autumn"],
-  signatureStyle: ["Spiced Floral Romance", "Oriental Elegance", "Smoky Rose Signature"],
+  occasions     : ["Daily Wear", "Weekend", "Date Night", "Wedding"],
+  seasons       : ["Spring", "Summer", "Autumn"],
+  signatureStyle: ["Gourmand Feminine", "Sweet Comfort Luxury", "Modern Dreamy"],
   recommendedFor: [
-    "Anyone seeking a sophisticated rose fragrance that balances spice and sensuality without sweetness or lightness.",
-    "Those drawn to oud and agarwood who want a wearable oriental that centers on rose rather than raw wood.",
-    "Women and men who wear velvet, leather, and dark florals and want their signature winter evening scent.",
-    "Fragrance collectors building a curated wardrobe who recognise rose oud as a modern classic register.",
+    "Women seeking a gourmand signature that feels effortless, wearable, and distinctly feminine across seasons",
+    "Those who love sweet comfort fragrances but want brightness and sophistication to balance the richness",
+    "Anyone looking for a dreamy everyday scent that transitions seamlessly from casual to special occasions",
   ],
 
   // ── Merchandising ───────────────────────────────────────────────────────────
@@ -80,37 +80,37 @@ export const roseOudInspired: FragranceKnowledge = {
   newArrival    : false,
 
   // ── Education ───────────────────────────────────────────────────────────────
-  subtitle      : "Spiced Velvet Romance",
-  description   : "Opens with Bulgarian rose and saffron—a spiced floral that immediately commands attention. The heart deepens into a tincture of rose and litchi, a sensual pairing that blurs sweetness with shadow, while agarwood and cedarwood anchor the composition in smoke and velvet warmth.",
-  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "what-makes-a-signature-scent", "how-to-layer-fragrances"],
-  academyCategories: ["fragrance-families", "the-note-pyramid", "occasions-and-style"],
+  subtitle      : "Sweetness Unwound",
+  description   : "A gourmand drift of whipped cream and praline settles on skin like sweet, cloudlike comfort, anchored by soft vanilla orchid and woody musk. Bergamot and pear open the composition with luminous brightness, while coconut rounds the edges into something intimate and skin-like. Dreamy without artifice—a fragrance that feels less worn than inhabited.",
+  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances", "how-to-wear-fragrance"],
+  academyCategories: ["fragrance-families", "the-note-pyramid", "wear-and-application"],
   educationTags : [
-    "oriental-floral",
-    "rose",
-    "oud",
-    "agarwood",
-    "saffron",
-    "cedarwood",
-    "romantic",
-    "winter",
-    "signature",
+    "gourmand",
+    "floral",
+    "vanilla",
+    "coconut",
+    "praline",
+    "bergamot",
+    "orchid",
+    "feminine",
+    "spring",
     "layering",
   ],
-  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "what-makes-a-signature-scent", "how-to-layer-fragrances"],
+  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances"],
 
   // ── Intelligence ────────────────────────────────────────────────────────────
   // Approximated from profile + season. Calibrated by Intelligence Producer in P2.
-  sweetness     : 2,
+  sweetness     : 4,
   freshness     : 3,
   warmth        : 2,
-  intensity     : 4,
-  versatility   : 2,
+  intensity     : 2,
+  versatility   : 3,
   popularity    : 5,
 
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["baccarat-rouge-540-inspired", "oud-mood-inspired", "velvet-rose-oud-inspired", "gold-oud-inspired", "outlands-inspired", "armani-prive-oud-royal-inspired", "les-sables-roses-inspired", "oud-bouquet-inspired"],
-    wardrobePartners: ["delina-inspired"],
+    alternatives:     ["love-don't-be-shy-inspired", "bianco-latte-inspired", "oriana-inspired"],
+    wardrobePartners: ["bleu-de-chanel-inspired"],
   },
 };

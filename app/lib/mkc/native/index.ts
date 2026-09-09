@@ -252,6 +252,19 @@ import { chanelAllureInspired } from "./chanel-allure-inspired";
 import { angeOuDemonInspired } from "./ange-ou-demon-inspired";
 import { amorAmorInspired } from "./amor-amor-inspired";
 import { dolceInspired } from "./dolce-inspired";
+import { matiereNoireInspired } from "./matiere-noire-inspired";
+import { versaceRoseFlamboyanteInspired } from "./versace-rose-flamboyante-inspired";
+import { tobaccoHoneyInspired } from "./tobacco-honey-inspired";
+import { oudBouquetInspired } from "./oud-bouquet-inspired";
+import { kourosSilverInspired } from "./kouros-silver-inspired";
+import { _212HeroesInspired } from "./212-heroes-inspired";
+import { strongerWithYouSandalwoodInspired } from "./stronger-with-you-sandalwood-inspired";
+import { euphoriaMenInspired } from "./euphoria-men-inspired";
+import { lightBlueCapriInLoveInspired } from "./light-blue-capri-in-love-inspired";
+import { jasminNoirInspired } from "./jasmin-noir-inspired";
+import { cloudInspired } from "./cloud-inspired";
+import { bombshellEscapeInspired } from "./bombshell-escape-inspired";
+import { opiumInspired } from "./opium-inspired";
 
 export const nativeFragrances = new Map<string, FragranceKnowledge>([
   ["sauvage-inspired",              sauvageInspired],
@@ -496,4 +509,17 @@ export const nativeFragrances = new Map<string, FragranceKnowledge>([
   ["ange-ou-demon-inspired", angeOuDemonInspired],
   ["amor-amor-inspired", amorAmorInspired],
   ["dolce-inspired", dolceInspired],
+  ["matiere-noire-inspired", matiereNoireInspired],
+  ["versace-rose-flamboyante-inspired", versaceRoseFlamboyanteInspired],
+  ["tobacco-honey-inspired", tobaccoHoneyInspired],
+  ["oud-bouquet-inspired", oudBouquetInspired],
+  ["kouros-silver-inspired", kourosSilverInspired],
+  ["212-heroes-inspired", _212HeroesInspired],
+  ["stronger-with-you-sandalwood-inspired", strongerWithYouSandalwoodInspired],
+  ["euphoria-men-inspired", euphoriaMenInspired],
+  ["light-blue-capri-in-love-inspired", lightBlueCapriInLoveInspired],
+  ["jasmin-noir-inspired", jasminNoirInspired],
+  ["cloud-inspired", cloudInspired],
+  ["bombshell-escape-inspired", bombshellEscapeInspired],
+  ["opium-inspired", opiumInspired],
 ]);

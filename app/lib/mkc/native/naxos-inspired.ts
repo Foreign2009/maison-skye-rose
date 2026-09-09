@@ -87,7 +87,7 @@ export const naxosInspired: FragranceKnowledge = {
 
   // ── Relationships ─────────────────────────────────────────────────────────────
   relationships: {
-    alternatives: ["layton-inspired", "arabians-tonka-inspired", "tobacco-vanille-inspired"],
+    alternatives: ["layton-inspired", "arabians-tonka-inspired", "tobacco-vanille-inspired", "tobacco-honey-inspired"],
     wardrobePartners: ["changing-constance-inspired"],
   },
 

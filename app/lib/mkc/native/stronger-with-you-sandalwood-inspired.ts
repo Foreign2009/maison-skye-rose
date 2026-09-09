@@ -1,7 +1,7 @@
 // ═════════════════════════════════════════════════════════════════
-// FACTORY DRAFT — rose-oud-inspired
+// FACTORY DRAFT — stronger-with-you-sandalwood-inspired
 // ─────────────────────────────────────────────────────────────────
-// Generated:         2026-08-16T17:08:42.738Z
+// Generated:         2026-09-07T18:26:45.305Z
 // Factory version:   0.5.0
 // Prompt versions:   EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0
 // Validation status: PASS  [0 error(s), 0 warning(s)]
@@ -20,49 +20,49 @@
 
 import type { FragranceKnowledge } from "../types";
 
-export const roseOudInspired: FragranceKnowledge = {
+export const strongerWithYouSandalwoodInspired: FragranceKnowledge = {
   // ── Identity ──────────────────────────────────────────────────────────────────
-  id            : "rose-oud-inspired",
-  slug          : "rose-oud-inspired",
+  id            : "stronger-with-you-sandalwood-inspired",
+  slug          : "stronger-with-you-sandalwood-inspired",
   brand         : "Maison Skye & Rose",
-  name          : "Rose Oud Inspired",
-  collection    : "Elite",
+  name          : "Stronger With You Sandalwood Inspired",
+  collection    : "Skye",
   catalogVersion: "1.0",
   status        : "active",
 
   // ── Classification ────────────────────────────────────────────────────────────
-  gender        : "unisex",
-  family        : ["Floral"],
+  gender        : "male",
+  family        : ["Woody"],
   scentCharacter: "Balanced Signature",
   projection    : "moderate",
 
   // ── Composition ─────────────────────────────────────────────────────────────
-  profile       : "Oriental Floral",
-  season        : "Winter",
+  profile       : "Oriental Woody",
+  season        : "Autumn",
   notes: {
-    top:   ["Bulgarian Rose", "Saffron", "Cinnamon"],
-    heart: ["Tincture of Rose", "Litchi"],
-    base:  ["Agarwood (Oud)", "Cypriol Oil/Nagarmotha", "Cedarwood"],
+    top:   ["Saffron"],
+    heart: ["Lavender", "Chestnut"],
+    base:  ["Sandalwood", "Vanilla", "Cedarwood"],
   },
-  mood          : "Smoky Romantic Oriental",
+  notesEvidenceLocked: true,
+  mood          : "Warm Spiced Woody",
 
   // ── Discovery ───────────────────────────────────────────────────────────────
   vibe          : [
-    "Romantic",
+    "Warm",
+    "Confident",
     "Sophisticated",
     "Sensual",
-    "Mysterious",
-    "Warm",
-    "Luxurious",
+    "Grounded",
   ],
-  occasions     : ["Date Night", "Evening", "Formal", "Weekend"],
-  seasons       : ["Winter", "Autumn"],
-  signatureStyle: ["Spiced Floral Romance", "Oriental Elegance", "Smoky Rose Signature"],
+  occasions     : ["Daily Wear", "Office", "Date Night", "Evening"],
+  seasons       : ["Autumn", "Winter"],
+  signatureStyle: ["Warm Woody Signature", "Balanced Oriental", "Spiced Elegance"],
   recommendedFor: [
-    "Anyone seeking a sophisticated rose fragrance that balances spice and sensuality without sweetness or lightness.",
-    "Those drawn to oud and agarwood who want a wearable oriental that centers on rose rather than raw wood.",
-    "Women and men who wear velvet, leather, and dark florals and want their signature winter evening scent.",
-    "Fragrance collectors building a curated wardrobe who recognise rose oud as a modern classic register.",
+    "Men who want a warm, spiced signature with genuine aromatic complexity and quiet authority",
+    "Those seeking an approachable woody fragrance that bridges office professionalism and intimate evenings",
+    "Anyone drawn to saffron and sandalwood but preferring balanced warmth over heavy oriental intensity",
+    "Men building a refined collection who need a versatile autumn anchor that pairs with fresher daytime fragrances",
   ],
 
   // ── Merchandising ───────────────────────────────────────────────────────────
@@ -72,45 +72,45 @@ export const roseOudInspired: FragranceKnowledge = {
     "30ml": 250,
   },
   images: {
-    "5ml":  "/images/pink-5ml.png",
-    "10ml": "/images/pink-10ml.png",
-    "30ml": "/images/glass-pink-30ml.png",
+    "5ml":  "/images/blue-5ml.png",
+    "10ml": "/images/blue-10ml.png",
+    "30ml": "/images/glass-blue-30ml.png",
   },
   bestSeller    : false,
   newArrival    : false,
 
   // ── Education ───────────────────────────────────────────────────────────────
-  subtitle      : "Spiced Velvet Romance",
-  description   : "Opens with Bulgarian rose and saffron—a spiced floral that immediately commands attention. The heart deepens into a tincture of rose and litchi, a sensual pairing that blurs sweetness with shadow, while agarwood and cedarwood anchor the composition in smoke and velvet warmth.",
-  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "what-makes-a-signature-scent", "how-to-layer-fragrances"],
-  academyCategories: ["fragrance-families", "the-note-pyramid", "occasions-and-style"],
+  subtitle      : "Warm Spiced Woody",
+  description   : "Saffron unfolds into a spiced heart of lavender and chestnut, grounding into creamy sandalwood and cedarwood. Warm, woody, and quietly confident—a fragrance that balances saffron's luminosity with the creamy depth of sandalwood.",
+  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances", "what-makes-a-signature-scent"],
+  academyCategories: ["fragrance-families", "the-note-pyramid", "wear-and-application"],
   educationTags : [
-    "oriental-floral",
-    "rose",
-    "oud",
-    "agarwood",
+    "woody",
+    "oriental",
+    "sandalwood",
     "saffron",
+    "lavender",
+    "vanilla",
     "cedarwood",
-    "romantic",
-    "winter",
+    "warm",
     "signature",
-    "layering",
+    "versatile",
   ],
-  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "what-makes-a-signature-scent", "how-to-layer-fragrances"],
+  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances"],
 
   // ── Intelligence ────────────────────────────────────────────────────────────
   // Approximated from profile + season. Calibrated by Intelligence Producer in P2.
   sweetness     : 2,
-  freshness     : 3,
-  warmth        : 2,
-  intensity     : 4,
-  versatility   : 2,
+  freshness     : 2,
+  warmth        : 3,
+  intensity     : 3,
+  versatility   : 3,
   popularity    : 5,
 
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["baccarat-rouge-540-inspired", "oud-mood-inspired", "velvet-rose-oud-inspired", "gold-oud-inspired", "outlands-inspired", "armani-prive-oud-royal-inspired", "les-sables-roses-inspired", "oud-bouquet-inspired"],
-    wardrobePartners: ["delina-inspired"],
+    alternatives:     ["stronger-with-you-inspired", "spicebomb-extreme-inspired"],
+    wardrobePartners: ["sauvage-inspired", "bleu-de-chanel-inspired"],
   },
 };

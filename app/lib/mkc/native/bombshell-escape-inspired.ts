@@ -1,7 +1,7 @@
 // ═════════════════════════════════════════════════════════════════
-// FACTORY DRAFT — rose-oud-inspired
+// FACTORY DRAFT — bombshell-escape-inspired
 // ─────────────────────────────────────────────────────────────────
-// Generated:         2026-08-16T17:08:42.738Z
+// Generated:         2026-09-07T18:27:49.977Z
 // Factory version:   0.5.0
 // Prompt versions:   EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0
 // Validation status: PASS  [0 error(s), 0 warning(s)]
@@ -20,49 +20,49 @@
 
 import type { FragranceKnowledge } from "../types";
 
-export const roseOudInspired: FragranceKnowledge = {
+export const bombshellEscapeInspired: FragranceKnowledge = {
   // ── Identity ──────────────────────────────────────────────────────────────────
-  id            : "rose-oud-inspired",
-  slug          : "rose-oud-inspired",
+  id            : "bombshell-escape-inspired",
+  slug          : "bombshell-escape-inspired",
   brand         : "Maison Skye & Rose",
-  name          : "Rose Oud Inspired",
-  collection    : "Elite",
+  name          : "Bombshell Escape Inspired",
+  collection    : "Rose",
   catalogVersion: "1.0",
   status        : "active",
 
   // ── Classification ────────────────────────────────────────────────────────────
-  gender        : "unisex",
-  family        : ["Floral"],
+  gender        : "female",
+  family        : ["Floral", "Fruity"],
   scentCharacter: "Balanced Signature",
   projection    : "moderate",
 
   // ── Composition ─────────────────────────────────────────────────────────────
-  profile       : "Oriental Floral",
-  season        : "Winter",
+  profile       : "Floral Fruity",
+  season        : "Summer",
   notes: {
-    top:   ["Bulgarian Rose", "Saffron", "Cinnamon"],
-    heart: ["Tincture of Rose", "Litchi"],
-    base:  ["Agarwood (Oud)", "Cypriol Oil/Nagarmotha", "Cedarwood"],
+    top:   ["Guava"],
+    heart: ["Peony"],
+    base:  ["Palm Leaf", "Palm Tree"],
   },
-  mood          : "Smoky Romantic Oriental",
+  notesEvidenceLocked: true,
+  mood          : "Tropical Feminine Fresh",
 
   // ── Discovery ───────────────────────────────────────────────────────────────
   vibe          : [
-    "Romantic",
-    "Sophisticated",
-    "Sensual",
-    "Mysterious",
+    "Feminine",
+    "Fresh",
+    "Bright",
+    "Tropical",
     "Warm",
-    "Luxurious",
+    "Playful",
   ],
-  occasions     : ["Date Night", "Evening", "Formal", "Weekend"],
-  seasons       : ["Winter", "Autumn"],
-  signatureStyle: ["Spiced Floral Romance", "Oriental Elegance", "Smoky Rose Signature"],
+  occasions     : ["Daily Wear", "Weekend", "Casual"],
+  seasons       : ["Summer"],
+  signatureStyle: ["Tropical Feminine Fresh", "Summer Signature", "Bright Floral Fruity"],
   recommendedFor: [
-    "Anyone seeking a sophisticated rose fragrance that balances spice and sensuality without sweetness or lightness.",
-    "Those drawn to oud and agarwood who want a wearable oriental that centers on rose rather than raw wood.",
-    "Women and men who wear velvet, leather, and dark florals and want their signature winter evening scent.",
-    "Fragrance collectors building a curated wardrobe who recognise rose oud as a modern classic register.",
+    "Women seeking a fresh tropical signature that feels effortless in warm weather and vacation settings",
+    "Those who love fruity florals with green brightness over heavy florals or gourmand sweetness",
+    "Anyone wanting a sun-kissed feminine fragrance that captures the feeling of salt air and warmth on skin",
   ],
 
   // ── Merchandising ───────────────────────────────────────────────────────────
@@ -80,37 +80,37 @@ export const roseOudInspired: FragranceKnowledge = {
   newArrival    : false,
 
   // ── Education ───────────────────────────────────────────────────────────────
-  subtitle      : "Spiced Velvet Romance",
-  description   : "Opens with Bulgarian rose and saffron—a spiced floral that immediately commands attention. The heart deepens into a tincture of rose and litchi, a sensual pairing that blurs sweetness with shadow, while agarwood and cedarwood anchor the composition in smoke and velvet warmth.",
-  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "what-makes-a-signature-scent", "how-to-layer-fragrances"],
-  academyCategories: ["fragrance-families", "the-note-pyramid", "occasions-and-style"],
+  subtitle      : "Tropical Radiance",
+  description   : "Guava's bright acidity opens into a luminous peony heart, softened by the green whisper of palm leaves. A tropical feminine fragrance that feels like skin warmed by sun and salt air.",
+  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "choosing-your-season-scent", "how-to-wear-fragrance"],
+  academyCategories: ["fragrance-families", "occasions-and-style", "the-note-pyramid"],
   educationTags : [
-    "oriental-floral",
-    "rose",
-    "oud",
-    "agarwood",
-    "saffron",
-    "cedarwood",
-    "romantic",
-    "winter",
+    "floral",
+    "fruity",
+    "guava",
+    "peony",
+    "palm-leaf",
+    "feminine",
+    "summer",
     "signature",
-    "layering",
+    "daily-wear",
+    "vacation",
   ],
-  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "what-makes-a-signature-scent", "how-to-layer-fragrances"],
+  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "choosing-your-season-scent"],
 
   // ── Intelligence ────────────────────────────────────────────────────────────
   // Approximated from profile + season. Calibrated by Intelligence Producer in P2.
   sweetness     : 2,
   freshness     : 3,
   warmth        : 2,
-  intensity     : 4,
-  versatility   : 2,
+  intensity     : 2,
+  versatility   : 3,
   popularity    : 5,
 
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["baccarat-rouge-540-inspired", "oud-mood-inspired", "velvet-rose-oud-inspired", "gold-oud-inspired", "outlands-inspired", "armani-prive-oud-royal-inspired", "les-sables-roses-inspired", "oud-bouquet-inspired"],
-    wardrobePartners: ["delina-inspired"],
+    alternatives:     ["delina-inspired", "mon-paris-inspired", "very-good-girl-inspired"],
+    wardrobePartners: ["bleu-de-chanel-inspired"],
   },
 };

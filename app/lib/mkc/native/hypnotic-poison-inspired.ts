@@ -103,8 +103,9 @@ export const hypnoticPoisonInspired: FragranceKnowledge = {
       "dark-vanilla-inspired",
       "changing-constance-inspired",
       "angel-inspired",
+      "opium-inspired",
     ],
-    wardrobePartners: ["delina-inspired", "baccarat-rouge-540-inspired", "gucci-bamboo-inspired", "eden-sparkling-lychee-inspired", "chanel-no-5-inspired", "creed-delphinus-inspired", "ange-ou-demon-inspired"],
+    wardrobePartners: ["delina-inspired", "baccarat-rouge-540-inspired", "gucci-bamboo-inspired", "eden-sparkling-lychee-inspired", "chanel-no-5-inspired", "creed-delphinus-inspired", "ange-ou-demon-inspired", "jasmin-noir-inspired"],
   },
 
   // ── Intelligence ─────────────────────────────────────────────────────────────

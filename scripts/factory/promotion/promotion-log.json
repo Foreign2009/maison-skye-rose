@@ -4669,6 +4669,279 @@
       "slug": "dolce-inspired",
       "operator": "Founder",
       "details": "promotionId:ZPeEB2cpYqiG  validation:PASS  nativePath:app/lib/mkc/native/dolce-inspired.ts"
+    },
+    {
+      "timestamp": "2026-09-08T20:16:00.003Z",
+      "action": "promotion_started",
+      "slug": "matiere-noire-inspired",
+      "operator": "cli",
+      "details": "symbol:matiereNoireInspired  reviewedBy:adnaan"
+    },
+    {
+      "timestamp": "2026-09-08T20:16:00.010Z",
+      "action": "relationships_synced",
+      "slug": "matiere-noire-inspired",
+      "operator": "cli",
+      "details": "reciprocals:4  files:4"
+    },
+    {
+      "timestamp": "2026-09-08T20:16:36.894Z",
+      "action": "promotion_completed",
+      "slug": "matiere-noire-inspired",
+      "operator": "cli",
+      "details": "promotionId:8UKPDsv9yve1  validation:PASS  nativePath:app/lib/mkc/native/matiere-noire-inspired.ts"
+    },
+    {
+      "timestamp": "2026-09-08T20:28:56.746Z",
+      "action": "promotion_started",
+      "slug": "versace-rose-flamboyante-inspired",
+      "operator": "cli",
+      "details": "symbol:versaceRoseFlamboyanteInspired  reviewedBy:adnaan"
+    },
+    {
+      "timestamp": "2026-09-08T20:28:56.754Z",
+      "action": "relationships_synced",
+      "slug": "versace-rose-flamboyante-inspired",
+      "operator": "cli",
+      "details": "reciprocals:4  files:4"
+    },
+    {
+      "timestamp": "2026-09-08T20:29:34.551Z",
+      "action": "promotion_completed",
+      "slug": "versace-rose-flamboyante-inspired",
+      "operator": "cli",
+      "details": "promotionId:daS1BpDAvBeL  validation:PASS  nativePath:app/lib/mkc/native/versace-rose-flamboyante-inspired.ts"
+    },
+    {
+      "timestamp": "2026-09-08T20:34:55.854Z",
+      "action": "promotion_started",
+      "slug": "tobacco-honey-inspired",
+      "operator": "cli",
+      "details": "symbol:tobaccoHoneyInspired  reviewedBy:adnaan"
+    },
+    {
+      "timestamp": "2026-09-08T20:34:55.862Z",
+      "action": "relationships_synced",
+      "slug": "tobacco-honey-inspired",
+      "operator": "cli",
+      "details": "reciprocals:5  files:5"
+    },
+    {
+      "timestamp": "2026-09-08T20:35:32.362Z",
+      "action": "promotion_completed",
+      "slug": "tobacco-honey-inspired",
+      "operator": "cli",
+      "details": "promotionId:jVKELyW6QrPG  validation:PASS  nativePath:app/lib/mkc/native/tobacco-honey-inspired.ts"
+    },
+    {
+      "timestamp": "2026-09-08T20:35:35.298Z",
+      "action": "promotion_started",
+      "slug": "oud-bouquet-inspired",
+      "operator": "cli",
+      "details": "symbol:oudBouquetInspired  reviewedBy:adnaan"
+    },
+    {
+      "timestamp": "2026-09-08T20:35:35.305Z",
+      "action": "relationships_synced",
+      "slug": "oud-bouquet-inspired",
+      "operator": "cli",
+      "details": "reciprocals:3  files:3"
+    },
+    {
+      "timestamp": "2026-09-08T20:36:12.019Z",
+      "action": "promotion_completed",
+      "slug": "oud-bouquet-inspired",
+      "operator": "cli",
+      "details": "promotionId:OVnEtVyd-Shv  validation:PASS  nativePath:app/lib/mkc/native/oud-bouquet-inspired.ts"
+    },
+    {
+      "timestamp": "2026-09-08T20:36:15.423Z",
+      "action": "promotion_started",
+      "slug": "kouros-silver-inspired",
+      "operator": "cli",
+      "details": "symbol:kourosSilverInspired  reviewedBy:adnaan"
+    },
+    {
+      "timestamp": "2026-09-08T20:36:15.431Z",
+      "action": "relationships_synced",
+      "slug": "kouros-silver-inspired",
+      "operator": "cli",
+      "details": "reciprocals:3  files:3"
+    },
+    {
+      "timestamp": "2026-09-08T20:36:52.194Z",
+      "action": "promotion_completed",
+      "slug": "kouros-silver-inspired",
+      "operator": "cli",
+      "details": "promotionId:pYood4_ZIngg  validation:PASS  nativePath:app/lib/mkc/native/kouros-silver-inspired.ts"
+    },
+    {
+      "timestamp": "2026-09-08T20:36:55.610Z",
+      "action": "promotion_started",
+      "slug": "212-heroes-inspired",
+      "operator": "cli",
+      "details": "symbol:_212HeroesInspired  reviewedBy:adnaan"
+    },
+    {
+      "timestamp": "2026-09-08T20:36:55.618Z",
+      "action": "relationships_synced",
+      "slug": "212-heroes-inspired",
+      "operator": "cli",
+      "details": "reciprocals:3  files:3"
+    },
+    {
+      "timestamp": "2026-09-08T20:37:33.669Z",
+      "action": "promotion_completed",
+      "slug": "212-heroes-inspired",
+      "operator": "cli",
+      "details": "promotionId:cbYFHS2-Fnds  validation:PASS  nativePath:app/lib/mkc/native/212-heroes-inspired.ts"
+    },
+    {
+      "timestamp": "2026-09-08T20:37:37.018Z",
+      "action": "promotion_started",
+      "slug": "stronger-with-you-sandalwood-inspired",
+      "operator": "cli",
+      "details": "symbol:strongerWithYouSandalwoodInspired  reviewedBy:adnaan"
+    },
+    {
+      "timestamp": "2026-09-08T20:37:37.026Z",
+      "action": "relationships_synced",
+      "slug": "stronger-with-you-sandalwood-inspired",
+      "operator": "cli",
+      "details": "reciprocals:4  files:4"
+    },
+    {
+      "timestamp": "2026-09-08T20:38:15.783Z",
+      "action": "promotion_completed",
+      "slug": "stronger-with-you-sandalwood-inspired",
+      "operator": "cli",
+      "details": "promotionId:tJYRR0kIkHlp  validation:PASS  nativePath:app/lib/mkc/native/stronger-with-you-sandalwood-inspired.ts"
+    },
+    {
+      "timestamp": "2026-09-08T20:38:18.641Z",
+      "action": "promotion_started",
+      "slug": "euphoria-men-inspired",
+      "operator": "cli",
+      "details": "symbol:euphoriaMenInspired  reviewedBy:adnaan"
+    },
+    {
+      "timestamp": "2026-09-08T20:38:18.649Z",
+      "action": "relationships_synced",
+      "slug": "euphoria-men-inspired",
+      "operator": "cli",
+      "details": "reciprocals:4  files:4"
+    },
+    {
+      "timestamp": "2026-09-08T20:38:58.675Z",
+      "action": "promotion_completed",
+      "slug": "euphoria-men-inspired",
+      "operator": "cli",
+      "details": "promotionId:1gpTTa_sHK5D  validation:PASS  nativePath:app/lib/mkc/native/euphoria-men-inspired.ts"
+    },
+    {
+      "timestamp": "2026-09-08T20:39:01.712Z",
+      "action": "promotion_started",
+      "slug": "light-blue-capri-in-love-inspired",
+      "operator": "cli",
+      "details": "symbol:lightBlueCapriInLoveInspired  reviewedBy:adnaan"
+    },
+    {
+      "timestamp": "2026-09-08T20:39:01.719Z",
+      "action": "relationships_synced",
+      "slug": "light-blue-capri-in-love-inspired",
+      "operator": "cli",
+      "details": "reciprocals:4  files:4"
+    },
+    {
+      "timestamp": "2026-09-08T20:39:40.700Z",
+      "action": "promotion_completed",
+      "slug": "light-blue-capri-in-love-inspired",
+      "operator": "cli",
+      "details": "promotionId:Kc8FhaS2BJWg  validation:PASS  nativePath:app/lib/mkc/native/light-blue-capri-in-love-inspired.ts"
+    },
+    {
+      "timestamp": "2026-09-08T20:39:44.141Z",
+      "action": "promotion_started",
+      "slug": "jasmin-noir-inspired",
+      "operator": "cli",
+      "details": "symbol:jasminNoirInspired  reviewedBy:adnaan"
+    },
+    {
+      "timestamp": "2026-09-08T20:39:44.148Z",
+      "action": "relationships_synced",
+      "slug": "jasmin-noir-inspired",
+      "operator": "cli",
+      "details": "reciprocals:4  files:4"
+    },
+    {
+      "timestamp": "2026-09-08T20:40:20.779Z",
+      "action": "promotion_completed",
+      "slug": "jasmin-noir-inspired",
+      "operator": "cli",
+      "details": "promotionId:L4wiekKlEGSi  validation:PASS  nativePath:app/lib/mkc/native/jasmin-noir-inspired.ts"
+    },
+    {
+      "timestamp": "2026-09-08T20:40:24.120Z",
+      "action": "promotion_started",
+      "slug": "cloud-inspired",
+      "operator": "cli",
+      "details": "symbol:cloudInspired  reviewedBy:adnaan"
+    },
+    {
+      "timestamp": "2026-09-08T20:40:24.127Z",
+      "action": "relationships_synced",
+      "slug": "cloud-inspired",
+      "operator": "cli",
+      "details": "reciprocals:4  files:4"
+    },
+    {
+      "timestamp": "2026-09-08T20:41:00.572Z",
+      "action": "promotion_completed",
+      "slug": "cloud-inspired",
+      "operator": "cli",
+      "details": "promotionId:ZZA9h74TywKv  validation:PASS  nativePath:app/lib/mkc/native/cloud-inspired.ts"
+    },
+    {
+      "timestamp": "2026-09-08T20:41:03.305Z",
+      "action": "promotion_started",
+      "slug": "bombshell-escape-inspired",
+      "operator": "cli",
+      "details": "symbol:bombshellEscapeInspired  reviewedBy:adnaan"
+    },
+    {
+      "timestamp": "2026-09-08T20:41:03.313Z",
+      "action": "relationships_synced",
+      "slug": "bombshell-escape-inspired",
+      "operator": "cli",
+      "details": "reciprocals:4  files:4"
+    },
+    {
+      "timestamp": "2026-09-08T20:41:39.540Z",
+      "action": "promotion_completed",
+      "slug": "bombshell-escape-inspired",
+      "operator": "cli",
+      "details": "promotionId:Qw2j6EWYUMCh  validation:PASS  nativePath:app/lib/mkc/native/bombshell-escape-inspired.ts"
+    },
+    {
+      "timestamp": "2026-09-08T20:41:42.277Z",
+      "action": "promotion_started",
+      "slug": "opium-inspired",
+      "operator": "cli",
+      "details": "symbol:opiumInspired  reviewedBy:adnaan"
+    },
+    {
+      "timestamp": "2026-09-08T20:41:42.285Z",
+      "action": "relationships_synced",
+      "slug": "opium-inspired",
+      "operator": "cli",
+      "details": "reciprocals:3  files:3"
+    },
+    {
+      "timestamp": "2026-09-08T20:42:24.173Z",
+      "action": "promotion_completed",
+      "slug": "opium-inspired",
+      "operator": "cli",
+      "details": "promotionId:t41u-VmTmDwU  validation:PASS  nativePath:app/lib/mkc/native/opium-inspired.ts"
     }
   ]
 }

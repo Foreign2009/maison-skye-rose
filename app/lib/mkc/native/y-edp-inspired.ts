@@ -88,7 +88,7 @@ export const yEdpInspired: FragranceKnowledge = {
   // ── Relationships ─────────────────────────────────────────────────────────────
   relationships: {
     evolutionOf: "y-inspired",
-    alternatives: ["montblanc-legend-inspired"],
+    alternatives: ["montblanc-legend-inspired", "kouros-silver-inspired"],
   },
 
   // ── Intelligence ─────────────────────────────────────────────────────────────

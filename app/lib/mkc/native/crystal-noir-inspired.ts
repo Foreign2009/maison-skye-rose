@@ -101,7 +101,7 @@ export const crystalNoirInspired: FragranceKnowledge = {
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["baccarat-rouge-540-inspired", "carmina-inspired", "narciso-rouge-inspired", "queen-of-silk-inspired"],
+    alternatives:     ["baccarat-rouge-540-inspired", "carmina-inspired", "narciso-rouge-inspired", "queen-of-silk-inspired", "matiere-noire-inspired"],
     wardrobePartners: ["sauvage-inspired", "oud-wood-inspired", "bright-crystal-inspired", "a-la-rose-inspired"],
   },
 };
