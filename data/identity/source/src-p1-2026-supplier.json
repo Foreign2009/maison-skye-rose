@@ -1,0 +1,74 @@
+{
+  "batchId": "src-p1-2026",
+  "description": "CATALOGUE-SRC-P1 supplier input pool — 10 frozen SRC-P1 candidates from August 2026 supplier intake. Sourced from fragrance-list-2026-08-normalized.json. Pool frozen by CATALOGUE-SRC-P0C governance episode (2026-09-10). All 10 candidates confirmed NEW_SUPPLIER_CANDIDATE with no MKC collision and no active governance HOLD at freeze date. External research authorized by CATALOGUE-SRC-P0D acceptance (2026-09-10).",
+  "governance": {
+    "phase": "CATALOGUE-SRC-P1",
+    "authorizedBy": "Founder — CATALOGUE-SRC-P0D acceptance 2026-09-10",
+    "poolFrozenBy": "CATALOGUE-SRC-P0C governance episode 2026-09-10",
+    "rawSourceFile": "data/supplier/normalized/fragrance-list-2026-08-normalized.json",
+    "researchFile": "data/identity/source/src-p1-2026-research.json",
+    "note": "supplierName values are exact from normalized source file. sourceReference values are the exact sourceKey from fragrance-list-2026-08-normalized.json. No collection assignment has been made at this stage — collection (ROSE/SKYE/ELITE) will be determined during a future governed editorial episode."
+  },
+  "entries": [
+    {
+      "supplierName": "Michael Kors Rose Radiant Gold",
+      "supplierCategory": "LADIES",
+      "sourceReference": "LADIES-193-Michael Kors Rose Radiant Gold",
+      "note": "SRC-P1 research candidate. Gap signal: Rose×female depth."
+    },
+    {
+      "supplierName": "Issey Miyake Sport",
+      "supplierCategory": "MEN",
+      "sourceReference": "MEN-85-Issey Miyake Sport",
+      "note": "SRC-P1 research candidate. Gap signal: Youthful×male, Energetic×male."
+    },
+    {
+      "supplierName": "Leather Malaki / Chopard",
+      "supplierCategory": "UNISEX",
+      "sourceReference": "UNISEX-66-Leather Malaki / Chopard",
+      "note": "SRC-P1 research candidate. Gap signal: Leather×unisex. Gender conflict: supplier categorized UNISEX but research indicates official male marketing — see research file."
+    },
+    {
+      "supplierName": "Chloe Roses",
+      "supplierCategory": "LADIES",
+      "sourceReference": "LADIES-71-Chloe Roses",
+      "note": "SRC-P1 research candidate. Gap signal: Rose×female depth. Canonical name confirmed as 'Roses de Chloé' — see research file."
+    },
+    {
+      "supplierName": "Lacoste Rose",
+      "supplierCategory": "LADIES",
+      "sourceReference": "LADIES-176-Lacoste Rose",
+      "note": "SRC-P1 research candidate. Gap signal: Rose×female depth. Identity ambiguous — multiple Lacoste L.12.12 Rose variants exist. Research file documents probable match and conflict."
+    },
+    {
+      "supplierName": "Paco Rabanne Ultra Violet",
+      "supplierCategory": "LADIES",
+      "sourceReference": "LADIES-223-Paco Rabanne Ultra Violet",
+      "note": "SRC-P1 research candidate. Gap signal: Powdery×female, Spicy×female. Canonical name: 'Ultraviolet Woman' by Rabanne. Discontinuation status uncertain — see research file."
+    },
+    {
+      "supplierName": "212 VIP Rose",
+      "supplierCategory": "LADIES",
+      "sourceReference": "LADIES-7-212 VIP Rose",
+      "note": "SRC-P1 research candidate. Gap signal: Rose×female depth. Canonical name: '212 VIP Rosé' (accent on é) by Carolina Herrera — see research file."
+    },
+    {
+      "supplierName": "Cool Water",
+      "supplierCategory": "LADIES",
+      "sourceReference": "LADIES-84-Cool Water",
+      "note": "SRC-P1 research candidate. Gap signal: EXPLORATORY — aquatic/fresh/warm-weather positioning; Travel×female gap. Canonical name: 'Cool Water Woman' by Davidoff. Distinct from male cool-water-inspired already in MKC."
+    },
+    {
+      "supplierName": "La Nuit Tresor Nude",
+      "supplierCategory": "LADIES",
+      "sourceReference": "LADIES-171-La Nuit Tresor Nude",
+      "note": "SRC-P1 research candidate. Gap signal: Powdery×female. Canonical name: 'La Nuit Trésor Nude' by Lancôme. Distinct from la-nuit-tresor-inspired (La Nuit Trésor EDP 2015) already in MKC."
+    },
+    {
+      "supplierName": "Polo Sport",
+      "supplierCategory": "MEN",
+      "sourceReference": "MEN-121-Polo Sport",
+      "note": "SRC-P1 research candidate. Gap signal: Youthful×male, Energetic×male."
+    }
+  ]
+}
