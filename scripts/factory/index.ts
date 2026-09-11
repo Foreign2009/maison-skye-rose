@@ -12,6 +12,9 @@
  *   mkc:factory -- "Fragrance Name" --force
  *     Force regeneration, overwriting existing drafts.
  *
+ *   mkc:factory -- "Fragrance Name" --dry-run
+ *     Simulate the pipeline without making any API call or writing a draft.
+ *
  *   mkc:factory:promote -- slug-name
  *     Promote an approved draft to the native registry.
  *
@@ -43,9 +46,10 @@ import { deriveSlug } from "./intake";
 
 // ── Argument parsing ──────────────────────────────────────────────────────────
 
-const args  = process.argv.slice(2);
-const force = args.includes("--force");
-const clean = args.filter(a => !a.startsWith("--"));
+const args   = process.argv.slice(2);
+const force  = args.includes("--force");
+const dryRun = args.includes("--dry-run");
+const clean  = args.filter(a => !a.startsWith("--"));
 
 // Determine mode from the script name used to invoke this file.
 // package.json sets: mkc:factory → node index.ts
@@ -93,7 +97,7 @@ async function main(): Promise<void> {
     // Accept either a name or a slug
     const slug = raw.includes(" ") ? deriveSlug(raw) : raw;
 
-    const result = await run({ slug, force, dryRun: false });
+    const result = await run({ slug, force, dryRun });
 
     if (result.status === "failed") {
       console.error(`\n[mkc:factory] Failed: ${result.message}\n`);

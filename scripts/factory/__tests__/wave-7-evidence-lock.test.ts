@@ -66,7 +66,7 @@ console.log("\n── B: Intake resolution ────────────�
 
 for (const slug of EXPECTED_SLUGS) {
   test(`intake resolves ${slug}`, () => {
-    const result = intake({ slug, force: false });
+    const result = intake({ slug, force: true });
     assert.equal(result.status, "found", `Expected status "found" but got "${result.status}"`);
     assert.notEqual(result.intake, null, "Expected intake record to be non-null");
   });

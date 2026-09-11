@@ -83,11 +83,11 @@ const skye: DisplayFragrance[] = [
     // LOCK E: family = ["Aromatic", "Aquatic"]. Profile = "Aromatic Aquatic".
     //   fragranceFamily="Aromatic Green" but mainAccords includes "aquatic" prominently.
     //   Seagrass heart note and aquatic character confirmed. P0 correction accepted.
-    // Gap: Youthful×male, Energetic×male — fills catalogue gap at this intersection.
+    // Gap: Energetic×male — sporty aquatic character and active lifestyle positioning.
     title:               "Polo Sport Inspired",
     collection:          "Skye",
     subtitle:            "Inspired by Ralph Lauren Polo Sport",
-    mood:                "Fresh Youthful Energetic",
+    mood:                "Fresh Energetic",
     profile:             "Aromatic Aquatic",
     season:              "Summer",
     notes:               ["Mint", "Lavender", "Bergamot", "Lemon", "Mandarin Orange", "Aldehydes", "Artemisia", "Neroli", "Pineapple", "Seagrass", "Ginger", "Jasmine", "Geranium", "Cyclamen", "Rose", "Brazilian Rosewood", "Musk", "Sandalwood", "Cedar", "Guaiac Wood", "Amber"],
@@ -142,11 +142,11 @@ const skye: DisplayFragrance[] = [
     // NOTE: Energetic vibe is evidence-supported — Fragrantica: "energetic, unconventional
     //   edition ideal for everyday use." Coastal NOT assigned: no aquatic/marine notes
     //   (composition: bergamot/grapefruit/nutmeg/leather/vetiver/cedar/ambergris).
-    // Gap: Youthful×male, Energetic×male — sporty citrus-spice everyday character.
+    // Gap: Energetic×male — sporty citrus-spice everyday character (Fragrantica-evidenced).
     title:               "Leau Dissey Pour Homme Sport Inspired",
     collection:          "Skye",
     subtitle:            "Inspired by Issey Miyake L'Eau d'Issey Pour Homme Sport",
-    mood:                "Fresh Youthful Energetic",
+    mood:                "Fresh Energetic",
     profile:             "Aromatic Fresh Spicy",
     season:              "Spring",
     notes:               ["Bergamot", "Grapefruit", "Nutmeg", "Leather", "Vetiver", "Virginia Cedar", "Ambergris"],
