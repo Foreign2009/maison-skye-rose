@@ -5308,6 +5308,174 @@
       "slug": "opium-inspired",
       "reviewer": "cli",
       "details": "promotionId:t41u-VmTmDwU  nativePath:app/lib/mkc/native/opium-inspired.ts"
+    },
+    {
+      "timestamp": "2026-09-11T20:35:26.774Z",
+      "action": "added_to_queue",
+      "slug": "212-vip-rose-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-09-11T20:35:26.784Z",
+      "action": "review_started",
+      "slug": "212-vip-rose-inspired",
+      "reviewer": "Adi",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-09-11T20:35:26.797Z",
+      "action": "approved",
+      "slug": "212-vip-rose-inspired",
+      "reviewer": "Adi",
+      "details": "Editorial review complete; evidence locks verified; validation passed."
+    },
+    {
+      "timestamp": "2026-09-11T20:35:26.812Z",
+      "action": "added_to_queue",
+      "slug": "ultraviolet-woman-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-09-11T20:35:26.823Z",
+      "action": "review_started",
+      "slug": "ultraviolet-woman-inspired",
+      "reviewer": "Adi",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-09-11T20:35:26.833Z",
+      "action": "approved",
+      "slug": "ultraviolet-woman-inspired",
+      "reviewer": "Adi",
+      "details": "Editorial review complete; evidence locks verified; validation passed."
+    },
+    {
+      "timestamp": "2026-09-11T20:35:26.844Z",
+      "action": "added_to_queue",
+      "slug": "leather-malaki-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-09-11T20:35:26.852Z",
+      "action": "review_started",
+      "slug": "leather-malaki-inspired",
+      "reviewer": "Adi",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-09-11T20:35:26.862Z",
+      "action": "approved",
+      "slug": "leather-malaki-inspired",
+      "reviewer": "Adi",
+      "details": "Editorial review complete; evidence locks verified; validation passed."
+    },
+    {
+      "timestamp": "2026-09-11T20:35:26.872Z",
+      "action": "added_to_queue",
+      "slug": "roses-de-chloe-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-09-11T20:35:26.881Z",
+      "action": "review_started",
+      "slug": "roses-de-chloe-inspired",
+      "reviewer": "Adi",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-09-11T20:35:26.890Z",
+      "action": "approved",
+      "slug": "roses-de-chloe-inspired",
+      "reviewer": "Adi",
+      "details": "Editorial corrections applied and revalidated; evidence locks verified; validation passed."
+    },
+    {
+      "timestamp": "2026-09-11T20:35:26.900Z",
+      "action": "added_to_queue",
+      "slug": "cool-water-woman-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-09-11T20:35:26.910Z",
+      "action": "review_started",
+      "slug": "cool-water-woman-inspired",
+      "reviewer": "Adi",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-09-11T20:35:26.919Z",
+      "action": "approved",
+      "slug": "cool-water-woman-inspired",
+      "reviewer": "Adi",
+      "details": "Editorial corrections applied and revalidated; evidence locks verified; validation passed."
+    },
+    {
+      "timestamp": "2026-09-11T20:35:26.929Z",
+      "action": "added_to_queue",
+      "slug": "leau-dissey-pour-homme-sport-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-09-11T20:35:26.939Z",
+      "action": "review_started",
+      "slug": "leau-dissey-pour-homme-sport-inspired",
+      "reviewer": "Adi",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-09-11T20:35:26.949Z",
+      "action": "approved",
+      "slug": "leau-dissey-pour-homme-sport-inspired",
+      "reviewer": "Adi",
+      "details": "Editorial corrections applied and revalidated; evidence locks verified; validation passed."
+    },
+    {
+      "timestamp": "2026-09-11T20:35:26.960Z",
+      "action": "added_to_queue",
+      "slug": "polo-sport-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-09-11T20:35:26.969Z",
+      "action": "review_started",
+      "slug": "polo-sport-inspired",
+      "reviewer": "Adi",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-09-11T20:35:26.979Z",
+      "action": "approved",
+      "slug": "polo-sport-inspired",
+      "reviewer": "Adi",
+      "details": "Editorial corrections applied and revalidated; evidence locks verified; validation passed."
+    },
+    {
+      "timestamp": "2026-09-11T20:35:26.990Z",
+      "action": "added_to_queue",
+      "slug": "la-nuit-tresor-nude-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-09-11T20:35:26.999Z",
+      "action": "review_started",
+      "slug": "la-nuit-tresor-nude-inspired",
+      "reviewer": "Adi",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-09-11T20:35:27.009Z",
+      "action": "approved",
+      "slug": "la-nuit-tresor-nude-inspired",
+      "reviewer": "Adi",
+      "details": "Editorial corrections applied and revalidated; evidence locks verified; validation passed."
     }
   ]
 }

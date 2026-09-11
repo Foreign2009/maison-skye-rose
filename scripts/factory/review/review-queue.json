@@ -5180,6 +5180,166 @@
         "timestamp": "2026-09-08T19:59:33.363Z",
         "reason": "Wave 6 editorial and evidence review completed; P4 corrections validated."
       }
+    },
+    {
+      "slug": "212-vip-rose-inspired",
+      "name": "212 VIP Rose Inspired",
+      "collection": "Rose",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-09-11T20:35:26.768Z",
+      "reviewStartedAt": "2026-09-11T20:35:26.778Z",
+      "decidedAt": "2026-09-11T20:35:26.791Z",
+      "reviewer": "Adi",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Adi",
+        "timestamp": "2026-09-11T20:35:26.791Z",
+        "reason": "Editorial review complete; evidence locks verified; validation passed."
+      }
+    },
+    {
+      "slug": "ultraviolet-woman-inspired",
+      "name": "Ultraviolet Woman Inspired",
+      "collection": "Rose",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-09-11T20:35:26.806Z",
+      "reviewStartedAt": "2026-09-11T20:35:26.815Z",
+      "decidedAt": "2026-09-11T20:35:26.828Z",
+      "reviewer": "Adi",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Adi",
+        "timestamp": "2026-09-11T20:35:26.828Z",
+        "reason": "Editorial review complete; evidence locks verified; validation passed."
+      }
+    },
+    {
+      "slug": "leather-malaki-inspired",
+      "name": "Leather Malaki Inspired",
+      "collection": "Skye",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-09-11T20:35:26.839Z",
+      "reviewStartedAt": "2026-09-11T20:35:26.848Z",
+      "decidedAt": "2026-09-11T20:35:26.857Z",
+      "reviewer": "Adi",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Adi",
+        "timestamp": "2026-09-11T20:35:26.857Z",
+        "reason": "Editorial review complete; evidence locks verified; validation passed."
+      }
+    },
+    {
+      "slug": "roses-de-chloe-inspired",
+      "name": "Roses de Chloe Inspired",
+      "collection": "Rose",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-09-11T20:35:26.866Z",
+      "reviewStartedAt": "2026-09-11T20:35:26.876Z",
+      "decidedAt": "2026-09-11T20:35:26.887Z",
+      "reviewer": "Adi",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Adi",
+        "timestamp": "2026-09-11T20:35:26.887Z",
+        "reason": "Editorial corrections applied and revalidated; evidence locks verified; validation passed."
+      }
+    },
+    {
+      "slug": "cool-water-woman-inspired",
+      "name": "Cool Water Woman Inspired",
+      "collection": "Rose",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-09-11T20:35:26.895Z",
+      "reviewStartedAt": "2026-09-11T20:35:26.904Z",
+      "decidedAt": "2026-09-11T20:35:26.914Z",
+      "reviewer": "Adi",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Adi",
+        "timestamp": "2026-09-11T20:35:26.914Z",
+        "reason": "Editorial corrections applied and revalidated; evidence locks verified; validation passed."
+      }
+    },
+    {
+      "slug": "leau-dissey-pour-homme-sport-inspired",
+      "name": "Leau Dissey Pour Homme Sport Inspired",
+      "collection": "Skye",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-09-11T20:35:26.924Z",
+      "reviewStartedAt": "2026-09-11T20:35:26.934Z",
+      "decidedAt": "2026-09-11T20:35:26.943Z",
+      "reviewer": "Adi",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Adi",
+        "timestamp": "2026-09-11T20:35:26.943Z",
+        "reason": "Editorial corrections applied and revalidated; evidence locks verified; validation passed."
+      }
+    },
+    {
+      "slug": "polo-sport-inspired",
+      "name": "Polo Sport Inspired",
+      "collection": "Skye",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-09-11T20:35:26.954Z",
+      "reviewStartedAt": "2026-09-11T20:35:26.964Z",
+      "decidedAt": "2026-09-11T20:35:26.974Z",
+      "reviewer": "Adi",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Adi",
+        "timestamp": "2026-09-11T20:35:26.974Z",
+        "reason": "Editorial corrections applied and revalidated; evidence locks verified; validation passed."
+      }
+    },
+    {
+      "slug": "la-nuit-tresor-nude-inspired",
+      "name": "La Nuit Tresor Nude Inspired",
+      "collection": "Rose",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-09-11T20:35:26.983Z",
+      "reviewStartedAt": "2026-09-11T20:35:26.994Z",
+      "decidedAt": "2026-09-11T20:35:27.004Z",
+      "reviewer": "Adi",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Adi",
+        "timestamp": "2026-09-11T20:35:27.004Z",
+        "reason": "Editorial corrections applied and revalidated; evidence locks verified; validation passed."
+      }
     }
   ]
 }
