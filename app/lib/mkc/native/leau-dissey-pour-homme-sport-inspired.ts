@@ -62,7 +62,7 @@ export const leauDisseyPourHommeSportInspired: FragranceKnowledge = {
     "Men seeking a fresh, energetic fragrance that transitions seamlessly from morning workouts to office and weekend activities",
     "Those who want bergamot brightness with subtle leather warmth — fresh without being sweet or overly citrus-driven",
     "Active men who appreciate a clean aromatic-spicy profile and subtle textured freshness over sweetness or loudness",
-    "Fragrance enthusiasts building a spring rotation who need a versatile daily wear that feels youthful and textured",
+    "Fragrance enthusiasts building a spring rotation who need a versatile daily wear that feels bright and energetic",
   ],
 
   // ── Merchandising ───────────────────────────────────────────────────────────
