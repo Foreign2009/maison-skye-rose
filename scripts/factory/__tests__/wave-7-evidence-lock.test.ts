@@ -13,6 +13,8 @@ import { intake, deriveSlug, toFragranceIntake } from "../intake";
 import { adaptFragrance }     from "../../../app/lib/knowledgeAdapter";
 import { nativeFragrances }   from "../../../app/lib/mkc/native/index";
 import { scaffold }           from "../scaffold";
+import { findRecord }         from "../review/ReviewRegistry";
+import { findPromotionRecord } from "../promotion/PromotionRegistry";
 
 // ── Test harness ──────────────────────────────────────────────────────────────
 
@@ -378,19 +380,44 @@ test("No duplicate slugs within wave7Catalogue", () => {
   assert.equal(unique.size, slugs.length, `Duplicate slugs detected: [${slugs.join(", ")}]`);
 });
 
-// ── K: No Wave 7 slug already native ─────────────────────────────────────────
+// ── K: Wave 7 slugs are native with governed review + promotion evidence ──────
+//
+// Pre-promotion: asserted slugs ABSENT from native (isolation guard).
+// Post-promotion: asserts slugs PRESENT in native WITH governed evidence.
+//   A native Wave 7 record is only accepted when:
+//     1. nativeFragrances contains the slug            (promotion executed)
+//     2. review-queue has status = "approved"          (editorial gate passed)
+//     3. promotion-registry has status = "promoted"    (governed pipeline ran)
 
-console.log("\n── K: No Wave 7 slug in native MKC ───────────────────────────");
+console.log("\n── K: Wave 7 governed promotion state ────────────────────────");
 
-test("No Wave 7 slug already exists in native MKC registry", () => {
-  const conflicts: string[] = [];
+test("All Wave 7 slugs are native with governed review and promotion evidence", () => {
+  const missing:    string[] = [];
+  const unapproved: string[] = [];
+  const unpromoted: string[] = [];
+
   for (const record of wave7Catalogue) {
     const slug = deriveSlug(record.title);
-    if (nativeFragrances.has(slug)) {
-      conflicts.push(slug);
+
+    if (!nativeFragrances.has(slug)) {
+      missing.push(slug);
+      continue;
+    }
+
+    const review = findRecord(slug);
+    if (!review || review.status !== "approved") {
+      unapproved.push(`${slug}(${review?.status ?? "not found"})`);
+    }
+
+    const promotion = findPromotionRecord(slug);
+    if (!promotion || promotion.status !== "promoted") {
+      unpromoted.push(`${slug}(${promotion?.status ?? "not found"})`);
     }
   }
-  assert.deepEqual(conflicts, [], `Wave 7 slugs already native: [${conflicts.join(", ")}]`);
+
+  assert.deepEqual(missing,    [], `Wave 7 slugs missing from native: [${missing.join(", ")}]`);
+  assert.deepEqual(unapproved, [], `Wave 7 slugs without approved review: [${unapproved.join(", ")}]`);
+  assert.deepEqual(unpromoted, [], `Wave 7 slugs without governed promotion: [${unpromoted.join(", ")}]`);
 });
 
 // ── L: All records pass intake/scaffold without generation ────────────────────
