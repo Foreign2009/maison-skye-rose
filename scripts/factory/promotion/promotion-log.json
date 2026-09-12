@@ -5110,6 +5110,13 @@
       "slug": "la-nuit-tresor-nude-inspired",
       "operator": "Adi",
       "details": "promotionId:Tvok-bcgnr8j  validation:PASS  nativePath:app/lib/mkc/native/la-nuit-tresor-nude-inspired.ts"
+    },
+    {
+      "timestamp": "2026-09-12T19:25:21.589Z",
+      "action": "native_retired",
+      "slug": "kayali-vanilla-28-inspired",
+      "operator": "EP-CAT-P2D",
+      "details": "Native file retired as duplicate identity (commit 74eb829, 2026-08-15). Canonical successor: vanilla-28-inspired. Registry preserves historical promotion record (status=promoted, completedAt=2026-07-14T17:49:58.382Z). Record not active in native catalogue."
     }
   ]
 }
