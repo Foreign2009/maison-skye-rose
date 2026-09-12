@@ -1,7 +1,7 @@
 // ═════════════════════════════════════════════════════════════════
-// FACTORY DRAFT — twilly-d'hermes-inspired
+// FACTORY DRAFT — 212-vip-rose-inspired
 // ─────────────────────────────────────────────────────────────────
-// Generated:         2026-08-16T18:08:21.443Z
+// Generated:         2026-09-11T18:49:34.325Z
 // Factory version:   0.5.0
 // Prompt versions:   EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0
 // Validation status: PASS  [0 error(s), 0 warning(s)]
@@ -20,54 +20,56 @@
 
 import type { FragranceKnowledge } from "../types";
 
-export const twillyDhermesInspired: FragranceKnowledge = {
+export const _212VipRoseInspired: FragranceKnowledge = {
   // ── Identity ──────────────────────────────────────────────────────────────────
-  id            : "twilly-d'hermes-inspired",
-  slug          : "twilly-d'hermes-inspired",
+  id            : "212-vip-rose-inspired",
+  slug          : "212-vip-rose-inspired",
   brand         : "Maison Skye & Rose",
-  name          : "Twilly d'Hermes Inspired",
+  name          : "212 VIP Rose Inspired",
   collection    : "Rose",
   catalogVersion: "1.0",
   status        : "active",
 
   // ── Classification ────────────────────────────────────────────────────────────
   gender        : "female",
-  family        : ["Floral", "Spicy"],
-  scentCharacter: "Rich & Full-Bodied",
+  family        : ["Floral", "Fruity", "Woody"],
+  scentCharacter: "Balanced Signature",
   projection    : "moderate",
 
   // ── Composition ─────────────────────────────────────────────────────────────
-  profile       : "Floral Spicy",
+  profile       : "Floral Fruity Woody",
   season        : "Spring",
   notes: {
-    top:   ["Ginger", "Bitter Orange", "Bergamot"],
-    heart: ["Tuberose", "Orange Blossom", "Jasmine"],
-    base:  ["Sandalwood", "Vanilla"],
+    top:   ["Champagne Rosé", "Pink Pepper"],
+    heart: ["Peach Blossom", "Rose"],
+    base:  ["Queenwood", "Musk"],
   },
-  mood          : "Spicy Floral Feminine",
+  notesEvidenceLocked: true,
+  mood          : "Luminous Feminine Magnetic",
 
   // ── Discovery ───────────────────────────────────────────────────────────────
   vibe          : [
-    "Confident",
+    "Magnetic",
+    "Luminous",
     "Feminine",
+    "Playful",
     "Sophisticated",
     "Warm",
-    "Sensual",
-    "Playful",
   ],
   occasions     : [
     "Daily Wear",
-    "Office",
+    "Wedding",
     "Date Night",
     "Weekend",
-    "Wedding",
+    "Evening",
   ],
   seasons       : ["Spring", "Summer"],
-  signatureStyle: ["Spiced Floral Elegance", "Modern Feminine Power"],
+  signatureStyle: ["Effervescent Elegance", "Modern Rose Icon", "Luminous Feminine"],
   recommendedFor: [
-    "Women seeking a confident floral that balances spice and softness for everyday elegance",
-    "Those who love rich, creamy florals with enough ginger bite to feel modern and assertive",
-    "Anyone wanting a signature scent that works from office to evening without feeling overdressed",
+    "Women seeking an elegant signature that balances celebration with everyday sophistication",
+    "Those who love rose but want brightness and playfulness over classic romance",
+    "Anyone drawn to fruity florals with enough depth to transition from day to evening",
+    "Gift-givers looking for a universally flattering fragrance with personality and warmth",
   ],
 
   // ── Merchandising ───────────────────────────────────────────────────────────
@@ -85,29 +87,29 @@ export const twillyDhermesInspired: FragranceKnowledge = {
   newArrival    : false,
 
   // ── Education ───────────────────────────────────────────────────────────────
-  subtitle      : "Spiced Bloom",
-  description   : "Ginger and bitter orange ignite with a sharp, almost peppery warmth that immediately commands attention. The heart unfolds into creamy tuberose and jasmine, their indolic richness tempered by the fragrance's restless spice—a floral that refuses to whisper. Sandalwood and vanilla settle beneath, grounding the composition in soft amber rather than sweetness.",
-  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances", "how-to-wear-fragrance"],
-  academyCategories: ["fragrance-families", "the-note-pyramid", "wear-and-application"],
+  subtitle      : "Effervescent Femininity",
+  description   : "Opens with the fizz of rosé and pink pepper—effervescent, celebratory, alive. A heart of peach blossom and rose unfolds with luminous warmth, grounded by queenwood and musk that anchor the composition in sensual depth rather than sugar.",
+  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "what-makes-a-signature-scent", "how-to-layer-fragrances"],
+  academyCategories: ["fragrance-families", "the-note-pyramid", "occasions-and-style"],
   educationTags : [
     "floral",
-    "spicy",
-    "tuberose",
-    "jasmine",
-    "ginger",
-    "sandalwood",
+    "rose",
+    "fruity",
+    "woody",
+    "peach",
+    "pink-pepper",
+    "champagne",
     "feminine",
-    "rich",
-    "full-bodied",
-    "layering",
+    "signature",
+    "spring",
   ],
-  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances"],
+  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "what-makes-a-signature-scent", "how-to-layer-fragrances"],
 
   // ── Intelligence ────────────────────────────────────────────────────────────
   // Approximated from profile + season. Calibrated by Intelligence Producer in P2.
   sweetness     : 2,
   freshness     : 3,
-  warmth        : 4,
+  warmth        : 3,
   intensity     : 2,
   versatility   : 3,
   popularity    : 5,
@@ -115,7 +117,7 @@ export const twillyDhermesInspired: FragranceKnowledge = {
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["chance-eau-tendre-inspired", "mon-paris-inspired", "ultraviolet-woman-inspired"],
-    wardrobePartners: ["alien-inspired"],
+    alternatives:     ["delina-inspired", "mon-paris-inspired", "chance-eau-tendre-inspired"],
+    wardrobePartners: ["baccarat-rouge-540-inspired", "alien-inspired"],
   },
 };

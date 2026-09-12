@@ -110,7 +110,7 @@ export const spicebombDarkLeatherInspired: FragranceKnowledge = {
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["spicebomb-extreme-inspired", "oud-for-greatness-inspired", "tuscan-leather-inspired"],
+    alternatives:     ["spicebomb-extreme-inspired", "oud-for-greatness-inspired", "tuscan-leather-inspired", "leather-malaki-inspired"],
     wardrobePartners: ["sauvage-elixir-inspired", "blue-noir-inspired"],
   },
 };

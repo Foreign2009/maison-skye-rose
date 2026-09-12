@@ -132,7 +132,7 @@ export const coolWaterInspired: FragranceKnowledge = {
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
     alternatives:     ["aqua-di-gio-inspired", "invictus-inspired", "hawas-inspired"],
-    wardrobePartners: ["spicebomb-extreme-inspired", "ombre-nomade-inspired"],
+    wardrobePartners: ["spicebomb-extreme-inspired", "ombre-nomade-inspired", "cool-water-woman-inspired"],
   },
 };
 

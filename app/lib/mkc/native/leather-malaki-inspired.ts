@@ -1,7 +1,7 @@
 // ═════════════════════════════════════════════════════════════════
-// FACTORY DRAFT — twilly-d'hermes-inspired
+// FACTORY DRAFT — leather-malaki-inspired
 // ─────────────────────────────────────────────────────────────────
-// Generated:         2026-08-16T18:08:21.443Z
+// Generated:         2026-09-11T18:52:38.824Z
 // Factory version:   0.5.0
 // Prompt versions:   EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0
 // Validation status: PASS  [0 error(s), 0 warning(s)]
@@ -20,54 +20,50 @@
 
 import type { FragranceKnowledge } from "../types";
 
-export const twillyDhermesInspired: FragranceKnowledge = {
+export const leatherMalakiInspired: FragranceKnowledge = {
   // ── Identity ──────────────────────────────────────────────────────────────────
-  id            : "twilly-d'hermes-inspired",
-  slug          : "twilly-d'hermes-inspired",
+  id            : "leather-malaki-inspired",
+  slug          : "leather-malaki-inspired",
   brand         : "Maison Skye & Rose",
-  name          : "Twilly d'Hermes Inspired",
-  collection    : "Rose",
+  name          : "Leather Malaki Inspired",
+  collection    : "Skye",
   catalogVersion: "1.0",
   status        : "active",
 
   // ── Classification ────────────────────────────────────────────────────────────
-  gender        : "female",
-  family        : ["Floral", "Spicy"],
-  scentCharacter: "Rich & Full-Bodied",
+  gender        : "male",
+  family        : ["Leather", "Woody"],
+  scentCharacter: "Deep & Intense",
   projection    : "moderate",
 
   // ── Composition ─────────────────────────────────────────────────────────────
-  profile       : "Floral Spicy",
-  season        : "Spring",
+  profile       : "Leather Woody",
+  season        : "Autumn",
   notes: {
-    top:   ["Ginger", "Bitter Orange", "Bergamot"],
-    heart: ["Tuberose", "Orange Blossom", "Jasmine"],
-    base:  ["Sandalwood", "Vanilla"],
+    top:   ["Bergamot", "Black Pepper"],
+    heart: ["Alaskan Cedar", "Cypress", "Spicy Notes"],
+    base:  ["Leather", "Labdanum", "Mineral Notes", "Amber"],
   },
-  mood          : "Spicy Floral Feminine",
+  notesEvidenceLocked: true,
+  mood          : "Dry Smoky Leather Mineral",
 
   // ── Discovery ───────────────────────────────────────────────────────────────
   vibe          : [
-    "Confident",
-    "Feminine",
+    "Intense",
     "Sophisticated",
+    "Mysterious",
     "Warm",
-    "Sensual",
-    "Playful",
+    "Mature",
+    "Bold",
   ],
-  occasions     : [
-    "Daily Wear",
-    "Office",
-    "Date Night",
-    "Weekend",
-    "Wedding",
-  ],
-  seasons       : ["Spring", "Summer"],
-  signatureStyle: ["Spiced Floral Elegance", "Modern Feminine Power"],
+  occasions     : ["Office", "Date Night", "Evening", "Formal"],
+  seasons       : ["Autumn", "Winter"],
+  signatureStyle: ["Dry Smoky Leather", "Woody Masculine Depth", "Mineral Cedar Elegance"],
   recommendedFor: [
-    "Women seeking a confident floral that balances spice and softness for everyday elegance",
-    "Those who love rich, creamy florals with enough ginger bite to feel modern and assertive",
-    "Anyone wanting a signature scent that works from office to evening without feeling overdressed",
+    "Men who gravitate toward leather and woody fragrances and want something sophisticated for professional and evening settings.",
+    "Those seeking a deep, mineral-driven leather that feels aged and smoky rather than soft or animalic.",
+    "Anyone drawn to spiced, complex compositions that evolve from bright bergamot into leather and amber.",
+    "Fragrance enthusiasts building a collection around woody and leather signatures for autumn and cooler months.",
   ],
 
   // ── Merchandising ───────────────────────────────────────────────────────────
@@ -77,45 +73,46 @@ export const twillyDhermesInspired: FragranceKnowledge = {
     "30ml": 250,
   },
   images: {
-    "5ml":  "/images/pink-5ml.png",
-    "10ml": "/images/pink-10ml.png",
-    "30ml": "/images/glass-pink-30ml.png",
+    "5ml":  "/images/blue-5ml.png",
+    "10ml": "/images/blue-10ml.png",
+    "30ml": "/images/glass-blue-30ml.png",
   },
   bestSeller    : false,
   newArrival    : false,
 
   // ── Education ───────────────────────────────────────────────────────────────
-  subtitle      : "Spiced Bloom",
-  description   : "Ginger and bitter orange ignite with a sharp, almost peppery warmth that immediately commands attention. The heart unfolds into creamy tuberose and jasmine, their indolic richness tempered by the fragrance's restless spice—a floral that refuses to whisper. Sandalwood and vanilla settle beneath, grounding the composition in soft amber rather than sweetness.",
+  subtitle      : "Dry Smoky Leather",
+  description   : "Black pepper and bergamot ignite against the mineral breath of cypress and Alaskan cedar, grounding into a leather that smells of smoke and aged hide. Labdanum and amber anchor the composition with a dry, almost ashy warmth—a fragrance that tastes like stone and tastes like time.",
   academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances", "how-to-wear-fragrance"],
   academyCategories: ["fragrance-families", "the-note-pyramid", "wear-and-application"],
   educationTags : [
-    "floral",
+    "leather",
+    "woody",
+    "amber",
+    "cedar",
     "spicy",
-    "tuberose",
-    "jasmine",
-    "ginger",
-    "sandalwood",
-    "feminine",
-    "rich",
-    "full-bodied",
+    "deep",
+    "intense",
+    "masculine",
+    "autumn",
+    "office",
     "layering",
   ],
-  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances"],
+  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances", "how-to-wear-fragrance"],
 
   // ── Intelligence ────────────────────────────────────────────────────────────
   // Approximated from profile + season. Calibrated by Intelligence Producer in P2.
   sweetness     : 2,
-  freshness     : 3,
-  warmth        : 4,
-  intensity     : 2,
+  freshness     : 1,
+  warmth        : 3,
+  intensity     : 3,
   versatility   : 3,
   popularity    : 5,
 
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["chance-eau-tendre-inspired", "mon-paris-inspired", "ultraviolet-woman-inspired"],
-    wardrobePartners: ["alien-inspired"],
+    alternatives:     ["ombre-leather-inspired", "spicebomb-dark-leather-inspired"],
+    wardrobePartners: ["sauvage-elixir-inspired"],
   },
 };

@@ -1,7 +1,7 @@
 // ═════════════════════════════════════════════════════════════════
-// FACTORY DRAFT — twilly-d'hermes-inspired
+// FACTORY DRAFT — la-nuit-tresor-nude-inspired
 // ─────────────────────────────────────────────────────────────────
-// Generated:         2026-08-16T18:08:21.443Z
+// Generated:         2026-09-11T18:53:14.895Z
 // Factory version:   0.5.0
 // Prompt versions:   EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0
 // Validation status: PASS  [0 error(s), 0 warning(s)]
@@ -20,54 +20,50 @@
 
 import type { FragranceKnowledge } from "../types";
 
-export const twillyDhermesInspired: FragranceKnowledge = {
+export const laNuitTresorNudeInspired: FragranceKnowledge = {
   // ── Identity ──────────────────────────────────────────────────────────────────
-  id            : "twilly-d'hermes-inspired",
-  slug          : "twilly-d'hermes-inspired",
+  id            : "la-nuit-tresor-nude-inspired",
+  slug          : "la-nuit-tresor-nude-inspired",
   brand         : "Maison Skye & Rose",
-  name          : "Twilly d'Hermes Inspired",
+  name          : "La Nuit Tresor Nude Inspired",
   collection    : "Rose",
   catalogVersion: "1.0",
   status        : "active",
 
   // ── Classification ────────────────────────────────────────────────────────────
   gender        : "female",
-  family        : ["Floral", "Spicy"],
+  family        : ["Vanilla", "Floral", "Sweet"],
   scentCharacter: "Rich & Full-Bodied",
   projection    : "moderate",
 
   // ── Composition ─────────────────────────────────────────────────────────────
-  profile       : "Floral Spicy",
+  profile       : "Floral Sweet Vanilla",
   season        : "Spring",
   notes: {
-    top:   ["Ginger", "Bitter Orange", "Bergamot"],
-    heart: ["Tuberose", "Orange Blossom", "Jasmine"],
-    base:  ["Sandalwood", "Vanilla"],
+    top:   ["Bergamot"],
+    heart: ["Rose"],
+    base:  ["Vanilla", "Coconut"],
   },
-  mood          : "Spicy Floral Feminine",
+  notesEvidenceLocked: true,
+  mood          : "Warm Romantic Soft",
 
   // ── Discovery ───────────────────────────────────────────────────────────────
   vibe          : [
-    "Confident",
-    "Feminine",
-    "Sophisticated",
+    "Romantic",
     "Warm",
+    "Soft",
+    "Intimate",
     "Sensual",
-    "Playful",
+    "Elegant",
   ],
-  occasions     : [
-    "Daily Wear",
-    "Office",
-    "Date Night",
-    "Weekend",
-    "Wedding",
-  ],
+  occasions     : ["Daily Wear", "Date Night", "Weekend", "Wedding"],
   seasons       : ["Spring", "Summer"],
-  signatureStyle: ["Spiced Floral Elegance", "Modern Feminine Power"],
+  signatureStyle: ["Romantic Skin Scent", "Soft Floral Intimacy", "Modern Romance"],
   recommendedFor: [
-    "Women seeking a confident floral that balances spice and softness for everyday elegance",
-    "Those who love rich, creamy florals with enough ginger bite to feel modern and assertive",
-    "Anyone wanting a signature scent that works from office to evening without feeling overdressed",
+    "Women seeking a romantic everyday fragrance that feels like a warm second skin rather than a bold statement",
+    "Those who love rose and vanilla but want softness and quiet warmth over bold statements",
+    "Anyone looking for a versatile floral that works equally well for spring dates, weekend wear, and casual evenings",
+    "Fragrance enthusiasts who want softness and sensuality without sweetness that feels cloying or juvenile",
   ],
 
   // ── Merchandising ───────────────────────────────────────────────────────────
@@ -85,27 +81,28 @@ export const twillyDhermesInspired: FragranceKnowledge = {
   newArrival    : false,
 
   // ── Education ───────────────────────────────────────────────────────────────
-  subtitle      : "Spiced Bloom",
-  description   : "Ginger and bitter orange ignite with a sharp, almost peppery warmth that immediately commands attention. The heart unfolds into creamy tuberose and jasmine, their indolic richness tempered by the fragrance's restless spice—a floral that refuses to whisper. Sandalwood and vanilla settle beneath, grounding the composition in soft amber rather than sweetness.",
-  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances", "how-to-wear-fragrance"],
-  academyCategories: ["fragrance-families", "the-note-pyramid", "wear-and-application"],
+  subtitle      : "Warm Romantic Skin",
+  description   : "Bergamot opens with bright warmth, yielding to a full-bodied rose that feels intimate rather than grand. Vanilla and coconut create a soft, skin-like base—a fragrance that feels like a second skin and deepens quietly with wear.",
+  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "choosing-your-season-scent", "how-to-layer-fragrances"],
+  academyCategories: ["fragrance-families", "occasions-and-style", "wear-and-application"],
   educationTags : [
     "floral",
-    "spicy",
-    "tuberose",
-    "jasmine",
-    "ginger",
-    "sandalwood",
-    "feminine",
-    "rich",
-    "full-bodied",
-    "layering",
+    "rose",
+    "vanilla",
+    "sweet",
+    "bergamot",
+    "coconut",
+    "romantic",
+    "warm",
+    "spring",
+    "daily-wear",
+    "wedding",
   ],
-  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances"],
+  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "choosing-your-season-scent", "how-to-layer-fragrances"],
 
   // ── Intelligence ────────────────────────────────────────────────────────────
   // Approximated from profile + season. Calibrated by Intelligence Producer in P2.
-  sweetness     : 2,
+  sweetness     : 4,
   freshness     : 3,
   warmth        : 4,
   intensity     : 2,
@@ -115,7 +112,7 @@ export const twillyDhermesInspired: FragranceKnowledge = {
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["chance-eau-tendre-inspired", "mon-paris-inspired", "ultraviolet-woman-inspired"],
-    wardrobePartners: ["alien-inspired"],
+    alternatives:     ["la-vie-est-belle-inspired", "flowerbomb-inspired", "la-nuit-tresor-inspired"],
+    wardrobePartners: ["bleu-de-chanel-inspired"],
   },
 };

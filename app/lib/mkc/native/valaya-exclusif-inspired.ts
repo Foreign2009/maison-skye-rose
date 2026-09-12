@@ -111,7 +111,7 @@ export const valayaExclusifInspired: FragranceKnowledge = {
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["delina-exclusif-inspired", "rolling-in-love-inspired"],
+    alternatives:     ["delina-exclusif-inspired", "rolling-in-love-inspired", "ultraviolet-woman-inspired"],
     wardrobePartners: ["prada-l'homme-inspired"],
   },
 };

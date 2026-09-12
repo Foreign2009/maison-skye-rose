@@ -116,7 +116,7 @@ export const gucciGuiltyPourFemmeInspired: FragranceKnowledge = {
   // â”€â”€ Relationships â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["delina-inspired", "mon-paris-inspired", "chance-eau-tendre-inspired"],
+    alternatives:     ["delina-inspired", "mon-paris-inspired", "chance-eau-tendre-inspired", "roses-de-chloe-inspired"],
     wardrobePartners: ["bleu-de-chanel-inspired"],
   },
 };

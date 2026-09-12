@@ -265,6 +265,14 @@ import { jasminNoirInspired } from "./jasmin-noir-inspired";
 import { cloudInspired } from "./cloud-inspired";
 import { bombshellEscapeInspired } from "./bombshell-escape-inspired";
 import { opiumInspired } from "./opium-inspired";
+import { rosesDeChloeInspired } from "./roses-de-chloe-inspired";
+import { _212VipRoseInspired } from "./212-vip-rose-inspired";
+import { coolWaterWomanInspired } from "./cool-water-woman-inspired";
+import { ultravioletWomanInspired } from "./ultraviolet-woman-inspired";
+import { leauDisseyPourHommeSportInspired } from "./leau-dissey-pour-homme-sport-inspired";
+import { poloSportInspired } from "./polo-sport-inspired";
+import { leatherMalakiInspired } from "./leather-malaki-inspired";
+import { laNuitTresorNudeInspired } from "./la-nuit-tresor-nude-inspired";
 
 export const nativeFragrances = new Map<string, FragranceKnowledge>([
   ["sauvage-inspired",              sauvageInspired],
@@ -522,4 +530,12 @@ export const nativeFragrances = new Map<string, FragranceKnowledge>([
   ["cloud-inspired", cloudInspired],
   ["bombshell-escape-inspired", bombshellEscapeInspired],
   ["opium-inspired", opiumInspired],
+  ["roses-de-chloe-inspired", rosesDeChloeInspired],
+  ["212-vip-rose-inspired", _212VipRoseInspired],
+  ["cool-water-woman-inspired", coolWaterWomanInspired],
+  ["ultraviolet-woman-inspired", ultravioletWomanInspired],
+  ["leau-dissey-pour-homme-sport-inspired", leauDisseyPourHommeSportInspired],
+  ["polo-sport-inspired", poloSportInspired],
+  ["leather-malaki-inspired", leatherMalakiInspired],
+  ["la-nuit-tresor-nude-inspired", laNuitTresorNudeInspired],
 ]);

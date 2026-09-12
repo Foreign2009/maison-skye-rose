@@ -123,7 +123,7 @@ export const laNuitTresorInspired: FragranceKnowledge = {
   // â”€â”€ Relationships â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["mon-paris-inspired", "delina-inspired", "oriana-inspired"],
+    alternatives:     ["mon-paris-inspired", "delina-inspired", "oriana-inspired", "la-nuit-tresor-nude-inspired"],
     wardrobePartners: ["black-opium-inspired", "alien-inspired"],
   },
 };

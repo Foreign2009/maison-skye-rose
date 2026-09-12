@@ -110,6 +110,6 @@ export const poloBlackInspired: FragranceKnowledge = {
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
     alternatives:     ["god-of-fire-inspired", "hacivat-inspired"],
-    wardrobePartners: ["spicebomb-extreme-inspired", "sauvage-elixir-inspired"],
+    wardrobePartners: ["spicebomb-extreme-inspired", "sauvage-elixir-inspired", "polo-sport-inspired"],
   },
 };

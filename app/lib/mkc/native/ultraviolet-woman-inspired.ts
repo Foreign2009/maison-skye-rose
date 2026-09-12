@@ -1,7 +1,7 @@
 // ═════════════════════════════════════════════════════════════════
-// FACTORY DRAFT — twilly-d'hermes-inspired
+// FACTORY DRAFT — ultraviolet-woman-inspired
 // ─────────────────────────────────────────────────────────────────
-// Generated:         2026-08-16T18:08:21.443Z
+// Generated:         2026-09-11T18:50:42.466Z
 // Factory version:   0.5.0
 // Prompt versions:   EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0
 // Validation status: PASS  [0 error(s), 0 warning(s)]
@@ -20,54 +20,55 @@
 
 import type { FragranceKnowledge } from "../types";
 
-export const twillyDhermesInspired: FragranceKnowledge = {
+export const ultravioletWomanInspired: FragranceKnowledge = {
   // ── Identity ──────────────────────────────────────────────────────────────────
-  id            : "twilly-d'hermes-inspired",
-  slug          : "twilly-d'hermes-inspired",
+  id            : "ultraviolet-woman-inspired",
+  slug          : "ultraviolet-woman-inspired",
   brand         : "Maison Skye & Rose",
-  name          : "Twilly d'Hermes Inspired",
+  name          : "Ultraviolet Woman Inspired",
   collection    : "Rose",
   catalogVersion: "1.0",
   status        : "active",
 
   // ── Classification ────────────────────────────────────────────────────────────
   gender        : "female",
-  family        : ["Floral", "Spicy"],
+  family        : ["Powdery", "Floral", "Spicy"],
   scentCharacter: "Rich & Full-Bodied",
   projection    : "moderate",
 
   // ── Composition ─────────────────────────────────────────────────────────────
-  profile       : "Floral Spicy",
-  season        : "Spring",
+  profile       : "Floral Powdery Spicy",
+  season        : "Autumn",
   notes: {
-    top:   ["Ginger", "Bitter Orange", "Bergamot"],
-    heart: ["Tuberose", "Orange Blossom", "Jasmine"],
-    base:  ["Sandalwood", "Vanilla"],
+    top:   [
+      "Apricot",
+      "Coriander",
+      "Orange Pepper",
+      "Red Pepper",
+      "Fresh Almond",
+      "Rosewood",
+    ],
+    heart: ["Violet", "Japanese Osmanthus", "Rose", "Jasmine"],
+    base:  ["Vanilla", "Amber", "Patchouli", "Cedar"],
   },
-  mood          : "Spicy Floral Feminine",
+  notesEvidenceLocked: true,
+  mood          : "Bold Sensual Mysterious",
 
   // ── Discovery ───────────────────────────────────────────────────────────────
   vibe          : [
-    "Confident",
-    "Feminine",
+    "Sensual",
+    "Mysterious",
+    "Bold",
     "Sophisticated",
     "Warm",
-    "Sensual",
-    "Playful",
   ],
-  occasions     : [
-    "Daily Wear",
-    "Office",
-    "Date Night",
-    "Weekend",
-    "Wedding",
-  ],
-  seasons       : ["Spring", "Summer"],
-  signatureStyle: ["Spiced Floral Elegance", "Modern Feminine Power"],
+  occasions     : ["Date Night", "Evening", "Formal", "Weekend"],
+  seasons       : ["Autumn", "Winter"],
+  signatureStyle: ["Sensual Powdery Spice", "Modern Mysterious Icon", "Evening Elegance"],
   recommendedFor: [
-    "Women seeking a confident floral that balances spice and softness for everyday elegance",
-    "Those who love rich, creamy florals with enough ginger bite to feel modern and assertive",
-    "Anyone wanting a signature scent that works from office to evening without feeling overdressed",
+    "Women who want a signature fragrance that feels bold, sensual, and mysteriously elegant for evening and intimate occasions",
+    "Those seeking a powdery floral with unexpected spice—a fragrance that commands attention without being sweet or conventional",
+    "Anyone drawn to violet and rose but craving depth, warmth, and amber-patchouli sophistication over delicate florals",
   ],
 
   // ── Merchandising ───────────────────────────────────────────────────────────
@@ -85,21 +86,21 @@ export const twillyDhermesInspired: FragranceKnowledge = {
   newArrival    : false,
 
   // ── Education ───────────────────────────────────────────────────────────────
-  subtitle      : "Spiced Bloom",
-  description   : "Ginger and bitter orange ignite with a sharp, almost peppery warmth that immediately commands attention. The heart unfolds into creamy tuberose and jasmine, their indolic richness tempered by the fragrance's restless spice—a floral that refuses to whisper. Sandalwood and vanilla settle beneath, grounding the composition in soft amber rather than sweetness.",
-  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances", "how-to-wear-fragrance"],
-  academyCategories: ["fragrance-families", "the-note-pyramid", "wear-and-application"],
+  subtitle      : "Velvet Spice",
+  description   : "Apricot and coriander ignite a spiced warmth that gives way to violet and rose—petals threaded with jasmine's honeyed depth. A base of amber and patchouli anchors the composition in sensual mystery, while cedar adds restraint to what could easily overwhelm.",
+  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances", "choosing-your-season-scent"],
+  academyCategories: ["fragrance-families", "the-note-pyramid", "occasions-and-style"],
   educationTags : [
-    "floral",
+    "powdery-floral",
     "spicy",
-    "tuberose",
-    "jasmine",
-    "ginger",
-    "sandalwood",
-    "feminine",
-    "rich",
-    "full-bodied",
-    "layering",
+    "violet",
+    "rose",
+    "amber",
+    "vanilla",
+    "autumn",
+    "sensual",
+    "bold",
+    "office-to-evening",
   ],
   learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances"],
 
@@ -108,14 +109,14 @@ export const twillyDhermesInspired: FragranceKnowledge = {
   sweetness     : 2,
   freshness     : 3,
   warmth        : 4,
-  intensity     : 2,
+  intensity     : 3,
   versatility   : 3,
   popularity    : 5,
 
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["chance-eau-tendre-inspired", "mon-paris-inspired", "ultraviolet-woman-inspired"],
-    wardrobePartners: ["alien-inspired"],
+    alternatives:     ["valaya-exclusif-inspired", "twilly-d'hermes-inspired"],
+    wardrobePartners: ["coco-mademoiselle-inspired"],
   },
 };

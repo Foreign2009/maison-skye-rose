@@ -1,7 +1,7 @@
 // ═════════════════════════════════════════════════════════════════
-// FACTORY DRAFT — twilly-d'hermes-inspired
+// FACTORY DRAFT — roses-de-chloe-inspired
 // ─────────────────────────────────────────────────────────────────
-// Generated:         2026-08-16T18:08:21.443Z
+// Generated:         2026-09-11T18:45:46.172Z
 // Factory version:   0.5.0
 // Prompt versions:   EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0
 // Validation status: PASS  [0 error(s), 0 warning(s)]
@@ -20,54 +20,62 @@
 
 import type { FragranceKnowledge } from "../types";
 
-export const twillyDhermesInspired: FragranceKnowledge = {
+export const rosesDeChloeInspired: FragranceKnowledge = {
   // ── Identity ──────────────────────────────────────────────────────────────────
-  id            : "twilly-d'hermes-inspired",
-  slug          : "twilly-d'hermes-inspired",
+  id            : "roses-de-chloe-inspired",
+  slug          : "roses-de-chloe-inspired",
   brand         : "Maison Skye & Rose",
-  name          : "Twilly d'Hermes Inspired",
+  name          : "Roses de Chloe Inspired",
   collection    : "Rose",
   catalogVersion: "1.0",
   status        : "active",
 
   // ── Classification ────────────────────────────────────────────────────────────
   gender        : "female",
-  family        : ["Floral", "Spicy"],
-  scentCharacter: "Rich & Full-Bodied",
+  family        : ["Floral", "Fruity"],
+  scentCharacter: "Balanced Signature",
   projection    : "moderate",
 
   // ── Composition ─────────────────────────────────────────────────────────────
-  profile       : "Floral Spicy",
+  profile       : "Floral Fruity",
   season        : "Spring",
   notes: {
-    top:   ["Ginger", "Bitter Orange", "Bergamot"],
-    heart: ["Tuberose", "Orange Blossom", "Jasmine"],
-    base:  ["Sandalwood", "Vanilla"],
+    top:   ["Litchi", "Bergamot", "Tarragon", "Lemon"],
+    heart: [
+      "Damask Rose",
+      "Magnolia",
+      "Cedar",
+      "Apple",
+      "Black Currant",
+      "Peach",
+    ],
+    base:  ["White Musk", "Amber", "Woody Notes"],
   },
-  mood          : "Spicy Floral Feminine",
+  notesEvidenceLocked: true,
+  mood          : "Fresh Romantic Floral",
 
   // ── Discovery ───────────────────────────────────────────────────────────────
   vibe          : [
-    "Confident",
-    "Feminine",
+    "Romantic",
+    "Fresh",
+    "Elegant",
+    "Modern",
     "Sophisticated",
-    "Warm",
-    "Sensual",
-    "Playful",
+    "Delicate",
   ],
   occasions     : [
     "Daily Wear",
     "Office",
     "Date Night",
-    "Weekend",
     "Wedding",
+    "Weekend",
   ],
   seasons       : ["Spring", "Summer"],
-  signatureStyle: ["Spiced Floral Elegance", "Modern Feminine Power"],
+  signatureStyle: ["Fresh Romantic Floral", "Modern Rose With Edge", "Balanced Signature"],
   recommendedFor: [
-    "Women seeking a confident floral that balances spice and softness for everyday elegance",
-    "Those who love rich, creamy florals with enough ginger bite to feel modern and assertive",
-    "Anyone wanting a signature scent that works from office to evening without feeling overdressed",
+    "Women seeking a romantic floral that feels fresh and modern rather than traditional or heavily perfumed",
+    "Those who love rose fragrances but want unexpected depth from cedar and magnolia—not just sweetness",
+    "Anyone looking for a signature spring fragrance that transitions effortlessly into summer and early autumn",
   ],
 
   // ── Merchandising ───────────────────────────────────────────────────────────
@@ -85,29 +93,29 @@ export const twillyDhermesInspired: FragranceKnowledge = {
   newArrival    : false,
 
   // ── Education ───────────────────────────────────────────────────────────────
-  subtitle      : "Spiced Bloom",
-  description   : "Ginger and bitter orange ignite with a sharp, almost peppery warmth that immediately commands attention. The heart unfolds into creamy tuberose and jasmine, their indolic richness tempered by the fragrance's restless spice—a floral that refuses to whisper. Sandalwood and vanilla settle beneath, grounding the composition in soft amber rather than sweetness.",
-  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances", "how-to-wear-fragrance"],
-  academyCategories: ["fragrance-families", "the-note-pyramid", "wear-and-application"],
+  subtitle      : "Rose With Edge",
+  description   : "Litchi and bergamot spark an immediate freshness before damask rose blooms with an unexpected depth—magnolia and cedar ground the florality in something almost structural. White musk and amber settle the composition into a warm, skin-like finish that feels both romantic and restrained.",
+  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "what-makes-a-signature-scent", "how-to-layer-fragrances"],
+  academyCategories: ["fragrance-families", "the-note-pyramid", "occasions-and-style"],
   educationTags : [
     "floral",
-    "spicy",
-    "tuberose",
-    "jasmine",
-    "ginger",
-    "sandalwood",
-    "feminine",
-    "rich",
-    "full-bodied",
-    "layering",
+    "fruity",
+    "damask-rose",
+    "litchi",
+    "balanced",
+    "signature",
+    "romantic",
+    "spring",
+    "daily-wear",
+    "wedding",
   ],
-  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances"],
+  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "what-makes-a-signature-scent", "how-to-layer-fragrances"],
 
   // ── Intelligence ────────────────────────────────────────────────────────────
   // Approximated from profile + season. Calibrated by Intelligence Producer in P2.
   sweetness     : 2,
   freshness     : 3,
-  warmth        : 4,
+  warmth        : 2,
   intensity     : 2,
   versatility   : 3,
   popularity    : 5,
@@ -115,7 +123,7 @@ export const twillyDhermesInspired: FragranceKnowledge = {
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["chance-eau-tendre-inspired", "mon-paris-inspired", "ultraviolet-woman-inspired"],
-    wardrobePartners: ["alien-inspired"],
+    alternatives:     ["delina-inspired", "mon-paris-inspired", "gucci-guilty-pour-femme-inspired"],
+    wardrobePartners: ["baccarat-rouge-540-inspired", "my-way-inspired"],
   },
 };

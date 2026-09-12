@@ -1,7 +1,7 @@
 // ═════════════════════════════════════════════════════════════════
-// FACTORY DRAFT — twilly-d'hermes-inspired
+// FACTORY DRAFT — leau-dissey-pour-homme-sport-inspired
 // ─────────────────────────────────────────────────────────────────
-// Generated:         2026-08-16T18:08:21.443Z
+// Generated:         2026-09-11T18:51:03.267Z
 // Factory version:   0.5.0
 // Prompt versions:   EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0
 // Validation status: PASS  [0 error(s), 0 warning(s)]
@@ -20,54 +20,49 @@
 
 import type { FragranceKnowledge } from "../types";
 
-export const twillyDhermesInspired: FragranceKnowledge = {
+export const leauDisseyPourHommeSportInspired: FragranceKnowledge = {
   // ── Identity ──────────────────────────────────────────────────────────────────
-  id            : "twilly-d'hermes-inspired",
-  slug          : "twilly-d'hermes-inspired",
+  id            : "leau-dissey-pour-homme-sport-inspired",
+  slug          : "leau-dissey-pour-homme-sport-inspired",
   brand         : "Maison Skye & Rose",
-  name          : "Twilly d'Hermes Inspired",
-  collection    : "Rose",
+  name          : "Leau Dissey Pour Homme Sport Inspired",
+  collection    : "Skye",
   catalogVersion: "1.0",
   status        : "active",
 
   // ── Classification ────────────────────────────────────────────────────────────
-  gender        : "female",
-  family        : ["Floral", "Spicy"],
-  scentCharacter: "Rich & Full-Bodied",
+  gender        : "male",
+  family        : ["Aromatic", "Fresh", "Spicy"],
+  scentCharacter: "Fresh & Light",
   projection    : "moderate",
 
   // ── Composition ─────────────────────────────────────────────────────────────
-  profile       : "Floral Spicy",
+  profile       : "Aromatic Fresh Spicy",
   season        : "Spring",
   notes: {
-    top:   ["Ginger", "Bitter Orange", "Bergamot"],
-    heart: ["Tuberose", "Orange Blossom", "Jasmine"],
-    base:  ["Sandalwood", "Vanilla"],
+    top:   ["Bergamot", "Grapefruit"],
+    heart: ["Nutmeg", "Leather"],
+    base:  ["Vetiver", "Virginia Cedar", "Ambergris"],
   },
-  mood          : "Spicy Floral Feminine",
+  notesEvidenceLocked: true,
+  mood          : "Fresh Energetic",
 
   // ── Discovery ───────────────────────────────────────────────────────────────
   vibe          : [
+    "Energetic",
+    "Fresh",
     "Confident",
-    "Feminine",
-    "Sophisticated",
+    "Bright",
     "Warm",
-    "Sensual",
-    "Playful",
   ],
-  occasions     : [
-    "Daily Wear",
-    "Office",
-    "Date Night",
-    "Weekend",
-    "Wedding",
-  ],
+  occasions     : ["Daily Wear", "Office", "Weekend", "Casual"],
   seasons       : ["Spring", "Summer"],
-  signatureStyle: ["Spiced Floral Elegance", "Modern Feminine Power"],
+  signatureStyle: ["Fresh Aromatic Spice", "Modern Athletic Elegance", "Energetic Everyday Icon"],
   recommendedFor: [
-    "Women seeking a confident floral that balances spice and softness for everyday elegance",
-    "Those who love rich, creamy florals with enough ginger bite to feel modern and assertive",
-    "Anyone wanting a signature scent that works from office to evening without feeling overdressed",
+    "Men seeking a fresh, energetic fragrance that transitions seamlessly from morning workouts to office and weekend activities",
+    "Those who want bergamot brightness with subtle leather warmth — fresh without being sweet or overly citrus-driven",
+    "Active men who appreciate a clean aromatic-spicy profile and subtle textured freshness over sweetness or loudness",
+    "Fragrance enthusiasts building a spring rotation who need a versatile daily wear that feels youthful and textured",
   ],
 
   // ── Merchandising ───────────────────────────────────────────────────────────
@@ -77,36 +72,35 @@ export const twillyDhermesInspired: FragranceKnowledge = {
     "30ml": 250,
   },
   images: {
-    "5ml":  "/images/pink-5ml.png",
-    "10ml": "/images/pink-10ml.png",
-    "30ml": "/images/glass-pink-30ml.png",
+    "5ml":  "/images/blue-5ml.png",
+    "10ml": "/images/blue-10ml.png",
+    "30ml": "/images/glass-blue-30ml.png",
   },
   bestSeller    : false,
   newArrival    : false,
 
   // ── Education ───────────────────────────────────────────────────────────────
-  subtitle      : "Spiced Bloom",
-  description   : "Ginger and bitter orange ignite with a sharp, almost peppery warmth that immediately commands attention. The heart unfolds into creamy tuberose and jasmine, their indolic richness tempered by the fragrance's restless spice—a floral that refuses to whisper. Sandalwood and vanilla settle beneath, grounding the composition in soft amber rather than sweetness.",
-  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances", "how-to-wear-fragrance"],
+  subtitle      : "Fresh Leather Energy",
+  description   : "Bergamot and grapefruit spark with immediate brightness, cutting through the air like morning light. Nutmeg and leather settle into the heart, grounding the freshness with subtle warmth and texture. Vetiver and cedarwood anchor the composition, leaving a clean, slightly mineral finish that feels both refined and alive.",
+  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-wear-fragrance", "how-to-layer-fragrances"],
   academyCategories: ["fragrance-families", "the-note-pyramid", "wear-and-application"],
   educationTags : [
-    "floral",
+    "aromatic",
+    "fresh",
     "spicy",
-    "tuberose",
-    "jasmine",
-    "ginger",
-    "sandalwood",
-    "feminine",
-    "rich",
-    "full-bodied",
-    "layering",
+    "bergamot",
+    "grapefruit",
+    "vetiver",
+    "leather",
+    "energetic",
+    "daily-wear",
   ],
-  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances"],
+  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-wear-fragrance"],
 
   // ── Intelligence ────────────────────────────────────────────────────────────
   // Approximated from profile + season. Calibrated by Intelligence Producer in P2.
-  sweetness     : 2,
-  freshness     : 3,
+  sweetness     : 1,
+  freshness     : 5,
   warmth        : 4,
   intensity     : 2,
   versatility   : 3,
@@ -115,7 +109,7 @@ export const twillyDhermesInspired: FragranceKnowledge = {
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["chance-eau-tendre-inspired", "mon-paris-inspired", "ultraviolet-woman-inspired"],
-    wardrobePartners: ["alien-inspired"],
+    alternatives:     ["sauvage-elixir-inspired", "prada-luna-rossa-carbon-inspired", "leau-dissey-pour-homme-inspired"],
+    wardrobePartners: ["spicebomb-extreme-inspired"],
   },
 };

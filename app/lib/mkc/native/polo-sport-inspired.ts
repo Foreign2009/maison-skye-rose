@@ -1,7 +1,7 @@
 // ═════════════════════════════════════════════════════════════════
-// FACTORY DRAFT — twilly-d'hermes-inspired
+// FACTORY DRAFT — polo-sport-inspired
 // ─────────────────────────────────────────────────────────────────
-// Generated:         2026-08-16T18:08:21.443Z
+// Generated:         2026-09-11T18:51:51.187Z
 // Factory version:   0.5.0
 // Prompt versions:   EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0
 // Validation status: PASS  [0 error(s), 0 warning(s)]
@@ -20,54 +20,79 @@
 
 import type { FragranceKnowledge } from "../types";
 
-export const twillyDhermesInspired: FragranceKnowledge = {
+export const poloSportInspired: FragranceKnowledge = {
   // ── Identity ──────────────────────────────────────────────────────────────────
-  id            : "twilly-d'hermes-inspired",
-  slug          : "twilly-d'hermes-inspired",
+  id            : "polo-sport-inspired",
+  slug          : "polo-sport-inspired",
   brand         : "Maison Skye & Rose",
-  name          : "Twilly d'Hermes Inspired",
-  collection    : "Rose",
+  name          : "Polo Sport Inspired",
+  collection    : "Skye",
   catalogVersion: "1.0",
   status        : "active",
 
   // ── Classification ────────────────────────────────────────────────────────────
-  gender        : "female",
-  family        : ["Floral", "Spicy"],
-  scentCharacter: "Rich & Full-Bodied",
+  gender        : "male",
+  family        : ["Aromatic", "Aquatic"],
+  scentCharacter: "Fresh & Light",
   projection    : "moderate",
 
   // ── Composition ─────────────────────────────────────────────────────────────
-  profile       : "Floral Spicy",
-  season        : "Spring",
+  profile       : "Aromatic Aquatic",
+  season        : "Summer",
   notes: {
-    top:   ["Ginger", "Bitter Orange", "Bergamot"],
-    heart: ["Tuberose", "Orange Blossom", "Jasmine"],
-    base:  ["Sandalwood", "Vanilla"],
+    top:   [
+      "Mint",
+      "Lavender",
+      "Bergamot",
+      "Lemon",
+      "Mandarin Orange",
+      "Aldehydes",
+      "Artemisia",
+      "Neroli",
+      "Pineapple",
+    ],
+    heart: [
+      "Seagrass",
+      "Ginger",
+      "Jasmine",
+      "Geranium",
+      "Cyclamen",
+      "Rose",
+      "Brazilian Rosewood",
+    ],
+    base:  [
+      "Musk",
+      "Sandalwood",
+      "Cedar",
+      "Guaiac Wood",
+      "Amber",
+    ],
   },
-  mood          : "Spicy Floral Feminine",
+  notesEvidenceLocked: true,
+  mood          : "Fresh Energetic",
 
   // ── Discovery ───────────────────────────────────────────────────────────────
   vibe          : [
+    "Energetic",
+    "Fresh",
+    "Bright",
     "Confident",
-    "Feminine",
-    "Sophisticated",
-    "Warm",
-    "Sensual",
     "Playful",
   ],
   occasions     : [
     "Daily Wear",
-    "Office",
-    "Date Night",
+    "Casual",
     "Weekend",
-    "Wedding",
+    "Vacation",
+    "Travel",
   ],
-  seasons       : ["Spring", "Summer"],
-  signatureStyle: ["Spiced Floral Elegance", "Modern Feminine Power"],
+  seasons       : ["Summer", "Spring"],
+  signatureStyle: ["Fresh Aquatic Sport", "Aquatic Velocity", "Summer Energy"],
   recommendedFor: [
-    "Women seeking a confident floral that balances spice and softness for everyday elegance",
-    "Those who love rich, creamy florals with enough ginger bite to feel modern and assertive",
-    "Anyone wanting a signature scent that works from office to evening without feeling overdressed",
+    "Men seeking a vibrant summer signature that energizes without overwhelming—perfect for beach days, casual outings, and warm-weather adventures.",
+    "Those who love fresh aquatics with a sporty edge and want a fragrance that feels as alive as the season itself.",
+    "Active men who want a fresh aquatic signature that carries through beach days, casual outings, and warm-weather adventures.",
+    "Fragrance explorers drawn to aromatic brightness and the clean energy of mint and seagrass over traditional sweetness.",
   ],
 
   // ── Merchandising ───────────────────────────────────────────────────────────
@@ -77,37 +102,37 @@ export const twillyDhermesInspired: FragranceKnowledge = {
     "30ml": 250,
   },
   images: {
-    "5ml":  "/images/pink-5ml.png",
-    "10ml": "/images/pink-10ml.png",
-    "30ml": "/images/glass-pink-30ml.png",
+    "5ml":  "/images/blue-5ml.png",
+    "10ml": "/images/blue-10ml.png",
+    "30ml": "/images/glass-blue-30ml.png",
   },
   bestSeller    : false,
   newArrival    : false,
 
   // ── Education ───────────────────────────────────────────────────────────────
-  subtitle      : "Spiced Bloom",
-  description   : "Ginger and bitter orange ignite with a sharp, almost peppery warmth that immediately commands attention. The heart unfolds into creamy tuberose and jasmine, their indolic richness tempered by the fragrance's restless spice—a floral that refuses to whisper. Sandalwood and vanilla settle beneath, grounding the composition in soft amber rather than sweetness.",
-  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances", "how-to-wear-fragrance"],
-  academyCategories: ["fragrance-families", "the-note-pyramid", "wear-and-application"],
+  subtitle      : "Fresh Velocity",
+  description   : "Mint and lavender open with crystalline brightness, then shift into a lush heart of seagrass and ginger that feels both aquatic and alive. Sandalwood and musk ground the composition with quiet warmth, creating a fragrance that moves from invigorating to intimate.",
+  academyArticleIds: ["guide-to-fragrance-families", "choosing-your-season-scent", "how-to-wear-fragrance"],
+  academyCategories: ["fragrance-families", "occasions-and-style"],
   educationTags : [
-    "floral",
-    "spicy",
-    "tuberose",
-    "jasmine",
-    "ginger",
-    "sandalwood",
-    "feminine",
-    "rich",
-    "full-bodied",
-    "layering",
+    "aromatic",
+    "aquatic",
+    "fresh",
+    "mint",
+    "citrus",
+    "summer",
+    "energetic",
+    "seagrass",
+    "musk",
+    "daily-wear",
   ],
-  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances"],
+  learningPath  : ["guide-to-fragrance-families", "choosing-your-season-scent", "how-to-wear-fragrance"],
 
   // ── Intelligence ────────────────────────────────────────────────────────────
   // Approximated from profile + season. Calibrated by Intelligence Producer in P2.
-  sweetness     : 2,
-  freshness     : 3,
-  warmth        : 4,
+  sweetness     : 1,
+  freshness     : 5,
+  warmth        : 1,
   intensity     : 2,
   versatility   : 3,
   popularity    : 5,
@@ -115,7 +140,7 @@ export const twillyDhermesInspired: FragranceKnowledge = {
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["chance-eau-tendre-inspired", "mon-paris-inspired", "ultraviolet-woman-inspired"],
-    wardrobePartners: ["alien-inspired"],
+    alternatives:     ["aqua-di-gio-inspired", "invictus-inspired", "bvlgari-aqua-inspired"],
+    wardrobePartners: ["sauvage-inspired", "eros-inspired", "polo-black-inspired"],
   },
 };

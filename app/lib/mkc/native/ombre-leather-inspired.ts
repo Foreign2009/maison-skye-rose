@@ -111,7 +111,7 @@ export const ombreLeatherInspired: FragranceKnowledge = {
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["oud-wood-inspired", "ombre-nomade-inspired", "tuscan-leather-inspired"],
+    alternatives:     ["oud-wood-inspired", "ombre-nomade-inspired", "tuscan-leather-inspired", "leather-malaki-inspired"],
     wardrobePartners: ["sauvage-inspired"],
   },
 };

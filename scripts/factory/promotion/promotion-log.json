@@ -4942,6 +4942,174 @@
       "slug": "opium-inspired",
       "operator": "cli",
       "details": "promotionId:t41u-VmTmDwU  validation:PASS  nativePath:app/lib/mkc/native/opium-inspired.ts"
+    },
+    {
+      "timestamp": "2026-09-12T17:23:10.890Z",
+      "action": "promotion_started",
+      "slug": "roses-de-chloe-inspired",
+      "operator": "Adi",
+      "details": "symbol:rosesDeChloeInspired  reviewedBy:Adi"
+    },
+    {
+      "timestamp": "2026-09-12T17:23:10.899Z",
+      "action": "relationships_synced",
+      "slug": "roses-de-chloe-inspired",
+      "operator": "Adi",
+      "details": "reciprocals:5  files:5"
+    },
+    {
+      "timestamp": "2026-09-12T17:23:53.001Z",
+      "action": "promotion_completed",
+      "slug": "roses-de-chloe-inspired",
+      "operator": "Adi",
+      "details": "promotionId:pcOK5wW3Mndp  validation:PASS  nativePath:app/lib/mkc/native/roses-de-chloe-inspired.ts"
+    },
+    {
+      "timestamp": "2026-09-12T17:25:31.326Z",
+      "action": "promotion_started",
+      "slug": "212-vip-rose-inspired",
+      "operator": "Adi",
+      "details": "symbol:_212VipRoseInspired  reviewedBy:Adi"
+    },
+    {
+      "timestamp": "2026-09-12T17:25:31.336Z",
+      "action": "relationships_synced",
+      "slug": "212-vip-rose-inspired",
+      "operator": "Adi",
+      "details": "reciprocals:5  files:5"
+    },
+    {
+      "timestamp": "2026-09-12T17:26:09.764Z",
+      "action": "promotion_completed",
+      "slug": "212-vip-rose-inspired",
+      "operator": "Adi",
+      "details": "promotionId:7H94o-e4E-nm  validation:PASS  nativePath:app/lib/mkc/native/212-vip-rose-inspired.ts"
+    },
+    {
+      "timestamp": "2026-09-12T17:26:42.092Z",
+      "action": "promotion_started",
+      "slug": "cool-water-woman-inspired",
+      "operator": "Adi",
+      "details": "symbol:coolWaterWomanInspired  reviewedBy:Adi"
+    },
+    {
+      "timestamp": "2026-09-12T17:26:42.099Z",
+      "action": "relationships_synced",
+      "slug": "cool-water-woman-inspired",
+      "operator": "Adi",
+      "details": "reciprocals:5  files:5"
+    },
+    {
+      "timestamp": "2026-09-12T17:27:22.392Z",
+      "action": "promotion_completed",
+      "slug": "cool-water-woman-inspired",
+      "operator": "Adi",
+      "details": "promotionId:IPA8c_TKKHCm  validation:PASS  nativePath:app/lib/mkc/native/cool-water-woman-inspired.ts"
+    },
+    {
+      "timestamp": "2026-09-12T17:27:54.203Z",
+      "action": "promotion_started",
+      "slug": "ultraviolet-woman-inspired",
+      "operator": "Adi",
+      "details": "symbol:ultravioletWomanInspired  reviewedBy:Adi"
+    },
+    {
+      "timestamp": "2026-09-12T17:27:54.211Z",
+      "action": "relationships_synced",
+      "slug": "ultraviolet-woman-inspired",
+      "operator": "Adi",
+      "details": "reciprocals:3  files:3"
+    },
+    {
+      "timestamp": "2026-09-12T17:28:36.235Z",
+      "action": "promotion_completed",
+      "slug": "ultraviolet-woman-inspired",
+      "operator": "Adi",
+      "details": "promotionId:-Xd_AwS-lnxV  validation:PASS  nativePath:app/lib/mkc/native/ultraviolet-woman-inspired.ts"
+    },
+    {
+      "timestamp": "2026-09-12T17:29:03.901Z",
+      "action": "promotion_started",
+      "slug": "leau-dissey-pour-homme-sport-inspired",
+      "operator": "Adi",
+      "details": "symbol:leauDisseyPourHommeSportInspired  reviewedBy:Adi"
+    },
+    {
+      "timestamp": "2026-09-12T17:29:03.908Z",
+      "action": "relationships_synced",
+      "slug": "leau-dissey-pour-homme-sport-inspired",
+      "operator": "Adi",
+      "details": "reciprocals:4  files:4"
+    },
+    {
+      "timestamp": "2026-09-12T17:29:43.161Z",
+      "action": "promotion_completed",
+      "slug": "leau-dissey-pour-homme-sport-inspired",
+      "operator": "Adi",
+      "details": "promotionId:AQ16AeCHaz-6  validation:PASS  nativePath:app/lib/mkc/native/leau-dissey-pour-homme-sport-inspired.ts"
+    },
+    {
+      "timestamp": "2026-09-12T17:30:29.954Z",
+      "action": "promotion_started",
+      "slug": "polo-sport-inspired",
+      "operator": "Adi",
+      "details": "symbol:poloSportInspired  reviewedBy:Adi"
+    },
+    {
+      "timestamp": "2026-09-12T17:30:29.963Z",
+      "action": "relationships_synced",
+      "slug": "polo-sport-inspired",
+      "operator": "Adi",
+      "details": "reciprocals:6  files:6"
+    },
+    {
+      "timestamp": "2026-09-12T17:31:08.065Z",
+      "action": "promotion_completed",
+      "slug": "polo-sport-inspired",
+      "operator": "Adi",
+      "details": "promotionId:nSZEK6eAeiZg  validation:PASS  nativePath:app/lib/mkc/native/polo-sport-inspired.ts"
+    },
+    {
+      "timestamp": "2026-09-12T17:31:38.392Z",
+      "action": "promotion_started",
+      "slug": "leather-malaki-inspired",
+      "operator": "Adi",
+      "details": "symbol:leatherMalakiInspired  reviewedBy:Adi"
+    },
+    {
+      "timestamp": "2026-09-12T17:31:38.399Z",
+      "action": "relationships_synced",
+      "slug": "leather-malaki-inspired",
+      "operator": "Adi",
+      "details": "reciprocals:3  files:3"
+    },
+    {
+      "timestamp": "2026-09-12T17:32:17.100Z",
+      "action": "promotion_completed",
+      "slug": "leather-malaki-inspired",
+      "operator": "Adi",
+      "details": "promotionId:T1pA3jD_PzOk  validation:PASS  nativePath:app/lib/mkc/native/leather-malaki-inspired.ts"
+    },
+    {
+      "timestamp": "2026-09-12T17:32:44.512Z",
+      "action": "promotion_started",
+      "slug": "la-nuit-tresor-nude-inspired",
+      "operator": "Adi",
+      "details": "symbol:laNuitTresorNudeInspired  reviewedBy:Adi"
+    },
+    {
+      "timestamp": "2026-09-12T17:32:44.522Z",
+      "action": "relationships_synced",
+      "slug": "la-nuit-tresor-nude-inspired",
+      "operator": "Adi",
+      "details": "reciprocals:4  files:4"
+    },
+    {
+      "timestamp": "2026-09-12T17:33:24.900Z",
+      "action": "promotion_completed",
+      "slug": "la-nuit-tresor-nude-inspired",
+      "operator": "Adi",
+      "details": "promotionId:Tvok-bcgnr8j  validation:PASS  nativePath:app/lib/mkc/native/la-nuit-tresor-nude-inspired.ts"
     }
   ]
 }

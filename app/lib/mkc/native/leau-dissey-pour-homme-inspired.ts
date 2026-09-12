@@ -142,7 +142,7 @@ export const leauDisseyPourHommeInspired: FragranceKnowledge = {
   // â”€â”€ Relationships â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["aqua-di-gio-inspired", "invictus-inspired", "hawas-inspired"],
+    alternatives:     ["aqua-di-gio-inspired", "invictus-inspired", "hawas-inspired", "leau-dissey-pour-homme-sport-inspired"],
     wardrobePartners: ["spicebomb-extreme-inspired"],
   },
 };

@@ -118,7 +118,7 @@ export const omniaCrystallineInspired: FragranceKnowledge = {
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["omnia-green-jade-inspired", "light-blue-inspired"],
+    alternatives:     ["omnia-green-jade-inspired", "light-blue-inspired", "cool-water-woman-inspired"],
     wardrobePartners: ["baccarat-rouge-540-inspired"],
   },
 };
