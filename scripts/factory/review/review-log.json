@@ -6001,6 +6001,20 @@
       "slug": "capri-lemon-sugar-inspired",
       "reviewer": "governance-p5c",
       "details": "supersededAction:founder_approval_timestamp_corrected  supersededEvent:review-log-entry-idx-852  originalIncorrectTimestamp:2026-09-13T18:30:03.500Z  effectiveFounderApprovalRecordedAt:2026-09-13T14:28:14.000Z  correctionRecordedAt:2026-09-13T15:19:52.640Z  founderRatificationCommit:caa40f65f9f1dbf5a19c830b5de5309a8d840321  promotionCommit:81b42ee96526b47fa9b1b35f862fe7dfd71eb51f  chronologyCorrectionCommit:be4346eef10954af97ea15cab454a8499f238a20  reason:P5B-used-effective-approval-time-as-correction-event-own-timestamp  founderApprovalValid:true  currentQueueStateCorrect:true  promotionFollowedFounderRatificationCommit:true"
+    },
+    {
+      "timestamp": "2026-09-13T18:54:35.690Z",
+      "action": "note_added",
+      "slug": "capri-lemon-sugar-inspired",
+      "reviewer": "Adi",
+      "details": "noteId:note-1789325675690-p7c1  section:governance  correction:P7-Capri-identity-lock-restore  oldName:Capri Lemon Sugar Inspired  correctedName:Capri Lemon Sugar | 14 Inspired  correctionBasis:Wave8-LOCK-D-previously-approved  founderApprovalValid:true  promotionValid:true  forwardOnly:true  P6ProtocolBreach:name-correction-reached-production"
+    },
+    {
+      "timestamp": "2026-09-13T18:54:35.690Z",
+      "action": "note_resolved",
+      "slug": "capri-lemon-sugar-inspired",
+      "reviewer": "Adi",
+      "details": "noteId:note-1789325675690-p7c1  section:governance  resolvedImmediately:true  openNotes:0  correctionCommit:pending-CATALOGUE-WAVE8-P7  founderApprovalValid:true  promotionValid:true"
     }
   ]
 }

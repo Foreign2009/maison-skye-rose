@@ -5587,6 +5587,14 @@
           "section": "governance",
           "note": "Founder approval explicitly granted by Adnaan 'Adi' Fortuin in ChatGPT on 2026-09-13 after completion of the Wave 8 P4C claim-safety and editorial audit.",
           "resolved": true
+        },
+        {
+          "id": "note-1789325675690-p7c1",
+          "reviewer": "Adi",
+          "timestamp": "2026-09-13T18:54:35.690Z",
+          "section": "governance",
+          "note": "P7 forward-only correction: name field updated from 'Capri Lemon Sugar Inspired' to 'Capri Lemon Sugar | 14 Inspired' to restore LOCK D denomination. Previously approved Wave 8 governance (ratification commit caa40f65). Correction authorized by founder Adnaan 'Adi' Fortuin. P6 protocol breach caused defect to reach production. Founder approval and promotion remain valid. No re-promotion occurred. Correction is forward-only.",
+          "resolved": true
         }
       ],
       "decision": {

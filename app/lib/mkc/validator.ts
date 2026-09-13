@@ -100,7 +100,9 @@ function checkIdentity(k: FragranceKnowledge): ValidationIssue[] {
   }
 
   if (k.name && k.slug) {
-    const derived = k.name.toLowerCase().replace(/\s+/g, "-");
+    // Strip Kayali-style | N denominations (e.g. "| 14") before deriving slug,
+    // as these are display-only and must not be reflected in the URL slug.
+    const derived = k.name.toLowerCase().replace(/\s*\|\s*\d+/g, "").replace(/\s+/g, "-");
     if (k.slug !== derived) {
       issues.push(e("SLUG_FORMULA", g, "slug",
         `slug "${k.slug}" should be "${derived}" (derived from name "${k.name}")`));

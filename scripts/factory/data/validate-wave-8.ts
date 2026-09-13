@@ -151,6 +151,22 @@ test("W8-V14 — capri-lemon-sugar-inspired: collection = Elite (CAPRI_COLLECTIO
     `Expected collection 'Elite', got '${capriLemonSugarInspired.collection}'`);
 });
 
+test("W8-V14b — capri-lemon-sugar-inspired: name preserves '| 14' denomination (LOCK D)", () => {
+  assert.ok(
+    capriLemonSugarInspired.name.includes("| 14"),
+    `Capri name must contain '| 14' per LOCK D Kayali naming governance. Got: '${capriLemonSugarInspired.name}'`,
+  );
+});
+
+test("W8-V14c — capri native record name preserves '| 14' denomination (LOCK D)", () => {
+  const native = nativeFragrances.get("capri-lemon-sugar-inspired");
+  assert.ok(native, "capri-lemon-sugar-inspired must be present in native MKC");
+  assert.ok(
+    native!.name.includes("| 14"),
+    `Capri native name must contain '| 14' per LOCK D. Got: '${native!.name}'`,
+  );
+});
+
 // ── Section 3: Family locks ───────────────────────────────────────────────────
 
 console.log("\n  ─── Section 3: Family locks ───\n");

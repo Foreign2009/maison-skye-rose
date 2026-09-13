@@ -25,7 +25,7 @@ export const capriLemonSugarInspired: FragranceKnowledge = {
   id            : "capri-lemon-sugar-inspired",
   slug          : "capri-lemon-sugar-inspired",
   brand         : "Maison Skye & Rose",
-  name          : "Capri Lemon Sugar Inspired",
+  name          : "Capri Lemon Sugar | 14 Inspired",
   collection    : "Elite",
   catalogVersion: "1.0",
   status        : "active",
