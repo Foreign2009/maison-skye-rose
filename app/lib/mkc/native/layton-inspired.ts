@@ -26,7 +26,7 @@ export const laytonInspired: FragranceKnowledge = {
     heart: ["Jasmine", "Cardamom", "Geranium"],
     base:  ["Vanilla", "Sandalwood", "Guaiac Wood", "Musk"],
   },
-  mood: "Warm, luxurious and commanding — the winter signature that stops conversations.",
+  mood: "Warm, luxurious and commanding — a winter signature of deep, refined character.",
 
   // ── Discovery ────────────────────────────────────────────────────────────────
   vibe:           ["Luxury", "Wealthy", "Romantic", "Bold", "Sophisticated"],

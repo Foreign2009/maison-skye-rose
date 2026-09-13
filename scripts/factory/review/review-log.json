@@ -6043,6 +6043,62 @@
       "slug": "capri-lemon-sugar-inspired",
       "reviewer": "Adi",
       "details": "noteId:note-1789329258153-p7bc1  section:governance  resolvedImmediately:true  openNotes:0  correctionCommit:pending-CATALOGUE-WAVE8-P7B  founderApprovalValid:true  promotionValid:true  generatingSourceTitle:Capri In a Bottle Lemon Sugar | 14 Inspired  reviewQueueName:Capri In a Bottle Lemon Sugar | 14 Inspired  validatorExceptionType:GOVERNED_SLUG_EXCEPTIONS-exact-map"
+    },
+    {
+      "timestamp": "2026-09-13T21:05:14.737Z",
+      "action": "note_added",
+      "slug": "layton-inspired",
+      "reviewer": "Adi",
+      "details": "SITE-RELIABILITY-P2  SITE-RELIABILITY-P2 claim correction: mood field — removed 'stops conversations' (prohibited social-effect performance claim). Replacement: 'a winter signature of deep, refined character.' Notes, identity, prices, relationships unchanged."
+    },
+    {
+      "timestamp": "2026-09-13T21:05:14.737Z",
+      "action": "note_added",
+      "slug": "spicebomb-extreme-inspired",
+      "reviewer": "Adi",
+      "details": "SITE-RELIABILITY-P2  SITE-RELIABILITY-P2 claim correction: mood field — removed 'announces its presence from across the room' (prohibited distance-projection claim). Replacement: 'a winter signature of deep, smoked spice.' Notes, identity, prices, relationships unchanged."
+    },
+    {
+      "timestamp": "2026-09-13T21:05:14.737Z",
+      "action": "note_added",
+      "slug": "ultra-male-inspired",
+      "reviewer": "Adi",
+      "details": "SITE-RELIABILITY-P2  SITE-RELIABILITY-P2 claim correction: mood field — removed 'turns heads and demands attention' (prohibited social-effect claim). Replacement: 'a bold, confident signature for those who wear fragrance with intention.' Notes, identity, prices, relationships unchanged."
+    },
+    {
+      "timestamp": "2026-09-13T21:05:14.737Z",
+      "action": "note_added",
+      "slug": "god-of-fire-inspired",
+      "reviewer": "Adi",
+      "details": "SITE-RELIABILITY-P2  SITE-RELIABILITY-P2 claim correction: description field — removed 'announces itself with a confidence that turns heads before a word is spoken' (prohibited social-effect claim). Replacement: 'opens with bright, immediate confidence.' Notes, identity, prices, relationships unchanged."
+    },
+    {
+      "timestamp": "2026-09-13T21:05:14.737Z",
+      "action": "note_added",
+      "slug": "le-male-elixir-inspired",
+      "reviewer": "Adi",
+      "details": "SITE-RELIABILITY-P2  SITE-RELIABILITY-P2 claim correction: mood field — removed 'announces itself before you speak' (prohibited projection claim). Replacement: 'an enveloping sweetness.' Notes, identity, prices, relationships unchanged."
+    },
+    {
+      "timestamp": "2026-09-13T21:05:14.737Z",
+      "action": "note_added",
+      "slug": "libre-le-parfum-inspired",
+      "reviewer": "Adi",
+      "details": "SITE-RELIABILITY-P2  SITE-RELIABILITY-P2 claim correction: description field — removed 'demands attention' (P2 borderline guaranteed-attention wording). Replacement: 'of radiant authority.' Notes, identity, prices, relationships unchanged. Record is in review queue."
+    },
+    {
+      "timestamp": "2026-09-13T21:05:14.737Z",
+      "action": "note_added",
+      "slug": "hypnotic-poison-inspired",
+      "reviewer": "Adi",
+      "details": "SITE-RELIABILITY-P2  SITE-RELIABILITY-P2 claim correction: recommendedFor[0] — removed 'announces itself' and 'leaves a trail that stays' (P2 borderline persistent-trail and projection wording). Replacement preserves bitter almond/vanilla accord as 'immediately recognisable and deeply individual.' Notes, identity, prices, relationships unchanged. Record is in review queue."
+    },
+    {
+      "timestamp": "2026-09-13T21:05:14.737Z",
+      "action": "note_added",
+      "slug": "invictus-inspired",
+      "reviewer": "Adi",
+      "details": "SITE-RELIABILITY-P2  SITE-RELIABILITY-P2 claim correction: description field — removed 'announces itself' phrasing (P2 borderline). Replacement: 'opens with an assertive Marine accord.' Factual notes and opening accord description unchanged; identity, prices, relationships unchanged."
     }
   ]
 }

@@ -68,22 +68,10 @@ const CATALOGUE_VIBES: string[] = (() => {
   return [...freq.entries()].sort((a, b) => b[1] - a[1]).map(([v]) => v);
 })();
 
-// Projection values — logical intensity order; only values that exist in the catalogue
-const PROJECTION_ORDER = ["soft", "moderate", "strong"] as const;
-const CATALOGUE_PROJECTIONS: string[] = (() => {
-  const seen = new Set<string>();
-  for (const k of catalogueMaps.byName.values()) seen.add(k.projection);
-  return PROJECTION_ORDER.filter((p) => seen.has(p));
-})();
-
 function chipCls(active: boolean) {
   return active
     ? "shrink-0 rounded-full bg-[#d89ca4] px-2.5 py-1 text-[11px] font-semibold text-white border border-[#d89ca4] transition-all"
     : "shrink-0 rounded-full bg-[#f5f1eb] px-2.5 py-1 text-[11px] font-semibold text-[#7b7480] border border-transparent hover:border-[#d89ca4] hover:text-[#d89ca4] transition-all";
-}
-
-function capitalize(s: string): string {
-  return s.charAt(0).toUpperCase() + s.slice(1);
 }
 
 export default function ShopPage() {
@@ -101,7 +89,6 @@ export default function ShopPage() {
   const [selectedCharacter,  setSelectedCharacter]  = useState<string | null>(null);
   const [selectedFamily,     setSelectedFamily]     = useState<string | null>(null);
   const [selectedVibe,       setSelectedVibe]       = useState<string | null>(null);
-  const [selectedProjection, setSelectedProjection] = useState<string | null>(null);
 
   // Debounce search input — clears immediately, delays non-empty terms by 300ms
   useEffect(() => {
@@ -180,7 +167,7 @@ export default function ShopPage() {
 
   // 2a. Dimension predicates — applied after search/tab, before sort
   const dimensionFiltered = useMemo((): DisplayFragrance[] => {
-    if (!selectedOccasion && !selectedSeason && !selectedCharacter && !selectedFamily && !selectedVibe && !selectedProjection) return filtered;
+    if (!selectedOccasion && !selectedSeason && !selectedCharacter && !selectedFamily && !selectedVibe) return filtered;
     return filtered.filter((item) => {
       const k = catalogueMaps.byName.get(item.title);
       if (!k) return true;
@@ -189,10 +176,9 @@ export default function ShopPage() {
       if (selectedCharacter  && k.scentCharacter !== selectedCharacter)   return false;
       if (selectedFamily     && !k.family.includes(selectedFamily))       return false;
       if (selectedVibe       && !k.vibe.includes(selectedVibe))           return false;
-      if (selectedProjection && k.projection !== selectedProjection)      return false;
       return true;
     });
-  }, [filtered, selectedOccasion, selectedSeason, selectedCharacter, selectedFamily, selectedVibe, selectedProjection]);
+  }, [filtered, selectedOccasion, selectedSeason, selectedCharacter, selectedFamily, selectedVibe]);
 
   // 2b. Sorting & Extra Filtering Logic — memoized; only recomputes when filtered list or sort changes
   const displayItems = useMemo(() => {
@@ -241,7 +227,7 @@ export default function ShopPage() {
     });
   }, [firstCardStrength]);
 
-  const hasDimensionFilters = selectedOccasion !== null || selectedSeason !== null || selectedCharacter !== null || selectedFamily !== null || selectedVibe !== null || selectedProjection !== null;
+  const hasDimensionFilters = selectedOccasion !== null || selectedSeason !== null || selectedCharacter !== null || selectedFamily !== null || selectedVibe !== null;
 
   function clearDimensionFilters() {
     setSelectedOccasion(null);
@@ -249,7 +235,6 @@ export default function ShopPage() {
     setSelectedCharacter(null);
     setSelectedFamily(null);
     setSelectedVibe(null);
-    setSelectedProjection(null);
   }
 
   const isMainMobileTab = (tab: string) => ["All", "Skye", "Rose", "Elite"].includes(tab);
@@ -437,24 +422,6 @@ export default function ShopPage() {
                 className={chipCls(selectedVibe === vibe)}
               >
                 {vibe}
-              </button>
-            ))}
-          </div>
-
-          {/* Projection */}
-          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar">
-            <span className="shrink-0 text-[10px] font-bold uppercase tracking-[0.18em] text-zinc-400 w-[64px]">Projection</span>
-            {CATALOGUE_PROJECTIONS.map((proj) => (
-              <button
-                key={proj}
-                onClick={() => {
-                  const next = selectedProjection === proj ? null : proj;
-                  setSelectedProjection(next);
-                  trackFilter({ filter: next ?? "clear-projection", mode: currentMode, resultCount: displayItems.length });
-                }}
-                className={chipCls(selectedProjection === proj)}
-              >
-                {capitalize(proj)}
               </button>
             ))}
           </div>
@@ -654,21 +621,6 @@ export default function ShopPage() {
                     className={chipCls(selectedVibe === vibe)}
                   >
                     {vibe}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div className="py-4 border-t border-zinc-100">
-              <label className="block text-xs font-bold uppercase text-zinc-400 tracking-wider mb-2">Projection</label>
-              <div className="flex flex-wrap gap-2">
-                {CATALOGUE_PROJECTIONS.map((proj) => (
-                  <button
-                    key={proj}
-                    onClick={() => setSelectedProjection(selectedProjection === proj ? null : proj)}
-                    className={chipCls(selectedProjection === proj)}
-                  >
-                    {capitalize(proj)}
                   </button>
                 ))}
               </div>

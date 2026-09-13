@@ -53,7 +53,7 @@ export const godOfFireInspired: FragranceKnowledge = {
   // ── Education ────────────────────────────────────────────────────────────────
   subtitle: "Tropical Explosion",
   description:
-    "God Of Fire Inspired is the collection's most vivid summer statement — a tropical, fruit-driven fragrance that announces itself with a confidence that turns heads before a word is spoken. " +
+    "God Of Fire Inspired is the collection's most vivid summer statement — a tropical, fruit-driven fragrance that opens with bright, immediate confidence. " +
     "Mango and Lemon ignite the opening with brightness and warmth, Red Berries adding a depth that lifts the fruit beyond the obvious. " +
     "The heart settles into an unexpected elegance — Iris and Jasmine lending a floral sophistication that prevents the tropical character from ever feeling one-dimensional. " +
     "Cedarwood and Sandalwood in the base anchor the composition in a woody luxury that justifies the Xerjoff name. " +

@@ -54,7 +54,7 @@ export const invictusInspired: FragranceKnowledge = {
   // ── Education ────────────────────────────────────────────────────────────────
   subtitle: "Victory Energy",
   description:
-    "Invictus Inspired announces itself with an assertive Marine accord and Grapefruit opening that is immediately recognisable — clean, citrus-aquatic, and unapologetically confident. " +
+    "Invictus Inspired opens with an assertive Marine accord and Grapefruit that is immediately recognisable — clean, citrus-aquatic, and unapologetically confident. " +
     "Bay Laurel in the heart introduces a subtle herbal depth that prevents the fresh opening from feeling generic, while Ambergris in the base provides warmth and a distinctive dry-down that separates this from simpler aquatics. " +
     "A fragrance that earned its place in this collection by earning its place in the world.",
 

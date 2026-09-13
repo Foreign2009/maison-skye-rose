@@ -26,7 +26,7 @@ export const ultraMaleInspired: FragranceKnowledge = {
     heart: ["Cinnamon", "Licorice", "Iris", "Amber"],
     base:  ["Vanilla", "Caramel", "White Musk"],
   },
-  mood: "Sweet, magnetic and completely unapologetic — a fragrance that turns heads and demands attention.",
+  mood: "Sweet, magnetic and completely unapologetic — a bold, confident signature for those who wear fragrance with intention.",
 
   // ── Discovery ────────────────────────────────────────────────────────────────
   vibe:           ["Confident", "Sexy", "Bold", "Playful", "Modern"],

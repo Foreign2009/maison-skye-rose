@@ -15,7 +15,7 @@ const faqs = [
   {
     question: "How long do the fragrances last?",
     answer:
-      "Longevity varies by fragrance and skin type, but most fragrances last between 6 to 12 hours with proper application.",
+      "How a fragrance wears varies with skin chemistry, application, environment and the fragrance itself. We do not guarantee a specific wear time.",
   },
   {
     question: "What sizes are available?",

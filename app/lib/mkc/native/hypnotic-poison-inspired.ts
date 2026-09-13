@@ -39,7 +39,7 @@ export const hypnoticPoisonInspired: FragranceKnowledge = {
   seasons:        ["Winter", "Autumn"],
   signatureStyle: ["Dark Feminine Icon", "Almond Vanilla Accord", "Winter Evening Statement"],
   recommendedFor: [
-    "Women who want a signature that announces itself — the bitter almond and vanilla accord is impossible to mistake and leaves a trail that stays",
+    "Women who want a distinctive signature — the bitter almond and vanilla accord is immediately recognisable and deeply individual",
     "Those who wear fragrance as a deliberate mood setter for evenings and special occasions: the warm, dark character transforms any atmosphere",
     "Anyone who loves vanilla but wants depth and edge rather than sweetness alone — the bitter almond introduces a complexity that straightforward vanilla cannot",
     "Collectors of the feminine oriental tradition who want the reference that shaped an entire category of warm feminine perfumery",

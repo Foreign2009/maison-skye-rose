@@ -33,7 +33,7 @@ export const MOMENT_CONTENT: MomentPageContent[] = [
     wardrobeNote:
       "The cornerstone of a considered wardrobe — a reliable anchor that works every day and makes space for bolder additions.",
     academyCopy:
-      "Learn how application and layering build all-day presence",
+      "Explore fragrance application and layering.",
     conciergeCopy:
       "Your Concierge can help build your daily fragrance rotation based on your lifestyle",
     conciergeContext:    { occasion: "Daily Wear" },

@@ -26,7 +26,7 @@ export const spicebombExtremeInspired: FragranceKnowledge = {
     heart: ["Tobacco", "Cardamom", "Saffron"],
     base:  ["Vanilla", "Benzoin", "Smoked Accord"],
   },
-  mood: "Warm, seductive and commanding — the winter signature that announces its presence from across the room.",
+  mood: "Warm, seductive and commanding — a winter signature of deep, smoked spice.",
 
   // ── Discovery ────────────────────────────────────────────────────────────────
   vibe:           ["Bold", "Powerful", "Mysterious", "Sexy", "Sophisticated"],

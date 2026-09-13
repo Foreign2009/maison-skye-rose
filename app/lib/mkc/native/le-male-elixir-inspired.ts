@@ -26,7 +26,7 @@ export const leMaleElixirInspired: FragranceKnowledge = {
     heart: ["Honey", "Iris", "Orange Blossom"],
     base:  ["Vanilla", "Tonka Bean", "Sandalwood"],
   },
-  mood: "Honey, warmth and a sweetness that announces itself before you speak — JPG's most addictive masculine statement.",
+  mood: "Honey, warmth and an enveloping sweetness — JPG's most addictive masculine statement.",
 
   // ── Discovery ────────────────────────────────────────────────────────────────
   vibe:           ["Seductive", "Bold", "Warm", "Luxurious", "Mysterious", "Confident"],

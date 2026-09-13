@@ -1,11 +1,6 @@
 export default function Reviews() {
   const reviews = [
     {
-      name: "Aaliyah",
-      review:
-        "The quality shocked me. Lasted all day and smelled incredibly close to the original.",
-    },
-    {
       name: "Jason",
       review:
         "Fast delivery and amazing scent performance. Definitely ordering again.",

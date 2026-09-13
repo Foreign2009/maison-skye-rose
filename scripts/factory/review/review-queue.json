@@ -740,7 +740,16 @@
       "reviewStartedAt": "2026-09-03T20:00:27.039Z",
       "decidedAt": "2026-09-04T17:02:01.825Z",
       "reviewer": "system",
-      "notes": [],
+      "notes": [
+        {
+          "id": "note-1789333514739-p2c2",
+          "reviewer": "Adi",
+          "timestamp": "2026-09-13T21:05:14.737Z",
+          "section": "claims",
+          "note": "SITE-RELIABILITY-P2: recommendedFor[0] corrected — removed 'announces itself' and 'leaves a trail that stays' (P2 borderline wording). Bitter almond/vanilla accord preserved as 'immediately recognisable and deeply individual'. Fragrance notes, identity, prices, and relationships are unchanged. Correction is forward-only.",
+          "resolved": true
+        }
+      ],
       "decision": {
         "decision": "needs_regeneration",
         "reviewer": "system",
@@ -926,6 +935,14 @@
           "section": "relationships",
           "note": "wardrobePartners missing â€” only alternatives populated; consider adding a male complement before promotion",
           "resolved": false
+        },
+        {
+          "id": "note-1789333514738-p2c1",
+          "reviewer": "Adi",
+          "timestamp": "2026-09-13T21:05:14.737Z",
+          "section": "claims",
+          "note": "SITE-RELIABILITY-P2: description field corrected — 'demands attention' (P2 borderline guaranteed-attention wording) replaced with 'of radiant authority'. Fragrance notes, identity, prices, and relationships are unchanged. Correction is forward-only.",
+          "resolved": true
         }
       ],
       "decision": {
