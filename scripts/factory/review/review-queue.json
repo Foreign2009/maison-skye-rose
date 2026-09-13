@@ -5351,7 +5351,7 @@
       "status": "approved",
       "addedAt": "2026-09-13T13:05:04.916Z",
       "reviewStartedAt": "2026-09-13T13:05:04.961Z",
-      "decidedAt": "2026-09-13T18:30:00.500Z",
+      "decidedAt": "2026-09-13T14:28:14.000Z",
       "reviewer": "Adi",
       "notes": [
         {
@@ -5381,7 +5381,7 @@
         {
           "id": "note-1789324200000-fa001",
           "reviewer": "Adi",
-          "timestamp": "2026-09-13T18:30:00.000Z",
+          "timestamp": "2026-09-13T14:28:14.000Z",
           "section": "governance",
           "note": "Founder approval explicitly granted by Adnaan 'Adi' Fortuin in ChatGPT on 2026-09-13 after completion of the Wave 8 P4C claim-safety and editorial audit.",
           "resolved": true
@@ -5390,10 +5390,10 @@
       "decision": {
         "decision": "approved",
         "reviewer": "Adi",
-        "timestamp": "2026-09-13T18:30:00.500Z",
+        "timestamp": "2026-09-13T14:28:14.000Z",
         "reason": "Founder approval explicitly granted by Adnaan 'Adi' Fortuin in ChatGPT on 2026-09-13 after completion of the Wave 8 P4C claim-safety and editorial audit."
       },
-      "founderApprovedAt": "2026-09-13T18:30:00.500Z"
+      "founderApprovedAt": "2026-09-13T14:28:14.000Z"
     },
     {
       "slug": "24-faubourg-inspired",
@@ -5405,7 +5405,7 @@
       "status": "approved",
       "addedAt": "2026-09-13T13:05:04.931Z",
       "reviewStartedAt": "2026-09-13T13:05:04.972Z",
-      "decidedAt": "2026-09-13T18:30:01.500Z",
+      "decidedAt": "2026-09-13T14:28:14.000Z",
       "reviewer": "Adi",
       "notes": [
         {
@@ -5475,7 +5475,7 @@
         {
           "id": "note-1789324201000-fa002",
           "reviewer": "Adi",
-          "timestamp": "2026-09-13T18:30:01.000Z",
+          "timestamp": "2026-09-13T14:28:14.000Z",
           "section": "governance",
           "note": "Founder approval explicitly granted by Adnaan 'Adi' Fortuin in ChatGPT on 2026-09-13 after completion of the Wave 8 P4C claim-safety and editorial audit.",
           "resolved": true
@@ -5484,10 +5484,10 @@
       "decision": {
         "decision": "approved",
         "reviewer": "Adi",
-        "timestamp": "2026-09-13T18:30:01.500Z",
+        "timestamp": "2026-09-13T14:28:14.000Z",
         "reason": "Founder approval explicitly granted by Adnaan 'Adi' Fortuin in ChatGPT on 2026-09-13 after completion of the Wave 8 P4C claim-safety and editorial audit."
       },
-      "founderApprovedAt": "2026-09-13T18:30:01.500Z"
+      "founderApprovedAt": "2026-09-13T14:28:14.000Z"
     },
     {
       "slug": "boss-nuit-pour-femme-inspired",
@@ -5499,7 +5499,7 @@
       "status": "approved",
       "addedAt": "2026-09-13T13:05:04.941Z",
       "reviewStartedAt": "2026-09-13T13:05:04.982Z",
-      "decidedAt": "2026-09-13T18:30:02.500Z",
+      "decidedAt": "2026-09-13T14:28:14.000Z",
       "reviewer": "Adi",
       "notes": [
         {
@@ -5521,7 +5521,7 @@
         {
           "id": "note-1789324202000-fa003",
           "reviewer": "Adi",
-          "timestamp": "2026-09-13T18:30:02.000Z",
+          "timestamp": "2026-09-13T14:28:14.000Z",
           "section": "governance",
           "note": "Founder approval explicitly granted by Adnaan 'Adi' Fortuin in ChatGPT on 2026-09-13 after completion of the Wave 8 P4C claim-safety and editorial audit.",
           "resolved": true
@@ -5530,10 +5530,10 @@
       "decision": {
         "decision": "approved",
         "reviewer": "Adi",
-        "timestamp": "2026-09-13T18:30:02.500Z",
+        "timestamp": "2026-09-13T14:28:14.000Z",
         "reason": "Founder approval explicitly granted by Adnaan 'Adi' Fortuin in ChatGPT on 2026-09-13 after completion of the Wave 8 P4C claim-safety and editorial audit."
       },
-      "founderApprovedAt": "2026-09-13T18:30:02.500Z"
+      "founderApprovedAt": "2026-09-13T14:28:14.000Z"
     },
     {
       "slug": "capri-lemon-sugar-inspired",
@@ -5545,7 +5545,7 @@
       "status": "approved",
       "addedAt": "2026-09-13T13:05:04.952Z",
       "reviewStartedAt": "2026-09-13T13:05:04.991Z",
-      "decidedAt": "2026-09-13T18:30:03.500Z",
+      "decidedAt": "2026-09-13T14:28:14.000Z",
       "reviewer": "Adi",
       "notes": [
         {
@@ -5583,7 +5583,7 @@
         {
           "id": "note-1789324203000-fa004",
           "reviewer": "Adi",
-          "timestamp": "2026-09-13T18:30:03.000Z",
+          "timestamp": "2026-09-13T14:28:14.000Z",
           "section": "governance",
           "note": "Founder approval explicitly granted by Adnaan 'Adi' Fortuin in ChatGPT on 2026-09-13 after completion of the Wave 8 P4C claim-safety and editorial audit.",
           "resolved": true
@@ -5592,10 +5592,10 @@
       "decision": {
         "decision": "approved",
         "reviewer": "Adi",
-        "timestamp": "2026-09-13T18:30:03.500Z",
+        "timestamp": "2026-09-13T14:28:14.000Z",
         "reason": "Founder approval explicitly granted by Adnaan 'Adi' Fortuin in ChatGPT on 2026-09-13 after completion of the Wave 8 P4C claim-safety and editorial audit."
       },
-      "founderApprovedAt": "2026-09-13T18:30:03.500Z"
+      "founderApprovedAt": "2026-09-13T14:28:14.000Z"
     }
   ]
 }

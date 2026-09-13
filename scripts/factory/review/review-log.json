@@ -5945,6 +5945,34 @@
       "slug": "capri-lemon-sugar-inspired",
       "reviewer": "Adi",
       "details": "promotionId:LI3HbqJzuQnX  nativePath:app/lib/mkc/native/capri-lemon-sugar-inspired.ts"
+    },
+    {
+      "timestamp": "2026-09-13T14:28:14.000Z",
+      "action": "founder_approval_timestamp_corrected",
+      "slug": "azzaro-wanted-by-night-inspired",
+      "reviewer": "governance-p5b",
+      "details": "originalTimestamp:2026-09-13T18:30:00.500Z  correctedTimestamp:2026-09-13T14:28:14.000Z  ratificationCommit:caa40f65f9f1dbf5a19c830b5de5309a8d840321  promotionCommit:81b42ee96526b47fa9b1b35f862fe7dfd71eb51f  reason:hardcoded-timestamp-caused-false-chronological-ordering  founderApprovalValid:true  promotionFollowedRatificationCommit:true"
+    },
+    {
+      "timestamp": "2026-09-13T14:28:14.000Z",
+      "action": "founder_approval_timestamp_corrected",
+      "slug": "24-faubourg-inspired",
+      "reviewer": "governance-p5b",
+      "details": "originalTimestamp:2026-09-13T18:30:01.500Z  correctedTimestamp:2026-09-13T14:28:14.000Z  ratificationCommit:caa40f65f9f1dbf5a19c830b5de5309a8d840321  promotionCommit:81b42ee96526b47fa9b1b35f862fe7dfd71eb51f  reason:hardcoded-timestamp-caused-false-chronological-ordering  founderApprovalValid:true  promotionFollowedRatificationCommit:true"
+    },
+    {
+      "timestamp": "2026-09-13T14:28:14.000Z",
+      "action": "founder_approval_timestamp_corrected",
+      "slug": "boss-nuit-pour-femme-inspired",
+      "reviewer": "governance-p5b",
+      "details": "originalTimestamp:2026-09-13T18:30:02.500Z  correctedTimestamp:2026-09-13T14:28:14.000Z  ratificationCommit:caa40f65f9f1dbf5a19c830b5de5309a8d840321  promotionCommit:81b42ee96526b47fa9b1b35f862fe7dfd71eb51f  reason:hardcoded-timestamp-caused-false-chronological-ordering  founderApprovalValid:true  promotionFollowedRatificationCommit:true"
+    },
+    {
+      "timestamp": "2026-09-13T14:28:14.000Z",
+      "action": "founder_approval_timestamp_corrected",
+      "slug": "capri-lemon-sugar-inspired",
+      "reviewer": "governance-p5b",
+      "details": "originalTimestamp:2026-09-13T18:30:03.500Z  correctedTimestamp:2026-09-13T14:28:14.000Z  ratificationCommit:caa40f65f9f1dbf5a19c830b5de5309a8d840321  promotionCommit:81b42ee96526b47fa9b1b35f862fe7dfd71eb51f  reason:hardcoded-timestamp-caused-false-chronological-ordering  founderApprovalValid:true  promotionFollowedRatificationCommit:true"
     }
   ]
 }
