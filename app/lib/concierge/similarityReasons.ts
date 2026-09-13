@@ -24,7 +24,6 @@ export function deriveSimilarityReasons(
   if (breakdown.occasion > 0)  reasons.push("Perfect for the same moments and occasions");
   if (breakdown.season > 0)    reasons.push(`Both shine in ${f.season.toLowerCase()} conditions`);
   if (breakdown.notes > 0)     reasons.push("Shares similar fragrance notes");
-  if (breakdown.projection > 0) reasons.push("Comparable strength and presence");
   if (breakdown.collection > 0) reasons.push("From the same Maison collection");
   if (f.bestSeller)             reasons.push("One of our most loved fragrances");
 

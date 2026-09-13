@@ -5351,8 +5351,8 @@
       "status": "approved",
       "addedAt": "2026-09-13T13:05:04.916Z",
       "reviewStartedAt": "2026-09-13T13:05:04.961Z",
-      "decidedAt": "2026-09-13T13:25:54.538Z",
-      "reviewer": "editorial-review-p4a",
+      "decidedAt": "2026-09-13T14:06:00.831Z",
+      "reviewer": "editorial-review-p4c",
       "notes": [
         {
           "id": "note-1789304705002-3tvfv",
@@ -5376,14 +5376,14 @@
           "timestamp": "2026-09-13T13:37:35.342Z",
           "section": "discovery",
           "note": "P4B NOTE REPAIR: signatureStyle corrected from 'Evening Intensity' to 'Dark Intensity'. 'Dark' is supported by mood 'Bold Sensual Dark' and vibe 'Intense'. Name-derived 'Evening' positioning removed.",
-          "resolved": false
+          "resolved": true
         }
       ],
       "decision": {
         "decision": "approved",
-        "reviewer": "editorial-review-p4a",
-        "timestamp": "2026-09-13T13:25:54.537Z",
-        "reason": "P4A corrected review PASS. No P4A-eligible corrections required (no vocabulary violations, no relationship governance defects). Relationships RETAINED: alternatives [spicebomb-extreme-inspired, tobacco-vanille-inspired], wardrobePartners [sauvage-inspired, bleu-de-chanel-inspired] — both supported by Woody family overlap and season/character contrast. P4 quality note (Evening Intensity) classified VALID_NON_BLOCKING and resolved. PROMOTION_READY pending founder approval and resolution of PROJECTION_GOVERNANCE_BLOCKER."
+        "reviewer": "editorial-review-p4c",
+        "timestamp": "2026-09-13T14:06:00.831Z",
+        "reason": "P4C corrected review PASS. signatureStyle final correction applied: 'Dark Intensity' → 'Spiced Tobacco' (evidence-supported: locked Spicy + Tobacco families; locked Cinnamon + Tobacco notes; no performance language). Open P4B note resolved. All evidence locks intact. PROMOTION_READY pending founder approval."
       }
     },
     {

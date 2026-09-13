@@ -15,6 +15,9 @@ import path   from "node:path";
 
 import { validateResponse, buildSystemPrompt } from "../../../app/lib/concierge/safetyGuard";
 import { nativeFragrances }                    from "../../../app/lib/mkc/native/index";
+import { deriveSimilarityReasons }             from "../../../app/lib/concierge/similarityReasons";
+import type { FragranceKnowledge }             from "../../../app/lib/mkc/types";
+import type { SimilarityResult }               from "../../../app/lib/discovery/types";
 
 // ── Harness ───────────────────────────────────────────────────────────────────
 
@@ -226,6 +229,46 @@ test("all 4 Wave 8 records absent from native MKC", () => {
       `Wave 8 record unexpectedly found in native MKC: ${slug}`,
     );
   }
+});
+
+// ── Section 8: Similarity reasons — projection claim removed ─────────────────
+console.log("\n  ─── Section 8: Similarity reasons — projection claim removed ───\n");
+
+test('similarityReasons.ts source does not contain "Comparable strength and presence"', () => {
+  const src = readSource("app/lib/concierge/similarityReasons.ts");
+  assert.ok(
+    !src.includes("Comparable strength and presence"),
+    '"Comparable strength and presence" still present in similarityReasons.ts source',
+  );
+});
+
+test("deriveSimilarityReasons does not emit projection-based reason when breakdown.projection > 0", () => {
+  const mockSource: FragranceKnowledge = {
+    id: "test-source", slug: "test-source", brand: "Test", name: "Test Source",
+    collection: "Skye", catalogVersion: "1.0", status: "active",
+    gender: "male", family: ["Woody"], scentCharacter: "Balanced Signature",
+    projection: "moderate", profile: "Woody", season: "Autumn",
+    notes: { top: ["Cedar"], heart: ["Sandalwood"], base: ["Musk"] },
+    mood: "Bold",
+    vibe: ["Bold"], occasions: ["Evening"], seasons: ["Autumn"],
+    signatureStyle: [], recommendedFor: [],
+    prices: { "5ml": 60, "10ml": 100, "30ml": 250 }, images: { "5ml": "/img.png", "10ml": "/img.png", "30ml": "/img.png" },
+    bestSeller: false, newArrival: false,
+    subtitle: "Test", description: "Test.",
+    academyArticleIds: [], academyCategories: [], educationTags: [], learningPath: [],
+    sweetness: 2, freshness: 2, warmth: 3, intensity: 3, versatility: 3, popularity: 3,
+    relationships: { alternatives: [], wardrobePartners: [] },
+  };
+  const mockResult: SimilarityResult = {
+    fragrance: { ...mockSource, id: "test-result", slug: "test-result", name: "Test Result", season: "Autumn" },
+    totalScore: 12,
+    breakdown: { family: 0, notes: 0, season: 0, occasion: 0, character: 0, projection: 12, collection: 0, popularity: 0 },
+  };
+  const reasons = deriveSimilarityReasons(mockSource, mockResult);
+  assert.ok(
+    !reasons.includes("Comparable strength and presence"),
+    `deriveSimilarityReasons emitted projection-based claim: ${JSON.stringify(reasons)}`,
+  );
 });
 
 // ── Results ───────────────────────────────────────────────────────────────────

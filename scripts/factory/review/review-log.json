@@ -5875,6 +5875,20 @@
       "slug": "capri-lemon-sugar-inspired",
       "reviewer": "editorial-review-p4b",
       "details": "noteId:note-1789305920224-4zoik"
+    },
+    {
+      "timestamp": "2026-09-13T14:06:00.822Z",
+      "action": "note_resolved",
+      "slug": "azzaro-wanted-by-night-inspired",
+      "reviewer": "editorial-review-p4c",
+      "details": "noteId:note-1789306655342-0tz25"
+    },
+    {
+      "timestamp": "2026-09-13T14:06:00.838Z",
+      "action": "approved",
+      "slug": "azzaro-wanted-by-night-inspired",
+      "reviewer": "editorial-review-p4c",
+      "details": "P4C corrected review PASS. signatureStyle final correction applied: 'Dark Intensity' → 'Spiced Tobacco' (evidence-supported: locked Spicy + Tobacco families; locked Cinnamon + Tobacco notes; no performance language). Open P4B note resolved. All evidence locks intact. PROMOTION_READY pending founder approval."
     }
   ]
 }

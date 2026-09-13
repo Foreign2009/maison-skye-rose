@@ -67,7 +67,7 @@ export const azzaroWantedByNightInspired: FragranceKnowledge = {
   ],
   occasions     : ["Date Night", "Evening", "Office", "Weekend"],
   seasons       : ["Autumn", "Winter"],
-  signatureStyle: ["Masculine Sensuality", "Tobacco & Leather", "Dark Intensity"],
+  signatureStyle: ["Masculine Sensuality", "Tobacco & Leather", "Spiced Tobacco"],
   recommendedFor: [
     "Men seeking a sophisticated evening fragrance that balances spicy warmth with leather and tobacco depth",
     "Those who want bold sensuality without sweetness — smoky, aromatic, and unmistakably confident",
