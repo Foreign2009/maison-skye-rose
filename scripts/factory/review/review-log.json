@@ -5973,6 +5973,34 @@
       "slug": "capri-lemon-sugar-inspired",
       "reviewer": "governance-p5b",
       "details": "originalTimestamp:2026-09-13T18:30:03.500Z  correctedTimestamp:2026-09-13T14:28:14.000Z  ratificationCommit:caa40f65f9f1dbf5a19c830b5de5309a8d840321  promotionCommit:81b42ee96526b47fa9b1b35f862fe7dfd71eb51f  reason:hardcoded-timestamp-caused-false-chronological-ordering  founderApprovalValid:true  promotionFollowedRatificationCommit:true"
+    },
+    {
+      "timestamp": "2026-09-13T15:19:52.640Z",
+      "action": "founder_approval_timestamp_correction_recorded",
+      "slug": "azzaro-wanted-by-night-inspired",
+      "reviewer": "governance-p5c",
+      "details": "supersededAction:founder_approval_timestamp_corrected  supersededEvent:review-log-entry-idx-849  originalIncorrectTimestamp:2026-09-13T18:30:00.500Z  effectiveFounderApprovalRecordedAt:2026-09-13T14:28:14.000Z  correctionRecordedAt:2026-09-13T15:19:52.640Z  founderRatificationCommit:caa40f65f9f1dbf5a19c830b5de5309a8d840321  promotionCommit:81b42ee96526b47fa9b1b35f862fe7dfd71eb51f  chronologyCorrectionCommit:be4346eef10954af97ea15cab454a8499f238a20  reason:P5B-used-effective-approval-time-as-correction-event-own-timestamp  founderApprovalValid:true  currentQueueStateCorrect:true  promotionFollowedFounderRatificationCommit:true"
+    },
+    {
+      "timestamp": "2026-09-13T15:19:52.640Z",
+      "action": "founder_approval_timestamp_correction_recorded",
+      "slug": "24-faubourg-inspired",
+      "reviewer": "governance-p5c",
+      "details": "supersededAction:founder_approval_timestamp_corrected  supersededEvent:review-log-entry-idx-850  originalIncorrectTimestamp:2026-09-13T18:30:01.500Z  effectiveFounderApprovalRecordedAt:2026-09-13T14:28:14.000Z  correctionRecordedAt:2026-09-13T15:19:52.640Z  founderRatificationCommit:caa40f65f9f1dbf5a19c830b5de5309a8d840321  promotionCommit:81b42ee96526b47fa9b1b35f862fe7dfd71eb51f  chronologyCorrectionCommit:be4346eef10954af97ea15cab454a8499f238a20  reason:P5B-used-effective-approval-time-as-correction-event-own-timestamp  founderApprovalValid:true  currentQueueStateCorrect:true  promotionFollowedFounderRatificationCommit:true"
+    },
+    {
+      "timestamp": "2026-09-13T15:19:52.640Z",
+      "action": "founder_approval_timestamp_correction_recorded",
+      "slug": "boss-nuit-pour-femme-inspired",
+      "reviewer": "governance-p5c",
+      "details": "supersededAction:founder_approval_timestamp_corrected  supersededEvent:review-log-entry-idx-851  originalIncorrectTimestamp:2026-09-13T18:30:02.500Z  effectiveFounderApprovalRecordedAt:2026-09-13T14:28:14.000Z  correctionRecordedAt:2026-09-13T15:19:52.640Z  founderRatificationCommit:caa40f65f9f1dbf5a19c830b5de5309a8d840321  promotionCommit:81b42ee96526b47fa9b1b35f862fe7dfd71eb51f  chronologyCorrectionCommit:be4346eef10954af97ea15cab454a8499f238a20  reason:P5B-used-effective-approval-time-as-correction-event-own-timestamp  founderApprovalValid:true  currentQueueStateCorrect:true  promotionFollowedFounderRatificationCommit:true"
+    },
+    {
+      "timestamp": "2026-09-13T15:19:52.640Z",
+      "action": "founder_approval_timestamp_correction_recorded",
+      "slug": "capri-lemon-sugar-inspired",
+      "reviewer": "governance-p5c",
+      "details": "supersededAction:founder_approval_timestamp_corrected  supersededEvent:review-log-entry-idx-852  originalIncorrectTimestamp:2026-09-13T18:30:03.500Z  effectiveFounderApprovalRecordedAt:2026-09-13T14:28:14.000Z  correctionRecordedAt:2026-09-13T15:19:52.640Z  founderRatificationCommit:caa40f65f9f1dbf5a19c830b5de5309a8d840321  promotionCommit:81b42ee96526b47fa9b1b35f862fe7dfd71eb51f  chronologyCorrectionCommit:be4346eef10954af97ea15cab454a8499f238a20  reason:P5B-used-effective-approval-time-as-correction-event-own-timestamp  founderApprovalValid:true  currentQueueStateCorrect:true  promotionFollowedFounderRatificationCommit:true"
     }
   ]
 }
