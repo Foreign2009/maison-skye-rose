@@ -66,7 +66,7 @@ export const _24FaubourgInspired: FragranceKnowledge = {
     "Warm",
     "Sophisticated",
     "Refined",
-    "Intimate",
+    "Sensual",
   ],
   occasions     : [
     "Daily Wear",
@@ -99,7 +99,7 @@ export const _24FaubourgInspired: FragranceKnowledge = {
   newArrival    : false,
 
   // ── Education ───────────────────────────────────────────────────────────────
-  subtitle      : "Luminous Warmth",
+  subtitle      : "Luminous Amber Bloom",
   description   : "Hyacinth and peach open into a luminous heart of jasmine and orange blossom, their creamy warmth grounded by sandalwood and amber. A fragrance that feels both radiant and intimate—floral without sweetness, elegant without restraint.",
   academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances", "what-makes-a-signature-scent"],
   academyCategories: ["fragrance-families", "the-note-pyramid", "wear-and-application"],
@@ -129,7 +129,7 @@ export const _24FaubourgInspired: FragranceKnowledge = {
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["delina-inspired", "j-adore-inspired"],
+    alternatives:     ["delina-inspired"],
     wardrobePartners: ["layton-inspired", "allure-homme-sport-inspired"],
   },
 };

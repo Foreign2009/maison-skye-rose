@@ -51,8 +51,8 @@ export const capriLemonSugarInspired: FragranceKnowledge = {
   vibe          : [
     "Playful",
     "Bright",
-    "Sweet",
-    "Fresh",
+    "Delicate",
+    "Clean",
     "Youthful",
     "Warm",
   ],

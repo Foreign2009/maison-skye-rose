@@ -5532,6 +5532,146 @@
       "slug": "la-nuit-tresor-nude-inspired",
       "reviewer": "Adi",
       "details": "promotionId:Tvok-bcgnr8j  nativePath:app/lib/mkc/native/la-nuit-tresor-nude-inspired.ts"
+    },
+    {
+      "timestamp": "2026-09-13T13:05:04.926Z",
+      "action": "added_to_queue",
+      "slug": "azzaro-wanted-by-night-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-09-13T13:05:04.937Z",
+      "action": "added_to_queue",
+      "slug": "24-faubourg-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-09-13T13:05:04.948Z",
+      "action": "added_to_queue",
+      "slug": "boss-nuit-pour-femme-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-09-13T13:05:04.957Z",
+      "action": "added_to_queue",
+      "slug": "capri-lemon-sugar-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-09-13T13:05:04.968Z",
+      "action": "review_started",
+      "slug": "azzaro-wanted-by-night-inspired",
+      "reviewer": "editorial-review-p4",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-09-13T13:05:04.978Z",
+      "action": "review_started",
+      "slug": "24-faubourg-inspired",
+      "reviewer": "editorial-review-p4",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-09-13T13:05:04.987Z",
+      "action": "review_started",
+      "slug": "boss-nuit-pour-femme-inspired",
+      "reviewer": "editorial-review-p4",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-09-13T13:05:04.998Z",
+      "action": "review_started",
+      "slug": "capri-lemon-sugar-inspired",
+      "reviewer": "editorial-review-p4",
+      "details": ""
+    },
+    {
+      "timestamp": "2026-09-13T13:05:05.008Z",
+      "action": "note_added",
+      "slug": "azzaro-wanted-by-night-inspired",
+      "reviewer": "editorial-review-p4",
+      "details": "[discovery] QUALITY_OPPORTUNITY: 'Evening Intensity' in signatureStyle inferred partly from product name 'Wanted by Night'. Character-supported by tobacco/spice/leather — not a governance violation. Consider revision to 'Dark Intensity' at future editorial pass to de-emphasise name-derived positioning."
+    },
+    {
+      "timestamp": "2026-09-13T13:05:05.018Z",
+      "action": "note_added",
+      "slug": "24-faubourg-inspired",
+      "reviewer": "editorial-review-p4",
+      "details": "[editorial] P4-15 CORRECTION APPLIED: subtitle corrected from 'Luminous Warmth' (EXACT_COLLISION — 2 existing native records) to 'Luminous Amber Bloom'. Subtitle is now unique across native MKC."
+    },
+    {
+      "timestamp": "2026-09-13T13:05:05.029Z",
+      "action": "note_added",
+      "slug": "24-faubourg-inspired",
+      "reviewer": "editorial-review-p4",
+      "details": "[composition] P4-15 CORRECTION APPLIED: vibe 'Intimate' replaced with canonical 'Sensual'. Non-canonical per fragranceVibes.ts."
+    },
+    {
+      "timestamp": "2026-09-13T13:05:05.038Z",
+      "action": "note_added",
+      "slug": "24-faubourg-inspired",
+      "reviewer": "editorial-review-p4",
+      "details": "[relationships] P4-15 CORRECTION APPLIED: 'j-adore-inspired' removed from alternatives — slug does not exist in native MKC. Single alternative 'delina-inspired' remains. Recommend identifying second valid Rose/Floral-Amber alternative at next editorial pass."
+    },
+    {
+      "timestamp": "2026-09-13T13:05:05.049Z",
+      "action": "note_added",
+      "slug": "24-faubourg-inspired",
+      "reviewer": "editorial-review-p4",
+      "details": "[relationships] QUALITY_OPPORTUNITY: wardrobePartners 'layton-inspired' (male) and 'allure-homme-sport-inspired' (male). Cross-gender pairing possible as couple scenario but 'allure-homme-sport-inspired' (fresh/sporty) has weak complementarity with a 1995 opulent Hermes floral. Review at P5."
+    },
+    {
+      "timestamp": "2026-09-13T13:05:05.057Z",
+      "action": "note_added",
+      "slug": "boss-nuit-pour-femme-inspired",
+      "reviewer": "editorial-review-p4",
+      "details": "[relationships] QUALITY_OPPORTUNITY: wardrobePartners 'sauvage-inspired' and 'bleu-de-chanel-inspired' identical to those generated for 'azzaro-wanted-by-night-inspired'. Cross-gender pairing is possible but identical output for two unrelated records signals low-confidence generation artifact. Review at P5."
+    },
+    {
+      "timestamp": "2026-09-13T13:05:05.068Z",
+      "action": "note_added",
+      "slug": "capri-lemon-sugar-inspired",
+      "reviewer": "editorial-review-p4",
+      "details": "[discovery] P4-15 CORRECTIONS APPLIED: vibe 'Sweet' replaced with canonical 'Delicate'; vibe 'Fresh' replaced with canonical 'Clean'. Both original values non-canonical per fragranceVibes.ts."
+    },
+    {
+      "timestamp": "2026-09-13T13:05:05.078Z",
+      "action": "note_added",
+      "slug": "capri-lemon-sugar-inspired",
+      "reviewer": "editorial-review-p4",
+      "details": "[relationships] QUALITY_OPPORTUNITY: single wardrobePartner 'baccarat-rouge-540-inspired' (rich amber floral). Compositionally valid as contrast partner but thinly supported. Recommend adding second wardrobePartner at next editorial pass."
+    },
+    {
+      "timestamp": "2026-09-13T13:05:05.087Z",
+      "action": "approved",
+      "slug": "azzaro-wanted-by-night-inspired",
+      "reviewer": "editorial-review-p4",
+      "details": "P4 editorial review PASS. Evidence locks intact (16 notes, male, Skye, Woody/Spicy/Tobacco). Claim safety PASS. Vocabulary all canonical. Subtitle 'Smoke & Spice' UNIQUE. Relationships valid. Non-blocking note: 'Evening Intensity' signatureStyle. PROMOTION_READY pending founder approval."
+    },
+    {
+      "timestamp": "2026-09-13T13:05:05.100Z",
+      "action": "approved",
+      "slug": "24-faubourg-inspired",
+      "reviewer": "editorial-review-p4",
+      "details": "P4 editorial review PASS after P4-15 corrections. Evidence locks intact (14 notes, female, Rose, Floral/Amber). P4-15: subtitle collision resolved, non-canonical vibe corrected, invalid relationship removed. Non-blocking relationship quality note. PROMOTION_READY pending founder approval."
+    },
+    {
+      "timestamp": "2026-09-13T13:05:05.109Z",
+      "action": "approved",
+      "slug": "boss-nuit-pour-femme-inspired",
+      "reviewer": "editorial-review-p4",
+      "details": "P4 editorial review PASS. Evidence locks intact (7 notes, female, Rose, Floral). Claim safety PASS. Vocabulary all canonical. Subtitle 'Luminous Violet' UNIQUE. Description quality STRONG. Non-blocking wardrobePartner quality note. PROMOTION_READY pending founder approval."
+    },
+    {
+      "timestamp": "2026-09-13T13:05:05.120Z",
+      "action": "approved",
+      "slug": "capri-lemon-sugar-inspired",
+      "reviewer": "editorial-review-p4",
+      "details": "P4 editorial review PASS after P4-15 corrections. Evidence locks intact (10 notes, unisex, Elite, Gourmand/Citrus). CAPRI_COLLECTION_ELITE confirmed. P4-15: non-canonical vibes corrected. Subtitle 'Citrus Gourmand Brightness' UNIQUE. Non-blocking wardrobePartner quality note. PROMOTION_READY pending founder approval."
     }
   ]
 }

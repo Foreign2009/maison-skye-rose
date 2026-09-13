@@ -5340,6 +5340,154 @@
         "timestamp": "2026-09-11T20:35:27.004Z",
         "reason": "Editorial corrections applied and revalidated; evidence locks verified; validation passed."
       }
+    },
+    {
+      "slug": "azzaro-wanted-by-night-inspired",
+      "name": "Azzaro Wanted By Night Inspired",
+      "collection": "Skye",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-09-13T13:05:04.916Z",
+      "reviewStartedAt": "2026-09-13T13:05:04.961Z",
+      "decidedAt": "2026-09-13T13:05:05.082Z",
+      "reviewer": "editorial-review-p4",
+      "notes": [
+        {
+          "id": "note-1789304705002-3tvfv",
+          "reviewer": "editorial-review-p4",
+          "timestamp": "2026-09-13T13:05:05.002Z",
+          "section": "discovery",
+          "note": "QUALITY_OPPORTUNITY: 'Evening Intensity' in signatureStyle inferred partly from product name 'Wanted by Night'. Character-supported by tobacco/spice/leather — not a governance violation. Consider revision to 'Dark Intensity' at future editorial pass to de-emphasise name-derived positioning.",
+          "resolved": false
+        }
+      ],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "editorial-review-p4",
+        "timestamp": "2026-09-13T13:05:05.082Z",
+        "reason": "P4 editorial review PASS. Evidence locks intact (16 notes, male, Skye, Woody/Spicy/Tobacco). Claim safety PASS. Vocabulary all canonical. Subtitle 'Smoke & Spice' UNIQUE. Relationships valid. Non-blocking note: 'Evening Intensity' signatureStyle. PROMOTION_READY pending founder approval."
+      }
+    },
+    {
+      "slug": "24-faubourg-inspired",
+      "name": "24 Faubourg Inspired",
+      "collection": "Rose",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-09-13T13:05:04.931Z",
+      "reviewStartedAt": "2026-09-13T13:05:04.972Z",
+      "decidedAt": "2026-09-13T13:05:05.092Z",
+      "reviewer": "editorial-review-p4",
+      "notes": [
+        {
+          "id": "note-1789304705012-k0b4t",
+          "reviewer": "editorial-review-p4",
+          "timestamp": "2026-09-13T13:05:05.012Z",
+          "section": "editorial",
+          "note": "P4-15 CORRECTION APPLIED: subtitle corrected from 'Luminous Warmth' (EXACT_COLLISION — 2 existing native records) to 'Luminous Amber Bloom'. Subtitle is now unique across native MKC.",
+          "resolved": false
+        },
+        {
+          "id": "note-1789304705022-imsp3",
+          "reviewer": "editorial-review-p4",
+          "timestamp": "2026-09-13T13:05:05.022Z",
+          "section": "composition",
+          "note": "P4-15 CORRECTION APPLIED: vibe 'Intimate' replaced with canonical 'Sensual'. Non-canonical per fragranceVibes.ts.",
+          "resolved": false
+        },
+        {
+          "id": "note-1789304705033-rdau9",
+          "reviewer": "editorial-review-p4",
+          "timestamp": "2026-09-13T13:05:05.033Z",
+          "section": "relationships",
+          "note": "P4-15 CORRECTION APPLIED: 'j-adore-inspired' removed from alternatives — slug does not exist in native MKC. Single alternative 'delina-inspired' remains. Recommend identifying second valid Rose/Floral-Amber alternative at next editorial pass.",
+          "resolved": false
+        },
+        {
+          "id": "note-1789304705042-qkxsh",
+          "reviewer": "editorial-review-p4",
+          "timestamp": "2026-09-13T13:05:05.042Z",
+          "section": "relationships",
+          "note": "QUALITY_OPPORTUNITY: wardrobePartners 'layton-inspired' (male) and 'allure-homme-sport-inspired' (male). Cross-gender pairing possible as couple scenario but 'allure-homme-sport-inspired' (fresh/sporty) has weak complementarity with a 1995 opulent Hermes floral. Review at P5.",
+          "resolved": false
+        }
+      ],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "editorial-review-p4",
+        "timestamp": "2026-09-13T13:05:05.092Z",
+        "reason": "P4 editorial review PASS after P4-15 corrections. Evidence locks intact (14 notes, female, Rose, Floral/Amber). P4-15: subtitle collision resolved, non-canonical vibe corrected, invalid relationship removed. Non-blocking relationship quality note. PROMOTION_READY pending founder approval."
+      }
+    },
+    {
+      "slug": "boss-nuit-pour-femme-inspired",
+      "name": "Boss Nuit Pour Femme Inspired",
+      "collection": "Rose",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-09-13T13:05:04.941Z",
+      "reviewStartedAt": "2026-09-13T13:05:04.982Z",
+      "decidedAt": "2026-09-13T13:05:05.104Z",
+      "reviewer": "editorial-review-p4",
+      "notes": [
+        {
+          "id": "note-1789304705051-y7vio",
+          "reviewer": "editorial-review-p4",
+          "timestamp": "2026-09-13T13:05:05.051Z",
+          "section": "relationships",
+          "note": "QUALITY_OPPORTUNITY: wardrobePartners 'sauvage-inspired' and 'bleu-de-chanel-inspired' identical to those generated for 'azzaro-wanted-by-night-inspired'. Cross-gender pairing is possible but identical output for two unrelated records signals low-confidence generation artifact. Review at P5.",
+          "resolved": false
+        }
+      ],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "editorial-review-p4",
+        "timestamp": "2026-09-13T13:05:05.104Z",
+        "reason": "P4 editorial review PASS. Evidence locks intact (7 notes, female, Rose, Floral). Claim safety PASS. Vocabulary all canonical. Subtitle 'Luminous Violet' UNIQUE. Description quality STRONG. Non-blocking wardrobePartner quality note. PROMOTION_READY pending founder approval."
+      }
+    },
+    {
+      "slug": "capri-lemon-sugar-inspired",
+      "name": "Capri Lemon Sugar Inspired",
+      "collection": "Elite",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-09-13T13:05:04.952Z",
+      "reviewStartedAt": "2026-09-13T13:05:04.991Z",
+      "decidedAt": "2026-09-13T13:05:05.115Z",
+      "reviewer": "editorial-review-p4",
+      "notes": [
+        {
+          "id": "note-1789304705063-uwl3k",
+          "reviewer": "editorial-review-p4",
+          "timestamp": "2026-09-13T13:05:05.063Z",
+          "section": "discovery",
+          "note": "P4-15 CORRECTIONS APPLIED: vibe 'Sweet' replaced with canonical 'Delicate'; vibe 'Fresh' replaced with canonical 'Clean'. Both original values non-canonical per fragranceVibes.ts.",
+          "resolved": false
+        },
+        {
+          "id": "note-1789304705072-th647",
+          "reviewer": "editorial-review-p4",
+          "timestamp": "2026-09-13T13:05:05.072Z",
+          "section": "relationships",
+          "note": "QUALITY_OPPORTUNITY: single wardrobePartner 'baccarat-rouge-540-inspired' (rich amber floral). Compositionally valid as contrast partner but thinly supported. Recommend adding second wardrobePartner at next editorial pass.",
+          "resolved": false
+        }
+      ],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "editorial-review-p4",
+        "timestamp": "2026-09-13T13:05:05.115Z",
+        "reason": "P4 editorial review PASS after P4-15 corrections. Evidence locks intact (10 notes, unisex, Elite, Gourmand/Citrus). CAPRI_COLLECTION_ELITE confirmed. P4-15: non-canonical vibes corrected. Subtitle 'Citrus Gourmand Brightness' UNIQUE. Non-blocking wardrobePartner quality note. PROMOTION_READY pending founder approval."
+      }
     }
   ]
 }
