@@ -2,6 +2,282 @@
   "version": "1.0",
   "runs": [
     {
+      "slug": "capri-lemon-sugar-inspired",
+      "name": "Capri Lemon Sugar Inspired",
+      "wave": null,
+      "startedAt": "2026-09-13T12:45:03.407Z",
+      "completedAt": "2026-09-13T12:45:14.118Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 1
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 1
+        },
+        {
+          "stage": "composition",
+          "status": "skip",
+          "durationMs": 0,
+          "message": "EVIDENCE_LOCK — governed notes preserved from scaffold; AI generation bypassed"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 1743,
+          "message": "823 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 2937,
+          "message": "9767 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 2228,
+          "message": "1370 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 3793,
+          "message": "1706 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "13666 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "pass",
+          "durationMs": 1,
+          "message": "PASS  [0 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 3
+        }
+      ],
+      "validationStatus": "PASS",
+      "promotedAt": null
+    },
+    {
+      "slug": "boss-nuit-pour-femme-inspired",
+      "name": "Boss Nuit Pour Femme Inspired",
+      "wave": null,
+      "startedAt": "2026-09-13T12:44:40.219Z",
+      "completedAt": "2026-09-13T12:44:52.183Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 1
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 1
+        },
+        {
+          "stage": "composition",
+          "status": "skip",
+          "durationMs": 0,
+          "message": "EVIDENCE_LOCK — governed notes preserved from scaffold; AI generation bypassed"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 1658,
+          "message": "796 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 3937,
+          "message": "9840 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 2137,
+          "message": "1350 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 4219,
+          "message": "1642 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "13628 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "pass",
+          "durationMs": 3,
+          "message": "PASS  [0 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 4
+        }
+      ],
+      "validationStatus": "PASS",
+      "promotedAt": null
+    },
+    {
+      "slug": "24-faubourg-inspired",
+      "name": "24 Faubourg Inspired",
+      "wave": null,
+      "startedAt": "2026-09-13T12:44:13.997Z",
+      "completedAt": "2026-09-13T12:44:26.405Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 1
+        },
+        {
+          "stage": "composition",
+          "status": "skip",
+          "durationMs": 1,
+          "message": "EVIDENCE_LOCK — governed notes preserved from scaffold; AI generation bypassed"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 1739,
+          "message": "837 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "degraded",
+          "durationMs": 3787,
+          "message": "9948 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 2257,
+          "message": "1390 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 4611,
+          "message": "1747 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "13922 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "pass",
+          "durationMs": 3,
+          "message": "PASS  [0 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 4
+        }
+      ],
+      "validationStatus": "PASS",
+      "promotedAt": null
+    },
+    {
+      "slug": "azzaro-wanted-by-night-inspired",
+      "name": "Azzaro Wanted By Night Inspired",
+      "wave": null,
+      "startedAt": "2026-09-13T12:43:46.782Z",
+      "completedAt": "2026-09-13T12:43:59.595Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 1
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "skip",
+          "durationMs": 0,
+          "message": "EVIDENCE_LOCK — governed notes preserved from scaffold; AI generation bypassed"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 2069,
+          "message": "847 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 3685,
+          "message": "9925 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 3252,
+          "message": "1437 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 3785,
+          "message": "1671 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "13880 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "pass",
+          "durationMs": 3,
+          "message": "PASS  [0 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 9
+        }
+      ],
+      "validationStatus": "PASS",
+      "promotedAt": null
+    },
+    {
       "slug": "la-nuit-tresor-nude-inspired",
       "name": "La Nuit Tresor Nude Inspired",
       "wave": null,
