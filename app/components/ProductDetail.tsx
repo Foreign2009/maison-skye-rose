@@ -60,11 +60,6 @@ const GENDER_LABELS: Record<FragranceKnowledge["gender"], string> = {
   unisex: "Unisex",
 };
 
-const PROJECTION_LABELS: Record<FragranceKnowledge["projection"], string> = {
-  soft:     "Soft",
-  moderate: "Moderate",
-  strong:   "Strong",
-};
 
 const FAMILY_ACADEMY_HEADERS: Record<string, string> = {
   "Amber":        "Discover the World of Amber",
@@ -569,7 +564,7 @@ export default function ProductDetail({
         <div className="mx-auto max-w-7xl">
           <div className="rounded-3xl bg-white p-6 md:p-10">
             <h2 className="text-2xl font-black text-[#4f4a52]">Quick Facts</h2>
-            <div className="mt-8 grid grid-cols-2 gap-6 md:grid-cols-5">
+            <div className="mt-8 grid grid-cols-2 gap-6 md:grid-cols-4">
 
               {/* Family */}
               <div>
@@ -613,16 +608,6 @@ export default function ProductDetail({
                     <KnowledgeChip key={o} label={o} />
                   ))}
                 </div>
-              </div>
-
-              {/* Sillage */}
-              <div>
-                <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-zinc-400">
-                  Sillage
-                </p>
-                <p className="mt-2.5 text-sm font-semibold text-[#4f4a52]">
-                  {PROJECTION_LABELS[knowledge.projection]}
-                </p>
               </div>
 
             </div>

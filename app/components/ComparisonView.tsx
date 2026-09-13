@@ -89,12 +89,6 @@ const CHARACTER_SPECTRUM = [
   "Deep & Intense",
 ] as const;
 
-const PROJECTION_LABELS: Record<string, string> = {
-  soft:     "Soft",
-  moderate: "Moderate",
-  strong:   "Strong",
-};
-
 // ── Sub-components ────────────────────────────────────────────────────────────
 
 function SectionCard({
@@ -328,25 +322,7 @@ export default function ComparisonView({
         </div>
       </SectionCard>
 
-      {/* ── Section 4: Projection ───────────────────────────────────────────── */}
-      <SectionCard title="Projection">
-        <div className="mt-6 overflow-hidden rounded-2xl bg-[#f9f7f4]">
-          <div className="flex items-center justify-between px-5 py-4 border-b border-[#ede8e1]">
-            <p className="text-sm text-zinc-500 truncate mr-4">{fragranceA.name}</p>
-            <p className="text-sm font-bold text-[#4f4a52] shrink-0">
-              {PROJECTION_LABELS[projection.a] ?? projection.a}
-            </p>
-          </div>
-          <div className="flex items-center justify-between px-5 py-4">
-            <p className="text-sm text-zinc-500 truncate mr-4">{fragranceB.name}</p>
-            <p className="text-sm font-bold text-[#4f4a52] shrink-0">
-              {PROJECTION_LABELS[projection.b] ?? projection.b}
-            </p>
-          </div>
-        </div>
-      </SectionCard>
-
-      {/* ── Section 5: Character Position ───────────────────────────────────── */}
+      {/* ── Section 4: Character Position ───────────────────────────────────── */}
       <SectionCard title="Character Position">
         <div className="mt-8 space-y-2">
           {CHARACTER_SPECTRUM.map((level) => {

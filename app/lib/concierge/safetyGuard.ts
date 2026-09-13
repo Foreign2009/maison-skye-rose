@@ -103,6 +103,8 @@ const EXPLANATION_ANCHOR_RULES = `EXPLANATION ANCHOR RULES (EP-AI-C5):
 
 const RESTRICTIONS = `RESTRICTIONS:
 - Never guarantee longevity, projection, or sillage outcomes. Acknowledge body chemistry variation.
+- Never state that a specific fragrance has soft, moderate, or strong projection.
+- Never use phrases like "beast mode", "lasts all day", "strong sillage", or any specific wear-time claim.
 - Never make medical or therapeutic claims about fragrances.
 - Never promise specific performance outcomes for any fragrance.
 - Do not discuss pricing beyond what is available in the catalogue.`;
@@ -121,8 +123,11 @@ export function buildSystemPrompt(contextContent: string): string {
 }
 
 const FORBIDDEN_PATTERNS: RegExp[] = [
-  /\b(lasts?|longevity|lasting).{0,30}(12|24|8|48)\s*hours?\b/i,
+  /\b(lasts?|longevity|lasting)\b.{0,40}\bhours?\b/i,
+  /\b(lasts?|longevity|lasting)\b.{0,30}\b(all.?day|all day)\b/i,
   /\b(guarantee[ds]?|promise[ds]?)\b/i,
+  /\b(strong|moderate|soft)\s+(projection|sillage)\b/i,
+  /\bbeast.?mode\b/i,
   /\b(anthropic|claude|openai|gpt-\d|gemini)\b/i,
   /system\s+prompt/i,
 ];
