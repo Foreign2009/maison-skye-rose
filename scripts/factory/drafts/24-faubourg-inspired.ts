@@ -130,6 +130,6 @@ export const _24FaubourgInspired: FragranceKnowledge = {
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
     alternatives:     ["delina-inspired"],
-    wardrobePartners: ["layton-inspired", "allure-homme-sport-inspired"],
+    wardrobePartners: ["layton-inspired"],
   },
 };

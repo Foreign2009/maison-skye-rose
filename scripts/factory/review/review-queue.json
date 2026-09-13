@@ -5351,8 +5351,8 @@
       "status": "approved",
       "addedAt": "2026-09-13T13:05:04.916Z",
       "reviewStartedAt": "2026-09-13T13:05:04.961Z",
-      "decidedAt": "2026-09-13T13:05:05.082Z",
-      "reviewer": "editorial-review-p4",
+      "decidedAt": "2026-09-13T13:25:54.538Z",
+      "reviewer": "editorial-review-p4a",
       "notes": [
         {
           "id": "note-1789304705002-3tvfv",
@@ -5360,14 +5360,30 @@
           "timestamp": "2026-09-13T13:05:05.002Z",
           "section": "discovery",
           "note": "QUALITY_OPPORTUNITY: 'Evening Intensity' in signatureStyle inferred partly from product name 'Wanted by Night'. Character-supported by tobacco/spice/leather — not a governance violation. Consider revision to 'Dark Intensity' at future editorial pass to de-emphasise name-derived positioning.",
+          "resolved": true
+        },
+        {
+          "id": "note-1789305920090-5wf67",
+          "reviewer": "editorial-review-p4a",
+          "timestamp": "2026-09-13T13:25:20.090Z",
+          "section": "discovery",
+          "note": "P4A-7 CLASSIFICATION: VALID_NON_BLOCKING. 'Evening Intensity' signatureStyle quality note acknowledged. Retained for future editorial pass. No P4A correction required.",
+          "resolved": true
+        },
+        {
+          "id": "note-1789306655342-0tz25",
+          "reviewer": "editorial-review-p4b",
+          "timestamp": "2026-09-13T13:37:35.342Z",
+          "section": "discovery",
+          "note": "P4B NOTE REPAIR: signatureStyle corrected from 'Evening Intensity' to 'Dark Intensity'. 'Dark' is supported by mood 'Bold Sensual Dark' and vibe 'Intense'. Name-derived 'Evening' positioning removed.",
           "resolved": false
         }
       ],
       "decision": {
         "decision": "approved",
-        "reviewer": "editorial-review-p4",
-        "timestamp": "2026-09-13T13:05:05.082Z",
-        "reason": "P4 editorial review PASS. Evidence locks intact (16 notes, male, Skye, Woody/Spicy/Tobacco). Claim safety PASS. Vocabulary all canonical. Subtitle 'Smoke & Spice' UNIQUE. Relationships valid. Non-blocking note: 'Evening Intensity' signatureStyle. PROMOTION_READY pending founder approval."
+        "reviewer": "editorial-review-p4a",
+        "timestamp": "2026-09-13T13:25:54.537Z",
+        "reason": "P4A corrected review PASS. No P4A-eligible corrections required (no vocabulary violations, no relationship governance defects). Relationships RETAINED: alternatives [spicebomb-extreme-inspired, tobacco-vanille-inspired], wardrobePartners [sauvage-inspired, bleu-de-chanel-inspired] — both supported by Woody family overlap and season/character contrast. P4 quality note (Evening Intensity) classified VALID_NON_BLOCKING and resolved. PROMOTION_READY pending founder approval and resolution of PROJECTION_GOVERNANCE_BLOCKER."
       }
     },
     {
@@ -5380,8 +5396,8 @@
       "status": "approved",
       "addedAt": "2026-09-13T13:05:04.931Z",
       "reviewStartedAt": "2026-09-13T13:05:04.972Z",
-      "decidedAt": "2026-09-13T13:05:05.092Z",
-      "reviewer": "editorial-review-p4",
+      "decidedAt": "2026-09-13T13:25:54.551Z",
+      "reviewer": "editorial-review-p4a",
       "notes": [
         {
           "id": "note-1789304705012-k0b4t",
@@ -5389,7 +5405,7 @@
           "timestamp": "2026-09-13T13:05:05.012Z",
           "section": "editorial",
           "note": "P4-15 CORRECTION APPLIED: subtitle corrected from 'Luminous Warmth' (EXACT_COLLISION — 2 existing native records) to 'Luminous Amber Bloom'. Subtitle is now unique across native MKC.",
-          "resolved": false
+          "resolved": true
         },
         {
           "id": "note-1789304705022-imsp3",
@@ -5397,7 +5413,7 @@
           "timestamp": "2026-09-13T13:05:05.022Z",
           "section": "composition",
           "note": "P4-15 CORRECTION APPLIED: vibe 'Intimate' replaced with canonical 'Sensual'. Non-canonical per fragranceVibes.ts.",
-          "resolved": false
+          "resolved": true
         },
         {
           "id": "note-1789304705033-rdau9",
@@ -5405,7 +5421,7 @@
           "timestamp": "2026-09-13T13:05:05.033Z",
           "section": "relationships",
           "note": "P4-15 CORRECTION APPLIED: 'j-adore-inspired' removed from alternatives — slug does not exist in native MKC. Single alternative 'delina-inspired' remains. Recommend identifying second valid Rose/Floral-Amber alternative at next editorial pass.",
-          "resolved": false
+          "resolved": true
         },
         {
           "id": "note-1789304705042-qkxsh",
@@ -5413,14 +5429,46 @@
           "timestamp": "2026-09-13T13:05:05.042Z",
           "section": "relationships",
           "note": "QUALITY_OPPORTUNITY: wardrobePartners 'layton-inspired' (male) and 'allure-homme-sport-inspired' (male). Cross-gender pairing possible as couple scenario but 'allure-homme-sport-inspired' (fresh/sporty) has weak complementarity with a 1995 opulent Hermes floral. Review at P5.",
-          "resolved": false
+          "resolved": true
+        },
+        {
+          "id": "note-1789305920111-rropn",
+          "reviewer": "editorial-review-p4a",
+          "timestamp": "2026-09-13T13:25:20.111Z",
+          "section": "editorial",
+          "note": "P4A-7 CLASSIFICATION: VALID_NON_BLOCKING. Subtitle P4-15 correction confirmed applied. 'Luminous Amber Bloom' unique across native MKC. Note resolved.",
+          "resolved": true
+        },
+        {
+          "id": "note-1789305920132-xveqy",
+          "reviewer": "editorial-review-p4a",
+          "timestamp": "2026-09-13T13:25:20.132Z",
+          "section": "composition",
+          "note": "P4A-7 CLASSIFICATION: VALID_NON_BLOCKING. Vibe P4-15 correction confirmed applied. 'Sensual' is canonical per fragranceVibes.ts. Note resolved.",
+          "resolved": true
+        },
+        {
+          "id": "note-1789305920151-v8w7k",
+          "reviewer": "editorial-review-p4a",
+          "timestamp": "2026-09-13T13:25:20.151Z",
+          "section": "relationships",
+          "note": "P4A-7 CLASSIFICATION: VALID_NON_BLOCKING. j-adore-inspired P4-15 removal confirmed applied. Note resolved.",
+          "resolved": true
+        },
+        {
+          "id": "note-1789305920170-r95c1",
+          "reviewer": "editorial-review-p4a",
+          "timestamp": "2026-09-13T13:25:20.170Z",
+          "section": "relationships",
+          "note": "P4A-7 CLASSIFICATION: RESOLVED_BY_P4A. 'allure-homme-sport-inspired' removed from wardrobePartners in P4A-5 (Woody/Spicy/Autumn — insufficient complementarity with opulent Hermès floral). wardrobePartners now: ['layton-inspired'] only.",
+          "resolved": true
         }
       ],
       "decision": {
         "decision": "approved",
-        "reviewer": "editorial-review-p4",
-        "timestamp": "2026-09-13T13:05:05.092Z",
-        "reason": "P4 editorial review PASS after P4-15 corrections. Evidence locks intact (14 notes, female, Rose, Floral/Amber). P4-15: subtitle collision resolved, non-canonical vibe corrected, invalid relationship removed. Non-blocking relationship quality note. PROMOTION_READY pending founder approval."
+        "reviewer": "editorial-review-p4a",
+        "timestamp": "2026-09-13T13:25:54.551Z",
+        "reason": "P4A corrected review PASS. P4A-5 relationship correction applied: allure-homme-sport-inspired REMOVED from wardrobePartners (Woody/Spicy/Autumn — insufficient complementarity with opulent Hermès floral per governance protocol). layton-inspired RETAINED (Amber family overlap + Rich & Full-Bodied scentCharacter — concrete complementarity). wardrobePartners now: [layton-inspired]. P4-15 corrections from P4 confirmed intact. All 4 P4 notes resolved. PROMOTION_READY pending founder approval and resolution of PROJECTION_GOVERNANCE_BLOCKER."
       }
     },
     {
@@ -5433,8 +5481,8 @@
       "status": "approved",
       "addedAt": "2026-09-13T13:05:04.941Z",
       "reviewStartedAt": "2026-09-13T13:05:04.982Z",
-      "decidedAt": "2026-09-13T13:05:05.104Z",
-      "reviewer": "editorial-review-p4",
+      "decidedAt": "2026-09-13T13:25:54.561Z",
+      "reviewer": "editorial-review-p4a",
       "notes": [
         {
           "id": "note-1789304705051-y7vio",
@@ -5442,14 +5490,22 @@
           "timestamp": "2026-09-13T13:05:05.051Z",
           "section": "relationships",
           "note": "QUALITY_OPPORTUNITY: wardrobePartners 'sauvage-inspired' and 'bleu-de-chanel-inspired' identical to those generated for 'azzaro-wanted-by-night-inspired'. Cross-gender pairing is possible but identical output for two unrelated records signals low-confidence generation artifact. Review at P5.",
-          "resolved": false
+          "resolved": true
+        },
+        {
+          "id": "note-1789305920191-k5so9",
+          "reviewer": "editorial-review-p4a",
+          "timestamp": "2026-09-13T13:25:20.191Z",
+          "section": "relationships",
+          "note": "P4A-7 CLASSIFICATION: RESOLVED_BY_P4A. 'sauvage-inspired' and 'bleu-de-chanel-inspired' removed from wardrobePartners in P4A-5 (no governed basis for Boss Nuit-specific wardrobe relationship beyond cross-gender generic pairing). wardrobePartners now: [].",
+          "resolved": true
         }
       ],
       "decision": {
         "decision": "approved",
-        "reviewer": "editorial-review-p4",
-        "timestamp": "2026-09-13T13:05:05.104Z",
-        "reason": "P4 editorial review PASS. Evidence locks intact (7 notes, female, Rose, Floral). Claim safety PASS. Vocabulary all canonical. Subtitle 'Luminous Violet' UNIQUE. Description quality STRONG. Non-blocking wardrobePartner quality note. PROMOTION_READY pending founder approval."
+        "reviewer": "editorial-review-p4a",
+        "timestamp": "2026-09-13T13:25:54.561Z",
+        "reason": "P4A corrected review PASS. P4A-5 relationship correction applied: sauvage-inspired and bleu-de-chanel-inspired REMOVED from wardrobePartners (no governed basis for Boss Nuit-specific wardrobe relationship; cross-gender pairing only; identical to Azzaro generation artifact). wardrobePartners now: []. P4 quality note classified RESOLVED_BY_P4A. PROMOTION_READY pending founder approval and resolution of PROJECTION_GOVERNANCE_BLOCKER."
       }
     },
     {
@@ -5462,8 +5518,8 @@
       "status": "approved",
       "addedAt": "2026-09-13T13:05:04.952Z",
       "reviewStartedAt": "2026-09-13T13:05:04.991Z",
-      "decidedAt": "2026-09-13T13:05:05.115Z",
-      "reviewer": "editorial-review-p4",
+      "decidedAt": "2026-09-13T13:25:54.571Z",
+      "reviewer": "editorial-review-p4a",
       "notes": [
         {
           "id": "note-1789304705063-uwl3k",
@@ -5471,7 +5527,7 @@
           "timestamp": "2026-09-13T13:05:05.063Z",
           "section": "discovery",
           "note": "P4-15 CORRECTIONS APPLIED: vibe 'Sweet' replaced with canonical 'Delicate'; vibe 'Fresh' replaced with canonical 'Clean'. Both original values non-canonical per fragranceVibes.ts.",
-          "resolved": false
+          "resolved": true
         },
         {
           "id": "note-1789304705072-th647",
@@ -5479,14 +5535,30 @@
           "timestamp": "2026-09-13T13:05:05.072Z",
           "section": "relationships",
           "note": "QUALITY_OPPORTUNITY: single wardrobePartner 'baccarat-rouge-540-inspired' (rich amber floral). Compositionally valid as contrast partner but thinly supported. Recommend adding second wardrobePartner at next editorial pass.",
-          "resolved": false
+          "resolved": true
+        },
+        {
+          "id": "note-1789305920207-31rx0",
+          "reviewer": "editorial-review-p4a",
+          "timestamp": "2026-09-13T13:25:20.207Z",
+          "section": "discovery",
+          "note": "P4A-7 CLASSIFICATION: VALID_NON_BLOCKING. Vibe P4-15 corrections confirmed applied. 'Delicate' and 'Clean' are canonical per fragranceVibes.ts. Note resolved.",
+          "resolved": true
+        },
+        {
+          "id": "note-1789305920224-4zoik",
+          "reviewer": "editorial-review-p4a",
+          "timestamp": "2026-09-13T13:25:20.224Z",
+          "section": "relationships",
+          "note": "P4A-7 CLASSIFICATION: RESOLVED_BY_P4A. 'baccarat-rouge-540-inspired' removed from wardrobePartners in P4A-5 (unisex pairing only — insufficient basis per P4A relationship governance protocol). wardrobePartners now: [].",
+          "resolved": true
         }
       ],
       "decision": {
         "decision": "approved",
-        "reviewer": "editorial-review-p4",
-        "timestamp": "2026-09-13T13:05:05.115Z",
-        "reason": "P4 editorial review PASS after P4-15 corrections. Evidence locks intact (10 notes, unisex, Elite, Gourmand/Citrus). CAPRI_COLLECTION_ELITE confirmed. P4-15: non-canonical vibes corrected. Subtitle 'Citrus Gourmand Brightness' UNIQUE. Non-blocking wardrobePartner quality note. PROMOTION_READY pending founder approval."
+        "reviewer": "editorial-review-p4a",
+        "timestamp": "2026-09-13T13:25:54.571Z",
+        "reason": "P4A corrected review PASS. P4A-5 relationship correction applied: baccarat-rouge-540-inspired REMOVED from wardrobePartners (unisex pairing only — insufficient per governance protocol). wardrobePartners now: []. alternatives RETAINED: burberry-her-inspired (Gourmand/Fruity + Summer — Gourmand family overlap) and oriana-inspired (Gourmand/Floral/Fruity — Gourmand family overlap). P4A-6 wording correction applied: 'tastes as good as it smells' replaced with 'wears as joyfully as it smells' in recommendedFor[0]. P4-15 corrections from P4 confirmed intact. All P4 notes resolved. PROMOTION_READY pending founder approval and resolution of PROJECTION_GOVERNANCE_BLOCKER."
       }
     }
   ]

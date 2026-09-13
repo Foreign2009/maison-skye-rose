@@ -111,6 +111,6 @@ export const bossNuitPourFemmeInspired: FragranceKnowledge = {
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
     alternatives:     ["coco-mademoiselle-inspired", "chance-inspired", "miss-dior-inspired"],
-    wardrobePartners: ["sauvage-inspired", "bleu-de-chanel-inspired"],
+    wardrobePartners: [],
   },
 };

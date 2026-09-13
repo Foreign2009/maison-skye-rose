@@ -66,7 +66,7 @@ export const capriLemonSugarInspired: FragranceKnowledge = {
   seasons       : ["Summer"],
   signatureStyle: ["Citrus Gourmand Brightness", "Fresh Fruit Sweetness", "Summer Luminosity"],
   recommendedFor: [
-    "Anyone seeking a bright, wearable fragrance that tastes as good as it smells—perfect for warm weather and carefree moments.",
+    "Anyone seeking a bright, wearable fragrance that wears as joyfully as it smells—perfect for warm weather and carefree moments.",
     "Women and men who love citrus but want sweetness without heaviness, ideal for daily wear and weekend adventures.",
     "Those drawn to playful gourmands who appreciate lemon and peach as much as vanilla and brown sugar.",
     "Fragrance collectors building a summer rotation who value freshness with a soft, approachable sweetness.",
@@ -119,6 +119,6 @@ export const capriLemonSugarInspired: FragranceKnowledge = {
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
     alternatives:     ["burberry-her-inspired", "oriana-inspired"],
-    wardrobePartners: ["baccarat-rouge-540-inspired"],
+    wardrobePartners: [],
   },
 };
