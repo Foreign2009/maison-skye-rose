@@ -16,7 +16,7 @@ import { brand } from "../data/brand";
 const ANNOUNCEMENTS = [
   "Nationwide South African Delivery",
   "Mix & Match Wholesale From 10 Bottles",
-  "5ml R48 • 10ml R77 • 30ml R180",
+  "Wholesale Pricing (10+ bottles): 5ml R48 • 10ml R77 • 30ml R180",
   "WhatsApp Orders Welcome",
   "A Fragrance for Every Confidence Journey",
   "Your personal Concierge is ready — start your fragrance journey",
@@ -240,7 +240,7 @@ export default function Navbar() {
           {/* South African Logistics & Corporate Email Footer Stack */}
           <div className="border-t border-zinc-100 pt-6 flex flex-col items-center gap-4">
             <p className="text-xs text-zinc-400 tracking-wider uppercase font-bold text-center">
-              Complimentary Delivery Over R750
+              Nationwide South African Delivery
             </p>
             <div className="space-y-1 text-center font-medium tracking-tight">
               <p className="text-[10px] text-zinc-400">

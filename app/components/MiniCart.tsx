@@ -10,6 +10,11 @@ import { brand } from "../data/brand";
 import { getCartRecommendations } from "../lib/customer/sync/CartRecommendationStrategy";
 import { useUnifiedCustomerProfile } from "../lib/customer/hooks/useUnifiedCustomerProfile";
 import type { DisplayFragrance } from "../lib/knowledgeAdapter";
+import { mkcCatalogue } from "../lib/mkc/catalogue";
+
+const MIN_RETAIL_5ML: number | null = mkcCatalogue.length > 0
+  ? Math.min(...mkcCatalogue.map((k) => k.prices["5ml"]))
+  : null;
 
 interface MiniCartProps {
   isOpen: boolean;
@@ -350,7 +355,7 @@ A member of our team will confirm your order and delivery details shortly.`;
         <div className="mt-3 flex justify-between text-sm">
           <span>Delivery</span>
           <span className="font-bold">
-            {delivery === 0 ? "FREE" : "Calculated at checkout"}
+            {cart && cart.length > 0 && delivery === 0 ? "FREE" : "Calculated at checkout"}
           </span>
         </div>
 
@@ -365,11 +370,11 @@ A member of our team will confirm your order and delivery details shortly.`;
 
         <div className="mt-6 flex justify-between border-t border-[#e9e3dc] pt-6">
           <span className="text-2xl font-black uppercase">
-            {delivery === 0 ? "Total" : "Subtotal"}
+            {cart && cart.length > 0 && delivery === 0 ? "Total" : "Subtotal"}
           </span>
 
           <span className="text-2xl font-black">
-            R{(delivery === 0 ? total : subtotal).toFixed(2)}
+            R{(cart && cart.length > 0 && delivery === 0 ? total : subtotal).toFixed(2)}
           </span>
         </div>
 
@@ -418,9 +423,11 @@ A member of our team will confirm your order and delivery details shortly.`;
                 {nextReward.reward}
               </p>
 
-              <p className="mt-2 text-xs text-zinc-500">
-                Add a 5ml fragrance from R89
-              </p>
+              {MIN_RETAIL_5ML !== null && (
+                <p className="mt-2 text-xs text-zinc-500">
+                  Add a 5ml fragrance from R{MIN_RETAIL_5ML}
+                </p>
+              )}
             </div>
           )}
         </div>
