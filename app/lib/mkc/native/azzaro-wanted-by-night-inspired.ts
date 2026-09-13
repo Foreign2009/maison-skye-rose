@@ -1,7 +1,7 @@
 // ═════════════════════════════════════════════════════════════════
-// FACTORY DRAFT — chance-inspired
+// FACTORY DRAFT — azzaro-wanted-by-night-inspired
 // ─────────────────────────────────────────────────────────────────
-// Generated:         2026-08-16T16:51:00.314Z
+// Generated:         2026-09-13T12:43:59.587Z
 // Factory version:   0.5.0
 // Prompt versions:   EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0
 // Validation status: PASS  [0 error(s), 0 warning(s)]
@@ -20,54 +20,58 @@
 
 import type { FragranceKnowledge } from "../types";
 
-export const chanceInspired: FragranceKnowledge = {
+export const azzaroWantedByNightInspired: FragranceKnowledge = {
   // ── Identity ──────────────────────────────────────────────────────────────────
-  id            : "chance-inspired",
-  slug          : "chance-inspired",
+  id            : "azzaro-wanted-by-night-inspired",
+  slug          : "azzaro-wanted-by-night-inspired",
   brand         : "Maison Skye & Rose",
-  name          : "Chance Inspired",
-  collection    : "Rose",
+  name          : "Azzaro Wanted By Night Inspired",
+  collection    : "Skye",
   catalogVersion: "1.0",
   status        : "active",
 
   // ── Classification ────────────────────────────────────────────────────────────
-  gender        : "female",
-  family        : ["Floral", "Fresh"],
-  scentCharacter: "Fresh & Light",
+  gender        : "male",
+  family        : ["Tobacco", "Woody", "Spicy"],
+  scentCharacter: "Deep & Intense",
   projection    : "moderate",
 
   // ── Composition ─────────────────────────────────────────────────────────────
-  profile       : "Floral Fresh",
-  season        : "Spring",
+  profile       : "Woody Spicy Tobacco",
+  season        : "Autumn",
   notes: {
-    top:   ["Citron", "Pink Pepper"],
-    heart: ["Jasmine Absolute", "Iris Absolute", "Hyacinth"],
-    base:  ["Amber Patchouli", "White Musk", "Vetiver"],
+    top:   ["Cinnamon", "Mandarin Orange", "Lavender", "Lemon"],
+    heart: ["Fruity Notes", "Red Cedar", "Cumin", "Incense"],
+    base:  [
+      "Tobacco",
+      "Vanilla",
+      "Cedar",
+      "Leather",
+      "Cypress",
+      "Iso E Super",
+      "Patchouli",
+      "Benzoin",
+    ],
   },
-  mood          : "Fresh Floral Feminine",
+  notesEvidenceLocked: true,
+  mood          : "Bold Sensual Dark",
 
   // ── Discovery ───────────────────────────────────────────────────────────────
   vibe          : [
-    "Feminine",
-    "Fresh",
-    "Elegant",
-    "Bright",
+    "Sensual",
+    "Bold",
     "Sophisticated",
-    "Magnetic",
+    "Mysterious",
+    "Warm",
+    "Intense",
   ],
-  occasions     : [
-    "Daily Wear",
-    "Office",
-    "Date Night",
-    "Wedding",
-    "Weekend",
-  ],
-  seasons       : ["Spring", "Summer"],
-  signatureStyle: ["Fresh Floral Elegance", "Modern Feminine Radiance", "Bright Jasmine Signature"],
+  occasions     : ["Date Night", "Evening", "Office", "Weekend"],
+  seasons       : ["Autumn", "Winter"],
+  signatureStyle: ["Masculine Sensuality", "Tobacco & Leather", "Spiced Tobacco"],
   recommendedFor: [
-    "Women seeking a radiant everyday floral that bridges fresh citrus brightness with elegant jasmine sophistication.",
-    "Those who love pink pepper's subtle spice and want a feminine signature that feels both modern and timeless.",
-    "Anyone looking for a spring fragrance that transitions effortlessly from daily wear to special occasions without heaviness.",
+    "Men seeking a sophisticated evening fragrance that balances spicy warmth with leather and tobacco depth",
+    "Those who want bold sensuality without sweetness — smoky, aromatic, and unmistakably confident",
+    "Anyone building a signature collection who needs a darker, more intense alternative to fresh daytime fragrances",
   ],
 
   // ── Merchandising ───────────────────────────────────────────────────────────
@@ -77,47 +81,45 @@ export const chanceInspired: FragranceKnowledge = {
     "30ml": 250,
   },
   images: {
-    "5ml":  "/images/pink-5ml.png",
-    "10ml": "/images/pink-10ml.png",
-    "30ml": "/images/glass-pink-30ml.png",
+    "5ml":  "/images/blue-5ml.png",
+    "10ml": "/images/blue-10ml.png",
+    "30ml": "/images/glass-blue-30ml.png",
   },
   bestSeller    : false,
   newArrival    : false,
 
   // ── Education ───────────────────────────────────────────────────────────────
-  subtitle      : "Radiant Femininity",
-  description   : "Pink pepper and citron open with bright vitality, immediately yielding to a lush heart of jasmine and iris that unfolds with deliberate elegance. Amber patchouli and white musk anchor the composition, creating a feminine fragrance that is luminous without artifice.",
-  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-wear-fragrance", "choosing-your-season-scent"],
-  academyCategories: ["fragrance-families", "the-note-pyramid", "occasions-and-style"],
+  subtitle      : "Smoke & Spice",
+  description   : "Cinnamon and mandarin ignite against cool lavender, then settle into a warm heart of red cedar and cumin that feels both aromatic and intimate. Tobacco and leather anchor the composition, creating a dark, sensual base that unfolds with quiet intensity and the subtle sweetness of vanilla and benzoin.",
+  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances", "how-to-wear-fragrance"],
+  academyCategories: ["fragrance-families", "the-note-pyramid", "wear-and-application"],
   educationTags : [
-    "floral",
-    "fresh",
-    "jasmine",
-    "iris",
-    "pink-pepper",
-    "citron",
-    "amber",
-    "spring",
-    "feminine",
-    "daily-wear",
-    "wedding",
-    "light",
+    "tobacco",
+    "woody",
+    "spicy",
+    "cinnamon",
+    "cedar",
+    "leather",
+    "sensual",
+    "bold",
+    "autumn",
+    "layering",
   ],
-  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "choosing-your-season-scent", "how-to-wear-fragrance"],
+  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances"],
 
   // ── Intelligence ────────────────────────────────────────────────────────────
   // Approximated from profile + season. Calibrated by Intelligence Producer in P2.
-  sweetness     : 1,
-  freshness     : 5,
-  warmth        : 1,
-  intensity     : 2,
+  sweetness     : 2,
+  freshness     : 1,
+  warmth        : 4,
+  intensity     : 3,
   versatility   : 3,
   popularity    : 5,
 
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["coco-mademoiselle-inspired", "chance-eau-fraiche-inspired", "chance-eau-tendre-inspired", "a-la-rose-inspired", "chloe-original-inspired", "greenley-inspired", "daisy-inspired", "boss-nuit-pour-femme-inspired"],
-    wardrobePartners: ["flowerbomb-inspired", "libre-inspired"],
+    alternatives:     ["spicebomb-extreme-inspired", "tobacco-vanille-inspired"],
+    wardrobePartners: ["sauvage-inspired", "bleu-de-chanel-inspired"],
   },
 };

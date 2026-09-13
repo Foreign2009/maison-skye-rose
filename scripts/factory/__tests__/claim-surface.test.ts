@@ -212,8 +212,8 @@ test("buildSystemPrompt includes beast mode restriction", () => {
   );
 });
 
-// ── Section 7: Wave 8 evidence locks remain intact ───────────────────────────
-console.log("\n  ─── Section 7: Wave 8 factual lock integrity ───\n");
+// ── Section 7: Wave 8 native MKC lock integrity ──────────────────────────────
+console.log("\n  ─── Section 7: Wave 8 native MKC lock integrity ───\n");
 
 const WAVE8_SLUGS = [
   "azzaro-wanted-by-night-inspired",
@@ -222,12 +222,21 @@ const WAVE8_SLUGS = [
   "capri-lemon-sugar-inspired",
 ];
 
-test("all 4 Wave 8 records absent from native MKC", () => {
+test("all 4 Wave 8 records promoted to native MKC (P5 cohort)", () => {
   for (const slug of WAVE8_SLUGS) {
     assert.ok(
-      !nativeFragrances.has(slug),
-      `Wave 8 record unexpectedly found in native MKC: ${slug}`,
+      nativeFragrances.has(slug),
+      `Wave 8 record missing from native MKC after P5 promotion: ${slug}`,
     );
+  }
+});
+
+test("all 4 Wave 8 records have bestSeller=false and newArrival=false in native", () => {
+  for (const slug of WAVE8_SLUGS) {
+    const record = nativeFragrances.get(slug);
+    assert.ok(record, `Wave 8 record not found in native: ${slug}`);
+    assert.strictEqual(record!.bestSeller, false, `bestSeller should be false for ${slug}`);
+    assert.strictEqual(record!.newArrival, false, `newArrival should be false for ${slug}`);
   }
 });
 

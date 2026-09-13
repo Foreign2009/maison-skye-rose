@@ -273,6 +273,10 @@ import { leauDisseyPourHommeSportInspired } from "./leau-dissey-pour-homme-sport
 import { poloSportInspired } from "./polo-sport-inspired";
 import { leatherMalakiInspired } from "./leather-malaki-inspired";
 import { laNuitTresorNudeInspired } from "./la-nuit-tresor-nude-inspired";
+import { azzaroWantedByNightInspired } from "./azzaro-wanted-by-night-inspired";
+import { _24FaubourgInspired } from "./24-faubourg-inspired";
+import { bossNuitPourFemmeInspired } from "./boss-nuit-pour-femme-inspired";
+import { capriLemonSugarInspired } from "./capri-lemon-sugar-inspired";
 
 export const nativeFragrances = new Map<string, FragranceKnowledge>([
   ["sauvage-inspired",              sauvageInspired],
@@ -538,4 +542,8 @@ export const nativeFragrances = new Map<string, FragranceKnowledge>([
   ["polo-sport-inspired", poloSportInspired],
   ["leather-malaki-inspired", leatherMalakiInspired],
   ["la-nuit-tresor-nude-inspired", laNuitTresorNudeInspired],
+  ["azzaro-wanted-by-night-inspired", azzaroWantedByNightInspired],
+  ["24-faubourg-inspired", _24FaubourgInspired],
+  ["boss-nuit-pour-femme-inspired", bossNuitPourFemmeInspired],
+  ["capri-lemon-sugar-inspired", capriLemonSugarInspired],
 ]);

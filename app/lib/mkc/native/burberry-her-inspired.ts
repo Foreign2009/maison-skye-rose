@@ -101,6 +101,6 @@ export const burberryHerInspired: FragranceKnowledge = {
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["delina-inspired", "oriana-inspired", "scandal-inspired", "torino24-inspired"],
+    alternatives:     ["delina-inspired", "oriana-inspired", "scandal-inspired", "torino24-inspired", "capri-lemon-sugar-inspired"],
   },
 };

@@ -5117,6 +5117,90 @@
       "slug": "kayali-vanilla-28-inspired",
       "operator": "EP-CAT-P2D",
       "details": "Native file retired as duplicate identity (commit 74eb829, 2026-08-15). Canonical successor: vanilla-28-inspired. Registry preserves historical promotion record (status=promoted, completedAt=2026-07-14T17:49:58.382Z). Record not active in native catalogue."
+    },
+    {
+      "timestamp": "2026-09-13T14:33:41.168Z",
+      "action": "promotion_started",
+      "slug": "azzaro-wanted-by-night-inspired",
+      "operator": "Adi",
+      "details": "symbol:azzaroWantedByNightInspired  reviewedBy:Adi"
+    },
+    {
+      "timestamp": "2026-09-13T14:33:41.175Z",
+      "action": "relationships_synced",
+      "slug": "azzaro-wanted-by-night-inspired",
+      "operator": "Adi",
+      "details": "reciprocals:4  files:4"
+    },
+    {
+      "timestamp": "2026-09-13T14:34:24.099Z",
+      "action": "promotion_completed",
+      "slug": "azzaro-wanted-by-night-inspired",
+      "operator": "Adi",
+      "details": "promotionId:8uPGB9SSQl2h  validation:PASS  nativePath:app/lib/mkc/native/azzaro-wanted-by-night-inspired.ts"
+    },
+    {
+      "timestamp": "2026-09-13T14:34:24.106Z",
+      "action": "promotion_started",
+      "slug": "24-faubourg-inspired",
+      "operator": "Adi",
+      "details": "symbol:_24FaubourgInspired  reviewedBy:Adi"
+    },
+    {
+      "timestamp": "2026-09-13T14:34:24.113Z",
+      "action": "relationships_synced",
+      "slug": "24-faubourg-inspired",
+      "operator": "Adi",
+      "details": "reciprocals:2  files:2"
+    },
+    {
+      "timestamp": "2026-09-13T14:35:08.359Z",
+      "action": "promotion_completed",
+      "slug": "24-faubourg-inspired",
+      "operator": "Adi",
+      "details": "promotionId:uonRjfxQ9k6B  validation:PASS  nativePath:app/lib/mkc/native/24-faubourg-inspired.ts"
+    },
+    {
+      "timestamp": "2026-09-13T14:35:08.367Z",
+      "action": "promotion_started",
+      "slug": "boss-nuit-pour-femme-inspired",
+      "operator": "Adi",
+      "details": "symbol:bossNuitPourFemmeInspired  reviewedBy:Adi"
+    },
+    {
+      "timestamp": "2026-09-13T14:35:08.376Z",
+      "action": "relationships_synced",
+      "slug": "boss-nuit-pour-femme-inspired",
+      "operator": "Adi",
+      "details": "reciprocals:3  files:3"
+    },
+    {
+      "timestamp": "2026-09-13T14:35:56.042Z",
+      "action": "promotion_completed",
+      "slug": "boss-nuit-pour-femme-inspired",
+      "operator": "Adi",
+      "details": "promotionId:5OxvDCIBJfXz  validation:PASS  nativePath:app/lib/mkc/native/boss-nuit-pour-femme-inspired.ts"
+    },
+    {
+      "timestamp": "2026-09-13T14:35:56.052Z",
+      "action": "promotion_started",
+      "slug": "capri-lemon-sugar-inspired",
+      "operator": "Adi",
+      "details": "symbol:capriLemonSugarInspired  reviewedBy:Adi"
+    },
+    {
+      "timestamp": "2026-09-13T14:35:56.058Z",
+      "action": "relationships_synced",
+      "slug": "capri-lemon-sugar-inspired",
+      "operator": "Adi",
+      "details": "reciprocals:2  files:2"
+    },
+    {
+      "timestamp": "2026-09-13T14:36:54.015Z",
+      "action": "promotion_completed",
+      "slug": "capri-lemon-sugar-inspired",
+      "operator": "Adi",
+      "details": "promotionId:LI3HbqJzuQnX  validation:PASS  nativePath:app/lib/mkc/native/capri-lemon-sugar-inspired.ts"
     }
   ]
 }

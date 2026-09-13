@@ -1,7 +1,7 @@
 // ═════════════════════════════════════════════════════════════════
-// FACTORY DRAFT — chance-inspired
+// FACTORY DRAFT — capri-lemon-sugar-inspired
 // ─────────────────────────────────────────────────────────────────
-// Generated:         2026-08-16T16:51:00.314Z
+// Generated:         2026-09-13T12:45:14.116Z
 // Factory version:   0.5.0
 // Prompt versions:   EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0
 // Validation status: PASS  [0 error(s), 0 warning(s)]
@@ -20,54 +20,56 @@
 
 import type { FragranceKnowledge } from "../types";
 
-export const chanceInspired: FragranceKnowledge = {
+export const capriLemonSugarInspired: FragranceKnowledge = {
   // ── Identity ──────────────────────────────────────────────────────────────────
-  id            : "chance-inspired",
-  slug          : "chance-inspired",
+  id            : "capri-lemon-sugar-inspired",
+  slug          : "capri-lemon-sugar-inspired",
   brand         : "Maison Skye & Rose",
-  name          : "Chance Inspired",
-  collection    : "Rose",
+  name          : "Capri Lemon Sugar Inspired",
+  collection    : "Elite",
   catalogVersion: "1.0",
   status        : "active",
 
   // ── Classification ────────────────────────────────────────────────────────────
-  gender        : "female",
-  family        : ["Floral", "Fresh"],
+  gender        : "unisex",
+  family        : ["Gourmand", "Citrus"],
   scentCharacter: "Fresh & Light",
   projection    : "moderate",
 
   // ── Composition ─────────────────────────────────────────────────────────────
-  profile       : "Floral Fresh",
-  season        : "Spring",
+  profile       : "Citrus Gourmand",
+  season        : "Summer",
   notes: {
-    top:   ["Citron", "Pink Pepper"],
-    heart: ["Jasmine Absolute", "Iris Absolute", "Hyacinth"],
-    base:  ["Amber Patchouli", "White Musk", "Vetiver"],
+    top:   ["Lemon", "Mandarin Orange", "Bergamot"],
+    heart: ["Freesia", "Raspberry", "Peach"],
+    base:  ["Brown Sugar", "Vanilla", "Musk", "Amber"],
   },
-  mood          : "Fresh Floral Feminine",
+  notesEvidenceLocked: true,
+  mood          : "Bright Playful Sweet",
 
   // ── Discovery ───────────────────────────────────────────────────────────────
   vibe          : [
-    "Feminine",
-    "Fresh",
-    "Elegant",
+    "Playful",
     "Bright",
-    "Sophisticated",
-    "Magnetic",
+    "Delicate",
+    "Clean",
+    "Youthful",
+    "Warm",
   ],
   occasions     : [
     "Daily Wear",
-    "Office",
-    "Date Night",
-    "Wedding",
+    "Vacation",
+    "Summer Days",
+    "Casual",
     "Weekend",
   ],
-  seasons       : ["Spring", "Summer"],
-  signatureStyle: ["Fresh Floral Elegance", "Modern Feminine Radiance", "Bright Jasmine Signature"],
+  seasons       : ["Summer"],
+  signatureStyle: ["Citrus Gourmand Brightness", "Fresh Fruit Sweetness", "Summer Luminosity"],
   recommendedFor: [
-    "Women seeking a radiant everyday floral that bridges fresh citrus brightness with elegant jasmine sophistication.",
-    "Those who love pink pepper's subtle spice and want a feminine signature that feels both modern and timeless.",
-    "Anyone looking for a spring fragrance that transitions effortlessly from daily wear to special occasions without heaviness.",
+    "Anyone seeking a bright, wearable fragrance that wears as joyfully as it smells—perfect for warm weather and carefree moments.",
+    "Women and men who love citrus but want sweetness without heaviness, ideal for daily wear and weekend adventures.",
+    "Those drawn to playful gourmands who appreciate lemon and peach as much as vanilla and brown sugar.",
+    "Fragrance collectors building a summer rotation who value freshness with a soft, approachable sweetness.",
   ],
 
   // ── Merchandising ───────────────────────────────────────────────────────────
@@ -77,37 +79,36 @@ export const chanceInspired: FragranceKnowledge = {
     "30ml": 250,
   },
   images: {
-    "5ml":  "/images/pink-5ml.png",
-    "10ml": "/images/pink-10ml.png",
-    "30ml": "/images/glass-pink-30ml.png",
+    "5ml":  "/images/elite-5ml.png",
+    "10ml": "/images/elite-10ml.png",
+    "30ml": "/images/glass-elite-30ml.png",
   },
   bestSeller    : false,
   newArrival    : false,
 
   // ── Education ───────────────────────────────────────────────────────────────
-  subtitle      : "Radiant Femininity",
-  description   : "Pink pepper and citron open with bright vitality, immediately yielding to a lush heart of jasmine and iris that unfolds with deliberate elegance. Amber patchouli and white musk anchor the composition, creating a feminine fragrance that is luminous without artifice.",
-  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-wear-fragrance", "choosing-your-season-scent"],
+  subtitle      : "Citrus Gourmand Brightness",
+  description   : "Bright citrus opens with lemon and mandarin, then softens into peach and raspberry—a fruit-forward heart that feels both luminous and tactile. Brown sugar and vanilla settle the composition into something warm and gently sweet, without saccharine weight.",
+  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "choosing-your-season-scent", "how-to-layer-fragrances"],
   academyCategories: ["fragrance-families", "the-note-pyramid", "occasions-and-style"],
   educationTags : [
-    "floral",
+    "citrus",
+    "gourmand",
+    "lemon",
+    "bergamot",
+    "vanilla",
+    "brown-sugar",
     "fresh",
-    "jasmine",
-    "iris",
-    "pink-pepper",
-    "citron",
-    "amber",
-    "spring",
-    "feminine",
-    "daily-wear",
-    "wedding",
     "light",
+    "summer",
+    "playful",
+    "unisex",
   ],
-  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "choosing-your-season-scent", "how-to-wear-fragrance"],
+  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "choosing-your-season-scent", "how-to-layer-fragrances"],
 
   // ── Intelligence ────────────────────────────────────────────────────────────
   // Approximated from profile + season. Calibrated by Intelligence Producer in P2.
-  sweetness     : 1,
+  sweetness     : 4,
   freshness     : 5,
   warmth        : 1,
   intensity     : 2,
@@ -117,7 +118,7 @@ export const chanceInspired: FragranceKnowledge = {
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["coco-mademoiselle-inspired", "chance-eau-fraiche-inspired", "chance-eau-tendre-inspired", "a-la-rose-inspired", "chloe-original-inspired", "greenley-inspired", "daisy-inspired", "boss-nuit-pour-femme-inspired"],
-    wardrobePartners: ["flowerbomb-inspired", "libre-inspired"],
+    alternatives:     ["burberry-her-inspired", "oriana-inspired"],
+    wardrobePartners: [],
   },
 };

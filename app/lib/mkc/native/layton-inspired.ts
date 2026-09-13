@@ -87,7 +87,7 @@ export const laytonInspired: FragranceKnowledge = {
   // ── Relationships ─────────────────────────────────────────────────────────────
   relationships: {
     alternatives: ["naxos-inspired", "althair-inspired", "ani-inspired", "black-opium-inspired", "ralph's-club-inspired", "bad-boy-inspired"],
-    wardrobePartners: ["l'immensite-inspired", "la-vie-est-belle-inspired", "rolling-in-love-inspired", "wedding-silk-santal-inspired", "montblanc-legend-inspired", "earl-grey-cucumber-inspired"],
+    wardrobePartners: ["l'immensite-inspired", "la-vie-est-belle-inspired", "rolling-in-love-inspired", "wedding-silk-santal-inspired", "montblanc-legend-inspired", "earl-grey-cucumber-inspired", "24-faubourg-inspired"],
   },
 
   // ── Intelligence ─────────────────────────────────────────────────────────────

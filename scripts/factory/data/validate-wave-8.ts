@@ -88,10 +88,10 @@ test("W8-V3 — all 4 expected slugs are registered in wave8Catalogue", () => {
   }
 });
 
-test("W8-V4 — all 4 Wave 8 slugs are absent from native MKC (not promoted)", () => {
+test("W8-V4 — all 4 Wave 8 slugs are present in native MKC (P5 promotion complete)", () => {
   for (const slug of WAVE8_SLUGS) {
-    assert.ok(!nativeFragrances.has(slug),
-      `${slug} must NOT be in native MKC yet — Wave 8 not promoted`);
+    assert.ok(nativeFragrances.has(slug),
+      `${slug} must be in native MKC — Wave 8 P5 promotion complete`);
   }
 });
 
@@ -379,10 +379,10 @@ test("W8-V43 — no prohibited performance/longevity claims in any description f
 
 console.log("\n  ─── Section 8: No native collision ───\n");
 
-test("W8-V44 — no Wave 8 slug collides with any existing native record", () => {
+test("W8-V44 — all 4 Wave 8 slugs are registered in native MKC (P5 promotion complete)", () => {
   for (const slug of WAVE8_SLUGS) {
-    assert.ok(!nativeFragrances.has(slug),
-      `CRITICAL: ${slug} already exists in native MKC — cannot generate over existing native`);
+    assert.ok(nativeFragrances.has(slug),
+      `${slug} missing from native MKC — Wave 8 P5 promotion must be complete`);
   }
 });
 
@@ -451,5 +451,5 @@ if (failed > 0) {
   console.log("  Unknown perfumers: omitted (Boss Nuit, Capri — not fabricated)");
   console.log("  Performance claim prohibition: CLEAN");
   console.log("  Merchandising: bestSeller=false, newArrival=false (all 4)");
-  console.log("  No native collision: all 4 slugs absent from native MKC\n");
+  console.log("  Native registration: all 4 slugs present in native MKC (P5 promotion complete)\n");
 }

@@ -1,7 +1,7 @@
 // ═════════════════════════════════════════════════════════════════
-// FACTORY DRAFT — chance-inspired
+// FACTORY DRAFT — boss-nuit-pour-femme-inspired
 // ─────────────────────────────────────────────────────────────────
-// Generated:         2026-08-16T16:51:00.314Z
+// Generated:         2026-09-13T12:44:52.179Z
 // Factory version:   0.5.0
 // Prompt versions:   EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0
 // Validation status: PASS  [0 error(s), 0 warning(s)]
@@ -20,54 +20,49 @@
 
 import type { FragranceKnowledge } from "../types";
 
-export const chanceInspired: FragranceKnowledge = {
+export const bossNuitPourFemmeInspired: FragranceKnowledge = {
   // ── Identity ──────────────────────────────────────────────────────────────────
-  id            : "chance-inspired",
-  slug          : "chance-inspired",
+  id            : "boss-nuit-pour-femme-inspired",
+  slug          : "boss-nuit-pour-femme-inspired",
   brand         : "Maison Skye & Rose",
-  name          : "Chance Inspired",
+  name          : "Boss Nuit Pour Femme Inspired",
   collection    : "Rose",
   catalogVersion: "1.0",
   status        : "active",
 
   // ── Classification ────────────────────────────────────────────────────────────
   gender        : "female",
-  family        : ["Floral", "Fresh"],
-  scentCharacter: "Fresh & Light",
+  family        : ["Floral"],
+  scentCharacter: "Balanced Signature",
   projection    : "moderate",
 
   // ── Composition ─────────────────────────────────────────────────────────────
-  profile       : "Floral Fresh",
+  profile       : "Floral",
   season        : "Spring",
   notes: {
-    top:   ["Citron", "Pink Pepper"],
-    heart: ["Jasmine Absolute", "Iris Absolute", "Hyacinth"],
-    base:  ["Amber Patchouli", "White Musk", "Vetiver"],
+    top:   ["Aldehydes", "Peach"],
+    heart: ["White Flowers", "Jasmine", "Violet"],
+    base:  ["Sandalwood", "Moss"],
   },
-  mood          : "Fresh Floral Feminine",
+  notesEvidenceLocked: true,
+  mood          : "Soft Feminine Elegant",
 
   // ── Discovery ───────────────────────────────────────────────────────────────
   vibe          : [
     "Feminine",
-    "Fresh",
     "Elegant",
-    "Bright",
+    "Soft",
+    "Luminous",
     "Sophisticated",
-    "Magnetic",
+    "Refined",
   ],
-  occasions     : [
-    "Daily Wear",
-    "Office",
-    "Date Night",
-    "Wedding",
-    "Weekend",
-  ],
+  occasions     : ["Daily Wear", "Office", "Wedding", "Evening"],
   seasons       : ["Spring", "Summer"],
-  signatureStyle: ["Fresh Floral Elegance", "Modern Feminine Radiance", "Bright Jasmine Signature"],
+  signatureStyle: ["Luminous Floral", "Balanced Femininity", "Soft Signature"],
   recommendedFor: [
-    "Women seeking a radiant everyday floral that bridges fresh citrus brightness with elegant jasmine sophistication.",
-    "Those who love pink pepper's subtle spice and want a feminine signature that feels both modern and timeless.",
-    "Anyone looking for a spring fragrance that transitions effortlessly from daily wear to special occasions without heaviness.",
+    "Women seeking a refined floral signature that transitions seamlessly from office to evening without heaviness",
+    "Those who love violet and white florals but want measured elegance over dramatic intensity",
+    "Anyone drawn to luminous, aldehydic openings that feel fresh yet distinctly feminine",
   ],
 
   // ── Merchandising ───────────────────────────────────────────────────────────
@@ -85,31 +80,29 @@ export const chanceInspired: FragranceKnowledge = {
   newArrival    : false,
 
   // ── Education ───────────────────────────────────────────────────────────────
-  subtitle      : "Radiant Femininity",
-  description   : "Pink pepper and citron open with bright vitality, immediately yielding to a lush heart of jasmine and iris that unfolds with deliberate elegance. Amber patchouli and white musk anchor the composition, creating a feminine fragrance that is luminous without artifice.",
-  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-wear-fragrance", "choosing-your-season-scent"],
-  academyCategories: ["fragrance-families", "the-note-pyramid", "occasions-and-style"],
+  subtitle      : "Luminous Violet",
+  description   : "Aldehydes and peach open into a luminous heart of jasmine and violet, where white florals bloom with measured elegance. Sandalwood and moss ground the composition in soft warmth, creating a fragrance that whispers rather than declares.",
+  academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances", "what-makes-a-signature-scent"],
+  academyCategories: ["fragrance-families", "the-note-pyramid", "wear-and-application"],
   educationTags : [
     "floral",
-    "fresh",
+    "white-flowers",
     "jasmine",
-    "iris",
-    "pink-pepper",
-    "citron",
-    "amber",
-    "spring",
+    "violet",
+    "aldehydes",
+    "peach",
+    "sandalwood",
     "feminine",
-    "daily-wear",
-    "wedding",
-    "light",
+    "elegant",
+    "signature-scent",
   ],
-  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "choosing-your-season-scent", "how-to-wear-fragrance"],
+  learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances"],
 
   // ── Intelligence ────────────────────────────────────────────────────────────
   // Approximated from profile + season. Calibrated by Intelligence Producer in P2.
-  sweetness     : 1,
-  freshness     : 5,
-  warmth        : 1,
+  sweetness     : 2,
+  freshness     : 3,
+  warmth        : 2,
   intensity     : 2,
   versatility   : 3,
   popularity    : 5,
@@ -117,7 +110,7 @@ export const chanceInspired: FragranceKnowledge = {
   // ── Relationships ────────────────────────────────────────────────────────────
   // REVIEW: Verify each suggestion and update the counterpart record symmetrically.
   relationships: {
-    alternatives:     ["coco-mademoiselle-inspired", "chance-eau-fraiche-inspired", "chance-eau-tendre-inspired", "a-la-rose-inspired", "chloe-original-inspired", "greenley-inspired", "daisy-inspired", "boss-nuit-pour-femme-inspired"],
-    wardrobePartners: ["flowerbomb-inspired", "libre-inspired"],
+    alternatives:     ["coco-mademoiselle-inspired", "chance-inspired", "miss-dior-inspired"],
+    wardrobePartners: [],
   },
 };

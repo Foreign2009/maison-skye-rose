@@ -5917,6 +5917,34 @@
       "slug": "capri-lemon-sugar-inspired",
       "reviewer": "Adi",
       "details": "Founder approval explicitly granted by Adnaan 'Adi' Fortuin in ChatGPT on 2026-09-13 after completion of the Wave 8 P4C claim-safety and editorial audit."
+    },
+    {
+      "timestamp": "2026-09-13T14:34:24.096Z",
+      "action": "promoted",
+      "slug": "azzaro-wanted-by-night-inspired",
+      "reviewer": "Adi",
+      "details": "promotionId:8uPGB9SSQl2h  nativePath:app/lib/mkc/native/azzaro-wanted-by-night-inspired.ts"
+    },
+    {
+      "timestamp": "2026-09-13T14:35:08.354Z",
+      "action": "promoted",
+      "slug": "24-faubourg-inspired",
+      "reviewer": "Adi",
+      "details": "promotionId:uonRjfxQ9k6B  nativePath:app/lib/mkc/native/24-faubourg-inspired.ts"
+    },
+    {
+      "timestamp": "2026-09-13T14:35:56.038Z",
+      "action": "promoted",
+      "slug": "boss-nuit-pour-femme-inspired",
+      "reviewer": "Adi",
+      "details": "promotionId:5OxvDCIBJfXz  nativePath:app/lib/mkc/native/boss-nuit-pour-femme-inspired.ts"
+    },
+    {
+      "timestamp": "2026-09-13T14:36:54.012Z",
+      "action": "promoted",
+      "slug": "capri-lemon-sugar-inspired",
+      "reviewer": "Adi",
+      "details": "promotionId:LI3HbqJzuQnX  nativePath:app/lib/mkc/native/capri-lemon-sugar-inspired.ts"
     }
   ]
 }
