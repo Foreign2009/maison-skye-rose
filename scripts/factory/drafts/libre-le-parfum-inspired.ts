@@ -81,7 +81,7 @@ export const libreLeParfumInspired: FragranceKnowledge = {
 
   // ── Education ───────────────────────────────────────────────────────────────
   subtitle      : "Radiant Authority",
-  description   : "A bold rose anchored in warm honey and amber, opening with the sharp clarity of pink pepper and grapefruit before settling into a base of creamy vanilla and sandalwood. This is a fragrance that demands attention—radiant without softness, confident without apology. Lavender and musk create an austere elegance that lingers long after the first spray.",
+  description   : "A bold rose anchored in warm honey and amber, opening with the sharp clarity of pink pepper and grapefruit before settling into a base of creamy vanilla and sandalwood. This is a fragrance of radiant authority—bold without softness, confident without apology. Lavender and musk create an austere elegance that lingers long after the first spray.",
   academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "choosing-your-season-scent", "how-to-wear-fragrance"],
   academyCategories: ["fragrance-families", "the-note-pyramid", "occasions-and-style"],
   educationTags : [

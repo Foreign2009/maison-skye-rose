@@ -16,6 +16,7 @@ const DELIVERY_RATES: Record<string, number> = {
   "KwaZulu-Natal":         180,
   "Other Major Cities":    200,
   "Outlying Areas":        300,
+  "Collection / Pickup":   0,
 };
 
 export default function CheckoutPage() {
@@ -38,12 +39,14 @@ export default function CheckoutPage() {
     setErrors((prev) => ({ ...prev, [field]: "" }));
   }
 
+  const isCollection = province === "Collection / Pickup";
+
   function validateForm(): boolean {
     const next: Record<string, string> = {};
-    if (!name.trim())                                   next.name    = "Please enter your full name.";
-    if (phone.trim().replace(/\D/g, "").length < 9)    next.phone   = "Please enter a valid phone number.";
-    if (!address.trim())                                next.address = "Please enter your delivery address.";
-    if (cart.length === 0)                              next.cart    = "Your cart is empty.";
+    if (!name.trim())                                              next.name    = "Please enter your full name.";
+    if (phone.trim().replace(/\D/g, "").length < 9)               next.phone   = "Please enter a valid phone number.";
+    if (!isCollection && !address.trim())                         next.address = "Please enter your delivery address.";
+    if (cart.length === 0)                                        next.cart    = "Your cart is empty.";
     setErrors(next);
     return Object.keys(next).length === 0;
   }
@@ -166,23 +169,33 @@ export default function CheckoutPage() {
             {errors.phone && <p className="text-sm text-red-500">{errors.phone}</p>}
           </div>
 
-          <div className="space-y-1.5">
-            <label htmlFor="checkout-address" className="block text-sm font-semibold text-[#4f4a52]">
-              Delivery Address
-            </label>
-            <textarea
-              id="checkout-address"
-              placeholder="Street address, suburb, city"
-              value={address}
-              onChange={(e) => { setAddress(e.target.value); clearFieldError("address"); }}
-              className={`w-full rounded-2xl border p-5 transition-colors ${errors.address ? "border-red-400 bg-red-50/30" : "border-gray-200"}`}
-            />
-            {errors.address && <p className="text-sm text-red-500">{errors.address}</p>}
-          </div>
+          {!isCollection && (
+            <div className="space-y-1.5">
+              <label htmlFor="checkout-address" className="block text-sm font-semibold text-[#4f4a52]">
+                Delivery Address
+              </label>
+              <textarea
+                id="checkout-address"
+                placeholder="Street address, suburb, city"
+                value={address}
+                onChange={(e) => { setAddress(e.target.value); clearFieldError("address"); }}
+                className={`w-full rounded-2xl border p-5 transition-colors ${errors.address ? "border-red-400 bg-red-50/30" : "border-gray-200"}`}
+              />
+              {errors.address && <p className="text-sm text-red-500">{errors.address}</p>}
+            </div>
+          )}
+
+          {isCollection && (
+            <div className="rounded-2xl border border-gray-200 bg-[#f5f1eb]/50 p-5">
+              <p className="text-sm text-[#7b7480]">
+                Our team will confirm collection arrangements when they process your order.
+              </p>
+            </div>
+          )}
 
           <div className="space-y-1.5">
             <label htmlFor="checkout-province" className="block text-sm font-semibold text-[#4f4a52]">
-              Delivery Area
+              Delivery Area / Collection
             </label>
             <select
               id="checkout-province"
@@ -196,6 +209,7 @@ export default function CheckoutPage() {
               <option>KwaZulu-Natal</option>
               <option>Other Major Cities</option>
               <option>Outlying Areas</option>
+              <option>Collection / Pickup</option>
             </select>
           </div>
 
@@ -215,8 +229,8 @@ export default function CheckoutPage() {
           </div>
 
           <div className="mt-4 flex justify-between">
-            <span>Delivery</span>
-            <span>R{delivery.toFixed(2)}</span>
+            <span>{isCollection ? "Collection" : "Delivery"}</span>
+            <span>{isCollection ? "FREE" : `R${delivery.toFixed(2)}`}</span>
           </div>
 
           <div className="mt-6 flex justify-between border-t pt-6 text-2xl font-black">
