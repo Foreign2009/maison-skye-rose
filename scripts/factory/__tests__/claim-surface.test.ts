@@ -1,10 +1,11 @@
 /**
- * EP-CLAIMS-P1 — Claim-Surface Governance Tests
+ * EP-CLAIMS-P1/P2 — Claim-Surface Governance Tests
  *
  * Verifies that product-specific projection/sillage values are not
  * presented to customers as factual performance promises.
  *
- * Covers: ProductDetail, ComparisonView, contextBuilder, safetyGuard.
+ * Covers: ProductDetail, ComparisonView, contextBuilder, safetyGuard,
+ *         generateWhyYoullLikeIt (EP-CLAIMS-P2 addition).
  *
  * Run: npx tsx scripts/factory/__tests__/claim-surface.test.ts
  */
@@ -16,6 +17,7 @@ import path   from "node:path";
 import { validateResponse, buildSystemPrompt } from "../../../app/lib/concierge/safetyGuard";
 import { nativeFragrances }                    from "../../../app/lib/mkc/native/index";
 import { deriveSimilarityReasons }             from "../../../app/lib/concierge/similarityReasons";
+import { generateWhyYoullLikeIt }              from "../../../app/lib/mkc/merchandising";
 import type { FragranceKnowledge }             from "../../../app/lib/mkc/types";
 import type { SimilarityResult }               from "../../../app/lib/discovery/types";
 
@@ -278,6 +280,134 @@ test("deriveSimilarityReasons does not emit projection-based reason when breakdo
     !reasons.includes("Comparable strength and presence"),
     `deriveSimilarityReasons emitted projection-based claim: ${JSON.stringify(reasons)}`,
   );
+});
+
+// ── Section 9: generateWhyYoullLikeIt — merchandising claim safety (EP-CLAIMS-P2) ──
+console.log("\n  ─── Section 9: generateWhyYoullLikeIt — merchandising claim safety ───\n");
+
+const PROHIBITED_MERCHANDISING_PATTERNS = [
+  /bold,?\s+intense\s+projection/i,
+  /projection/i,
+  /sillage/i,
+  /lasts?\s+\d+\s+hours?/i,
+  /all[\s-]day\s+wear/i,
+  /beast\s*mode/i,
+  /room[\s-]filling/i,
+  /strong\s+performer/i,
+  /powerful\s+trail/i,
+];
+
+function makeMinimalKnowledge(overrides: Partial<FragranceKnowledge>): FragranceKnowledge {
+  const base: FragranceKnowledge = {
+    id: "test", slug: "test", brand: "Test", name: "Test",
+    collection: "Skye", catalogVersion: "1.0", status: "active",
+    gender: "unisex", family: ["Woody"], scentCharacter: "Balanced Signature",
+    projection: "moderate", profile: "Woody", season: "Autumn",
+    notes: { top: ["Cedar"], heart: ["Sandalwood"], base: ["Musk"] },
+    mood: "Bold",
+    vibe: ["Bold"], occasions: ["Evening"], seasons: ["Autumn"],
+    signatureStyle: [], recommendedFor: [],
+    prices: { "5ml": 60, "10ml": 100, "30ml": 250 },
+    images: { "5ml": "/img.png", "10ml": "/img.png", "30ml": "/img.png" },
+    bestSeller: false, newArrival: false,
+    subtitle: "Test", description: "Test.",
+    academyArticleIds: [], academyCategories: [], educationTags: [], learningPath: [],
+    sweetness: 2, freshness: 2, warmth: 3, intensity: 3, versatility: 3, popularity: 3,
+    relationships: { alternatives: [], wardrobePartners: [] },
+  };
+  return { ...base, ...overrides };
+}
+
+const SCENT_CHARACTERS = [
+  "Fresh & Light",
+  "Balanced Signature",
+  "Rich & Full-Bodied",
+  "Deep & Intense",
+] as const;
+
+test('generateWhyYoullLikeIt does not emit "Bold, intense projection" for any scentCharacter', () => {
+  for (const scent of SCENT_CHARACTERS) {
+    const k = makeMinimalKnowledge({ scentCharacter: scent });
+    const bullets = generateWhyYoullLikeIt(k);
+    for (const bullet of bullets) {
+      assert.ok(
+        !bullet.toLowerCase().includes("bold, intense projection"),
+        `"Bold, intense projection" emitted for scentCharacter="${scent}": "${bullet}"`,
+      );
+    }
+  }
+});
+
+test('generateWhyYoullLikeIt emits "Deep, distinctive character" for Deep & Intense', () => {
+  const k = makeMinimalKnowledge({ scentCharacter: "Deep & Intense" });
+  const bullets = generateWhyYoullLikeIt(k);
+  assert.ok(
+    bullets.includes("Deep, distinctive character"),
+    `Expected "Deep, distinctive character" for Deep & Intense, got: ${JSON.stringify(bullets)}`,
+  );
+});
+
+test("generateWhyYoullLikeIt does not emit product-specific projection claim for any scentCharacter", () => {
+  for (const scent of SCENT_CHARACTERS) {
+    const k = makeMinimalKnowledge({ scentCharacter: scent });
+    const bullets = generateWhyYoullLikeIt(k);
+    for (const bullet of bullets) {
+      for (const pattern of PROHIBITED_MERCHANDISING_PATTERNS) {
+        assert.ok(
+          !pattern.test(bullet),
+          `Prohibited pattern /${pattern.source}/ matched in bullet for scentCharacter="${scent}": "${bullet}"`,
+        );
+      }
+    }
+  }
+});
+
+test("generateWhyYoullLikeIt: Fresh & Light emits light character bullet (no projection claim)", () => {
+  const k = makeMinimalKnowledge({ scentCharacter: "Fresh & Light" });
+  const bullets = generateWhyYoullLikeIt(k);
+  assert.ok(
+    bullets[1].toLowerCase().includes("light") || bullets[1].toLowerCase().includes("effortless"),
+    `Fresh & Light character bullet unexpected: "${bullets[1]}"`,
+  );
+  assert.ok(
+    !PROHIBITED_MERCHANDISING_PATTERNS.some(p => p.test(bullets[1])),
+    `Fresh & Light character bullet contains prohibited claim: "${bullets[1]}"`,
+  );
+});
+
+test("generateWhyYoullLikeIt: Balanced Signature emits balanced character bullet (no projection claim)", () => {
+  const k = makeMinimalKnowledge({ scentCharacter: "Balanced Signature" });
+  const bullets = generateWhyYoullLikeIt(k);
+  assert.ok(
+    bullets[1].toLowerCase().includes("balanced") || bullets[1].toLowerCase().includes("refined"),
+    `Balanced Signature character bullet unexpected: "${bullets[1]}"`,
+  );
+  assert.ok(
+    !PROHIBITED_MERCHANDISING_PATTERNS.some(p => p.test(bullets[1])),
+    `Balanced Signature character bullet contains prohibited claim: "${bullets[1]}"`,
+  );
+});
+
+test("generateWhyYoullLikeIt: Rich & Full-Bodied emits rich character bullet (no projection claim)", () => {
+  const k = makeMinimalKnowledge({ scentCharacter: "Rich & Full-Bodied" });
+  const bullets = generateWhyYoullLikeIt(k);
+  assert.ok(
+    bullets[1].toLowerCase().includes("rich") || bullets[1].toLowerCase().includes("expressive"),
+    `Rich & Full-Bodied character bullet unexpected: "${bullets[1]}"`,
+  );
+  assert.ok(
+    !PROHIBITED_MERCHANDISING_PATTERNS.some(p => p.test(bullets[1])),
+    `Rich & Full-Bodied character bullet contains prohibited claim: "${bullets[1]}"`,
+  );
+});
+
+test("generateWhyYoullLikeIt: all scentCharacter bullets return exactly 3 items", () => {
+  for (const scent of SCENT_CHARACTERS) {
+    const k = makeMinimalKnowledge({ scentCharacter: scent });
+    const bullets = generateWhyYoullLikeIt(k);
+    assert.equal(bullets.length, 3,
+      `Expected 3 bullets for scentCharacter="${scent}", got ${bullets.length}`);
+  }
 });
 
 // ── Results ───────────────────────────────────────────────────────────────────

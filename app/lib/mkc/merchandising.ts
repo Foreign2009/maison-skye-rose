@@ -23,7 +23,7 @@ export function generateWhyYoullLikeIt(k: FragranceKnowledge): [string, string, 
     "Fresh & Light":       "Light, effortless everyday character",
     "Balanced Signature":  "Refined, balanced signature scent",
     "Rich & Full-Bodied": "Rich, expressive character — full-bodied presence that deepens through the dry-down",
-    "Deep & Intense":      "Bold, intense projection",
+    "Deep & Intense":      "Deep, distinctive character",
   };
 
   const occasionMap: Record<string, string> = {
