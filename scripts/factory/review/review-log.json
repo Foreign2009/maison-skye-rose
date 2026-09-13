@@ -5889,6 +5889,34 @@
       "slug": "azzaro-wanted-by-night-inspired",
       "reviewer": "editorial-review-p4c",
       "details": "P4C corrected review PASS. signatureStyle final correction applied: 'Dark Intensity' → 'Spiced Tobacco' (evidence-supported: locked Spicy + Tobacco families; locked Cinnamon + Tobacco notes; no performance language). Open P4B note resolved. All evidence locks intact. PROMOTION_READY pending founder approval."
+    },
+    {
+      "timestamp": "2026-09-13T18:30:00.500Z",
+      "action": "founder_approved",
+      "slug": "azzaro-wanted-by-night-inspired",
+      "reviewer": "Adi",
+      "details": "Founder approval explicitly granted by Adnaan 'Adi' Fortuin in ChatGPT on 2026-09-13 after completion of the Wave 8 P4C claim-safety and editorial audit."
+    },
+    {
+      "timestamp": "2026-09-13T18:30:01.500Z",
+      "action": "founder_approved",
+      "slug": "24-faubourg-inspired",
+      "reviewer": "Adi",
+      "details": "Founder approval explicitly granted by Adnaan 'Adi' Fortuin in ChatGPT on 2026-09-13 after completion of the Wave 8 P4C claim-safety and editorial audit."
+    },
+    {
+      "timestamp": "2026-09-13T18:30:02.500Z",
+      "action": "founder_approved",
+      "slug": "boss-nuit-pour-femme-inspired",
+      "reviewer": "Adi",
+      "details": "Founder approval explicitly granted by Adnaan 'Adi' Fortuin in ChatGPT on 2026-09-13 after completion of the Wave 8 P4C claim-safety and editorial audit."
+    },
+    {
+      "timestamp": "2026-09-13T18:30:03.500Z",
+      "action": "founder_approved",
+      "slug": "capri-lemon-sugar-inspired",
+      "reviewer": "Adi",
+      "details": "Founder approval explicitly granted by Adnaan 'Adi' Fortuin in ChatGPT on 2026-09-13 after completion of the Wave 8 P4C claim-safety and editorial audit."
     }
   ]
 }
