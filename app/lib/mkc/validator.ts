@@ -104,8 +104,16 @@ function checkIdentity(k: FragranceKnowledge): ValidationIssue[] {
     // as these are display-only and must not be reflected in the URL slug.
     const derived = k.name.toLowerCase().replace(/\s*\|\s*\d+/g, "").replace(/\s+/g, "-");
     if (k.slug !== derived) {
-      issues.push(e("SLUG_FORMULA", g, "slug",
-        `slug "${k.slug}" should be "${derived}" (derived from name "${k.name}")`));
+      // SLUG_GOVERNED_EXCEPTION (P7A): capri-lemon-sugar-inspired has "In a Bottle"
+      // in its display name (restored in P7A) that was absent when the permanent slug
+      // was derived. The governed slug is protected and must not change.
+      const isGoverned =
+        k.slug === "capri-lemon-sugar-inspired" &&
+        /in\s+a\s+bottle/i.test(k.name);
+      if (!isGoverned) {
+        issues.push(e("SLUG_FORMULA", g, "slug",
+          `slug "${k.slug}" should be "${derived}" (derived from name "${k.name}")`));
+      }
     }
   }
 

@@ -17,6 +17,8 @@
  */
 
 import assert from "node:assert/strict";
+import { validateKnowledgeRecord } from "../../../app/lib/mkc/validator";
+import type { FragranceKnowledge } from "../../../app/lib/mkc/types";
 import { wave8Catalogue } from "./wave-8-catalogue";
 
 import { azzaroWantedByNightInspired } from "../drafts/azzaro-wanted-by-night-inspired";
@@ -448,6 +450,97 @@ test("W8-V50 — all 4 drafts have non-empty image paths for 5ml, 10ml, 30ml", (
   }
 });
 
+// ── Section 11: P7A — Capri complete identity + slug validation ───────────────
+
+console.log("\n  ─── Section 11: Capri complete identity + slug validation (P7A) ───\n");
+
+function slugTestRecord(name: string, slug: string): FragranceKnowledge {
+  return {
+    id: slug, slug, name, brand: "Test",
+    notes: { top: [], heart: [], base: [] },
+  } as unknown as FragranceKnowledge;
+}
+
+const COMPLETE_CAPRI_NAME = "Capri In a Bottle Lemon Sugar | 14 Inspired";
+
+test("W8-V51 — capri draft name equals complete governed identity (P7A)", () => {
+  assert.equal(
+    capriLemonSugarInspired.name,
+    COMPLETE_CAPRI_NAME,
+    `Capri draft name must be '${COMPLETE_CAPRI_NAME}'. Got: '${capriLemonSugarInspired.name}'`,
+  );
+});
+
+test("W8-V52 — capri native record name equals complete governed identity (P7A)", () => {
+  const native = nativeFragrances.get("capri-lemon-sugar-inspired");
+  assert.ok(native, "capri-lemon-sugar-inspired must be present in native MKC");
+  assert.equal(
+    native!.name,
+    COMPLETE_CAPRI_NAME,
+    `Capri native name must be '${COMPLETE_CAPRI_NAME}'. Got: '${native!.name}'`,
+  );
+});
+
+test("W8-V53 — capri draft name contains 'In a Bottle' (P7A LOCK-D complete identity)", () => {
+  assert.ok(
+    capriLemonSugarInspired.name.includes("In a Bottle"),
+    `Capri draft name must contain 'In a Bottle'. Got: '${capriLemonSugarInspired.name}'`,
+  );
+});
+
+test("W8-V54 — capri native name contains 'In a Bottle' (P7A LOCK-D complete identity)", () => {
+  const native = nativeFragrances.get("capri-lemon-sugar-inspired");
+  assert.ok(native, "capri-lemon-sugar-inspired must be present in native MKC");
+  assert.ok(
+    native!.name.includes("In a Bottle"),
+    `Capri native name must contain 'In a Bottle'. Got: '${native!.name}'`,
+  );
+});
+
+test("W8-V55 — validateKnowledgeRecord: capri passes slug validation with complete identity", () => {
+  const result = validateKnowledgeRecord(capriLemonSugarInspired);
+  const slugErrors = result.errors.filter(e => e.code === "SLUG_FORMULA");
+  assert.equal(
+    slugErrors.length,
+    0,
+    `Capri must produce no SLUG_FORMULA errors. Got: ${JSON.stringify(slugErrors)}`,
+  );
+});
+
+test("W8-V56 — validateKnowledgeRecord: ordinary invalid name/slug mismatch produces SLUG_FORMULA error", () => {
+  const record = slugTestRecord("Something Completely Different", "nothing-like-this");
+  const result = validateKnowledgeRecord(record);
+  const slugErrors = result.errors.filter(e => e.code === "SLUG_FORMULA");
+  assert.ok(
+    slugErrors.length > 0,
+    "An ordinary name/slug mismatch must produce a SLUG_FORMULA error",
+  );
+});
+
+test("W8-V57 — validateKnowledgeRecord: | N removal alone cannot conceal unrelated slug differences", () => {
+  // name after | N removal → "alpha fragrance" → "alpha-fragrance" ≠ "beta-fragrance"
+  const record = slugTestRecord("Alpha Fragrance | 99", "beta-fragrance");
+  const result = validateKnowledgeRecord(record);
+  const slugErrors = result.errors.filter(e => e.code === "SLUG_FORMULA");
+  assert.ok(
+    slugErrors.length > 0,
+    "| N removal must not conceal an unrelated slug difference — SLUG_FORMULA error expected",
+  );
+});
+
+test("W8-V58 — validateKnowledgeRecord: 'In a Bottle' not globally discarded from unrelated identities", () => {
+  // A record whose slug legitimately includes 'in-a-bottle' must still PASS slug validation.
+  // Verifies the capri exception is narrow (gated by slug) and does not strip the phrase globally.
+  const record = slugTestRecord("Some Fragrance In a Bottle Inspired", "some-fragrance-in-a-bottle-inspired");
+  const result = validateKnowledgeRecord(record);
+  const slugErrors = result.errors.filter(e => e.code === "SLUG_FORMULA");
+  assert.equal(
+    slugErrors.length,
+    0,
+    "'In a Bottle' must not be globally discarded — a matching name/slug must PASS",
+  );
+});
+
 // ── Summary ───────────────────────────────────────────────────────────────────
 
 console.log(`\n${"─".repeat(60)}`);
@@ -467,5 +560,7 @@ if (failed > 0) {
   console.log("  Unknown perfumers: omitted (Boss Nuit, Capri — not fabricated)");
   console.log("  Performance claim prohibition: CLEAN");
   console.log("  Merchandising: bestSeller=false, newArrival=false (all 4)");
-  console.log("  Native registration: all 4 slugs present in native MKC (P5 promotion complete)\n");
+  console.log("  Native registration: all 4 slugs present in native MKC (P5 promotion complete)");
+  console.log("  P7A — Capri complete identity: 'In a Bottle' and '| 14' both present (LOCK-D)");
+  console.log("  P7A — Slug governed exception: narrowly gated, general validation intact\n");
 }

@@ -6015,6 +6015,20 @@
       "slug": "capri-lemon-sugar-inspired",
       "reviewer": "Adi",
       "details": "noteId:note-1789325675690-p7c1  section:governance  resolvedImmediately:true  openNotes:0  correctionCommit:pending-CATALOGUE-WAVE8-P7  founderApprovalValid:true  promotionValid:true"
+    },
+    {
+      "timestamp": "2026-09-13T19:31:20.679Z",
+      "action": "note_added",
+      "slug": "capri-lemon-sugar-inspired",
+      "reviewer": "Adi",
+      "details": "noteId:note-1789327880800-p7ac1  section:governance  correction:P7A-Capri-complete-identity-restore  P7recordedIncompleteName:Capri Lemon Sugar | 14 Inspired  completeGovernedName:Capri In a Bottle Lemon Sugar | 14 Inspired  omittedPhrase:In a Bottle  causeOfOmission:P7-unintentional-P7-used-staging-title-which-omitted-In-a-Bottle  pipe14Preserved:true  slugUnchanged:capri-lemon-sugar-inspired  founderApprovalValid:true  promotionValid:true  forwardOnly:true  P7EventsIntact:true  P7AProtocol:CATALOGUE-WAVE8-P7A"
+    },
+    {
+      "timestamp": "2026-09-13T19:31:20.679Z",
+      "action": "note_resolved",
+      "slug": "capri-lemon-sugar-inspired",
+      "reviewer": "Adi",
+      "details": "noteId:note-1789327880800-p7ac1  section:governance  resolvedImmediately:true  openNotes:0  correctionCommit:pending-CATALOGUE-WAVE8-P7A  founderApprovalValid:true  promotionValid:true  nativeNameNow:Capri In a Bottle Lemon Sugar | 14 Inspired"
     }
   ]
 }

@@ -5595,6 +5595,14 @@
           "section": "governance",
           "note": "P7 forward-only correction: name field updated from 'Capri Lemon Sugar Inspired' to 'Capri Lemon Sugar | 14 Inspired' to restore LOCK D denomination. Previously approved Wave 8 governance (ratification commit caa40f65). Correction authorized by founder Adnaan 'Adi' Fortuin. P6 protocol breach caused defect to reach production. Founder approval and promotion remain valid. No re-promotion occurred. Correction is forward-only.",
           "resolved": true
+        },
+        {
+          "id": "note-1789327880800-p7ac1",
+          "reviewer": "Adi",
+          "timestamp": "2026-09-13T19:31:20.679Z",
+          "section": "governance",
+          "note": "P7A forward-only correction: name field updated from 'Capri Lemon Sugar | 14 Inspired' to 'Capri In a Bottle Lemon Sugar | 14 Inspired'. P7 unintentionally omitted 'In a Bottle' when restoring the | 14 denomination. Complete governed name now matches source identity: Kayali Capri In a Bottle Lemon Sugar | 14. | 14 denomination preserved throughout. Slug unchanged: capri-lemon-sugar-inspired. Founder approval and promotion remain valid. No re-promotion occurred. P7 review-log events (idx 857-858) remain historically intact. Correction is forward-only.",
+          "resolved": true
         }
       ],
       "decision": {
