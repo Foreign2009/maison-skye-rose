@@ -17,6 +17,8 @@
  */
 
 import assert from "node:assert/strict";
+import fs from "node:fs";
+import path from "node:path";
 import { validateKnowledgeRecord } from "../../../app/lib/mkc/validator";
 import type { FragranceKnowledge } from "../../../app/lib/mkc/types";
 import { wave8Catalogue } from "./wave-8-catalogue";
@@ -79,13 +81,18 @@ test("W8-V2 — wave8Drafts array contains exactly 4 draft records", () => {
 
 test("W8-V3 — all 4 expected slugs are registered in wave8Catalogue", () => {
   for (const slug of WAVE8_SLUGS) {
-    const found = wave8Catalogue.some(f => f.title.toLowerCase().replace(/\s+/g, "-").replace(/-inspired$/, "") === slug.replace(/-inspired$/, ""));
     // Use slug-aware check
     const foundByTitle = wave8Catalogue.some(f => {
       const derived = f.title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/-+$/, "");
       return derived === slug;
     });
-    assert.ok(foundByTitle || wave8Catalogue.some(f => f.title.toLowerCase().includes(slug.replace("-inspired", "").replace(/-/g, " "))),
+    // For governed identity exceptions (e.g. Capri where "In a Bottle" is in display name
+    // but not in slug), check that all key words from the slug appear in the title.
+    const slugWords = slug.replace("-inspired", "").split("-");
+    const foundByKeyWords = wave8Catalogue.some(f =>
+      slugWords.every(word => f.title.toLowerCase().includes(word)),
+    );
+    assert.ok(foundByTitle || foundByKeyWords,
       `Expected slug '${slug}' not found in wave8Catalogue`);
   }
 });
@@ -541,6 +548,93 @@ test("W8-V58 — validateKnowledgeRecord: 'In a Bottle' not globally discarded f
   );
 });
 
+// ── Section 12: P7B — Adversarial slug validation ─────────────────────────────
+
+console.log("\n  ─── Section 12: Adversarial slug validation (P7B) ───\n");
+
+const CAPRI_SLUG = "capri-lemon-sugar-inspired";
+
+// ── PASS cases ────────────────────────────────────────────────────────────────
+
+test("W8-V61 — validateKnowledgeRecord: exact approved name + exact Capri slug passes (no SLUG_FORMULA)", () => {
+  const record = slugTestRecord(COMPLETE_CAPRI_NAME, CAPRI_SLUG);
+  const slugErrors = validateKnowledgeRecord(record).errors.filter(e => e.code === "SLUG_FORMULA");
+  assert.equal(slugErrors.length, 0,
+    `Exact approved name+slug must produce 0 SLUG_FORMULA errors. Got: ${JSON.stringify(slugErrors)}`);
+});
+
+// ── FAIL cases — wrong name paired with Capri slug ───────────────────────────
+
+test("W8-V62 — 'Wrong In a Bottle Inspired' + Capri slug fails SLUG_FORMULA", () => {
+  const record = slugTestRecord("Wrong In a Bottle Inspired", CAPRI_SLUG);
+  const slugErrors = validateKnowledgeRecord(record).errors.filter(e => e.code === "SLUG_FORMULA");
+  assert.ok(slugErrors.length > 0, "Near-miss name must produce a SLUG_FORMULA error");
+});
+
+test("W8-V63 — 'Capri In a Bottle Wrong Product Inspired' + Capri slug fails SLUG_FORMULA", () => {
+  const record = slugTestRecord("Capri In a Bottle Wrong Product Inspired", CAPRI_SLUG);
+  const slugErrors = validateKnowledgeRecord(record).errors.filter(e => e.code === "SLUG_FORMULA");
+  assert.ok(slugErrors.length > 0, "Near-miss name must produce a SLUG_FORMULA error");
+});
+
+test("W8-V64 — 'Capri In a Bottle Lemon Sugar Inspired' (missing | 14) + Capri slug fails SLUG_FORMULA", () => {
+  const record = slugTestRecord("Capri In a Bottle Lemon Sugar Inspired", CAPRI_SLUG);
+  const slugErrors = validateKnowledgeRecord(record).errors.filter(e => e.code === "SLUG_FORMULA");
+  assert.ok(slugErrors.length > 0, "Name without '| 14' must produce a SLUG_FORMULA error");
+});
+
+test("W8-V65 — 'Capri Lemon Sugar | 14 Inspired' (P7 incomplete — missing 'In a Bottle') + Capri slug fails SLUG_FORMULA", () => {
+  const record = slugTestRecord("Capri Lemon Sugar | 14 Inspired", CAPRI_SLUG);
+  const slugErrors = validateKnowledgeRecord(record).errors.filter(e => e.code === "SLUG_FORMULA");
+  assert.ok(slugErrors.length > 0, "P7 incomplete name must produce a SLUG_FORMULA error");
+});
+
+// ── FAIL case — exact approved name with wrong slug ───────────────────────────
+
+test("W8-V66 — exact approved Capri name + wrong slug fails SLUG_FORMULA", () => {
+  const record = slugTestRecord(COMPLETE_CAPRI_NAME, "capri-wrong-slug");
+  const slugErrors = validateKnowledgeRecord(record).errors.filter(e => e.code === "SLUG_FORMULA");
+  assert.ok(slugErrors.length > 0, "Approved name with wrong slug must produce a SLUG_FORMULA error");
+});
+
+// ── FAIL cases — records unrelated to Capri ───────────────────────────────────
+
+test("W8-V67 — different record with 'In a Bottle' + unrelated mismatched slug fails SLUG_FORMULA", () => {
+  const record = slugTestRecord("Some Other Fragrance In a Bottle Inspired", "completely-different-slug");
+  const slugErrors = validateKnowledgeRecord(record).errors.filter(e => e.code === "SLUG_FORMULA");
+  assert.ok(slugErrors.length > 0, "Unrelated record with 'In a Bottle' mismatch must produce a SLUG_FORMULA error");
+});
+
+test("W8-V68 — different record with '| 14' + unrelated mismatched slug fails SLUG_FORMULA", () => {
+  const record = slugTestRecord("Some Fragrance | 14 Collection Inspired", "some-fragrance-collection-inspired");
+  const slugErrors = validateKnowledgeRecord(record).errors.filter(e => e.code === "SLUG_FORMULA");
+  assert.ok(slugErrors.length > 0, "Unrelated '| 14' record with mismatched slug must produce a SLUG_FORMULA error");
+});
+
+// ── Source and queue synchronization verification ─────────────────────────────
+
+test("W8-V69 — generating source (wave-8-catalogue.ts) title equals complete approved Capri identity", () => {
+  const capriEntry = wave8Catalogue.find(f =>
+    typeof (f as Record<string, unknown>)["title"] === "string" &&
+    ((f as Record<string, unknown>)["title"] as string).includes("Capri"),
+  );
+  assert.ok(capriEntry, "Capri entry must exist in wave8Catalogue");
+  const title = (capriEntry as Record<string, unknown>)["title"] as string;
+  assert.equal(title, COMPLETE_CAPRI_NAME,
+    `Generating source title must be '${COMPLETE_CAPRI_NAME}'. Got: '${title}'`);
+});
+
+test("W8-V70 — review-queue current identity matches complete approved Capri identity", () => {
+  const queuePath = path.resolve(__dirname, "../review/review-queue.json");
+  const queue = JSON.parse(fs.readFileSync(queuePath, "utf8")) as {
+    records: Array<{ slug: string; name: string }>;
+  };
+  const capri = queue.records.find(r => r.slug === CAPRI_SLUG);
+  assert.ok(capri, `Capri record must exist in review-queue.json`);
+  assert.equal(capri!.name, COMPLETE_CAPRI_NAME,
+    `Review-queue name must be '${COMPLETE_CAPRI_NAME}'. Got: '${capri!.name}'`);
+});
+
 // ── Summary ───────────────────────────────────────────────────────────────────
 
 console.log(`\n${"─".repeat(60)}`);
@@ -562,5 +656,7 @@ if (failed > 0) {
   console.log("  Merchandising: bestSeller=false, newArrival=false (all 4)");
   console.log("  Native registration: all 4 slugs present in native MKC (P5 promotion complete)");
   console.log("  P7A — Capri complete identity: 'In a Bottle' and '| 14' both present (LOCK-D)");
-  console.log("  P7A — Slug governed exception: narrowly gated, general validation intact\n");
+  console.log("  P7B — Slug governed exception: exact name+slug mapping, fails closed");
+  console.log("  P7B — Generating source synchronized: complete identity in wave-8-catalogue.ts");
+  console.log("  P7B — Review queue synchronized: current identity updated\n");
 }

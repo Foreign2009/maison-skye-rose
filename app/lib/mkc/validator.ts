@@ -73,6 +73,26 @@ export interface ValidationResult {
 
 const FAMILY_VOCABULARY = new Set<string>(fragranceFamilies);
 
+// ── Governed slug exceptions ──────────────────────────────────────────────────
+//
+// Records whose display identity includes franchise-specific nomenclature that
+// was absent when their permanent URL slug was first derived. Each entry maps
+// the EXACT approved display name to its EXACT governed slug. Both sides must
+// match exactly; no partial match, no regex bypass, no substring rule.
+//
+// Do NOT add an entry here to fix a plain slug authoring mistake — only for
+// cases where the canonical product identity contains words that are not
+// reflected in the permanently-governed slug for documented governance reasons.
+
+const GOVERNED_SLUG_EXCEPTIONS: Readonly<Record<string, string>> = {
+  // Kayali "Capri In a Bottle Lemon Sugar | 14":
+  //   Slug capri-lemon-sugar-inspired was derived from the abbreviated staging title
+  //   "Capri Lemon Sugar Inspired" before "In a Bottle" was restored in P7A.
+  //   The slug is permanently protected per the non-change-slug governance rule.
+  //   See CATALOGUE-WAVE8-P7A for correction history.
+  "Capri In a Bottle Lemon Sugar | 14 Inspired": "capri-lemon-sugar-inspired",
+};
+
 // ── Issue builders ────────────────────────────────────────────────────────────
 
 function e(code: string, group: ValidationGroup, field: string, message: string): ValidationIssue {
@@ -100,17 +120,10 @@ function checkIdentity(k: FragranceKnowledge): ValidationIssue[] {
   }
 
   if (k.name && k.slug) {
-    // Strip Kayali-style | N denominations (e.g. "| 14") before deriving slug,
-    // as these are display-only and must not be reflected in the URL slug.
-    const derived = k.name.toLowerCase().replace(/\s*\|\s*\d+/g, "").replace(/\s+/g, "-");
+    const derived = k.name.toLowerCase().replace(/\s+/g, "-");
     if (k.slug !== derived) {
-      // SLUG_GOVERNED_EXCEPTION (P7A): capri-lemon-sugar-inspired has "In a Bottle"
-      // in its display name (restored in P7A) that was absent when the permanent slug
-      // was derived. The governed slug is protected and must not change.
-      const isGoverned =
-        k.slug === "capri-lemon-sugar-inspired" &&
-        /in\s+a\s+bottle/i.test(k.name);
-      if (!isGoverned) {
+      const governedSlug = GOVERNED_SLUG_EXCEPTIONS[k.name];
+      if (!(governedSlug !== undefined && k.slug === governedSlug)) {
         issues.push(e("SLUG_FORMULA", g, "slug",
           `slug "${k.slug}" should be "${derived}" (derived from name "${k.name}")`));
       }

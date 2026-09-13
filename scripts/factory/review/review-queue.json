@@ -5537,7 +5537,7 @@
     },
     {
       "slug": "capri-lemon-sugar-inspired",
-      "name": "Capri Lemon Sugar Inspired",
+      "name": "Capri In a Bottle Lemon Sugar | 14 Inspired",
       "collection": "Elite",
       "factoryVersion": "0.5.0",
       "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
@@ -5602,6 +5602,14 @@
           "timestamp": "2026-09-13T19:31:20.679Z",
           "section": "governance",
           "note": "P7A forward-only correction: name field updated from 'Capri Lemon Sugar | 14 Inspired' to 'Capri In a Bottle Lemon Sugar | 14 Inspired'. P7 unintentionally omitted 'In a Bottle' when restoring the | 14 denomination. Complete governed name now matches source identity: Kayali Capri In a Bottle Lemon Sugar | 14. | 14 denomination preserved throughout. Slug unchanged: capri-lemon-sugar-inspired. Founder approval and promotion remain valid. No re-promotion occurred. P7 review-log events (idx 857-858) remain historically intact. Correction is forward-only.",
+          "resolved": true
+        },
+        {
+          "id": "note-1789329258153-p7bc1",
+          "reviewer": "Adi",
+          "timestamp": "2026-09-13T19:54:18.152Z",
+          "section": "governance",
+          "note": "P7B forward-only correction: wave-8-catalogue.ts title synchronized to 'Capri In a Bottle Lemon Sugar | 14 Inspired' (complete governed identity). Review-queue current name field updated from 'Capri Lemon Sugar Inspired' to 'Capri In a Bottle Lemon Sugar | 14 Inspired'. Validator slug exception narrowed from broad regex to exact GOVERNED_SLUG_EXCEPTIONS map requiring exact name+slug pair match. P7A product identity unchanged. Founder approval and promotion remain valid. No re-promotion occurred. P7, P7A events remain historically intact. Correction is forward-only.",
           "resolved": true
         }
       ],

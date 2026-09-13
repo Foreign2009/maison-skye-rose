@@ -6029,6 +6029,20 @@
       "slug": "capri-lemon-sugar-inspired",
       "reviewer": "Adi",
       "details": "noteId:note-1789327880800-p7ac1  section:governance  resolvedImmediately:true  openNotes:0  correctionCommit:pending-CATALOGUE-WAVE8-P7A  founderApprovalValid:true  promotionValid:true  nativeNameNow:Capri In a Bottle Lemon Sugar | 14 Inspired"
+    },
+    {
+      "timestamp": "2026-09-13T19:54:18.152Z",
+      "action": "note_added",
+      "slug": "capri-lemon-sugar-inspired",
+      "reviewer": "Adi",
+      "details": "noteId:note-1789329258153-p7bc1  section:governance  correction:P7B-source-sync-validator-harden  completedGovernedName:Capri In a Bottle Lemon Sugar | 14 Inspired  sourceCatalogueSynchronized:wave-8-catalogue.ts-title-updated  reviewQueueCurrentStateSynchronized:name-field-updated-to-complete-identity  validatorBypassNarrowed:exact-GOVERNED_SLUG_EXCEPTIONS-map-replaces-broad-regex  pipeNStrippingRemoved:no-other-record-required-it  P7AProductIdentityUnchanged:Capri-In-a-Bottle-Lemon-Sugar-|-14-Inspired  founderApprovalValid:true  promotionValid:true  noRePromotion:true  forwardOnly:true  P7EventsIntact:idx857-858  P7AEventsIntact:idx859-860  P5BEventsIntact:idx849-852  P5CEventsIntact:idx853-856  P7BProtocol:CATALOGUE-WAVE8-P7B"
+    },
+    {
+      "timestamp": "2026-09-13T19:54:18.152Z",
+      "action": "note_resolved",
+      "slug": "capri-lemon-sugar-inspired",
+      "reviewer": "Adi",
+      "details": "noteId:note-1789329258153-p7bc1  section:governance  resolvedImmediately:true  openNotes:0  correctionCommit:pending-CATALOGUE-WAVE8-P7B  founderApprovalValid:true  promotionValid:true  generatingSourceTitle:Capri In a Bottle Lemon Sugar | 14 Inspired  reviewQueueName:Capri In a Bottle Lemon Sugar | 14 Inspired  validatorExceptionType:GOVERNED_SLUG_EXCEPTIONS-exact-map"
     }
   ]
 }

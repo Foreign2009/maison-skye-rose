@@ -168,7 +168,11 @@ const elite: DisplayFragrance[] = [
     // Supplier: 'Kayali Capri In a Bottle Lemon Sugar 14' — mid-year-2026 candidate
     // Canonical identity: Kayali Capri In a Bottle Lemon Sugar | 14 EDP (2024). Unisex.
     //   Display identity MUST preserve "| 14" per Kayali naming convention.
-    //   Slug: capri-lemon-sugar-inspired (pipe omitted for ASCII slug compatibility).
+    //   Display identity MUST also preserve "In a Bottle" — canonical Kayali brand phrase.
+    //   Slug: capri-lemon-sugar-inspired — derived from original abbreviated staging title
+    //   (before "In a Bottle" restoration). The slug is permanently governed and must NOT
+    //   change. See SLUG_GOVERNED_EXCEPTION in app/lib/mkc/validator.ts.
+    //   NOTE: deriveSlug(title) will NOT equal slug — this is expected and governed.
     // Evidence: mid-year-2026-research.json (Gemini, 2026-08-08). AI_RESEARCH_SUMMARY.
     //   sourceNotes: "Part of Kayali's Vacay in a Bottle collection released in 2024."
     // LOCK D (COLLECTION ELITE): unisex evidence + 47/48 Maison unisex→Elite precedent +
@@ -176,7 +180,7 @@ const elite: DisplayFragrance[] = [
     //   family = ["Citrus", "Gourmand"]. No "Sweet" as redundant expansion.
     //   perfumer = UNKNOWN: must be OMITTED from generated record — do not fabricate.
     //   DO NOT infer relationship to light-blue-capri-in-love-inspired from naming.
-    title:               "Capri Lemon Sugar Inspired",
+    title:               "Capri In a Bottle Lemon Sugar | 14 Inspired",
     collection:          "Elite",
     subtitle:            "Inspired by Kayali Capri In a Bottle Lemon Sugar | 14",
     mood:                "Bright Playful Sweet",
