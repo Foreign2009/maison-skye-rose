@@ -14,6 +14,9 @@ export const ALL_PROVINCES: string[] = Object.keys(DELIVERY_RATES);
 
 export function getDeliveryCharge(province: string): number {
   const rate = DELIVERY_RATES[province];
+  // R180 fallback for unknown provinces. In the validated order submission
+  // path, validateOrderBody rejects unknown provinces before reaching this
+  // function — the fallback is only reachable via direct unvalidated calls.
   return rate !== undefined ? rate : 180;
 }
 

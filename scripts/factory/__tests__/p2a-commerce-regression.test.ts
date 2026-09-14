@@ -1,5 +1,5 @@
 /**
- * SITE-RELIABILITY-P2C — Commerce Regression Tests
+ * SITE-RELIABILITY-P2C/P2D — Commerce Regression Tests
  *
  * Covers:
  *   - Catalogue price correctness (5ml/10ml/30ml per authorized rates)
@@ -7,8 +7,9 @@
  *     getDeliveryCharge(), isCollectionOrder(), ALL_PROVINCES
  *   - Wholesale module: WHOLESALE_THRESHOLD, isWholesaleActive(), getWholesaleItemPrice()
  *   - Rewards module: getNextReward(), getRewardMessage() — confirmed R2000+ threshold
- *   - Order validation (server-side): delivery recomputed from items; tampered payloads
- *     rejected; retail-above-R2000-but-wholesale-below charged; collection always accepted
+ *   - Order validation (server-side, P2D): catalogue-authoritative pricing; unknown/inactive
+ *     products rejected; tampered item prices caught via subtotal mismatch; server returns
+ *     { ok, subtotal, delivery, total } discriminated union
  *   - MiniCart: delivery calc uses FREE_DELIVERY_THRESHOLD (>), no wholesale exception
  *   - Checkout: local DELIVERY_RATES removed, imports computeDelivery
  *   - Projection filter removal, FAQ claim corrections, MKC corrections, Testimonials
@@ -70,28 +71,40 @@ function readSource(relPath: string): string {
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
-/** Build a valid courier order body for a given province + retail item set. */
+// Authoritative catalogue prices — matches all 93 records (Section 1 test).
+const CATALOGUE_PRICES: Record<string, number> = { "5ml": 60, "10ml": 100, "30ml": 250 };
+
+// A real catalogue slug used as the default for test items.
+const TEST_SLUG  = "aventus-inspired";
+const TEST_TITLE = "Aventus Inspired";
+
+/**
+ * Build a valid courier order body for a given province + item set.
+ * Subtotal is computed from authoritative catalogue prices (matching what the
+ * server computes after P2D), so the body passes validateOrderBody.
+ */
 function courierOrder(
   province: string,
-  items: Array<{price: number; quantity: number; size: string; id?: string; title?: string}>,
+  items: Array<{quantity: number; size: string; id?: string; title?: string}>,
 ): Record<string, unknown> {
   const cartCount = items.reduce((n, i) => n + i.quantity, 0);
-  const active = cartCount >= WHOLESALE_THRESHOLD;
-  const subtotal = items.reduce(
-    (s, i) => s + getWholesaleItemPrice(i.size, i.price, active) * i.quantity, 0
-  );
+  const active    = cartCount >= WHOLESALE_THRESHOLD;
+  const subtotal  = items.reduce((s, i) => {
+    const cataloguePrice = CATALOGUE_PRICES[i.size] ?? 60;
+    return s + getWholesaleItemPrice(i.size, cataloguePrice, active) * i.quantity;
+  }, 0);
   const delivery = computeDelivery(province, subtotal);
   return {
     customer_name: "Test Customer",
     phone: "0821234567",
     address: province === COLLECTION_PROVINCE ? undefined : "123 Main Street",
     province,
-    items: items.map((i, idx) => ({
-      id: i.id ?? `item-${idx}`,
-      title: i.title ?? `Fragrance ${idx}`,
-      price: i.price,
+    items: items.map(i => ({
+      id:       i.id    ?? TEST_SLUG,
+      title:    i.title ?? TEST_TITLE,
+      price:    CATALOGUE_PRICES[i.size] ?? 60, // client sends this; server ignores it
       quantity: i.quantity,
-      size: i.size,
+      size:     i.size,
     })),
     subtotal,
     delivery,
@@ -248,109 +261,191 @@ test("getRewardMessage: R2000.01 includes Free Delivery", () => {
 });
 
 // ── Section 5: Order validation ──────────────────────────────────────────────
-console.log("\n  ─── Section 5: Order validation (server-side) ───\n");
+console.log("\n  ─── Section 5: Order validation (server-side, catalogue-authoritative) ───\n");
 
-test("validateOrderBody: valid retail courier order returns null", () => {
-  const body = courierOrder("Cape Town Metro", [{ price: 60, quantity: 1, size: "5ml" }]);
-  assert.equal(validateOrderBody(body), null);
+test("validateOrderBody: valid retail courier order returns server-computed values", () => {
+  // 1 × 5ml @ R60 retail, not wholesale → subtotal R60, delivery R100 (Cape Town Metro)
+  const body = courierOrder("Cape Town Metro", [{ quantity: 1, size: "5ml" }]);
+  const result = validateOrderBody(body);
+  assert.ok(result.ok, `Expected ok, got error: ${!result.ok ? result.error : ""}`);
+  if (result.ok) {
+    assert.equal(result.subtotal,  60);
+    assert.equal(result.delivery, 100);
+    assert.equal(result.total,    160);
+  }
 });
 
-test("validateOrderBody: collection without address returns null (accepted)", () => {
-  const body = courierOrder("Collection / Pickup", [{ price: 60, quantity: 1, size: "5ml" }]);
-  assert.equal(validateOrderBody(body), null);
+test("validateOrderBody: collection without address is accepted", () => {
+  const body   = courierOrder("Collection / Pickup", [{ quantity: 1, size: "5ml" }]);
+  const result = validateOrderBody(body);
+  assert.ok(result.ok, `Expected ok, got error: ${!result.ok ? result.error : ""}`);
+  if (result.ok) {
+    assert.equal(result.delivery, 0);
+    assert.equal(result.total,   result.subtotal);
+  }
 });
 
 test("validateOrderBody: collection at any subtotal always delivery=0", () => {
-  const body = courierOrder("Collection / Pickup", [{ price: 60, quantity: 40, size: "5ml" }]);
-  assert.equal((body.delivery as number), 0, "Collection should have delivery=0");
-  assert.equal(validateOrderBody(body), null);
+  // 40 items → wholesale active; subtotal = 40 × 48 = R1920; delivery = 0 (collection)
+  const body   = courierOrder("Collection / Pickup", Array(40).fill({ quantity: 1, size: "5ml" }));
+  assert.equal((body.delivery as number), 0, "Collection helper should set delivery=0");
+  const result = validateOrderBody(body);
+  assert.ok(result.ok, `Expected ok, got error: ${!result.ok ? result.error : ""}`);
+  if (result.ok) assert.equal(result.delivery, 0);
 });
 
 test("validateOrderBody: delivery without address is rejected", () => {
-  const body: Record<string, unknown> = {
-    ...courierOrder("Cape Town Metro", [{ price: 60, quantity: 1, size: "5ml" }]),
-    address: undefined,
-  };
-  const err = validateOrderBody(body);
-  assert.ok(err !== null && err.includes("address"), `Expected address error, got: ${err}`);
+  const body   = { ...courierOrder("Cape Town Metro", [{ quantity: 1, size: "5ml" }]), address: undefined };
+  const result = validateOrderBody(body);
+  assert.ok(!result.ok, "Should be rejected");
+  if (!result.ok) assert.ok(result.error.includes("address"), `Expected address error, got: ${result.error}`);
 });
 
 test("validateOrderBody: unknown province is rejected", () => {
-  const body = { ...courierOrder("Cape Town Metro", [{ price: 60, quantity: 1, size: "5ml" }]), province: "Fake Province" };
-  const err = validateOrderBody(body);
-  assert.ok(err !== null && err.includes("delivery area"), `Expected province error, got: ${err}`);
+  const body   = { ...courierOrder("Cape Town Metro", [{ quantity: 1, size: "5ml" }]), province: "Fake Province" };
+  const result = validateOrderBody(body);
+  assert.ok(!result.ok, "Should be rejected");
+  if (!result.ok) assert.ok(result.error.includes("delivery area"), `Expected province error, got: ${result.error}`);
 });
 
-test("validateOrderBody: tampered delivery=0 for chargeable order is rejected", () => {
-  // Subtotal R60, province Cape Town Metro → server computes delivery=R100
-  // Client tampers delivery=0 to avoid the charge
+test("validateOrderBody: unknown product id is rejected", () => {
   const body = {
     customer_name: "Test Customer",
     phone: "0821234567",
     address: "123 Main Street",
     province: "Cape Town Metro",
-    items: [{ id: "t1", title: "F", price: 60, quantity: 1, size: "5ml" }],
+    items: [{ id: "not-in-catalogue", title: "Fake Fragrance", price: 60, quantity: 1, size: "5ml" }],
     subtotal: 60,
-    delivery: 0, // tampered
+    delivery: 100,
+    total: 160,
+  };
+  const result = validateOrderBody(body);
+  assert.ok(!result.ok, "Unknown product should be rejected");
+  if (!result.ok)
+    assert.ok(
+      result.error.includes("not-in-catalogue") || result.error.toLowerCase().includes("not found"),
+      `Expected 'not found' error, got: ${result.error}`,
+    );
+});
+
+test("validateOrderBody: invalid size for known product is rejected", () => {
+  const body = {
+    customer_name: "Test Customer",
+    phone: "0821234567",
+    address: "123 Main Street",
+    province: "Cape Town Metro",
+    items: [{ id: TEST_SLUG, title: TEST_TITLE, price: 60, quantity: 1, size: "50ml" }],
+    subtotal: 60,
+    delivery: 100,
+    total: 160,
+  };
+  const result = validateOrderBody(body);
+  assert.ok(!result.ok, "Invalid size should be rejected");
+  if (!result.ok) assert.ok(result.error.toLowerCase().includes("size"), `Expected size error, got: ${result.error}`);
+});
+
+test("validateOrderBody: tampered delivery=0 for chargeable order is rejected", () => {
+  // Catalogue: aventus-inspired 5ml = R60. Province Cape Town Metro → server computes delivery=R100.
+  // Client tampers delivery=0 to avoid the charge.
+  const body = {
+    customer_name: "Test Customer",
+    phone: "0821234567",
+    address: "123 Main Street",
+    province: "Cape Town Metro",
+    items: [{ id: TEST_SLUG, title: TEST_TITLE, price: 60, quantity: 1, size: "5ml" }],
+    subtotal: 60,
+    delivery: 0,  // tampered — server computes R100
     total: 60,
   };
-  const err = validateOrderBody(body);
-  assert.ok(err !== null, "Tampered delivery=0 should be rejected");
-  assert.ok(
-    err!.includes("Delivery") || err!.includes("total"),
-    `Expected delivery mismatch error, got: ${err}`,
-  );
+  const result = validateOrderBody(body);
+  assert.ok(!result.ok, "Tampered delivery=0 should be rejected");
+  if (!result.ok)
+    assert.ok(
+      result.error.includes("Delivery") || result.error.includes("total"),
+      `Expected delivery mismatch error, got: ${result.error}`,
+    );
 });
 
-test("validateOrderBody: retail subtotal R2001 → free delivery (server agrees)", () => {
-  // 34 items × R60 retail = R2040 — but cartCount=34 → wholesaleActive → R48 each
-  // wholesale subtotal = 34 × 48 = R1632 → NOT free (below R2000)
-  // Need a scenario without wholesale: single large-price item
-  const body = courierOrder("Cape Town Metro", [{ price: 2001, quantity: 1, size: "unknown-size" }]);
-  assert.equal((body.delivery as number), 0, "Subtotal R2001 > threshold, delivery should be free");
-  assert.equal(validateOrderBody(body), null);
+test("validateOrderBody: client-submitted price ignored — catalogue price enforced", () => {
+  // Client sends price: 1 (tampered) but catalogue says 5ml = R60.
+  // Client's subtotal: 1; server's serverSubtotal: 60 → mismatch → rejected.
+  const body = {
+    customer_name: "Test Customer",
+    phone: "0821234567",
+    address: "123 Main Street",
+    province: "Cape Town Metro",
+    items: [{ id: TEST_SLUG, title: TEST_TITLE, price: 1, quantity: 1, size: "5ml" }],
+    subtotal: 1,   // matches tampered price; does NOT match catalogue price
+    delivery: 100,
+    total: 101,
+  };
+  const result = validateOrderBody(body);
+  assert.ok(!result.ok, "Tampered item price should cause subtotal mismatch rejection");
+  if (!result.ok)
+    assert.ok(result.error.includes("subtotal"), `Expected subtotal error, got: ${result.error}`);
 });
 
-test("validateOrderBody: retail subtotal exactly R2000 → NOT free (province rate charged)", () => {
-  const body = courierOrder("Cape Town Metro", [{ price: 2000, quantity: 1, size: "unknown-size" }]);
+test("validateOrderBody: retail subtotal R2250 (9 × 30ml) → free delivery", () => {
+  // 9 × 30ml @ R250 retail = R2250; cartCount=9 → NOT wholesale (< 10)
+  // R2250 > R2000 threshold → free delivery
+  const body   = courierOrder("Cape Town Metro", Array(9).fill({ quantity: 1, size: "30ml" }));
+  assert.ok((body.subtotal as number) > FREE_DELIVERY_THRESHOLD, `Expected subtotal > R2000, got ${body.subtotal}`);
+  assert.equal((body.delivery as number), 0, "Subtotal R2250 > R2000, delivery should be free");
+  const result = validateOrderBody(body);
+  assert.ok(result.ok, `Expected ok, got error: ${!result.ok ? result.error : ""}`);
+  if (result.ok) assert.equal(result.delivery, 0);
+});
+
+test("validateOrderBody: retail subtotal exactly R2000 (8 × 30ml) → NOT free", () => {
+  // 8 × 30ml @ R250 retail = R2000; cartCount=8 → NOT wholesale (< 10)
+  // R2000 does NOT exceed threshold (exclusive) → province rate charged
+  const body   = courierOrder("Cape Town Metro", Array(8).fill({ quantity: 1, size: "30ml" }));
+  assert.equal((body.subtotal as number), 2000, "Expected subtotal = R2000 exactly");
   assert.equal((body.delivery as number), 100, "Subtotal R2000 exactly should NOT be free");
-  assert.equal(validateOrderBody(body), null);
+  const result = validateOrderBody(body);
+  assert.ok(result.ok, `Expected ok, got error: ${!result.ok ? result.error : ""}`);
+  if (result.ok) assert.equal(result.delivery, 100);
 });
 
 test("validateOrderBody: wholesale subtotal > R2000 → free delivery", () => {
-  // 10 items × R48 wholesale = R480 — not enough
-  // Need wholesale subtotal > R2000: 10 × R180 wholesale (30ml items)
-  // But 10 × R250 retail, wholesale R180 → 10 × R180 = R1800 still below
-  // 12 × R180 = R2160 → free
-  const body = courierOrder("Gauteng", Array(12).fill({ price: 250, quantity: 1, size: "30ml" }));
-  const sub = body.subtotal as number;
+  // 12 × 30ml: catalogue R250 each, wholesale (cartCount=12 ≥ 10) → R180 each
+  // subtotal = 12 × R180 = R2160 > R2000 → free delivery
+  const body   = courierOrder("Gauteng", Array(12).fill({ quantity: 1, size: "30ml" }));
+  const sub    = body.subtotal as number;
   assert.ok(sub > FREE_DELIVERY_THRESHOLD, `Wholesale subtotal ${sub} should exceed threshold`);
   assert.equal((body.delivery as number), 0, "Wholesale subtotal > R2000 should be free");
-  assert.equal(validateOrderBody(body), null);
+  const result = validateOrderBody(body);
+  assert.ok(result.ok, `Expected ok, got error: ${!result.ok ? result.error : ""}`);
+  if (result.ok) assert.equal(result.delivery, 0);
 });
 
 test("validateOrderBody: retail list-price above R2000 but wholesale-priced subtotal below it — charged", () => {
-  // Retail: 35 × R60 = R2100 (above R2000)
-  // Wholesale: 35 × R48 = R1680 (below R2000) → delivery NOT free
-  const items = Array(35).fill({ price: 60, quantity: 1, size: "5ml" });
-  const body = courierOrder("Cape Town Metro", items);
-  const sub = body.subtotal as number;
+  // 35 × 5ml: catalogue R60 retail; wholesale (cartCount=35) → R48 each
+  // retail subtotal 35 × R60 = R2100 (above R2000)
+  // wholesale subtotal 35 × R48 = R1680 (below R2000) → delivery NOT free
+  const body   = courierOrder("Cape Town Metro", Array(35).fill({ quantity: 1, size: "5ml" }));
+  const sub    = body.subtotal as number;
   assert.ok(sub <= FREE_DELIVERY_THRESHOLD, `Wholesale subtotal ${sub} should be below threshold`);
   assert.ok((body.delivery as number) > 0, "Should be charged — wholesale subtotal below R2000");
-  assert.equal(validateOrderBody(body), null);
+  const result = validateOrderBody(body);
+  assert.ok(result.ok, `Expected ok, got error: ${!result.ok ? result.error : ""}`);
+  if (result.ok) assert.ok(result.delivery > 0, "Server delivery should be non-zero");
 });
 
 test("validateOrderBody: wholesale eligibility alone does not grant free delivery", () => {
-  // 10 items at R60 retail → wholesale R48 → subtotal R480 — well below R2000
-  const body = courierOrder("Outlying Areas", Array(10).fill({ price: 60, quantity: 1, size: "5ml" }));
+  // 10 × 5ml: catalogue R60 retail; wholesale → R48 each; subtotal = R480 (well below R2000)
+  const body   = courierOrder("Outlying Areas", Array(10).fill({ quantity: 1, size: "5ml" }));
   assert.equal((body.delivery as number), 300, "Wholesale orders below R2000 should pay province rate");
-  assert.equal(validateOrderBody(body), null);
+  const result = validateOrderBody(body);
+  assert.ok(result.ok, `Expected ok, got error: ${!result.ok ? result.error : ""}`);
+  if (result.ok) assert.equal(result.delivery, 300);
 });
 
 test("validateOrderBody: empty cart rejected", () => {
-  const body = { ...courierOrder("Cape Town Metro", [{ price: 60, quantity: 1, size: "5ml" }]), items: [] };
-  const err = validateOrderBody(body);
-  assert.ok(err !== null && err.includes("empty"), `Expected empty cart error, got: ${err}`);
+  const body   = { ...courierOrder("Cape Town Metro", [{ quantity: 1, size: "5ml" }]), items: [] };
+  const result = validateOrderBody(body);
+  assert.ok(!result.ok, "Should be rejected");
+  if (!result.ok) assert.ok(result.error.includes("empty"), `Expected empty cart error, got: ${result.error}`);
 });
 
 // ── Section 6: MiniCart delivery logic ───────────────────────────────────────
@@ -573,7 +668,7 @@ test("Testimonials.tsx: no longevity claims", () => {
 console.log("\n" + "─".repeat(60));
 console.log(`  Results: ${passed} passed, ${failed} failed`);
 if (failed === 0) {
-  console.log("\n  PASS — all P2C commerce regression checks passed.\n");
+  console.log("\n  PASS — all P2C/P2D commerce regression checks passed.\n");
 } else {
   console.log("\n  FAIL — regression violations detected.\n");
   process.exit(1);

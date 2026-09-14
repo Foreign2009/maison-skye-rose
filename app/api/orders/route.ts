@@ -15,10 +15,10 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
 
-    const validationError = validateOrderBody(body);
-    if (validationError) {
+    const validation = validateOrderBody(body);
+    if (!validation.ok) {
       return NextResponse.json(
-        { success: false, message: validationError },
+        { success: false, message: validation.error },
         { status: 400 }
       );
     }
@@ -29,19 +29,13 @@ export async function POST(request: Request) {
       address,
       province,
       items,
-      subtotal,
-      delivery,
-      total,
       discovery_context: rawDiscovery,
     } = body as {
       customer_name:      string;
       phone:              string;
-      address:            string;
+      address?:           string;
       province:           string;
       items:              unknown[];
-      subtotal:           number;
-      delivery:           number;
-      total:              number;
       discovery_context?: unknown;
     };
 
@@ -55,6 +49,8 @@ export async function POST(request: Request) {
       { status: "awaiting_payment", changed_at: new Date().toISOString(), note: "Order created" },
     ];
 
+    // Use server-computed financial values — validation.subtotal/delivery/total are
+    // derived from the authoritative catalogue, not from the client submission.
     const { error } = await supabase
       .from("orders")
       .insert([
@@ -62,13 +58,13 @@ export async function POST(request: Request) {
           order_ref,
           customer_name:     customer_name.trim(),
           phone:             phone.trim(),
-          address:           address.trim(),
+          address:           (address ?? "").trim(),
           province,
           items,
-          subtotal,
+          subtotal:          validation.subtotal,
           vat:               0,
-          delivery,
-          total,
+          delivery:          validation.delivery,
+          total:             validation.total,
           payment_status:    "awaiting_payment",
           status_history:    initialHistory,
           discovery_context: discoveryContext ?? null,
@@ -90,7 +86,7 @@ export async function POST(request: Request) {
       orderRef:  order_ref,
       province,
       itemCount: items.length,
-      total,
+      total:     validation.total,
     });
 
     return NextResponse.json({
