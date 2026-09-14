@@ -20,6 +20,12 @@ const BANKING_DETAILS = {
 };
 const PAYMENT_TRACKED_KEY = "msr_eft_instructions_viewed";
 
+// Confirmation state returned by GET /api/orders/[ref]
+type ConfirmationState =
+  | { status: "loading" }
+  | { status: "confirmed"; total: number; paymentStatus: string }
+  | { status: "error" };
+
 function CopyButton({ value }: { value: string }) {
   const [copied, setCopied] = useState(false);
 
@@ -50,16 +56,42 @@ function CopyButton({ value }: { value: string }) {
 
 function EFTConfirmationContent() {
   const searchParams = useSearchParams();
-  const orderRef     = searchParams.get("ref")   ?? "—";
-  const rawTotal     = parseFloat(searchParams.get("total") ?? "0");
-  const totalDisplay = `R${rawTotal.toFixed(2)}`;
+  const orderRef     = searchParams.get("ref") ?? "—";
 
+  // Server-verified order total — never read from query parameters.
+  const [confirmation, setConfirmation] = useState<ConfirmationState>({ status: "loading" });
+
+  // Fetch the server-authoritative total from the orders API.
+  // The ?total= query parameter is ignored — it is not trusted for display.
+  useEffect(() => {
+    if (!orderRef || orderRef === "—") {
+      setConfirmation({ status: "error" });
+      return;
+    }
+    fetch(`/api/orders/${encodeURIComponent(orderRef)}`)
+      .then(async (res) => {
+        if (!res.ok) {
+          setConfirmation({ status: "error" });
+          return;
+        }
+        const data = await res.json() as {
+          orderRef:      string;
+          total:         number;
+          paymentStatus: string;
+        };
+        setConfirmation({ status: "confirmed", total: data.total, paymentStatus: data.paymentStatus });
+      })
+      .catch(() => setConfirmation({ status: "error" }));
+  }, [orderRef]);
+
+  // Analytics — fire once per page view.
   useEffect(() => {
     if (sessionStorage.getItem(PAYMENT_TRACKED_KEY)) return;
     sessionStorage.setItem(PAYMENT_TRACKED_KEY, "1");
     trackPaymentReturnSuccess({});
   }, []);
 
+  // Record purchase for loyalty/profile tracking (uses orderRef, not total).
   useEffect(() => {
     if (!orderRef || orderRef === "—") return;
     try {
@@ -71,8 +103,13 @@ function EFTConfirmationContent() {
     } catch { /* localStorage unavailable */ }
   }, [orderRef]);
 
+  // WhatsApp message uses the confirmed total when available.
+  const amountLine = confirmation.status === "confirmed"
+    ? `\nAmount: R${confirmation.total.toFixed(2)}`
+    : "\nPlease confirm the payment amount for my order";
+
   const whatsappMessage = encodeURIComponent(
-    `Hi Maison Skye & Rose! 🌸\n\nI've placed an order and am sending proof of payment.\n\nOrder Reference: ${orderRef}\nAmount: ${totalDisplay}\n\nPlease find my proof of payment attached. Thank you!`
+    `Hi Maison Skye & Rose! 🌸\n\nI've placed an order and am sending proof of payment.\n\nOrder Reference: ${orderRef}${amountLine}\n\nPlease find my proof of payment attached. Thank you!`
   );
   const whatsappUrl = `https://wa.me/${brand.social.whatsappNumber}?text=${whatsappMessage}`;
 
@@ -152,12 +189,27 @@ function EFTConfirmationContent() {
           <CopyButton value={orderRef} />
         </div>
 
+        {/* Amount Due — sourced from the server, never from the URL */}
         <div className="mt-4 flex items-center justify-between gap-4 border-t pt-4">
           <div>
             <p className="text-[10px] uppercase tracking-[0.3em] text-[#9b9298]">Amount Due</p>
-            <p className="mt-0.5 text-2xl font-black text-[#4f4a52]">{totalDisplay}</p>
+            {confirmation.status === "loading" && (
+              <div className="mt-1 h-8 w-32 animate-pulse rounded-lg bg-[#f0ebe3]" aria-label="Loading amount" />
+            )}
+            {confirmation.status === "confirmed" && (
+              <p className="mt-0.5 text-2xl font-black text-[#4f4a52]">
+                R{confirmation.total.toFixed(2)}
+              </p>
+            )}
+            {confirmation.status === "error" && (
+              <p className="mt-1 text-sm text-[#9b9298]">
+                Unable to load — please contact us
+              </p>
+            )}
           </div>
-          <CopyButton value={rawTotal.toFixed(2)} />
+          {confirmation.status === "confirmed" && (
+            <CopyButton value={confirmation.total.toFixed(2)} />
+          )}
         </div>
       </motion.div>
 

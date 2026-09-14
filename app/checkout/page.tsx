@@ -98,7 +98,7 @@ export default function CheckoutPage() {
           );
         } catch { /* localStorage unavailable */ }
         clearCart();
-        window.location.href = `/payment-success?ref=${encodeURIComponent(orderData.orderRef)}&total=${total.toFixed(2)}`;
+        window.location.href = `/payment-success?ref=${encodeURIComponent(orderData.orderRef)}`;
       } else {
         setOrderError(orderData.message ?? "We could not process your order. Please try again.");
       }

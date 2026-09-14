@@ -11,6 +11,9 @@ import {
 const MAX_NOTE_LENGTH    = 500;
 const MAX_TRACKING_LENGTH = 100;
 
+// MSR-YYYYMMDD-NNNNN — validated before any DB access.
+const REF_FORMAT = /^MSR-\d{8}-\d{5}$/;
+
 export async function PATCH(
   request: NextRequest,
   { params }: { params: Promise<{ ref: string }> }
@@ -180,4 +183,76 @@ export async function PATCH(
     orderRef: ref,
     status:   newStatus,
   });
+}
+
+// ── Confirmation GET — public, returns non-PII confirmation data only ─────────
+//
+// Returns { orderRef, total, paymentStatus } for a valid, known order.
+// No customer name, phone or address is exposed.
+// Used by the payment-success page to obtain a server-verified total.
+
+export interface ConfirmationDb {
+  getOrderConfirmation(ref: string): Promise<{
+    data: { order_ref: string; total: number; payment_status: string } | null;
+    error: unknown;
+  }>;
+}
+
+export async function handleGetConfirmation(
+  ref: string,
+  db: ConfirmationDb,
+): Promise<NextResponse> {
+  if (!ref || !REF_FORMAT.test(ref)) {
+    return NextResponse.json(
+      { success: false, message: "Invalid order reference." },
+      { status: 400 }
+    );
+  }
+
+  const { data, error } = await db.getOrderConfirmation(ref);
+
+  if (error) {
+    console.error(
+      "[Orders/GET] DB error:",
+      error instanceof Error ? error.message : "unknown error"
+    );
+    return NextResponse.json(
+      { success: false, message: "Unable to load order confirmation." },
+      { status: 500 }
+    );
+  }
+
+  if (!data) {
+    return NextResponse.json(
+      { success: false, message: "Order not found." },
+      { status: 404 }
+    );
+  }
+
+  return NextResponse.json({
+    orderRef:      data.order_ref,
+    total:         data.total,
+    paymentStatus: data.payment_status,
+  });
+}
+
+export async function GET(
+  _request: NextRequest,
+  { params }: { params: Promise<{ ref: string }> },
+) {
+  const { ref } = await params;
+  const db: ConfirmationDb = {
+    getOrderConfirmation: async (r) => {
+      const { data, error } = await getSupabaseAdmin()
+        .from("orders")
+        .select("order_ref, total, payment_status")
+        .eq("order_ref", r)
+        .maybeSingle();
+      return {
+        data: data as { order_ref: string; total: number; payment_status: string } | null,
+        error,
+      };
+    },
+  };
+  return handleGetConfirmation(ref, db);
 }
