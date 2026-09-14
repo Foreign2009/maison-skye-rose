@@ -8,16 +8,7 @@ import { useCart } from "../context/CartContext";
 import { trackCheckoutStarted, trackRecommendationCheckoutAttributed } from "../lib/analytics";
 import { getDiscoveryAttribution, clearDiscoveryAttribution } from "../lib/discoveryAttribution";
 import { getRecommendationAttribution, clearRecommendationAttribution } from "../lib/recommendationAttribution";
-
-const DELIVERY_RATES: Record<string, number> = {
-  "Cape Town Metro":       100,
-  "Western Cape Regional": 150,
-  "Gauteng":               180,
-  "KwaZulu-Natal":         180,
-  "Other Major Cities":    200,
-  "Outlying Areas":        300,
-  "Collection / Pickup":   0,
-};
+import { COLLECTION_PROVINCE, getDeliveryCharge } from "../lib/commerce/delivery";
 
 export default function CheckoutPage() {
   const { cart, clearCart } = useCart();
@@ -32,14 +23,13 @@ export default function CheckoutPage() {
   const [orderError, setOrderError] = useState("");
 
   const subtotal = cart.reduce((total, item) => total + item.price * item.quantity, 0);
-  const delivery = DELIVERY_RATES[province] ?? 180;
+  const isCollection = province === COLLECTION_PROVINCE;
+  const delivery = getDeliveryCharge(province);
   const total    = subtotal + delivery;
 
   function clearFieldError(field: string) {
     setErrors((prev) => ({ ...prev, [field]: "" }));
   }
-
-  const isCollection = province === "Collection / Pickup";
 
   function validateForm(): boolean {
     const next: Record<string, string> = {};

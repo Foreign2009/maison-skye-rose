@@ -11,6 +11,7 @@ import { getCartRecommendations } from "../lib/customer/sync/CartRecommendationS
 import { useUnifiedCustomerProfile } from "../lib/customer/hooks/useUnifiedCustomerProfile";
 import type { DisplayFragrance } from "../lib/knowledgeAdapter";
 import { mkcCatalogue } from "../lib/mkc/catalogue";
+import { getNextReward, getRewardMessage } from "../lib/commerce/rewards";
 
 const MIN_RETAIL_5ML: number | null = mkcCatalogue.length > 0
   ? Math.min(...mkcCatalogue.map((k) => k.prices["5ml"]))
@@ -112,16 +113,7 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
     : subtotal >= 400  ? 25 + ((subtotal - 400)  / 300) * 25
     : (subtotal / 400) * 25;
 
-  const nextReward =
-    subtotal < 400
-      ? { amount: 400, reward: "1 Free 5ml Sample" }
-      : subtotal < 700
-      ? { amount: 700, reward: "2 Free 5ml Samples" }
-      : subtotal < 1000
-      ? { amount: 1000, reward: "3 Free 5ml Samples" }
-      : subtotal < 1500
-      ? { amount: 1500, reward: "Discovery Set (5 × 5ml)" }
-      : null;
+  const nextReward = getNextReward(subtotal);
 
   const delivery =
     !cart || cart.length === 0
@@ -136,18 +128,7 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
   const originalTotal = cart.reduce((total, item) => total + item.price * item.quantity, 0);
   const savings = originalTotal - subtotal;
 
-  const rewardMessage =
-    subtotal >= 2000
-      ? "✓ Discovery Set (5 × 5ml) + Free Delivery"
-      : subtotal >= 1500
-      ? "✓ Discovery Set (5 × 5ml)"
-      : subtotal >= 1000
-      ? "✓ 3 Free 5ml Samples"
-      : subtotal >= 700
-      ? "✓ 2 Free 5ml Samples"
-      : subtotal >= 400
-      ? "✓ 1 Free 5ml Sample"
-      : "";
+  const rewardMessage = getRewardMessage(subtotal);
 
   const handleWhatsAppCheckout = () => {
     const orderLines = cart

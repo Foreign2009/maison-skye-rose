@@ -8,6 +8,7 @@ import {
   useMemo,
   useState,
 } from "react";
+import { WHOLESALE_THRESHOLD, getWholesaleItemPrice } from "@/app/lib/commerce/wholesale";
 
 export type CartProduct = {
   id: string;
@@ -133,23 +134,10 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     [cart]
   );
 
-  const wholesaleActive = cartCount >= 10;
+  const wholesaleActive = cartCount >= WHOLESALE_THRESHOLD;
 
   const getWholesalePrice = useCallback(
-    (item: CartProduct) => {
-      if (!wholesaleActive) return item.price;
-
-      switch (item.size) {
-        case "5ml":
-          return 48;
-        case "10ml":
-          return 77;
-        case "30ml":
-          return 180;
-        default:
-          return item.price;
-      }
-    },
+    (item: CartProduct) => getWholesaleItemPrice(item.size, item.price, wholesaleActive),
     [wholesaleActive]
   );
 

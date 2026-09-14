@@ -1,22 +1,9 @@
-const reviews = [
-  {
-    location: "Cape Town",
-    review:
-      "I started with one 5ml and now I have a full wardrobe. Maison has completely changed how I think about fragrance.",
-  },
-  {
-    location: "Johannesburg",
-    review:
-      "The Concierge helped me find exactly what I was looking for within minutes. It felt like talking to someone who genuinely knows fragrance.",
-  },
-  {
-    location: "Durban",
-    review:
-      "The quality, the curation, the experience — exceptional. This is not your average fragrance purchase.",
-  },
-];
+// Testimonials suppressed pending provenance verification.
+// Original 3 entries preserved in Git history (commit f82ac548).
+const reviews: { location: string; review: string }[] = [];
 
 export default function Testimonials() {
+  if (reviews.length === 0) return null;
   return (
     <section className="py-20 md:py-28">
       <div className="mx-auto max-w-7xl px-6">
