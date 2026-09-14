@@ -8,10 +8,10 @@ import { useCart } from "../context/CartContext";
 import { trackCheckoutStarted, trackRecommendationCheckoutAttributed } from "../lib/analytics";
 import { getDiscoveryAttribution, clearDiscoveryAttribution } from "../lib/discoveryAttribution";
 import { getRecommendationAttribution, clearRecommendationAttribution } from "../lib/recommendationAttribution";
-import { COLLECTION_PROVINCE, getDeliveryCharge } from "../lib/commerce/delivery";
+import { COLLECTION_PROVINCE, computeDelivery } from "../lib/commerce/delivery";
 
 export default function CheckoutPage() {
-  const { cart, clearCart } = useCart();
+  const { cart, clearCart, cartTotal } = useCart();
 
   const [name,     setName]     = useState("");
   const [phone,    setPhone]    = useState("");
@@ -22,9 +22,9 @@ export default function CheckoutPage() {
   const [errors,     setErrors]     = useState<Record<string, string>>({});
   const [orderError, setOrderError] = useState("");
 
-  const subtotal = cart.reduce((total, item) => total + item.price * item.quantity, 0);
+  const subtotal = cartTotal; // wholesale-adjusted when active
   const isCollection = province === COLLECTION_PROVINCE;
-  const delivery = getDeliveryCharge(province);
+  const delivery = computeDelivery(province, subtotal);
   const total    = subtotal + delivery;
 
   function clearFieldError(field: string) {
@@ -220,7 +220,7 @@ export default function CheckoutPage() {
 
           <div className="mt-4 flex justify-between">
             <span>{isCollection ? "Collection" : "Delivery"}</span>
-            <span>{isCollection ? "FREE" : `R${delivery.toFixed(2)}`}</span>
+            <span>{delivery === 0 ? "FREE" : `R${delivery.toFixed(2)}`}</span>
           </div>
 
           <div className="mt-6 flex justify-between border-t pt-6 text-2xl font-black">

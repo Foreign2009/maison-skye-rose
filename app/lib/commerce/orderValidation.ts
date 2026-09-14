@@ -1,4 +1,5 @@
-import { ALL_PROVINCES, isCollectionOrder } from "./delivery";
+import { ALL_PROVINCES, isCollectionOrder, computeDelivery } from "./delivery";
+import { WHOLESALE_THRESHOLD, getWholesaleItemPrice } from "./wholesale";
 
 const MAX_LENGTHS = { customer_name: 100, phone: 20, address: 500 } as const;
 const MAX_ITEMS       = 50;
@@ -49,7 +50,24 @@ export function validateOrderBody(body: unknown): string | null {
   if (typeof b.delivery !== "number" || b.delivery <  0) return "Invalid delivery amount.";
   if (typeof b.total    !== "number" || b.total    <= 0) return "Invalid order total.";
 
-  const expectedTotal = (b.subtotal as number) + (b.delivery as number);
+  // Recompute subtotal and delivery server-side from item data.
+  // This prevents a tampered client payload from obtaining free delivery.
+  const castItems = b.items as Array<Record<string, unknown>>;
+  const cartCount = castItems.reduce((n, i) => n + (i.quantity as number), 0);
+  const activeWholesale = cartCount >= WHOLESALE_THRESHOLD;
+  const serverSubtotal = castItems.reduce(
+    (sum, i) =>
+      sum + getWholesaleItemPrice(i.size as string, i.price as number, activeWholesale) * (i.quantity as number),
+    0,
+  );
+  const serverDelivery = computeDelivery(b.province as string, serverSubtotal);
+
+  if (Math.abs((b.subtotal as number) - serverSubtotal) > TOTAL_TOLERANCE)
+    return "Order subtotal does not match.";
+  if (Math.abs((b.delivery as number) - serverDelivery) > TOTAL_TOLERANCE)
+    return "Delivery charge does not match.";
+
+  const expectedTotal = serverSubtotal + serverDelivery;
   if (Math.abs((b.total as number) - expectedTotal) > TOTAL_TOLERANCE)
     return "Order total does not match.";
 

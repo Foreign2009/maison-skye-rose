@@ -133,4 +133,28 @@ Do not reverse a decision without understanding its rationale first.
 
 **Trade-off:** The customer sees R100 free delivery in the MiniCart but potentially R180 on the checkout form. This creates a trust problem.
 
-**Required fix:** Reconcile before launch. Options: (a) adopt province-based in both, (b) remove province-based from checkout and use total-based throughout, (c) show a clear "delivery calculated at checkout" message in MiniCart.
+**Status:** RESOLVED by D11 (2026-09-14). See D11.
+
+---
+
+## D11 — Approved Delivery Policy: Free on Orders Over R2000
+
+**Decision:** Free delivery applies to all courier orders where the merchandise subtotal is strictly greater than R2000. Collection / Pickup is always free. Wholesale eligibility alone does not grant free delivery.
+
+**Authority:** Founder instruction (Adnaan "Adi" Fortuin), 2026-09-14: "orders over R2000 is free."
+
+**Exact rule:**
+- Collection / Pickup: always R0, no minimum spend.
+- Courier, subtotal > R2000: R0 (free).
+- Courier, subtotal ≤ R2000 (including exactly R2000): normal province rate.
+- Same rule for retail and wholesale orders.
+- Subtotal is the merchandise total after applicable wholesale pricing, excluding delivery.
+- Wholesale eligibility (cartCount ≥ 10) alone does NOT grant free delivery.
+
+**Why:** Resolves the inconsistency between MiniCart free-delivery logic (prior unresolved rule) and checkout page (province-only). Establishes a single shared rule implemented via `app/lib/commerce/delivery.ts:computeDelivery()`.
+
+**Trade-off:** Wholesale customers placing large orders (> R2000 at wholesale prices) receive free delivery as a side effect of the R2000 rule. This is acceptable and aligns with a positive customer experience for high-value orders.
+
+**Customer-facing wording:** "Free delivery on orders over R2000."
+
+**Implementation:** `app/lib/commerce/delivery.ts` — `FREE_DELIVERY_THRESHOLD = 2000`, `computeDelivery(province, subtotal)`. Used in MiniCart, checkout, and API validation. Server recomputes subtotal and delivery from validated items to prevent client-side tampering.

@@ -40,7 +40,7 @@ const faqs = [
   {
     question: "How much is delivery?",
     answer:
-      "Cape Town Metro: R100, Western Cape Regional: R150, Johannesburg: R180, Durban: R180, Other Major Cities: R200 and Outlying Areas: R300.",
+      "Cape Town Metro: R100, Western Cape Regional: R150, Johannesburg: R180, Durban: R180, Other Major Cities: R200 and Outlying Areas: R300. Free delivery on orders over R2000. Collection / Pickup is always free.",
   },
   {
     question: "How long does delivery take?",

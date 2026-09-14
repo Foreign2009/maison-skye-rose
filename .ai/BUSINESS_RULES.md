@@ -37,7 +37,7 @@ When in doubt, the source file is authoritative.
 - MiniCart shows crossed-out retail + green wholesale per line item
 - MiniCart shows total savings: `originalTotal - wholesaleSubtotal`
 - Reward progress bar is replaced by "Wholesale Pricing Active" panel
-- Delivery is free regardless of order total
+- Delivery is NOT automatically free for wholesale — standard R2000 threshold applies
 - WhatsApp message includes "WHOLESALE ORDER" header and "(Wholesale)" per line item
 
 **Source:** `app/context/CartContext.tsx` — `getWholesalePrice`, `wholesaleActive`
@@ -71,19 +71,34 @@ When in doubt, the source file is authoritative.
 
 ## Delivery
 
-**MiniCart delivery logic:**
-- If cart is empty → R0
-- If `wholesaleActive` → R0 (always free)
-- If `subtotal >= 2000` → R0 (free delivery reward)
-- Otherwise → R100
+**Approved rule (D11 — Founder, 2026-09-14):** Free delivery on orders over R2000.
+- Collection / Pickup: always R0, no minimum spend.
+- Courier with merchandise subtotal **strictly greater than** R2000: R0.
+- Courier with merchandise subtotal ≤ R2000 (including exactly R2000): normal province rate.
+- Wholesale eligibility alone does NOT grant free delivery.
+- Subtotal used for eligibility is the wholesale-adjusted merchandise total, excluding delivery.
 
-**Checkout page delivery logic (DIFFERENT — not aligned with MiniCart):**
-- Western Cape → R100
-- All other provinces → R180
+**Exact threshold:** `subtotal > 2000` (exclusive; R2000.00 does NOT qualify).
 
-**This is a known inconsistency. Do not "fix" one side without reconciling both.**
+**Province rates:**
+- Cape Town Metro: R100
+- Western Cape Regional: R150
+- Gauteng: R180
+- KwaZulu-Natal: R180
+- Other Major Cities: R200
+- Outlying Areas: R300
+- Collection / Pickup: R0
 
-**Source:** `app/components/MiniCart.tsx`, `app/checkout/page.tsx`
+**Shared implementation:** `app/lib/commerce/delivery.ts` → `computeDelivery(province, subtotal)`
+Used consistently in: MiniCart, checkout, API order validation.
+
+**Server validation:** `/api/orders` recomputes subtotal (with wholesale pricing) and delivery from submitted items. Rejects any order where the submitted delivery charge does not match the server-computed value.
+
+**MiniCart display:** Province is unknown at MiniCart stage. Shows "FREE" when subtotal > R2000; otherwise shows "Calculated at checkout" and displays the subtotal (not total).
+
+**Customer-facing wording:** "Free delivery on orders over R2000."
+
+**Source:** `app/lib/commerce/delivery.ts`, `app/components/MiniCart.tsx`, `app/checkout/page.tsx`
 
 ---
 

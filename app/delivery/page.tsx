@@ -80,6 +80,15 @@ export default function DeliveryPage() {
               </div>
             ))}
           </div>
+
+          <div className="mt-8 rounded-2xl bg-[#f5f1eb] px-6 py-5">
+            <p className="text-sm font-bold text-[#4f4a52]">
+              Free delivery on orders over R2000.
+            </p>
+            <p className="mt-1 text-sm text-zinc-600">
+              Collection / Pickup is always free, regardless of order value.
+            </p>
+          </div>
         </div>
 
         <div className="mt-10 rounded-[40px] bg-white p-8 shadow-sm">

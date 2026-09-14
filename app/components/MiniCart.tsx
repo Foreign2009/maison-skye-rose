@@ -12,6 +12,7 @@ import { useUnifiedCustomerProfile } from "../lib/customer/hooks/useUnifiedCusto
 import type { DisplayFragrance } from "../lib/knowledgeAdapter";
 import { mkcCatalogue } from "../lib/mkc/catalogue";
 import { getNextReward, getRewardMessage } from "../lib/commerce/rewards";
+import { FREE_DELIVERY_THRESHOLD } from "../lib/commerce/delivery";
 
 const MIN_RETAIL_5ML: number | null = mkcCatalogue.length > 0
   ? Math.min(...mkcCatalogue.map((k) => k.prices["5ml"]))
@@ -118,11 +119,9 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
   const delivery =
     !cart || cart.length === 0
       ? 0
-      : wholesaleActive
+      : subtotal > FREE_DELIVERY_THRESHOLD
       ? 0
-      : subtotal >= 2000
-      ? 0
-      : 100;
+      : 100; // province unknown; UI shows "Calculated at checkout" when non-zero
 
   const total = subtotal + delivery;
   const originalTotal = cart.reduce((total, item) => total + item.price * item.quantity, 0);
@@ -204,9 +203,6 @@ A member of our team will confirm your order and delivery details shortly.`;
                 Wholesale Pricing Active
               </p>
               <p className="mt-1 text-xs text-green-600">Mix & Match pricing applied</p>
-              <p className="mt-1 text-xs font-semibold text-green-700">
-                ✓ Free Delivery Included
-              </p>
             </div>
           ) : (
             <div className="mt-3 rounded-xl bg-[#f5f1eb] px-3 py-2">

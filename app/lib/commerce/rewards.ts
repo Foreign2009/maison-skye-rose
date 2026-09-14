@@ -12,11 +12,11 @@ export function getNextReward(subtotal: number): { amount: number; reward: strin
   return null;
 }
 
-// POLICY-PENDING: The R2000 entry includes "+ Free Delivery".
-// Authority for this free-delivery rule is unresolved pending founder confirmation.
-// This string appears only in the MiniCart WhatsApp preview.
+import { FREE_DELIVERY_THRESHOLD } from "./delivery";
+
+// Founder decision 2026-09-14: free delivery on orders over R2000 (subtotal > 2000).
 export function getRewardMessage(subtotal: number): string {
-  if (subtotal >= 2000) return "✓ Discovery Set (5 × 5ml) + Free Delivery";
+  if (subtotal > FREE_DELIVERY_THRESHOLD) return "✓ Discovery Set (5 × 5ml) + Free Delivery";
   if (subtotal >= 1500) return "✓ Discovery Set (5 × 5ml)";
   if (subtotal >= 1000) return "✓ 3 Free 5ml Samples";
   if (subtotal >= 700)  return "✓ 2 Free 5ml Samples";

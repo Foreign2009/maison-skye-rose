@@ -20,3 +20,13 @@ export function getDeliveryCharge(province: string): number {
 export function isCollectionOrder(province: string): boolean {
   return province === COLLECTION_PROVINCE;
 }
+
+// Founder decision 2026-09-14: "orders over R2000 is free"
+// Threshold is exclusive: subtotal must be strictly GREATER THAN R2000.
+export const FREE_DELIVERY_THRESHOLD = 2000;
+
+export function computeDelivery(province: string, subtotal: number): number {
+  if (isCollectionOrder(province)) return 0;
+  if (subtotal > FREE_DELIVERY_THRESHOLD) return 0;
+  return getDeliveryCharge(province);
+}
