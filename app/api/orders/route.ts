@@ -1,8 +1,13 @@
 import { NextResponse } from "next/server";
-import { supabase } from "@/app/lib/supabase";
 import type { StatusHistoryEntry } from "@/app/lib/orderStatus";
 import { validateDiscoveryAttribution } from "@/app/lib/discoveryAttribution";
 import { validateOrderBody } from "@/app/lib/commerce/orderValidation";
+
+// Minimal DB interface — allows the real handler to be tested with a mock.
+// The production POST adapter wraps the supabase client to satisfy this shape.
+export interface OrderDb {
+  insertOrder(row: Record<string, unknown>): Promise<{ error: unknown }>;
+}
 
 function generateOrderRef(): string {
   const now     = new Date();
@@ -11,10 +16,8 @@ function generateOrderRef(): string {
   return `MSR-${dateStr}-${suffix}`;
 }
 
-export async function POST(request: Request) {
+export async function handleOrder(body: unknown, db: OrderDb): Promise<NextResponse> {
   try {
-    const body = await request.json();
-
     const validation = validateOrderBody(body);
     if (!validation.ok) {
       return NextResponse.json(
@@ -28,14 +31,12 @@ export async function POST(request: Request) {
       phone,
       address,
       province,
-      items,
       discovery_context: rawDiscovery,
     } = body as {
       customer_name:      string;
       phone:              string;
       address?:           string;
       province:           string;
-      items:              unknown[];
       discovery_context?: unknown;
     };
 
@@ -49,27 +50,23 @@ export async function POST(request: Request) {
       { status: "awaiting_payment", changed_at: new Date().toISOString(), note: "Order created" },
     ];
 
-    // Use server-computed financial values — validation.subtotal/delivery/total are
-    // derived from the authoritative catalogue, not from the client submission.
-    const { error } = await supabase
-      .from("orders")
-      .insert([
-        {
-          order_ref,
-          customer_name:     customer_name.trim(),
-          phone:             phone.trim(),
-          address:           (address ?? "").trim(),
-          province,
-          items,
-          subtotal:          validation.subtotal,
-          vat:               0,
-          delivery:          validation.delivery,
-          total:             validation.total,
-          payment_status:    "awaiting_payment",
-          status_history:    initialHistory,
-          discovery_context: discoveryContext ?? null,
-        },
-      ]);
+    // Use server-computed financial values and normalized items from validation result.
+    // validation.items carries effective (wholesale or retail) prices — not raw client prices.
+    const { error } = await db.insertOrder({
+      order_ref,
+      customer_name:     customer_name.trim(),
+      phone:             phone.trim(),
+      address:           (address ?? "").trim(),
+      province,
+      items:             validation.items,
+      subtotal:          validation.subtotal,
+      vat:               0,
+      delivery:          validation.delivery,
+      total:             validation.total,
+      payment_status:    "awaiting_payment",
+      status_history:    initialHistory,
+      discovery_context: discoveryContext ?? null,
+    });
 
     if (error) {
       console.error(
@@ -85,7 +82,7 @@ export async function POST(request: Request) {
     console.log("[Orders] Order created", {
       orderRef:  order_ref,
       province,
-      itemCount: items.length,
+      itemCount: validation.items.length,
       total:     validation.total,
     });
 
@@ -94,6 +91,28 @@ export async function POST(request: Request) {
       orderRef: order_ref,
     });
 
+  } catch (error) {
+    console.error(
+      "Orders route error:",
+      error instanceof Error ? error.message : "Unknown error"
+    );
+    return NextResponse.json(
+      { success: false, message: "An unexpected error occurred. Please try again." },
+      { status: 500 }
+    );
+  }
+}
+
+export async function POST(request: Request) {
+  try {
+    const body = await request.json();
+    // Supabase is imported lazily so the module can be loaded in tests
+    // without triggering client initialization.
+    const { supabase } = await import("@/app/lib/supabase");
+    const db: OrderDb = {
+      insertOrder: async (row) => supabase.from("orders").insert([row]),
+    };
+    return handleOrder(body, db);
   } catch (error) {
     console.error(
       "Orders route error:",

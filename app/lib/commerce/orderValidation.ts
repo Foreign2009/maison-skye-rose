@@ -11,9 +11,17 @@ const catalogueBySlug = new Map<string, FragranceKnowledge>(
 const MAX_LENGTHS = { customer_name: 100, phone: 20, address: 500 } as const;
 const MAX_ITEMS   = 50;
 
+export type NormalizedOrderItem = {
+  id:       string;
+  title:    string;
+  price:    number;   // effective price — retail, or wholesale when threshold is met
+  quantity: number;
+  size:     string;
+};
+
 export type OrderValidationResult =
   | { ok: false; error: string }
-  | { ok: true;  subtotal: number; delivery: number; total: number };
+  | { ok: true;  subtotal: number; delivery: number; total: number; items: NormalizedOrderItem[] };
 
 function isPurchasable(product: FragranceKnowledge): boolean {
   const s = product.availabilityStatus;
@@ -74,14 +82,25 @@ export function validateOrderBody(body: unknown): OrderValidationResult {
 
   // Recompute from authoritative catalogue prices.
   // Client-submitted unit prices, subtotal, delivery, total, and wholesale flags are not trusted.
-  const castItems    = b.items as Array<Record<string, unknown>>;
-  const cartCount    = castItems.reduce((n, i) => n + (i.quantity as number), 0);
+  const castItems       = b.items as Array<Record<string, unknown>>;
+  const cartCount       = castItems.reduce((n, i) => n + (i.quantity as number), 0);
   const activeWholesale = cartCount >= WHOLESALE_THRESHOLD;
-  const serverSubtotal  = castItems.reduce((sum, i) => {
-    const product     = catalogueBySlug.get(i.id as string)!; // already validated above
-    const retailPrice = product.prices[i.size as "5ml" | "10ml" | "30ml"]!;
-    return sum + getWholesaleItemPrice(i.size as string, retailPrice, activeWholesale) * (i.quantity as number);
+
+  const normalizedItems: NormalizedOrderItem[] = [];
+  const serverSubtotal = castItems.reduce((sum, i) => {
+    const product        = catalogueBySlug.get(i.id as string)!; // already validated above
+    const retailPrice    = product.prices[i.size as "5ml" | "10ml" | "30ml"]!;
+    const effectivePrice = getWholesaleItemPrice(i.size as string, retailPrice, activeWholesale);
+    normalizedItems.push({
+      id:       i.id       as string,
+      title:    i.title    as string,
+      price:    effectivePrice,
+      quantity: i.quantity as number,
+      size:     i.size     as string,
+    });
+    return sum + effectivePrice * (i.quantity as number);
   }, 0);
+
   const serverDelivery = computeDelivery(b.province as string, serverSubtotal);
   const serverTotal    = serverSubtotal + serverDelivery;
 
@@ -93,5 +112,5 @@ export function validateOrderBody(body: unknown): OrderValidationResult {
   if ((b.total as number) !== serverTotal)
     return { ok: false, error: "Order total does not match." };
 
-  return { ok: true, subtotal: serverSubtotal, delivery: serverDelivery, total: serverTotal };
+  return { ok: true, subtotal: serverSubtotal, delivery: serverDelivery, total: serverTotal, items: normalizedItems };
 }
