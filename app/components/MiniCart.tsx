@@ -63,6 +63,16 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
     });
   }, [cart, favorites, profile]);
 
+  // Escape key closes the cart — ARIA dialog spec requires this
+  useEffect(() => {
+    if (!isOpen) return;
+    function handleKeyDown(e: KeyboardEvent) {
+      if (e.key === "Escape") onClose();
+    }
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isOpen, onClose]);
+
   const impressionFired = useRef(false);
   useEffect(() => {
     if (!showRecommendations) return;

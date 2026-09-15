@@ -155,7 +155,7 @@ export default function Navbar() {
 
                 <Link
                   href="/favorites"
-                  className="relative p-2 text-[#4f4a52] hover:text-[#d89ca4] transition-colors"
+                  className="relative p-2 text-[#4f4a52] hover:text-[#d89ca4] transition-colors hidden sm:flex"
                   aria-label="Favorites"
                 >
                   <Heart className="h-5 w-5 stroke-[1.75]" />
