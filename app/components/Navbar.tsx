@@ -141,7 +141,7 @@ export default function Navbar() {
               </div>
 
               {/* Functional Icon Group */}
-              <div className="flex items-center gap-3 md:gap-4 ml-0 md:ml-2">
+              <div className="flex items-center gap-2 md:gap-4 ml-0 md:ml-2">
                 <button
                   onClick={() => {
                     openSearch();
@@ -169,7 +169,7 @@ export default function Navbar() {
 
                 <Link
                   href="/recently-viewed"
-                  className="relative p-2 text-[#4f4a52] hover:text-[#d89ca4] transition-colors"
+                  className="relative p-2 text-[#4f4a52] hover:text-[#d89ca4] transition-colors hidden sm:flex"
                   aria-label="Recently Viewed"
                 >
                   <Clock className="h-5 w-5 stroke-[1.75]" />
@@ -177,7 +177,7 @@ export default function Navbar() {
 
                 <Link
                   href="/fragrance-profile"
-                  className={`p-2 text-[#4f4a52] hover:text-[#d89ca4] transition-colors ${
+                  className={`p-2 text-[#4f4a52] hover:text-[#d89ca4] transition-colors hidden sm:flex ${
                     pathname === "/fragrance-profile" ? "text-[#d89ca4]" : ""
                   }`}
                   aria-label="Your Fragrance Profile"
@@ -227,6 +227,13 @@ export default function Navbar() {
                 {link.label}
               </Link>
             ))}
+          </div>
+
+          {/* Utility links — hidden on icon bar at mobile width */}
+          <div className="flex gap-6 pb-6 border-b border-zinc-100">
+            <Link href="/favorites"         className="text-sm font-semibold text-[#7b7480]">Favourites</Link>
+            <Link href="/recently-viewed"   className="text-sm font-semibold text-[#7b7480]">Recently Viewed</Link>
+            <Link href="/fragrance-profile" className="text-sm font-semibold text-[#7b7480]">My Profile</Link>
           </div>
 
           {/* South African Logistics & Corporate Email Footer Stack */}
