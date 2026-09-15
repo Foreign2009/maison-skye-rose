@@ -11,8 +11,15 @@ import { useSearchUI } from "../context/SearchUIContext";
 import MiniCart from "./MiniCart";
 import { trackCartOpened, trackSearchOpened } from "../lib/analytics";
 import { brand } from "../data/brand";
+import { RETAIL_PRICES } from "../lib/commerce/wholesale";
+import { FREE_DELIVERY_THRESHOLD } from "../lib/commerce/delivery";
 
-const ANNOUNCEMENT = "Nationwide South African Delivery · Fragrances from R60 · Free Delivery on Orders Over R2 000";
+// Sourced from authoritative commerce constants — won't stale when prices change.
+const _free = FREE_DELIVERY_THRESHOLD >= 1000
+  ? `R${FREE_DELIVERY_THRESHOLD / 1000} 000`
+  : `R${FREE_DELIVERY_THRESHOLD}`;
+const ANNOUNCEMENT_SHORT = `Nationwide Delivery · From R${RETAIL_PRICES["5ml"]}`;
+const ANNOUNCEMENT_FULL  = `Nationwide South African Delivery · Fragrances from R${RETAIL_PRICES["5ml"]} · Free Delivery Over ${_free}`;
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -49,7 +56,8 @@ export default function Navbar() {
     <>
       {/* Unified announcement bar — single global editorial voice */}
       <div className="fixed top-0 left-0 right-0 z-50 bg-[#4f4a52] text-white text-[11px] uppercase tracking-[0.2em] font-semibold h-8 flex items-center justify-center gap-4 px-4 select-none">
-        <span className="truncate">{ANNOUNCEMENT}</span>
+        <span className="sm:hidden truncate">{ANNOUNCEMENT_SHORT}</span>
+        <span className="hidden sm:inline truncate">{ANNOUNCEMENT_FULL}</span>
         <a
           href={brand.social.whatsappLink}
           target="_blank"
