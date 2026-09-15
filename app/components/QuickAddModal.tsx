@@ -37,6 +37,16 @@ export default function QuickAddModal({ open, onClose, title, slug, images = {},
     }
   }, [open]);
 
+  // Escape key closes the modal — ARIA dialog spec requires this
+  useEffect(() => {
+    if (!open) return;
+    function handleKeyDown(e: KeyboardEvent) {
+      if (e.key === "Escape") onClose();
+    }
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [open, onClose]);
+
   if (!mounted) return null;
 
   const retailPrice = prices?.[selectedSize] || 0;

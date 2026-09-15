@@ -644,8 +644,11 @@ test("Reviews.tsx: Aaliyah entry removed", () => {
   assert.ok(!src.includes("Lasted all day"));
 });
 
-test("Testimonials.tsx: imported on homepage", () => {
-  assert.ok(readSource("app/page.tsx").includes("Testimonials"));
+test("Testimonials.tsx: NOT imported on homepage (suppressed)", () => {
+  assert.ok(
+    !readSource("app/page.tsx").includes("Testimonials"),
+    "Testimonials must not appear on homepage — unverified testimonials are suppressed",
+  );
 });
 
 test("Testimonials.tsx: reviews array is empty (suppressed)", () => {

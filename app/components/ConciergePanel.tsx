@@ -85,6 +85,16 @@ export default function ConciergePanel() {
     }
   }, [isOpen]);
 
+  // Escape key closes the concierge — ARIA dialog spec requires this
+  useEffect(() => {
+    if (!isOpen) return;
+    function handleKeyDown(e: KeyboardEvent) {
+      if (e.key === "Escape") closeConcierge();
+    }
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isOpen, closeConcierge]);
+
   // ── Interaction handlers ────────────────────────────────────────────────────
 
   const handleSend = useCallback(async (text?: string) => {
