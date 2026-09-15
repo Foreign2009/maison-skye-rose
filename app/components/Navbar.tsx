@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
@@ -11,15 +11,18 @@ import { useSearchUI } from "../context/SearchUIContext";
 import MiniCart from "./MiniCart";
 import { trackCartOpened, trackSearchOpened } from "../lib/analytics";
 import { brand } from "../data/brand";
-import { RETAIL_PRICES } from "../lib/commerce/wholesale";
 import { FREE_DELIVERY_THRESHOLD } from "../lib/commerce/delivery";
+import { mkcCatalogue } from "../lib/mkc/catalogue";
 
-// Sourced from authoritative commerce constants — won't stale when prices change.
+// Derived from catalogue at load time -- stays in sync when prices change (same pattern as MiniCart).
 const _free = FREE_DELIVERY_THRESHOLD >= 1000
   ? `R${FREE_DELIVERY_THRESHOLD / 1000} 000`
   : `R${FREE_DELIVERY_THRESHOLD}`;
-const ANNOUNCEMENT_SHORT = `Nationwide Delivery · From R${RETAIL_PRICES["5ml"]}`;
-const ANNOUNCEMENT_FULL  = `Nationwide South African Delivery · Fragrances from R${RETAIL_PRICES["5ml"]} · Free Delivery Over ${_free}`;
+const _min5ml = mkcCatalogue.length > 0
+  ? Math.min(...mkcCatalogue.map((k) => k.prices["5ml"]))
+  : 60;
+const ANNOUNCEMENT_SHORT = `Nationwide Delivery · From R${_min5ml}`;
+const ANNOUNCEMENT_FULL  = `Nationwide South African Delivery · Fragrances from R${_min5ml} · Free Delivery Over ${_free}`;
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);

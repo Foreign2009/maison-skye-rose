@@ -10,7 +10,12 @@ import BestSellers from "./components/BestSellers";
 import Footer from "./components/Footer";
 import QuickAddModal from "./components/QuickAddModal";
 import { toDisplayFragrance } from "./lib/mkc/displayAdapter";
-import { RETAIL_PRICES } from "./lib/commerce/wholesale";
+import { mkcCatalogue } from "./lib/mkc/catalogue";
+
+// Derived from catalogue — stays authoritative when prices change (same pattern as MiniCart).
+const _min5ml  = mkcCatalogue.length > 0 ? Math.min(...mkcCatalogue.map((k) => k.prices["5ml"]))  : 60;
+const _min10ml = mkcCatalogue.length > 0 ? Math.min(...mkcCatalogue.map((k) => k.prices["10ml"])) : 100;
+const _min30ml = mkcCatalogue.length > 0 ? Math.min(...mkcCatalogue.map((k) => k.prices["30ml"])) : 250;
 
 export default function HomePage() {
   const [selectedFragrance, setSelectedFragrance] = useState<ReturnType<typeof toDisplayFragrance> | null>(null);
@@ -136,21 +141,21 @@ export default function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             <div className="rounded-[20px] bg-[#faf7f5] border border-[#f0ebe8] p-7 text-center">
               <p className="text-2xl font-black text-[#d89ca4]">5ml</p>
-              <p className="mt-2 text-sm font-bold text-[#4f4a52]">Try It &middot; From R{RETAIL_PRICES["5ml"]}</p>
+              <p className="mt-2 text-sm font-bold text-[#4f4a52]">Try It &middot; From R{_min5ml}</p>
               <p className="mt-3 text-sm leading-relaxed text-[#7b7480]">
                 Perfect for discovering new scents. Enough for 2–3 weeks of daily wear.
               </p>
             </div>
             <div className="rounded-[20px] bg-[#faf7f5] border border-[#f0ebe8] p-7 text-center">
               <p className="text-2xl font-black text-[#d89ca4]">10ml</p>
-              <p className="mt-2 text-sm font-bold text-[#4f4a52]">Own It &middot; From R{RETAIL_PRICES["10ml"]}</p>
+              <p className="mt-2 text-sm font-bold text-[#4f4a52]">Own It &middot; From R{_min10ml}</p>
               <p className="mt-3 text-sm leading-relaxed text-[#7b7480]">
                 Your daily signature. A generous size for a scent you have already fallen for.
               </p>
             </div>
             <div className="rounded-[20px] bg-[#faf7f5] border border-[#f0ebe8] p-7 text-center">
               <p className="text-2xl font-black text-[#d89ca4]">30ml</p>
-              <p className="mt-2 text-sm font-bold text-[#4f4a52]">Live It &middot; From R{RETAIL_PRICES["30ml"]}</p>
+              <p className="mt-2 text-sm font-bold text-[#4f4a52]">Live It &middot; From R{_min30ml}</p>
               <p className="mt-3 text-sm leading-relaxed text-[#7b7480]">
                 For the fragrance you cannot imagine life without. A full wardrobe staple.
               </p>
