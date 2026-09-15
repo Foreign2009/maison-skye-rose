@@ -2,6 +2,11 @@ import { NextResponse } from "next/server";
 import type { StatusHistoryEntry } from "@/app/lib/orderStatus";
 import { validateDiscoveryAttribution } from "@/app/lib/discoveryAttribution";
 import { validateOrderBody } from "@/app/lib/commerce/orderValidation";
+import {
+  getReceiptSecret,
+  signReceiptToken,
+  RECEIPT_EXPIRY_SECONDS,
+} from "@/app/lib/receiptToken";
 
 // Minimal DB interface — allows the real handler to be tested with a mock.
 // The production POST adapter wraps the supabase client to satisfy this shape.
@@ -17,6 +22,16 @@ function generateOrderRef(): string {
 }
 
 export async function handleOrder(body: unknown, db: OrderDb): Promise<NextResponse> {
+  // Fail before insert if receipt signing is not configured.
+  try {
+    getReceiptSecret();
+  } catch {
+    return NextResponse.json(
+      { success: false, message: "Service unavailable." },
+      { status: 503 }
+    );
+  }
+
   try {
     const validation = validateOrderBody(body);
     if (!validation.ok) {
@@ -86,10 +101,16 @@ export async function handleOrder(body: unknown, db: OrderDb): Promise<NextRespo
       total:     validation.total,
     });
 
-    return NextResponse.json({
-      success:  true,
-      orderRef: order_ref,
+    const token = await signReceiptToken(order_ref);
+    const response = NextResponse.json({ success: true, orderRef: order_ref });
+    response.cookies.set(`msr_receipt_${order_ref}`, token, {
+      httpOnly: true,
+      sameSite: "strict",
+      path:     "/",
+      maxAge:   RECEIPT_EXPIRY_SECONDS,
+      secure:   process.env.NODE_ENV === "production",
     });
+    return response;
 
   } catch (error) {
     console.error(
@@ -104,8 +125,17 @@ export async function handleOrder(body: unknown, db: OrderDb): Promise<NextRespo
 }
 
 export async function POST(request: Request) {
+  // JSON parse failure is a client error (400), not a server error (500).
+  let body: unknown;
   try {
-    const body = await request.json();
+    body = await request.json();
+  } catch {
+    return NextResponse.json(
+      { success: false, message: "Invalid request body." },
+      { status: 400 }
+    );
+  }
+  try {
     // Supabase is imported lazily so the module can be loaded in tests
     // without triggering client initialization.
     const { supabase } = await import("@/app/lib/supabase");

@@ -1,3 +1,6 @@
+// Must be set before any import that calls getReceiptSecret() at call time.
+process.env.ORDER_RECEIPT_SECRET = "test-p2e-secret";
+
 /**
  * SITE-RELIABILITY-P2E — Handler Integration Tests
  *

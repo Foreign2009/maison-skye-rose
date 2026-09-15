@@ -1,3 +1,6 @@
+// Must be set before any import that reads ORDER_RECEIPT_SECRET at call time.
+process.env.ORDER_RECEIPT_SECRET = "test-p2f-secret";
+
 /**
  * SITE-RELIABILITY-P2F — Confirmation Security Tests
  *
@@ -13,7 +16,7 @@
  *      page fetches from the server, not from query parameters.
  *   7. A reference from one order cannot be paired with another order's total.
  *   8. The HTTP wrapper (GET function) enforces format validation without DB access.
- *   9. The POST HTTP wrapper handles malformed JSON safely.
+ *   9. The POST HTTP wrapper handles malformed JSON safely (400 — client error).
  *  10. Source invariants: checkout redirect no longer includes ?total=;
  *      GET query selects only non-PII fields.
  *
@@ -35,6 +38,8 @@ import {
   POST,
   type OrderDb,
 } from "../../../app/api/orders/route";
+
+import { signReceiptToken } from "../../../app/lib/receiptToken";
 
 import {
   FREE_DELIVERY_THRESHOLD,
@@ -156,7 +161,7 @@ console.log("  ─── Section 1: Valid confirmation ───\n");
 
 it("Valid ref, order found → 200 with orderRef, total, paymentStatus", async () => {
   const db  = makeConfirmationDb({ order_ref: "MSR-20260914-11111", total: 160, payment_status: "awaiting_payment" });
-  const res = await handleGetConfirmation("MSR-20260914-11111", db);
+  const res = await handleGetConfirmation("MSR-20260914-11111", await signReceiptToken("MSR-20260914-11111"), db);
   assert.equal(res.status, 200);
   const json = await parseResponse(res);
   assert.equal(json.orderRef,      "MSR-20260914-11111");
@@ -166,28 +171,28 @@ it("Valid ref, order found → 200 with orderRef, total, paymentStatus", async (
 
 it("Retail order total confirmed: 1 × 5ml @ R60 + Cape Town Metro R100 = R160", async () => {
   const db  = makeConfirmationDb({ order_ref: "MSR-20260914-22222", total: 160, payment_status: "awaiting_payment" });
-  const res = await handleGetConfirmation("MSR-20260914-22222", db);
+  const res = await handleGetConfirmation("MSR-20260914-22222", await signReceiptToken("MSR-20260914-22222"), db);
   const json = await parseResponse(res);
   assert.equal(json.total, 160);
 });
 
 it("Wholesale order total confirmed: 10 × 5ml wholesale = R480 + Gauteng R180 = R660", async () => {
   const db  = makeConfirmationDb({ order_ref: "MSR-20260914-33333", total: 660, payment_status: "awaiting_payment" });
-  const res = await handleGetConfirmation("MSR-20260914-33333", db);
+  const res = await handleGetConfirmation("MSR-20260914-33333", await signReceiptToken("MSR-20260914-33333"), db);
   const json = await parseResponse(res);
   assert.equal(json.total, 660);
 });
 
 it("Collection order total confirmed: delivery R0, total = subtotal only", async () => {
   const db  = makeConfirmationDb({ order_ref: "MSR-20260914-44444", total: 60, payment_status: "awaiting_payment" });
-  const res = await handleGetConfirmation("MSR-20260914-44444", db);
+  const res = await handleGetConfirmation("MSR-20260914-44444", await signReceiptToken("MSR-20260914-44444"), db);
   const json = await parseResponse(res);
   assert.equal(json.total, 60);
 });
 
 it("Response includes paymentStatus field for EFT context", async () => {
   const db  = makeConfirmationDb({ order_ref: "MSR-20260914-55555", total: 280, payment_status: "awaiting_payment" });
-  const res = await handleGetConfirmation("MSR-20260914-55555", db);
+  const res = await handleGetConfirmation("MSR-20260914-55555", await signReceiptToken("MSR-20260914-55555"), db);
   const json = await parseResponse(res);
   assert.ok("paymentStatus" in json, "paymentStatus must be present");
   assert.equal(json.paymentStatus, "awaiting_payment",
@@ -217,7 +222,8 @@ for (const [label, ref] of invalidRefs) {
         return { data: null, error: null };
       },
     };
-    const res = await handleGetConfirmation(ref, db);
+    // Format check fires before token check — null token is fine for invalid refs.
+    const res = await handleGetConfirmation(ref, null, db);
     assert.equal(res.status, 400, `Expected 400 for ref: "${ref}"`);
     assert.ok(!dbCalled, "DB must not be called for invalid ref format");
     const json = await parseResponse(res);
@@ -230,7 +236,7 @@ console.log("  ─── Section 3: Order not found ───\n");
 
 it("Valid format ref not in store → 404 order not found", async () => {
   const db  = makeConfirmationDb(null); // no order stored
-  const res = await handleGetConfirmation("MSR-20260914-99999", db);
+  const res = await handleGetConfirmation("MSR-20260914-99999", await signReceiptToken("MSR-20260914-99999"), db);
   assert.equal(res.status, 404);
   const json = await parseResponse(res);
   assert.equal(json.success, false);
@@ -239,7 +245,7 @@ it("Valid format ref not in store → 404 order not found", async () => {
 
 it("404 response does not expose customer information", async () => {
   const db  = makeConfirmationDb(null);
-  const res = await handleGetConfirmation("MSR-20260914-99998", db);
+  const res = await handleGetConfirmation("MSR-20260914-99998", await signReceiptToken("MSR-20260914-99998"), db);
   const json = await parseResponse(res);
   assert.ok(!("customer_name" in json), "Must not expose customer_name");
   assert.ok(!("phone"         in json), "Must not expose phone");
@@ -251,7 +257,7 @@ console.log("  ─── Section 4: DB error ───\n");
 
 it("DB error → 500 with safe message, no internal details", async () => {
   const db  = makeConfirmationDb(null, true); // fail = true
-  const res = await handleGetConfirmation("MSR-20260914-77777", db);
+  const res = await handleGetConfirmation("MSR-20260914-77777", await signReceiptToken("MSR-20260914-77777"), db);
   assert.equal(res.status, 500);
   const json = await parseResponse(res);
   assert.equal(json.success, false);
@@ -263,11 +269,11 @@ it("DB error → 500 with safe message, no internal details", async () => {
 console.log("  ─── Section 5: Tampering resistance ───\n");
 
 it("GET handler does not accept total from query parameters — total always from DB", async () => {
-  // The handler takes only (ref, db) — there is no mechanism to supply ?total=.
+  // The handler takes (ref, token, db) — there is no mechanism to supply ?total=.
   // This test verifies the handler interface has no total parameter.
   const db  = makeConfirmationDb({ order_ref: "MSR-20260914-66666", total: 999, payment_status: "awaiting_payment" });
-  // We can only pass ref and db — no way to inject ?total=
-  const res = await handleGetConfirmation("MSR-20260914-66666", db);
+  // We can only pass ref, token, and db — no way to inject ?total=
+  const res = await handleGetConfirmation("MSR-20260914-66666", await signReceiptToken("MSR-20260914-66666"), db);
   const json = await parseResponse(res);
   assert.equal(json.total, 999, "Handler returns the stored total, not any URL param");
 });
@@ -277,8 +283,8 @@ it("Order A ref cannot retrieve Order B's total — DB lookup is ref-specific", 
   const dbA = makeConfirmationDb({ order_ref: "MSR-20260914-10001", total: 160, payment_status: "awaiting_payment" });
   const dbB = makeConfirmationDb({ order_ref: "MSR-20260914-10002", total: 550, payment_status: "awaiting_payment" });
 
-  const resA = await handleGetConfirmation("MSR-20260914-10001", dbA);
-  const resB = await handleGetConfirmation("MSR-20260914-10002", dbB);
+  const resA = await handleGetConfirmation("MSR-20260914-10001", await signReceiptToken("MSR-20260914-10001"), dbA);
+  const resB = await handleGetConfirmation("MSR-20260914-10002", await signReceiptToken("MSR-20260914-10002"), dbB);
 
   const jsonA = await parseResponse(resA);
   const jsonB = await parseResponse(resB);
@@ -292,7 +298,7 @@ it("Presenting Order B's ref returns Order B's total, regardless of any claimed 
   // Simulates: attacker knows ref MSR-...-10002 (total R550) but tries to use it
   // with a different DB that has a different total. The DB is keyed by ref.
   const db  = makeConfirmationDb({ order_ref: "MSR-20260914-10002", total: 550, payment_status: "awaiting_payment" });
-  const res = await handleGetConfirmation("MSR-20260914-10002", db);
+  const res = await handleGetConfirmation("MSR-20260914-10002", await signReceiptToken("MSR-20260914-10002"), db);
   const json = await parseResponse(res);
   // No matter what the attacker claims, the server returns the stored total.
   assert.equal(json.total, 550);
@@ -306,13 +312,16 @@ it("POST → handleOrder produces the server total that GET will later confirm",
   const captured = orderMock.captured()!;
   const storedTotal = captured.total as number;
 
+  // Sign a token for the captured ref to authorize the confirmation lookup.
+  const token = await signReceiptToken(captured.order_ref as string);
+
   // Confirmation GET returns the same value.
   const confirmDb = makeConfirmationDb({
     order_ref:      captured.order_ref as string,
     total:          storedTotal,
     payment_status: "awaiting_payment",
   });
-  const res  = await handleGetConfirmation(captured.order_ref as string, confirmDb);
+  const res  = await handleGetConfirmation(captured.order_ref as string, token, confirmDb);
   const json = await parseResponse(res);
   assert.equal(json.total, storedTotal, "Confirmation total matches stored total");
   assert.equal(json.total, 160, "Retail: 1×5ml R60 + Cape Town R100 = R160");
@@ -323,7 +332,7 @@ console.log("  ─── Section 6: No PII in confirmation response ───\n"
 
 it("Confirmation response fields: only orderRef, total, paymentStatus", async () => {
   const db   = makeConfirmationDb({ order_ref: "MSR-20260914-55556", total: 160, payment_status: "awaiting_payment" });
-  const res  = await handleGetConfirmation("MSR-20260914-55556", db);
+  const res  = await handleGetConfirmation("MSR-20260914-55556", await signReceiptToken("MSR-20260914-55556"), db);
   const json = await parseResponse(res);
   const allowed = new Set(["orderRef", "total", "paymentStatus"]);
   for (const key of Object.keys(json)) {
@@ -353,45 +362,46 @@ it("GET wrapper: invalid ref format → 400 without DB access", async () => {
   // The GET() function validates the ref before creating the DB adapter.
   // Passing an invalid ref hits handleGetConfirmation's format guard.
   // getSupabaseAdmin() is NOT called because the ref guard fires first.
-  const res = await GET(
-    new Request("http://localhost/api/orders/bad") as unknown as import("next/server").NextRequest,
-    { params: Promise.resolve({ ref: "bad-ref" }) },
-  );
+  const mockReq = Object.assign(
+    new Request("http://localhost/api/orders/bad"),
+    { cookies: { get: () => undefined } },
+  ) as unknown as import("next/server").NextRequest;
+  const res = await GET(mockReq, { params: Promise.resolve({ ref: "bad-ref" }) });
   assert.equal(res.status, 400);
   const json = await parseResponse(res);
   assert.equal(json.success, false);
 });
 
 it("GET wrapper: empty-string ref → 400", async () => {
-  const res = await GET(
-    new Request("http://localhost") as unknown as import("next/server").NextRequest,
-    { params: Promise.resolve({ ref: "" }) },
-  );
+  const mockReq = Object.assign(
+    new Request("http://localhost"),
+    { cookies: { get: () => undefined } },
+  ) as unknown as import("next/server").NextRequest;
+  const res = await GET(mockReq, { params: Promise.resolve({ ref: "" }) });
   assert.equal(res.status, 400);
 });
 
-it("POST wrapper: malformed JSON body → 500 (outer catch), no Supabase needed", async () => {
-  // The outer try-catch in POST catches request.json() failures before reaching
-  // the dynamic import of supabase.
+it("POST wrapper: malformed JSON body → 400 (client error)", async () => {
+  // request.json() parse failure is a client error — not an internal server error.
   const req = new Request("http://localhost/api/orders", {
     method:  "POST",
     headers: { "Content-Type": "application/json" },
     body:    "not{valid}json{{",
   });
   const res  = await POST(req);
-  assert.equal(res.status, 500);
+  assert.equal(res.status, 400);
   const json = await parseResponse(res);
   assert.equal(json.success, false);
   assert.ok(typeof json.message === "string");
 });
 
-it("POST wrapper: missing Content-Type body → 500 (JSON parse fails)", async () => {
+it("POST wrapper: missing Content-Type body → 400 (JSON parse fails)", async () => {
   const req = new Request("http://localhost/api/orders", {
     method: "POST",
     body:   "plain text",
   });
   const res = await POST(req);
-  assert.equal(res.status, 500);
+  assert.equal(res.status, 400);
 });
 
 // ── Section 8: Source invariants ─────────────────────────────────────────────

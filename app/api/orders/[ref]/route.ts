@@ -7,6 +7,7 @@ import {
   type OrderStatus,
   type StatusHistoryEntry,
 } from "@/app/lib/orderStatus";
+import { verifyReceiptToken } from "@/app/lib/receiptToken";
 
 const MAX_NOTE_LENGTH    = 500;
 const MAX_TRACKING_LENGTH = 100;
@@ -200,12 +201,29 @@ export interface ConfirmationDb {
 
 export async function handleGetConfirmation(
   ref: string,
+  token: string | null,
   db: ConfirmationDb,
 ): Promise<NextResponse> {
   if (!ref || !REF_FORMAT.test(ref)) {
     return NextResponse.json(
       { success: false, message: "Invalid order reference." },
       { status: 400 }
+    );
+  }
+
+  // Receipt credential must be present and valid before any DB access.
+  if (!token) {
+    return NextResponse.json(
+      { success: false, message: "Unauthorized." },
+      { status: 401 }
+    );
+  }
+  try {
+    await verifyReceiptToken(token, ref);
+  } catch {
+    return NextResponse.json(
+      { success: false, message: "Unauthorized." },
+      { status: 401 }
     );
   }
 
@@ -229,18 +247,21 @@ export async function handleGetConfirmation(
     );
   }
 
-  return NextResponse.json({
+  const response = NextResponse.json({
     orderRef:      data.order_ref,
     total:         data.total,
     paymentStatus: data.payment_status,
   });
+  response.headers.set("Cache-Control", "private, no-store");
+  return response;
 }
 
 export async function GET(
-  _request: NextRequest,
+  request: NextRequest,
   { params }: { params: Promise<{ ref: string }> },
 ) {
   const { ref } = await params;
+  const token = request.cookies.get(`msr_receipt_${ref}`)?.value ?? null;
   const db: ConfirmationDb = {
     getOrderConfirmation: async (r) => {
       const { data, error } = await getSupabaseAdmin()
@@ -254,5 +275,5 @@ export async function GET(
       };
     },
   };
-  return handleGetConfirmation(ref, db);
+  return handleGetConfirmation(ref, token, db);
 }
