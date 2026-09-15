@@ -2,12 +2,14 @@
 
 import { Sparkles } from "lucide-react";
 import { useConcierge } from "../context/ConciergeContext";
+import { useCartUI } from "../context/CartUIContext";
 import { trackAiChatStarted } from "../lib/analytics";
 
 export default function ConciergeButton() {
   const { isOpen, openConcierge, conversationState } = useConcierge();
+  const { cartOpen } = useCartUI();
 
-  if (isOpen) return null;
+  if (isOpen || cartOpen) return null;
 
   return (
     <button

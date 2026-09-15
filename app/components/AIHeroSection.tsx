@@ -44,20 +44,20 @@ export default function AIHeroSection() {
             </p>
 
             <div className="mt-10 flex flex-wrap gap-4">
-              <button
-                onClick={handleDiscoverClick}
-                className="inline-flex items-center gap-2.5 rounded-full bg-[#4f4a52] px-8 py-4 text-sm font-bold uppercase tracking-wider text-white transition-all duration-300 hover:scale-[1.02] hover:bg-black"
-              >
-                <Sparkles size={16} />
-                Discover Your Scent
-              </button>
-
               <Link
                 href="/shop"
-                className="inline-flex items-center rounded-full border border-[#d89ca4] px-8 py-4 text-sm font-bold uppercase tracking-wider text-[#d89ca4] transition-all duration-300 hover:bg-[#d89ca4]/5"
+                className="inline-flex items-center rounded-full bg-[#4f4a52] px-8 py-4 text-sm font-bold uppercase tracking-wider text-white transition-all duration-300 hover:scale-[1.02] hover:bg-black"
               >
-                Explore the Collection
+                Shop Fragrances
               </Link>
+
+              <button
+                onClick={handleDiscoverClick}
+                className="inline-flex items-center gap-2.5 rounded-full border border-[#d89ca4] px-8 py-4 text-sm font-bold uppercase tracking-wider text-[#d89ca4] transition-all duration-300 hover:bg-[#d89ca4]/5"
+              >
+                <Sparkles size={15} />
+                Help Me Choose
+              </button>
             </div>
 
             <p className="mt-8 text-[11px] text-[#9b9298]">

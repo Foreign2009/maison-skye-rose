@@ -12,15 +12,7 @@ import MiniCart from "./MiniCart";
 import { trackCartOpened, trackSearchOpened } from "../lib/analytics";
 import { brand } from "../data/brand";
 
-// Optimized: Static array defined outside the component scope to preserve performance memory allocations
-const ANNOUNCEMENTS = [
-  "Nationwide South African Delivery",
-  "Mix & Match Wholesale From 10 Bottles",
-  "Wholesale Pricing (10+ bottles): 5ml R48 • 10ml R77 • 30ml R180",
-  "WhatsApp Orders Welcome",
-  "A Fragrance for Every Confidence Journey",
-  "Your personal Concierge is ready — start your fragrance journey",
-];
+const ANNOUNCEMENT = "Nationwide South African Delivery · Fragrances from R60 · Free Delivery on Orders Over R2 000";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -33,15 +25,6 @@ export default function Navbar() {
 
   const { favorites } = useFavorites();
   const favoriteCount = favorites.length;
-
-  const [currentAnnouncement, setCurrentAnnouncement] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentAnnouncement((prev) => (prev + 1) % ANNOUNCEMENTS.length);
-    }, 4000);
-    return () => clearInterval(interval);
-  }, []);
 
   // Close mobile menu when route changes
   useEffect(() => {
@@ -66,9 +49,7 @@ export default function Navbar() {
     <>
       {/* Unified announcement bar — single global editorial voice */}
       <div className="fixed top-0 left-0 right-0 z-50 bg-[#4f4a52] text-white text-[11px] uppercase tracking-[0.2em] font-semibold h-8 flex items-center justify-center gap-4 px-4 select-none">
-        <span key={currentAnnouncement} className="animate-fade-in truncate">
-          {ANNOUNCEMENTS[currentAnnouncement]}
-        </span>
+        <span className="truncate">{ANNOUNCEMENT}</span>
         <a
           href={brand.social.whatsappLink}
           target="_blank"

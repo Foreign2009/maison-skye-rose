@@ -3,10 +3,12 @@
 import { MessageCircle } from "lucide-react";
 import { brand } from "../data/brand";
 import { useConcierge } from "../context/ConciergeContext";
+import { useCartUI } from "../context/CartUIContext";
 
 export default function FloatingWhatsApp() {
   const { isOpen } = useConcierge();
-  if (isOpen) return null;
+  const { cartOpen } = useCartUI();
+  if (isOpen || cartOpen) return null;
 
   return (
     <a
