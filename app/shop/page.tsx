@@ -264,27 +264,27 @@ export default function ShopPage() {
       <Navbar />
 
       {/* SECTION 1: Top Hero & Search Bar Layout */}
-      <section className="px-4 md:px-6 pt-24 md:pt-40">
+      <section className="px-4 md:px-6 pt-24 md:pt-32">
         <div className="mx-auto max-w-7xl">
           {/* Hide Shop Hero on Mobile */}
           <div className="hidden md:block text-center">
-            <h1 className="text-5xl md:text-6xl font-black tracking-[-0.05em] text-[#4f4a52]">
+            <h1 className="text-4xl md:text-5xl font-black tracking-[-0.05em] text-[#4f4a52]">
               Shop All
             </h1>
-            <p className="mt-6 mx-auto max-w-2xl text-sm md:text-base text-[#7b7480]">
+            <p className="mt-3 mx-auto max-w-2xl text-sm text-[#7b7480]">
               Explore our collection of luxury-inspired fragrances crafted for everyday elegance.
             </p>
           </div>
 
           {/* Hide Free Sample Banner on Mobile */}
           <div className="hidden md:block mx-auto max-w-3xl text-center">
-            <div className="mt-8 inline-flex rounded-full bg-white px-5 py-3 text-sm font-semibold text-[#b67d73] border border-[#efe8e1]">
+            <div className="mt-4 inline-flex rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-[#b67d73] border border-[#efe8e1]">
               🎁 Orders over R400 receive a FREE 5ml Sample
             </div>
           </div>
 
           {/* Search Input */}
-          <div className="mt-4 md:mt-12">
+          <div className="mt-4 md:mt-6">
             <SearchBar
               value={search}
               onChange={setSearch}

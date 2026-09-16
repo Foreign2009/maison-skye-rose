@@ -170,24 +170,8 @@ export default function Navbar() {
               </Link>
             </div>
 
-            {/* Right Column: Desktop Links (Right-Wing) paired with Utility Icons */}
-            <div className="flex items-center justify-end md:justify-start gap-2 md:gap-8 pl-0 md:pl-12">
-              
-              {/* Desktop Right-Wing Navigation Items — Change 1 & 6 */}
-              <div className="hidden md:flex items-center gap-4 lg:gap-6">
-                {rightLinks.map((link) => (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    className={`inline-flex text-[13px] uppercase tracking-[0.20em] font-semibold transition-all duration-200 items-center gap-1.5 whitespace-nowrap group relative py-1 ${
-                      pathname === link.href ? "text-[#d89ca4]" : "text-[#4f4a52]"
-                    }`}
-                  >
-                    {link.label}
-                    <span className="absolute -bottom-2 left-0 h-[1px] w-0 bg-[#d89ca4] transition-all duration-300 group-hover:w-full" />
-                  </Link>
-                ))}
-              </div>
+            {/* Right Column: Utility Icons */}
+            <div className="flex items-center justify-end gap-2 md:gap-4">
 
               {/* Functional Icon Group */}
               <div className="flex items-center gap-2 md:gap-4 ml-0 md:ml-2">

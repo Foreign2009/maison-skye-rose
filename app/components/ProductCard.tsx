@@ -30,12 +30,6 @@ type ProductCardProps = {
   slug?: string;
 };
 
-const WARDROBE_ROLE_SHORT: Record<string, string> = {
-  "Fresh & Light":       "Opening Chapter",
-  "Balanced Signature":  "Daily Anchor",
-  "Rich & Full-Bodied": "Statement Piece",
-  "Deep & Intense":      "Signature Depth",
-};
 
 function ProductCard({
   title,
@@ -48,13 +42,11 @@ function ProductCard({
   images,
   bestSeller,
   newArrival,
-  scentCharacter,
   onQuickAdd,
   onLearnMore,
   priority = false,
   source,
   rank,
-  recReason,
   slug,
 }: ProductCardProps) {
   const { addToFavorites, removeFromFavorites, isFavorite } = useFavorites();
@@ -156,12 +148,6 @@ function ProductCard({
         {/* Luxury mobile rule: Kept subtitle on desktop, hidden on mobile */}
         <p className="hidden md:block mt-2 min-h-[40px] text-sm font-semibold text-[#d89ca4]">{subtitle}</p>
 
-        {recReason && (
-          <p className="hidden md:block mt-1 text-[11px] italic leading-5 text-[#9b9298] line-clamp-1">
-            {recReason}
-          </p>
-        )}
-
         <p className="hidden md:block mt-4 line-clamp-2 text-sm leading-6 text-[#7b7480]">{mood}</p>
         
         <div className="hidden md:flex mt-6 flex-wrap gap-2">
@@ -177,11 +163,6 @@ function ProductCard({
         
         <div className="hidden md:block mt-6">
           <p className="text-sm text-[#7b7480]">{profile} • {season}</p>
-          {scentCharacter && WARDROBE_ROLE_SHORT[scentCharacter] && (
-            <p className="mt-1 text-[10px] text-zinc-400 italic">
-              {WARDROBE_ROLE_SHORT[scentCharacter]}
-            </p>
-          )}
         </div>
 
         <div className="mt-auto pt-2 md:pt-8">
@@ -193,13 +174,6 @@ function ProductCard({
                 R{prices["5ml"]}
               </p>
 
-              <p className="hidden md:block mt-1 text-[10px] md:text-xs font-medium text-[#d89ca4]">
-                🎁 Free 5ml Sample over R400
-              </p>
-
-              <p className="hidden md:block text-[10px] md:text-xs text-[#7b7480]">
-                30ml offers the best value
-              </p>
             </div>
             <div className="flex items-center gap-2">
               <button

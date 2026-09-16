@@ -15,7 +15,7 @@ export default function AIHeroSection() {
   }
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-br from-[#fdf9f7] via-[#faf7f5] to-[#f5ede8] py-20 md:py-32">
+    <section className="relative overflow-hidden bg-gradient-to-br from-[#fdf9f7] via-[#faf7f5] to-[#f5ede8] pt-[93px] pb-16 md:py-32">
       {/* Atmospheric vignette */}
       <div
         aria-hidden="true"
@@ -38,9 +38,8 @@ export default function AIHeroSection() {
             </h1>
 
             <p className="mt-6 max-w-[460px] text-base leading-relaxed text-[#7b7480] md:text-lg">
-              Not a catalogue — a curated fragrance experience. Your personal
-              Concierge guides you through our carefully chosen collection to
-              build a fragrance wardrobe that&apos;s unmistakably yours.
+              Explore luxury-inspired fragrances and find your next favourite.
+              Start with 5ml, or let our Concierge help you choose.
             </p>
 
             <div className="mt-10 flex flex-wrap gap-4">

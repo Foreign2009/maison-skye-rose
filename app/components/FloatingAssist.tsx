@@ -15,14 +15,16 @@ export default function FloatingAssist() {
   const [expanded, setExpanded] = useState(false);
   const [quickAddOpen, setQuickAddOpen] = useState(false);
   const [navOpen, setNavOpen] = useState(false);
+  const [purchaseBarOpen, setPurchaseBarOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
-  // Track QuickAddModal and mobile nav open state via MutationObserver
+  // Track QuickAddModal, mobile nav, and PDP sticky purchase bar via MutationObserver
   useEffect(() => {
     function check() {
       setQuickAddOpen(!!document.querySelector('[data-modal="quick-add"]'));
       const navPanel = document.getElementById("mobile-nav-panel");
       setNavOpen(navPanel ? navPanel.getAttribute("aria-hidden") === "false" : false);
+      setPurchaseBarOpen(!!document.querySelector('[data-purchase-bar="pdp-sticky"]'));
     }
     check();
     const obs = new MutationObserver(check);
@@ -53,6 +55,8 @@ export default function FloatingAssist() {
   }, [conciergeOpen, cartOpen, searchOpen, quickAddOpen, navOpen]);
 
   if (conciergeOpen || cartOpen || searchOpen || quickAddOpen || navOpen) return null;
+
+  const mobileFabBottom = purchaseBarOpen ? "bottom-[96px]" : "bottom-5";
 
   const handleConcierge = () => {
     setExpanded(false);
@@ -87,7 +91,7 @@ export default function FloatingAssist() {
       {/* ── Mobile: compact FAB that expands to both options ──────────────── */}
       <div
         ref={menuRef}
-        className="md:hidden fixed bottom-5 right-4 z-[9999] flex flex-col items-end gap-2"
+        className={`md:hidden fixed ${mobileFabBottom} right-4 z-[9999] flex flex-col items-end gap-2`}
       >
         {expanded && (
           <>

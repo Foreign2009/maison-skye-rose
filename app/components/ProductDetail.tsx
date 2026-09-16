@@ -501,11 +501,9 @@ export default function ProductDetail({
               </div>
 
               {/* Trust signals */}
-              <div className="mt-4 space-y-2 text-sm text-zinc-600">
-                <p>✓ Nationwide South African Delivery</p>
-                <p>✓ Carefully Curated Collection</p>
-                <p>✓ Secure Checkout</p>
-                <p>✓ Luxury Inspired Fragrance Collection</p>
+              <div className="mt-4 space-y-1.5 text-sm text-zinc-500">
+                <p>✓ Free nationwide delivery · Secure checkout</p>
+                <p>✓ Curated collection · Start with a 5ml sample</p>
               </div>
 
               {/* Add to Cart + Favourite */}
@@ -528,32 +526,33 @@ export default function ProductDetail({
                 </button>
               </div>
 
-              {/* Buy Now */}
+              {/* Buy Now — secondary emphasis */}
               <button
                 onClick={handleBuyNow}
-                className="mt-3 w-full rounded-2xl border-2 border-[#d89ca4] bg-transparent py-3 font-bold text-[#d89ca4] transition hover:bg-[#fff7f8]"
+                className="mt-3 w-full rounded-2xl border border-[#d89ca4]/50 bg-white py-2.5 text-sm font-semibold text-[#d89ca4] transition hover:border-[#d89ca4] hover:bg-[#fff7f8]"
               >
                 Buy Now
               </button>
 
-              {/* Ask About This Fragrance */}
-              <button
-                onClick={() => {
-                  openConcierge({ mentionedSlug: knowledge.slug });
-                  trackAiChatStarted({ trigger: "pdp", sessionId: conversationState.sessionId });
-                }}
-                className="mt-3 w-full rounded-2xl border border-[#efe8e1] bg-white py-3 text-sm font-semibold text-[#4f4a52] transition hover:border-[#d89ca4] hover:text-[#d89ca4]"
-              >
-                ✦ Ask About This Fragrance
-              </button>
-
-              {/* Compare */}
-              <button
-                onClick={() => setCompareOpen(true)}
-                className="mt-3 w-full rounded-2xl border border-[#efe8e1] bg-white py-3 text-sm font-semibold text-[#4f4a52] transition hover:border-[#d89ca4] hover:text-[#d89ca4]"
-              >
-                ⇄ Compare with Another Fragrance
-              </button>
+              {/* Ask / Compare — compact inline links */}
+              <div className="mt-3 flex items-center justify-center gap-5 text-sm text-[#7b7480]">
+                <button
+                  onClick={() => {
+                    openConcierge({ mentionedSlug: knowledge.slug });
+                    trackAiChatStarted({ trigger: "pdp", sessionId: conversationState.sessionId });
+                  }}
+                  className="underline-offset-2 hover:text-[#d89ca4] hover:underline transition-colors"
+                >
+                  ✦ Ask about this
+                </button>
+                <span aria-hidden="true">·</span>
+                <button
+                  onClick={() => setCompareOpen(true)}
+                  className="underline-offset-2 hover:text-[#d89ca4] hover:underline transition-colors"
+                >
+                  ⇄ Compare
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -1113,7 +1112,7 @@ export default function ProductDetail({
 
       {/* ── Sticky mobile bar ────────────────────────────────────────────────── */}
       {showStickyBar && (
-        <div className="fixed bottom-0 left-0 right-0 z-50 border-t border-[#efe8e1] bg-white/90 backdrop-blur-xl shadow-2xl md:hidden">
+        <div data-purchase-bar="pdp-sticky" className="fixed bottom-0 left-0 right-0 z-50 border-t border-[#efe8e1] bg-white/90 backdrop-blur-xl shadow-2xl md:hidden">
           <div className="flex items-center justify-between gap-3 px-4 py-3">
             <div>
               <p className="text-xs uppercase tracking-wider text-zinc-400">
