@@ -166,15 +166,14 @@ async function verifyCartContent(page, ctx, viewport: string) {
     fail(`${viewport}: cart price`, `R${expectedPrice} not found; got: ${cartText.slice(0, 100)}`);
   }
 
-  // Subtotal section — should show R{expectedPrice} or more (could have previous items if cart not fresh)
-  // Look for "Subtotal" row — the amount next to it should be >= expectedPrice
+  // Subtotal section — isolated cart (fresh context) should show exactly R{expectedPrice}
   const subtotalMatch = cartText.match(/Subtotal[\s\S]*?R([\d,.]+)/);
   if (subtotalMatch) {
     const subtotalAmt = parseFloat(subtotalMatch[1].replace(",", ""));
     note(`${viewport}: Subtotal found = R${subtotalAmt}`);
-    subtotalAmt >= expectedPrice
-      ? pass(`${viewport}: subtotal R${subtotalAmt} >= expected R${expectedPrice}`)
-      : fail(`${viewport}: subtotal`, `R${subtotalAmt} is less than expected R${expectedPrice}`);
+    subtotalAmt === expectedPrice
+      ? pass(`${viewport}: subtotal R${subtotalAmt} === R${expectedPrice} (exact)`)
+      : fail(`${viewport}: subtotal`, `R${subtotalAmt} !== R${expectedPrice} — expected exact equality for isolated cart`);
   } else {
     note(`${viewport}: Could not parse subtotal — cart may be empty or layout differs`);
   }

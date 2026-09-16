@@ -13,6 +13,7 @@ import {
 } from "../lib/analytics";
 import { recordSearch } from "../lib/customer/sync/CustomerProfileSync";
 import type { SearchDocument } from "../lib/search/types";
+import { useFocusTrap } from "../lib/useFocusTrap";
 
 interface Props {
   isOpen:  boolean;
@@ -27,7 +28,22 @@ export default function SearchOverlay({ isOpen, onClose }: Props) {
   const [inputValue,     setInputValue]     = useState("");
   const [debouncedQuery, setDebouncedQuery] = useState("");
   const [highlightedId,  setHighlightedId]  = useState<string | null>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef  = useRef<HTMLInputElement>(null);
+  const panelRef  = useRef<HTMLDivElement>(null);
+  const priorFocus = useRef<HTMLElement | null>(null);
+
+  // Save focus on open; restore to invoking element on close
+  useEffect(() => {
+    if (!isOpen) return;
+    priorFocus.current = document.activeElement as HTMLElement;
+    return () => {
+      priorFocus.current?.focus();
+      priorFocus.current = null;
+    };
+  }, [isOpen]);
+
+  // Trap Tab/Shift+Tab within the panel while open
+  useFocusTrap(panelRef, true);
 
   // Reset state and focus on open
   useEffect(() => {
@@ -132,6 +148,7 @@ export default function SearchOverlay({ isOpen, onClose }: Props) {
 
       {/* Panel — full-screen drawer on mobile, centered modal on desktop */}
       <div
+        ref={panelRef}
         className="fixed inset-x-0 bottom-0 z-[70] md:inset-auto md:top-[12vh] md:left-1/2 md:-translate-x-1/2 md:w-full md:max-w-2xl"
         role="dialog"
         aria-modal="true"

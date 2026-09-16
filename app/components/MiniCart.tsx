@@ -83,10 +83,12 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
     if (isOpen) {
       priorFocus.current = document.activeElement as HTMLElement;
       const t = setTimeout(() => {
-        const first = panelRef.current?.querySelector<HTMLElement>(
-          "button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex='-1'])"
-        );
-        first?.focus();
+        const candidates = Array.from(
+          panelRef.current?.querySelectorAll<HTMLElement>(
+            "button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex='-1'])"
+          ) ?? []
+        ).filter(el => getComputedStyle(el).display !== "none");
+        candidates[0]?.focus();
       }, 50);
       return () => clearTimeout(t);
     } else {
