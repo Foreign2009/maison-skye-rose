@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Navbar from "../components/Navbar";
 import { academyCatalogue } from "../lib/academy/catalogue";
 import { ACADEMY_CATEGORIES } from "../lib/academy/categories";
 import { AcademyHero } from "../components/academy/AcademyHero";
@@ -51,6 +52,7 @@ export default function AcademyPage() {
 
   return (
     <main className="min-h-screen bg-[#faf8f8]">
+      <Navbar />
 
       {/* ── Hero ─────────────────────────────────────────────────────────────── */}
       <AcademyHero

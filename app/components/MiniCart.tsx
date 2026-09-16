@@ -5,7 +5,8 @@ import { useCart } from "../context/CartContext";
 import { useFavorites } from "../context/FavoritesContext";
 import { trackAddToCart, trackWhatsAppCheckout, trackCartRecommendationsShown, trackRecommendationCheckoutAttributed } from "../lib/analytics";
 import { setRecommendationAttribution, getRecommendationAttribution } from "../lib/recommendationAttribution";
-import { useMemo, useState, useRef, useEffect } from "react";
+import { useMemo, useState, useRef, useEffect, useCallback } from "react";
+import { pushEscape, popEscape, isTopEscape } from "../lib/escapeStack";
 import { brand } from "../data/brand";
 import { getCartRecommendations } from "../lib/customer/sync/CartRecommendationStrategy";
 import { useUnifiedCustomerProfile } from "../lib/customer/hooks/useUnifiedCustomerProfile";
@@ -63,15 +64,39 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
     });
   }, [cart, favorites, profile]);
 
-  // Escape key closes the cart — ARIA dialog spec requires this
+  const panelRef = useRef<HTMLDivElement>(null);
+
+  // Inert prevents keyboard access to the off-screen panel when closed
+  useEffect(() => {
+    if (!panelRef.current) return;
+    if (isOpen) {
+      panelRef.current.removeAttribute("inert");
+    } else {
+      panelRef.current.setAttribute("inert", "");
+    }
+  }, [isOpen]);
+
+  // Restore focus to the cart icon when closed via Escape
+  const restoreFocus = useCallback(() => {
+    (document.querySelector('[aria-label="Open Cart"]') as HTMLElement)?.focus();
+  }, []);
+
+  // Escape key closes the cart — ARIA dialog spec; escapeStack ensures only the topmost overlay responds
   useEffect(() => {
     if (!isOpen) return;
+    pushEscape("minicart");
     function handleKeyDown(e: KeyboardEvent) {
-      if (e.key === "Escape") onClose();
+      if (e.key === "Escape" && isTopEscape("minicart")) {
+        restoreFocus();
+        onClose();
+      }
     }
     window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isOpen, onClose]);
+    return () => {
+      popEscape("minicart");
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isOpen, onClose, restoreFocus]);
 
   const impressionFired = useRef(false);
   useEffect(() => {
@@ -179,6 +204,7 @@ A member of our team will confirm your order and delivery details shortly.`;
 
   return (
     <div
+      ref={panelRef}
       role="dialog"
       aria-modal="true"
       aria-label="Shopping cart"

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Navbar from "../../components/Navbar";
 import { academyCatalogue } from "../../lib/academy/catalogue";
 import { categoryToSlug } from "../../lib/academy/categories";
 import { ArticleContentRenderer } from "../../components/academy/ArticleContentRenderer";
@@ -138,12 +139,14 @@ export default async function AcademyArticlePage({ params }: Props) {
       <ReadingProgress />
 
       <main className="min-h-screen bg-[#faf8f8]">
+        <Navbar />
 
         {/* ── Article header ─────────────────────────────────────────────── */}
-        <section className="bg-white border-b border-[#e8e4e9] px-4 py-12">
+        <section className="bg-white border-b border-[#e8e4e9] px-4 pt-24 md:pt-32 pb-12">
           <div className="max-w-2xl mx-auto">
             <AcademyBreadcrumbs
               items={[
+                { label: "Home", href: "/" },
                 { label: "Academy", href: "/academy" },
                 {
                   label: article.category,

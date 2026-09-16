@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { useSearchUI } from "../context/SearchUIContext";
 import { trackSearchOpened } from "../lib/analytics";
+import { pushEscape, popEscape, isTopEscape } from "../lib/escapeStack";
 import SearchOverlay from "./SearchOverlay";
 
 /**
@@ -41,8 +42,8 @@ export default function GlobalSearch() {
         return;
       }
 
-      // Escape — close if open
-      if (e.key === "Escape" && searchOpen) {
+      // Escape — close only when this is the topmost overlay
+      if (e.key === "Escape" && searchOpen && isTopEscape("search")) {
         closeSearch();
       }
     }
@@ -50,6 +51,14 @@ export default function GlobalSearch() {
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [searchOpen, openSearch, closeSearch]);
+
+  // Register/deregister in the escape stack when open state changes
+  useEffect(() => {
+    if (searchOpen) {
+      pushEscape("search");
+      return () => popEscape("search");
+    }
+  }, [searchOpen]);
 
   return <SearchOverlay isOpen={searchOpen} onClose={closeSearch} />;
 }

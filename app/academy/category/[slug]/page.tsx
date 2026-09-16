@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Navbar from "../../../components/Navbar";
 import { academyCatalogue } from "../../../lib/academy/catalogue";
 import {
   ACADEMY_CATEGORIES,
@@ -86,12 +87,14 @@ export default async function AcademyCategoryPage({ params }: Props) {
       />
 
       <main className="min-h-screen bg-[#faf8f8]">
+        <Navbar />
 
         {/* ── Category hero ─────────────────────────────────────────────── */}
-        <section className="bg-white border-b border-[#e8e4e9] px-4 py-14">
+        <section className="bg-white border-b border-[#e8e4e9] px-4 pt-24 md:pt-32 pb-14">
           <div className="max-w-3xl mx-auto">
             <AcademyBreadcrumbs
               items={[
+                { label: "Home", href: "/" },
                 { label: "Academy", href: "/academy" },
                 { label: cat.title },
               ]}

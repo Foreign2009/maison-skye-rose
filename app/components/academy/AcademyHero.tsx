@@ -5,7 +5,7 @@ interface AcademyHeroProps {
 
 export function AcademyHero({ articleCount, categoryCount }: AcademyHeroProps) {
   return (
-    <section className="bg-white border-b border-[#e8e4e9] px-4 py-16 md:py-24 text-center">
+    <section className="bg-white border-b border-[#e8e4e9] px-4 pt-24 md:pt-32 pb-16 md:pb-24 text-center">
       <p className="text-[10px] font-semibold tracking-[0.25em] uppercase text-[#d89ca4] mb-5">
         Maison Skye &amp; Rose
       </p>
@@ -29,24 +29,6 @@ export function AcademyHero({ articleCount, categoryCount }: AcademyHeroProps) {
         </span>
       </div>
 
-      {/* Search placeholder — UI only, no backend */}
-      <div className="max-w-sm mx-auto">
-        <div className="relative">
-          <span
-            className="absolute left-4 top-1/2 -translate-y-1/2 text-[#4f4a52]/25 select-none pointer-events-none"
-            aria-hidden="true"
-          >
-            ⌕
-          </span>
-          <input
-            type="text"
-            placeholder="Search articles… (coming soon)"
-            disabled
-            aria-label="Article search — coming soon"
-            className="w-full rounded-full border border-[#e8e4e9] bg-[#faf8f8] px-5 py-3 pl-10 text-sm text-[#4f4a52]/30 placeholder-[#4f4a52]/25 cursor-not-allowed select-none"
-          />
-        </div>
-      </div>
     </section>
   );
 }

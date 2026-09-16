@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
+import { pushEscape, popEscape, isTopEscape } from "../lib/escapeStack";
 import { X, Send, Sparkles } from "lucide-react";
 import { useConcierge }     from "../context/ConciergeContext";
 import { useFavorites }     from "../context/FavoritesContext";
@@ -62,9 +63,10 @@ export default function ConciergePanel() {
   const [isLoading,  setIsLoading]  = useState(false);
   const [mounted,    setMounted]    = useState(false);
 
-  const bottomRef  = useRef<HTMLDivElement>(null);
+  const bottomRef   = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const sessionId  = conversationState.sessionId;
+  const panelRef    = useRef<HTMLDivElement>(null);
+  const sessionId   = conversationState.sessionId;
 
   // Lazy mount — keep in DOM after first open for smooth animation
   useEffect(() => {
@@ -85,14 +87,28 @@ export default function ConciergePanel() {
     }
   }, [isOpen]);
 
-  // Escape key closes the concierge — ARIA dialog spec requires this
+  // Inert prevents keyboard access to the off-screen panel when closed
+  useEffect(() => {
+    if (!panelRef.current) return;
+    if (isOpen) {
+      panelRef.current.removeAttribute("inert");
+    } else {
+      panelRef.current.setAttribute("inert", "");
+    }
+  }, [isOpen]);
+
+  // Escape key closes the concierge — escapeStack ensures only the topmost overlay responds
   useEffect(() => {
     if (!isOpen) return;
+    pushEscape("concierge");
     function handleKeyDown(e: KeyboardEvent) {
-      if (e.key === "Escape") closeConcierge();
+      if (e.key === "Escape" && isTopEscape("concierge")) closeConcierge();
     }
     window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
+    return () => {
+      popEscape("concierge");
+      window.removeEventListener("keydown", handleKeyDown);
+    };
   }, [isOpen, closeConcierge]);
 
   // ── Interaction handlers ────────────────────────────────────────────────────
@@ -252,6 +268,7 @@ export default function ConciergePanel() {
 
       {/* Panel */}
       <div
+        ref={panelRef}
         className={`fixed inset-y-0 right-0 z-[80] flex w-full flex-col bg-white shadow-2xl transition-transform duration-300 ease-in-out md:w-[380px] md:border-l md:border-black/5 ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}

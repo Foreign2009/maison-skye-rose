@@ -15,7 +15,7 @@ export default function CartSuccessToast() {
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 40, scale: 0.94 }}
           transition={{ type: "spring", stiffness: 220, damping: 18 }}
-          className="fixed bottom-28 left-1/2 z-[999999] w-[92%] max-w-sm -translate-x-1/2"
+          className="fixed bottom-[136px] left-1/2 z-[999999] w-[92%] max-w-sm -translate-x-1/2"
         >
           <div className="relative overflow-hidden rounded-[32px] border border-white/40 bg-white/75 p-4 shadow-[0_20px_80px_rgba(0,0,0,0.12)] backdrop-blur-[30px]">
             {/* GLOW */}

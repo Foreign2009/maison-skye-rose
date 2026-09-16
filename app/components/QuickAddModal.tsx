@@ -2,8 +2,10 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
+import { pushEscape, popEscape, isTopEscape } from "../lib/escapeStack";
+import { useFocusTrap } from "../lib/useFocusTrap";
 import { useCart } from "../context/CartContext";
 import { useCartFeedback } from "../context/CartFeedbackContext";
 import { trackAddToCart } from "../lib/analytics";
@@ -28,6 +30,8 @@ export default function QuickAddModal({ open, onClose, title, slug, images = {},
   const sizeOptions = Object.entries(prices);
   const [selectedSize, setSelectedSize] = useState(sizeOptions?.[0]?.[0] || "10ml");
   const [quantity, setQuantity] = useState(1);
+  const panelRef    = useRef<HTMLDivElement>(null);
+  const priorFocus  = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     setMounted(true);
@@ -37,15 +41,39 @@ export default function QuickAddModal({ open, onClose, title, slug, images = {},
     }
   }, [open]);
 
-  // Escape key closes the modal — ARIA dialog spec requires this
+  // Save invoking element; move focus into modal on open; restore on close
+  useEffect(() => {
+    if (open) {
+      priorFocus.current = document.activeElement as HTMLElement;
+      // Focus the first focusable element inside the panel after the transition starts
+      const t = setTimeout(() => {
+        const first = panelRef.current?.querySelector<HTMLElement>(
+          "button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex='-1'])",
+        );
+        first?.focus();
+      }, 50);
+      return () => clearTimeout(t);
+    } else {
+      priorFocus.current?.focus();
+    }
+  }, [open]);
+
+  // Escape key — escapeStack ensures only the topmost overlay responds
   useEffect(() => {
     if (!open) return;
+    pushEscape("quick-add");
     function handleKeyDown(e: KeyboardEvent) {
-      if (e.key === "Escape") onClose();
+      if (e.key === "Escape" && isTopEscape("quick-add")) onClose();
     }
     window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
+    return () => {
+      popEscape("quick-add");
+      window.removeEventListener("keydown", handleKeyDown);
+    };
   }, [open, onClose]);
+
+  // Focus trap: keep Tab/Shift+Tab within the modal panel
+  useFocusTrap(panelRef, open);
 
   if (!mounted) return null;
 
@@ -92,7 +120,7 @@ export default function QuickAddModal({ open, onClose, title, slug, images = {},
     <AnimatePresence>
       {open && (
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[99999] flex items-end justify-center bg-black/40 backdrop-blur-sm sm:items-center">
-          <motion.div initial={{ y: 100, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: 100, opacity: 0 }} transition={{ duration: 0.35 }} className="relative w-full max-w-md overflow-hidden rounded-t-[38px] bg-white p-6 shadow-[0_30px_100px_rgba(0,0,0,0.18)] sm:rounded-[38px]">
+          <motion.div ref={panelRef} role="dialog" aria-modal="true" aria-labelledby="quick-add-title" data-modal="quick-add" initial={{ y: 100, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: 100, opacity: 0 }} transition={{ duration: 0.35 }} className="relative w-full max-w-md overflow-hidden rounded-t-[38px] bg-white p-6 shadow-[0_30px_100px_rgba(0,0,0,0.18)] sm:rounded-[38px]">
             <div className="absolute inset-0 overflow-hidden"><div className="absolute -left-10 top-0 h-40 w-40 rounded-full bg-pink-200/30 blur-3xl" /><div className="absolute -right-10 bottom-0 h-40 w-40 rounded-full bg-blue-200/30 blur-3xl" /></div>
             <div className="relative z-10">
               <div className="flex justify-center">
@@ -107,7 +135,7 @@ export default function QuickAddModal({ open, onClose, title, slug, images = {},
                   />
                 </motion.div>
               </div>
-              <h2 className="mt-5 text-center text-2xl font-black uppercase tracking-[-0.05em] text-[#4f4a52]">{title}</h2>
+              <h2 id="quick-add-title" className="mt-5 text-center text-2xl font-black uppercase tracking-[-0.05em] text-[#4f4a52]">{title}</h2>
               <div className="mt-6">
                 <p className="mb-3 text-[11px] uppercase tracking-[0.2em] text-[#7b7480]">Select Size</p>
                 <div className="flex gap-3">
