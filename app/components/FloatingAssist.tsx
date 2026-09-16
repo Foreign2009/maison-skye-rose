@@ -14,16 +14,24 @@ export default function FloatingAssist() {
   const { searchOpen } = useSearchUI();
   const [expanded, setExpanded] = useState(false);
   const [quickAddOpen, setQuickAddOpen] = useState(false);
+  const [navOpen, setNavOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
-  // Track QuickAddModal open state via MutationObserver (no shared context needed)
+  // Track QuickAddModal and mobile nav open state via MutationObserver
   useEffect(() => {
     function check() {
       setQuickAddOpen(!!document.querySelector('[data-modal="quick-add"]'));
+      const navPanel = document.getElementById("mobile-nav-panel");
+      setNavOpen(navPanel ? navPanel.getAttribute("aria-hidden") === "false" : false);
     }
     check();
     const obs = new MutationObserver(check);
-    obs.observe(document.body, { childList: true, subtree: true });
+    obs.observe(document.body, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: ["aria-hidden"],
+    });
     return () => obs.disconnect();
   }, []);
 
@@ -41,10 +49,10 @@ export default function FloatingAssist() {
 
   // Collapse if any overlay opens
   useEffect(() => {
-    if (conciergeOpen || cartOpen || searchOpen || quickAddOpen) setExpanded(false);
-  }, [conciergeOpen, cartOpen, searchOpen, quickAddOpen]);
+    if (conciergeOpen || cartOpen || searchOpen || quickAddOpen || navOpen) setExpanded(false);
+  }, [conciergeOpen, cartOpen, searchOpen, quickAddOpen, navOpen]);
 
-  if (conciergeOpen || cartOpen || searchOpen || quickAddOpen) return null;
+  if (conciergeOpen || cartOpen || searchOpen || quickAddOpen || navOpen) return null;
 
   const handleConcierge = () => {
     setExpanded(false);

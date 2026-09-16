@@ -1,6 +1,6 @@
 ﻿"use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ShoppingBag, Menu, X, User, Heart, Clock, Search } from "lucide-react";
@@ -13,6 +13,8 @@ import { trackCartOpened, trackSearchOpened } from "../lib/analytics";
 import { brand } from "../data/brand";
 import { FREE_DELIVERY_THRESHOLD } from "../lib/commerce/delivery";
 import { mkcCatalogue } from "../lib/mkc/catalogue";
+import { useFocusTrap } from "../lib/useFocusTrap";
+import { pushEscape, popEscape, isTopEscape } from "../lib/escapeStack";
 
 // Derived from catalogue at load time -- stays in sync when prices change (same pattern as MiniCart).
 const _free = FREE_DELIVERY_THRESHOLD >= 1000
@@ -29,12 +31,56 @@ export default function Navbar() {
   const pathname = usePathname();
   const { cartOpen, openCart, closeCart } = useCartUI();
   const { openSearch } = useSearchUI();
+  const panelRef = useRef<HTMLDivElement>(null);
+  const hamburgerRef = useRef<HTMLButtonElement>(null);
+  const priorFocus = useRef<HTMLElement | null>(null);
 
   const { cart } = useCart();
   const totalItems = (cart || []).reduce((acc, item) => acc + item.quantity, 0);
 
   const { favorites } = useFavorites();
   const favoriteCount = favorites.length;
+
+  // Focus trap: Tab/Shift+Tab stays within the panel while open
+  useFocusTrap(panelRef, isOpen);
+
+  // Inert: prevent keyboard access to closed panel links
+  useEffect(() => {
+    if (!panelRef.current) return;
+    if (isOpen) {
+      panelRef.current.removeAttribute("inert");
+    } else {
+      panelRef.current.setAttribute("inert", "");
+    }
+  }, [isOpen]);
+
+  // Escape: register with escapeStack so only topmost overlay responds
+  useEffect(() => {
+    if (!isOpen) return;
+    pushEscape("mobile-nav");
+    function handleKey(e: KeyboardEvent) {
+      if (e.key === "Escape" && isTopEscape("mobile-nav")) {
+        e.stopPropagation();
+        setIsOpen(false);
+      }
+    }
+    document.addEventListener("keydown", handleKey);
+    return () => {
+      popEscape("mobile-nav");
+      document.removeEventListener("keydown", handleKey);
+    };
+  }, [isOpen]);
+
+  // Focus management: save prior focus on open, restore on close
+  useEffect(() => {
+    if (isOpen) {
+      priorFocus.current = document.activeElement as HTMLElement;
+      const firstLink = panelRef.current?.querySelector<HTMLElement>("a, button");
+      firstLink?.focus();
+    } else {
+      (priorFocus.current ?? hamburgerRef.current)?.focus();
+    }
+  }, [isOpen]);
 
   // Close mobile menu when route changes
   useEffect(() => {
@@ -83,9 +129,12 @@ export default function Navbar() {
               {/* Mobile Menu Toggle */}
               <div className="flex md:hidden">
                 <button
+                  ref={hamburgerRef}
                   onClick={() => setIsOpen(!isOpen)}
                   className="p-2.5 text-[#4f4a52] hover:text-[#d89ca4] transition-colors"
                   aria-label="Toggle Menu"
+                  aria-expanded={isOpen}
+                  aria-controls="mobile-nav-panel"
                 >
                   {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
                 </button>
@@ -209,8 +258,11 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* Mobile Fullscreen Overlay Navigation — Top offset adjusted to 126px (Announcement h-10 + Nav h-[86px]) */}
+        {/* Mobile Fullscreen Overlay Navigation */}
         <div
+          ref={panelRef}
+          id="mobile-nav-panel"
+          aria-hidden={!isOpen}
           className={`fixed inset-x-0 top-[80px] bottom-0 bg-white z-30 transform transition-transform duration-300 ease-in-out md:hidden flex flex-col justify-between px-6 py-12 ${
             isOpen ? "translate-x-0" : "-translate-x-full"
           }`}
