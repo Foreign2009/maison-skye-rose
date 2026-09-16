@@ -89,6 +89,7 @@ export default function ShopPage() {
   const [selectedCharacter,  setSelectedCharacter]  = useState<string | null>(null);
   const [selectedFamily,     setSelectedFamily]     = useState<string | null>(null);
   const [selectedVibe,       setSelectedVibe]       = useState<string | null>(null);
+  const [showMoreFilters,    setShowMoreFilters]     = useState(false);
 
   // Debounce search input — clears immediately, delays non-empty terms by 300ms
   useEffect(() => {
@@ -235,7 +236,12 @@ export default function ShopPage() {
     setSelectedCharacter(null);
     setSelectedFamily(null);
     setSelectedVibe(null);
+    setShowMoreFilters(false);
   }
+
+  // Keep secondary filters visible when one is active
+  const secondaryFilterActive = selectedFamily !== null || selectedVibe !== null;
+  const showSecondaryFilters  = showMoreFilters || secondaryFilterActive;
 
   const isMainMobileTab = (tab: string) => ["All", "Skye", "Rose", "Elite"].includes(tab);
 
@@ -390,45 +396,72 @@ export default function ShopPage() {
             ))}
           </div>
 
-          {/* Family */}
-          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar">
-            <span className="shrink-0 text-[10px] font-bold uppercase tracking-[0.18em] text-zinc-400 w-[64px]">Family</span>
-            {CATALOGUE_FAMILIES.map((fam) => (
+          {/* Family + Vibe — secondary filters, collapsible on desktop */}
+          {showSecondaryFilters && (
+            <>
+              <div className="flex items-center gap-2 overflow-x-auto no-scrollbar">
+                <span className="shrink-0 text-[10px] font-bold uppercase tracking-[0.18em] text-zinc-400 w-[64px]">Family</span>
+                {CATALOGUE_FAMILIES.map((fam) => (
+                  <button
+                    key={fam}
+                    onClick={() => {
+                      const next = selectedFamily === fam ? null : fam;
+                      setSelectedFamily(next);
+                      trackFilter({ filter: next ?? "clear-family", mode: currentMode, resultCount: displayItems.length });
+                    }}
+                    className={chipCls(selectedFamily === fam)}
+                  >
+                    {fam}
+                  </button>
+                ))}
+              </div>
+
+              <div className="flex items-center gap-2 overflow-x-auto no-scrollbar">
+                <span className="shrink-0 text-[10px] font-bold uppercase tracking-[0.18em] text-zinc-400 w-[64px]">Vibe</span>
+                {CATALOGUE_VIBES.map((vibe) => (
+                  <button
+                    key={vibe}
+                    onClick={() => {
+                      const next = selectedVibe === vibe ? null : vibe;
+                      setSelectedVibe(next);
+                      trackFilter({ filter: next ?? "clear-vibe", mode: currentMode, resultCount: displayItems.length });
+                    }}
+                    className={chipCls(selectedVibe === vibe)}
+                  >
+                    {vibe}
+                  </button>
+                ))}
+              </div>
+            </>
+          )}
+
+          {/* More / fewer filters toggle — desktop only (mobile uses drawer) */}
+          <div className="hidden md:flex items-center gap-2 overflow-x-auto no-scrollbar">
+            <span className="w-[64px]" />
+            <button
+              onClick={() => setShowMoreFilters((v) => !v)}
+              className="shrink-0 text-[10px] font-bold uppercase tracking-[0.18em] text-zinc-400 hover:text-[#d89ca4] transition-colors"
+            >
+              {showSecondaryFilters ? "Fewer Filters ↑" : "More Filters ↓"}
+              {secondaryFilterActive && !showMoreFilters && (
+                <span className="ml-1.5 inline-flex h-4 w-4 items-center justify-center rounded-full bg-[#d89ca4] text-[9px] text-white">
+                  {(selectedFamily ? 1 : 0) + (selectedVibe ? 1 : 0)}
+                </span>
+              )}
+            </button>
+            {hasDimensionFilters && (
               <button
-                key={fam}
-                onClick={() => {
-                  const next = selectedFamily === fam ? null : fam;
-                  setSelectedFamily(next);
-                  trackFilter({ filter: next ?? "clear-family", mode: currentMode, resultCount: displayItems.length });
-                }}
-                className={chipCls(selectedFamily === fam)}
+                onClick={clearDimensionFilters}
+                className="shrink-0 text-[10px] font-bold uppercase tracking-[0.18em] text-[#d89ca4] hover:underline"
               >
-                {fam}
+                Clear All ×
               </button>
-            ))}
+            )}
           </div>
 
-          {/* Vibe */}
-          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar">
-            <span className="shrink-0 text-[10px] font-bold uppercase tracking-[0.18em] text-zinc-400 w-[64px]">Vibe</span>
-            {CATALOGUE_VIBES.map((vibe) => (
-              <button
-                key={vibe}
-                onClick={() => {
-                  const next = selectedVibe === vibe ? null : vibe;
-                  setSelectedVibe(next);
-                  trackFilter({ filter: next ?? "clear-vibe", mode: currentMode, resultCount: displayItems.length });
-                }}
-                className={chipCls(selectedVibe === vibe)}
-              >
-                {vibe}
-              </button>
-            ))}
-          </div>
-
-          {/* Clear Filters — only shown when at least one dimension filter is active */}
+          {/* Clear Filters — mobile (below character row, above drawer entry) */}
           {hasDimensionFilters && (
-            <div className="flex items-center gap-2 pt-0.5">
+            <div className="md:hidden flex items-center gap-2 pt-0.5">
               <span className="w-[64px]" />
               <button
                 onClick={clearDimensionFilters}

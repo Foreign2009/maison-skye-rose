@@ -11,9 +11,8 @@ import { SearchUIProvider } from "./context/SearchUIContext";
 import { ConciergeProvider } from "./context/ConciergeContext";
 
 import CartSuccessToast from "./components/CartSuccessToast";
-import FloatingWhatsApp from "./components/FloatingWhatsApp";
+import FloatingAssist from "./components/FloatingAssist";
 import GlobalSearch from "./components/GlobalSearch";
-import ConciergeButton from "./components/ConciergeButton";
 import ConciergePanel from "./components/ConciergePanel";
 import { AnalyticsInit } from "./components/AnalyticsInit";
 
@@ -70,9 +69,8 @@ export default function RootLayout({
                     {children}
 
                     <CartSuccessToast />
-                    <FloatingWhatsApp />
+                    <FloatingAssist />
                     <GlobalSearch />
-                    <ConciergeButton />
                     <ConciergePanel />
                   </ConciergeProvider>
                 </SearchUIProvider>

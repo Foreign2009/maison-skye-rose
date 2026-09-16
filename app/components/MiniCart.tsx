@@ -5,8 +5,9 @@ import { useCart } from "../context/CartContext";
 import { useFavorites } from "../context/FavoritesContext";
 import { trackAddToCart, trackWhatsAppCheckout, trackCartRecommendationsShown, trackRecommendationCheckoutAttributed } from "../lib/analytics";
 import { setRecommendationAttribution, getRecommendationAttribution } from "../lib/recommendationAttribution";
-import { useMemo, useState, useRef, useEffect, useCallback } from "react";
+import { useMemo, useState, useRef, useEffect } from "react";
 import { pushEscape, popEscape, isTopEscape } from "../lib/escapeStack";
+import { useFocusTrap } from "../lib/useFocusTrap";
 import { brand } from "../data/brand";
 import { getCartRecommendations } from "../lib/customer/sync/CartRecommendationStrategy";
 import { useUnifiedCustomerProfile } from "../lib/customer/hooks/useUnifiedCustomerProfile";
@@ -64,7 +65,8 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
     });
   }, [cart, favorites, profile]);
 
-  const panelRef = useRef<HTMLDivElement>(null);
+  const panelRef   = useRef<HTMLDivElement>(null);
+  const priorFocus = useRef<HTMLElement | null>(null);
 
   // Inert prevents keyboard access to the off-screen panel when closed
   useEffect(() => {
@@ -76,27 +78,40 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
     }
   }, [isOpen]);
 
-  // Restore focus to the cart icon when closed via Escape
-  const restoreFocus = useCallback(() => {
-    (document.querySelector('[aria-label="Open Cart"]') as HTMLElement)?.focus();
-  }, []);
+  // Save the invoking element on open; move focus into panel; restore on close
+  useEffect(() => {
+    if (isOpen) {
+      priorFocus.current = document.activeElement as HTMLElement;
+      const t = setTimeout(() => {
+        const first = panelRef.current?.querySelector<HTMLElement>(
+          "button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex='-1'])"
+        );
+        first?.focus();
+      }, 50);
+      return () => clearTimeout(t);
+    } else {
+      const target = priorFocus.current;
+      priorFocus.current = null;
+      target?.focus();
+    }
+  }, [isOpen]);
 
   // Escape key closes the cart — ARIA dialog spec; escapeStack ensures only the topmost overlay responds
   useEffect(() => {
     if (!isOpen) return;
     pushEscape("minicart");
     function handleKeyDown(e: KeyboardEvent) {
-      if (e.key === "Escape" && isTopEscape("minicart")) {
-        restoreFocus();
-        onClose();
-      }
+      if (e.key === "Escape" && isTopEscape("minicart")) onClose();
     }
     window.addEventListener("keydown", handleKeyDown);
     return () => {
       popEscape("minicart");
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [isOpen, onClose, restoreFocus]);
+  }, [isOpen, onClose]);
+
+  // Focus trap: Tab/Shift+Tab cycles within the open panel
+  useFocusTrap(panelRef, isOpen);
 
   const impressionFired = useRef(false);
   useEffect(() => {

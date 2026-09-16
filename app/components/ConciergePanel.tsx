@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import { pushEscape, popEscape, isTopEscape } from "../lib/escapeStack";
+import { useFocusTrap } from "../lib/useFocusTrap";
 import { X, Send, Sparkles } from "lucide-react";
 import { useConcierge }     from "../context/ConciergeContext";
 import { useFavorites }     from "../context/FavoritesContext";
@@ -66,6 +67,7 @@ export default function ConciergePanel() {
   const bottomRef   = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const panelRef    = useRef<HTMLDivElement>(null);
+  const priorFocus  = useRef<HTMLElement | null>(null);
   const sessionId   = conversationState.sessionId;
 
   // Lazy mount — keep in DOM after first open for smooth animation
@@ -80,12 +82,20 @@ export default function ConciergePanel() {
     }
   }, [messages, isLoading]);
 
-  // Focus textarea on open
+  // Save invoking element on open; focus textarea after transition; restore on close
   useEffect(() => {
     if (isOpen) {
+      priorFocus.current = document.activeElement as HTMLElement;
       setTimeout(() => textareaRef.current?.focus(), 300);
+    } else {
+      const target = priorFocus.current;
+      priorFocus.current = null;
+      setTimeout(() => target?.focus(), 0);
     }
   }, [isOpen]);
+
+  // Focus trap: Tab/Shift+Tab cycles within the open panel
+  useFocusTrap(panelRef, isOpen);
 
   // Inert prevents keyboard access to the off-screen panel when closed
   useEffect(() => {
