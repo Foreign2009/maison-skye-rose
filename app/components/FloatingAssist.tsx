@@ -13,7 +13,19 @@ export default function FloatingAssist() {
   const { cartOpen } = useCartUI();
   const { searchOpen } = useSearchUI();
   const [expanded, setExpanded] = useState(false);
+  const [quickAddOpen, setQuickAddOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
+
+  // Track QuickAddModal open state via MutationObserver (no shared context needed)
+  useEffect(() => {
+    function check() {
+      setQuickAddOpen(!!document.querySelector('[data-modal="quick-add"]'));
+    }
+    check();
+    const obs = new MutationObserver(check);
+    obs.observe(document.body, { childList: true, subtree: true });
+    return () => obs.disconnect();
+  }, []);
 
   // Collapse the mobile menu when clicking outside
   useEffect(() => {
@@ -29,10 +41,10 @@ export default function FloatingAssist() {
 
   // Collapse if any overlay opens
   useEffect(() => {
-    if (conciergeOpen || cartOpen || searchOpen) setExpanded(false);
-  }, [conciergeOpen, cartOpen, searchOpen]);
+    if (conciergeOpen || cartOpen || searchOpen || quickAddOpen) setExpanded(false);
+  }, [conciergeOpen, cartOpen, searchOpen, quickAddOpen]);
 
-  if (conciergeOpen || cartOpen || searchOpen) return null;
+  if (conciergeOpen || cartOpen || searchOpen || quickAddOpen) return null;
 
   const handleConcierge = () => {
     setExpanded(false);
