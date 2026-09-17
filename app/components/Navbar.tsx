@@ -125,7 +125,7 @@ export default function Navbar() {
           <div className="relative h-12 md:h-[86px] grid grid-cols-[1fr_auto_1fr] items-center">
             
             {/* Left Column: Mobile Hamburger Toggle OR Desktop Links (Left-Wing) */}
-            <div className="flex items-center justify-start md:justify-end gap-8 md:pr-12">
+            <div className="flex items-center justify-start md:justify-end gap-8 md:pr-12 xl:pr-0">
               {/* Mobile Menu Toggle */}
               <div className="flex md:hidden">
                 <button
@@ -140,13 +140,26 @@ export default function Navbar() {
                 </button>
               </div>
 
-              {/* Desktop Left-Wing Navigation Items — Change 1 & 6 */}
-              <div className="hidden md:flex items-center gap-4 lg:gap-6 justify-start">
+              {/* Desktop Left-Wing Navigation Items */}
+              <div className="hidden md:flex items-center gap-4 justify-start">
                 {leftLinks.map((link) => (
                   <Link
                     key={link.href}
                     href={link.href}
                     className={`inline-flex text-[13px] uppercase tracking-[0.20em] font-semibold transition-all duration-200 items-center gap-1.5 whitespace-nowrap group relative py-1 ${
+                      pathname === link.href ? "text-[#d89ca4]" : "text-[#4f4a52]"
+                    }`}
+                  >
+                    {link.label}
+                    <span className="absolute -bottom-2 left-0 h-[1px] w-0 bg-[#d89ca4] transition-all duration-300 group-hover:w-full" />
+                  </Link>
+                ))}
+                {/* Academy + Wholesale — visible at xl (1280px) and above only */}
+                {rightLinks.filter(l => l.href !== "/quiz").map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className={`hidden xl:inline-flex text-[13px] uppercase tracking-[0.20em] font-semibold transition-all duration-200 items-center gap-1.5 whitespace-nowrap group relative py-1 ${
                       pathname === link.href ? "text-[#d89ca4]" : "text-[#4f4a52]"
                     }`}
                   >
@@ -170,8 +183,22 @@ export default function Navbar() {
               </Link>
             </div>
 
-            {/* Right Column: Utility Icons */}
+            {/* Right Column: Fragrance Quiz (xl+) + Utility Icons */}
             <div className="flex items-center justify-end gap-2 md:gap-4">
+
+              {/* Fragrance Quiz — visible at xl (1280px) and above only */}
+              {rightLinks.filter(l => l.href === "/quiz").map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={`hidden xl:inline-flex text-[13px] uppercase tracking-[0.20em] font-semibold transition-all duration-200 items-center gap-1.5 whitespace-nowrap group relative py-1 ${
+                    pathname === link.href ? "text-[#d89ca4]" : "text-[#4f4a52]"
+                  }`}
+                >
+                  {link.label}
+                  <span className="absolute -bottom-2 left-0 h-[1px] w-0 bg-[#d89ca4] transition-all duration-300 group-hover:w-full" />
+                </Link>
+              ))}
 
               {/* Functional Icon Group */}
               <div className="flex items-center gap-2 md:gap-4 ml-0 md:ml-2">
