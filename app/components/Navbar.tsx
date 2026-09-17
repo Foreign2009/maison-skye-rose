@@ -126,8 +126,8 @@ export default function Navbar() {
             
             {/* Left Column: Mobile Hamburger Toggle OR Desktop Links (Left-Wing) */}
             <div className="flex items-center justify-start md:justify-end gap-8 md:pr-12 xl:pr-0">
-              {/* Mobile Menu Toggle */}
-              <div className="flex md:hidden">
+              {/* Mobile Menu Toggle — visible at mobile and at md/lg (768–1279px) where secondary links are hidden */}
+              <div className="flex xl:hidden">
                 <button
                   ref={hamburgerRef}
                   onClick={() => setIsOpen(!isOpen)}
@@ -140,8 +140,8 @@ export default function Navbar() {
                 </button>
               </div>
 
-              {/* Desktop Left-Wing Navigation Items */}
-              <div className="hidden md:flex items-center gap-4 justify-start">
+              {/* Desktop Left-Wing Navigation Items — xl+ only; hamburger covers 768–1279px */}
+              <div className="hidden xl:flex items-center gap-4 justify-start">
                 {leftLinks.map((link) => (
                   <Link
                     key={link.href}
@@ -274,7 +274,7 @@ export default function Navbar() {
           ref={panelRef}
           id="mobile-nav-panel"
           aria-hidden={!isOpen}
-          className={`fixed inset-x-0 top-[80px] bottom-0 bg-white z-30 transform transition-transform duration-300 ease-in-out md:hidden flex flex-col justify-between px-6 py-12 ${
+          className={`fixed inset-x-0 top-[80px] md:top-[128px] bottom-0 bg-white z-30 transform transition-transform duration-300 ease-in-out xl:hidden flex flex-col justify-between px-6 py-12 ${
             isOpen ? "translate-x-0" : "-translate-x-full"
           }`}
         >
