@@ -16,6 +16,7 @@ export default function FloatingAssist() {
   const [quickAddOpen, setQuickAddOpen] = useState(false);
   const [navOpen, setNavOpen] = useState(false);
   const [purchaseBarOpen, setPurchaseBarOpen] = useState(false);
+  const [filterDrawerOpen, setFilterDrawerOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
   // Track QuickAddModal, mobile nav, and PDP sticky purchase bar via MutationObserver
@@ -25,6 +26,7 @@ export default function FloatingAssist() {
       const navPanel = document.getElementById("mobile-nav-panel");
       setNavOpen(navPanel ? navPanel.getAttribute("aria-hidden") === "false" : false);
       setPurchaseBarOpen(!!document.querySelector('[data-purchase-bar="pdp-sticky"]'));
+      setFilterDrawerOpen(!!document.querySelector('[data-drawer="filter"]'));
     }
     check();
     const obs = new MutationObserver(check);
@@ -51,10 +53,10 @@ export default function FloatingAssist() {
 
   // Collapse if any overlay opens
   useEffect(() => {
-    if (conciergeOpen || cartOpen || searchOpen || quickAddOpen || navOpen) setExpanded(false);
-  }, [conciergeOpen, cartOpen, searchOpen, quickAddOpen, navOpen]);
+    if (conciergeOpen || cartOpen || searchOpen || quickAddOpen || navOpen || filterDrawerOpen) setExpanded(false);
+  }, [conciergeOpen, cartOpen, searchOpen, quickAddOpen, navOpen, filterDrawerOpen]);
 
-  if (conciergeOpen || cartOpen || searchOpen || quickAddOpen || navOpen) return null;
+  if (conciergeOpen || cartOpen || searchOpen || quickAddOpen || navOpen || filterDrawerOpen) return null;
 
   const handleConcierge = () => {
     setExpanded(false);

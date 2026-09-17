@@ -305,7 +305,7 @@ export default function ShopPage() {
                   setCurrentFilter(tab);
                   trackFilter({ filter: tab, mode: currentMode, resultCount: displayItems.length });
                 }}
-                className={`${!isMainMobileTab(tab) ? "hidden md:inline-flex" : "inline-flex"} rounded-xl px-3 py-2 md:px-4 md:py-2.5 text-xs font-semibold uppercase tracking-wider transition-all ${
+                className={`${!isMainMobileTab(tab) ? "hidden md:inline-flex" : "inline-flex"} rounded-xl px-2 py-1.5 md:px-4 md:py-2.5 text-xs font-semibold uppercase tracking-wider transition-all ${
                   currentFilter === tab ? "bg-[#d89ca4] text-white shadow-md" : "border border-zinc-200 bg-white text-zinc-600 hover:bg-zinc-50"
                 }`}
               >
@@ -559,7 +559,7 @@ export default function ShopPage() {
 
       {/* Mobile Drawer/Modal Overlay */}
       {isDrawerOpen && (
-        <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/40 backdrop-blur-sm md:hidden" onClick={() => setIsDrawerOpen(false)}>
+        <div data-drawer="filter" className="fixed inset-0 z-50 flex items-end justify-center bg-black/40 backdrop-blur-sm md:hidden" onClick={() => setIsDrawerOpen(false)}>
           <div className="w-full rounded-t-2xl bg-white p-6 shadow-xl max-h-[80vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
             <div className="flex items-center justify-between pb-4 border-b border-zinc-100">
               <h3 className="text-sm font-bold uppercase tracking-wider text-zinc-800">Filters & Sorting</h3>
