@@ -35,8 +35,13 @@ import { LearningPathPanel } from "./academy/LearningPathPanel";
 import { explainArticleRecommendation } from "../lib/academy/explainArticleRecommendation";
 import ComparePickerOverlay from "./ComparePickerOverlay";
 import ProductIntelligenceSection from "./ProductIntelligenceSection";
+import { FREE_DELIVERY_THRESHOLD } from "../lib/commerce/delivery";
 
 
+
+const _freeThreshold = FREE_DELIVERY_THRESHOLD >= 1000
+  ? `R${FREE_DELIVERY_THRESHOLD / 1000} 000`
+  : `R${FREE_DELIVERY_THRESHOLD}`;
 
 export interface DiscoverMoreArticle {
   slug: string;
@@ -502,7 +507,7 @@ export default function ProductDetail({
 
               {/* Trust signals */}
               <div className="mt-4 space-y-1.5 text-sm text-zinc-500">
-                <p>✓ Free nationwide delivery · Secure checkout</p>
+                <p>✓ Nationwide delivery · Free courier on orders over {_freeThreshold}</p>
                 <p>✓ Curated collection · Start with a 5ml sample</p>
               </div>
 
@@ -534,8 +539,8 @@ export default function ProductDetail({
                 Buy Now
               </button>
 
-              {/* Ask / Compare — compact inline links */}
-              <div className="mt-3 flex items-center justify-center gap-5 text-sm text-[#7b7480]">
+              {/* Ask / WhatsApp / Compare — compact inline links */}
+              <div className="mt-3 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-sm text-[#7b7480]">
                 <button
                   onClick={() => {
                     openConcierge({ mentionedSlug: knowledge.slug });
@@ -545,6 +550,15 @@ export default function ProductDetail({
                 >
                   ✦ Ask about this
                 </button>
+                <span aria-hidden="true">·</span>
+                <a
+                  href={brand.social.whatsappLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline-offset-2 hover:text-green-600 hover:underline transition-colors"
+                >
+                  WhatsApp Us
+                </a>
                 <span aria-hidden="true">·</span>
                 <button
                   onClick={() => setCompareOpen(true)}

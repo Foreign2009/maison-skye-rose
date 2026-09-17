@@ -103,7 +103,7 @@ export default function HomePage() {
               </div>
               <h3 className="text-base font-black tracking-wide text-[#4f4a52]">Elite</h3>
               <p className="mt-2 text-sm leading-relaxed text-[#7b7480]">
-                Refined, prestigious, and enduring
+                Distinctive compositions to explore
               </p>
               <span className="mt-5 inline-block rounded-full bg-[#7a6e64] px-6 py-2.5 text-[11px] font-bold uppercase tracking-[0.18em] text-white transition-colors group-hover:bg-[#5e5249]">
                 Shop Elite
@@ -143,7 +143,7 @@ export default function HomePage() {
               <p className="text-2xl font-black text-[#d89ca4]">5ml</p>
               <p className="mt-2 text-sm font-bold text-[#4f4a52]">Try It &middot; From R{_min5ml}</p>
               <p className="mt-3 text-sm leading-relaxed text-[#7b7480]">
-                Perfect for discovering new scents. Enough for 2–3 weeks of daily wear.
+                Discover a new scent before choosing a larger size.
               </p>
             </div>
             <div className="rounded-[20px] bg-[#faf7f5] border border-[#f0ebe8] p-7 text-center">

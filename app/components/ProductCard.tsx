@@ -145,25 +145,8 @@ function ProductCard({
           </h3>
         </Link>
         
-        {/* Luxury mobile rule: Kept subtitle on desktop, hidden on mobile */}
+        {/* One concise composition descriptor — desktop only */}
         <p className="hidden md:block mt-2 min-h-[40px] text-sm font-semibold text-[#d89ca4]">{subtitle}</p>
-
-        <p className="hidden md:block mt-4 line-clamp-2 text-sm leading-6 text-[#7b7480]">{mood}</p>
-        
-        <div className="hidden md:flex mt-6 flex-wrap gap-2">
-          {notes.slice(0, 2).map((note) => (
-            <span
-              key={note}
-              className="rounded-full bg-pink-50 px-2.5 md:px-3 py-1 text-[10px] md:text-xs font-semibold text-[#d89ca4]"
-            >
-              {note}
-            </span>
-          ))}
-        </div>
-        
-        <div className="hidden md:block mt-6">
-          <p className="text-sm text-[#7b7480]">{profile} • {season}</p>
-        </div>
 
         <div className="mt-auto pt-2 md:pt-8">
           <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">

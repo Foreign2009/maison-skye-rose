@@ -297,7 +297,7 @@ export default function ShopPage() {
       {/* ISOLATED STICKY BAR: Completely untrapped from section layout bounds */}
       <div className="fixed top-[80px] left-0 right-0 z-[45] bg-[#f5f1eb]/95 backdrop-blur-sm px-4 md:px-6 py-3 border-b border-zinc-200/20 md:relative md:top-0 md:left-auto md:right-auto md:bg-transparent md:backdrop-blur-none md:border-b-0 md:mt-6">
         <div className="mx-auto max-w-7xl flex items-center justify-between gap-2">
-          <div className="flex flex-wrap gap-1.5 md:gap-2 items-center overflow-x-auto no-scrollbar">
+          <div className="flex gap-1.5 md:gap-2 items-center overflow-x-auto no-scrollbar">
             {["All", "Skye", "Rose", "Elite", "Best Sellers", "New Arrivals"].map((tab) => (
               <button
                 key={tab}
@@ -343,7 +343,7 @@ export default function ShopPage() {
         <div className="mx-auto max-w-7xl space-y-2 py-3">
 
           {/* Occasion */}
-          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar">
+          <div className="hidden md:flex items-center gap-2 overflow-x-auto no-scrollbar">
             <span className="shrink-0 text-[10px] font-bold uppercase tracking-[0.18em] text-zinc-400 w-[64px]">Occasion</span>
             {CATALOGUE_OCCASIONS.map((occ) => (
               <button
@@ -361,7 +361,7 @@ export default function ShopPage() {
           </div>
 
           {/* Season */}
-          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar">
+          <div className="hidden md:flex items-center gap-2 overflow-x-auto no-scrollbar">
             <span className="shrink-0 text-[10px] font-bold uppercase tracking-[0.18em] text-zinc-400 w-[64px]">Season</span>
             {CATALOGUE_SEASONS.map((sea) => (
               <button
@@ -379,7 +379,7 @@ export default function ShopPage() {
           </div>
 
           {/* Scent Character */}
-          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar">
+          <div className="hidden md:flex items-center gap-2 overflow-x-auto no-scrollbar">
             <span className="shrink-0 text-[10px] font-bold uppercase tracking-[0.18em] text-zinc-400 w-[64px]">Character</span>
             {SCENT_CHARACTERS.map((char) => (
               <button
@@ -399,7 +399,7 @@ export default function ShopPage() {
           {/* Family + Vibe — secondary filters, collapsible on desktop */}
           {showSecondaryFilters && (
             <>
-              <div className="flex items-center gap-2 overflow-x-auto no-scrollbar">
+              <div className="hidden md:flex items-center gap-2 overflow-x-auto no-scrollbar">
                 <span className="shrink-0 text-[10px] font-bold uppercase tracking-[0.18em] text-zinc-400 w-[64px]">Family</span>
                 {CATALOGUE_FAMILIES.map((fam) => (
                   <button
@@ -416,7 +416,7 @@ export default function ShopPage() {
                 ))}
               </div>
 
-              <div className="flex items-center gap-2 overflow-x-auto no-scrollbar">
+              <div className="hidden md:flex items-center gap-2 overflow-x-auto no-scrollbar">
                 <span className="shrink-0 text-[10px] font-bold uppercase tracking-[0.18em] text-zinc-400 w-[64px]">Vibe</span>
                 {CATALOGUE_VIBES.map((vibe) => (
                   <button
@@ -459,15 +459,19 @@ export default function ShopPage() {
             )}
           </div>
 
-          {/* Clear Filters — mobile (below character row, above drawer entry) */}
+          {/* Mobile: active filter summary + Clear All */}
           {hasDimensionFilters && (
-            <div className="md:hidden flex items-center gap-2 pt-0.5">
-              <span className="w-[64px]" />
+            <div className="md:hidden flex flex-wrap items-center gap-1.5 pt-1">
+              {selectedOccasion   && <span className="rounded-full bg-[#d89ca4]/10 border border-[#d89ca4]/30 px-2.5 py-0.5 text-[11px] font-semibold text-[#d89ca4]">{selectedOccasion}</span>}
+              {selectedSeason     && <span className="rounded-full bg-[#d89ca4]/10 border border-[#d89ca4]/30 px-2.5 py-0.5 text-[11px] font-semibold text-[#d89ca4]">{selectedSeason}</span>}
+              {selectedCharacter  && <span className="rounded-full bg-[#d89ca4]/10 border border-[#d89ca4]/30 px-2.5 py-0.5 text-[11px] font-semibold text-[#d89ca4]">{selectedCharacter}</span>}
+              {selectedFamily     && <span className="rounded-full bg-[#d89ca4]/10 border border-[#d89ca4]/30 px-2.5 py-0.5 text-[11px] font-semibold text-[#d89ca4]">{selectedFamily}</span>}
+              {selectedVibe       && <span className="rounded-full bg-[#d89ca4]/10 border border-[#d89ca4]/30 px-2.5 py-0.5 text-[11px] font-semibold text-[#d89ca4]">{selectedVibe}</span>}
               <button
                 onClick={clearDimensionFilters}
                 className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#d89ca4] hover:underline"
               >
-                Clear Filters ×
+                Clear All ×
               </button>
             </div>
           )}

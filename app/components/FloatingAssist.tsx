@@ -16,7 +16,6 @@ export default function FloatingAssist() {
   const [quickAddOpen, setQuickAddOpen] = useState(false);
   const [navOpen, setNavOpen] = useState(false);
   const [purchaseBarOpen, setPurchaseBarOpen] = useState(false);
-  const [purchaseBarHeight, setPurchaseBarHeight] = useState(0);
   const menuRef = useRef<HTMLDivElement>(null);
 
   // Track QuickAddModal, mobile nav, and PDP sticky purchase bar via MutationObserver
@@ -25,9 +24,7 @@ export default function FloatingAssist() {
       setQuickAddOpen(!!document.querySelector('[data-modal="quick-add"]'));
       const navPanel = document.getElementById("mobile-nav-panel");
       setNavOpen(navPanel ? navPanel.getAttribute("aria-hidden") === "false" : false);
-      const purchaseBar = document.querySelector('[data-purchase-bar="pdp-sticky"]');
-      setPurchaseBarOpen(!!purchaseBar);
-      setPurchaseBarHeight(purchaseBar ? Math.round(purchaseBar.getBoundingClientRect().height) : 0);
+      setPurchaseBarOpen(!!document.querySelector('[data-purchase-bar="pdp-sticky"]'));
     }
     check();
     const obs = new MutationObserver(check);
@@ -59,12 +56,6 @@ export default function FloatingAssist() {
 
   if (conciergeOpen || cartOpen || searchOpen || quickAddOpen || navOpen) return null;
 
-  // Use inline style so the offset is always exactly (measured bar height + 8px),
-  // regardless of product name length or viewport width.
-  const mobileFabStyle: React.CSSProperties | undefined = purchaseBarOpen
-    ? { bottom: `${purchaseBarHeight + 8}px` }
-    : undefined;
-
   const handleConcierge = () => {
     setExpanded(false);
     openConcierge();
@@ -95,11 +86,10 @@ export default function FloatingAssist() {
         </a>
       </div>
 
-      {/* ── Mobile: compact FAB that expands to both options ──────────────── */}
-      <div
+      {/* ── Mobile: compact FAB — hidden on PDP (purchase bar present); PDP provides inline assistance ── */}
+      {!purchaseBarOpen && <div
         ref={menuRef}
-        className={`md:hidden fixed ${purchaseBarOpen ? "" : "bottom-5"} right-4 z-[9999] flex flex-col items-end gap-2`}
-        style={mobileFabStyle}
+        className="md:hidden fixed bottom-5 right-4 z-[9999] flex flex-col items-end gap-2"
       >
         {expanded && (
           <>
@@ -139,7 +129,7 @@ export default function FloatingAssist() {
             </span>
           )}
         </button>
-      </div>
+      </div>}
     </>
   );
 }
