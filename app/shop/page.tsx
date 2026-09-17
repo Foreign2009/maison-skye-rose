@@ -103,6 +103,16 @@ export default function ShopPage() {
     return () => clearTimeout(timer);
   }, [search]);
 
+  // Close filter drawer on Escape
+  useEffect(() => {
+    if (!isDrawerOpen) return;
+    function handleKey(e: KeyboardEvent) {
+      if (e.key === "Escape") { e.stopPropagation(); setIsDrawerOpen(false); }
+    }
+    document.addEventListener("keydown", handleKey);
+    return () => document.removeEventListener("keydown", handleKey);
+  }, [isDrawerOpen]);
+
   // Detect intent signals from the debounced search term.
   // Returns null in Mode 0 (empty query) and Mode 2 (no signals found).
   // Non-null value is the reliable Mode 1 indicator for the UI.
@@ -305,7 +315,7 @@ export default function ShopPage() {
                   setCurrentFilter(tab);
                   trackFilter({ filter: tab, mode: currentMode, resultCount: displayItems.length });
                 }}
-                className={`${!isMainMobileTab(tab) ? "hidden md:inline-flex" : "inline-flex"} rounded-xl px-2 py-1.5 md:px-4 md:py-2.5 text-xs font-semibold uppercase tracking-wider transition-all ${
+                className={`${!isMainMobileTab(tab) ? "hidden md:inline-flex" : "inline-flex"} rounded-xl px-2 py-2 min-h-[44px] md:min-h-0 md:px-4 md:py-2.5 text-xs font-semibold uppercase tracking-wider transition-all ${
                   currentFilter === tab ? "bg-[#d89ca4] text-white shadow-md" : "border border-zinc-200 bg-white text-zinc-600 hover:bg-zinc-50"
                 }`}
               >
