@@ -184,7 +184,7 @@ export default function Navbar() {
             </div>
 
             {/* Right Column: Fragrance Quiz (xl+) + Utility Icons */}
-            <div className="flex items-center justify-end gap-2 md:gap-4">
+            <div className="flex items-center justify-end gap-2 md:gap-3">
 
               {/* Fragrance Quiz — visible at xl (1280px) and above only */}
               {rightLinks.filter(l => l.href === "/quiz").map((link) => (
@@ -201,7 +201,7 @@ export default function Navbar() {
               ))}
 
               {/* Functional Icon Group */}
-              <div className="flex items-center gap-2 md:gap-4 ml-0 md:ml-2">
+              <div className="flex items-center gap-2 md:gap-3 ml-0">
                 <button
                   onClick={() => {
                     openSearch();
