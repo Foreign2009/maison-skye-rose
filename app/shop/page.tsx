@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useEffect, useCallback } from "react";
+import { useState, useMemo, useEffect, useCallback, useRef } from "react";
 
 import Navbar from "../components/Navbar";
 import QuickAddModal from "../components/QuickAddModal";
@@ -91,6 +91,9 @@ export default function ShopPage() {
   const [selectedVibe,       setSelectedVibe]       = useState<string | null>(null);
   const [showMoreFilters,    setShowMoreFilters]     = useState(false);
 
+  const filtersBtnRef    = useRef<HTMLButtonElement>(null);
+  const drawerPriorFocus = useRef<HTMLElement | null>(null);
+
   // Debounce search input — clears immediately, delays non-empty terms by 300ms
   useEffect(() => {
     if (!search) {
@@ -111,6 +114,16 @@ export default function ShopPage() {
     }
     document.addEventListener("keydown", handleKey);
     return () => document.removeEventListener("keydown", handleKey);
+  }, [isDrawerOpen]);
+
+  // Focus management: save invoking element on open, restore on close
+  useEffect(() => {
+    if (isDrawerOpen) {
+      drawerPriorFocus.current = document.activeElement as HTMLElement;
+    } else if (drawerPriorFocus.current) {
+      drawerPriorFocus.current.focus();
+      drawerPriorFocus.current = null;
+    }
   }, [isDrawerOpen]);
 
   // Detect intent signals from the debounced search term.
@@ -305,7 +318,7 @@ export default function ShopPage() {
       </section>
 
       {/* ISOLATED STICKY BAR: Completely untrapped from section layout bounds */}
-      <div className="fixed top-[80px] left-0 right-0 z-[45] bg-[#f5f1eb]/95 backdrop-blur-sm px-4 md:px-6 py-3 border-b border-zinc-200/20 md:relative md:top-0 md:left-auto md:right-auto md:bg-transparent md:backdrop-blur-none md:border-b-0 md:mt-6">
+      <div className="fixed top-[80px] left-0 right-0 z-[45] bg-[#f5f1eb]/95 backdrop-blur-sm px-4 md:px-6 py-3 border-b border-zinc-200/20 md:sticky md:top-[118px] md:left-auto md:right-auto md:z-[35] md:mt-6">
         <div className="mx-auto max-w-7xl flex items-center justify-between gap-2">
           <div className="flex gap-1.5 md:gap-2 items-center overflow-x-auto no-scrollbar">
             {["All", "Skye", "Rose", "Elite", "Best Sellers", "New Arrivals"].map((tab) => (
@@ -324,7 +337,8 @@ export default function ShopPage() {
             ))}
           </div>
           
-          <button 
+          <button
+            ref={filtersBtnRef}
             onClick={() => setIsDrawerOpen(true)}
             className="flex md:hidden items-center gap-1 rounded-xl border border-zinc-200 bg-white px-4 py-2 text-xs font-semibold uppercase tracking-wider text-zinc-600 active:bg-zinc-50 shrink-0"
           >

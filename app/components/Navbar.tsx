@@ -125,7 +125,7 @@ export default function Navbar() {
           <div className="relative h-12 md:h-[86px] grid grid-cols-[1fr_auto_1fr] items-center">
             
             {/* Left Column: Mobile Hamburger Toggle OR Desktop Links (Left-Wing) */}
-            <div className="flex items-center justify-start md:justify-end gap-8 md:pr-12 xl:pr-0">
+            <div className="flex items-center justify-start md:justify-end gap-8 md:pr-12 xl:pr-6">
               {/* Mobile Menu Toggle — visible at mobile and at md/lg (768–1279px) where secondary links are hidden */}
               <div className="flex xl:hidden">
                 <button
@@ -141,7 +141,7 @@ export default function Navbar() {
               </div>
 
               {/* Desktop Left-Wing Navigation Items — xl+ only; hamburger covers 768–1279px */}
-              <div className="hidden xl:flex items-center gap-1 justify-start">
+              <div className="hidden xl:flex items-center gap-3 justify-start">
                 {leftLinks.map((link) => (
                   <Link
                     key={link.href}
