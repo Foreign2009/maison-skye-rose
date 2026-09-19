@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 import Navbar from "../components/Navbar";
 
@@ -22,6 +22,10 @@ export default function CheckoutPage() {
   const [errors,     setErrors]     = useState<Record<string, string>>({});
   const [orderError, setOrderError] = useState("");
 
+  // Synchronous guard — closes the narrow window between first click and the
+  // React re-render that disables the button via the loading state.
+  const submittingRef = useRef(false);
+
   const subtotal = cartTotal; // wholesale-adjusted when active
   const isCollection = province === COLLECTION_PROVINCE;
   const delivery = computeDelivery(province, subtotal);
@@ -42,9 +46,11 @@ export default function CheckoutPage() {
   }
 
   const handlePayment = async () => {
+    if (submittingRef.current) return;
     setOrderError("");
     if (!validateForm()) return;
 
+    submittingRef.current = true;
     try {
       setLoading(true);
 
@@ -104,9 +110,12 @@ export default function CheckoutPage() {
       }
 
     } catch {
-      setOrderError("A network error occurred. Please check your connection and try again.");
+      setOrderError(
+        "A connection error occurred. Your order may have been placed — please contact us to confirm before trying again."
+      );
     } finally {
       setLoading(false);
+      submittingRef.current = false;
     }
   };
 
@@ -229,7 +238,7 @@ export default function CheckoutPage() {
           </div>
 
           {orderError && (
-            <p className="mt-6 rounded-2xl bg-red-50 px-5 py-4 text-sm text-red-600">
+            <p role="alert" className="mt-6 rounded-2xl bg-red-50 px-5 py-4 text-sm text-red-600">
               {orderError}
             </p>
           )}
