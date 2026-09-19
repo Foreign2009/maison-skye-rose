@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { X } from "lucide-react";
 import { useCart } from "../context/CartContext";
 import { useFavorites } from "../context/FavoritesContext";
@@ -26,6 +27,8 @@ interface MiniCartProps {
 }
 
 export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
+  const router = useRouter();
+
   const {
     cart,
     addToCart,
@@ -180,6 +183,11 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
   const savings = originalTotal - subtotal;
 
   const rewardMessage = getRewardMessage(subtotal);
+
+  const handleCheckout = () => {
+    onClose();
+    router.push("/checkout");
+  };
 
   const handleWhatsAppCheckout = () => {
     const orderLines = cart
@@ -618,11 +626,18 @@ A member of our team will confirm your order and delivery details shortly.`;
         </div>
         <div className="shrink-0 border-t border-black/10 px-5 pt-4 pb-5 md:px-6 md:pb-6">
           <button
+            onClick={handleCheckout}
+            disabled={!cart || cart.length === 0}
+            className="w-full min-h-[44px] rounded-full bg-[#4f4a52] px-6 py-4 text-[11px] font-bold uppercase tracking-[0.25em] text-white transition-all duration-300 hover:bg-black hover:scale-[1.01] disabled:opacity-50"
+          >
+            Checkout
+          </button>
+          <button
             onClick={handleWhatsAppCheckout}
             disabled={!cart || cart.length === 0}
-            className="w-full rounded-full bg-[#4f4a52] px-6 py-4 text-[11px] font-bold uppercase tracking-[0.25em] text-white transition-all duration-300 hover:bg-black hover:scale-[1.01] disabled:opacity-50"
+            className="mt-3 w-full min-h-[44px] rounded-full border border-[#4f4a52]/25 px-6 py-4 text-[11px] font-bold uppercase tracking-[0.25em] text-[#4f4a52] transition-all duration-200 hover:border-[#4f4a52]/60 hover:bg-[#4f4a52]/5 disabled:opacity-50"
           >
-            Checkout via WhatsApp
+            Order via WhatsApp
           </button>
         </div>
       </div>
