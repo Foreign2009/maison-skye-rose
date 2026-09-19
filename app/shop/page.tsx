@@ -340,7 +340,7 @@ export default function ShopPage() {
           <button
             ref={filtersBtnRef}
             onClick={() => setIsDrawerOpen(true)}
-            className="flex md:hidden items-center gap-1 rounded-xl border border-zinc-200 bg-white px-4 py-2 text-xs font-semibold uppercase tracking-wider text-zinc-600 active:bg-zinc-50 shrink-0"
+            className="flex md:hidden items-center gap-1 rounded-xl border border-zinc-200 bg-white px-4 py-2 min-h-[44px] text-xs font-semibold uppercase tracking-wider text-zinc-600 active:bg-zinc-50 shrink-0"
           >
             Filters {(sortBy !== "Featured" || ["Best Sellers", "New Arrivals"].includes(currentFilter) || hasDimensionFilters) && "•"} ▼
           </button>
