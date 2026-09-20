@@ -64,16 +64,24 @@ const CART_ITEM = JSON.stringify([{
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
 async function loadCheckout(page) {
-  await page.goto(`${BASE}/checkout`, { waitUntil: 'networkidle', timeout: 25000 });
-  await page.evaluate((item) => {
+  // Pre-seed localStorage BEFORE the page runs any JS. addInitScript fires on
+  // every navigation for this page object, so CartContext's LOAD CART useEffect
+  // reads the full cart on first mount — no evaluate→reload race possible.
+  await page.addInitScript((item) => {
     try { localStorage.setItem('maison-skye-rose-cart', item); } catch {}
   }, CART_ITEM);
-  await page.reload({ waitUntil: 'networkidle', timeout: 25000 });
-  await page.waitForTimeout(2000); // allow React hydration to complete under dev-server load
+  await page.goto(`${BASE}/checkout`, { waitUntil: 'networkidle', timeout: 25000 });
+  // By networkidle, React has mounted and the cart subtotal reflects our item.
+  // Poll body.textContent directly — more reliable than a Playwright text locator
+  // for verifying React state has propagated all the way to the rendered DOM.
+  await page.waitForFunction(
+    () => (document.body.textContent || '').includes('R60.00'),
+    { timeout: 12000, polling: 200 },
+  );
   await page.fill('#checkout-name',    'Test Guest');
   await page.fill('#checkout-phone',   '0821234567');
   await page.fill('#checkout-address', '12 Test Street, Cape Town');
-  await page.waitForTimeout(500);
+  await page.waitForTimeout(300);
 }
 
 async function readAttemptKey(page) {
@@ -106,7 +114,17 @@ async function readConflictFlag(page) {
 test('1. Key generated and stored in sessionStorage on mount', async ({ page }, testInfo) => {
   test.setTimeout(30000);
   await page.goto(`${BASE}/checkout`, { waitUntil: 'networkidle', timeout: 25000 });
-  await page.waitForTimeout(2000); // extra headroom under server load
+  // Wait for the useEffect that writes the idempotency key to sessionStorage.
+  // Polling avoids a fixed sleep while being specific to what we are testing.
+  await page.waitForFunction(
+    (ssKey) => {
+      const raw = sessionStorage.getItem(ssKey);
+      if (!raw) return false;
+      try { const p = JSON.parse(raw); return typeof p?.key === 'string'; } catch { return false; }
+    },
+    ATTEMPT_SS,
+    { timeout: 10000, polling: 200 },
+  );
 
   const key    = await readAttemptKey(page);
   const isUuid = key !== null && UUID_V4_RE.test(key);
@@ -242,7 +260,7 @@ test('6. Key and intent preserved across page reload', async ({ page }, testInfo
   await page.goto(`${BASE}/checkout`, { waitUntil: 'networkidle', timeout: 25000 });
   await page.evaluate((item) => { try { localStorage.setItem('maison-skye-rose-cart', item); } catch {} }, CART_ITEM);
   await page.reload({ waitUntil: 'networkidle', timeout: 25000 });
-  await page.waitForTimeout(800);
+  await page.getByText('R60.00').first().waitFor({ state: 'visible', timeout: 12000 });
   await page.fill('#checkout-name',    'Reload Intent Test');
   await page.fill('#checkout-phone',   '0821111111');
   await page.fill('#checkout-address', '77 Reload Road, Cape Town');
@@ -254,14 +272,13 @@ test('6. Key and intent preserved across page reload', async ({ page }, testInfo
 
   // Reload — form and key must be restored
   await page.reload({ waitUntil: 'networkidle', timeout: 25000 });
-  await page.waitForTimeout(800);
+  // Wait for the frozen snapshot to restore and the retry notice to render.
+  const retryNotice = page.locator('[role="status"]').filter({ hasText: /Retrying your previous order/i });
+  await retryNotice.waitFor({ state: 'visible', timeout: 12000 });
 
   const keyAfterReload = await readAttemptKey(page);
   f('key-preserved', keyAfterReload === keyBefore ? 'pass' : 'fail', `${keyBefore} → ${keyAfterReload}`);
   expect(keyAfterReload).toBe(keyBefore);
-
-  // After a submitted attempt, the page shows the retry notice with original values
-  const retryNotice = page.locator('[role="status"]').filter({ hasText: /Retrying your previous order/i });
   const noticeVisible = await retryNotice.isVisible().catch(() => false);
   f('retry-notice-visible-after-reload', noticeVisible ? 'pass' : 'fail', `visible: ${noticeVisible}`);
   expect(noticeVisible, 'Retry notice must be visible after reload with submitted attempt').toBe(true);
@@ -393,6 +410,12 @@ test('11. sessionStorage unavailable → in-memory fallback → key still sent',
       }),
     });
   });
+  // Pre-seed cart BEFORE the page runs any JS — same pattern as loadCheckout.
+  // Without this, CartContext's SAVE CART effect races with the evaluate+reload
+  // and can overwrite CART_ITEM with [] before the reload reads it.
+  await page.addInitScript((item) => {
+    try { localStorage.setItem('maison-skye-rose-cart', item); } catch {}
+  }, CART_ITEM);
 
   const capturedBodies = [];
   await page.route(ORDERS_ROUTE, async (route) => {
@@ -402,9 +425,10 @@ test('11. sessionStorage unavailable → in-memory fallback → key still sent',
   });
 
   await page.goto(`${BASE}/checkout`, { waitUntil: 'networkidle', timeout: 25000 });
-  await page.evaluate((item) => { try { localStorage.setItem('maison-skye-rose-cart', item); } catch {} }, CART_ITEM);
-  await page.reload({ waitUntil: 'networkidle', timeout: 25000 });
-  await page.waitForTimeout(800);
+  await page.waitForFunction(
+    () => (document.body.textContent || '').includes('R60.00'),
+    { timeout: 12000, polling: 200 },
+  );
   await page.fill('#checkout-name',    'Memory Fallback Test');
   await page.fill('#checkout-phone',   '0829999999');
   await page.fill('#checkout-address', '5 Memory Lane, Cape Town');
@@ -831,7 +855,7 @@ test('19. Lost response → cart edit → reload → original snapshot in retry;
     try { localStorage.setItem('maison-skye-rose-cart', JSON.stringify(c)); } catch {}
   }, originalCart);
   await page.reload({ waitUntil: 'networkidle', timeout: 25000 });
-  await page.waitForTimeout(800);
+  await page.getByText('R60.00').first().waitFor({ state: 'visible', timeout: 12000 });
 
   await page.fill('#checkout-name',    'Recovery Guest');
   await page.fill('#checkout-phone',   '0821230001');
@@ -863,10 +887,11 @@ test('19. Lost response → cart edit → reload → original snapshot in retry;
   // Reload — simulates the user refreshing after the lost response.
   // Frozen snapshot is restored from sessionStorage.
   await page.reload({ waitUntil: 'networkidle', timeout: 25000 });
-  await page.waitForTimeout(800);
 
   const retryNotice = page.locator('[role="status"]').filter({ hasText: /Retrying your previous order/i });
-  f('19-retry-notice-visible', await retryNotice.isVisible().catch(() => false) ? 'pass' : 'fail', 'visible');
+  // Wait for the retry notice to render — confirms the frozen snapshot was restored.
+  await retryNotice.waitFor({ state: 'visible', timeout: 12000 });
+  f('19-retry-notice-visible', 'pass', 'visible');
   expect(await retryNotice.isVisible()).toBe(true);
 
   // Retry the original order.
@@ -917,18 +942,28 @@ test('19. Lost response → cart edit → reload → original snapshot in retry;
 });
 
 // ── Test 20 (P8d) ─────────────────────────────────────────────────────────────
-// While a retry is in-flight (held), "Start a separate new order" must be a
-// no-op — the attempt key and frozen snapshot must not change.
+// While a retry is in-flight (held), "Start a separate new order" must be
+// disabled so the user cannot accidentally trigger it during loading.
+//
+// What this test verifies:
+//   • The button carries the HTML disabled attribute while loading=true (UI layer).
+//   • After a force-click (which React suppresses on disabled elements), the
+//     attempt key and frozen snapshot are unchanged.
+//
+// What this test does NOT prove:
+//   • That the submittingRef JS guard executed — React does not call onClick
+//     on a disabled button even when a synthetic click event is dispatched.
+//     The JS guard is defence-in-depth; its coverage lives in the unit layer.
 //
 // Sequence:
 //   1. First request → 503 → error shown; frozen snapshot set; retry notice
 //      becomes visible with "Start a separate new order instead" button.
 //   2. Re-route all subsequent requests to hold indefinitely.
-//   3. Click Retry — loading becomes true; retry notice button stays in DOM.
+//   3. Click Retry — loading becomes true; button gets disabled attribute.
 //   4. Assert the button is disabled (HTML attribute).
-//   5. Force-click the button — submittingRef guard must prevent key rotation.
-//   6. Assert key and frozen snapshot are unchanged.
-//   7. Release the held response — success, navigate to payment-success.
+//   5. Force-click — React does not fire onClick on disabled buttons;
+//      key and snapshot remain unchanged (expected outcome).
+//   6. Release the held response — success, navigate to payment-success.
 test('20. Held-response: "Start a separate new order" is a no-op while loading (P8d)', async ({ page }, testInfo) => {
   test.setTimeout(60000);
 
@@ -989,8 +1024,9 @@ test('20. Held-response: "Start a separate new order" is a no-op while loading (
   f('20-all-new-order-btns-disabled-while-loading', allDisabled ? 'pass' : 'fail', `disabled: ${allDisabled}`);
   expect(allDisabled, 'Start-a-new-order buttons must be disabled while loading').toBe(true);
 
-  // Force-click (bypasses the HTML disabled attribute; the JS guard in
-  // handleStartNewOrder must prevent the key rotation).
+  // Force-click bypasses Playwright's actionability check but React itself
+  // suppresses onClick on disabled buttons — the click is silently ignored
+  // by React, so the key must remain unchanged.
   await allNewOrderBtns.first().click({ force: true, timeout: 2000 }).catch(() => {});
   await page.waitForTimeout(300);
 
