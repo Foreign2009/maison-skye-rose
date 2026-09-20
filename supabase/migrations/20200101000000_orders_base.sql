@@ -1,9 +1,30 @@
+-- ─────────────────────────────────────────────────────────────────────────────
 -- LOCAL DEV ONLY — base orders schema for integration testing.
--- Production already has this table. This migration makes the local stack
--- usable for integration tests without pulling the full remote schema.
--- DO NOT apply to production.
+-- DO NOT apply to production.  Production already owns this table.
+--
+-- SCHEMA ASSUMPTIONS (unverified against production)
+-- ────────────────────────────────────────────────────
+-- 1. id column type: this fixture uses BIGSERIAL.
+--    Earlier production evidence suggests UUID (gen_random_uuid()).
+--    All API routes (handleOrder, handleGetConfirmation, PATCH) address rows
+--    exclusively by order_ref (TEXT UNIQUE) — the id column is never read or
+--    returned by application code.  The type difference does not affect
+--    integration-test validity or idempotency behaviour.
+--
+-- 2. INSERT policy: the production database is assumed to grant INSERT to the
+--    anon role (public) via RLS policy, because the production POST handler
+--    uses the anon Supabase client for insertOrder calls.  This fixture adds
+--    an equivalent policy so the test OrderDb adapter can mirror that path.
+--    If production uses a different policy name or condition, update this file
+--    and re-run `npx supabase db reset` — no application code change needed.
+--
+-- 3. Column set: derived from insertOrder (route.ts) + PATCH + GET handlers.
+--    Additional columns present in production but not referenced by any API
+--    route would not affect test results.
+-- ─────────────────────────────────────────────────────────────────────────────
 
 CREATE TABLE IF NOT EXISTS orders (
+  -- id: BIGSERIAL here; production may use UUID. Unused by all API routes.
   id                   BIGSERIAL      PRIMARY KEY,
   order_ref            TEXT           NOT NULL UNIQUE,
   customer_name        TEXT           NOT NULL,
@@ -27,6 +48,17 @@ CREATE TABLE IF NOT EXISTS orders (
   created_at           TIMESTAMPTZ    NOT NULL DEFAULT NOW()
 );
 
--- RLS: no public reads. All order access goes through the service_role
--- admin client. Anonymous clients receive no rows.
+-- RLS: enabled with two policies mirroring assumed production behaviour.
 ALTER TABLE orders ENABLE ROW LEVEL SECURITY;
+
+-- INSERT: anon role may create orders (assumed production policy).
+-- The production POST handler uses the anon Supabase client for inserts.
+-- Without this policy, anon-key inserts are blocked by RLS and handleOrder
+-- returns a 500 insert error, which is a false negative for integration tests.
+CREATE POLICY "anon_insert_orders"
+  ON orders FOR INSERT TO anon
+  WITH CHECK (true);
+
+-- SELECT: no public policy — the anon client cannot read orders.
+-- All order reads go through the service_role admin client.
+-- The RLS denial integration check verifies this: anon SELECT returns zero rows.
