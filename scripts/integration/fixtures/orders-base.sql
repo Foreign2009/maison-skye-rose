@@ -55,9 +55,19 @@ ALTER TABLE orders ENABLE ROW LEVEL SECURITY;
 -- The production POST handler uses the anon Supabase client for inserts.
 -- Without this policy, anon-key inserts are blocked by RLS and handleOrder
 -- returns a 500 insert error, which is a false negative for integration tests.
-CREATE POLICY "anon_insert_orders"
-  ON orders FOR INSERT TO anon
-  WITH CHECK (true);
+-- DO block makes this idempotent: safe to re-run bootstrap on an existing DB.
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_policies
+     WHERE tablename = 'orders' AND policyname = 'anon_insert_orders'
+  ) THEN
+    CREATE POLICY "anon_insert_orders"
+      ON orders FOR INSERT TO anon
+      WITH CHECK (true);
+  END IF;
+END
+$$;
 
 -- SELECT: no public policy — the anon client cannot read orders.
 -- All order reads go through the service_role admin client.

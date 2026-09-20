@@ -187,11 +187,11 @@ async function guardLocalOnly(): Promise<void> {
     );
   }
   try {
-    const resp = await fetch(`${LOCAL_URL}/health`);
+    const resp = await fetch(`${LOCAL_URL}/rest/v1/`);
     if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
   } catch (e) {
     throw new Error(
-      `Local Supabase is not running at ${LOCAL_URL}.\n` +
+      `Local Supabase REST API not reachable at ${LOCAL_URL}/rest/v1/.\n` +
       `Run:  npx supabase start\n` +
       `Then: npx tsx scripts/integration/bootstrap-local.ts\n` +
       String(e),
@@ -216,12 +216,20 @@ function spawnDevServer(): ChildProcess {
   env.ORDER_RECEIPT_SECRET          = TEST_RECEIPT_SECRET;
   env.NEXT_TELEMETRY_DISABLED       = "1";
 
-  return spawn("npm", ["run", "dev"], {
-    env: env as NodeJS.ProcessEnv,
+  // On Windows, npm is a .cmd batch file that requires a shell to run.
+  // Explicitly invoke cmd.exe /c with shell:false to avoid DEP0190
+  // (which fires when shell:true is combined with a non-empty args array).
+  const [cmd, args] =
+    process.platform === "win32"
+      ? (["cmd.exe", ["/c", "npm", "run", "dev"]] as const)
+      : (["npm",     ["run", "dev"]]              as const);
+
+  return spawn(cmd, [...args], {
+    env:      env as NodeJS.ProcessEnv,
     stdio:    "pipe",
     cwd:      process.cwd(),
     detached: false,
-    shell:    process.platform === "win32",
+    shell:    false,
   });
 }
 
