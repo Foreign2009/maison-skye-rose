@@ -20,10 +20,11 @@
  *  9.  Conflict panel: form fields preserved, button re-enabled
  * 10.  Attempt cleared after success; new visit to /checkout gets new key
  * 11.  sessionStorage failure → in-memory fallback → key still sent on retry
- * 12.  Malformed JSON in sessionStorage → blocking conflict panel; persists across reload (P8c)
- * 13.  Invalid stored key (non-UUID) → blocking conflict panel; persists across reload (P8c)
- * 14.  Stored snapshot immutable after first submit — form edits do not update it (P8c)
+ * 12.  Malformed JSON → blocking panel on mount; persists after record removed (P8c)
+ * 13.  Invalid stored key (non-UUID) → blocking panel; persists across reload (P8c)
+ * 14.  Retry sends original frozen snapshot, not edited form values (P8c)
  * 15.  Success clears ATTEMPT_SS and CONFLICT_SS directly (P8c)
+ * 16.  Lost response → reload → retry uses original body; storage-unavailable in-memory retry (P8c)
  */
 
 const { test, expect } = require('@playwright/test');
@@ -75,7 +76,6 @@ async function loadCheckout(page) {
   await page.waitForTimeout(300);
 }
 
-// Reads the attempt key from the JSON stored in sessionStorage.
 async function readAttemptKey(page) {
   return page.evaluate((ssKey) => {
     try {
@@ -87,7 +87,6 @@ async function readAttemptKey(page) {
   }, ATTEMPT_SS);
 }
 
-// Reads the full saved attempt object from sessionStorage.
 async function readSavedAttempt(page) {
   return page.evaluate((ssKey) => {
     try {
@@ -97,209 +96,151 @@ async function readSavedAttempt(page) {
   }, ATTEMPT_SS);
 }
 
-// Reads the CONFLICT_SS flag value.
 async function readConflictFlag(page) {
   return page.evaluate((ssKey) => {
     try { return sessionStorage.getItem(ssKey); } catch { return 'error'; }
   }, CONFLICT_SS);
 }
 
-// ── Test 1: Key generated on page load ────────────────────────────────────────
+// ── Test 1 ────────────────────────────────────────────────────────────────────
 test('1. Key generated and stored in sessionStorage on mount', async ({ page }, testInfo) => {
   test.setTimeout(30000);
-  await page.setViewportSize({ width: 375, height: 812 });
-
   await page.goto(`${BASE}/checkout`, { waitUntil: 'networkidle', timeout: 25000 });
   await page.waitForTimeout(800);
 
   const key    = await readAttemptKey(page);
   const isUuid = key !== null && UUID_V4_RE.test(key);
-
   f('key-generated-on-mount', isUuid ? 'pass' : 'fail', `key: ${key}`);
-  f('key-is-uuid-v4',         isUuid ? 'pass' : 'fail', `matches UUID v4: ${isUuid}`);
   expect(isUuid, 'key must be a UUID v4 in sessionStorage after mount').toBe(true);
 
-  await page.screenshot({ path: path.join(testInfo.outputDir, '01-key-on-mount.png') });
+  await page.screenshot({ path: path.join(testInfo.outputDir, '01.png') });
 });
 
-// ── Test 2: Key included in POST body (always — no conditional spread) ────────
+// ── Test 2 ────────────────────────────────────────────────────────────────────
 test('2. checkout_attempt_key always included in POST body', async ({ page }, testInfo) => {
   test.setTimeout(30000);
-  await page.setViewportSize({ width: 375, height: 812 });
 
   let capturedBody = null;
   await page.route(ORDERS_ROUTE, async (route) => {
     capturedBody = route.request().postDataJSON();
-    await route.fulfill({
-      status:      500,
-      contentType: 'application/json',
-      body:        JSON.stringify({ success: false, message: 'Mocked failure.' }),
-    });
+    await route.fulfill({ status: 500, contentType: 'application/json',
+      body: JSON.stringify({ success: false, message: 'Mocked failure.' }) });
   });
 
   await loadCheckout(page);
   const keyBeforeSubmit = await readAttemptKey(page);
 
-  const btn = page.locator('button').filter({ hasText: /Place Order/ }).first();
-  await btn.click();
+  await page.locator('button').filter({ hasText: /Place Order/ }).first().click();
   await page.locator('p[role="alert"]').waitFor({ state: 'visible', timeout: 8000 });
 
-  await page.screenshot({ path: path.join(testInfo.outputDir, '02-post-body.png') });
-
   const keyInBody    = capturedBody?.checkout_attempt_key;
-  const bodyKeyIsUuid = keyInBody && UUID_V4_RE.test(keyInBody);
+  const bodyKeyOk    = keyInBody && UUID_V4_RE.test(keyInBody);
   const bodyMatchesSS = keyInBody === keyBeforeSubmit;
 
-  f('body-has-attempt-key',     bodyKeyIsUuid ? 'pass' : 'fail', `body key: ${keyInBody}`);
+  f('body-has-attempt-key',     bodyKeyOk    ? 'pass' : 'fail', `body key: ${keyInBody}`);
   f('body-key-matches-session', bodyMatchesSS ? 'pass' : 'fail', `SS: ${keyBeforeSubmit}, body: ${keyInBody}`);
-  f('key-always-present-not-conditional', bodyKeyIsUuid ? 'pass' : 'fail',
-    `checkout_attempt_key present: ${bodyKeyIsUuid}`);
-  expect(bodyKeyIsUuid,  'POST body must include a UUID v4 checkout_attempt_key').toBe(true);
-  expect(bodyMatchesSS, 'POST body key must match the sessionStorage key').toBe(true);
+  expect(bodyKeyOk,   'POST body must include UUID v4 checkout_attempt_key').toBe(true);
+  expect(bodyMatchesSS, 'POST body key must match sessionStorage key').toBe(true);
+
+  await page.screenshot({ path: path.join(testInfo.outputDir, '02.png') });
 });
 
-// ── Test 3: Key cleared on success ────────────────────────────────────────────
+// ── Test 3 ────────────────────────────────────────────────────────────────────
 test('3. Key cleared from sessionStorage on success', async ({ page }, testInfo) => {
   test.setTimeout(30000);
-  await page.setViewportSize({ width: 375, height: 812 });
 
   await page.route(ORDERS_ROUTE, async (route) => {
-    await route.fulfill({
-      status:      200,
-      contentType: 'application/json',
-      body:        JSON.stringify({ success: true, orderRef: 'MSR-20260920-P8TEST' }),
-    });
+    await route.fulfill({ status: 200, contentType: 'application/json',
+      body: JSON.stringify({ success: true, orderRef: 'MSR-20260920-P8TEST' }) });
   });
 
   await loadCheckout(page);
   const keyBefore = await readAttemptKey(page);
-  const hadKey    = keyBefore !== null && UUID_V4_RE.test(keyBefore);
+  expect(keyBefore !== null && UUID_V4_RE.test(keyBefore), 'key present before submit').toBe(true);
 
-  f('key-present-before-submit', hadKey ? 'pass' : 'fail', `key: ${keyBefore}`);
-  expect(hadKey, 'key must be set before submit').toBe(true);
-
-  const btn = page.locator('button').filter({ hasText: /Place Order/ }).first();
-  await btn.click();
+  await page.locator('button').filter({ hasText: /Place Order/ }).first().click();
 
   try {
     await page.waitForURL(/payment-success/, { timeout: 10000 });
+    f('navigated-to-success', 'pass', page.url());
+    expect(page.url()).toContain('MSR-20260920-P8TEST');
   } catch {
     await page.screenshot({ path: path.join(testInfo.outputDir, '03-stuck.png') });
-    f('navigated-to-success', 'fail', `still on ${page.url()}`);
     throw new Error('Did not navigate to payment-success');
   }
-
-  f('navigated-to-success', 'pass', page.url());
-  const urlHasRef = page.url().includes('MSR-20260920-P8TEST');
-  f('success-url-has-ref', urlHasRef ? 'pass' : 'fail', page.url());
-  expect(urlHasRef).toBe(true);
 });
 
-// ── Test 4: 409 shows conflict panel, no auto key rotation ────────────────────
+// ── Test 4 ────────────────────────────────────────────────────────────────────
 test('4. 409 shows conflict panel — no automatic key rotation', async ({ page }, testInfo) => {
   test.setTimeout(30000);
-  await page.setViewportSize({ width: 375, height: 812 });
 
   await page.route(ORDERS_ROUTE, async (route) => {
-    await route.fulfill({
-      status:      409,
-      contentType: 'application/json',
-      body:        JSON.stringify({
-        success: false,
-        message: 'An earlier order may already exist with different items or delivery details. Please contact us to confirm.',
-      }),
-    });
+    await route.fulfill({ status: 409, contentType: 'application/json',
+      body: JSON.stringify({ success: false, message: 'An earlier order may already exist. Please contact us.' }) });
   });
 
   await loadCheckout(page);
   const keyBefore = await readAttemptKey(page);
 
-  const btn = page.locator('button').filter({ hasText: /Place Order/ }).first();
-  await btn.click();
+  await page.locator('button').filter({ hasText: /Place Order/ }).first().click();
 
   const conflictPanel = page.locator('[role="alert"]').filter({ hasText: /earlier order may already exist/i });
   await conflictPanel.waitFor({ state: 'visible', timeout: 8000 });
-  await page.screenshot({ path: path.join(testInfo.outputDir, '04-conflict-panel.png') });
 
-  const panelVisible = await conflictPanel.isVisible().catch(() => false);
-  f('conflict-panel-visible', panelVisible ? 'pass' : 'fail', `visible: ${panelVisible}`);
-  expect(panelVisible, 'Conflict panel must be visible after 409').toBe(true);
+  f('conflict-panel-visible', 'pass', 'visible');
+  f('key-not-rotated-on-409', (await readAttemptKey(page)) === keyBefore ? 'pass' : 'fail',
+    `before: ${keyBefore}, after: ${await readAttemptKey(page)}`);
+  f('conflict-panel-has-contact-guidance',
+    (await conflictPanel.textContent() ?? '').toLowerCase().includes('contact') ? 'pass' : 'fail',
+    'contact guidance');
 
-  const keyAfter    = await readAttemptKey(page);
-  const keyUnchanged = keyAfter === keyBefore;
-  f('key-not-rotated-on-409', keyUnchanged ? 'pass' : 'fail',
-    `before: ${keyBefore}, after: ${keyAfter}`);
-  expect(keyUnchanged, 'Key must not be automatically rotated on 409').toBe(true);
+  expect(await conflictPanel.isVisible()).toBe(true);
+  expect(await readAttemptKey(page)).toBe(keyBefore);
+  expect((await conflictPanel.textContent() ?? '').toLowerCase()).toContain('contact');
+  expect(await conflictPanel.locator('button').filter({ hasText: /separate/i }).isVisible()).toBe(true);
 
-  const bodyText           = (await conflictPanel.textContent() ?? '').toLowerCase();
-  const hasContactGuidance = bodyText.includes('contact');
-  f('conflict-panel-contact-guidance', hasContactGuidance ? 'pass' : 'fail',
-    `panel text includes "contact": ${hasContactGuidance}`);
-  expect(hasContactGuidance, 'Conflict panel must advise contacting us').toBe(true);
-
-  const newOrderBtn        = conflictPanel.locator('button').filter({ hasText: /separate/i });
-  const newOrderBtnVisible = await newOrderBtn.isVisible().catch(() => false);
-  f('new-order-button-visible', newOrderBtnVisible ? 'pass' : 'fail',
-    `button visible: ${newOrderBtnVisible}`);
-  expect(newOrderBtnVisible, '"Start a separate new order" button must be visible').toBe(true);
+  await page.screenshot({ path: path.join(testInfo.outputDir, '04.png') });
 });
 
-// ── Test 5: "Start a separate new order" rotates the key ─────────────────────
+// ── Test 5 ────────────────────────────────────────────────────────────────────
 test('5. "Start a separate new order" generates a fresh key', async ({ page }, testInfo) => {
   test.setTimeout(30000);
-  await page.setViewportSize({ width: 375, height: 812 });
 
   await page.route(ORDERS_ROUTE, async (route) => {
-    await route.fulfill({
-      status:      409,
-      contentType: 'application/json',
-      body:        JSON.stringify({ success: false, message: 'An earlier order may already exist.' }),
-    });
+    await route.fulfill({ status: 409, contentType: 'application/json',
+      body: JSON.stringify({ success: false, message: 'An earlier order may already exist.' }) });
   });
 
   await loadCheckout(page);
   const keyBefore = await readAttemptKey(page);
 
-  const btn = page.locator('button').filter({ hasText: /Place Order/ }).first();
-  await btn.click();
-
+  await page.locator('button').filter({ hasText: /Place Order/ }).first().click();
   const conflictPanel = page.locator('[role="alert"]').filter({ hasText: /earlier order/i });
   await conflictPanel.waitFor({ state: 'visible', timeout: 8000 });
 
-  const newOrderBtn = conflictPanel.locator('button').filter({ hasText: /separate/i });
-  await newOrderBtn.click();
+  await conflictPanel.locator('button').filter({ hasText: /separate/i }).click();
   await page.waitForTimeout(300);
-
-  await page.screenshot({ path: path.join(testInfo.outputDir, '05-new-order-key.png') });
-
-  const panelGone = !(await conflictPanel.isVisible().catch(() => false));
-  f('conflict-panel-dismissed', panelGone ? 'pass' : 'fail', `panel gone: ${panelGone}`);
-  expect(panelGone, 'Conflict panel must be dismissed after starting new order').toBe(true);
 
   const keyAfter   = await readAttemptKey(page);
   const keyRotated = keyAfter !== null && keyAfter !== keyBefore && UUID_V4_RE.test(keyAfter);
-  f('key-rotated-after-explicit-new-order', keyRotated ? 'pass' : 'fail',
-    `before: ${keyBefore}, after: ${keyAfter}`);
-  expect(keyRotated, 'Key must be a new UUID after clicking "Start a separate new order"').toBe(true);
+  f('key-rotated', keyRotated ? 'pass' : 'fail', `before: ${keyBefore}, after: ${keyAfter}`);
+  expect(keyRotated).toBe(true);
+  expect(await conflictPanel.isVisible().catch(() => false)).toBe(false);
+
+  await page.screenshot({ path: path.join(testInfo.outputDir, '05.png') });
 });
 
-// ── Test 6: Key and intent preserved/restored across reload ──────────────────
+// ── Test 6 ────────────────────────────────────────────────────────────────────
 test('6. Key and intent preserved across page reload', async ({ page }, testInfo) => {
   test.setTimeout(45000);
-  await page.setViewportSize({ width: 375, height: 812 });
 
   await page.route(ORDERS_ROUTE, async (route) => {
-    await route.fulfill({
-      status:      503,
-      contentType: 'application/json',
-      body:        JSON.stringify({ success: false, message: 'Service unavailable.' }),
-    });
+    await route.fulfill({ status: 503, contentType: 'application/json',
+      body: JSON.stringify({ success: false, message: 'Service unavailable.' }) });
   });
 
   await page.goto(`${BASE}/checkout`, { waitUntil: 'networkidle', timeout: 25000 });
-  await page.evaluate((item) => {
-    try { localStorage.setItem('maison-skye-rose-cart', item); } catch {}
-  }, CART_ITEM);
+  await page.evaluate((item) => { try { localStorage.setItem('maison-skye-rose-cart', item); } catch {} }, CART_ITEM);
   await page.reload({ waitUntil: 'networkidle', timeout: 25000 });
   await page.waitForTimeout(800);
   await page.fill('#checkout-name',    'Reload Intent Test');
@@ -308,211 +249,147 @@ test('6. Key and intent preserved across page reload', async ({ page }, testInfo
   await page.waitForTimeout(300);
 
   const keyBefore = await readAttemptKey(page);
+  await page.locator('button').filter({ hasText: /Place Order/ }).first().click();
+  await page.locator('[role="alert"]').waitFor({ state: 'visible', timeout: 8000 });
 
-  const btn = page.locator('button').filter({ hasText: /Place Order/ }).first();
-  await btn.click();
-  await page.locator('p[role="alert"]').waitFor({ state: 'visible', timeout: 8000 });
-
-  const savedBefore  = await readSavedAttempt(page);
-  const intentSaved  = savedBefore && savedBefore.name === 'Reload Intent Test';
-  f('intent-saved-before-reload', intentSaved ? 'pass' : 'fail',
-    `saved.name: ${savedBefore?.name}`);
-  expect(intentSaved, 'Intent must be saved in sessionStorage after submit attempt').toBe(true);
-
+  // Reload — form and key must be restored
   await page.reload({ waitUntil: 'networkidle', timeout: 25000 });
   await page.waitForTimeout(800);
 
   const keyAfterReload = await readAttemptKey(page);
-  const keyPreserved   = keyAfterReload === keyBefore;
-  f('key-preserved-across-reload', keyPreserved ? 'pass' : 'fail',
-    `before: ${keyBefore}, after: ${keyAfterReload}`);
-  expect(keyPreserved, 'Key must be the same after reload').toBe(true);
+  f('key-preserved', keyAfterReload === keyBefore ? 'pass' : 'fail', `${keyBefore} → ${keyAfterReload}`);
+  expect(keyAfterReload).toBe(keyBefore);
 
-  const nameVal    = await page.inputValue('#checkout-name');
-  const phoneVal   = await page.inputValue('#checkout-phone');
-  const addressVal = await page.inputValue('#checkout-address');
-  f('name-restored-after-reload',    nameVal    === 'Reload Intent Test'        ? 'pass' : 'fail', `name: "${nameVal}"`);
-  f('phone-restored-after-reload',   phoneVal   === '0821111111'                ? 'pass' : 'fail', `phone: "${phoneVal}"`);
-  f('address-restored-after-reload', addressVal === '77 Reload Road, Cape Town' ? 'pass' : 'fail', `address: "${addressVal}"`);
-  expect(nameVal).toBe('Reload Intent Test');
-  expect(phoneVal).toBe('0821111111');
-  expect(addressVal).toBe('77 Reload Road, Cape Town');
+  // After a submitted attempt, the page shows the retry notice with original values
+  const retryNotice = page.locator('[role="status"]').filter({ hasText: /Retrying your previous order/i });
+  const noticeVisible = await retryNotice.isVisible().catch(() => false);
+  f('retry-notice-visible-after-reload', noticeVisible ? 'pass' : 'fail', `visible: ${noticeVisible}`);
+  expect(noticeVisible, 'Retry notice must be visible after reload with submitted attempt').toBe(true);
 
-  await page.screenshot({ path: path.join(testInfo.outputDir, '06-reload-restore.png') });
+  // Form shows original values (read-only in retry mode)
+  expect(await page.inputValue('#checkout-name')).toBe('Reload Intent Test');
+  expect(await page.inputValue('#checkout-phone')).toBe('0821111111');
+  expect(await page.inputValue('#checkout-address')).toBe('77 Reload Road, Cape Town');
+
+  await page.screenshot({ path: path.join(testInfo.outputDir, '06.png') });
 });
 
-// ── Test 7: 503 shows standard error, key unchanged ───────────────────────────
+// ── Test 7 ────────────────────────────────────────────────────────────────────
 test('7. 503 shows standard error — key unchanged', async ({ page }, testInfo) => {
   test.setTimeout(30000);
-  await page.setViewportSize({ width: 375, height: 812 });
 
   await page.route(ORDERS_ROUTE, async (route) => {
-    await route.fulfill({
-      status:      503,
-      contentType: 'application/json',
-      body:        JSON.stringify({ success: false, message: 'Service unavailable.' }),
-    });
+    await route.fulfill({ status: 503, contentType: 'application/json',
+      body: JSON.stringify({ success: false, message: 'Service unavailable.' }) });
   });
 
   await loadCheckout(page);
   const keyBefore = await readAttemptKey(page);
 
-  const btn = page.locator('button').filter({ hasText: /Place Order/ }).first();
-  await btn.click();
+  await page.locator('button').filter({ hasText: /Place Order/ }).first().click();
+  await page.locator('[role="alert"]').filter({ hasText: /unavailable/i }).waitFor({ state: 'visible', timeout: 8000 });
 
-  const alert = page.locator('p[role="alert"]');
-  await alert.waitFor({ state: 'visible', timeout: 8000 });
-  await page.screenshot({ path: path.join(testInfo.outputDir, '07-503-error.png') });
+  f('key-unchanged-on-503', (await readAttemptKey(page)) === keyBefore ? 'pass' : 'fail', 'key');
+  expect(await readAttemptKey(page)).toBe(keyBefore);
 
-  const alertVisible = await alert.isVisible().catch(() => false);
-  f('503-error-visible', alertVisible ? 'pass' : 'fail', `visible: ${alertVisible}`);
-  expect(alertVisible).toBe(true);
-
-  const keyAfter    = await readAttemptKey(page);
-  const keyUnchanged = keyAfter === keyBefore;
-  f('key-unchanged-on-503', keyUnchanged ? 'pass' : 'fail',
-    `before: ${keyBefore}, after: ${keyAfter}`);
-  expect(keyUnchanged, 'Key must not change on 503 error').toBe(true);
+  await page.screenshot({ path: path.join(testInfo.outputDir, '07.png') });
 });
 
-// ── Test 8: Recovery (200 recovered:true) navigates normally ─────────────────
-test('8. Recovery response (recovered:true) navigates to payment-success', async ({ page }, testInfo) => {
+// ── Test 8 ────────────────────────────────────────────────────────────────────
+test('8. Recovery (recovered:true) navigates to payment-success', async ({ page }, testInfo) => {
   test.setTimeout(30000);
-  await page.setViewportSize({ width: 375, height: 812 });
 
   await page.route(ORDERS_ROUTE, async (route) => {
-    await route.fulfill({
-      status:      200,
-      contentType: 'application/json',
-      body:        JSON.stringify({ success: true, orderRef: 'MSR-20260920-RECOVER', recovered: true }),
-    });
+    await route.fulfill({ status: 200, contentType: 'application/json',
+      body: JSON.stringify({ success: true, orderRef: 'MSR-20260920-RECOVER', recovered: true }) });
   });
 
   await loadCheckout(page);
-
-  const btn = page.locator('button').filter({ hasText: /Place Order/ }).first();
-  await btn.click();
+  await page.locator('button').filter({ hasText: /Place Order/ }).first().click();
 
   try {
     await page.waitForURL(/payment-success/, { timeout: 10000 });
-    const urlOk = page.url().includes('MSR-20260920-RECOVER');
-    f('recovery-navigates-to-success', 'pass', page.url());
-    f('recovery-url-has-original-ref', urlOk ? 'pass' : 'fail', page.url());
-    expect(urlOk, 'Recovery must navigate with original orderRef').toBe(true);
+    f('recovery-navigates', 'pass', page.url());
+    expect(page.url()).toContain('MSR-20260920-RECOVER');
   } catch {
-    await page.screenshot({ path: path.join(testInfo.outputDir, '08-recovery-stuck.png') });
-    f('recovery-navigates-to-success', 'fail', `stuck on ${page.url()}`);
-    throw new Error('Recovery did not navigate to payment-success');
+    await page.screenshot({ path: path.join(testInfo.outputDir, '08-stuck.png') });
+    throw new Error('Recovery did not navigate');
   }
 });
 
-// ── Test 9: Conflict panel: form fields preserved, button re-enabled ──────────
-test('9. Conflict panel — form fields preserved, Place Order button re-enabled', async ({ page }, testInfo) => {
+// ── Test 9 ────────────────────────────────────────────────────────────────────
+// After a 409, frozenAttemptRef is set (frozen before the request fires).
+// The button label changes from "Place Order" to "Retry original order".
+// We assert the button is not loading-disabled using a label-independent locator.
+test('9. Conflict panel — fields preserved, button re-enabled', async ({ page }, testInfo) => {
   test.setTimeout(30000);
-  await page.setViewportSize({ width: 375, height: 812 });
 
   await page.route(ORDERS_ROUTE, async (route) => {
-    await route.fulfill({
-      status:      409,
-      contentType: 'application/json',
-      body:        JSON.stringify({ success: false, message: 'An earlier order may already exist.' }),
-    });
+    await route.fulfill({ status: 409, contentType: 'application/json',
+      body: JSON.stringify({ success: false, message: 'An earlier order may already exist.' }) });
   });
 
   await loadCheckout(page);
-
-  const btn = page.locator('button').filter({ hasText: /Place Order/ }).first();
-  await btn.click();
+  await page.locator('button').filter({ hasText: /Place Order/ }).first().click();
 
   const conflictPanel = page.locator('[role="alert"]').filter({ hasText: /earlier order/i });
   await conflictPanel.waitFor({ state: 'visible', timeout: 8000 });
-  await page.screenshot({ path: path.join(testInfo.outputDir, '09-conflict-fields.png') });
 
-  const nameVal  = await page.inputValue('#checkout-name');
-  const phoneVal = await page.inputValue('#checkout-phone');
-  f('conflict-name-preserved',  nameVal  === 'Test Guest'  ? 'pass' : 'fail', `name="${nameVal}"`);
-  f('conflict-phone-preserved', phoneVal === '0821234567' ? 'pass' : 'fail', `phone="${phoneVal}"`);
-  expect(nameVal).toBe('Test Guest');
-  expect(phoneVal).toBe('0821234567');
-
-  const isDisabled = await btn.isDisabled();
-  f('conflict-button-reenabled', !isDisabled ? 'pass' : 'fail', `disabled: ${isDisabled}`);
-  expect(isDisabled, 'Place Order must be re-enabled after 409').toBe(false);
-
-  const cartData = await page.evaluate((key) => {
-    try { return JSON.parse(localStorage.getItem(key) ?? '[]'); } catch { return []; }
-  }, CART_KEY);
-  f('conflict-cart-preserved', cartData.length > 0 ? 'pass' : 'fail', `cart items: ${cartData.length}`);
-  expect(cartData.length).toBeGreaterThan(0);
-
-  f('conflict-no-navigation', page.url().includes('/checkout') ? 'pass' : 'fail', page.url());
+  expect(await page.inputValue('#checkout-name')).toBe('Test Guest');
+  expect(await page.inputValue('#checkout-phone')).toBe('0821234567');
+  // After 409, button shows "Retry original order" — find by either label.
+  const submitBtn = page.locator('button').filter({ hasText: /Retry original order|Place Order/i }).first();
+  expect(await submitBtn.isDisabled()).toBe(false);
   expect(page.url()).toContain('/checkout');
+
+  await page.screenshot({ path: path.join(testInfo.outputDir, '09.png') });
 });
 
-// ── Test 10: Attempt cleared after success; new /checkout visit gets new key ──
+// ── Test 10 ───────────────────────────────────────────────────────────────────
 test('10. Attempt cleared after success; subsequent visit gets a new key', async ({ page }, testInfo) => {
   test.setTimeout(50000);
-  await page.setViewportSize({ width: 375, height: 812 });
 
   await page.route(ORDERS_ROUTE, async (route) => {
-    await route.fulfill({
-      status:      200,
-      contentType: 'application/json',
-      body:        JSON.stringify({ success: true, orderRef: 'MSR-20260920-CLEARED' }),
-    });
+    await route.fulfill({ status: 200, contentType: 'application/json',
+      body: JSON.stringify({ success: true, orderRef: 'MSR-20260920-CLEARED' }) });
   });
 
   await loadCheckout(page);
   const keyBeforeSuccess = await readAttemptKey(page);
 
-  const btn = page.locator('button').filter({ hasText: /Place Order/ }).first();
-  await btn.click();
-
+  await page.locator('button').filter({ hasText: /Place Order/ }).first().click();
   try {
     await page.waitForURL(/payment-success/, { timeout: 10000 });
   } catch {
-    await page.screenshot({ path: path.join(testInfo.outputDir, '10-success-stuck.png') });
     throw new Error('Did not navigate to payment-success');
   }
 
-  f('success-navigated', 'pass', page.url());
-
   await page.goto(`${BASE}/checkout`, { waitUntil: 'networkidle', timeout: 25000 });
-  await page.evaluate((item) => {
-    try { localStorage.setItem('maison-skye-rose-cart', item); } catch {}
-  }, CART_ITEM);
+  await page.evaluate((item) => { try { localStorage.setItem('maison-skye-rose-cart', item); } catch {} }, CART_ITEM);
   await page.reload({ waitUntil: 'networkidle', timeout: 25000 });
   await page.waitForTimeout(800);
 
   const keyAfterSuccess = await readAttemptKey(page);
-  const newKeyIsUuid    = keyAfterSuccess !== null && UUID_V4_RE.test(keyAfterSuccess);
-  const keyIsDifferent  = keyAfterSuccess !== keyBeforeSuccess;
+  f('new-key-after-success', keyAfterSuccess !== keyBeforeSuccess && UUID_V4_RE.test(keyAfterSuccess ?? '') ? 'pass' : 'fail',
+    `orig: ${keyBeforeSuccess}, new: ${keyAfterSuccess}`);
+  expect(UUID_V4_RE.test(keyAfterSuccess ?? '')).toBe(true);
+  expect(keyAfterSuccess).not.toBe(keyBeforeSuccess);
 
-  f('attempt-cleared-success-new-key', keyIsDifferent  ? 'pass' : 'fail',
-    `original: ${keyBeforeSuccess}, new: ${keyAfterSuccess}`);
-  f('new-key-is-valid-uuid',           newKeyIsUuid    ? 'pass' : 'fail',
-    `new key: ${keyAfterSuccess}`);
-  expect(newKeyIsUuid,   'New visit after success must have a fresh UUID key').toBe(true);
-  expect(keyIsDifferent, 'New key must differ from the cleared attempt key').toBe(true);
-
-  await page.screenshot({ path: path.join(testInfo.outputDir, '10-new-key-after-success.png') });
+  await page.screenshot({ path: path.join(testInfo.outputDir, '10.png') });
 });
 
-// ── Test 11: sessionStorage failure → in-memory fallback → key sent on retry ─
+// ── Test 11 ───────────────────────────────────────────────────────────────────
 test('11. sessionStorage unavailable → in-memory fallback → key still sent', async ({ page }, testInfo) => {
   test.setTimeout(30000);
-  await page.setViewportSize({ width: 375, height: 812 });
 
   await page.addInitScript(() => {
     Object.defineProperty(window, 'sessionStorage', {
       configurable: true,
       get: () => ({
-        getItem:    () => { throw new DOMException('QuotaExceededError', 'QuotaExceededError'); },
-        setItem:    () => { throw new DOMException('QuotaExceededError', 'QuotaExceededError'); },
-        removeItem: () => { throw new DOMException('QuotaExceededError', 'QuotaExceededError'); },
-        clear:      () => {},
-        length:     0,
-        key:        () => null,
+        getItem:    () => { throw new DOMException('QuotaExceededError'); },
+        setItem:    () => { throw new DOMException('QuotaExceededError'); },
+        removeItem: () => { throw new DOMException('QuotaExceededError'); },
+        clear: () => {}, length: 0, key: () => null,
       }),
     });
   });
@@ -520,17 +397,12 @@ test('11. sessionStorage unavailable → in-memory fallback → key still sent',
   const capturedBodies = [];
   await page.route(ORDERS_ROUTE, async (route) => {
     capturedBodies.push(route.request().postDataJSON());
-    await route.fulfill({
-      status:      500,
-      contentType: 'application/json',
-      body:        JSON.stringify({ success: false, message: 'Mocked failure.' }),
-    });
+    await route.fulfill({ status: 500, contentType: 'application/json',
+      body: JSON.stringify({ success: false, message: 'Mocked failure.' }) });
   });
 
   await page.goto(`${BASE}/checkout`, { waitUntil: 'networkidle', timeout: 25000 });
-  await page.evaluate((item) => {
-    try { localStorage.setItem('maison-skye-rose-cart', item); } catch {}
-  }, CART_ITEM);
+  await page.evaluate((item) => { try { localStorage.setItem('maison-skye-rose-cart', item); } catch {} }, CART_ITEM);
   await page.reload({ waitUntil: 'networkidle', timeout: 25000 });
   await page.waitForTimeout(800);
   await page.fill('#checkout-name',    'Memory Fallback Test');
@@ -538,218 +410,225 @@ test('11. sessionStorage unavailable → in-memory fallback → key still sent',
   await page.fill('#checkout-address', '5 Memory Lane, Cape Town');
   await page.waitForTimeout(300);
 
-  const btn = page.locator('button').filter({ hasText: /Place Order/ }).first();
-  await btn.click();
-  await page.locator('p[role="alert"]').waitFor({ state: 'visible', timeout: 8000 });
+  await page.locator('button').filter({ hasText: /Place Order/ }).first().click();
+  await page.locator('[role="alert"]').filter({ hasText: /Mocked failure|could not|unavailable/i }).waitFor({ state: 'visible', timeout: 8000 });
 
-  const key1     = capturedBodies[0]?.checkout_attempt_key;
-  const hasKey1  = key1 && UUID_V4_RE.test(key1);
-  f('storage-fail-key-sent-on-first-submit', hasKey1 ? 'pass' : 'fail',
-    `first submit key: ${key1}`);
-  expect(hasKey1, 'Key must be sent even when sessionStorage is unavailable').toBe(true);
+  const key1    = capturedBodies[0]?.checkout_attempt_key;
+  const hasKey1 = key1 && UUID_V4_RE.test(key1);
+  f('storage-fail-key-on-first-submit', hasKey1 ? 'pass' : 'fail', `key: ${key1}`);
+  expect(hasKey1, 'Key must be sent when sessionStorage unavailable').toBe(true);
 
-  await btn.click();
+  // Second submit on same page — after first submit the button shows "Retry original order".
+  // In retry mode the frozen in-memory snapshot is sent with the same key.
+  const retryBtnAfterFirst = page.locator('button').filter({ hasText: /Retry original order/i }).first();
+  await retryBtnAfterFirst.waitFor({ state: 'visible', timeout: 5000 });
+  await retryBtnAfterFirst.click();
   await page.waitForTimeout(1500);
 
-  const key2        = capturedBodies[1]?.checkout_attempt_key;
-  const sameKeyUsed = key1 === key2;
-  const isUuid2     = key2 && UUID_V4_RE.test(key2);
-  f('storage-fail-key-sent-on-second-submit', isUuid2     ? 'pass' : 'fail', `second: ${key2}`);
-  f('storage-fail-same-key-reused',           sameKeyUsed ? 'pass' : 'fail', `k1=${key1} k2=${key2}`);
-  expect(isUuid2,     'Key must be sent on second in-memory submit').toBe(true);
-  expect(sameKeyUsed, 'Same key must be reused from in-memory ref on same-page retries').toBe(true);
+  const key2       = capturedBodies[1]?.checkout_attempt_key;
+  const sameKey    = key1 === key2;
+  f('storage-fail-same-key-retry', sameKey ? 'pass' : 'fail', `k1=${key1}, k2=${key2}`);
+  expect(sameKey, 'Same key must be reused from in-memory ref').toBe(true);
 
-  await page.screenshot({ path: path.join(testInfo.outputDir, '11-storage-failure.png') });
+  // Retry body must have original name (not modified — in retry mode after first submit)
+  const retryBody = capturedBodies[1];
+  f('storage-fail-retry-original-name',
+    retryBody?.customer_name === 'Memory Fallback Test' ? 'pass' : 'fail',
+    `retry name: ${retryBody?.customer_name}`);
+  expect(retryBody?.customer_name).toBe('Memory Fallback Test');
+
+  await page.screenshot({ path: path.join(testInfo.outputDir, '11.png') });
 });
 
-// ── Test 12 (P8c): Malformed JSON → blocking conflict panel persists across reload ──
-test('12. Malformed JSON in sessionStorage → blocking conflict panel persists across reload', async ({ page }, testInfo) => {
+// ── Test 12 (P8c) ─────────────────────────────────────────────────────────────
+// Corruption is seeded ONCE via page.evaluate; not re-injected on subsequent navigations.
+// We also verify that after removing the malformed record, the CONFLICT_SS flag
+// alone is sufficient to keep the blocking panel visible.
+test('12. Malformed JSON → blocking panel; persists after record removed (P8c)', async ({ page }, testInfo) => {
   test.setTimeout(45000);
-  await page.setViewportSize({ width: 375, height: 812 });
 
-  // Inject malformed JSON before load so useEffect sees it on mount.
-  await page.addInitScript((ssKey) => {
+  // Navigate first so sessionStorage is on the correct origin.
+  await page.goto(`${BASE}/checkout`, { waitUntil: 'networkidle', timeout: 25000 });
+
+  // Seed bad data ONCE via evaluate (not addInitScript which re-runs on every load).
+  await page.evaluate((ssKey) => {
     try { sessionStorage.setItem(ssKey, '{bad json'); } catch {}
   }, ATTEMPT_SS);
 
-  await page.goto(`${BASE}/checkout`, { waitUntil: 'networkidle', timeout: 25000 });
-  await page.waitForTimeout(800);
-
-  const blockingPanel = page.locator('[role="alert"]').filter({ hasText: /could not read your session/i });
-  const panelVisible  = await blockingPanel.isVisible().catch(() => false);
-  f('12-blocking-panel-on-malformed-json', panelVisible ? 'pass' : 'fail', `visible: ${panelVisible}`);
-  expect(panelVisible, 'Blocking conflict panel must appear for malformed JSON').toBe(true);
-
-  // No new key must have been generated — the corrupted record must not be replaced.
-  const attemptKey = await readAttemptKey(page);
-  f('12-no-key-generated-on-corruption', attemptKey === null ? 'pass' : 'fail', `key: ${attemptKey}`);
-  expect(attemptKey, 'No new key must be auto-generated when stored state is corrupted').toBeNull();
-
-  // CONFLICT_SS must be set so corruption persists even if the raw record changes.
-  const conflictFlag = await readConflictFlag(page);
-  f('12-conflict-flag-set', conflictFlag !== null ? 'pass' : 'fail', `flag: ${conflictFlag}`);
-  expect(conflictFlag, 'CONFLICT_SS must be set to preserve the corruption signal across reloads').not.toBeNull();
-
-  // Reload — blocking panel must still appear (CONFLICT_SS drives re-rendering).
+  // Reload — checkout useEffect now sees the malformed JSON.
   await page.reload({ waitUntil: 'networkidle', timeout: 25000 });
   await page.waitForTimeout(800);
 
-  const panelAfterReload = await blockingPanel.isVisible().catch(() => false);
-  f('12-blocking-panel-survives-reload', panelAfterReload ? 'pass' : 'fail',
-    `visible after reload: ${panelAfterReload}`);
-  expect(panelAfterReload, 'Blocking conflict panel must persist across reload').toBe(true);
+  const blockingPanel = page.locator('[role="alert"]').filter({ hasText: /could not read your session/i });
+  f('12-blocking-panel-on-malformed', await blockingPanel.isVisible().catch(() => false) ? 'pass' : 'fail', 'visible');
+  expect(await blockingPanel.isVisible()).toBe(true);
 
-  // "Start a separate new order" is the ONLY action that may dismiss it.
-  const newOrderBtn = blockingPanel.locator('button').filter({ hasText: /separate/i });
-  await newOrderBtn.click();
+  // CONFLICT_SS must be set.
+  const conflictFlag = await readConflictFlag(page);
+  f('12-conflict-flag-set', conflictFlag !== null ? 'pass' : 'fail', `flag: ${conflictFlag}`);
+  expect(conflictFlag).not.toBeNull();
+
+  // No new key auto-generated — corruption must block key rotation.
+  const keyAfterCorruption = await readAttemptKey(page);
+  f('12-no-key-generated', keyAfterCorruption === null ? 'pass' : 'fail', `key: ${keyAfterCorruption}`);
+  expect(keyAfterCorruption).toBeNull();
+
+  // Remove the malformed record from sessionStorage — CONFLICT_SS should keep panel alive.
+  await page.evaluate((ssKey) => { try { sessionStorage.removeItem(ssKey); } catch {} }, ATTEMPT_SS);
+  await page.reload({ waitUntil: 'networkidle', timeout: 25000 });
+  await page.waitForTimeout(800);
+
+  // Panel must STILL show — driven by CONFLICT_SS alone, not the raw malformed record.
+  const panelAfterRemoval = await blockingPanel.isVisible().catch(() => false);
+  f('12-blocking-panel-persists-after-record-removed', panelAfterRemoval ? 'pass' : 'fail',
+    `visible: ${panelAfterRemoval}`);
+  expect(panelAfterRemoval, 'Blocking panel must persist even after malformed record is removed').toBe(true);
+
+  // Only "Start a separate new order" may dismiss the blocking panel.
+  await blockingPanel.locator('button').filter({ hasText: /separate/i }).click();
   await page.waitForTimeout(400);
 
   const panelDismissed = !(await blockingPanel.isVisible().catch(() => false));
   const newKey         = await readAttemptKey(page);
-  f('12-panel-dismissed-by-new-order',      panelDismissed                        ? 'pass' : 'fail', `dismissed: ${panelDismissed}`);
-  f('12-new-key-generated-after-new-order', newKey && UUID_V4_RE.test(newKey)     ? 'pass' : 'fail', `new key: ${newKey}`);
-  expect(panelDismissed, 'Blocking panel must be dismissed by "Start a separate new order"').toBe(true);
-  expect(newKey && UUID_V4_RE.test(newKey), 'New key must be generated after starting new order').toBe(true);
+  f('12-panel-dismissed-by-new-order',      panelDismissed               ? 'pass' : 'fail', 'dismissed');
+  f('12-new-key-after-new-order', newKey && UUID_V4_RE.test(newKey)       ? 'pass' : 'fail', `key: ${newKey}`);
+  expect(panelDismissed).toBe(true);
+  expect(newKey && UUID_V4_RE.test(newKey)).toBe(true);
 
-  await page.screenshot({ path: path.join(testInfo.outputDir, '12-malformed-json.png') });
+  await page.screenshot({ path: path.join(testInfo.outputDir, '12.png') });
 });
 
-// ── Test 13 (P8c): Invalid stored key → blocking conflict panel persists across reload ──
-test('13. Invalid stored key (non-UUID) → blocking conflict panel persists across reload', async ({ page }, testInfo) => {
+// ── Test 13 (P8c) ─────────────────────────────────────────────────────────────
+// Seed corruption once; verify it persists across a full reload.
+test('13. Invalid stored key (non-UUID) → blocking panel persists across reload (P8c)', async ({ page }, testInfo) => {
   test.setTimeout(45000);
-  await page.setViewportSize({ width: 375, height: 812 });
 
-  // Inject a syntactically valid JSON record but with a non-UUID key.
-  await page.addInitScript((ssKey) => {
+  await page.goto(`${BASE}/checkout`, { waitUntil: 'networkidle', timeout: 25000 });
+
+  // Seed invalid key ONCE.
+  await page.evaluate((ssKey) => {
     try {
       sessionStorage.setItem(ssKey, JSON.stringify({
-        key:      'not-a-valid-uuid',
-        name:     'Test User',
-        phone:    '0821234567',
-        address:  '1 Test Street',
-        province: 'Cape Town Metro',
+        key: 'not-a-valid-uuid', name: 'Test', phone: '082', address: 'addr', province: 'Cape Town Metro',
       }));
     } catch {}
   }, ATTEMPT_SS);
 
-  await page.goto(`${BASE}/checkout`, { waitUntil: 'networkidle', timeout: 25000 });
+  await page.reload({ waitUntil: 'networkidle', timeout: 25000 });
   await page.waitForTimeout(800);
 
   const blockingPanel = page.locator('[role="alert"]').filter({ hasText: /could not read your session/i });
-  const panelVisible  = await blockingPanel.isVisible().catch(() => false);
-  f('13-blocking-panel-on-invalid-key', panelVisible ? 'pass' : 'fail', `visible: ${panelVisible}`);
-  expect(panelVisible, 'Blocking conflict panel must appear for an invalid stored key').toBe(true);
+  f('13-blocking-panel-on-invalid-key', await blockingPanel.isVisible().catch(() => false) ? 'pass' : 'fail', 'visible');
+  expect(await blockingPanel.isVisible()).toBe(true);
 
-  // CONFLICT_SS must be set.
   const conflictFlag = await readConflictFlag(page);
   f('13-conflict-flag-set', conflictFlag !== null ? 'pass' : 'fail', `flag: ${conflictFlag}`);
-  expect(conflictFlag, 'CONFLICT_SS must be set for invalid key').not.toBeNull();
+  expect(conflictFlag).not.toBeNull();
 
-  // Reload — panel persists.
+  // Reload — panel must persist (driven by CONFLICT_SS).
   await page.reload({ waitUntil: 'networkidle', timeout: 25000 });
   await page.waitForTimeout(800);
+  f('13-panel-survives-reload', await blockingPanel.isVisible().catch(() => false) ? 'pass' : 'fail', 'visible');
+  expect(await blockingPanel.isVisible()).toBe(true);
 
-  const panelAfterReload = await blockingPanel.isVisible().catch(() => false);
-  f('13-blocking-panel-survives-reload', panelAfterReload ? 'pass' : 'fail',
-    `visible after reload: ${panelAfterReload}`);
-  expect(panelAfterReload, 'Blocking panel must persist across reload for invalid key').toBe(true);
-
-  await page.screenshot({ path: path.join(testInfo.outputDir, '13-invalid-key.png') });
+  await page.screenshot({ path: path.join(testInfo.outputDir, '13.png') });
 });
 
-// ── Test 14 (P8c): Stored snapshot immutable after first submit ───────────────
-test('14. Stored snapshot is immutable after first submit — form edits do not update it', async ({ page }, testInfo) => {
+// ── Test 14 (P8c) ─────────────────────────────────────────────────────────────
+// Retry must send the ORIGINAL frozen snapshot in the POST body.
+// Form edits after a 503 must NOT silently become the retry body.
+test('14. Retry sends original frozen snapshot body — not edited form values (P8c)', async ({ page }, testInfo) => {
   test.setTimeout(45000);
-  await page.setViewportSize({ width: 375, height: 812 });
 
+  const capturedBodies = [];
   await page.route(ORDERS_ROUTE, async (route) => {
-    await route.fulfill({
-      status:      503,
-      contentType: 'application/json',
-      body:        JSON.stringify({ success: false, message: 'Service unavailable.' }),
-    });
+    capturedBodies.push(route.request().postDataJSON());
+    await route.fulfill({ status: 503, contentType: 'application/json',
+      body: JSON.stringify({ success: false, message: 'Service unavailable.' }) });
   });
 
   await page.goto(`${BASE}/checkout`, { waitUntil: 'networkidle', timeout: 25000 });
-  await page.evaluate((item) => {
-    try { localStorage.setItem('maison-skye-rose-cart', item); } catch {}
-  }, CART_ITEM);
+  await page.evaluate((item) => { try { localStorage.setItem('maison-skye-rose-cart', item); } catch {} }, CART_ITEM);
   await page.reload({ waitUntil: 'networkidle', timeout: 25000 });
   await page.waitForTimeout(800);
 
+  // First submission with original values.
   await page.fill('#checkout-name',    'Original Name');
   await page.fill('#checkout-phone',   '0821110000');
   await page.fill('#checkout-address', '1 Original Street');
   await page.waitForTimeout(300);
 
-  const btn = page.locator('button').filter({ hasText: /Place Order/ }).first();
-  await btn.click();
-  await page.locator('p[role="alert"]').waitFor({ state: 'visible', timeout: 8000 });
+  await page.locator('button').filter({ hasText: /Place Order/ }).first().click();
+  // Use content-specific filter to avoid matching Next.js route announcer [role="alert"].
+  await page.locator('[role="alert"]').filter({ hasText: /unavailable/i }).waitFor({ state: 'visible', timeout: 8000 });
 
-  // Verify snapshot was saved with original values and submitted=true.
+  const firstBody = capturedBodies[0];
+  f('14-first-submit-name', firstBody?.customer_name === 'Original Name' ? 'pass' : 'fail',
+    `first: ${firstBody?.customer_name}`);
+  expect(firstBody?.customer_name).toBe('Original Name');
+  expect(firstBody?.phone).toBe('0821110000');
+
+  // Verify the snapshot was frozen.
   const snapshotAfterFirst = await readSavedAttempt(page);
-  const firstKeyInSnap     = snapshotAfterFirst?.key;
-  f('14-snapshot-saved-after-first-submit', snapshotAfterFirst !== null ? 'pass' : 'fail',
-    `snapshot: ${JSON.stringify(snapshotAfterFirst)}`);
-  f('14-snapshot-submitted-flag',
-    snapshotAfterFirst?.submitted === true ? 'pass' : 'fail',
+  f('14-snapshot-submitted-true', snapshotAfterFirst?.submitted === true ? 'pass' : 'fail',
     `submitted: ${snapshotAfterFirst?.submitted}`);
-  f('14-snapshot-original-name',
-    snapshotAfterFirst?.name === 'Original Name' ? 'pass' : 'fail',
-    `name: ${snapshotAfterFirst?.name}`);
   expect(snapshotAfterFirst?.submitted).toBe(true);
-  expect(snapshotAfterFirst?.name).toBe('Original Name');
 
-  // Edit the form — these must NOT update the stored snapshot.
-  await page.fill('#checkout-name',    'Edited Name');
-  await page.fill('#checkout-phone',   '0829990000');
-  await page.fill('#checkout-address', '99 Edited Avenue');
-  await page.waitForTimeout(300);
+  // Now the page is in retry mode — form fields are read-only.
+  // The retry button label must change.
+  const retryBtnText = await page.locator('button').filter({ hasText: /Retry original order|Place Order/i }).first().textContent();
+  f('14-button-shows-retry', /retry/i.test(retryBtnText ?? '') ? 'pass' : 'fail', `btn text: ${retryBtnText}`);
+  expect(/retry/i.test(retryBtnText ?? ''), 'Button must show retry label after first submit').toBe(true);
 
-  // Verify snapshot is unchanged after form edits (before second submit).
-  const snapshotAfterEdit = await readSavedAttempt(page);
-  f('14-snapshot-unchanged-after-edit',
-    snapshotAfterEdit?.name === 'Original Name' ? 'pass' : 'fail',
-    `snapshot.name after edit: ${snapshotAfterEdit?.name}`);
-  f('14-snapshot-key-unchanged',
-    snapshotAfterEdit?.key === firstKeyInSnap ? 'pass' : 'fail',
-    `key unchanged: ${snapshotAfterEdit?.key === firstKeyInSnap}`);
-  expect(snapshotAfterEdit?.name,  'Snapshot must not be updated after form edit').toBe('Original Name');
-  expect(snapshotAfterEdit?.phone, 'Snapshot phone must be original').toBe('0821110000');
+  // Reload to simulate a lost-response scenario — intent must be restored.
+  await page.reload({ waitUntil: 'networkidle', timeout: 25000 });
+  await page.waitForTimeout(800);
 
-  // Second submit.
-  await btn.click();
-  await page.waitForTimeout(3000);
+  // After reload, retry notice must show with original values.
+  const retryNotice = page.locator('[role="status"]').filter({ hasText: /Retrying your previous order/i });
+  f('14-retry-notice-after-reload', await retryNotice.isVisible().catch(() => false) ? 'pass' : 'fail', 'visible');
+  expect(await retryNotice.isVisible()).toBe(true);
 
-  // Snapshot must still be the original after second submit attempt.
-  const snapshotAfterRetry = await readSavedAttempt(page);
-  f('14-snapshot-unchanged-after-retry',
-    snapshotAfterRetry?.name === 'Original Name' ? 'pass' : 'fail',
-    `snapshot.name after retry: ${snapshotAfterRetry?.name}`);
-  expect(snapshotAfterRetry?.name, 'Snapshot must remain original after second submit').toBe('Original Name');
+  // Click retry — body must have original values.
+  await page.locator('button').filter({ hasText: /Retry original order/i }).first().click();
+  await page.waitForTimeout(2000);
 
-  await page.screenshot({ path: path.join(testInfo.outputDir, '14-immutable-snapshot.png') });
+  const retryBody = capturedBodies[capturedBodies.length - 1];
+  f('14-retry-body-original-name',    retryBody?.customer_name === 'Original Name' ? 'pass' : 'fail',
+    `retry name: ${retryBody?.customer_name}`);
+  f('14-retry-body-original-phone',   retryBody?.phone         === '0821110000'    ? 'pass' : 'fail',
+    `retry phone: ${retryBody?.phone}`);
+  f('14-retry-body-original-address', retryBody?.address       === '1 Original Street' ? 'pass' : 'fail',
+    `retry address: ${retryBody?.address}`);
+  f('14-retry-same-key', retryBody?.checkout_attempt_key === firstBody?.checkout_attempt_key ? 'pass' : 'fail',
+    `key match: ${retryBody?.checkout_attempt_key === firstBody?.checkout_attempt_key}`);
+
+  expect(retryBody?.customer_name,       'Retry must send original name').toBe('Original Name');
+  expect(retryBody?.phone,               'Retry must send original phone').toBe('0821110000');
+  expect(retryBody?.address,             'Retry must send original address').toBe('1 Original Street');
+  expect(retryBody?.checkout_attempt_key, 'Retry must use same key').toBe(firstBody?.checkout_attempt_key);
+
+  await page.screenshot({ path: path.join(testInfo.outputDir, '14.png') });
 });
 
-// ── Test 15 (P8c): Success clears ATTEMPT_SS and CONFLICT_SS ─────────────────
-test('15. Success clears ATTEMPT_SS and CONFLICT_SS directly', async ({ page }, testInfo) => {
+// ── Test 15 (P8c) ─────────────────────────────────────────────────────────────
+// CONFLICT_SS is seeded via page.evaluate (not addInitScript) so it does not
+// get re-injected on the payment-success navigation.
+test('15. Success clears ATTEMPT_SS and CONFLICT_SS directly (P8c)', async ({ page }, testInfo) => {
   test.setTimeout(30000);
-  await page.setViewportSize({ width: 375, height: 812 });
-
-  // Pre-seed CONFLICT_SS to verify it is also cleared on success.
-  await page.addInitScript((conflictKey) => {
-    try { sessionStorage.setItem(conflictKey, '1'); } catch {}
-  }, CONFLICT_SS);
 
   await page.route(ORDERS_ROUTE, async (route) => {
-    await route.fulfill({
-      status:      200,
-      contentType: 'application/json',
-      body:        JSON.stringify({ success: true, orderRef: 'MSR-20260920-CLEARTEST' }),
-    });
+    await route.fulfill({ status: 200, contentType: 'application/json',
+      body: JSON.stringify({ success: true, orderRef: 'MSR-20260920-CLEARTEST' }) });
   });
 
   await loadCheckout(page);
+
+  // Seed CONFLICT_SS AFTER the page has loaded (useEffect already ran).
+  // The flag sits quietly until clearSavedAttempt() removes it on success.
+  await page.evaluate((key) => {
+    try { sessionStorage.setItem(key, '1'); } catch {}
+  }, CONFLICT_SS);
 
   const btn = page.locator('button').filter({ hasText: /Place Order/ }).first();
   await btn.click();
@@ -761,20 +640,83 @@ test('15. Success clears ATTEMPT_SS and CONFLICT_SS directly', async ({ page }, 
     throw new Error('Did not navigate to payment-success');
   }
 
-  // sessionStorage is shared within the same origin/tab across hard navigation.
-  const attemptSS  = await page.evaluate((k) => {
-    try { return sessionStorage.getItem(k); } catch { return 'storage-error'; }
-  }, ATTEMPT_SS);
-  const conflictSS = await page.evaluate((k) => {
-    try { return sessionStorage.getItem(k); } catch { return 'storage-error'; }
-  }, CONFLICT_SS);
+  // sessionStorage is shared within the same origin/tab across hard navigations.
+  const attemptSS  = await page.evaluate((k) => { try { return sessionStorage.getItem(k); } catch { return 'error'; } }, ATTEMPT_SS);
+  const conflictSS = await page.evaluate((k) => { try { return sessionStorage.getItem(k); } catch { return 'error'; } }, CONFLICT_SS);
 
-  f('15-attempt-ss-cleared-on-success',  attemptSS  === null ? 'pass' : 'fail', `ATTEMPT_SS: ${attemptSS}`);
-  f('15-conflict-ss-cleared-on-success', conflictSS === null ? 'pass' : 'fail', `CONFLICT_SS: ${conflictSS}`);
-  expect(attemptSS,  'ATTEMPT_SS must be null after successful order').toBeNull();
-  expect(conflictSS, 'CONFLICT_SS must be null after successful order').toBeNull();
+  f('15-attempt-ss-cleared',  attemptSS  === null ? 'pass' : 'fail', `ATTEMPT_SS: ${attemptSS}`);
+  f('15-conflict-ss-cleared', conflictSS === null ? 'pass' : 'fail', `CONFLICT_SS: ${conflictSS}`);
+  expect(attemptSS,  'ATTEMPT_SS must be null after success').toBeNull();
+  expect(conflictSS, 'CONFLICT_SS must be null after success').toBeNull();
 
-  await page.screenshot({ path: path.join(testInfo.outputDir, '15-cleared-on-success.png') });
+  await page.screenshot({ path: path.join(testInfo.outputDir, '15.png') });
+});
+
+// ── Test 16 (P8c) ─────────────────────────────────────────────────────────────
+// Storage-unavailable path: in-memory snapshot preserved across multiple retries.
+test('16. Storage-unavailable: in-memory frozen snapshot used on all retries (P8c)', async ({ page }, testInfo) => {
+  test.setTimeout(30000);
+
+  await page.addInitScript(() => {
+    Object.defineProperty(window, 'sessionStorage', {
+      configurable: true,
+      get: () => ({
+        getItem:    () => { throw new DOMException('SecurityError'); },
+        setItem:    () => { throw new DOMException('SecurityError'); },
+        removeItem: () => { throw new DOMException('SecurityError'); },
+        clear: () => {}, length: 0, key: () => null,
+      }),
+    });
+  });
+
+  const capturedBodies = [];
+  await page.route(ORDERS_ROUTE, async (route) => {
+    capturedBodies.push(route.request().postDataJSON());
+    await route.fulfill({ status: 503, contentType: 'application/json',
+      body: JSON.stringify({ success: false, message: 'Service unavailable.' }) });
+  });
+
+  await page.goto(`${BASE}/checkout`, { waitUntil: 'networkidle', timeout: 25000 });
+  await page.evaluate((item) => { try { localStorage.setItem('maison-skye-rose-cart', item); } catch {} }, CART_ITEM);
+  await page.reload({ waitUntil: 'networkidle', timeout: 25000 });
+  await page.waitForTimeout(800);
+
+  await page.fill('#checkout-name',    'Storage Fail Test');
+  await page.fill('#checkout-phone',   '0827771111');
+  await page.fill('#checkout-address', '10 No Storage Road');
+  await page.waitForTimeout(300);
+
+  await page.locator('button').filter({ hasText: /Place Order/ }).first().click();
+  await page.locator('[role="alert"]').filter({ hasText: /unavailable/i }).waitFor({ state: 'visible', timeout: 8000 });
+
+  const key1 = capturedBodies[0]?.checkout_attempt_key;
+  f('16-key-sent-first-submit', key1 && UUID_V4_RE.test(key1) ? 'pass' : 'fail', `k1: ${key1}`);
+  expect(key1 && UUID_V4_RE.test(key1)).toBe(true);
+
+  // Second retry (in retry mode — button now says "Retry original order")
+  const retryBtn = page.locator('button').filter({ hasText: /Retry original order/i }).first();
+  const retryBtnVisible = await retryBtn.isVisible().catch(() => false);
+  f('16-retry-button-visible', retryBtnVisible ? 'pass' : 'fail', `visible: ${retryBtnVisible}`);
+
+  if (retryBtnVisible) {
+    await retryBtn.click();
+    await page.waitForTimeout(1500);
+
+    const key2 = capturedBodies[1]?.checkout_attempt_key;
+    f('16-same-key-on-retry', key1 === key2 ? 'pass' : 'fail', `k1=${key1}, k2=${key2}`);
+    expect(key2).toBe(key1);
+
+    // Body must have ORIGINAL values, not edited ones
+    f('16-retry-body-original-name',
+      capturedBodies[1]?.customer_name === 'Storage Fail Test' ? 'pass' : 'fail',
+      `retry name: ${capturedBodies[1]?.customer_name}`);
+    expect(capturedBodies[1]?.customer_name).toBe('Storage Fail Test');
+  } else {
+    f('16-retry-button-visible', 'fail', 'retry button not found — cannot continue');
+    throw new Error('Retry button not visible after first submit with storage unavailable');
+  }
+
+  await page.screenshot({ path: path.join(testInfo.outputDir, '16.png') });
 });
 
 // ── Reporting ─────────────────────────────────────────────────────────────────

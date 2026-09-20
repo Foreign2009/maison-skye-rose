@@ -46,9 +46,14 @@ export interface OrderDb {
 function safeErrorSummary(err: unknown): string {
   if (!err || typeof err !== "object") return "unknown error";
   const e = err as Record<string, unknown>;
-  // DB/Supabase errors carry a .code — only expose that, not detail/hint.
-  if (typeof e.code === "string") return `DB error ${e.code}`;
-  if (typeof e.message === "string") return e.message.slice(0, 120);
+  // PostgreSQL/Supabase errors carry a SQLSTATE code — safe fixed identifier.
+  if (typeof e.code === "string") return `DB_${e.code}`;
+  // Standard JS error types — category only; never log the message which
+  // may contain internal connection strings or schema fragments.
+  if (err instanceof TypeError)   return "TypeError";
+  if (err instanceof RangeError)  return "RangeError";
+  if (err instanceof SyntaxError) return "SyntaxError";
+  if (err instanceof Error)       return "Error";
   return "unknown error";
 }
 

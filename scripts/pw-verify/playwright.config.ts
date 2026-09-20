@@ -28,9 +28,7 @@ export default defineConfig({
     headless:      true,
     screenshot:    "only-on-failure",
     trace:         "on-first-retry",
-    launchOptions: {
-      args: ["--disable-web-security"],
-    },
+    launchOptions: {},
   },
 
   projects: [
