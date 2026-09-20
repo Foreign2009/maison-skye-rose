@@ -38,6 +38,20 @@ export interface OrderDb {
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
+/**
+ * Returns a safe, sanitized summary of an error for logging.
+ * Never exposes raw Supabase error details, hints, or constraint metadata
+ * that could reveal schema information.
+ */
+function safeErrorSummary(err: unknown): string {
+  if (!err || typeof err !== "object") return "unknown error";
+  const e = err as Record<string, unknown>;
+  // DB/Supabase errors carry a .code — only expose that, not detail/hint.
+  if (typeof e.code === "string") return `DB error ${e.code}`;
+  if (typeof e.message === "string") return e.message.slice(0, 120);
+  return "unknown error";
+}
+
 function generateOrderRef(): string {
   const now     = new Date();
   const dateStr = now.toISOString().slice(0, 10).replace(/-/g, "");
@@ -143,10 +157,7 @@ export async function handleOrder(
     try {
       lookupResult = await db.findByIdempotencyKey(idempotencyKey);
     } catch (lookupErr) {
-      console.error(
-        "[Orders] Idempotency lookup threw:",
-        lookupErr instanceof Error ? lookupErr.message : "unknown",
-      );
+      console.error("[Orders] Idempotency lookup threw:", safeErrorSummary(lookupErr));
       return NextResponse.json(
         { success: false, message: "Service unavailable." },
         { status: 503 },
@@ -154,12 +165,7 @@ export async function handleOrder(
     }
 
     if (lookupResult.error) {
-      console.error(
-        "[Orders] Idempotency lookup error:",
-        lookupResult.error instanceof Error
-          ? lookupResult.error.message
-          : "unknown",
-      );
+      console.error("[Orders] Idempotency lookup error:", safeErrorSummary(lookupResult.error));
       return NextResponse.json(
         { success: false, message: "Service unavailable." },
         { status: 503 },
@@ -295,10 +301,7 @@ export async function handleOrder(
         try {
           raceResult = await db.findByIdempotencyKey(idempotencyKey);
         } catch (raceErr) {
-          console.error(
-            "[Orders] Race recovery lookup threw:",
-            raceErr instanceof Error ? raceErr.message : "unknown",
-          );
+          console.error("[Orders] Race recovery lookup threw:", safeErrorSummary(raceErr));
           return NextResponse.json(
             { success: false, message: "Service unavailable." },
             { status: 503 },
@@ -342,10 +345,7 @@ export async function handleOrder(
       }
 
       // Unrelated insert failure.
-      console.error(
-        "Order save failed:",
-        insertError instanceof Error ? insertError.message : "Supabase write error",
-      );
+      console.error("Order save failed:", safeErrorSummary(insertError));
       return NextResponse.json(
         {
           success: false,
@@ -374,10 +374,7 @@ export async function handleOrder(
     return response;
 
   } catch (err) {
-    console.error(
-      "Orders route error:",
-      err instanceof Error ? err.message : "Unknown error",
-    );
+    console.error("Orders route error:", safeErrorSummary(err));
     return NextResponse.json(
       {
         success: false,
@@ -433,10 +430,7 @@ export async function POST(request: Request) {
     };
     return handleOrder(body, db);
   } catch (err) {
-    console.error(
-      "Orders route error:",
-      err instanceof Error ? err.message : "Unknown error",
-    );
+    console.error("Orders route error:", safeErrorSummary(err));
     return NextResponse.json(
       {
         success: false,

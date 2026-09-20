@@ -12,18 +12,34 @@ import { COLLECTION_PROVINCE, computeDelivery } from "../lib/commerce/delivery";
 
 // ── Attempt storage ───────────────────────────────────────────────────────────
 
-const ATTEMPT_SS = "msr_checkout_attempt";
+const ATTEMPT_SS  = "msr_checkout_attempt";
+// Persists a "potentially unresolved" signal across reloads when the stored
+// attempt record is found to be malformed or invalid on mount. Cleared only
+// when the user explicitly starts a new order or a submission succeeds.
+const CONFLICT_SS = "msr_checkout_conflict";
 
 const UUID_V4_RE =
   /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
+type CanonicalItem = { id: string; size: string; quantity: number };
+
 type SavedAttempt = {
-  key:      string;
-  name:     string;
-  phone:    string;
-  address:  string;
-  province: string;
+  key:       string;
+  name:      string;
+  phone:     string;
+  address:   string;
+  province:  string;
+  items:     CanonicalItem[];
+  // True once the first request has been sent. The snapshot (all other fields)
+  // is immutable once submitted — subsequent form edits are never written back.
+  submitted: boolean;
 };
+
+type AttemptState =
+  | { kind: "ok";                 attempt: SavedAttempt }
+  | { kind: "missing"  }          // nothing stored; fresh session
+  | { kind: "corrupted" }         // stored data is unreadable or invalid
+  | { kind: "storage-unavailable" }; // sessionStorage throws on any access
 
 // ── Component ─────────────────────────────────────────────────────────────────
 
@@ -36,78 +52,156 @@ export default function CheckoutPage() {
   const [province, setProvince] = useState("Cape Town Metro");
   const [loading,  setLoading]  = useState(false);
 
-  const [errors,            setErrors]            = useState<Record<string, string>>({});
-  const [orderError,        setOrderError]        = useState("");
-  const [showConflictPanel, setShowConflictPanel] = useState(false);
+  const [errors,             setErrors]             = useState<Record<string, string>>({});
+  const [orderError,         setOrderError]          = useState("");
+  // 409 conflict — prior order may already exist; user must contact us or
+  // explicitly start a new separate order.
+  const [showConflictPanel,  setShowConflictPanel]   = useState(false);
+  // Blocking conflict — stored state is corrupted; prior attempt may be
+  // unresolved. Only handleStartNewOrder may clear this.
+  const [showBlockingConflict, setShowBlockingConflict] = useState(false);
 
   // Synchronous guard — closes the narrow window between first click and the
   // React re-render that disables the button via the loading state.
   const submittingRef = useRef(false);
 
-  // Attempt key — sole source of truth in memory; sessionStorage for reload
-  // persistence. If sessionStorage is unavailable the key stays in memory
-  // only (same-page retries are still keyed; reload recovery is unavailable).
+  // Attempt key — sole in-memory source of truth; sessionStorage for reload
+  // persistence. If sessionStorage is unavailable the key lives only in
+  // memory (same-page retries are still keyed; reload recovery is not).
   const attemptKeyRef = useRef<string | null>(null);
 
-  // ── Attempt storage helpers ──────────────────────────────────────────────
+  // ── Storage helpers ────────────────────────────────────────────────────────
 
-  function readSavedAttempt(): SavedAttempt | null {
+  function isValidSavedAttempt(v: unknown): boolean {
+    if (!v || typeof v !== "object") return false;
+    const a = v as Record<string, unknown>;
+    return (
+      typeof a.key      === "string" && UUID_V4_RE.test(a.key) &&
+      typeof a.name     === "string" &&
+      typeof a.phone    === "string" &&
+      typeof a.address  === "string" &&
+      typeof a.province === "string"
+      // submitted and items are optional for P8b compatibility
+    );
+  }
+
+  function normalizeAttempt(raw: Record<string, unknown>): SavedAttempt {
+    const items: CanonicalItem[] = [];
+    if (Array.isArray(raw.items)) {
+      for (const entry of raw.items as unknown[]) {
+        if (entry && typeof entry === "object") {
+          const i = entry as Record<string, unknown>;
+          if (
+            typeof i.id       === "string" &&
+            typeof i.size     === "string" &&
+            typeof i.quantity === "number"
+          ) {
+            items.push({ id: i.id, size: i.size, quantity: i.quantity });
+          }
+        }
+      }
+    }
+    const submitted =
+      typeof raw.submitted === "boolean"
+        ? raw.submitted
+        : items.length > 0; // P8b records: infer from whether items were saved
+    return {
+      key:      (raw.key as string).toLowerCase(),
+      name:     raw.name     as string,
+      phone:    raw.phone    as string,
+      address:  raw.address  as string,
+      province: raw.province as string,
+      items,
+      submitted,
+    };
+  }
+
+  function readAttemptState(): AttemptState {
     try {
       const raw = sessionStorage.getItem(ATTEMPT_SS);
-      if (!raw) return null;
-      const parsed = JSON.parse(raw) as SavedAttempt;
-      if (!parsed || typeof parsed.key !== "string") return null;
-      return parsed;
+
+      if (raw === null) {
+        // No attempt record — but check for a persisted conflict flag left by
+        // a previous load that found a corrupted record.
+        const hasFlag = sessionStorage.getItem(CONFLICT_SS) !== null;
+        return hasFlag ? { kind: "corrupted" } : { kind: "missing" };
+      }
+
+      let parsed: unknown;
+      try {
+        parsed = JSON.parse(raw);
+      } catch {
+        // Malformed JSON — set the flag so corruption persists across reloads
+        // even after the raw data may be overwritten.
+        setConflictFlag();
+        return { kind: "corrupted" };
+      }
+
+      if (!isValidSavedAttempt(parsed)) {
+        setConflictFlag();
+        return { kind: "corrupted" };
+      }
+
+      return { kind: "ok", attempt: normalizeAttempt(parsed as Record<string, unknown>) };
+
     } catch {
-      return null;
+      // sessionStorage itself is unavailable (quota, SecurityError, etc.)
+      return { kind: "storage-unavailable" };
     }
+  }
+
+  function setConflictFlag(): void {
+    try { sessionStorage.setItem(CONFLICT_SS, "1"); } catch { /* ignore */ }
   }
 
   function writeSavedAttempt(a: SavedAttempt): void {
     attemptKeyRef.current = a.key;
     try {
       sessionStorage.setItem(ATTEMPT_SS, JSON.stringify(a));
-    } catch {
-      // sessionStorage unavailable — key survives in memory for this session.
-    }
+      sessionStorage.removeItem(CONFLICT_SS); // clear stale conflict flag on valid write
+    } catch { /* sessionStorage unavailable — key lives in memory only */ }
   }
 
   function clearSavedAttempt(): void {
     attemptKeyRef.current = null;
     try {
       sessionStorage.removeItem(ATTEMPT_SS);
+      sessionStorage.removeItem(CONFLICT_SS);
     } catch { /* ignore */ }
   }
 
-  // ── Mount: restore or initialise attempt ────────────────────────────────
+  // ── Mount: restore or initialise attempt ──────────────────────────────────
 
   useEffect(() => {
-    const saved = readSavedAttempt();
+    const state = readAttemptState();
 
-    if (saved) {
-      if (UUID_V4_RE.test(saved.key)) {
-        // Valid stored attempt — restore key and any saved form fields so
-        // a reload after a failed submission can retry with the same fingerprint.
-        attemptKeyRef.current = saved.key;
-        if (saved.name)     setName(saved.name);
-        if (saved.phone)    setPhone(saved.phone);
-        if (saved.address)  setAddress(saved.address);
-        if (saved.province) setProvince(saved.province);
-      } else {
-        // Stored key is not a valid UUID. Clear it and surface the conflict
-        // panel — an earlier attempt may be unresolved.
-        clearSavedAttempt();
-        setShowConflictPanel(true);
-      }
-    } else {
-      // No stored attempt — generate a fresh key for this session.
+    if (state.kind === "ok") {
+      attemptKeyRef.current = state.attempt.key;
+      if (state.attempt.name)     setName(state.attempt.name);
+      if (state.attempt.phone)    setPhone(state.attempt.phone);
+      if (state.attempt.address)  setAddress(state.attempt.address);
+      if (state.attempt.province) setProvince(state.attempt.province);
+
+    } else if (state.kind === "missing") {
       const newKey = crypto.randomUUID();
-      writeSavedAttempt({ key: newKey, name: "", phone: "", address: "", province: "Cape Town Metro" });
+      writeSavedAttempt({
+        key: newKey, name: "", phone: "", address: "",
+        province: "Cape Town Metro", items: [], submitted: false,
+      });
+
+    } else if (state.kind === "corrupted") {
+      // Stored state exists but cannot be read or validated. A prior attempt
+      // may be unresolved. Show the blocking panel — only handleStartNewOrder
+      // may clear this; a plain refresh keeps the state visible.
+      setShowBlockingConflict(true);
+
     }
+    // storage-unavailable: key remains null until first submission, at which
+    // point handlePayment generates a fresh key in memory.
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const subtotal    = cartTotal; // wholesale-adjusted when active
+  const subtotal    = cartTotal;
   const isCollection = province === COLLECTION_PROVINCE;
   const delivery    = computeDelivery(province, subtotal);
   const total       = subtotal + delivery;
@@ -127,34 +221,43 @@ export default function CheckoutPage() {
   }
 
   /**
-   * Starts a deliberate new order attempt after a conflict.
-   *
-   * Generates a fresh key. The customer must call this explicitly — the
-   * conflict panel must not auto-rotate the key, as an earlier order may
-   * have committed and the customer should confirm with us before proceeding.
+   * Starts a deliberate new order attempt. This is the ONLY action that may
+   * clear a blocking conflict (corrupted stored state) or a 409 conflict.
+   * The customer must call this explicitly — no automatic rotation occurs.
    */
   function handleStartNewOrder(): void {
     const newKey = crypto.randomUUID();
-    writeSavedAttempt({ key: newKey, name, phone, address, province });
+    writeSavedAttempt({
+      key: newKey, name, phone, address, province, items: [], submitted: false,
+    });
     setShowConflictPanel(false);
+    setShowBlockingConflict(false);
     setOrderError("");
   }
 
   const handlePayment = async () => {
     if (submittingRef.current) return;
+
+    // If the blocking conflict panel is showing (corrupted session state),
+    // the customer must contact us or start a new order before proceeding.
+    if (showBlockingConflict) {
+      setOrderError(
+        "Please contact us or start a new order below before placing another order.",
+      );
+      return;
+    }
+
     setOrderError("");
     setShowConflictPanel(false);
     if (!validateForm()) return;
 
-    // Require a valid key before sending — never submit keyless.
-    // If the key is absent (e.g. mount effect has not run or storage failed
-    // and no in-memory fallback exists), show an error and abort.
-    const attemptKey = attemptKeyRef.current;
+    // Guarantee a valid key before sending — never submit keyless.
+    let attemptKey = attemptKeyRef.current;
     if (!attemptKey) {
-      setOrderError(
-        "Your checkout session could not be initialized. Please refresh the page and try again.",
-      );
-      return;
+      // storage-unavailable path: generate a key in memory for this submission.
+      const freshKey = crypto.randomUUID();
+      attemptKeyRef.current = freshKey;
+      attemptKey = freshKey;
     }
 
     submittingRef.current = true;
@@ -176,10 +279,26 @@ export default function CheckoutPage() {
         });
       }
 
-      // Persist the full intent together with the key before sending the
-      // request. If the response is lost and the page reloads, this state
-      // is restored so the retry can be submitted with a matching fingerprint.
-      writeSavedAttempt({ key: attemptKey, name, phone, address, province });
+      // Snapshot the intent before sending. Only the FIRST submission writes
+      // to the stored record. Subsequent form edits never overwrite the snapshot
+      // so the original intent remains available for retry after a reload.
+      const currentState = readAttemptState();
+      const isFirstSubmit =
+        currentState.kind === "ok"     && !currentState.attempt.submitted ||
+        currentState.kind === "missing";
+
+      if (isFirstSubmit) {
+        const canonicalItems: CanonicalItem[] = cart.map(i => ({
+          id:       i.id,
+          size:     i.size,
+          quantity: i.quantity,
+        }));
+        writeSavedAttempt({
+          key: attemptKey, name, phone, address, province,
+          items:     canonicalItems,
+          submitted: true,
+        });
+      }
 
       const discoveryContext = getDiscoveryAttribution();
 
@@ -208,13 +327,11 @@ export default function CheckoutPage() {
       };
 
       if (orderData.success && orderData.orderRef) {
-        // Normal insert or silent recovery of a previous attempt.
         clearDiscoveryAttribution();
         clearRecommendationAttribution();
-        // Clear the attempt record — the order is confirmed.
-        // Generate a fresh in-memory key in case navigation fails and the
-        // user needs to place another order without reloading.
         clearSavedAttempt();
+
+        // Generate a fresh in-memory key for any edge-case retry before navigation.
         const freshKey = crypto.randomUUID();
         attemptKeyRef.current = freshKey;
 
@@ -229,8 +346,8 @@ export default function CheckoutPage() {
 
       } else if (orderResponse.status === 409) {
         // An earlier order with this key may already exist.
-        // Do NOT auto-rotate the key — the customer must confirm with us or
-        // deliberately start a new separate order.
+        // Do NOT auto-rotate the key — the customer must confirm or explicitly
+        // start a new separate order.
         setShowConflictPanel(true);
 
       } else {
@@ -371,6 +488,28 @@ export default function CheckoutPage() {
             <p role="alert" className="mt-6 rounded-2xl bg-red-50 px-5 py-4 text-sm text-red-600">
               {orderError}
             </p>
+          )}
+
+          {showBlockingConflict && (
+            <div
+              role="alert"
+              aria-live="assertive"
+              className="mt-6 rounded-2xl border border-amber-400 bg-amber-50 px-5 py-4"
+            >
+              <p className="text-sm font-semibold text-[#4f4a52]">
+                We could not read your session data — an earlier order may be unresolved.
+              </p>
+              <p className="mt-1 text-sm leading-relaxed text-[#7b7480]">
+                Please contact us before placing another order to avoid a duplicate.
+                If you are certain no earlier order was placed, you may start a new one below.
+              </p>
+              <button
+                onClick={handleStartNewOrder}
+                className="mt-3 rounded-full border border-[#4f4a52] bg-transparent px-4 py-2 text-xs font-semibold text-[#4f4a52] transition-colors hover:bg-[#4f4a52] hover:text-white focus:outline-none focus:ring-2 focus:ring-[#4f4a52] focus:ring-offset-2"
+              >
+                Start a separate new order
+              </button>
+            </div>
           )}
 
           {showConflictPanel && (

@@ -76,6 +76,14 @@ CREATE UNIQUE INDEX IF NOT EXISTS orders_idempotency_key_unique
 -- Required configuration
 -- ─────────────────────────────────────────────────────────────────────────────
 --
--- No new environment variables are required.
+-- New environment variable required:
+--   SUPABASE_SERVICE_ROLE_KEY — used by the server-side admin client
+--   (getSupabaseAdmin) to perform idempotency lookups before each insert.
+--   Without this key, getSupabaseAdmin throws and handleOrder returns 503
+--   for keyed requests. Idempotency protection is degraded but checkout
+--   remains functional (falls through to the legacy insert path).
+--   Set this in your Vercel project environment variables under Settings →
+--   Environment Variables. Do NOT expose it to the browser.
+--
 -- ORDER_RECEIPT_SECRET must remain set (required by P7 and earlier).
 -- NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY unchanged.
