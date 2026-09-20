@@ -19,7 +19,9 @@ export type KeyValidationResult =
  *   valid    — UUID v4 confirmed; caller must perform the deduplication lookup.
  */
 export function validateIdempotencyKey(key: unknown): KeyValidationResult {
-  if (key === undefined || key === null) {
+  // Only an omitted field (undefined) is "absent" — triggers legacy-client path.
+  // An explicit null or any other non-UUID value is invalid and must be rejected.
+  if (key === undefined) {
     return { valid: false, absent: true };
   }
   if (typeof key !== "string") {
@@ -28,7 +30,9 @@ export function validateIdempotencyKey(key: unknown): KeyValidationResult {
   if (!UUID_V4_RE.test(key)) {
     return { valid: false, absent: false, reason: "Key must be a valid UUID v4." };
   }
-  return { valid: true, key };
+  // Normalize to lowercase before lookup and insertion so uppercase/mixed-case
+  // client-generated UUIDs match stored lowercase values.
+  return { valid: true, key: key.toLowerCase() };
 }
 
 // ── Fingerprint ───────────────────────────────────────────────────────────────
@@ -86,9 +90,10 @@ export function extractFingerprintInputs(
  *   • A matching retry recovers the ORIGINAL saved order even if the catalogue
  *     has been repriced since the first attempt.
  *   • New orders still use server-authoritative price validation.
- *   • If a product is retired, validateOrderBody rejects the retry at 400
- *     BEFORE the idempotency check — recovery is not possible for retired
- *     products on a first-ever attempt, only for already-committed orders.
+ *   • Recovery (key found, fingerprint matches) bypasses validateOrderBody
+ *     entirely, so a retired product never blocks recovery of an already-
+ *     committed order. Only new inserts (key absent or not yet committed)
+ *     run validateOrderBody, which rejects any retired or unavailable item.
  *
  * Items are merged by id+size to handle KI-04 duplicate line items (different
  * add-to-cart flows creating separate entries for the same product), then

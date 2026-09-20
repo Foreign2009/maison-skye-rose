@@ -407,8 +407,20 @@ export async function POST(request: Request) {
     const { supabase } = await import("@/app/lib/supabase");
     const db: OrderDb = {
       insertOrder: async (row) => supabase.from("orders").insert([row]),
+      // Lookup uses the service-role admin client — the anon key does not have
+      // SELECT access on the orders table.
+      // Requires SUPABASE_SERVICE_ROLE_KEY in the deployment environment.
+      // If the key is absent (e.g. local dev), getSupabaseAdmin throws → the
+      // returned error object causes handleOrder to return 503.
       findByIdempotencyKey: async (key) => {
-        const result = await supabase
+        const { getSupabaseAdmin } = await import("@/app/lib/supabaseAdmin");
+        let admin;
+        try {
+          admin = getSupabaseAdmin();
+        } catch (e) {
+          return { data: null, error: e };
+        }
+        const result = await admin
           .from("orders")
           .select("order_ref, payload_fingerprint")
           .eq("idempotency_key", key)

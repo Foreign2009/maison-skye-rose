@@ -10,7 +10,22 @@ import { getDiscoveryAttribution, clearDiscoveryAttribution } from "../lib/disco
 import { getRecommendationAttribution, clearRecommendationAttribution } from "../lib/recommendationAttribution";
 import { COLLECTION_PROVINCE, computeDelivery } from "../lib/commerce/delivery";
 
-const ATTEMPT_KEY_SESSION = "msr_checkout_attempt_key";
+// ── Attempt storage ───────────────────────────────────────────────────────────
+
+const ATTEMPT_SS = "msr_checkout_attempt";
+
+const UUID_V4_RE =
+  /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+
+type SavedAttempt = {
+  key:      string;
+  name:     string;
+  phone:    string;
+  address:  string;
+  province: string;
+};
+
+// ── Component ─────────────────────────────────────────────────────────────────
 
 export default function CheckoutPage() {
   const { cart, clearCart, cartTotal } = useCart();
@@ -29,45 +44,65 @@ export default function CheckoutPage() {
   // React re-render that disables the button via the loading state.
   const submittingRef = useRef(false);
 
-  // Attempt key — in-memory primary storage; sessionStorage for reload
-  // persistence. If sessionStorage is unavailable, the in-memory key is used
-  // for the current page session (reload recovery is then unavailable, but
-  // the request is always keyed — no silently keyless fallback).
+  // Attempt key — sole source of truth in memory; sessionStorage for reload
+  // persistence. If sessionStorage is unavailable the key stays in memory
+  // only (same-page retries are still keyed; reload recovery is unavailable).
   const attemptKeyRef = useRef<string | null>(null);
 
-  function readAttemptKey(): string | null {
+  // ── Attempt storage helpers ──────────────────────────────────────────────
+
+  function readSavedAttempt(): SavedAttempt | null {
     try {
-      return sessionStorage.getItem(ATTEMPT_KEY_SESSION) ?? attemptKeyRef.current;
+      const raw = sessionStorage.getItem(ATTEMPT_SS);
+      if (!raw) return null;
+      const parsed = JSON.parse(raw) as SavedAttempt;
+      if (!parsed || typeof parsed.key !== "string") return null;
+      return parsed;
     } catch {
-      return attemptKeyRef.current;
+      return null;
     }
   }
 
-  function writeAttemptKey(key: string): void {
-    attemptKeyRef.current = key;
+  function writeSavedAttempt(a: SavedAttempt): void {
+    attemptKeyRef.current = a.key;
     try {
-      sessionStorage.setItem(ATTEMPT_KEY_SESSION, key);
+      sessionStorage.setItem(ATTEMPT_SS, JSON.stringify(a));
     } catch {
-      // sessionStorage unavailable — key survives in memory for this page
-      // session; reload recovery is not available.
+      // sessionStorage unavailable — key survives in memory for this session.
     }
   }
 
-  function clearAttemptKey(): void {
+  function clearSavedAttempt(): void {
     attemptKeyRef.current = null;
     try {
-      sessionStorage.removeItem(ATTEMPT_KEY_SESSION);
+      sessionStorage.removeItem(ATTEMPT_SS);
     } catch { /* ignore */ }
   }
 
+  // ── Mount: restore or initialise attempt ────────────────────────────────
+
   useEffect(() => {
-    const existing = readAttemptKey();
-    if (existing) {
-      // Sync memory ref with sessionStorage so readAttemptKey works without
-      // re-hitting sessionStorage on every call.
-      attemptKeyRef.current = existing;
+    const saved = readSavedAttempt();
+
+    if (saved) {
+      if (UUID_V4_RE.test(saved.key)) {
+        // Valid stored attempt — restore key and any saved form fields so
+        // a reload after a failed submission can retry with the same fingerprint.
+        attemptKeyRef.current = saved.key;
+        if (saved.name)     setName(saved.name);
+        if (saved.phone)    setPhone(saved.phone);
+        if (saved.address)  setAddress(saved.address);
+        if (saved.province) setProvince(saved.province);
+      } else {
+        // Stored key is not a valid UUID. Clear it and surface the conflict
+        // panel — an earlier attempt may be unresolved.
+        clearSavedAttempt();
+        setShowConflictPanel(true);
+      }
     } else {
-      writeAttemptKey(crypto.randomUUID());
+      // No stored attempt — generate a fresh key for this session.
+      const newKey = crypto.randomUUID();
+      writeSavedAttempt({ key: newKey, name: "", phone: "", address: "", province: "Cape Town Metro" });
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -92,14 +127,15 @@ export default function CheckoutPage() {
   }
 
   /**
-   * Starts a deliberate new order attempt after a 409 conflict.
+   * Starts a deliberate new order attempt after a conflict.
    *
    * Generates a fresh key. The customer must call this explicitly — the
-   * 409 conflict panel must not auto-rotate the key, as an earlier order may
+   * conflict panel must not auto-rotate the key, as an earlier order may
    * have committed and the customer should confirm with us before proceeding.
    */
   function handleStartNewOrder(): void {
-    writeAttemptKey(crypto.randomUUID());
+    const newKey = crypto.randomUUID();
+    writeSavedAttempt({ key: newKey, name, phone, address, province });
     setShowConflictPanel(false);
     setOrderError("");
   }
@@ -109,6 +145,17 @@ export default function CheckoutPage() {
     setOrderError("");
     setShowConflictPanel(false);
     if (!validateForm()) return;
+
+    // Require a valid key before sending — never submit keyless.
+    // If the key is absent (e.g. mount effect has not run or storage failed
+    // and no in-memory fallback exists), show an error and abort.
+    const attemptKey = attemptKeyRef.current;
+    if (!attemptKey) {
+      setOrderError(
+        "Your checkout session could not be initialized. Please refresh the page and try again.",
+      );
+      return;
+    }
 
     submittingRef.current = true;
     try {
@@ -129,8 +176,12 @@ export default function CheckoutPage() {
         });
       }
 
+      // Persist the full intent together with the key before sending the
+      // request. If the response is lost and the page reloads, this state
+      // is restored so the retry can be submitted with a matching fingerprint.
+      writeSavedAttempt({ key: attemptKey, name, phone, address, province });
+
       const discoveryContext = getDiscoveryAttribution();
-      const attemptKey       = readAttemptKey();
 
       const orderResponse = await fetch("/api/orders", {
         method:  "POST",
@@ -145,7 +196,7 @@ export default function CheckoutPage() {
           delivery,
           total,
           ...(discoveryContext ? { discovery_context: discoveryContext } : {}),
-          ...(attemptKey ? { checkout_attempt_key: attemptKey } : {}),
+          checkout_attempt_key: attemptKey,
         }),
       });
 
@@ -160,7 +211,12 @@ export default function CheckoutPage() {
         // Normal insert or silent recovery of a previous attempt.
         clearDiscoveryAttribution();
         clearRecommendationAttribution();
-        clearAttemptKey();
+        // Clear the attempt record — the order is confirmed.
+        // Generate a fresh in-memory key in case navigation fails and the
+        // user needs to place another order without reloading.
+        clearSavedAttempt();
+        const freshKey = crypto.randomUUID();
+        attemptKeyRef.current = freshKey;
 
         try {
           localStorage.setItem(
