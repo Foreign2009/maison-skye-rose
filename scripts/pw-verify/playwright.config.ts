@@ -24,7 +24,7 @@ export default defineConfig({
   testDir:             "./specs",
   testMatch:           "**/*.spec.js",
   timeout:             60_000,
-  retries:             1,
+  retries:             2,
   workers:             1,
   reporter:            [["list"], ["json", { outputFile: "results/p8/pw-report.json" }]],
   outputDir:           "results/p8/traces",

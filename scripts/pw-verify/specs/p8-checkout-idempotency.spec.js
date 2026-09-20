@@ -916,6 +916,106 @@ test('19. Lost response → cart edit → reload → original snapshot in retry;
   await page.screenshot({ path: path.join(testInfo.outputDir, '19.png') });
 });
 
+// ── Test 20 (P8d) ─────────────────────────────────────────────────────────────
+// While a retry is in-flight (held), "Start a separate new order" must be a
+// no-op — the attempt key and frozen snapshot must not change.
+//
+// Sequence:
+//   1. First request → 503 → error shown; frozen snapshot set; retry notice
+//      becomes visible with "Start a separate new order instead" button.
+//   2. Re-route all subsequent requests to hold indefinitely.
+//   3. Click Retry — loading becomes true; retry notice button stays in DOM.
+//   4. Assert the button is disabled (HTML attribute).
+//   5. Force-click the button — submittingRef guard must prevent key rotation.
+//   6. Assert key and frozen snapshot are unchanged.
+//   7. Release the held response — success, navigate to payment-success.
+test('20. Held-response: "Start a separate new order" is a no-op while loading (P8d)', async ({ page }, testInfo) => {
+  test.setTimeout(60000);
+
+  let requestCount = 0;
+  /** @type {(() => void) | null} */
+  let resolveHeld = null;
+
+  await page.route(ORDERS_ROUTE, async (route) => {
+    requestCount++;
+    if (requestCount === 1) {
+      // First request returns 503 so the frozen snapshot is set and the
+      // retry notice (with "Start a separate new order instead") becomes visible.
+      await route.fulfill({ status: 503, contentType: 'application/json',
+        body: JSON.stringify({ success: false, message: 'Service unavailable.' }) });
+    } else {
+      // All subsequent requests are held until resolveHeld() is called.
+      await new Promise((resolve) => { resolveHeld = resolve; });
+      await route.fulfill({ status: 200, contentType: 'application/json',
+        body: JSON.stringify({ success: true, orderRef: 'MSR-T20-HELD' }) });
+    }
+  });
+
+  await loadCheckout(page);
+
+  // Capture key and snapshot before the first submission.
+  const keyBefore = await readAttemptKey(page);
+  f('20-key-exists-before-submit', keyBefore !== null && UUID_V4_RE.test(keyBefore) ? 'pass' : 'fail', `key: ${keyBefore}`);
+  expect(keyBefore).not.toBeNull();
+
+  // First submit → 503; frozen snapshot is set.
+  await page.locator('button').filter({ hasText: /Place Order/ }).first().click();
+  await page.locator('[role="alert"]').filter({ hasText: /unavailable/i }).waitFor({ state: 'visible', timeout: 15000 });
+
+  const snapshotAfter503 = await readSavedAttempt(page);
+  f('20-snapshot-frozen-after-503', snapshotAfter503?.submitted === true ? 'pass' : 'fail',
+    `submitted: ${snapshotAfter503?.submitted}`);
+  expect(snapshotAfter503?.submitted).toBe(true);
+
+  // The retry notice with "Start a separate new order instead" must now be visible.
+  const newOrderBtn = page.locator('button').filter({ hasText: /separate new order/i }).first();
+  await newOrderBtn.waitFor({ state: 'visible', timeout: 5000 });
+  f('20-new-order-btn-visible-before-retry', await newOrderBtn.isVisible() ? 'pass' : 'fail', 'visible');
+
+  // Retry — second request is held; loading becomes true.
+  await page.locator('button').filter({ hasText: /Retry original order|Place Order/i }).first().click();
+  await page.waitForTimeout(400); // let React flip loading=true
+
+  // ── Assert button is disabled while loading ────────────────────────────────
+  const allNewOrderBtns = page.locator('button').filter({ hasText: /separate new order/i });
+  const btnCount = await allNewOrderBtns.count();
+  f('20-buttons-in-dom-during-load', btnCount > 0 ? 'pass' : 'fail', `count: ${btnCount}`);
+  expect(btnCount).toBeGreaterThan(0);
+
+  let allDisabled = true;
+  for (let i = 0; i < btnCount; i++) {
+    if (!(await allNewOrderBtns.nth(i).isDisabled())) { allDisabled = false; }
+  }
+  f('20-all-new-order-btns-disabled-while-loading', allDisabled ? 'pass' : 'fail', `disabled: ${allDisabled}`);
+  expect(allDisabled, 'Start-a-new-order buttons must be disabled while loading').toBe(true);
+
+  // Force-click (bypasses the HTML disabled attribute; the JS guard in
+  // handleStartNewOrder must prevent the key rotation).
+  await allNewOrderBtns.first().click({ force: true, timeout: 2000 }).catch(() => {});
+  await page.waitForTimeout(300);
+
+  const keyDuringLoad = await readAttemptKey(page);
+  f('20-key-unchanged-during-retry-load', keyDuringLoad === keyBefore ? 'pass' : 'fail',
+    `before: ${keyBefore}, during: ${keyDuringLoad}`);
+  expect(keyDuringLoad).toBe(keyBefore);
+
+  const snapshotDuringLoad = await readSavedAttempt(page);
+  f('20-snapshot-unchanged-during-retry-load',
+    snapshotDuringLoad?.submitted === true && snapshotDuringLoad?.key === keyBefore ? 'pass' : 'fail',
+    `submitted: ${snapshotDuringLoad?.submitted}, key match: ${snapshotDuringLoad?.key === keyBefore}`);
+  expect(snapshotDuringLoad?.submitted).toBe(true);
+  expect(snapshotDuringLoad?.key).toBe(keyBefore);
+
+  // Release the held response; navigation must complete with the original key.
+  if (resolveHeld) resolveHeld();
+  await page.waitForURL(/payment-success/, { timeout: 15000 });
+
+  f('20-navigation-used-original-order-ref', page.url().includes('MSR-T20-HELD') ? 'pass' : 'fail', page.url());
+  expect(page.url()).toContain('MSR-T20-HELD');
+
+  await page.screenshot({ path: path.join(testInfo.outputDir, '20.png') });
+});
+
 // ── Reporting ─────────────────────────────────────────────────────────────────
 
 test.afterAll(() => {
