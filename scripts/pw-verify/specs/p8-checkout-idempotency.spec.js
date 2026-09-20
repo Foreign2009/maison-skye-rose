@@ -34,7 +34,7 @@ const path = require('path');
 const OUT = path.join(__dirname, '../results/p8');
 fs.mkdirSync(OUT, { recursive: true });
 
-const BASE         = 'http://localhost:3000';
+const BASE         = 'http://localhost:3099'; // matches webServer.env.PORT in playwright.config.ts
 const CART_KEY     = 'maison-skye-rose-cart';
 const ATTEMPT_SS   = 'msr_checkout_attempt';
 const CONFLICT_SS  = 'msr_checkout_conflict';
@@ -69,11 +69,11 @@ async function loadCheckout(page) {
     try { localStorage.setItem('maison-skye-rose-cart', item); } catch {}
   }, CART_ITEM);
   await page.reload({ waitUntil: 'networkidle', timeout: 25000 });
-  await page.waitForTimeout(800);
+  await page.waitForTimeout(2000); // allow React hydration to complete under dev-server load
   await page.fill('#checkout-name',    'Test Guest');
   await page.fill('#checkout-phone',   '0821234567');
   await page.fill('#checkout-address', '12 Test Street, Cape Town');
-  await page.waitForTimeout(300);
+  await page.waitForTimeout(500);
 }
 
 async function readAttemptKey(page) {
@@ -106,7 +106,7 @@ async function readConflictFlag(page) {
 test('1. Key generated and stored in sessionStorage on mount', async ({ page }, testInfo) => {
   test.setTimeout(30000);
   await page.goto(`${BASE}/checkout`, { waitUntil: 'networkidle', timeout: 25000 });
-  await page.waitForTimeout(800);
+  await page.waitForTimeout(2000); // extra headroom under server load
 
   const key    = await readAttemptKey(page);
   const isUuid = key !== null && UUID_V4_RE.test(key);
@@ -131,7 +131,7 @@ test('2. checkout_attempt_key always included in POST body', async ({ page }, te
   const keyBeforeSubmit = await readAttemptKey(page);
 
   await page.locator('button').filter({ hasText: /Place Order/ }).first().click();
-  await page.locator('p[role="alert"]').waitFor({ state: 'visible', timeout: 8000 });
+  await page.locator('p[role="alert"]').waitFor({ state: 'visible', timeout: 15000 });
 
   const keyInBody    = capturedBody?.checkout_attempt_key;
   const bodyKeyOk    = keyInBody && UUID_V4_RE.test(keyInBody);
@@ -185,7 +185,7 @@ test('4. 409 shows conflict panel — no automatic key rotation', async ({ page 
   await page.locator('button').filter({ hasText: /Place Order/ }).first().click();
 
   const conflictPanel = page.locator('[role="alert"]').filter({ hasText: /earlier order may already exist/i });
-  await conflictPanel.waitFor({ state: 'visible', timeout: 8000 });
+  await conflictPanel.waitFor({ state: 'visible', timeout: 15000 });
 
   f('conflict-panel-visible', 'pass', 'visible');
   f('key-not-rotated-on-409', (await readAttemptKey(page)) === keyBefore ? 'pass' : 'fail',
@@ -216,7 +216,7 @@ test('5. "Start a separate new order" generates a fresh key', async ({ page }, t
 
   await page.locator('button').filter({ hasText: /Place Order/ }).first().click();
   const conflictPanel = page.locator('[role="alert"]').filter({ hasText: /earlier order/i });
-  await conflictPanel.waitFor({ state: 'visible', timeout: 8000 });
+  await conflictPanel.waitFor({ state: 'visible', timeout: 15000 });
 
   await conflictPanel.locator('button').filter({ hasText: /separate/i }).click();
   await page.waitForTimeout(300);
@@ -250,7 +250,7 @@ test('6. Key and intent preserved across page reload', async ({ page }, testInfo
 
   const keyBefore = await readAttemptKey(page);
   await page.locator('button').filter({ hasText: /Place Order/ }).first().click();
-  await page.locator('[role="alert"]').waitFor({ state: 'visible', timeout: 8000 });
+  await page.locator('[role="alert"]').filter({ hasText: /unavailable/i }).waitFor({ state: 'visible', timeout: 15000 });
 
   // Reload — form and key must be restored
   await page.reload({ waitUntil: 'networkidle', timeout: 25000 });
@@ -287,7 +287,7 @@ test('7. 503 shows standard error — key unchanged', async ({ page }, testInfo)
   const keyBefore = await readAttemptKey(page);
 
   await page.locator('button').filter({ hasText: /Place Order/ }).first().click();
-  await page.locator('[role="alert"]').filter({ hasText: /unavailable/i }).waitFor({ state: 'visible', timeout: 8000 });
+  await page.locator('[role="alert"]').filter({ hasText: /unavailable/i }).waitFor({ state: 'visible', timeout: 15000 });
 
   f('key-unchanged-on-503', (await readAttemptKey(page)) === keyBefore ? 'pass' : 'fail', 'key');
   expect(await readAttemptKey(page)).toBe(keyBefore);
@@ -333,7 +333,7 @@ test('9. Conflict panel — fields preserved, button re-enabled', async ({ page 
   await page.locator('button').filter({ hasText: /Place Order/ }).first().click();
 
   const conflictPanel = page.locator('[role="alert"]').filter({ hasText: /earlier order/i });
-  await conflictPanel.waitFor({ state: 'visible', timeout: 8000 });
+  await conflictPanel.waitFor({ state: 'visible', timeout: 15000 });
 
   expect(await page.inputValue('#checkout-name')).toBe('Test Guest');
   expect(await page.inputValue('#checkout-phone')).toBe('0821234567');
@@ -411,7 +411,7 @@ test('11. sessionStorage unavailable → in-memory fallback → key still sent',
   await page.waitForTimeout(300);
 
   await page.locator('button').filter({ hasText: /Place Order/ }).first().click();
-  await page.locator('[role="alert"]').filter({ hasText: /Mocked failure|could not|unavailable/i }).waitFor({ state: 'visible', timeout: 8000 });
+  await page.locator('[role="alert"]').filter({ hasText: /Mocked failure|could not|unavailable/i }).waitFor({ state: 'visible', timeout: 15000 });
 
   const key1    = capturedBodies[0]?.checkout_attempt_key;
   const hasKey1 = key1 && UUID_V4_RE.test(key1);
@@ -560,7 +560,7 @@ test('14. Retry sends original frozen snapshot body — not edited form values (
 
   await page.locator('button').filter({ hasText: /Place Order/ }).first().click();
   // Use content-specific filter to avoid matching Next.js route announcer [role="alert"].
-  await page.locator('[role="alert"]').filter({ hasText: /unavailable/i }).waitFor({ state: 'visible', timeout: 8000 });
+  await page.locator('[role="alert"]').filter({ hasText: /unavailable/i }).waitFor({ state: 'visible', timeout: 15000 });
 
   const firstBody = capturedBodies[0];
   f('14-first-submit-name', firstBody?.customer_name === 'Original Name' ? 'pass' : 'fail',
@@ -687,7 +687,7 @@ test('16. Storage-unavailable: in-memory frozen snapshot used on all retries (P8
   await page.waitForTimeout(300);
 
   await page.locator('button').filter({ hasText: /Place Order/ }).first().click();
-  await page.locator('[role="alert"]').filter({ hasText: /unavailable/i }).waitFor({ state: 'visible', timeout: 8000 });
+  await page.locator('[role="alert"]').filter({ hasText: /unavailable/i }).waitFor({ state: 'visible', timeout: 15000 });
 
   const key1 = capturedBodies[0]?.checkout_attempt_key;
   f('16-key-sent-first-submit', key1 && UUID_V4_RE.test(key1) ? 'pass' : 'fail', `k1: ${key1}`);
@@ -717,6 +717,203 @@ test('16. Storage-unavailable: in-memory frozen snapshot used on all retries (P8
   }
 
   await page.screenshot({ path: path.join(testInfo.outputDir, '16.png') });
+});
+
+// ── Test 17 (P8d) ─────────────────────────────────────────────────────────────
+// submitted must be a literal boolean. A string "true" must trigger blocking
+// conflict, and the blocking panel must persist after the record is removed
+// (CONFLICT_SS carries it across reloads).
+test('17. submitted: "true" (string) → blocking conflict; persists across reload (P8d)', async ({ page }, testInfo) => {
+  test.setTimeout(45000);
+
+  await page.goto(`${BASE}/checkout`, { waitUntil: 'networkidle', timeout: 25000 });
+
+  await page.evaluate((ssKey) => {
+    try {
+      sessionStorage.setItem(ssKey, JSON.stringify({
+        key:       '12345678-1234-4234-a234-123456789012',
+        name:      'Test', phone: '082', address: 'addr', province: 'Cape Town Metro',
+        submitted: 'true', // STRING — must be rejected; only boolean is valid
+      }));
+    } catch {}
+  }, ATTEMPT_SS);
+
+  await page.reload({ waitUntil: 'networkidle', timeout: 25000 });
+  await page.waitForTimeout(800);
+
+  const blockingPanel = page.locator('[role="alert"]').filter({ hasText: /could not read your session/i });
+  f('17-blocking-panel-on-string-submitted', await blockingPanel.isVisible().catch(() => false) ? 'pass' : 'fail', 'visible');
+  expect(await blockingPanel.isVisible(), 'submitted:"true" must trigger blocking conflict').toBe(true);
+
+  const conflictFlag = await readConflictFlag(page);
+  f('17-conflict-flag-set', conflictFlag !== null ? 'pass' : 'fail', `flag: ${conflictFlag}`);
+  expect(conflictFlag).not.toBeNull();
+
+  // Remove the malformed record — CONFLICT_SS alone must keep the panel alive.
+  await page.evaluate((ssKey) => { try { sessionStorage.removeItem(ssKey); } catch {} }, ATTEMPT_SS);
+  await page.reload({ waitUntil: 'networkidle', timeout: 25000 });
+  await page.waitForTimeout(800);
+
+  f('17-panel-persists-after-record-removed',
+    await blockingPanel.isVisible().catch(() => false) ? 'pass' : 'fail', 'visible');
+  expect(await blockingPanel.isVisible()).toBe(true);
+
+  await page.screenshot({ path: path.join(testInfo.outputDir, '17.png') });
+});
+
+// ── Test 18 (P8d) ─────────────────────────────────────────────────────────────
+// submitted field missing entirely must also trigger blocking conflict.
+test('18. submitted field missing → blocking conflict (P8d)', async ({ page }, testInfo) => {
+  test.setTimeout(30000);
+
+  await page.goto(`${BASE}/checkout`, { waitUntil: 'networkidle', timeout: 25000 });
+
+  await page.evaluate((ssKey) => {
+    try {
+      sessionStorage.setItem(ssKey, JSON.stringify({
+        key:      '12345678-1234-4234-a234-123456789012',
+        name:     'Test', phone: '082', address: 'addr', province: 'Cape Town Metro',
+        // submitted field absent — must be rejected
+      }));
+    } catch {}
+  }, ATTEMPT_SS);
+
+  await page.reload({ waitUntil: 'networkidle', timeout: 25000 });
+  await page.waitForTimeout(800);
+
+  const blockingPanel = page.locator('[role="alert"]').filter({ hasText: /could not read your session/i });
+  f('18-blocking-panel-on-missing-submitted',
+    await blockingPanel.isVisible().catch(() => false) ? 'pass' : 'fail', 'visible');
+  expect(await blockingPanel.isVisible(), 'missing submitted must trigger blocking conflict').toBe(true);
+
+  f('18-conflict-flag-set', (await readConflictFlag(page)) !== null ? 'pass' : 'fail', 'flag');
+  expect(await readConflictFlag(page)).not.toBeNull();
+
+  await page.screenshot({ path: path.join(testInfo.outputDir, '18.png') });
+});
+
+// ── Test 19 (P8d) ─────────────────────────────────────────────────────────────
+// Full lost-response recovery path with cart preservation.
+// Sequence:
+//   1. First request is aborted (lost response).
+//   2. Cart is changed after the abort (add a second item).
+//   3. Page is reloaded — frozen snapshot recovered from sessionStorage.
+//   4. User retries — second request body must carry original values.
+//   5. Exactly 2 requests intercepted; both use the same key.
+//   6. Recovery succeeds; NEWER (changed) cart is preserved in localStorage.
+test('19. Lost response → cart edit → reload → original snapshot in retry; newer cart preserved (P8d)', async ({ page }, testInfo) => {
+  test.setTimeout(60000);
+
+  let requestCount = 0;
+  const capturedBodies = [];
+
+  await page.route(ORDERS_ROUTE, async (route) => {
+    requestCount++;
+    capturedBodies.push(route.request().postDataJSON());
+    if (requestCount === 1) {
+      await route.abort('failed'); // first request: lost (abort = "connection error" path)
+    } else {
+      await route.fulfill({
+        status:      200,
+        contentType: 'application/json',
+        body:        JSON.stringify({ success: true, orderRef: 'MSR-RECOVERY-19', recovered: true }),
+      });
+    }
+  });
+
+  // Load checkout with original cart (one item).
+  const originalCart = [{
+    id: 'sauvage-inspired', title: 'Sauvage Inspired', price: 60,
+    image: '/images/placeholder.jpg', quantity: 1, size: '5ml',
+  }];
+  await page.goto(`${BASE}/checkout`, { waitUntil: 'networkidle', timeout: 25000 });
+  await page.evaluate((c) => {
+    try { localStorage.setItem('maison-skye-rose-cart', JSON.stringify(c)); } catch {}
+  }, originalCart);
+  await page.reload({ waitUntil: 'networkidle', timeout: 25000 });
+  await page.waitForTimeout(800);
+
+  await page.fill('#checkout-name',    'Recovery Guest');
+  await page.fill('#checkout-phone',   '0821230001');
+  await page.fill('#checkout-address', '99 Original Road');
+  await page.waitForTimeout(300);
+
+  // Submit — first request is aborted (lost).
+  await page.locator('button').filter({ hasText: /Place Order/ }).first().click();
+  await page.locator('[role="alert"]').filter({ hasText: /connection error/i }).waitFor({ state: 'visible', timeout: 15000 });
+
+  // Snapshot must be frozen with submitted:true.
+  const snapshotAfterAbort = await readSavedAttempt(page);
+  f('19-snapshot-frozen-on-abort', snapshotAfterAbort?.submitted === true ? 'pass' : 'fail',
+    `submitted: ${snapshotAfterAbort?.submitted}`);
+  expect(snapshotAfterAbort?.submitted).toBe(true);
+
+  // Change the cart — add a second item to simulate cart modifications after
+  // the lost response.
+  const changedCart = [
+    { id: 'sauvage-inspired', title: 'Sauvage Inspired', price: 60,
+      image: '/images/placeholder.jpg', quantity: 1, size: '5ml' },
+    { id: 'aventus-inspired',  title: 'Aventus Inspired',  price: 80,
+      image: '/images/placeholder.jpg', quantity: 2, size: '10ml' },
+  ];
+  await page.evaluate((c) => {
+    try { localStorage.setItem('maison-skye-rose-cart', JSON.stringify(c)); } catch {}
+  }, changedCart);
+
+  // Reload — simulates the user refreshing after the lost response.
+  // Frozen snapshot is restored from sessionStorage.
+  await page.reload({ waitUntil: 'networkidle', timeout: 25000 });
+  await page.waitForTimeout(800);
+
+  const retryNotice = page.locator('[role="status"]').filter({ hasText: /Retrying your previous order/i });
+  f('19-retry-notice-visible', await retryNotice.isVisible().catch(() => false) ? 'pass' : 'fail', 'visible');
+  expect(await retryNotice.isVisible()).toBe(true);
+
+  // Retry the original order.
+  await page.locator('button').filter({ hasText: /Retry original order/i }).first().click();
+  await page.waitForURL(/payment-success/, { timeout: 10000 });
+
+  // ── Assert exactly 2 requests ──────────────────────────────────────────────
+  f('19-exactly-two-requests', capturedBodies.length === 2 ? 'pass' : 'fail', `count: ${capturedBodies.length}`);
+  expect(capturedBodies.length).toBe(2);
+
+  // ── Both requests carry the same idempotency key ───────────────────────────
+  const key1 = capturedBodies[0]?.checkout_attempt_key;
+  const key2 = capturedBodies[1]?.checkout_attempt_key;
+  f('19-same-key-both-requests', key1 === key2 ? 'pass' : 'fail', `k1=${key1}, k2=${key2}`);
+  expect(key2).toBe(key1);
+
+  // ── Retry body carries original customer / delivery fields ─────────────────
+  f('19-retry-original-name',    capturedBodies[1]?.customer_name === 'Recovery Guest'  ? 'pass' : 'fail', capturedBodies[1]?.customer_name);
+  f('19-retry-original-phone',   capturedBodies[1]?.phone         === '0821230001'      ? 'pass' : 'fail', capturedBodies[1]?.phone);
+  f('19-retry-original-address', capturedBodies[1]?.address       === '99 Original Road' ? 'pass' : 'fail', capturedBodies[1]?.address);
+  expect(capturedBodies[1]?.customer_name).toBe('Recovery Guest');
+  expect(capturedBodies[1]?.phone).toBe('0821230001');
+  expect(capturedBodies[1]?.address).toBe('99 Original Road');
+
+  // ── Retry body carries original item IDs, sizes, quantities ───────────────
+  const retryItems = capturedBodies[1]?.items ?? [];
+  f('19-retry-item-count', retryItems.length === 1 ? 'pass' : 'fail', `items: ${retryItems.length}`);
+  expect(retryItems.length).toBe(1);
+  f('19-retry-item-id',       retryItems[0]?.id       === 'sauvage-inspired' ? 'pass' : 'fail', retryItems[0]?.id);
+  f('19-retry-item-size',     retryItems[0]?.size     === '5ml'              ? 'pass' : 'fail', retryItems[0]?.size);
+  f('19-retry-item-quantity', retryItems[0]?.quantity === 1                  ? 'pass' : 'fail', `qty: ${retryItems[0]?.quantity}`);
+  expect(retryItems[0]?.id).toBe('sauvage-inspired');
+  expect(retryItems[0]?.size).toBe('5ml');
+  expect(retryItems[0]?.quantity).toBe(1);
+
+  // ── Newer cart is preserved — NOT cleared on recovery of original order ────
+  const cartAfterRecovery = await page.evaluate(() => {
+    try { return JSON.parse(localStorage.getItem('maison-skye-rose-cart') || 'null'); } catch { return null; }
+  });
+  f('19-changed-cart-preserved',
+    Array.isArray(cartAfterRecovery) && cartAfterRecovery.length === 2 ? 'pass' : 'fail',
+    `cart items: ${Array.isArray(cartAfterRecovery) ? cartAfterRecovery.length : 'null'}`);
+  expect(Array.isArray(cartAfterRecovery)).toBe(true);
+  expect(cartAfterRecovery.length).toBe(2);
+  expect(cartAfterRecovery.some((i) => i.id === 'aventus-inspired')).toBe(true);
+
+  await page.screenshot({ path: path.join(testInfo.outputDir, '19.png') });
 });
 
 // ── Reporting ─────────────────────────────────────────────────────────────────

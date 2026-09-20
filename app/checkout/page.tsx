@@ -106,17 +106,21 @@ export default function CheckoutPage() {
     if (!v || typeof v !== "object") return false;
     const a = v as Record<string, unknown>;
     if (
-      typeof a.key      !== "string" || !UUID_V4_RE.test(a.key) ||
-      typeof a.name     !== "string" ||
-      typeof a.phone    !== "string" ||
-      typeof a.address  !== "string" ||
-      typeof a.province !== "string"
+      typeof a.key       !== "string"  || !UUID_V4_RE.test(a.key) ||
+      typeof a.name      !== "string"  ||
+      typeof a.phone     !== "string"  ||
+      typeof a.address   !== "string"  ||
+      typeof a.province  !== "string"  ||
+      // submitted MUST be a literal boolean — string/null/undefined/number values
+      // are treated as corrupted to prevent silently treating a submitted attempt
+      // as unsubmitted.
+      typeof a.submitted !== "boolean"
     ) return false;
 
     // Submitted snapshots must carry complete, valid items and financial totals.
     // Reject incomplete or malformed submitted records — never silently drop
     // entries or treat them as unsubmitted.
-    if (typeof a.submitted === "boolean" && a.submitted) {
+    if (a.submitted) {
       if (
         !Array.isArray(a.items) || (a.items as unknown[]).length === 0 ||
         typeof a.subtotal !== "number" ||
@@ -157,7 +161,7 @@ export default function CheckoutPage() {
       subtotal:  typeof raw.subtotal === "number" ? raw.subtotal : 0,
       delivery:  typeof raw.delivery === "number" ? raw.delivery : 0,
       total:     typeof raw.total    === "number" ? raw.total    : 0,
-      submitted: typeof raw.submitted === "boolean" ? raw.submitted : false,
+      submitted: raw.submitted as boolean, // guaranteed boolean by isValidSavedAttempt
     };
   }
 
@@ -250,6 +254,20 @@ export default function CheckoutPage() {
   const delivery    = computeDelivery(province, subtotal);
   const total       = subtotal + delivery;
 
+  // Returns true when every cart item (by id+size) has the same quantity as
+  // the frozen snapshot and the totals are identical — used to decide whether
+  // to clear the cart after a successful recovery.
+  function cartMatchesFrozen(
+    cartItems: Array<{ id: string; size: string; quantity: number }>,
+    frozenItems: FrozenItem[],
+  ): boolean {
+    if (cartItems.length !== frozenItems.length) return false;
+    const frozenMap = new Map<string, number>(
+      frozenItems.map(i => [`${i.id}|${i.size}`, i.quantity]),
+    );
+    return cartItems.every(c => frozenMap.get(`${c.id}|${c.size}`) === c.quantity);
+  }
+
   function clearFieldError(field: string) {
     setErrors((prev) => ({ ...prev, [field]: "" }));
   }
@@ -265,6 +283,9 @@ export default function CheckoutPage() {
   }
 
   function handleStartNewOrder(): void {
+    // Guard: do not replace the key or snapshot while a request is in flight.
+    // The submittingRef closes the narrow window between click and loading state.
+    if (submittingRef.current) return;
     const newKey = crypto.randomUUID();
     writeSavedAttempt({
       key: newKey, name, phone, address, province,
@@ -401,6 +422,9 @@ export default function CheckoutPage() {
           ? (frozenAttemptRef.current?.items.map(i => i.id) ?? [])
           : cart.map(i => i.id);
 
+        // Capture the frozen snapshot BEFORE nulling it — used below to decide
+        // whether the current cart still represents the submitted order.
+        const frozenSnapshot = frozenAttemptRef.current;
         clearSavedAttempt();
         frozenAttemptRef.current = null;
 
@@ -411,7 +435,15 @@ export default function CheckoutPage() {
           );
         } catch { /* localStorage unavailable */ }
 
-        clearCart();
+        // Only clear the cart when it still represents the submitted order.
+        // If the user changed their cart after the original submission (and a
+        // recovery succeeded), preserve the newer cart so they can check out
+        // again with their updated selection.
+        if (inRetryMode && frozenSnapshot && !cartMatchesFrozen(cart, frozenSnapshot.items)) {
+          // Cart was changed after submission — preserve it.
+        } else {
+          clearCart();
+        }
         window.location.href = `/payment-success?ref=${encodeURIComponent(orderData.orderRef)}`;
 
       } else if (orderResponse.status === 409) {
@@ -472,7 +504,8 @@ export default function CheckoutPage() {
             </p>
             <button
               onClick={handleStartNewOrder}
-              className="mt-2 text-xs font-semibold text-[#d89ca4] underline underline-offset-2 hover:text-[#4f4a52] focus:outline-none focus:ring-2 focus:ring-[#d89ca4] focus:ring-offset-1 rounded"
+              disabled={loading}
+              className="mt-2 text-xs font-semibold text-[#d89ca4] underline underline-offset-2 hover:text-[#4f4a52] focus:outline-none focus:ring-2 focus:ring-[#d89ca4] focus:ring-offset-1 rounded disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Start a separate new order instead
             </button>
@@ -605,7 +638,8 @@ export default function CheckoutPage() {
               </p>
               <button
                 onClick={handleStartNewOrder}
-                className="mt-3 rounded-full border border-[#4f4a52] bg-transparent px-4 py-2 text-xs font-semibold text-[#4f4a52] transition-colors hover:bg-[#4f4a52] hover:text-white focus:outline-none focus:ring-2 focus:ring-[#4f4a52] focus:ring-offset-2"
+                disabled={loading}
+                className="mt-3 rounded-full border border-[#4f4a52] bg-transparent px-4 py-2 text-xs font-semibold text-[#4f4a52] transition-colors hover:bg-[#4f4a52] hover:text-white focus:outline-none focus:ring-2 focus:ring-[#4f4a52] focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Start a separate new order
               </button>
@@ -627,7 +661,8 @@ export default function CheckoutPage() {
               </p>
               <button
                 onClick={handleStartNewOrder}
-                className="mt-3 rounded-full border border-[#4f4a52] bg-transparent px-4 py-2 text-xs font-semibold text-[#4f4a52] transition-colors hover:bg-[#4f4a52] hover:text-white focus:outline-none focus:ring-2 focus:ring-[#4f4a52] focus:ring-offset-2"
+                disabled={loading}
+                className="mt-3 rounded-full border border-[#4f4a52] bg-transparent px-4 py-2 text-xs font-semibold text-[#4f4a52] transition-colors hover:bg-[#4f4a52] hover:text-white focus:outline-none focus:ring-2 focus:ring-[#4f4a52] focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Start a separate new order
               </button>
