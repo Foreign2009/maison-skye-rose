@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 
 import Navbar from "../components/Navbar";
 
@@ -9,6 +9,8 @@ import { trackCheckoutStarted, trackRecommendationCheckoutAttributed } from "../
 import { getDiscoveryAttribution, clearDiscoveryAttribution } from "../lib/discoveryAttribution";
 import { getRecommendationAttribution, clearRecommendationAttribution } from "../lib/recommendationAttribution";
 import { COLLECTION_PROVINCE, computeDelivery } from "../lib/commerce/delivery";
+
+const ATTEMPT_KEY_SESSION = "msr_checkout_attempt_key";
 
 export default function CheckoutPage() {
   const { cart, clearCart, cartTotal } = useCart();
@@ -19,17 +21,61 @@ export default function CheckoutPage() {
   const [province, setProvince] = useState("Cape Town Metro");
   const [loading,  setLoading]  = useState(false);
 
-  const [errors,     setErrors]     = useState<Record<string, string>>({});
-  const [orderError, setOrderError] = useState("");
+  const [errors,            setErrors]            = useState<Record<string, string>>({});
+  const [orderError,        setOrderError]        = useState("");
+  const [showConflictPanel, setShowConflictPanel] = useState(false);
 
   // Synchronous guard — closes the narrow window between first click and the
   // React re-render that disables the button via the loading state.
   const submittingRef = useRef(false);
 
-  const subtotal = cartTotal; // wholesale-adjusted when active
+  // Attempt key — in-memory primary storage; sessionStorage for reload
+  // persistence. If sessionStorage is unavailable, the in-memory key is used
+  // for the current page session (reload recovery is then unavailable, but
+  // the request is always keyed — no silently keyless fallback).
+  const attemptKeyRef = useRef<string | null>(null);
+
+  function readAttemptKey(): string | null {
+    try {
+      return sessionStorage.getItem(ATTEMPT_KEY_SESSION) ?? attemptKeyRef.current;
+    } catch {
+      return attemptKeyRef.current;
+    }
+  }
+
+  function writeAttemptKey(key: string): void {
+    attemptKeyRef.current = key;
+    try {
+      sessionStorage.setItem(ATTEMPT_KEY_SESSION, key);
+    } catch {
+      // sessionStorage unavailable — key survives in memory for this page
+      // session; reload recovery is not available.
+    }
+  }
+
+  function clearAttemptKey(): void {
+    attemptKeyRef.current = null;
+    try {
+      sessionStorage.removeItem(ATTEMPT_KEY_SESSION);
+    } catch { /* ignore */ }
+  }
+
+  useEffect(() => {
+    const existing = readAttemptKey();
+    if (existing) {
+      // Sync memory ref with sessionStorage so readAttemptKey works without
+      // re-hitting sessionStorage on every call.
+      attemptKeyRef.current = existing;
+    } else {
+      writeAttemptKey(crypto.randomUUID());
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const subtotal    = cartTotal; // wholesale-adjusted when active
   const isCollection = province === COLLECTION_PROVINCE;
-  const delivery = computeDelivery(province, subtotal);
-  const total    = subtotal + delivery;
+  const delivery    = computeDelivery(province, subtotal);
+  const total       = subtotal + delivery;
 
   function clearFieldError(field: string) {
     setErrors((prev) => ({ ...prev, [field]: "" }));
@@ -45,9 +91,23 @@ export default function CheckoutPage() {
     return Object.keys(next).length === 0;
   }
 
+  /**
+   * Starts a deliberate new order attempt after a 409 conflict.
+   *
+   * Generates a fresh key. The customer must call this explicitly — the
+   * 409 conflict panel must not auto-rotate the key, as an earlier order may
+   * have committed and the customer should confirm with us before proceeding.
+   */
+  function handleStartNewOrder(): void {
+    writeAttemptKey(crypto.randomUUID());
+    setShowConflictPanel(false);
+    setOrderError("");
+  }
+
   const handlePayment = async () => {
     if (submittingRef.current) return;
     setOrderError("");
+    setShowConflictPanel(false);
     if (!validateForm()) return;
 
     submittingRef.current = true;
@@ -70,11 +130,12 @@ export default function CheckoutPage() {
       }
 
       const discoveryContext = getDiscoveryAttribution();
+      const attemptKey       = readAttemptKey();
 
       const orderResponse = await fetch("/api/orders", {
-        method: "POST",
+        method:  "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
+        body:    JSON.stringify({
           customer_name: name,
           phone,
           address,
@@ -84,18 +145,22 @@ export default function CheckoutPage() {
           delivery,
           total,
           ...(discoveryContext ? { discovery_context: discoveryContext } : {}),
+          ...(attemptKey ? { checkout_attempt_key: attemptKey } : {}),
         }),
       });
 
       const orderData = await orderResponse.json() as {
-        success:   boolean;
-        orderRef?: string;
-        message?:  string;
+        success:    boolean;
+        orderRef?:  string;
+        message?:   string;
+        recovered?: boolean;
       };
 
       if (orderData.success && orderData.orderRef) {
+        // Normal insert or silent recovery of a previous attempt.
         clearDiscoveryAttribution();
         clearRecommendationAttribution();
+        clearAttemptKey();
 
         try {
           localStorage.setItem(
@@ -105,13 +170,22 @@ export default function CheckoutPage() {
         } catch { /* localStorage unavailable */ }
         clearCart();
         window.location.href = `/payment-success?ref=${encodeURIComponent(orderData.orderRef)}`;
+
+      } else if (orderResponse.status === 409) {
+        // An earlier order with this key may already exist.
+        // Do NOT auto-rotate the key — the customer must confirm with us or
+        // deliberately start a new separate order.
+        setShowConflictPanel(true);
+
       } else {
-        setOrderError(orderData.message ?? "We could not process your order. Please try again.");
+        setOrderError(
+          orderData.message ?? "We could not process your order. Please try again.",
+        );
       }
 
     } catch {
       setOrderError(
-        "A connection error occurred. Your order may have been placed — please contact us to confirm before trying again."
+        "A connection error occurred. Your order may have been placed — please contact us to confirm before trying again.",
       );
     } finally {
       setLoading(false);
@@ -241,6 +315,28 @@ export default function CheckoutPage() {
             <p role="alert" className="mt-6 rounded-2xl bg-red-50 px-5 py-4 text-sm text-red-600">
               {orderError}
             </p>
+          )}
+
+          {showConflictPanel && (
+            <div
+              role="alert"
+              className="mt-6 rounded-2xl border border-[#d89ca4] bg-[#fdf8f9] px-5 py-4"
+            >
+              <p className="text-sm font-semibold text-[#4f4a52]">
+                An earlier order may already exist.
+              </p>
+              <p className="mt-1 text-sm leading-relaxed text-[#7b7480]">
+                Please contact us to confirm before placing a separate order. If
+                you are certain no earlier order was placed, you may start a new
+                one below.
+              </p>
+              <button
+                onClick={handleStartNewOrder}
+                className="mt-3 rounded-full border border-[#4f4a52] bg-transparent px-4 py-2 text-xs font-semibold text-[#4f4a52] transition-colors hover:bg-[#4f4a52] hover:text-white focus:outline-none focus:ring-2 focus:ring-[#4f4a52] focus:ring-offset-2"
+              >
+                Start a separate new order
+              </button>
+            </div>
           )}
 
           <button

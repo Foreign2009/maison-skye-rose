@@ -1,0 +1,81 @@
+-- CHECKOUT-P8: Idempotency key and payload fingerprint columns
+-- ─────────────────────────────────────────────────────────────
+-- Migration: 20260920_orders_idempotency
+-- Branch:    refinement/storefront-p1
+--
+-- DO NOT apply to production without founder authorisation.
+-- See release sequence at end of this file.
+--
+-- Purpose
+-- ───────
+-- Enables server-side idempotency for the /api/orders endpoint.
+-- When a client retries after a lost response, the server recognises the
+-- same checkout_attempt_key and returns the original order reference rather
+-- than creating a duplicate.
+--
+-- Backward compatibility
+-- ──────────────────────
+-- Both columns are nullable.  Rows created before this migration (or by
+-- older clients that omit checkout_attempt_key) have NULL in both columns.
+-- NULL values are excluded from the unique index, so legacy rows never
+-- conflict with one another or with new rows.
+--
+-- Uniqueness is enforced ONLY for non-null keys, which means:
+--   • Two concurrent requests with the same key → exactly one commits.
+--   • A legacy (keyless) request never triggers the unique constraint.
+
+ALTER TABLE orders
+  ADD COLUMN IF NOT EXISTS idempotency_key     TEXT,
+  ADD COLUMN IF NOT EXISTS payload_fingerprint TEXT;
+
+-- Partial unique index — enforces atomicity for keyed requests only.
+-- NULL keys are excluded so legacy orders never collide.
+CREATE UNIQUE INDEX IF NOT EXISTS orders_idempotency_key_unique
+  ON orders (idempotency_key)
+  WHERE idempotency_key IS NOT NULL;
+
+-- ─────────────────────────────────────────────────────────────────────────────
+-- Release sequence
+-- ─────────────────────────────────────────────────────────────────────────────
+--
+-- 1. Apply this migration to Supabase via the dashboard SQL editor or
+--    the Supabase CLI (supabase db push).
+--
+--    The new columns are nullable and the unique index is partial, so the
+--    existing application (P7) continues to operate without modification
+--    during the deployment window.
+--
+-- 2. Deploy the updated application code (P8 bundle) via Vercel.
+--    New checkouts will begin sending checkout_attempt_key.
+--
+-- The gap between steps 1 and 2 is safe: the P7 code inserts NULL for both
+-- new columns (they do not appear in the INSERT statement) and the partial
+-- unique index ignores NULLs.
+--
+-- ─────────────────────────────────────────────────────────────────────────────
+-- Rollback notes
+-- ─────────────────────────────────────────────────────────────────────────────
+--
+-- Application rollback (revert to P7 code):
+--   Redeploying the P7 bundle removes idempotency protection but is otherwise
+--   safe.  The two columns remain in the database.  NULL will be written for
+--   both columns by the P7 insert (which does not reference them).  No data
+--   is lost.  Existing orders with non-null keys are unaffected.
+--
+-- Database rollback (remove the columns):
+--   This is a DESTRUCTIVE operation and must be explicitly authorised.
+--   It discards idempotency_key and payload_fingerprint for all rows.
+--   Only execute if the columns are confirmed empty or their loss is accepted.
+--
+--   DROP INDEX IF EXISTS orders_idempotency_key_unique;
+--   ALTER TABLE orders
+--     DROP COLUMN IF EXISTS idempotency_key,
+--     DROP COLUMN IF EXISTS payload_fingerprint;
+--
+-- ─────────────────────────────────────────────────────────────────────────────
+-- Required configuration
+-- ─────────────────────────────────────────────────────────────────────────────
+--
+-- No new environment variables are required.
+-- ORDER_RECEIPT_SECRET must remain set (required by P7 and earlier).
+-- NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY unchanged.
