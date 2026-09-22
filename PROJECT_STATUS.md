@@ -1,19 +1,43 @@
 # Project Status — Maison Skye & Rose
 
-**Last updated:** 2026-08-15
+**Last updated:** 2026-09-21
 **Phase:** Launch Execution
-**Build status:** PASS — static generation 189/189; 0 TypeScript errors; 0 warnings (last verified FR-03 governance close-out, 2026-08-15)
+**Build status:** PASS — static generation 189/189; 0 TypeScript errors; 0 warnings (last verified during CHECKOUT-P8 development; commit 5ae10b6, 2026-09-21)
 
 ---
 
 ## Current Engineering Program
 
-**Programme:** FR-03 — Production Environment & Database Verification — FORMALLY CLOSED
-**Decision:** VERIFIED — READY TO CLOSE WITH DOCUMENTED DEFERRED LAUNCH ITEMS
-**Governance close-out:** 2026-08-15
-Repository verified production-ready. No code changes. Deferred launch items: five NEXT_PUBLIC_BANK_* Vercel variables (awaiting banking details); push to origin/main after banking configured; Vercel production branch confirmation.
+**Programme:** CHECKOUT-P8 — Server-Side Idempotency for Safe Order Retries — COMPLETE
+**Decision:** DEPLOYED AND VERIFIED IN PRODUCTION
+**Commit:** 5ae10b694335f8b2c58fab4f2644cbe9b34e842b
+**Released:** 2026-09-21 — fast-forward push to origin/main; Vercel Ready confirmed by founder.
 
-**Next launch gate:** Banking Configuration + Pre-Deployment Verification — PENDING FOUNDER ACTION.
+Adds server-side idempotency to `/api/orders`. When a client retries after a lost response, the server recognises the same `checkout_attempt_key` and returns the original order reference rather than creating a duplicate. Client-side frozen-snapshot retry path and attempt-state management added to checkout page. New environment variable `SUPABASE_SERVICE_ROLE_KEY` required; confirmed present in Vercel Production and Preview.
+
+**Database migration:** Applied manually to Supabase production before deployment. Two nullable text columns (`idempotency_key`, `payload_fingerprint`) added to `public.orders`; partial unique index `orders_idempotency_key_unique ON orders(idempotency_key) WHERE idempotency_key IS NOT NULL` created. Migration file retained at `supabase/pending/20260920_orders_idempotency.sql` — do not re-apply.
+
+**Production verification evidence (founder-provided, 2026-09-21):**
+- Vercel: Ready, Production, main, commit 5ae10b6. ✓
+- Migration columns and index verified via read-only SQL query. ✓
+- Checkout receipt loaded for reference MSR-20260921-28816, amount R60.00. ✓
+- Read-only query confirmed: `total=60`, `payment_status=awaiting_payment`, `has_key=true`, `has_fingerprint=true`. ✓
+
+**Test order:** MSR-20260921-28816 was placed as a smoke test on 2026-09-21. **DO NOT FULFIL.** Current `payment_status` remains `awaiting_payment`. Operational test-order marker not verified — supplied SQL result did not include `notes` or `customer_name`. If a marker is needed in Supabase Dashboard → SQL Editor:
+```sql
+UPDATE public.orders
+SET notes = 'TEST ORDER — DO NOT FULFIL. Smoke test placed 2026-09-21.'
+WHERE order_ref = 'MSR-20260921-28816';
+```
+
+**Verification scope and limitations:**
+- Local HTTP integration tests (5 scenarios): PASS — concurrent deduplication, lost-response recovery, valid/invalid receipt cookies, RLS denial. Executed 2026-09-21 against local Supabase Docker stack, isolated Next.js dev server port 3098.
+- Browser suite (Playwright, 20 tests): PASS — commit dbc6233, 2026-09-21.
+- **Production retry recovery was NOT exercised.** The smoke test confirmed a single successful order submission with correct idempotency column values. Duplicate-submission and retry-recovery paths have local integration test coverage only; production retry behaviour is unverified.
+
+**Banking display:** `NEXT_PUBLIC_BANK_*` variables confirmed configured in Vercel Production. All five banking details displayed correctly on the production receipt for MSR-20260921-28816. Preview environment configuration not verified.
+
+**Previous programme:** FR-03 — Production Environment & Database Verification — FORMALLY CLOSED 2026-08-15.
 
 **Previous Programme (FR line):** FR-02 — Switch Launch Checkout to EFT-First Flow — COMPLETE (commit d307a5f, 2026-08-15)
 EFT established as production payment method. Checkout posts to /api/orders (Supabase, anon key), redirects to /payment-success with banking details and WhatsApp proof-of-payment CTA. PayFast route preserved but dormant.
@@ -43,11 +67,9 @@ Same-session corrective episode for EP6-P5C. Two live-use safety defects correct
 
 ## Current Sprint
 
-No active sprint. FR-03 Production Environment & Database Verification closed 2026-08-15.
+No active sprint. CHECKOUT-P8 deployed 2026-09-21.
 
-**Next launch gate:** Banking Configuration + Pre-Deployment Verification.
-Status: PENDING FOUNDER ACTION — awaiting final banking details.
-Do not push. Do not deploy.
+**Banking display:** Confirmed in Production. `NEXT_PUBLIC_BANK_*` variables configured in Vercel Production; all five banking details displayed correctly on the production receipt (MSR-20260921-28816). Preview environment configuration not verified.
 
 ---
 
@@ -159,6 +181,7 @@ Verify: `npm run build`
 | EP19 | EP19-P3 | Wave 1 Bestseller Native Knowledge Migration — Batch 2 | Complete — 2026-08-15 — commit 57d312a |
 | FR | FR-02 | Switch Launch Checkout to EFT-First Flow | Complete — 2026-08-15 — commit d307a5f |
 | FR | FR-03 | Production Environment & Database Verification — Governance Close-Out | Complete — 2026-08-15 |
+| CHECKOUT | CHECKOUT-P8 | Server-Side Idempotency for Safe Order Retries | Complete — 2026-09-21 — commit 5ae10b6 |
 
 `FOUNDATIONS/00_FOUNDERS_LETTER.md` — The permanent founder's letter to Skye, Rose, future employees, and future stewards. *Why we began.*
 `FOUNDATIONS/01_SKYE_AND_ROSE_COVENANT.md` — The institutional promise: to customers, products, technology, and future generations. *What we promise.*
@@ -454,4 +477,4 @@ The Maison Fragrance Academy is a first-class product — the long-term knowledg
 
 ## Next Approved Sprint
 
-None. FR-03 closed 2026-08-15. Next launch gate: Banking Configuration + Pre-Deployment Verification. Awaiting Founder authorisation to proceed.
+None. CHECKOUT-P8 deployed 2026-09-21. No active sprint.

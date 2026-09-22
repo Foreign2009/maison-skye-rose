@@ -39,6 +39,53 @@ Never edit or delete past entries.
 
 ## Log
 
+### 2026-09-21 — CHECKOUT-P8 — Production Release and Close-Out
+
+**Participants:** Project Owner (founder authorisation, production evidence, production verification) / Claude (release preparation, preflight checks, deployment execution, documentation close-out)
+**Program:** CHECKOUT-P8 — Server-Side Idempotency for Safe Order Retries
+
+**Decisions Made:**
+- Founder authorised deployment of commit 5ae10b694335f8b2c58fab4f2644cbe9b34e842b to production.
+- Release method: exact SHA fast-forward push (`git push origin 5ae10b6…:refs/heads/main`) — no squash, no merge commit, no force push.
+- Production migration applied manually by founder via Supabase Dashboard SQL Editor before deployment.
+- `SUPABASE_SERVICE_ROLE_KEY` and `ORDER_RECEIPT_SECRET` confirmed present in Vercel Production; `NEXT_PUBLIC_SUPABASE_ANON_KEY` recreated as Config for Production and Preview.
+- Test order MSR-20260921-28816 (smoke test, R60.00) recorded as DO NOT FULFIL. Operational test-order marker not verified — supplied SQL result did not include `notes` or `customer_name`.
+- Production retry recovery NOT exercised. Local integration test coverage only for duplicate-submission and recovery paths.
+
+**Tasks Completed:**
+- Release-readiness report produced: application delta vs f33d519, migration review, production schema verification, release sequence, test results record.
+- Pre-push preflight: fetch origin, verified HEAD = 5ae10b6, verified origin/main = f33d519, verified tracked files clean, confirmed origin/main is ancestor of HEAD (fast-forward valid).
+- Push executed: `git push origin 5ae10b694335f8b2c58fab4f2644cbe9b34e842b:refs/heads/main` — accepted, fast-forward f33d519→5ae10b6.
+- Post-push verification: `git rev-parse origin/main` = 5ae10b6. ✓
+- Founder verified Vercel Ready on production domain.
+- Founder ran production smoke test checkout; receipt loaded for MSR-20260921-28816, R60.00.
+- Founder ran read-only SQL verification query: `total=60`, `payment_status=awaiting_payment`, `has_key=true`, `has_fingerprint=true`. ✓
+- Documentation updated: `PROJECT_STATUS.md`, `.ai/CURRENT_TASK.md`, `.ai/ENGINEERING_LOG.md` (this entry).
+
+**Test results carried forward (local — not re-run in this session):**
+- HTTP integration tests (5 scenarios, local Supabase, port 3098): PASS — concurrent deduplication, lost-response recovery, valid/invalid/tampered/wrong-ref receipt cookies, RLS denial. Commit 5ae10b6.
+- Browser suite (Playwright, 20 tests): PASS. Commit dbc6233. One prior T8 timeout (cause unconfirmed, not reproduced).
+- These are local test results; production retry recovery was NOT verified.
+
+**Build Result:** Not re-run in this session. Last verified clean during CHECKOUT-P8 development (commit 5ae10b6, 2026-09-21) — 0 TypeScript errors, 0 warnings. Page count unchanged at 189/189.
+
+**Files Changed (this session — documentation only):**
+- `PROJECT_STATUS.md` — updated: last updated date, build status note, Current Engineering Program (CHECKOUT-P8 complete), Current Sprint, Completed Programs table.
+- `.ai/CURRENT_TASK.md` — updated: Current Task (NO ACTIVE TASK, post-P8 state), added CHECKOUT-P8 Previous Task block.
+- `.ai/ENGINEERING_LOG.md` — appended (this entry).
+
+**Handoff:**
+- Production is live on commit 5ae10b6. Idempotency is active for all new checkout submissions.
+- MSR-20260921-28816 is recorded as DO NOT FULFIL. Operational test-order marker not verified — supplied SQL result did not include `notes` or `customer_name`.
+- `NEXT_PUBLIC_BANK_*` variables confirmed configured in Vercel Production; banking details displayed correctly on the production receipt. Preview environment configuration not verified.
+- Production retry recovery path is unverified. If a duplicate-submission incident occurs in production before recovery is verified, check Vercel function logs for `recovered:true` in the response body and `orders_idempotency_key_unique` constraint violations.
+
+**Open Questions Carried Forward:**
+- Preview environment `NEXT_PUBLIC_BANK_*` configuration not verified — confirm if needed before Preview-based testing.
+- Should a controlled production retry-recovery test be run once the site receives real traffic?
+
+---
+
 ### 2026-08-11 — EP6-P5D — First Controlled Founder Relationship Review Pilot
 
 **Participants:** Project Owner (founder authorisation + all five decisions) / Claude (selection, verification, governance close-out)

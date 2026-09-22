@@ -10,20 +10,53 @@
 **Status:** NO ACTIVE TASK
 **Program:** None
 
-FR-03 Production Environment & Database Verification formally closed 2026-08-15. Decision: VERIFIED — READY TO CLOSE WITH DOCUMENTED DEFERRED LAUNCH ITEMS.
+CHECKOUT-P8 deployed and verified 2026-09-21. Commit 5ae10b694335f8b2c58fab4f2644cbe9b34e842b is live on production (Vercel Ready, origin/main).
 
 EP6-P5E-R Relationship Review Evidence Enrichment is complete through Phase 4C-1. The EP6-P5E campaign (20-unit controlled relationship review) remains PAUSED — 17 of 20 units pending. Campaign resumption requires separate founder authorisation. Do not resume without explicit approval.
 
-**Next launch gate:** Banking Configuration + Pre-Deployment Verification — PENDING FOUNDER ACTION.
-Required before deployment:
-1. Receive final banking details.
-2. Configure five NEXT_PUBLIC_BANK_* Vercel variables.
-3. Verify Vercel Production Branch = main in Settings → Git.
-4. Authorise controlled push of local main to origin/main.
-5. Allow Vercel production deployment.
-6. Perform post-deployment production smoke test.
+**Banking display — Production verified:**
+`NEXT_PUBLIC_BANK_*` variables confirmed configured in Vercel Production. All five banking details displayed correctly on the production receipt for MSR-20260921-28816. Preview environment configuration not verified.
 
-Do not push. Do not deploy. Await Founder authorisation.
+**Test order — DO NOT FULFIL:**
+MSR-20260921-28816 (smoke test, 2026-09-21, R60.00). `payment_status = awaiting_payment`. Operational test-order marker not verified — supplied SQL result did not include `notes` or `customer_name`. If a marker is needed, run in Supabase Dashboard → SQL Editor:
+```sql
+UPDATE public.orders
+SET notes = 'TEST ORDER — DO NOT FULFIL. Smoke test placed 2026-09-21.'
+WHERE order_ref = 'MSR-20260921-28816';
+```
+
+---
+
+## Previous Task (COMPLETE)
+**Program:** CHECKOUT-P8 — Server-Side Idempotency for Safe Order Retries
+
+**Decision:** DEPLOYED AND VERIFIED IN PRODUCTION
+**Completed:** 2026-09-21
+**Commit:** 5ae10b694335f8b2c58fab4f2644cbe9b34e842b
+
+**Scope:** Server-side idempotency for `/api/orders`. Client sends `checkout_attempt_key` with every submission; server deduplicates via `findByIdempotencyKey` (admin client) before insert; payload fingerprint guards against intent mismatch on retry; `recovered: true` response reissues the receipt cookie for lost-response recovery.
+
+**Application files changed:**
+- `app/api/orders/route.ts` — idempotency handler, dedup lookup, fingerprint check, conflict detection, recovery response
+- `app/checkout/page.tsx` — `checkout_attempt_key` generation and transmission, frozen-snapshot retry path, attempt state in `sessionStorage`
+- `app/lib/commerce/idempotency.ts` — new: `validateIdempotencyKey`, `extractFingerprintInputs`, `computePayloadFingerprint`
+
+**Database migration (manually applied, do not re-apply):**
+File: `supabase/pending/20260920_orders_idempotency.sql`
+Added `idempotency_key TEXT` and `payload_fingerprint TEXT` nullable columns; created partial unique index `orders_idempotency_key_unique ON public.orders(idempotency_key) WHERE idempotency_key IS NOT NULL`.
+
+**Production verification (founder-provided, 2026-09-21):**
+- Vercel: Ready, Production, main, commit 5ae10b6. ✓
+- Migration columns and index: confirmed via read-only query. ✓
+- Checkout receipt: loaded for MSR-20260921-28816, R60.00. ✓
+- DB row: `total=60`, `payment_status=awaiting_payment`, `has_key=true`, `has_fingerprint=true`. ✓
+
+**Verification scope and limitations:**
+- Local HTTP integration tests (5 scenarios, port 3098, local Supabase): PASS — concurrent deduplication, lost-response recovery, valid/invalid/tampered/wrong-ref receipt cookies, RLS denial.
+- Browser suite (Playwright, 20 tests): PASS — commit dbc6233.
+- **Production retry recovery was NOT exercised.** Idempotency key and fingerprint storage confirmed; duplicate-submission and retry-recovery behaviour in production is unverified.
+
+**Test order:** MSR-20260921-28816 — smoke test placed 2026-09-21. DO NOT FULFIL. Operational test-order marker not verified — supplied SQL result did not include `notes` or `customer_name`.
 
 ---
 
