@@ -194,7 +194,7 @@ export async function PATCH(
 
 export interface ConfirmationDb {
   getOrderConfirmation(ref: string): Promise<{
-    data: { order_ref: string; total: number; payment_status: string } | null;
+    data: { order_ref: string; total: number; payment_status: string; province: string | null } | null;
     error: unknown;
   }>;
 }
@@ -251,6 +251,7 @@ export async function handleGetConfirmation(
     orderRef:      data.order_ref,
     total:         data.total,
     paymentStatus: data.payment_status,
+    province:      data.province ?? null,
   });
   response.headers.set("Cache-Control", "private, no-store");
   return response;
@@ -266,11 +267,11 @@ export async function GET(
     getOrderConfirmation: async (r) => {
       const { data, error } = await getSupabaseAdmin()
         .from("orders")
-        .select("order_ref, total, payment_status")
+        .select("order_ref, total, payment_status, province")
         .eq("order_ref", r)
         .maybeSingle();
       return {
-        data: data as { order_ref: string; total: number; payment_status: string } | null,
+        data: data as { order_ref: string; total: number; payment_status: string; province: string | null } | null,
         error,
       };
     },

@@ -10,6 +10,7 @@ import Navbar from "../components/Navbar";
 import { trackPaymentReturnSuccess } from "../lib/analytics";
 import { recordPurchase } from "../lib/customer/sync/CustomerProfileSync";
 import { brand } from "../data/brand";
+import { COLLECTION_PROVINCE, ALL_PROVINCES } from "../lib/commerce/delivery";
 
 const BANKING_DETAILS = {
   bank:          process.env.NEXT_PUBLIC_BANK_NAME           ?? "",
@@ -23,8 +24,17 @@ const PAYMENT_TRACKED_KEY = "msr_eft_instructions_viewed";
 // Confirmation state returned by GET /api/orders/[ref]
 type ConfirmationState =
   | { status: "loading" }
-  | { status: "confirmed"; total: number; paymentStatus: string }
+  | { status: "confirmed"; total: number; paymentStatus: string; province: string | null }
   | { status: "error" };
+
+type FulfilmentMode = "collection" | "delivery" | "unknown";
+
+function getFulfilmentMode(province: string | null | undefined): FulfilmentMode {
+  if (!province) return "unknown";
+  if (province === COLLECTION_PROVINCE) return "collection";
+  if (ALL_PROVINCES.includes(province)) return "delivery";
+  return "unknown";
+}
 
 function CopyButton({ value }: { value: string }) {
   const [copied, setCopied] = useState(false);
@@ -43,7 +53,7 @@ function CopyButton({ value }: { value: string }) {
     <button
       onClick={handleCopy}
       aria-label={`Copy ${value}`}
-      className="flex shrink-0 items-center gap-1.5 rounded-full border border-[#4f4a52]/20 px-3 py-1.5 text-xs font-semibold text-[#4f4a52] transition hover:bg-[#4f4a52]/5"
+      className="flex shrink-0 items-center gap-1.5 rounded-full border border-[#4f4a52]/20 px-3 py-1.5 min-h-[44px] text-xs font-semibold text-[#4f4a52] transition hover:bg-[#4f4a52]/5"
     >
       {copied
         ? <Check size={13} className="text-green-600" />
@@ -78,8 +88,14 @@ function EFTConfirmationContent() {
           orderRef:      string;
           total:         number;
           paymentStatus: string;
+          province:      string | null;
         };
-        setConfirmation({ status: "confirmed", total: data.total, paymentStatus: data.paymentStatus });
+        setConfirmation({
+          status: "confirmed",
+          total: data.total,
+          paymentStatus: data.paymentStatus,
+          province: data.province ?? null,
+        });
       })
       .catch(() => setConfirmation({ status: "error" }));
   }, [orderRef]);
@@ -103,6 +119,11 @@ function EFTConfirmationContent() {
     } catch { /* localStorage unavailable */ }
   }, [orderRef]);
 
+  const fulfilmentMode: FulfilmentMode =
+    confirmation.status === "confirmed"
+      ? getFulfilmentMode(confirmation.province)
+      : "unknown";
+
   // WhatsApp message uses the confirmed total when available.
   const amountLine = confirmation.status === "confirmed"
     ? `\nAmount: R${confirmation.total.toFixed(2)}`
@@ -123,7 +144,7 @@ function EFTConfirmationContent() {
   ];
 
   return (
-    <section className="mx-auto max-w-xl px-6 py-16 md:py-24">
+    <section className="mx-auto max-w-xl px-6 pt-16 pb-24 md:py-24">
 
       {/* Header */}
       <motion.div
@@ -157,11 +178,15 @@ function EFTConfirmationContent() {
           What Happens Next
         </p>
         <div className="mt-5 space-y-4">
-          {([
+          {[
             "Complete your EFT using the banking details below.",
             "Send us proof of payment via WhatsApp — the button is ready for you.",
-            "We confirm your payment and arrange delivery with care.",
-          ] as const).map((step, i) => (
+            fulfilmentMode === "collection"
+              ? "We confirm your payment and contact you to arrange collection."
+              : fulfilmentMode === "delivery"
+                ? "We confirm your payment and arrange delivery with care."
+                : "We confirm your payment and will be in touch.",
+          ].map((step, i) => (
             <div key={i} className="flex items-start gap-4">
               <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#dff6e4] text-xs font-bold text-[#7bb78a]">
                 {i + 1}
@@ -277,7 +302,12 @@ function EFTConfirmationContent() {
         transition={{ duration: 0.5, delay: 0.5 }}
         className="mt-8 text-center text-xs leading-relaxed text-[#9b9298]"
       >
-        Please complete your payment within 24 hours to secure your order. Once confirmed, we&apos;ll be in touch to arrange delivery.
+        {fulfilmentMode === "collection"
+          ? "Please complete your payment within 24 hours to secure your order. Once confirmed, we'll be in touch to arrange your collection."
+          : fulfilmentMode === "delivery"
+            ? "Please complete your payment within 24 hours to secure your order. Once confirmed, we'll be in touch to arrange delivery."
+            : "Please complete your payment within 24 hours to secure your order. Once confirmed, we'll be in touch."
+        }
       </motion.p>
 
     </section>
