@@ -2,7 +2,7 @@
 
 **Last updated:** 2026-09-21
 **Phase:** Launch Execution
-**Build status:** PASS — static generation 189/189; 0 TypeScript errors; 0 warnings (last verified during CHECKOUT-P8 development; commit 5ae10b6, 2026-09-21)
+**Build status:** PASS — 363/363 pages generated; TypeScript and compilation clean; nonblocking npm allow-scripts warnings present (Vercel build for commit 5ae10b6, 2026-09-21)
 
 ---
 
@@ -89,12 +89,9 @@ The Maison Fragrance Academy is live — 28 articles across 3 content waves, int
 |---|---|
 | Build result | PASS |
 | TypeScript errors | 0 |
-| Warnings | 0 |
-| Total pages | 189 |
-| Product pages (SSG) | 93 |
-| Static pages | 25 |
-| Dynamic routes | 16 |
-| Last verified | 2026-08-15 (FR-03 governance close-out) |
+| Warnings | Nonblocking npm allow-scripts warnings (not TypeScript) |
+| Total pages | 363 |
+| Last verified | 2026-09-21 (Vercel build for CHECKOUT-P8, commit 5ae10b6) |
 
 Verify: `npm run build`
 

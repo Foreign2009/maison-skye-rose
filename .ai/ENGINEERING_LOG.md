@@ -67,7 +67,7 @@ Never edit or delete past entries.
 - Browser suite (Playwright, 20 tests): PASS. Commit dbc6233. One prior T8 timeout (cause unconfirmed, not reproduced).
 - These are local test results; production retry recovery was NOT verified.
 
-**Build Result:** Not re-run in this session. Last verified clean during CHECKOUT-P8 development (commit 5ae10b6, 2026-09-21) — 0 TypeScript errors, 0 warnings. Page count unchanged at 189/189.
+**Build Result:** Not re-run in this session. Vercel build for commit 5ae10b6 (2026-09-21): 363/363 pages generated; TypeScript and compilation clean; nonblocking npm allow-scripts warnings present.
 
 **Files Changed (this session — documentation only):**
 - `PROJECT_STATUS.md` — updated: last updated date, build status note, Current Engineering Program (CHECKOUT-P8 complete), Current Sprint, Completed Programs table.
@@ -78,7 +78,7 @@ Never edit or delete past entries.
 - Production is live on commit 5ae10b6. Idempotency is active for all new checkout submissions.
 - MSR-20260921-28816 is recorded as DO NOT FULFIL. Operational test-order marker not verified — supplied SQL result did not include `notes` or `customer_name`.
 - `NEXT_PUBLIC_BANK_*` variables confirmed configured in Vercel Production; banking details displayed correctly on the production receipt. Preview environment configuration not verified.
-- Production retry recovery path is unverified. If a duplicate-submission incident occurs in production before recovery is verified, check Vercel function logs for `recovered:true` in the response body and `orders_idempotency_key_unique` constraint violations.
+- Production retry recovery path is unverified. If a duplicate-submission incident occurs in production before recovery is verified, `recovered: true` is returned in the POST /api/orders response body to the client; for server-side diagnosis, check Vercel function logs for `orders_idempotency_key_unique` constraint violations.
 
 **Open Questions Carried Forward:**
 - Preview environment `NEXT_PUBLIC_BANK_*` configuration not verified — confirm if needed before Preview-based testing.
