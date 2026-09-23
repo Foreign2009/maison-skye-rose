@@ -10,9 +10,12 @@
 **Status:** NO ACTIVE TASK
 **Program:** None
 
-CHECKOUT-P8 deployed and verified 2026-09-21. Commit 5ae10b694335f8b2c58fab4f2644cbe9b34e842b is live on production (Vercel Ready, origin/main).
+CHECKOUT-P10 deployed and verified 2026-09-23. Commit 6ab79be83eb16f8fe27697c09bcaf96dc7e5cc0a is live on production (Vercel Ready, origin/main).
 
 EP6-P5E-R Relationship Review Evidence Enrichment is complete through Phase 4C-1. The EP6-P5E campaign (20-unit controlled relationship review) remains PAUSED — 17 of 20 units pending. Campaign resumption requires separate founder authorisation. Do not resume without explicit approval.
+
+**Receipt access — Production state:**
+Authentication rejection on the production receipt is confirmed. Its cause (missing, expired, or invalid cookie) is unconfirmed. P10 corrects the misleading confirmed-order UI shown on rejection; it does not restore receipt access. Live authenticated receipt wording (collection/courier) has not been verified in production.
 
 **Banking display — Production verified:**
 `NEXT_PUBLIC_BANK_*` variables confirmed configured in Vercel Production. All five banking details displayed correctly on the production receipt for MSR-20260921-28816. Preview environment configuration not verified.
@@ -24,6 +27,39 @@ UPDATE public.orders
 SET notes = 'TEST ORDER — DO NOT FULFIL. Smoke test placed 2026-09-21.'
 WHERE order_ref = 'MSR-20260921-28816';
 ```
+
+---
+
+## Previous Task (COMPLETE)
+**Program:** CHECKOUT-P10 — Receipt Access Error Handling and Reference State Isolation
+
+**Decision:** DEPLOYED — PRODUCTION ACCESS-ERROR UI VERIFIED
+**Completed:** 2026-09-23
+**Commit:** 6ab79be83eb16f8fe27697c09bcaf96dc7e5cc0a
+
+**Scope:** `app/payment-success/page.tsx` refactored from a three-state loading/confirmed/error model to a seven-state discriminated union: `loading | confirmed | unauthorized | not_found | invalid_ref | network_error | server_error`. Previously, all non-200 responses — including a 401 Unauthorized — rendered the confirmed-order heading, banking instructions, and Send Proof of Payment CTA. P10 replaces that with correct per-state UI: access-error explanation for 401; not-found, invalid-ref, and network/server error states each with appropriate copy and CTAs; confirmed state preserving all P9 behaviour. Reference state is isolated via `key={orderRef}` — a wrapper component reads `useSearchParams` and renders the receipt component keyed by reference, preventing confirmed data for reference A from persisting under reference B during client-side navigation.
+
+**Application files changed:**
+- `app/payment-success/page.tsx` — 7-state discriminated union; `AbortController` + stale flag; `retryTrigger` for overlap-safe retry; `REF_FORMAT` validation; `key={orderRef}` wrapper; per-state UI sections
+
+**Test files added:**
+- `scripts/pw-verify/playwright.p10.config.ts` — P10 Playwright config (port 3098, WebKit iPhone 13 Mini, runs both p10 suites)
+- `scripts/pw-verify/playwright.p10-p9reg.config.ts` — P9 regression config (port 3098, reuseExistingServer)
+- `scripts/pw-verify/specs/p10-receipt-states.spec.js` — 17 P10 browser tests: 7 error/loading states, 2 P9 confirmed regression, 2 error-state mobile layout, 4 reference-binding and replay prevention
+- `scripts/pw-verify/specs/p10-p9-regression.spec.js` — P9 confirmed-state regression suite retargeted at P10 server (17 tests)
+
+**Production verification evidence (founder-provided, 2026-09-23):**
+- P10 pushed to origin/main; git ls-remote confirmed full SHA 6ab79be83eb16f8fe27697c09bcaf96dc7e5cc0a. ✓
+- Vercel deployment for 6ab79be: Ready, Production. ✓
+- Local build: TypeScript clean; 363/363 pages; no new warnings. Vercel build: TypeScript clean; 363/363 pages; existing nonblocking npm allow-scripts warnings. ✓
+- Founder's production screenshot confirms: access-error state displays "We couldn't verify access to this receipt.", browser guidance, supplied reference, "Contact us about this order" CTA, and "Continue Shopping". No confirmed-order claim, amount, banking instructions, or proof-of-payment CTA appears. Desktop action buttons visibly clear of floating controls. ✓
+
+**Verification scope and limitations:**
+- Authentication rejection is confirmed. Its cause (missing, expired, or invalid cookie) is unconfirmed.
+- P10 corrects the misleading receipt UI shown when access is rejected. It does not restore receipt access.
+- Authenticated collection/courier behaviour was tested locally with mocked API responses. Live authenticated collection wording remains unverified in production.
+- The production screenshot does not verify WhatsApp message contents or mobile layout.
+- Local browser verification: 34/34 combined tests passed (17 P10 receipt states + 17 P9 regression, WebKit iPhone 13 Mini, mocked API, port 3098). Separately, 2/2 corrected client-side navigation tests used `history.pushState` plus synthetic `popstate`; the document sentinel survived and both tests passed. The sentinel correction was applied after the 34-test run; a fresh full 34-test run was not repeated after that correction.
 
 ---
 

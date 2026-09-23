@@ -39,6 +39,57 @@ Never edit or delete past entries.
 
 ## Log
 
+### 2026-09-23 — CHECKOUT-P10 — Production Release and Close-Out
+
+**Participants:** Project Owner (founder authorisation, production screenshot, push authorisation, Vercel verification) / Claude (implementation, testing, release preparation, preflight checks, documentation close-out)
+**Program:** CHECKOUT-P10 — Receipt Access Error Handling and Reference State Isolation
+
+**Decisions Made:**
+- Founder authorised deployment of commit 6ab79be83eb16f8fe27697c09bcaf96dc7e5cc0a to production.
+- Release method: exact SHA fast-forward push (`git push origin 6ab79be…:refs/heads/main`) — no squash, no merge commit, no force push.
+- Authentication rejection on the production receipt confirmed. Its cause (missing, expired, or invalid cookie) not established and not investigated in this programme.
+- P10 scope accepted: correct the misleading confirmed-order UI for non-200 API responses. Restoring receipt access and investigating authentication root cause explicitly out of scope.
+
+**Tasks Completed:**
+- `app/payment-success/page.tsx` rewritten: three-state model → seven-state discriminated union (`loading | confirmed | unauthorized | not_found | invalid_ref | network_error | server_error`). `AbortController` + stale flag; `retryTrigger` overlap prevention; `REF_FORMAT` validation; `key={orderRef}` wrapper component; per-state UI with branded CTAs. P9 confirmed-state behaviour fully preserved.
+- Playwright browser suite written: 17 P10 receipt-state tests + 17 P9 confirmed-state regression tests = 34 combined. All 34 passed.
+- Client-side navigation tests (tests 16–17): initial anchor-click approach identified as causing full page reload in WebKit (sentinel `window.__navSentinel` proved undefined after navigation). Replaced with `history.pushState` + synthetic `popstate`; the document sentinel survived and both tests passed.
+- Local build verified: 363/363 pages, TypeScript clean, no new warnings.
+- Pre-push preflight: fetch origin, verified HEAD = 6ab79be, verified origin/main = ba7c8fa, tracked files clean, origin/main is ancestor of HEAD, `git diff --check` clean.
+- Push executed: `git push origin 6ab79be83eb16f8fe27697c09bcaf96dc7e5cc0a:refs/heads/main` — accepted, fast-forward ba7c8fa→6ab79be.
+- Founder verified Vercel Ready, Production for commit 6ab79be.
+- Founder's production screenshot confirmed: access-error state shows "We couldn't verify access to this receipt.", browser guidance, supplied reference, "Contact us about this order" CTA, and "Continue Shopping". No confirmed-order claim, amount, banking instructions, or proof-of-payment CTA visible. Desktop action buttons visibly clear of floating controls.
+- Documentation updated: `PROJECT_STATUS.md`, `.ai/CURRENT_TASK.md`, `.ai/ENGINEERING_LOG.md` (this entry).
+
+**Test results:**
+- Combined browser suite (34 tests, Playwright WebKit iPhone 13 Mini, port 3098, mocked API): 34/34 PASS — commit 6ab79be.
+- Corrected navigation tests (2 tests, `history.pushState` + synthetic `popstate`, document sentinel preserved): 2/2 PASS — run after the 34-test suite; a fresh full 34-test run was not repeated after the sentinel correction.
+- The founder loaded the production receipt page and verified its access-error UI. Successful authenticated receipt data was not obtained. Authentication state confirmed as rejected (401); root cause unconfirmed.
+
+**Build Result:** Local build: TypeScript clean; 363/363 pages; no new warnings. Vercel build for commit 6ab79be: TypeScript clean; 363/363 pages; existing nonblocking npm allow-scripts warnings. Ready, Production.
+
+**Files Changed:**
+- `app/payment-success/page.tsx` — P10 implementation
+- `scripts/pw-verify/playwright.p10.config.ts` — new
+- `scripts/pw-verify/playwright.p10-p9reg.config.ts` — new
+- `scripts/pw-verify/specs/p10-receipt-states.spec.js` — new
+- `scripts/pw-verify/specs/p10-p9-regression.spec.js` — new
+- `PROJECT_STATUS.md` — updated
+- `.ai/CURRENT_TASK.md` — updated
+- `.ai/ENGINEERING_LOG.md` — appended (this entry)
+
+**Handoff:**
+- Production is live on commit 6ab79be. The receipt page now shows correct per-state UI for all API response types.
+- Authentication rejection on the production receipt is confirmed. Its cause is unconfirmed. Receipt access remains restricted until authentication is resolved separately.
+- Live authenticated collection/courier wording has not been verified in production — local mocked-response tests only.
+- Test order MSR-20260921-28816 remains DO NOT FULFIL (see CHECKOUT-P8 notes).
+
+**Open Questions Carried Forward:**
+- What is causing authentication rejection on the production receipt (missing, expired, or invalid cookie)? Explicitly out of scope for P10.
+- Live authenticated collection/courier wording: has not been verified in production.
+
+---
+
 ### 2026-09-21 — CHECKOUT-P8 — Production Release and Close-Out
 
 **Participants:** Project Owner (founder authorisation, production evidence, production verification) / Claude (release preparation, preflight checks, deployment execution, documentation close-out)

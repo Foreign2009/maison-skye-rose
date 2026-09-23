@@ -1,41 +1,46 @@
 # Project Status — Maison Skye & Rose
 
-**Last updated:** 2026-09-21
+**Last updated:** 2026-09-23
 **Phase:** Launch Execution
-**Build status:** PASS — 363/363 pages generated; TypeScript and compilation clean; nonblocking npm allow-scripts warnings present (Vercel build for commit 5ae10b6, 2026-09-21)
+**Build status:** PASS — 363/363 pages generated; TypeScript and compilation clean; nonblocking npm allow-scripts warnings present (Vercel build for commit 6ab79be, 2026-09-23)
 
 ---
 
 ## Current Engineering Program
 
-**Programme:** CHECKOUT-P8 — Server-Side Idempotency for Safe Order Retries — COMPLETE
-**Decision:** DEPLOYED AND VERIFIED IN PRODUCTION
-**Commit:** 5ae10b694335f8b2c58fab4f2644cbe9b34e842b
-**Released:** 2026-09-21 — fast-forward push to origin/main; Vercel Ready confirmed by founder.
+**Programme:** CHECKOUT-P10 — Receipt Access Error Handling and Reference State Isolation — COMPLETE
+**Decision:** DEPLOYED — PRODUCTION ACCESS-ERROR UI VERIFIED
+**Commit:** 6ab79be83eb16f8fe27697c09bcaf96dc7e5cc0a
+**Released:** 2026-09-23 — fast-forward push to origin/main; Vercel Ready confirmed by founder.
 
-Adds server-side idempotency to `/api/orders`. When a client retries after a lost response, the server recognises the same `checkout_attempt_key` and returns the original order reference rather than creating a duplicate. Client-side frozen-snapshot retry path and attempt-state management added to checkout page. New environment variable `SUPABASE_SERVICE_ROLE_KEY` required; confirmed present in Vercel Production and Preview.
+Refactors `app/payment-success/page.tsx` from a three-state model to a seven-state discriminated union (`loading | confirmed | unauthorized | not_found | invalid_ref | network_error | server_error`). Previously, all non-200 responses — including a 401 Unauthorized — rendered the confirmed-order heading, banking instructions, and Send Proof of Payment CTA. P10 replaces that with correct per-state UI. Reference state isolation added via `key={orderRef}`: a wrapper reads `useSearchParams` and keys the receipt component by reference, preventing confirmed data for reference A from persisting under reference B during client-side navigation.
 
-**Database migration:** Applied manually to Supabase production before deployment. Two nullable text columns (`idempotency_key`, `payload_fingerprint`) added to `public.orders`; partial unique index `orders_idempotency_key_unique ON orders(idempotency_key) WHERE idempotency_key IS NOT NULL` created. Migration file retained at `supabase/pending/20260920_orders_idempotency.sql` — do not re-apply.
+**Production verification evidence (founder-provided, 2026-09-23):**
+- P10 pushed to origin/main; git ls-remote confirmed full SHA 6ab79be83eb16f8fe27697c09bcaf96dc7e5cc0a. ✓
+- Vercel: Ready, Production, main, commit 6ab79be. ✓
+- Local build: TypeScript clean; 363/363 pages; no new warnings. Vercel build: TypeScript clean; 363/363 pages; existing nonblocking npm allow-scripts warnings. ✓
+- Founder's production screenshot: access-error state shows "We couldn't verify access to this receipt.", browser guidance, supplied reference, "Contact us about this order" CTA, and "Continue Shopping". No confirmed-order claim, amount, banking instructions, or proof-of-payment CTA visible. Desktop action buttons visibly clear of floating controls. ✓
 
-**Production verification evidence (founder-provided, 2026-09-21):**
-- Vercel: Ready, Production, main, commit 5ae10b6. ✓
-- Migration columns and index verified via read-only SQL query. ✓
-- Checkout receipt loaded for reference MSR-20260921-28816, amount R60.00. ✓
-- Read-only query confirmed: `total=60`, `payment_status=awaiting_payment`, `has_key=true`, `has_fingerprint=true`. ✓
+**Verification scope and limitations:**
+- Authentication rejection is confirmed. Its cause (missing, expired, or invalid cookie) is unconfirmed.
+- P10 corrects the misleading receipt UI shown when access is rejected. It does not restore receipt access.
+- Authenticated collection/courier behaviour was tested locally with mocked API responses. Live authenticated collection wording remains unverified in production.
+- The production screenshot does not verify WhatsApp message contents or mobile layout.
+- Local browser verification: 34/34 combined tests passed (17 P10 receipt states + 17 P9 regression, WebKit iPhone 13 Mini, mocked API). Separately, 2/2 corrected client-side navigation tests used `history.pushState` plus synthetic `popstate`; the document sentinel survived and both tests passed. The sentinel correction was applied after the 34-test run; a fresh full 34-test run was not repeated after that correction.
 
-**Test order:** MSR-20260921-28816 was placed as a smoke test on 2026-09-21. **DO NOT FULFIL.** Current `payment_status` remains `awaiting_payment`. Operational test-order marker not verified — supplied SQL result did not include `notes` or `customer_name`. If a marker is needed in Supabase Dashboard → SQL Editor:
+**Receipt access — Production state:**
+Authentication rejection on the production receipt is confirmed. Its cause is unconfirmed. Receipt access remains restricted until authentication is resolved. Live authenticated collection/courier wording has not been verified in production.
+
+**Test order:** MSR-20260921-28816 was placed as a smoke test on 2026-09-21. **DO NOT FULFIL.** Operational test-order marker not verified — supplied SQL result did not include `notes` or `customer_name`. If a marker is needed in Supabase Dashboard → SQL Editor:
 ```sql
 UPDATE public.orders
 SET notes = 'TEST ORDER — DO NOT FULFIL. Smoke test placed 2026-09-21.'
 WHERE order_ref = 'MSR-20260921-28816';
 ```
 
-**Verification scope and limitations:**
-- Local HTTP integration tests (5 scenarios): PASS — concurrent deduplication, lost-response recovery, valid/invalid receipt cookies, RLS denial. Executed 2026-09-21 against local Supabase Docker stack, isolated Next.js dev server port 3098.
-- Browser suite (Playwright, 20 tests): PASS — commit dbc6233, 2026-09-21.
-- **Production retry recovery was NOT exercised.** The smoke test confirmed a single successful order submission with correct idempotency column values. Duplicate-submission and retry-recovery paths have local integration test coverage only; production retry behaviour is unverified.
+**Banking display:** `NEXT_PUBLIC_BANK_*` variables confirmed configured in Vercel Production. Preview environment configuration not verified.
 
-**Banking display:** `NEXT_PUBLIC_BANK_*` variables confirmed configured in Vercel Production. All five banking details displayed correctly on the production receipt for MSR-20260921-28816. Preview environment configuration not verified.
+**Previous programme:** CHECKOUT-P8 — Server-Side Idempotency for Safe Order Retries — COMPLETE (commit 5ae10b6, 2026-09-21). Adds server-side idempotency to `/api/orders`. Migration at `supabase/pending/20260920_orders_idempotency.sql` applied manually to Supabase production — already applied; do not re-apply. Production verification: Vercel Ready; receipt loaded for MSR-20260921-28816, R60.00; idempotency columns confirmed. Production retry recovery was NOT exercised.
 
 **Previous programme:** FR-03 — Production Environment & Database Verification — FORMALLY CLOSED 2026-08-15.
 
@@ -67,9 +72,7 @@ Same-session corrective episode for EP6-P5C. Two live-use safety defects correct
 
 ## Current Sprint
 
-No active sprint. CHECKOUT-P8 deployed 2026-09-21.
-
-**Banking display:** Confirmed in Production. `NEXT_PUBLIC_BANK_*` variables configured in Vercel Production; all five banking details displayed correctly on the production receipt (MSR-20260921-28816). Preview environment configuration not verified.
+No active sprint. CHECKOUT-P10 deployed 2026-09-23.
 
 ---
 
@@ -91,7 +94,7 @@ The Maison Fragrance Academy is live — 28 articles across 3 content waves, int
 | TypeScript errors | 0 |
 | Warnings | Nonblocking npm allow-scripts warnings (not TypeScript) |
 | Total pages | 363 |
-| Last verified | 2026-09-21 (Vercel build for CHECKOUT-P8, commit 5ae10b6) |
+| Last verified | 2026-09-23 (Vercel build for CHECKOUT-P10, commit 6ab79be) |
 
 Verify: `npm run build`
 
@@ -179,6 +182,7 @@ Verify: `npm run build`
 | FR | FR-02 | Switch Launch Checkout to EFT-First Flow | Complete — 2026-08-15 — commit d307a5f |
 | FR | FR-03 | Production Environment & Database Verification — Governance Close-Out | Complete — 2026-08-15 |
 | CHECKOUT | CHECKOUT-P8 | Server-Side Idempotency for Safe Order Retries | Complete — 2026-09-21 — commit 5ae10b6 |
+| CHECKOUT | CHECKOUT-P10 | Receipt Access Error Handling and Reference State Isolation | Complete — 2026-09-23 — commit 6ab79be |
 
 `FOUNDATIONS/00_FOUNDERS_LETTER.md` — The permanent founder's letter to Skye, Rose, future employees, and future stewards. *Why we began.*
 `FOUNDATIONS/01_SKYE_AND_ROSE_COVENANT.md` — The institutional promise: to customers, products, technology, and future generations. *What we promise.*
@@ -474,4 +478,4 @@ The Maison Fragrance Academy is a first-class product — the long-term knowledg
 
 ## Next Approved Sprint
 
-None. CHECKOUT-P8 deployed 2026-09-21. No active sprint.
+None. CHECKOUT-P10 deployed 2026-09-23. No active sprint.
