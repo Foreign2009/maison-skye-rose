@@ -22,6 +22,11 @@ import {
 import {
   handleGetConfirmation,
 } from "../../../app/api/orders/[ref]/route";
+import {
+  signReceiptToken,
+  verifyReceiptToken,
+  RECEIPT_EXPIRY_SECONDS,
+} from "../../../app/lib/receiptToken";
 import { NextResponse } from "next/server";
 
 // ── In-memory persistence ────────────────────────────────────────────────────
@@ -55,6 +60,7 @@ function makeConfirmationDb() {
           order_ref:      row.order_ref,
           total:          row.total,
           payment_status: row.payment_status,
+          province:       (row.province as string | null) ?? null,
         },
         error: null,
       };
@@ -270,7 +276,7 @@ async function main() {
       const getRes = await fetch(`${base}/api/orders/${ref}`, {
         headers: { "Cookie": `${cookie.name}=${cookie.value}` },
       });
-      const getJson = await getRes.json() as { orderRef?: string; total?: number; paymentStatus?: string };
+      const getJson = await getRes.json() as { orderRef?: string; total?: number; paymentStatus?: string; province?: string | null };
 
       getRes.status === 200
         ? pass(`GET /api/orders/${ref} with valid cookie → 200`)
@@ -289,11 +295,15 @@ async function main() {
         ? pass(`Confirmation paymentStatus: ${getJson.paymentStatus}`)
         : fail("paymentStatus unexpected", `got ${getJson.paymentStatus}`);
 
-      const allowedKeys = new Set(["orderRef", "total", "paymentStatus"]);
+      const allowedKeys = new Set(["orderRef", "total", "paymentStatus", "province"]);
       const extraKeys = Object.keys(getJson).filter(k => !allowedKeys.has(k));
       extraKeys.length === 0
-        ? pass("Response contains only { orderRef, total, paymentStatus } — no PII")
+        ? pass("Response contains { orderRef, total, paymentStatus, province } — no PII")
         : fail("Extra fields in response", extraKeys.join(", "));
+
+      getJson.province === "Cape Town Metro"
+        ? pass("Confirmation province: Cape Town Metro")
+        : fail("province unexpected", `got ${String(getJson.province)}`);
 
       const cacheControl = getRes.headers.get("cache-control");
       cacheControl === "private, no-store"
@@ -316,15 +326,15 @@ async function main() {
 
       console.log();
 
-      // ── Journey 4: Refresh — cookie still works ────────────────────────────
-      console.log("──── Journey 4: Second GET (simulates browser refresh) ────\n");
+      // ── Journey 4: Repeated GET with manually supplied cookie ──────────────
+      console.log("──── Journey 4: Repeated GET with manually supplied cookie ────\n");
 
       const refreshRes = await fetch(`${base}/api/orders/${ref}`, {
         headers: { "Cookie": `${cookie.name}=${cookie.value}` },
       });
       refreshRes.status === 200
-        ? pass("Refresh: second GET with same cookie → 200")
-        : fail("Refresh second GET", `status=${refreshRes.status}`);
+        ? pass("Repeated GET with manually supplied cookie → 200")
+        : fail("Repeated GET with manually supplied cookie", `status=${refreshRes.status}`);
 
       console.log();
 
@@ -457,6 +467,83 @@ async function main() {
       pass(`Collection POST 200: orderRef=${colJson.orderRef}`);
     } else {
       fail("Collection POST", `status=${colRes.status} msg="${colJson.message ?? "none"}"`);
+    }
+
+    console.log();
+
+    // ── Journey 11: Token expiry — controlled clock ───────────────────────────
+    console.log("──── Journey 11: Token expiry — controlled clock ────\n");
+    console.log("    Freezes Date.now at a fixed epoch; signs via signReceiptToken.");
+    console.log("    Advances clock to before expiry, at boundary, and one second past.");
+    console.log("    Exercises verifyReceiptToken (E1–E3) and handleGetConfirmation (E4).\n");
+
+    const EXPIRY_REF = "MSR-20260921-77777";
+    // Arbitrary fixed epoch (2023-11-14T22:13:20Z). No relationship to real events.
+    // Token exp = BASE_TIME_SEC + RECEIPT_EXPIRY_SECONDS after signing.
+    const BASE_TIME_MS  = 1_700_000_000_000;
+    const BASE_TIME_SEC = Math.floor(BASE_TIME_MS / 1000);
+    const EXP_SEC       = BASE_TIME_SEC + RECEIPT_EXPIRY_SECONDS;
+    const originalDateNow = Date.now;
+
+    try {
+      // Freeze clock at BASE_TIME_MS so signReceiptToken produces a deterministic exp.
+      Date.now = () => BASE_TIME_MS;
+      const token = await signReceiptToken(EXPIRY_REF);
+
+      // E1: one second before expiry — exp > now, exp < now is false → accepted.
+      Date.now = () => (EXP_SEC - 1) * 1000;
+      {
+        let threw = false;
+        try { await verifyReceiptToken(token, EXPIRY_REF); } catch { threw = true; }
+        !threw
+          ? pass("E1: one second before expiry (exp > now) → accepted")
+          : fail("E1: token rejected before expiry unexpectedly");
+      }
+
+      // E2: exactly at boundary — exp === now, exp < now is false → accepted.
+      Date.now = () => EXP_SEC * 1000;
+      {
+        let threw = false;
+        try { await verifyReceiptToken(token, EXPIRY_REF); } catch { threw = true; }
+        !threw
+          ? pass("E2: at exact expiry boundary (exp === now, exp < now is false) → accepted")
+          : fail("E2: token rejected at exact boundary unexpectedly");
+      }
+
+      // E3: one second after expiry — exp < now is true → rejected.
+      Date.now = () => (EXP_SEC + 1) * 1000;
+      {
+        let threw = false;
+        try { await verifyReceiptToken(token, EXPIRY_REF); } catch { threw = true; }
+        threw
+          ? pass("E3: one second after expiry (exp < now) → rejected")
+          : fail("E3: token accepted one second after expiry (should be rejected)");
+      }
+
+      // E4: expired token through handleGetConfirmation → 401 and zero DB calls.
+      // Clock remains at EXP_SEC + 1 (one second past expiry).
+      {
+        let dbCallCount = 0;
+        const res = await handleGetConfirmation(
+          EXPIRY_REF,
+          token,
+          {
+            getOrderConfirmation: async (_ref) => {
+              dbCallCount++;
+              return { data: null, error: null };
+            },
+          },
+        );
+        res.status === 401
+          ? pass("E4: expired token → handleGetConfirmation → 401")
+          : fail("E4: expected 401 for expired token", `got ${res.status}`);
+        dbCallCount === 0
+          ? pass("E4: token check fires before DB lookup (0 DB calls)")
+          : fail("E4: DB was reached despite expired token", `${dbCallCount} call(s)`);
+      }
+
+    } finally {
+      Date.now = originalDateNow;
     }
 
     console.log();
