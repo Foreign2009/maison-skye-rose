@@ -46,6 +46,8 @@ export async function updateStatusAction(
   status:          OrderStatus,
   note?:           string,
   trackingNumber?: string,
+  courierName?:    string,
+  trackingUrl?:    string,
 ): Promise<{ success: boolean; message?: string }> {
   const adminSecret = process.env.ADMIN_SECRET;
   const baseUrl     = process.env.NEXT_PUBLIC_WEBSITE_URL ?? "http://localhost:3000";
@@ -61,6 +63,8 @@ export async function updateStatusAction(
         status,
         ...(note?.trim()           ? { note:             note.trim() }           : {}),
         ...(trackingNumber?.trim() ? { tracking_number: trackingNumber.trim() } : {}),
+        ...(courierName?.trim()    ? { courier_name:    courierName.trim() }    : {}),
+        ...(trackingUrl?.trim()    ? { tracking_url:    trackingUrl.trim() }    : {}),
       }),
     });
 

@@ -41,6 +41,8 @@ CREATE TABLE IF NOT EXISTS orders (
   discovery_context    JSONB,
   notes                TEXT,
   tracking_number      TEXT,
+  courier_name         TEXT,
+  tracking_url         TEXT,
   payment_confirmed_at TIMESTAMPTZ,
   dispatched_at        TIMESTAMPTZ,
   delivered_at         TIMESTAMPTZ,

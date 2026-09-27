@@ -9,8 +9,10 @@ import {
 } from "@/app/lib/orderStatus";
 import { verifyReceiptToken } from "@/app/lib/receiptToken";
 
-const MAX_NOTE_LENGTH    = 500;
+const MAX_NOTE_LENGTH     = 500;
 const MAX_TRACKING_LENGTH = 100;
+const MAX_COURIER_LENGTH  = 100;
+const MAX_URL_LENGTH      = 500;
 
 // MSR-YYYYMMDD-NNNNN — validated before any DB access.
 const REF_FORMAT = /^MSR-\d{8}-\d{5}$/;
@@ -57,7 +59,7 @@ export async function PATCH(
     );
   }
 
-  const { status, note, tracking_number } = body;
+  const { status, note, tracking_number, courier_name, tracking_url } = body;
 
   if (!status || !ORDER_STATUSES.includes(status as OrderStatus)) {
     return NextResponse.json(
@@ -81,6 +83,39 @@ export async function PATCH(
       { success: false, message: `Tracking number must be a non-empty string under ${MAX_TRACKING_LENGTH} characters.` },
       { status: 400 }
     );
+  }
+
+  if (
+    courier_name !== undefined &&
+    (typeof courier_name !== "string" || courier_name.trim().length === 0 || courier_name.length > MAX_COURIER_LENGTH)
+  ) {
+    return NextResponse.json(
+      { success: false, message: `Courier name must be a non-empty string under ${MAX_COURIER_LENGTH} characters.` },
+      { status: 400 }
+    );
+  }
+
+  if (tracking_url !== undefined && tracking_url !== "") {
+    if (typeof tracking_url !== "string" || tracking_url.length > MAX_URL_LENGTH) {
+      return NextResponse.json(
+        { success: false, message: `Tracking URL must be under ${MAX_URL_LENGTH} characters.` },
+        { status: 400 }
+      );
+    }
+    try {
+      const parsed = new URL(tracking_url as string);
+      if (parsed.protocol !== "https:") {
+        return NextResponse.json(
+          { success: false, message: "Tracking URL must be a valid https:// URL." },
+          { status: 400 }
+        );
+      }
+    } catch {
+      return NextResponse.json(
+        { success: false, message: "Tracking URL must be a valid https:// URL." },
+        { status: 400 }
+      );
+    }
   }
 
   // ── Fetch current order ───────────────────────────────────────────────────
@@ -136,6 +171,13 @@ export async function PATCH(
     );
   }
 
+  if (newStatus === "dispatched" && !courier_name) {
+    return NextResponse.json(
+      { success: false, message: "A courier name is required when dispatching an order." },
+      { status: 400 }
+    );
+  }
+
   // ── Build update payload ──────────────────────────────────────────────────
   const historyEntry: StatusHistoryEntry = {
     status:     newStatus,
@@ -156,7 +198,9 @@ export async function PATCH(
   if (tsField) updatePayload[tsField] = new Date().toISOString();
 
   if (tracking_number) updatePayload.tracking_number = (tracking_number as string).trim();
-  if (note)            updatePayload.notes            = (note as string).trim();
+  if (courier_name)   updatePayload.courier_name    = (courier_name as string).trim();
+  if (tracking_url)   updatePayload.tracking_url    = (tracking_url as string).trim();
+  if (note)           updatePayload.notes           = (note as string).trim();
 
   // ── Write ─────────────────────────────────────────────────────────────────
   const { error: updateError } = await db
@@ -177,6 +221,7 @@ export async function PATCH(
     from:     currentStatus,
     to:       newStatus,
     ...(tracking_number ? { trackingNumber: tracking_number } : {}),
+    ...(courier_name    ? { courierName:    courier_name }    : {}),
   });
 
   return NextResponse.json({

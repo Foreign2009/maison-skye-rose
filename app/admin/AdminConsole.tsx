@@ -40,6 +40,8 @@ export interface OrderRow {
   payment_status:       OrderStatus;
   notes:                string | null;
   tracking_number:      string | null;
+  courier_name:         string | null;
+  tracking_url:         string | null;
   payment_confirmed_at: string | null;
   dispatched_at:        string | null;
   delivered_at:         string | null;
@@ -48,6 +50,15 @@ export interface OrderRow {
   discovery_context:    DiscoveryAttribution | null;
   created_at:           string;
 }
+
+// Local type for a pending status transition with all dispatch fields.
+type PendingAction = {
+  status:         OrderStatus;
+  note:           string;
+  trackingNumber: string;
+  courierName:    string;
+  trackingUrl:    string;
+};
 
 interface DashboardMetrics {
   pendingRevenue:   number;
@@ -124,6 +135,41 @@ function toWhatsAppNumber(phone: string): string {
   if (d.startsWith("27")) return d;
   if (d.startsWith("0"))  return "27" + d.slice(1);
   return d;
+}
+
+function isValidWaPhone(phone: string): boolean {
+  const n = toWhatsAppNumber(phone);
+  return /^\d{10,}$/.test(n);
+}
+
+function isValidHttpsUrl(url: string): boolean {
+  if (!url) return true;
+  try {
+    const u = new URL(url);
+    return u.protocol === "https:";
+  } catch {
+    return false;
+  }
+}
+
+function buildDispatchMessage(
+  order:          OrderRow,
+  courierName:    string,
+  trackingNumber: string,
+  trackingUrl:    string,
+): string {
+  const firstName = order.customer_name.split(" ")[0];
+  const itemLines = (order.items ?? [])
+    .map(i => `  • ${i.title}${i.size ? ` (${i.size})` : ""} × ${i.quantity}`)
+    .join("\n");
+  let msg = `Hi ${firstName}! 🎉 Your Maison Skye & Rose order has been dispatched!\n\n`;
+  msg += `Order: ${order.order_ref}\n`;
+  if (itemLines) msg += `Items:\n${itemLines}\n\n`;
+  msg += `Courier: ${courierName}\n`;
+  msg += `Tracking: ${trackingNumber}`;
+  if (trackingUrl) msg += `\nTrack here: ${trackingUrl}`;
+  msg += `\n\nThank you for shopping with us! 💜`;
+  return msg;
 }
 
 // Returns how overdue an order is relative to its created_at timestamp.
@@ -374,7 +420,9 @@ function PackingSlip({ order, printedAt }: { order: OrderRow; printedAt: string 
             <p className="mb-1 text-[10px] font-bold uppercase tracking-[0.4em] text-gray-500">
               Tracking
             </p>
-            <p className="text-sm font-bold">{order.tracking_number}</p>
+            <p className="text-sm font-bold">
+              {order.courier_name ? `${order.courier_name}: ` : ""}{order.tracking_number}
+            </p>
           </div>
         </>
       )}
@@ -401,20 +449,22 @@ function PackingSlip({ order, printedAt }: { order: OrderRow; printedAt: string 
 // ── DetailPanel ───────────────────────────────────────────────────────────────
 
 interface DetailPanelProps {
-  order:           OrderRow;
-  nextStatuses:    OrderStatus[];
-  pendingAction:   { status: OrderStatus; note: string; trackingNumber: string } | null;
-  onActionClick:   (s: OrderStatus) => void;
-  onPendingChange: (pa: { status: OrderStatus; note: string; trackingNumber: string } | null) => void;
-  onConfirmAction: () => void;
-  onCancelAction:  () => void;
-  notesValue:      string;
-  notesChanged:    boolean;
-  onNotesChange:   (v: string) => void;
-  onSaveNotes:     () => void;
-  feedback:        { type: "success" | "error"; text: string } | null;
-  isPending:       boolean;
-  onClose:         () => void;
+  order:                OrderRow;
+  nextStatuses:         OrderStatus[];
+  pendingAction:        PendingAction | null;
+  onActionClick:        (s: OrderStatus) => void;
+  onPendingChange:      (pa: PendingAction | null) => void;
+  onConfirmAction:      () => void;
+  onCancelAction:       () => void;
+  dispatchStep:         "form" | "review";
+  onDispatchStepChange: (step: "form" | "review") => void;
+  notesValue:           string;
+  notesChanged:         boolean;
+  onNotesChange:        (v: string) => void;
+  onSaveNotes:          () => void;
+  feedback:             { type: "success" | "error"; text: string } | null;
+  isPending:            boolean;
+  onClose:              () => void;
 }
 
 function DetailPanel({
@@ -425,6 +475,8 @@ function DetailPanel({
   onPendingChange,
   onConfirmAction,
   onCancelAction,
+  dispatchStep,
+  onDispatchStepChange,
   notesValue,
   notesChanged,
   onNotesChange,
@@ -450,10 +502,14 @@ function DetailPanel({
     `Hi ${firstName}! This is Maison Skye & Rose regarding your order ${order.order_ref}.`
   )}`;
 
-  const dispatchWaUrl = order.tracking_number
-    ? `https://wa.me/${toWhatsAppNumber(order.phone)}?text=${encodeURIComponent(
-        `Hi ${firstName}! Great news — your Maison Skye & Rose order has been dispatched 🎉\n\nOrder: ${order.order_ref}\nTracking: ${order.tracking_number}\n\nThank you for shopping with us! 💜`
-      )}`
+  // Dispatch notification section — derived from saved DB fields so it
+  // persists after page refresh. Shown for all dispatched orders where
+  // courier_name and tracking_number were saved.
+  const dispatchMsg = order.payment_status === "dispatched" && order.courier_name && order.tracking_number
+    ? buildDispatchMessage(order, order.courier_name, order.tracking_number, order.tracking_url ?? "")
+    : null;
+  const dispatchWaUrl = dispatchMsg && isValidWaPhone(order.phone)
+    ? `https://wa.me/${toWhatsAppNumber(order.phone)}?text=${encodeURIComponent(dispatchMsg)}`
     : null;
 
   function handlePrint() {
@@ -639,40 +695,174 @@ function DetailPanel({
                       </button>
                     ))}
                   </div>
-                ) : (
-                  <div className="space-y-3 rounded-2xl border border-gray-100 bg-gray-50 p-4">
-                    <p className="text-sm font-semibold text-[#4f4a52]">
-                      {ACTION_LABELS[pendingAction.status] ?? STATUS_LABELS[pendingAction.status]}
-                    </p>
+                ) : pendingAction.status === "dispatched" ? (
+                  dispatchStep === "form" ? (
+                    // ── Dispatch: Step 1 — details form ────────────────────
+                    <div className="space-y-3 rounded-2xl border border-gray-100 bg-gray-50 p-4">
+                      <p className="text-sm font-semibold text-[#4f4a52]">Dispatch Details</p>
 
-                    {pendingAction.status === "dispatched" && (
+                      <div>
+                        <label className="mb-1 block text-[10px] uppercase tracking-[0.3em] text-[#9b9298]">
+                          Courier <span className="text-red-400">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          value={pendingAction.courierName}
+                          onChange={e =>
+                            onPendingChange({ ...pendingAction, courierName: e.target.value })
+                          }
+                          placeholder="e.g. The Courier Guy"
+                          autoFocus
+                          className="w-full rounded-xl border border-gray-200 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#4f4a52]/20"
+                        />
+                      </div>
+
                       <div>
                         <label className="mb-1 block text-[10px] uppercase tracking-[0.3em] text-[#9b9298]">
                           Tracking Number <span className="text-red-400">*</span>
                         </label>
-                        <div className="flex items-center gap-2">
-                          <input
-                            type="text"
-                            value={pendingAction.trackingNumber}
-                            onChange={e =>
-                              onPendingChange({ ...pendingAction, trackingNumber: e.target.value })
-                            }
-                            placeholder="e.g. SN123456789"
-                            autoFocus
-                            className="flex-1 rounded-xl border border-gray-200 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#4f4a52]/20"
-                          />
-                          {pendingAction.trackingNumber.trim() && (
-                            <CopyButton
-                              value={pendingAction.trackingNumber.trim()}
-                              label="Copy tracking number"
-                            />
+                        <input
+                          type="text"
+                          value={pendingAction.trackingNumber}
+                          onChange={e =>
+                            onPendingChange({ ...pendingAction, trackingNumber: e.target.value })
+                          }
+                          placeholder="e.g. SN123456789"
+                          className="w-full rounded-xl border border-gray-200 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#4f4a52]/20"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="mb-1 block text-[10px] uppercase tracking-[0.3em] text-[#9b9298]">
+                          Tracking URL (optional)
+                        </label>
+                        <input
+                          type="url"
+                          value={pendingAction.trackingUrl}
+                          onChange={e =>
+                            onPendingChange({ ...pendingAction, trackingUrl: e.target.value })
+                          }
+                          placeholder="https://track.example.com/…"
+                          className="w-full rounded-xl border border-gray-200 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#4f4a52]/20"
+                        />
+                        {pendingAction.trackingUrl && !isValidHttpsUrl(pendingAction.trackingUrl) && (
+                          <p className="mt-1 text-[10px] text-red-500">
+                            Must be a valid https:// URL
+                          </p>
+                        )}
+                      </div>
+
+                      <div>
+                        <label className="mb-1 block text-[10px] uppercase tracking-[0.3em] text-[#9b9298]">
+                          Note (optional)
+                        </label>
+                        <textarea
+                          value={pendingAction.note}
+                          onChange={e =>
+                            onPendingChange({ ...pendingAction, note: e.target.value })
+                          }
+                          placeholder="e.g. Handed to courier at 10:30"
+                          rows={2}
+                          className="w-full resize-none rounded-xl border border-gray-200 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#4f4a52]/20"
+                        />
+                      </div>
+
+                      <div className="flex gap-2">
+                        <button
+                          onClick={() => onDispatchStepChange("review")}
+                          disabled={
+                            !pendingAction.courierName.trim() ||
+                            !pendingAction.trackingNumber.trim() ||
+                            (!!pendingAction.trackingUrl && !isValidHttpsUrl(pendingAction.trackingUrl))
+                          }
+                          className="flex-1 rounded-full bg-[#4f4a52] py-2.5 text-xs font-bold text-white transition hover:bg-black disabled:opacity-40"
+                        >
+                          Review →
+                        </button>
+                        <button
+                          onClick={onCancelAction}
+                          className="rounded-full border border-gray-200 px-4 py-2.5 text-xs font-semibold text-[#7b7480] transition hover:bg-gray-100"
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    // ── Dispatch: Step 2 — review & confirm ────────────────
+                    <div data-testid="dispatch-review" className="space-y-3 rounded-2xl border border-indigo-100 bg-indigo-50/40 p-4">
+                      <p className="text-sm font-semibold text-[#4f4a52]">Confirm Dispatch</p>
+
+                      <div className="space-y-1.5 rounded-xl border border-gray-100 bg-white p-3 text-sm">
+                        <div className="flex justify-between gap-2">
+                          <span className="text-[#9b9298]">Order</span>
+                          <span className="font-semibold text-[#4f4a52]">{order.order_ref}</span>
+                        </div>
+                        <div className="flex justify-between gap-2">
+                          <span className="text-[#9b9298]">To</span>
+                          <span className="text-right font-semibold text-[#4f4a52]">
+                            {order.customer_name} · {order.province}
+                          </span>
+                        </div>
+                        {items.length > 0 && (
+                          <div>
+                            <span className="text-[#9b9298]">Items</span>
+                            <ul className="mt-1 space-y-0.5">
+                              {items.map((item, i) => (
+                                <li key={i} className="text-[#4f4a52]">
+                                  {item.title}{item.size ? ` (${item.size})` : ""} × {item.quantity}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
+                        <div className="space-y-1 border-t border-gray-100 pt-1.5">
+                          <div className="flex justify-between gap-2">
+                            <span className="text-[#9b9298]">Courier</span>
+                            <span className="font-semibold text-[#4f4a52]">
+                              {pendingAction.courierName}
+                            </span>
+                          </div>
+                          <div className="flex justify-between gap-2">
+                            <span className="text-[#9b9298]">Tracking</span>
+                            <span className="font-semibold text-[#4f4a52]">
+                              {pendingAction.trackingNumber}
+                            </span>
+                          </div>
+                          {pendingAction.trackingUrl && (
+                            <div className="flex justify-between gap-2">
+                              <span className="shrink-0 text-[#9b9298]">URL</span>
+                              <span className="max-w-[180px] truncate font-semibold text-[#4f4a52]">
+                                {pendingAction.trackingUrl}
+                              </span>
+                            </div>
                           )}
                         </div>
-                        <p className="mt-1 text-[10px] text-[#9b9298]">
-                          Copy the number above to paste into your courier portal.
-                        </p>
                       </div>
-                    )}
+
+                      <div className="flex gap-2">
+                        <button
+                          onClick={() => onDispatchStepChange("form")}
+                          disabled={isPending}
+                          className="rounded-full border border-gray-200 px-4 py-2.5 text-xs font-semibold text-[#7b7480] transition hover:bg-gray-100"
+                        >
+                          ← Back
+                        </button>
+                        <button
+                          onClick={onConfirmAction}
+                          disabled={isPending}
+                          className="flex-1 rounded-full bg-indigo-600 py-2.5 text-xs font-bold text-white transition hover:bg-indigo-700 disabled:opacity-40"
+                        >
+                          {isPending ? "Dispatching…" : "Confirm dispatch"}
+                        </button>
+                      </div>
+                    </div>
+                  )
+                ) : (
+                  // ── Generic non-dispatch pending action ────────────────────
+                  <div className="space-y-3 rounded-2xl border border-gray-100 bg-gray-50 p-4">
+                    <p className="text-sm font-semibold text-[#4f4a52]">
+                      {ACTION_LABELS[pendingAction.status] ?? STATUS_LABELS[pendingAction.status]}
+                    </p>
 
                     <div>
                       <label className="mb-1 block text-[10px] uppercase tracking-[0.3em] text-[#9b9298]">
@@ -692,11 +882,7 @@ function DetailPanel({
                     <div className="flex gap-2">
                       <button
                         onClick={onConfirmAction}
-                        disabled={
-                          isPending ||
-                          (pendingAction.status === "dispatched" &&
-                            !pendingAction.trackingNumber.trim())
-                        }
+                        disabled={isPending}
                         className="flex-1 rounded-full bg-[#4f4a52] py-2.5 text-xs font-bold text-white transition hover:bg-black disabled:opacity-40"
                       >
                         {isPending ? "Updating…" : "Confirm"}
@@ -788,17 +974,49 @@ function DetailPanel({
             WhatsApp {firstName}
           </a>
 
-          {/* ── Dispatch notification — dispatched orders with tracking ───── */}
-          {order.payment_status === "dispatched" && dispatchWaUrl && (
-            <a
-              href={dispatchWaUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex w-full items-center justify-center gap-2 rounded-full border border-indigo-200 bg-indigo-50 py-3.5 text-sm font-bold text-indigo-700 transition hover:bg-indigo-100"
-            >
-              <MessageCircle size={16} />
-              Send Dispatch Notification
-            </a>
+          {/* ── Dispatch notification — dispatched orders with saved courier info ── */}
+          {dispatchMsg && (
+            <section data-testid="dispatch-notification-section">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#d89ca4]">
+                Dispatch Notification
+              </p>
+              <div className="mt-3 space-y-2">
+                <div className="space-y-0.5 rounded-xl border border-gray-100 bg-gray-50 px-3 py-2 text-xs text-[#7b7480]">
+                  <p>
+                    <span className="font-semibold text-[#4f4a52]">Courier:</span>{" "}
+                    {order.courier_name}
+                  </p>
+                  <p>
+                    <span className="font-semibold text-[#4f4a52]">Tracking:</span>{" "}
+                    {order.tracking_number}
+                  </p>
+                  {order.tracking_url && (
+                    <p className="truncate">
+                      <span className="font-semibold text-[#4f4a52]">URL:</span>{" "}
+                      {order.tracking_url}
+                    </p>
+                  )}
+                </div>
+                {dispatchWaUrl ? (
+                  <a
+                    href={dispatchWaUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex w-full items-center justify-center gap-2 rounded-full border border-indigo-200 bg-indigo-50 py-3 text-sm font-bold text-indigo-700 transition hover:bg-indigo-100"
+                  >
+                    <MessageCircle size={16} />
+                    Open WhatsApp message
+                  </a>
+                ) : (
+                  <div className="flex items-center justify-between gap-2 rounded-xl border border-gray-100 bg-gray-50 px-3 py-2.5">
+                    <span className="text-xs text-[#9b9298]">
+                      Phone number not available for WhatsApp
+                    </span>
+                    <CopyButton value={dispatchMsg} label="Copy dispatch message" />
+                  </div>
+                )}
+              </div>
+            </section>
           )}
 
         </div>
@@ -821,13 +1039,10 @@ export default function AdminConsole({ initialOrders }: { initialOrders: OrderRo
   const [searchQuery,   setSearchQuery]   = useState("");
   const [statusFilter,  setStatusFilter]  = useState<OrderStatus | "all">("all");
   const [selectedRef,   setSelectedRef]   = useState<string | null>(null);
-  const [pendingAction, setPendingAction] = useState<{
-    status:         OrderStatus;
-    note:           string;
-    trackingNumber: string;
-  } | null>(null);
-  const [notesValue, setNotesValue] = useState("");
-  const [feedback,   setFeedback]   = useState<{ type: "success" | "error"; text: string } | null>(null);
+  const [pendingAction, setPendingAction] = useState<PendingAction | null>(null);
+  const [dispatchStep,  setDispatchStep]  = useState<"form" | "review">("form");
+  const [notesValue,    setNotesValue]    = useState("");
+  const [feedback,      setFeedback]      = useState<{ type: "success" | "error"; text: string } | null>(null);
 
   const selectedOrder = useMemo(
     () => (selectedRef ? (initialOrders.find(o => o.order_ref === selectedRef) ?? null) : null),
@@ -841,6 +1056,7 @@ export default function AdminConsole({ initialOrders }: { initialOrders: OrderRo
     setNotesValue(selectedOrder?.notes ?? "");
     setPendingAction(null);
     setFeedback(null);
+    setDispatchStep("form");
   }, [selectedRef]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const statusCounts = useMemo(() => {
@@ -884,8 +1100,9 @@ export default function AdminConsole({ initialOrders }: { initialOrders: OrderRo
   }
 
   function handleStatusAction(status: OrderStatus) {
-    setPendingAction({ status, note: "", trackingNumber: "" });
+    setPendingAction({ status, note: "", trackingNumber: "", courierName: "", trackingUrl: "" });
     setFeedback(null);
+    setDispatchStep("form");
   }
 
   function handleConfirmAction() {
@@ -896,10 +1113,13 @@ export default function AdminConsole({ initialOrders }: { initialOrders: OrderRo
         pendingAction.status,
         pendingAction.note || undefined,
         pendingAction.trackingNumber || undefined,
+        pendingAction.courierName || undefined,
+        pendingAction.trackingUrl || undefined,
       );
       if (result.success) {
         router.refresh();
         setPendingAction(null);
+        setDispatchStep("form");
         setFeedback({ type: "success", text: "Order updated successfully." });
       } else {
         setFeedback({ type: "error", text: result.message ?? "Update failed." });
@@ -921,17 +1141,19 @@ export default function AdminConsole({ initialOrders }: { initialOrders: OrderRo
   }
 
   const detailPanelProps: Omit<DetailPanelProps, "onClose"> = {
-    order:           selectedOrder!,
+    order:                selectedOrder!,
     nextStatuses,
     pendingAction,
-    onActionClick:   handleStatusAction,
-    onPendingChange: setPendingAction,
-    onConfirmAction: handleConfirmAction,
-    onCancelAction:  () => setPendingAction(null),
+    onActionClick:        handleStatusAction,
+    onPendingChange:      setPendingAction,
+    onConfirmAction:      handleConfirmAction,
+    onCancelAction:       () => { setPendingAction(null); setDispatchStep("form"); },
+    dispatchStep,
+    onDispatchStepChange: setDispatchStep,
     notesValue,
     notesChanged,
-    onNotesChange:   setNotesValue,
-    onSaveNotes:     handleSaveNotes,
+    onNotesChange:        setNotesValue,
+    onSaveNotes:          handleSaveNotes,
     feedback,
     isPending,
   };
@@ -1153,7 +1375,7 @@ export default function AdminConsole({ initialOrders }: { initialOrders: OrderRo
           </div>
 
           {/* ── Detail panel (desktop) — full-width during print ────────────── */}
-          <div className="hidden w-[440px] shrink-0 overflow-y-auto border-l border-gray-100 bg-white lg:block print:block print:w-full print:border-0">
+          <div data-testid="detail-panel-desktop" className="hidden w-[440px] shrink-0 overflow-y-auto border-l border-gray-100 bg-white lg:block print:block print:w-full print:border-0">
             {selectedOrder ? (
               <DetailPanel
                 {...detailPanelProps}
@@ -1185,6 +1407,7 @@ export default function AdminConsole({ initialOrders }: { initialOrders: OrderRo
                 animate={{ y: 0 }}
                 exit={{ y: "100%" }}
                 transition={{ type: "spring", damping: 30, stiffness: 300 }}
+                data-testid="detail-panel-mobile"
                 className="fixed inset-x-0 bottom-0 z-30 max-h-[88vh] overflow-y-auto rounded-t-[28px] bg-white lg:hidden print:hidden"
               >
                 <div className="flex justify-center pb-1 pt-3">
