@@ -1,5 +1,7 @@
 "use client";
 
+import { brand } from "../data/brand";
+
 export default function RequestFragrance() {
   return (
     <section className="bg-black py-24 text-white">
@@ -20,7 +22,7 @@ export default function RequestFragrance() {
         </p>
 
         <a
-          href="https://wa.me/27696863952?text=Hi%20Maison%20Skye%20%26%20Rose,%20I%20am%20looking%20for%20a%20specific%20fragrance."
+          href={brand.social.whatsappLink}
           target="_blank"
           rel="noopener noreferrer"
           className="mt-10 inline-flex rounded-full bg-white px-8 py-4 font-bold text-black transition hover:scale-105"

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { brand } from "../data/brand";
 
 export const metadata: Metadata = {
   title: "FAQ | Maison Skye & Rose",
@@ -101,7 +102,7 @@ export default function FAQPage() {
           </p>
 
           <a
-            href="https://wa.me/27696863952"
+            href={brand.social.whatsappBareLink}
             target="_blank"
             rel="noopener noreferrer"
             className="mt-8 inline-flex rounded-full bg-white px-8 py-4 font-bold text-black"

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { brand } from "../data/brand";
 
 export const metadata: Metadata = {
   title: "Contact Us | Maison Skye & Rose",
@@ -46,7 +47,7 @@ export default function ContactPage() {
             </p>
 
             <a
-              href="https://wa.me/27696863952"
+              href={brand.social.whatsappBareLink}
               target="_blank"
               rel="noopener noreferrer"
               className="mt-6 inline-flex rounded-full bg-black px-6 py-3 text-white font-semibold"
@@ -67,7 +68,7 @@ export default function ContactPage() {
                   WhatsApp:
                 </span>
                 <br />
-                +27 69 686 3952
+                +27 50 215 4734
               </p>
 
               <p>
@@ -100,7 +101,7 @@ export default function ContactPage() {
           </p>
 
           <a
-            href="https://wa.me/27696863952?text=Hi%20Maison%20Skye%20%26%20Rose,%20I%20am%20looking%20for%20a%20specific%20fragrance."
+            href={brand.social.whatsappLink}
             target="_blank"
             rel="noopener noreferrer"
             className="mt-8 inline-flex rounded-full bg-white px-8 py-4 font-bold text-black"

@@ -128,7 +128,7 @@ export default function TermsPage() {
             </p>
 
             <p className="mt-4 font-bold text-[#4f4a52]">
-              +27 69 686 3952
+              +27 50 215 4734
             </p>
           </div>
 

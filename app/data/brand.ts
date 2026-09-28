@@ -17,9 +17,12 @@ export const brand = {
   
   // Contact & Social Information
   social: {
-    whatsappNumber: "27696863952",
-    whatsappLink: "https://wa.me/27696863952?text=Hi%20Maison%20Skye%20%26%20Rose,%20I%20am%20looking%20for%20a%20specific%20fragrance.",
-    instagramUrl: "https://instagram.com/maisonskyeandrose",
+    whatsappNumber:   "27502154734",
+    // Bare link — opens a blank chat, no prefill. Use for general contact CTAs.
+    whatsappBareLink: "https://wa.me/27502154734",
+    // Prefilled link — generic fragrance enquiry opener. Use for discovery/fragrance CTAs.
+    whatsappLink:     "https://wa.me/27502154734?text=Hi%20Maison%20Skye%20%26%20Rose,%20I%20am%20looking%20for%20a%20specific%20fragrance.",
+    instagramUrl:     "https://instagram.com/maisonskyeandrose",
   },
   
   // SEO & Meta Defaults

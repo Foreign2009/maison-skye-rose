@@ -361,7 +361,7 @@ test.describe('P9 regression — WhatsApp handoff', () => {
     const href   = await waLink.getAttribute('href');
     expect(typeof href === 'string', 'WhatsApp link has href').toBe(true);
 
-    expect(href, 'WhatsApp URL targets correct number').toContain('wa.me/27696863952');
+    expect(href, 'WhatsApp URL targets correct number').toContain('wa.me/27502154734');
 
     const urlObj  = new URL(href);
     const rawText = urlObj.searchParams.get('text') ?? '';
@@ -370,7 +370,7 @@ test.describe('P9 regression — WhatsApp handoff', () => {
     expect(rawText, 'message mentions proof of payment').toContain('proof of payment');
     expect(rawText, 'no raw URL encoding artifacts').not.toContain('%0A%0A%0A');
 
-    console.log(`    [INFO] WhatsApp destination: wa.me/27696863952`);
+    console.log(`    [INFO] WhatsApp destination: wa.me/27502154734`);
     console.log(`    [INFO] Decoded message preview: ${rawText.substring(0, 200)}`);
   });
 

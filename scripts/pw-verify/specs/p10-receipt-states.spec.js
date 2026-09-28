@@ -177,7 +177,7 @@ test.describe('P10 receipt states — loading and error states', () => {
     const href = await contactLink.getAttribute('href');
 
     expect(typeof href === 'string', 'contact link has href').toBe(true);
-    expect(href, 'contact link uses WhatsApp').toContain('wa.me/27696863952');
+    expect(href, 'contact link uses WhatsApp').toContain('wa.me/27502154734');
 
     const url      = new URL(href);
     const msgText  = url.searchParams.get('text') ?? '';

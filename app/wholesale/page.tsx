@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { brand } from "../data/brand";
 import Navbar from "../components/Navbar";
 
 export default function WholesalePage() {
@@ -26,7 +27,7 @@ Business Type: ${businessType}
 Estimated Monthly Volume: ${monthlyVolume}`;
 
     window.open(
-      `https://wa.me/27696863952?text=${encodeURIComponent(message)}`,
+      `https://wa.me/${brand.social.whatsappNumber}?text=${encodeURIComponent(message)}`,
       "_blank"
     );
   };
@@ -230,7 +231,7 @@ Estimated Monthly Volume: ${monthlyVolume}`;
                 <p>info@maisonskyeandrose.com</p>
                 <p>hello@maisonskyeandrose.com</p>
                 <p>support@maisonskyeandrose.com</p>
-                <p>WhatsApp: +27 69 686 3952</p>
+                <p>WhatsApp: +27 50 215 4734</p>
               </div>
 
               <Link

@@ -1,5 +1,7 @@
 "use client";
 
+import { brand } from "../data/brand";
+
 const sets = [
   {
     title: "Modern Gentleman Set",
@@ -67,7 +69,7 @@ export default function DiscoverySets() {
                 </span>
 
                 <a
-                  href={`https://wa.me/27696863952?text=Hi%20Maison%20Skye%20%26%20Rose,%20I'm%20interested%20in%20the%20${encodeURIComponent(set.title)}.`}
+                  href={`https://wa.me/${brand.social.whatsappNumber}?text=Hi%20Maison%20Skye%20%26%20Rose,%20I'm%20interested%20in%20the%20${encodeURIComponent(set.title)}.`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="rounded-full bg-gradient-to-r from-pink-400 to-blue-400 px-6 py-3 font-bold text-white transition hover:opacity-90"

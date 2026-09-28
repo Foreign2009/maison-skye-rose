@@ -2,6 +2,7 @@
 
 import { useMemo, useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import { brand } from "../data/brand";
 
 import Navbar from "../components/Navbar";
 import ProductCard from "../components/ProductCard";
@@ -531,7 +532,7 @@ export default function QuizPage() {
 
               {/* Quick WhatsApp CTA Button */}
               <a
-                href="https://wa.me/27696863952"
+                href={`https://wa.me/${brand.social.whatsappNumber}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => trackQuizWhatsApp({ ctaType: "help" })}
@@ -540,7 +541,7 @@ export default function QuizPage() {
                 Need Help Choosing?
               </a>
               <a
-                href={`https://wa.me/27696863952?text=${encodeURIComponent(
+                href={`https://wa.me/${brand.social.whatsappNumber}?text=${encodeURIComponent(
                   `My Maison AI Results:%0A%0ATop Match: ${recommended[0]?.title}%0AAlternative Match: ${recommended[1]?.title}%0ATrending Choice: ${recommended[2]?.title}`
                 )}`}
                 target="_blank"
