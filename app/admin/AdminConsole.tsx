@@ -42,6 +42,7 @@ export interface OrderRow {
   tracking_number:      string | null;
   courier_name:         string | null;
   tracking_url:         string | null;
+  courier_cost:         number | null;
   payment_confirmed_at: string | null;
   dispatched_at:        string | null;
   delivered_at:         string | null;
@@ -58,6 +59,7 @@ type PendingAction = {
   trackingNumber: string;
   courierName:    string;
   trackingUrl:    string;
+  courierCost:    string;
 };
 
 interface DashboardMetrics {
@@ -150,6 +152,15 @@ function isValidHttpsUrl(url: string): boolean {
   } catch {
     return false;
   }
+}
+
+// Returns true when a non-blank courier cost string fails validation.
+// Blank is valid (means omitted). Checks range 0–9999.99 and ≤2 decimal places.
+function isInvalidCourierCost(v: string): boolean {
+  if (!v.trim()) return false;
+  const n = Number(v);
+  // toFixed(2) round-trip detects extra precision and scientific notation.
+  return !isFinite(n) || n < 0 || n > 9999.99 || Number.parseFloat(n.toFixed(2)) !== n;
 }
 
 function buildDispatchMessage(
@@ -488,11 +499,16 @@ function DetailPanel({
   // Packing checklist — ephemeral, resets when order changes.
   const [checkedItems,   setCheckedItems]   = useState<Set<number>>(new Set());
   // Print timestamp — set just before window.print() so the slip shows accurate time.
-  const [printTimestamp, setPrintTimestamp] = useState<string>("");
+  const [printTimestamp,    setPrintTimestamp]    = useState<string>("");
+  const [handoverConfirmed, setHandoverConfirmed] = useState(false);
 
   useEffect(() => {
     setCheckedItems(new Set());
   }, [order.order_ref]);
+
+  useEffect(() => {
+    if (dispatchStep !== "review") setHandoverConfirmed(false);
+  }, [dispatchStep]);
 
   const items    = order.items ?? [];
   const allPacked = items.length > 0 && checkedItems.size === items.length;
@@ -754,6 +770,29 @@ function DetailPanel({
 
                       <div>
                         <label className="mb-1 block text-[10px] uppercase tracking-[0.3em] text-[#9b9298]">
+                          Courier Cost — internal only (R)
+                        </label>
+                        <input
+                          type="number"
+                          min="0"
+                          max="9999.99"
+                          step="0.01"
+                          value={pendingAction.courierCost}
+                          onChange={e =>
+                            onPendingChange({ ...pendingAction, courierCost: e.target.value })
+                          }
+                          placeholder="e.g. 89.00"
+                          className="w-full rounded-xl border border-gray-200 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#4f4a52]/20"
+                        />
+                        {isInvalidCourierCost(pendingAction.courierCost) && (
+                          <p className="mt-1 text-[10px] text-red-500">
+                            Must be 0–9999.99 with at most two decimal places
+                          </p>
+                        )}
+                      </div>
+
+                      <div>
+                        <label className="mb-1 block text-[10px] uppercase tracking-[0.3em] text-[#9b9298]">
                           Note (optional)
                         </label>
                         <textarea
@@ -773,7 +812,8 @@ function DetailPanel({
                           disabled={
                             !pendingAction.courierName.trim() ||
                             !pendingAction.trackingNumber.trim() ||
-                            (!!pendingAction.trackingUrl && !isValidHttpsUrl(pendingAction.trackingUrl))
+                            (!!pendingAction.trackingUrl && !isValidHttpsUrl(pendingAction.trackingUrl)) ||
+                            isInvalidCourierCost(pendingAction.courierCost)
                           }
                           className="flex-1 rounded-full bg-[#4f4a52] py-2.5 text-xs font-bold text-white transition hover:bg-black disabled:opacity-40"
                         >
@@ -836,8 +876,29 @@ function DetailPanel({
                               </span>
                             </div>
                           )}
+                          {pendingAction.courierCost && !isNaN(Number(pendingAction.courierCost)) && (
+                            <div className="flex justify-between gap-2">
+                              <span className="text-[#9b9298]">Cost</span>
+                              <span className="font-semibold text-[#4f4a52]">
+                                R {parseFloat(pendingAction.courierCost).toFixed(2)}
+                              </span>
+                            </div>
+                          )}
                         </div>
                       </div>
+
+                      <label className="flex cursor-pointer items-start gap-3 rounded-xl border border-amber-100 bg-amber-50/60 px-3 py-2.5">
+                        <input
+                          type="checkbox"
+                          checked={handoverConfirmed}
+                          onChange={e => setHandoverConfirmed(e.target.checked)}
+                          className="mt-0.5 h-4 w-4 shrink-0 cursor-pointer accent-[#4f4a52]"
+                        />
+                        <span className="text-xs leading-relaxed text-[#4f4a52]">
+                          I confirm this parcel has been physically handed to{" "}
+                          <span className="font-semibold">{pendingAction.courierName}</span> — this will mark the order as Dispatched.
+                        </span>
+                      </label>
 
                       <div className="flex gap-2">
                         <button
@@ -849,10 +910,10 @@ function DetailPanel({
                         </button>
                         <button
                           onClick={onConfirmAction}
-                          disabled={isPending}
+                          disabled={isPending || !handoverConfirmed}
                           className="flex-1 rounded-full bg-indigo-600 py-2.5 text-xs font-bold text-white transition hover:bg-indigo-700 disabled:opacity-40"
                         >
-                          {isPending ? "Dispatching…" : "Confirm dispatch"}
+                          {isPending ? "Saving…" : "Confirm handover"}
                         </button>
                       </div>
                     </div>
@@ -1100,7 +1161,7 @@ export default function AdminConsole({ initialOrders }: { initialOrders: OrderRo
   }
 
   function handleStatusAction(status: OrderStatus) {
-    setPendingAction({ status, note: "", trackingNumber: "", courierName: "", trackingUrl: "" });
+    setPendingAction({ status, note: "", trackingNumber: "", courierName: "", trackingUrl: "", courierCost: "" });
     setFeedback(null);
     setDispatchStep("form");
   }
@@ -1115,6 +1176,7 @@ export default function AdminConsole({ initialOrders }: { initialOrders: OrderRo
         pendingAction.trackingNumber || undefined,
         pendingAction.courierName || undefined,
         pendingAction.trackingUrl || undefined,
+        pendingAction.courierCost || undefined,
       );
       if (result.success) {
         router.refresh();

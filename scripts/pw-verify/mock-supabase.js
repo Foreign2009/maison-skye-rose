@@ -26,6 +26,16 @@ const YESTERDAY = new Date(Date.now() - 25 * 60 * 60 * 1000).toISOString();
 /** @type {Map<string, Record<string, unknown>>} */
 const orderPatches = new Map();
 
+// Counts how many times the mock PATCH handler is reached. Reset before a
+// request, read after: count = 0 proves the mock PATCH handler was not reached.
+let patchCallCount = 0;
+
+// Counts how many times the mock GET (SELECT) handler is reached for
+// /rest/v1/orders. Reset before a request, read after: count = 0 proves the
+// mock SELECT handler was not reached. Together with patchCallCount = 0 these
+// prove no DB access of any kind for the tested request.
+let selectCallCount = 0;
+
 // ── Helper ────────────────────────────────────────────────────────────────────
 
 /**
@@ -65,6 +75,7 @@ const SYNTHETIC_ORDERS = [
     tracking_number:      null,
     courier_name:         null,
     tracking_url:         null,
+    courier_cost:         null,
     payment_confirmed_at: null,
     dispatched_at:        null,
     delivered_at:         null,
@@ -91,6 +102,7 @@ const SYNTHETIC_ORDERS = [
     tracking_number:      null,
     courier_name:         null,
     tracking_url:         null,
+    courier_cost:         null,
     payment_confirmed_at: NOW,
     dispatched_at:        null,
     delivered_at:         null,
@@ -118,6 +130,7 @@ const SYNTHETIC_ORDERS = [
     tracking_number:      null,
     courier_name:         null,
     tracking_url:         null,
+    courier_cost:         null,
     payment_confirmed_at: YESTERDAY,
     dispatched_at:        null,
     delivered_at:         null,
@@ -148,6 +161,7 @@ const SYNTHETIC_ORDERS = [
     tracking_number:      "TCG987654",
     courier_name:         "The Courier Guy",
     tracking_url:         "https://track.thecourierguy.co.za/TCG987654",
+    courier_cost:         null,
     payment_confirmed_at: YESTERDAY,
     dispatched_at:        NOW,
     delivered_at:         null,
@@ -178,6 +192,7 @@ const SYNTHETIC_ORDERS = [
     tracking_number:      "FS-TEST-001",
     courier_name:         "FastShip",
     tracking_url:         null,
+    courier_cost:         null,
     payment_confirmed_at: YESTERDAY,
     dispatched_at:        NOW,
     delivered_at:         null,
@@ -187,6 +202,217 @@ const SYNTHETIC_ORDERS = [
       { status: "payment_confirmed", changed_at: YESTERDAY, note: "Bank confirmed"    },
       { status: "processing",        changed_at: YESTERDAY, note: "Packing started"   },
       { status: "dispatched",        changed_at: NOW,       note: "Handed to courier" },
+    ],
+    discovery_context: null,
+    created_at:        YESTERDAY,
+  },
+  // ── Courier-cost persistence test orders ─────────────────────────────────────
+  // Each starts as processing so it can be dispatched exactly once per test run.
+  // Used by dispatch-api.spec.js to verify zero, positive, and blank/omit cost.
+  {
+    id:                   "00000000-0000-0000-0000-000000000007",
+    order_ref:            "MSR-TEST-PWCOST-001",
+    customer_name:        "Cost Test Zero",
+    phone:                "0820000007",
+    address:              "7 Cost Street, Cape Town",
+    province:             "Western Cape",
+    items: [
+      { id: "cost-test", title: "Cost Test Fragrance", price: 300, image: "/img/test.jpg", quantity: 1, size: "50ml" },
+    ],
+    subtotal: 300, vat: 0, delivery: 0, total: 300,
+    payment_status:       "processing",
+    notes:                null,
+    tracking_number:      null,
+    courier_name:         null,
+    tracking_url:         null,
+    courier_cost:         null,
+    payment_confirmed_at: YESTERDAY,
+    dispatched_at:        null,
+    delivered_at:         null,
+    cancelled_at:         null,
+    status_history: [
+      { status: "awaiting_payment",  changed_at: YESTERDAY, note: "Order placed"   },
+      { status: "payment_confirmed", changed_at: YESTERDAY, note: "Bank confirmed" },
+      { status: "processing",        changed_at: NOW,       note: "Packing"        },
+    ],
+    discovery_context: null,
+    created_at:        YESTERDAY,
+  },
+  {
+    id:                   "00000000-0000-0000-0000-000000000008",
+    order_ref:            "MSR-TEST-PWCOST-002",
+    customer_name:        "Cost Test Positive",
+    phone:                "0820000008",
+    address:              "8 Cost Street, Cape Town",
+    province:             "Western Cape",
+    items: [
+      { id: "cost-test-2", title: "Cost Test Fragrance 2", price: 320, image: "/img/test.jpg", quantity: 1, size: "50ml" },
+    ],
+    subtotal: 320, vat: 0, delivery: 0, total: 320,
+    payment_status:       "processing",
+    notes:                null,
+    tracking_number:      null,
+    courier_name:         null,
+    tracking_url:         null,
+    courier_cost:         null,
+    payment_confirmed_at: YESTERDAY,
+    dispatched_at:        null,
+    delivered_at:         null,
+    cancelled_at:         null,
+    status_history: [
+      { status: "awaiting_payment",  changed_at: YESTERDAY, note: "Order placed"   },
+      { status: "payment_confirmed", changed_at: YESTERDAY, note: "Bank confirmed" },
+      { status: "processing",        changed_at: NOW,       note: "Packing"        },
+    ],
+    discovery_context: null,
+    created_at:        YESTERDAY,
+  },
+  {
+    id:                   "00000000-0000-0000-0000-000000000009",
+    order_ref:            "MSR-TEST-PWCOST-003",
+    customer_name:        "Cost Test Blank",
+    phone:                "0820000009",
+    address:              "9 Cost Street, Cape Town",
+    province:             "Western Cape",
+    items: [
+      { id: "cost-test-3", title: "Cost Test Fragrance 3", price: 310, image: "/img/test.jpg", quantity: 1, size: "50ml" },
+    ],
+    subtotal: 310, vat: 0, delivery: 0, total: 310,
+    payment_status:       "processing",
+    notes:                null,
+    tracking_number:      null,
+    courier_name:         null,
+    tracking_url:         null,
+    courier_cost:         null,
+    payment_confirmed_at: YESTERDAY,
+    dispatched_at:        null,
+    delivered_at:         null,
+    cancelled_at:         null,
+    status_history: [
+      { status: "awaiting_payment",  changed_at: YESTERDAY, note: "Order placed"   },
+      { status: "payment_confirmed", changed_at: YESTERDAY, note: "Bank confirmed" },
+      { status: "processing",        changed_at: NOW,       note: "Packing"        },
+    ],
+    discovery_context: null,
+    created_at:        YESTERDAY,
+  },
+  {
+    id:                   "00000000-0000-0000-0000-000000000010",
+    order_ref:            "MSR-TEST-PWCOST-004",
+    customer_name:        "Cost Test WA",
+    phone:                "0820000010",
+    address:              "10 Cost Street, Durban",
+    province:             "KwaZulu-Natal",
+    items: [
+      { id: "cost-test-4", title: "Cost Test Fragrance 4", price: 330, image: "/img/test.jpg", quantity: 1, size: "50ml" },
+    ],
+    subtotal: 330, vat: 0, delivery: 0, total: 330,
+    payment_status:       "processing",
+    notes:                null,
+    tracking_number:      null,
+    courier_name:         null,
+    tracking_url:         null,
+    courier_cost:         null,
+    payment_confirmed_at: YESTERDAY,
+    dispatched_at:        null,
+    delivered_at:         null,
+    cancelled_at:         null,
+    status_history: [
+      { status: "awaiting_payment",  changed_at: YESTERDAY, note: "Order placed"   },
+      { status: "payment_confirmed", changed_at: YESTERDAY, note: "Bank confirmed" },
+      { status: "processing",        changed_at: NOW,       note: "Packing"        },
+    ],
+    discovery_context: null,
+    created_at:        YESTERDAY,
+  },
+  // ── Browser-test-only orders ──────────────────────────────────────────────
+  // PWCOST-005: server-action validation browser test (test 13).
+  // PWCOST-006: browser-reload positive-cost persistence test (test 14).
+  // PWCOST-007: browser-reload zero-cost persistence test (test 15).
+  // Not used by dispatch-api.spec.js so their state is never mutated by API tests.
+  {
+    id:                   "00000000-0000-0000-0000-000000000011",
+    order_ref:            "MSR-TEST-PWCOST-005",
+    customer_name:        "Cost Test SA Validate",
+    phone:                "0820000011",
+    address:              "11 Cost Street, Cape Town",
+    province:             "Western Cape",
+    items: [
+      { id: "cost-test-5", title: "Cost Test Fragrance 5", price: 340, image: "/img/test.jpg", quantity: 1, size: "50ml" },
+    ],
+    subtotal: 340, vat: 0, delivery: 0, total: 340,
+    payment_status:       "processing",
+    notes:                null,
+    tracking_number:      null,
+    courier_name:         null,
+    tracking_url:         null,
+    courier_cost:         null,
+    payment_confirmed_at: YESTERDAY,
+    dispatched_at:        null,
+    delivered_at:         null,
+    cancelled_at:         null,
+    status_history: [
+      { status: "awaiting_payment",  changed_at: YESTERDAY, note: "Order placed"   },
+      { status: "payment_confirmed", changed_at: YESTERDAY, note: "Bank confirmed" },
+      { status: "processing",        changed_at: NOW,       note: "Packing"        },
+    ],
+    discovery_context: null,
+    created_at:        YESTERDAY,
+  },
+  {
+    id:                   "00000000-0000-0000-0000-000000000012",
+    order_ref:            "MSR-TEST-PWCOST-006",
+    customer_name:        "Cost Test Reload",
+    phone:                "0820000012",
+    address:              "12 Cost Street, Cape Town",
+    province:             "Western Cape",
+    items: [
+      { id: "cost-test-6", title: "Cost Test Fragrance 6", price: 350, image: "/img/test.jpg", quantity: 1, size: "50ml" },
+    ],
+    subtotal: 350, vat: 0, delivery: 0, total: 350,
+    payment_status:       "processing",
+    notes:                null,
+    tracking_number:      null,
+    courier_name:         null,
+    tracking_url:         null,
+    courier_cost:         null,
+    payment_confirmed_at: YESTERDAY,
+    dispatched_at:        null,
+    delivered_at:         null,
+    cancelled_at:         null,
+    status_history: [
+      { status: "awaiting_payment",  changed_at: YESTERDAY, note: "Order placed"   },
+      { status: "payment_confirmed", changed_at: YESTERDAY, note: "Bank confirmed" },
+      { status: "processing",        changed_at: NOW,       note: "Packing"        },
+    ],
+    discovery_context: null,
+    created_at:        YESTERDAY,
+  },
+  {
+    id:                   "00000000-0000-0000-0000-000000000013",
+    order_ref:            "MSR-TEST-PWCOST-007",
+    customer_name:        "Cost Test Zero Reload",
+    phone:                "0820000013",
+    address:              "13 Cost Street, Cape Town",
+    province:             "Western Cape",
+    items: [
+      { id: "cost-test-7", title: "Cost Test Fragrance 7", price: 360, image: "/img/test.jpg", quantity: 1, size: "50ml" },
+    ],
+    subtotal: 360, vat: 0, delivery: 0, total: 360,
+    payment_status:       "processing",
+    notes:                null,
+    tracking_number:      null,
+    courier_name:         null,
+    tracking_url:         null,
+    courier_cost:         null,
+    payment_confirmed_at: YESTERDAY,
+    dispatched_at:        null,
+    delivered_at:         null,
+    cancelled_at:         null,
+    status_history: [
+      { status: "awaiting_payment",  changed_at: YESTERDAY, note: "Order placed"   },
+      { status: "payment_confirmed", changed_at: YESTERDAY, note: "Bank confirmed" },
+      { status: "processing",        changed_at: NOW,       note: "Packing"        },
     ],
     discovery_context: null,
     created_at:        YESTERDAY,
@@ -208,6 +434,7 @@ const SYNTHETIC_ORDERS = [
     tracking_number:      null,
     courier_name:         null,
     tracking_url:         null,
+    courier_cost:         null,
     payment_confirmed_at: YESTERDAY,
     dispatched_at:        null,
     delivered_at:         null,
@@ -246,12 +473,40 @@ const server = http.createServer((req, res) => {
     return;
   }
 
+  // ── Test-instrumentation endpoints ───────────────────────────────────────
+  // Used by tests to prove zero DB access for requests rejected by the
+  // Next.js route before reaching the Supabase layer.
+
+  if (urlObj.pathname === "/mock/patch-count") {
+    res.writeHead(200, { "Content-Type": "application/json" });
+    res.end(JSON.stringify({ count: patchCallCount }));
+    return;
+  }
+
+  if (urlObj.pathname === "/mock/reset-count") {
+    patchCallCount  = 0;
+    selectCallCount = 0;
+    res.writeHead(200, { "Content-Type": "application/json" });
+    res.end(JSON.stringify({ ok: true }));
+    return;
+  }
+
+  if (urlObj.pathname === "/mock/select-count") {
+    res.writeHead(200, { "Content-Type": "application/json" });
+    res.end(JSON.stringify({ count: selectCallCount }));
+    return;
+  }
+
   // Orders table
   if (urlObj.pathname === "/rest/v1/orders") {
     const refFilter  = parseEqFilter(urlObj.searchParams, "order_ref");
     const limitParam = urlObj.searchParams.get("limit");
 
     if (req.method === "GET" || req.method === "HEAD") {
+      // Count SELECT calls. Tests that prove zero DB access reset this before
+      // sending a request and check it = 0 after to verify no SELECT reached here.
+      selectCallCount += 1;
+
       // Merge in-memory patches with base synthetic data so router.refresh()
       // reflects PATCH writes applied during the current test session.
       let orders = SYNTHETIC_ORDERS.map(o => ({
@@ -278,6 +533,12 @@ const server = http.createServer((req, res) => {
     }
 
     if (req.method === "PATCH") {
+      // Increment counter every time the mock PATCH handler is reached.
+      // This is AFTER the Next.js route's validation layer — if a request
+      // is rejected by the route before the Supabase PATCH, this counter
+      // stays at its pre-request value (proving zero DB access).
+      patchCallCount += 1;
+
       // Return 500 for the PWFAIL test ref to simulate a DB write failure.
       // The Next.js PATCH handler checks for updateError and returns 500,
       // which updateStatusAction surfaces as { success: false }.

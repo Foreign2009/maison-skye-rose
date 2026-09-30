@@ -48,9 +48,24 @@ export async function updateStatusAction(
   trackingNumber?: string,
   courierName?:    string,
   trackingUrl?:    string,
+  courierCost?:    string,
 ): Promise<{ success: boolean; message?: string }> {
   const adminSecret = process.env.ADMIN_SECRET;
   const baseUrl     = process.env.NEXT_PUBLIC_WEBSITE_URL ?? "http://localhost:3000";
+
+  // Validate courierCost before calling PATCH.
+  // Blank/whitespace → omitted (null in DB, not zero).
+  // Non-blank valid → sent as a typed number so the route's typeof check passes.
+  // Non-blank invalid → return error; no PATCH request is made.
+  let parsedCourierCost: number | undefined;
+  if (courierCost !== undefined && courierCost.trim() !== "") {
+    const n = Number(courierCost);
+    // toFixed(2) round-trip detects extra precision and scientific notation.
+    if (!isFinite(n) || n < 0 || n > 9999.99 || Number.parseFloat(n.toFixed(2)) !== n) {
+      return { success: false, message: "Courier cost must be a number between 0 and 9999.99 with at most two decimal places." };
+    }
+    parsedCourierCost = n;
+  }
 
   try {
     const res = await fetch(`${baseUrl}/api/orders/${encodeURIComponent(ref)}`, {
@@ -65,6 +80,7 @@ export async function updateStatusAction(
         ...(trackingNumber?.trim() ? { tracking_number: trackingNumber.trim() } : {}),
         ...(courierName?.trim()    ? { courier_name:    courierName.trim() }    : {}),
         ...(trackingUrl?.trim()    ? { tracking_url:    trackingUrl.trim() }    : {}),
+        ...(parsedCourierCost !== undefined ? { courier_cost: parsedCourierCost } : {}),
       }),
     });
 

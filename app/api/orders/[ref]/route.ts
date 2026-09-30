@@ -59,7 +59,7 @@ export async function PATCH(
     );
   }
 
-  const { status, note, tracking_number, courier_name, tracking_url } = body;
+  const { status, note, tracking_number, courier_name, tracking_url, courier_cost } = body;
 
   if (!status || !ORDER_STATUSES.includes(status as OrderStatus)) {
     return NextResponse.json(
@@ -113,6 +113,27 @@ export async function PATCH(
     } catch {
       return NextResponse.json(
         { success: false, message: "Tracking URL must be a valid https:// URL." },
+        { status: 400 }
+      );
+    }
+  }
+
+  if (courier_cost !== undefined) {
+    // Reject non-number types before any arithmetic. JSON null, booleans,
+    // strings and arrays all coerce via Number() to plausible values but are
+    // not valid courier-cost inputs.
+    if (typeof courier_cost !== "number" || !isFinite(courier_cost) || courier_cost < 0 || courier_cost > 9999.99) {
+      return NextResponse.json(
+        { success: false, message: "Courier cost must be a finite number between 0 and 9999.99 with at most two decimal places." },
+        { status: 400 }
+      );
+    }
+    // Reject more than two decimal places. toFixed(2) round-trips: if the
+    // value changes when rounded to 2dp it had extra precision. This handles
+    // scientific notation (1e-7) that String().split('.') misses.
+    if (Number.parseFloat((courier_cost as number).toFixed(2)) !== courier_cost) {
+      return NextResponse.json(
+        { success: false, message: "Courier cost must be a finite number between 0 and 9999.99 with at most two decimal places." },
         { status: 400 }
       );
     }
@@ -201,6 +222,10 @@ export async function PATCH(
   if (courier_name)   updatePayload.courier_name    = (courier_name as string).trim();
   if (tracking_url)   updatePayload.tracking_url    = (tracking_url as string).trim();
   if (note)           updatePayload.notes           = (note as string).trim();
+  if (courier_cost !== undefined) {
+    // Type and precision already validated above; store as-is.
+    updatePayload.courier_cost = courier_cost as number;
+  }
 
   // ── Write ─────────────────────────────────────────────────────────────────
   const { error: updateError } = await db

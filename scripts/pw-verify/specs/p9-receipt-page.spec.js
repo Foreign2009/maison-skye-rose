@@ -197,8 +197,8 @@ test.describe('P9 receipt page — collection / courier / null province', () => 
     expect(getCount(), 'interceptor ran').toBeGreaterThan(0);
   });
 
-  // ── Scenario 6: Loading state (held response) → neutral wording ───────
-  test('loading state: neutral wording shown before API response resolves', async ({ page }) => {
+  // ── Scenario 6: Loading state (held response) → no confirmed-order claims ─
+  test('loading state: spinner only — no confirmed-order claims while response is held', async ({ page }) => {
     let resolveResponse;
     const holdPromise = new Promise(r => { resolveResponse = r; });
 
@@ -214,15 +214,25 @@ test.describe('P9 receipt page — collection / courier / null province', () => 
 
     await page.goto(RECEIPT_URL);
 
-    // Loading skeleton is visible before useEffect fetch resolves (status === "loading")
-    await page.waitForSelector('[aria-label="Loading amount"]', { timeout: 10_000 });
+    // Loading spinner is visible before useEffect fetch resolves (status === "loading").
+    // aria-label is "Loading order details" — the component renders only a spinner and
+    // the text "Loading your order details…"; no steps, banking details or CTAs.
+    await page.waitForSelector('[aria-label="Loading order details"]', { timeout: 10_000 });
 
-    // While response is held: step 3 must show neutral wording
-    const stepsLoading = await page.locator('text=We confirm your payment').allTextContents();
-    const step3Loading = stepsLoading.find(s => s.includes('We confirm'));
-    expect(step3Loading, 'loading state: neutral step 3').toContain('will be in touch');
-    expect(step3Loading, 'loading state: not delivery').not.toContain('arrange delivery');
-    expect(step3Loading, 'loading state: not collection').not.toContain('collection');
+    // While response is held: confirmed-order claims must NOT be visible.
+    // These are the elements that must never appear before the server confirms the order.
+    await expect(
+      page.locator('text=Your Order Is Confirmed'),
+      'loading state: confirmed heading not shown'
+    ).not.toBeVisible();
+    await expect(
+      page.getByText('Banking Details', { exact: true }),
+      'loading state: banking details not shown'
+    ).not.toBeVisible();
+    await expect(
+      page.locator('text=Send Proof of Payment via WhatsApp'),
+      'loading state: payment CTA not shown'
+    ).not.toBeVisible();
 
     // Release the held response and wait for confirmed state
     resolveResponse();

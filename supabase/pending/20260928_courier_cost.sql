@@ -1,0 +1,33 @@
+-- DISPATCH-P13: Internal courier cost column
+-- ─────────────────────────────────────────────
+-- Migration: 20260928_courier_cost
+-- Branch:    refinement/storefront-p1
+--
+-- DO NOT apply to production without founder authorisation.
+--
+-- Purpose
+-- ───────
+-- Stores the internal operational cost the admin paid the courier.
+-- This is a back-office field only. It does not affect the customer's
+-- paid delivery charge or the order total — those are immutable once
+-- the order is placed.
+--
+-- The column is nullable. Orders created before this migration have NULL.
+-- Validation (positive number, max 9999.99) is enforced by the PATCH handler
+-- in app/api/orders/[ref]/route.ts before any write reaches the database.
+--
+-- Deployment order
+-- ────────────────
+-- Apply this migration to production Supabase BEFORE deploying any
+-- application code that writes courier_cost. The PATCH handler only
+-- includes courier_cost in the update payload when it is supplied, so
+-- if the column does not yet exist the write will fail at the DB layer.
+--
+-- Rollback
+-- ────────
+-- This is a DESTRUCTIVE operation requiring explicit founder authorisation.
+--
+--   ALTER TABLE orders DROP COLUMN IF EXISTS courier_cost;
+
+ALTER TABLE orders
+  ADD COLUMN IF NOT EXISTS courier_cost NUMERIC(10,2);
