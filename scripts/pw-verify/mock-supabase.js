@@ -417,6 +417,69 @@ const SYNTHETIC_ORDERS = [
     discovery_context: null,
     created_at:        YESTERDAY,
   },
+  // ── Admin-notes regression orders ────────────────────────────────────────────
+  // PWNTE-001: processing order with a pre-existing admin note.
+  //   Used to verify that a status-transition PATCH does not overwrite orders.notes.
+  // PWNTE-002: processing order with no notes.
+  //   Used to verify that updateNotesAction writes orders.notes without touching status_history.
+  {
+    id:                   "00000000-0000-0000-0000-000000000014",
+    order_ref:            "MSR-TEST-PWNTE-001",
+    customer_name:        "Notes Test Dispatch",
+    phone:                "0820000014",
+    address:              "14 Notes Lane, Johannesburg",
+    province:             "Gauteng",
+    items: [
+      { id: "notes-test-1", title: "Notes Test Fragrance", price: 250, image: "/img/test.jpg", quantity: 1, size: "50ml" },
+    ],
+    subtotal: 250, vat: 0, delivery: 0, total: 250,
+    payment_status:       "processing",
+    notes:                "Pre-existing admin note — must survive dispatch",
+    tracking_number:      null,
+    courier_name:         null,
+    tracking_url:         null,
+    courier_cost:         null,
+    payment_confirmed_at: YESTERDAY,
+    dispatched_at:        null,
+    delivered_at:         null,
+    cancelled_at:         null,
+    status_history: [
+      { status: "awaiting_payment",  changed_at: YESTERDAY, note: "Order placed"   },
+      { status: "payment_confirmed", changed_at: YESTERDAY, note: "Bank confirmed" },
+      { status: "processing",        changed_at: NOW,       note: "Packing started" },
+    ],
+    discovery_context: null,
+    created_at:        YESTERDAY,
+  },
+  {
+    id:                   "00000000-0000-0000-0000-000000000015",
+    order_ref:            "MSR-TEST-PWNTE-002",
+    customer_name:        "Notes Test Edit",
+    phone:                "0820000015",
+    address:              "15 Notes Lane, Cape Town",
+    province:             "Western Cape",
+    items: [
+      { id: "notes-test-2", title: "Notes Test Fragrance 2", price: 280, image: "/img/test.jpg", quantity: 1, size: "50ml" },
+    ],
+    subtotal: 280, vat: 0, delivery: 0, total: 280,
+    payment_status:       "processing",
+    notes:                null,
+    tracking_number:      null,
+    courier_name:         null,
+    tracking_url:         null,
+    courier_cost:         null,
+    payment_confirmed_at: YESTERDAY,
+    dispatched_at:        null,
+    delivered_at:         null,
+    cancelled_at:         null,
+    status_history: [
+      { status: "awaiting_payment",  changed_at: YESTERDAY, note: "Order placed"   },
+      { status: "payment_confirmed", changed_at: YESTERDAY, note: "Bank confirmed" },
+      { status: "processing",        changed_at: NOW,       note: "Packing started" },
+    ],
+    discovery_context: null,
+    created_at:        YESTERDAY,
+  },
   // Processing order that always returns HTTP 500 on PATCH: tests "failed save".
   {
     id:                   "00000000-0000-0000-0000-000000000006",

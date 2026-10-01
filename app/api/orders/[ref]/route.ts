@@ -221,7 +221,9 @@ export async function PATCH(
   if (tracking_number) updatePayload.tracking_number = (tracking_number as string).trim();
   if (courier_name)   updatePayload.courier_name    = (courier_name as string).trim();
   if (tracking_url)   updatePayload.tracking_url    = (tracking_url as string).trim();
-  if (note)           updatePayload.notes           = (note as string).trim();
+  // Transition notes are stored in status_history[].note (line 206) and
+  // rendered in the Timeline. orders.notes is the admin sticky note,
+  // written only by updateNotesAction — a status change must not overwrite it.
   if (courier_cost !== undefined) {
     // Type and precision already validated above; store as-is.
     updatePayload.courier_cost = courier_cost as number;
