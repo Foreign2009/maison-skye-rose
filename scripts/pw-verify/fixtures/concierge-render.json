@@ -1,0 +1,152 @@
+{
+  "scenarioA": {
+    "content": "I'd recommend Wood Sage Sea Salt Inspired — it has a coastal, mineral freshness.",
+    "fragrances": [
+      {
+        "slug": "wood-sage-sea-salt-inspired",
+        "name": "Wood Sage Sea Salt Inspired",
+        "subtitle": "Coastal Clarity",
+        "family": [
+          "Fresh",
+          "Woody"
+        ],
+        "image": "/images/blue-10ml.png",
+        "price": 100,
+        "href": "/product/wood-sage-sea-salt-inspired"
+      }
+    ],
+    "articles": [],
+    "followUpSuggestions": [
+      "Compare these",
+      "Show me another option"
+    ],
+    "intent": "similar_to",
+    "sessionUpdates": {
+      "selectedSlug": null,
+      "lastArticleSlug": null,
+      "lastCollection": "Elite",
+      "comparisonSlugs": [],
+      "profile": null,
+      "consultationPlan": null,
+      "clarificationTurnCount": 0
+    }
+  },
+  "scenarioB": {
+    "content": "Two great options: Wood Sage Sea Salt Inspired for freshness and Sauvage Inspired for bold presence.",
+    "fragrances": [
+      {
+        "slug": "wood-sage-sea-salt-inspired",
+        "name": "Wood Sage Sea Salt Inspired",
+        "subtitle": "Coastal Clarity",
+        "family": [
+          "Fresh",
+          "Woody"
+        ],
+        "image": "/images/blue-10ml.png",
+        "price": 100,
+        "href": "/product/wood-sage-sea-salt-inspired"
+      },
+      {
+        "slug": "sauvage-inspired",
+        "name": "Sauvage Inspired",
+        "subtitle": "Masculine Energy",
+        "family": [
+          "Fresh",
+          "Woody",
+          "Aromatic"
+        ],
+        "image": "/images/blue-10ml.png",
+        "price": 100,
+        "href": "/product/sauvage-inspired"
+      }
+    ],
+    "articles": [],
+    "followUpSuggestions": [
+      "Show me something different",
+      "Find gifts"
+    ],
+    "intent": "comparison",
+    "sessionUpdates": {
+      "selectedSlug": null,
+      "lastArticleSlug": null,
+      "lastCollection": "Elite",
+      "comparisonSlugs": [],
+      "profile": null,
+      "consultationPlan": null,
+      "clarificationTurnCount": 0
+    }
+  },
+  "scenarioC": {
+    "content": "You might find The Note Pyramid Explained helpful. For your profile I'd suggest Wood Sage Sea Salt Inspired.",
+    "fragrances": [
+      {
+        "slug": "wood-sage-sea-salt-inspired",
+        "name": "Wood Sage Sea Salt Inspired",
+        "subtitle": "Coastal Clarity",
+        "family": [
+          "Fresh",
+          "Woody"
+        ],
+        "image": "/images/blue-10ml.png",
+        "price": 100,
+        "href": "/product/wood-sage-sea-salt-inspired"
+      }
+    ],
+    "articles": [
+      {
+        "slug": "the-note-pyramid-explained",
+        "title": "The Note Pyramid Explained",
+        "category": "The Note Pyramid",
+        "readTime": 4,
+        "excerpt": "Every fragrance tells a story in three acts. Learn how top, heart, and base notes work together to create the scent you experience from first spray to hours later.",
+        "href": "/academy/the-note-pyramid-explained"
+      }
+    ],
+    "followUpSuggestions": [
+      "Show fragrances in this family",
+      "Teach me more"
+    ],
+    "intent": "education",
+    "sessionUpdates": {
+      "selectedSlug": null,
+      "lastArticleSlug": null,
+      "lastCollection": "Elite",
+      "comparisonSlugs": [],
+      "profile": null,
+      "consultationPlan": null,
+      "clarificationTurnCount": 0
+    }
+  },
+  "scenarioD": {
+    "content": "I'd suggest Wood Sage Sea Salt Inspired for everyday and Sauvage Inspired for special occasions.",
+    "fragrances": [
+      {
+        "slug": "wood-sage-sea-salt-inspired",
+        "name": "Wood Sage Sea Salt Inspired",
+        "subtitle": "Coastal Clarity",
+        "family": [
+          "Fresh",
+          "Woody"
+        ],
+        "image": "/images/blue-10ml.png",
+        "price": 100,
+        "href": "/product/wood-sage-sea-salt-inspired"
+      }
+    ],
+    "articles": [],
+    "followUpSuggestions": [
+      "Compare these",
+      "Show me another option"
+    ],
+    "intent": "similar_to",
+    "sessionUpdates": {
+      "selectedSlug": null,
+      "lastArticleSlug": null,
+      "lastCollection": "Elite",
+      "comparisonSlugs": [],
+      "profile": null,
+      "consultationPlan": null,
+      "clarificationTurnCount": 0
+    }
+  }
+}

@@ -155,15 +155,69 @@ export function planResponse(
   const rawSlugs:    string[] = [];
   const articleSlugs: string[] = [];
 
-  // Extract and strip [PRODUCT:slug] markers (captured but not yet validated)
-  let content = rawContent.replace(PRODUCT_RE, (_, slug: string) => {
-    if (!rawSlugs.includes(slug)) rawSlugs.push(slug);
-    return "";
+  // Extract [PRODUCT:slug] markers and preserve the canonical name in prose.
+  //
+  // The model wraps product markers in **...** for emphasis: **[PRODUCT:slug]**.
+  // ConciergeMessage renders content as a plain text node (no markdown processor),
+  // so those asterisks appear as literal characters. Handling bold-wrapped and
+  // non-bold forms as separate patterns removes the ** together with the marker,
+  // preventing orphaned **** from appearing in the chat bubble.
+  //
+  // Valid slug (present in retrieval context) → replaced with the canonical name.
+  // Unknown / disallowed slug                 → replaced with "" (whole construct
+  //                                             removed; no marker leaked to UI).
+  //
+  // Slug collection pre-scan: capture slugs in text-appearance order before the
+  // two replacement passes. The bold pass (Step 1) and non-bold pass (Step 2)
+  // run in a fixed sequence; without a pre-scan a bold slug positioned after a
+  // non-bold one in the text would still be pushed first, inverting first-mentioned
+  // priority when cardTarget limits the selection to fewer cards than markers.
+  {
+    const slugScanRE = /\*\*\[PRODUCT:([a-z0-9'-]+)\]\*\*|\[PRODUCT:([a-z0-9'-]+)\]/g;
+    let m: RegExpExecArray | null;
+    while ((m = slugScanRE.exec(rawContent)) !== null) {
+      const slug = m[1] ?? m[2];
+      if (!rawSlugs.includes(slug)) rawSlugs.push(slug);
+    }
+  }
+  // Step 1: bold-wrapped markers (**[PRODUCT:slug]**) — content replacement only.
+  let content = rawContent.replace(/\*\*\[PRODUCT:([a-z0-9'-]+)\]\*\*/g, (_, slug: string) => {
+    const frag = retrieval.fragrances.find((f) => f.slug === slug);
+    return frag ? frag.name : "";
+  });
+  // Step 2: non-bold (or asymmetrically-wrapped) markers ([PRODUCT:slug])
+  content = content.replace(PRODUCT_RE, (_, slug: string) => {
+    const frag = retrieval.fragrances.find((f) => f.slug === slug);
+    return frag ? frag.name : "";
   });
 
-  // Extract and strip [ARTICLE:slug] markers
+  // Extract [ARTICLE:slug] markers and preserve the canonical title in prose.
+  // The model emits [ARTICLE:slug] without bold-wrapping per system prompt, but
+  // bold-wrapped form is handled first for safety.
+  //
+  // Valid slug (present in retrieval context) → replaced with the article title;
+  //                                             slug added to articleSlugs for card.
+  // Unknown / out-of-retrieval slug           → replaced with "" (removed cleanly);
+  //                                             slug NOT added to articleSlugs so
+  //                                             formatResponse cannot render a card
+  //                                             by resolving it against academyCatalogue.
+  //
+  // Step 1: bold-wrapped markers (**[ARTICLE:slug]**) — treated as a unit.
+  content = content.replace(/\*\*\[ARTICLE:([a-z0-9-]+)\]\*\*/g, (_, slug: string) => {
+    const article = retrieval.articles.find((a) => a.slug === slug);
+    if (article) {
+      if (!articleSlugs.includes(slug)) articleSlugs.push(slug);
+      return article.title;
+    }
+    return "";
+  });
+  // Step 2: non-bold (or asymmetrically-wrapped) markers ([ARTICLE:slug])
   content = content.replace(ARTICLE_RE, (_, slug: string) => {
-    if (!articleSlugs.includes(slug)) articleSlugs.push(slug);
+    const article = retrieval.articles.find((a) => a.slug === slug);
+    if (article) {
+      if (!articleSlugs.includes(slug)) articleSlugs.push(slug);
+      return article.title;
+    }
     return "";
   });
 
