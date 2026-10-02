@@ -10,7 +10,7 @@ import {
   type OrderStatus,
   type StatusHistoryEntry,
 } from "@/app/lib/orderStatus";
-import { logoutAction, updateStatusAction, updateNotesAction } from "./actions";
+import { logoutAction, updateStatusAction, updateNotesAction, updateCourierCostAction } from "./actions";
 import AdminNavigation from "./components/AdminNavigation";
 import type { DiscoveryAttribution } from "@/app/lib/discoveryAttribution";
 
@@ -473,6 +473,10 @@ interface DetailPanelProps {
   notesChanged:         boolean;
   onNotesChange:        (v: string) => void;
   onSaveNotes:          () => void;
+  courierCostValue:     string;
+  courierCostChanged:   boolean;
+  onCourierCostChange:  (v: string) => void;
+  onSaveCourierCost:    () => void;
   feedback:             { type: "success" | "error"; text: string } | null;
   isPending:            boolean;
   onClose:              () => void;
@@ -492,6 +496,10 @@ function DetailPanel({
   notesChanged,
   onNotesChange,
   onSaveNotes,
+  courierCostValue,
+  courierCostChanged,
+  onCourierCostChange,
+  onSaveCourierCost,
   feedback,
   isPending,
   onClose,
@@ -965,6 +973,7 @@ function DetailPanel({
           {/* ── Feedback ──────────────────────────────────────────────────── */}
           {feedback && (
             <p
+              data-testid="feedback-banner"
               className={`rounded-2xl px-4 py-3 text-sm font-semibold ${
                 feedback.type === "success"
                   ? "bg-green-50 text-green-700"
@@ -1080,6 +1089,47 @@ function DetailPanel({
             </section>
           )}
 
+          {/* ── Courier Cost — dispatched / delivered ─────────────────────────── */}
+          {(order.payment_status === "dispatched" || order.payment_status === "delivered") && (
+            <section data-testid="courier-cost-section">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#d89ca4]">
+                Courier Cost
+              </p>
+              <div className="mt-3 space-y-2">
+                <p className="text-xs text-[#7b7480]">
+                  Saved:{" "}
+                  <span className="font-semibold text-[#4f4a52]" data-testid="courier-cost-saved">
+                    {order.courier_cost == null
+                      ? "Not recorded"
+                      : `R${order.courier_cost.toFixed(2)}`}
+                  </span>
+                </p>
+                <input
+                  type="text"
+                  inputMode="decimal"
+                  value={courierCostValue}
+                  onChange={e => onCourierCostChange(e.target.value)}
+                  placeholder="e.g. 85.00  (blank to clear)"
+                  data-testid="courier-cost-input"
+                  className="w-full rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#4f4a52]/20"
+                />
+                {isInvalidCourierCost(courierCostValue) && (
+                  <p className="px-1 text-xs text-red-500" data-testid="courier-cost-error">
+                    Enter 0 – 9999.99 with at most 2 decimal places, or leave blank to clear.
+                  </p>
+                )}
+                <button
+                  onClick={onSaveCourierCost}
+                  disabled={!courierCostChanged || isInvalidCourierCost(courierCostValue) || isPending}
+                  data-testid="courier-cost-save-btn"
+                  className="rounded-full bg-[#4f4a52] px-5 py-2 text-xs font-bold text-white transition hover:bg-black disabled:opacity-40"
+                >
+                  {isPending ? "Saving…" : "Save Cost"}
+                </button>
+              </div>
+            </section>
+          )}
+
         </div>
       </div>
 
@@ -1102,19 +1152,23 @@ export default function AdminConsole({ initialOrders }: { initialOrders: OrderRo
   const [selectedRef,   setSelectedRef]   = useState<string | null>(null);
   const [pendingAction, setPendingAction] = useState<PendingAction | null>(null);
   const [dispatchStep,  setDispatchStep]  = useState<"form" | "review">("form");
-  const [notesValue,    setNotesValue]    = useState("");
-  const [feedback,      setFeedback]      = useState<{ type: "success" | "error"; text: string } | null>(null);
+  const [notesValue,      setNotesValue]      = useState("");
+  const [courierCostEdit, setCourierCostEdit] = useState("");
+  const [feedback,        setFeedback]        = useState<{ type: "success" | "error"; text: string } | null>(null);
 
   const selectedOrder = useMemo(
     () => (selectedRef ? (initialOrders.find(o => o.order_ref === selectedRef) ?? null) : null),
     [selectedRef, initialOrders],
   );
 
-  // Sync notes and reset drawer state when the selected order changes.
-  // Intentionally only on selectedRef, not on selectedOrder.notes —
+  // Sync editable fields and reset drawer state when the selected order changes.
+  // Intentionally only on selectedRef, not on selectedOrder fields —
   // we don't want to discard in-progress edits during a background refresh.
   useEffect(() => {
     setNotesValue(selectedOrder?.notes ?? "");
+    setCourierCostEdit(
+      selectedOrder?.courier_cost == null ? "" : String(selectedOrder.courier_cost),
+    );
     setPendingAction(null);
     setFeedback(null);
     setDispatchStep("form");
@@ -1150,6 +1204,9 @@ export default function AdminConsole({ initialOrders }: { initialOrders: OrderRo
 
   const notesSaved   = selectedOrder?.notes ?? "";
   const notesChanged = notesValue !== notesSaved;
+
+  const courierCostSaved   = selectedOrder?.courier_cost == null ? "" : String(selectedOrder.courier_cost);
+  const courierCostChanged = courierCostEdit !== courierCostSaved;
 
   function handleSelectOrder(ref: string) {
     setSelectedRef(prev => (prev === ref ? null : ref));
@@ -1202,6 +1259,19 @@ export default function AdminConsole({ initialOrders }: { initialOrders: OrderRo
     });
   }
 
+  function handleSaveCourierCost() {
+    if (!selectedOrder) return;
+    startTransition(async () => {
+      const result = await updateCourierCostAction(selectedOrder.order_ref, courierCostEdit);
+      if (result.success) {
+        router.refresh();
+        setFeedback({ type: "success", text: "Courier cost saved." });
+      } else {
+        setFeedback({ type: "error", text: result.message ?? "Failed to save courier cost." });
+      }
+    });
+  }
+
   const detailPanelProps: Omit<DetailPanelProps, "onClose"> = {
     order:                selectedOrder!,
     nextStatuses,
@@ -1216,6 +1286,10 @@ export default function AdminConsole({ initialOrders }: { initialOrders: OrderRo
     notesChanged,
     onNotesChange:        setNotesValue,
     onSaveNotes:          handleSaveNotes,
+    courierCostValue:     courierCostEdit,
+    courierCostChanged,
+    onCourierCostChange:  setCourierCostEdit,
+    onSaveCourierCost:    handleSaveCourierCost,
     feedback,
     isPending,
   };
@@ -1267,7 +1341,7 @@ export default function AdminConsole({ initialOrders }: { initialOrders: OrderRo
             <p className="mt-1 text-xl font-black tabular-nums text-[#4f4a52]">
               {fmtR(dashboard.confirmedRevenue)}
             </p>
-            <p className="mt-0.5 text-[10px] text-blue-600/80">payment received</p>
+            <p className="mt-0.5 text-[10px] text-blue-600/80">payment received · incl. delivery charges</p>
           </div>
           <div className="rounded-2xl border border-gray-100 bg-white px-4 py-4">
             <p className="text-[9px] uppercase tracking-[0.35em] text-[#9b9298]">Active</p>

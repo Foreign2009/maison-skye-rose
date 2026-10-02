@@ -254,20 +254,20 @@ export default function BriefingDashboard({
               <p className="text-[10px] uppercase tracking-[0.3em] text-[#4f4a52]/40">Today</p>
               <p className="mt-1 text-2xl font-black tabular-nums text-[#4f4a52]">{fmtR(brief.todayRevenue)}</p>
               <p className="mt-0.5 text-xs text-[#4f4a52]/40">
-                {brief.todayOrders} {brief.todayOrders === 1 ? "order" : "orders"}
+                {brief.todayOrders} {brief.todayOrders === 1 ? "order" : "orders"} · incl. delivery
               </p>
             </div>
             <div>
               <p className="text-[10px] uppercase tracking-[0.3em] text-[#4f4a52]/40">This Week</p>
               <p className="mt-1 text-2xl font-black tabular-nums text-[#4f4a52]">{fmtR(brief.weekRevenue)}</p>
               <p className="mt-0.5 text-xs text-[#4f4a52]/40">
-                {brief.weekOrders} {brief.weekOrders === 1 ? "order" : "orders"}
+                {brief.weekOrders} {brief.weekOrders === 1 ? "order" : "orders"} · incl. delivery
               </p>
             </div>
             <div>
               <p className="text-[10px] uppercase tracking-[0.3em] text-[#4f4a52]/40">All Time</p>
               <p className="mt-1 text-2xl font-black tabular-nums text-[#4f4a52]">{fmtR(brief.allTimeRevenue)}</p>
-              <p className="mt-0.5 text-xs text-[#4f4a52]/40">confirmed revenue</p>
+              <p className="mt-0.5 text-xs text-[#4f4a52]/40">confirmed · incl. delivery charges</p>
             </div>
             <div>
               <p className="text-[10px] uppercase tracking-[0.3em] text-[#4f4a52]/40">Active</p>

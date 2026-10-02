@@ -113,3 +113,62 @@ export async function updateNotesAction(
     return { success: false, message: "Failed to connect to the database." };
   }
 }
+
+export async function updateCourierCostAction(
+  ref:  string,
+  cost: string,
+): Promise<{ success: boolean; message?: string }> {
+  // Independent auth check — this action bypasses the PATCH route so
+  // it must verify the session cookie itself.
+  const adminSecret = process.env.ADMIN_SECRET;
+  if (!adminSecret) return { success: false, message: "Server misconfiguration." };
+  const expected    = computeSessionToken();
+  const cookieStore = await cookies();
+  const session     = cookieStore.get("msr-ops-session");
+  if (session?.value !== expected) {
+    return { success: false, message: "Unauthorized." };
+  }
+
+  // Validate order_ref format before touching the DB.
+  if (!/^MSR-\d{8}-\d{5}$/.test(ref)) {
+    return { success: false, message: "Invalid order reference." };
+  }
+
+  // Validate cost: blank or whitespace → null; non-blank must be a valid cost.
+  let parsedCost: number | null = null;
+  if (cost.trim() !== "") {
+    const n = Number(cost);
+    if (!isFinite(n) || n < 0 || n > 9999.99 || Number.parseFloat(n.toFixed(2)) !== n) {
+      return {
+        success: false,
+        message: "Courier cost must be a number between 0 and 9999.99 with at most two decimal places.",
+      };
+    }
+    parsedCost = n;
+  }
+
+  try {
+    const db = getSupabaseAdmin();
+
+    // Update only courier_cost. The status filter is embedded in the UPDATE
+    // itself — not a preceding SELECT — so a status change between a read and
+    // this write (TOCTOU) cannot silently succeed. If 0 rows are returned the
+    // order is either absent or no longer dispatched/delivered.
+    const { data: updated, error: updateError } = await db
+      .from("orders")
+      .update({ courier_cost: parsedCost })
+      .eq("order_ref", ref)
+      .in("payment_status", ["dispatched", "delivered"])
+      .select("order_ref");
+
+    if (updateError) return { success: false, message: "Failed to save courier cost." };
+    if (!updated || updated.length === 0) {
+      return { success: false, message: "Order not found or not eligible for a cost update." };
+    }
+
+    revalidatePath("/admin");
+    return { success: true };
+  } catch {
+    return { success: false, message: "Failed to connect to the database." };
+  }
+}

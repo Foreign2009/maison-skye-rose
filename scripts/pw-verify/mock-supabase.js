@@ -51,6 +51,19 @@ function parseEqFilter(params, key) {
   return val.slice(3);
 }
 
+/**
+ * Extracts the values from a Supabase in-filter query param.
+ * e.g. "payment_status=in.(dispatched,delivered)" → ["dispatched","delivered"]
+ * @param {URLSearchParams} params
+ * @param {string} key
+ * @returns {string[]|null}
+ */
+function parseInFilter(params, key) {
+  const val = params.get(key);
+  if (!val || !val.startsWith("in.(") || !val.endsWith(")")) return null;
+  return val.slice(4, -1).split(",").map(s => s.trim()).filter(Boolean);
+}
+
 // ── Synthetic orders ──────────────────────────────────────────────────────────
 // Clearly-labelled test orders covering different statuses, provinces and
 // dispatch scenarios. None of these refs will ever appear in the production DB.
@@ -480,6 +493,221 @@ const SYNTHETIC_ORDERS = [
     discovery_context: null,
     created_at:        YESTERDAY,
   },
+  // ── Courier-cost editor test orders ──────────────────────────────────────────
+  // Pre-dispatched orders for testing the post-dispatch cost editor.
+  // Not used by dispatch-api.spec.js or dispatch-handoff.spec.js.
+  {
+    id:                   "00000000-0000-0000-0000-000000000016",
+    order_ref:            "MSR-20261001-00016",
+    customer_name:        "CCE Test Positive",
+    phone:                "0820000016",
+    address:              "16 CCE Lane, Johannesburg",
+    province:             "Gauteng",
+    items: [
+      { id: "cce-test-1", title: "CCE Test Fragrance 1", price: 200, image: "/img/test.jpg", quantity: 1, size: "10ml" },
+    ],
+    subtotal: 200, vat: 0, delivery: 180, total: 380,
+    payment_status:       "dispatched",
+    notes:                "CCE field-preservation note",
+    tracking_number:      "PNA-CCE-001",
+    courier_name:         "PostNet",
+    tracking_url:         "https://www.postnet.co.za",
+    courier_cost:         null,
+    payment_confirmed_at: YESTERDAY,
+    dispatched_at:        NOW,
+    delivered_at:         null,
+    cancelled_at:         null,
+    status_history: [
+      { status: "awaiting_payment",  changed_at: YESTERDAY, note: "Order placed"      },
+      { status: "payment_confirmed", changed_at: YESTERDAY, note: "Bank confirmed"    },
+      { status: "processing",        changed_at: YESTERDAY, note: "Packing started"   },
+      { status: "dispatched",        changed_at: NOW,       note: "Handed to courier" },
+    ],
+    discovery_context: null,
+    created_at:        YESTERDAY,
+  },
+  {
+    id:                   "00000000-0000-0000-0000-000000000017",
+    order_ref:            "MSR-20261001-00017",
+    customer_name:        "CCE Test Zero",
+    phone:                "0820000017",
+    address:              "17 CCE Lane, Durban",
+    province:             "KwaZulu-Natal",
+    items: [
+      { id: "cce-test-2", title: "CCE Test Fragrance 2", price: 250, image: "/img/test.jpg", quantity: 1, size: "10ml" },
+    ],
+    subtotal: 250, vat: 0, delivery: 180, total: 430,
+    payment_status:       "dispatched",
+    notes:                null,
+    tracking_number:      null,
+    courier_name:         null,
+    tracking_url:         null,
+    courier_cost:         null,
+    payment_confirmed_at: YESTERDAY,
+    dispatched_at:        NOW,
+    delivered_at:         null,
+    cancelled_at:         null,
+    status_history: [
+      { status: "awaiting_payment",  changed_at: YESTERDAY, note: "Order placed"      },
+      { status: "payment_confirmed", changed_at: YESTERDAY, note: "Bank confirmed"    },
+      { status: "processing",        changed_at: YESTERDAY, note: "Packing started"   },
+      { status: "dispatched",        changed_at: NOW,       note: "Handed to courier" },
+    ],
+    discovery_context: null,
+    created_at:        YESTERDAY,
+  },
+  {
+    id:                   "00000000-0000-0000-0000-000000000018",
+    order_ref:            "MSR-20261001-00018",
+    customer_name:        "CCE Test Clear",
+    phone:                "0820000018",
+    address:              "18 CCE Lane, Cape Town",
+    province:             "Western Cape",
+    items: [
+      { id: "cce-test-3", title: "CCE Test Fragrance 3", price: 300, image: "/img/test.jpg", quantity: 1, size: "10ml" },
+    ],
+    subtotal: 300, vat: 0, delivery: 100, total: 400,
+    payment_status:       "dispatched",
+    notes:                null,
+    tracking_number:      null,
+    courier_name:         null,
+    tracking_url:         null,
+    courier_cost:         45.50,
+    payment_confirmed_at: YESTERDAY,
+    dispatched_at:        NOW,
+    delivered_at:         null,
+    cancelled_at:         null,
+    status_history: [
+      { status: "awaiting_payment",  changed_at: YESTERDAY, note: "Order placed"      },
+      { status: "payment_confirmed", changed_at: YESTERDAY, note: "Bank confirmed"    },
+      { status: "processing",        changed_at: YESTERDAY, note: "Packing started"   },
+      { status: "dispatched",        changed_at: NOW,       note: "Handed to courier" },
+    ],
+    discovery_context: null,
+    created_at:        YESTERDAY,
+  },
+  {
+    id:                   "00000000-0000-0000-0000-000000000019",
+    order_ref:            "MSR-20261001-00019",
+    customer_name:        "CCE Test Ineligible",
+    phone:                "0820000019",
+    address:              "19 CCE Lane, Pretoria",
+    province:             "Gauteng",
+    items: [
+      { id: "cce-test-4", title: "CCE Test Fragrance 4", price: 150, image: "/img/test.jpg", quantity: 1, size: "10ml" },
+    ],
+    subtotal: 150, vat: 0, delivery: 180, total: 330,
+    payment_status:       "payment_confirmed",
+    notes:                null,
+    tracking_number:      null,
+    courier_name:         null,
+    tracking_url:         null,
+    courier_cost:         null,
+    payment_confirmed_at: NOW,
+    dispatched_at:        null,
+    delivered_at:         null,
+    cancelled_at:         null,
+    status_history: [
+      { status: "awaiting_payment",  changed_at: YESTERDAY, note: "Order placed"   },
+      { status: "payment_confirmed", changed_at: NOW,       note: "Bank confirmed" },
+    ],
+    discovery_context: null,
+    created_at:        YESTERDAY,
+  },
+  {
+    id:                   "00000000-0000-0000-0000-000000000020",
+    order_ref:            "MSR-20261001-00020",
+    customer_name:        "CCE Test Delivered",
+    phone:                "0820000020",
+    address:              "20 CCE Lane, Bloemfontein",
+    province:             "Free State",
+    items: [
+      { id: "cce-test-5", title: "CCE Test Fragrance 5", price: 200, image: "/img/test.jpg", quantity: 1, size: "10ml" },
+    ],
+    subtotal: 200, vat: 0, delivery: 180, total: 380,
+    payment_status:       "delivered",
+    notes:                null,
+    tracking_number:      null,
+    courier_name:         null,
+    tracking_url:         null,
+    courier_cost:         null,
+    payment_confirmed_at: YESTERDAY,
+    dispatched_at:        YESTERDAY,
+    delivered_at:         NOW,
+    cancelled_at:         null,
+    status_history: [
+      { status: "awaiting_payment",  changed_at: YESTERDAY, note: "Order placed"      },
+      { status: "payment_confirmed", changed_at: YESTERDAY, note: "Bank confirmed"    },
+      { status: "processing",        changed_at: YESTERDAY, note: "Packing started"   },
+      { status: "dispatched",        changed_at: YESTERDAY, note: "Handed to courier" },
+      { status: "delivered",         changed_at: NOW,       note: "Delivered"         },
+    ],
+    discovery_context: null,
+    created_at:        YESTERDAY,
+  },
+  // CCE-FAIL: dispatched order where PATCH returns 500 — tests failed-save feedback.
+  {
+    id:                   "00000000-0000-0000-0000-000000000021",
+    order_ref:            "MSR-20261001-00021",
+    customer_name:        "CCE Test Fail Save",
+    phone:                "0820000021",
+    address:              "21 CCE Lane, East London",
+    province:             "Eastern Cape",
+    items: [
+      { id: "cce-test-6", title: "CCE Test Fragrance 6", price: 200, image: "/img/test.jpg", quantity: 1, size: "10ml" },
+    ],
+    subtotal: 200, vat: 0, delivery: 180, total: 380,
+    payment_status:       "dispatched",
+    notes:                null,
+    tracking_number:      null,
+    courier_name:         null,
+    tracking_url:         null,
+    courier_cost:         null,
+    payment_confirmed_at: YESTERDAY,
+    dispatched_at:        NOW,
+    delivered_at:         null,
+    cancelled_at:         null,
+    status_history: [
+      { status: "awaiting_payment",  changed_at: YESTERDAY, note: "Order placed"      },
+      { status: "payment_confirmed", changed_at: YESTERDAY, note: "Bank confirmed"    },
+      { status: "processing",        changed_at: YESTERDAY, note: "Packing started"   },
+      { status: "dispatched",        changed_at: NOW,       note: "Handed to courier" },
+    ],
+    discovery_context: null,
+    created_at:        YESTERDAY,
+  },
+  // CCE-022: dispatched order reserved for action-ID capture in courier-cost-editor tests.
+  // A real browser dispatch to this order captures the Next-Action header for updateCourierCostAction.
+  {
+    id:                   "00000000-0000-0000-0000-000000000022",
+    order_ref:            "MSR-20261001-00022",
+    customer_name:        "CCE ID Capture",
+    phone:                "0820000022",
+    address:              "22 CCE Lane, Johannesburg",
+    province:             "Gauteng",
+    items: [
+      { id: "cce-test-7", title: "CCE Test Fragrance 7", price: 200, image: "/img/test.jpg", quantity: 1, size: "10ml" },
+    ],
+    subtotal: 200, vat: 0, delivery: 180, total: 380,
+    payment_status:       "dispatched",
+    notes:                null,
+    tracking_number:      null,
+    courier_name:         null,
+    tracking_url:         null,
+    courier_cost:         null,
+    payment_confirmed_at: YESTERDAY,
+    dispatched_at:        NOW,
+    delivered_at:         null,
+    cancelled_at:         null,
+    status_history: [
+      { status: "awaiting_payment",  changed_at: YESTERDAY, note: "Order placed"      },
+      { status: "payment_confirmed", changed_at: YESTERDAY, note: "Bank confirmed"    },
+      { status: "processing",        changed_at: YESTERDAY, note: "Packing started"   },
+      { status: "dispatched",        changed_at: NOW,       note: "Handed to courier" },
+    ],
+    discovery_context: null,
+    created_at:        YESTERDAY,
+  },
   // Processing order that always returns HTTP 500 on PATCH: tests "failed save".
   {
     id:                   "00000000-0000-0000-0000-000000000006",
@@ -602,14 +830,18 @@ const server = http.createServer((req, res) => {
       // stays at its pre-request value (proving zero DB access).
       patchCallCount += 1;
 
-      // Return 500 for the PWFAIL test ref to simulate a DB write failure.
-      // The Next.js PATCH handler checks for updateError and returns 500,
-      // which updateStatusAction surfaces as { success: false }.
-      if (refFilter === "MSR-TEST-PWFAIL-00001") {
+      // Return 500 for specific test refs to simulate DB write failures.
+      // MSR-TEST-PWFAIL-00001: used by dispatch-api.spec.js (status transition fails).
+      // MSR-20261001-00021:    used by courier-cost-editor.spec.js (cost save fails).
+      if (refFilter === "MSR-TEST-PWFAIL-00001" || refFilter === "MSR-20261001-00021") {
         res.writeHead(500, { "Content-Type": "application/json" });
         res.end(JSON.stringify({ message: "Simulated database error" }));
         return;
       }
+
+      // Parse optional filters and select parameter from the URL.
+      const statusFilter = parseInFilter(urlObj.searchParams, "payment_status");
+      const selectCols   = urlObj.searchParams.get("select");
 
       // Read body async and apply patch to in-memory state.
       let body = "";
@@ -617,17 +849,41 @@ const server = http.createServer((req, res) => {
       req.on("end", () => {
         try {
           const patch = JSON.parse(body || "{}");
-          if (refFilter) {
-            orderPatches.set(refFilter, {
-              ...(orderPatches.get(refFilter) || {}),
+
+          // Find orders matching all URL filters (with existing patches applied).
+          let matches = SYNTHETIC_ORDERS.map(o => ({
+            ...o,
+            ...(orderPatches.get(/** @type {string} */ (o.order_ref)) || {}),
+          }));
+          if (refFilter)    matches = matches.filter(o => o.order_ref === refFilter);
+          if (statusFilter) matches = matches.filter(o => statusFilter.includes(/** @type {string} */ (o.payment_status)));
+
+          // Apply patch only to matching orders.
+          for (const o of matches) {
+            orderPatches.set(/** @type {string} */ (o.order_ref), {
+              ...(orderPatches.get(/** @type {string} */ (o.order_ref)) || {}),
               ...patch,
             });
           }
+
+          // Build response: return updated rows if `select` requested, else empty.
+          let responseRows;
+          if (selectCols) {
+            const cols = selectCols.split(",").map(s => s.trim()).filter(Boolean);
+            responseRows = matches.map(o => {
+              const updated = { ...o, ...(orderPatches.get(/** @type {string} */ (o.order_ref)) || {}) };
+              return Object.fromEntries(cols.map(col => [col, updated[col]]));
+            });
+          } else {
+            responseRows = [];
+          }
+
+          res.writeHead(200, { "Content-Type": "application/json" });
+          res.end(JSON.stringify(responseRows));
         } catch {
-          // Ignore parse errors — respond 200 regardless
+          res.writeHead(200, { "Content-Type": "application/json" });
+          res.end(EMPTY_JSON);
         }
-        res.writeHead(200, { "Content-Type": "application/json" });
-        res.end(EMPTY_JSON);
       });
       return;
     }
