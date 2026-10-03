@@ -171,6 +171,81 @@ function getPreviousIntent(state: ConversationState): ConversationIntent {
 
 // ── Public API ────────────────────────────────────────────────────────────────
 
+// Exported so route.ts and tests can detect a direction signal after entity
+// resolution without duplicating the signal list.
+export function hasAnchoredDirectionSignal(message: string): boolean {
+  const q = message.toLowerCase().trim();
+  return ANCHORED_DIRECTION_SIGNALS.some((p) => q.includes(p));
+}
+
+// ── Anchor slug resolution ────────────────────────────────────────────────────
+// Determines the effective anchor slug and whether the conversation plan should
+// be upgraded to anchored_refinement. Extracted from route.ts so the routing
+// decision is exercised directly by unit tests via the same function production
+// executes.
+//
+// Inputs use primitive types so this function carries no cross-module type
+// dependencies beyond ConversationPlan.
+
+export interface AnchorResolution {
+  anchorSlug:        string | undefined;
+  upgradeToAnchored: boolean;
+}
+
+export function resolveAnchorSlug({
+  plan,
+  entitySlug,
+  compareSlugCount,
+  currentAnchorSlug,
+  resolvedOrdinalSlug,
+  message,
+}: {
+  plan:                ConversationPlan;
+  entitySlug:          string | undefined;
+  compareSlugCount:    number;
+  currentAnchorSlug:   string | undefined;
+  resolvedOrdinalSlug: string | undefined;
+  message:             string;
+}): AnchorResolution {
+  // Comparisons (multi-entity or explicit comparison plan) must not be anchored.
+  if (plan.action === "comparison" || compareSlugCount >= 2) {
+    return { anchorSlug: currentAnchorSlug, upgradeToAnchored: false };
+  }
+
+  // No catalogue entity resolved — no explicit anchor to act on.
+  if (!entitySlug) {
+    return { anchorSlug: currentAnchorSlug, upgradeToAnchored: false };
+  }
+
+  // No direction signal — entity alone does not warrant anchored_refinement.
+  if (!hasAnchoredDirectionSignal(message)) {
+    return { anchorSlug: currentAnchorSlug, upgradeToAnchored: false };
+  }
+
+  // Ordinal reference takes highest precedence over any entity in the text.
+  if (resolvedOrdinalSlug) {
+    return { anchorSlug: currentAnchorSlug, upgradeToAnchored: false };
+  }
+
+  if (plan.action === "anchored_refinement") {
+    // Plan is already anchored_refinement (triggered by prior recs or selectedSlug).
+    // When the message explicitly names a fragrance, that named fragrance overrides
+    // the stale session anchor — "I love Sauvage Inspired but less sweet" with
+    // selectedSlug="aventus-inspired" must anchor to Sauvage, not Aventus.
+    return { anchorSlug: entitySlug, upgradeToAnchored: false };
+  }
+
+  // Fresh-turn case: planConversation fell through to new_search (no prior recs,
+  // no selectedSlug, not education/comparison/refinement). resolveIntent found the
+  // entity. Upgrade only from new_search — academy_lookup, refinement, and
+  // alternative_exploration have their own routing and must not be overridden.
+  if (!currentAnchorSlug && plan.action === "new_search") {
+    return { anchorSlug: entitySlug, upgradeToAnchored: true };
+  }
+
+  return { anchorSlug: currentAnchorSlug, upgradeToAnchored: false };
+}
+
 export function planConversation(
   message:  string,
   state:    ConversationState

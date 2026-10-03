@@ -29,7 +29,7 @@ import { nativeFragrances }  from "../../../app/lib/mkc/native";
 import { resolveIntent } from "../../../app/lib/concierge/intentResolver";
 import type { ConversationProfile, ConversationState, ConversationContext, ConsultationPlan }  from "../../../app/lib/concierge/types";
 import type { ResolvedIntent } from "../../../app/lib/concierge/intentResolver";
-import { planConversation, type ConversationPlan } from "../../../app/lib/concierge/conversationPlanner";
+import { planConversation, hasAnchoredDirectionSignal, resolveAnchorSlug, type ConversationPlan } from "../../../app/lib/concierge/conversationPlanner";
 import type { RetrievalContext } from "../../../app/lib/concierge/contextBuilder";
 import { detectRejections, NONE_OF_THOSE_SIGNALS } from "../../../app/lib/concierge/rejectionDetector";
 import { planResponse } from "../../../app/lib/concierge/responsePlanner";
@@ -3131,6 +3131,491 @@ test("T-C4-LS-14 — direction=less: instructions say 'Lower-dimension', not 'Hi
     rendered.includes("Lower-"),
     "T-C4-LS-14 — direction=less constraint exclusion must produce 'Lower-dimension' in instruction"
   );
+});
+
+// ── EP-AI-C4-R1: First-turn explicit anchor regression (T-C4-FT) ─────────────
+// Regression coverage for the live failure on 871ac80: first-turn messages naming
+// a catalogue fragrance + direction signal were routed to similar_to (not
+// anchored_refinement) because planConversation requires prior recs or selectedSlug.
+//
+// T-C4-FT-01 / FT-02 / FT-02b / FT-03 verify pipeline behaviour downstream of the
+// routing decision (planRetrieval, buildContext, responsePlanner).
+//
+// T-C4-FT-05 to FT-09 verify resolveAnchorSlug — the shared function that
+// route.ts now calls for both the fresh-turn upgrade and the session-override paths.
+// Tests call the same function production executes, not a reconstruction.
+
+console.log("\n── C4-FT. First-turn explicit anchor regression ─────────────────");
+
+test("T-C4-FT-01 — hasAnchoredDirectionSignal: exact first-turn messages", () => {
+  assert.ok(
+    hasAnchoredDirectionSignal("I love Sauvage Inspired but I'd like something less sweet"),
+    "T-C4-FT-01a — 'less sweet' must be detected as direction signal"
+  );
+  assert.ok(
+    hasAnchoredDirectionSignal("I love Baccarat Rouge 540 Inspired but would like something less sweet"),
+    "T-C4-FT-01b — 'less sweet' in BR540 message must be detected as direction signal"
+  );
+  assert.ok(
+    !hasAnchoredDirectionSignal("I love Sauvage Inspired, can you recommend something similar?"),
+    "T-C4-FT-01c — no direction signal in plain similar_to message"
+  );
+});
+
+test("T-C4-FT-02 — Sauvage Inspired less sweet: empty pool, catalogueBoundary=true", () => {
+  // Sauvage Inspired sweetness=1 is the catalogue minimum.
+  // Routing: first-turn → anchored_refinement via resolveAnchorSlug upgrade.
+  // planRetrieval receives anchored_refinement intent + anchorSlug.
+  const sauvage = mkcCatalogue.find(k => k.slug === "sauvage-inspired");
+  assert.ok(sauvage, "T-C4-FT-02 — sauvage-inspired must exist in catalogue");
+  assert.equal(sauvage!.sweetness, 1, "T-C4-FT-02 — Sauvage Inspired sweetness must be 1");
+
+  const result = planRetrieval(
+    ANCHORED_INTENT, EMPTY_CONTEXT, undefined, undefined, undefined, null, undefined,
+    "I love Sauvage Inspired but I'd like something less sweet",
+    "sauvage-inspired"
+  );
+
+  assert.equal(result.fragrances.length, 0,
+    "T-C4-FT-02 — pool must be empty for catalogue-minimum anchor requesting less sweet");
+  assert.equal(result.anchoredMeta?.strictMatches, false,
+    "T-C4-FT-02 — strictMatches must be false");
+  assert.equal(result.anchoredMeta?.catalogueBoundary, true,
+    "T-C4-FT-02 — catalogueBoundary must be true: no fragrance scores below sweetness=1");
+  assert.equal(result.anchoredMeta?.anchorScore, 1,
+    "T-C4-FT-02 — anchorScore must be 1 (not null, not 0)");
+});
+
+test("T-C4-FT-02b — Sauvage no-match context: boundary explanation, no 'excluded by preferences'", () => {
+  const sauvage = mkcCatalogue.find(k => k.slug === "sauvage-inspired");
+  if (!sauvage) { skip("T-C4-FT-02b — sauvage-inspired not found"); return; }
+
+  const anchoredMeta = {
+    anchorSlug:        "sauvage-inspired",
+    anchorName:        sauvage.name,
+    dimension:         "sweetness",
+    direction:         "less" as const,
+    anchorScore:       1 as number | null,
+    strictMatches:     false,
+    catalogueBoundary: true,
+  };
+  const retrieval: RetrievalContext = { fragrances: [], articles: [], anchoredMeta };
+  const ctx = buildContext(retrieval, EMPTY_STATE, ANCHOR_PLAN,
+    "anchored_refinement", null, null, null,
+    "I love Sauvage Inspired but I'd like something less sweet");
+  const rendered = renderContext(ctx);
+
+  assert.ok(!rendered.includes("excluded by active preference filters"),
+    "T-C4-FT-02b — catalogue boundary must not say 'excluded by preferences'");
+  assert.ok(!rendered.includes("Present EXACTLY"),
+    "T-C4-FT-02b — no-match must not emit a card-count instruction");
+  assert.ok(rendered.includes("lower end") || rendered.includes("lower"),
+    "T-C4-FT-02b — boundary explanation must reference the lower end of the sweetness range");
+  assert.ok(rendered.includes("Do not present any fragrance"),
+    "T-C4-FT-02b — no-match block must instruct model not to present fragrances");
+});
+
+test("T-C4-FT-03 — BR540 less sweet: non-empty pool, every candidate sweetness < 3", () => {
+  // Baccarat Rouge 540 Inspired sweetness=3. Many candidates at sweetness=1 and 2.
+  const br540 = mkcCatalogue.find(k => k.slug === "baccarat-rouge-540-inspired");
+  assert.ok(br540, "T-C4-FT-03 — baccarat-rouge-540-inspired must exist in catalogue");
+  assert.equal(br540!.sweetness, 3, "T-C4-FT-03 — BR540 sweetness must be 3");
+
+  const result = planRetrieval(
+    ANCHORED_INTENT, EMPTY_CONTEXT, undefined, undefined, undefined, null, undefined,
+    "I love Baccarat Rouge 540 Inspired but would like something less sweet",
+    "baccarat-rouge-540-inspired"
+  );
+
+  assert.ok(result.fragrances.length > 0,
+    "T-C4-FT-03 — pool must be non-empty: many fragrances score below sweetness=3");
+  assert.equal(result.anchoredMeta?.strictMatches, true,
+    "T-C4-FT-03 — strictMatches must be true");
+  assert.equal(result.anchoredMeta?.catalogueBoundary, false,
+    "T-C4-FT-03 — catalogueBoundary must be false");
+  assert.equal(result.anchoredMeta?.anchorScore, 3,
+    "T-C4-FT-03 — anchorScore must be 3");
+
+  const allBelow = result.fragrances.every(f => (f.sweetness ?? 99) < 3);
+  assert.ok(allBelow,
+    `T-C4-FT-03 — every pool candidate must have sweetness < 3; got: ${
+      result.fragrances.filter(f => (f.sweetness ?? 99) >= 3).map(f => `${f.slug}(${f.sweetness})`).join(", ")
+    }`);
+});
+
+test("T-C4-FT-04 — responsePlanner Step 0: canonical name match + in-retrieval collapsed; prose and out-of-retrieval preserved", () => {
+  const yEdp   = mkcCatalogue.find(k => k.slug === "y-edp-inspired");
+  const voyage = mkcCatalogue.find(k => k.slug === "voyage-d'hermes-inspired");
+  if (!yEdp) { skip("T-C4-FT-04 — y-edp-inspired not found"); return; }
+
+  // 04a: canonical name matches + slug in retrieval → collapsed, name appears once, no **
+  {
+    const retrieval: RetrievalContext = { fragrances: [yEdp], articles: [] };
+    const raw = `I suggest **Y EDP Inspired** [PRODUCT:y-edp-inspired]. It is similar in character.`;
+    const result = planResponse(raw, "similar_to", retrieval, ANCHOR_PLAN);
+    assert.ok(!result.content.includes("**"),
+      "T-C4-FT-04a — canonical match: no literal asterisks");
+    assert.equal((result.content.match(/Y EDP Inspired/g) ?? []).length, 1,
+      "T-C4-FT-04a — canonical match: name appears exactly once");
+    assert.ok(result.recommendedSlugs.includes("y-edp-inspired"),
+      "T-C4-FT-04a — canonical match: slug collected for card");
+    assert.ok(result.content.includes("It is similar in character"),
+      "T-C4-FT-04a — canonical match: surrounding prose preserved");
+  }
+
+  // 04b: bold text does NOT match canonical name → bold prose preserved, marker expanded separately
+  {
+    const retrieval: RetrievalContext = { fragrances: [yEdp], articles: [] };
+    const raw = `I suggest **This is amazing** [PRODUCT:y-edp-inspired].`;
+    const result = planResponse(raw, "similar_to", retrieval, ANCHOR_PLAN);
+    assert.ok(result.content.includes("This is amazing"),
+      "T-C4-FT-04b — name mismatch: unrelated bold prose preserved in output");
+  }
+
+  // 04c: slug not in retrieval → not collapsed, bold text preserved
+  {
+    const retrieval: RetrievalContext = { fragrances: [yEdp], articles: [] };
+    const raw = `Consider **Sauvage Inspired** [PRODUCT:sauvage-inspired].`;
+    const result = planResponse(raw, "similar_to", retrieval, ANCHOR_PLAN);
+    assert.ok(result.content.includes("Sauvage Inspired"),
+      "T-C4-FT-04c — out-of-retrieval: bold product name preserved");
+  }
+
+  // 04d: apostrophe in slug + name matches → collapsed correctly
+  if (voyage) {
+    const retrieval: RetrievalContext = { fragrances: [voyage], articles: [] };
+    const raw = `I suggest **Voyage d'Hermes Inspired** [PRODUCT:voyage-d'hermes-inspired].`;
+    const result = planResponse(raw, "similar_to", retrieval, ANCHOR_PLAN);
+    assert.ok(!result.content.includes("**"),
+      "T-C4-FT-04d — apostrophe slug: no literal asterisks");
+    assert.equal((result.content.match(/Voyage d'Hermes Inspired/g) ?? []).length, 1,
+      "T-C4-FT-04d — apostrophe slug: name appears exactly once");
+  }
+
+  // 04e: existing **[PRODUCT:slug]** bold-wrapped form (Step 1) still works
+  {
+    const retrieval: RetrievalContext = { fragrances: [yEdp], articles: [] };
+    const raw = `Here is **[PRODUCT:y-edp-inspired]** for you.`;
+    const result = planResponse(raw, "similar_to", retrieval, ANCHOR_PLAN);
+    assert.ok(!result.content.includes("[PRODUCT:"),
+      "T-C4-FT-04e — Step 1 bold-wrapped: marker removed");
+    assert.ok(result.content.includes("Y EDP Inspired"),
+      "T-C4-FT-04e — Step 1 bold-wrapped: name present");
+  }
+
+  // 04f: plain [PRODUCT:slug] form (Step 2) still works
+  {
+    const retrieval: RetrievalContext = { fragrances: [yEdp], articles: [] };
+    const raw = `Here is [PRODUCT:y-edp-inspired] for you.`;
+    const result = planResponse(raw, "similar_to", retrieval, ANCHOR_PLAN);
+    assert.ok(!result.content.includes("[PRODUCT:"),
+      "T-C4-FT-04f — Step 2 plain: marker removed");
+    assert.ok(result.content.includes("Y EDP Inspired"),
+      "T-C4-FT-04f — Step 2 plain: name present");
+  }
+});
+
+test("T-C4-FT-05 — resolveAnchorSlug: fresh-turn entity+direction → upgradeToAnchored=true", () => {
+  // Exact failing scenario: first-turn, no session state, message names Sauvage + less sweet.
+  // planConversation returns new_search (no prior recs / selectedSlug to fire anchored_refinement).
+  // resolveAnchorSlug must detect entity+direction and upgrade.
+  const msg  = "I love Sauvage Inspired but I'd like something less sweet";
+  const plan = planConversation(msg, EMPTY_STATE);
+  const ri   = resolveIntent(msg, EMPTY_CONTEXT);
+
+  assert.notEqual(plan.action, "anchored_refinement",
+    "T-C4-FT-05a — planConversation must NOT return anchored_refinement on fresh turn");
+  assert.equal(ri.entitySlug, "sauvage-inspired",
+    "T-C4-FT-05b — resolveIntent must find sauvage-inspired entity");
+
+  const result = resolveAnchorSlug({
+    plan,
+    entitySlug:          ri.entitySlug,
+    compareSlugCount:    ri.compareSlug.length,
+    currentAnchorSlug:   undefined,
+    resolvedOrdinalSlug: undefined,
+    message:             msg,
+  });
+  assert.equal(result.upgradeToAnchored, true,
+    "T-C4-FT-05c — must upgrade to anchored_refinement");
+  assert.equal(result.anchorSlug, "sauvage-inspired",
+    "T-C4-FT-05d — anchor must be the explicitly named fragrance");
+});
+
+test("T-C4-FT-06 — resolveAnchorSlug: stale selectedSlug overridden by explicit entity", () => {
+  // When planConversation fires anchored_refinement via selectedSlug (stale session state),
+  // but the message explicitly names a different fragrance, the named fragrance wins.
+  const msg  = "I love Sauvage Inspired but I'd like something less sweet";
+  const plan = planConversation(msg, { ...EMPTY_STATE, selectedSlug: "aventus-inspired" });
+
+  assert.equal(plan.action, "anchored_refinement",
+    "T-C4-FT-06a — planConversation must return anchored_refinement when selectedSlug present");
+
+  const result = resolveAnchorSlug({
+    plan,
+    entitySlug:          "sauvage-inspired", // resolveIntent would find this
+    compareSlugCount:    0,
+    currentAnchorSlug:   "aventus-inspired", // stale session anchor
+    resolvedOrdinalSlug: undefined,
+    message:             msg,
+  });
+  assert.equal(result.upgradeToAnchored, false,
+    "T-C4-FT-06b — plan already anchored_refinement — no upgrade flag needed");
+  assert.equal(result.anchorSlug, "sauvage-inspired",
+    "T-C4-FT-06c — explicit entity must override stale session anchor");
+});
+
+test("T-C4-FT-07 — resolveAnchorSlug: comparison preserved — both entities resolved, no upgrade", () => {
+  // "Sauvage vs Baccarat Rouge 540, which is less sweet?" must remain a comparison.
+  // planConversation returns comparison; resolveIntent returns both slugs.
+  const msg  = "Sauvage vs Baccarat Rouge 540, which is less sweet?";
+  const plan = planConversation(msg, EMPTY_STATE);
+  const ri   = resolveIntent(msg, EMPTY_CONTEXT);
+
+  assert.equal(plan.action, "comparison",
+    "T-C4-FT-07a — planConversation must return comparison for 'vs' message");
+  assert.ok(ri.compareSlug.length >= 2,
+    "T-C4-FT-07b — both entities must be resolved");
+  assert.ok(ri.compareSlug.includes("sauvage-inspired"),
+    "T-C4-FT-07c — sauvage-inspired must be in compareSlug");
+  assert.ok(ri.compareSlug.includes("baccarat-rouge-540-inspired"),
+    "T-C4-FT-07d — baccarat-rouge-540-inspired must be in compareSlug");
+
+  const result = resolveAnchorSlug({
+    plan,
+    entitySlug:          ri.entitySlug,
+    compareSlugCount:    ri.compareSlug.length,
+    currentAnchorSlug:   undefined,
+    resolvedOrdinalSlug: undefined,
+    message:             msg,
+  });
+  assert.equal(result.upgradeToAnchored, false,
+    "T-C4-FT-07e — comparison must not be upgraded to anchored_refinement");
+});
+
+test("T-C4-FT-08 — resolveAnchorSlug: no direction signal → ordinary similar-to not upgraded", () => {
+  // Entity present but no direction signal: must stay as similar_to, not upgraded.
+  const msg  = "I love Sauvage Inspired, can you recommend something similar?";
+  const plan = planConversation(msg, EMPTY_STATE);
+  const ri   = resolveIntent(msg, EMPTY_CONTEXT);
+
+  const result = resolveAnchorSlug({
+    plan,
+    entitySlug:          ri.entitySlug,
+    compareSlugCount:    ri.compareSlug.length,
+    currentAnchorSlug:   undefined,
+    resolvedOrdinalSlug: undefined,
+    message:             msg,
+  });
+  assert.equal(result.upgradeToAnchored, false,
+    "T-C4-FT-08a — no direction signal: must not upgrade to anchored_refinement");
+});
+
+test("T-C4-FT-09 — resolveAnchorSlug: ordinal wins over conflicting explicit entity", () => {
+  // "The second one but less sweet" with a different entity explicitly in the message.
+  // Ordinal reference takes highest precedence — the conflicting entity must be ignored.
+  const ordinalAnchor     = "sauvage-inspired";
+  const conflictingEntity = "baccarat-rouge-540-inspired"; // different from ordinal
+  const result = resolveAnchorSlug({
+    plan:                ANCHOR_PLAN, // anchored_refinement
+    entitySlug:          conflictingEntity,
+    compareSlugCount:    0,
+    currentAnchorSlug:   ordinalAnchor,
+    resolvedOrdinalSlug: ordinalAnchor,
+    message:             "the second one but less sweet",
+  });
+  assert.equal(result.upgradeToAnchored, false,
+    "T-C4-FT-09a — ordinal: plan already anchored_refinement, no upgrade needed");
+  assert.equal(result.anchorSlug, ordinalAnchor,
+    "T-C4-FT-09b — ordinal takes precedence: ordinal anchor returned");
+  assert.notEqual(result.anchorSlug, conflictingEntity,
+    "T-C4-FT-09c — conflicting explicit entity must not become the anchor");
+});
+
+test("T-C4-FT-10 — full pipeline Sauvage: planConversation→resolveIntent→resolveAnchorSlug→planRetrieval", () => {
+  // Founder message 1: entire chain without manually injected anchor.
+  const msg   = "I love Sauvage Inspired but I'd like something less sweet";
+  const plan0 = planConversation(msg, EMPTY_STATE);
+  const ri    = resolveIntent(msg, EMPTY_CONTEXT);
+
+  assert.notEqual(plan0.action, "anchored_refinement",
+    "T-C4-FT-10a — planConversation must not return anchored_refinement on fresh turn");
+  assert.equal(ri.entitySlug, "sauvage-inspired",
+    "T-C4-FT-10b — resolveIntent must find sauvage-inspired");
+
+  const ar = resolveAnchorSlug({
+    plan: plan0, entitySlug: ri.entitySlug, compareSlugCount: ri.compareSlug.length,
+    currentAnchorSlug: undefined, resolvedOrdinalSlug: undefined, message: msg,
+  });
+  assert.equal(ar.upgradeToAnchored, true,  "T-C4-FT-10c — must upgrade");
+  assert.equal(ar.anchorSlug, "sauvage-inspired", "T-C4-FT-10d — anchor from resolver, not hardcoded");
+
+  const upgradedIntent: ResolvedIntent = { ...ri, intent: "anchored_refinement" as const };
+  const retrieval = planRetrieval(
+    upgradedIntent, EMPTY_CONTEXT, undefined, undefined, undefined, null, undefined,
+    msg, ar.anchorSlug
+  );
+  assert.equal(retrieval.fragrances.length, 0,
+    "T-C4-FT-10e — sweetness=1 is catalogue minimum → empty pool");
+  assert.equal(retrieval.anchoredMeta?.catalogueBoundary, true,
+    "T-C4-FT-10f — catalogueBoundary must be true");
+  assert.equal(retrieval.anchoredMeta?.anchorScore, 1,
+    "T-C4-FT-10g — anchorScore must be 1");
+});
+
+test("T-C4-FT-11 — full pipeline BR540: planConversation→resolveIntent→resolveAnchorSlug→planRetrieval", () => {
+  // Founder message 2: entire chain without manually injected anchor.
+  const msg   = "I love Baccarat Rouge 540 Inspired but would like something less sweet";
+  const plan0 = planConversation(msg, EMPTY_STATE);
+  const ri    = resolveIntent(msg, EMPTY_CONTEXT);
+
+  assert.notEqual(plan0.action, "anchored_refinement",
+    "T-C4-FT-11a — planConversation must not return anchored_refinement on fresh turn");
+  assert.equal(ri.entitySlug, "baccarat-rouge-540-inspired",
+    "T-C4-FT-11b — resolveIntent must find baccarat-rouge-540-inspired");
+
+  const ar = resolveAnchorSlug({
+    plan: plan0, entitySlug: ri.entitySlug, compareSlugCount: ri.compareSlug.length,
+    currentAnchorSlug: undefined, resolvedOrdinalSlug: undefined, message: msg,
+  });
+  assert.equal(ar.upgradeToAnchored, true, "T-C4-FT-11c — must upgrade");
+  assert.equal(ar.anchorSlug, "baccarat-rouge-540-inspired", "T-C4-FT-11d — anchor from resolver");
+
+  const upgradedIntent: ResolvedIntent = { ...ri, intent: "anchored_refinement" as const };
+  const retrieval = planRetrieval(
+    upgradedIntent, EMPTY_CONTEXT, undefined, undefined, undefined, null, undefined,
+    msg, ar.anchorSlug
+  );
+  assert.ok(retrieval.fragrances.length > 0,
+    "T-C4-FT-11e — sweetness=3 → non-empty pool below sweetness 3");
+  assert.equal(retrieval.anchoredMeta?.strictMatches, true,  "T-C4-FT-11f — strictMatches=true");
+  assert.equal(retrieval.anchoredMeta?.catalogueBoundary, false, "T-C4-FT-11g — no boundary");
+  assert.equal(retrieval.anchoredMeta?.anchorScore, 3, "T-C4-FT-11h — anchorScore=3");
+  const allBelow = retrieval.fragrances.every(f => (f.sweetness ?? 99) < 3);
+  assert.ok(allBelow,
+    `T-C4-FT-11i — every candidate must have sweetness < 3; got: ${
+      retrieval.fragrances.filter(f => (f.sweetness ?? 99) >= 3).map(f => `${f.slug}(${f.sweetness})`).join(", ")
+    }`);
+});
+
+test("T-C4-FT-12 — informational: multi-entity question with direction stays informational (compareSlugCount guard)", () => {
+  // "Tell me about Sauvage Inspired, is it less sweet than Aventus?" resolves two entities
+  // → compareSlugCount >= 2 blocks the upgrade before plan.action is checked.
+  const msg   = "Tell me about Sauvage Inspired, is it less sweet than Aventus?";
+  const plan0 = planConversation(msg, EMPTY_STATE);
+  const ri    = resolveIntent(msg, EMPTY_CONTEXT);
+
+  assert.ok(ri.compareSlug.length >= 2,
+    "T-C4-FT-12a — both entities must resolve → compareSlugCount >= 2");
+  assert.ok(hasAnchoredDirectionSignal(msg), "T-C4-FT-12b — direction signal present");
+
+  const result = resolveAnchorSlug({
+    plan: plan0, entitySlug: ri.entitySlug, compareSlugCount: ri.compareSlug.length,
+    currentAnchorSlug: undefined, resolvedOrdinalSlug: undefined, message: msg,
+  });
+  assert.equal(result.upgradeToAnchored, false,
+    "T-C4-FT-12c — multi-entity: compareSlugCount guard must prevent upgrade");
+});
+
+test("T-C4-FT-13 — informational: single-entity academy_lookup with direction stays informational (plan.action guard)", () => {
+  // "Tell me about Sauvage Inspired, is it less sweet than most?" — one entity, direction signal,
+  // but planConversation returns academy_lookup. Must not upgrade to anchored_refinement.
+  const msg   = "Tell me about Sauvage Inspired, is it less sweet than most?";
+  const plan0 = planConversation(msg, EMPTY_STATE);
+  const ri    = resolveIntent(msg, EMPTY_CONTEXT);
+
+  assert.equal(plan0.action, "academy_lookup",
+    "T-C4-FT-13a — 'tell me about' must route to academy_lookup");
+  assert.ok(ri.entitySlug,               "T-C4-FT-13b — single entity must be resolved");
+  assert.equal(ri.compareSlug.length, 0, "T-C4-FT-13c — compareSlug must be empty (single entity)");
+  assert.ok(hasAnchoredDirectionSignal(msg), "T-C4-FT-13d — direction signal present");
+
+  const result = resolveAnchorSlug({
+    plan: plan0, entitySlug: ri.entitySlug, compareSlugCount: ri.compareSlug.length,
+    currentAnchorSlug: undefined, resolvedOrdinalSlug: undefined, message: msg,
+  });
+  assert.equal(result.upgradeToAnchored, false,
+    "T-C4-FT-13e — academy_lookup must not be upgraded to anchored_refinement");
+});
+
+test("T-C4-FT-14 — active exclusions survive first-turn upgrade: rejected slug cannot re-enter pool", () => {
+  // After the first-turn upgrade, planRetrieval's hard rejection filter must still apply.
+  const msg   = "I love Baccarat Rouge 540 Inspired but would like something less sweet";
+  const plan0 = planConversation(msg, EMPTY_STATE);
+  const ri    = resolveIntent(msg, EMPTY_CONTEXT);
+  const ar    = resolveAnchorSlug({
+    plan: plan0, entitySlug: ri.entitySlug, compareSlugCount: ri.compareSlug.length,
+    currentAnchorSlug: undefined, resolvedOrdinalSlug: undefined, message: msg,
+  });
+  assert.equal(ar.upgradeToAnchored, true, "T-C4-FT-14-pre — upgrade must fire");
+
+  const upgradedIntent: ResolvedIntent = { ...ri, intent: "anchored_refinement" as const };
+
+  const basePool = planRetrieval(
+    upgradedIntent, EMPTY_CONTEXT, undefined, undefined, undefined, null, undefined,
+    msg, ar.anchorSlug
+  );
+  if (!basePool.fragrances.length) { skip("T-C4-FT-14 — base pool empty, cannot test exclusions"); return; }
+
+  // Reject the first candidate, assert it cannot re-enter.
+  const toReject = basePool.fragrances[0].slug;
+  const profile  = makeProfile({ rejectedSlugs: [toReject] });
+  const restricted = planRetrieval(
+    upgradedIntent, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined,
+    msg, ar.anchorSlug
+  );
+  assert.ok(
+    !restricted.fragrances.some(f => f.slug === toReject),
+    `T-C4-FT-14 — rejected slug '${toReject}' must not appear in pool after upgrade`
+  );
+});
+
+test("T-C4-FT-15 — anchored pool: conflicting named source cannot bypass directional filter via source re-add", () => {
+  // Scenario: ordinal resolved to sauvage-inspired (sweetness=1, catalogue floor);
+  // message also names "Baccarat Rouge 540 Inspired" (sweetness=3).
+  // anchorSlug = "sauvage-inspired" (from ordinal, passed directly).
+  // entitySlug = "baccarat-rouge-540-inspired" → sourceKnowledge = BR540.
+  //
+  // Without the unconditional anchored_refinement guard, sourceIsAnchor is false
+  // ("baccarat-rouge-540-inspired" !== "sauvage-inspired") so the source re-add
+  // injects BR540 into the empty pool, bypassing the sweetness<1 filter.
+  //
+  // With the fix (intent === "anchored_refinement" blocks all source re-add),
+  // the pool stays empty and BR540 cannot appear.
+  const msg             = "something less sweet, and what about Baccarat Rouge 540 Inspired?";
+  const ordinalAnchor   = "sauvage-inspired";             // ordinal-resolved anchor
+  const conflictSource  = "baccarat-rouge-540-inspired";  // named entity, sweetness=3
+
+  // Build intent as route.ts would after ordinal resolution + intent override.
+  // entitySlug carries the conflicting named entity; intent is anchored_refinement.
+  const anchoredIntent: ResolvedIntent = {
+    intent:      "anchored_refinement",
+    signals:     {},
+    entitySlug:  conflictSource,
+    compareSlug: [],
+  };
+
+  const retrieval = planRetrieval(
+    anchoredIntent, EMPTY_CONTEXT, undefined, undefined, undefined, null, undefined,
+    msg, ordinalAnchor
+  );
+
+  assert.equal(retrieval.anchoredMeta?.anchorSlug, ordinalAnchor,
+    "T-C4-FT-15a — anchoredMeta reflects ordinal anchor, not named entity");
+  assert.equal(retrieval.anchoredMeta?.catalogueBoundary, true,
+    "T-C4-FT-15b — sauvage sweetness=1 is floor → strict pool empty");
+  assert.equal(retrieval.fragrances.length, 0,
+    "T-C4-FT-15c — pool must be empty; source re-add must not inject conflicting entity");
+  assert.ok(
+    !retrieval.fragrances.some((f) => f.slug === conflictSource),
+    "T-C4-FT-15d — conflicting named entity must not appear in anchored pool"
+  );
+  const allStrictlyQualify = retrieval.fragrances.every((f) => {
+    const sw = (f as unknown as { sweetness?: number }).sweetness;
+    return typeof sw === "number" && sw < 1;
+  });
+  assert.ok(allStrictlyQualify,
+    "T-C4-FT-15e — every candidate (if any) must satisfy sweetness < anchorScore(1)");
 });
 
 // ── EP-AI-C5: Profile Completeness Engine (T-C5-P) ───────────────────────────

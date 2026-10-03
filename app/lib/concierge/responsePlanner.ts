@@ -172,6 +172,19 @@ export function planResponse(
   // run in a fixed sequence; without a pre-scan a bold slug positioned after a
   // non-bold one in the text would still be pushed first, inverting first-mentioned
   // priority when cardTarget limits the selection to fewer cards than markers.
+  // Step 0: Collapse **canonical name** [PRODUCT:slug] → [PRODUCT:slug].
+  // Only collapses when the bold text matches that product's canonical name AND
+  // the slug is present in the retrieval context (eligible this turn).
+  // Unrelated bold prose and out-of-retrieval slugs are preserved unchanged so
+  // Steps 1/2 handle or discard them cleanly without double-processing.
+  rawContent = rawContent.replace(/\*\*([^*]+)\*\*\s*(\[PRODUCT:[a-z0-9'-]+\])/g, (_match, name: string, marker: string) => {
+    const slug = marker.slice(9, -1); // '[PRODUCT:'.length === 9, strip trailing ']'
+    const frag = retrieval.fragrances.find((f) => f.slug === slug);
+    if (!frag) return _match;
+    if (frag.name.toLowerCase().trim() !== name.trim().toLowerCase()) return _match;
+    return marker;
+  });
+
   {
     const slugScanRE = /\*\*\[PRODUCT:([a-z0-9'-]+)\]\*\*|\[PRODUCT:([a-z0-9'-]+)\]/g;
     let m: RegExpExecArray | null;

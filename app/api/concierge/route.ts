@@ -20,7 +20,7 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
-import { planConversation }                    from "../../lib/concierge/conversationPlanner";
+import { planConversation, resolveAnchorSlug } from "../../lib/concierge/conversationPlanner";
 import { resolveIntent }                       from "../../lib/concierge/intentResolver";
 import { planRetrieval, buildCachedRetrieval } from "../../lib/concierge/retrievalPlanner";
 import { buildContext, renderContext }          from "../../lib/concierge/contextBuilder";
@@ -202,7 +202,8 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     // 1c. Anchor slug for anchored_refinement (EP-AI-C4):
     // Ordinal takes precedence (guest explicitly referenced a position);
     // falls back to persisted selectedSlug; falls back to first previous rec.
-    const anchorSlug: string | undefined = plan.action === "anchored_refinement"
+    // let (not const) — may be updated below when first-turn entity + direction detected.
+    let anchorSlug: string | undefined = plan.action === "anchored_refinement"
       ? (resolvedOrdinalSlug ?? state.selectedSlug ?? state.lastRecommendationSlugs?.[0])
       : undefined;
 
@@ -224,9 +225,26 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     if (plan.requiresRetrieval) {
       if (!resolvedIntent) resolvedIntent = resolveIntent(message, context);
 
-      // EP-AI-C4: override intent so planRetrieval routes to anchored_refinement case
-      if (plan.action === "anchored_refinement") {
-        resolvedIntent = { ...resolvedIntent, intent: "anchored_refinement" as const };
+      // EP-AI-C4 + EP-AI-C4-R1: Resolve anchor slug and, when needed, upgrade plan
+      // to anchored_refinement. Both the session-override and the fresh-turn paths
+      // are handled by resolveAnchorSlug (conversationPlanner) so the routing logic
+      // is covered by unit tests that exercise the same function production runs.
+      {
+        const ar = resolveAnchorSlug({
+          plan,
+          entitySlug:          resolvedIntent.entitySlug,
+          compareSlugCount:    resolvedIntent.compareSlug.length,
+          currentAnchorSlug:   anchorSlug,
+          resolvedOrdinalSlug,
+          message,
+        });
+        anchorSlug = ar.anchorSlug;
+        if (ar.upgradeToAnchored) {
+          plan = { ...plan, action: "anchored_refinement" as const, nextIntent: "anchored_refinement" as const, requiresRetrieval: true };
+        }
+        if (plan.action === "anchored_refinement") {
+          resolvedIntent = { ...resolvedIntent, intent: "anchored_refinement" as const };
+        }
       }
 
       // Refinement roles and exploration target are mutually exclusive per plan.action

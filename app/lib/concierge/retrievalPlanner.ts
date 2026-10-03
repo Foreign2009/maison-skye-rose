@@ -1121,8 +1121,14 @@ export function planRetrieval(
     !!resolvedOccasion &&
     !!sourceKnowledge &&
     !matchesOccasion(sourceKnowledge, resolvedOccasion);
+  // anchored_refinement: buildAnchoredPool already applied strict directional
+  // filtering. Re-inserting any sourceKnowledge (whether it is the anchor itself
+  // or a secondary named entity) bypasses that filter and can introduce
+  // non-qualifying candidates. Block unconditionally for this intent.
+  const sourceIsAnchor = intent === "anchored_refinement";
   if (
     sourceKnowledge &&
+    !sourceIsAnchor &&
     !fragrances.find((f) => f.slug === sourceKnowledge.slug) &&
     !rejectedSourceSlug &&
     !sourceViolatesFamily &&
