@@ -17,7 +17,7 @@
 import assert from "node:assert/strict";
 import { planConversation, resolveAnchorSlug } from "../../../app/lib/concierge/conversationPlanner";
 import { resolveIntent }  from "../../../app/lib/concierge/intentResolver";
-import { planRetrieval }  from "../../../app/lib/concierge/retrievalPlanner";
+import { planRetrieval, buildCachedRetrieval } from "../../../app/lib/concierge/retrievalPlanner";
 import { mkcCatalogue }   from "../../../app/lib/mkc/catalogue";
 import type { ConversationState, ConversationContext } from "../../../app/lib/concierge/types";
 
@@ -132,6 +132,67 @@ test("CR-05 — anchor exclusion limitation documented (not a hard pipeline guar
     assert.ok(retrieval.fragrances.length > 0,
       `CR-05 — "${msg}" returned empty pool`);
   }
+});
+
+// ── CR-06/07: "Compare these" next-turn routing with 2 and 3 cached cards ──────
+// Verifies the full planConversation + buildCachedRetrieval pipeline:
+//   - "Compare these" always routes to requiresComparison=true
+//   - buildCachedRetrieval returns ALL cached slugs, not a selected pair
+// This covers the routing gap the chip-count assertion (T-LF-07b/c) does not test.
+
+console.log("\n── Chip routing: 'Compare these' next-turn ───────────────────────");
+
+function makeCompareState(slugs: string[]): ConversationState {
+  return {
+    sessionId:               "test",
+    selectedSlug:            slugs[0],
+    lastRecommendationSlugs: slugs,
+    turns: [
+      { role: "user",      content: "Show me something less sweet",   timestamp: 1 },
+      { role: "assistant", content: "Here are your recommendations:", timestamp: 2,
+        intent: "anchored_refinement" },
+    ],
+    context: { mentionedSlug: slugs[0] },
+  };
+}
+
+test("CR-06 — 'Compare these' with 2 cached slugs: action=comparison, both slugs retained", () => {
+  const slugs = mkcCatalogue.slice(0, 2).map((f) => f.slug);
+  const state = makeCompareState(slugs);
+
+  const plan = planConversation("Compare these", state);
+  assert.equal(plan.requiresComparison, true,
+    `CR-06 — requiresComparison must be true; got action="${plan.action}"`);
+  assert.equal(plan.reuseRecommendations, true,
+    `CR-06 — reuseRecommendations must be true; got action="${plan.action}"`);
+
+  const retrieval = buildCachedRetrieval(state);
+  const returnedSlugs = retrieval.fragrances.map((f) => f.slug).sort();
+  const expectedSlugs = [...slugs].sort();
+  assert.deepEqual(returnedSlugs, expectedSlugs,
+    `CR-06 — both cached slugs must appear in retrieval context; got: [${returnedSlugs.join(", ")}]`);
+  console.log(`         → action="${plan.action}", context slugs=[${returnedSlugs.join(", ")}]`);
+});
+
+test("CR-07 — 'Compare these' with 3 cached slugs: action=comparison, all 3 slugs retained", () => {
+  const slugs = mkcCatalogue.slice(0, 3).map((f) => f.slug);
+  const state = makeCompareState(slugs);
+
+  const plan = planConversation("Compare these", state);
+  assert.equal(plan.requiresComparison, true,
+    `CR-07 — requiresComparison must be true; got action="${plan.action}"`);
+  assert.equal(plan.reuseRecommendations, true,
+    `CR-07 — reuseRecommendations must be true; got action="${plan.action}"`);
+
+  const retrieval = buildCachedRetrieval(state);
+  const returnedSlugs = retrieval.fragrances.map((f) => f.slug).sort();
+  const expectedSlugs = [...slugs].sort();
+  assert.deepEqual(returnedSlugs, expectedSlugs,
+    `CR-07 — all 3 cached slugs must appear in retrieval context; got: [${returnedSlugs.join(", ")}]`);
+  console.log(`         → action="${plan.action}", context slugs=[${returnedSlugs.join(", ")}]`);
+  // Document: pipeline passes all 3 slugs to the model with "Compare the previous recommendations
+  // directly." — no pair selection is enforced. The model handles the 3-way comparison.
+  console.log(`         ℹ  3-card comparison: model receives all 3 slugs; no pipeline-enforced pair selection`);
 });
 
 console.log(`\n${passed + failed} checks  |  ${passed} passed  |  ${failed} failed\n`);

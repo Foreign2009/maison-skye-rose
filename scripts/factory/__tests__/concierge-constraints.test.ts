@@ -3884,6 +3884,368 @@ test("T-LF-05g — different dimension/direction (warmth/more): direction-correc
     `T-LF-05g — expected highest/higher-in-warmth language; got: "${result.content}"`);
 });
 
+// ── T-LF-06: strict-match absence-claim post-processor (sanitiseAbsenceClaims) ─
+// These tests verify CODE BEHAVIOUR in planResponse, not model compliance.
+// sanitiseAbsenceClaims is called for strict-match anchored_refinement responses.
+// It corrects residual absence-implying phrases using relative wording validated
+// against actual rendered candidates, not flat "low/high" level labels.
+
+console.log("\n── LF-06. Strict-match absence-claim post-processor ─────────────");
+
+test("T-LF-06a — observed BR540 failure: 'sophistication without sweetness' corrected", () => {
+  // "sophistication without sweetness" appeared in live deployment despite the prohibition.
+  // Single candidate at sweetness=1 → all-same score → scoreTag=" (1/5)".
+  // Expected correction: "with lower sweetness than {anchorName} (1/5)".
+  const anchor = mkcCatalogue.find((k) => k.slug === "baccarat-rouge-540-inspired");
+  if (!anchor) { skip("T-LF-06a — BR540 not in catalogue"); return; }
+  const meta: AnchoredMeta = {
+    anchorSlug: "baccarat-rouge-540-inspired", anchorName: anchor.name,
+    dimension: "sweetness", direction: "less", anchorScore: 3,
+    strictMatches: true, catalogueBoundary: false,
+  };
+  const candidates = mkcCatalogue.filter((k) => (k.sweetness ?? 99) === 1).slice(0, 1);
+  if (candidates.length === 0) { skip("T-LF-06a — no sweetness=1 candidates"); return; }
+  const retrieval: RetrievalContext = { fragrances: candidates, articles: [], anchoredMeta: meta };
+  const raw = `[PRODUCT:${candidates[0].slug}] brings sophistication without sweetness, scoring 1/5.`;
+  const result = planResponse(raw, "anchored_refinement", retrieval, ANCHOR_PLAN);
+  assert.ok(!result.content.includes("without sweetness"),
+    `T-LF-06a — "without sweetness" must not survive; got: "${result.content}"`);
+  assert.ok(result.content.includes(`with lower sweetness than ${anchor.name} (1/5)`),
+    `T-LF-06a — relative corrected phrase must appear; got: "${result.content}"`);
+  assert.ok(result.content.includes(`sophistication with lower sweetness than ${anchor.name} (1/5)`),
+    `T-LF-06a — exact phrase in context; got: "${result.content}"`);
+});
+
+test("T-LF-06b — 'zero sweetness' corrected to relative lower-than phrase", () => {
+  const meta: AnchoredMeta = {
+    anchorSlug: "baccarat-rouge-540-inspired", anchorName: "Baccarat Rouge 540 Inspired",
+    dimension: "sweetness", direction: "less", anchorScore: 3,
+    strictMatches: true, catalogueBoundary: false,
+  };
+  const candidates = mkcCatalogue.filter((k) => (k.sweetness ?? 99) === 1).slice(0, 1);
+  if (candidates.length === 0) { skip("T-LF-06b — no sweetness=1 candidates"); return; }
+  const retrieval: RetrievalContext = { fragrances: candidates, articles: [], anchoredMeta: meta };
+  const raw = `[PRODUCT:${candidates[0].slug}] registers zero sweetness at 1/5.`;
+  const result = planResponse(raw, "anchored_refinement", retrieval, ANCHOR_PLAN);
+  assert.ok(!result.content.includes("zero sweetness"),
+    `T-LF-06b — "zero sweetness" must not survive; got: "${result.content}"`);
+  assert.ok(result.content.includes("lower sweetness than Baccarat Rouge 540 Inspired (1/5)"),
+    `T-LF-06b — relative corrected phrase must appear; got: "${result.content}"`);
+});
+
+test("T-LF-06c — 'no sweetness' corrected to relative lower-than phrase", () => {
+  const meta: AnchoredMeta = {
+    anchorSlug: "baccarat-rouge-540-inspired", anchorName: "Baccarat Rouge 540 Inspired",
+    dimension: "sweetness", direction: "less", anchorScore: 3,
+    strictMatches: true, catalogueBoundary: false,
+  };
+  const candidates = mkcCatalogue.filter((k) => (k.sweetness ?? 99) === 1).slice(0, 1);
+  if (candidates.length === 0) { skip("T-LF-06c — no sweetness=1 candidates"); return; }
+  const retrieval: RetrievalContext = { fragrances: candidates, articles: [], anchoredMeta: meta };
+  const raw = `[PRODUCT:${candidates[0].slug}] carries no sweetness in its profile.`;
+  const result = planResponse(raw, "anchored_refinement", retrieval, ANCHOR_PLAN);
+  assert.ok(!result.content.includes("no sweetness"),
+    `T-LF-06c — "no sweetness" must not survive; got: "${result.content}"`);
+  assert.ok(result.content.includes("lower sweetness than Baccarat Rouge 540 Inspired"),
+    `T-LF-06c — relative corrected phrase must appear; got: "${result.content}"`);
+});
+
+test("T-LF-06d — valid negation 'not zero sweetness' preserved unchanged", () => {
+  // Negation guard: "not" within 16 chars of "zero" must prevent replacement.
+  const meta: AnchoredMeta = {
+    anchorSlug: "baccarat-rouge-540-inspired", anchorName: "Baccarat Rouge 540 Inspired",
+    dimension: "sweetness", direction: "less", anchorScore: 3,
+    strictMatches: true, catalogueBoundary: false,
+  };
+  const candidates = mkcCatalogue.filter((k) => (k.sweetness ?? 99) === 1).slice(0, 1);
+  if (candidates.length === 0) { skip("T-LF-06d — no sweetness=1 candidates"); return; }
+  const retrieval: RetrievalContext = { fragrances: candidates, articles: [], anchoredMeta: meta };
+  const raw = `[PRODUCT:${candidates[0].slug}] is not zero sweetness — it registers 1/5.`;
+  const result = planResponse(raw, "anchored_refinement", retrieval, ANCHOR_PLAN);
+  // Negation guard preserves the phrase exactly as "not zero sweetness"
+  assert.ok(result.content.includes("not zero sweetness"),
+    `T-LF-06d — "not zero sweetness" must be preserved by negation guard; got: "${result.content}"`);
+  // Confirm the negation was not silently stripped to produce a bare absence claim
+  assert.ok(!result.content.match(/\bis zero sweetness\b/) && !result.content.match(/\bhas zero sweetness\b/),
+    `T-LF-06d — negation must not be stripped; got: "${result.content}"`);
+});
+
+test("T-LF-06e — sweetness synonym 'without sugar' corrected to relative phrase", () => {
+  const meta: AnchoredMeta = {
+    anchorSlug: "baccarat-rouge-540-inspired", anchorName: "Baccarat Rouge 540 Inspired",
+    dimension: "sweetness", direction: "less", anchorScore: 3,
+    strictMatches: true, catalogueBoundary: false,
+  };
+  const candidates = mkcCatalogue.filter((k) => (k.sweetness ?? 99) === 1).slice(0, 1);
+  if (candidates.length === 0) { skip("T-LF-06e — no sweetness=1 candidates"); return; }
+  const retrieval: RetrievalContext = { fragrances: candidates, articles: [], anchoredMeta: meta };
+  const raw = `[PRODUCT:${candidates[0].slug}] presents without sugar, offering a clean character.`;
+  const result = planResponse(raw, "anchored_refinement", retrieval, ANCHOR_PLAN);
+  assert.ok(!result.content.includes("without sugar"),
+    `T-LF-06e — "without sugar" must not survive; got: "${result.content}"`);
+  assert.ok(result.content.includes("with lower sweetness than Baccarat Rouge 540 Inspired"),
+    `T-LF-06e — relative corrected phrase must appear; got: "${result.content}"`);
+});
+
+test("T-LF-06f — direction='more', dimension='warmth': 'without warmth' → 'with higher warmth than'", () => {
+  // Catches hardcoded sweetness assumptions — sanitiser must work for any scored dimension
+  // and for direction="more" (dirComp="higher" not "lower").
+  const candidates = mkcCatalogue.filter((k) => (k.warmth ?? 0) >= 4).slice(0, 2);
+  if (candidates.length === 0) { skip("T-LF-06f — no high-warmth candidates"); return; }
+  const meta: AnchoredMeta = {
+    anchorSlug: "sauvage-inspired", anchorName: "Sauvage Inspired",
+    dimension: "warmth", direction: "more", anchorScore: 3,
+    strictMatches: true, catalogueBoundary: false,
+  };
+  const retrieval: RetrievalContext = { fragrances: candidates, articles: [], anchoredMeta: meta };
+  const raw = `[PRODUCT:${candidates[0].slug}] presents without warmth in its opening but deepens beautifully.`;
+  const result = planResponse(raw, "anchored_refinement", retrieval, ANCHOR_PLAN);
+  assert.ok(!result.content.includes("without warmth"),
+    `T-LF-06f — "without warmth" must not survive; got: "${result.content}"`);
+  assert.ok(result.content.includes("with higher warmth than Sauvage Inspired"),
+    `T-LF-06f — relative corrected phrase must appear; got: "${result.content}"`);
+});
+
+test("T-LF-06g — less: anchor sweetness=5, candidate sweetness=4 → score tag reflects candidate", () => {
+  // Verifies: score tag comes from the candidate score (4), not the anchor score (5).
+  const candidate = mkcCatalogue.find((k) => (k.sweetness ?? 0) >= 4);
+  if (!candidate) { skip("T-LF-06g — no sweetness>=4 candidate in catalogue"); return; }
+  const meta: AnchoredMeta = {
+    anchorSlug: "test-anchor", anchorName: "Test Anchor",
+    dimension: "sweetness", direction: "less", anchorScore: 5,
+    strictMatches: true, catalogueBoundary: false,
+  };
+  const retrieval: RetrievalContext = { fragrances: [candidate], articles: [], anchoredMeta: meta };
+  const raw = `[PRODUCT:${candidate.slug}] offers a drier character without sweetness.`;
+  const result = planResponse(raw, "anchored_refinement", retrieval, ANCHOR_PLAN);
+  assert.ok(!result.content.includes("without sweetness"),
+    `T-LF-06g — "without sweetness" must not survive; got: "${result.content}"`);
+  assert.ok(result.content.includes("with lower sweetness than Test Anchor"),
+    `T-LF-06g — relative phrase with correct anchor must appear; got: "${result.content}"`);
+  // Score tag must reflect candidate's sweetness, not anchor's (5/5 would be wrong)
+  assert.ok(!result.content.includes("(5/5)"),
+    `T-LF-06g — anchor score must not appear in score tag; got: "${result.content}"`);
+  const candidateScore = candidate.sweetness;
+  assert.ok(result.content.includes(`(${candidateScore}/5)`) || !result.content.match(/\(\d\/5\)/),
+    `T-LF-06g — if score tag present, must reflect candidate score ${candidateScore}/5; got: "${result.content}"`);
+});
+
+test("T-LF-06h — more: anchor warmth=1, candidate warmth=2 → 'higher warmth' with candidate score", () => {
+  const candidate = mkcCatalogue.find((k) => (k.warmth ?? 0) >= 2);
+  if (!candidate) { skip("T-LF-06h — no warmth>=2 candidate in catalogue"); return; }
+  const meta: AnchoredMeta = {
+    anchorSlug: "test-anchor", anchorName: "Test Anchor Warmth",
+    dimension: "warmth", direction: "more", anchorScore: 1,
+    strictMatches: true, catalogueBoundary: false,
+  };
+  const retrieval: RetrievalContext = { fragrances: [candidate], articles: [], anchoredMeta: meta };
+  const raw = `[PRODUCT:${candidate.slug}] is without warmth to open, but grows richer.`;
+  const result = planResponse(raw, "anchored_refinement", retrieval, ANCHOR_PLAN);
+  assert.ok(!result.content.includes("without warmth"),
+    `T-LF-06h — "without warmth" must not survive; got: "${result.content}"`);
+  assert.ok(result.content.includes("with higher warmth than Test Anchor Warmth"),
+    `T-LF-06h — direction must be "higher" for more-direction; got: "${result.content}"`);
+});
+
+test("T-LF-06i — mixed candidate scores: no score tag in corrected phrase", () => {
+  // When rendered candidates have different sweetness values, the score is ambiguous —
+  // no score tag should appear. "lower sweetness than {anchor}" without "(N/5)".
+  const sw1 = mkcCatalogue.filter((k) => (k.sweetness ?? 99) === 1);
+  const sw2 = mkcCatalogue.filter((k) => (k.sweetness ?? 99) === 2);
+  if (sw1.length === 0 || sw2.length === 0) {
+    skip("T-LF-06i — need sweetness=1 and sweetness=2 candidates for mixed-score test");
+    return;
+  }
+  const candidates = [sw1[0], sw2[0]];
+  const meta: AnchoredMeta = {
+    anchorSlug: "baccarat-rouge-540-inspired", anchorName: "Baccarat Rouge 540 Inspired",
+    dimension: "sweetness", direction: "less", anchorScore: 3,
+    strictMatches: true, catalogueBoundary: false,
+  };
+  const retrieval: RetrievalContext = { fragrances: candidates, articles: [], anchoredMeta: meta };
+  const raw = `[PRODUCT:${candidates[0].slug}] and [PRODUCT:${candidates[1].slug}] both without sweetness in character.`;
+  const result = planResponse(raw, "anchored_refinement", retrieval, ANCHOR_PLAN);
+  assert.ok(!result.content.includes("without sweetness"),
+    `T-LF-06i — "without sweetness" must not survive; got: "${result.content}"`);
+  assert.ok(result.content.includes("lower sweetness than Baccarat Rouge 540 Inspired"),
+    `T-LF-06i — relative phrase must appear; got: "${result.content}"`);
+  // Mixed scores → no score tag
+  assert.ok(!result.content.match(/lower sweetness than Baccarat Rouge 540 Inspired \(\d\/5\)/),
+    `T-LF-06i — score tag must be absent for mixed candidate scores; got: "${result.content}"`);
+});
+
+test("T-LF-06j — quoted customer preference 'I want no sweetness' preserved", () => {
+  // The preference-intent guard (want/prefer/seek) must protect the guest's own quoted words.
+  // "I want no sweetness" — "want" within 16 chars before "no" triggers preservation.
+  const meta: AnchoredMeta = {
+    anchorSlug: "baccarat-rouge-540-inspired", anchorName: "Baccarat Rouge 540 Inspired",
+    dimension: "sweetness", direction: "less", anchorScore: 3,
+    strictMatches: true, catalogueBoundary: false,
+  };
+  const candidates = mkcCatalogue.filter((k) => (k.sweetness ?? 99) === 1).slice(0, 1);
+  if (candidates.length === 0) { skip("T-LF-06j — no sweetness=1 candidates"); return; }
+  const retrieval: RetrievalContext = { fragrances: candidates, articles: [], anchoredMeta: meta };
+  // Simulate a model response that quotes the guest's preference before describing the fragrance
+  const raw = `Since you want no sweetness, [PRODUCT:${candidates[0].slug}] fits well — it scores 1/5.`;
+  const result = planResponse(raw, "anchored_refinement", retrieval, ANCHOR_PLAN);
+  // "want no sweetness" must be preserved — "want" precedes "no" within 16 chars
+  assert.ok(result.content.includes("want no sweetness"),
+    `T-LF-06j — quoted preference "want no sweetness" must be preserved; got: "${result.content}"`);
+});
+
+// ── T-LF-06k–m: shared-score guard regressions ───────────────────────────────
+// These verify CODE BEHAVIOUR of the allSame guard, not model output.
+// The guard requires scores.length === rendered.length so null scores cannot
+// produce a falsely shared tag by being silently excluded from the scores array.
+
+test("T-LF-06k — scores=[1, null]: null candidate score must prevent score tag", () => {
+  // rendered=[candSw1, candNullSw] → scores=[1] → scores.length(1) ≠ rendered.length(2)
+  // → allSame=false → no score tag even though the only valid score is 1.
+  const anchor = "Baccarat Rouge 540 Inspired";
+  const meta: AnchoredMeta = {
+    anchorSlug: "baccarat-rouge-540-inspired", anchorName: anchor,
+    dimension: "sweetness", direction: "less", anchorScore: 3,
+    strictMatches: true, catalogueBoundary: false,
+  };
+  const realCand = mkcCatalogue.find((k) => (k.sweetness ?? 99) === 1);
+  if (!realCand) { skip("T-LF-06k — no sweetness=1 candidate"); return; }
+  const secondCand = mkcCatalogue.find((k) => k.slug !== realCand.slug);
+  if (!secondCand) { skip("T-LF-06k — no second candidate"); return; }
+  // Inject null sweetness to simulate an unscored runtime entry
+  const nullSweetnessCand = { ...secondCand, sweetness: null } as unknown as typeof secondCand;
+  const retrieval: RetrievalContext = {
+    fragrances: [realCand, nullSweetnessCand], articles: [], anchoredMeta: meta, cardTarget: 2,
+  };
+  const raw = `[PRODUCT:${realCand.slug}] and [PRODUCT:${secondCand.slug}] without sweetness in character.`;
+  const result = planResponse(raw, "anchored_refinement", retrieval, ANCHOR_PLAN);
+  // Absence phrase corrected
+  assert.ok(!result.content.includes("without sweetness"),
+    `T-LF-06k — "without sweetness" must not survive; got: "${result.content}"`);
+  assert.ok(result.content.includes(`with lower sweetness than ${anchor}`),
+    `T-LF-06k — relative phrase must appear; got: "${result.content}"`);
+  // Score tag must NOT appear — null score on second candidate fails the guard
+  assert.ok(!result.content.match(/with lower sweetness than [^(]+ \(\d\/5\)/),
+    `T-LF-06k — score tag must be absent when one rendered candidate has null score; got: "${result.content}"`);
+});
+
+test("T-LF-06l — all scores missing: no score tag when dimension is unscored", () => {
+  // Use dimension="longevity" — not in extractDimScore's map, so all candidates return null.
+  // scores=[] → scores.length(0) ≠ rendered.length(2) → allSame=false → no score tag.
+  const candidates = mkcCatalogue.slice(0, 2);
+  const meta: AnchoredMeta = {
+    anchorSlug: "test-anchor", anchorName: "Test Anchor",
+    dimension: "longevity", direction: "less", anchorScore: null,
+    strictMatches: true, catalogueBoundary: false,
+  };
+  const retrieval: RetrievalContext = {
+    fragrances: candidates, articles: [], anchoredMeta: meta, cardTarget: 2,
+  };
+  const raw = `[PRODUCT:${candidates[0].slug}] and [PRODUCT:${candidates[1].slug}] without longevity in the drydown.`;
+  const result = planResponse(raw, "anchored_refinement", retrieval, ANCHOR_PLAN);
+  // Absence phrase corrected
+  assert.ok(!result.content.includes("without longevity"),
+    `T-LF-06l — "without longevity" must not survive; got: "${result.content}"`);
+  assert.ok(result.content.includes("with lower longevity than Test Anchor"),
+    `T-LF-06l — relative phrase must appear without score tag; got: "${result.content}"`);
+  // No score tag — all candidates scored null for unrecognised dimension
+  assert.ok(!result.content.match(/lower longevity than Test Anchor \(\d\/5\)/),
+    `T-LF-06l — score tag must be absent when all candidates have null score; got: "${result.content}"`);
+});
+
+test("T-LF-06m — identical valid scores: score tag correctly added", () => {
+  // rendered=[sw1_a, sw1_b] → scores=[1,1] → scores.length(2) === rendered.length(2),
+  // every score finite+in-range+equal → allSame=true → "(1/5)" tag appears.
+  const candidates = mkcCatalogue.filter((k) => (k.sweetness ?? 99) === 1).slice(0, 2);
+  if (candidates.length < 2) { skip("T-LF-06m — need 2 sweetness=1 candidates"); return; }
+  const meta: AnchoredMeta = {
+    anchorSlug: "baccarat-rouge-540-inspired", anchorName: "Baccarat Rouge 540 Inspired",
+    dimension: "sweetness", direction: "less", anchorScore: 3,
+    strictMatches: true, catalogueBoundary: false,
+  };
+  const retrieval: RetrievalContext = {
+    fragrances: candidates, articles: [], anchoredMeta: meta, cardTarget: 2,
+  };
+  const raw = `[PRODUCT:${candidates[0].slug}] and [PRODUCT:${candidates[1].slug}] without sweetness.`;
+  const result = planResponse(raw, "anchored_refinement", retrieval, ANCHOR_PLAN);
+  // Score tag must appear — every rendered candidate shares the same valid score
+  assert.ok(result.content.includes("lower sweetness than Baccarat Rouge 540 Inspired (1/5)"),
+    `T-LF-06m — score tag must appear when all rendered candidates share identical valid score; got: "${result.content}"`);
+});
+
+// ── T-LF-07: comparison chip count awareness ──────────────────────────────────
+// Verifies that the "Compare these" chip is suppressed below 2 cards and present
+// for 2+ cards. Also verifies chip text is "Compare these" (not "Compare these two").
+
+console.log("\n── LF-07. Comparison chip card-count awareness ───────────────────");
+
+test("T-LF-07a — one card: 'Compare these' chip must be absent", () => {
+  const candidates = mkcCatalogue.filter((k) => (k.sweetness ?? 99) === 1).slice(0, 1);
+  if (candidates.length < 1) { skip("T-LF-07a — no sweetness=1 candidates"); return; }
+  const meta: AnchoredMeta = {
+    anchorSlug: "baccarat-rouge-540-inspired", anchorName: "Baccarat Rouge 540 Inspired",
+    dimension: "sweetness", direction: "less", anchorScore: 3,
+    strictMatches: true, catalogueBoundary: false,
+  };
+  const retrieval: RetrievalContext = {
+    fragrances: candidates, articles: [], anchoredMeta: meta, cardTarget: 1,
+  };
+  const raw = `[PRODUCT:${candidates[0].slug}] scores lower in sweetness at 1/5.`;
+  const result = planResponse(raw, "anchored_refinement", retrieval, ANCHOR_PLAN);
+  assert.equal(result.recommendedSlugs.length, 1, "T-LF-07a — exactly 1 card shown");
+  const compareChip = result.followUpSuggestions.some((s) => s.toLowerCase().startsWith("compare"));
+  assert.equal(compareChip, false,
+    `T-LF-07a — compare chip must be absent for 1 card; got: [${result.followUpSuggestions.join(", ")}]`);
+});
+
+test("T-LF-07b — two cards: 'Compare these' chip must be present", () => {
+  const candidates = mkcCatalogue.filter((k) => (k.sweetness ?? 99) < 3).slice(0, 2);
+  if (candidates.length < 2) { skip("T-LF-07b — not enough low-sweetness candidates"); return; }
+  const meta: AnchoredMeta = {
+    anchorSlug: "baccarat-rouge-540-inspired", anchorName: "Baccarat Rouge 540 Inspired",
+    dimension: "sweetness", direction: "less", anchorScore: 3,
+    strictMatches: true, catalogueBoundary: false,
+  };
+  const retrieval: RetrievalContext = {
+    fragrances: candidates, articles: [], anchoredMeta: meta, cardTarget: 2,
+  };
+  const raw = `[PRODUCT:${candidates[0].slug}] and [PRODUCT:${candidates[1].slug}] both score lower.`;
+  const result = planResponse(raw, "anchored_refinement", retrieval, ANCHOR_PLAN);
+  assert.equal(result.recommendedSlugs.length, 2, "T-LF-07b — exactly 2 cards shown");
+  const compareChip = result.followUpSuggestions.some((s) => s.toLowerCase().startsWith("compare"));
+  assert.ok(compareChip,
+    `T-LF-07b — compare chip must be present for 2 cards; got: [${result.followUpSuggestions.join(", ")}]`);
+  const exactTwo = result.followUpSuggestions.some((s) => s === "Compare these two");
+  assert.equal(exactTwo, false,
+    `T-LF-07b — chip must say "Compare these" not "Compare these two"; got: [${result.followUpSuggestions.join(", ")}]`);
+});
+
+test("T-LF-07c — three cards: 'Compare these' chip must be present (not 'Compare these two')", () => {
+  const candidates = mkcCatalogue.filter((k) => (k.sweetness ?? 99) < 3).slice(0, 3);
+  if (candidates.length < 3) { skip("T-LF-07c — not enough low-sweetness candidates"); return; }
+  const meta: AnchoredMeta = {
+    anchorSlug: "baccarat-rouge-540-inspired", anchorName: "Baccarat Rouge 540 Inspired",
+    dimension: "sweetness", direction: "less", anchorScore: 3,
+    strictMatches: true, catalogueBoundary: false,
+  };
+  const retrieval: RetrievalContext = {
+    fragrances: candidates, articles: [], anchoredMeta: meta, cardTarget: 3,
+  };
+  const raw = [
+    `[PRODUCT:${candidates[0].slug}]`,
+    `[PRODUCT:${candidates[1].slug}]`,
+    `[PRODUCT:${candidates[2].slug}]`,
+    "— all score lower in sweetness.",
+  ].join(" ");
+  const result = planResponse(raw, "anchored_refinement", retrieval, ANCHOR_PLAN);
+  assert.equal(result.recommendedSlugs.length, 3, "T-LF-07c — exactly 3 cards shown");
+  const compareChip = result.followUpSuggestions.some((s) => s.toLowerCase().startsWith("compare"));
+  assert.ok(compareChip,
+    `T-LF-07c — compare chip must be present for 3 cards; got: [${result.followUpSuggestions.join(", ")}]`);
+  const exactTwo = result.followUpSuggestions.some((s) => s === "Compare these two");
+  assert.equal(exactTwo, false,
+    `T-LF-07c — chip must not say "Compare these two" for 3 cards; got: [${result.followUpSuggestions.join(", ")}]`);
+});
+
 // ── EP-AI-C5: Profile Completeness Engine (T-C5-P) ───────────────────────────
 
 console.log("\n── C5-P. Profile Completeness Engine ────────────────────────────");

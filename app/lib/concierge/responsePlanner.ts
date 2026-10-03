@@ -77,6 +77,112 @@ function buildNoMatchResponse(meta: AnchoredMeta): string {
   );
 }
 
+// ── Strict-match absence-claim post-processor ────────────────────────────────
+// After callClaude, sweeps residual absence-implying phrases from strict-match
+// anchored_refinement responses. The calibration instruction explicitly prohibits
+// phrases like "without sweetness" and "zero sweetness", but model compliance
+// is probabilistic — this sweep corrects residual phrases that survive.
+//
+// Relative wording: phrases are corrected to "lower/higher {dim} than {anchorName}"
+// (verified by the actual rendered candidate scores), not to flat "low/high" labels
+// that have no anchor reference. Score tag appended only when all rendered candidates
+// share the same score — avoids false precision for mixed-score pools.
+//
+// Preserves valid negations ("not zero sweetness") and quoted customer preferences
+// ("I want no sweetness"). Checks 16 chars before the match for negation/preference words.
+//
+// Inferred failure mechanism: the model may treat absence phrases as legitimate
+// fragrance character descriptions rather than literal echoes of the banned text.
+// This is a plausible inference from the observed failure pattern, not a verified
+// internal model cause.
+
+function extractDimScore(
+  f: { sweetness: number; freshness: number; warmth: number; intensity: number },
+  dim: string,
+): number | null {
+  const map: Record<string, number> = {
+    sweetness: f.sweetness,
+    freshness: f.freshness,
+    warmth:    f.warmth,
+    intensity: f.intensity,
+  };
+  return map[dim.toLowerCase()] ?? null;
+}
+
+function sanitiseAbsenceClaims(
+  content:  string,
+  meta:     AnchoredMeta,
+  rendered: RetrievalContext["fragrances"],  // actual rendered candidates only
+): string {
+  const { anchorName, dimension, direction } = meta;
+  const dim     = dimension.toLowerCase();
+  const dirComp = direction === "less" ? "lower" : "higher";
+
+  // Score from rendered candidates for this dimension.
+  // A score tag is added only when EVERY rendered candidate contributes a valid,
+  // finite, in-range score AND all values match.
+  //
+  // The guard requires scores.length === rendered.length so that candidates for which
+  // extractDimScore returns null (unscored dimension, unknown field) are never silently
+  // excluded from the set in a way that produces a falsely shared tag.
+  // e.g. rendered=[sw1, null] → scores=[1] → 1 ≠ 2 (rendered.length) → no tag.
+  const scores = rendered.flatMap((f) => {
+    const v = extractDimScore(
+      f as { sweetness: number; freshness: number; warmth: number; intensity: number },
+      dim,
+    );
+    return v !== null ? [v] : [];
+  });
+  const allSame =
+    rendered.length > 0 &&
+    scores.length === rendered.length &&
+    scores.every((s) => Number.isFinite(s) && s >= 1 && s <= 5 && s === scores[0]);
+  const scoreTag = allSame ? ` (${scores[0]}/5)` : "";
+
+  // "with lower sweetness than Baccarat Rouge 540 Inspired (1/5)"
+  const withRelative = `with ${dirComp} ${dim} than ${anchorName}${scoreTag}`;
+  // "lower sweetness than Baccarat Rouge 540 Inspired (1/5)"
+  const bareRelative = `${dirComp} ${dim} than ${anchorName}${scoreTag}`;
+
+  // Preserves valid negations ("not without sweetness", "isn't no sweetness") and
+  // quoted customer preferences ("I want no sweetness", "since you prefer no sweetness").
+  // Checks 16 characters before the match — wide enough for "I want " (7 chars) and
+  // "seeking " (8 chars). Includes negation words and preference-intent verbs.
+  function replaceUnlessNegated(text: string, pattern: RegExp, repl: string): string {
+    return text.replace(pattern, (match, offset: number) => {
+      const preceding = text.slice(Math.max(0, offset - 16), offset);
+      if (
+        /\b(?:not|isn't|aren't|don't|doesn't|never|want|wants|wanted|wanting|prefer|prefers|preferred|seek|seeking|avoid|avoiding|avoids)\s*$/i
+          .test(preceding)
+      ) {
+        return match;
+      }
+      return repl;
+    });
+  }
+
+  let result = content;
+
+  // "without [any] sweetness" → "with lower sweetness than {anchor}(scoreTag)"
+  result = replaceUnlessNegated(result, new RegExp(`without(?:\\s+any)?\\s+${dim}\\b`, "gi"), withRelative);
+  // "no sweetness" (word boundary) → "lower sweetness than {anchor}(scoreTag)"
+  result = replaceUnlessNegated(result, new RegExp(`\\bno\\s+${dim}\\b`, "gi"), bareRelative);
+  // "zero sweetness" → "lower sweetness than {anchor}(scoreTag)"
+  result = replaceUnlessNegated(result, new RegExp(`\\bzero\\s+${dim}\\b`, "gi"), bareRelative);
+  // "sweetness-free" → "lower-sweetness"
+  result = replaceUnlessNegated(result, new RegExp(`\\b${dim}-free\\b`, "gi"), `${dirComp}-${dim}`);
+
+  // Sweetness-specific sugar synonyms (also forbidden by calibration instruction)
+  if (dim === "sweetness") {
+    result = replaceUnlessNegated(result, /without(?:\s+any)?\s+sugar\b/gi, withRelative);
+    result = replaceUnlessNegated(result, /\bno\s+sugar\b/gi, bareRelative);
+    result = replaceUnlessNegated(result, /\bsugar-?free\b/gi, `${dirComp}-sweetness`);
+    result = replaceUnlessNegated(result, /\bsugarless\b/gi, `${dirComp}-sweetness`);
+  }
+
+  return result;
+}
+
 // ── Contextual follow-up generation ──────────────────────────────────────────
 
 // ── Static follow-up pools ────────────────────────────────────────────────────
@@ -93,7 +199,7 @@ const STATIC_FOLLOW_UPS: Record<ConversationIntent, string[]> = {
   gift:                ["Show luxury gift options", "Find something for daily wear"],
   general_discovery:   ["Help me find my signature scent", "Show best sellers"],
   clarification:       ["Shop by occasion", "Help me explore families"],
-  anchored_refinement: ["Show me more in this direction", "Compare these two", "Tell me more about this one"],
+  anchored_refinement: ["Show me more in this direction", "Compare these", "Tell me more about this one"],
 };
 
 // Follow-up phrases that could inadvertently propose a direction the guest
@@ -128,10 +234,11 @@ function isSuggestionSafe(
 }
 
 function generateFollowUps(
-  plan:    ConversationPlan,
-  intent:  ConversationIntent,
-  hasRecs: boolean,
-  profile?: ConversationProfile,
+  plan:      ConversationPlan,
+  intent:    ConversationIntent,
+  hasRecs:   boolean,
+  profile?:  ConversationProfile,
+  recCount?: number,
 ): string[] {
   const avoidedFamilies = (profile?.avoidedFamilies?.value ?? []).map((f) => f.toLowerCase());
   const avoidedNotes    = (profile?.avoidedNotes?.value    ?? []).map((n) => n.toLowerCase());
@@ -179,9 +286,15 @@ function generateFollowUps(
     return filter(["Try a different direction", "Explore the catalogue"]);
   }
 
-  // Generic selection based on intent
+  // Generic selection based on intent.
+  // anchored_refinement: suppress "Compare these" when fewer than 2 cards are shown.
+  // Comparison requires two subjects — 1 card makes the chip misleading.
   const pool = STATIC_FOLLOW_UPS[intent] ?? STATIC_FOLLOW_UPS.general_discovery;
-  return filter(pool);
+  const filteredPool =
+    intent === "anchored_refinement" && recCount !== undefined && recCount < 2
+      ? pool.filter((s) => !s.toLowerCase().startsWith("compare"))
+      : pool;
+  return filter(filteredPool);
 }
 
 // ── Public types ──────────────────────────────────────────────────────────────
@@ -363,8 +476,18 @@ export function planResponse(
     content = buildNoMatchResponse(retrieval.anchoredMeta);
   }
 
+  // Strict-match anchored_refinement: post-process residual absence-implying phrases.
+  // The calibration instruction prohibits "without sweetness", "zero sweetness", etc.
+  // but model compliance is probabilistic. This sweep corrects residual phrases using
+  // relative wording validated against rendered candidates only — not the full pool.
+  // Applied after marker processing so product name substitutions are already done.
+  if (intent === "anchored_refinement" && retrieval.anchoredMeta?.strictMatches === true) {
+    const renderedCandidates = retrieval.fragrances.filter((f) => finalSlugs.includes(f.slug));
+    content = sanitiseAbsenceClaims(content, retrieval.anchoredMeta, renderedCandidates);
+  }
+
   const hasRecs             = retrieval.fragrances.length > 0;
-  const followUpSuggestions = generateFollowUps(plan, intent, hasRecs, profile).slice(0, 2);
+  const followUpSuggestions = generateFollowUps(plan, intent, hasRecs, profile, finalSlugs.length).slice(0, 2);
 
   return {
     content:          content.replace(/\s{2,}/g, " ").trim(),
