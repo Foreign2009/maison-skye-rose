@@ -33,6 +33,7 @@ import { planConversation, type ConversationPlan } from "../../../app/lib/concie
 import type { RetrievalContext } from "../../../app/lib/concierge/contextBuilder";
 import { detectRejections, NONE_OF_THOSE_SIGNALS } from "../../../app/lib/concierge/rejectionDetector";
 import { planResponse } from "../../../app/lib/concierge/responsePlanner";
+import { formatResponse } from "../../../app/lib/concierge/responseFormatter";
 import { computeProfileCompleteness } from "../../../app/lib/concierge/profileCompletenessEngine";
 import { buildSearchIndex } from "../../../app/lib/search/indexBuilder";
 import { computeConfidenceClassifications } from "../../../app/lib/concierge/retrievalPlanner";
@@ -2318,18 +2319,19 @@ test("T-C4-11 — freshness:more strict match: anchor below max freshness → fr
   if (!anchor) { skip("T-C4-11 — no anchor below max freshness"); return; }
   const result = planRetrieval(ANCHORED_INTENT, EMPTY_CONTEXT, undefined, undefined, undefined, null, undefined,
     "like that but fresher", anchor.slug);
-  const allFresher = result.fragrances.every(f => (f.freshness ?? 0) > (anchor.freshness ?? 0));
-  // When strictMatches=true, all candidates must be fresher
+  // strictMatches=true: all pool candidates are genuinely fresher (no supplements)
   if (result.anchoredMeta?.strictMatches) {
+    const allFresher = result.fragrances.every(f => (f.freshness ?? 0) > (anchor.freshness ?? 0));
     assert.ok(allFresher,
       `T-C4-11 — strict match but some candidates not fresher than ${anchor.freshness}`);
+    assert.ok(result.fragrances.length > 0, "T-C4-11 — strict match must have at least 1 candidate");
   } else {
-    // No strict matches found — acceptable fallback
-    assert.ok(result.fragrances.length > 0, "T-C4-11 — fallback must still return candidates");
+    // No strict match — pool must be empty (no quality supplements returned)
+    assert.equal(result.fragrances.length, 0, "T-C4-11 — no-match pool must be empty, not padded with supplements");
   }
 });
 
-test("T-C4-12 — freshness:more no strict match: anchor at max freshness → strictMatches=false", () => {
+test("T-C4-12 — freshness:more no strict match: anchor at max freshness → empty pool, catalogue boundary", () => {
   const maxFresh = Math.max(...mkcCatalogue.map(k => k.freshness ?? 0));
   const anchor   = mkcCatalogue.find(k => (k.freshness ?? 0) >= maxFresh);
   if (!anchor) { skip("T-C4-12 — no max-freshness anchor"); return; }
@@ -2337,25 +2339,31 @@ test("T-C4-12 — freshness:more no strict match: anchor at max freshness → st
     "like that but fresher", anchor.slug);
   assert.equal(result.anchoredMeta?.strictMatches, false,
     "T-C4-12 — anchor at max freshness must produce strictMatches=false");
-  assert.ok(result.fragrances.length > 0, "T-C4-12 — fallback must return candidates even with no strict match");
+  assert.equal(result.fragrances.length, 0,
+    "T-C4-12 — no-match pool must be empty (no quality supplement padding)");
+  assert.equal(result.anchoredMeta?.catalogueBoundary, true,
+    "T-C4-12 — anchor at catalogue max freshness must flag catalogueBoundary=true");
 });
 
-test("T-C4-13 — sweetness:less strict match: anchor above min sweetness → candidates less sweet", () => {
+test("T-C4-13 — sweetness:less strict match: anchor above min sweetness → all candidates less sweet", () => {
   const minSweet = Math.min(...mkcCatalogue.map(k => k.sweetness ?? 5));
   const anchor   = mkcCatalogue.find(k => (k.sweetness ?? 0) > minSweet + 1);
   if (!anchor) { skip("T-C4-13 — no anchor above min sweetness"); return; }
   const result = planRetrieval(ANCHORED_INTENT, EMPTY_CONTEXT, undefined, undefined, undefined, null, undefined,
     "like that but less sweet", anchor.slug);
+  // strictMatches=true: all pool candidates are genuinely less sweet (no supplements)
   if (result.anchoredMeta?.strictMatches) {
     const allLessSweet = result.fragrances.every(f => (f.sweetness ?? 0) < (anchor.sweetness ?? 0));
     assert.ok(allLessSweet,
       `T-C4-13 — strict match but some candidates not less sweet than anchor (${anchor.sweetness})`);
+    assert.ok(result.fragrances.length > 0, "T-C4-13 — strict match must have at least 1 candidate");
   } else {
-    assert.ok(result.fragrances.length > 0, "T-C4-13 — fallback must return candidates");
+    // No strict match — pool must be empty
+    assert.equal(result.fragrances.length, 0, "T-C4-13 — no-match pool must be empty");
   }
 });
 
-test("T-C4-14 — sweetness:less no strict match: anchor at min sweetness → strictMatches=false", () => {
+test("T-C4-14 — sweetness:less no strict match: anchor at min sweetness → empty pool, catalogue boundary", () => {
   const minSweet = Math.min(...mkcCatalogue.map(k => k.sweetness ?? 5));
   const anchor   = mkcCatalogue.find(k => (k.sweetness ?? 5) <= minSweet);
   if (!anchor) { skip("T-C4-14 — no min-sweetness anchor"); return; }
@@ -2363,9 +2371,13 @@ test("T-C4-14 — sweetness:less no strict match: anchor at min sweetness → st
     "like that but less sweet", anchor.slug);
   assert.equal(result.anchoredMeta?.strictMatches, false,
     "T-C4-14 — anchor at min sweetness must produce strictMatches=false");
+  assert.equal(result.fragrances.length, 0,
+    "T-C4-14 — no-match pool must be empty (no quality supplement padding)");
+  assert.equal(result.anchoredMeta?.catalogueBoundary, true,
+    "T-C4-14 — anchor at catalogue min sweetness must flag catalogueBoundary=true");
 });
 
-test("T-C4-15 — warmth:more strict match: anchor below max warmth → warmer candidates", () => {
+test("T-C4-15 — warmth:more strict match: anchor below max warmth → all candidates warmer", () => {
   const maxWarmth = Math.max(...mkcCatalogue.map(k => k.warmth ?? 0));
   const anchor    = mkcCatalogue.find(k => (k.warmth ?? 0) < maxWarmth);
   if (!anchor) { skip("T-C4-15 — no anchor below max warmth"); return; }
@@ -2375,11 +2387,11 @@ test("T-C4-15 — warmth:more strict match: anchor below max warmth → warmer c
     const allWarmer = result.fragrances.every(f => (f.warmth ?? 0) > (anchor.warmth ?? 0));
     assert.ok(allWarmer, `T-C4-15 — strict match but some candidates not warmer than anchor (${anchor.warmth})`);
   } else {
-    assert.ok(result.fragrances.length > 0, "T-C4-15 — fallback must return candidates");
+    assert.equal(result.fragrances.length, 0, "T-C4-15 — no-match pool must be empty");
   }
 });
 
-test("T-C4-16 — intensity:less strict match: anchor above min intensity → lighter candidates", () => {
+test("T-C4-16 — intensity:less strict match: anchor above min intensity → all candidates lighter", () => {
   const minInt = Math.min(...mkcCatalogue.map(k => k.intensity ?? 5));
   const anchor  = mkcCatalogue.find(k => (k.intensity ?? 0) > minInt + 1);
   if (!anchor) { skip("T-C4-16 — no anchor above min intensity"); return; }
@@ -2389,7 +2401,7 @@ test("T-C4-16 — intensity:less strict match: anchor above min intensity → li
     const allLighter = result.fragrances.every(f => (f.intensity ?? 0) < (anchor.intensity ?? 0));
     assert.ok(allLighter, `T-C4-16 — strict match but some candidates not lighter than anchor (${anchor.intensity})`);
   } else {
-    assert.ok(result.fragrances.length > 0, "T-C4-16 — fallback must return candidates");
+    assert.equal(result.fragrances.length, 0, "T-C4-16 — no-match pool must be empty");
   }
 });
 
@@ -2530,7 +2542,7 @@ test("T-C4-28 — response may never map to non-current candidate", () => {
 
 // ── C4-29 to C4-35: Anchored refinement constraints (Founder required) ────────
 
-test("T-C4-29 — strict directional match exists: leading candidates satisfy direction", () => {
+test("T-C4-29 — strict directional match exists: leading candidates satisfy direction, no supplements", () => {
   // Find anchor with freshness < max so strict fresher candidates exist
   const maxFresh = Math.max(...mkcCatalogue.map(k => k.freshness ?? 0));
   const anchor   = mkcCatalogue.find(k => (k.freshness ?? 0) < maxFresh - 1);
@@ -2541,13 +2553,17 @@ test("T-C4-29 — strict directional match exists: leading candidates satisfy di
     const leadsFresher = (result.fragrances[0]?.freshness ?? 0) > (anchor.freshness ?? 0);
     assert.ok(leadsFresher,
       `T-C4-29 — strict match declared but lead candidate (${result.fragrances[0]?.freshness}) not fresher than anchor (${anchor.freshness})`);
+    // All pool items must genuinely satisfy direction — no quality supplements
+    const allFresher = result.fragrances.every(f => (f.freshness ?? 0) > (anchor.freshness ?? 0));
+    assert.ok(allFresher,
+      `T-C4-29 — pool contains non-fresher supplements; all must satisfy direction`);
   } else {
-    // No strict matches available in catalogue — graceful fallback
-    assert.ok(result.fragrances.length > 0, "T-C4-29 — fallback must provide candidates");
+    // No strict matches — pool must be empty (no supplement padding)
+    assert.equal(result.fragrances.length, 0, "T-C4-29 — no-match pool must be empty");
   }
 });
 
-test("T-C4-30 — no strict directional match: strictMatches=false, no false 'improved' result", () => {
+test("T-C4-30 — no strict directional match: strictMatches=false, empty pool, catalogue boundary", () => {
   const minFresh = Math.min(...mkcCatalogue.map(k => k.freshness ?? 5));
   const anchor   = mkcCatalogue.find(k => (k.freshness ?? 5) <= minFresh);
   if (!anchor) { skip("T-C4-30 — no min-freshness anchor"); return; }
@@ -2555,7 +2571,10 @@ test("T-C4-30 — no strict directional match: strictMatches=false, no false 'im
     "like that but less fresh", anchor.slug);
   assert.equal(result.anchoredMeta?.strictMatches, false,
     "T-C4-30 — anchor at minimum freshness: strictMatches must be false");
-  // Confirm meta carries the honest direction info
+  assert.equal(result.fragrances.length, 0,
+    "T-C4-30 — no-match pool must be empty (no quality supplement padding)");
+  assert.equal(result.anchoredMeta?.catalogueBoundary, true,
+    "T-C4-30 — anchor at catalogue min freshness must flag catalogueBoundary=true");
   assert.equal(result.anchoredMeta?.direction, "less", "T-C4-30 — direction must be 'less'");
 });
 
@@ -2627,9 +2646,18 @@ test("T-C4-36 — Conversation A: multi-turn discover → anchor + direction →
   const t2 = planRetrieval(anchIntent, EMPTY_CONTEXT, undefined, undefined, undefined, null, undefined,
     "like the second one but fresher", anchorSlug);
 
-  assert.ok(t2.fragrances.length > 0, "T-C4-36 — Turn 2 anchored_refinement must return candidates");
+  // Anchor must never appear in results regardless of match outcome
   assert.equal(t2.fragrances.find(f => f.slug === anchorSlug), undefined,
     "T-C4-36 — anchor must not appear in Turn 2 results");
+  // When strict matches found: all must be fresher; when no match: pool is empty
+  if (t2.anchoredMeta?.strictMatches) {
+    assert.ok(t2.fragrances.length > 0, "T-C4-36 — strict match must have candidates");
+    const allFresher = t2.fragrances.every(f =>
+      (f.freshness ?? 0) > (t2.anchoredMeta?.anchorScore ?? 0));
+    assert.ok(allFresher, "T-C4-36 — strict match candidates must all be fresher than anchor");
+  } else {
+    assert.equal(t2.fragrances.length, 0, "T-C4-36 — no-match pool must be empty");
+  }
   assert.equal(t2.anchoredMeta?.anchorSlug, anchorSlug,
     "T-C4-36 — anchoredMeta must carry the correct anchor slug");
   assert.equal(t2.anchoredMeta?.dimension, "freshness",
@@ -2708,6 +2736,401 @@ test("T-C4-40 — anchored_refinement + avoidance + rejection all respected simu
   );
   assert.equal(avoidedLeaks.length, 0,
     `T-C4-40 — avoided family '${avoided}' leaked into anchored pool`);
+});
+
+// ── C4-LS: Less-sweet fallback fix — controlled matching scenarios ────────────
+
+console.log("\n── C4-LS. Less-sweet fallback fix ───────────────────────────────");
+
+test("T-C4-LS-01 — 0 strict matches: empty pool, strictMatches=false, catalogueBoundary from runtime catalogue", () => {
+  // sweetness=1 is the runtime catalogue minimum — verified from mkcCatalogue at test runtime
+  const minSweet = Math.min(...mkcCatalogue.map(k => k.sweetness ?? 5));
+  const anchor   = mkcCatalogue.find(k => (k.sweetness ?? 5) <= minSweet);
+  if (!anchor) { skip("T-C4-LS-01 — no min-sweetness anchor in runtime catalogue"); return; }
+  const result = planRetrieval(ANCHORED_INTENT, EMPTY_CONTEXT, undefined, undefined, undefined, null, undefined,
+    "like that but less sweet", anchor.slug);
+  assert.equal(result.fragrances.length, 0,
+    `T-C4-LS-01 — zero strict matches must produce empty pool, not quality supplements`);
+  assert.equal(result.anchoredMeta?.strictMatches, false,
+    "T-C4-LS-01 — strictMatches must be false");
+  // catalogueBoundary must reflect the runtime catalogue, not a hardcoded claim
+  const hasLowerInCatalogue = mkcCatalogue.some(k =>
+    k.slug !== anchor.slug && (k.sweetness ?? null) !== null && (k.sweetness ?? 0) < (anchor.sweetness ?? 0)
+  );
+  assert.equal(result.anchoredMeta?.catalogueBoundary, !hasLowerInCatalogue,
+    `T-C4-LS-01 — catalogueBoundary must match runtime catalogue (hasLowerInCatalogue=${hasLowerInCatalogue})`);
+});
+
+test("T-C4-LS-02 — 1 strict match: pool has exactly 1 item, strictMatches=true, no supplements", () => {
+  // Use sweetness dimension: find an anchor where exactly 1 other fragrance scores lower
+  // after applying rejected slugs to reduce the pool to 1
+  const minSweet = Math.min(...mkcCatalogue.map(k => k.sweetness ?? 5));
+  const nextMin  = Math.min(...mkcCatalogue.filter(k => (k.sweetness ?? 5) > minSweet).map(k => k.sweetness ?? 5));
+  const anchor   = mkcCatalogue.find(k => (k.sweetness ?? 0) === nextMin);
+  if (!anchor) { skip("T-C4-LS-02 — no suitable anchor for 1-strict-match scenario"); return; }
+  // All fragrances with sweetness < nextMin (i.e., sweetness=minSweet)
+  const naturalStrict = mkcCatalogue.filter(k => (k.sweetness ?? 5) < nextMin && k.slug !== anchor.slug);
+  if (naturalStrict.length < 2) { skip("T-C4-LS-02 — not enough lower-sweetness candidates to manufacture 1-match"); return; }
+  // Reject all but one to produce exactly 1 strict match
+  const keepSlug = naturalStrict[0].slug;
+  const rejectSlugs = naturalStrict.slice(1).map(k => k.slug);
+  const profile = makeProfile({ rejectedSlugs: rejectSlugs });
+  const result = planRetrieval(ANCHORED_INTENT, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined,
+    "like that but less sweet", anchor.slug);
+  assert.equal(result.anchoredMeta?.strictMatches, true,
+    "T-C4-LS-02 — 1 strict match must produce strictMatches=true");
+  assert.equal(result.fragrances.length, 1,
+    `T-C4-LS-02 — pool must have exactly 1 item, got ${result.fragrances.length}`);
+  assert.equal(result.fragrances[0].slug, keepSlug,
+    `T-C4-LS-02 — the 1 match must be the unrejected sweet candidate, got ${result.fragrances[0]?.slug}`);
+  assert.ok((result.fragrances[0].sweetness ?? 0) < (anchor.sweetness ?? 0),
+    `T-C4-LS-02 — the 1 match must genuinely score lower in sweetness`);
+});
+
+test("T-C4-LS-03 — 2 strict matches: pool has exactly 2 items, both genuine, no supplements", () => {
+  const minSweet = Math.min(...mkcCatalogue.map(k => k.sweetness ?? 5));
+  const nextMin  = Math.min(...mkcCatalogue.filter(k => (k.sweetness ?? 5) > minSweet).map(k => k.sweetness ?? 5));
+  const anchor   = mkcCatalogue.find(k => (k.sweetness ?? 0) === nextMin);
+  if (!anchor) { skip("T-C4-LS-03 — no suitable anchor"); return; }
+  const naturalStrict = mkcCatalogue.filter(k => (k.sweetness ?? 5) < nextMin && k.slug !== anchor.slug);
+  if (naturalStrict.length < 3) { skip("T-C4-LS-03 — not enough lower-sweetness candidates for 2-match"); return; }
+  const rejectSlugs = naturalStrict.slice(2).map(k => k.slug);
+  const profile = makeProfile({ rejectedSlugs: rejectSlugs });
+  const result = planRetrieval(ANCHORED_INTENT, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined,
+    "like that but less sweet", anchor.slug);
+  assert.equal(result.anchoredMeta?.strictMatches, true,
+    "T-C4-LS-03 — 2 strict matches must produce strictMatches=true");
+  assert.equal(result.fragrances.length, 2,
+    `T-C4-LS-03 — pool must have exactly 2 items, got ${result.fragrances.length}`);
+  const allLessSweet = result.fragrances.every(f => (f.sweetness ?? 0) < (anchor.sweetness ?? 0));
+  assert.ok(allLessSweet, "T-C4-LS-03 — both matches must genuinely score lower in sweetness (no supplements)");
+});
+
+test("T-C4-LS-04 — constraint exclusion: lower-sweetness exists in catalogue but excluded → catalogueBoundary=false", () => {
+  // Use a sweetness=2 anchor: many sweetness=1 candidates exist, but exclude them all via rejectedSlugs
+  const minSweet = Math.min(...mkcCatalogue.map(k => k.sweetness ?? 5));
+  const nextMin  = Math.min(...mkcCatalogue.filter(k => (k.sweetness ?? 5) > minSweet).map(k => k.sweetness ?? 5));
+  const anchor   = mkcCatalogue.find(k => (k.sweetness ?? 0) === nextMin);
+  if (!anchor) { skip("T-C4-LS-04 — no suitable anchor"); return; }
+  const allLowerInCatalogue = mkcCatalogue.filter(k => (k.sweetness ?? 5) < nextMin && k.slug !== anchor.slug);
+  if (allLowerInCatalogue.length === 0) { skip("T-C4-LS-04 — no lower-sweetness candidates in catalogue"); return; }
+  // Reject ALL lower-sweetness candidates
+  const profile = makeProfile({ rejectedSlugs: allLowerInCatalogue.map(k => k.slug) });
+  const result = planRetrieval(ANCHORED_INTENT, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined,
+    "like that but less sweet", anchor.slug);
+  assert.equal(result.fragrances.length, 0,
+    "T-C4-LS-04 — all lower-sweetness excluded: pool must be empty");
+  assert.equal(result.anchoredMeta?.strictMatches, false,
+    "T-C4-LS-04 — strictMatches must be false");
+  assert.equal(result.anchoredMeta?.catalogueBoundary, false,
+    "T-C4-LS-04 — lower-sweetness exists in catalogue (just rejected): catalogueBoundary must be false");
+});
+
+test("T-C4-LS-05 — missing dimension score does not qualify as a strict match", () => {
+  // Find an anchor where the dimension to vary has a score, then verify no fragrance
+  // with a null score for that dimension ends up in the strict pool
+  const anchor = mkcCatalogue.find(k => (k.sweetness ?? null) !== null);
+  if (!anchor) { skip("T-C4-LS-05 — no scored anchor"); return; }
+  const result = planRetrieval(ANCHORED_INTENT, EMPTY_CONTEXT, undefined, undefined, undefined, null, undefined,
+    "like that but less sweet", anchor.slug);
+  const hasNullScore = result.fragrances.some(f => f.sweetness === undefined || f.sweetness === null);
+  assert.equal(hasNullScore, false,
+    "T-C4-LS-05 — fragrance with missing sweetness score must not appear in strict pool");
+  // All returned fragrances must have a score AND score < anchor (when strictMatches)
+  if (result.anchoredMeta?.strictMatches) {
+    const allScored = result.fragrances.every(f => typeof f.sweetness === "number");
+    assert.ok(allScored, "T-C4-LS-05 — all strict pool members must have a scored sweetness");
+  }
+});
+
+test("T-C4-LS-06 — formatted response has zero cards in the no-match case", () => {
+  // Run through the full planRetrieval → planResponse → formatResponse pipeline
+  const minSweet = Math.min(...mkcCatalogue.map(k => k.sweetness ?? 5));
+  const anchor   = mkcCatalogue.find(k => (k.sweetness ?? 5) <= minSweet);
+  if (!anchor) { skip("T-C4-LS-06 — no min-sweetness anchor"); return; }
+  const retrieval = planRetrieval(ANCHORED_INTENT, EMPTY_CONTEXT, undefined, undefined, undefined, null, undefined,
+    "like that but less sweet", anchor.slug);
+  assert.equal(retrieval.fragrances.length, 0, "T-C4-LS-06 — retrieval pool must be empty");
+  // Simulate a model response that (incorrectly) tries to emit a product marker
+  // The formatter must produce zero cards regardless
+  const fabricatedSlug = mkcCatalogue[0]?.slug ?? "unknown-slug";
+  const mockModelResponse = `I'm sorry, no less-sweet option is available. You might enjoy [PRODUCT:${fabricatedSlug}]`;
+  const planned = planResponse(mockModelResponse, "anchored_refinement", retrieval, ANCHOR_PLAN);
+  assert.equal(planned.recommendedSlugs.length, 0,
+    `T-C4-LS-06 — zero-pool retrieval must produce zero cards; model emitted [PRODUCT:${fabricatedSlug}] but it should be rejected`);
+  const formatted = formatResponse(planned);
+  assert.equal(formatted.fragrances.length, 0,
+    "T-C4-LS-06 — formatted response must have zero fragrance cards in the no-match case");
+});
+
+test("T-C4-LS-07 — no equal or higher sweetness in less-sweet results", () => {
+  // For any anchor above the catalogue minimum, all returned fragrances must score strictly lower
+  const minSweet = Math.min(...mkcCatalogue.map(k => k.sweetness ?? 5));
+  const anchor   = mkcCatalogue.find(k => (k.sweetness ?? 0) > minSweet);
+  if (!anchor) { skip("T-C4-LS-07 — no anchor above min sweetness"); return; }
+  const result = planRetrieval(ANCHORED_INTENT, EMPTY_CONTEXT, undefined, undefined, undefined, null, undefined,
+    "like that but less sweet", anchor.slug);
+  if (result.fragrances.length > 0) {
+    const hasEqualOrHigher = result.fragrances.some(
+      f => (f.sweetness ?? 0) >= (anchor.sweetness ?? 0)
+    );
+    assert.equal(hasEqualOrHigher, false,
+      `T-C4-LS-07 — pool contains fragrance with sweetness >= anchor (${anchor.sweetness}); equal/higher must never appear`);
+  }
+  // No match is also acceptable — pool being empty is always correct
+});
+
+test("T-C4-LS-08 — 3 strict matches: pool has exactly 3 items, all genuine, no supplements", () => {
+  const minSweet = Math.min(...mkcCatalogue.map(k => k.sweetness ?? 5));
+  const nextMin  = Math.min(...mkcCatalogue.filter(k => (k.sweetness ?? 5) > minSweet).map(k => k.sweetness ?? 5));
+  const anchor   = mkcCatalogue.find(k => (k.sweetness ?? 0) === nextMin);
+  if (!anchor) { skip("T-C4-LS-08 — no suitable anchor"); return; }
+  const naturalStrict = mkcCatalogue.filter(k => (k.sweetness ?? 5) < nextMin && k.slug !== anchor.slug);
+  if (naturalStrict.length < 4) { skip("T-C4-LS-08 — not enough lower-sweetness candidates for 3-match"); return; }
+  // Reject all but 3 to produce exactly 3 strict matches
+  const rejectSlugs = naturalStrict.slice(3).map(k => k.slug);
+  const profile = makeProfile({ rejectedSlugs: rejectSlugs });
+  const result = planRetrieval(ANCHORED_INTENT, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined,
+    "like that but less sweet", anchor.slug);
+  assert.equal(result.anchoredMeta?.strictMatches, true,
+    "T-C4-LS-08 — 3 strict matches must produce strictMatches=true");
+  assert.equal(result.fragrances.length, 3,
+    `T-C4-LS-08 — pool must have exactly 3 items, got ${result.fragrances.length}`);
+  const allLessSweet = result.fragrances.every(f => (f.sweetness ?? 0) < (anchor.sweetness ?? 0));
+  assert.ok(allLessSweet, "T-C4-LS-08 — all 3 matches must genuinely score lower in sweetness (no supplements)");
+  assert.equal(result.anchoredMeta?.catalogueBoundary, false,
+    "T-C4-LS-08 — strictMatches=true implies catalogueBoundary must be false");
+});
+
+test("T-C4-LS-09 — context instructions: catalogue boundary message vs constraint exclusion message, no contradictory recommendation", () => {
+  const minSweet = Math.min(...mkcCatalogue.map(k => k.sweetness ?? 5));
+  const anchor   = mkcCatalogue.find(k => (k.sweetness ?? 5) <= minSweet);
+  if (!anchor) { skip("T-C4-LS-09 — no min-sweetness anchor"); return; }
+
+  // Case A: catalogue boundary (sweetness=1 anchor — no lower option in catalogue)
+  const retrievalBoundary: RetrievalContext = {
+    fragrances: [],
+    articles:   [],
+    anchoredMeta: {
+      anchorSlug:        anchor.slug,
+      anchorName:        anchor.name,
+      dimension:         "sweetness",
+      direction:         "less",
+      anchorScore:       anchor.sweetness ?? 1,
+      strictMatches:     false,
+      catalogueBoundary: true,
+    },
+  };
+  const ctxBoundary = buildContext(retrievalBoundary, EMPTY_STATE, ANCHOR_PLAN,
+    "anchored_refinement", null, null, null, `like ${anchor.name} but less sweet`);
+  const renderedBoundary = renderContext(ctxBoundary);
+  // Must reference that no lower option exists in the catalogue
+  assert.ok(
+    renderedBoundary.includes("lower end") || renderedBoundary.includes("our catalogue") || renderedBoundary.includes("catalogue"),
+    "T-C4-LS-09A — catalogue boundary message must reference the catalogue limit"
+  );
+  // Must not instruct the model to present any product
+  assert.ok(
+    !renderedBoundary.includes("Present EXACTLY"),
+    "T-C4-LS-09A — no 'Present EXACTLY N' instruction when pool is empty (catalogue boundary)"
+  );
+  assert.ok(
+    renderedBoundary.includes("Do not present any fragrance"),
+    "T-C4-LS-09A — instruction must explicitly forbid presenting a fragrance"
+  );
+
+  // Case B: constraint exclusion (lower-sweetness exists in catalogue but preferences exclude it)
+  const retrievalExclusion: RetrievalContext = {
+    fragrances: [],
+    articles:   [],
+    anchoredMeta: {
+      anchorSlug:        anchor.slug,
+      anchorName:        anchor.name,
+      dimension:         "sweetness",
+      direction:         "less",
+      anchorScore:       anchor.sweetness ?? 1,
+      strictMatches:     false,
+      catalogueBoundary: false,
+    },
+  };
+  const ctxExclusion = buildContext(retrievalExclusion, EMPTY_STATE, ANCHOR_PLAN,
+    "anchored_refinement", null, null, null, `like ${anchor.name} but less sweet`);
+  const renderedExclusion = renderContext(ctxExclusion);
+  // Must reference preference filters, not claim the anchor is at the catalogue limit
+  assert.ok(
+    renderedExclusion.includes("preference") || renderedExclusion.includes("excluded"),
+    "T-C4-LS-09B — constraint exclusion message must reference preference filters or exclusion"
+  );
+  assert.ok(
+    !renderedExclusion.includes("Present EXACTLY"),
+    "T-C4-LS-09B — no 'Present EXACTLY N' instruction when pool is empty (constraint exclusion)"
+  );
+  // The two cases must produce different messages (they describe different situations)
+  assert.notEqual(renderedBoundary, renderedExclusion,
+    "T-C4-LS-09 — boundary and constraint-exclusion instructions must differ");
+});
+
+test("T-C4-LS-10 — card-free when model output names a previously recommended fragrance", () => {
+  // Pool is empty (no-match), model response names a fragrance from prior recommendations
+  const minSweet = Math.min(...mkcCatalogue.map(k => k.sweetness ?? 5));
+  const anchor   = mkcCatalogue.find(k => (k.sweetness ?? 5) <= minSweet);
+  if (!anchor) { skip("T-C4-LS-10 — no min-sweetness anchor"); return; }
+  const retrieval = planRetrieval(ANCHORED_INTENT, EMPTY_CONTEXT, undefined, undefined, undefined, null, undefined,
+    "like that but less sweet", anchor.slug);
+  assert.equal(retrieval.fragrances.length, 0, "T-C4-LS-10 — pool must be empty for this test");
+  // Pick a fragrance from the catalogue that was "previously recommended"
+  const prevRec = mkcCatalogue.find(k => k.slug !== anchor.slug);
+  if (!prevRec) { skip("T-C4-LS-10 — no prev rec candidate"); return; }
+  // Mock model output that mentions both the anchor name and the previous recommendation's name
+  const mockOutput = `${anchor.name} sits at the lower end of our sweetness range. ` +
+    `You previously showed interest in ${prevRec.name} — would you like to explore that direction further, ` +
+    `or try a different dimension such as freshness?`;
+  const planned = planResponse(mockOutput, "anchored_refinement", retrieval, ANCHOR_PLAN);
+  assert.equal(planned.recommendedSlugs.length, 0,
+    "T-C4-LS-10 — naming a previous recommendation in prose must not produce a card when pool is empty");
+  const formatted = formatResponse(planned);
+  assert.equal(formatted.fragrances.length, 0,
+    "T-C4-LS-10 — formatted response must have zero cards even when model names a prior recommendation");
+});
+
+test("T-C4-LS-11 — no-match retrieval carries anchor slug for session persistence", () => {
+  // Verify anchoredMeta.anchorSlug is populated for the no-match case.
+  // The API route uses anchorSlug (via anchoredMeta) to set sessionUpdates.selectedSlug.
+  // This test confirms the anchor is preserved at the retrieval layer so the route
+  // can persist it without looking at the (empty) recommendation list.
+  const minSweet = Math.min(...mkcCatalogue.map(k => k.sweetness ?? 5));
+  const anchor   = mkcCatalogue.find(k => (k.sweetness ?? 5) <= minSweet);
+  if (!anchor) { skip("T-C4-LS-11 — no min-sweetness anchor"); return; }
+  const result = planRetrieval(ANCHORED_INTENT, EMPTY_CONTEXT, undefined, undefined, undefined, null, undefined,
+    "like that but less sweet", anchor.slug);
+  assert.equal(result.fragrances.length, 0,     "T-C4-LS-11 — pool must be empty");
+  assert.equal(result.anchoredMeta?.strictMatches, false, "T-C4-LS-11 — strictMatches must be false");
+  assert.equal(result.anchoredMeta?.anchorSlug, anchor.slug,
+    "T-C4-LS-11 — anchoredMeta.anchorSlug must equal the requested anchor so the route can persist it");
+  assert.ok(result.anchoredMeta?.anchorName?.length > 0,
+    "T-C4-LS-11 — anchoredMeta.anchorName must be non-empty");
+  // Simulate the route's sessionUpdates logic (route.ts line 325):
+  //   selectedSlug = plan.action === "anchored_refinement" ? (anchorSlug ?? recommendedSlugs[0]) : ...
+  //   For no-match case: recommendedSlugs[0] is undefined; anchorSlug from anchoredMeta is the fallback.
+  const simulatedSelectedSlug = result.anchoredMeta?.anchorSlug ?? undefined;
+  assert.equal(simulatedSelectedSlug, anchor.slug,
+    "T-C4-LS-11 — simulated sessionUpdates.selectedSlug must equal anchor slug for no-match case");
+});
+
+test("T-C4-LS-12A — null anchor score via real pipeline: if runtime has unscored anchor, anchorScore must be null not 0", () => {
+  // Conditional: most runtime catalogues fully score sweetness; skip gracefully when all have scores.
+  const unscoredAnchor = mkcCatalogue.find(k => k.sweetness === undefined || k.sweetness === null);
+  if (!unscoredAnchor) { skip("T-C4-LS-12A — no unscored-sweetness anchor in runtime catalogue (catalogue may be fully scored)"); return; }
+  const result = planRetrieval(ANCHORED_INTENT, EMPTY_CONTEXT, undefined, undefined, undefined, null, undefined,
+    "like that but less sweet", unscoredAnchor.slug);
+  assert.equal(result.fragrances.length, 0,
+    "T-C4-LS-12A — pool must be empty when anchor has no dimension score");
+  assert.equal(result.anchoredMeta?.anchorScore, null,
+    "T-C4-LS-12A — anchoredMeta.anchorScore must be null, not 0");
+});
+
+test("T-C4-LS-12B — null anchor score via manual anchoredMeta: rendered context has no 0/5, boundary, or exclusion claim", () => {
+  // This test runs unconditionally because it constructs anchoredMeta directly,
+  // exercising the buildContext/renderContext instruction-builder path.
+  const anchorName = "Phantom Inspired";  // hypothetical name, not used in catalogue lookup
+  const anchorSlug = "phantom-inspired-test";
+  const nullScoreMeta = {
+    anchorSlug,
+    anchorName,
+    dimension:         "sweetness",
+    direction:         "less" as const,
+    anchorScore:       null,       // the case under test
+    strictMatches:     false,
+    catalogueBoundary: false,
+  };
+  const retrieval: RetrievalContext = { fragrances: [], articles: [], anchoredMeta: nullScoreMeta };
+  const ctx = buildContext(retrieval, EMPTY_STATE, ANCHOR_PLAN,
+    "anchored_refinement", null, null, null, `like ${anchorName} but less sweet`);
+  const rendered = renderContext(ctx);
+
+  assert.ok(
+    !rendered.includes("0/5"),
+    "T-C4-LS-12B — rendered instructions must not claim anchorScore=0/5 for unscored anchor"
+  );
+  assert.ok(
+    !rendered.includes("at the lower end") && !rendered.includes("at the upper end"),
+    "T-C4-LS-12B — rendered instructions must not claim catalogue boundary when anchor is unscored"
+  );
+  assert.ok(
+    !rendered.includes("excluded by active preference filters"),
+    "T-C4-LS-12B — rendered instructions must not claim preference exclusion when anchor is unscored"
+  );
+  assert.ok(
+    rendered.includes("score") || rendered.includes("unscored") || rendered.includes("not have a"),
+    "T-C4-LS-12B — rendered instructions must acknowledge the score is unavailable"
+  );
+  assert.ok(
+    !rendered.includes("Present EXACTLY"),
+    "T-C4-LS-12B — no card-count instruction when anchor is unscored"
+  );
+});
+
+test("T-C4-LS-13 — direction=more: instructions say 'Higher-dimension', not 'Lower-dimension'", () => {
+  // Use a max-sweetness anchor (sweetness=5) and request direction="more"
+  const maxSweet  = Math.max(...mkcCatalogue.map(k => k.sweetness ?? 0));
+  const anchor    = mkcCatalogue.find(k => (k.sweetness ?? 0) >= maxSweet && k.sweetness !== undefined);
+  if (!anchor) { skip("T-C4-LS-13 — no max-sweetness anchor in runtime catalogue"); return; }
+
+  // Retrieval for direction=more (anchor at max → no higher options in full catalogue)
+  const result = planRetrieval(ANCHORED_INTENT, EMPTY_CONTEXT, undefined, undefined, undefined, null, undefined,
+    "like that but more sweet", anchor.slug);
+  assert.equal(result.anchoredMeta?.direction, "more", "T-C4-LS-13 — direction must be 'more'");
+  assert.equal(result.fragrances.length, 0,
+    "T-C4-LS-13 — max-sweetness anchor: pool must be empty for more-sweet request");
+
+  // Context instructions must not say 'Lower-' for a direction=more request
+  const retrieval: RetrievalContext = { fragrances: [], articles: [], anchoredMeta: result.anchoredMeta };
+  const ctx = buildContext(retrieval, EMPTY_STATE, ANCHOR_PLAN,
+    "anchored_refinement", null, null, null, `like ${anchor.name} but more sweet`);
+  const rendered = renderContext(ctx);
+  assert.ok(
+    !rendered.includes(`Lower-sweetness`) && !rendered.includes(`Lower-${result.anchoredMeta?.dimension}`),
+    "T-C4-LS-13 — direction=more must not produce 'Lower-dimension' instruction"
+  );
+  assert.ok(
+    rendered.includes("Higher-") || rendered.includes("higher"),
+    "T-C4-LS-13 — direction=more must produce 'Higher-dimension' or 'higher' in instruction"
+  );
+  assert.ok(
+    !rendered.includes("Present EXACTLY"),
+    "T-C4-LS-13 — no card-count instruction when pool is empty (direction=more no-match)"
+  );
+});
+
+test("T-C4-LS-14 — direction=less: instructions say 'Lower-dimension', not 'Higher-dimension'", () => {
+  // Use a next-to-minimum sweetness anchor (sweetness=2), exclude all sweetness=1 candidates
+  const minSweet  = Math.min(...mkcCatalogue.map(k => k.sweetness ?? 5));
+  const nextMin   = Math.min(...mkcCatalogue.filter(k => (k.sweetness ?? 5) > minSweet).map(k => k.sweetness ?? 5));
+  const anchor    = mkcCatalogue.find(k => (k.sweetness ?? 0) === nextMin);
+  if (!anchor) { skip("T-C4-LS-14 — no suitable anchor"); return; }
+  const allLower  = mkcCatalogue.filter(k => (k.sweetness ?? 5) < nextMin && k.slug !== anchor.slug);
+  if (allLower.length === 0) { skip("T-C4-LS-14 — no lower candidates"); return; }
+  // Reject all lower-sweetness candidates to force the constraint-exclusion path
+  const profile   = makeProfile({ rejectedSlugs: allLower.map(k => k.slug) });
+  const result    = planRetrieval(ANCHORED_INTENT, EMPTY_CONTEXT, profile, undefined, undefined, null, undefined,
+    "like that but less sweet", anchor.slug);
+  assert.equal(result.anchoredMeta?.direction, "less", "T-C4-LS-14 — direction must be 'less'");
+  assert.equal(result.fragrances.length, 0, "T-C4-LS-14 — pool must be empty");
+  assert.equal(result.anchoredMeta?.catalogueBoundary, false, "T-C4-LS-14 — constraint exclusion (not boundary)");
+
+  // Context instructions must say 'Lower-' not 'Higher-' for direction=less constraint exclusion
+  const retrieval: RetrievalContext = { fragrances: [], articles: [], anchoredMeta: result.anchoredMeta };
+  const ctx = buildContext(retrieval, EMPTY_STATE, ANCHOR_PLAN,
+    "anchored_refinement", null, null, null, `like ${anchor.name} but less sweet`);
+  const rendered = renderContext(ctx);
+  assert.ok(
+    !rendered.includes("Higher-sweetness") && !rendered.includes(`Higher-${result.anchoredMeta?.dimension}`),
+    "T-C4-LS-14 — direction=less must not produce 'Higher-dimension' instruction"
+  );
+  assert.ok(
+    rendered.includes("Lower-"),
+    "T-C4-LS-14 — direction=less constraint exclusion must produce 'Lower-dimension' in instruction"
+  );
 });
 
 // ── EP-AI-C5: Profile Completeness Engine (T-C5-P) ───────────────────────────

@@ -1,0 +1,22 @@
+{
+  "scenarioE": {
+    "content": "Sauvage Inspired already sits at the lower end of our sweetness range in the catalogue — no fragrance with a lower sweetness profile exists in our current collection. Would you like to explore a different dimension instead, such as lighter intensity or lower warmth?",
+    "fragrances": [],
+    "articles": [],
+    "followUpSuggestions": [
+      "Show me more in this direction",
+      "Compare these two"
+    ],
+    "intent": "anchored_refinement",
+    "sessionUpdates": {
+      "selectedSlug": "sauvage-inspired"
+    },
+    "_meta": {
+      "anchorSlug": "sauvage-inspired",
+      "anchorName": "Sauvage Inspired",
+      "anchorSweetness": 1,
+      "strictMatches": false,
+      "catalogueBoundary": true
+    }
+  }
+}

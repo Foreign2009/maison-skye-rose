@@ -79,7 +79,7 @@ function buildAnchoredPool(
   anchorSlug: string,
   hint:       { dimension: IntelligenceDim; direction: "more" | "less" } | null,
   profile:    ConversationProfile | undefined,
-): { fragrances: FragranceKnowledge[]; strictMatches: boolean } {
+): { fragrances: FragranceKnowledge[]; strictMatches: boolean; catalogueBoundary: boolean } {
   const anchor           = catalogueMaps.bySlug.get(anchorSlug);
   const genderConstraint = getEffectiveGenderConstraint(profile);
   const avoidedFamilies  = (profile?.avoidedFamilies?.value ?? []).map((f) => f.toLowerCase());
@@ -102,15 +102,16 @@ function buildAnchoredPool(
   });
 
   if (!hint || !anchor) {
-    return { fragrances: baseCandidates.sort(sortByQuality).slice(0, 6), strictMatches: false };
+    return { fragrances: [], strictMatches: false, catalogueBoundary: false };
   }
 
   const anchorScore = getIntelligenceScore(anchor, hint.dimension);
   if (anchorScore === null) {
-    return { fragrances: baseCandidates.sort(sortByQuality).slice(0, 6), strictMatches: false };
+    return { fragrances: [], strictMatches: false, catalogueBoundary: false };
   }
 
-  // Strict directional candidates: score strictly in the requested direction
+  // Strict directional candidates: score strictly in the requested direction.
+  // Only fragrances with a non-null dimension score qualify — missing scores do not count.
   const strict = baseCandidates.filter((k) => {
     const kScore = getIntelligenceScore(k, hint.dimension);
     return kScore !== null && (
@@ -118,33 +119,31 @@ function buildAnchoredPool(
     );
   });
 
-  if (strict.length >= 3) {
-    // Full strict set: sort strongest-direction-first
-    strict.sort((a, b) => {
-      const aScore = getIntelligenceScore(a, hint.dimension) ?? anchorScore;
-      const bScore = getIntelligenceScore(b, hint.dimension) ?? anchorScore;
-      return hint.direction === "less" ? aScore - bScore : bScore - aScore;
+  if (strict.length === 0) {
+    // Determine whether this is a catalogue boundary (no qualifying fragrance exists
+    // anywhere in the catalogue, irrespective of constraints) or a constraint exclusion.
+    const catalogueStrict = mkcCatalogue.filter((k) => {
+      if (k.slug === anchorSlug) return false;
+      const kScore = getIntelligenceScore(k, hint.dimension);
+      return kScore !== null && (
+        hint.direction === "less" ? kScore < anchorScore : kScore > anchorScore
+      );
     });
-    return { fragrances: strict.slice(0, 6), strictMatches: true };
+    return {
+      fragrances:        [],
+      strictMatches:     false,
+      catalogueBoundary: catalogueStrict.length === 0,
+    };
   }
 
-  if (strict.length > 0) {
-    // Some strict matches but < 3 — supplement with non-strict; mark as mixed (false)
-    strict.sort((a, b) => {
-      const aScore = getIntelligenceScore(a, hint.dimension) ?? anchorScore;
-      const bScore = getIntelligenceScore(b, hint.dimension) ?? anchorScore;
-      return hint.direction === "less" ? aScore - bScore : bScore - aScore;
-    });
-    const strictSlugs = new Set(strict.map((k) => k.slug));
-    const supplement  = baseCandidates
-      .filter((k) => !strictSlugs.has(k.slug))
-      .sort(sortByQuality)
-      .slice(0, 6 - strict.length);
-    return { fragrances: [...strict, ...supplement], strictMatches: false };
-  }
-
-  // No strict matches — return quality-sorted base pool
-  return { fragrances: baseCandidates.sort(sortByQuality).slice(0, 6), strictMatches: false };
+  // 1+ strict matches: sort strongest-direction-first, return without quality supplements.
+  // 1 or 2 genuine matches are still genuine matches — no padding with non-qualifying items.
+  strict.sort((a, b) => {
+    const aScore = getIntelligenceScore(a, hint.dimension) ?? anchorScore;
+    const bScore = getIntelligenceScore(b, hint.dimension) ?? anchorScore;
+    return hint.direction === "less" ? aScore - bScore : bScore - aScore;
+  });
+  return { fragrances: strict.slice(0, 6), strictMatches: true, catalogueBoundary: false };
 }
 
 function getIntelligenceScore(k: FragranceKnowledge, dimension: string): number | null {
@@ -697,12 +696,12 @@ export function planRetrieval(
     }
 
     case "anchored_refinement": { // EP-AI-C4
-      // Retrieve candidates that score differently in the requested intelligence
-      // dimension relative to the anchor fragrance. The anchor's intelligence scores
-      // are governed MKC numeric fields (0–5). Hard constraints (gender, avoidances,
-      // rejections) are applied inside buildAnchoredPool; the post-switch filters
-      // are idempotent. strictMatches signals whether all candidates genuinely satisfy
-      // the direction — carried through to contextBuilder for LLM instruction.
+      // Retrieve candidates that score strictly in the requested intelligence dimension
+      // relative to the anchor fragrance. Hard constraints (gender, avoidances, rejections)
+      // are applied inside buildAnchoredPool. strictMatches=true when 1+ genuine matches
+      // exist; fragrances=[] and strictMatches=false when none exist. No quality
+      // supplements are added — equal or higher scores are never returned for "less" requests.
+      // catalogueBoundary distinguishes a catalogue-level limit from a constraint exclusion.
       if (anchorSlug) {
         const hint   = rawMessage ? extractDirectionHint(rawMessage) : null;
         const anchor = catalogueMaps.bySlug.get(anchorSlug);
@@ -711,11 +710,12 @@ export function planRetrieval(
         if (anchor && hint) {
           anchoredMeta = {
             anchorSlug,
-            anchorName:    anchor.name,
-            dimension:     hint.dimension,
-            direction:     hint.direction,
-            anchorScore:   getIntelligenceScore(anchor, hint.dimension) ?? 0,
-            strictMatches: pool.strictMatches,
+            anchorName:        anchor.name,
+            dimension:         hint.dimension,
+            direction:         hint.direction,
+            anchorScore:       getIntelligenceScore(anchor, hint.dimension),
+            strictMatches:     pool.strictMatches,
+            catalogueBoundary: pool.catalogueBoundary,
           };
         }
       } else {

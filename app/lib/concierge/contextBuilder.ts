@@ -24,12 +24,13 @@ import { planCollection }                  from "./collectionPlanner";
 // ── Types ─────────────────────────────────────────────────────────────────────
 
 export interface AnchoredMeta {
-  anchorSlug:    string;
-  anchorName:    string;
-  dimension:     string;
-  direction:     "more" | "less";
-  anchorScore:   number;
-  strictMatches: boolean;
+  anchorSlug:        string;
+  anchorName:        string;
+  dimension:         string;
+  direction:         "more" | "less";
+  anchorScore:       number | null; // null when the anchor has no scored value for this dimension
+  strictMatches:     boolean;
+  catalogueBoundary: boolean; // true when full catalogue has no qualifying fragrance (not a constraint issue)
 }
 
 export interface RetrievalContext {
@@ -255,14 +256,49 @@ function buildInstructionsSection(
 ): PromptSection {
   const instructions: string[] = [];
 
+  // ── Anchored refinement — no match (EP-AI-C4 LS) ────────────────────────────
+  // Fires BEFORE card-count so the model receives no conflicting "present N" instruction.
+  // When strictMatches=false, retrieval returned an empty pool. The model must not
+  // present any fragrance; it explains the constraint and asks one clarifying question.
+  const noMatchAnchored =
+    effectiveIntent === "anchored_refinement" && !!anchoredMeta && !anchoredMeta.strictMatches;
+  if (noMatchAnchored && anchoredMeta) {
+    const { anchorName, dimension, direction, anchorScore, catalogueBoundary } = anchoredMeta;
+    const dirWord = direction === "more" ? "higher" : "lower";
+
+    if (anchorScore === null) {
+      // Anchor has no scored value for this dimension — directional comparison is impossible.
+      // Do not claim a score, a catalogue boundary, or a constraint exclusion.
+      instructions.push(
+        `[Anchored Refinement — anchor: ${anchorName} · ${dimension} unscored · guest requested: ${dirWord} ${dimension} · score unavailable]`,
+        `${anchorName} does not have a ${dimension} profile score in our catalogue, so a ${dirWord}-${dimension} comparison cannot be made.`,
+        `Do not present any fragrance. Do not emit any [PRODUCT:slug] markers.`,
+        `Acknowledge clearly that the comparison is not possible without a score.`,
+        `Then ask exactly one concise question — how the guest experiences ${dimension}, so you can find an appropriate alternative.`
+      );
+    } else {
+      const limitLabel = direction === "less" ? "lower" : "upper";
+      const dirAdj     = direction === "less" ? "Lower" : "Higher";
+      instructions.push(
+        `[Anchored Refinement — anchor: ${anchorName} · ${dimension} ${anchorScore}/5 · guest requested: ${dirWord} ${dimension} · no match]`,
+        catalogueBoundary
+          ? `No fragrance in our catalogue scores ${dirWord} in ${dimension} than ${anchorName} (${anchorScore}/5). ${anchorName} is at the ${limitLabel} end of the ${dimension} range in our catalogue.`
+          : `No fragrance scores ${dirWord} in ${dimension} than ${anchorName} (${anchorScore}/5) within the current preferences. ${dirAdj}-${dimension} options may exist in the catalogue but are excluded by active preference filters.`,
+        `Do not present any fragrance. Do not emit any [PRODUCT:slug] markers.`,
+        `Acknowledge the constraint clearly and concisely.`,
+        `Then ask exactly one concise question — whether the guest would like to explore a different dimension (e.g. ${direction === "less" ? "lower warmth or lower intensity" : "higher freshness or higher intensity"}) or relax an active preference.`,
+        `Describe differences as catalogue profile scores — do not guarantee how the guest will perceive ${dimension}.`
+      );
+    }
+  }
+
   // EP-AI-C6-P3-R2 (Repair D): Exact count + prose economy instruction.
-  // Uses computeCardTarget (shared with buildContext server-side guarantee).
-  // When context holds >= N governed candidates: "EXACTLY N" is authoritative.
-  // When context holds < N governed candidates: present all available.
-  // Prose economy fires for N >= 4 to keep five-card responses panel-friendly.
-  if (rawMessage && !plan.requiresComparison && !plan.requiresClarification) {
+  // Skipped entirely when no-match anchored — pool is empty and no count is meaningful.
+  // Also skipped when contextFragranceCount === 0 (no fragrances in context) to prevent
+  // the model being asked to present a count of fragrances it does not have.
+  if (!noMatchAnchored && rawMessage && !plan.requiresComparison && !plan.requiresClarification) {
     const cardTarget = computeCardTarget(rawMessage, plan, state);
-    if (cardTarget !== null) {
+    if (cardTarget !== null && (typeof contextFragranceCount !== "number" || contextFragranceCount > 0)) {
       if (typeof contextFragranceCount === "number" && contextFragranceCount > 0 && contextFragranceCount < cardTarget) {
         instructions.push(
           `Present all ${contextFragranceCount} available fragrances from FRAGRANCES IN CONTEXT. Each should offer a distinct character or mood.`
@@ -278,27 +314,21 @@ function buildInstructionsSection(
     }
   }
 
-  // ── Anchored refinement instructions (EP-AI-C4) ──────────────────────────────
-  // Must fire first so the anchor context frames all other instructions.
-  if (effectiveIntent === "anchored_refinement" && anchoredMeta) {
-    const { anchorName, dimension, direction, anchorScore, strictMatches } = anchoredMeta;
-    const dirWord = direction === "more" ? "higher" : "lower";
-    instructions.push(
-      `[Anchored Refinement — anchor: ${anchorName} · ${dimension} ${anchorScore}/5 · guest requested: ${dirWord} ${dimension}]`
-    );
-    if (strictMatches) {
+  // ── Anchored refinement — strict match (EP-AI-C4) ────────────────────────────
+  // strictMatches=true: all fragrances in context genuinely satisfy the direction.
+  // Covers 1, 2, or 3+ strict matches — no quality supplements are included.
+  if (!noMatchAnchored && effectiveIntent === "anchored_refinement" && anchoredMeta?.strictMatches) {
+    const { anchorName, dimension, direction, anchorScore } = anchoredMeta;
+    // anchorScore is guaranteed non-null when strictMatches=true (buildAnchoredPool returns early for null scores),
+    // but we guard explicitly so TypeScript can narrow to number.
+    if (anchorScore !== null) {
+      const dirWord = direction === "more" ? "higher" : "lower";
       instructions.push(
+        `[Anchored Refinement — anchor: ${anchorName} · ${dimension} ${anchorScore}/5 · guest requested: ${dirWord} ${dimension}]`,
         `FRAGRANCES IN CONTEXT are genuinely ${dirWord} in ${dimension} than ${anchorName} (${anchorScore}/5).`,
         `Present them as satisfying the directional request. Tag each as [PRODUCT:slug].`,
-        `Briefly reference the ${dimension} difference to make the improvement concrete — e.g., compare the score to the anchor's.`
-      );
-    } else {
-      instructions.push(
-        `No fragrances in context score ${dirWord} in ${dimension} than ${anchorName} (${anchorScore}/5).`,
-        `FRAGRANCES IN CONTEXT are the closest available options — they do not strictly satisfy the directional request.`,
-        `Be transparent: acknowledge the closest available options, describe their ${dimension} character honestly, and let the guest decide.`,
-        `Do NOT claim these are ${dirWord} in ${dimension} when they are not. Do not use language like "fresher option" if they are not fresher.`,
-        `Tag each presented option as [PRODUCT:slug].`
+        `Briefly reference the ${dimension} difference to make the improvement concrete — e.g., compare the score to the anchor's.`,
+        `Describe differences as catalogue profile scores — do not guarantee how the guest will perceive ${dimension}.`
       );
     }
   }
