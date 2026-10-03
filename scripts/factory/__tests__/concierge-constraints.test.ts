@@ -23,6 +23,7 @@ import {
 } from "../../../app/lib/concierge/retrievalPlanner";
 import type { FitSignals } from "../../../app/lib/concierge/retrievalPlanner";
 import { buildContext, renderContext, detectCardTarget } from "../../../app/lib/concierge/contextBuilder";
+import type { AnchoredMeta } from "../../../app/lib/concierge/contextBuilder";
 import { buildSystemPrompt } from "../../../app/lib/concierge/safetyGuard";
 import { mkcCatalogue }      from "../../../app/lib/mkc/catalogue";
 import { nativeFragrances }  from "../../../app/lib/mkc/native";
@@ -3618,6 +3619,271 @@ test("T-C4-FT-15 — anchored pool: conflicting named source cannot bypass direc
     "T-C4-FT-15e — every candidate (if any) must satisfy sweetness < anchorScore(1)");
 });
 
+// ── Live-feedback regressions (T-LF) ─────────────────────────────────────────
+
+console.log("\n── LF. Live-feedback regressions ────────────────────────────────");
+
+test("T-LF-01 — zero-card anchored_refinement: no product-referencing follow-up chips", () => {
+  // When the anchored pool is empty (catalogueBoundary, no recs), chips like
+  // "Compare these two" and "Show me more in this direction" reference non-existent
+  // products. The fix must return redirectional chips instead.
+  const emptyRetrieval: RetrievalContext = { fragrances: [], articles: [] };
+  const result = planResponse(
+    "Sauvage Inspired is already at the lowest sweetness in our catalogue.",
+    "anchored_refinement",
+    emptyRetrieval,
+    ANCHOR_PLAN,
+  );
+  const compareChip = result.followUpSuggestions.some(
+    (s) => s.toLowerCase().includes("compare")
+  );
+  assert.equal(compareChip, false,
+    `T-LF-01a — "Compare" must not appear in chips when pool is empty; got: ${result.followUpSuggestions.join(", ")}`);
+  const moreChip = result.followUpSuggestions.some(
+    (s) => s.toLowerCase().includes("more in this direction")
+  );
+  assert.equal(moreChip, false,
+    `T-LF-01b — "more in this direction" must not appear when pool is empty; got: ${result.followUpSuggestions.join(", ")}`);
+  assert.ok(result.followUpSuggestions.length > 0,
+    "T-LF-01c — at least one redirectional chip must be offered");
+  // Verify the specific honest chip labels introduced by this fix.
+  const hasDirectionChip = result.followUpSuggestions.some(
+    (s) => s.toLowerCase().includes("different direction")
+  );
+  const hasExploreChip = result.followUpSuggestions.some(
+    (s) => s.toLowerCase().includes("explore the catalogue")
+  );
+  assert.ok(hasDirectionChip || hasExploreChip,
+    `T-LF-01d — expected a 'different direction' or 'Explore the catalogue' chip; got: ${result.followUpSuggestions.join(", ")}`);
+});
+
+test("T-LF-02 — system prompt does not emit bare /quiz or /academy slash paths", () => {
+  // The model outputs these literally when they appear in the system prompt.
+  // The fix removes /quiz and /academy as bare path references.
+  const sp = buildSystemPrompt("");
+  assert.ok(!sp.includes("/quiz"),
+    "T-LF-02a — system prompt must not contain literal /quiz (model echoes it as plain text)");
+  assert.ok(!sp.includes("/academy"),
+    "T-LF-02b — system prompt must not contain literal /academy");
+});
+
+test("T-LF-03 — system prompt contains plain-text formatting rule", () => {
+  // A markdown formatting rule must exist so the model does not emit **bold**
+  // or *emphasis* that renders as literal asterisks in the chat bubble.
+  const sp = buildSystemPrompt("");
+  assert.ok(
+    sp.includes("plain text") || sp.includes("render") && sp.includes("literally"),
+    "T-LF-03 — FORMATTING section must warn against markdown bold/emphasis"
+  );
+});
+
+test("T-LF-04a — strict-match anchored context carries score calibration language", () => {
+  // The model described sweetness=1 as "zero sweetness" / "without sugar".
+  // The fix adds a calibration rule: 1/5 is the low end, not an absence.
+  const anchor = mkcCatalogue.find((k) => k.slug === "baccarat-rouge-540-inspired");
+  if (!anchor) { skip("T-LF-04a — BR540 not in catalogue"); return; }
+  const strictMeta: AnchoredMeta = {
+    anchorSlug:        "baccarat-rouge-540-inspired",
+    anchorName:        anchor.name,
+    dimension:         "sweetness",
+    direction:         "less",
+    anchorScore:       3,
+    strictMatches:     true,
+    catalogueBoundary: false,
+  };
+  const candidates = mkcCatalogue.filter((k) => (k.sweetness ?? 99) < 3).slice(0, 2);
+  const retrieval: RetrievalContext = { fragrances: candidates, articles: [], anchoredMeta: strictMeta };
+  const rendered = renderContext(buildContext(retrieval, EMPTY_STATE, ANCHOR_PLAN, "anchored_refinement",
+    null, null, null, "something less sweet"));
+  assert.ok(rendered.includes("lowest end of the range"),
+    "T-LF-04a — calibration instruction 'lowest end of the range' must appear in strict-match context");
+  // The instruction names "zero sweetness" in a prohibition ("do not describe it as...").
+  // Guard against the context making a positive CLAIM of zero sweetness instead.
+  assert.ok(!rendered.includes("is zero sweetness") && !rendered.includes("has zero sweetness"),
+    "T-LF-04a — context must not positively assert 'zero sweetness'");
+});
+
+test("T-LF-04b — no-match anchored context carries score calibration language", () => {
+  // Same calibration requirement for the catalogue-boundary (empty pool) case.
+  const anchor = mkcCatalogue.find((k) => k.slug === "sauvage-inspired");
+  if (!anchor) { skip("T-LF-04b — Sauvage not in catalogue"); return; }
+  const noMatchMeta: AnchoredMeta = {
+    anchorSlug:        "sauvage-inspired",
+    anchorName:        anchor.name,
+    dimension:         "sweetness",
+    direction:         "less",
+    anchorScore:       1,
+    strictMatches:     false,
+    catalogueBoundary: true,
+  };
+  const retrieval: RetrievalContext = { fragrances: [], articles: [], anchoredMeta: noMatchMeta };
+  const rendered = renderContext(buildContext(retrieval, EMPTY_STATE, ANCHOR_PLAN, "anchored_refinement",
+    null, null, null, "something less sweet"));
+  assert.ok(rendered.includes("lowest end of the range"),
+    "T-LF-04b — calibration instruction 'lowest end of the range' must appear in no-match context");
+  assert.ok(!rendered.includes("is zero sweetness") && !rendered.includes("has zero sweetness"),
+    "T-LF-04b — context must not positively assert 'zero sweetness'");
+  // Question is now injected by planResponse post-processor, not by the prompt.
+  // The no-match context must instruct the model NOT to include its own closing question.
+  assert.ok(rendered.includes("Do not include a closing question"),
+    "T-LF-04b — no-match context must tell the model not to include a closing question (code handles it)");
+  // Context must not prescribe exact question text (that is now the post-processor's job)
+  assert.ok(!rendered.includes("Would you like to try a lower"),
+    "T-LF-04b — no-match context must not prescribe the exact question (post-processor handles that)");
+  // Old soft instruction must not be present
+  assert.ok(!rendered.includes("Then ask exactly one"),
+    "T-LF-04b — old soft 'exactly one question' instruction must not appear");
+});
+
+test("T-LF-04c — no-match sweetness context explicitly prohibits sugar synonyms", () => {
+  // Observed live failures: model said "without any sugar", "remove sweetness entirely".
+  // These are prompt-level safeguards; live-model compliance is not guaranteed.
+  const anchor = mkcCatalogue.find((k) => k.slug === "sauvage-inspired");
+  if (!anchor) { skip("T-LF-04c — Sauvage not in catalogue"); return; }
+  const noMatchMeta: AnchoredMeta = {
+    anchorSlug:        "sauvage-inspired",
+    anchorName:        anchor.name,
+    dimension:         "sweetness",
+    direction:         "less",
+    anchorScore:       1,
+    strictMatches:     false,
+    catalogueBoundary: true,
+  };
+  const retrieval: RetrievalContext = { fragrances: [], articles: [], anchoredMeta: noMatchMeta };
+  const rendered = renderContext(buildContext(retrieval, EMPTY_STATE, ANCHOR_PLAN, "anchored_refinement",
+    null, null, null, "something less sweet"));
+  assert.ok(rendered.includes("without sugar"),
+    "T-LF-04c — calibration must name 'without sugar' as a forbidden phrase (prompt safeguard)");
+  assert.ok(rendered.includes("remove sweetness entirely"),
+    "T-LF-04c — calibration must name 'remove sweetness entirely' as a forbidden phrase (prompt safeguard)");
+  // Verify these appear only in the prohibition clause, not as positive claims
+  assert.ok(!rendered.includes("is without sugar") && !rendered.includes("has no sugar"),
+    "T-LF-04c — context must not positively claim absence of sugar");
+});
+
+test("T-LF-04d — strict-match anchored context prohibits sweetness synonyms (BR540 issue)", () => {
+  // BR540 live failure: model used "without any sugar" and "remove sweetness entirely" on the
+  // strict-match path (options exist and were shown). The prohibition was missing from that branch.
+  // These are prompt-level safeguards; live-model compliance is not guaranteed.
+  const anchor = mkcCatalogue.find((k) => k.slug === "baccarat-rouge-540-inspired");
+  if (!anchor) { skip("T-LF-04d — BR540 not in catalogue"); return; }
+  const strictMeta: AnchoredMeta = {
+    anchorSlug:        "baccarat-rouge-540-inspired",
+    anchorName:        anchor.name,
+    dimension:         "sweetness",
+    direction:         "less",
+    anchorScore:       3,
+    strictMatches:     true,
+    catalogueBoundary: false,
+  };
+  const candidates = mkcCatalogue.filter((k) => (k.sweetness ?? 99) < 3).slice(0, 2);
+  const retrieval: RetrievalContext = { fragrances: candidates, articles: [], anchoredMeta: strictMeta };
+  const rendered = renderContext(buildContext(retrieval, EMPTY_STATE, ANCHOR_PLAN, "anchored_refinement",
+    null, null, null, "something less sweet"));
+  assert.ok(rendered.includes("without sugar"),
+    "T-LF-04d — strict-match context must name 'without sugar' as a forbidden phrase (prompt safeguard)");
+  assert.ok(rendered.includes("remove sweetness entirely"),
+    "T-LF-04d — strict-match context must name 'remove sweetness entirely' as a forbidden phrase (prompt safeguard)");
+  assert.ok(!rendered.includes("is without sugar") && !rendered.includes("has no sugar"),
+    "T-LF-04d — strict-match context must not make a positive sugar-absence claim");
+});
+
+// ── T-LF-05: deterministic no-match planResponse post-processor ──────────────
+// These tests verify CODE BEHAVIOUR in planResponse, not model compliance.
+// The post-processor replaces the ENTIRE content with text built from AnchoredMeta.
+// No model prose is retained — invented scores, zero-dimension claims, product markers,
+// and extra questions are all discarded regardless of what the model returned.
+
+console.log("\n── LF-05. No-match planResponse post-processor ──────────────────");
+
+test("T-LF-05 — catalogue-boundary: bad model text entirely replaced by metadata content", () => {
+  const meta: AnchoredMeta = {
+    anchorSlug: "sauvage-inspired", anchorName: "Sauvage Inspired",
+    dimension: "sweetness", direction: "less", anchorScore: 1,
+    strictMatches: false, catalogueBoundary: true,
+  };
+  const retrieval: RetrievalContext = { fragrances: [], articles: [], anchoredMeta: meta };
+  // Deliberately wrong model output: zero-sweetness claim, invented score, two product markers,
+  // two questions — none of this should survive.
+  const bad = "Sauvage has **zero sweetness** (scores 0/5). Try [PRODUCT:sauvage-inspired] or [PRODUCT:aventus-inspired]. Would you like a no-sugar option? Or something completely different?";
+  const result = planResponse(bad, "anchored_refinement", retrieval, ANCHOR_PLAN);
+
+  const expected =
+    "Sauvage Inspired is already at the lowest end of our sweetness range (1/5)" +
+    " — no fragrance in our catalogue scores lower in sweetness." +
+    " Would you like to explore another fragrance characteristic instead?";
+  assert.equal(result.content, expected, `T-LF-05a — content must come entirely from metadata; got: "${result.content}"`);
+  assert.deepEqual(result.recommendedSlugs, [], "T-LF-05b — zero product cards");
+  assert.ok(!result.content.includes("zero"), "T-LF-05c — zero-sweetness claim must not survive");
+  assert.ok(!result.content.includes("[PRODUCT:"), "T-LF-05d — no product markers in output");
+  const qCount = (result.content.match(/\?/g) ?? []).length;
+  assert.equal(qCount, 1, `T-LF-05e — exactly 1 question mark; got ${qCount}: "${result.content}"`);
+});
+
+test("T-LF-05e — preference-exclusion: bad model text replaced; sugar synonyms cannot survive", () => {
+  const meta: AnchoredMeta = {
+    anchorSlug: "baccarat-rouge-540-inspired", anchorName: "Baccarat Rouge 540 Inspired",
+    dimension: "sweetness", direction: "less", anchorScore: 3,
+    strictMatches: false, catalogueBoundary: false,
+  };
+  const retrieval: RetrievalContext = { fragrances: [], articles: [], anchoredMeta: meta };
+  const bad = "BR540 scores 3/5 sweetness. Without any sugar, nothing fits. Try [PRODUCT:baccarat-rouge-540-inspired]. Shall I show no-sugar options? Or remove sweetness entirely?";
+  const result = planResponse(bad, "anchored_refinement", retrieval, ANCHOR_PLAN);
+
+  const expected =
+    "No fragrance scores lower in sweetness than Baccarat Rouge 540 Inspired (3/5) within your current preferences" +
+    " — lower-sweetness options may exist in the catalogue but are excluded by your active filters." +
+    " Would you like to relax one of your preferences, or explore another fragrance characteristic instead?";
+  assert.equal(result.content, expected, `T-LF-05e — content must come from metadata; got: "${result.content}"`);
+  assert.deepEqual(result.recommendedSlugs, [], "T-LF-05e — zero cards");
+  assert.ok(!result.content.includes("without any sugar"), "T-LF-05e — sugar synonym must not survive");
+  assert.ok(!result.content.includes("remove sweetness"), "T-LF-05e — remove-sweetness claim must not survive");
+  const qCount = (result.content.match(/\?/g) ?? []).length;
+  assert.equal(qCount, 1, `T-LF-05e — exactly 1 question; got ${qCount}`);
+});
+
+test("T-LF-05f — unknown score: invented score discarded; comparison-impossible statement returned", () => {
+  const meta: AnchoredMeta = {
+    anchorSlug: "some-fragrance", anchorName: "Some Fragrance",
+    dimension: "sweetness", direction: "less", anchorScore: null,
+    strictMatches: false, catalogueBoundary: false,
+  };
+  const retrieval: RetrievalContext = { fragrances: [], articles: [], anchoredMeta: meta };
+  const bad = "Some Fragrance has sweetness 2/5. Try [PRODUCT:some-other]. Is 1/5 sweeter? Would you like less sugar?";
+  const result = planResponse(bad, "anchored_refinement", retrieval, ANCHOR_PLAN);
+
+  const expected =
+    "Some Fragrance does not have a sweetness score in our catalogue, so a directional comparison cannot be made." +
+    " Would you like to explore another fragrance characteristic instead?";
+  assert.equal(result.content, expected, `T-LF-05f — content must come from metadata; got: "${result.content}"`);
+  assert.deepEqual(result.recommendedSlugs, [], "T-LF-05f — zero cards for unscored anchor");
+  assert.ok(!result.content.includes("2/5"), "T-LF-05f — invented score must not survive");
+  const qCount = (result.content.match(/\?/g) ?? []).length;
+  assert.equal(qCount, 1, `T-LF-05f — exactly 1 question; got ${qCount}`);
+});
+
+test("T-LF-05g — different dimension/direction (warmth/more): direction-correct question text", () => {
+  // Catches hardcoded "lower warmth or lower intensity" that would be wrong for a 'more' direction.
+  const meta: AnchoredMeta = {
+    anchorSlug: "oud-inspired", anchorName: "Oud Inspired",
+    dimension: "warmth", direction: "more", anchorScore: 5,
+    strictMatches: false, catalogueBoundary: true,
+  };
+  const retrieval: RetrievalContext = { fragrances: [], articles: [], anchoredMeta: meta };
+  const bad = "Oud has zero warmth. Try [PRODUCT:oud-inspired]. Would you prefer less warmth? Or more intensity?";
+  const result = planResponse(bad, "anchored_refinement", retrieval, ANCHOR_PLAN);
+
+  const expected =
+    "Oud Inspired is already at the highest end of our warmth range (5/5)" +
+    " — no fragrance in our catalogue scores higher in warmth." +
+    " Would you like to explore another fragrance characteristic instead?";
+  assert.equal(result.content, expected, `T-LF-05g — got: "${result.content}"`);
+  assert.ok(!result.content.includes("lower warmth"),
+    `T-LF-05g — less-direction text must not appear for a more-direction case; got: "${result.content}"`);
+  assert.ok(result.content.includes("highest") && result.content.includes("higher in warmth"),
+    `T-LF-05g — expected highest/higher-in-warmth language; got: "${result.content}"`);
+});
+
 // ── EP-AI-C5: Profile Completeness Engine (T-C5-P) ───────────────────────────
 
 console.log("\n── C5-P. Profile Completeness Engine ────────────────────────────");
@@ -6750,9 +7016,16 @@ test("K2 — safetyGuard KNOWLEDGE instructs not to claim catalogue lacks a gend
   );
 });
 
-test("K3 — safetyGuard KNOWLEDGE mentions /quiz as fallback when context is insufficient", () => {
+test("K3 — safetyGuard does not emit bare /quiz or /academy paths that render literally in the UI", () => {
+  // The model echoes /quiz and /academy as literal text in the chat bubble.
+  // The fix removes these bare paths; the Scent Finder and Academy are still referenced by name.
   const prompt = buildSystemPrompt("");
-  assert.ok(prompt.includes("/quiz"), "K3 — KNOWLEDGE must reference /quiz as fallback");
+  assert.ok(!prompt.includes("/quiz"),
+    "K3a — system prompt must not contain /quiz (model outputs it as plain text)");
+  assert.ok(!prompt.includes("/academy"),
+    "K3b — system prompt must not contain /academy");
+  assert.ok(prompt.toLowerCase().includes("scent finder"),
+    "K3c — Scent Finder must still be referenced by name");
 });
 
 test("K4 — validateResponse passes for compliant content", () => {

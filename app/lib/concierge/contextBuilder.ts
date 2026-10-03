@@ -285,9 +285,8 @@ function buildInstructionsSection(
           ? `No fragrance in our catalogue scores ${dirWord} in ${dimension} than ${anchorName} (${anchorScore}/5). ${anchorName} is at the ${limitLabel} end of the ${dimension} range in our catalogue.`
           : `No fragrance scores ${dirWord} in ${dimension} than ${anchorName} (${anchorScore}/5) within the current preferences. ${dirAdj}-${dimension} options may exist in the catalogue but are excluded by active preference filters.`,
         `Do not present any fragrance. Do not emit any [PRODUCT:slug] markers.`,
-        `Acknowledge the constraint clearly and concisely.`,
-        `Then ask exactly one concise question — whether the guest would like to explore a different dimension (e.g. ${direction === "less" ? "lower warmth or lower intensity" : "higher freshness or higher intensity"}) or relax an active preference.`,
-        `Describe differences as catalogue profile scores — do not guarantee how the guest will perceive ${dimension}.`
+        `Acknowledge the constraint in one sentence. Do not include a closing question.`,
+        `Describe differences as catalogue profile scores (e.g. "low ${dimension} at 1/5", "moderate ${dimension} at 3/5"). A score of 1/5 is the lowest end of the range — the fragrance still has ${dimension}, just at a low level. Do not describe it as absent: avoid "no ${dimension}", "without ${dimension}", "zero ${dimension}", "no ${dimension} at all", "remove the ${dimension}", or any phrasing that implies absence.${dimension === "sweetness" ? ' Do not substitute synonyms — "without sugar", "without any sugar", "no sugar", and "remove sweetness entirely" are equally forbidden.' : ''} Do not guarantee how the guest will perceive ${dimension}.`
       );
     }
   }
@@ -328,7 +327,7 @@ function buildInstructionsSection(
         `FRAGRANCES IN CONTEXT are genuinely ${dirWord} in ${dimension} than ${anchorName} (${anchorScore}/5).`,
         `Present them as satisfying the directional request. Tag each as [PRODUCT:slug].`,
         `Briefly reference the ${dimension} difference to make the improvement concrete — e.g., compare the score to the anchor's.`,
-        `Describe differences as catalogue profile scores — do not guarantee how the guest will perceive ${dimension}.`
+        `Describe differences as catalogue profile scores (e.g. "low ${dimension} at 1/5", "moderate ${dimension} at 3/5"). A score of 1/5 is the lowest end of the range — the fragrance still has ${dimension}, just at a low level. Do not describe it as absent: avoid "no ${dimension}", "without ${dimension}", "zero ${dimension}", "no ${dimension} at all", "remove the ${dimension}", or any phrasing that implies absence.${dimension === "sweetness" ? ' Do not substitute synonyms — "without sugar", "without any sugar", "no sugar", and "remove sweetness entirely" are equally forbidden.' : ''} Do not guarantee how the guest will perceive ${dimension}.`
       );
     }
   }

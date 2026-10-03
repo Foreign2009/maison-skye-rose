@@ -9,7 +9,7 @@
  */
 
 import type { ConversationIntent, ConversationProfile } from "./types";
-import type { RetrievalContext }   from "./contextBuilder";
+import type { RetrievalContext, AnchoredMeta } from "./contextBuilder";
 import type { ConversationPlan }   from "./conversationPlanner";
 
 // ── Marker patterns ───────────────────────────────────────────────────────────
@@ -37,6 +37,44 @@ function stripProseSuffix(name: string): string {
 // Removes periods and collapses whitespace so "No. 5" ≡ "No 5".
 function normalizeForProseMatch(s: string): string {
   return s.toLowerCase().replace(/\./g, "").replace(/\s+/g, " ").trim();
+}
+
+// ── No-match deterministic response ──────────────────────────────────────────
+// Builds the entire response content for a no-match anchored_refinement turn from
+// AnchoredMeta alone. No model prose is retained — the entire content comes from
+// catalogue metadata so false claims (invented scores, zero-dimension assertions,
+// product markers) cannot survive regardless of what the model returned.
+//
+// Three separate paths:
+//   null score   — comparison cannot be established; no score invented
+//   boundary     — anchor is at the limit of the catalogue range
+//   exclusion    — lower/higher options exist but are filtered by active preferences
+function buildNoMatchResponse(meta: AnchoredMeta): string {
+  const { anchorName, dimension, direction, anchorScore, catalogueBoundary } = meta;
+
+  if (anchorScore === null) {
+    return (
+      `${anchorName} does not have a ${dimension} score in our catalogue, so a directional comparison cannot be made.` +
+      ` Would you like to explore another fragrance characteristic instead?`
+    );
+  }
+
+  const dirWord  = direction === "less" ? "lower"  : "higher";
+  const limitEnd = direction === "less" ? "lowest" : "highest";
+
+  if (catalogueBoundary) {
+    return (
+      `${anchorName} is already at the ${limitEnd} end of our ${dimension} range (${anchorScore}/5)` +
+      ` — no fragrance in our catalogue scores ${dirWord} in ${dimension}.` +
+      ` Would you like to explore another fragrance characteristic instead?`
+    );
+  }
+
+  return (
+    `No fragrance scores ${dirWord} in ${dimension} than ${anchorName} (${anchorScore}/5) within your current preferences` +
+    ` — ${dirWord}-${dimension} options may exist in the catalogue but are excluded by your active filters.` +
+    ` Would you like to relax one of your preferences, or explore another fragrance characteristic instead?`
+  );
 }
 
 // ── Contextual follow-up generation ──────────────────────────────────────────
@@ -126,6 +164,19 @@ function generateFollowUps(
   // Consultation readiness gate fired — suggest discovery alternatives
   if (plan.consultationReadinessQuestion) {
     return filter(["Show me what's popular", "Help me explore by occasion"]);
+  }
+
+  // anchored_refinement with empty pool: product-referencing chips ("Compare these two",
+  // "Show me more in this direction") make no sense when zero cards were returned.
+  // Redirect toward adjacent dimensions or broader discovery instead.
+  if (intent === "anchored_refinement" && !hasRecs) {
+    // "Try a different direction" is honest: routes to new_search with no direction re-trigger.
+    // "Explore the catalogue" is honest: routes to general_discovery using quality-ranked pool
+    // (sortByQuality: bestSeller → overallScore → popularity). Does not promise a different anchor
+    // is excluded — retrieval may still return the anchor since mentionedSlug persists in context.
+    // "Explore a different family" was replaced because the pipeline cannot enforce a family
+    // change from this chip text alone (no family signal in the message).
+    return filter(["Try a different direction", "Explore the catalogue"]);
   }
 
   // Generic selection based on intent
@@ -301,6 +352,15 @@ export function planResponse(
         if (!finalSlugs.includes(f.slug)) finalSlugs.push(f.slug);
       }
     }
+  }
+
+  // No-match anchored_refinement post-processor:
+  // Replace the entire content with a deterministic response built from AnchoredMeta.
+  // No model prose is retained — invented scores, zero-dimension claims, product markers,
+  // and extra questions are discarded regardless of what the model returned.
+  if (retrieval.anchoredMeta && !retrieval.anchoredMeta.strictMatches) {
+    finalSlugs = [];
+    content = buildNoMatchResponse(retrieval.anchoredMeta);
   }
 
   const hasRecs             = retrieval.fragrances.length > 0;
