@@ -32,15 +32,15 @@ import { detectRejections }                                                     
 import { buildConsultationPlan, evolveConsultationPlan, detectAffectedRoles, detectExplorationTarget } from "../../lib/concierge/consultationTracker";
 import { adaptCustomerProfile }                from "../../lib/concierge/customerAdapter";
 import { catalogueMaps }                       from "../../lib/discovery";
+import { callClaude, selectTokenBudget }       from "../../lib/concierge/claudeClient";
 import type { ConversationState, ConversationContext, SessionUpdates, FormattedResponse, ConsultationPlan } from "../../lib/concierge/types";
 import type { UnifiedCustomerProfile }         from "../../lib/customer/profile/UnifiedCustomerProfile";
 
 // ── Model configuration ───────────────────────────────────────────────────────
 
-const PRIMARY_MODEL  = process.env.CLAUDE_CONCIERGE_MODEL ?? "claude-sonnet-5";
+const PRIMARY_MODEL = process.env.CLAUDE_CONCIERGE_MODEL ?? "claude-sonnet-5";
 const FALLBACK_MODEL = "claude-haiku-4-5-20251001";
-const MAX_TOKENS     = 400;
-const MAX_HISTORY    = 8;
+const MAX_HISTORY   = 8;
 
 const client = new Anthropic();
 
@@ -75,34 +75,6 @@ function buildUnifiedProfileFromBrowser(
     lastQuizSlugs:  [],
     lastActiveAt:   null,
   };
-}
-
-// ── Claude call with model fallback ──────────────────────────────────────────
-
-async function callClaude(
-  messages:     Array<{ role: "user" | "assistant"; content: string }>,
-  systemPrompt: string
-): Promise<string> {
-  async function attempt(model: string): Promise<string> {
-    const response = await client.messages.create({
-      model,
-      max_tokens:  MAX_TOKENS,
-      temperature: 0,
-      system:      systemPrompt,
-      messages,
-    });
-    return response.content
-      .filter((block): block is Anthropic.TextBlock => block.type === "text")
-      .map((block) => block.text)
-      .join("");
-  }
-
-  try {
-    return await attempt(PRIMARY_MODEL);
-  } catch {
-    if (PRIMARY_MODEL === FALLBACK_MODEL) throw new Error("Claude unavailable");
-    return await attempt(FALLBACK_MODEL);
-  }
 }
 
 // ── Route handler ─────────────────────────────────────────────────────────────
@@ -293,10 +265,14 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       content: turn.content,
     }));
 
-    // 6. Call Claude
+    // 6. Call Claude — selectTokenBudget gives comparison turns more headroom.
     const rawContent = await callClaude(
+      client,
       [...history, { role: "user" as const, content: message }],
-      systemPrompt
+      systemPrompt,
+      selectTokenBudget(plan.requiresComparison),
+      PRIMARY_MODEL,
+      FALLBACK_MODEL,
     );
 
     // 7. Validate safety

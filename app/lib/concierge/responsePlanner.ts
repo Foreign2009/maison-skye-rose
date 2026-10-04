@@ -349,6 +349,22 @@ export function planResponse(
     return marker;
   });
 
+  // Step 0b: Collapse bare canonical-name [PRODUCT:slug] → [PRODUCT:slug].
+  // On comparison turns the model often writes the name in prose and then
+  // immediately emits a marker: "Sauvage Inspired [PRODUCT:sauvage-inspired]".
+  // Step 2 would then substitute the marker with the name again, producing
+  // "Sauvage Inspired Sauvage Inspired". Collapsing here prevents the duplicate.
+  // Only fires when the name is immediately adjacent (optional whitespace only) —
+  // legitimate mentions elsewhere in the same sentence are not affected.
+  for (const frag of retrieval.fragrances) {
+    const escapedName = frag.name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const escapedSlug = frag.slug.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    rawContent = rawContent.replace(
+      new RegExp(`${escapedName}\\s*(\\[PRODUCT:${escapedSlug}\\])`, "g"),
+      "$1",
+    );
+  }
+
   {
     const slugScanRE = /\*\*\[PRODUCT:([a-z0-9'-]+)\]\*\*|\[PRODUCT:([a-z0-9'-]+)\]/g;
     let m: RegExpExecArray | null;
@@ -406,6 +422,16 @@ export function planResponse(
   content = content
     .replace(/\[PRODUCT:[^\]]*\]/g, "")
     .replace(/\[ARTICLE:[^\]]*\]/g, "");
+
+  // Repair C: strip residual **bold** emphasis markers.
+  // The system prompt prohibits bold and single-asterisk emphasis, but model
+  // compliance is probabilistic — on comparison turns the model uses **Name**
+  // as a visual section heading per fragrance. These characters are not processed
+  // by a Markdown renderer and appear literally in the chat bubble.
+  // The enclosed text is preserved; only the paired ** delimiters are removed.
+  // Must run after Repair B so no marker syntax (e.g. **[PRODUCT:...]**) remains
+  // to be mis-matched — those are already resolved or stripped by Steps 0–2.
+  content = content.replace(/\*\*([^*\n]+)\*\*/g, "$1");
 
   if (articleSlugs.length === 0 && retrieval.articles.length > 0) {
     retrieval.articles.slice(0, 2).forEach((a) => articleSlugs.push(a.slug));

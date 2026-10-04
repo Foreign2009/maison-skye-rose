@@ -35,6 +35,7 @@ import type { RetrievalContext } from "../../../app/lib/concierge/contextBuilder
 import { detectRejections, NONE_OF_THOSE_SIGNALS } from "../../../app/lib/concierge/rejectionDetector";
 import { planResponse } from "../../../app/lib/concierge/responsePlanner";
 import { formatResponse } from "../../../app/lib/concierge/responseFormatter";
+import { TRUNCATION_FALLBACK } from "../../../app/lib/concierge/claudeClient";
 import { computeProfileCompleteness } from "../../../app/lib/concierge/profileCompletenessEngine";
 import { buildSearchIndex } from "../../../app/lib/search/indexBuilder";
 import { computeConfidenceClassifications } from "../../../app/lib/concierge/retrievalPlanner";
@@ -4244,6 +4245,165 @@ test("T-LF-07c — three cards: 'Compare these' chip must be present (not 'Compa
   const exactTwo = result.followUpSuggestions.some((s) => s === "Compare these two");
   assert.equal(exactTwo, false,
     `T-LF-07c — chip must not say "Compare these two" for 3 cards; got: [${result.followUpSuggestions.join(", ")}]`);
+});
+
+// ── T-CP: Comparison parser fixes ────────────────────────────────────────────
+//
+// Regression fixtures for the four live comparison failures observed on deployed
+// 6f186bd: (1) literal Markdown emphasis, (2) duplicate canonical names,
+// (3) projection wording, (4) response ending mid-sentence.
+//
+// Failures 1 and 2 are deterministic — tested here as parser assertions.
+// Failure 3 is a prompt safeguard — compliance is probabilistic; not asserted.
+// Failure 4 (token budget) cannot be unit-tested at the provider level;
+//   T-CP-06/07 test the parser side: that a complete response parses cleanly
+//   and that the truncation-fallback text (returned when stop_reason="max_tokens"
+//   is detected) produces a valid, card-free result.
+//   Whether stop_reason="max_tokens" caused the observed truncation is a
+//   hypothesis — unconfirmed until a live provider response is captured.
+
+console.log("\n── CP. Comparison parser fixes ──────────────────────────────────");
+
+// Fixtures: use first 3 catalogue entries as comparison candidates.
+const CP_FRAGS = mkcCatalogue.slice(0, 3);
+const [CP_F0, CP_F1, CP_F2] = CP_FRAGS;
+
+const COMPARISON_PLAN: ConversationPlan = {
+  action:                "comparison",
+  reason:                "test",
+  requiresRetrieval:     false,
+  requiresComparison:    true,
+  requiresClarification: false,
+  reuseRecommendations:  true,
+  nextIntent:            "comparison",
+};
+
+const CP_RETRIEVAL: RetrievalContext = { fragrances: CP_FRAGS, articles: [] };
+
+test("T-CP-01 — bare name immediately before marker: no duplicate in output", () => {
+  // Live-failure pattern: model writes "Sauvage Inspired [PRODUCT:sauvage-inspired]"
+  // → Step 2 formerly produced "Sauvage Inspired Sauvage Inspired".
+  // Step 0b collapses the adjacent name+marker before the slug pre-scan.
+  const raw =
+    `${CP_F0.name} [PRODUCT:${CP_F0.slug}] opens with citrus. ` +
+    `${CP_F1.name} [PRODUCT:${CP_F1.slug}] is warmer.`;
+  const result = planResponse(raw, "comparison", CP_RETRIEVAL, COMPARISON_PLAN);
+  const doubled0 = `${CP_F0.name} ${CP_F0.name}`;
+  const doubled1 = `${CP_F1.name} ${CP_F1.name}`;
+  assert.ok(!result.content.includes(doubled0),
+    `T-CP-01 — duplicate "${CP_F0.name}" must not appear; content: "${result.content}"`);
+  assert.ok(!result.content.includes(doubled1),
+    `T-CP-01 — duplicate "${CP_F1.name}" must not appear; content: "${result.content}"`);
+  // Both names should appear exactly once as the resolved replacement
+  assert.ok(result.content.includes(CP_F0.name),
+    `T-CP-01 — ${CP_F0.name} must appear in output`);
+  assert.ok(result.content.includes(CP_F1.name),
+    `T-CP-01 — ${CP_F1.name} must appear in output`);
+});
+
+test("T-CP-02 — standalone **heading** emphasis stripped, text preserved", () => {
+  // Live-failure pattern: model uses "**Name**" as a section heading per fragrance.
+  // No [PRODUCT:slug] marker follows the bold name — Step 0 does not fire.
+  // Repair C strips the ** delimiters and preserves the enclosed text.
+  const raw =
+    `**${CP_F0.name}** opens with citrus and bergamot. ` +
+    `**${CP_F1.name}** is warmer and more intense.`;
+  const result = planResponse(raw, "comparison", CP_RETRIEVAL, COMPARISON_PLAN);
+  assert.ok(!result.content.includes("**"),
+    `T-CP-02 — literal ** must not appear in output; content: "${result.content}"`);
+  assert.ok(result.content.includes(CP_F0.name),
+    `T-CP-02 — ${CP_F0.name} must be preserved after stripping **`);
+  assert.ok(result.content.includes(CP_F1.name),
+    `T-CP-02 — ${CP_F1.name} must be preserved after stripping **`);
+});
+
+test("T-CP-03 — **name** [PRODUCT:slug] heading: Step-0 path → single name, no **", () => {
+  // Step 0 (existing) collapses **canonical name** [PRODUCT:slug] → [PRODUCT:slug].
+  // Step 2 then replaces the marker with the name. No ** should survive.
+  const raw =
+    `**${CP_F0.name}** [PRODUCT:${CP_F0.slug}] opens with citrus. ` +
+    `**${CP_F1.name}** [PRODUCT:${CP_F1.slug}] is warmer.`;
+  const result = planResponse(raw, "comparison", CP_RETRIEVAL, COMPARISON_PLAN);
+  assert.ok(!result.content.includes("**"),
+    `T-CP-03 — literal ** must not appear after Step-0 collapse + name substitution`);
+  const doubled0 = `${CP_F0.name} ${CP_F0.name}`;
+  assert.ok(!result.content.includes(doubled0),
+    `T-CP-03 — duplicate "${CP_F0.name}" must not appear`);
+});
+
+test("T-CP-04 — legitimate repeated mention elsewhere in prose is preserved", () => {
+  // Step 0b only collapses when the name is immediately adjacent to its marker.
+  // A mention elsewhere in the same sentence (not directly before the marker)
+  // must not be removed.
+  const raw =
+    `Between ${CP_F0.name} and ${CP_F1.name}, ` +
+    `${CP_F0.name} [PRODUCT:${CP_F0.slug}] suits evenings best.`;
+  // After Step 0b: "Between {F0} and {F1}, [PRODUCT:{F0}] suits evenings best."
+  // After Step 2: "Between {F0} and {F1}, {F0} suits evenings best."
+  const result = planResponse(raw, "comparison", CP_RETRIEVAL, COMPARISON_PLAN);
+  // F0 should appear twice — once from the "Between" clause, once from the marker replacement
+  const occurrences = result.content.split(CP_F0.name).length - 1;
+  assert.ok(occurrences >= 2,
+    `T-CP-04 — "${CP_F0.name}" should appear at least twice; content: "${result.content}"`);
+  assert.ok(result.content.includes(CP_F1.name),
+    `T-CP-04 — "${CP_F1.name}" must be preserved`);
+});
+
+test("T-CP-05 — three comparison cards: all three slugs retained", () => {
+  // A well-formed comparison response with three [PRODUCT:slug] markers.
+  // Verifies the comparison path returns all three cards unmodified.
+  const raw =
+    `[PRODUCT:${CP_F0.slug}] opens with citrus. ` +
+    `[PRODUCT:${CP_F1.slug}] is warmer. ` +
+    `[PRODUCT:${CP_F2.slug}] is the most versatile. ` +
+    `I'd choose ${CP_F0.name} for evenings.`;
+  const result = planResponse(raw, "comparison", CP_RETRIEVAL, COMPARISON_PLAN);
+  assert.equal(result.recommendedSlugs.length, 3,
+    `T-CP-05 — all 3 comparison slugs must be retained; got: [${result.recommendedSlugs.join(", ")}]`);
+  assert.ok(result.recommendedSlugs.includes(CP_F0.slug), `T-CP-05 — ${CP_F0.slug} must be in slugs`);
+  assert.ok(result.recommendedSlugs.includes(CP_F1.slug), `T-CP-05 — ${CP_F1.slug} must be in slugs`);
+  assert.ok(result.recommendedSlugs.includes(CP_F2.slug), `T-CP-05 — ${CP_F2.slug} must be in slugs`);
+});
+
+test("T-CP-06 — normal completion mock: complete comparison response parses cleanly", () => {
+  // Simulates a well-formed provider response (stop_reason="end_turn").
+  // Uses realistic live-failure patterns (bold headings + bare name+marker) to
+  // confirm that after our fixes the parser produces clean, complete prose.
+  const raw =
+    `**${CP_F0.name}** [PRODUCT:${CP_F0.slug}] brings a fresh opening — ` +
+    `sweetness 1/5, freshness 4/5. Clean and modern.\n` +
+    `**${CP_F1.name}** [PRODUCT:${CP_F1.slug}] is richer — ` +
+    `sweetness 2/5, warmth 3/5. More complex eveningwear.\n` +
+    `${CP_F2.name} [PRODUCT:${CP_F2.slug}] balances all dimensions. ` +
+    `For evening versatility, I'd choose ${CP_F0.name}.`;
+  const result = planResponse(raw, "comparison", CP_RETRIEVAL, COMPARISON_PLAN);
+  assert.ok(!result.content.includes("**"),
+    `T-CP-06 — no literal ** in output`);
+  // No duplicate names
+  const doubled0 = `${CP_F0.name} ${CP_F0.name}`;
+  const doubled2 = `${CP_F2.name} ${CP_F2.name}`;
+  assert.ok(!result.content.includes(doubled0), `T-CP-06 — no duplicate ${CP_F0.name}`);
+  assert.ok(!result.content.includes(doubled2), `T-CP-06 — no duplicate ${CP_F2.name}`);
+  assert.equal(result.recommendedSlugs.length, 3, `T-CP-06 — all 3 slugs present`);
+  // Content should end cleanly (last char not a sentence fragment indicator)
+  assert.ok(result.content.length > 20, `T-CP-06 — content must be non-trivial`);
+});
+
+test("T-CP-07 — truncation-fallback mock (max_tokens): complete sentence, no product cards", () => {
+  // When callClaude detects stop_reason="max_tokens", it returns TRUNCATION_FALLBACK
+  // instead of truncated prose. This test verifies that text passes through
+  // planResponse without being broken or producing unexpected product cards.
+  // The TRUNCATION_FALLBACK is a complete sentence (ends with ".") and references
+  // no [PRODUCT:slug] markers — it should produce an empty recommendedSlugs.
+  const result = planResponse(TRUNCATION_FALLBACK, "comparison", CP_RETRIEVAL, COMPARISON_PLAN);
+  assert.equal(result.recommendedSlugs.length, 0,
+    `T-CP-07 — truncation fallback must produce no product cards; got: [${result.recommendedSlugs.join(", ")}]`);
+  // Content ends with a period — it's a complete sentence
+  const trimmed = result.content.trim();
+  assert.ok(trimmed.endsWith("."),
+    `T-CP-07 — truncation fallback must end with a period; ends with: "${trimmed.slice(-10)}"`);
+  assert.ok(!result.content.includes("**"),
+    `T-CP-07 — truncation fallback must not contain literal **`);
 });
 
 // ── EP-AI-C5: Profile Completeness Engine (T-C5-P) ───────────────────────────
