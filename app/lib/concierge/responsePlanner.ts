@@ -433,6 +433,35 @@ export function planResponse(
   // to be mis-matched — those are already resolved or stripped by Steps 0–2.
   content = content.replace(/\*\*([^*\n]+)\*\*/g, "$1");
 
+  // Repair D: strip residual *italic* single-asterisk emphasis markers.
+  // Catches cases like "sweetness *and* its warmth" where the model emphasises
+  // a word or phrase with *word* or *multi-word phrase*.
+  //
+  // Pattern: /(?<!\w)\*(\S[^*\n]*\S|\S)\*(?!\w)/g
+  //
+  // (?<!\w)  — opening * must NOT be preceded by a word character (letter,
+  //            digit, _). This protects "2*3*4" (multiplication) and
+  //            "name*slug*" from matching — the * is adjacent to a word char.
+  //
+  // \S       — content after opening * must start with a non-whitespace char.
+  //            This protects "2 * 3 * 4" (spaced multiplication) and
+  //            "* item" (bullet prefix) — the content starts with a space.
+  //
+  // [^*\n]*  — allows multi-word content but stops at * or newline.
+  //
+  // (\S...\S|\S) — inner group matches either multi-char (start and end both
+  //            non-whitespace) or exactly one non-whitespace character.
+  //
+  // (?!\w)   — closing * must NOT be followed by a word character. This
+  //            allows the closing * to sit before punctuation (comma, period)
+  //            without requiring a space after emphasis.
+  //
+  // Unmatched asterisks (bullet prefixes "* item") are not affected because:
+  //   (a) the content immediately after * is a space (fails the \S check), or
+  //   (b) there is no closing * on the same line.
+  // Runs after Repair C so any **bold** double-markers are already gone.
+  content = content.replace(/(?<!\w)\*(\S[^*\n]*\S|\S)\*(?!\w)/g, "$1");
+
   if (articleSlugs.length === 0 && retrieval.articles.length > 0) {
     retrieval.articles.slice(0, 2).forEach((a) => articleSlugs.push(a.slug));
   }

@@ -4406,6 +4406,78 @@ test("T-CP-07 — truncation-fallback mock (max_tokens): complete sentence, no p
     `T-CP-07 — truncation fallback must not contain literal **`);
 });
 
+// T-CP-08–11: Repair D — single-asterisk emphasis cleanup
+// Observed live: "sweetness *and* its warmth" — Repair C handles ** only.
+// These regressions pin the four cases the fix must satisfy.
+
+test("T-CP-08 — single-asterisk: observed live *and* pattern is stripped", () => {
+  const raw = `If you want to move away from Baccarat Rouge 540 Inspired's sweetness *and* its warmth, [PRODUCT:${CP_FRAGS[0].slug}] is the answer.`;
+  const result = planResponse(raw, "comparison", CP_RETRIEVAL, COMPARISON_PLAN);
+  assert.ok(!result.content.includes("*and*"),
+    `T-CP-08 — literal *and* must not appear; content: "${result.content}"`);
+  assert.ok(result.content.includes("and"),
+    `T-CP-08 — the word "and" must be preserved; content: "${result.content}"`);
+});
+
+test("T-CP-09 — single-asterisk: multi-word italic phrase is stripped, text preserved", () => {
+  const raw = `Sauvage Inspired is *the most decisive shift* in character. [PRODUCT:${CP_FRAGS[0].slug}]`;
+  const result = planResponse(raw, "comparison", CP_RETRIEVAL, COMPARISON_PLAN);
+  assert.ok(!result.content.includes("*"),
+    `T-CP-09 — no asterisks must remain; content: "${result.content}"`);
+  assert.ok(result.content.includes("the most decisive shift"),
+    `T-CP-09 — phrase text must be preserved; content: "${result.content}"`);
+});
+
+test("T-CP-10 — bold markers (**word**) continue to be stripped by Repair C", () => {
+  const raw = `**Sauvage Inspired** is the boldest option. [PRODUCT:${CP_FRAGS[0].slug}]`;
+  const result = planResponse(raw, "comparison", CP_RETRIEVAL, COMPARISON_PLAN);
+  assert.ok(!result.content.includes("**"),
+    `T-CP-10 — no ** must remain; content: "${result.content}"`);
+  assert.ok(result.content.includes("Sauvage Inspired"),
+    `T-CP-10 — fragrance name must be preserved; content: "${result.content}"`);
+});
+
+test("T-CP-11 — unmatched asterisk (no closing partner on same line) is preserved", () => {
+  // "* Note" style — opening * with no closing * on the same line.
+  // Repair D must not corrupt this.
+  const raw = `Freshness is the key dimension. * Sauvage Inspired leads on this measure. [PRODUCT:${CP_FRAGS[0].slug}]`;
+  const result = planResponse(raw, "comparison", CP_RETRIEVAL, COMPARISON_PLAN);
+  assert.ok(result.content.includes("*"),
+    `T-CP-11 — unmatched * must survive Repair D; content: "${result.content}"`);
+});
+
+// T-CP-12–14: Repair D preservation cases — literal and context asterisks
+// Pattern (?<!\w)\*...\*(?!\w) must not corrupt multiplication or bullet prefixes.
+
+test("T-CP-12 — Repair D preserves multiplication expression 2*3*4 (no spaces)", () => {
+  // * preceded by digit — fails (?<!\w) lookbehind; must not be stripped.
+  const raw = `Freshness is 2*3*4 combined. [PRODUCT:${CP_FRAGS[0].slug}]`;
+  const result = planResponse(raw, "comparison", CP_RETRIEVAL, COMPARISON_PLAN);
+  assert.ok(result.content.includes("2*3*4"),
+    `T-CP-12 — multiplication expression 2*3*4 must survive; content: "${result.content}"`);
+});
+
+test("T-CP-13 — Repair D preserves spaced multiplication expression 2 * 3 * 4", () => {
+  // Content after opening * is a space — fails \S check; must not be stripped.
+  const raw = `Formula: 2 * 3 * 4 = 24. [PRODUCT:${CP_FRAGS[0].slug}]`;
+  const result = planResponse(raw, "comparison", CP_RETRIEVAL, COMPARISON_PLAN);
+  assert.ok(result.content.includes("2 * 3 * 4"),
+    `T-CP-13 — spaced multiplication must survive; content: "${result.content}"`);
+});
+
+test("T-CP-14 — Repair D strips italic within bullet, preserves bullet prefix *", () => {
+  // Bullet "* item" — opening * followed by space, fails \S; bullet * preserved.
+  // Inner "*phrase*" — preceded by space, valid emphasis; stripped, text preserved.
+  const raw = `* Sauvage Inspired is *the bolder choice*. [PRODUCT:${CP_FRAGS[0].slug}]`;
+  const result = planResponse(raw, "comparison", CP_RETRIEVAL, COMPARISON_PLAN);
+  assert.ok(result.content.startsWith("*"),
+    `T-CP-14 — bullet * must be preserved; content: "${result.content}"`);
+  assert.ok(!result.content.includes("*the bolder choice*"),
+    `T-CP-14 — italic markers around phrase must be stripped; content: "${result.content}"`);
+  assert.ok(result.content.includes("the bolder choice"),
+    `T-CP-14 — phrase text must be preserved; content: "${result.content}"`);
+});
+
 // ── EP-AI-C5: Profile Completeness Engine (T-C5-P) ───────────────────────────
 
 console.log("\n── C5-P. Profile Completeness Engine ────────────────────────────");

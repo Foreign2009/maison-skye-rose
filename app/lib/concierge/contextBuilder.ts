@@ -339,6 +339,7 @@ function buildInstructionsSection(
       "Give a clear, decisive recommendation for which to choose.",
       "Tag each fragrance as [PRODUCT:slug].",
       "[Prompt safeguard — compliance not deterministically enforced] Do not make claims about projection, sillage, longevity, or any wear-performance characteristic — describe notes, scent character, and scored dimensions only.",
+      "[Prompt safeguard — compliance not deterministically enforced] When citing versatility scores, describe supported occasions and uses rather than claiming suitability everywhere, in every season, or at every moment. A high score does not imply universal suitability.",
     );
   }
 
