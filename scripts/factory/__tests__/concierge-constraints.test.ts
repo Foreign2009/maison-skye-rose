@@ -4478,6 +4478,323 @@ test("T-CP-14 — Repair D strips italic within bullet, preserves bullet prefix 
     `T-CP-14 — phrase text must be preserved; content: "${result.content}"`);
 });
 
+// ── EP-QS: Quality Safeguard context assertions (T-QS) ───────────────────────
+//
+// These tests verify that the new recommendation and comparison safeguard
+// instructions are present in the rendered context for the correct turns, and
+// absent from turns where they must not fire.
+//
+// IMPORTANT: A context assertion confirms the instruction text is in the prompt;
+// it does NOT prove the live model will follow it. All T-QS tests are
+// explicitly labelled "context assertion" where relevant.
+//
+// Fixtures
+const QS_FRAGS = mkcCatalogue.slice(0, 3);
+const QS_RETRIEVAL: RetrievalContext = { fragrances: QS_FRAGS, articles: [] };
+
+const QS_REC_PLAN: ConversationPlan = {
+  ...BASE_PLAN,
+  action:             "new_search",
+  requiresComparison: false,
+  requiresClarification: false,
+};
+
+const QS_COMP_PLAN: ConversationPlan = {
+  ...BASE_PLAN,
+  action:             "comparison",
+  requiresComparison: true,
+  requiresClarification: false,
+  reuseRecommendations: true,
+  nextIntent:         "comparison" as const,
+};
+
+const QS_CLARIF_PLAN: ConversationPlan = {
+  ...BASE_PLAN,
+  action:             "clarification",
+  requiresComparison: false,
+  requiresClarification: true,
+};
+
+console.log("\n── QS. Quality Safeguard context assertions ──────────────────────");
+
+test("T-QS-01 — recommendation context (context assertion): dimension-grounding safeguard present", () => {
+  const rendered = renderContext(buildContext(
+    QS_RETRIEVAL, EMPTY_STATE, QS_REC_PLAN, "general_discovery", null, null, null,
+    "I want something less sweet",
+  ));
+  assert.ok(
+    rendered.includes("Do not infer freshness from reduced sweetness"),
+    `T-QS-01 — dimension-grounding instruction must be in prompt; check buildInstructionsSection EP-QS block`,
+  );
+});
+
+test("T-QS-02 — recommendation context (context assertion): absence-claim safeguard present", () => {
+  const rendered = renderContext(buildContext(
+    QS_RETRIEVAL, EMPTY_STATE, QS_REC_PLAN, "general_discovery", null, null, null,
+    "I want something less sweet",
+  ));
+  // Instruction delivery test — does not prove generated-response compliance.
+  // Wording: score does not justify absence claim; avoid "strips away" etc.
+  assert.ok(
+    rendered.includes("strips away") && rendered.includes("does not justify an absolute absence claim"),
+    `T-QS-02 — absence-claim safeguard (updated wording) must be in prompt`,
+  );
+});
+
+test("T-QS-03 — recommendation context (context assertion): customer-consensus prohibition present", () => {
+  const rendered = renderContext(buildContext(
+    QS_RETRIEVAL, EMPTY_STATE, QS_REC_PLAN, "general_discovery", null, null, null,
+    "recommend something fresh",
+  ));
+  assert.ok(
+    rendered.includes("most people") && rendered.includes("invent customer consensus"),
+    `T-QS-03 — customer-consensus prohibition must be in prompt`,
+  );
+});
+
+test("T-QS-04 — recommendation context (context assertion): projection/duration prohibition present", () => {
+  const rendered = renderContext(buildContext(
+    QS_RETRIEVAL, EMPTY_STATE, QS_REC_PLAN, "general_discovery", null, null, null,
+    "recommend something fresh",
+  ));
+  assert.ok(
+    rendered.includes("dominates the entire wear") && rendered.includes("announces itself"),
+    `T-QS-04 — projection/duration prohibition must be in prompt`,
+  );
+});
+
+// Limitation note: detectCardTarget recognises digit-based counts ([1-9]) and the word "one".
+// Written-out numbers ("three", "four") are not currently recognised — a known pre-existing
+// gap not addressed in this patch. "show me 3 options" tests the explicit-digit path.
+test("T-QS-05 — recommendation context (context assertion): word target present for 3-card response", () => {
+  const rendered = renderContext(buildContext(
+    QS_RETRIEVAL, EMPTY_STATE, QS_REC_PLAN, "general_discovery", null, null, null,
+    "show me 3 options",
+  ));
+  assert.ok(
+    rendered.includes("100–160"),
+    `T-QS-05 — word target "100–160" must be in prompt for 3-card response`,
+  );
+});
+
+test("T-QS-06 — comparison context (context assertion): dimension-grounding instruction present", () => {
+  const rendered = renderContext(buildContext(
+    QS_RETRIEVAL, EMPTY_STATE, QS_COMP_PLAN, "comparison", null, null, null,
+    "compare these",
+  ));
+  assert.ok(
+    rendered.includes("do not describe a fragrance as fresher because it scores lower in sweetness"),
+    `T-QS-06 — dimension-grounding instruction must be in comparison prompt`,
+  );
+});
+
+test("T-QS-07 — comparison context (context assertion): word target present", () => {
+  const rendered = renderContext(buildContext(
+    QS_RETRIEVAL, EMPTY_STATE, QS_COMP_PLAN, "comparison", null, null, null,
+    "compare these",
+  ));
+  assert.ok(
+    rendered.includes("120–180"),
+    `T-QS-07 — word target "120–180" must be in comparison prompt`,
+  );
+});
+
+test("T-QS-08 — clarification turn: quality safeguards must not appear (wrong gate)", () => {
+  const rendered = renderContext(buildContext(
+    QS_RETRIEVAL, EMPTY_STATE, QS_CLARIF_PLAN, "general_discovery", null, null, null,
+    "I like fragrance",
+  ));
+  // Safeguards only fire for non-clarification turns
+  assert.ok(
+    !rendered.includes("invent customer consensus"),
+    `T-QS-08 — customer-consensus prohibition must not appear in clarification prompt`,
+  );
+});
+
+test("T-QS-09 — comparison turn: recommendation-only safeguards must not appear", () => {
+  const rendered = renderContext(buildContext(
+    QS_RETRIEVAL, EMPTY_STATE, QS_COMP_PLAN, "comparison", null, null, null,
+    "compare these",
+  ));
+  // Absence-claim and consensus are now in the shared block and DO appear for comparison turns.
+  // What must NOT appear are the recommendation-only instructions: dimension direction via
+  // FRAGRANCES IN CONTEXT, and the projection/duration safeguard that refers to
+  // "dominates the entire wear" — the comparison block has its own analogues.
+  assert.ok(
+    !rendered.includes("dominates the entire wear"),
+    `T-QS-09 — recommendation-only projection safeguard must not appear in comparison prompt`,
+  );
+  assert.ok(
+    !rendered.includes("Base dimension direction claims on the Intelligence scores in FRAGRANCES IN CONTEXT"),
+    `T-QS-09 — recommendation-only dimension-grounding must not appear in comparison prompt`,
+  );
+});
+
+test("T-QS-10 — FR540 freshness score in context is 3/5 (catalogue data assertion)", () => {
+  // Confirms the data available to the model. BR540 freshness=3; Oud Wood freshness=1.
+  // The recommendation that described Oud Wood as "fresher" was inferring from
+  // reduced sweetness — both scores are now explicitly in FRAGRANCES IN CONTEXT.
+  const br540 = mkcCatalogue.find((f: any) => f.slug === "baccarat-rouge-540-inspired");
+  const oudWood = mkcCatalogue.find((f: any) => f.slug === "oud-wood-inspired");
+  assert.ok(br540, "T-QS-10 — baccarat-rouge-540-inspired must exist in catalogue");
+  assert.ok(oudWood, "T-QS-10 — oud-wood-inspired must exist in catalogue");
+  assert.equal((br540 as any).intelligence?.freshness ?? (br540 as any).freshness, 3,
+    "T-QS-10 — BR540 freshness must be 3 (the anchor the comparison referenced)");
+  assert.equal((oudWood as any).intelligence?.freshness ?? (oudWood as any).freshness, 1,
+    "T-QS-10 — Oud Wood freshness must be 1 (less fresh than BR540, not more)");
+});
+
+test("T-QS-11 — comparison context (instruction delivery): shared absence safeguard present", () => {
+  // The absence-claim safeguard moved to a shared block covering comparison turns.
+  // Instruction delivery test only — does not prove generated-response compliance.
+  const rendered = renderContext(buildContext(
+    QS_RETRIEVAL, EMPTY_STATE, QS_COMP_PLAN, "comparison", null, null, null,
+    "compare these",
+  ));
+  assert.ok(
+    rendered.includes("does not justify an absolute absence claim"),
+    `T-QS-11 — shared absence safeguard must appear in comparison prompt`,
+  );
+});
+
+test("T-QS-12 — comparison context (instruction delivery): shared consensus safeguard present", () => {
+  // The consensus safeguard moved to a shared block covering comparison turns.
+  // Instruction delivery test only — does not prove generated-response compliance.
+  const rendered = renderContext(buildContext(
+    QS_RETRIEVAL, EMPTY_STATE, QS_COMP_PLAN, "comparison", null, null, null,
+    "compare these",
+  ));
+  assert.ok(
+    rendered.includes("invent customer consensus"),
+    `T-QS-12 — shared consensus safeguard must appear in comparison prompt`,
+  );
+});
+
+test("T-QS-13 — clarification turn: shared safeguards must not appear", () => {
+  // Shared block gates on !requiresClarification — both safeguards must be absent.
+  const rendered = renderContext(buildContext(
+    QS_RETRIEVAL, EMPTY_STATE, QS_CLARIF_PLAN, "general_discovery", null, null, null,
+    "I like fragrance",
+  ));
+  assert.ok(
+    !rendered.includes("does not justify an absolute absence claim"),
+    `T-QS-13 — absence safeguard must not appear in clarification prompt`,
+  );
+  assert.ok(
+    !rendered.includes("invent customer consensus"),
+    `T-QS-13 — consensus safeguard must not appear in clarification prompt`,
+  );
+});
+
+test("T-QS-14 — BR540 less-sweet: production-equivalent planning path delivers writing guidance and shared safeguards", () => {
+  // Regression for the original "less sweet" live issue. Mirrors route.ts orchestration
+  // including the resolveAnchorSlug upgrade introduced in production (22f4147).
+  // Limitation: omits browser profile assembly, customer profile adaptation, and cumulative
+  // exclusion set — all absent on a first-turn request in an empty session.
+  const MSG = "I love Baccarat Rouge 540 Inspired, but I'd like something less sweet.";
+
+  // Step 1 — initial plan (no prior recs in empty state → new_search)
+  let plan = planConversation(MSG, EMPTY_STATE);
+  const updatedProfile = extractProfile(MSG, undefined);
+
+  // Step 2 — resolve entity and direction signal (route uses state.context, not full state)
+  let resolvedIntent = resolveIntent(MSG, EMPTY_STATE.context);
+  assert.equal(resolvedIntent.entitySlug, "baccarat-rouge-540-inspired",
+    "T-QS-14 — entity must resolve to BR540 slug");
+
+  // Step 3 — anchor resolution (mirrors route.ts lines 204–220, including upgrade logic)
+  const ar = resolveAnchorSlug({
+    plan,
+    entitySlug:          resolvedIntent.entitySlug,
+    compareSlugCount:    resolvedIntent.compareSlug.length,
+    currentAnchorSlug:   undefined,
+    resolvedOrdinalSlug: undefined,
+    message:             MSG,
+  });
+  assert.ok(ar.upgradeToAnchored,
+    "T-QS-14 — plan must be upgraded to anchored_refinement (entity + direction signal detected)");
+  assert.equal(ar.anchorSlug, "baccarat-rouge-540-inspired",
+    "T-QS-14 — anchor slug must be baccarat-rouge-540-inspired");
+
+  // Step 4 — apply upgrade (mirrors route.ts)
+  plan = { ...plan, action: "anchored_refinement" as const, nextIntent: "anchored_refinement" as const, requiresRetrieval: true };
+  resolvedIntent = { ...resolvedIntent, intent: "anchored_refinement" as const };
+
+  // Step 5 — retrieve lower-sweetness candidates relative to BR540 (sweetness 3/5)
+  const retrieval = planRetrieval(
+    resolvedIntent, EMPTY_STATE.context, updatedProfile,
+    undefined, undefined, null, undefined, MSG, ar.anchorSlug,
+  );
+
+  assert.ok(retrieval.anchoredMeta,
+    "T-QS-14 — anchoredMeta must be populated for anchored_refinement");
+  assert.equal(retrieval.anchoredMeta?.dimension, "sweetness",
+    "T-QS-14 — anchor dimension must be sweetness");
+  assert.equal(retrieval.anchoredMeta?.direction, "less",
+    "T-QS-14 — anchor direction must be less");
+  assert.equal(retrieval.anchoredMeta?.anchorScore, 3,
+    "T-QS-14 — BR540 catalogue sweetness score must be 3/5 (relative ranking)");
+  assert.ok(retrieval.anchoredMeta?.strictMatches,
+    "T-QS-14 — strictMatches must be true (sweetness < 3 candidates exist in catalogue)");
+  for (const f of retrieval.fragrances) {
+    assert.ok(f.sweetness < 3,
+      `T-QS-14 — candidate ${f.slug} must have sweetness < 3/5; found ${f.sweetness}`);
+  }
+
+  // Step 6 — build context with upgraded plan
+  const effectiveIntent = resolvedIntent.intent;
+  const rendered = renderContext(buildContext(
+    retrieval, EMPTY_STATE, plan, effectiveIntent, null, null, null, MSG,
+  ));
+
+  // Instruction delivery assertions — does not prove generated-response compliance.
+  assert.ok(
+    rendered.includes("Writing target"),
+    "T-QS-14 — writing target must appear for anchored_refinement turn (no explicit count in message)",
+  );
+  assert.ok(
+    rendered.includes("does not justify an absolute absence claim"),
+    "T-QS-14 — shared absence safeguard must appear for anchored_refinement turn",
+  );
+  assert.ok(
+    rendered.includes("invent customer consensus"),
+    "T-QS-14 — shared consensus safeguard must appear for anchored_refinement turn",
+  );
+});
+
+test("T-QS-15 — no-match anchored refinement: shared safeguards excluded by noMatchAnchored gate", () => {
+  // Instruction delivery test: confirms the shared absence-claim and consensus safeguards
+  // do NOT fire when noMatchAnchored=true (strictMatches=false, empty pool).
+  // Existing tests T-C4-12 and T-C4-14 verify the retrieval side (strictMatches=false,
+  // empty pool); this test verifies the instruction gate added by EP-QS.
+  const noMatchMeta: AnchoredMeta = {
+    anchorSlug:        "baccarat-rouge-540-inspired",
+    anchorName:        "Baccarat Rouge 540 Inspired",
+    dimension:         "sweetness",
+    direction:         "less" as const,
+    anchorScore:       1,
+    strictMatches:     false,
+    catalogueBoundary: true,
+  };
+  const noMatchRetrieval: RetrievalContext = {
+    fragrances: [], articles: [], anchoredMeta: noMatchMeta,
+  };
+  const rendered = renderContext(buildContext(
+    noMatchRetrieval, EMPTY_STATE,
+    { ...BASE_PLAN, action: "anchored_refinement" as const, nextIntent: "anchored_refinement" as const, requiresRetrieval: true },
+    "anchored_refinement",
+    null, null, null, "something less sweet",
+  ));
+  assert.ok(
+    !rendered.includes("does not justify an absolute absence claim"),
+    "T-QS-15 — shared absence safeguard must not fire for no-match turn (noMatchAnchored=true)",
+  );
+  assert.ok(
+    !rendered.includes("invent customer consensus"),
+    "T-QS-15 — shared consensus safeguard must not fire for no-match turn (noMatchAnchored=true)",
+  );
+});
+
 // ── EP-AI-C5: Profile Completeness Engine (T-C5-P) ───────────────────────────
 
 console.log("\n── C5-P. Profile Completeness Engine ────────────────────────────");
@@ -4808,8 +5125,8 @@ test("T-C5-K-01 — requiresComparison=false → no COMPARISON INTELLIGENCE FOCU
   const retrieval = { fragrances: mkcCatalogue.slice(0, 2), articles: [] };
   const ctx = buildContext(retrieval, EMPTY_STATE, { ...BASE_PLAN, requiresComparison: false });
   const rendered = renderContext(ctx);
-  assert.ok(!rendered.includes("COMPARISON INTELLIGENCE FOCUS"),
-    "COMPARISON INTELLIGENCE FOCUS should not appear when requiresComparison=false");
+  assert.ok(!rendered.includes("=== COMPARISON INTELLIGENCE FOCUS ==="),
+    "COMPARISON INTELLIGENCE FOCUS section should not appear when requiresComparison=false");
 });
 
 test("T-C5-K-02 — requiresComparison=true but < 2 fragrances → no section", () => {
@@ -4817,8 +5134,11 @@ test("T-C5-K-02 — requiresComparison=true but < 2 fragrances → no section", 
   const plan = { ...BASE_PLAN, requiresComparison: true };
   const ctx = buildContext(retrieval, EMPTY_STATE, plan);
   const rendered = renderContext(ctx);
-  assert.ok(!rendered.includes("COMPARISON INTELLIGENCE FOCUS"),
-    "COMPARISON INTELLIGENCE FOCUS should not appear with < 2 fragrances");
+  // Check for the section header format produced by renderContext ("=== LABEL ==="),
+  // not just the string — the comparison instructions block references the section by
+  // name in its safeguard text, so a plain includes() would false-positive.
+  assert.ok(!rendered.includes("=== COMPARISON INTELLIGENCE FOCUS ==="),
+    "COMPARISON INTELLIGENCE FOCUS section should not appear with < 2 fragrances");
 });
 
 test("T-C5-K-03 — requiresComparison=true + 2 fragrances → section present", () => {

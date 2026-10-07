@@ -309,8 +309,34 @@ function buildInstructionsSection(
         instructions.push(
           `Present EXACTLY ${cardTarget} fragrances from FRAGRANCES IN CONTEXT. Each must be distinct.${prose}`
         );
+        if (cardTarget === 2 || cardTarget === 3) {
+          const wordTarget = cardTarget === 2 ? "70–110" : "100–160";
+          instructions.push(
+            `[Writing target — not a hard limit] Aim for ${wordTarget} words total: one brief opening sentence, one short paragraph per fragrance, one follow-up question at most.`
+          );
+        }
       }
     }
+  }
+
+  // Absence-claim and customer-consensus safeguards — shared across recommendation and
+  // comparison turns (EP-QS). Fires for any content-generating turn.
+  // Prompt-level only; deterministic no-match paths and clarification turns excluded.
+  if (!noMatchAnchored && !plan.requiresClarification) {
+    instructions.push(
+      "[Prompt safeguard] The catalogue score does not justify an absolute absence claim. Avoid 'strips away', 'removes', 'eliminates', 'without [dimension]'. Describe it as 'low [dimension] at 1/5' instead.",
+      "[Prompt safeguard] Do not invent customer consensus. Avoid 'most people', 'everyone discovers', 'guests wish they had found sooner'. Speak from the fragrance's own character.",
+    );
+  }
+
+  // Recommendation-turn safeguards (EP-QS). Fires for new_search, refinement, and
+  // anchored_refinement recommendation turns. Prompt-level only.
+  if (!noMatchAnchored && !plan.requiresComparison && !plan.requiresClarification) {
+    instructions.push(
+      "[Prompt safeguard] Base dimension direction claims on the Intelligence scores in FRAGRANCES IN CONTEXT. Do not infer freshness from reduced sweetness, or vice versa. Do not infer projection or longevity from intensity.",
+      "[Prompt safeguard] Do not imply duration or projection. Avoid 'dominates the entire wear', 'announces itself', 'fills the room'. Describe notes, character, and scored dimensions only.",
+      "[Writing target — not a hard limit] Keep responses concise: one brief opening sentence, one short paragraph per fragrance, at most one follow-up question.",
+    );
   }
 
   // ── Anchored refinement — strict match (EP-AI-C4) ────────────────────────────
@@ -338,6 +364,8 @@ function buildInstructionsSection(
       "Use Intelligence scores (sweetness, freshness, warmth, intensity) to highlight concrete differences.",
       "Give a clear, decisive recommendation for which to choose.",
       "Tag each fragrance as [PRODUCT:slug].",
+      "[Writing target — not a hard limit] Aim for 120–180 words: one short paragraph per fragrance, a decisive recommendation, and at most one follow-up question.",
+      "[Prompt safeguard — compliance not deterministically enforced] Dimension comparisons must follow the scores in COMPARISON INTELLIGENCE FOCUS. Do not infer one dimension's direction from another — for example, do not describe a fragrance as fresher because it scores lower in sweetness.",
       "[Prompt safeguard — compliance not deterministically enforced] Do not make claims about projection, sillage, longevity, or any wear-performance characteristic — describe notes, scent character, and scored dimensions only.",
       "[Prompt safeguard — compliance not deterministically enforced] When citing versatility scores, describe supported occasions and uses rather than claiming suitability everywhere, in every season, or at every moment. A high score does not imply universal suitability.",
     );
