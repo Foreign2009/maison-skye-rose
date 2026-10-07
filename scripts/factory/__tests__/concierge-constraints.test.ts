@@ -28,7 +28,7 @@ import { buildSystemPrompt } from "../../../app/lib/concierge/safetyGuard";
 import { mkcCatalogue }      from "../../../app/lib/mkc/catalogue";
 import { nativeFragrances }  from "../../../app/lib/mkc/native";
 import { resolveIntent } from "../../../app/lib/concierge/intentResolver";
-import type { ConversationProfile, ConversationState, ConversationContext, ConsultationPlan }  from "../../../app/lib/concierge/types";
+import type { ConversationProfile, ConversationState, ConversationContext, ConsultationPlan, ConversationIntent }  from "../../../app/lib/concierge/types";
 import type { ResolvedIntent } from "../../../app/lib/concierge/intentResolver";
 import { planConversation, hasAnchoredDirectionSignal, resolveAnchorSlug, type ConversationPlan } from "../../../app/lib/concierge/conversationPlanner";
 import type { RetrievalContext } from "../../../app/lib/concierge/contextBuilder";
@@ -3896,7 +3896,11 @@ console.log("\n── LF-06. Strict-match absence-claim post-processor ───
 test("T-LF-06a — observed BR540 failure: 'sophistication without sweetness' corrected", () => {
   // "sophistication without sweetness" appeared in live deployment despite the prohibition.
   // Single candidate at sweetness=1 → all-same score → scoreTag=" (1/5)".
-  // Expected correction: "with lower sweetness than {anchorName} (1/5)".
+  // Expected correction: "with lower sweetness (1/5) than {anchorName}".
+  // Pass B must also strip ", scoring 1/5" that trails after the anchor name — the input
+  // includes "scoring 1/5" to replicate a model that restates the candidate's score in prose.
+  // After repair that notation lands after the anchor name and reads as the anchor's score;
+  // it must be removed since the scoreTag already captures the candidate's score.
   const anchor = mkcCatalogue.find((k) => k.slug === "baccarat-rouge-540-inspired");
   if (!anchor) { skip("T-LF-06a — BR540 not in catalogue"); return; }
   const meta: AnchoredMeta = {
@@ -3911,13 +3915,22 @@ test("T-LF-06a — observed BR540 failure: 'sophistication without sweetness' co
   const result = planResponse(raw, "anchored_refinement", retrieval, ANCHOR_PLAN);
   assert.ok(!result.content.includes("without sweetness"),
     `T-LF-06a — "without sweetness" must not survive; got: "${result.content}"`);
-  assert.ok(result.content.includes(`with lower sweetness than ${anchor.name} (1/5)`),
+  assert.ok(result.content.includes(`with lower sweetness (1/5) than ${anchor.name}`),
     `T-LF-06a — relative corrected phrase must appear; got: "${result.content}"`);
-  assert.ok(result.content.includes(`sophistication with lower sweetness than ${anchor.name} (1/5)`),
+  assert.ok(result.content.includes(`sophistication with lower sweetness (1/5) than ${anchor.name}`),
     `T-LF-06a — exact phrase in context; got: "${result.content}"`);
+  // Pass B: ", scoring 1/5" that followed "without sweetness" must be stripped — it lands
+  // after the anchor name and would otherwise read as the anchor's score.
+  assert.ok(!result.content.includes(`, scoring 1/5`),
+    `T-LF-06a — trailing ", scoring 1/5" after anchor name must be stripped by Pass B; got: "${result.content}"`);
+  // Full expected sentence: "{name} brings sophistication with lower sweetness (1/5) than {anchor}."
+  assert.ok(result.content.endsWith(`with lower sweetness (1/5) than ${anchor.name}.`),
+    `T-LF-06a — complete corrected sentence must end cleanly; got: "${result.content}"`);
 });
 
 test("T-LF-06b — 'zero sweetness' corrected to relative lower-than phrase", () => {
+  // "registers zero sweetness at 1/5" — after repair the "at 1/5" lands after the anchor name
+  // and reads as the anchor's score. Pass B must strip it.
   const meta: AnchoredMeta = {
     anchorSlug: "baccarat-rouge-540-inspired", anchorName: "Baccarat Rouge 540 Inspired",
     dimension: "sweetness", direction: "less", anchorScore: 3,
@@ -3930,8 +3943,14 @@ test("T-LF-06b — 'zero sweetness' corrected to relative lower-than phrase", ()
   const result = planResponse(raw, "anchored_refinement", retrieval, ANCHOR_PLAN);
   assert.ok(!result.content.includes("zero sweetness"),
     `T-LF-06b — "zero sweetness" must not survive; got: "${result.content}"`);
-  assert.ok(result.content.includes("lower sweetness than Baccarat Rouge 540 Inspired (1/5)"),
+  assert.ok(result.content.includes("lower sweetness (1/5) than Baccarat Rouge 540 Inspired"),
     `T-LF-06b — relative corrected phrase must appear; got: "${result.content}"`);
+  // Pass B: "at 1/5" trailing after anchor name must be stripped.
+  assert.ok(!result.content.includes("Baccarat Rouge 540 Inspired at 1/5"),
+    `T-LF-06b — "at 1/5" must not appear after anchor name; got: "${result.content}"`);
+  // Full expected sentence: "{name} registers lower sweetness (1/5) than Baccarat Rouge 540 Inspired."
+  assert.ok(result.content.endsWith("lower sweetness (1/5) than Baccarat Rouge 540 Inspired."),
+    `T-LF-06b — complete corrected sentence must end cleanly; got: "${result.content}"`);
 });
 
 test("T-LF-06c — 'no sweetness' corrected to relative lower-than phrase", () => {
@@ -3947,7 +3966,7 @@ test("T-LF-06c — 'no sweetness' corrected to relative lower-than phrase", () =
   const result = planResponse(raw, "anchored_refinement", retrieval, ANCHOR_PLAN);
   assert.ok(!result.content.includes("no sweetness"),
     `T-LF-06c — "no sweetness" must not survive; got: "${result.content}"`);
-  assert.ok(result.content.includes("lower sweetness than Baccarat Rouge 540 Inspired"),
+  assert.ok(result.content.includes("lower sweetness (1/5) than Baccarat Rouge 540 Inspired"),
     `T-LF-06c — relative corrected phrase must appear; got: "${result.content}"`);
 });
 
@@ -3984,7 +4003,7 @@ test("T-LF-06e — sweetness synonym 'without sugar' corrected to relative phras
   const result = planResponse(raw, "anchored_refinement", retrieval, ANCHOR_PLAN);
   assert.ok(!result.content.includes("without sugar"),
     `T-LF-06e — "without sugar" must not survive; got: "${result.content}"`);
-  assert.ok(result.content.includes("with lower sweetness than Baccarat Rouge 540 Inspired"),
+  assert.ok(result.content.includes("with lower sweetness (1/5) than Baccarat Rouge 540 Inspired"),
     `T-LF-06e — relative corrected phrase must appear; got: "${result.content}"`);
 });
 
@@ -4003,7 +4022,7 @@ test("T-LF-06f — direction='more', dimension='warmth': 'without warmth' → 'w
   const result = planResponse(raw, "anchored_refinement", retrieval, ANCHOR_PLAN);
   assert.ok(!result.content.includes("without warmth"),
     `T-LF-06f — "without warmth" must not survive; got: "${result.content}"`);
-  assert.ok(result.content.includes("with higher warmth than Sauvage Inspired"),
+  assert.ok(result.content.includes("with higher warmth (5/5) than Sauvage Inspired"),
     `T-LF-06f — relative corrected phrase must appear; got: "${result.content}"`);
 });
 
@@ -4021,7 +4040,7 @@ test("T-LF-06g — less: anchor sweetness=5, candidate sweetness=4 → score tag
   const result = planResponse(raw, "anchored_refinement", retrieval, ANCHOR_PLAN);
   assert.ok(!result.content.includes("without sweetness"),
     `T-LF-06g — "without sweetness" must not survive; got: "${result.content}"`);
-  assert.ok(result.content.includes("with lower sweetness than Test Anchor"),
+  assert.ok(result.content.includes("with lower sweetness (4/5) than Test Anchor"),
     `T-LF-06g — relative phrase with correct anchor must appear; got: "${result.content}"`);
   // Score tag must reflect candidate's sweetness, not anchor's (5/5 would be wrong)
   assert.ok(!result.content.includes("(5/5)"),
@@ -4044,7 +4063,7 @@ test("T-LF-06h — more: anchor warmth=1, candidate warmth=2 → 'higher warmth'
   const result = planResponse(raw, "anchored_refinement", retrieval, ANCHOR_PLAN);
   assert.ok(!result.content.includes("without warmth"),
     `T-LF-06h — "without warmth" must not survive; got: "${result.content}"`);
-  assert.ok(result.content.includes("with higher warmth than Test Anchor Warmth"),
+  assert.ok(result.content.includes("with higher warmth (3/5) than Test Anchor Warmth"),
     `T-LF-06h — direction must be "higher" for more-direction; got: "${result.content}"`);
 });
 
@@ -4169,8 +4188,65 @@ test("T-LF-06m — identical valid scores: score tag correctly added", () => {
   const raw = `[PRODUCT:${candidates[0].slug}] and [PRODUCT:${candidates[1].slug}] without sweetness.`;
   const result = planResponse(raw, "anchored_refinement", retrieval, ANCHOR_PLAN);
   // Score tag must appear — every rendered candidate shares the same valid score
-  assert.ok(result.content.includes("lower sweetness than Baccarat Rouge 540 Inspired (1/5)"),
+  assert.ok(result.content.includes("lower sweetness (1/5) than Baccarat Rouge 540 Inspired"),
     `T-LF-06m — score tag must appear when all rendered candidates share identical valid score; got: "${result.content}"`);
+});
+
+test("T-LF-06n — 'carries without sweetness' does not produce 'carries with lower sweetness'", () => {
+  // Pass A: "verb + with lower/higher" fix.
+  // "carries without sweetness" → main substitution produces "carries with lower sweetness (1/5) than X"
+  //   → Pass A strips the spurious "with" → "carries lower sweetness (1/5) than X".
+  // "carries with lower sweetness" is grammatically awkward; "carries lower sweetness" is correct.
+  const meta: AnchoredMeta = {
+    anchorSlug: "baccarat-rouge-540-inspired", anchorName: "Baccarat Rouge 540 Inspired",
+    dimension: "sweetness", direction: "less", anchorScore: 3,
+    strictMatches: true, catalogueBoundary: false,
+  };
+  const candidates = mkcCatalogue.filter((k) => (k.sweetness ?? 99) === 1).slice(0, 1);
+  if (candidates.length === 0) { skip("T-LF-06n — no sweetness=1 candidates"); return; }
+  const retrieval: RetrievalContext = { fragrances: candidates, articles: [], anchoredMeta: meta };
+  const raw = `[PRODUCT:${candidates[0].slug}] carries without sweetness in its opening.`;
+  const result = planResponse(raw, "anchored_refinement", retrieval, ANCHOR_PLAN);
+  assert.ok(!result.content.includes("without sweetness"),
+    `T-LF-06n — "without sweetness" must not survive; got: "${result.content}"`);
+  // Pass A must remove the spurious "with":
+  assert.ok(!result.content.includes("carries with lower"),
+    `T-LF-06n — "carries with lower" is grammatically broken; Pass A must strip "with"; got: "${result.content}"`);
+  assert.ok(result.content.includes("carries lower sweetness"),
+    `T-LF-06n — corrected form "carries lower sweetness" must appear; got: "${result.content}"`);
+  // Complete sentence check:
+  assert.ok(result.content.includes("carries lower sweetness (1/5) than Baccarat Rouge 540 Inspired in its opening."),
+    `T-LF-06n — complete corrected sentence must be grammatical; got: "${result.content}"`);
+});
+
+test("T-LF-06o — Pass B: anchor's own trailing score is preserved; candidate score is stripped", () => {
+  // Pass B strips "at N/5" / "scoring N/5" appearing after the anchor name when the
+  // stated score is NOT the anchor's own score (candidate score landed ambiguously after
+  // substitution). When the stated score equals anchorScore, it legitimately identifies
+  // the anchor and must NOT be stripped.
+  const meta: AnchoredMeta = {
+    anchorSlug: "baccarat-rouge-540-inspired", anchorName: "Baccarat Rouge 540 Inspired",
+    dimension: "sweetness", direction: "less", anchorScore: 3,
+    strictMatches: true, catalogueBoundary: false,
+  };
+  const candidates = mkcCatalogue.filter((k) => (k.sweetness ?? 99) === 1).slice(0, 1);
+  if (candidates.length === 0) { skip("T-LF-06o — no sweetness=1 candidates"); return; }
+  const retrieval: RetrievalContext = { fragrances: candidates, articles: [], anchoredMeta: meta };
+
+  // Raw already in relative form — no absence claim. "at 3/5" is the anchor's own score.
+  const raw = `[PRODUCT:${candidates[0].slug}] has lower sweetness (1/5) than Baccarat Rouge 540 Inspired at 3/5, making it very different in character.`;
+  const result = planResponse(raw, "anchored_refinement", retrieval, ANCHOR_PLAN);
+
+  // Anchor's own score (3/5) must survive Pass B:
+  assert.ok(
+    result.content.includes("than Baccarat Rouge 540 Inspired at 3/5"),
+    `T-LF-06o — anchor's own "at 3/5" must not be stripped by Pass B; got: "${result.content}"`
+  );
+  // Unrelated prose after the anchor reference is also preserved:
+  assert.ok(
+    result.content.includes("making it very different in character"),
+    `T-LF-06o — prose following anchor reference must be preserved; got: "${result.content}"`
+  );
 });
 
 // ── T-LF-07: comparison chip count awareness ──────────────────────────────────
@@ -4558,7 +4634,7 @@ test("T-QS-04 — recommendation context (context assertion): projection/duratio
     "recommend something fresh",
   ));
   assert.ok(
-    rendered.includes("dominates the entire wear") && rendered.includes("announces itself"),
+    rendered.includes("dominates the wear") && rendered.includes("announces itself"),
     `T-QS-04 — projection/duration prohibition must be in prompt`,
   );
 });
@@ -9976,6 +10052,161 @@ test("VRANK-05 — 'something refined': parses Refined and ≥1 Refined-tagged r
   assert.equal(r.signals.vibe, "Refined", `VRANK-05: expected vibe=Refined, got ${r.signals.vibe}`);
   assert.ok(tagged.length >= 1,
     `VRANK-05: expected ≥1 Refined-tagged record in bare-query result; got none. Slugs: ${result.fragrances.map(f=>f.slug).join(", ")}`);
+});
+
+// ── T-QS-16–19: Defect regression regressions (patch 2026-10-07) ─────────────
+
+test("T-QS-16 — score attribution: (1/5) appears before 'than', not after anchor name", () => {
+  // Reproduce the sanitiseAbsenceClaims output for a sweetness=1 pool.
+  // We build a minimal anchored_refinement context and drive planResponse with
+  // model prose that contains "without sweetness".
+  const terraFrag = nativeFragrances.get("terre-d'hermes-inspired");
+  assert.ok(terraFrag, "T-QS-16: prerequisite — terre-d'hermes-inspired present in native catalogue");
+
+  const retrieval: RetrievalContext = {
+    fragrances:  [terraFrag!],
+    articles:    [],
+    anchoredMeta: {
+      anchorSlug:        "baccarat-rouge-540-inspired",
+      anchorName:        "Baccarat Rouge 540 Inspired",
+      dimension:         "sweetness",
+      direction:         "less",
+      anchorScore:       3,
+      strictMatches:     true,
+      catalogueBoundary: false,
+    },
+  };
+
+  const rawModel =
+    "This option carries without sweetness, making it a great match.\n\n[PRODUCT:terre-d'hermes-inspired]";
+  const result = planResponse(rawModel, "anchored_refinement", retrieval, ANCHOR_PLAN);
+
+  // Score tag "(1/5)" must appear BEFORE "than Baccarat Rouge 540 Inspired"
+  const scoreBeforeThan = /\(1\/5\)\s+than\s+Baccarat Rouge 540 Inspired/.test(result.content);
+  // Score tag must NOT appear AFTER anchor name
+  const scoreAfterAnchor = /Baccarat Rouge 540 Inspired\s*\(1\/5\)/.test(result.content);
+
+  console.log(`     T-QS-16 content excerpt: "${result.content.slice(0, 120)}"`);
+  assert.ok(scoreBeforeThan,  `T-QS-16: expected "(1/5) than Baccarat Rouge 540 Inspired" — score must precede anchor. Content: ${result.content.slice(0,200)}`);
+  assert.ok(!scoreAfterAnchor, `T-QS-16: "(1/5)" must not appear after anchor name. Content: ${result.content.slice(0,200)}`);
+});
+
+test("T-QS-17 — apostrophe normalization: U+2019 in PRODUCT marker resolves to canonical name", () => {
+  // Construct a rawContent where the LLM emitted U+2019 (RIGHT SINGLE QUOTATION MARK)
+  // inside the PRODUCT marker slug — as it may when typographic quotes are used.
+  // After normalization the marker should match PRODUCT_RE (U+0027 only) and the
+  // canonical name should appear in the output instead of the raw marker.
+  const terraFrag = nativeFragrances.get("terre-d'hermes-inspired");
+  assert.ok(terraFrag, "T-QS-17: prerequisite — terre-d'hermes-inspired present in native catalogue");
+
+  const retrieval: RetrievalContext = {
+    fragrances:  [terraFrag!],
+    articles:    [],
+  };
+
+  // U+2019 apostrophe in the slug — PRODUCT_RE would not match without normalization
+  const curlyApostrophe = "’";
+  const rawModel = `Here is our recommendation.\n\n[PRODUCT:terre-d${curlyApostrophe}hermes-inspired]`;
+
+  const result = planResponse(rawModel, "new_search", retrieval, BASE_PLAN);
+
+  console.log(`     T-QS-17 content: "${result.content.slice(0, 120)}" slugs: ${result.recommendedSlugs.join(", ")}`);
+
+  // The marker should have resolved: canonical name present, slug in recommendedSlugs
+  const namePresent = result.content.includes("Terre d");  // "Terre d'Hermes Inspired" or variant
+  const slugResolved = result.recommendedSlugs.includes("terre-d'hermes-inspired");
+
+  assert.ok(namePresent,   `T-QS-17: canonical name "Terre d..." not found in output. Content: ${result.content.slice(0,200)}`);
+  assert.ok(slugResolved,  `T-QS-17: slug "terre-d'hermes-inspired" not in recommendedSlugs. Got: ${result.recommendedSlugs.join(", ")}`);
+});
+
+test("T-QS-18 — context: all 5 confirmed projection phrases absent from Imagination+Sauvage rendered context", () => {
+  const imaginationFrag = nativeFragrances.get("imagination-inspired");
+  const sauvageFrag     = nativeFragrances.get("sauvage-inspired");
+  assert.ok(imaginationFrag, "T-QS-18: prerequisite — imagination-inspired in catalogue");
+  assert.ok(sauvageFrag,     "T-QS-18: prerequisite — sauvage-inspired in catalogue");
+
+  const retrieval: RetrievalContext = {
+    fragrances:  [imaginationFrag!, sauvageFrag!],
+    articles:    [],
+  };
+
+  const ctx  = buildContext(retrieval, EMPTY_STATE, BASE_PLAN);
+  const text = renderContext(ctx);
+
+  // Only check the fragrances section — instructions section may quote phrases as examples.
+  // Section header is "FRAGRANCES IN CONTEXT"; next section starts with "===".
+  const fragrancesSectionMatch = text.match(/FRAGRANCES IN CONTEXT[\s\S]*?(?=\n===|$)/);
+  const fragrancesSection = fragrancesSectionMatch ? fragrancesSectionMatch[0] : text;
+
+  console.log(`     T-QS-18 context length: ${text.length} chars, fragrances section: ${fragrancesSection.length} chars`);
+
+  // Confirmed sources that stripContextProjectionLanguage must remove
+  const forbidden = [
+    "rewards closeness over announcement",
+    "intimate rather than projecting",
+    "revealing its character through proximity rather than sillage",
+    "blends with skin chemistry to produce a projection that feels personal rather than heavy",
+    "most wearable and universally appreciated",
+  ];
+
+  for (const phrase of forbidden) {
+    const present = fragrancesSection.toLowerCase().includes(phrase.toLowerCase());
+    console.log(`     T-QS-18 phrase "${phrase.slice(0,50)}…" present=${present}`);
+    assert.ok(!present, `T-QS-18: forbidden phrase found in fragrances section: "${phrase}"`);
+  }
+
+  // Additional checks for updated strip patterns
+  assert.ok(!fragrancesSection.includes("rewards closeness"),
+    `T-QS-18: "rewards closeness" remnant must not appear — full recommendedFor[0] entry must be omitted`);
+  assert.ok(!fragrancesSection.includes("one of the most distinctive masculines in the collection"),
+    `T-QS-18: "most distinctive" replacement phrase must not appear — no substitution is made`);
+
+  // Supported content must still be present
+  assert.ok(fragrancesSection.includes("Office and professional environments"),
+    "T-QS-18: supported Imagination occasion text must be preserved in context");
+  assert.ok(fragrancesSection.includes("confident without demanding attention"),
+    "T-QS-18: supported Sauvage character descriptor must be preserved in context");
+  assert.ok(fragrancesSection.includes("imagination-inspired"), "T-QS-18: imagination slug should appear in context");
+  assert.ok(fragrancesSection.includes("sauvage-inspired"),     "T-QS-18: sauvage slug should appear in context");
+});
+
+test("T-QS-19 — paragraph breaks: \\n\\n preserved through planResponse; flat content unchanged", () => {
+  const terraFrag = nativeFragrances.get("terre-d'hermes-inspired");
+  assert.ok(terraFrag, "T-QS-19: prerequisite — terre-d'hermes-inspired present in native catalogue");
+
+  const retrieval: RetrievalContext = {
+    fragrances:  [terraFrag!],
+    articles:    [],
+  };
+
+  // Multi-paragraph response with LF paragraph breaks
+  const multiParaLF =
+    "Here is a woody option for you.\n\n[PRODUCT:terre-d'hermes-inspired]\n\nIt has earthy, mineral character.";
+  const resultLF = planResponse(multiParaLF, "new_search", retrieval, BASE_PLAN);
+  assert.ok(
+    resultLF.content.includes("\n\n"),
+    `T-QS-19: LF paragraph break not preserved. Content: ${JSON.stringify(resultLF.content.slice(0,200))}`
+  );
+
+  // Multi-paragraph response with CRLF paragraph breaks (Windows line endings)
+  const multiParaCRLF =
+    "Here is a woody option for you.\r\n\r\n[PRODUCT:terre-d'hermes-inspired]\r\n\r\nIt has earthy, mineral character.";
+  const resultCRLF = planResponse(multiParaCRLF, "new_search", retrieval, BASE_PLAN);
+  assert.ok(
+    resultCRLF.content.includes("\n\n"),
+    `T-QS-19: CRLF paragraph break not normalized+preserved. Content: ${JSON.stringify(resultCRLF.content.slice(0,200))}`
+  );
+
+  // Flat single-paragraph response must remain flat (no spurious \n\n injected)
+  const flat = "This is a single-paragraph response with no line breaks at all.";
+  const resultFlat = planResponse(flat, "new_search", retrieval, BASE_PLAN);
+  assert.ok(
+    !resultFlat.content.includes("\n\n"),
+    `T-QS-19: flat content should not contain \\n\\n. Content: ${JSON.stringify(resultFlat.content.slice(0,200))}`
+  );
+
+  console.log(`     T-QS-19 LF preserved: ${resultLF.content.includes("\n\n")}  CRLF→LF: ${resultCRLF.content.includes("\n\n")}  flat clean: ${!resultFlat.content.includes("\n\n")}`);
 });
 
 // ── Summary ───────────────────────────────────────────────────────────────────

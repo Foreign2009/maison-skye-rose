@@ -117,6 +117,69 @@
       "clarificationTurnCount": 0
     }
   },
+  "scenarioE": {
+    "content": "Wood Sage Sea Salt Inspired is a coastal, mineral fragrance — ideal for warmer months.\n\nIt opens with sea-spray freshness and dries down to soft woody musks.",
+    "fragrances": [
+      {
+        "slug": "wood-sage-sea-salt-inspired",
+        "name": "Wood Sage Sea Salt Inspired",
+        "subtitle": "Coastal Clarity",
+        "family": ["Fresh", "Woody"],
+        "image": "/images/blue-10ml.png",
+        "price": 100,
+        "href": "/product/wood-sage-sea-salt-inspired"
+      }
+    ],
+    "articles": [],
+    "followUpSuggestions": ["Compare these", "Show me another option"],
+    "intent": "similar_to",
+    "sessionUpdates": {
+      "selectedSlug": null, "lastArticleSlug": null, "lastCollection": "Elite",
+      "comparisonSlugs": [], "profile": null, "consultationPlan": null, "clarificationTurnCount": 0
+    }
+  },
+  "scenarioF": {
+    "content": "Wood Sage Sea Salt Inspired is a coastal, mineral fragrance — ideal for warmer months.\r\n\r\nIt opens with sea-spray freshness and dries down to soft woody musks.",
+    "fragrances": [
+      {
+        "slug": "wood-sage-sea-salt-inspired",
+        "name": "Wood Sage Sea Salt Inspired",
+        "subtitle": "Coastal Clarity",
+        "family": ["Fresh", "Woody"],
+        "image": "/images/blue-10ml.png",
+        "price": 100,
+        "href": "/product/wood-sage-sea-salt-inspired"
+      }
+    ],
+    "articles": [],
+    "followUpSuggestions": ["Compare these", "Show me another option"],
+    "intent": "similar_to",
+    "sessionUpdates": {
+      "selectedSlug": null, "lastArticleSlug": null, "lastCollection": "Elite",
+      "comparisonSlugs": [], "profile": null, "consultationPlan": null, "clarificationTurnCount": 0
+    }
+  },
+  "scenarioG": {
+    "content": "Wood Sage Sea Salt Inspired is a coastal, mineral fragrance — ideal for warmer months.",
+    "fragrances": [
+      {
+        "slug": "wood-sage-sea-salt-inspired",
+        "name": "Wood Sage Sea Salt Inspired",
+        "subtitle": "Coastal Clarity",
+        "family": ["Fresh", "Woody"],
+        "image": "/images/blue-10ml.png",
+        "price": 100,
+        "href": "/product/wood-sage-sea-salt-inspired"
+      }
+    ],
+    "articles": [],
+    "followUpSuggestions": ["Show me another option"],
+    "intent": "similar_to",
+    "sessionUpdates": {
+      "selectedSlug": null, "lastArticleSlug": null, "lastCollection": "Elite",
+      "comparisonSlugs": [], "profile": null, "consultationPlan": null, "clarificationTurnCount": 0
+    }
+  },
   "scenarioD": {
     "content": "I'd suggest Wood Sage Sea Salt Inspired for everyday and Sauvage Inspired for special occasions.",
     "fragrances": [

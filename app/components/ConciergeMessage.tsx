@@ -38,7 +38,9 @@ export default function ConciergeMessage({
             : "bg-[#d89ca4] text-white rounded-tr-sm"
         }`}
       >
-        {message.content}
+        {message.content.split(/\r?\n\r?\n/).map((para, i) => (
+          <span key={i} className={i > 0 ? "block mt-2" : "block"}>{para}</span>
+        ))}
       </div>
 
       {/* Product cards (assistant only) */}

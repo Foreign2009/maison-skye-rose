@@ -163,6 +163,42 @@ function buildRelationshipBlock(k: FragranceKnowledge): string | null {
   return `   Relationships:\n${parts.join("\n")}`;
 }
 
+// Strip confirmed performance/projection language from catalogue prose before
+// serialising to the model context. These specific phrases are the demonstrated
+// sources of conflicting performance descriptions that the model echoes
+// regardless of instruction safeguards (confirmed from Imagination and Sauvage
+// catalogue entries). Only the identified phrases are removed; notes, character,
+// occasion guidance and catalogue rankings are preserved.
+//
+// Sources confirmed:
+//   Imagination mood:           "a fresh masculine that rewards closeness over announcement"
+//   Imagination description:    "a fragrance that rewards closeness over announcement"
+//   Imagination recommendedFor: "Those who prefer fragrance that rewards closeness — Imagination is intimate
+//                                 rather than projecting, revealing its character through proximity rather
+//                                 than sillage" (full entry omitted — remnant stub still implies proximity/performance)
+//   Sauvage description:        "This molecule, responsible for the fragrance's magnetic character,
+//                                 blends with skin chemistry to produce a projection
+//                                 that feels personal rather than heavy."
+//   Sauvage description:        "one of the most wearable and universally appreciated masculines in the
+//                                 collection — " (removed; supported descriptor preserved: "confident without
+//                                 demanding attention, fresh without being forgettable")
+function stripContextProjectionLanguage(text: string): string {
+  return text
+    .replace(/ — a fresh masculine that rewards closeness over announcement\./g, ".")
+    .replace(/ — a fragrance that rewards closeness over announcement\./g, ".")
+    // Strip the complete Imagination recommendedFor[0] entry. Removing only the projecting
+    // clause previously left "Those who prefer fragrance that rewards closeness" — a stub
+    // that still implies proximity/performance. The empty return is filtered by the caller.
+    .replace(/Those who prefer fragrance that rewards closeness — Imagination is intimate rather than projecting, revealing its character through proximity rather than sillage/g, "")
+    // Strip full Sauvage sentence — removing only the dependent clause would leave "This molecule,
+    // responsible for the fragrance's magnetic character." as a fragment with no predicate.
+    .replace(/This molecule, responsible for the fragrance's magnetic character, blends with skin chemistry to produce a projection that feels personal rather than heavy\. /g, "")
+    // Remove the unsupported universal-wearability claim; preserve the following supported
+    // character description ("confident without demanding attention, fresh without being forgettable").
+    .replace(/one of the most wearable and universally appreciated masculines in the collection — /g, "")
+    .trim();
+}
+
 function buildFragranceSection(
   fragrances:                FragranceKnowledge[],
   reuseMode:                 boolean,
@@ -186,13 +222,15 @@ function buildFragranceSection(
       const quality = getKnowledgeQuality(k.slug);
 
       // Editorial content — authored for native records only
-      if (k.description) lines.push(`   Description: ${k.description}`);
+      // stripContextProjectionLanguage removes confirmed performance/projection
+      // phrases before they reach the model (see function comment above).
+      if (k.description) lines.push(`   Description: ${stripContextProjectionLanguage(k.description)}`);
 
       // Educational depth signal — guides LLM when editorial richness is absent
       if (quality?.educationalRichness === 0) {
         lines.push(`   [Prioritise Academy article recommendations for educational depth on this fragrance]`);
       }
-      lines.push(`   Mood: ${k.mood}`);
+      lines.push(`   Mood: ${stripContextProjectionLanguage(k.mood)}`);
       lines.push(`   Wardrobe Role: ${computeWardrobe(k).wardrobeRole} | Signature: ${k.signatureStyle.join(", ")}`);
       lines.push(`   Vibe: ${k.vibe.join(", ")}`);
       lines.push(`   Occasions: ${k.occasions.join(", ")}`);
@@ -216,8 +254,9 @@ function buildFragranceSection(
       const relBlock = buildRelationshipBlock(k);
       if (relBlock) lines.push(relBlock);
 
-      // Persona fit
-      lines.push(`   Best for: ${k.recommendedFor.slice(0, 2).join("; ")}`);
+      // Persona fit — filter empty strings produced when a full entry is stripped.
+      const bestFor = k.recommendedFor.slice(0, 2).map(stripContextProjectionLanguage).filter(s => s.length > 0);
+      if (bestFor.length > 0) lines.push(`   Best for: ${bestFor.join("; ")}`);
 
       if (k.bestSeller) lines.push("   [Best Seller]");
       if (k.newArrival) lines.push("   [New Arrival]");
@@ -334,7 +373,7 @@ function buildInstructionsSection(
   if (!noMatchAnchored && !plan.requiresComparison && !plan.requiresClarification) {
     instructions.push(
       "[Prompt safeguard] Base dimension direction claims on the Intelligence scores in FRAGRANCES IN CONTEXT. Do not infer freshness from reduced sweetness, or vice versa. Do not infer projection or longevity from intensity.",
-      "[Prompt safeguard] Do not imply duration or projection. Avoid 'dominates the entire wear', 'announces itself', 'fills the room'. Describe notes, character, and scored dimensions only.",
+      "[Prompt safeguard] Do not make any claim about projection, sillage, longevity, or universal wearability. Avoid 'announces itself', 'fills the room', 'commands a room', 'holds presence', 'dominates the wear', 'intimate rather than projecting', 'universally wearable'. Describe only notes, character, and scored dimensions.",
       "[Writing target — not a hard limit] Keep responses concise: one brief opening sentence, one short paragraph per fragrance, at most one follow-up question.",
     );
   }

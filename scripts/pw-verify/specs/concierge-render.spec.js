@@ -183,6 +183,82 @@ test('C: article marker — title in bubble, no marker, article card with correc
   await expect(productCard, 'Product card present').toBeVisible();
 });
 
+// ── Scenario E: two paragraphs (LF separator) render as distinct blocks ──────
+
+test('E: two paragraphs (LF) — each paragraph renders as a distinct visible block', async ({ page }) => {
+  const fixture = FIXTURES.scenarioE;
+  // fixture.content has \n\n (LF paragraph break) between two sentences.
+  // ConciergeMessage splits on \r?\n\n and wraps each in <span class="block">.
+  // Both paragraphs must be visible and vertically separated (distinct bounding boxes).
+
+  const dialog = await openAndSendMessage(page, fixture, 'Tell me about Wood Sage Sea Salt?');
+
+  const bubble = dialog.locator('.rounded-tl-sm').last();
+  await expect(bubble).toBeVisible({ timeout: 5_000 });
+
+  // Both paragraph texts must appear
+  const bubbleText = await bubble.textContent();
+  expect(bubbleText, 'First paragraph text present').toContain('coastal, mineral fragrance');
+  expect(bubbleText, 'Second paragraph text present').toContain('sea-spray freshness');
+
+  // Paragraph spans: ConciergeMessage renders each \n\n-separated block as span.block
+  const paragraphSpans = bubble.locator('span.block');
+  await expect(paragraphSpans, 'Two block spans rendered').toHaveCount(2);
+
+  // Verify they are vertically separated — each span has its own bounding box
+  const box0 = await paragraphSpans.nth(0).boundingBox();
+  const box1 = await paragraphSpans.nth(1).boundingBox();
+  expect(box0, 'First paragraph bounding box exists').not.toBeNull();
+  expect(box1, 'Second paragraph bounding box exists').not.toBeNull();
+  expect(box1.y, 'Second paragraph starts below first paragraph').toBeGreaterThan(box0.y);
+});
+
+// ── Scenario F: two paragraphs (CRLF separator) render as distinct blocks ────
+
+test('F: two paragraphs (CRLF) — CRLF separator normalised; paragraphs render as distinct blocks', async ({ page }) => {
+  const fixture = FIXTURES.scenarioF;
+  // fixture.content has \r\n\r\n (CRLF paragraph break). ConciergeMessage splits on \r?\n\n.
+  // Must render identically to LF case — CRLF must not prevent paragraph splitting.
+
+  const dialog = await openAndSendMessage(page, fixture, 'Tell me more about this fragrance?');
+
+  const bubble = dialog.locator('.rounded-tl-sm').last();
+  await expect(bubble).toBeVisible({ timeout: 5_000 });
+
+  const bubbleText = await bubble.textContent();
+  expect(bubbleText, 'First paragraph text present (CRLF case)').toContain('coastal, mineral fragrance');
+  expect(bubbleText, 'Second paragraph text present (CRLF case)').toContain('sea-spray freshness');
+
+  const paragraphSpans = bubble.locator('span.block');
+  await expect(paragraphSpans, 'Two block spans rendered (CRLF case)').toHaveCount(2);
+
+  const box0 = await paragraphSpans.nth(0).boundingBox();
+  const box1 = await paragraphSpans.nth(1).boundingBox();
+  expect(box0, 'First paragraph bounding box exists (CRLF case)').not.toBeNull();
+  expect(box1, 'Second paragraph bounding box exists (CRLF case)').not.toBeNull();
+  expect(box1.y, 'Second paragraph starts below first (CRLF case)').toBeGreaterThan(box0.y);
+});
+
+// ── Scenario G: flat single-paragraph text renders without spurious blocks ───
+
+test('G: flat text — single paragraph renders as one block, text preserved', async ({ page }) => {
+  const fixture = FIXTURES.scenarioG;
+  // No \n\n in content — the split produces a single element.
+  // Must render without any extra spacing or missing text.
+
+  const dialog = await openAndSendMessage(page, fixture, 'Give me a brief description?');
+
+  const bubble = dialog.locator('.rounded-tl-sm').last();
+  await expect(bubble).toBeVisible({ timeout: 5_000 });
+
+  const bubbleText = await bubble.textContent();
+  expect(bubbleText, 'Single paragraph text fully present').toContain('coastal, mineral fragrance');
+  expect(bubbleText, 'No partial text — full sentence present').toContain('ideal for warmer months');
+
+  const paragraphSpans = bubble.locator('span.block');
+  await expect(paragraphSpans, 'Exactly one block span for flat text').toHaveCount(1);
+});
+
 // ── Scenario D: mixed-marker order, cardTarget=1 ─────────────────────────────
 
 test('D: mixed-marker order — first-mentioned (non-bold) selected at cardTarget=1', async ({ page }) => {

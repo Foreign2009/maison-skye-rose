@@ -114,7 +114,7 @@ function sanitiseAbsenceClaims(
   meta:     AnchoredMeta,
   rendered: RetrievalContext["fragrances"],  // actual rendered candidates only
 ): string {
-  const { anchorName, dimension, direction } = meta;
+  const { anchorName, dimension, direction, anchorScore } = meta;
   const dim     = dimension.toLowerCase();
   const dirComp = direction === "less" ? "lower" : "higher";
 
@@ -139,10 +139,12 @@ function sanitiseAbsenceClaims(
     scores.every((s) => Number.isFinite(s) && s >= 1 && s <= 5 && s === scores[0]);
   const scoreTag = allSame ? ` (${scores[0]}/5)` : "";
 
-  // "with lower sweetness than Baccarat Rouge 540 Inspired (1/5)"
-  const withRelative = `with ${dirComp} ${dim} than ${anchorName}${scoreTag}`;
-  // "lower sweetness than Baccarat Rouge 540 Inspired (1/5)"
-  const bareRelative = `${dirComp} ${dim} than ${anchorName}${scoreTag}`;
+  // "with lower sweetness (1/5) than Baccarat Rouge 540 Inspired"
+  // scoreTag placed between dimension and "than" so (1/5) unambiguously
+  // belongs to the candidates' score, not to the anchor fragrance.
+  const withRelative = `with ${dirComp} ${dim}${scoreTag} than ${anchorName}`;
+  // "lower sweetness (1/5) than Baccarat Rouge 540 Inspired"
+  const bareRelative = `${dirComp} ${dim}${scoreTag} than ${anchorName}`;
 
   // Preserves valid negations ("not without sweetness", "isn't no sweetness") and
   // quoted customer preferences ("I want no sweetness", "since you prefer no sweetness").
@@ -179,6 +181,33 @@ function sanitiseAbsenceClaims(
     result = replaceUnlessNegated(result, /\bsugar-?free\b/gi, `${dirComp}-sweetness`);
     result = replaceUnlessNegated(result, /\bsugarless\b/gi, `${dirComp}-sweetness`);
   }
+
+  // Pass A: Fix "verb + with lower/higher" produced when "verb without X" is replaced by
+  // "verb with lower X than Y". Verbs that take a direct object (not a prepositional "with")
+  // produce grammatically awkward constructions: "carries with lower sweetness" should be
+  // "carries lower sweetness".
+  result = result.replace(
+    /\b(carries|has|contains|maintains|retains|registers|sits|scores)\s+with\s+(lower|higher)\b/gi,
+    "$1 $2",
+  );
+
+  // Pass B: Strip score notations immediately after the anchor name.
+  // Model prose sometimes states the candidate's score after the absence claim
+  // (e.g. "zero sweetness at 1/5", "without sweetness, scoring 1/5"). After the
+  // main substitution the anchor name lands before these notations, producing
+  // "than AnchorName at 1/5" which reads as the anchor's score — not the candidate's.
+  // The scoreTag already in the repaired phrase carries the candidate's score.
+  //
+  // Exception: preserve when the stated score equals the anchor's own score —
+  // "than AnchorName at 3/5" may legitimately identify the anchor itself.
+  const escapedAnchor = anchorName.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  result = result.replace(
+    new RegExp(`(than\\s+${escapedAnchor})(,?\\s+(?:at|scoring|scored)\\s+)(\\d+\/5)`, "gi"),
+    (_m, before, _sep, score) => {
+      if (anchorScore !== null && score === `${anchorScore}/5`) return _m;
+      return before;
+    },
+  );
 
   return result;
 }
@@ -318,6 +347,14 @@ export function planResponse(
 ): PlannedResponse {
   const rawSlugs:    string[] = [];
   const articleSlugs: string[] = [];
+
+  // Normalise typographic apostrophes inside product and article markers.
+  // LLMs may emit U+2019 in slugs (e.g. terre-d'hermes) even when the context
+  // used U+0027. PRODUCT_RE only matches U+0027; without this normalisation the
+  // marker falls through to Repair B, which strips it and loses the name.
+  rawContent = rawContent.replace(/\[(?:PRODUCT|ARTICLE):[^\]]+\]/g, (m) =>
+    m.replace(/[‘’]/g, "'")
+  );
 
   // Extract [PRODUCT:slug] markers and preserve the canonical name in prose.
   //
@@ -545,7 +582,9 @@ export function planResponse(
   const followUpSuggestions = generateFollowUps(plan, intent, hasRecs, profile, finalSlugs.length).slice(0, 2);
 
   return {
-    content:          content.replace(/\s{2,}/g, " ").trim(),
+    // Normalise line endings, collapse excess spaces/tabs (not newlines),
+    // cap 3+ consecutive newlines to 2 so paragraph breaks are preserved.
+    content:          content.replace(/\r\n/g, "\n").replace(/[ \t]{2,}/g, " ").replace(/\n{3,}/g, "\n\n").trim(),
     recommendedSlugs: finalSlugs,
     articleSlugs,
     followUpSuggestions,
