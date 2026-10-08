@@ -4610,9 +4610,9 @@ test("T-QS-02 — recommendation context (context assertion): absence-claim safe
     "I want something less sweet",
   ));
   // Instruction delivery test — does not prove generated-response compliance.
-  // Wording: score does not justify absence claim; avoid "strips away" etc.
+  // Wording: score of 1/5 means low end of range, not absent; enumerate concrete examples.
   assert.ok(
-    rendered.includes("strips away") && rendered.includes("does not justify an absolute absence claim"),
+    rendered.includes("sits at the low end of the range") && rendered.includes("Do not assert absence"),
     `T-QS-02 — absence-claim safeguard (updated wording) must be in prompt`,
   );
 });
@@ -4728,7 +4728,7 @@ test("T-QS-11 — comparison context (instruction delivery): shared absence safe
     "compare these",
   ));
   assert.ok(
-    rendered.includes("does not justify an absolute absence claim"),
+    rendered.includes("sits at the low end of the range"),
     `T-QS-11 — shared absence safeguard must appear in comparison prompt`,
   );
 });
@@ -4753,7 +4753,7 @@ test("T-QS-13 — clarification turn: shared safeguards must not appear", () => 
     "I like fragrance",
   ));
   assert.ok(
-    !rendered.includes("does not justify an absolute absence claim"),
+    !rendered.includes("sits at the low end of the range"),
     `T-QS-13 — absence safeguard must not appear in clarification prompt`,
   );
   assert.ok(
@@ -4829,7 +4829,7 @@ test("T-QS-14 — BR540 less-sweet: production-equivalent planning path delivers
     "T-QS-14 — writing target must appear for anchored_refinement turn (no explicit count in message)",
   );
   assert.ok(
-    rendered.includes("does not justify an absolute absence claim"),
+    rendered.includes("sits at the low end of the range"),
     "T-QS-14 — shared absence safeguard must appear for anchored_refinement turn",
   );
   assert.ok(
@@ -4862,7 +4862,7 @@ test("T-QS-15 — no-match anchored refinement: shared safeguards excluded by no
     null, null, null, "something less sweet",
   ));
   assert.ok(
-    !rendered.includes("does not justify an absolute absence claim"),
+    !rendered.includes("sits at the low end of the range"),
     "T-QS-15 — shared absence safeguard must not fire for no-match turn (noMatchAnchored=true)",
   );
   assert.ok(
@@ -10207,6 +10207,132 @@ test("T-QS-19 — paragraph breaks: \\n\\n preserved through planResponse; flat 
   );
 
   console.log(`     T-QS-19 LF preserved: ${resultLF.content.includes("\n\n")}  CRLF→LF: ${resultCRLF.content.includes("\n\n")}  flat clean: ${!resultFlat.content.includes("\n\n")}`);
+});
+
+test("T-QS-20 — context: 'immediate impact' absent from Sauvage fragrances section; Occasions preserved", () => {
+  // Instruction-presence / context-strip test only. Not proof that the live model avoids
+  // "immediate presence" language — live-model compliance requires a fresh-chat after deploy.
+  const sauvageFrag = nativeFragrances.get("sauvage-inspired");
+  assert.ok(sauvageFrag, "T-QS-20: prerequisite — sauvage-inspired in catalogue");
+
+  const retrieval: RetrievalContext = {
+    fragrances: [sauvageFrag!],
+    articles:   [],
+  };
+
+  const ctx  = buildContext(retrieval, EMPTY_STATE, BASE_PLAN);
+  const text = renderContext(ctx);
+
+  const fragrancesSectionMatch = text.match(/FRAGRANCES IN CONTEXT[\s\S]*?(?=\n===|$)/);
+  const fragrancesSection = fragrancesSectionMatch ? fragrancesSectionMatch[0] : text;
+
+  assert.ok(
+    !fragrancesSection.includes("immediate impact"),
+    `T-QS-20: "immediate impact" must be stripped from Sauvage fragrances section. Section excerpt: ${fragrancesSection.slice(0, 300)}`
+  );
+
+  // Occasion context must still be present (preserved via Occasions field, not recommendedFor)
+  const hasOccasion = fragrancesSection.includes("Daily Wear") || fragrancesSection.includes("Office");
+  assert.ok(hasOccasion, `T-QS-20: Sauvage occasions (Daily Wear / Office) must be preserved in fragrances section`);
+
+  console.log(`     T-QS-20 "immediate impact" absent=${!fragrancesSection.includes("immediate impact")}  occasions preserved=${hasOccasion}`);
+});
+
+test("T-QS-21 — instruction: note-absence safeguard reaches recommendation path (BASE_PLAN)", () => {
+  // Instruction-presence test only. Verifies the safeguard text is in the prompt context
+  // sent to the model; does not prove the model complies with it.
+  const sauvageFrag = nativeFragrances.get("sauvage-inspired");
+  assert.ok(sauvageFrag, "T-QS-21: prerequisite — sauvage-inspired in catalogue");
+
+  const retrieval: RetrievalContext = { fragrances: [sauvageFrag!], articles: [] };
+  const text = renderContext(buildContext(retrieval, EMPTY_STATE, BASE_PLAN));
+
+  const instrSectionMatch = text.match(/RESPONSE INSTRUCTIONS[\s\S]*?(?=\n===|$)/);
+  const instrSection = instrSectionMatch ? instrSectionMatch[0] : "";
+
+  const present = instrSection.includes("key character notes, not a complete formula inventory");
+  console.log(`     T-QS-21 note-absence instruction present (rec)=${present}`);
+  assert.ok(present, `T-QS-21: note-absence safeguard must appear in instructions for recommendation path`);
+});
+
+test("T-QS-22 — instruction: note-absence safeguard reaches comparison path (QS_COMP_PLAN)", () => {
+  // Instruction-presence test only.
+  const sauvageFrag = nativeFragrances.get("sauvage-inspired");
+  assert.ok(sauvageFrag, "T-QS-22: prerequisite — sauvage-inspired in catalogue");
+
+  const retrieval: RetrievalContext = { fragrances: [sauvageFrag!], articles: [] };
+  const text = renderContext(buildContext(retrieval, EMPTY_STATE, QS_COMP_PLAN));
+
+  const instrSectionMatch = text.match(/RESPONSE INSTRUCTIONS[\s\S]*?(?=\n===|$)/);
+  const instrSection = instrSectionMatch ? instrSectionMatch[0] : "";
+
+  const present = instrSection.includes("key character notes, not a complete formula inventory");
+  console.log(`     T-QS-22 note-absence instruction present (comp)=${present}`);
+  assert.ok(present, `T-QS-22: note-absence safeguard must appear in instructions for comparison path`);
+});
+
+test("T-QS-23 — instruction: intensity-guarantee safeguard reaches recommendation path (BASE_PLAN)", () => {
+  // Instruction-presence test only.
+  const sauvageFrag = nativeFragrances.get("sauvage-inspired");
+  assert.ok(sauvageFrag, "T-QS-23: prerequisite — sauvage-inspired in catalogue");
+
+  const retrieval: RetrievalContext = { fragrances: [sauvageFrag!], articles: [] };
+  const text = renderContext(buildContext(retrieval, EMPTY_STATE, BASE_PLAN));
+
+  const instrSectionMatch = text.match(/RESPONSE INSTRUCTIONS[\s\S]*?(?=\n===|$)/);
+  const instrSection = instrSectionMatch ? instrSectionMatch[0] : "";
+
+  const present = instrSection.includes("intensity score does not establish projection");
+  console.log(`     T-QS-23 intensity-guarantee instruction present (rec)=${present}`);
+  assert.ok(present, `T-QS-23: intensity-guarantee safeguard must appear in instructions for recommendation path`);
+});
+
+test("T-QS-24 — instruction: intensity-guarantee safeguard reaches comparison path (QS_COMP_PLAN)", () => {
+  // Instruction-presence test only.
+  const sauvageFrag = nativeFragrances.get("sauvage-inspired");
+  assert.ok(sauvageFrag, "T-QS-24: prerequisite — sauvage-inspired in catalogue");
+
+  const retrieval: RetrievalContext = { fragrances: [sauvageFrag!], articles: [] };
+  const text = renderContext(buildContext(retrieval, EMPTY_STATE, QS_COMP_PLAN));
+
+  const instrSectionMatch = text.match(/RESPONSE INSTRUCTIONS[\s\S]*?(?=\n===|$)/);
+  const instrSection = instrSectionMatch ? instrSectionMatch[0] : "";
+
+  const present = instrSection.includes("intensity score does not establish projection");
+  console.log(`     T-QS-24 intensity-guarantee instruction present (comp)=${present}`);
+  assert.ok(present, `T-QS-24: intensity-guarantee safeguard must appear in instructions for comparison path`);
+});
+
+test("T-QS-25 — instruction: versatility safeguard reaches recommendation path (BASE_PLAN)", () => {
+  // Instruction-presence test only.
+  const sauvageFrag = nativeFragrances.get("sauvage-inspired");
+  assert.ok(sauvageFrag, "T-QS-25: prerequisite — sauvage-inspired in catalogue");
+
+  const retrieval: RetrievalContext = { fragrances: [sauvageFrag!], articles: [] };
+  const text = renderContext(buildContext(retrieval, EMPTY_STATE, BASE_PLAN));
+
+  const instrSectionMatch = text.match(/RESPONSE INSTRUCTIONS[\s\S]*?(?=\n===|$)/);
+  const instrSection = instrSectionMatch ? instrSectionMatch[0] : "";
+
+  const present = instrSection.includes("versatile across every occasion");
+  console.log(`     T-QS-25 versatility instruction present (rec)=${present}`);
+  assert.ok(present, `T-QS-25: versatility safeguard (quoting "versatile across every occasion") must appear in instructions for recommendation path`);
+});
+
+test("T-QS-26 — instruction: versatility safeguard reaches comparison path (QS_COMP_PLAN)", () => {
+  // Instruction-presence test only.
+  const sauvageFrag = nativeFragrances.get("sauvage-inspired");
+  assert.ok(sauvageFrag, "T-QS-26: prerequisite — sauvage-inspired in catalogue");
+
+  const retrieval: RetrievalContext = { fragrances: [sauvageFrag!], articles: [] };
+  const text = renderContext(buildContext(retrieval, EMPTY_STATE, QS_COMP_PLAN));
+
+  const instrSectionMatch = text.match(/RESPONSE INSTRUCTIONS[\s\S]*?(?=\n===|$)/);
+  const instrSection = instrSectionMatch ? instrSectionMatch[0] : "";
+
+  const present = instrSection.includes("versatile across every occasion");
+  console.log(`     T-QS-26 versatility instruction present (comp)=${present}`);
+  assert.ok(present, `T-QS-26: versatility safeguard (quoting "versatile across every occasion") must appear in instructions for comparison path`);
 });
 
 // ── Summary ───────────────────────────────────────────────────────────────────

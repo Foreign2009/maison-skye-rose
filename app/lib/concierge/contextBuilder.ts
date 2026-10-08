@@ -170,18 +170,20 @@ function buildRelationshipBlock(k: FragranceKnowledge): string | null {
 // catalogue entries). Only the identified phrases are removed; notes, character,
 // occasion guidance and catalogue rankings are preserved.
 //
-// Sources confirmed:
+// Sources confirmed (context inputs; causal influence on observed model wording is inferred):
 //   Imagination mood:           "a fresh masculine that rewards closeness over announcement"
 //   Imagination description:    "a fragrance that rewards closeness over announcement"
 //   Imagination recommendedFor: "Those who prefer fragrance that rewards closeness — Imagination is intimate
 //                                 rather than projecting, revealing its character through proximity rather
 //                                 than sillage" (full entry omitted — remnant stub still implies proximity/performance)
+//   Sauvage recommendedFor[1]:  "Fragrance beginners who want immediate impact"
+//                                 (omitted — "immediate impact" is an inferred source of "immediate presence"
+//                                 language in model output; occasion context preserved via Occasions field)
 //   Sauvage description:        "This molecule, responsible for the fragrance's magnetic character,
 //                                 blends with skin chemistry to produce a projection
 //                                 that feels personal rather than heavy."
 //   Sauvage description:        "one of the most wearable and universally appreciated masculines in the
-//                                 collection — " (removed; supported descriptor preserved: "confident without
-//                                 demanding attention, fresh without being forgettable")
+//                                 collection — " (removed; editorial description that follows is preserved)
 function stripContextProjectionLanguage(text: string): string {
   return text
     .replace(/ — a fresh masculine that rewards closeness over announcement\./g, ".")
@@ -190,11 +192,14 @@ function stripContextProjectionLanguage(text: string): string {
     // clause previously left "Those who prefer fragrance that rewards closeness" — a stub
     // that still implies proximity/performance. The empty return is filtered by the caller.
     .replace(/Those who prefer fragrance that rewards closeness — Imagination is intimate rather than projecting, revealing its character through proximity rather than sillage/g, "")
+    // Sauvage recommendedFor[1]: "immediate impact" is an inferred source of "immediate presence"
+    // language in model output. The empty return is filtered by the caller.
+    .replace(/Fragrance beginners who want immediate impact/g, "")
     // Strip full Sauvage sentence — removing only the dependent clause would leave "This molecule,
     // responsible for the fragrance's magnetic character." as a fragment with no predicate.
     .replace(/This molecule, responsible for the fragrance's magnetic character, blends with skin chemistry to produce a projection that feels personal rather than heavy\. /g, "")
-    // Remove the unsupported universal-wearability claim; preserve the following supported
-    // character description ("confident without demanding attention, fresh without being forgettable").
+    // Remove the unsupported universal-wearability claim; the editorial description that follows
+    // ("confident without demanding attention, fresh without being forgettable") is preserved.
     .replace(/one of the most wearable and universally appreciated masculines in the collection — /g, "")
     .trim();
 }
@@ -363,8 +368,12 @@ function buildInstructionsSection(
   // Prompt-level only; deterministic no-match paths and clarification turns excluded.
   if (!noMatchAnchored && !plan.requiresClarification) {
     instructions.push(
-      "[Prompt safeguard] The catalogue score does not justify an absolute absence claim. Avoid 'strips away', 'removes', 'eliminates', 'without [dimension]'. Describe it as 'low [dimension] at 1/5' instead.",
+      "[Prompt safeguard] A catalogue score of 1/5 on any dimension means the fragrance sits at the low end of the range — not absent. Do not assert absence: avoid 'without sweetness', 'no sweetness', 'zero sweetness', 'without any sweetness', 'without warmth', 'no warmth'. Describe as 'very low sweetness at 1/5' or 'low warmth at 2/5'.",
       "[Prompt safeguard] Do not invent customer consensus. Avoid 'most people', 'everyone discovers', 'guests wish they had found sooner'. Speak from the fragrance's own character.",
+      "[Prompt safeguard] Do not assert a note or ingredient is absent because it is not in the listed notes. The note list represents key character notes, not a complete formula inventory. Do not say 'no amber', 'no vanilla', 'without amber', 'without any amber or vanilla foundation', or any phrasing asserting a specific ingredient is absent.",
+      "[Prompt safeguard] The intensity score does not establish projection, sillage, longevity, or guaranteed wear experience. Do not say 'ensures it won’t feel thin', 'ensures presence', 'guarantees longevity', or any equivalent presenting wear performance as a guaranteed outcome.",
+      "[Prompt safeguard] When citing versatility, describe the occasions listed in FRAGRANCES IN CONTEXT. A versatility score of 5/5 indicates a wide occasion range relative to the catalogue — it does not imply every occasion or universal suitability. Do not say 'versatile across every occasion', 'suits every occasion', 'works everywhere'. Reference specific supported occasions instead.",
+      "[Prompt safeguard] Do not make claims about projection, sillage, or immediate sensory impact as a guaranteed quality. Avoid 'announces itself', 'immediate presence', 'fills the room', 'commands a room', 'holds presence'.",
     );
   }
 
@@ -373,7 +382,7 @@ function buildInstructionsSection(
   if (!noMatchAnchored && !plan.requiresComparison && !plan.requiresClarification) {
     instructions.push(
       "[Prompt safeguard] Base dimension direction claims on the Intelligence scores in FRAGRANCES IN CONTEXT. Do not infer freshness from reduced sweetness, or vice versa. Do not infer projection or longevity from intensity.",
-      "[Prompt safeguard] Do not make any claim about projection, sillage, longevity, or universal wearability. Avoid 'announces itself', 'fills the room', 'commands a room', 'holds presence', 'dominates the wear', 'intimate rather than projecting', 'universally wearable'. Describe only notes, character, and scored dimensions.",
+      "[Prompt safeguard] Do not make any claim about projection, sillage, longevity, or universal wearability. Avoid 'announces itself', 'immediate presence', 'fills the room', 'commands a room', 'holds presence', 'dominates the wear', 'intimate rather than projecting', 'universally wearable'. Describe only notes, character, and scored dimensions.",
       "[Writing target — not a hard limit] Keep responses concise: one brief opening sentence, one short paragraph per fragrance, at most one follow-up question.",
     );
   }
