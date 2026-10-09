@@ -4354,6 +4354,13 @@ const COMPARISON_PLAN: ConversationPlan = {
   nextIntent:            "comparison",
 };
 
+// Used for Repair A–D prose tests: requiresComparison=false so the deterministic
+// replacement does not fire and the repaired prose is the final output.
+const PROSE_REPAIR_PLAN: ConversationPlan = {
+  ...COMPARISON_PLAN,
+  requiresComparison: false,
+};
+
 const CP_RETRIEVAL: RetrievalContext = { fragrances: CP_FRAGS, articles: [] };
 
 test("T-CP-01 — bare name immediately before marker: no duplicate in output", () => {
@@ -4410,13 +4417,13 @@ test("T-CP-03 — **name** [PRODUCT:slug] heading: Step-0 path → single name, 
 test("T-CP-04 — legitimate repeated mention elsewhere in prose is preserved", () => {
   // Step 0b only collapses when the name is immediately adjacent to its marker.
   // A mention elsewhere in the same sentence (not directly before the marker)
-  // must not be removed.
+  // must not be removed. Uses PROSE_REPAIR_PLAN so repaired prose is the output.
   const raw =
     `Between ${CP_F0.name} and ${CP_F1.name}, ` +
     `${CP_F0.name} [PRODUCT:${CP_F0.slug}] suits evenings best.`;
   // After Step 0b: "Between {F0} and {F1}, [PRODUCT:{F0}] suits evenings best."
   // After Step 2: "Between {F0} and {F1}, {F0} suits evenings best."
-  const result = planResponse(raw, "comparison", CP_RETRIEVAL, COMPARISON_PLAN);
+  const result = planResponse(raw, "comparison", CP_RETRIEVAL, PROSE_REPAIR_PLAN);
   // F0 should appear twice — once from the "Between" clause, once from the marker replacement
   const occurrences = result.content.split(CP_F0.name).length - 1;
   assert.ok(occurrences >= 2,
@@ -4488,7 +4495,7 @@ test("T-CP-07 — truncation-fallback mock (max_tokens): complete sentence, no p
 
 test("T-CP-08 — single-asterisk: observed live *and* pattern is stripped", () => {
   const raw = `If you want to move away from Baccarat Rouge 540 Inspired's sweetness *and* its warmth, [PRODUCT:${CP_FRAGS[0].slug}] is the answer.`;
-  const result = planResponse(raw, "comparison", CP_RETRIEVAL, COMPARISON_PLAN);
+  const result = planResponse(raw, "comparison", CP_RETRIEVAL, PROSE_REPAIR_PLAN);
   assert.ok(!result.content.includes("*and*"),
     `T-CP-08 — literal *and* must not appear; content: "${result.content}"`);
   assert.ok(result.content.includes("and"),
@@ -4497,7 +4504,7 @@ test("T-CP-08 — single-asterisk: observed live *and* pattern is stripped", () 
 
 test("T-CP-09 — single-asterisk: multi-word italic phrase is stripped, text preserved", () => {
   const raw = `Sauvage Inspired is *the most decisive shift* in character. [PRODUCT:${CP_FRAGS[0].slug}]`;
-  const result = planResponse(raw, "comparison", CP_RETRIEVAL, COMPARISON_PLAN);
+  const result = planResponse(raw, "comparison", CP_RETRIEVAL, PROSE_REPAIR_PLAN);
   assert.ok(!result.content.includes("*"),
     `T-CP-09 — no asterisks must remain; content: "${result.content}"`);
   assert.ok(result.content.includes("the most decisive shift"),
@@ -4515,9 +4522,9 @@ test("T-CP-10 — bold markers (**word**) continue to be stripped by Repair C", 
 
 test("T-CP-11 — unmatched asterisk (no closing partner on same line) is preserved", () => {
   // "* Note" style — opening * with no closing * on the same line.
-  // Repair D must not corrupt this.
+  // Repair D must not corrupt this. Uses PROSE_REPAIR_PLAN so repaired prose survives.
   const raw = `Freshness is the key dimension. * Sauvage Inspired leads on this measure. [PRODUCT:${CP_FRAGS[0].slug}]`;
-  const result = planResponse(raw, "comparison", CP_RETRIEVAL, COMPARISON_PLAN);
+  const result = planResponse(raw, "comparison", CP_RETRIEVAL, PROSE_REPAIR_PLAN);
   assert.ok(result.content.includes("*"),
     `T-CP-11 — unmatched * must survive Repair D; content: "${result.content}"`);
 });
@@ -4528,7 +4535,7 @@ test("T-CP-11 — unmatched asterisk (no closing partner on same line) is preser
 test("T-CP-12 — Repair D preserves multiplication expression 2*3*4 (no spaces)", () => {
   // * preceded by digit — fails (?<!\w) lookbehind; must not be stripped.
   const raw = `Freshness is 2*3*4 combined. [PRODUCT:${CP_FRAGS[0].slug}]`;
-  const result = planResponse(raw, "comparison", CP_RETRIEVAL, COMPARISON_PLAN);
+  const result = planResponse(raw, "comparison", CP_RETRIEVAL, PROSE_REPAIR_PLAN);
   assert.ok(result.content.includes("2*3*4"),
     `T-CP-12 — multiplication expression 2*3*4 must survive; content: "${result.content}"`);
 });
@@ -4536,7 +4543,7 @@ test("T-CP-12 — Repair D preserves multiplication expression 2*3*4 (no spaces)
 test("T-CP-13 — Repair D preserves spaced multiplication expression 2 * 3 * 4", () => {
   // Content after opening * is a space — fails \S check; must not be stripped.
   const raw = `Formula: 2 * 3 * 4 = 24. [PRODUCT:${CP_FRAGS[0].slug}]`;
-  const result = planResponse(raw, "comparison", CP_RETRIEVAL, COMPARISON_PLAN);
+  const result = planResponse(raw, "comparison", CP_RETRIEVAL, PROSE_REPAIR_PLAN);
   assert.ok(result.content.includes("2 * 3 * 4"),
     `T-CP-13 — spaced multiplication must survive; content: "${result.content}"`);
 });
@@ -4545,7 +4552,7 @@ test("T-CP-14 — Repair D strips italic within bullet, preserves bullet prefix 
   // Bullet "* item" — opening * followed by space, fails \S; bullet * preserved.
   // Inner "*phrase*" — preceded by space, valid emphasis; stripped, text preserved.
   const raw = `* Sauvage Inspired is *the bolder choice*. [PRODUCT:${CP_FRAGS[0].slug}]`;
-  const result = planResponse(raw, "comparison", CP_RETRIEVAL, COMPARISON_PLAN);
+  const result = planResponse(raw, "comparison", CP_RETRIEVAL, PROSE_REPAIR_PLAN);
   assert.ok(result.content.startsWith("*"),
     `T-CP-14 — bullet * must be preserved; content: "${result.content}"`);
   assert.ok(!result.content.includes("*the bolder choice*"),
@@ -5131,7 +5138,7 @@ test("T-C5-C-10 — confidence tag appears in correct position (after role tag)"
 console.log("\n── C5-R. Rejected Products Section ──────────────────────────────");
 
 test("T-C5-R-01 — no rejectedSlugs → no REJECTED PRODUCTS section", () => {
-  const retrieval = { fragrances: mkcCatalogue.slice(0, 2), articles: [] };
+  const retrieval = { fragrances: mkcCatalogue.slice(0, 2), articles: [], resolvedCompareSlugs: mkcCatalogue.slice(0, 2).map(f => f.slug) };
   const state = { ...EMPTY_STATE, profile: makeProfile({}) };
   const ctx = buildContext(retrieval, state, BASE_PLAN);
   const rendered = renderContext(ctx);
@@ -5198,7 +5205,7 @@ test("T-C5-R-06 — hard rejection filter removes rejected slugs AND section gov
 console.log("\n── C5-K. Comparison Intelligence ────────────────────────────────");
 
 test("T-C5-K-01 — requiresComparison=false → no COMPARISON INTELLIGENCE FOCUS", () => {
-  const retrieval = { fragrances: mkcCatalogue.slice(0, 2), articles: [] };
+  const retrieval = { fragrances: mkcCatalogue.slice(0, 2), articles: [], resolvedCompareSlugs: mkcCatalogue.slice(0, 2).map(f => f.slug) };
   const ctx = buildContext(retrieval, EMPTY_STATE, { ...BASE_PLAN, requiresComparison: false });
   const rendered = renderContext(ctx);
   assert.ok(!rendered.includes("=== COMPARISON INTELLIGENCE FOCUS ==="),
@@ -5218,7 +5225,7 @@ test("T-C5-K-02 — requiresComparison=true but < 2 fragrances → no section", 
 });
 
 test("T-C5-K-03 — requiresComparison=true + 2 fragrances → section present", () => {
-  const retrieval = { fragrances: mkcCatalogue.slice(0, 2), articles: [] };
+  const retrieval = { fragrances: mkcCatalogue.slice(0, 2), articles: [], resolvedCompareSlugs: mkcCatalogue.slice(0, 2).map(f => f.slug) };
   const plan = { ...BASE_PLAN, requiresComparison: true, nextIntent: "comparison" as const };
   const ctx = buildContext(retrieval, EMPTY_STATE, plan);
   const rendered = renderContext(ctx);
@@ -5227,7 +5234,7 @@ test("T-C5-K-03 — requiresComparison=true + 2 fragrances → section present",
 });
 
 test("T-C5-K-04 — section mentions 'Key dimensions'", () => {
-  const retrieval = { fragrances: mkcCatalogue.slice(0, 2), articles: [] };
+  const retrieval = { fragrances: mkcCatalogue.slice(0, 2), articles: [], resolvedCompareSlugs: mkcCatalogue.slice(0, 2).map(f => f.slug) };
   const plan = { ...BASE_PLAN, requiresComparison: true, nextIntent: "comparison" as const };
   const ctx = buildContext(retrieval, EMPTY_STATE, plan);
   const rendered = renderContext(ctx);
@@ -5238,7 +5245,7 @@ test("T-C5-K-04 — section mentions 'Key dimensions'", () => {
 test("T-C5-K-05 — fragrance names appear in comparison section", () => {
   const f0 = mkcCatalogue[0];
   const f1 = mkcCatalogue[1];
-  const retrieval = { fragrances: [f0, f1], articles: [] };
+  const retrieval = { fragrances: [f0, f1], articles: [], resolvedCompareSlugs: [f0.slug, f1.slug] };
   const plan = { ...BASE_PLAN, requiresComparison: true, nextIntent: "comparison" as const };
   const ctx = buildContext(retrieval, EMPTY_STATE, plan);
   const rendered = renderContext(ctx);
@@ -5249,7 +5256,7 @@ test("T-C5-K-05 — fragrance names appear in comparison section", () => {
 test("T-C5-K-06 — explicit dimension mention in rawMessage → that dimension appears first", () => {
   const f0 = mkcCatalogue[0];
   const f1 = mkcCatalogue[1];
-  const retrieval = { fragrances: [f0, f1], articles: [] };
+  const retrieval = { fragrances: [f0, f1], articles: [], resolvedCompareSlugs: [f0.slug, f1.slug] };
   const plan = { ...BASE_PLAN, requiresComparison: true, nextIntent: "comparison" as const };
   const ctx = buildContext(retrieval, EMPTY_STATE, plan, undefined, null, null, null, "which one has more freshness?");
   const rendered = renderContext(ctx);
@@ -5269,7 +5276,7 @@ test("T-C5-K-06 — explicit dimension mention in rawMessage → that dimension 
 console.log("\n── C5-K-R1. Comparison Intelligence Tier 2 ─────────────────────");
 
 test("T-C5-K-R1-01 — explicit freshness question prioritizes freshness (tier 1)", () => {
-  const retrieval = { fragrances: mkcCatalogue.slice(0, 2), articles: [] };
+  const retrieval = { fragrances: mkcCatalogue.slice(0, 2), articles: [], resolvedCompareSlugs: mkcCatalogue.slice(0, 2).map(f => f.slug) };
   const plan = { ...BASE_PLAN, requiresComparison: true, nextIntent: "comparison" as const };
   const ctx = buildContext(retrieval, EMPTY_STATE, plan, undefined, null, null, null, "which one has more freshness?");
   const rendered = renderContext(ctx);
@@ -5284,7 +5291,7 @@ test("T-C5-K-R1-01 — explicit freshness question prioritizes freshness (tier 1
 });
 
 test("T-C5-K-R1-02 — explicit sweetness question prioritizes sweetness (tier 1)", () => {
-  const retrieval = { fragrances: mkcCatalogue.slice(0, 2), articles: [] };
+  const retrieval = { fragrances: mkcCatalogue.slice(0, 2), articles: [], resolvedCompareSlugs: mkcCatalogue.slice(0, 2).map(f => f.slug) };
   const plan = { ...BASE_PLAN, requiresComparison: true, nextIntent: "comparison" as const };
   const ctx = buildContext(retrieval, EMPTY_STATE, plan, undefined, null, null, null, "which has more sweetness?");
   const rendered = renderContext(ctx);
@@ -5299,7 +5306,7 @@ test("T-C5-K-R1-02 — explicit sweetness question prioritizes sweetness (tier 1
 });
 
 test("T-C5-K-R1-03 — fresh family profile → freshness prioritized via tier 2", () => {
-  const retrieval = { fragrances: mkcCatalogue.slice(0, 2), articles: [] };
+  const retrieval = { fragrances: mkcCatalogue.slice(0, 2), articles: [], resolvedCompareSlugs: mkcCatalogue.slice(0, 2).map(f => f.slug) };
   const plan = { ...BASE_PLAN, requiresComparison: true, nextIntent: "comparison" as const };
   const state = { ...EMPTY_STATE, profile: makeProfile({ preferredFamilies: { value: ["Citrus"], confidence: "HIGH" } }) };
   const ctx = buildContext(retrieval, state, plan);
@@ -5316,7 +5323,7 @@ test("T-C5-K-R1-03 — fresh family profile → freshness prioritized via tier 2
 });
 
 test("T-C5-K-R1-04 — warm family profile → warmth prioritized via tier 2", () => {
-  const retrieval = { fragrances: mkcCatalogue.slice(0, 2), articles: [] };
+  const retrieval = { fragrances: mkcCatalogue.slice(0, 2), articles: [], resolvedCompareSlugs: mkcCatalogue.slice(0, 2).map(f => f.slug) };
   const plan = { ...BASE_PLAN, requiresComparison: true, nextIntent: "comparison" as const };
   const state = { ...EMPTY_STATE, profile: makeProfile({ preferredFamilies: { value: ["Oriental"], confidence: "HIGH" } }) };
   const ctx = buildContext(retrieval, state, plan);
@@ -5332,7 +5339,7 @@ test("T-C5-K-R1-04 — warm family profile → warmth prioritized via tier 2", (
 });
 
 test("T-C5-K-R1-05 — gourmand family profile → sweetness prioritized via tier 2", () => {
-  const retrieval = { fragrances: mkcCatalogue.slice(0, 2), articles: [] };
+  const retrieval = { fragrances: mkcCatalogue.slice(0, 2), articles: [], resolvedCompareSlugs: mkcCatalogue.slice(0, 2).map(f => f.slug) };
   const plan = { ...BASE_PLAN, requiresComparison: true, nextIntent: "comparison" as const };
   const state = { ...EMPTY_STATE, profile: makeProfile({ preferredFamilies: { value: ["Gourmand"], confidence: "HIGH" } }) };
   const ctx = buildContext(retrieval, state, plan);
@@ -5348,7 +5355,7 @@ test("T-C5-K-R1-05 — gourmand family profile → sweetness prioritized via tie
 });
 
 test("T-C5-K-R1-06 — explicit dimension overrides conflicting profile preference (tier 1 > tier 2)", () => {
-  const retrieval = { fragrances: mkcCatalogue.slice(0, 2), articles: [] };
+  const retrieval = { fragrances: mkcCatalogue.slice(0, 2), articles: [], resolvedCompareSlugs: mkcCatalogue.slice(0, 2).map(f => f.slug) };
   const plan = { ...BASE_PLAN, requiresComparison: true, nextIntent: "comparison" as const };
   // Profile implies warmth (Oriental/Amber) — but guest explicitly asks about freshness
   const state = { ...EMPTY_STATE, profile: makeProfile({ preferredFamilies: { value: ["Oriental", "Amber"], confidence: "HIGH" } }) };
@@ -5366,7 +5373,7 @@ test("T-C5-K-R1-06 — explicit dimension overrides conflicting profile preferen
 });
 
 test("T-C5-K-R1-07 — non-mappable family profile (Floral) falls back to spread ordering (tier 3)", () => {
-  const retrieval = { fragrances: mkcCatalogue.slice(0, 2), articles: [] };
+  const retrieval = { fragrances: mkcCatalogue.slice(0, 2), articles: [], resolvedCompareSlugs: mkcCatalogue.slice(0, 2).map(f => f.slug) };
   const plan = { ...BASE_PLAN, requiresComparison: true, nextIntent: "comparison" as const };
   // Floral is not in FAMILY_TO_DIM — tier 2 produces null, falls to spread (tier 3)
   const state = { ...EMPTY_STATE, profile: makeProfile({ preferredFamilies: { value: ["Floral"], confidence: "HIGH" } }) };
@@ -5379,7 +5386,7 @@ test("T-C5-K-R1-07 — non-mappable family profile (Floral) falls back to spread
 });
 
 test("T-C5-K-R1-08 — undefined profile preserves tier 3 spread behavior", () => {
-  const retrieval = { fragrances: mkcCatalogue.slice(0, 2), articles: [] };
+  const retrieval = { fragrances: mkcCatalogue.slice(0, 2), articles: [], resolvedCompareSlugs: mkcCatalogue.slice(0, 2).map(f => f.slug) };
   const plan = { ...BASE_PLAN, requiresComparison: true, nextIntent: "comparison" as const };
   const ctx = buildContext(retrieval, EMPTY_STATE, plan);
   const rendered = renderContext(ctx);
@@ -5391,7 +5398,7 @@ test("T-C5-K-R1-08 — undefined profile preserves tier 3 spread behavior", () =
 
 test("T-C5-K-R1-09 — preference mapping does not change candidate presence in context", () => {
   const candidates = mkcCatalogue.slice(0, 2);
-  const retrieval  = { fragrances: candidates, articles: [] };
+  const retrieval  = { fragrances: candidates, articles: [], resolvedCompareSlugs: candidates.map(f => f.slug) };
   const plan = { ...BASE_PLAN, requiresComparison: true, nextIntent: "comparison" as const };
   const stateNoProfile   = EMPTY_STATE;
   const stateWithProfile = { ...EMPTY_STATE, profile: makeProfile({ preferredFamilies: { value: ["Citrus"], confidence: "HIGH" } }) };
@@ -5425,7 +5432,7 @@ test("T-C5-K-R1-10 — zero-note fragrance in comparison: section shows intellig
   );
   const f0 = zeroNote ?? mkcCatalogue[0];
   const f1 = mkcCatalogue.find((k) => k.slug !== f0.slug) ?? mkcCatalogue[1];
-  const retrieval = { fragrances: [f0, f1], articles: [] };
+  const retrieval = { fragrances: [f0, f1], articles: [], resolvedCompareSlugs: [f0.slug, f1.slug] };
   const plan = { ...BASE_PLAN, requiresComparison: true, nextIntent: "comparison" as const };
   const ctx = buildContext(retrieval, EMPTY_STATE, plan);
   const rendered = renderContext(ctx);
@@ -5495,7 +5502,7 @@ test("T-C5-X-05 — POOL EXHAUSTION section mentions quiz", () => {
 console.log("\n── C5-S. Consultation Stage ──────────────────────────────────────");
 
 test("T-C5-S-01 — no turns → stage is 'Starting consultation'", () => {
-  const retrieval = { fragrances: mkcCatalogue.slice(0, 2), articles: [] };
+  const retrieval = { fragrances: mkcCatalogue.slice(0, 2), articles: [], resolvedCompareSlugs: mkcCatalogue.slice(0, 2).map(f => f.slug) };
   const ctx = buildContext(retrieval, EMPTY_STATE, BASE_PLAN);
   const rendered = renderContext(ctx);
   assert.ok(rendered.includes("Starting consultation"), "Stage should be 'Starting consultation' on turn 0");
@@ -5510,7 +5517,7 @@ test("T-C5-S-02 — turns + lastRecommendationSlugs → stage includes 'Followin
     ],
     lastRecommendationSlugs: [mkcCatalogue[0].slug],
   };
-  const retrieval = { fragrances: mkcCatalogue.slice(0, 2), articles: [] };
+  const retrieval = { fragrances: mkcCatalogue.slice(0, 2), articles: [], resolvedCompareSlugs: mkcCatalogue.slice(0, 2).map(f => f.slug) };
   const ctx = buildContext(retrieval, stateWithRecs, BASE_PLAN);
   const rendered = renderContext(ctx);
   assert.ok(rendered.includes("Following up"), "Stage should mention 'Following up' when recs exist");
@@ -5529,7 +5536,7 @@ test("T-C5-S-03 — consultationPlan with roles → stage includes 'Collection c
       roles: [{ position: 1, character: "Fresh", title: "Fresh Character", slug: mkcCatalogue[0].slug, name: mkcCatalogue[0].name }],
     },
   };
-  const retrieval = { fragrances: mkcCatalogue.slice(0, 2), articles: [] };
+  const retrieval = { fragrances: mkcCatalogue.slice(0, 2), articles: [], resolvedCompareSlugs: mkcCatalogue.slice(0, 2).map(f => f.slug) };
   const ctx = buildContext(retrieval, stateWithPlan, BASE_PLAN);
   const rendered = renderContext(ctx);
   assert.ok(rendered.includes("Collection consultation"), "Stage should mention 'Collection consultation' when plan is active");
@@ -5543,14 +5550,14 @@ test("T-C5-S-04 — turns + no recs → stage is 'Exploring preferences'", () =>
       { role: "assistant" as const, content: "hi", timestamp: 2 },
     ],
   };
-  const retrieval = { fragrances: mkcCatalogue.slice(0, 2), articles: [] };
+  const retrieval = { fragrances: mkcCatalogue.slice(0, 2), articles: [], resolvedCompareSlugs: mkcCatalogue.slice(0, 2).map(f => f.slug) };
   const ctx = buildContext(retrieval, stateWithTurns, BASE_PLAN);
   const rendered = renderContext(ctx);
   assert.ok(rendered.includes("Exploring preferences"), "Stage should be 'Exploring preferences' when turns exist but no recs");
 });
 
 test("T-C5-S-05 — CONSULTATION STAGE section appears in all rendered contexts", () => {
-  const retrieval = { fragrances: mkcCatalogue.slice(0, 2), articles: [] };
+  const retrieval = { fragrances: mkcCatalogue.slice(0, 2), articles: [], resolvedCompareSlugs: mkcCatalogue.slice(0, 2).map(f => f.slug) };
   const ctx = buildContext(retrieval, EMPTY_STATE, BASE_PLAN);
   const rendered = renderContext(ctx);
   assert.ok(rendered.includes("CONSULTATION STAGE"), "CONSULTATION STAGE section should always appear in context");
@@ -5737,7 +5744,7 @@ test("T-C5-SUP-03 — CLARIFICATION FOCUS section appears in context when plan h
     ...BASE_PLAN,
     consultationReadinessQuestion: "What occasions do you have in mind?",
   };
-  const retrieval = { fragrances: mkcCatalogue.slice(0, 2), articles: [] };
+  const retrieval = { fragrances: mkcCatalogue.slice(0, 2), articles: [], resolvedCompareSlugs: mkcCatalogue.slice(0, 2).map(f => f.slug) };
   const ctx = buildContext(retrieval, EMPTY_STATE, planWithQ);
   const rendered = renderContext(ctx);
   assert.ok(rendered.includes("CLARIFICATION FOCUS"),
@@ -5747,7 +5754,7 @@ test("T-C5-SUP-03 — CLARIFICATION FOCUS section appears in context when plan h
 });
 
 test("T-C5-SUP-04 — CLARIFICATION FOCUS absent when no consultationReadinessQuestion", () => {
-  const retrieval = { fragrances: mkcCatalogue.slice(0, 2), articles: [] };
+  const retrieval = { fragrances: mkcCatalogue.slice(0, 2), articles: [], resolvedCompareSlugs: mkcCatalogue.slice(0, 2).map(f => f.slug) };
   const ctx = buildContext(retrieval, EMPTY_STATE, BASE_PLAN);
   const rendered = renderContext(ctx);
   assert.ok(!rendered.includes("CLARIFICATION FOCUS"),
@@ -5759,7 +5766,7 @@ test("T-C5-SUP-05 — profile-aware follow-ups filter suggestions that propose a
     avoidedFamilies: { value: ["oriental", "amber"], confidence: "HIGH" },
   });
   const plan = { ...BASE_PLAN, nextIntent: "seasonal" as const };
-  const retrieval = { fragrances: mkcCatalogue.slice(0, 2), articles: [] };
+  const retrieval = { fragrances: mkcCatalogue.slice(0, 2), articles: [], resolvedCompareSlugs: mkcCatalogue.slice(0, 2).map(f => f.slug) };
   const planned = planResponse("Great fragrance for you.", "seasonal", retrieval, plan, profile);
   // "Find something warmer" and "for cooler weather" map to warm/oriental families — should be filtered
   const noWarm = planned.followUpSuggestions.every((s) =>
@@ -10333,6 +10340,741 @@ test("T-QS-26 — instruction: versatility safeguard reaches comparison path (QS
   const present = instrSection.includes("versatile across every occasion");
   console.log(`     T-QS-26 versatility instruction present (comp)=${present}`);
   assert.ok(present, `T-QS-26: versatility safeguard (quoting "versatile across every occasion") must appear in instructions for comparison path`);
+});
+
+// ── Section QS-B: Comparison score accuracy regressions ──────────────────────
+// Pipeline regression tests for the three-candidate comparison fix.
+// Covers: all fragrances in intelligence focus, all explicitly requested dims,
+// correct catalogue scores, model-score stripping, shared claims, missing dims,
+// occasions, card behaviour, and intensity/projection safeguard.
+//
+// Context assertions (T-QS-27..30) confirm what the model receives.
+// Pipeline assertions (T-QS-31..41) confirm what the guest receives.
+// All instruction tests are labelled accordingly.
+
+console.log("\n── QS-B. Comparison score accuracy regressions ─────────────────────");
+
+// Shared helper — fresh retrieval each call to avoid buildContext mutation bleed
+function makeRetrieval3(): RetrievalContext {
+  const sauvage = nativeFragrances.get("sauvage-inspired");
+  const terre   = nativeFragrances.get("terre-d'hermes-inspired");
+  const oudWood = nativeFragrances.get("oud-wood-inspired");
+  if (!sauvage || !terre || !oudWood) throw new Error("prerequisite fragrances missing");
+  const fragrances = [sauvage, terre, oudWood];
+  const slugs = fragrances.map(f => f.slug);
+  // resolvedCompareSlugs + comparisonCandidateSlugs mirror the 3 resolved candidates.
+  // resolvedCompareSlugs simulates planRetrieval/buildCachedRetrieval output.
+  // comparisonCandidateSlugs simulates what buildContext would derive from it — required
+  // for tests that call planResponse directly without going through buildContext.
+  return { fragrances, articles: [], resolvedCompareSlugs: slugs, comparisonCandidateSlugs: slugs };
+}
+
+test("T-QS-27 — comparison context: COMPARISON INTELLIGENCE FOCUS includes all 3 fragrances", () => {
+  const r3 = makeRetrieval3();
+  const rendered = renderContext(buildContext(
+    r3, EMPTY_STATE, QS_COMP_PLAN, "comparison", null, null, null,
+    "compare these for freshness and intensity",
+  ));
+
+  const focusMatch = rendered.match(/COMPARISON INTELLIGENCE FOCUS[\s\S]*?(?=\n===|$)/);
+  const focus = focusMatch ? focusMatch[0] : "";
+
+  const [sauvage, terre, oudWood] = r3.fragrances;
+  const hasSauvage = focus.includes(sauvage.name);
+  const hasTerre   = focus.includes(terre.name);
+  const hasOudWood = focus.includes(oudWood.name);
+
+  console.log(`     T-QS-27 Sauvage=${hasSauvage} Terre=${hasTerre} OudWood=${hasOudWood}`);
+  assert.ok(hasSauvage, `T-QS-27: ${sauvage.name} must appear in COMPARISON INTELLIGENCE FOCUS`);
+  assert.ok(hasTerre,   `T-QS-27: ${terre.name} must appear in COMPARISON INTELLIGENCE FOCUS`);
+  assert.ok(hasOudWood, `T-QS-27: ${oudWood.name} must appear in COMPARISON INTELLIGENCE FOCUS`);
+});
+
+test("T-QS-28 — comparison context: all explicitly requested dims appear in focus (freshness + intensity)", () => {
+  const r3 = makeRetrieval3();
+  const rendered = renderContext(buildContext(
+    r3, EMPTY_STATE, QS_COMP_PLAN, "comparison", null, null, null,
+    "compare sweetness, freshness and intensity",
+  ));
+
+  const focusMatch = rendered.match(/COMPARISON INTELLIGENCE FOCUS[\s\S]*?(?=\n===|$)/);
+  const focus = focusMatch ? focusMatch[0] : "";
+
+  const hasSweetness  = focus.toLowerCase().includes("sweetness");
+  const hasFreshness  = focus.toLowerCase().includes("freshness");
+  const hasIntensity  = focus.toLowerCase().includes("intensity");
+
+  console.log(`     T-QS-28 sweetness=${hasSweetness} freshness=${hasFreshness} intensity=${hasIntensity}`);
+  assert.ok(hasSweetness, `T-QS-28: sweetness must appear in focus when explicitly requested`);
+  assert.ok(hasFreshness, `T-QS-28: freshness must appear in focus when explicitly requested`);
+  assert.ok(hasIntensity, `T-QS-28: intensity must appear in focus when explicitly requested`);
+});
+
+test("T-QS-29 — comparison context: correct catalogue scores in focus (Terre freshness 3/5, Oud Wood intensity 4/5)", () => {
+  const r3 = makeRetrieval3();
+  const rendered = renderContext(buildContext(
+    r3, EMPTY_STATE, QS_COMP_PLAN, "comparison", null, null, null,
+    "compare these for freshness and intensity",
+  ));
+
+  const focusMatch = rendered.match(/COMPARISON INTELLIGENCE FOCUS[\s\S]*?(?=\n===|$)/);
+  const focus = focusMatch ? focusMatch[0] : "";
+
+  // Freshness line must show Terre as 3/5 (catalogue value), not 4/5 (live model error)
+  const freshnessLineMatch = focus.match(/Freshness:[^\n]*/i);
+  const freshnessLine = freshnessLineMatch ? freshnessLineMatch[0] : "";
+  const terreName = r3.fragrances[1].name;
+  const oudWoodName = r3.fragrances[2].name;
+
+  const hasTerreFreshness3 = freshnessLine.includes(`${terreName}: 3/5`);
+  const hasTerreFreshness4 = freshnessLine.includes(`${terreName}: 4/5`);
+
+  // Intensity line must show Oud Wood as 4/5 (catalogue value), not 3/5 (live model error)
+  const intensityLineMatch = focus.match(/Intensity:[^\n]*/i);
+  const intensityLine = intensityLineMatch ? intensityLineMatch[0] : "";
+  const hasOudWoodIntensity4 = intensityLine.includes(`${oudWoodName}: 4/5`);
+  const hasOudWoodIntensity3 = intensityLine.includes(`${oudWoodName}: 3/5`);
+
+  console.log(`     T-QS-29 Terre freshness 3/5=${hasTerreFreshness3} (wrong 4/5=${hasTerreFreshness4})`);
+  console.log(`     T-QS-29 OudWood intensity 4/5=${hasOudWoodIntensity4} (wrong 3/5=${hasOudWoodIntensity3})`);
+  assert.ok(hasTerreFreshness3,  `T-QS-29: ${terreName} must be 3/5 in Freshness focus line (catalogue value)`);
+  assert.ok(!hasTerreFreshness4, `T-QS-29: ${terreName} must NOT be 4/5 in Freshness focus line (live model error)`);
+  assert.ok(hasOudWoodIntensity4,  `T-QS-29: ${oudWoodName} must be 4/5 in Intensity focus line (catalogue value)`);
+  assert.ok(!hasOudWoodIntensity3, `T-QS-29: ${oudWoodName} must NOT be 3/5 in Intensity focus line (live model error)`);
+});
+
+test("T-QS-30 — comparison context: no explicit dims requested → still shows 3 rows (existing behaviour preserved)", () => {
+  const r3 = makeRetrieval3();
+  const rendered = renderContext(buildContext(
+    r3, EMPTY_STATE, QS_COMP_PLAN, "comparison", null, null, null,
+    "compare these",
+  ));
+
+  const focusMatch = rendered.match(/COMPARISON INTELLIGENCE FOCUS[\s\S]*?(?=\n===|$)/);
+  const focus = focusMatch ? focusMatch[0] : "";
+
+  // Count dimension label lines (each starts with a capitalised dimension name followed by colon)
+  const dimLines = (focus.match(/^(?:Sweetness|Freshness|Warmth|Intensity|Versatility):/gim) ?? []).length;
+
+  console.log(`     T-QS-30 dimension rows in focus=${dimLines}`);
+  assert.ok(dimLines >= 3, `T-QS-30: at least 3 dimension rows expected when no dims explicitly requested; got ${dimLines}`);
+});
+
+// ── Pipeline output tests (deterministic replacement) ────────────────────────
+// Tests T-QS-31..45 verify the final output the guest receives.
+// Model prose is entirely replaced for resolved comparison turns; assertions
+// verify catalogue scores, absent wrong claims, and guard conditions.
+
+test("T-QS-31 — context: buildContext sets comparisonFocusDims when dims appear in message", () => {
+  const r3 = makeRetrieval3();
+  buildContext(r3, EMPTY_STATE, QS_COMP_PLAN, "comparison", null, null, null,
+    "compare these for freshness and intensity");
+
+  const hasFreshness = r3.comparisonFocusDims?.includes("freshness");
+  const hasIntensity = r3.comparisonFocusDims?.includes("intensity");
+
+  console.log(`     T-QS-31 focusDims=${JSON.stringify(r3.comparisonFocusDims)}`);
+  assert.ok(hasFreshness, `T-QS-31: comparisonFocusDims must include "freshness"`);
+  assert.ok(hasIntensity, `T-QS-31: comparisonFocusDims must include "intensity"`);
+});
+
+test("T-QS-32 — pipeline: live 3-frag example — all authoritative scores for freshness + intensity", () => {
+  const r3 = makeRetrieval3();
+  r3.comparisonFocusDims = ["freshness", "intensity"];
+  const [sauvage, terre, oudWood] = r3.fragrances;
+
+  // Simulate live model errors that must not survive replacement
+  const modelOutput =
+    `${sauvage.name} leads in freshness. ${terre.name} has freshness 4/5. ` +
+    `${oudWood.name} has intensity 3/5. None will feel sugary.`;
+
+  const result = planResponse(modelOutput, "comparison", r3, QS_COMP_PLAN);
+
+  // Correct catalogue scores: Sauvage fr=5, Terre fr=3, OudWood in=4
+  const hasSauvageFr5 = result.content.includes("freshness 5/5");
+  const hasTerreFr3   = result.content.includes("freshness 3/5");
+  const hasOudWoodIn4 = result.content.includes("intensity 4/5");
+  // Wrong model scores and qualitative inferences must be absent
+  const wrongFr4   = result.content.includes("freshness 4/5");
+  const wrongSugary = result.content.includes("sugary");
+
+  console.log(`     T-QS-32 fr5=${hasSauvageFr5} fr3=${hasTerreFr3} in4=${hasOudWoodIn4} wrongFr4=${wrongFr4} sugary=${wrongSugary}`);
+  assert.ok(hasSauvageFr5,  `T-QS-32: Sauvage freshness 5/5 (catalogue) must appear`);
+  assert.ok(hasTerreFr3,    `T-QS-32: Terre freshness 3/5 (catalogue) must appear`);
+  assert.ok(hasOudWoodIn4,  `T-QS-32: Oud Wood intensity 4/5 (catalogue) must appear`);
+  assert.ok(!wrongFr4,      `T-QS-32: "freshness 4/5" (model error for Terre) must be absent`);
+  assert.ok(!wrongSugary,   `T-QS-32: "sugary" qualitative inference must be absent`);
+});
+
+test("T-QS-33 — pipeline: wrong qualitative rankings ('confident and present', 'more intimate') cannot survive", () => {
+  const r3 = makeRetrieval3();
+  r3.comparisonFocusDims = ["intensity"];
+  const [sauvage, terre] = r3.fragrances;
+
+  // Model output with projection/intimacy claims that were observed in live sessions
+  const modelOutput =
+    `${sauvage.name} feels confident and present, projecting strongly into any room. ` +
+    `${terre.name} is more intimate, suited to close encounters.`;
+
+  const result = planResponse(modelOutput, "comparison", r3, QS_COMP_PLAN);
+
+  const wrongPresent  = result.content.includes("confident and present");
+  const wrongIntimate = result.content.includes("more intimate");
+  const wrongProjects = result.content.includes("projecting strongly");
+
+  console.log(`     T-QS-33 present=${wrongPresent} intimate=${wrongIntimate} projects=${wrongProjects}`);
+  assert.ok(!wrongPresent,  `T-QS-33: "confident and present" claim must be absent from output`);
+  assert.ok(!wrongIntimate, `T-QS-33: "more intimate" claim must be absent from output`);
+  assert.ok(!wrongProjects, `T-QS-33: "projecting strongly" claim must be absent from output`);
+});
+
+test("T-QS-34 — pipeline: sweetness-absence inference ('none will feel sugary', 'gourmand') cannot survive", () => {
+  const r3 = makeRetrieval3();
+  r3.comparisonFocusDims = ["sweetness"];
+  const [sauvage, terre, oudWood] = r3.fragrances;
+
+  // Sweetness-absence inference observed in live sessions
+  const modelOutput =
+    `${sauvage.name}, ${terre.name} and ${oudWood.name}: none will feel sugary or gourmand. ` +
+    `All three are designed for masculine, non-sweet tastes.`;
+
+  const result = planResponse(modelOutput, "comparison", r3, QS_COMP_PLAN);
+
+  const wrongSugary   = result.content.includes("none will feel sugary");
+  const wrongGourmand = result.content.includes("gourmand");
+  // Correct sweetness: all 1/5 from catalogue
+  const hasSweet1 = result.content.includes("sweetness 1/5");
+
+  console.log(`     T-QS-34 sugary=${wrongSugary} gourmand=${wrongGourmand} sweet1=${hasSweet1}`);
+  assert.ok(!wrongSugary,   `T-QS-34: "none will feel sugary" inference must be absent`);
+  assert.ok(!wrongGourmand, `T-QS-34: "gourmand" inference must be absent`);
+  assert.ok(hasSweet1,      `T-QS-34: sweetness 1/5 (catalogue) must appear`);
+});
+
+test("T-QS-35 — pipeline: ambiguous shared claim ('both score N/5') cannot survive replacement", () => {
+  const r3 = makeRetrieval3();
+  r3.comparisonFocusDims = ["sweetness"];
+  const [sauvage, terre] = r3.fragrances;
+
+  // Shared multi-fragrance score claim (wrong: model says 2/5, catalogue is 1/5)
+  const modelOutput =
+    `${sauvage.name} and ${terre.name} both score 2/5 for sweetness — a moderate level. ` +
+    `Worth considering for casual wear.`;
+
+  const result = planResponse(modelOutput, "comparison", r3, QS_COMP_PLAN);
+
+  const wrongBothScore = result.content.includes("both score 2/5");
+  // Correct sweetness (1/5) must appear from catalogue
+  const hasSweet1 = result.content.includes("sweetness 1/5");
+
+  console.log(`     T-QS-35 wrongBothScore=${wrongBothScore} sweet1=${hasSweet1}`);
+  assert.ok(!wrongBothScore, `T-QS-35: "both score 2/5" ambiguous claim must be absent`);
+  assert.ok(hasSweet1,       `T-QS-35: correct sweetness 1/5 must appear from catalogue`);
+});
+
+test("T-QS-36 — pipeline: candidate order preserved regardless of model output order", () => {
+  const r3 = makeRetrieval3();
+  r3.comparisonFocusDims = ["warmth"];
+  const [sauvage, terre, oudWood] = r3.fragrances;
+
+  // Model mentions fragrances in reverse order
+  const modelOutput =
+    `${oudWood.name} leads in warmth. ${terre.name} follows. ${sauvage.name} is the coolest.`;
+
+  const result = planResponse(modelOutput, "comparison", r3, QS_COMP_PLAN);
+
+  // Output order must match the fragrances array: Sauvage, Terre, Oud Wood
+  const sauvageIdx = result.content.indexOf(sauvage.name);
+  const terreIdx   = result.content.indexOf(terre.name);
+  const oudIdx     = result.content.indexOf(oudWood.name);
+
+  console.log(`     T-QS-36 order Sauvage=${sauvageIdx} Terre=${terreIdx} OudWood=${oudIdx}`);
+  assert.ok(sauvageIdx < terreIdx,  `T-QS-36: Sauvage must appear before Terre (candidate order)`);
+  assert.ok(terreIdx   < oudIdx,    `T-QS-36: Terre must appear before Oud Wood (candidate order)`);
+});
+
+test("T-QS-37 — pipeline: model prose containing no fragrance names → replacement fires from plan/candidates", () => {
+  const r3 = makeRetrieval3();
+  r3.comparisonFocusDims = ["freshness"];
+  const [sauvage, terre, oudWood] = r3.fragrances;
+
+  // Model output with NO fragrance names — pure abstract prose
+  const modelOutput =
+    "The first option leads in freshness. The second is earthier. The third is warmest.";
+
+  const result = planResponse(modelOutput, "comparison", r3, QS_COMP_PLAN);
+
+  // Names must come from catalogue candidates, not from model prose
+  const hasSauvage = result.content.includes(sauvage.name);
+  const hasTerre   = result.content.includes(terre.name);
+  const hasOudWood = result.content.includes(oudWood.name);
+
+  console.log(`     T-QS-37 Sauvage=${hasSauvage} Terre=${hasTerre} OudWood=${hasOudWood}`);
+  assert.ok(hasSauvage, `T-QS-37: ${sauvage.name} must appear even when model prose had no names`);
+  assert.ok(hasTerre,   `T-QS-37: ${terre.name} must appear even when model prose had no names`);
+  assert.ok(hasOudWood, `T-QS-37: ${oudWood.name} must appear even when model prose had no names`);
+});
+
+test("T-QS-38 — pipeline: requested dims only — unrequested dims absent from output", () => {
+  const r3 = makeRetrieval3();
+  r3.comparisonFocusDims = ["freshness", "intensity"];
+
+  const modelOutput = "These three have distinct characters.";
+
+  const result = planResponse(modelOutput, "comparison", r3, QS_COMP_PLAN);
+
+  // Only freshness and intensity should appear in score lines
+  const hasFreshness   = result.content.includes("freshness");
+  const hasIntensity   = result.content.includes("intensity");
+  const hasWarmth      = result.content.includes("warmth");
+  const hasSweetness   = result.content.includes("sweetness");
+  const hasVersatility = result.content.includes("versatility");
+
+  console.log(`     T-QS-38 fr=${hasFreshness} in=${hasIntensity} wm=${hasWarmth} sw=${hasSweetness} vv=${hasVersatility}`);
+  assert.ok(hasFreshness,    `T-QS-38: requested "freshness" must appear in output`);
+  assert.ok(hasIntensity,    `T-QS-38: requested "intensity" must appear in output`);
+  assert.ok(!hasWarmth,      `T-QS-38: unrequested "warmth" must be absent from output`);
+  assert.ok(!hasSweetness,   `T-QS-38: unrequested "sweetness" must be absent from output`);
+  assert.ok(!hasVersatility, `T-QS-38: unrequested "versatility" must be absent from output`);
+});
+
+test("T-QS-39 — pipeline: occasions always present in deterministic response", () => {
+  const r3 = makeRetrieval3();
+  r3.comparisonFocusDims = ["warmth"];
+
+  const modelOutput = "Worth comparing for occasion suitability.";
+
+  const result = planResponse(modelOutput, "comparison", r3, QS_COMP_PLAN);
+
+  const hasOccasions = result.content.includes("occasions:");
+  const hasDailyWear = result.content.includes("Daily Wear");
+
+  console.log(`     T-QS-39 occasions=${hasOccasions} DailyWear=${hasDailyWear}`);
+  assert.ok(hasOccasions, `T-QS-39: "occasions:" must always appear in deterministic comparison response`);
+  assert.ok(hasDailyWear, `T-QS-39: Sauvage "Daily Wear" occasion must appear`);
+});
+
+test("T-QS-40 — pipeline: missing score → dim skipped, no 0 invented", () => {
+  const r3 = makeRetrieval3();
+  const [sauvage, terre, oudWood] = r3.fragrances;
+
+  // Remove sweetness from Sauvage to test missing-score handling
+  const sauvageNoSweet = { ...sauvage } as Record<string, unknown>;
+  delete sauvageNoSweet["sweetness"];
+  const modFrags = [
+    sauvageNoSweet as (typeof r3.fragrances)[0],
+    terre,
+    oudWood,
+  ];
+  const r3mod: RetrievalContext = {
+    fragrances: modFrags,
+    articles: [],
+    comparisonFocusDims:      ["sweetness"],
+    comparisonCandidateSlugs: modFrags.map(f => f.slug),
+  };
+
+  const result = planResponse("These fragrances differ in sweetness.", "comparison", r3mod, QS_COMP_PLAN);
+
+  const hasZeroScore = result.content.includes("sweetness 0/5");
+
+  console.log(`     T-QS-40 zero-score invented=${hasZeroScore}`);
+  assert.ok(!hasZeroScore, `T-QS-40: missing sweetness score must not produce "sweetness 0/5"`);
+});
+
+test("T-QS-41 — pipeline: TRUNCATION_FALLBACK content preserved — not replaced by comparison response", () => {
+  const r3 = makeRetrieval3();
+  r3.comparisonFocusDims = ["freshness"];
+
+  const result = planResponse(TRUNCATION_FALLBACK, "comparison", r3, QS_COMP_PLAN);
+
+  console.log(`     T-QS-41 content="${result.content.slice(0, 60)}..."`);
+  assert.equal(result.content, TRUNCATION_FALLBACK,
+    `T-QS-41: TRUNCATION_FALLBACK must pass through unchanged — explicit guard, not incidental name absence`);
+});
+
+test("T-QS-42 — pipeline: clarification plan (requiresComparison=false) → model prose preserved", () => {
+  const r3 = makeRetrieval3();
+  r3.comparisonFocusDims = ["freshness"];
+
+  const clarificationPlan = { ...QS_COMP_PLAN, requiresComparison: false } as ConversationPlan;
+  const modelOutput = "Could you tell me which fragrances you want to compare?";
+
+  const result = planResponse(modelOutput, "comparison", r3, clarificationPlan);
+
+  const hasModel = result.content.includes("Could you tell me");
+  console.log(`     T-QS-42 model prose preserved=${hasModel}`);
+  assert.ok(hasModel, `T-QS-42: clarification plan (requiresComparison=false) must preserve model prose`);
+});
+
+test("T-QS-43 — pipeline: [PRODUCT:slug] markers → finalSlugs settled before replacement; generated names don't add slugs", () => {
+  const r3 = makeRetrieval3();
+  const [sauvage, terre, oudWood] = r3.fragrances;
+  buildContext(r3, EMPTY_STATE, QS_COMP_PLAN, "comparison", null, null, null, "compare these");
+
+  // Model output uses Precedence 1 markers — card resolution runs on these before replacement
+  const modelOutput = [
+    `[PRODUCT:${sauvage.slug}] is the freshest.`,
+    `[PRODUCT:${terre.slug}] is earthier.`,
+    `[PRODUCT:${oudWood.slug}] is the warmest.`,
+  ].join("\n");
+
+  const result = planResponse(modelOutput, "comparison", r3, QS_COMP_PLAN);
+
+  // recommendedSlugs must come from markers (Precedence 1), settled before content replacement
+  const hasSauvage = result.recommendedSlugs.includes(sauvage.slug);
+  const hasTerre   = result.recommendedSlugs.includes(terre.slug);
+  const hasOudWood = result.recommendedSlugs.includes(oudWood.slug);
+  // Deterministic replacement names must not create extra slugs beyond the 3 candidates
+  const slugCount  = result.recommendedSlugs.length;
+
+  console.log(`     T-QS-43 recommendedSlugs=${result.recommendedSlugs.join(", ")} count=${slugCount}`);
+  assert.ok(hasSauvage,   `T-QS-43: sauvage-inspired must be in recommendedSlugs via Precedence 1`);
+  assert.ok(hasTerre,     `T-QS-43: terre-d'hermes-inspired must be in recommendedSlugs via Precedence 1`);
+  assert.ok(hasOudWood,   `T-QS-43: oud-wood-inspired must be in recommendedSlugs via Precedence 1`);
+  assert.ok(slugCount <= 3, `T-QS-43: generated names must not create extra slugs beyond the 3 candidates; got ${slugCount}`);
+});
+
+test("T-QS-44 — comparison: cardTarget is undefined in fixture (never assigned for comparison plans)", () => {
+  // buildContext assigns cardTarget only when computeCardTarget returns non-null.
+  // For requiresComparison plans, computeCardTarget returns null → assignment guard
+  // never fires → retrieval.cardTarget remains undefined (not null).
+  // planResponse normalises to null via `retrieval.cardTarget ?? null`.
+  const r3 = makeRetrieval3();
+  buildContext(r3, EMPTY_STATE, QS_COMP_PLAN, "comparison", null, null, null, "compare these");
+
+  console.log(`     T-QS-44 cardTarget=${r3.cardTarget}`);
+  assert.strictEqual(r3.cardTarget, undefined,
+    `T-QS-44: cardTarget must be undefined (not null) in comparison fixture; planResponse normalises via ?? null`);
+});
+
+test("T-QS-45 — pipeline: fewer than 2 fragrances → model prose preserved, no deterministic replacement", () => {
+  const sauvage = nativeFragrances.get("sauvage-inspired");
+  if (!sauvage) throw new Error("prerequisite missing: sauvage-inspired");
+  const r1: RetrievalContext = { fragrances: [sauvage], articles: [] };
+
+  const modelOutput = "I found one fragrance that matches. Would you like to compare it with something else?";
+  const result = planResponse(modelOutput, "comparison", r1, QS_COMP_PLAN);
+
+  const hasModel = result.content.includes("I found one fragrance");
+  console.log(`     T-QS-45 model prose preserved=${hasModel}`);
+  assert.ok(hasModel, `T-QS-45: with fewer than 2 fragrances, model prose must be preserved`);
+});
+
+test("T-QS-46 — pipeline: requiresComparison + requiresClarification → clarification prose preserved", () => {
+  const r3 = makeRetrieval3();
+  r3.comparisonFocusDims = ["freshness"];
+  // A plan that asks a clarifying question mid-comparison (e.g. "which three?")
+  const bothPlan = { ...QS_COMP_PLAN, requiresClarification: true } as ConversationPlan;
+
+  const modelOutput = "Which three fragrances did you want to compare?";
+  const result = planResponse(modelOutput, "comparison", r3, bothPlan);
+
+  const hasModel = result.content.includes("Which three fragrances");
+  console.log(`     T-QS-46 clarification preserved=${hasModel}`);
+  assert.ok(hasModel, `T-QS-46: when requiresClarification is true, comparison replacement must not fire`);
+});
+
+test("T-QS-47 — pipeline: extra unrelated fragrance in retrieval cannot enter comparison output", () => {
+  const r3 = makeRetrieval3();
+  // Build context first — snapshots comparisonCandidateSlugs from the 3 resolved frags
+  buildContext(r3, EMPTY_STATE, QS_COMP_PLAN, "comparison", null, null, null, "compare these");
+
+  // Simulate a bug: an extra fragrance accumulates in retrieval.fragrances after context build
+  const extraFrag = nativeFragrances.get("aventus-inspired");
+  if (!extraFrag) throw new Error("prerequisite missing: aventus-inspired");
+  const r4: RetrievalContext = {
+    ...r3,
+    fragrances: [...r3.fragrances, extraFrag],
+  };
+
+  const result = planResponse("comparison output", "comparison", r4, QS_COMP_PLAN);
+
+  const hasExtra    = result.content.includes(extraFrag.name);
+  const hasOriginal = r3.fragrances.every(f => result.content.includes(f.name));
+
+  console.log(`     T-QS-47 extra excluded=${!hasExtra} originals present=${hasOriginal}`);
+  assert.ok(!hasExtra,   `T-QS-47: extra fragrance must be absent from comparison output`);
+  assert.ok(hasOriginal, `T-QS-47: all 3 resolved candidates must appear`);
+});
+
+test("T-QS-48 — pipeline: exact founder request — sweetness/freshness/intensity/occasions via buildContext", () => {
+  // The exact founder message; no manual focusDims — buildContext must detect them.
+  const r3 = makeRetrieval3();
+  const [sauvage, terre, oudWood] = r3.fragrances;
+
+  buildContext(r3, EMPTY_STATE, QS_COMP_PLAN, "comparison", null, null, null,
+    "Compare all three fragrances you just recommended, including their sweetness, freshness, intensity and suitable occasions.");
+
+  // focusDims should be ["sweetness","freshness","intensity"] — "occasions" is always included separately
+  const modelOutput = "Here is a comparison of all three fragrances.";
+  const result = planResponse(modelOutput, "comparison", r3, QS_COMP_PLAN);
+
+  // All three requested dimension labels must appear
+  const hasSweetness = result.content.includes("sweetness");
+  const hasFreshness = result.content.includes("freshness");
+  const hasIntensity = result.content.includes("intensity");
+  const hasOccasions = result.content.includes("occasions:");
+
+  // Correct catalogue scores for all three fragrances
+  const hasSauvageFr5  = result.content.includes("freshness 5/5");
+  const hasTerreFr3    = result.content.includes("freshness 3/5");
+  const hasOudWoodIn4  = result.content.includes("intensity 4/5");
+
+  // All three candidate names in output
+  const hasSauvage = result.content.includes(sauvage.name);
+  const hasTerre   = result.content.includes(terre.name);
+  const hasOudWood = result.content.includes(oudWood.name);
+
+  // Each row is its own paragraph: output has 4 \n\n-separated blocks (3 rows + follow-up)
+  const paragraphs = result.content.split("\n\n").filter(p => p.trim().length > 0);
+
+  console.log(`     T-QS-48 sw=${hasSweetness} fr=${hasFreshness} in=${hasIntensity} occ=${hasOccasions}`);
+  console.log(`     T-QS-48 fr5=${hasSauvageFr5} fr3=${hasTerreFr3} in4=${hasOudWoodIn4} paragraphs=${paragraphs.length}`);
+  assert.ok(hasSweetness,   `T-QS-48: sweetness must appear (requested in founder message)`);
+  assert.ok(hasFreshness,   `T-QS-48: freshness must appear (requested in founder message)`);
+  assert.ok(hasIntensity,   `T-QS-48: intensity must appear (requested in founder message)`);
+  assert.ok(hasOccasions,   `T-QS-48: occasions must always appear`);
+  assert.ok(hasSauvageFr5,  `T-QS-48: Sauvage freshness 5/5 (catalogue) must appear`);
+  assert.ok(hasTerreFr3,    `T-QS-48: Terre freshness 3/5 (catalogue) must appear`);
+  assert.ok(hasOudWoodIn4,  `T-QS-48: Oud Wood intensity 4/5 (catalogue) must appear`);
+  assert.ok(hasSauvage,     `T-QS-48: ${sauvage.name} must appear`);
+  assert.ok(hasTerre,       `T-QS-48: ${terre.name} must appear`);
+  assert.ok(hasOudWood,     `T-QS-48: ${oudWood.name} must appear`);
+  assert.equal(paragraphs.length, 4,
+    `T-QS-48: output must be 4 paragraphs (3 candidate rows + 1 follow-up); got ${paragraphs.length}`);
+});
+
+test("T-QS-49 — pipeline: extra frag present BEFORE buildContext excluded via resolvedCompareSlugs", () => {
+  const r3 = makeRetrieval3();
+  const [sauvage, terre, oudWood] = r3.fragrances;
+
+  const extraFrag = nativeFragrances.get("aventus-inspired");
+  if (!extraFrag) throw new Error("prerequisite missing: aventus-inspired");
+
+  // Extra already in retrieval (simulates planRetrieval appending supplementary similar frags)
+  const r4: RetrievalContext = {
+    fragrances: [...r3.fragrances, extraFrag],
+    articles: [],
+    // planRetrieval would have set this BEFORE appending the extra
+    resolvedCompareSlugs: [sauvage.slug, terre.slug, oudWood.slug],
+  };
+
+  buildContext(r4, EMPTY_STATE, QS_COMP_PLAN, "comparison", null, null, null, "compare these");
+
+  // comparisonCandidateSlugs must be sourced from resolvedCompareSlugs (3 slugs), not all 4 frags
+  assert.equal(r4.comparisonCandidateSlugs?.length, 3,
+    "T-QS-49: comparisonCandidateSlugs must contain exactly 3 resolved candidates (not 4)");
+
+  const result = planResponse("comparison output", "comparison", r4, QS_COMP_PLAN);
+
+  const hasExtra    = result.content.includes(extraFrag.name);
+  const hasOriginal = [sauvage, terre, oudWood].every(f => result.content.includes(f.name));
+
+  console.log(`     T-QS-49 extra excluded=${!hasExtra} originals present=${hasOriginal}`);
+  assert.ok(!hasExtra,   "T-QS-49: extra frag present before buildContext must be excluded via resolvedCompareSlugs");
+  assert.ok(hasOriginal, "T-QS-49: all 3 resolved candidates must appear");
+});
+
+test("T-QS-50 — pipeline: resolved-slug order preserved even when retrieval order differs", () => {
+  const r3 = makeRetrieval3();
+  const [sauvage, terre, oudWood] = r3.fragrances;
+
+  // resolvedCompareSlugs lists candidates in reverse order from retrieval array order
+  const r3Reordered: RetrievalContext = {
+    fragrances: [sauvage, terre, oudWood],
+    articles: [],
+    resolvedCompareSlugs: [oudWood.slug, terre.slug, sauvage.slug],
+  };
+
+  buildContext(r3Reordered, EMPTY_STATE, QS_COMP_PLAN, "comparison", null, null, null, "compare these");
+
+  const result = planResponse("comparison output", "comparison", r3Reordered, QS_COMP_PLAN);
+
+  const oudIdx     = result.content.indexOf(oudWood.name);
+  const terreIdx   = result.content.indexOf(terre.name);
+  const sauvageIdx = result.content.indexOf(sauvage.name);
+
+  console.log(`     T-QS-50 OW=${oudIdx} Terre=${terreIdx} Sauvage=${sauvageIdx}`);
+  assert.ok(oudIdx   < terreIdx,   "T-QS-50: Oud Wood must appear before Terre (resolved order)");
+  assert.ok(terreIdx < sauvageIdx, "T-QS-50: Terre must appear before Sauvage (resolved order)");
+});
+
+test("T-QS-51 — pipeline: slug missing from retrieval skipped; remaining candidates preserved", () => {
+  const r3 = makeRetrieval3();
+  const [sauvage, terre] = r3.fragrances;
+
+  // resolvedCompareSlugs includes a nonexistent slug; only 2 exist in retrieval
+  const r3Missing: RetrievalContext = {
+    fragrances: [sauvage, terre],
+    articles: [],
+    resolvedCompareSlugs: [sauvage.slug, terre.slug, "nonexistent-slug"],
+  };
+
+  buildContext(r3Missing, EMPTY_STATE, QS_COMP_PLAN, "comparison", null, null, null, "compare these");
+
+  // nonexistent-slug not in retrieval → filtered out → 2 feasible candidates
+  assert.equal(r3Missing.comparisonCandidateSlugs?.length, 2,
+    "T-QS-51: nonexistent resolved slug must be filtered out (not in retrieval)");
+
+  const result = planResponse("comparison output", "comparison", r3Missing, QS_COMP_PLAN);
+
+  const hasSauvage = result.content.includes(sauvage.name);
+  const hasTerre   = result.content.includes(terre.name);
+
+  console.log(`     T-QS-51 sauvage=${hasSauvage} terre=${hasTerre}`);
+  assert.ok(hasSauvage, "T-QS-51: Sauvage must appear");
+  assert.ok(hasTerre,   "T-QS-51: Terre must appear");
+});
+
+test("T-QS-53 — pipeline: 0 resolved candidates after missing-slug resolution → guard fails, model prose preserved", () => {
+  const sauvage = nativeFragrances.get("sauvage-inspired");
+  if (!sauvage) throw new Error("prerequisite missing: sauvage-inspired");
+
+  // resolvedCompareSlugs contains two slugs that do not exist in retrieval.fragrances
+  const r0: RetrievalContext = {
+    fragrances: [sauvage],
+    articles: [],
+    resolvedCompareSlugs: ["nonexistent-a", "nonexistent-b"],
+  };
+
+  buildContext(r0, EMPTY_STATE, QS_COMP_PLAN, "comparison", null, null, null, "compare these");
+
+  assert.equal(r0.comparisonCandidateSlugs?.length, 0,
+    "T-QS-53: all resolved slugs missing from retrieval → 0 feasible candidates");
+
+  const modelOutput = "I was unable to find the fragrances you mentioned.";
+  const result = planResponse(modelOutput, "comparison", r0, QS_COMP_PLAN);
+
+  const hasModel = result.content.includes("unable to find");
+  console.log(`     T-QS-53 model prose preserved=${hasModel}`);
+  assert.ok(hasModel, "T-QS-53: with 0 resolved candidates, model prose must be preserved");
+});
+
+test("T-QS-54 — pipeline: 1 resolved candidate after missing-slug resolution → guard fails, model prose preserved", () => {
+  const r3 = makeRetrieval3();
+  const [sauvage] = r3.fragrances;
+
+  // resolvedCompareSlugs has 2 entries but only 1 exists in retrieval
+  const r1: RetrievalContext = {
+    fragrances: [sauvage],
+    articles: [],
+    resolvedCompareSlugs: [sauvage.slug, "nonexistent-slug"],
+  };
+
+  buildContext(r1, EMPTY_STATE, QS_COMP_PLAN, "comparison", null, null, null, "compare these");
+
+  assert.equal(r1.comparisonCandidateSlugs?.length, 1,
+    "T-QS-54: 1 feasible candidate after missing-slug filter");
+
+  const modelOutput = "I could only find one fragrance matching your selection.";
+  const result = planResponse(modelOutput, "comparison", r1, QS_COMP_PLAN);
+
+  const hasModel = result.content.includes("only find one");
+  console.log(`     T-QS-54 model prose preserved=${hasModel}`);
+  assert.ok(hasModel, "T-QS-54: with 1 resolved candidate, model prose must be preserved");
+});
+
+test("T-QS-55 — pipeline: stale comparisonSlugs in session state cannot override newer recommendations via buildCachedRetrieval", () => {
+  const stateWithStale: ConversationState = {
+    ...EMPTY_STATE,
+    comparisonSlugs:         ["sauvage-inspired", "terre-d'hermes-inspired"],
+    lastRecommendationSlugs: ["aventus-inspired", "hacivat-inspired", "layton-inspired"],
+  };
+
+  // buildCachedRetrieval resolves from lastRecommendationSlugs, not comparisonSlugs
+  const retrieval = buildCachedRetrieval(stateWithStale);
+
+  // resolvedCompareSlugs must not contain the stale comparison slugs
+  const hasStale = (retrieval.resolvedCompareSlugs ?? []).includes("sauvage-inspired");
+  console.log(`     T-QS-55 stale sauvage in resolvedCompareSlugs=${hasStale}`);
+  assert.ok(!hasStale,
+    "T-QS-55: stale comparisonSlugs must not appear in buildCachedRetrieval resolvedCompareSlugs");
+
+  // buildContext uses resolvedCompareSlugs — comparisonCandidateSlugs must be the current recs
+  buildContext(retrieval, stateWithStale, QS_COMP_PLAN, "comparison", null, null, null, "compare all three");
+
+  const hasAventus = retrieval.comparisonCandidateSlugs?.includes("aventus-inspired");
+  const hasHacivat = retrieval.comparisonCandidateSlugs?.includes("hacivat-inspired");
+  console.log(`     T-QS-55 aventus=${hasAventus} hacivat=${hasHacivat}`);
+  assert.ok(hasAventus, "T-QS-55: current recommendation (aventus) must appear in comparisonCandidateSlugs");
+  assert.ok(hasHacivat, "T-QS-55: current recommendation (hacivat) must appear in comparisonCandidateSlugs");
+});
+
+test("T-QS-56 — negative: undefined resolvedCompareSlugs + supplementary frags → no authoritative comparison, section empty", () => {
+  const sauvage = nativeFragrances.get("sauvage-inspired");
+  const terre   = nativeFragrances.get("terre-d'hermes-inspired");
+  const oudWood = nativeFragrances.get("oud-wood-inspired");
+  if (!sauvage || !terre || !oudWood) throw new Error("prerequisite fragrances missing");
+
+  const rNoMeta: RetrievalContext = {
+    fragrances: [sauvage, terre, oudWood],
+    articles: [],
+    // resolvedCompareSlugs deliberately absent — missing metadata
+  };
+
+  const rendered = renderContext(buildContext(rNoMeta, EMPTY_STATE, QS_COMP_PLAN, "comparison", null, null, null, "compare these"));
+
+  assert.equal(rNoMeta.comparisonCandidateSlugs?.length, 0,
+    "T-QS-56: missing resolvedCompareSlugs → comparisonCandidateSlugs must be empty");
+  assert.ok(!rendered.includes("=== COMPARISON INTELLIGENCE FOCUS ==="),
+    "T-QS-56: section must be absent when resolvedCompareSlugs is undefined");
+
+  const modelOutput = "Let me compare these fragrances for you.";
+  const result = planResponse(modelOutput, "comparison", rNoMeta, QS_COMP_PLAN);
+  const hasModel = result.content.includes("Let me compare");
+  console.log(`     T-QS-56 section=${rendered.includes("COMPARISON INTELLIGENCE FOCUS")} prose=${hasModel}`);
+  assert.ok(hasModel, "T-QS-56: model prose must be preserved when resolvedCompareSlugs is undefined");
+});
+
+test("T-QS-57 — negative: empty resolvedCompareSlugs + supplementary frags → no authoritative comparison, section empty", () => {
+  const sauvage = nativeFragrances.get("sauvage-inspired");
+  const terre   = nativeFragrances.get("terre-d'hermes-inspired");
+  const oudWood = nativeFragrances.get("oud-wood-inspired");
+  if (!sauvage || !terre || !oudWood) throw new Error("prerequisite fragrances missing");
+
+  const rEmptyResolved: RetrievalContext = {
+    fragrances: [sauvage, terre, oudWood],
+    articles: [],
+    resolvedCompareSlugs: [],
+  };
+
+  const rendered = renderContext(buildContext(rEmptyResolved, EMPTY_STATE, QS_COMP_PLAN, "comparison", null, null, null, "compare these"));
+
+  assert.equal(rEmptyResolved.comparisonCandidateSlugs?.length, 0,
+    "T-QS-57: empty resolvedCompareSlugs → comparisonCandidateSlugs must be empty");
+  assert.ok(!rendered.includes("=== COMPARISON INTELLIGENCE FOCUS ==="),
+    "T-QS-57: section must be absent when resolvedCompareSlugs is empty");
+
+  const modelOutput = "Unable to resolve comparison candidates.";
+  const result = planResponse(modelOutput, "comparison", rEmptyResolved, QS_COMP_PLAN);
+  const hasModel = result.content.includes("Unable to resolve");
+  console.log(`     T-QS-57 section=${rendered.includes("COMPARISON INTELLIGENCE FOCUS")} prose=${hasModel}`);
+  assert.ok(hasModel, "T-QS-57: model prose must be preserved when resolvedCompareSlugs is empty");
+});
+
+test("T-QS-52 — pipeline: duplicate resolved slugs deduplicated; each candidate appears once", () => {
+  const r3 = makeRetrieval3();
+  const [sauvage, terre, oudWood] = r3.fragrances;
+
+  // resolvedCompareSlugs has sauvage listed twice
+  const r3Dup: RetrievalContext = {
+    fragrances: [sauvage, terre, oudWood],
+    articles: [],
+    resolvedCompareSlugs: [sauvage.slug, sauvage.slug, terre.slug, oudWood.slug],
+  };
+
+  buildContext(r3Dup, EMPTY_STATE, QS_COMP_PLAN, "comparison", null, null, null, "compare these");
+
+  // After dedup: 3 unique slugs
+  assert.equal(r3Dup.comparisonCandidateSlugs?.length, 3,
+    "T-QS-52: duplicate resolved slugs must be deduplicated to 3 unique candidates");
+
+  const result = planResponse("comparison output", "comparison", r3Dup, QS_COMP_PLAN);
+
+  // Sauvage must appear exactly once (one row, not duplicated)
+  const sauvageCount = result.content.split(sauvage.name).length - 1;
+  console.log(`     T-QS-52 sauvage occurrences=${sauvageCount}`);
+  assert.equal(sauvageCount, 1, "T-QS-52: Sauvage must appear exactly once (deduplicated)");
 });
 
 // ── Summary ───────────────────────────────────────────────────────────────────

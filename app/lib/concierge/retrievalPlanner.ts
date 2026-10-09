@@ -533,6 +533,10 @@ export function planRetrieval(
   let isHiddenGemRequest = false;
   // EP-AI-C4: anchored refinement metadata, populated only in anchored_refinement path
   let anchoredMeta: AnchoredMeta | undefined;
+  // Resolved comparison candidates (explicit entities), captured BEFORE planRetrieval
+  // appends supplementary similar fragrances. buildContext reads this to source
+  // comparisonCandidateSlugs accurately. undefined on all non-comparison paths.
+  let resolvedCompareSlugs: string[] | undefined;
 
   // Variety-request detection (EP-AI-C3): when guest asks for alternatives,
   // the session-diversity block will restrict candidates to unseen-only so the
@@ -564,6 +568,10 @@ export function planRetrieval(
       fragrances = slugsToCompare
         .map((slug) => catalogueMaps.bySlug.get(slug))
         .filter((k): k is FragranceKnowledge => !!k);
+
+      // Snapshot resolved candidates BEFORE appending supplementary similar frags.
+      // buildContext reads resolvedCompareSlugs to source comparisonCandidateSlugs.
+      resolvedCompareSlugs = fragrances.map(f => f.slug);
 
       if (fragrances.length >= 2) {
         const additional = getSimilarFragrances(fragrances[0], { count: 3, excludeSlug: fragrances[0].slug })
@@ -1154,7 +1162,7 @@ export function planRetrieval(
   // Signals context builder to instruct the LLM to handle it conversationally.
   const poolExhausted = fragrances.length < 2;
 
-  return { fragrances, articles, collectionName, fragranceRoles, anchoredMeta, confidenceClassifications, poolExhausted };
+  return { fragrances, articles, collectionName, fragranceRoles, anchoredMeta, confidenceClassifications, poolExhausted, resolvedCompareSlugs };
 }
 
 /**
@@ -1184,5 +1192,9 @@ export function buildCachedRetrieval(
       )
     : [];
 
-  return { fragrances, articles, collectionName: state.lastCollection };
+  // resolvedCompareSlugs mirrors the actual retrieved frags (no supplementary appended
+  // on this path), so buildContext can source comparisonCandidateSlugs without relying
+  // on session state fields that may be stale from a prior comparison turn.
+  const resolvedCompareSlugs = fragrances.map(f => f.slug);
+  return { fragrances, articles, collectionName: state.lastCollection, resolvedCompareSlugs };
 }

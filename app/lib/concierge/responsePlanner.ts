@@ -11,6 +11,7 @@
 import type { ConversationIntent, ConversationProfile } from "./types";
 import type { RetrievalContext, AnchoredMeta } from "./contextBuilder";
 import type { ConversationPlan }   from "./conversationPlanner";
+import { TRUNCATION_FALLBACK }     from "./claudeClient";
 
 // ── Marker patterns ───────────────────────────────────────────────────────────
 
@@ -326,6 +327,100 @@ function generateFollowUps(
   return filter(filteredPool);
 }
 
+// ── Deterministic comparison response ─────────────────────────────────────────
+
+const COMPARISON_DIMS_META: Array<{ key: string; label: string }> = [
+  { key: "sweetness",   label: "Sweetness"   },
+  { key: "freshness",   label: "Freshness"   },
+  { key: "warmth",      label: "Warmth"      },
+  { key: "intensity",   label: "Intensity"   },
+  { key: "versatility", label: "Versatility" },
+];
+
+// Resolves comparison candidates from RetrievalContext exactly once.
+// undefined or empty comparisonCandidateSlugs means no resolved selection — returns [].
+// Missing metadata must not promote supplementary retrieval fragrances into candidates.
+function resolveComparisonCandidates(
+  retrieval: RetrievalContext,
+): RetrievalContext["fragrances"] {
+  if (!retrieval.comparisonCandidateSlugs?.length) {
+    return [];
+  }
+  const fragMap = new Map(retrieval.fragrances.map(f => [f.slug, f]));
+  return retrieval.comparisonCandidateSlugs
+    .map(slug => fragMap.get(slug))
+    .filter((f): f is RetrievalContext["fragrances"][number] => f !== undefined);
+}
+
+// Builds the authoritative comparison response from catalogue data.
+// Replaces model prose entirely for resolved comparison turns.
+// Receives pre-resolved candidates from resolveComparisonCandidates.
+//
+// Dimensions shown:
+//   - Explicit: those in focusDims (from retrieval.comparisonFocusDims)
+//   - Implicit: top-3 by max spread across all candidates when none specified
+//
+// Missing numeric values are omitted, never substituted with 0.
+// Candidate order matches the resolved-slug order. Occasions always included.
+function buildDeterministicComparisonResponse(
+  candidates: RetrievalContext["fragrances"],
+  focusDims:  string[],
+): string {
+  // Select dimensions to show
+  let dimsToShow: Array<{ key: string; label: string }>;
+  if (focusDims.length > 0) {
+    dimsToShow = COMPARISON_DIMS_META.filter((d) => focusDims.includes(d.key));
+  } else {
+    // No explicit request: top 3 by max spread across all candidate pairs
+    const scored = COMPARISON_DIMS_META.map((d) => {
+      let maxSpread = 0;
+      for (let i = 0; i < candidates.length; i++) {
+        for (let j = i + 1; j < candidates.length; j++) {
+          const vi = (candidates[i] as Record<string, unknown>)[d.key];
+          const vj = (candidates[j] as Record<string, unknown>)[d.key];
+          if (typeof vi === "number" && typeof vj === "number") {
+            maxSpread = Math.max(maxSpread, Math.abs(vi - vj));
+          }
+        }
+      }
+      return { key: d.key, label: d.label, maxSpread };
+    });
+    scored.sort((a, b) => b.maxSpread - a.maxSpread);
+    dimsToShow = scored.slice(0, 3).map(({ key, label }) => ({ key, label }));
+  }
+
+  const rows = candidates.map((f) => {
+    const fragRec = f as Record<string, unknown>;
+
+    const scoreStr = dimsToShow
+      .map(({ key, label }) => {
+        const v = fragRec[key];
+        return typeof v === "number" ? `${label.toLowerCase()} ${v}/5` : null;
+      })
+      .filter((s): s is string => s !== null)
+      .join(", ");
+
+    const occ = (fragRec.occasions as string[] | undefined)?.slice(0, 5).join(", ") ?? "";
+
+    const parts = [
+      scoreStr || null,
+      occ ? `occasions: ${occ}` : null,
+    ].filter((p): p is string => p !== null);
+
+    return `${f.name}: ${parts.length > 0 ? parts.join(" · ") : "—"}`;
+  });
+
+  const followUp =
+    focusDims.length === 1
+      ? `Which ${focusDims[0]} level suits you best?`
+      : focusDims.length > 1
+      ? `Which of these fits what you had in mind?`
+      : `Which character appeals most to you?`;
+
+  // Each row is separated by \n\n so ConciergeMessage renders them as distinct paragraphs.
+  return rows.join("\n\n") + "\n\n" + followUp;
+}
+
 // ── Public types ──────────────────────────────────────────────────────────────
 
 export interface PlannedResponse {
@@ -345,6 +440,9 @@ export function planResponse(
   plan:       ConversationPlan,
   profile?:   ConversationProfile,
 ): PlannedResponse {
+  // Capture before any mutation so the truncation-fallback guard below is reliable.
+  const isTruncationFallback = rawContent === TRUNCATION_FALLBACK;
+
   const rawSlugs:    string[] = [];
   const articleSlugs: string[] = [];
 
@@ -557,6 +655,32 @@ export function planResponse(
         if (!finalSlugs.includes(f.slug)) finalSlugs.push(f.slug);
       }
     }
+  }
+
+  // ── Deterministic comparison replacement ──────────────────────────────────────
+  // Replace model prose entirely for resolved, non-clarification comparison turns.
+  // Card resolution above has already run — finalSlugs is settled before this fires.
+  // Model-generated scores, qualitative rankings (present/intimate), and
+  // absence-of-sweetness inferences are discarded; response built from catalogue data.
+  // Triggered from plan/candidates, not from content.
+  // Guards:
+  //   !isTruncationFallback      — explicit; retry message passes through unchanged
+  //   !plan.requiresClarification — when the planner still needs to ask the guest a
+  //                                  question, the model's clarification prose survives
+  // Resolve candidates once; guard and builder use the identical list.
+  // Returns [] when comparisonCandidateSlugs is absent or empty — missing
+  // metadata means no authoritative candidates; guard fails, model prose preserved.
+  const resolvedCandidates = resolveComparisonCandidates(retrieval);
+  if (
+    plan.requiresComparison &&
+    !plan.requiresClarification &&
+    resolvedCandidates.length >= 2 &&
+    !isTruncationFallback
+  ) {
+    content = buildDeterministicComparisonResponse(
+      resolvedCandidates,
+      retrieval.comparisonFocusDims ?? [],
+    );
   }
 
   // No-match anchored_refinement post-processor:

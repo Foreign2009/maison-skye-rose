@@ -180,6 +180,45 @@
       "comparisonSlugs": [], "profile": null, "consultationPlan": null, "clarificationTurnCount": 0
     }
   },
+  "scenarioH": {
+    "content": "Sauvage Inspired: sweetness 1/5, freshness 5/5, intensity 4/5 · occasions: Daily Wear, Office, Date Night, Weekend\n\nTerre d'Hermes Inspired: sweetness 1/5, freshness 3/5, intensity 3/5 · occasions: Daily Wear, Office, Weekend, Date Night\n\nOud Wood Inspired: sweetness 1/5, freshness 1/5, intensity 4/5 · occasions: Formal Events, Evening, Date Night, Business, Winter Days\n\nWhich of these fits what you had in mind?",
+    "fragrances": [
+      {
+        "slug": "sauvage-inspired",
+        "name": "Sauvage Inspired",
+        "subtitle": "Masculine Energy",
+        "family": ["Fresh", "Woody", "Aromatic"],
+        "image": "/images/blue-10ml.png",
+        "price": 100,
+        "href": "/product/sauvage-inspired"
+      },
+      {
+        "slug": "terre-d'hermes-inspired",
+        "name": "Terre d'Hermes Inspired",
+        "subtitle": "Earthy Elegance",
+        "family": ["Woody", "Earthy"],
+        "image": "/images/blue-10ml.png",
+        "price": 100,
+        "href": "/product/terre-d'hermes-inspired"
+      },
+      {
+        "slug": "oud-wood-inspired",
+        "name": "Oud Wood Inspired",
+        "subtitle": "Deep Warmth",
+        "family": ["Woody", "Oriental"],
+        "image": "/images/blue-10ml.png",
+        "price": 100,
+        "href": "/product/oud-wood-inspired"
+      }
+    ],
+    "articles": [],
+    "followUpSuggestions": [],
+    "intent": "comparison",
+    "sessionUpdates": {
+      "selectedSlug": null, "lastArticleSlug": null, "lastCollection": null,
+      "comparisonSlugs": [], "profile": null, "consultationPlan": null, "clarificationTurnCount": 0
+    }
+  },
   "scenarioD": {
     "content": "I'd suggest Wood Sage Sea Salt Inspired for everyday and Sauvage Inspired for special occasions.",
     "fragrances": [

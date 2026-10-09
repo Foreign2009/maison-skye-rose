@@ -259,6 +259,51 @@ test('G: flat text — single paragraph renders as one block, text preserved', a
   await expect(paragraphSpans, 'Exactly one block span for flat text').toHaveCount(1);
 });
 
+// ── Scenario H: comparison paragraphs — 3 candidates + follow-up ─────────────
+//
+// Verifies that ConciergeMessage renders a deterministic comparison response
+// (3 candidate rows + 1 follow-up, separated by \n\n) as 4 distinct <span class="block">
+// elements — one per paragraph — with each candidate name in the correct span
+// and the follow-up text in the last span.
+//
+// This is a browser-rendering verification (not a string-split formatting check).
+// The mocked API response carries pre-computed content from buildDeterministicComparisonResponse.
+
+test('H: comparison paragraphs — 3 candidate rows + follow-up render as 4 distinct block spans', async ({ page }) => {
+  const fixture = FIXTURES.scenarioH;
+  // content: "Sauvage Inspired: ...\n\nTerre d'Hermes Inspired: ...\n\nOud Wood Inspired: ...\n\nWhich of these fits what you had in mind?"
+
+  const dialog = await openAndSendMessage(page, fixture, 'Compare these three fragrances?');
+
+  const bubble = dialog.locator('.rounded-tl-sm').last();
+  await expect(bubble).toBeVisible({ timeout: 5_000 });
+
+  // 4 block spans: one per \n\n-separated paragraph
+  const paragraphSpans = bubble.locator('span.block');
+  await expect(paragraphSpans, '4 block spans rendered (3 candidate rows + 1 follow-up)').toHaveCount(4);
+
+  // Each candidate name appears in its own span (in order)
+  const span0 = paragraphSpans.nth(0);
+  const span1 = paragraphSpans.nth(1);
+  const span2 = paragraphSpans.nth(2);
+  const span3 = paragraphSpans.nth(3);
+
+  await expect(span0, 'First span: Sauvage Inspired').toContainText('Sauvage Inspired');
+  await expect(span1, 'Second span: Terre d\'Hermes Inspired').toContainText("Terre d'Hermes Inspired");
+  await expect(span2, 'Third span: Oud Wood Inspired').toContainText('Oud Wood Inspired');
+  await expect(span3, 'Fourth span: follow-up question').toContainText('Which of these fits what you had in mind?');
+
+  // Vertically ordered: each span starts below the previous one
+  const box0 = await span0.boundingBox();
+  const box1 = await span1.boundingBox();
+  const box2 = await span2.boundingBox();
+  const box3 = await span3.boundingBox();
+  expect(box0, 'span 0 bounding box exists').not.toBeNull();
+  expect(box1.y, 'span 1 starts below span 0').toBeGreaterThan(box0.y);
+  expect(box2.y, 'span 2 starts below span 1').toBeGreaterThan(box1.y);
+  expect(box3.y, 'span 3 starts below span 2').toBeGreaterThan(box2.y);
+});
+
 // ── Scenario D: mixed-marker order, cardTarget=1 ─────────────────────────────
 
 test('D: mixed-marker order — first-mentioned (non-bold) selected at cardTarget=1', async ({ page }) => {

@@ -42,6 +42,9 @@ export interface RetrievalContext {
   confidenceClassifications?: ConfidenceClassification[];  // EP-AI-C5: per-candidate fit confidence
   poolExhausted?:            boolean;              // EP-AI-C5: fewer than 2 eligible candidates after all filters
   cardTarget?:               number;              // EP-AI-C6-P3-R2: set by buildContext, read by planResponse for server-side guarantee
+  comparisonFocusDims?:      string[];             // intelligence dim keys explicitly requested in comparison message
+  resolvedCompareSlugs?:     string[];             // slugs resolved by planRetrieval BEFORE supplementary similar frags appended
+  comparisonCandidateSlugs?: string[];             // slugs of resolved comparison candidates, snapshotted at context-build time
 }
 
 export interface PromptSection {
@@ -1035,9 +1038,11 @@ function buildComparisonIntelligenceSection(
     { key: "versatility", label: "Versatility" },
   ];
 
-  // Tier 1: detect which dimension the guest explicitly asked about this turn
+  // Tier 1: detect ALL dimensions the guest explicitly asked about this turn
   const msgLower = (rawMessage ?? "").toLowerCase();
-  const explicitDim = DIMS.find((d) => msgLower.includes(d.key.toLowerCase()))?.key ?? null;
+  const explicitDims = new Set(
+    DIMS.filter((d) => msgLower.includes(d.key.toLowerCase())).map((d) => d.key),
+  );
 
   // Tier 2: derive a preferred dimension from the guest's accumulated family preferences.
   // Conservative — maps only Maison family vocabulary that clearly aligns with a numeric
@@ -1052,25 +1057,33 @@ function buildComparisonIntelligenceSection(
     guestFamilies.some((gf) => entry.families.some((f) => gf.includes(f) || f.includes(gf)))
   )?.dim ?? null;
 
-  // Compute spread for each dimension across the two primary fragrances
-  const f0 = fragrances[0];
-  const f1 = fragrances[1];
+  // Compute max spread across all candidate pairs for each dimension.
+  // Handles 2-frag and N-frag comparisons; non-numeric values contribute 0.
   type ScoredDim = Dim & { spread: number; priority: number };
   const scored: ScoredDim[] = DIMS.map((d) => {
-    const v0 = (f0 as Record<string, unknown>)[d.key];
-    const v1 = (f1 as Record<string, unknown>)[d.key];
-    const spread = typeof v0 === "number" && typeof v1 === "number" ? Math.abs(v0 - v1) : 0;
+    let maxSpread = 0;
+    for (let i = 0; i < fragrances.length; i++) {
+      for (let j = i + 1; j < fragrances.length; j++) {
+        const vi = (fragrances[i] as Record<string, unknown>)[d.key];
+        const vj = (fragrances[j] as Record<string, unknown>)[d.key];
+        if (typeof vi === "number" && typeof vj === "number") {
+          maxSpread = Math.max(maxSpread, Math.abs(vi - vj));
+        }
+      }
+    }
     // Priority: tier 1 (explicit current-turn question) > tier 2 (known preferences) > tier 3 (spread)
-    const priority = d.key === explicitDim ? 100
-                   : d.key === profileDim  ? 50
-                   : spread;
-    return { ...d, spread, priority };
+    const priority = explicitDims.has(d.key) ? 100
+                   : d.key === profileDim     ? 50
+                   : maxSpread;
+    return { ...d, spread: maxSpread, priority };
   });
 
   scored.sort((a, b) => b.priority - a.priority);
 
-  const lines = scored.slice(0, 3).map((d) => {
-    const vals = fragrances.slice(0, 2).map((f) => {
+  // Show at least 3 rows, or all explicitly asked dimensions — whichever is more
+  const rowCount = Math.max(3, explicitDims.size);
+  const lines = scored.slice(0, rowCount).map((d) => {
+    const vals = fragrances.map((f) => {
       const v = (f as Record<string, unknown>)[d.key];
       return `${f.name}: ${typeof v === "number" ? `${v}/5` : "—"}`;
     });
@@ -1107,6 +1120,39 @@ export function buildContext(
     retrieval.cardTarget = computedCardTarget;
   }
 
+  // Store dims the guest explicitly asked about in this comparison message so
+  // planResponse can build an authoritative comparison covering exactly those dims.
+  if (plan.requiresComparison && rawMessage) {
+    const msgLower = rawMessage.toLowerCase();
+    const COMP_DIM_KEYS = ["sweetness", "freshness", "warmth", "intensity", "versatility"];
+    const focusDims = COMP_DIM_KEYS.filter((d) => msgLower.includes(d));
+    if (focusDims.length > 0) retrieval.comparisonFocusDims = focusDims;
+  }
+
+  // Snapshot resolved comparison candidates at context-build time.
+  // Both planRetrieval (explicit entities) and buildCachedRetrieval (reuseRecommendations)
+  // set resolvedCompareSlugs before this function is called, so it is always the
+  // authoritative source. No fallback to state session fields: comparisonSlugs may be
+  // stale from a prior comparison turn and must not override a newer recommendation set.
+  // Dedup (preserving order) and filter to slugs present in retrieval.fragrances so
+  // the resulting count is the true feasible candidate count.
+  if (plan.requiresComparison) {
+    const sourceSlugs = retrieval.resolvedCompareSlugs ?? [];
+    const fragSlugsInRetrieval = new Set(retrieval.fragrances.map(f => f.slug));
+    retrieval.comparisonCandidateSlugs = [...new Set(sourceSlugs)].filter(s => fragSlugsInRetrieval.has(s));
+  }
+
+  // Comparison intelligence section uses only the resolved candidates in slug order.
+  // Missing or empty comparisonCandidateSlugs means no resolved selection — section empty.
+  // Supplementary retrieval fragrances are excluded; they must not enter the section.
+  const comparisonSectionFragrances: FragranceKnowledge[] = (() => {
+    if (!plan.requiresComparison || !retrieval.comparisonCandidateSlugs?.length) return [];
+    const fragMap = new Map(retrieval.fragrances.map(f => [f.slug, f]));
+    return retrieval.comparisonCandidateSlugs
+      .map(slug => fragMap.get(slug))
+      .filter((f): f is FragranceKnowledge => f !== undefined);
+  })();
+
   const sections: PromptSection[] = [
     buildSeasonalContextSection(rawMessage),  // EP-AI-C6-P3 Change D
     buildConsultationStageSection(state),                                        // EP-AI-C5
@@ -1131,7 +1177,7 @@ export function buildContext(
       : { label: "", content: "" },
     buildArticleSection(retrieval.articles),
     buildComparisonIntelligenceSection(                                          // EP-AI-C5
-      retrieval.fragrances,
+      comparisonSectionFragrances,
       rawMessage,
       state.profile,
       plan.requiresComparison,
