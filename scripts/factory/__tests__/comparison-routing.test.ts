@@ -24,6 +24,7 @@
  *   T-H-05  Provider max_tokens → TRUNCATION_FALLBACK in final JSON + empty fragrances
  *   T-H-06  Prose replaced by deterministic output with all three names + exact scores
  *   T-H-07  Insufficient selection — no /5 scores, deterministic guard does not fire
+ *   T-H-08  Typographic apostrophe (U+2019) — Terre resolves in live customer messages
  *
  *   T-F-01  callClaude: max_tokens → TRUNCATION_FALLBACK
  *   T-F-02  callClaude: end_turn → model text preserved
@@ -33,6 +34,7 @@
  *   T-F-06  Flanker safety: exact slugs sauvage-elixir-inspired vs sauvage-inspired
  *   T-F-07  and/& normalization: spaced "and", spaced "&", unspaced "&" — identical
  *   T-F-08  Clarification routing: vague first turn → clarification action
+ *   T-F-09  Typographic apostrophe (U+2019): compareSlug length 3, Terre present
  *
  * Run: npx tsx scripts/factory/__tests__/comparison-routing.test.ts
  */
@@ -195,9 +197,15 @@ function fnMockClient(stopReason: "end_turn" | "max_tokens", text = ""): Anthrop
 
 // Generic back-reference (cached path)
 const MSG_GENERIC    = "Compare all three fragrances you just recommended, including their sweetness, freshness, intensity and suitable occasions.";
-// Explicit named (accented and unaccented)
+// Explicit named (accented and unaccented, straight apostrophe U+0027)
 const MSG_ACCENTED   = "Compare Oud Wood Inspired, Sauvage Inspired and Terre d'Hermès Inspired by sweetness, freshness, intensity and suitable occasions.";
 const MSG_UNACCENTED = "Compare Oud Wood Inspired, Sauvage Inspired and Terre d'Hermes Inspired by sweetness, freshness, intensity and suitable occasions.";
+// Live customer variants: typographic RIGHT SINGLE QUOTATION MARK (U+2019) in "d'Hermès"
+// Mobile keyboards auto-substitute U+2019; TypeScript source literals use U+0027.
+// Tests using MSG_ACCENTED already pass because U+0027 is the source encoding —
+// these two variants caught the silent omission of Terre in production.
+const MSG_CURLY_APOSTROPHE   = "Compare Oud Wood Inspired, Sauvage Inspired and Terre d’Hermès Inspired by sweetness, freshness, intensity and suitable occasions.";
+const MSG_CURLY_DECOMPOSED   = "Compare Oud Wood Inspired, Sauvage Inspired and Terre d’Hermès Inspired by sweetness, freshness, intensity and suitable occasions.";
 
 // Expected exact score strings from catalogue data (verified: sw=1,fr=1,int=4 / sw=1,fr=5,int=4 / sw=1,fr=3,int=3)
 const SCORE_OUD   = "Oud Wood Inspired: sweetness 1/5, freshness 1/5, intensity 4/5";
@@ -389,6 +397,38 @@ await test("T-H-07-b  single named frag: no score rows (/5 absent)", async () =>
     "no /5 scores when only one fragrance is resolvable");
 });
 
+// ── T-H-08: Typographic apostrophe (U+2019) in live customer message ──────────
+// Mobile keyboards auto-substitute U+2019 RIGHT SINGLE QUOTATION MARK for the
+// straight apostrophe U+0027. The live message "Terre d'Hermès Inspired" (U+2019)
+// was silently producing only two comparison rows — Oud Wood and Sauvage — because
+// normalizeInputForEntityMatch did not map U+2019 to U+0027 before matching against
+// catalogue keys (authored with U+0027). These tests pin the exact fix.
+
+console.log("\n  ── T-H-08  Typographic apostrophe (U+2019) ──");
+
+await test("T-H-08-a  U+2019 + composed è: Terre score row present", async () => {
+  _mock.set("end_turn", PROSE_MOCK);
+  const body = await post(MSG_CURLY_APOSTROPHE, EMPTY_STATE);
+  assert.ok((body.content as string).includes(SCORE_TERRE),
+    `U+2019 + composed è must produce Terre row: "${SCORE_TERRE}"`);
+});
+
+await test("T-H-08-b  U+2019 + decomposed e+grave: Terre score row present", async () => {
+  _mock.set("end_turn", PROSE_MOCK);
+  const body = await post(MSG_CURLY_DECOMPOSED, EMPTY_STATE);
+  assert.ok((body.content as string).includes(SCORE_TERRE),
+    `U+2019 + decomposed e+grave must produce Terre row: "${SCORE_TERRE}"`);
+});
+
+await test("T-H-08-c  U+2019 variant produces identical content to U+0027 variant", async () => {
+  _mock.set("end_turn", PROSE_MOCK);
+  const bodyC = await post(MSG_CURLY_APOSTROPHE, EMPTY_STATE);
+  _mock.set("end_turn", PROSE_MOCK);
+  const bodyS = await post(MSG_ACCENTED, EMPTY_STATE);
+  assert.equal(bodyC.content, bodyS.content,
+    "U+2019 smart-quote input must produce identical content to U+0027 straight-apostrophe input");
+});
+
 } // end runHandlerTests
 
 // ── Part B: Function-level tests ─────────────────────────────────────────────
@@ -511,6 +551,33 @@ await test("T-F-08  vague first turn → clarification action, requiresCompariso
     "requiresComparison must be false on a clarification turn");
 });
 
+// ── T-F-09: Typographic apostrophe — resolveIntent compareSlug coverage ────────
+
+console.log("\n  ── T-F-09  Typographic apostrophe (resolveIntent) ──");
+
+await test("T-F-09-a  U+2019 + composed è: compareSlug length 3, Terre present", () => {
+  const ri = resolveIntent(MSG_CURLY_APOSTROPHE, {});
+  assert.equal(ri.compareSlug.length, 3,
+    `compareSlug must have 3 entries for U+2019 input, got ${ri.compareSlug.length}: [${ri.compareSlug.join(", ")}]`);
+  assert.ok(ri.compareSlug.includes("terre-d'hermes-inspired"),
+    "terre-d'hermes-inspired must be in compareSlug for U+2019 apostrophe input");
+});
+
+await test("T-F-09-b  U+2019 + decomposed e+grave: compareSlug length 3, Terre present", () => {
+  const ri = resolveIntent(MSG_CURLY_DECOMPOSED, {});
+  assert.equal(ri.compareSlug.length, 3,
+    `compareSlug must have 3 entries for U+2019+decomposed input, got ${ri.compareSlug.length}: [${ri.compareSlug.join(", ")}]`);
+  assert.ok(ri.compareSlug.includes("terre-d'hermes-inspired"),
+    "terre-d'hermes-inspired must be in compareSlug for U+2019+decomposed input");
+});
+
+await test("T-F-09-c  U+2019 and U+0027 produce identical compareSlug (sorted)", () => {
+  const curly   = resolveIntent(MSG_CURLY_APOSTROPHE, {}).compareSlug.slice().sort();
+  const straight = resolveIntent(MSG_ACCENTED,        {}).compareSlug.slice().sort();
+  assert.deepEqual(curly, straight,
+    "U+2019 smart-quote and U+0027 straight-apostrophe must produce identical compareSlug");
+});
+
 } // end runFunctionTests
 
 // ── Main ──────────────────────────────────────────────────────────────────────
@@ -522,8 +589,8 @@ await test("T-F-08  vague first turn → clarification action, requiresCompariso
   } finally {
     const total = passed + failed;
     console.log(`\n  ${total} tests — ${passed} passed, ${failed} failed`);
-    console.log(`  Part A (handler-level): T-H-01 through T-H-07`);
-    console.log(`  Part B (function-level): T-F-01 through T-F-08`);
+    console.log(`  Part A (handler-level): T-H-01 through T-H-08`);
+    console.log(`  Part B (function-level): T-F-01 through T-F-09`);
     if (failed > 0) process.exit(1);
   }
 })();
