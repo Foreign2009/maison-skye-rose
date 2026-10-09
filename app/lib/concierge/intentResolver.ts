@@ -44,6 +44,9 @@ function stripMaisonSuffix(name: string): string {
 }
 
 // Normalizes user-input punctuation for entity matching.
+// NFD decomposition + combining-character strip normalises accented input so
+// "Hermès" (user) matches catalogue key "Hermes". Catalogue names are stored
+// without accents; the user-side normalization bridges both directions.
 // Periods are replaced with spaces so "No. 5" and "No.5" both match bare key "No 5".
 // "&" (with or without surrounding spaces) and " and " are stripped so natural
 // compound-name phrasings ("Wood Sage and Sea Salt", "English Pear & Freesia",
@@ -52,6 +55,8 @@ function stripMaisonSuffix(name: string): string {
 // Apostrophes, hyphens, and other identity-significant characters are preserved.
 function normalizeInputForEntityMatch(s: string): string {
   return s
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")
     .replace(/\./g, " ")
     .replace(/\s*&\s*/g, " ")
     .replace(/\s+and\s+/gi, " ")
@@ -130,7 +135,7 @@ export function resolveIntent(message: string, context: ConversationContext): Re
     entitySlug = mentionedSlugs[0];
     entityFromMessage = true;
   } else if (mentionedSlugs.length >= 2) {
-    compareSlug  = mentionedSlugs.slice(0, 2);
+    compareSlug  = mentionedSlugs.slice(0, 3);
     [entitySlug] = compareSlug;
     entityFromMessage = true;
   }

@@ -194,8 +194,31 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       }
     }
 
+    // Comparison entity-authority: when planConversation chose the cached comparison
+    // path (requiresRetrieval=false, e.g. "compare all three"), check whether the message
+    // also names specific fragrances. Named frags override the cached recommendation
+    // selection — the guest is asking to compare the explicit names, not the session cache.
+    if (plan.requiresComparison && !plan.requiresRetrieval) {
+      if (!resolvedIntent) resolvedIntent = resolveIntent(message, context);
+      if (resolvedIntent.compareSlug.length >= 2) {
+        plan = { ...plan, requiresRetrieval: true };
+      }
+    }
+
     if (plan.requiresRetrieval) {
       if (!resolvedIntent) resolvedIntent = resolveIntent(message, context);
+
+      // Named-comparison upgrade: resolveIntent found >= 2 explicit frags on a comparison
+      // turn that planConversation did not classify (COMPARISON_PATTERNS gap for bare
+      // "compare [names]"). Upgrade requiresComparison so the correct token budget and
+      // deterministic response guard fire. action upgraded to "comparison" for consistency.
+      if (
+        !plan.requiresComparison &&
+        resolvedIntent.intent === "comparison" &&
+        resolvedIntent.compareSlug.length >= 2
+      ) {
+        plan = { ...plan, requiresComparison: true, action: "comparison" as const, nextIntent: "comparison" as const };
+      }
 
       // EP-AI-C4 + EP-AI-C4-R1: Resolve anchor slug and, when needed, upgrade plan
       // to anchored_refinement. Both the session-override and the fresh-turn paths

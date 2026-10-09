@@ -48,6 +48,8 @@ const REFERENCE_PATTERNS = [
 ];
 
 const COMPARISON_PATTERNS = [
+  // Generic back-references to previous recommendations (no named frags in message)
+  "compare all",
   "compare them", "compare these", "compare both", "compare the two",
   " vs ",  "versus", "versus the", "first vs", "second vs",
   "which is better", "which should i", "which one should",
