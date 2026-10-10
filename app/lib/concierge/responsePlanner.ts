@@ -244,6 +244,25 @@ function getSentenceContaining(text: string, matchStart: number, matchLen: numbe
   return text.slice(start, end);
 }
 
+// Returns the text between the nearest blank-line boundaries (\n\n) surrounding
+// the match at [matchStart, matchStart+matchLen). Single-sentence content with
+// no blank lines returns the entire string. Used for paragraph-level fallback
+// when the claim's sentence contains no fragrance name.
+function getParagraphContaining(text: string, matchStart: number, matchLen: number): string {
+  let start = 0;
+  for (let i = matchStart - 1; i >= 1; i--) {
+    if (text[i] === "\n" && text[i - 1] === "\n") { start = i + 1; break; }
+  }
+  while (start < matchStart && (text[start] === " " || text[start] === "\n")) start++;
+
+  let end = text.length;
+  const afterMatch = matchStart + matchLen;
+  for (let i = afterMatch; i < text.length - 1; i++) {
+    if (text[i] === "\n" && text[i + 1] === "\n") { end = i; break; }
+  }
+  return text.slice(start, end);
+}
+
 // Returns the single rendered candidate named in a sentence, or null when zero
 // or two-or-more are identified (ambiguous attribution). Matches on full canonical
 // name and bare name (Maison suffix stripped). Bare names shorter than 5 chars are
@@ -278,8 +297,10 @@ function resolveNamedCandidate(
 // passes as a supported 2-word prefix of "Baccarat Rouge 540".
 //
 // Candidate-specific attribution (gate 3): the named fragrance within the claim's sentence
-// is resolved via resolveNamedCandidate. If no candidate is named (pronoun, cross-sentence
-// reference) or multiple candidates are named (ambiguous), the phrase is left unchanged.
+// is resolved via resolveNamedCandidate. When the sentence uses a pronoun ("It's a statement
+// piece… higher warmth (4/5)"), a paragraph-level fallback is attempted: if exactly one
+// rendered candidate is named in the surrounding paragraph (bounded by blank lines), that
+// candidate is used. Zero or multiple paragraph-level matches remain unchanged (ambiguous).
 // This prevents Oud Wood's warmth=4 from validating a claim attributed to Sauvage (warmth=3).
 //
 // Negation/preference guard: catches "not higher warmth" and auxiliary-not constructions
@@ -335,10 +356,17 @@ function sanitiseEqualScoreClaims(
           if (!anchorAliases.has(compareTarget)) return match;         // gate 2b
         }
 
-        // Gate 3: resolve the single candidate named in this sentence.
-        // Pronouns and cross-sentence references are ambiguous — leave unchanged.
+        // Gate 3: resolve the single candidate named in this claim.
+        // First attempt sentence-level attribution. When the sentence uses a pronoun
+        // (no fragrance name), fall back to the surrounding paragraph (bounded by blank
+        // lines): exactly one rendered candidate named there is sufficient. Zero or
+        // multiple paragraph-level matches are ambiguous — leave unchanged.
         const sentence = getSentenceContaining(input, offset, match.length);
-        const candidate = resolveNamedCandidate(sentence, rendered);
+        let candidate = resolveNamedCandidate(sentence, rendered);
+        if (!candidate) {
+          const paragraph = getParagraphContaining(input, offset, match.length);
+          candidate = resolveNamedCandidate(paragraph, rendered);
+        }
         if (!candidate) return match;                                    // gate 3
 
         // Gate 4: that candidate's actual catalogue score must equal the stated score.

@@ -351,6 +351,40 @@ test("RP-B-17  'does not offer higher warmth (4/5)' preserved via negation guard
   );
 });
 
+test("RP-B-18  paragraph-level attribution: pronoun sentence, single candidate in paragraph → corrected", () => {
+  // Live defect: the model writes a two-sentence paragraph where the first sentence
+  // names the fragrance and the second uses a pronoun.
+  // Sentence containing the claim: "It's a statement piece … higher warmth (4/5) …" → no name.
+  // Paragraph lookup: "Oud Wood Inspired" in first sentence → exactly one rendered candidate.
+  // Gate 4: OUD_WOOD.warmth=4 = statedScore=4 → correction fires.
+  const para =
+    "Oud Wood Inspired opens with cedar and sandalwood, immediately settling into a warm and woody heart.\n" +
+    `It's a statement piece for evening and formal moments, where the lower sweetness and higher warmth (${OUD_WOOD.warmth}/5) create something genuinely distinctive.`;
+  const out = run(para);
+  assert.ok(!out.includes(`higher warmth (${OUD_WOOD.warmth}/5)`), "false higher-warmth claim must be corrected via paragraph attribution");
+  assert.ok(out.includes("the same warmth"), "replaced with same-score phrasing");
+});
+
+test("RP-B-19  paragraph-level attribution: multiple candidates in paragraph → unchanged (gate 3 ambiguous)", () => {
+  // Paragraph names both Oud Wood Inspired and Sauvage Inspired.
+  // Sentence using the claim has no name → sentence resolution returns null.
+  // Paragraph resolution finds two candidates → ambiguous → gate 3 returns null → unchanged.
+  const retrieval: RetrievalContext = {
+    fragrances: [OUD_WOOD, SAUVAGE],
+    articles: [],
+    anchoredMeta: BR540_META,
+    cardTarget: 2,
+  };
+  const para =
+    `Oud Wood Inspired and Sauvage Inspired both stand apart from Baccarat Rouge.\n` +
+    `They offer higher warmth (${BR540.warmth}/5) in the dry-down, creating a more grounded character.`;
+  const out = planResponse(para, "anchored_refinement", retrieval, ANCHORED_PLAN).content;
+  assert.ok(
+    out.includes(`higher warmth (${BR540.warmth}/5)`),
+    "multi-candidate paragraph must be left unchanged (gate 3: ambiguous paragraph attribution)",
+  );
+});
+
 // ── Mixed-score / absent-score guard (Defect A scoreTag) ─────────────────────
 
 test("RP-A-10  no score tag when one candidate has sweetness and one is missing sweetness", () => {
