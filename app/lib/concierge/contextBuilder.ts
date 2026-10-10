@@ -29,6 +29,7 @@ export interface AnchoredMeta {
   dimension:         string;
   direction:         "more" | "less";
   anchorScore:       number | null; // null when the anchor has no scored value for this dimension
+  anchorDimScores?:  Readonly<Record<string, number>>; // all scored dims for the anchor; used by equal-score post-processor
   strictMatches:     boolean;
   catalogueBoundary: boolean; // true when full catalogue has no qualifying fragrance (not a constraint issue)
 }

@@ -166,8 +166,10 @@ function sanitiseAbsenceClaims(
 
   let result = content;
 
-  // "without [any] sweetness" → "with lower sweetness than {anchor}(scoreTag)"
-  result = replaceUnlessNegated(result, new RegExp(`without(?:\\s+any)?\\s+${dim}\\b`, "gi"), withRelative);
+  // "without [any|the|its|…] sweetness" → "with lower sweetness than {anchor}(scoreTag)"
+  // The optional group covers common articles and determiners ("the", "its", "that", "all",
+  // "this", "a", "much") observed in live model output alongside "any" (already covered).
+  result = replaceUnlessNegated(result, new RegExp(`without(?:\\s+(?:any|the|its|that|all|this|a|much))?\\s+${dim}\\b`, "gi"), withRelative);
   // "no sweetness" (word boundary) → "lower sweetness than {anchor}(scoreTag)"
   result = replaceUnlessNegated(result, new RegExp(`\\bno\\s+${dim}\\b`, "gi"), bareRelative);
   // "zero sweetness" → "lower sweetness than {anchor}(scoreTag)"
@@ -177,7 +179,7 @@ function sanitiseAbsenceClaims(
 
   // Sweetness-specific sugar synonyms (also forbidden by calibration instruction)
   if (dim === "sweetness") {
-    result = replaceUnlessNegated(result, /without(?:\s+any)?\s+sugar\b/gi, withRelative);
+    result = replaceUnlessNegated(result, /without(?:\s+(?:any|the|its|that|all|this|a|much))?\s+sugar\b/gi, withRelative);
     result = replaceUnlessNegated(result, /\bno\s+sugar\b/gi, bareRelative);
     result = replaceUnlessNegated(result, /\bsugar-?free\b/gi, `${dirComp}-sweetness`);
     result = replaceUnlessNegated(result, /\bsugarless\b/gi, `${dirComp}-sweetness`);
@@ -210,6 +212,156 @@ function sanitiseAbsenceClaims(
     },
   );
 
+  return result;
+}
+
+// ── Helpers for candidate-specific attribution in sanitiseEqualScoreClaims ────
+
+const MAISON_SUFFIXES_LC = [" inspired", " eau de parfum", " edp", " eau de toilette", " edt"] as const;
+
+function stripMaisonSuffixLc(name: string): string {
+  for (const s of MAISON_SUFFIXES_LC) {
+    if (name.endsWith(s)) return name.slice(0, -s.length);
+  }
+  return name;
+}
+
+// Returns the text between the nearest sentence boundaries (.!?\n) surrounding
+// the match at [matchStart, matchStart+matchLen). Non-terminal punctuation
+// (commas, hyphens, parentheses, em dashes) is not treated as a boundary.
+function getSentenceContaining(text: string, matchStart: number, matchLen: number): string {
+  let start = 0;
+  for (let i = matchStart - 1; i >= 0; i--) {
+    if (/[.!?\n]/.test(text[i])) { start = i + 1; break; }
+  }
+  while (start < matchStart && text[start] === " ") start++;
+
+  let end = text.length;
+  for (let i = matchStart + matchLen; i < text.length; i++) {
+    if (/[.!?\n]/.test(text[i])) { end = i + 1; break; }
+  }
+
+  return text.slice(start, end);
+}
+
+// Returns the single rendered candidate named in a sentence, or null when zero
+// or two-or-more are identified (ambiguous attribution). Matches on full canonical
+// name and bare name (Maison suffix stripped). Bare names shorter than 5 chars are
+// excluded — same threshold as planResponse Precedence-2 name matching.
+function resolveNamedCandidate(
+  sentence: string,
+  rendered: RetrievalContext["fragrances"],
+): RetrievalContext["fragrances"][number] | null {
+  const sentLower = sentence.toLowerCase();
+  const matched: RetrievalContext["fragrances"][number][] = [];
+  for (const f of rendered) {
+    const fullKey = f.name.toLowerCase();
+    const bareKey = stripMaisonSuffixLc(fullKey);
+    if (sentLower.includes(fullKey) || (bareKey.length >= 5 && sentLower.includes(bareKey))) {
+      matched.push(f);
+    }
+  }
+  return matched.length === 1 ? matched[0] : null;
+}
+
+// ── Equal-score comparative-claim post-processor ──────────────────────────────
+// Corrects model claims of the form "higher/lower DIM (X/5)" when:
+//   (a) the anchor's actual score for that dimension equals X (gate 2),
+//   (b) the claim is not an explicit comparison against a non-anchor reference (gate 2b),
+//   (c) the rendered candidate named in the claim's sentence is resolvable (gate 3), and
+//   (d) that candidate's actual catalogue score also equals X (gate 4).
+//
+// Explicit-comparison guard (gate 2b): when "than X" follows the claim, correction proceeds
+// only if X exactly matches the anchor's full name, bare name, or a bare-name word-prefix
+// of ≥2 words. Compound ("than Baccarat Rouge and Sauvage"), partial ("than rouge") and
+// unrelated ("than heavier ouds") targets leave the phrase unchanged. "than Baccarat Rouge"
+// passes as a supported 2-word prefix of "Baccarat Rouge 540".
+//
+// Candidate-specific attribution (gate 3): the named fragrance within the claim's sentence
+// is resolved via resolveNamedCandidate. If no candidate is named (pronoun, cross-sentence
+// reference) or multiple candidates are named (ambiguous), the phrase is left unchanged.
+// This prevents Oud Wood's warmth=4 from validating a claim attributed to Sauvage (warmth=3).
+//
+// Negation/preference guard: catches "not higher warmth" and auxiliary-not constructions
+// ("does not offer higher warmth") within a 16-char preceding window.
+//
+// Scope: anchored_refinement turns with strictMatches=true and anchorDimScores available.
+// Limitation: bare comparative phrases without a score tag (e.g. "offers higher warmth")
+// are not corrected here — that residual path requires prompt-level guidance.
+function sanitiseEqualScoreClaims(
+  content:  string,
+  meta:     AnchoredMeta,
+  rendered: RetrievalContext["fragrances"],
+): string {
+  const { anchorDimScores } = meta;
+  if (!anchorDimScores || rendered.length === 0) return content;
+
+  // Restricted to the four dimensions handled by extractDimScore; versatility would
+  // always produce null scores (extractDimScore doesn't map it), so it is excluded.
+  const SCORED_DIMS = ["sweetness", "freshness", "warmth", "intensity"] as const;
+  let result = content;
+
+  for (const dim of SCORED_DIMS) {
+    const anchorDimScore = anchorDimScores[dim];
+    if (anchorDimScore === undefined) continue;                          // gate 1
+
+    const input = result;
+    result = input.replace(
+      new RegExp(`\\b(?:higher|lower)\\s+(${dim})\\s*\\((\\d+)\\/5\\)`, "gi"),
+      (match, dimension, statedScoreStr, offset) => {
+        const statedScore = parseInt(statedScoreStr, 10);
+
+        // Gate 2: anchor's actual score must equal the stated score.
+        // A mismatch means this is a correct non-equal claim or a hallucination that does
+        // not implicate equal-score confusion with the anchor.
+        if (statedScore !== anchorDimScore) return match;               // gate 2
+
+        // Gate 2b: explicit non-anchor comparison guard.
+        // When "than X" is present, only proceed if X resolves to the anchor.
+        // "than Baccarat Rouge" names the anchor and passes; all other targets block.
+        const afterMatch = input.slice(offset + match.length, offset + match.length + 60);
+        const thanM = /^[,\s]*than\s+(.{1,40})/i.exec(afterMatch);
+        if (thanM) {
+          const compareTarget  = thanM[1].toLowerCase().replace(/[.,;!?].*$/, "").trim();
+          const anchorFullKey  = meta.anchorName.toLowerCase();
+          const anchorBareKey  = stripMaisonSuffixLc(anchorFullKey);
+          // Build explicit alias set: full name, bare name, and bare-name word-prefixes of ≥2 words.
+          // "Baccarat Rouge" passes; compound "Baccarat Rouge and Sauvage" and partials do not.
+          const anchorAliases  = new Set([anchorFullKey, anchorBareKey]);
+          const bareWords      = anchorBareKey.split(" ");
+          for (let n = bareWords.length - 1; n >= 2; n--) {
+            anchorAliases.add(bareWords.slice(0, n).join(" "));
+          }
+          if (!anchorAliases.has(compareTarget)) return match;         // gate 2b
+        }
+
+        // Gate 3: resolve the single candidate named in this sentence.
+        // Pronouns and cross-sentence references are ambiguous — leave unchanged.
+        const sentence = getSentenceContaining(input, offset, match.length);
+        const candidate = resolveNamedCandidate(sentence, rendered);
+        if (!candidate) return match;                                    // gate 3
+
+        // Gate 4: that candidate's actual catalogue score must equal the stated score.
+        // A mismatch means the model hallucinated the score or misattributed the claim.
+        const candidateScore = extractDimScore(
+          candidate as { sweetness: number; freshness: number; warmth: number; intensity: number },
+          dim,
+        );
+        if (candidateScore !== statedScore) return match;               // gate 4
+
+        // Negation/preference guard — 16-char preceding window.
+        // (?:\s+\w+)? catches auxiliary-not: "does not offer higher warmth".
+        const preceding = input.slice(Math.max(0, offset - 16), offset);
+        if (
+          /\b(?:not|isn't|aren't|don't|doesn't|never|want|wants|wanted|wanting|prefer|prefers|preferred|seek|seeking|avoid|avoiding|avoids)(?:\s+\w+)?\s*$/i
+            .test(preceding)
+        ) {
+          return match;
+        }
+        return `the same ${dimension} (${statedScoreStr}/5)`;
+      },
+    );
+  }
   return result;
 }
 
@@ -700,6 +852,7 @@ export function planResponse(
   if (intent === "anchored_refinement" && retrieval.anchoredMeta?.strictMatches === true) {
     const renderedCandidates = retrieval.fragrances.filter((f) => finalSlugs.includes(f.slug));
     content = sanitiseAbsenceClaims(content, retrieval.anchoredMeta, renderedCandidates);
+    content = sanitiseEqualScoreClaims(content, retrieval.anchoredMeta, renderedCandidates);
   }
 
   const hasRecs             = retrieval.fragrances.length > 0;

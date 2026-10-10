@@ -722,6 +722,12 @@ export function planRetrieval(
             dimension:         hint.dimension,
             direction:         hint.direction,
             anchorScore:       getIntelligenceScore(anchor, hint.dimension),
+            anchorDimScores:   Object.fromEntries(
+              (["sweetness", "freshness", "warmth", "intensity", "versatility"] as const).flatMap((d) => {
+                const s = getIntelligenceScore(anchor, d);
+                return s !== null ? [[d, s]] : [];
+              }),
+            ),
             strictMatches:     pool.strictMatches,
             catalogueBoundary: pool.catalogueBoundary,
           };
