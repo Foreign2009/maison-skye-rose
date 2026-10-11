@@ -438,6 +438,52 @@ function correctAmberWarmthAbsenceClaims(
   return result;
 }
 
+// ── Unsupported "without gourmand sweetness" qualifier ───────────────────────
+// Observed: "Cardamom and Chinese Pepper create warmth without gourmand sweetness." for
+// Oud Wood, whose context text says "creating warmth without aggression" and never uses
+// "gourmand"; its listed base notes include Tonka Bean and Vanilla. A low sweetness score
+// establishes neither the presence nor the absence of gourmand character, and a missing
+// "Gourmand" family entry is not evidence of absence. The trailing qualifier is removed,
+// leaving the model's own preceding clause ("create warmth."). No score or attribution is
+// introduced. Left unchanged when:
+//   - any fragrance in context mentions "gourmand" in its prompt-visible fields (the
+//     wording might be grounded there; this function does not attribute claims),
+//   - no cards are rendered (no-match turns),
+//   - the phrase is quoted, or its sentence contains a negation ("not", "never", "cannot",
+//     "-n't" with a straight or curly apostrophe) or a guest-preference word,
+//   - the phrase is not followed by a clause boundary (". , ; : ! ?" or line end), e.g.
+//     "without gourmand sweetness or heaviness",
+//   - the preceding word is a linking/function word whose removal would strand it
+//     ("is without …", "and without …").
+// Only the exact phrase "without [any] gourmand sweetness" is handled.
+
+const GOURMAND_ABSENCE_RE =
+  /(?<=[\p{L}\p{N})])\s+without\s+(?:any\s+)?gourmand\s+sweetness(?=[.,;:!?]|[ \t]*(?:\n|$))/giu;
+const STRANDING_WORD_RE =
+  /\b(?:is|are|was|were|be|been|being|remains?|stays?|feels?|seems?|smells?|leaves?|with|and|or|but|nor|of|for|from|to|that|which|who|not|never)\s*$/i;
+const GOURMAND_PREFERENCE_RE =
+  /\b(?:not|never|cannot|\w+n['’]t|want|wants|wanted|wanting|prefer|prefers|preferred|like|likes|love|loves|seek|seeking|avoid|avoids|avoiding|asked|looking\s+for|rather)\b/i;
+
+function contextMentionsGourmand(f: RetrievalContext["fragrances"][number]): boolean {
+  const visible = [f.description ?? "", f.mood ?? "", ...(f.recommendedFor ?? []).slice(0, 2), ...(f.family ?? [])];
+  return visible.some((t) => /gourmand/i.test(t));
+}
+
+function correctGourmandAbsenceClaims(
+  content:  string,
+  context:  RetrievalContext["fragrances"],
+  rendered: RetrievalContext["fragrances"],
+): string {
+  if (rendered.length === 0 || context.some(contextMentionsGourmand)) return content;
+  return content.replace(GOURMAND_ABSENCE_RE, (match: string, offset: number, whole: string) => {
+    const at = offset + match.search(/without/i);
+    if (isInsideQuotedText(whole, at)) return match;
+    const before = whole.slice(sentenceStartBefore(whole, offset), offset);
+    if (STRANDING_WORD_RE.test(before) || GOURMAND_PREFERENCE_RE.test(before)) return match;
+    return "";
+  });
+}
+
 // ── Strict-match "removal" claim correction ──────────────────────────────────
 // "Oud Wood removes the sweetness almost entirely (1/5)": a 1/5 score supports lower
 // sweetness than the anchor (e.g. Baccarat Rouge 540 Inspired 3/5), not near-total
@@ -1187,6 +1233,13 @@ export function planResponse(
   // score. Runs on every turn type; no-op when no cards are rendered.
   content = correctAmberWarmthAbsenceClaims(
     content,
+    retrieval.fragrances.filter((f) => finalSlugs.includes(f.slug)),
+  );
+
+  // Remove an unsupported trailing "without gourmand sweetness" qualifier (see function comment).
+  content = correctGourmandAbsenceClaims(
+    content,
+    retrieval.fragrances,
     retrieval.fragrances.filter((f) => finalSlugs.includes(f.slug)),
   );
 
