@@ -37,6 +37,10 @@ export const romanceByRalphLaurenInspired: FragranceKnowledge = {
   projection    : "moderate",
 
   // ── Composition ─────────────────────────────────────────────────────────────
+  // PROPOSED EDITORIAL PROFILE (2026-10-11, for review — not a supplier confirmation or promotion approval):
+  //   retain "Floral Fresh", supported by the recorded Ulta (authorised retailer) family "Fresh Floral".
+  //   Conflicting classification kept on record: brand copy via mazenonline.com "Floral, Woody" (brand page 403).
+  //   family and scentCharacter are derived by knowledgeAdapter from this profile.
   profile       : "Floral Fresh",
   season        : "Spring",
   notes: {
@@ -113,6 +117,7 @@ export const romanceByRalphLaurenInspired: FragranceKnowledge = {
   // Scores derived by knowledgeAdapter.deriveMetrics(profile="Floral Fresh", season="Spring").
   // Profile "Floral Fresh": ulta.com family "Fresh Floral"; brand copy (non-authorised retailer) says "Floral, Woody" — conflict recorded.
   // sweetness:1 (fresh), freshness:5 (fresh), warmth:1 (fresh), intensity:2 (Spring), versatility:3 (Spring).
+  // scentCharacter "Fresh & Light" per deriveScentCharacter (has "fresh").
   // Scores are heuristic-derived approximations (knowledgeAdapter.ts line 208). No calibration producer in pipeline.
   sweetness     : 1,
   freshness     : 5,

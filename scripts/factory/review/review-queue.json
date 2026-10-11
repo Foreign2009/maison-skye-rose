@@ -5657,6 +5657,46 @@
         "timestamp": "2026-10-11T09:53:48.017Z",
         "reason": "Wave 9: evidence PYRAMID_SECONDARY_SUPPORTED (Nordstrom EDP listing); identity founder-reported 2026-10-11, no direct supplier response inspected; relationships empty; see catalogue-expansion-ledger.json"
       }
+    },
+    {
+      "slug": "jimmy-choo-inspired",
+      "name": "Jimmy Choo Inspired",
+      "collection": "Rose",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-10-11T18:17:18.864Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-10-11T18:17:32.902Z",
+      "reviewer": "Founder (Adnaan) - approval 2026-10-11",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder (Adnaan) - approval 2026-10-11",
+        "timestamp": "2026-10-11T18:17:32.901Z",
+        "reason": "Wave 9 r12: founder editorial/promotion approval 2026-10-11 of profile 'Fruity Floral Sweet'; evidence PYRAMID_SECONDARY_SUPPORTED (John Lewis EDP listing; Tiger qualifier Nordstrom/Ulta/Debenhams); identity founder-reported 2026-10-11, no direct supplier response inspected; approval is not supplier identity or concentration evidence; relationships empty (proposals pending); see catalogue-expansion-ledger.json"
+      }
+    },
+    {
+      "slug": "romance-by-ralph-lauren-inspired",
+      "name": "Romance by Ralph Lauren Inspired",
+      "collection": "Rose",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-10-11T18:17:21.765Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-10-11T18:17:35.671Z",
+      "reviewer": "Founder (Adnaan) - approval 2026-10-11",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder (Adnaan) - approval 2026-10-11",
+        "timestamp": "2026-10-11T18:17:35.670Z",
+        "reason": "Wave 9 r12: founder editorial/promotion approval 2026-10-11 of profile 'Floral Fresh' (Ulta 'Fresh Floral'; brand-copy 'Floral, Woody' conflict recorded); evidence PYRAMID_SECONDARY_SUPPORTED (Ulta, brand copy, Nordstrom); identity founder-reported 2026-10-11, no direct supplier response inspected; approval is not supplier identity or concentration evidence; relationships empty (proposals pending); see catalogue-expansion-ledger.json"
+      }
     }
   ]
 }

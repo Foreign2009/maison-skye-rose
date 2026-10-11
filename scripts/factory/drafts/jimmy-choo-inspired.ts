@@ -32,21 +32,28 @@ export const jimmyChooInspired: FragranceKnowledge = {
 
   // ── Classification ────────────────────────────────────────────────────────────
   gender        : "female",
-  family        : ["Gourmand", "Floral"],
+  family        : ["Floral", "Fruity", "Sweet"],
   scentCharacter: "Rich & Full-Bodied",
   projection    : "moderate",
 
   // ── Composition ─────────────────────────────────────────────────────────────
-  profile       : "Floral Gourmand",
+  // PROPOSED EDITORIAL PROFILE (2026-10-11, for review — not a supplier confirmation or promotion approval):
+  //   "Fruity Floral Sweet" uses authorised-retailer classifications: Nordstrom style "Fruity, floral",
+  //   Ulta family "Sweet". Other classifications kept on record: "fruity chypre" (Nordstrom story, Ulta scent
+  //   type, John Lewis). Previous editorial mapping: "Floral Gourmand" (no authorised source uses "Gourmand").
+  //   family and scentCharacter are derived by knowledgeAdapter from this profile.
+  profile       : "Fruity Floral Sweet",
   season        : "Spring",
   notes: {
-    // Pyramid attributed to Fragrantica (Jimmy-Choo-10573) — that page was NOT inspected (HTTP 403).
-    // "Tiger Orchid" is supported by inspected nordstrom.com and ulta.com EDP listings (single heart note).
-    // OPEN CONFLICT: Nordstrom lists top "pear, sweet Italian orange" and base "Indonesian patchouli,
-    //   caramel" — no Mandarin, Green Notes or Toffee. scentverdict.com supports the current wording but
-    //   is not a named tier-2 source. See wave-9-source-evidence.json.
-    // IDENTITY CONFIRMED (founder-reported 2026-10-11; no direct supplier response inspected): original women's Jimmy Choo, EDP.
-    top:   ["Pear", "Mandarin Orange", "Green Notes"],
+    // Pyramid matches the inspected johnlewis.com EDP listing (authorised): top "Pear, mandarin orange",
+    //   heart "Orchid", base "Patchouli, toffee". "Tiger Orchid" naming per nordstrom.com, ulta.com and
+    //   debenhams.com (first-party). "Green Notes" removed 2026-10-11: listed only by scentverdict.com
+    //   (third-party database), by no authorised source.
+    // WORDING VARIANTS between authorised sources: Nordstrom/Debenhams "sweet Italian orange" (vs John Lewis
+    //   "mandarin orange"); Nordstrom "caramel" (vs John Lewis/Debenhams "toffee"). See wave-9-source-evidence.json.
+    // IDENTITY CONFIRMED (founder-reported 2026-10-11; no direct supplier response inspected): founder wording
+    //   "original women's Jimmy Choo, EDP". Reference edition used: Jimmy Choo EDP (2011).
+    top:   ["Pear", "Mandarin Orange"],
     heart: ["Tiger Orchid"],
     base:  ["Toffee", "Patchouli"],
   },
@@ -70,12 +77,12 @@ export const jimmyChooInspired: FragranceKnowledge = {
     "Wedding",
   ],
   seasons       : ["Spring", "Summer", "Autumn"],
-  signatureStyle: ["Modern Floral Gourmand", "Playful Elegance", "Sensual Softness"],
+  signatureStyle: ["Modern Fruity Floral", "Playful Elegance", "Sensual Softness"],
   recommendedFor: [
-    "Women who want a signature fragrance that balances floral elegance with gourmand warmth for everyday confidence",
+    "Women who want a signature fragrance that balances floral elegance with fruity sweetness for everyday confidence",
     "Those seeking a playful, modern feminine scent that suits both office and evening without feeling heavy",
     "Anyone drawn to orchid-led florals who appreciates a touch of toffee sweetness and sensual depth",
-    "Women building a fragrance wardrobe who need a versatile piece that layers beautifully with bolder scents",
+    "Women building a fragrance wardrobe who want a playful floral alongside bolder scents",
   ],
 
   // ── Merchandising ───────────────────────────────────────────────────────────
@@ -94,12 +101,13 @@ export const jimmyChooInspired: FragranceKnowledge = {
 
   // ── Education ───────────────────────────────────────────────────────────────
   subtitle      : "Floral Sweetness",
-  description   : "Pear and mandarin open with crisp, fruit-bright clarity, a green note grounding the freshness. Tiger orchid blooms at the heart with singular, sensual presence—quietly confident. Toffee and patchouli close the composition with soft, sweet depth.",
+  description   : "Pear and mandarin open with crisp, fruit-bright clarity. Tiger orchid blooms alone at the heart, sensual and quietly confident. Toffee and patchouli close the composition with soft, sweet depth.",
   academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances", "how-to-wear-fragrance"],
   academyCategories: ["fragrance-families", "the-note-pyramid", "wear-and-application"],
   educationTags : [
-    "gourmand",
+    "fruity",
     "floral",
+    "sweet",
     "patchouli",
     "toffee",
     "feminine",
@@ -111,8 +119,9 @@ export const jimmyChooInspired: FragranceKnowledge = {
   learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances"],
 
   // ── Intelligence ────────────────────────────────────────────────────────────
-  // Scores derived by knowledgeAdapter.deriveMetrics(profile="Floral Gourmand", season="Spring").
-  // sweetness:4 (gourmand), freshness:3 (floral), warmth:2 (else), intensity:2 (Spring), versatility:3 (Spring).
+  // Scores derived by knowledgeAdapter.deriveMetrics(profile="Fruity Floral Sweet", season="Spring").
+  // sweetness:4 (sweet), freshness:3 (floral), warmth:2 (else), intensity:2 (Spring), versatility:3 (Spring).
+  // scentCharacter "Rich & Full-Bodied" per deriveScentCharacter (has "sweet").
   // Scores are heuristic-derived approximations (knowledgeAdapter.ts line 208). No calibration producer in pipeline.
   sweetness     : 4,
   freshness     : 3,

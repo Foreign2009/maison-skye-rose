@@ -2,6 +2,36 @@
   "version": "1.0",
   "records": [
     {
+      "slug": "romance-by-ralph-lauren-inspired",
+      "name": "Romance by Ralph Lauren Inspired",
+      "collection": "Rose",
+      "operator": "Claude Code (founder approval 2026-10-11)",
+      "reviewedBy": "Founder (Adnaan) - approval 2026-10-11",
+      "status": "promoted",
+      "startedAt": "2026-10-11T18:18:49.660Z",
+      "completedAt": "2026-10-11T18:19:34.467Z",
+      "nativePath": "app/lib/mkc/native/romance-by-ralph-lauren-inspired.ts",
+      "validationStatus": "PASS",
+      "buildResult": "pass",
+      "durationMs": 44819,
+      "error": null
+    },
+    {
+      "slug": "jimmy-choo-inspired",
+      "name": "Jimmy Choo Inspired",
+      "collection": "Rose",
+      "operator": "Claude Code (founder approval 2026-10-11)",
+      "reviewedBy": "Founder (Adnaan) - approval 2026-10-11",
+      "status": "promoted",
+      "startedAt": "2026-10-11T18:17:59.454Z",
+      "completedAt": "2026-10-11T18:18:46.612Z",
+      "nativePath": "app/lib/mkc/native/jimmy-choo-inspired.ts",
+      "validationStatus": "PASS",
+      "buildResult": "pass",
+      "durationMs": 47168,
+      "error": null
+    },
+    {
       "slug": "beautiful-by-estee-lauder-inspired",
       "name": "Beautiful by Estee Lauder Inspired",
       "collection": "Rose",

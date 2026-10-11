@@ -20,22 +20,30 @@
  * thescentbase.com / scentverdict.com are NOT treated as equivalent without corroboration.
  *
  * PYRAMID_SECONDARY_SUPPORTED (full pyramid matches an inspected named/authorised source):
- *   romance-by-ralph-lauren (Ulta + brand copy), beautiful-by-estee-lauder (Nordstrom).
+ *   romance-by-ralph-lauren (Ulta + brand copy), beautiful-by-estee-lauder (Nordstrom),
+ *   jimmy-choo (John Lewis; "Green Notes" removed 2026-10-11 as third-party-only).
  *   (Withdrawn duplicate dolce-and-gabbana-the-one also had supported 2006 EDP evidence.)
  * AI_INFERENCE_UNSOURCED (no full corroboration from a named/authorised source):
- *   gucci-rush, tommy-girl, poison-by-dior, jimmy-choo.
+ *   gucci-rush, tommy-girl, poison-by-dior.
  * Evidence tier qualifies the reference-fragrance pyramid only; promotion eligibility is
  * recorded separately in the ledger.
  *
  * Supplier identities for The One, Jimmy Choo, Romance, Beautiful and Poison were confirmed
- * by founder-reported confirmation on 2026-10-11 (all original versions, EDP). No direct
- * supplier response was inspected. No supplier identity holds remain.
- * Poison: founder-confirmed EDP, but inspected references are EDT — CONCENTRATION/REFERENCE hold.
- * PROMOTED to native MKC 2026-10-11 (uncommitted): beautiful-by-estee-lauder
- *   (promotionId o60aTXEc01Dy). Its entry below remains for factory intake history.
+ * by founder-reported confirmation on 2026-10-11 (founder wording: original version, "EDP").
+ * No direct supplier response was inspected. No supplier identity holds remain.
+ * The wording does not say whether "EDP" is the reference fragrance's edition or the concentration
+ * supplied to Maison; the two are recorded separately in the ledger (concentrationProvenance).
+ * Poison: inspected references are EDT (or a vintage "Esprit de Parfum", not EDP) —
+ *   CONCENTRATION/REFERENCE hold; founder clarification requested.
+ * PROMOTED to native MKC 2026-10-11: beautiful-by-estee-lauder (promotionId o60aTXEc01Dy;
+ *   commit 2803160, pushed — an ancestor of origin/main; deployed per founder report).
+ *   Its entry below remains for factory intake history.
+ * PROMOTED to native MKC 2026-10-11 (uncommitted), after founder editorial/promotion approval of the
+ *   reviewed r12 profiles (approval is not supplier identity or concentration evidence):
+ *   jimmy-choo (Fruity Floral Sweet; promotionId fBkPTNpdbCYp) and romance-by-ralph-lauren
+ *   (Floral Fresh; promotionId 13zI9yHDv62X). Their entries below remain for factory intake history.
  * WITHDRAWN DUPLICATE (not promoted): dolce-and-gabbana-the-one — see REMOVED note below.
- * Held: gucci-rush, tommy-girl, jimmy-choo (evidence); poison-by-dior (evidence + concentration
- *   reference); romance-by-ralph-lauren (profile review).
+ * Held: gucci-rush, tommy-girl (evidence); poison-by-dior (evidence + concentration reference).
  * Eligible for promotion: none.
  *
  * IDENTITY REMOVALS (corrected from initial batch):
@@ -137,19 +145,24 @@ const rose: DisplayFragrance[] = [
     // slug: jimmy-choo-inspired
     // Supplier: 'Jimmy Choo' (sourceKey: LADIES-156-Jimmy Choo); distinct entries also exist for
     //   'Jimmy Choo Fever' and 'Jimmy Choo Flash'. Their presence does not identify the unqualified entry.
-    // Reference fragrance: Jimmy Choo EDP (2011). Female.
+    // Reference edition used: Jimmy Choo EDP (2011). Female.
     // IDENTITY CONFIRMED (founder-reported 2026-10-11; no direct supplier response inspected):
-    //   original women's Jimmy Choo, EDP.
-    // Evidence: AI_INFERENCE_UNSOURCED — "Tiger Orchid" is supported (Nordstrom, Ulta), but Nordstrom
-    //   lists "pear, sweet Italian orange" / "Indonesian patchouli, caramel" (no Mandarin, Green Notes, Toffee).
+    //   founder wording "original women's Jimmy Choo, EDP".
+    // Evidence: PYRAMID_SECONDARY_SUPPORTED — full pyramid matches johnlewis.com (authorised); "Tiger
+    //   Orchid" naming per Nordstrom, Ulta, Debenhams. "Green Notes" removed 2026-10-11 (third-party only).
+    //   Wording variants: Nordstrom/Debenhams "sweet Italian orange"; Nordstrom "caramel".
+    // PROMOTED 2026-10-11 (fBkPTNpdbCYp) after founder editorial/promotion approval of this profile.
+    // EDITORIAL PROFILE (proposed and approved 2026-10-11): "Fruity Floral Sweet" — Nordstrom style
+    //   "Fruity, floral" + Ulta family "Sweet". Also on record: "fruity chypre" (Nordstrom story, Ulta scent
+    //   type, John Lewis). Previous editorial mapping "Floral Gourmand". Not a supplier confirmation.
     title:               "Jimmy Choo Inspired",
     collection:          "Rose",
     subtitle:            "Inspired by Jimmy Choo",
     mood:                "Feminine Playful Modern",
-    profile:             "Floral Gourmand",
+    profile:             "Fruity Floral Sweet",
     season:              "Spring",
-    // Fragrantica not inspected (403). Single heart note matches Nordstrom and Ulta.
-    notes:               ["Pear", "Mandarin Orange", "Green Notes", "Tiger Orchid", "Toffee", "Patchouli"],
+    // Fragrantica not inspected (403). Single heart note matches John Lewis, Nordstrom and Ulta.
+    notes:               ["Pear", "Mandarin Orange", "Tiger Orchid", "Toffee", "Patchouli"],
     bestSeller:          false,
     newArrival:          false,
     prices:              PRICES,
@@ -157,7 +170,7 @@ const rose: DisplayFragrance[] = [
     gender:              "female",
     notesEvidenceLocked: true,
     notesStructured: {
-      top:   ["Pear", "Mandarin Orange", "Green Notes"],
+      top:   ["Pear", "Mandarin Orange"],
       heart: ["Tiger Orchid"],
       base:  ["Toffee", "Patchouli"],
     },
@@ -175,6 +188,8 @@ const rose: DisplayFragrance[] = [
     mood:                "Romantic Classic Lush",
     // Ulta family "Fresh Floral" supports this profile; brand copy (non-authorised retailer) says
     //   "Floral, Woody" — conflict recorded in wave-9-research.json profileRationale.
+    // PROMOTED 2026-10-11 (13zI9yHDv62X) after founder editorial/promotion approval of this profile.
+    // EDITORIAL PROFILE (proposed and approved 2026-10-11): retain "Floral Fresh" (Ulta). Not a supplier confirmation.
     profile:             "Floral Fresh",
     season:              "Spring",
     // Pyramid per ulta.com (inspected); replaces uninspected Fragrantica-attributed pyramid.

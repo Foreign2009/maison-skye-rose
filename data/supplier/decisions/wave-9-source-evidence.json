@@ -24,7 +24,8 @@
       "finding": "Amcal is a national Australian pharmacy retail banner, not one of the named examples. The inspected page does not establish that it is an authorised Tommy Hilfiger fragrance stockist, and authorised status could not be verified from an accessible source. Tommy Hilfiger regional brand pages (timed out) are indicated by search listings to describe a reformulated current EDT.",
       "decision": "Amcal evidence does not meet the authorised-retailer criterion as demonstrable. Tommy Girl reverts to AI_INFERENCE_UNSOURCED."
     },
-    "revision6": "2026-10-11: Gucci Rush, Tommy Girl, Jimmy Choo, Poison and The One researched further. Marketplace third-party sellers on debenhams.com are recorded with authorisedOrNamed=false; 'Sold & Delivered by Debenhams' listings are treated as major-retailer first-party."
+    "revision6": "2026-10-11: Gucci Rush, Tommy Girl, Jimmy Choo, Poison and The One researched further. Marketplace third-party sellers on debenhams.com are recorded with authorisedOrNamed=false; 'Sold & Delivered by Debenhams' listings are treated as major-retailer first-party.",
+    "revision7": "2026-10-11: readable-page reviews continued for the five remaining Batch 1 drafts (10 fetch records, indices 64–73). Romance brand/Macy's/Sephora, The Perfume Shop (Jimmy Choo), Sephora UAE (Poison) and Argos returned 403. Lookfantastic (Tommy Girl) gave a full first-party pyramid that conflicts with the draft; recorded, not applied. A vintage reseller lists Poison 1985 as 'Esprit de Parfum' (supplementary; not treated as EDP). Parfumdreams and Escentual were readable but carried no notes. Web search was used only to locate URLs; no search summary is recorded as evidence."
   },
   "fetches": [
     {
@@ -1009,6 +1010,114 @@
         "identical material set and grouping to John Lewis"
       ],
       "differencesFromDraft": "Same as John Lewis: Plum grouped with base notes; 'Madonna Lily'."
+    },
+    {
+      "draftSlug": "romance-by-ralph-lauren-inspired",
+      "url": "https://www.ralphlaurenfragrances.com/en_US/women/romance/romance-eau-de-parfum/3605972287687.html",
+      "result": "BLOCKED",
+      "detail": "HTTP 403. Brand page not inspected.",
+      "revision": 7,
+      "accessDate": "2026-10-11"
+    },
+    {
+      "draftSlug": "romance-by-ralph-lauren-inspired",
+      "url": "https://macys.com/shop/product/ralph-lauren-romance-eau-de-parfum-fragrance-collection?ID=3603",
+      "result": "BLOCKED",
+      "detail": "HTTP 403.",
+      "revision": 7,
+      "accessDate": "2026-10-11"
+    },
+    {
+      "draftSlug": "romance-by-ralph-lauren-inspired",
+      "url": "https://www.sephora.com/product/romance-P6463",
+      "result": "BLOCKED",
+      "detail": "HTTP 403.",
+      "revision": 7,
+      "accessDate": "2026-10-11"
+    },
+    {
+      "draftSlug": "jimmy-choo-inspired",
+      "url": "https://www.theperfumeshop.com/jimmy-choo/jimmy-choo-original/eau-de-parfum-spray/p/1107093",
+      "result": "BLOCKED",
+      "detail": "HTTP 403.",
+      "revision": 7,
+      "accessDate": "2026-10-11"
+    },
+    {
+      "draftSlug": "tommy-girl-inspired",
+      "url": "https://www.lookfantastic.com/p/tommy-girl-eau-de-toilette-100ml/11435939/",
+      "result": "INSPECTED",
+      "revision": 7,
+      "accessDate": "2026-10-11",
+      "sourceType": "MAJOR_RETAILER_FIRST_PARTY (UK online beauty retailer)",
+      "authorisedOrNamed": "NOT_VERIFIED — page does not state authorised-stockist status; not a named repository example.",
+      "captured": {
+        "name": "Tommy Girl Eau de Toilette 100ml",
+        "brand": "Tommy Hilfiger",
+        "concentration": "Eau de Toilette (from product name)",
+        "fragranceFamily": "not listed",
+        "description": "an iconic, fresh fragrance",
+        "top": "Top Notes: Camellia Flowers, Apple Blossoms, Blackcurrant, Mandarin, Tangerine.",
+        "heart": "Heart Notes: Grapefruit, Citrus Orchards, Crisp Green Notes, Honeysuckle, Butterfly Violets.",
+        "base": "Base Notes: Desert Jasmin, Cherokee Rose, Magnolia Petals, Dakota Lilies, Cedar, Sandalwood, Wild Heather."
+      },
+      "supportedFields": [
+        "Camellia, Apple Blossom, Blackcurrant, Mandarin (top)",
+        "Grapefruit, Honeysuckle, Violet (heart)",
+        "Magnolia, Jasmine, Cedar, Sandalwood (base)"
+      ],
+      "differencesFromDraft": "Full pyramid that CONFLICTS with the draft (amcal.com.au) pyramid: adds Tangerine (top), 'Citrus Orchards' and 'Crisp Green Notes' (heart), Wild Heather (base); places Rose and Lily in the base (draft: heart); does not list Lemon, Mint or Leather. Corroborates Debenhams first-party copy (tangerine, honeysuckle, wild heather). Not applied to the draft: authorised status not verified and the two retailer pyramids disagree."
+    },
+    {
+      "draftSlug": "gucci-rush-inspired",
+      "url": "https://www.parfumdreams.ie/Gucci/Womens-fragrances/Gucci-rush/Eau-de-Toilette-Spray/index_13334.aspx",
+      "result": "INSPECTED_NO_PYRAMID",
+      "revision": 7,
+      "accessDate": "2026-10-11",
+      "detail": "Readable; product name 'Gucci rush Eau de Toilette Spray by Gucci'. Extracted content truncated before product details — no notes, family or seller. Not pyramid evidence."
+    },
+    {
+      "draftSlug": "poison-by-dior-inspired",
+      "url": "https://sephora.ae/en/p/poison-eau-de-toilette-P3104.html",
+      "result": "BLOCKED",
+      "detail": "HTTP 403.",
+      "revision": 7,
+      "accessDate": "2026-10-11"
+    },
+    {
+      "draftSlug": "poison-by-dior-inspired",
+      "url": "https://vintagevonwerth.de/products/christian-dior-poison-1985-15-ml-esprit-de-parfum-1980s-vintage-perfume-splash",
+      "result": "INSPECTED",
+      "revision": 7,
+      "accessDate": "2026-10-11",
+      "sourceType": "VINTAGE_RESELLER (supplementary; not a named database or authorised retailer)",
+      "authorisedOrNamed": false,
+      "captured": {
+        "name": "CHRISTIAN DIOR Poison (1985) 15 ml Esprit de Parfum 1980s Vintage Perfume Splash",
+        "concentration": "Esprit de Parfum",
+        "year": "1985",
+        "top": "Orange honey, coriander, plum, pimento, rosewood, wild berries, aniseed",
+        "heart": "Tuberose, carnation, opoponax, frankincense, jasmine, neroli, cinnamon, rose",
+        "base": "Heliotrope, vanilla, amber, cedar, musk, sandalwood, vetiver"
+      },
+      "supportedFields": [],
+      "differencesFromDraft": "Supplementary only. Base matches the draft's seven materials; top/heart broadly consistent (adds orange honey, pimento, neroli; 'frankincense' vs draft 'Incense'). Concentration is 'Esprit de Parfum' — NOT recorded as 'Eau de Parfum' and not used to resolve the EDP question."
+    },
+    {
+      "draftSlug": "tommy-girl-inspired",
+      "url": "https://escentual.com/products/tommy-hilfiger-tommy-girl-eau-de-toilette-spray",
+      "result": "INSPECTED_NO_PYRAMID",
+      "revision": 7,
+      "accessDate": "2026-10-11",
+      "detail": "Readable; title 'Tommy Hilfiger Tommy Girl Eau de Toilette Spray'. Extracted content truncated to navigation — no notes, family or seller. Not pyramid evidence."
+    },
+    {
+      "draftSlug": "tommy-girl-inspired",
+      "url": "https://argos.co.uk/product/7195004",
+      "result": "BLOCKED",
+      "detail": "HTTP 403.",
+      "revision": 7,
+      "accessDate": "2026-10-11"
     }
   ]
 }

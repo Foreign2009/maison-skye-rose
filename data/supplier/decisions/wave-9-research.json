@@ -23,7 +23,10 @@
         "Revision 7 (2026-10-11): The One Plum moved heart → base per John Lewis/Ulta; evidence tier PYRAMID_SECONDARY_SUPPORTED for the 2006 EDP reference while the concentration identity hold keeps it ineligible; Beautiful identity wording clarified; promotionEligible recorded separately from evidence tier.",
         "Revision 8 (2026-10-11): founder-reported identity confirmations recorded for The One, Jimmy Choo, Romance, Beautiful and Poison (no direct supplier response inspected). Identity holds resolved; Poison keeps a concentration/reference evidence hold (EDP confirmed, EDT evidence not transferred).",
         "Revision 9 (2026-10-11): beautiful-by-estee-lauder-inspired promoted to native (promotionId o60aTXEc01Dy, uncommitted); dolce-and-gabbana-the-one-inspired found to duplicate active native the-one-pour-femme-inspired (LADIES-108) — not promoted, disposition pending.",
-        "Revision 10 (2026-10-11): dolce-and-gabbana-the-one-inspired withdrawn as DUPLICATE_ALIAS of active native the-one-pour-femme-inspired (LADIES-108-Dolce & Gabbana The One); record, evidence and founder-reported identity confirmation retained for reference."
+        "Revision 10 (2026-10-11): dolce-and-gabbana-the-one-inspired withdrawn as DUPLICATE_ALIAS of active native the-one-pour-femme-inspired (LADIES-108-Dolce & Gabbana The One); record, evidence and founder-reported identity confirmation retained for reference.",
+        "Revision 11 (2026-10-11): founder wording recorded verbatim; 'EDP' scope (reference edition vs supplied concentration) recorded as unspecified in concentrationProvenance for every staged record; Poison/Jimmy Choo statements that conflated the two corrected. Jimmy Choo 'Green Notes' removed (third-party only) — tier PYRAMID_SECONDARY_SUPPORTED, profile review opened. Tommy Girl Lookfantastic pyramid recorded as a conflict (not applied). Readable-page reviews logged as evidence fetches 64–73.",
+        "Revision 12 (2026-10-11): proposed editorial profiles prepared for review — Jimmy Choo 'Fruity Floral Sweet' (family, scentCharacter and scores derived through knowledgeAdapter), Romance retains 'Floral Fresh'; conflicting classifications kept; not supplier confirmations or promotion approval. Beautiful commit state corrected (2803160 committed and pushed; deployment founder-reported). Jimmy Choo single heart note recorded as an informational evidence-locked exception.",
+        "Revision 13 (2026-10-11): founder editorial/promotion approval of the r12 profiles (not supplier identity or concentration evidence); jimmy-choo-inspired (fBkPTNpdbCYp) and romance-by-ralph-lauren-inspired (13zI9yHDv62X) promoted to native via the review/promotion workflow on base 160ccbf; native total 270. Not committed."
       ]
     },
     "supportingEvidenceFiles": [
@@ -75,7 +78,8 @@
           "sourceKey": "LADIES-108-Dolce & Gabbana The One",
           "date": "2026-10-11",
           "confirmedBy": "Founder (Adnaan)",
-          "provenance": "FOUNDER_REPORTED — Founder (Adnaan) reported this confirmation on 2026-10-11. No direct supplier response was inspected."
+          "provenance": "FOUNDER_REPORTED — Founder (Adnaan) reported this confirmation on 2026-10-11. No direct supplier response was inspected.",
+          "founderReportedWording": "The One: original Dolce & Gabbana women's, EDP."
         },
         "identityHoldResolved": {
           "holdType": "CONCENTRATION_UNRESOLVED",
@@ -218,7 +222,17 @@
         "notes": "Supplier text names brand ('Gucci') and fragrance line ('Rush'). A separate entry 'Gucci Rush ii' (LADIES-133) exists, which indicates — but does not by itself prove — that the unqualified entry is the 1999 original.",
         "identityDecision": "Gucci Rush (1999) — female",
         "concentrationBlocker": "Supplier text does not specify EDT. Gucci Rush was released only as EDT — no concentration ambiguity.",
-        "blockers": []
+        "blockers": [],
+        "concentrationProvenance": {
+          "recordedDate": "2026-10-11",
+          "founderReportedWording": null,
+          "founderStatedConcentration": null,
+          "founderStatedConcentrationScope": null,
+          "referenceEditionUsedForEvidence": "Gucci Rush Eau de Toilette (1999)",
+          "referenceEditionBasis": "Retail listings inspected are EDT (Debenhams marketplace, Parfumdreams, Amazon); thescentbase.com states no concentration.",
+          "suppliedConcentration": "NOT_ESTABLISHED — supplier text states no concentration; no founder confirmation recorded.",
+          "consistency": "Reference edition only; supplier text 'Gucci Rush' states no concentration."
+        }
       },
       "commercialFragranceEvidence": {
         "canonicalIdentity": "Gucci Rush EDT (1999)",
@@ -263,7 +277,8 @@
           "remainingGaps": [
             "No authorised retailer, brand page or named database inspected (Selfridges, Superdrug, Basenotes 403; gucci.com inaccessible).",
             "Californian Gardenia and Damask Rose appear only in thescentbase.com.",
-            "Retail listings conflict on top/heart notes."
+            "Retail listings conflict on top/heart notes.",
+            "Parfumdreams readable but without notes (2026-10-11); no authorised pyramid found."
           ],
           "revision": 6
         },
@@ -287,9 +302,9 @@
         "sourceKey": "LADIES-156-Jimmy Choo",
         "sourcePage": 2,
         "qualificationStatus": "CONFIRMED_FOUNDER_REPORTED",
-        "notes": "Supplier text is the house name only ('Jimmy Choo', LADIES-156). The supplier also lists 'Jimmy Choo Fever' (LADIES-157) and 'Jimmy Choo Flash' (LADIES-158); excluding those does not identify which Jimmy Choo line or concentration the unqualified entry is. The 2011 EDP is an assumed reference, not a confirmed identity.",
+        "notes": "Supplier text is the house name only ('Jimmy Choo', LADIES-156); 'Jimmy Choo Fever' (LADIES-157), 'Jimmy Choo Flash' (LADIES-158) and MEN-89 'Jimmy Choo' are listed separately. Identity rests on the founder-reported confirmation (2026-10-11), not on elimination or on any reference page.",
         "identityDecision": "CONFIRMED (founder-reported, 2026-10-11): Jimmy Choo — original women's — EDP.",
-        "concentrationBlocker": "Resolved: concentration confirmed as EDP (founder-reported, 2026-10-11).",
+        "concentrationBlocker": "None for evidence: founder wording 'original women's Jimmy Choo, EDP' (scope of 'EDP' unspecified); reference edition used is the 2011 EDP, consistent under either reading. Supplied concentration not established.",
         "blockers": [],
         "qualificationStatusPrevious": "HELD",
         "identityConfirmation": {
@@ -298,7 +313,8 @@
           "sourceKey": "LADIES-156-Jimmy Choo",
           "date": "2026-10-11",
           "confirmedBy": "Founder (Adnaan)",
-          "provenance": "FOUNDER_REPORTED — Founder (Adnaan) reported this confirmation on 2026-10-11. No direct supplier response was inspected."
+          "provenance": "FOUNDER_REPORTED — Founder (Adnaan) reported this confirmation on 2026-10-11. No direct supplier response was inspected.",
+          "founderReportedWording": "Jimmy Choo: original women's Jimmy Choo, EDP."
         },
         "identityHoldResolved": {
           "holdType": "UNQUALIFIED_IDENTITY_AND_VARIANT",
@@ -312,18 +328,86 @@
         "blockersResolved": [
           "Supplier text is the house name only ('Jimmy Choo', LADIES-156). Elimination of 'Fever' and 'Flash' does not exclude other women's Jimmy Choo lines or concentrations (e.g. EDT vs EDP of the 2011 original). Supplier also lists 'Jimmy Choo' under MEN (MEN-89). Not resolved by assumption."
         ],
-        "concentrationBlockerPrevious": "Supplier text does not state a concentration. Part of the open identity hold."
+        "concentrationBlockerPrevious": "Supplier text does not state a concentration. Part of the open identity hold.",
+        "concentrationProvenance": {
+          "recordedDate": "2026-10-11",
+          "founderReportedWording": "Jimmy Choo: original women's Jimmy Choo, EDP.",
+          "founderStatedConcentration": "EDP",
+          "founderStatedConcentrationScope": "NOT_SPECIFIED",
+          "referenceEditionUsedForEvidence": "Jimmy Choo Eau de Parfum (2011), women's",
+          "referenceEditionBasis": "Inspected authorised EDP listings (John Lewis, Nordstrom, Ulta, Debenhams).",
+          "suppliedConcentration": "NOT_ESTABLISHED — no supplier document inspected; founder stated 'EDP' with unspecified scope.",
+          "consistency": "Consistent under either reading: the original women's Jimmy Choo is the 2011 EDP.",
+          "scopeNote": "The founder wording names the original fragrance and 'EDP' but does not state whether 'EDP' describes the reference fragrance's edition or the concentration of the product supplied to Maison (the supplier list footer states: 'All fragrances are inspired by the listed designer brands'). The two are recorded separately; neither is inferred from a reference-fragrance page."
+        },
+        "concentrationBlockerPreviousRev10": "Resolved: concentration confirmed as EDP (founder-reported, 2026-10-11)."
       },
       "commercialFragranceEvidence": {
         "canonicalIdentity": "Jimmy Choo EDP (2011) — female — founder-confirmed (founder-reported)",
-        "concentration": "EDP (founder-reported confirmation)",
+        "concentration": "Reference edition: Eau de Parfum (2011). Supplied concentration: not established (see concentrationProvenance).",
         "gender": "female",
         "launch": 2011,
-        "sourceConflicts": [],
-        "correctionsSummary": "Current pyramid unchanged since initial session. 'Tiger Orchid' supported by Nordstrom and Ulta; other notes conflict with Nordstrom.",
-        "sparseHeartNote": "Single heart note (tiger orchid) is listed by inspected nordstrom.com and ulta.com pages.",
-        "evidenceTier": "AI_INFERENCE_UNSOURCED",
+        "sourceConflicts": [
+          "Wording variants between authorised sources: 'sweet Italian orange' (Nordstrom, Debenhams) vs 'mandarin orange' (John Lewis); 'caramel' (Nordstrom) vs 'toffee' (John Lewis, Debenhams). Draft follows John Lewis."
+        ],
+        "correctionsSummary": "Revision 11 (2026-10-11): 'Green Notes' removed from the top tier — listed only by scentverdict.com (third-party database) and by no authorised source. Remaining pyramid matches John Lewis in the same tiers.",
+        "sparseHeartNote": "Single heart note (Tiger Orchid) is source-supported: John Lewis ('Orchid'), Nordstrom, Ulta and Debenhams each list exactly one heart note. notesEvidenceLocked bypasses NOTES_HEART_MIN. Informational — not a promotion blocker.",
+        "evidenceTier": "PYRAMID_SECONDARY_SUPPORTED",
         "notesAsDrafted": {
+          "top": [
+            "Pear",
+            "Mandarin Orange"
+          ],
+          "heart": [
+            "Tiger Orchid"
+          ],
+          "base": [
+            "Toffee",
+            "Patchouli"
+          ]
+        },
+        "evidenceTierClaimedPreviously": "PYRAMID_SECONDARY_SUPPORTED",
+        "evidenceTierNote": "PYRAMID_SECONDARY_SUPPORTED: full pyramid matches the inspected johnlewis.com EDP listing (authorised; top 'Pear, mandarin orange', heart 'Orchid', base 'Patchouli, toffee'). 'Tiger Orchid' naming per nordstrom.com, ulta.com and debenhams.com (first-party). 'Green Notes' removed (scentverdict.com only). Fragrantica was not inspected (HTTP 403).",
+        "inspectedEvidence": {
+          "status": "SUPPORTED_AFTER_CORRECTION",
+          "pages": [
+            "https://scentverdict.com/perfume/jimmy-choo-jimmy-choo-eau-de-parfum",
+            "https://www.nordstrom.com/s/jimmy-choo-eau-de-parfum/3196411",
+            "https://www.ulta.com/p/jimmy-choo-eau-de-parfum-xlsImpprod4760589",
+            "https://www.johnlewis.com/jimmy-choo-eau-de-parfum/p200402",
+            "https://www.debenhams.com/product/jimmy-choo-jimmy-choo-eau-de-parfum_ydd03691"
+          ],
+          "finding": "Full pyramid Pear, Mandarin Orange / Tiger Orchid / Toffee, Patchouli matches John Lewis (authorised) in the same tiers; Tiger qualifier per Nordstrom, Ulta, Debenhams. 'Green Notes' (scentverdict.com only) removed. The Perfume Shop returned 403 (2026-10-11).",
+          "evidenceFile": "data/supplier/decisions/wave-9-source-evidence.json",
+          "namedOrAuthorisedPages": [
+            "https://www.nordstrom.com/s/jimmy-choo-eau-de-parfum/3196411",
+            "https://www.ulta.com/p/jimmy-choo-eau-de-parfum-xlsImpprod4760589",
+            "https://www.johnlewis.com/jimmy-choo-eau-de-parfum/p200402",
+            "https://www.debenhams.com/product/jimmy-choo-jimmy-choo-eau-de-parfum_ydd03691"
+          ],
+          "remainingGaps": [
+            "Wording variants between authorised sources: 'sweet Italian orange' (Nordstrom, Debenhams) vs 'mandarin orange' (John Lewis); 'caramel' (Nordstrom) vs 'toffee' (John Lewis, Debenhams). Draft follows John Lewis.",
+            "Proposed editorial profile 'Fruity Floral Sweet' awaiting review (see profileReview.proposal2026-10-11)."
+          ],
+          "revision": 6,
+          "remainingGapsPreviousRev11": [
+            "Wording variants between authorised sources: 'sweet Italian orange' (Nordstrom, Debenhams) vs 'mandarin orange' (John Lewis); 'caramel' (Nordstrom) vs 'toffee' (John Lewis, Debenhams). Draft follows John Lewis.",
+            "Profile review open — see profileReview."
+          ]
+        },
+        "evidenceTierBasis": "PYRAMID_SECONDARY_SUPPORTED: full pyramid matches the inspected johnlewis.com EDP listing (authorised; top 'Pear, mandarin orange', heart 'Orchid', base 'Patchouli, toffee'). 'Tiger Orchid' naming per nordstrom.com, ulta.com and debenhams.com (first-party). 'Green Notes' removed (scentverdict.com only). Fragrantica was not inspected (HTTP 403).",
+        "history": {
+          "label": "HISTORICAL (initial session, 2026-10-10): recorded from Fragrantica-attributed web-search results; the Fragrantica page was never inspected. Retained for audit only — not current evidence.",
+          "correctionsSummary": "Freesia removed. Mandarin Orange and Green Notes added to top. Heart reduced to single confirmed note (Tiger Orchid — Fragrantica-listed only). notesEvidenceLocked bypasses NOTES_HEART_MIN.",
+          "sparseHeartNote": "Fragrantica lists only Tiger Orchid in the heart tier. No additional heart note confirmed in any accessible source. Single heart note is source-constrained.",
+          "supplierNotes": "Supplier text is the house name only. However, the same supplier list contains distinct entries for 'Jimmy Choo Fever' (LADIES-157) and 'Jimmy Choo Flash' (LADIES-158), confirming that unqualified 'Jimmy Choo' is the 2011 original eponymous fragrance by process of elimination.",
+          "concentrationBlocker": "Supplier text does not specify concentration. Jimmy Choo original was released primarily as EDP — no significant concentration ambiguity."
+        },
+        "fragranticaUrlAttributed": "https://www.fragrantica.com/perfume/Jimmy-Choo/Jimmy-Choo-10573.html",
+        "fragranticaStatus": "NOT_INSPECTED — HTTP 403; never used as current evidence.",
+        "canonicalIdentityPrevious": "Jimmy Choo EDP (2011)",
+        "concentrationPrevious": "EDP",
+        "notesPreviouslyDraftedRev10": {
           "top": [
             "Pear",
             "Mandarin Orange",
@@ -337,48 +421,141 @@
             "Patchouli"
           ]
         },
-        "evidenceTierClaimedPreviously": "PYRAMID_SECONDARY_SUPPORTED",
-        "evidenceTierNote": "AI_INFERENCE_UNSOURCED: no inspected brand page, named database or authorised retailer matches the full draft pyramid in the same tiers. Partial authorised evidence: https://www.nordstrom.com/s/jimmy-choo-eau-de-parfum/3196411, https://www.ulta.com/p/jimmy-choo-eau-de-parfum-xlsImpprod4760589, https://www.johnlewis.com/jimmy-choo-eau-de-parfum/p200402, https://www.debenhams.com/product/jimmy-choo-jimmy-choo-eau-de-parfum_ydd03691. Third-party database matches (thescentbase/scentverdict) and marketplace listings are supplementary only. Fragrantica was not inspected (HTTP 403).",
-        "inspectedEvidence": {
-          "status": "MOSTLY_SUPPORTED_ONE_NOTE_UNSUPPORTED",
-          "pages": [
-            "https://scentverdict.com/perfume/jimmy-choo-jimmy-choo-eau-de-parfum",
-            "https://www.nordstrom.com/s/jimmy-choo-eau-de-parfum/3196411",
-            "https://www.ulta.com/p/jimmy-choo-eau-de-parfum-xlsImpprod4760589",
-            "https://www.johnlewis.com/jimmy-choo-eau-de-parfum/p200402",
-            "https://www.debenhams.com/product/jimmy-choo-jimmy-choo-eau-de-parfum_ydd03691"
+        "profileReview": {
+          "status": "APPROVED_BY_FOUNDER",
+          "recordedDate": "2026-10-11",
+          "storedProfile": "Floral Gourmand",
+          "storedSeason": "Spring",
+          "authorisedClassifications": {
+            "nordstrom.com": "style 'Fruity, floral'; story 'a sensual fruity chypre'",
+            "ulta.com": "family 'Sweet'; scent type 'Fruity Chypre'",
+            "johnlewis.com": "'A modern fruity chypre with warm, rich, woody depths.'"
+          },
+          "finding": "No authorised source uses 'Gourmand'. 'Floral Gourmand' is an editorial mapping (toffee/caramel base; Ulta 'Sweet'). 'Chypre' is aliased to Amber by knowledgeAdapter and would change warmth.",
+          "optionsDeriveMetrics": [
+            {
+              "profile": "Floral Gourmand (current)",
+              "scores": [
+                4,
+                3,
+                2,
+                2,
+                3
+              ],
+              "scentCharacter": "Rich & Full-Bodied",
+              "basis": "editorial mapping"
+            },
+            {
+              "profile": "Fruity Floral Sweet",
+              "scores": [
+                4,
+                3,
+                2,
+                2,
+                3
+              ],
+              "scentCharacter": "Rich & Full-Bodied",
+              "basis": "Nordstrom 'Fruity, floral' + Ulta 'Sweet' (authorised vocabulary)"
+            },
+            {
+              "profile": "Fruity Floral",
+              "scores": [
+                2,
+                3,
+                2,
+                2,
+                3
+              ],
+              "scentCharacter": "Balanced Signature",
+              "basis": "Nordstrom 'Fruity, floral'"
+            },
+            {
+              "profile": "Fruity Chypre",
+              "scores": [
+                3,
+                2,
+                4,
+                2,
+                3
+              ],
+              "scentCharacter": "Rich & Full-Bodied",
+              "basis": "Ulta / John Lewis 'fruity chypre' (Chypre→Amber alias)"
+            }
           ],
-          "finding": "Authorised retailers support 5 of 6 notes: Pear (John Lewis, Nordstrom, Ulta), Mandarin Orange (John Lewis), Tiger Orchid (Nordstrom, Ulta, Debenhams), Toffee (John Lewis, Debenhams), Patchouli (John Lewis, Nordstrom, Ulta). 'Green Notes' is not listed by any authorised source. Nordstrom and Debenhams give 'sweet Italian orange' and Nordstrom gives 'caramel'.",
-          "evidenceFile": "data/supplier/decisions/wave-9-source-evidence.json",
-          "namedOrAuthorisedPages": [
-            "https://www.nordstrom.com/s/jimmy-choo-eau-de-parfum/3196411",
-            "https://www.ulta.com/p/jimmy-choo-eau-de-parfum-xlsImpprod4760589",
-            "https://www.johnlewis.com/jimmy-choo-eau-de-parfum/p200402",
-            "https://www.debenhams.com/product/jimmy-choo-jimmy-choo-eau-de-parfum_ydd03691"
-          ],
-          "remainingGaps": [
-            "'Green Notes' unsupported by authorised sources (scentverdict.com only).",
-            "Top citrus wording split: 'mandarin orange' (John Lewis) vs 'sweet Italian orange' (Nordstrom, Debenhams).",
-            "Base wording split: 'toffee' (John Lewis, Debenhams) vs 'caramel' (Nordstrom)."
-          ],
-          "revision": 6
+          "scoreOrder": "sweetness, freshness, warmth, intensity, versatility (season Spring)",
+          "decisionRequired": "Founder/editorial choice of profile. Not changed to obtain any score.",
+          "statusPreviousRev11": "OPEN",
+          "proposal2026-10-11": {
+            "status": "PROPOSED_EDITORIAL_CHOICE",
+            "recordedDate": "2026-10-11",
+            "proposedProfile": "Fruity Floral Sweet",
+            "basis": "Authorised-retailer classifications: Nordstrom style 'Fruity, floral'; Ulta fragrance family 'Sweet'.",
+            "conflictingClassificationsKept": [
+              "'fruity chypre' — Nordstrom story, Ulta scent type 'Fruity Chypre', John Lewis 'modern fruity chypre' (Chypre is aliased to Amber by the adapter)."
+            ],
+            "previousProfile": "Floral Gourmand (editorial mapping; no authorised source uses 'Gourmand')",
+            "derivedByAdapter": {
+              "command": "adaptFragrance() on the staging-catalogue entry (app/lib/knowledgeAdapter.ts: extractFamilies, deriveScentCharacter, deriveMetrics)",
+              "family": [
+                "Floral",
+                "Fruity",
+                "Sweet"
+              ],
+              "scentCharacter": "Rich & Full-Bodied",
+              "scores": [
+                4,
+                3,
+                2,
+                2,
+                3
+              ],
+              "scoreOrder": "sweetness, freshness, warmth, intensity, versatility"
+            },
+            "nature": "Proposed editorial choice prepared for review. NOT a supplier confirmation and NOT promotion approval. Profile wording chosen from source classifications, not to obtain particular scores."
+          },
+          "statusPreviousRev12": "PROPOSED_EDITORIAL_CHOICE",
+          "approvedDate": "2026-10-11"
         },
-        "evidenceTierBasis": "Authorised retailers support 5 of 6 notes: Pear (John Lewis, Nordstrom, Ulta), Mandarin Orange (John Lewis), Tiger Orchid (Nordstrom, Ulta, Debenhams), Toffee (John Lewis, Debenhams), Patchouli (John Lewis, Nordstrom, Ulta). 'Green Notes' is not listed by any authorised source. Nordstrom and Debenhams give 'sweet Italian orange' and Nordstrom gives 'caramel'.",
-        "history": {
-          "label": "HISTORICAL (initial session, 2026-10-10): recorded from Fragrantica-attributed web-search results; the Fragrantica page was never inspected. Retained for audit only — not current evidence.",
-          "correctionsSummary": "Freesia removed. Mandarin Orange and Green Notes added to top. Heart reduced to single confirmed note (Tiger Orchid — Fragrantica-listed only). notesEvidenceLocked bypasses NOTES_HEART_MIN.",
-          "sparseHeartNote": "Fragrantica lists only Tiger Orchid in the heart tier. No additional heart note confirmed in any accessible source. Single heart note is source-constrained.",
-          "supplierNotes": "Supplier text is the house name only. However, the same supplier list contains distinct entries for 'Jimmy Choo Fever' (LADIES-157) and 'Jimmy Choo Flash' (LADIES-158), confirming that unqualified 'Jimmy Choo' is the 2011 original eponymous fragrance by process of elimination.",
-          "concentrationBlocker": "Supplier text does not specify concentration. Jimmy Choo original was released primarily as EDP — no significant concentration ambiguity."
-        },
-        "fragranticaUrlAttributed": "https://www.fragrantica.com/perfume/Jimmy-Choo/Jimmy-Choo-10573.html",
-        "fragranticaStatus": "NOT_INSPECTED — HTTP 403; never used as current evidence.",
-        "canonicalIdentityPrevious": "Jimmy Choo EDP (2011)",
-        "concentrationPrevious": "EDP"
+        "concentrationPreviousRev10": "EDP (founder-reported confirmation)",
+        "evidenceTierPreviousRev10": "AI_INFERENCE_UNSOURCED",
+        "correctionsSummaryPreviousRev10": "Current pyramid unchanged since initial session. 'Tiger Orchid' supported by Nordstrom and Ulta; other notes conflict with Nordstrom.",
+        "evidenceTierNotePreviousRev10": "AI_INFERENCE_UNSOURCED: no inspected brand page, named database or authorised retailer matches the full draft pyramid in the same tiers. Partial authorised evidence: https://www.nordstrom.com/s/jimmy-choo-eau-de-parfum/3196411, https://www.ulta.com/p/jimmy-choo-eau-de-parfum-xlsImpprod4760589, https://www.johnlewis.com/jimmy-choo-eau-de-parfum/p200402, https://www.debenhams.com/product/jimmy-choo-jimmy-choo-eau-de-parfum_ydd03691. Third-party database matches (thescentbase/scentverdict) and marketplace listings are supplementary only. Fragrantica was not inspected (HTTP 403).",
+        "sparseHeartNotePreviousRev11": "Single heart note (tiger orchid) is listed by inspected nordstrom.com and ulta.com pages.",
+        "evidenceLockedExceptions": [
+          {
+            "type": "EVIDENCE_LOCKED_EXCEPTION",
+            "field": "notes.heart",
+            "detail": "Single heart note (Tiger Orchid) is source-supported: John Lewis ('Orchid'), Nordstrom, Ulta and Debenhams each list exactly one heart note. notesEvidenceLocked bypasses NOTES_HEART_MIN. Informational — not a promotion blocker.",
+            "recordedDate": "2026-10-11"
+          }
+        ]
       },
-      "evidenceQualification": "AI_INFERENCE_UNSOURCED",
+      "evidenceQualification": "PYRAMID_SECONDARY_SUPPORTED",
       "promotionEligible": false,
-      "promotionEligibilityReason": "Not eligible: evidence tier below PYRAMID_SECONDARY_SUPPORTED."
+      "promotionEligibilityReason": "Promoted to native MKC on 2026-10-11 (promotionId fBkPTNpdbCYp); not committed.",
+      "promotionEligibilityReasonPreviousRev11": "Not eligible: open profile review (evidence tier now PYRAMID_SECONDARY_SUPPORTED).",
+      "promotionEligibilityReasonPreviousRev12": "Not eligible yet: proposed editorial profile awaiting review; no promotion approval recorded.",
+      "founderApproval": {
+        "date": "2026-10-11",
+        "approvedBy": "Founder (Adnaan)",
+        "scope": "Editorial and promotion approval of the reviewed r12 record (profile 'Fruity Floral Sweet') for local promotion.",
+        "notEvidence": "This approval is NOT additional supplier identity or concentration evidence. Identity remains founder-reported (2026-10-11); supplied concentration remains not established.",
+        "reviewQueueReviewer": "Founder (Adnaan) - approval 2026-10-11"
+      },
+      "promotion": {
+        "promotionId": "fBkPTNpdbCYp",
+        "nativePath": "app/lib/mkc/native/jimmy-choo-inspired.ts",
+        "completedAt": "2026-10-11T18:18:46.612Z",
+        "operator": "Claude Code (founder approval 2026-10-11)",
+        "reviewedBy": "Founder (Adnaan) - approval 2026-10-11",
+        "validationStatus": "PASS",
+        "buildResult": "pass",
+        "workflow": "npm run mkc:review -- --add/--approve jimmy-choo-inspired; npm run mkc:promote -- --slug jimmy-choo-inspired",
+        "integratedBase": "160ccbf4117d74c3d51309f7c21590eec1c031d8 (origin/main, fast-forwarded from 2803160 before promotion)",
+        "identityProvenance": "FOUNDER_REPORTED (2026-10-11); no direct supplier response inspected",
+        "relationships": "empty — proposals remain pending in entries.pending_relationship_proposals",
+        "committed": false
+      }
     },
     {
       "draftSlug": "romance-by-ralph-lauren-inspired",
@@ -398,7 +575,8 @@
           "sourceKey": "LADIES-251-Romance",
           "date": "2026-10-11",
           "confirmedBy": "Founder (Adnaan)",
-          "provenance": "FOUNDER_REPORTED — Founder (Adnaan) reported this confirmation on 2026-10-11. No direct supplier response was inspected."
+          "provenance": "FOUNDER_REPORTED — Founder (Adnaan) reported this confirmation on 2026-10-11. No direct supplier response was inspected.",
+          "founderReportedWording": "Romance: original Ralph Lauren Romance, EDP."
         },
         "identityHoldResolved": {
           "holdType": "BRAND_INFERRED",
@@ -412,7 +590,18 @@
         "blockersResolved": [
           "Supplier text is 'Romance' (LADIES-251) with no brand. Ralph Lauren Romance is inferred from name prominence only. Not resolved by assumption."
         ],
-        "concentrationBlockerPrevious": "Supplier text does not specify concentration. Ralph Lauren Romance was released only as EDP — no concentration ambiguity."
+        "concentrationBlockerPrevious": "Supplier text does not specify concentration. Ralph Lauren Romance was released only as EDP — no concentration ambiguity.",
+        "concentrationProvenance": {
+          "recordedDate": "2026-10-11",
+          "founderReportedWording": "Romance: original Ralph Lauren Romance, EDP.",
+          "founderStatedConcentration": "EDP",
+          "founderStatedConcentrationScope": "NOT_SPECIFIED",
+          "referenceEditionUsedForEvidence": "Ralph Lauren Romance Eau de Parfum (1998)",
+          "referenceEditionBasis": "Inspected authorised EDP listings (Ulta, Nordstrom) and brand copy (mazenonline.com).",
+          "suppliedConcentration": "NOT_ESTABLISHED — no supplier document inspected; founder stated 'EDP' with unspecified scope.",
+          "consistency": "Consistent under either reading: inspected references are the EDP.",
+          "scopeNote": "The founder wording names the original fragrance and 'EDP' but does not state whether 'EDP' describes the reference fragrance's edition or the concentration of the product supplied to Maison (the supplier list footer states: 'All fragrances are inspired by the listed designer brands'). The two are recorded separately; neither is inferred from a reference-fragrance page."
+        }
       },
       "commercialFragranceEvidence": {
         "canonicalIdentity": "Ralph Lauren Romance EDP (1998) — female — founder-confirmed (founder-reported)",
@@ -467,12 +656,15 @@
           ],
           "pagesReadableWithoutPyramid": [
             "https://perfumania.com/products/ralph-lauren-romance-perfume-for-women-eau-de-parfum"
+          ],
+          "remainingGaps": [
+            "Brand page (ralphlaurenfragrances.com), Macy's and Sephora returned 403 on 2026-10-11; the brand 'Floral, Woody' classification remains seen only via mazenonline.com brand copy."
           ]
         },
         "profileRationale": {
           "storedProfile": "Floral Fresh",
           "storedSeason": "Spring",
-          "conclusion": "Current: see revision3 (profile conflict OPEN).",
+          "conclusion": "Proposed editorial choice (2026-10-11): retain 'Floral Fresh' (Ulta). Brand-copy 'Floral, Woody' conflict kept on record. See proposal2026-10-11.",
           "seasonEvidence": "No inspected source states a season. 'Spring' is an editorial inference.",
           "revision3": {
             "pyramidNow": "Mandarin, Pink Pepper, Violet Leaves / Rose, Jasmine, Marigold, Geranium / Patchouli, Oakmoss, Musk",
@@ -499,6 +691,74 @@
               "scentCharacter": "Balanced Signature",
               "note": "Reported for decision support only; not applied."
             }
+          },
+          "optionsDeriveMetrics2026-10-11": [
+            {
+              "profile": "Floral Fresh (current)",
+              "scores": [
+                1,
+                5,
+                1,
+                2,
+                3
+              ],
+              "scentCharacter": "Fresh & Light",
+              "basis": "Ulta 'Fresh Floral'"
+            },
+            {
+              "profile": "Floral Woody",
+              "scores": [
+                2,
+                3,
+                3,
+                2,
+                3
+              ],
+              "scentCharacter": "Balanced Signature",
+              "basis": "brand copy 'Floral, Woody' (mazenonline.com)"
+            },
+            {
+              "profile": "Floral",
+              "scores": [
+                2,
+                3,
+                2,
+                2,
+                3
+              ],
+              "scentCharacter": "Balanced Signature",
+              "basis": "common to all classifications"
+            }
+          ],
+          "conclusionPreviousRev11": "Current: see revision3 (profile conflict OPEN).",
+          "proposal2026-10-11": {
+            "status": "APPROVED_BY_FOUNDER",
+            "recordedDate": "2026-10-11",
+            "proposedProfile": "Floral Fresh",
+            "basis": "Recorded Ulta (authorised retailer) fragrance family 'Fresh Floral'.",
+            "conflictingClassificationsKept": [
+              "'Floral, Woody' — Ralph Lauren brand copy reproduced on mazenonline.com (not an authorised retailer); brand page returned 403."
+            ],
+            "previousProfile": "Floral Fresh (unchanged)",
+            "derivedByAdapter": {
+              "command": "adaptFragrance() on the staging-catalogue entry (app/lib/knowledgeAdapter.ts: extractFamilies, deriveScentCharacter, deriveMetrics)",
+              "family": [
+                "Floral",
+                "Fresh"
+              ],
+              "scentCharacter": "Fresh & Light",
+              "scores": [
+                1,
+                5,
+                1,
+                2,
+                3
+              ],
+              "scoreOrder": "sweetness, freshness, warmth, intensity, versatility"
+            },
+            "nature": "Proposed editorial choice prepared for review. NOT a supplier confirmation and NOT promotion approval. Profile wording chosen from source classifications, not to obtain particular scores.",
+            "statusPreviousRev12": "PROPOSED_EDITORIAL_CHOICE",
+            "approvedDate": "2026-10-11"
           }
         },
         "evidenceTierBasis": "Ulta (authorised retailer) full pyramid, corroborated by Ralph Lauren brand copy (mazenonline.com) and Nordstrom key notes. Draft pyramid replaced accordingly.",
@@ -533,7 +793,30 @@
       },
       "evidenceQualification": "PYRAMID_SECONDARY_SUPPORTED",
       "promotionEligible": false,
-      "promotionEligibilityReason": "Not eligible: open profile review."
+      "promotionEligibilityReason": "Promoted to native MKC on 2026-10-11 (promotionId 13zI9yHDv62X); not committed.",
+      "promotionEligibilityReasonPreviousRev11": "Not eligible: open profile review.",
+      "promotionEligibilityReasonPreviousRev12": "Not eligible yet: proposed editorial profile awaiting review; no promotion approval recorded.",
+      "founderApproval": {
+        "date": "2026-10-11",
+        "approvedBy": "Founder (Adnaan)",
+        "scope": "Editorial and promotion approval of the reviewed r12 record (profile 'Floral Fresh') for local promotion.",
+        "notEvidence": "This approval is NOT additional supplier identity or concentration evidence. Identity remains founder-reported (2026-10-11); supplied concentration remains not established.",
+        "reviewQueueReviewer": "Founder (Adnaan) - approval 2026-10-11"
+      },
+      "promotion": {
+        "promotionId": "13zI9yHDv62X",
+        "nativePath": "app/lib/mkc/native/romance-by-ralph-lauren-inspired.ts",
+        "completedAt": "2026-10-11T18:19:34.467Z",
+        "operator": "Claude Code (founder approval 2026-10-11)",
+        "reviewedBy": "Founder (Adnaan) - approval 2026-10-11",
+        "validationStatus": "PASS",
+        "buildResult": "pass",
+        "workflow": "npm run mkc:review -- --add/--approve romance-by-ralph-lauren-inspired; npm run mkc:promote -- --slug romance-by-ralph-lauren-inspired",
+        "integratedBase": "160ccbf4117d74c3d51309f7c21590eec1c031d8 (origin/main, fast-forwarded from 2803160 before promotion)",
+        "identityProvenance": "FOUNDER_REPORTED (2026-10-11); no direct supplier response inspected",
+        "relationships": "empty — proposals remain pending in entries.pending_relationship_proposals",
+        "committed": false
+      }
     },
     {
       "draftSlug": "tommy-girl-inspired",
@@ -545,7 +828,17 @@
         "notes": "Supplier text 'Tommy Girl' is specific to Tommy Hilfiger's 1996 fragrance. No other major house uses this exact name. Brand qualifier implicit in the product name itself.",
         "identityDecision": "Tommy Hilfiger Tommy Girl EDT (1996) — female",
         "concentrationBlocker": "Tommy Girl was released only as EDT — no concentration ambiguity.",
-        "blockers": []
+        "blockers": [],
+        "concentrationProvenance": {
+          "recordedDate": "2026-10-11",
+          "founderReportedWording": null,
+          "founderStatedConcentration": null,
+          "founderStatedConcentrationScope": null,
+          "referenceEditionUsedForEvidence": "Tommy Hilfiger Tommy Girl Eau de Toilette (1996)",
+          "referenceEditionBasis": "Inspected listings are EDT (amcal.com.au, Debenhams, Lookfantastic).",
+          "suppliedConcentration": "NOT_ESTABLISHED — supplier text states no concentration; no founder confirmation recorded.",
+          "consistency": "Reference edition only; supplier text 'Tommy Girl' states no brand or concentration."
+        }
       },
       "commercialFragranceEvidence": {
         "canonicalIdentity": "Tommy Hilfiger Tommy Girl EDT (1996)",
@@ -582,12 +875,13 @@
         "evidenceTierClaimedPreviously": "PYRAMID_SECONDARY_SUPPORTED",
         "evidenceTierNote": "AI_INFERENCE_UNSOURCED: no inspected brand page, named database or authorised retailer matches the full draft pyramid in the same tiers. Partial authorised evidence: https://www.debenhams.com/product/tommy-hilfiger-tommy-girl-eau-de-toilette_ydd09770. Third-party database matches (thescentbase/scentverdict) and marketplace listings are supplementary only. Fragrantica was not inspected (HTTP 403).",
         "inspectedEvidence": {
-          "status": "UNCORROBORATED_POSSIBLE_REFORMULATION",
+          "status": "SOURCE_CONFLICT",
           "pages": [
             "https://www.amcal.com.au/shop/product/MMC-O100030742/tommy-hilfiger-tommy-girl-30ml-edt-spray/",
-            "https://www.debenhams.com/product/tommy-hilfiger-tommy-girl-eau-de-toilette_ydd09770"
+            "https://www.debenhams.com/product/tommy-hilfiger-tommy-girl-eau-de-toilette_ydd09770",
+            "https://www.lookfantastic.com/p/tommy-girl-eau-de-toilette-100ml/11435939/"
           ],
-          "finding": "Debenhams first-party listing (sold by Debenhams) names only tangerine, honeysuckle and wild heather — supports Honeysuckle only. amcal.com.au (not a demonstrable authorised retailer) matches the 16-note draft. Current retail copy may describe a different formulation.",
+          "finding": "Debenhams first-party listing (sold by Debenhams) names only tangerine, honeysuckle and wild heather — supports Honeysuckle only. amcal.com.au (not a demonstrable authorised retailer) matches the 16-note draft. Current retail copy may describe a different formulation. Revision 11: Lookfantastic (first-party; authorised status not verified) lists a full 17-note pyramid that conflicts with the draft — adds Tangerine, 'Citrus Orchards', 'Crisp Green Notes', Wild Heather; Rose and Lily in base; no Lemon, Mint or Leather. It corroborates Debenhams' tangerine / honeysuckle / wild heather.",
           "evidenceFile": "data/supplier/decisions/wave-9-source-evidence.json",
           "namedOrAuthorisedPages": [
             "https://www.debenhams.com/product/tommy-hilfiger-tommy-girl-eau-de-toilette_ydd09770"
@@ -598,7 +892,9 @@
           "remainingGaps": [
             "No authorised source lists the 16-note pyramid.",
             "Current copy names 'tangerine' and 'wild heather', absent from the draft.",
-            "Tommy Hilfiger brand pages timed out."
+            "Tommy Hilfiger brand pages timed out.",
+            "Two retailer pyramids disagree (amcal.com.au = draft; Lookfantastic = different). Neither is a verified authorised source.",
+            "Escentual readable without notes; Argos 403 (2026-10-11)."
           ],
           "revision": 6
         },
@@ -608,7 +904,35 @@
           "correctionsSummary": "Major overhaul — 8+ notes wrong. Bergamot removed; Apple corrected to Apple Tree Blossom; Mandarin Orange, Camellia, Blackcurrant added to top. Cherry Blossom, Marigold, Lily of the Valley removed; Lemon, Honeysuckle, Grapefruit, Lily, Mint added to heart. Jasmine moved to base. Cedar corrected. Musk and Amber removed; Magnolia, Leather added to base."
         },
         "fragranticaUrlAttributed": "https://www.fragrantica.com/perfume/Tommy-Hilfiger/Tommy-Girl-3016.html",
-        "fragranticaStatus": "NOT_INSPECTED — HTTP 403; never used as current evidence."
+        "fragranticaStatus": "NOT_INSPECTED — HTTP 403; never used as current evidence.",
+        "candidateCorrectionNotApplied": {
+          "recordedDate": "2026-10-11",
+          "source": "https://www.lookfantastic.com/p/tommy-girl-eau-de-toilette-100ml/11435939/",
+          "top": [
+            "Camellia",
+            "Apple Blossom",
+            "Blackcurrant",
+            "Mandarin",
+            "Tangerine"
+          ],
+          "heart": [
+            "Grapefruit",
+            "Citrus Orchards",
+            "Green Notes",
+            "Honeysuckle",
+            "Violet"
+          ],
+          "base": [
+            "Jasmine",
+            "Rose",
+            "Magnolia",
+            "Lily",
+            "Cedar",
+            "Sandalwood",
+            "Wild Heather"
+          ],
+          "reason": "Recorded for review only. Not applied: authorised status unverified and conflicting retailer pyramids."
+        }
       },
       "evidenceQualification": "AI_INFERENCE_UNSOURCED",
       "promotionEligible": false,
@@ -730,7 +1054,8 @@
           "sourceKey": "LADIES-34-Beautiful",
           "date": "2026-10-11",
           "confirmedBy": "Founder (Adnaan)",
-          "provenance": "FOUNDER_REPORTED — Founder (Adnaan) reported this confirmation on 2026-10-11. No direct supplier response was inspected."
+          "provenance": "FOUNDER_REPORTED — Founder (Adnaan) reported this confirmation on 2026-10-11. No direct supplier response was inspected.",
+          "founderReportedWording": "Beautiful: original Estée Lauder Beautiful, EDP."
         },
         "identityHoldResolved": {
           "holdType": "UNQUALIFIED_IDENTITY",
@@ -745,7 +1070,18 @@
         "blockersResolved": [
           "Supplier text 'Beautiful' lacks a brand qualifier. Only the supplier can confirm which product it means; a brand page establishes facts about Estée Lauder Beautiful but not the supplier's meaning."
         ],
-        "concentrationBlockerPrevious": "Beautiful was released as EDP, not EDT — but since identity itself is unconfirmed, concentration is a secondary blocker."
+        "concentrationBlockerPrevious": "Beautiful was released as EDP, not EDT — but since identity itself is unconfirmed, concentration is a secondary blocker.",
+        "concentrationProvenance": {
+          "recordedDate": "2026-10-11",
+          "founderReportedWording": "Beautiful: original Estée Lauder Beautiful, EDP.",
+          "founderStatedConcentration": "EDP",
+          "founderStatedConcentrationScope": "NOT_SPECIFIED",
+          "referenceEditionUsedForEvidence": "Estée Lauder Beautiful Eau de Parfum (1985)",
+          "referenceEditionBasis": "Inspected Nordstrom EDP listing.",
+          "suppliedConcentration": "NOT_ESTABLISHED — no supplier document inspected; founder stated 'EDP' with unspecified scope.",
+          "consistency": "Consistent under either reading: inspected reference is the EDP.",
+          "scopeNote": "The founder wording names the original fragrance and 'EDP' but does not state whether 'EDP' describes the reference fragrance's edition or the concentration of the product supplied to Maison (the supplier list footer states: 'All fragrances are inspired by the listed designer brands'). The two are recorded separately; neither is inferred from a reference-fragrance page."
+        }
       },
       "commercialFragranceEvidence": {
         "canonicalIdentity": "Estée Lauder Beautiful EDP (1985) — female — founder-confirmed (founder-reported)",
@@ -823,7 +1159,7 @@
       },
       "evidenceQualification": "PYRAMID_SECONDARY_SUPPORTED",
       "promotionEligible": false,
-      "promotionEligibilityReason": "Promoted to native MKC on 2026-10-11; not committed.",
+      "promotionEligibilityReason": "Promoted to native MKC on 2026-10-11 (promotionId o60aTXEc01Dy); committed in 2803160 and pushed; deployment founder-reported.",
       "promotion": {
         "promotionId": "o60aTXEc01Dy",
         "nativePath": "app/lib/mkc/native/beautiful-by-estee-lauder-inspired.ts",
@@ -834,8 +1170,15 @@
         "buildResult": "pass",
         "workflow": "npx tsx scripts/factory/review/index.ts --add/--approve; npx tsx scripts/factory/promotion/index.ts --slug",
         "identityProvenance": "FOUNDER_REPORTED (2026-10-11); no direct supplier response inspected",
-        "committed": false
-      }
+        "committed": true,
+        "committedPreviousRev11": false,
+        "commit": "2803160b406d62eef79c27ef45ecf705fdea9e11",
+        "pushed": true,
+        "pushedEvidence": "Verified 2026-10-11: 2803160 is an ancestor of origin/main (git ls-remote origin refs/heads/main = 160ccbf4117d74c3d51309f7c21590eec1c031d8; git merge-base --is-ancestor exit 0).",
+        "deployed": "FOUNDER_REPORTED",
+        "deployedEvidence": "Founder report 2026-10-11: 2803160 pushed and deployed. Deployment not independently verified here (no deployment dashboard or URL inspected)."
+      },
+      "promotionEligibilityReasonPreviousRev11": "Promoted to native MKC on 2026-10-11; not committed."
     },
     {
       "draftSlug": "poison-by-dior-inspired",
@@ -846,7 +1189,7 @@
         "qualificationStatus": "CONFIRMED_FOUNDER_REPORTED",
         "notes": "Supplier text is 'Poison' only — no brand stated. The supplier separately lists 'Poison Girl' (LADIES-233), 'Poison / Hypnotic' (LADIES-234), 'Poison / Midnite' (LADIES-235) and 'Poison / Pure' (LADIES-236), which suggests the Dior Poison line; the original 1985 Poison is an inferred reference, not a confirmed identity.",
         "identityDecision": "CONFIRMED (founder-reported, 2026-10-11): Dior Poison — original — EDP.",
-        "concentrationBlocker": "Supplier concentration confirmed as EDP (founder-reported). Inspected references are EDT — see commercialFragranceEvidence.concentrationReferenceHold.",
+        "concentrationBlocker": "OPEN: founder wording 'original Dior Poison, EDP' does not state whether 'EDP' is the reference edition or the supplied concentration. Inspected references are EDT (or 'Esprit de Parfum', vintage reseller). See commercialFragranceEvidence.concentrationReferenceHold.",
         "blockers": [],
         "qualificationStatusPrevious": "HELD",
         "identityConfirmation": {
@@ -855,7 +1198,8 @@
           "sourceKey": "LADIES-232-Poison",
           "date": "2026-10-11",
           "confirmedBy": "Founder (Adnaan)",
-          "provenance": "FOUNDER_REPORTED — Founder (Adnaan) reported this confirmation on 2026-10-11. No direct supplier response was inspected."
+          "provenance": "FOUNDER_REPORTED — Founder (Adnaan) reported this confirmation on 2026-10-11. No direct supplier response was inspected.",
+          "founderReportedWording": "Poison: original Dior Poison, EDP."
         },
         "identityHoldResolved": {
           "holdType": "BRAND_INFERRED",
@@ -869,11 +1213,23 @@
         "blockersResolved": [
           "Supplier text is 'Poison' (LADIES-232) with no brand. Dior is inferred from the presence of 'Poison Girl', 'Poison / Hypnotic', 'Poison / Midnite', 'Poison / Pure'. Concentration of the original is also unstated by the supplier. Not resolved by assumption."
         ],
-        "concentrationBlockerPrevious": "Supplier text does not state a concentration. A 1985 EDT is listed by inspected scentverdict.com and a current Poison EDT by nordstrom.com. Part of the open identity hold."
+        "concentrationBlockerPrevious": "Supplier text does not state a concentration. A 1985 EDT is listed by inspected scentverdict.com and a current Poison EDT by nordstrom.com. Part of the open identity hold.",
+        "concentrationProvenance": {
+          "recordedDate": "2026-10-11",
+          "founderReportedWording": "Poison: original Dior Poison, EDP.",
+          "founderStatedConcentration": "EDP",
+          "founderStatedConcentrationScope": "NOT_SPECIFIED",
+          "referenceEditionUsedForEvidence": "UNRESOLVED — inspected references are the 1985 Eau de Toilette (scentverdict.com, nordstrom.com, johnlewis.com) or state no concentration (thescentbase.com); a vintage reseller lists a 1985 'Esprit de Parfum' (not 'Eau de Parfum').",
+          "referenceEditionBasis": "No inspected Poison 'Eau de Parfum' reference.",
+          "suppliedConcentration": "NOT_ESTABLISHED — no supplier document inspected; founder stated 'EDP' with unspecified scope.",
+          "consistency": "UNRESOLVED: if 'EDP' denotes the reference edition, no EDP reference has been found; if it denotes the supplied concentration, the reference edition (EDT or Esprit de Parfum) still has to be chosen. Founder clarification requested.",
+          "scopeNote": "The founder wording names the original fragrance and 'EDP' but does not state whether 'EDP' describes the reference fragrance's edition or the concentration of the product supplied to Maison (the supplier list footer states: 'All fragrances are inspired by the listed designer brands'). The two are recorded separately; neither is inferred from a reference-fragrance page."
+        },
+        "concentrationBlockerPreviousRev10": "Supplier concentration confirmed as EDP (founder-reported). Inspected references are EDT — see commercialFragranceEvidence.concentrationReferenceHold."
       },
       "commercialFragranceEvidence": {
         "canonicalIdentity": "Christian Dior Poison — original — EDP (founder-confirmed, founder-reported). Inspected reference evidence describes the EDT; no EDP reference established.",
-        "concentration": "EDP (founder-reported confirmation). NOT matched by inspected references, which are EDT.",
+        "concentration": "Founder stated 'EDP' (scope unspecified). Inspected references: EDT (scentverdict.com, nordstrom.com, johnlewis.com), unstated (thescentbase.com), 'Esprit de Parfum' (vintagevonwerth.de, vintage reseller). No 'Eau de Parfum' reference inspected.",
         "gender": "female",
         "launch": 1985,
         "sourceConflicts": [],
@@ -928,9 +1284,13 @@
             "No authorised full pyramid (dior.com 403, Dillard's denied).",
             "Opoponax tier differs from Nordstrom.",
             "18 of 21 notes rely on thescentbase.com only.",
-            "No Poison EDP reference inspected; existing evidence is EDT or unstated."
+            "No Poison EDP reference inspected; existing evidence is EDT or unstated.",
+            "Sephora UAE EDT page returned 403 (2026-10-11)."
           ],
-          "revision": 6
+          "revision": 6,
+          "supplementaryPagesRevision7": [
+            "https://vintagevonwerth.de/products/christian-dior-poison-1985-15-ml-esprit-de-parfum-1980s-vintage-perfume-splash"
+          ]
         },
         "evidenceTierBasis": "Nordstrom key notes support Coriander, Tuberose and Opoponax (Opoponax as base; draft heart). John Lewis lists a 1985 EDT but its description carries Hypnotic Poison-style notes, so it neither corroborates nor refutes the pyramid. thescentbase.com (supplementary) matches all 21 notes.",
         "history": {
@@ -946,15 +1306,19 @@
         "concentrationReferenceHold": {
           "status": "HOLD_OPEN",
           "recordedDate": "2026-10-11",
-          "detail": "EVIDENCE (CONCENTRATION_REFERENCE): founder-confirmed identity is the original Dior Poison EDP, but every inspected reference (scentverdict.com EDT, nordstrom.com EDT, johnlewis.com EDT; thescentbase.com concentration unstated) describes the EDT or does not state a concentration. The draft pyramid is not transferred or relabelled as EDP. Hold until an exact Poison EDP reference is established.",
+          "detail": "EVIDENCE (CONCENTRATION_REFERENCE): founder wording 'original Dior Poison, EDP' (2026-10-11). Whether 'EDP' names Dior's edition or the concentration supplied to Maison is not stated. No inspected source describes a Poison 'Eau de Parfum'; references are EDT, unstated, or a vintage 'Esprit de Parfum' (not equated with EDP). The draft pyramid is not relabelled. Hold until the founder clarifies the scope of 'EDP' and an exact reference edition is established.",
           "inspectedReferenceConcentrations": {
             "scentverdict.com": "EDT",
             "nordstrom.com": "EDT",
             "johnlewis.com": "EDT",
-            "thescentbase.com": "not stated"
+            "thescentbase.com": "not stated",
+            "vintagevonwerth.de": "Esprit de Parfum (vintage reseller, supplementary)"
           },
-          "draftPyramidBasis": "EDT / unstated-concentration references — not transferred to EDP."
-        }
+          "draftPyramidBasis": "EDT / unstated-concentration references — not transferred to EDP.",
+          "detailPreviousRev10": "EVIDENCE (CONCENTRATION_REFERENCE): founder-confirmed identity is the original Dior Poison EDP, but every inspected reference (scentverdict.com EDT, nordstrom.com EDT, johnlewis.com EDT; thescentbase.com concentration unstated) describes the EDT or does not state a concentration. The draft pyramid is not transferred or relabelled as EDP. Hold until an exact Poison EDP reference is established.",
+          "clarificationRequested": "Does 'EDP' describe (a) the Dior Poison edition the supplier's product is inspired by, or (b) the concentration of the product supplied to Maison? A product label, image or spec sheet would also settle it."
+        },
+        "concentrationPreviousRev10": "EDP (founder-reported confirmation). NOT matched by inspected references, which are EDT."
       },
       "evidenceQualification": "AI_INFERENCE_UNSOURCED",
       "promotionEligible": false,
@@ -1132,6 +1496,11 @@
     "scentCharacterAndFamily": "Draft scentCharacter equals derived value for all 8. Family sets equal; Poison and Jimmy Choo differ only in array order.",
     "staleClaimFound": "Ledger Poison note claimed scores sweetness:4, freshness:1, warmth:5, intensity:5; stored and derived scores are 3/3/4/3/3. Ledger note corrected.",
     "correctionsApplied": "None to scores — no mismatches.",
-    "duplicateNote": "versace-yellow-diamonds-inspired and dolce-and-gabbana-the-one-inspired results retained for reference; both drafts are withdrawn duplicates of existing native records."
+    "duplicateNote": "versace-yellow-diamonds-inspired and dolce-and-gabbana-the-one-inspired results retained for reference; both drafts are withdrawn duplicates of existing native records.",
+    "recheck2026-10-11": {
+      "method": "adaptFragrance() on each staging-catalogue entry compared with the draft's stored scores, scentCharacter, notes, profile, season and mood; relationship targets checked against native MKC.",
+      "executedCommand": "npx tsx scratchpad/w9/w9-consistency.ts",
+      "result": "see review bundle VALIDATION.txt"
+    }
   }
 }

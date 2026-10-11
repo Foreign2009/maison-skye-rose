@@ -6120,6 +6120,48 @@
       "slug": "beautiful-by-estee-lauder-inspired",
       "reviewer": "Claude Code (founder instruction 2026-10-11)",
       "details": "promotionId:o60aTXEc01Dy  nativePath:app/lib/mkc/native/beautiful-by-estee-lauder-inspired.ts"
+    },
+    {
+      "timestamp": "2026-10-11T18:17:18.877Z",
+      "action": "added_to_queue",
+      "slug": "jimmy-choo-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-10-11T18:17:21.781Z",
+      "action": "added_to_queue",
+      "slug": "romance-by-ralph-lauren-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-10-11T18:17:32.912Z",
+      "action": "approved",
+      "slug": "jimmy-choo-inspired",
+      "reviewer": "Founder (Adnaan) - approval 2026-10-11",
+      "details": "Wave 9 r12: founder editorial/promotion approval 2026-10-11 of profile 'Fruity Floral Sweet'; evidence PYRAMID_SECONDARY_SUPPORTED (John Lewis EDP listing; Tiger qualifier Nordstrom/Ulta/Debenhams); identity founder-reported 2026-10-11, no direct supplier response inspected; approval is not supplier identity or concentration evidence; relationships empty (proposals pending); see catalogue-expansion-ledger.json"
+    },
+    {
+      "timestamp": "2026-10-11T18:17:35.681Z",
+      "action": "approved",
+      "slug": "romance-by-ralph-lauren-inspired",
+      "reviewer": "Founder (Adnaan) - approval 2026-10-11",
+      "details": "Wave 9 r12: founder editorial/promotion approval 2026-10-11 of profile 'Floral Fresh' (Ulta 'Fresh Floral'; brand-copy 'Floral, Woody' conflict recorded); evidence PYRAMID_SECONDARY_SUPPORTED (Ulta, brand copy, Nordstrom); identity founder-reported 2026-10-11, no direct supplier response inspected; approval is not supplier identity or concentration evidence; relationships empty (proposals pending); see catalogue-expansion-ledger.json"
+    },
+    {
+      "timestamp": "2026-10-11T18:18:46.629Z",
+      "action": "promoted",
+      "slug": "jimmy-choo-inspired",
+      "reviewer": "Claude Code (founder approval 2026-10-11)",
+      "details": "promotionId:fBkPTNpdbCYp  nativePath:app/lib/mkc/native/jimmy-choo-inspired.ts"
+    },
+    {
+      "timestamp": "2026-10-11T18:19:34.486Z",
+      "action": "promoted",
+      "slug": "romance-by-ralph-lauren-inspired",
+      "reviewer": "Claude Code (founder approval 2026-10-11)",
+      "details": "promotionId:13zI9yHDv62X  nativePath:app/lib/mkc/native/romance-by-ralph-lauren-inspired.ts"
     }
   ]
 }
