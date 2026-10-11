@@ -484,6 +484,111 @@ function correctGourmandAbsenceClaims(
   });
 }
 
+// ── Anchor-contrast absence claims ───────────────────────────────────────────
+// Observed (BR540 "less sweet", post-543c0bb):
+//   "It's confident and magnetic without any of the amber-tonka warmth that makes
+//    Baccarat Rouge so indulgent."
+//   "Cardamom and Oud create warmth and luxury without the caramel-vanilla sweetness of
+//    Baccarat Rouge — it's polished and refined instead."
+// The context supplies only the anchor's name and anchored score — no anchor notes — so
+// descriptors attributed to the anchor ("amber-tonka", "caramel-vanilla", "indulgent") are
+// not grounded, and "without" asserts an absence in the candidate that its own scores do
+// not support (Sauvage warmth 3/5; Oud Wood sweetness 1/5 with Vanilla listed). The whole
+// "without … <dimension> of/that makes <anchor> …" span is replaced with the catalogue
+// relative claim, scores attached to the right fragrance:
+//   → "with lower warmth (3/5) than Baccarat Rouge 540 Inspired (4/5)"
+// Scope: strict anchored turns only; the dimension must be one of sweetness / warmth /
+// freshness / intensity, and the phrase must explicitly reference the anchor (full name,
+// bare name, or a bare-name prefix of ≥2 words) via "of", "in" or "that/which makes", then
+// reach a clause boundary. At most two descriptor words before the dimension.
+// Attribution: the single rendered candidate named in the sentence; if the sentence names
+// none, the single rendered candidate named in its paragraph. Unchanged when more than one
+// candidate is named, when the sentence names any other catalogue fragrance (e.g. a
+// non-rendered subject), or — for the paragraph fallback — when the sentence also names the
+// anchor outside the matched phrase (it may describe the anchor itself) or the paragraph
+// names any catalogue fragrance other than the anchor and the resolved candidate.
+// Left unchanged when: quoted; the sentence contains a negation or preference word; the
+// candidate or anchor score is missing; the candidate is not lower than the anchor on that
+// dimension; or the phrase does not reference the anchor. Other "without …" wording
+// (e.g. "without aggression") is not touched.
+
+function namedRenderedCandidates(
+  text:     string,
+  rendered: RetrievalContext["fragrances"],
+): RetrievalContext["fragrances"] {
+  const folded = foldText(text);
+  return rendered.filter((f) => nameKeysFor(f.name).some((k) => wholeNameOccurrences(folded, k).length > 0));
+}
+
+// True when the sentence names a catalogue fragrance that is neither the anchor nor one of
+// `named` (the rendered candidates found there) — e.g. a non-rendered fragrance as subject.
+function namesOtherFragrance(sentence: string, anchorName: string, named: RetrievalContext["fragrances"]): boolean {
+  const folded = foldText(sentence);
+  const allowed = new Set([...nameKeysFor(anchorName), ...named.flatMap((f) => nameKeysFor(f.name))]);
+  return allCatalogueNameKeys().some((key) => !allowed.has(key) && wholeNameOccurrences(folded, key).length > 0);
+}
+
+function anchorAliasPattern(anchorName: string): string {
+  const full  = anchorName.toLowerCase();
+  const bare  = stripMaisonSuffixLc(full);
+  const words = bare.split(" ");
+  const aliases = new Set([full, bare]);
+  for (let n = words.length - 1; n >= 2; n--) aliases.add(words.slice(0, n).join(" "));
+  return [...aliases]
+    .sort((a, b) => b.length - a.length)
+    .map((a) => a.replace(/[.*+?^${}()|[\]\\]/g, "\\$&").replace(/ /g, "\\s+"))
+    .join("|");
+}
+
+function correctAnchorContrastAbsenceClaims(
+  content:  string,
+  meta:     AnchoredMeta,
+  rendered: RetrievalContext["fragrances"],
+): string {
+  const { anchorDimScores } = meta;
+  if (!anchorDimScores || rendered.length === 0) return content;
+  const ref = `(?:${anchorAliasPattern(meta.anchorName)})\\b`;
+  const anchorRef = new RegExp(`\\b${ref}`, "i");
+  const re = new RegExp(
+    `\\bwithout\\s+(?:any\\s+of\\s+)?(?:the\\s+|its\\s+)?(?:[a-z]+(?:-[a-z]+)*\\s+){0,2}` +
+    `(sweetness|warmth|freshness|intensity)\\s+` +
+    `(?:(?:of|in)\\s+${ref}|(?:that|which)\\s+makes?\\s+${ref}(?:\\s+(?:so\\s+|feel\\s+|very\\s+)?[a-z-]+)?)` +
+    `(?=\\s*(?:[.,;:!?—–]|$))`,
+    "gi",
+  );
+  return content.replace(re, (match: string, dimRaw: string, offset: number, whole: string) => {
+    if (isInsideQuotedText(whole, offset)) return match;
+    if (GOURMAND_PREFERENCE_RE.test(whole.slice(sentenceStartBefore(whole, offset), offset))) return match;
+
+    const sentence   = getSentenceContaining(whole, offset, match.length);
+    const inSentence = namedRenderedCandidates(sentence, rendered);
+    if (namesOtherFragrance(sentence, meta.anchorName, inSentence)) return match;
+    let pool = inSentence;
+    if (pool.length === 0) {
+      // Paragraph fallback (pronoun or note-led subject). Rejected when the sentence itself
+      // names the anchor outside the matched phrase (it may be describing the anchor), or
+      // when the paragraph names any other catalogue fragrance besides the resolved one.
+      const end = offset + match.length;
+      const outsideMatch = `${whole.slice(sentenceStartBefore(whole, offset), offset)} ${whole.slice(end, sentenceEndAfter(whole, end))}`;
+      if (anchorRef.test(outsideMatch)) return match;
+      const paragraph = getParagraphContaining(whole, offset, match.length);
+      pool = namedRenderedCandidates(paragraph, rendered);
+      if (pool.length === 1 && namesOtherFragrance(paragraph, meta.anchorName, pool)) return match;
+    }
+    if (pool.length !== 1) return match;
+
+    const dim = dimRaw.toLowerCase();
+    const candidateScore = extractDimScore(
+      pool[0] as { sweetness: number; freshness: number; warmth: number; intensity: number },
+      dim,
+    );
+    const anchorScore = anchorDimScores[dim];
+    if (!validScore(candidateScore) || !validScore(anchorScore) || candidateScore >= anchorScore) return match;
+
+    return `with lower ${dim} (${candidateScore}/5) than ${meta.anchorName} (${anchorScore}/5)`;
+  });
+}
+
 // ── Strict-match "removal" claim correction ──────────────────────────────────
 // "Oud Wood removes the sweetness almost entirely (1/5)": a 1/5 score supports lower
 // sweetness than the anchor (e.g. Baccarat Rouge 540 Inspired 3/5), not near-total
@@ -1224,6 +1329,7 @@ export function planResponse(
   // Applied after marker processing so product name substitutions are already done.
   if (intent === "anchored_refinement" && retrieval.anchoredMeta?.strictMatches === true) {
     const renderedCandidates = retrieval.fragrances.filter((f) => finalSlugs.includes(f.slug));
+    content = correctAnchorContrastAbsenceClaims(content, retrieval.anchoredMeta, renderedCandidates);
     content = sanitiseAbsenceClaims(content, retrieval.anchoredMeta, renderedCandidates);
     content = sanitiseRemovalClaims(content, retrieval.anchoredMeta, renderedCandidates);
     content = sanitiseEqualScoreClaims(content, retrieval.anchoredMeta, renderedCandidates);
