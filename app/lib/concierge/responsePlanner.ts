@@ -12,6 +12,7 @@ import type { ConversationIntent, ConversationProfile } from "./types";
 import type { RetrievalContext, AnchoredMeta } from "./contextBuilder";
 import type { ConversationPlan }   from "./conversationPlanner";
 import { TRUNCATION_FALLBACK }     from "./claudeClient";
+import { mkcCatalogue }            from "../mkc/catalogue";
 
 // ── Marker patterns ───────────────────────────────────────────────────────────
 
@@ -336,17 +337,52 @@ function collapseAdjacentDuplicateNames(
 
 const foldText = (s: string): string => [...s].map(foldForNameMatch).join("");
 
-// Same rules as resolveNamedCandidate, but accent/apostrophe-insensitive.
+// Folded full name plus bare name (Maison suffix stripped, ≥5 chars).
+function nameKeysFor(name: string): string[] {
+  const full = foldText(name);
+  const bare = stripMaisonSuffixLc(full);
+  return bare !== full && bare.length >= 5 ? [full, bare] : [full];
+}
+
+let catalogueNameKeys: string[] | null = null;
+function allCatalogueNameKeys(): string[] {
+  if (!catalogueNameKeys) {
+    const keys = new Set<string>();
+    for (const k of mkcCatalogue) for (const key of nameKeysFor(k.name)) keys.add(key);
+    catalogueNameKeys = [...keys];
+  }
+  return catalogueNameKeys;
+}
+
+const isNameChar = (c: string | undefined): boolean => c !== undefined && /[\p{L}\p{N}]/u.test(c);
+
+// Start indices where `key` occurs in `folded` as a whole name: bounded by non-letter/digit
+// characters and not inside a longer catalogue name occurrence (so "light blue" does not
+// match within "light blue pour homme inspired").
+function wholeNameOccurrences(folded: string, key: string): number[] {
+  const longer = allCatalogueNameKeys().filter((k) => k.length > key.length && k.includes(key));
+  const out: number[] = [];
+  for (let i = folded.indexOf(key); i >= 0; i = folded.indexOf(key, i + 1)) {
+    if (isNameChar(folded[i - 1]) || isNameChar(folded[i + key.length])) continue;
+    const insideLonger = longer.some((k) => {
+      for (let j = k.indexOf(key); j >= 0; j = k.indexOf(key, j + 1)) {
+        const s = i - j;
+        if (s >= 0 && folded.startsWith(k, s) && !isNameChar(folded[s - 1]) && !isNameChar(folded[s + k.length])) return true;
+      }
+      return false;
+    });
+    if (!insideLonger) out.push(i);
+  }
+  return out;
+}
+
+// Same rules as resolveNamedCandidate, but accent/apostrophe-insensitive and whole-name.
 function resolveNamedCandidateFolded(
   text:     string,
   rendered: RetrievalContext["fragrances"],
 ): RetrievalContext["fragrances"][number] | null {
   const folded = foldText(text);
-  const matched = rendered.filter((f) => {
-    const fullKey = foldText(f.name);
-    const bareKey = stripMaisonSuffixLc(fullKey);
-    return folded.includes(fullKey) || (bareKey.length >= 5 && folded.includes(bareKey));
-  });
+  const matched = rendered.filter((f) => nameKeysFor(f.name).some((k) => wholeNameOccurrences(folded, k).length > 0));
   return matched.length === 1 ? matched[0] : null;
 }
 
@@ -400,6 +436,134 @@ function correctAmberWarmthAbsenceClaims(
     });
   }
   return result;
+}
+
+// ── Strict-match "removal" claim correction ──────────────────────────────────
+// "Oud Wood removes the sweetness almost entirely (1/5)": a 1/5 score supports lower
+// sweetness than the anchor (e.g. Baccarat Rouge 540 Inspired 3/5), not near-total
+// removal. On strict-match anchored_refinement turns with direction "less", removal
+// verbs applied to the anchored dimension are rewritten as a relative claim with scores
+// attached to the right fragrance:
+//   "removes the sweetness almost entirely (1/5)"
+//     → "has lower sweetness (1/5) than Baccarat Rouge 540 Inspired (3/5)"
+// Attribution (conservative) — the claim is rewritten only when exactly one rendered
+// candidate is grammatically tied to it within the same sentence:
+//   finite verb:    "<Candidate> removes …"           (only whitespace between name and claim)
+//   shared subject: "<Candidate> keeps some warmth (4/5) but removes …" — one "-s" verb, up
+//                   to six plain words or "(n/5)" scores, then "but"; no conjunction, pronoun,
+//                   relative word, punctuation or other fragrance name in between
+//   gerund:         "<Candidate> is <adj>[ and <adj>], removing …"
+// The candidate name must be a whole name (not inside a longer catalogue name) and must
+// not be part of a coordinated subject ("A and <Candidate> …"). If the anchor is the tied
+// subject, no candidate is tied, or more than one is, the claim is left unchanged —
+// rendered cards and nearby names alone never establish the subject. The tied candidate's
+// own score must be valid and below the anchor's.
+// Adverb-first forms "almost/nearly/virtually/practically entirely/completely/totally
+// removes …" are consumed whole; any other "-ly" adverb directly before the verb (e.g.
+// "mostly removes") leaves the claim unchanged to avoid partial rewrites.
+// An explicit comparison target later in the same sentence ("… than another fragrance")
+// leaves the claim unchanged — no second comparison is inserted.
+// Guarantee: a rewrite only ever uses the score of the single rendered candidate matched by
+// the patterns above. Anything else is left as written, including: subjects that are not a
+// rendered candidate (e.g. a non-rendered fragrance, which is never scored here), pronoun
+// and plural subjects, constructions other than the three above (including a new subject
+// after "but": "<Candidate> keeps … but <Other> removes …" is tied to <Other> only if <Other>
+// is itself a rendered candidate directly before the verb), passive forms ("the
+// sweetness is removed"), other verbs ("takes away", "cuts out"), claims followed by any
+// "than …" in the same sentence (including anchor targets), and turns without strict
+// anchored metadata. Negations, preference verbs and quoted text are kept.
+
+function validScore(v: unknown): v is number {
+  return typeof v === "number" && Number.isInteger(v) && v >= 1 && v <= 5;
+}
+
+function sentenceStartBefore(text: string, offset: number): number {
+  for (let i = offset - 1; i >= 0; i--) {
+    if (/[.!?\n]/.test(text[i])) return i + 1;
+  }
+  return 0;
+}
+
+function sentenceEndAfter(text: string, from: number): number {
+  for (let i = from; i < text.length; i++) {
+    if (/[.!?\n]/.test(text[i])) return i;
+  }
+  return text.length;
+}
+
+function sanitiseRemovalClaims(
+  content:  string,
+  meta:     AnchoredMeta,
+  rendered: RetrievalContext["fragrances"],
+): string {
+  if (meta.direction !== "less" || !validScore(meta.anchorScore) || rendered.length === 0) return content;
+  const dim         = meta.dimension.toLowerCase();
+  const anchorScore = meta.anchorScore;
+  const scoreOf = (f: RetrievalContext["fragrances"][number]) =>
+    extractDimScore(f as { sweetness: number; freshness: number; warmth: number; intensity: number }, dim);
+
+  const FINITE_LINK = /^\s+$/;
+  const GERUND_LINK = /^\s+is\s+[a-z-]+(?:\s+and\s+[a-z-]+)?,\s+$/;
+  const COORDINATED = /(?:\band|\bor|\bplus|&|\bas well as)\s+$/;
+  // Shared subject: "<Name> keeps some warmth (4/5) but removes …" — one -s verb, a short
+  // object of plain words / "(n/5)" scores, then "but". Anything that could introduce a new
+  // subject or clause (conjunctions, pronouns, relatives, punctuation, another fragrance
+  // name) breaks the tie.
+  const SHARED_LINK = /^\s+[a-z]+s((?:\s+(?:[a-z-]+|\(\d\/5\))){1,6})\s+but\s+$/;
+  const SHARED_STOP = /\b(?:and|or|nor|but|yet|so|while|whereas|although|though|because|than|it|this|that|these|those|which|who|whom|whose|he|she|they|one)\b/;
+  const sharedObjectIsPlain = (object: string): boolean =>
+    !SHARED_STOP.test(object) && !allCatalogueNameKeys().some((k) => wholeNameOccurrences(object, k).length > 0);
+
+  const linksToClaim = (rest: string, finite: boolean): boolean => {
+    if (!finite) return GERUND_LINK.test(rest);
+    if (FINITE_LINK.test(rest)) return true;
+    const shared = SHARED_LINK.exec(rest);
+    return shared !== null && sharedObjectIsPlain(shared[1]);
+  };
+
+  // True when a whole-name occurrence of `name` is connected to the claim by an accepted link.
+  const isTiedSubject = (prefix: string, name: string, finite: boolean): boolean =>
+    nameKeysFor(name).some((key) =>
+      wholeNameOccurrences(prefix, key).some((at) =>
+        linksToClaim(prefix.slice(at + key.length), finite) && !COORDINATED.test(prefix.slice(0, at)),
+      ),
+    );
+
+  const escDim = dim.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const removalRE = new RegExp(
+    `(?:\\b(?:almost|nearly|virtually|practically)\\s+(?:entirely|completely|totally)\\s+)?` +
+    `\\b(removes|remove|removing|strips|strip|stripping|eliminates|eliminate|eliminating)` +
+    `(?:\\s+(?:away|out))?` +
+    `\\s+(?:the\\s+|its\\s+|their\\s+|all\\s+(?:the\\s+|its\\s+)?|most\\s+of\\s+(?:the\\s+|its\\s+)?|much\\s+of\\s+(?:the\\s+|its\\s+)?)?` +
+    `${escDim}` +
+    `(?:\\s+(?:almost|nearly|virtually|practically|all\\s+but)?\\s*(?:entirely|completely|altogether|totally))?` +
+    `(?:\\s*\\(\\d\\/5\\))?`,
+    "gi",
+  );
+
+  return content.replace(removalRE, (match: string, verb: string, offset: number, whole: string) => {
+    if (isQuotedOrNegated(whole, offset)) return match;
+
+    const v = verb.toLowerCase();
+    if (/^(remove|strip|eliminate)$/.test(v)) return match;                     // plural subject
+    if (/\b\w+ly\s+$/i.test(whole.slice(Math.max(0, offset - 24), offset))) return match;  // unconsumed adverb
+
+    const end = offset + match.length;
+    if (/\bthan\b/i.test(whole.slice(end, sentenceEndAfter(whole, end)))) return match;    // explicit target
+
+    // The claim must be grammatically tied to exactly one rendered candidate in this sentence.
+    const prefix = foldText(whole.slice(sentenceStartBefore(whole, offset), offset));
+    const finite = !v.endsWith("ing");
+    if (isTiedSubject(prefix, meta.anchorName, finite)) return match;
+    const tied = rendered.filter((f) => isTiedSubject(prefix, f.name, finite));
+    if (tied.length !== 1) return match;
+
+    const score = scoreOf(tied[0]);
+    if (!validScore(score) || score >= anchorScore) return match;
+
+    const lead = v.endsWith("ing") ? "with" : "has";
+    return `${lead} lower ${dim} (${score}/5) than ${meta.anchorName} (${anchorScore}/5)`;
+  });
 }
 
 // ── Equal-score comparative-claim post-processor ──────────────────────────────
@@ -1015,6 +1179,7 @@ export function planResponse(
   if (intent === "anchored_refinement" && retrieval.anchoredMeta?.strictMatches === true) {
     const renderedCandidates = retrieval.fragrances.filter((f) => finalSlugs.includes(f.slug));
     content = sanitiseAbsenceClaims(content, retrieval.anchoredMeta, renderedCandidates);
+    content = sanitiseRemovalClaims(content, retrieval.anchoredMeta, renderedCandidates);
     content = sanitiseEqualScoreClaims(content, retrieval.anchoredMeta, renderedCandidates);
   }
 
