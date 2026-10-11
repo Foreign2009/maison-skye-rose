@@ -110,6 +110,20 @@ function extractDimScore(
   return map[dim.toLowerCase()] ?? null;
 }
 
+// Preserves valid negations ("not without sweetness", "isn't no sweetness") and
+// quoted customer preferences ("I want no sweetness", "since you prefer no sweetness").
+// Checks 16 characters before the match — wide enough for "I want " (7 chars) and
+// "seeking " (8 chars). Includes negation words and preference-intent verbs.
+function isNegatedOrPreference(text: string, offset: number): boolean {
+  const preceding = text.slice(Math.max(0, offset - 16), offset);
+  return /\b(?:not|isn't|aren't|don't|doesn't|never|want|wants|wanted|wanting|prefer|prefers|preferred|seek|seeking|avoid|avoiding|avoids)\s*$/i
+    .test(preceding);
+}
+
+function replaceUnlessNegated(text: string, pattern: RegExp, repl: string): string {
+  return text.replace(pattern, (match, offset: number) => (isNegatedOrPreference(text, offset) ? match : repl));
+}
+
 function sanitiseAbsenceClaims(
   content:  string,
   meta:     AnchoredMeta,
@@ -146,23 +160,6 @@ function sanitiseAbsenceClaims(
   const withRelative = `with ${dirComp} ${dim}${scoreTag} than ${anchorName}`;
   // "lower sweetness (1/5) than Baccarat Rouge 540 Inspired"
   const bareRelative = `${dirComp} ${dim}${scoreTag} than ${anchorName}`;
-
-  // Preserves valid negations ("not without sweetness", "isn't no sweetness") and
-  // quoted customer preferences ("I want no sweetness", "since you prefer no sweetness").
-  // Checks 16 characters before the match — wide enough for "I want " (7 chars) and
-  // "seeking " (8 chars). Includes negation words and preference-intent verbs.
-  function replaceUnlessNegated(text: string, pattern: RegExp, repl: string): string {
-    return text.replace(pattern, (match, offset: number) => {
-      const preceding = text.slice(Math.max(0, offset - 16), offset);
-      if (
-        /\b(?:not|isn't|aren't|don't|doesn't|never|want|wants|wanted|wanting|prefer|prefers|preferred|seek|seeking|avoid|avoiding|avoids)\s*$/i
-          .test(preceding)
-      ) {
-        return match;
-      }
-      return repl;
-    });
-  }
 
   let result = content;
 
@@ -281,6 +278,128 @@ function resolveNamedCandidate(
     }
   }
   return matched.length === 1 ? matched[0] : null;
+}
+
+// ── Adjacent duplicate fragrance-name collapse ───────────────────────────────
+// The model sometimes writes a fragrance name beside its [PRODUCT:slug] marker in a
+// form that is not byte-identical to the canonical name ("Beautiful by Estée Lauder
+// Inspired" vs canonical "Beautiful by Estee Lauder Inspired"), or places the name
+// after the marker. Step 0b only collapses an exact canonical name before the marker,
+// so marker substitution then produces "Name Name". This pass collapses a fragrance
+// name immediately repeated on the same line (spaces/tabs only between the two) into
+// one canonical name. Matching ignores accents, case and apostrophe style. Later
+// mentions, other separators and different fragrances are left unchanged.
+
+function foldForNameMatch(ch: string): string {
+  return ch.normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[‘’]/g, "'").toLowerCase();
+}
+
+function collapseAdjacentDuplicateNames(
+  content:    string,
+  fragrances: RetrievalContext["fragrances"],
+): string {
+  let result = content;
+  for (const f of fragrances) {
+    const foldedName = [...f.name].map(foldForNameMatch).join("");
+    const escaped    = foldedName.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const pairRE     = new RegExp(`(?<![\\p{L}\\p{N}])${escaped}[ \\t\\u00a0]+${escaped}(?![\\p{L}\\p{N}])`, "u");
+    for (;;) {
+      // Fold per original character, keeping a map back to original indices.
+      let folded = "";
+      const origIndex: number[] = [];
+      for (let i = 0; i < result.length; i++) {
+        const fc = foldForNameMatch(result[i]);
+        folded += fc;
+        for (let k = 0; k < fc.length; k++) origIndex.push(i);
+      }
+      const m = pairRE.exec(folded);
+      if (!m) break;
+      const start = origIndex[m.index];
+      const end   = origIndex[m.index + m[0].length - 1] + 1;
+      result = result.slice(0, start) + f.name + result.slice(end);
+    }
+  }
+  return result;
+}
+
+// ── "Amber warmth" absence-claim correction ──────────────────────────────────
+// "Amber warmth" is not the same thing as total warmth: the catalogue scores overall
+// warmth (e.g. Terre d'Hermes Inspired 3/5), but says nothing reliable about an amber
+// note or accord — a missing amber entry in notes/family/profile does not prove absence.
+// So no absence (or presence) of amber is ever asserted. "without any amber warmth" reads
+// as a denial of warmth the catalogue scores; when the phrase is attributed to exactly one
+// rendered fragrance NAMED in the same sentence (or, failing that, the same paragraph) and
+// that fragrance has a valid warmth score, it is replaced with a positive, metadata-backed
+// statement ("with warmth rated 3/5"). Unattributed or ambiguous wording, or a missing or
+// invalid score, is left unchanged. Negations, preference verbs and anything inside quoted
+// (straight or curly) text — typically the guest's own words — are preserved.
+
+const foldText = (s: string): string => [...s].map(foldForNameMatch).join("");
+
+// Same rules as resolveNamedCandidate, but accent/apostrophe-insensitive.
+function resolveNamedCandidateFolded(
+  text:     string,
+  rendered: RetrievalContext["fragrances"],
+): RetrievalContext["fragrances"][number] | null {
+  const folded = foldText(text);
+  const matched = rendered.filter((f) => {
+    const fullKey = foldText(f.name);
+    const bareKey = stripMaisonSuffixLc(fullKey);
+    return folded.includes(fullKey) || (bareKey.length >= 5 && folded.includes(bareKey));
+  });
+  return matched.length === 1 ? matched[0] : null;
+}
+
+// True when `offset` falls inside an open quotation within its paragraph. Single quotes
+// open only after whitespace/start/bracket, so apostrophes ("d'Hermes", "isn't") never
+// count; a single quote closes only when not followed by a letter or digit.
+function isInsideQuotedText(text: string, offset: number): boolean {
+  const paraStart = text.lastIndexOf("\n\n", offset);
+  const scopeStart = paraStart < 0 ? 0 : paraStart + 2;
+  const scope = text.slice(scopeStart, offset);
+  if (((scope.match(/"/g) ?? []).length) % 2 === 1) return true;
+  if (scope.lastIndexOf("“") > scope.lastIndexOf("”")) return true;
+  let singleOpen = false;
+  for (let i = 0; i < scope.length; i++) {
+    const ch = scope[i];
+    const prev = i === 0 ? " " : scope[i - 1];
+    // Look ahead in the full text: a quote just before `offset` is followed by the match itself.
+    const next = text[scopeStart + i + 1] ?? " ";
+    if (!singleOpen && (ch === "'" || ch === "‘") && /[\s(\[]/.test(prev) && !/\s/.test(next)) {
+      singleOpen = true;
+    } else if (singleOpen && (ch === "'" || ch === "’") && !/[\p{L}\p{N}]/u.test(next)) {
+      singleOpen = false;
+    }
+  }
+  return singleOpen;
+}
+
+function isQuotedOrNegated(text: string, offset: number): boolean {
+  return isInsideQuotedText(text, offset) || isNegatedOrPreference(text, offset);
+}
+
+function correctAmberWarmthAbsenceClaims(
+  content:  string,
+  rendered: RetrievalContext["fragrances"],
+): string {
+  if (rendered.length === 0) return content;
+  const patterns: Array<[RegExp, (score: number) => string]> = [
+    [/\bwithout(?:\s+(?:any|the|its|that|all|this|a|much))?\s+amber\s+warmth\b/gi, (s) => `with warmth rated ${s}/5`],
+    [/\b(?:no|zero)\s+amber\s+warmth\b/gi, (s) => `warmth rated ${s}/5`],
+  ];
+  let result = content;
+  for (const [pattern, repl] of patterns) {
+    result = result.replace(pattern, (match: string, offset: number, whole: string) => {
+      if (isQuotedOrNegated(whole, offset)) return match;
+      const candidate =
+        resolveNamedCandidateFolded(getSentenceContaining(whole, offset, match.length), rendered) ??
+        resolveNamedCandidateFolded(getParagraphContaining(whole, offset, match.length), rendered);
+      const score = candidate?.warmth;
+      if (typeof score !== "number" || !Number.isInteger(score) || score < 1 || score > 5) return match;
+      return repl(score);
+    });
+  }
+  return result;
 }
 
 // ── Equal-score comparative-claim post-processor ──────────────────────────────
@@ -789,6 +908,10 @@ export function planResponse(
   // Runs after Repair C so any **bold** double-markers are already gone.
   content = content.replace(/(?<!\w)\*(\S[^*\n]*\S|\S)\*(?!\w)/g, "$1");
 
+  // Repair E: collapse a fragrance name immediately repeated on the same line
+  // (accent/case/apostrophe-insensitive) left by marker substitution.
+  content = collapseAdjacentDuplicateNames(content, retrieval.fragrances);
+
   if (articleSlugs.length === 0 && retrieval.articles.length > 0) {
     retrieval.articles.slice(0, 2).forEach((a) => articleSlugs.push(a.slug));
   }
@@ -894,6 +1017,13 @@ export function planResponse(
     content = sanitiseAbsenceClaims(content, retrieval.anchoredMeta, renderedCandidates);
     content = sanitiseEqualScoreClaims(content, retrieval.anchoredMeta, renderedCandidates);
   }
+
+  // Replace "without any amber warmth" with the attributed rendered fragrance's actual warmth
+  // score. Runs on every turn type; no-op when no cards are rendered.
+  content = correctAmberWarmthAbsenceClaims(
+    content,
+    retrieval.fragrances.filter((f) => finalSlugs.includes(f.slug)),
+  );
 
   const hasRecs             = retrieval.fragrances.length > 0;
   const followUpSuggestions = generateFollowUps(plan, intent, hasRecs, profile, new Set(finalSlugs).size).slice(0, 2);
