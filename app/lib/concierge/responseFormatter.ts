@@ -7,6 +7,7 @@
  */
 
 import type { PlannedResponse } from "./responsePlanner";
+import { suppressComparisonChips } from "./responsePlanner";
 import type { FormattedFragrance, FormattedArticle, FormattedResponse } from "./types";
 import type { FragranceKnowledge } from "../mkc/types";
 import type { AcademyArticle } from "../academy/types";
@@ -51,11 +52,15 @@ export function formatResponse(planned: PlannedResponse): FormattedResponse {
     .filter((a): a is AcademyArticle => !!a)
     .map(formatArticle);
 
+  // Final guard on what is actually rendered: distinct fragrance cards only (articles excluded),
+  // regardless of where a chip originated.
+  const distinctFragranceCount = new Set(fragrances.map((f) => f.slug)).size;
+
   return {
     content:             planned.content,
     fragrances,
     articles,
-    followUpSuggestions: planned.followUpSuggestions,
+    followUpSuggestions: suppressComparisonChips(planned.followUpSuggestions, distinctFragranceCount),
     intent:              planned.intent,
   };
 }

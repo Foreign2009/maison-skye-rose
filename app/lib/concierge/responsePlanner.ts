@@ -400,16 +400,20 @@ function sanitiseEqualScoreClaims(
 // time — suggestions that would propose avoided or rejected directions are
 // removed before the slice. Deterministic only: no additional LLM call.
 
+// Fragrance-comparison chips: only meaningful with two or more fragrance cards on screen.
+const COMPARE_THESE_CHIP  = "Compare these";
+const WHICH_EVENINGS_CHIP = "Which is better for evenings?";
+
 const STATIC_FOLLOW_UPS: Record<ConversationIntent, string[]> = {
-  similar_to:          ["Compare these", "Show me another option", "Find something fresher"],
-  comparison:          ["Show me something different", "Which is better for evenings?"],
+  similar_to:          [COMPARE_THESE_CHIP, "Show me another option", "Find something fresher"],
+  comparison:          ["Show me something different", WHICH_EVENINGS_CHIP],
   education:           ["Show fragrances in this family", "Teach me more"],
   occasion_search:     ["Find something subtler", "Show best sellers for this occasion"],
   seasonal:            ["Show year-round options", "Find something for cooler weather"],
   gift:                ["Show luxury gift options", "Find something for daily wear"],
   general_discovery:   ["Help me find my signature scent", "Show best sellers"],
   clarification:       ["Shop by occasion", "Help me explore families"],
-  anchored_refinement: ["Show me more in this direction", "Compare these", "Tell me more about this one"],
+  anchored_refinement: ["Show me more in this direction", COMPARE_THESE_CHIP, "Tell me more about this one"],
 };
 
 // Follow-up phrases that could inadvertently propose a direction the guest
@@ -443,6 +447,19 @@ function isSuggestionSafe(
   return true;
 }
 
+// Exact labels only — other "Compare …" chips (e.g. families, articles) are unaffected.
+const FRAGRANCE_COMPARISON_CHIPS = new Set([COMPARE_THESE_CHIP, WHICH_EVENINGS_CHIP]);
+
+export function requiresMultipleFragrances(chip: string): boolean {
+  return FRAGRANCE_COMPARISON_CHIPS.has(chip.trim());
+}
+
+// Removes multi-fragrance chips when fewer than two distinct fragrance cards are shown.
+// Article cards are not fragrances and must not be counted by callers.
+export function suppressComparisonChips(chips: string[], distinctFragranceCount: number): string[] {
+  return distinctFragranceCount >= 2 ? chips : chips.filter((c) => !requiresMultipleFragrances(c));
+}
+
 function generateFollowUps(
   plan:      ConversationPlan,
   intent:    ConversationIntent,
@@ -453,8 +470,9 @@ function generateFollowUps(
   const avoidedFamilies = (profile?.avoidedFamilies?.value ?? []).map((f) => f.toLowerCase());
   const avoidedNotes    = (profile?.avoidedNotes?.value    ?? []).map((n) => n.toLowerCase());
 
+  // Applied before the slice so a single-product response keeps a useful second chip.
   const filter = (suggestions: string[]): string[] =>
-    suggestions
+    (recCount === undefined ? suggestions : suppressComparisonChips(suggestions, recCount))
       .filter((s) => isSuggestionSafe(s, avoidedFamilies, avoidedNotes))
       .slice(0, 2);
 
@@ -470,7 +488,7 @@ function generateFollowUps(
 
   // Cache-reuse path — customer already has recommendations
   if (plan.reuseRecommendations && hasRecs) {
-    return filter(["Compare these", "Show me another option", "Teach me more"]);
+    return filter([COMPARE_THESE_CHIP, "Show me another option", "Teach me more"]);
   }
 
   // Education completed
@@ -496,15 +514,9 @@ function generateFollowUps(
     return filter(["Try a different direction", "Explore the catalogue"]);
   }
 
-  // Generic selection based on intent.
-  // anchored_refinement: suppress "Compare these" when fewer than 2 cards are shown.
-  // Comparison requires two subjects — 1 card makes the chip misleading.
-  const pool = STATIC_FOLLOW_UPS[intent] ?? STATIC_FOLLOW_UPS.general_discovery;
-  const filteredPool =
-    intent === "anchored_refinement" && recCount !== undefined && recCount < 2
-      ? pool.filter((s) => !s.toLowerCase().startsWith("compare"))
-      : pool;
-  return filter(filteredPool);
+  // Generic selection based on intent. Comparison chips are already suppressed by
+  // filter() when fewer than 2 distinct cards are shown, for every intent.
+  return filter(STATIC_FOLLOW_UPS[intent] ?? STATIC_FOLLOW_UPS.general_discovery);
 }
 
 // ── Deterministic comparison response ─────────────────────────────────────────
@@ -884,7 +896,7 @@ export function planResponse(
   }
 
   const hasRecs             = retrieval.fragrances.length > 0;
-  const followUpSuggestions = generateFollowUps(plan, intent, hasRecs, profile, finalSlugs.length).slice(0, 2);
+  const followUpSuggestions = generateFollowUps(plan, intent, hasRecs, profile, new Set(finalSlugs).size).slice(0, 2);
 
   return {
     // Normalise line endings, collapse excess spaces/tabs (not newlines),
