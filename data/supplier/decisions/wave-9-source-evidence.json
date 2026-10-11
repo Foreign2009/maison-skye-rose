@@ -25,7 +25,8 @@
       "decision": "Amcal evidence does not meet the authorised-retailer criterion as demonstrable. Tommy Girl reverts to AI_INFERENCE_UNSOURCED."
     },
     "revision6": "2026-10-11: Gucci Rush, Tommy Girl, Jimmy Choo, Poison and The One researched further. Marketplace third-party sellers on debenhams.com are recorded with authorisedOrNamed=false; 'Sold & Delivered by Debenhams' listings are treated as major-retailer first-party.",
-    "revision7": "2026-10-11: readable-page reviews continued for the five remaining Batch 1 drafts (10 fetch records, indices 64–73). Romance brand/Macy's/Sephora, The Perfume Shop (Jimmy Choo), Sephora UAE (Poison) and Argos returned 403. Lookfantastic (Tommy Girl) gave a full first-party pyramid that conflicts with the draft; recorded, not applied. A vintage reseller lists Poison 1985 as 'Esprit de Parfum' (supplementary; not treated as EDP). Parfumdreams and Escentual were readable but carried no notes. Web search was used only to locate URLs; no search summary is recorded as evidence."
+    "revision7": "2026-10-11: readable-page reviews continued for the five remaining Batch 1 drafts (10 fetch records, indices 64–73). Romance brand/Macy's/Sephora, The Perfume Shop (Jimmy Choo), Sephora UAE (Poison) and Argos returned 403. Lookfantastic (Tommy Girl) gave a full first-party pyramid that conflicts with the draft; recorded, not applied. A vintage reseller lists Poison 1985 as 'Esprit de Parfum' (supplementary; not treated as EDP). Parfumdreams and Escentual were readable but carried no notes. Web search was used only to locate URLs; no search summary is recorded as evidence.",
+    "revision8": "2026-10-11: Wave 9 Batch 2 research — 26 fetch records (indices 74–99). Only INSPECTED results count as evidence; BLOCKED / NOT_FOUND / INSPECTED_NO_PYRAMID are recorded for transparency. Web search was used only to locate URLs; search summaries are not recorded as evidence."
   },
   "fetches": [
     {
@@ -1118,6 +1119,430 @@
       "detail": "HTTP 403.",
       "revision": 7,
       "accessDate": "2026-10-11"
+    },
+    {
+      "draftSlug": "perfect-by-marc-jacobs-inspired",
+      "url": "https://www.johnlewis.com/marc-jacobs-perfect-marc-jacobs-eau-de-parfum/p5116036",
+      "result": "INSPECTED",
+      "revision": 8,
+      "accessDate": "2026-10-11",
+      "batch": "wave-9-batch-2",
+      "sourceType": "MAJOR_AUTHORISED_RETAILER (UK department store)",
+      "authorisedOrNamed": true,
+      "captured": {
+        "name": "Perfect Marc Jacobs Eau de Parfum",
+        "type": "Eau de Parfum",
+        "specification": "Floral Woody",
+        "keyNotes": {
+          "top": "Rhubarb and Daffodil",
+          "heart": "Almond Milk",
+          "base": "Cashmeran"
+        },
+        "description": "A comforting floral perfume with rhubarb and daffodil mellowed out by almond milk, cedarwood and cashmeran."
+      },
+      "supportedFields": [
+        "notes.top",
+        "notes.heart",
+        "notes.base",
+        "profile Floral Woody"
+      ],
+      "differencesFromDraft": "None in key notes. Description also names cedarwood (not a key note; not added)."
+    },
+    {
+      "draftSlug": "perfect-by-marc-jacobs-inspired",
+      "url": "https://ulta.com/p/perfect-eau-de-parfum-pimprod2016739",
+      "result": "INSPECTED",
+      "revision": 8,
+      "accessDate": "2026-10-11",
+      "batch": "wave-9-batch-2",
+      "sourceType": "AUTHORISED_RETAILER (major US beauty retailer)",
+      "authorisedOrNamed": true,
+      "captured": {
+        "name": "Marc Jacobs Perfect Eau de Parfum",
+        "fragranceFamily": "Floral",
+        "scentType": "Warm Floral",
+        "keyNotes": [
+          "Top - Rhubarb, Daffodil",
+          "Middle - Almond Milk",
+          "Base - Cashmeran"
+        ]
+      },
+      "supportedFields": [
+        "notes.top",
+        "notes.heart",
+        "notes.base"
+      ],
+      "differencesFromDraft": "None in notes; classification 'Floral' / 'Warm Floral'."
+    },
+    {
+      "draftSlug": "prada-candy-inspired",
+      "url": "https://www.kohls.com/product/prd-5142435/prada-candy-eau-de-parfum-with-caramel-white-musk.jsp",
+      "result": "BLOCKED",
+      "revision": 8,
+      "accessDate": "2026-10-11",
+      "batch": "wave-9-batch-2",
+      "detail": "HTTP 403."
+    },
+    {
+      "draftSlug": "prada-candy-inspired",
+      "url": "https://eu.lookfantastic.com/p/prada-candy-eau-de-parfum-50ml/12271406/",
+      "result": "INSPECTED",
+      "revision": 8,
+      "accessDate": "2026-10-11",
+      "batch": "wave-9-batch-2",
+      "sourceType": "MAJOR_RETAILER_FIRST_PARTY (online beauty retailer)",
+      "authorisedOrNamed": "NOT_VERIFIED",
+      "captured": {
+        "name": "Prada Candy Eau de Parfum - 50ml",
+        "fragranceFamily": "Amber Gourmand",
+        "top": "White Musk.",
+        "heart": "Benzoin.",
+        "base": "Caramel Accord."
+      },
+      "supportedFields": [
+        "tier placement (unverified source)"
+      ],
+      "differencesFromDraft": "Draft tiers follow this page. Image caption names bergamot/orange blossom/vanilla accords — not used."
+    },
+    {
+      "draftSlug": "euphoria-by-calvin-klein-inspired",
+      "url": "https://www.qvc.com/p/calvin-klein-euphoria-ladies-eau-de-parfum-34-fl-oz/A438496",
+      "result": "BLOCKED",
+      "revision": 8,
+      "accessDate": "2026-10-11",
+      "batch": "wave-9-batch-2",
+      "detail": "HTTP 418."
+    },
+    {
+      "draftSlug": "euphoria-by-calvin-klein-inspired",
+      "url": "https://eu.lookfantastic.com/p/calvin-klein-euphoria-for-women-eau-de-parfum-50ml/11079278/",
+      "result": "INSPECTED",
+      "revision": 8,
+      "accessDate": "2026-10-11",
+      "batch": "wave-9-batch-2",
+      "sourceType": "MAJOR_RETAILER_FIRST_PARTY (online beauty retailer)",
+      "authorisedOrNamed": "NOT_VERIFIED",
+      "captured": {
+        "name": "Calvin Klein Euphoria for Women Eau de Parfum (50ml)",
+        "family": "a fruity, floral and oriental perfume",
+        "top": "Pomegranate, Persimmon, Green Notes.",
+        "heart": "Lotus Blossom, Champaca Flower, Black Orchid.",
+        "base": "Liquid Amber, Black Violet, Cream Accord, Mahogany Wood."
+      },
+      "supportedFields": [
+        "corroborates Ulta tiers for shared notes"
+      ],
+      "differencesFromDraft": "Adds Champaca Flower (heart) and Liquid Amber (base); 'Black Violet' vs Ulta 'violet'. Supplementary only."
+    },
+    {
+      "draftSlug": null,
+      "url": "https://ca.burberry.com/my-burberry",
+      "result": "NOT_FOUND",
+      "revision": 8,
+      "accessDate": "2026-10-11",
+      "batch": "wave-9-batch-2",
+      "detail": "301 → https://int.burberry.com/my-burberry, which returned HTTP 404. No My Burberry page inspected."
+    },
+    {
+      "draftSlug": "only-the-brave-inspired",
+      "url": "https://www.dischem.co.za/diesel-only-the-brave-eau-de-toilette-50ml-235",
+      "result": "INSPECTED",
+      "revision": 8,
+      "accessDate": "2026-10-11",
+      "batch": "wave-9-batch-2",
+      "sourceType": "MAJOR_RETAILER_FIRST_PARTY (South African pharmacy retailer; seller Dis-Chem)",
+      "authorisedOrNamed": "NOT_VERIFIED",
+      "captured": {
+        "name": "Diesel Only The Brave Eau De Toilette 50ml",
+        "tiers": "absent",
+        "prose": [
+          "fresh notes of lemon and mandarin with violet, cedar and coriander",
+          "warm accords of amber along with leather nuances (styrax and labdanum) and benzoin in a base"
+        ]
+      },
+      "supportedFields": [
+        "Lemon, Mandarin, Coriander, Cedar, Amber, Leather, Labdanum (materials)"
+      ],
+      "differencesFromDraft": "Prose only; also names violet, styrax, benzoin. Not used for tiers."
+    },
+    {
+      "draftSlug": "only-the-brave-inspired",
+      "url": "https://boots.com/diesel-only-the-brave-eau-de-toilette-50ml-10087450",
+      "result": "BLOCKED",
+      "revision": 8,
+      "accessDate": "2026-10-11",
+      "batch": "wave-9-batch-2",
+      "detail": "Bot-check interstitial; no product content."
+    },
+    {
+      "draftSlug": null,
+      "url": "https://escentual.com/products/kenzo-flower-by-kenzo-eau-de-parfum-spray",
+      "result": "INSPECTED_NO_PYRAMID",
+      "revision": 8,
+      "accessDate": "2026-10-11",
+      "batch": "wave-9-batch-2",
+      "detail": "Kenzo Flower (LADIES-167) research. Readable; extracted content truncated before notes. Not pyramid evidence."
+    },
+    {
+      "draftSlug": null,
+      "url": "https://www.boots.com/flower-by-kenzo-eau-de-toilette-30ml-10293040",
+      "result": "BLOCKED",
+      "revision": 8,
+      "accessDate": "2026-10-11",
+      "batch": "wave-9-batch-2",
+      "detail": "Kenzo Flower (LADIES-167) research. Bot-check interstitial."
+    },
+    {
+      "draftSlug": null,
+      "url": "https://www.notino.co.uk/burberry/mr-burberry-eau-de-toilette-for-men/p-546986/",
+      "result": "BLOCKED",
+      "revision": 8,
+      "accessDate": "2026-10-11",
+      "batch": "wave-9-batch-2",
+      "detail": "Mr Burberry (MEN-104) research. HTTP 403."
+    },
+    {
+      "draftSlug": "prada-candy-inspired",
+      "url": "https://www.johnlewis.com/prada-candy-eau-de-parfum/p269671",
+      "result": "INSPECTED",
+      "revision": 8,
+      "accessDate": "2026-10-11",
+      "batch": "wave-9-batch-2",
+      "sourceType": "MAJOR_AUTHORISED_RETAILER (UK department store)",
+      "authorisedOrNamed": true,
+      "captured": {
+        "type": "Eau de Parfum",
+        "scent": "Sweet",
+        "yearOfRelease": "2011",
+        "keyNotes": "absent (no top/heart/base grouping)",
+        "description": "notes of creamy white musk, intoxicating benzoin and addictive caramel."
+      },
+      "supportedFields": [
+        "materials White Musk, Benzoin, Caramel",
+        "scent Sweet",
+        "launch 2011"
+      ],
+      "differencesFromDraft": "Supports materials, not tiers. Page specification fields on longevity/sillage were not used (claim policy)."
+    },
+    {
+      "draftSlug": "euphoria-by-calvin-klein-inspired",
+      "url": "https://www.johnlewis.com/calvin-klein-euphoria-for-women-eau-de-parfum/p109703764",
+      "result": "INSPECTED",
+      "revision": 8,
+      "accessDate": "2026-10-11",
+      "batch": "wave-9-batch-2",
+      "sourceType": "MAJOR_AUTHORISED_RETAILER (UK department store)",
+      "authorisedOrNamed": true,
+      "captured": {
+        "type": "Eau de Parfum",
+        "scent": "Amber, Floral",
+        "yearOfRelease": "2005",
+        "keyNotes": "absent",
+        "description": [
+          "This feminine fragrance opens with succulent persimmon and addictive pomegranate.",
+          "An intoxicating blend of lotus blossom and orchid envelops it further, layered with liquid amber and lush mahogany wood."
+        ]
+      },
+      "supportedFields": [
+        "Persimmon, Pomegranate (top)",
+        "Lotus Blossom, Orchid",
+        "Mahogany Wood",
+        "profile Amber, Floral",
+        "launch 2005"
+      ],
+      "differencesFromDraft": "Subset of the Ulta pyramid; also names liquid amber (not in Ulta key notes; not added)."
+    },
+    {
+      "draftSlug": "only-the-brave-inspired",
+      "url": "https://www.johnlewis.com/diesel-only-the-brave-eau-de-toilette-spray/p205040",
+      "result": "INSPECTED",
+      "revision": 8,
+      "accessDate": "2026-10-11",
+      "batch": "wave-9-batch-2",
+      "sourceType": "MAJOR_AUTHORISED_RETAILER (UK department store)",
+      "authorisedOrNamed": true,
+      "captured": {
+        "type": "Eau de Toilette",
+        "scent": "Amber",
+        "yearOfRelease": "2009",
+        "classification": "A Citrus Woody",
+        "top": "opens with the invigorating and energizing freshness of Lemon and Mandarin … contrasted with the herbaceous spicy freshness of Coriander",
+        "heart": "The heart notes bring an aromatic sensuality with Labdanum, Violet Leaves and Rosemary.",
+        "base": "the base notes … with the warmth of amber, … the intensity of Leather and the woody Cedar notes"
+      },
+      "supportedFields": [
+        "notes.top",
+        "notes.heart",
+        "notes.base",
+        "profile Citrus Woody",
+        "launch 2009"
+      ],
+      "differencesFromDraft": "None. The page's 'long-lasting' wording is a performance claim and is not carried into the record."
+    },
+    {
+      "draftSlug": null,
+      "url": "https://int.burberry.com/mr-burberry-eau-de-toilette-100ml-p39727541",
+      "result": "INSPECTED",
+      "revision": 8,
+      "accessDate": "2026-10-11",
+      "batch": "wave-9-batch-2",
+      "sourceType": "BRAND_PAGE",
+      "authorisedOrNamed": true,
+      "captured": {
+        "name": "Mr. Burberry Eau de Toilette 100ml",
+        "top": "crisp zesty grapefruit",
+        "heart": "absent",
+        "base": "earthy vetiver and smoky guaiac wood"
+      },
+      "detail": "Mr Burberry (MEN-104) research. Brand page names top and base only; no heart. Not drafted."
+    },
+    {
+      "draftSlug": null,
+      "url": "https://www.sephora.com/product/mr-burberry-P408037",
+      "result": "BLOCKED",
+      "revision": 8,
+      "accessDate": "2026-10-11",
+      "batch": "wave-9-batch-2",
+      "detail": "Mr Burberry (MEN-104) research. HTTP 403."
+    },
+    {
+      "draftSlug": null,
+      "url": "https://www.macys.com/shop/product/kenzo-flower-by-kenzo-eau-de-parfum-fragrance-collection?ID=610625",
+      "result": "BLOCKED",
+      "revision": 8,
+      "accessDate": "2026-10-11",
+      "batch": "wave-9-batch-2",
+      "detail": "Kenzo Flower (LADIES-167) research. HTTP 403."
+    },
+    {
+      "draftSlug": null,
+      "url": "https://www.abercrombie.com/shop/us/p/fierce-cologne-43949819",
+      "result": "INSPECTED",
+      "revision": 8,
+      "accessDate": "2026-10-11",
+      "batch": "wave-9-batch-2",
+      "sourceType": "BRAND_PAGE",
+      "authorisedOrNamed": true,
+      "captured": {
+        "name": "Fierce Cologne",
+        "concentration": "Cologne (no EDC/EDT/EDP designation)",
+        "keyNotesUnlabelled": "Marine Breeze - Sandalwood - Sensual Musk Wood",
+        "description": "Fierce features a blend of marine breeze, sandalwood and sensual musk wood notes"
+      },
+      "detail": "Abercrombie & Fitch Fierce (MEN-12) research. Brand key notes only, no tiers. Not drafted."
+    },
+    {
+      "draftSlug": "euphoria-by-calvin-klein-inspired",
+      "url": "https://www.ulta.com/p/euphoria-eau-de-parfum-VP10888?sku=2118557",
+      "result": "INSPECTED",
+      "revision": 8,
+      "accessDate": "2026-10-11",
+      "batch": "wave-9-batch-2",
+      "sourceType": "AUTHORISED_RETAILER (major US beauty retailer)",
+      "authorisedOrNamed": true,
+      "captured": {
+        "name": "Euphoria Eau de Parfum",
+        "fragranceFamily": "Chypre",
+        "scentType": "Floral",
+        "top": "pomegranate, persimmon, green accord",
+        "middle": "black orchid, lotus blossom",
+        "base": "cream accord, mahogany wood, violet"
+      },
+      "supportedFields": [
+        "notes.top",
+        "notes.heart",
+        "notes.base"
+      ],
+      "differencesFromDraft": "None — draft pyramid follows this page."
+    },
+    {
+      "draftSlug": "prada-candy-inspired",
+      "url": "https://www.ulta.com/p/candy-eau-de-parfum-xlsImpprod4630107?sku=2248965",
+      "result": "INSPECTED",
+      "revision": 8,
+      "accessDate": "2026-10-11",
+      "batch": "wave-9-batch-2",
+      "sourceType": "AUTHORISED_RETAILER (major US beauty retailer)",
+      "authorisedOrNamed": true,
+      "captured": {
+        "name": "Prada Candy Eau de Parfum",
+        "fragranceFamily": [
+          "Warm & Spicy",
+          "Gourmand"
+        ],
+        "keyNotes": [
+          "White Musks",
+          "Benzoin",
+          "Carmel Accord (sic)"
+        ],
+        "tiers": "absent"
+      },
+      "supportedFields": [
+        "materials",
+        "profile Gourmand / Spicy"
+      ],
+      "differencesFromDraft": "Key notes without tiers."
+    },
+    {
+      "draftSlug": "prada-candy-inspired",
+      "url": "https://www.prada.com/gb/en/p/prada-candy-edp-80-ml/1A1100_2HDP_F0Z99_P_ML080",
+      "result": "BLOCKED",
+      "revision": 8,
+      "accessDate": "2026-10-11",
+      "batch": "wave-9-batch-2",
+      "detail": "Fetch timeout (60 s)."
+    },
+    {
+      "draftSlug": "euphoria-by-calvin-klein-inspired",
+      "url": "https://www.debenhams.com/product/calvin-klein-euphoria-for-women-eau-de-parfum_ydd07082",
+      "result": "INSPECTED_NO_PYRAMID",
+      "revision": 8,
+      "accessDate": "2026-10-11",
+      "batch": "wave-9-batch-2",
+      "detail": "First 100,000 characters contained navigation only; seller and notes not reached; not pursued."
+    },
+    {
+      "draftSlug": "prada-candy-inspired",
+      "url": "https://www.boots.com/prada-candy-eau-de-parfum-50ml",
+      "result": "BLOCKED",
+      "revision": 8,
+      "accessDate": "2026-10-11",
+      "batch": "wave-9-batch-2",
+      "detail": "Bot-check interstitial."
+    },
+    {
+      "draftSlug": "wonderlust-by-michael-kors-inspired",
+      "url": "https://www.nordstrom.com/s/michael-kors-wonderlust-eau-de-parfum/7475399",
+      "result": "INSPECTED",
+      "revision": 8,
+      "accessDate": "2026-10-11",
+      "batch": "wave-9-batch-2",
+      "sourceType": "NAMED_TIER2_AUTHORISED_RETAILER",
+      "authorisedOrNamed": true,
+      "captured": {
+        "name": "Wonderlust Eau de Parfum",
+        "style": "Warm, spicy",
+        "top": "Italian bergamot",
+        "middle": "jasmin grandiflorum",
+        "base": "Sri Lankan sandalwood",
+        "availability": "Sold Out — This item is no longer available."
+      },
+      "supportedFields": [
+        "notes.top",
+        "notes.heart",
+        "notes.base",
+        "profile Spicy"
+      ],
+      "differencesFromDraft": "None. A Macy's listing located by search reportedly differs (not inspected; macys.com 403)."
+    },
+    {
+      "draftSlug": "wonderlust-by-michael-kors-inspired",
+      "url": "https://www.michaelkors.com/wonderlust-eau-de-parfum--3.4-oz./5JT6-01.html",
+      "result": "NOT_FOUND",
+      "revision": 8,
+      "accessDate": "2026-10-11",
+      "batch": "wave-9-batch-2",
+      "detail": "302 → https://www.michaelkors.global/za/en/ (regional homepage). Not followed; no brand pyramid inspected."
     }
   ]
 }

@@ -280,6 +280,9 @@ import { capriLemonSugarInspired } from "./capri-lemon-sugar-inspired";
 import { beautifulByEsteeLauderInspired } from "./beautiful-by-estee-lauder-inspired";
 import { jimmyChooInspired } from "./jimmy-choo-inspired";
 import { romanceByRalphLaurenInspired } from "./romance-by-ralph-lauren-inspired";
+import { perfectByMarcJacobsInspired } from "./perfect-by-marc-jacobs-inspired";
+import { euphoriaByCalvinKleinInspired } from "./euphoria-by-calvin-klein-inspired";
+import { onlyTheBraveInspired } from "./only-the-brave-inspired";
 
 export const nativeFragrances = new Map<string, FragranceKnowledge>([
   ["sauvage-inspired",              sauvageInspired],
@@ -552,4 +555,7 @@ export const nativeFragrances = new Map<string, FragranceKnowledge>([
   ["beautiful-by-estee-lauder-inspired", beautifulByEsteeLauderInspired],
   ["jimmy-choo-inspired", jimmyChooInspired],
   ["romance-by-ralph-lauren-inspired", romanceByRalphLaurenInspired],
+  ["perfect-by-marc-jacobs-inspired", perfectByMarcJacobsInspired],
+  ["euphoria-by-calvin-klein-inspired", euphoriaByCalvinKleinInspired],
+  ["only-the-brave-inspired", onlyTheBraveInspired],
 ]);

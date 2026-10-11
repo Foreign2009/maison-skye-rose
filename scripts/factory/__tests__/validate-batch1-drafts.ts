@@ -7,7 +7,7 @@
  * That is expected; those checks run at promotion time when allRecords is supplied.
  *
  * Two groups are reported separately:
- *   STAGED (6)              — records present in scripts/factory/data/wave-9-catalogue.ts
+ *   STAGED (6)              — records present in wave9Batch1Catalogue (scripts/factory/data/wave-9-catalogue.ts)
  *                             (includes beautiful-by-estee-lauder-inspired, already promoted).
  *                             Any FAIL here fails the run.
  *   WITHDRAWN REFERENCE (2) — preserved DUPLICATE_ALIAS drafts of active native records:
@@ -19,7 +19,7 @@
 import { validateKnowledgeRecord } from "../../../app/lib/mkc/validator";
 import type { FragranceKnowledge } from "../../../app/lib/mkc/types";
 import { deriveSlug }                     from "../core/deriveSlug";
-import { wave9Catalogue }                 from "../data/wave-9-catalogue";
+import { wave9Batch1Catalogue as wave9Catalogue }                 from "../data/wave-9-catalogue";
 import { dolceAndGabbanaTheOneInspired }  from "../drafts/dolce-and-gabbana-the-one-inspired";
 import { gucciRushInspired }              from "../drafts/gucci-rush-inspired";
 import { jimmyChooInspired }              from "../drafts/jimmy-choo-inspired";

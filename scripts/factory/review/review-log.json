@@ -6162,6 +6162,69 @@
       "slug": "romance-by-ralph-lauren-inspired",
       "reviewer": "Claude Code (founder approval 2026-10-11)",
       "details": "promotionId:13zI9yHDv62X  nativePath:app/lib/mkc/native/romance-by-ralph-lauren-inspired.ts"
+    },
+    {
+      "timestamp": "2026-10-11T20:08:03.597Z",
+      "action": "added_to_queue",
+      "slug": "perfect-by-marc-jacobs-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-10-11T20:08:07.356Z",
+      "action": "approved",
+      "slug": "perfect-by-marc-jacobs-inspired",
+      "reviewer": "Founder (Adnaan) - approval 2026-10-11",
+      "details": "Wave 9 Batch 2 r14a: founder editorial/promotion approval 2026-10-11 of profile 'Floral Woody'; evidence PYRAMID_SECONDARY_SUPPORTED (John Lewis + Ulta key notes); reference identity/edition founder-reported 2026-10-11 (r14b), not supplier evidence; supplied concentration unconfirmed; relationships empty (proposals pending); see catalogue-expansion-ledger.json"
+    },
+    {
+      "timestamp": "2026-10-11T20:08:11.072Z",
+      "action": "added_to_queue",
+      "slug": "euphoria-by-calvin-klein-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-10-11T20:08:14.828Z",
+      "action": "approved",
+      "slug": "euphoria-by-calvin-klein-inspired",
+      "reviewer": "Founder (Adnaan) - approval 2026-10-11",
+      "details": "Wave 9 Batch 2 r14a: founder editorial/promotion approval 2026-10-11 of profile 'Floral Amber'; evidence PYRAMID_SECONDARY_SUPPORTED (Ulta key notes; John Lewis description); reference identity/edition founder-reported 2026-10-11 (r14b), not supplier evidence; supplied concentration unconfirmed; relationships empty (proposals pending); see catalogue-expansion-ledger.json"
+    },
+    {
+      "timestamp": "2026-10-11T20:08:18.522Z",
+      "action": "added_to_queue",
+      "slug": "only-the-brave-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-10-11T20:08:22.244Z",
+      "action": "approved",
+      "slug": "only-the-brave-inspired",
+      "reviewer": "Founder (Adnaan) - approval 2026-10-11",
+      "details": "Wave 9 Batch 2 r14a: founder editorial/promotion approval 2026-10-11 of profile 'Citrus Woody'; evidence PYRAMID_SECONDARY_SUPPORTED (John Lewis tiered description); reference identity/edition founder-reported 2026-10-11 (r14b), not supplier evidence; supplied concentration unconfirmed; relationships empty (proposals pending); see catalogue-expansion-ledger.json"
+    },
+    {
+      "timestamp": "2026-10-11T20:09:36.092Z",
+      "action": "promoted",
+      "slug": "perfect-by-marc-jacobs-inspired",
+      "reviewer": "Claude Code (founder approval 2026-10-11)",
+      "details": "promotionId:V7fJUpJ310Qr  nativePath:app/lib/mkc/native/perfect-by-marc-jacobs-inspired.ts"
+    },
+    {
+      "timestamp": "2026-10-11T20:10:35.914Z",
+      "action": "promoted",
+      "slug": "euphoria-by-calvin-klein-inspired",
+      "reviewer": "Claude Code (founder approval 2026-10-11)",
+      "details": "promotionId:L1hdNMRYvMxC  nativePath:app/lib/mkc/native/euphoria-by-calvin-klein-inspired.ts"
+    },
+    {
+      "timestamp": "2026-10-11T20:11:35.287Z",
+      "action": "promoted",
+      "slug": "only-the-brave-inspired",
+      "reviewer": "Claude Code (founder approval 2026-10-11)",
+      "details": "promotionId:KvfQqR73e2wA  nativePath:app/lib/mkc/native/only-the-brave-inspired.ts"
     }
   ]
 }

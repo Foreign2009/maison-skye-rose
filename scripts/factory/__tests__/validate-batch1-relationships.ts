@@ -12,7 +12,7 @@
  * Alternatives are checked for slug existence only (no reciprocity requirement).
  * wardrobePartners are checked for both slug existence AND reciprocity.
  *
- * Staging alignment: staged draft slugs must equal the slugs in wave-9-catalogue.ts —
+ * Staging alignment: staged draft slugs must equal the Batch 1 slugs (wave9Batch1Catalogue) in wave-9-catalogue.ts —
  * missing, extra or duplicate slugs (or a withdrawn draft in the catalogue) exit non-zero.
  *
  * Groups:
@@ -30,7 +30,7 @@ import { validateKnowledgeRecord }       from "../../../app/lib/mkc/validator";
 import type { FragranceKnowledge }       from "../../../app/lib/mkc/types";
 import { nativeFragrances }              from "../../../app/lib/mkc/native/index";
 import { deriveSlug }                    from "../core/deriveSlug";
-import { wave9Catalogue }                from "../data/wave-9-catalogue";
+import { wave9Batch1Catalogue as wave9Catalogue }                from "../data/wave-9-catalogue";
 import { dolceAndGabbanaTheOneInspired } from "../drafts/dolce-and-gabbana-the-one-inspired";
 import { gucciRushInspired }             from "../drafts/gucci-rush-inspired";
 import { jimmyChooInspired }             from "../drafts/jimmy-choo-inspired";

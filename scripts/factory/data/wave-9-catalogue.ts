@@ -7,7 +7,13 @@
  * This file MUST NOT be imported by any module under app/.
  * Managed exclusively by: scripts/factory/intake.ts (decenary catalogue fallback).
  *
- * Collections:  ROSE (6) = 6 total (includes beautiful-by-estee-lauder, already promoted)
+ * Collections:  Batch 1 — ROSE (6) = 6 total (includes beautiful-by-estee-lauder, jimmy-choo and
+ *               romance-by-ralph-lauren, already promoted).
+ *               Batch 2 (2026-10-11, review drafts, NOT promoted) — ROSE (4) + SKYE (1) = 5 total:
+ *               perfect-by-marc-jacobs, euphoria-by-calvin-klein, wonderlust-by-michael-kors, prada-candy
+ *               (evidence hold), only-the-brave. See the BATCH 2 section below.
+ *               PROMOTED 2026-10-11 (uncommitted): perfect-by-marc-jacobs, euphoria-by-calvin-klein,
+ *               only-the-brave. NOT promoted: wonderlust-by-michael-kors (review), prada-candy (hold).
  *
  * EVIDENCE STATUS — per record (not production-ready)
  *
@@ -106,6 +112,7 @@ import type { DisplayFragrance } from "../../../app/lib/knowledgeAdapter";
 const PRICES = { "5ml": 60, "10ml": 100, "30ml": 250 } as const;
 
 const PINK_IMAGES = { "5ml": "/images/pink-5ml.png", "10ml": "/images/pink-10ml.png", "30ml": "/images/glass-pink-30ml.png" } as const;
+const BLUE_IMAGES = { "5ml": "/images/blue-5ml.png", "10ml": "/images/blue-10ml.png", "30ml": "/images/glass-blue-30ml.png" } as const;
 
 // ── ROSE (6) ─────────────────────────────────────────────────────────────────
 
@@ -296,6 +303,157 @@ const rose: DisplayFragrance[] = [
   },
 ];
 
+
+// ── BATCH 2 (5) — review drafts prepared 2026-10-11; NOT promoted ─────────────
+// Supplier text and row IDs are exact (data/supplier/raw/fragrance-list-2026-08.json). The supplier
+// states no concentration for any of these rows; no founder or supplier identity/concentration
+// confirmation exists for Batch 2, and the Batch 1 EDP confirmations do NOT apply.
+// "Reference edition" = the reference fragrance's edition used for evidence only.
+// Pyramids are evidence-locked to inspected pages (data/supplier/decisions/wave-9-source-evidence.json,
+// revision 8). Profiles use source classifications; seasons are editorial assumptions.
+
+const batch2: DisplayFragrance[] = [
+  {
+    // PROMOTED 2026-10-11 (V7fJUpJ310Qr) after founder editorial/promotion approval; reference identity
+    //   founder-reported (r14b); supplied concentration unconfirmed.
+    // slug: perfect-by-marc-jacobs-inspired — Supplier: 'Perfect by Marc Jacobs' (LADIES-227-Perfect by Marc Jacobs).
+    // Reference edition: Marc Jacobs Perfect Eau de Parfum (2020). Female.
+    // Evidence: PYRAMID_SECONDARY_SUPPORTED — johnlewis.com and ulta.com key notes agree in the same tiers.
+    //   John Lewis description also names cedarwood (in neither key-notes list; not added).
+    // Profile: John Lewis specification "Floral Woody"; Ulta family "Floral", scent type "Warm Floral" (kept on record).
+    title:               "Perfect by Marc Jacobs Inspired",
+    collection:          "Rose",
+    subtitle:            "Inspired by Marc Jacobs Perfect",
+    mood:                "Playful Bright Modern",
+    profile:             "Floral Woody",
+    season:              "Spring",
+    notes:               ["Rhubarb", "Daffodil", "Almond Milk", "Cashmeran"],
+    bestSeller:          false,
+    newArrival:          false,
+    prices:              PRICES,
+    images:              PINK_IMAGES,
+    gender:              "female",
+    notesEvidenceLocked: true,
+    notesStructured: {
+      top:   ["Rhubarb", "Daffodil"],
+      heart: ["Almond Milk"],
+      base:  ["Cashmeran"],
+    },
+  },
+  {
+    // PROMOTED 2026-10-11 (L1hdNMRYvMxC) after founder editorial/promotion approval; reference identity
+    //   founder-reported (r14b); supplied concentration unconfirmed.
+    // slug: euphoria-by-calvin-klein-inspired — Supplier: 'CK Euphoria' (LADIES-75-CK Euphoria). The supplier lists
+    //   MEN-43 'CK Euphoria' separately (native euphoria-men-inspired). Reference edition: Calvin Klein Euphoria
+    //   for Women Eau de Parfum (2005). Female.
+    // Evidence: PYRAMID_SECONDARY_SUPPORTED — ulta.com key notes (full pyramid). John Lewis description supports
+    //   persimmon, pomegranate, lotus blossom, orchid; Lookfantastic adds champaca, liquid amber, "black violet".
+    // Profile: John Lewis scent "Amber, Floral"; Ulta family "Chypre" (adapter aliases Chypre to Amber), type "Floral".
+    title:               "Euphoria by Calvin Klein Inspired",
+    collection:          "Rose",
+    subtitle:            "Inspired by Calvin Klein Euphoria",
+    mood:                "Sensual Mysterious Luxurious",
+    profile:             "Floral Amber",
+    season:              "Autumn",
+    notes:               ["Pomegranate", "Persimmon", "Green Accord", "Black Orchid", "Lotus Blossom", "Cream Accord", "Mahogany Wood", "Violet"],
+    bestSeller:          false,
+    newArrival:          false,
+    prices:              PRICES,
+    images:              PINK_IMAGES,
+    gender:              "female",
+    notesEvidenceLocked: true,
+    notesStructured: {
+      top:   ["Pomegranate", "Persimmon", "Green Accord"],
+      heart: ["Black Orchid", "Lotus Blossom"],
+      base:  ["Cream Accord", "Mahogany Wood", "Violet"],
+    },
+  },
+  {
+    // slug: wonderlust-by-michael-kors-inspired — Supplier: 'Michael Kors Wonderlust' (LADIES-195-Michael Kors Wonderlust).
+    // Reference edition: Michael Kors Wonderlust Eau de Parfum (2016). Female.
+    // Evidence: PYRAMID_SECONDARY_SUPPORTED — nordstrom.com key notes (full pyramid; listing marked "no longer available").
+    //   CONFLICT SIGNAL (not inspected): a Macy's listing located by search reportedly gives a different pyramid
+    //   (almond milk, dianthus / benzoin / sandalwood). macys.com returns 403; recorded, not used.
+    // Profile: Nordstrom style "Warm, spicy". "Floral" (jasmine heart) and "Woody" (sandalwood base) are editorial.
+    title:               "Wonderlust by Michael Kors Inspired",
+    collection:          "Rose",
+    subtitle:            "Inspired by Michael Kors Wonderlust",
+    mood:                "Warm Sensual Sophisticated",
+    profile:             "Floral Spicy Woody",
+    season:              "Autumn",
+    notes:               ["Italian Bergamot", "Jasmine Grandiflorum", "Sri Lankan Sandalwood"],
+    bestSeller:          false,
+    newArrival:          false,
+    prices:              PRICES,
+    images:              PINK_IMAGES,
+    gender:              "female",
+    notesEvidenceLocked: true,
+    notesStructured: {
+      top:   ["Italian Bergamot"],
+      heart: ["Jasmine Grandiflorum"],
+      base:  ["Sri Lankan Sandalwood"],
+    },
+  },
+  {
+    // slug: prada-candy-inspired — Supplier: 'Prada / Candy' (LADIES-238-Prada / Candy).
+    // Reference edition: Prada Candy Eau de Parfum (2011). Female. Not Candy L'Eau or Candy Night (distinct flankers).
+    // Evidence: AI_INFERENCE_UNSOURCED (tiers) — White Musk, Benzoin, Caramel Accord are listed by ulta.com and
+    //   johnlewis.com (authorised) WITHOUT tiers; tier placement is from lookfantastic.com only (first-party,
+    //   authorised status not verified). EVIDENCE HOLD until an authorised tiered source is inspected.
+    // Profile: Ulta fragrance family "Warm & Spicy" and "Gourmand"; John Lewis scent "Sweet"; Lookfantastic "Amber Gourmand".
+    title:               "Prada Candy Inspired",
+    collection:          "Rose",
+    subtitle:            "Inspired by Prada Candy",
+    mood:                "Playful Sensual Warm",
+    profile:             "Gourmand Spicy",
+    season:              "Winter",
+    notes:               ["White Musk", "Benzoin", "Caramel Accord"],
+    bestSeller:          false,
+    newArrival:          false,
+    prices:              PRICES,
+    images:              PINK_IMAGES,
+    gender:              "female",
+    notesEvidenceLocked: true,
+    notesStructured: {
+      top:   ["White Musk"],
+      heart: ["Benzoin"],
+      base:  ["Caramel Accord"],
+    },
+  },
+  {
+    // PROMOTED 2026-10-11 (KvfQqR73e2wA) after founder editorial/promotion approval; reference identity
+    //   founder-reported (r14b); supplied concentration unconfirmed.
+    // slug: only-the-brave-inspired — Supplier: 'Diesel - Only The Brave' (MEN-52-Diesel - Only The Brave).
+    // Reference edition: Diesel Only The Brave Eau de Toilette (2009). Male.
+    // Evidence: PYRAMID_SECONDARY_SUPPORTED — johnlewis.com description names top, heart and base notes explicitly.
+    //   Dis-Chem (first-party) prose also names violet, styrax and benzoin (not added). The John Lewis copy's
+    //   performance wording ("long-lasting") is NOT carried into this record.
+    // Profile: John Lewis description "A Citrus Woody"; specification Scent "Amber" (kept on record).
+    title:               "Only The Brave Inspired",
+    collection:          "Skye",
+    subtitle:            "Inspired by Diesel Only The Brave",
+    mood:                "Bold Confident Energetic",
+    profile:             "Citrus Woody",
+    season:              "All Season",
+    notes:               ["Lemon", "Mandarin", "Coriander", "Labdanum", "Violet Leaves", "Rosemary", "Amber", "Leather", "Cedar"],
+    bestSeller:          false,
+    newArrival:          false,
+    prices:              PRICES,
+    images:              BLUE_IMAGES,
+    gender:              "male",
+    notesEvidenceLocked: true,
+    notesStructured: {
+      top:   ["Lemon", "Mandarin", "Coriander"],
+      heart: ["Labdanum", "Violet Leaves", "Rosemary"],
+      base:  ["Amber", "Leather", "Cedar"],
+    },
+  },
+];
+
 // ── Export ────────────────────────────────────────────────────────────────────
 
-export const wave9Catalogue: DisplayFragrance[] = [...rose];
+/** Batch 1 staging entries (6; includes promoted records kept for intake history). */
+export const wave9Batch1Catalogue: DisplayFragrance[] = [...rose];
+/** Batch 2 staging entries (5; review drafts, not promoted). */
+export const wave9Batch2Catalogue: DisplayFragrance[] = [...batch2];
+export const wave9Catalogue: DisplayFragrance[] = [...rose, ...batch2];

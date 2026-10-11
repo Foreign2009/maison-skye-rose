@@ -18,7 +18,7 @@
     "counts": {
       "supplierRawRows": 565,
       "supplierUniqueIdentities": "NOT_CONFIRMED — 565 is the total row count; internal duplicates or variant entries within the supplier list have not been fully enumerated. Unique identity count requires a dedicated deduplication pass.",
-      "activeNativeMKC": 270,
+      "activeNativeMKC": 273,
       "activeMatchesFoundInSupplierRows": "PARTIAL — reconcile.mjs (2026-10-10) found 68 supplier rows matching native MKC beyond initial slug analysis (i.e., matched by name/alias/flanker, not just slug). Total confirmed supplier rows already in active MKC is at least 218 (565 − 347 provisional gap; LADIES-277 and LADIES-108 confirmed as existing matches and LADIES-34, LADIES-156, LADIES-251 promoted on 2026-10-11). Exact count requires full reconciliation pass.",
       "unresolvedIdentity": 2,
       "duplicateAlias": 3,
@@ -27,9 +27,9 @@
       "batch1DraftsCurrentlyInStaging": 6,
       "verifiedReadyForPromotion": 0,
       "provisionalMissingFromActiveMKC": {
-        "count": 347,
+        "count": 344,
         "status": "PROVISIONAL_UPPER_BOUND",
-        "basis": "347 = 349 less 2 supplier rows promoted on 2026-10-11 (LADIES-156 → jimmy-choo-inspired, LADIES-251 → romance-by-ralph-lauren-inspired; uncommitted). Still NOT a reconciled final count and NOT a unique-fragrance count.",
+        "basis": "344 = 347 less 3 supplier rows promoted on 2026-10-11 (LADIES-227, LADIES-75, MEN-52; uncommitted). Still NOT a reconciled final count and NOT a unique-fragrance count; 14 Batch 2 likely existing matches not yet subtracted.",
         "cannotBeReducedBy": "The remaining staged batch 1 drafts do NOT reduce this count; only promotion to native MKC or a confirmed existing match does. Unresolved entries (2) are not subtracted. (The two withdrawn duplicate drafts are preserved; their supplier rows are already counted as confirmed existing matches.)",
         "knownGaps": "13 ambiguous supplier entries require separate identity research before batch assignment.",
         "overlaps": "The 68 additionally-found MKC matches were located by name/alias/flanker reconciliation beyond slug-matching. Further identity research may identify additional overlaps (two Batch 1 drafts proved to be existing natives), so 349 may still be an over-estimate. The final count can only be confirmed after all 565 rows are individually resolved.",
@@ -48,11 +48,17 @@
             "count": 349,
             "date": "2026-10-11",
             "basis": "349 = 351 less 1 supplier row confirmed already active (LADIES-108 → the-one-pour-femme-inspired) and 1 supplier row promoted (LADIES-34 → beautiful-by-estee-lauder-inspired, committed in 2803160), 2026-10-11. Still NOT a reconciled final count and NOT a unique-fragrance count."
+          },
+          {
+            "count": 347,
+            "date": "2026-10-11",
+            "basis": "347 = 349 less 2 supplier rows promoted on 2026-10-11 (LADIES-156 → jimmy-choo-inspired, LADIES-251 → romance-by-ralph-lauren-inspired; uncommitted). Still NOT a reconciled final count and NOT a unique-fragrance count."
           }
         ],
         "cannotBeReducedByPreviousRev11": "The remaining staged batch 1 drafts do NOT reduce this count; only promotion to native MKC or a confirmed existing match does. Deleted drafts (2) and unresolved entries (2) are not subtracted.",
         "basisPreviousRev11": "349 = 351 less 1 supplier row confirmed already active (LADIES-108 → the-one-pour-femme-inspired) and 1 supplier row promoted (LADIES-34 → beautiful-by-estee-lauder-inspired, uncommitted), 2026-10-11. Still NOT a reconciled final count and NOT a unique-fragrance count.",
-        "basisPreviousRev12": "349 = 351 less 1 supplier row confirmed already active (LADIES-108 → the-one-pour-femme-inspired) and 1 supplier row promoted (LADIES-34 → beautiful-by-estee-lauder-inspired, committed in 2803160), 2026-10-11. Still NOT a reconciled final count and NOT a unique-fragrance count."
+        "basisPreviousRev12": "349 = 351 less 1 supplier row confirmed already active (LADIES-108 → the-one-pour-femme-inspired) and 1 supplier row promoted (LADIES-34 → beautiful-by-estee-lauder-inspired, committed in 2803160), 2026-10-11. Still NOT a reconciled final count and NOT a unique-fragrance count.",
+        "basisPreviousRev14": "347 = 349 less 2 supplier rows promoted on 2026-10-11 (LADIES-156 → jimmy-choo-inspired, LADIES-251 → romance-by-ralph-lauren-inspired; uncommitted). Still NOT a reconciled final count and NOT a unique-fragrance count."
       },
       "batch1ByStatus": {
         "DRAFT_GENERATED_PENDING_EVIDENCE": 3,
@@ -63,7 +69,7 @@
         "PYRAMID_SECONDARY_SUPPORTED": 3
       },
       "batch1IdentityHolds": [],
-      "countsDerivedFrom": "entries.draft_generated (6 staged records incl. 3 promoted) and entries.duplicate_alias — revision 13, 2026-10-11",
+      "countsDerivedFrom": "entries.draft_generated (Batch 1) and entries.batch2_draft_generated — revision 15, 2026-10-11",
       "batch1IdentityHoldCount": 0,
       "batch1EvidenceHolds": [
         "gucci-rush-inspired",
@@ -87,12 +93,15 @@
       ],
       "activeNativeMKCPrevious": 267,
       "activeNativeMKCBreakdown": {
-        "total": 270,
-        "Skye": 109,
-        "Rose": 112,
+        "total": 273,
+        "Skye": 110,
+        "Rose": 114,
         "Elite": 49,
+        "female": 114,
+        "male": 110,
+        "unisex": 49,
         "measuredDate": "2026-10-11",
-        "note": "Measured from nativeFragrances (app/lib/mkc/native/index.ts) after promoting jimmy-choo-inspired and romance-by-ralph-lauren-inspired; all records status 'active'; no duplicate slug, id or normalised name."
+        "note": "Measured from nativeFragrances after promoting perfect-by-marc-jacobs, euphoria-by-calvin-klein and only-the-brave; all active; no duplicate slug, id or normalised name."
       },
       "batch1PromotedToNative": [
         "jimmy-choo-inspired",
@@ -166,7 +175,64 @@
         "remainingDecision": "Review the proposed editorial profiles (Jimmy Choo 'Fruity Floral Sweet'; Romance retains 'Floral Fresh'). Evidence tier PYRAMID_SECONDARY_SUPPORTED; identity founder-reported; relationship proposals remain pending. Promotion requires separate approval.",
         "remainingDecisionPreviousRev11": "One profile decision each (options and deriveMetrics outcomes in research profileReview / profileRationale). Evidence tier PYRAMID_SECONDARY_SUPPORTED; identity founder-reported; relationships remain pending proposals."
       },
-      "activeMatchesFoundInSupplierRowsPreviousRev12": "PARTIAL — reconcile.mjs (2026-10-10) found 68 supplier rows matching native MKC beyond initial slug analysis (i.e., matched by name/alias/flanker, not just slug). Total confirmed supplier rows already in active MKC is at least 216 (565 − 349 provisional gap; LADIES-277 and LADIES-108 confirmed as existing matches and LADIES-34 promoted on 2026-10-11). Exact count requires full reconciliation pass."
+      "activeMatchesFoundInSupplierRowsPreviousRev12": "PARTIAL — reconcile.mjs (2026-10-10) found 68 supplier rows matching native MKC beyond initial slug analysis (i.e., matched by name/alias/flanker, not just slug). Total confirmed supplier rows already in active MKC is at least 216 (565 − 349 provisional gap; LADIES-277 and LADIES-108 confirmed as existing matches and LADIES-34 promoted on 2026-10-11). Exact count requires full reconciliation pass.",
+      "batch2": {
+        "recordedDate": "2026-10-11",
+        "draftsGenerated": 5,
+        "byStatus": {
+          "DRAFT_GENERATED_PENDING_EVIDENCE": 1,
+          "DRAFT_GENERATED_PENDING_REVIEW": 1,
+          "PROMOTED_TO_NATIVE": 3
+        },
+        "byEvidenceTier": {
+          "AI_INFERENCE_UNSOURCED": 1,
+          "PYRAMID_SECONDARY_SUPPORTED": 4
+        },
+        "evidenceHolds": [
+          "prada-candy-inspired"
+        ],
+        "researchedNotDrafted": 6,
+        "likelyExistingMatchesFound": 14,
+        "promotionEligible": [],
+        "provisionalMissingNote": "Provisional missing count (347) unchanged: drafts do not reduce it; the 14 likely existing matches may reduce it after confirmation.",
+        "referenceIdentityConfirmedFounderReported": [
+          "euphoria-by-calvin-klein-inspired",
+          "only-the-brave-inspired",
+          "perfect-by-marc-jacobs-inspired"
+        ],
+        "editorialPromotionApproval": {
+          "approved": {
+            "perfect-by-marc-jacobs-inspired": "Floral Woody",
+            "euphoria-by-calvin-klein-inspired": "Floral Amber",
+            "only-the-brave-inspired": "Citrus Woody"
+          },
+          "date": "2026-10-11",
+          "by": "Founder (Adnaan)",
+          "notApproved": [
+            "wonderlust-by-michael-kors-inspired",
+            "prada-candy-inspired"
+          ]
+        },
+        "byStatusPreviousRev14": {
+          "DRAFT_GENERATED_PENDING_EVIDENCE": 1,
+          "DRAFT_GENERATED_PENDING_REVIEW": 4
+        },
+        "promotedToNative": [
+          "euphoria-by-calvin-klein-inspired",
+          "only-the-brave-inspired",
+          "perfect-by-marc-jacobs-inspired"
+        ],
+        "editorialPromotionApprovalPreviousRev14": "PENDING — none recorded for Batch 2."
+      },
+      "activeNativeMKCPreviousRev14": 270,
+      "activeNativeMKCBreakdownPreviousRev14": {
+        "total": 270,
+        "Skye": 109,
+        "Rose": 112,
+        "Elite": 49,
+        "measuredDate": "2026-10-11",
+        "note": "Measured from nativeFragrances (app/lib/mkc/native/index.ts) after promoting jimmy-choo-inspired and romance-by-ralph-lauren-inspired; all records status 'active'; no duplicate slug, id or normalised name."
+      }
     },
     "recoveryRevision": {
       "date": "2026-10-10",
@@ -181,7 +247,11 @@
       "revision10": "2026-10-11: dolce-and-gabbana-the-one-inspired withdrawn as DUPLICATE_ALIAS of the-one-pour-femme-inspired (LADIES-108-Dolce & Gabbana The One); removed from staging catalogue; draft, research, evidence and founder confirmation preserved. Current-state count wording corrected to 349; provisional count unchanged (LADIES-108 already subtracted in revision 9).",
       "revision11": "2026-10-11: founder wording recorded verbatim with EDP scope unspecified (concentrationProvenance per staged record); Jimmy Choo 'Green Notes' removed, tier PYRAMID_SECONDARY_SUPPORTED, status PENDING_PROFILE_REVIEW; Tommy Girl Lookfantastic conflict recorded; Poison hold re-worded (EDP scope + 'Esprit de Parfum' not equated with EDP); counts recalculated. No promotion.",
       "revision12": "2026-10-11: proposed editorial profiles (Jimmy Choo 'Fruity Floral Sweet'; Romance retains 'Floral Fresh') with adapter-derived family/scentCharacter/scores; conflicting classifications kept; not supplier confirmations or promotion approval. Beautiful commit state corrected (2803160 committed, pushed — verified ancestor of origin/main; deployment founder-reported). batch1DraftsDeleted corrected 2 → 0 (withdrawn duplicates preserved). Jimmy Choo single heart note moved from promotionBlockers to informationalNotes. Historical entries preserved.",
-      "revision13": "2026-10-11: founder editorial/promotion approval (not supplier evidence) of r12 profiles; branch fast-forwarded 2803160 → 160ccbf (origin/main) with uncommitted Wave 9 changes preserved (verified backup); jimmy-choo-inspired (fBkPTNpdbCYp) and romance-by-ralph-lauren-inspired (13zI9yHDv62X) promoted via mkc:review/mkc:promote; native total 270 measured; provisional missing 349 → 347. Not committed."
+      "revision13": "2026-10-11: founder editorial/promotion approval (not supplier evidence) of r12 profiles; branch fast-forwarded 2803160 → 160ccbf (origin/main) with uncommitted Wave 9 changes preserved (verified backup); jimmy-choo-inspired (fBkPTNpdbCYp) and romance-by-ralph-lauren-inspired (13zI9yHDv62X) promoted via mkc:review/mkc:promote; native total 270 measured; provisional missing 349 → 347. Not committed.",
+      "revision14": "2026-10-11: Wave 9 Batch 2 — 5 review drafts recorded under entries.batch2_draft_generated (4 PYRAMID_SECONDARY_SUPPORTED pending review, 1 evidence hold); 6 researched-not-drafted rows; 14 likely existing matches; 5 unverified relationship proposals appended. Batch 1 entries unchanged. No promotion.",
+      "revision14b": "2026-10-11: founder-reported reference identity/edition confirmations for 3 Batch 2 rows (LADIES-227, LADIES-75, MEN-52); provenance: founder in conversation, no supplier response; supplied concentration unconfirmed; editorial/promotion approval pending; Wonderlust, Prada Candy and Batch 1 holds unchanged.",
+      "revision15": "2026-10-11: founder editorial/promotion approval (separate from r14b; not supplier evidence); perfect-by-marc-jacobs-inspired (V7fJUpJ310Qr), euphoria-by-calvin-klein-inspired (L1hdNMRYvMxC), only-the-brave-inspired (KvfQqR73e2wA) promoted; native 273 measured; provisional missing 347 → 344. Wonderlust, Prada Candy, Batch 1 holds unchanged. Not committed.",
+      "revision15a": "2026-10-11: identityConfirmation.notEditorialApproval updated for the three promoted Batch 2 rows to reference founderApproval; original wording preserved as notEditorialApprovalHistoricalRev14b. Metadata only."
     },
     "evidenceTierPolicyApplied": {
       "source": "data/identity/source/wave-3-2026-research.json → governance.sourcePolicyTiers / admissibilityNote; data/supplier/decisions/catalogue-expansion-ledger.json → governance.governancePrinciples; Wave 8 precedent (scripts/factory/data/wave-8-catalogue.ts).",
@@ -1136,11 +1206,77 @@
             "black-opium-inspired"
           ],
           "notes": "spicebomb-extreme-inspired is cross-gender (male). All slugs confirmed in native MKC. Reciprocity requires both wardrobePartner records to add poison-by-dior-inspired."
+        },
+        {
+          "draftSlug": "perfect-by-marc-jacobs-inspired",
+          "batch": "wave-9-batch-2",
+          "proposedAlternatives": [
+            "delina-inspired",
+            "chance-eau-tendre-inspired"
+          ],
+          "proposedWardrobePartners": [
+            "bleu-de-chanel-inspired"
+          ],
+          "status": "UNVERIFIED_FACTORY_SUGGESTION",
+          "notes": "RelationshipProducer suggestion, cleared from the draft. Not reviewed; cross-gender pairs and reciprocity unverified."
+        },
+        {
+          "draftSlug": "euphoria-by-calvin-klein-inspired",
+          "batch": "wave-9-batch-2",
+          "proposedAlternatives": [
+            "crystal-noir-inspired",
+            "alien-goddess-inspired"
+          ],
+          "proposedWardrobePartners": [
+            "euphoria-men-inspired"
+          ],
+          "status": "UNVERIFIED_FACTORY_SUGGESTION",
+          "notes": "RelationshipProducer suggestion, cleared from the draft. Not reviewed; cross-gender pairs and reciprocity unverified."
+        },
+        {
+          "draftSlug": "wonderlust-by-michael-kors-inspired",
+          "batch": "wave-9-batch-2",
+          "proposedAlternatives": [
+            "twilly-d'hermes-inspired",
+            "mon-guerlain-inspired"
+          ],
+          "proposedWardrobePartners": [
+            "spicebomb-extreme-inspired",
+            "tobacco-vanille-inspired"
+          ],
+          "status": "UNVERIFIED_FACTORY_SUGGESTION",
+          "notes": "RelationshipProducer suggestion, cleared from the draft. Not reviewed; cross-gender pairs and reciprocity unverified."
+        },
+        {
+          "draftSlug": "prada-candy-inspired",
+          "batch": "wave-9-batch-2",
+          "proposedAlternatives": [
+            "black-opium-inspired",
+            "hypnotic-poison-inspired"
+          ],
+          "proposedWardrobePartners": [
+            "alien-inspired"
+          ],
+          "status": "UNVERIFIED_FACTORY_SUGGESTION",
+          "notes": "RelationshipProducer suggestion, cleared from the draft. Not reviewed; cross-gender pairs and reciprocity unverified."
+        },
+        {
+          "draftSlug": "only-the-brave-inspired",
+          "batch": "wave-9-batch-2",
+          "proposedAlternatives": [
+            "bleu-de-chanel-inspired",
+            "terre-d'hermes-inspired"
+          ],
+          "proposedWardrobePartners": [
+            "sauvage-elixir-inspired"
+          ],
+          "status": "UNVERIFIED_FACTORY_SUGGESTION",
+          "notes": "RelationshipProducer suggestion, cleared from the draft. Not reviewed; cross-gender pairs and reciprocity unverified."
         }
       ]
     },
     "missing": {
-      "provisionalCount": 347,
+      "provisionalCount": 344,
       "basis": "2026-10-10 reconcile.mjs pass — all gap candidates checked against native MKC using names, brands, aliases and flankers (not slug-matching alone). Found 68 additional entries already in MKC beyond initial slug analysis.",
       "note": "Provisional upper bound 347 (352 at reconciliation, less LADIES-277 and LADIES-108 confirmed existing matches and LADIES-34, LADIES-156, LADIES-251 promoted). Not a unique-fragrance count.",
       "futureWorkNote": "13 ambiguous supplier entries from the normalized file require separate identity research before batch assignment.",
@@ -1155,7 +1291,8 @@
         }
       ],
       "provisionalCountPreviousRev12": 349,
-      "notePreviousRev12": "Provisional upper bound 349 (352 at reconciliation, less LADIES-277 and LADIES-108 confirmed existing matches and LADIES-34 promoted). Not a unique-fragrance count."
+      "notePreviousRev12": "Provisional upper bound 349 (352 at reconciliation, less LADIES-277 and LADIES-108 confirmed existing matches and LADIES-34 promoted). Not a unique-fragrance count.",
+      "provisionalCountPreviousRev14": 347
     },
     "existing_holds_preserved": [
       {
@@ -1239,6 +1376,470 @@
           "notEvidence": "This approval is NOT additional supplier identity or concentration evidence. Identity remains founder-reported (2026-10-11); supplied concentration remains not established.",
           "reviewQueueReviewer": "Founder (Adnaan) - approval 2026-10-11"
         }
+      },
+      {
+        "slug": "perfect-by-marc-jacobs-inspired",
+        "sourceKey": "LADIES-227-Perfect by Marc Jacobs",
+        "promotionId": "V7fJUpJ310Qr",
+        "nativePath": "app/lib/mkc/native/perfect-by-marc-jacobs-inspired.ts",
+        "completedAt": "2026-10-11T20:09:36.074Z",
+        "operator": "Claude Code (founder approval 2026-10-11)",
+        "reviewedBy": "Founder (Adnaan) - approval 2026-10-11",
+        "validationStatus": "PASS",
+        "buildResult": "pass",
+        "workflow": "npm run mkc:review -- --add/--approve perfect-by-marc-jacobs-inspired; npm run mkc:promote -- --slug perfect-by-marc-jacobs-inspired",
+        "base": "fdaff61ad0e68ab55e2078eca363b80a6e7ea797 (= origin/main at promotion; no integration needed)",
+        "nativeEqualsDraft": "Native body identical to the reviewed r14a draft apart from the type import path.",
+        "relationships": "empty — proposals remain UNVERIFIED_FACTORY_SUGGESTION in the ledger",
+        "committed": false,
+        "founderApproval": {
+          "date": "2026-10-11",
+          "approvedBy": "Founder (Adnaan)",
+          "scope": "Editorial and promotion approval of the reviewed r14a record (profile 'Floral Woody') for local promotion.",
+          "separateFrom": "Separate from the r14b founder-reported reference identity/edition confirmation.",
+          "notEvidence": "Not supplier identity, concentration or note evidence. Supplied-product concentration remains unconfirmed.",
+          "reviewQueueReviewer": "Founder (Adnaan) - approval 2026-10-11"
+        }
+      },
+      {
+        "slug": "euphoria-by-calvin-klein-inspired",
+        "sourceKey": "LADIES-75-CK Euphoria",
+        "promotionId": "L1hdNMRYvMxC",
+        "nativePath": "app/lib/mkc/native/euphoria-by-calvin-klein-inspired.ts",
+        "completedAt": "2026-10-11T20:10:35.891Z",
+        "operator": "Claude Code (founder approval 2026-10-11)",
+        "reviewedBy": "Founder (Adnaan) - approval 2026-10-11",
+        "validationStatus": "PASS",
+        "buildResult": "pass",
+        "workflow": "npm run mkc:review -- --add/--approve euphoria-by-calvin-klein-inspired; npm run mkc:promote -- --slug euphoria-by-calvin-klein-inspired",
+        "base": "fdaff61ad0e68ab55e2078eca363b80a6e7ea797 (= origin/main at promotion; no integration needed)",
+        "nativeEqualsDraft": "Native body identical to the reviewed r14a draft apart from the type import path.",
+        "relationships": "empty — proposals remain UNVERIFIED_FACTORY_SUGGESTION in the ledger",
+        "committed": false,
+        "founderApproval": {
+          "date": "2026-10-11",
+          "approvedBy": "Founder (Adnaan)",
+          "scope": "Editorial and promotion approval of the reviewed r14a record (profile 'Floral Amber') for local promotion.",
+          "separateFrom": "Separate from the r14b founder-reported reference identity/edition confirmation.",
+          "notEvidence": "Not supplier identity, concentration or note evidence. Supplied-product concentration remains unconfirmed.",
+          "reviewQueueReviewer": "Founder (Adnaan) - approval 2026-10-11"
+        }
+      },
+      {
+        "slug": "only-the-brave-inspired",
+        "sourceKey": "MEN-52-Diesel - Only The Brave",
+        "promotionId": "KvfQqR73e2wA",
+        "nativePath": "app/lib/mkc/native/only-the-brave-inspired.ts",
+        "completedAt": "2026-10-11T20:11:35.265Z",
+        "operator": "Claude Code (founder approval 2026-10-11)",
+        "reviewedBy": "Founder (Adnaan) - approval 2026-10-11",
+        "validationStatus": "PASS",
+        "buildResult": "pass",
+        "workflow": "npm run mkc:review -- --add/--approve only-the-brave-inspired; npm run mkc:promote -- --slug only-the-brave-inspired",
+        "base": "fdaff61ad0e68ab55e2078eca363b80a6e7ea797 (= origin/main at promotion; no integration needed)",
+        "nativeEqualsDraft": "Native body identical to the reviewed r14a draft apart from the type import path.",
+        "relationships": "empty — proposals remain UNVERIFIED_FACTORY_SUGGESTION in the ledger",
+        "committed": false,
+        "founderApproval": {
+          "date": "2026-10-11",
+          "approvedBy": "Founder (Adnaan)",
+          "scope": "Editorial and promotion approval of the reviewed r14a record (profile 'Citrus Woody') for local promotion.",
+          "separateFrom": "Separate from the r14b founder-reported reference identity/edition confirmation.",
+          "notEvidence": "Not supplier identity, concentration or note evidence. Supplied-product concentration remains unconfirmed.",
+          "reviewQueueReviewer": "Founder (Adnaan) - approval 2026-10-11"
+        }
+      }
+    ],
+    "batch2_draft_generated": [
+      {
+        "slug": "perfect-by-marc-jacobs-inspired",
+        "sourceKey": "LADIES-227-Perfect by Marc Jacobs",
+        "supplierText": "Perfect by Marc Jacobs",
+        "supplierCategory": "LADIES",
+        "draftFile": "scripts/factory/drafts/perfect-by-marc-jacobs-inspired.ts",
+        "generatedDate": "2026-10-11",
+        "factoryValidation": "PASS [0 errors, 0 warnings]",
+        "referenceEditionUsedForEvidence": "Marc Jacobs Perfect Eau de Parfum (2020)",
+        "supplierConcentration": "NOT_STATED",
+        "identityConfirmation": {
+          "status": "CONFIRMED_FOUNDER_REPORTED",
+          "scope": "REFERENCE_IDENTITY_AND_EDITION_ONLY",
+          "confirmedReference": "Marc Jacobs Perfect — original — Eau de Parfum",
+          "founderReportedWording": "LADIES-227 “Perfect by Marc Jacobs” refers to original Marc Jacobs Perfect EDP.",
+          "sourceKey": "LADIES-227-Perfect by Marc Jacobs",
+          "date": "2026-10-11",
+          "confirmedBy": "Founder (Adnaan)",
+          "provenance": "FOUNDER_REPORTED — confirmation given by Founder (Adnaan) in the Claude Code conversation on 2026-10-11. No direct supplier response was inspected.",
+          "suppliedConcentration": "NOT_CONFIRMED — this confirmation establishes the reference fragrance identity and edition only; the concentration of the product supplied to Maison remains unconfirmed.",
+          "notEditorialApproval": "This reference identity/edition confirmation is separate from editorial and promotion approval. Founder approval was subsequently recorded on 2026-10-11 in founderApproval.",
+          "notEditorialApprovalHistoricalRev14b": "This is not editorial or promotion approval; that remains pending."
+        },
+        "evidenceTier": "PYRAMID_SECONDARY_SUPPORTED",
+        "profile": "Floral Woody",
+        "adapterDerived": {
+          "family": [
+            "Floral",
+            "Woody"
+          ],
+          "scentCharacter": "Balanced Signature",
+          "scores": [
+            2,
+            3,
+            3,
+            2,
+            3
+          ],
+          "scoreOrder": "sweetness, freshness, warmth, intensity, versatility",
+          "method": "adaptFragrance() on the staging entry; draft values equal (validate-batch2-drafts.ts)."
+        },
+        "status": "PROMOTED_TO_NATIVE",
+        "promotionEligible": false,
+        "promotionEligibilityReason": "Promoted to native MKC on 2026-10-11 (promotionId V7fJUpJ310Qr); not committed.",
+        "identityConfirmationPreviousRev14": "NONE",
+        "supplierConcentrationNote": "Supplier text states no concentration; supplied-product concentration unconfirmed (founder confirmation covers the reference edition only).",
+        "statusPreviousRev14": "DRAFT_GENERATED_PENDING_REVIEW",
+        "promotionEligibilityReasonPreviousRev14": "Not eligible yet: review draft awaiting founder review and approval.",
+        "founderApproval": {
+          "date": "2026-10-11",
+          "approvedBy": "Founder (Adnaan)",
+          "scope": "Editorial and promotion approval of the reviewed r14a record (profile 'Floral Woody') for local promotion.",
+          "separateFrom": "Separate from the r14b founder-reported reference identity/edition confirmation.",
+          "notEvidence": "Not supplier identity, concentration or note evidence. Supplied-product concentration remains unconfirmed.",
+          "reviewQueueReviewer": "Founder (Adnaan) - approval 2026-10-11"
+        },
+        "promotion": {
+          "promotionId": "V7fJUpJ310Qr",
+          "nativePath": "app/lib/mkc/native/perfect-by-marc-jacobs-inspired.ts",
+          "completedAt": "2026-10-11T20:09:36.074Z",
+          "operator": "Claude Code (founder approval 2026-10-11)",
+          "reviewedBy": "Founder (Adnaan) - approval 2026-10-11",
+          "validationStatus": "PASS",
+          "buildResult": "pass",
+          "workflow": "npm run mkc:review -- --add/--approve perfect-by-marc-jacobs-inspired; npm run mkc:promote -- --slug perfect-by-marc-jacobs-inspired",
+          "base": "fdaff61ad0e68ab55e2078eca363b80a6e7ea797 (= origin/main at promotion; no integration needed)",
+          "nativeEqualsDraft": "Native body identical to the reviewed r14a draft apart from the type import path.",
+          "relationships": "empty — proposals remain UNVERIFIED_FACTORY_SUGGESTION in the ledger",
+          "committed": false
+        }
+      },
+      {
+        "slug": "euphoria-by-calvin-klein-inspired",
+        "sourceKey": "LADIES-75-CK Euphoria",
+        "supplierText": "CK Euphoria",
+        "supplierCategory": "LADIES",
+        "draftFile": "scripts/factory/drafts/euphoria-by-calvin-klein-inspired.ts",
+        "generatedDate": "2026-10-11",
+        "factoryValidation": "PASS [0 errors, 0 warnings]",
+        "referenceEditionUsedForEvidence": "Calvin Klein Euphoria for Women Eau de Parfum (2005)",
+        "supplierConcentration": "NOT_STATED",
+        "identityConfirmation": {
+          "status": "CONFIRMED_FOUNDER_REPORTED",
+          "scope": "REFERENCE_IDENTITY_AND_EDITION_ONLY",
+          "confirmedReference": "Calvin Klein Euphoria for Women — original — Eau de Parfum",
+          "founderReportedWording": "LADIES-75 “CK Euphoria” refers to original Calvin Klein Euphoria for Women EDP.",
+          "sourceKey": "LADIES-75-CK Euphoria",
+          "date": "2026-10-11",
+          "confirmedBy": "Founder (Adnaan)",
+          "provenance": "FOUNDER_REPORTED — confirmation given by Founder (Adnaan) in the Claude Code conversation on 2026-10-11. No direct supplier response was inspected.",
+          "suppliedConcentration": "NOT_CONFIRMED — this confirmation establishes the reference fragrance identity and edition only; the concentration of the product supplied to Maison remains unconfirmed.",
+          "notEditorialApproval": "This reference identity/edition confirmation is separate from editorial and promotion approval. Founder approval was subsequently recorded on 2026-10-11 in founderApproval.",
+          "notEditorialApprovalHistoricalRev14b": "This is not editorial or promotion approval; that remains pending."
+        },
+        "evidenceTier": "PYRAMID_SECONDARY_SUPPORTED",
+        "profile": "Floral Amber",
+        "adapterDerived": {
+          "family": [
+            "Floral",
+            "Amber"
+          ],
+          "scentCharacter": "Rich & Full-Bodied",
+          "scores": [
+            3,
+            3,
+            4,
+            3,
+            3
+          ],
+          "scoreOrder": "sweetness, freshness, warmth, intensity, versatility",
+          "method": "adaptFragrance() on the staging entry; draft values equal (validate-batch2-drafts.ts)."
+        },
+        "status": "PROMOTED_TO_NATIVE",
+        "promotionEligible": false,
+        "promotionEligibilityReason": "Promoted to native MKC on 2026-10-11 (promotionId L1hdNMRYvMxC); not committed.",
+        "identityConfirmationPreviousRev14": "NONE",
+        "supplierConcentrationNote": "Supplier text states no concentration; supplied-product concentration unconfirmed (founder confirmation covers the reference edition only).",
+        "statusPreviousRev14": "DRAFT_GENERATED_PENDING_REVIEW",
+        "promotionEligibilityReasonPreviousRev14": "Not eligible yet: review draft awaiting founder review and approval.",
+        "founderApproval": {
+          "date": "2026-10-11",
+          "approvedBy": "Founder (Adnaan)",
+          "scope": "Editorial and promotion approval of the reviewed r14a record (profile 'Floral Amber') for local promotion.",
+          "separateFrom": "Separate from the r14b founder-reported reference identity/edition confirmation.",
+          "notEvidence": "Not supplier identity, concentration or note evidence. Supplied-product concentration remains unconfirmed.",
+          "reviewQueueReviewer": "Founder (Adnaan) - approval 2026-10-11"
+        },
+        "promotion": {
+          "promotionId": "L1hdNMRYvMxC",
+          "nativePath": "app/lib/mkc/native/euphoria-by-calvin-klein-inspired.ts",
+          "completedAt": "2026-10-11T20:10:35.891Z",
+          "operator": "Claude Code (founder approval 2026-10-11)",
+          "reviewedBy": "Founder (Adnaan) - approval 2026-10-11",
+          "validationStatus": "PASS",
+          "buildResult": "pass",
+          "workflow": "npm run mkc:review -- --add/--approve euphoria-by-calvin-klein-inspired; npm run mkc:promote -- --slug euphoria-by-calvin-klein-inspired",
+          "base": "fdaff61ad0e68ab55e2078eca363b80a6e7ea797 (= origin/main at promotion; no integration needed)",
+          "nativeEqualsDraft": "Native body identical to the reviewed r14a draft apart from the type import path.",
+          "relationships": "empty — proposals remain UNVERIFIED_FACTORY_SUGGESTION in the ledger",
+          "committed": false
+        }
+      },
+      {
+        "slug": "wonderlust-by-michael-kors-inspired",
+        "sourceKey": "LADIES-195-Michael Kors Wonderlust",
+        "supplierText": "Michael Kors Wonderlust",
+        "supplierCategory": "LADIES",
+        "draftFile": "scripts/factory/drafts/wonderlust-by-michael-kors-inspired.ts",
+        "generatedDate": "2026-10-11",
+        "factoryValidation": "PASS [0 errors, 0 warnings]",
+        "referenceEditionUsedForEvidence": "Michael Kors Wonderlust Eau de Parfum (2016)",
+        "supplierConcentration": "NOT_STATED",
+        "identityConfirmation": "NONE",
+        "evidenceTier": "PYRAMID_SECONDARY_SUPPORTED",
+        "profile": "Floral Spicy Woody",
+        "adapterDerived": {
+          "family": [
+            "Floral",
+            "Woody",
+            "Spicy"
+          ],
+          "scentCharacter": "Rich & Full-Bodied",
+          "scores": [
+            2,
+            3,
+            4,
+            3,
+            3
+          ],
+          "scoreOrder": "sweetness, freshness, warmth, intensity, versatility",
+          "method": "adaptFragrance() on the staging entry; draft values equal (validate-batch2-drafts.ts)."
+        },
+        "status": "DRAFT_GENERATED_PENDING_REVIEW",
+        "promotionEligible": false,
+        "promotionEligibilityReason": "Not eligible yet: review draft; the uninspected Macy's pyramid signal should be reviewed before approval."
+      },
+      {
+        "slug": "prada-candy-inspired",
+        "sourceKey": "LADIES-238-Prada / Candy",
+        "supplierText": "Prada / Candy",
+        "supplierCategory": "LADIES",
+        "draftFile": "scripts/factory/drafts/prada-candy-inspired.ts",
+        "generatedDate": "2026-10-11",
+        "factoryValidation": "PASS [0 errors, 0 warnings]",
+        "referenceEditionUsedForEvidence": "Prada Candy Eau de Parfum (2011) — not Candy L'Eau or Candy Night",
+        "supplierConcentration": "NOT_STATED",
+        "identityConfirmation": "NONE",
+        "evidenceTier": "AI_INFERENCE_UNSOURCED",
+        "profile": "Gourmand Spicy",
+        "adapterDerived": {
+          "family": [
+            "Gourmand",
+            "Spicy"
+          ],
+          "scentCharacter": "Rich & Full-Bodied",
+          "scores": [
+            4,
+            2,
+            4,
+            4,
+            2
+          ],
+          "scoreOrder": "sweetness, freshness, warmth, intensity, versatility",
+          "method": "adaptFragrance() on the staging entry; draft values equal (validate-batch2-drafts.ts)."
+        },
+        "status": "DRAFT_GENERATED_PENDING_EVIDENCE",
+        "promotionEligible": false,
+        "promotionEligibilityReason": "Not eligible: EVIDENCE HOLD — tier placement not confirmed by an authorised source."
+      },
+      {
+        "slug": "only-the-brave-inspired",
+        "sourceKey": "MEN-52-Diesel - Only The Brave",
+        "supplierText": "Diesel - Only The Brave",
+        "supplierCategory": "MEN",
+        "draftFile": "scripts/factory/drafts/only-the-brave-inspired.ts",
+        "generatedDate": "2026-10-11",
+        "factoryValidation": "PASS [0 errors, 0 warnings]",
+        "referenceEditionUsedForEvidence": "Diesel Only The Brave Eau de Toilette (2009)",
+        "supplierConcentration": "NOT_STATED",
+        "identityConfirmation": {
+          "status": "CONFIRMED_FOUNDER_REPORTED",
+          "scope": "REFERENCE_IDENTITY_AND_EDITION_ONLY",
+          "confirmedReference": "Diesel Only The Brave — original — Eau de Toilette",
+          "founderReportedWording": "MEN-52 “Diesel - Only The Brave” refers to original Diesel Only The Brave EDT.",
+          "sourceKey": "MEN-52-Diesel - Only The Brave",
+          "date": "2026-10-11",
+          "confirmedBy": "Founder (Adnaan)",
+          "provenance": "FOUNDER_REPORTED — confirmation given by Founder (Adnaan) in the Claude Code conversation on 2026-10-11. No direct supplier response was inspected.",
+          "suppliedConcentration": "NOT_CONFIRMED — this confirmation establishes the reference fragrance identity and edition only; the concentration of the product supplied to Maison remains unconfirmed.",
+          "notEditorialApproval": "This reference identity/edition confirmation is separate from editorial and promotion approval. Founder approval was subsequently recorded on 2026-10-11 in founderApproval.",
+          "notEditorialApprovalHistoricalRev14b": "This is not editorial or promotion approval; that remains pending."
+        },
+        "evidenceTier": "PYRAMID_SECONDARY_SUPPORTED",
+        "profile": "Citrus Woody",
+        "adapterDerived": {
+          "family": [
+            "Citrus",
+            "Woody"
+          ],
+          "scentCharacter": "Fresh & Light",
+          "scores": [
+            1,
+            5,
+            3,
+            3,
+            5
+          ],
+          "scoreOrder": "sweetness, freshness, warmth, intensity, versatility",
+          "method": "adaptFragrance() on the staging entry; draft values equal (validate-batch2-drafts.ts)."
+        },
+        "status": "PROMOTED_TO_NATIVE",
+        "promotionEligible": false,
+        "promotionEligibilityReason": "Promoted to native MKC on 2026-10-11 (promotionId KvfQqR73e2wA); not committed.",
+        "identityConfirmationPreviousRev14": "NONE",
+        "supplierConcentrationNote": "Supplier text states no concentration; supplied-product concentration unconfirmed (founder confirmation covers the reference edition only).",
+        "statusPreviousRev14": "DRAFT_GENERATED_PENDING_REVIEW",
+        "promotionEligibilityReasonPreviousRev14": "Not eligible yet: review draft awaiting founder review and approval.",
+        "founderApproval": {
+          "date": "2026-10-11",
+          "approvedBy": "Founder (Adnaan)",
+          "scope": "Editorial and promotion approval of the reviewed r14a record (profile 'Citrus Woody') for local promotion.",
+          "separateFrom": "Separate from the r14b founder-reported reference identity/edition confirmation.",
+          "notEvidence": "Not supplier identity, concentration or note evidence. Supplied-product concentration remains unconfirmed.",
+          "reviewQueueReviewer": "Founder (Adnaan) - approval 2026-10-11"
+        },
+        "promotion": {
+          "promotionId": "KvfQqR73e2wA",
+          "nativePath": "app/lib/mkc/native/only-the-brave-inspired.ts",
+          "completedAt": "2026-10-11T20:11:35.265Z",
+          "operator": "Claude Code (founder approval 2026-10-11)",
+          "reviewedBy": "Founder (Adnaan) - approval 2026-10-11",
+          "validationStatus": "PASS",
+          "buildResult": "pass",
+          "workflow": "npm run mkc:review -- --add/--approve only-the-brave-inspired; npm run mkc:promote -- --slug only-the-brave-inspired",
+          "base": "fdaff61ad0e68ab55e2078eca363b80a6e7ea797 (= origin/main at promotion; no integration needed)",
+          "nativeEqualsDraft": "Native body identical to the reviewed r14a draft apart from the type import path.",
+          "relationships": "empty — proposals remain UNVERIFIED_FACTORY_SUGGESTION in the ledger",
+          "committed": false
+        }
+      }
+    ],
+    "batch2_researched_not_drafted": [
+      {
+        "sourceKey": "LADIES-167-Kenzo Flower",
+        "rawSupplierText": "Kenzo Flower",
+        "status": "RESEARCHED_NOT_DRAFTED",
+        "reason": "No readable authorised pyramid: Macy's 403, Boots bot-check, Escentual truncated; search results disagree. Not drafted to avoid AI-inferred notes."
+      },
+      {
+        "sourceKey": "LADIES-59-Burberry / My Burberry",
+        "rawSupplierText": "Burberry / My Burberry",
+        "status": "RESEARCHED_NOT_DRAFTED",
+        "reason": "Edition ambiguity: My Burberry EDT and EDP are reported as different compositions and the supplier states no concentration; burberry.com page 404. Needs supplier/founder clarification."
+      },
+      {
+        "sourceKey": "MEN-104-Mr Burberry",
+        "rawSupplierText": "Mr Burberry",
+        "status": "RESEARCHED_NOT_DRAFTED",
+        "reason": "Brand EDT page names top (grapefruit) and base (vetiver, guaiac wood) only; no heart. Sephora and Notino 403. Incomplete pyramid."
+      },
+      {
+        "sourceKey": "MEN-12-Abercombie & Fitch - Fierce",
+        "rawSupplierText": "Abercombie & Fitch - Fierce",
+        "status": "RESEARCHED_NOT_DRAFTED",
+        "reason": "Brand page gives three unlabelled key notes (marine breeze, sandalwood, musk wood); no tiers."
+      },
+      {
+        "sourceKey": "LADIES-222-Paco Rabanne Pure XS",
+        "rawSupplierText": "Paco Rabanne Pure XS",
+        "status": "NOT_RESEARCHED_FURTHER",
+        "reason": "Search located only brand marketing copy with conflicting note lists; no page inspected."
+      },
+      {
+        "sourceKey": "MEN-137-UOMO Valentino",
+        "rawSupplierText": "UOMO Valentino",
+        "status": "IDENTITY_HOLD",
+        "reason": "Ambiguous between Valentino Uomo (2014) and the Born in Roma Uomo line, which is already native (valentino-uomo-born-in-roma-inspired). Not drafted."
+      }
+    ],
+    "batch2_likely_existing_matches": [
+      {
+        "sourceKey": "LADIES-266-Twilly by Hermes",
+        "nativeSlug": "twilly-d'hermes-inspired",
+        "basis": "Name/alias match to an active native record (spelling variant missed by the coarse pool match); not supplier-confirmed."
+      },
+      {
+        "sourceKey": "MEN-102-Mont Blanc Explorer",
+        "nativeSlug": "montblanc-explorer-inspired",
+        "basis": "Name/alias match to an active native record (spelling variant missed by the coarse pool match); not supplier-confirmed."
+      },
+      {
+        "sourceKey": "MEN-103-Mont Blanc Legend",
+        "nativeSlug": "montblanc-legend-inspired",
+        "basis": "Name/alias match to an active native record (spelling variant missed by the coarse pool match); not supplier-confirmed."
+      },
+      {
+        "sourceKey": "MEN-144-Voyage Hermes",
+        "nativeSlug": "voyage-d'hermes-inspired",
+        "basis": "Name/alias match to an active native record (spelling variant missed by the coarse pool match); not supplier-confirmed."
+      },
+      {
+        "sourceKey": "MEN-148-Azzaro The Most Wanted",
+        "nativeSlug": "azzaro-most-wanted-inspired",
+        "basis": "Name/alias match to an active native record (spelling variant missed by the coarse pool match); not supplier-confirmed."
+      },
+      {
+        "sourceKey": "MEN-32-Bulgari Aqua",
+        "nativeSlug": "bvlgari-aqua-inspired",
+        "basis": "Name/alias match to an active native record (spelling variant missed by the coarse pool match); not supplier-confirmed."
+      },
+      {
+        "sourceKey": "MEN-33-Bulgari Aqua Amara",
+        "nativeSlug": "aqva-amara-inspired",
+        "basis": "Name/alias match to an active native record (spelling variant missed by the coarse pool match); not supplier-confirmed."
+      },
+      {
+        "sourceKey": "MEN-34-Bulgari Aqva Marine",
+        "nativeSlug": "bvlgari-aqva-marine-inspired",
+        "basis": "Name/alias match to an active native record (spelling variant missed by the coarse pool match); not supplier-confirmed."
+      },
+      {
+        "sourceKey": "MEN-35-Bulgari Black",
+        "nativeSlug": "bvlgari-black-inspired",
+        "basis": "Name/alias match to an active native record (spelling variant missed by the coarse pool match); not supplier-confirmed."
+      },
+      {
+        "sourceKey": "LADIES-223-Paco Rabanne Ultra Violet",
+        "nativeSlug": "ultraviolet-woman-inspired",
+        "basis": "Name/alias match to an active native record (spelling variant missed by the coarse pool match); not supplier-confirmed."
+      },
+      {
+        "sourceKey": "MEN-43-CK Euphoria",
+        "nativeSlug": "euphoria-men-inspired",
+        "basis": "Name/alias match to an active native record (spelling variant missed by the coarse pool match); not supplier-confirmed."
+      },
+      {
+        "sourceKey": "UNISEX-38-Jo Malone / Wood Sage & Sea Salt",
+        "nativeSlug": "wood-sage-sea-salt-inspired",
+        "basis": "Name/alias match to an active native record (spelling variant missed by the coarse pool match); not supplier-confirmed."
+      },
+      {
+        "sourceKey": "UNISEX-64-Jo Malone / English Pear & Freesia",
+        "nativeSlug": "english-pear-freesia-inspired",
+        "basis": "Name/alias match to an active native record (spelling variant missed by the coarse pool match); not supplier-confirmed."
+      },
+      {
+        "sourceKey": "UNISEX-60-Jo Malone / Fig & Lotus Flower",
+        "nativeSlug": "fig-lotus-flower-inspired",
+        "basis": "Name/alias match to an active native record (spelling variant missed by the coarse pool match); not supplier-confirmed."
       }
     ]
   },
