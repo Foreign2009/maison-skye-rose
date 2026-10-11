@@ -5637,6 +5637,26 @@
         "reason": "Founder approval explicitly granted by Adnaan 'Adi' Fortuin in ChatGPT on 2026-09-13 after completion of the Wave 8 P4C claim-safety and editorial audit."
       },
       "founderApprovedAt": "2026-09-13T14:28:14.000Z"
+    },
+    {
+      "slug": "beautiful-by-estee-lauder-inspired",
+      "name": "Beautiful by Estee Lauder Inspired",
+      "collection": "Rose",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-10-11T09:53:45.723Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-10-11T09:53:48.018Z",
+      "reviewer": "Founder (Adnaan) - instruction 2026-10-11",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder (Adnaan) - instruction 2026-10-11",
+        "timestamp": "2026-10-11T09:53:48.017Z",
+        "reason": "Wave 9: evidence PYRAMID_SECONDARY_SUPPORTED (Nordstrom EDP listing); identity founder-reported 2026-10-11, no direct supplier response inspected; relationships empty; see catalogue-expansion-ledger.json"
+      }
     }
   ]
 }

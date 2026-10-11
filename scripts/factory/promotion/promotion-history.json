@@ -2,6 +2,24 @@
   "version": "1.0",
   "entries": [
     {
+      "promotionId": "o60aTXEc01Dy",
+      "slug": "beautiful-by-estee-lauder-inspired",
+      "name": "Beautiful by Estee Lauder Inspired",
+      "collection": "Rose",
+      "operator": "Claude Code (founder instruction 2026-10-11)",
+      "reviewedBy": "Founder (Adnaan) - instruction 2026-10-11",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "startedAt": "2026-10-11T09:53:59.084Z",
+      "completedAt": "2026-10-11T09:55:05.798Z",
+      "durationMs": 66715,
+      "outcome": "promoted",
+      "validationStatus": "PASS",
+      "buildResult": "pass",
+      "nativePath": "app/lib/mkc/native/beautiful-by-estee-lauder-inspired.ts",
+      "error": null
+    },
+    {
       "promotionId": "LI3HbqJzuQnX",
       "slug": "capri-lemon-sugar-inspired",
       "name": "Capri Lemon Sugar Inspired",

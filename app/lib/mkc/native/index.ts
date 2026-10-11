@@ -277,6 +277,7 @@ import { azzaroWantedByNightInspired } from "./azzaro-wanted-by-night-inspired";
 import { _24FaubourgInspired } from "./24-faubourg-inspired";
 import { bossNuitPourFemmeInspired } from "./boss-nuit-pour-femme-inspired";
 import { capriLemonSugarInspired } from "./capri-lemon-sugar-inspired";
+import { beautifulByEsteeLauderInspired } from "./beautiful-by-estee-lauder-inspired";
 
 export const nativeFragrances = new Map<string, FragranceKnowledge>([
   ["sauvage-inspired",              sauvageInspired],
@@ -546,4 +547,5 @@ export const nativeFragrances = new Map<string, FragranceKnowledge>([
   ["24-faubourg-inspired", _24FaubourgInspired],
   ["boss-nuit-pour-femme-inspired", bossNuitPourFemmeInspired],
   ["capri-lemon-sugar-inspired", capriLemonSugarInspired],
+  ["beautiful-by-estee-lauder-inspired", beautifulByEsteeLauderInspired],
 ]);

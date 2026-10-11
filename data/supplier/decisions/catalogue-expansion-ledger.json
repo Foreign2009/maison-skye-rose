@@ -1,0 +1,903 @@
+{
+  "schemaVersion": "CATALOGUE-EXPANSION-LEDGER-v1.0.0",
+  "description": "Durable reconciliation ledger for the August 2026 supplier catalogue expansion. Tracks all supplier entries across six disposition states. Append-only governance evidence. The current provisional missing count is 349, an upper bound — not a confirmed unique-fragrance count (352 at the 2026-10-10 reconciliation and 351 after the first confirmed existing match are retained as history in countHistory).",
+  "governance": {
+    "sourceSupplierFile": "data/supplier/raw/fragrance-list-2026-08.json",
+    "sourceNormalizedFile": "data/supplier/normalized/fragrance-list-2026-08-normalized.json",
+    "reconciliationScript": "C:\\Users\\adi\\AppData\\Local\\Temp\\claude\\...\\scratchpad\\reconcile.mjs",
+    "reconciliationDate": "2026-10-10",
+    "authorizedBy": "Founder — catalogue expansion authorization 2026-10-10",
+    "governancePrinciples": [
+      "The provisional missing count is currently 349 — an upper bound, not a confirmed total or unique-fragrance count. History: 352 at the 2026-10-10 reconciliation; 351 after the LADIES-277 existing match; 349 after the LADIES-108 existing match and the LADIES-34 promotion (2026-10-11). It changes only when an existing match or an active MKC promotion is demonstrated, and a supplier row is subtracted at most once.",
+      "Batch 1 factory drafts do NOT reduce the provisional missing count (currently 349). Drafts are staging artefacts, not active MKC records; only promotion or a confirmed existing match reduces it. (Historical: 10 drafts were originally generated; the count was 352 at the time.)",
+      "Evidence tier AI_INFERENCE_UNSOURCED requires source verification before promotion. No promotion occurs without PYRAMID_SECONDARY_SUPPORTED or higher evidence.",
+      "Unresolved identities (supplier text does not self-identify the exact fragrance or variant) must not be promoted until resolution is confirmed.",
+      "Supplier text is the authoritative basis for identity resolution. Inference without supplier text support is flagged, not treated as confirmation.",
+      "Reconciliation findings supersede slug-matching alone. Brand-stripped slug forms were checked during the 2026-10-10 reconciliation pass."
+    ],
+    "counts": {
+      "supplierRawRows": 565,
+      "supplierUniqueIdentities": "NOT_CONFIRMED — 565 is the total row count; internal duplicates or variant entries within the supplier list have not been fully enumerated. Unique identity count requires a dedicated deduplication pass.",
+      "activeNativeMKC": 268,
+      "activeMatchesFoundInSupplierRows": "PARTIAL — reconcile.mjs (2026-10-10) found 68 supplier rows matching native MKC beyond initial slug analysis (i.e., matched by name/alias/flanker, not just slug). Total confirmed supplier rows already in active MKC is at least 216 (565 − 349 provisional gap; LADIES-277 and LADIES-108 confirmed as existing matches and LADIES-34 promoted on 2026-10-11). Exact count requires full reconciliation pass.",
+      "unresolvedIdentity": 2,
+      "duplicateAlias": 3,
+      "batch1DraftsGenerated": 8,
+      "batch1DraftsDeleted": 2,
+      "batch1DraftsCurrentlyInStaging": 6,
+      "verifiedReadyForPromotion": 0,
+      "provisionalMissingFromActiveMKC": {
+        "count": 349,
+        "status": "PROVISIONAL_UPPER_BOUND",
+        "basis": "349 = 351 less 1 supplier row confirmed already active (LADIES-108 → the-one-pour-femme-inspired) and 1 supplier row promoted (LADIES-34 → beautiful-by-estee-lauder-inspired, uncommitted), 2026-10-11. Still NOT a reconciled final count and NOT a unique-fragrance count.",
+        "cannotBeReducedBy": "The remaining staged batch 1 drafts do NOT reduce this count; only promotion to native MKC or a confirmed existing match does. Deleted drafts (2) and unresolved entries (2) are not subtracted.",
+        "knownGaps": "13 ambiguous supplier entries require separate identity research before batch assignment.",
+        "overlaps": "The 68 additionally-found MKC matches were located by name/alias/flanker reconciliation beyond slug-matching. Further identity research may identify additional overlaps (two Batch 1 drafts proved to be existing natives), so 349 may still be an over-estimate. The final count can only be confirmed after all 565 rows are individually resolved.",
+        "countHistory": [
+          {
+            "count": 352,
+            "date": "2026-10-10",
+            "basis": "2026-10-10 reconcile.mjs pass — 565 supplier rows minus confirmed-matched entries. NOT a reconciled final count."
+          },
+          {
+            "count": 351,
+            "date": "2026-10-11",
+            "basis": "352 from the 2026-10-10 reconcile.mjs NOT-IN-MKC list, minus 1 supplier row (LADIES-277-Versace Yellow Diamonds) confirmed on 2026-10-11 as already active (yellow-diamond-inspired). Still NOT a reconciled final count and NOT a unique-fragrance count."
+          }
+        ]
+      },
+      "batch1ByStatus": {
+        "DRAFT_GENERATED_PENDING_EVIDENCE": 4,
+        "DRAFT_GENERATED_PENDING_PROFILE_REVIEW": 1,
+        "PROMOTED_TO_NATIVE": 1
+      },
+      "batch1ByEvidenceTier": {
+        "AI_INFERENCE_UNSOURCED": 4,
+        "PYRAMID_SECONDARY_SUPPORTED": 2
+      },
+      "batch1IdentityHolds": [],
+      "countsDerivedFrom": "entries.draft_generated (6 staged records incl. 1 promoted) and entries.duplicate_alias — revision 10, 2026-10-11",
+      "batch1IdentityHoldCount": 0,
+      "batch1EvidenceHolds": [
+        "gucci-rush-inspired",
+        "jimmy-choo-inspired",
+        "tommy-girl-inspired",
+        "poison-by-dior-inspired"
+      ],
+      "batch1EvidenceHoldCount": 4,
+      "batch1ProfileReviewHolds": [
+        "romance-by-ralph-lauren-inspired"
+      ],
+      "existingHoldsPreserved": 1,
+      "batch1DraftsWithdrawnAsDuplicate": 2,
+      "batch1PromotionEligible": [],
+      "batch1ConcentrationReferenceHolds": [
+        "poison-by-dior-inspired"
+      ],
+      "batch1IdentityConfirmedFounderReported": [
+        "jimmy-choo-inspired",
+        "romance-by-ralph-lauren-inspired",
+        "beautiful-by-estee-lauder-inspired",
+        "poison-by-dior-inspired",
+        "dolce-and-gabbana-the-one-inspired (withdrawn duplicate)"
+      ],
+      "activeNativeMKCPrevious": 267,
+      "activeNativeMKCBreakdown": {
+        "total": 268,
+        "Elite": 49,
+        "Skye": 109,
+        "Rose": 110,
+        "measuredDate": "2026-10-11",
+        "note": "Measured from nativeFragrances after promotion. The earlier header baseline 'Elite 48, Skye 109, Rose 110 = 267' was inaccurate; measured pre-promotion state was Elite 49, Skye 109, Rose 109 = 267."
+      },
+      "batch1PromotedToNative": [
+        "beautiful-by-estee-lauder-inspired"
+      ],
+      "batch1ConfirmedDuplicatesPendingDisposition": [],
+      "batch1WithdrawnDuplicates": [
+        {
+          "draft": "versace-yellow-diamonds-inspired",
+          "resolvedTo": "yellow-diamond-inspired",
+          "sourceKey": "LADIES-277-Versace Yellow Diamonds"
+        },
+        {
+          "draft": "dolce-and-gabbana-the-one-inspired",
+          "resolvedTo": "the-one-pour-femme-inspired",
+          "sourceKey": "LADIES-108-Dolce & Gabbana The One"
+        }
+      ]
+    },
+    "recoveryRevision": {
+      "date": "2026-10-10",
+      "changes": "supplierText set to verbatim raw strings with sourceKey; inspected evidence linked; identity holds added for D&G The One, Jimmy Choo, Poison; Romance and Poison identity notes corrected; stale Poison score note corrected; Kayali Vanilla 28 hold recorded.",
+      "supportingEvidenceFile": "data/supplier/decisions/wave-9-source-evidence.json",
+      "revision4": "evidenceTierNote/inspectedEvidence.pages aligned; Fragrantica claims moved to per-entry history; Jimmy Choo elimination claim removed; Romance identity hold added; counts recalculated.",
+      "revision5": "2026-10-11: versace-yellow-diamonds-inspired recorded as DUPLICATE_ALIAS of yellow-diamond-inspired (LADIES-277-Versace Yellow Diamonds); withdrawn from staging; ready count 0; provisional upper bound 352 → 351.",
+      "revision6": "2026-10-11: evidence research continued; no tier, status or count changes.",
+      "revision7": "2026-10-11: The One Plum heart → base (evidence supported, identity held); Beautiful blocker wording; promotionEligible recorded separately from evidence tier; counts recalculated.",
+      "revision8": "2026-10-11: founder-reported identity confirmations (no direct supplier response inspected); identity holds cleared; Poison concentration/reference evidence hold added; readiness recalculated.",
+      "revision9": "2026-10-11: beautiful-by-estee-lauder-inspired promoted via review+promotion workflow (promotionId o60aTXEc01Dy, uncommitted). dolce-and-gabbana-the-one-inspired found to duplicate active the-one-pour-femme-inspired (LADIES-108); not promoted; disposition pending. Active native MKC 267 → 268; provisional upper bound 351 → 349.",
+      "revision10": "2026-10-11: dolce-and-gabbana-the-one-inspired withdrawn as DUPLICATE_ALIAS of the-one-pour-femme-inspired (LADIES-108-Dolce & Gabbana The One); removed from staging catalogue; draft, research, evidence and founder confirmation preserved. Current-state count wording corrected to 349; provisional count unchanged (LADIES-108 already subtracted in revision 9)."
+    },
+    "evidenceTierPolicyApplied": {
+      "source": "data/identity/source/wave-3-2026-research.json → governance.sourcePolicyTiers / admissibilityNote; data/supplier/decisions/catalogue-expansion-ledger.json → governance.governancePrinciples; Wave 8 precedent (scripts/factory/data/wave-8-catalogue.ts).",
+      "tier1": "Official brand websites (brand.com product pages)",
+      "tier2": "Fragrantica.com, Basenotes.net, major authorised retailers (Amazon, Sephora, Kohl's, Nordstrom, authorized boutiques)",
+      "admissibility": "LLM general knowledge is NOT admissible; claims must be traceable to a named external source.",
+      "promotionRule": "Ledger: AI_INFERENCE_UNSOURCED requires source verification; no promotion without PYRAMID_SECONDARY_SUPPORTED or higher.",
+      "noFounderApprovalForTier": "The repository attaches no founder-approval step to PYRAMID_SECONDARY_SUPPORTED. The earlier 'founder decision required' wording in these artifacts was not a repository requirement and has been removed.",
+      "appliedInterpretation": "Revision 3: PYRAMID_SECONDARY_SUPPORTED requires a full-pyramid match with an inspected tier-1 brand page or tier-2 source (Fragrantica, Basenotes, major authorised retailer). thescentbase.com / scentverdict.com are supplementary only and require such corroboration. Amcal not demonstrably an authorised retailer.",
+      "strictnessNote": "Wave 3 accepted Fragrantica WebSearch snippets as HIGH evidence. This wave follows the stricter instruction that search summaries and blocked fetches are not inspected-page evidence.",
+      "identitySeparation": "Evidence tier describes the reference-fragrance pyramid only. Supplier identity holds are independent and still block promotion."
+    },
+    "supplierConfirmationRequests": "data/supplier/decisions/wave-9-supplier-confirmation-requests.md (LADIES-108, LADIES-156, LADIES-251, LADIES-34, LADIES-232)"
+  },
+  "entries": {
+    "duplicate_alias": [
+      {
+        "supplierText": "Gucci Guilty",
+        "supplierCategory": "LADIES",
+        "disposition": "DUPLICATE_ALIAS",
+        "resolvedTo": "gucci-guilty-pour-femme-inspired",
+        "resolvedStatus": "ALREADY_ACTIVE_IN_MKC",
+        "evidenceLevel": "REPOSITORY_CONFIRMED",
+        "notes": "Gucci Guilty (unqualified female entry) = Gucci Guilty Pour Femme (2010 original). gucci-guilty-pour-femme-inspired is already in native MKC. Confirmed during batch 1 preparation 2026-10-10. Do NOT create a separate gucci-guilty-inspired record.",
+        "confirmedDate": "2026-10-10"
+      },
+      {
+        "supplierText": "Versace Yellow Diamonds",
+        "sourceKey": "LADIES-277-Versace Yellow Diamonds",
+        "supplierCategory": "LADIES",
+        "disposition": "DUPLICATE_ALIAS",
+        "resolvedTo": "yellow-diamond-inspired",
+        "resolvedStatus": "ALREADY_ACTIVE_IN_MKC",
+        "evidenceLevel": "REPOSITORY_CONFIRMED",
+        "repositoryEvidence": [
+          "app/lib/mkc/native/yellow-diamond-inspired.ts — active Rose record, slug yellow-diamond-inspired",
+          "app/lib/mkc/native/index.ts — registered (import line 165, map entry line 434)",
+          "scripts/factory/promotion/promotion-registry.json — status 'promoted', completedAt 2026-08-20, nativePath app/lib/mkc/native/yellow-diamond-inspired.ts",
+          "git commit 2396f41 'EP-CAT-P7B: promote Wave 2 Rose collection to native MKC'",
+          "data/identity/source/wave-2-2026-research.json — _sourceKey LADIES-277-Versace Yellow Diamonds, canonicalName 'Yellow Diamond', brand Versace, launchYear 2011"
+        ],
+        "notes": "Wave 9 batch 1 draft versace-yellow-diamonds-inspired duplicates the active native record yellow-diamond-inspired (same supplier row, same fragrance: Versace Yellow Diamond EDT, 2011). Withdrawn from Wave 9 staging. Do NOT promote and do NOT create a separate versace-yellow-diamonds-inspired record.",
+        "withdrawnDraft": {
+          "slug": "versace-yellow-diamonds-inspired",
+          "draftFile": "scripts/factory/drafts/versace-yellow-diamonds-inspired.ts",
+          "draftPreserved": true,
+          "removedFromStagingCatalogue": "scripts/factory/data/wave-9-catalogue.ts",
+          "statusBeforeWithdrawal": "VERIFIED_READY_FOR_PROMOTION",
+          "sourceEvidencePreserved": "data/supplier/decisions/wave-9-source-evidence.json (all versace-yellow-diamonds-inspired fetch records retained)",
+          "recordAtWithdrawal": {
+            "supplierText": "Versace Yellow Diamonds",
+            "supplierCategory": "LADIES",
+            "slug": "versace-yellow-diamonds-inspired",
+            "draftFile": "scripts/factory/drafts/versace-yellow-diamonds-inspired.ts",
+            "canonicalIdentity": "Versace Yellow Diamond EDT (2011) — female",
+            "identityConfidence": "HIGH",
+            "identityNote": "Supplier text includes brand and specific name ('Versace Yellow Diamonds'). Inspected Nordstrom and scentverdict listings title the product 'Yellow Diamond' (singular); canonical identity uses that form.",
+            "evidenceTier": "PYRAMID_SECONDARY_SUPPORTED",
+            "notesResearchDate": "2026-10-10",
+            "factoryValidation": "PASS [0 errors, 0 warnings] — 2026-10-10",
+            "promotionBlockers": [],
+            "status": "VERIFIED_READY_FOR_PROMOTION",
+            "generatedDate": "2026-10-10",
+            "sourceKey": "LADIES-277-Versace Yellow Diamonds",
+            "inspectedEvidence": {
+              "summary": "Nordstrom (named tier-2 retailer) full pyramid; draft wording aligned (Lemon, Orange Blossom). Corroborates scentverdict.com.",
+              "evidenceFile": "data/supplier/decisions/wave-9-source-evidence.json",
+              "accessDate": "2026-10-10",
+              "revision": 3,
+              "pages": [
+                "https://scentverdict.com/perfume/versace-yellow-diamond-eau-de-toilette",
+                "https://larose.az/en/product/versace-yellow-diamond",
+                "https://www.thebeautyshortlist.com/2011/11/13/versace-yellow-diamond/",
+                "https://www.nordstrom.com/s/versace-yellow-diamond-eau-de-toilette/3265651"
+              ],
+              "namedOrAuthorisedPages": [
+                "https://www.nordstrom.com/s/versace-yellow-diamond-eau-de-toilette/3265651"
+              ]
+            },
+            "evidenceTierBasis": "Nordstrom (named tier-2 retailer) full pyramid; draft wording aligned (Lemon, Orange Blossom). Corroborates scentverdict.com.",
+            "history": {
+              "label": "HISTORICAL (initial session, 2026-10-10): recorded from Fragrantica-attributed web-search results; the Fragrantica page was never inspected. Retained for audit only — not current evidence.",
+              "notesResearchSource": "https://www.fragrantica.com/perfume/Versace/Yellow-Diamond-13064.html",
+              "notesResearchNote": "Notes pyramid corrected: Freesia moved to heart (was top); Amalfi Lemon and Pear added to top. Rose, Jasmine, Anemone removed from heart (not in source); African Orange Flower added. Sandalwood removed from base. Broken alternatives reference 'yellow-diamond-inspired' removed (slug does not exist in MKC).",
+              "evidenceSource": "Model knowledge corrected from Fragrantica-attributed search results; not confirmed by an inspected page.",
+              "identityNote": "Supplier text includes brand and specific name. Fragrantica title is 'Yellow Diamond' (no S) — corrected in canonical identity. Yellow Diamond Intense (2014) is a distinct flanker."
+            },
+            "evidenceTierNote": "PYRAMID_SECONDARY_SUPPORTED: full pyramid matches inspected named/authorised source(s): https://www.nordstrom.com/s/versace-yellow-diamond-eau-de-toilette/3265651. Fragrantica was not inspected (HTTP 403) and is not relied on.",
+            "currentNotesSource": "Inspected named/authorised source(s): https://www.nordstrom.com/s/versace-yellow-diamond-eau-de-toilette/3265651"
+          }
+        },
+        "nativeRecordUnchanged": "yellow-diamond-inspired profile, scores, prices, notes and relationships were not modified.",
+        "evidenceNoteForNativeRecord": "The inspected Nordstrom listing names 'lemon' and 'orange blossom'. The qualifiers 'Amalfi Lemon' and 'African Orange Flower' (used in the native record) are not supported by that inspected evidence. This is recorded for reference only; the native record was not changed.",
+        "evidenceNoteSource": "https://www.nordstrom.com/s/versace-yellow-diamond-eau-de-toilette/3265651",
+        "correctedEarlierClaims": [
+          "Wave 9 catalogue header: 'All 8 slugs confirmed clear: native MKC ...' — incorrect for LADIES-277.",
+          "pending_relationship_proposals: 'yellow-diamond-inspired ... RELATIONSHIP_SLUG_NOT_FOUND — no such slug in native MKC' — incorrect; the slug is active.",
+          "Normalized supplier intake shows existingMKCSlug: null for LADIES-277. That historical intake file is preserved unchanged; this ledger entry supersedes it for reconciliation."
+        ],
+        "confirmedDate": "2026-10-11"
+      },
+      {
+        "supplierText": "Dolce & Gabbana The One",
+        "sourceKey": "LADIES-108-Dolce & Gabbana The One",
+        "supplierCategory": "LADIES",
+        "disposition": "DUPLICATE_ALIAS",
+        "resolvedTo": "the-one-pour-femme-inspired",
+        "resolvedStatus": "ALREADY_ACTIVE_IN_MKC",
+        "evidenceLevel": "REPOSITORY_CONFIRMED",
+        "repositoryEvidence": [
+          "app/lib/mkc/native/the-one-pour-femme-inspired.ts — active Rose record, female, 'The One Pour Femme Inspired'",
+          "app/lib/mkc/native/index.ts — registered",
+          "scripts/factory/promotion/promotion-registry.json — the-one-pour-femme-inspired status 'promoted'",
+          "git commit e8082fd 'Promote Wave 5 catalogue to native MKC'",
+          "data/identity/source/wave-5-2026-supplier.json — LADIES-108-Dolce & Gabbana The One → 'Canonical identity: Dolce & Gabbana The One EDP (2006, women's) … Proposed slug: the-one-pour-femme-inspired'"
+        ],
+        "notes": "Wave 9 batch 1 draft dolce-and-gabbana-the-one-inspired duplicates the active native record the-one-pour-femme-inspired (same supplier row LADIES-108; same fragrance: Dolce & Gabbana The One, women's, EDP 2006). Withdrawn from Wave 9 staging. Do NOT promote and do NOT create a separate dolce-and-gabbana-the-one-inspired record.",
+        "identityConfirmation": {
+          "status": "CONFIRMED_FOUNDER_REPORTED",
+          "confirmedIdentity": "Dolce & Gabbana The One — original women's — EDP",
+          "sourceKey": "LADIES-108-Dolce & Gabbana The One",
+          "date": "2026-10-11",
+          "confirmedBy": "Founder (Adnaan)",
+          "provenance": "FOUNDER_REPORTED — Founder (Adnaan) reported this confirmation on 2026-10-11. No direct supplier response was inspected."
+        },
+        "withdrawnDraft": {
+          "slug": "dolce-and-gabbana-the-one-inspired",
+          "draftFile": "scripts/factory/drafts/dolce-and-gabbana-the-one-inspired.ts",
+          "draftPreserved": true,
+          "removedFromStagingCatalogue": "scripts/factory/data/wave-9-catalogue.ts",
+          "statusBeforeWithdrawal": "DRAFT_GENERATED_DUPLICATE_PENDING_DISPOSITION",
+          "sourceEvidencePreserved": "data/supplier/decisions/wave-9-source-evidence.json (all dolce-and-gabbana-the-one-inspired fetch records retained)",
+          "researchPreserved": "data/supplier/decisions/wave-9-research.json (record retained with disposition DUPLICATE_ALIAS)",
+          "recordAtWithdrawal": {
+            "supplierText": "Dolce & Gabbana The One",
+            "supplierCategory": "LADIES",
+            "slug": "dolce-and-gabbana-the-one-inspired",
+            "draftFile": "scripts/factory/drafts/dolce-and-gabbana-the-one-inspired.ts",
+            "canonicalIdentity": "Dolce & Gabbana The One EDP (2006) — female — founder-confirmed (founder-reported)",
+            "identityConfidence": "CONFIRMED_FOUNDER_REPORTED",
+            "identityNote": "Supplier text is specific. Variant (EDT vs EDP) unspecified.",
+            "evidenceTier": "PYRAMID_SECONDARY_SUPPORTED",
+            "notesResearchDate": "2026-10-10",
+            "factoryValidation": "PASS [0 errors, 0 warnings] — 2026-10-10",
+            "promotionBlockers": [
+              "DUPLICATE: supplier row LADIES-108 is already active in native MKC as the-one-pour-femme-inspired (Wave 5, commit e8082fd). Not promoted. Disposition (e.g. DUPLICATE_ALIAS withdrawal, as for Versace) awaits founder decision. The native record was not changed."
+            ],
+            "status": "DRAFT_GENERATED_DUPLICATE_PENDING_DISPOSITION",
+            "generatedDate": "2026-10-10",
+            "supplierTextPreviouslyRecorded": "Dolce and Gabbana The One",
+            "sourceKey": "LADIES-108-Dolce & Gabbana The One",
+            "inspectedEvidence": {
+              "summary": "Full 2006 EDP pyramid matches inspected authorised retailers John Lewis (https://www.johnlewis.com/dolce-gabbana-the-one-eau-de-parfum/p41003) and Ulta (https://www.ulta.com/p/one-eau-de-parfum-prod481734?sku=2159420) in the same tiers after moving Plum heart → base on 2026-10-11. Draft keeps 'Lily' where both list 'Madonna Lily' (generic form; no repository precedent for the qualifier). Supports the reference fragrance only — not the supplier's concentration.",
+              "evidenceFile": "data/supplier/decisions/wave-9-source-evidence.json",
+              "accessDate": "2026-10-10",
+              "revision": 7,
+              "pages": [
+                "https://scentverdict.com/perfume/dolce-gabbana-the-one-eau-de-parfum",
+                "https://scentverdict.com/perfume/dolce-gabbana-the-one-eau-de-toilette",
+                "https://www.nordstrom.com/s/the-one-eau-de-parfum/7756843",
+                "https://www.dolcegabbana.com/en-us/beauty/perfumes-for-her/the-one/eau-de-parfum---158057971180486.html",
+                "https://www.johnlewis.com/dolce-gabbana-the-one-eau-de-parfum/p41003",
+                "https://www.ulta.com/p/one-eau-de-parfum-prod481734?sku=2159420"
+              ],
+              "namedOrAuthorisedPages": [
+                "https://www.nordstrom.com/s/the-one-eau-de-parfum/7756843",
+                "https://www.dolcegabbana.com/en-us/beauty/perfumes-for-her/the-one/eau-de-parfum---158057971180486.html",
+                "https://www.johnlewis.com/dolce-gabbana-the-one-eau-de-parfum/p41003",
+                "https://www.ulta.com/p/one-eau-de-parfum-prod481734?sku=2159420"
+              ],
+              "remainingGaps": [
+                "'Lily' retained for retailers' 'Madonna Lily' (less specific, not contradictory)."
+              ]
+            },
+            "identityConfidencePrevious": "HELD",
+            "evidenceTierBasis": "Full 2006 EDP pyramid matches inspected authorised retailers John Lewis (https://www.johnlewis.com/dolce-gabbana-the-one-eau-de-parfum/p41003) and Ulta (https://www.ulta.com/p/one-eau-de-parfum-prod481734?sku=2159420) in the same tiers after moving Plum heart → base on 2026-10-11. Draft keeps 'Lily' where both list 'Madonna Lily' (generic form; no repository precedent for the qualifier). Supports the reference fragrance only — not the supplier's concentration.",
+            "history": {
+              "label": "HISTORICAL (initial session, 2026-10-10): recorded from Fragrantica-attributed web-search results; the Fragrantica page was never inspected. Retained for audit only — not current evidence.",
+              "notesResearchSource": "https://www.fragrantica.com/perfume/Dolce-Gabbana/The-One-698.html",
+              "notesResearchNote": "Notes pyramid corrected against Fragrantica search result: Peach moved to top; Marigold removed; Lily and Plum added to heart. wardrobePartner layton-inspired (male) removed. Evidence tier remains AI_INFERENCE_UNSOURCED — no stored source artifact.",
+              "evidenceSource": "Inspected secondary page (see inspectedEvidence). Pyramid first drafted from model knowledge and corrected from Fragrantica-attributed search results."
+            },
+            "evidenceTierNote": "PYRAMID_SECONDARY_SUPPORTED: full pyramid matches inspected authorised retailers https://www.johnlewis.com/dolce-gabbana-the-one-eau-de-parfum/p41003, https://www.ulta.com/p/one-eau-de-parfum-prod481734?sku=2159420 (2006 EDP reference). Concentration confirmed as EDP (founder-reported, 2026-10-11), matching the 2006 EDP reference. Fragrantica was not inspected (HTTP 403) and is not relied on.",
+            "currentNotesSource": "Inspected authorised retailers: https://www.johnlewis.com/dolce-gabbana-the-one-eau-de-parfum/p41003, https://www.ulta.com/p/one-eau-de-parfum-prod481734?sku=2159420",
+            "evidenceQualification": "PYRAMID_SECONDARY_SUPPORTED",
+            "promotionEligible": false,
+            "promotionEligibilityReason": "Not eligible: confirmed duplicate of active native the-one-pour-femme-inspired (LADIES-108).",
+            "identityConfirmation": {
+              "status": "CONFIRMED_FOUNDER_REPORTED",
+              "confirmedIdentity": "Dolce & Gabbana The One — original women's — EDP",
+              "sourceKey": "LADIES-108-Dolce & Gabbana The One",
+              "date": "2026-10-11",
+              "confirmedBy": "Founder (Adnaan)",
+              "provenance": "FOUNDER_REPORTED — Founder (Adnaan) reported this confirmation on 2026-10-11. No direct supplier response was inspected."
+            },
+            "promotionBlockersResolved": [
+              {
+                "blocker": "IDENTITY HOLD (CONCENTRATION_UNRESOLVED): supplier text does not state EDP or EDT; inspected sources show different EDP (2006) and EDT (2017) compositions. Do not resolve by assumption.",
+                "resolvedDate": "2026-10-11",
+                "resolution": "Founder-reported confirmation: Dolce & Gabbana The One — original women's — EDP"
+              },
+              {
+                "blocker": "Variant clarification recommended (EDT vs EDP)",
+                "resolvedDate": "2026-10-11",
+                "resolution": "Founder-reported confirmation: Dolce & Gabbana The One — original women's — EDP"
+              }
+            ],
+            "duplicateFinding": {
+              "existingNativeSlug": "the-one-pour-femme-inspired",
+              "sourceKey": "LADIES-108-Dolce & Gabbana The One",
+              "repositoryEvidence": [
+                "app/lib/mkc/native/the-one-pour-femme-inspired.ts — active Rose record, female, 'The One Pour Femme Inspired'",
+                "app/lib/mkc/native/index.ts — registered",
+                "scripts/factory/promotion/promotion-registry.json — the-one-pour-femme-inspired status 'promoted'",
+                "git commit e8082fd 'Promote Wave 5 catalogue to native MKC'",
+                "data/identity/source/wave-5-2026-supplier.json — LADIES-108-Dolce & Gabbana The One → 'Canonical identity: Dolce & Gabbana The One EDP (2006, women's) … Proposed slug: the-one-pour-femme-inspired'"
+              ],
+              "found": "2026-10-11",
+              "foundDuring": "Pre-promotion duplicate recheck by name, alias and supplier source key (revision 9)."
+            }
+          }
+        },
+        "nativeRecordUnchanged": "the-one-pour-femme-inspired was not modified (its profile, notes, scores, prices and relationships are unchanged). Differences between the withdrawn draft and the native record are not reconciled by this withdrawal.",
+        "provisionalCountEffect": "None. LADIES-108 was already subtracted from the provisional count as a confirmed existing match in revision 9 (351 → 349); withdrawal does not reduce it again.",
+        "precedent": "Follows the LADIES-277 Versace Yellow Diamonds DUPLICATE_ALIAS withdrawal (revision 5).",
+        "confirmedDate": "2026-10-11"
+      }
+    ],
+    "unresolved_identity": [
+      {
+        "supplierText": "Jean Paul Gaultier",
+        "supplierCategory": "LADIES",
+        "disposition": "UNRESOLVED_IDENTITY",
+        "reason": "Supplier text does not self-identify the specific fragrance or variant. Jean Paul Gaultier produces multiple distinct fragrances (Classique 1993, Le Male 1995, La Belle, Scandal, etc.). Inference to Classique is not evidence. Supplier also lists 'Jean Paul Gaultier La Belle' and 'Jean Paul Gaultier Scandal' as separate entries — but the unqualified entry remains ambiguous. Resolution requires supplier clarification or authoritative source identifying which specific fragrance this entry refers to.",
+        "blockedDraft": "jean-paul-gaultier-classique-inspired.ts (deleted — generated on unresolved identity)",
+        "status": "HOLD_FOR_IDENTITY_RESOLUTION",
+        "flaggedDate": "2026-10-10"
+      },
+      {
+        "supplierText": "Issey Miyake",
+        "supplierCategory": "LADIES",
+        "disposition": "UNRESOLVED_IDENTITY",
+        "reason": "Supplier text does not self-identify the specific fragrance or variant. Issey Miyake produces multiple distinct fragrances (L'Eau d'Issey Women 1992, L'Eau d'Issey Pour Homme 1994, Pure, Blue, Sport, etc.). Inference to L'Eau d'Issey Women (1992) is not evidence. Supplier also lists 'Issey Miyake Pure' as a separate entry — but the unqualified entry remains ambiguous (could be Women original or Men original). Resolution requires supplier clarification or authoritative source.",
+        "blockedDraft": "issey-miyake-inspired.ts (deleted — generated on unresolved identity)",
+        "status": "HOLD_FOR_IDENTITY_RESOLUTION",
+        "flaggedDate": "2026-10-10"
+      }
+    ],
+    "draft_generated": [
+      {
+        "supplierText": "Gucci Rush",
+        "supplierCategory": "LADIES",
+        "slug": "gucci-rush-inspired",
+        "draftFile": "scripts/factory/drafts/gucci-rush-inspired.ts",
+        "canonicalIdentity": "Gucci Rush EDT (1999) — female",
+        "identityConfidence": "HIGH",
+        "identityNote": "Supplier text is specific. Distinct from Gucci Rush ii (separate listing in supplier). Do NOT confuse with gucci-guilty-pour-femme-inspired.",
+        "evidenceTier": "AI_INFERENCE_UNSOURCED",
+        "notesResearchDate": "2026-10-10",
+        "factoryValidation": "PASS [0 errors, 0 warnings] — 2026-10-10",
+        "promotionBlockers": [
+          "EVIDENCE: No authorised or named source corroborates the pyramid. thescentbase.com (supplementary) matches. Two readable Debenhams marketplace listings (third-party sellers) disagree with each other: one is consistent with the draft tiers but omits Californian Gardenia and Damask Rose; the other lists African orange flower and musk instead."
+        ],
+        "status": "DRAFT_GENERATED_PENDING_EVIDENCE",
+        "generatedDate": "2026-10-10",
+        "sourceKey": "LADIES-132-Gucci Rush",
+        "inspectedEvidence": {
+          "summary": "No authorised or named source corroborates the pyramid. thescentbase.com (supplementary) matches. Two readable Debenhams marketplace listings (third-party sellers) disagree with each other: one is consistent with the draft tiers but omits Californian Gardenia and Damask Rose; the other lists African orange flower and musk instead.",
+          "evidenceFile": "data/supplier/decisions/wave-9-source-evidence.json",
+          "accessDate": "2026-10-10",
+          "revision": 6,
+          "pages": [
+            "https://thescentbase.com/perfumes/gucci/gucci-rush",
+            "https://www.debenhams.com/product/gucci-rush-eau-de-toilette-spray-75ml_p-739b06e2-858a-477a-9b5b-b38223db6cc9",
+            "https://www.debenhams.com/product/gucci-rush-50ml-eau-de-toilette_p-d9096114-272b-4fdc-80a0-905f763bbf44"
+          ],
+          "namedOrAuthorisedPages": [],
+          "pagesReadableWithoutPyramid": [
+            "https://www.amazon.com/Gucci-Rush-Women-Toilette-Spray/dp/B0009OAIIG"
+          ],
+          "remainingGaps": [
+            "No authorised retailer, brand page or named database inspected (Selfridges, Superdrug, Basenotes 403; gucci.com inaccessible).",
+            "Californian Gardenia and Damask Rose appear only in thescentbase.com.",
+            "Retail listings conflict on top/heart notes."
+          ]
+        },
+        "evidenceTierBasis": "No authorised or named source corroborates the pyramid. thescentbase.com (supplementary) matches. Two readable Debenhams marketplace listings (third-party sellers) disagree with each other: one is consistent with the draft tiers but omits Californian Gardenia and Damask Rose; the other lists African orange flower and musk instead.",
+        "history": {
+          "label": "HISTORICAL (initial session, 2026-10-10): recorded from Fragrantica-attributed web-search results; the Fragrantica page was never inspected. Retained for audit only — not current evidence.",
+          "notesResearchSource": "https://www.fragrantica.com/perfume/Gucci/Gucci-Rush-686.html",
+          "notesResearchNote": "Notes pyramid significantly corrected against Fragrantica: Orange Blossom and Magnolia removed; Coriander moved to heart; Peach moved to top; Sandalwood/Musk removed; Vetiver added to base; note names corrected to Fragrantica-listed forms. wardrobePartner spicebomb-extreme-inspired (male) removed.",
+          "evidenceSource": "Inspected secondary page (see inspectedEvidence). Pyramid first drafted from model knowledge and corrected from Fragrantica-attributed search results."
+        },
+        "evidenceTierNote": "AI_INFERENCE_UNSOURCED: no inspected brand page, named database or authorised retailer matches the full draft pyramid in the same tiers. Third-party database matches (thescentbase/scentverdict) and marketplace listings are supplementary only. Fragrantica was not inspected (HTTP 403).",
+        "currentNotesSource": "No named/authorised source corroborates the full pyramid; see inspectedEvidence.",
+        "evidenceQualification": "AI_INFERENCE_UNSOURCED",
+        "promotionEligible": false,
+        "promotionEligibilityReason": "Not eligible: evidence tier below PYRAMID_SECONDARY_SUPPORTED."
+      },
+      {
+        "supplierText": "Jimmy Choo",
+        "supplierCategory": "LADIES",
+        "slug": "jimmy-choo-inspired",
+        "draftFile": "scripts/factory/drafts/jimmy-choo-inspired.ts",
+        "canonicalIdentity": "Jimmy Choo EDP (2011) — female — founder-confirmed (founder-reported)",
+        "identityConfidence": "CONFIRMED_FOUNDER_REPORTED",
+        "identityNote": "Supplier text is the house name only. 'Jimmy Choo Fever' and 'Jimmy Choo Flash' are listed separately, but that does not identify the unqualified entry's line or concentration. 2011 EDP is an assumed reference.",
+        "evidenceTier": "AI_INFERENCE_UNSOURCED",
+        "notesResearchDate": "2026-10-10",
+        "factoryValidation": "PASS [0 errors, 0 warnings] — 2026-10-10",
+        "promotionBlockers": [
+          "EVIDENCE: Authorised retailers support 5 of 6 notes: Pear (John Lewis, Nordstrom, Ulta), Mandarin Orange (John Lewis), Tiger Orchid (Nordstrom, Ulta, Debenhams), Toffee (John Lewis, Debenhams), Patchouli (John Lewis, Nordstrom, Ulta). 'Green Notes' is not listed by any authorised source. Nordstrom and Debenhams give 'sweet Italian orange' and Nordstrom gives 'caramel'.",
+          "Heart tier has a single note (Tiger Orchid), consistent with Nordstrom and Ulta. Validator NOTES_HEART_MIN bypassed by notesEvidenceLocked."
+        ],
+        "status": "DRAFT_GENERATED_PENDING_EVIDENCE",
+        "generatedDate": "2026-10-10",
+        "sourceKey": "LADIES-156-Jimmy Choo",
+        "inspectedEvidence": {
+          "summary": "Authorised retailers support 5 of 6 notes: Pear (John Lewis, Nordstrom, Ulta), Mandarin Orange (John Lewis), Tiger Orchid (Nordstrom, Ulta, Debenhams), Toffee (John Lewis, Debenhams), Patchouli (John Lewis, Nordstrom, Ulta). 'Green Notes' is not listed by any authorised source. Nordstrom and Debenhams give 'sweet Italian orange' and Nordstrom gives 'caramel'.",
+          "evidenceFile": "data/supplier/decisions/wave-9-source-evidence.json",
+          "accessDate": "2026-10-10",
+          "revision": 6,
+          "pages": [
+            "https://scentverdict.com/perfume/jimmy-choo-jimmy-choo-eau-de-parfum",
+            "https://www.nordstrom.com/s/jimmy-choo-eau-de-parfum/3196411",
+            "https://www.ulta.com/p/jimmy-choo-eau-de-parfum-xlsImpprod4760589",
+            "https://www.johnlewis.com/jimmy-choo-eau-de-parfum/p200402",
+            "https://www.debenhams.com/product/jimmy-choo-jimmy-choo-eau-de-parfum_ydd03691"
+          ],
+          "namedOrAuthorisedPages": [
+            "https://www.nordstrom.com/s/jimmy-choo-eau-de-parfum/3196411",
+            "https://www.ulta.com/p/jimmy-choo-eau-de-parfum-xlsImpprod4760589",
+            "https://www.johnlewis.com/jimmy-choo-eau-de-parfum/p200402",
+            "https://www.debenhams.com/product/jimmy-choo-jimmy-choo-eau-de-parfum_ydd03691"
+          ],
+          "remainingGaps": [
+            "'Green Notes' unsupported by authorised sources (scentverdict.com only).",
+            "Top citrus wording split: 'mandarin orange' (John Lewis) vs 'sweet Italian orange' (Nordstrom, Debenhams).",
+            "Base wording split: 'toffee' (John Lewis, Debenhams) vs 'caramel' (Nordstrom)."
+          ]
+        },
+        "identityConfidencePrevious": "HELD",
+        "evidenceTierBasis": "Authorised retailers support 5 of 6 notes: Pear (John Lewis, Nordstrom, Ulta), Mandarin Orange (John Lewis), Tiger Orchid (Nordstrom, Ulta, Debenhams), Toffee (John Lewis, Debenhams), Patchouli (John Lewis, Nordstrom, Ulta). 'Green Notes' is not listed by any authorised source. Nordstrom and Debenhams give 'sweet Italian orange' and Nordstrom gives 'caramel'.",
+        "history": {
+          "label": "HISTORICAL (initial session, 2026-10-10): recorded from Fragrantica-attributed web-search results; the Fragrantica page was never inspected. Retained for audit only — not current evidence.",
+          "notesResearchSource": "https://www.fragrantica.com/perfume/Jimmy-Choo/Jimmy-Choo-10573.html",
+          "notesResearchNote": "Notes pyramid corrected: Freesia removed from top; Mandarin Orange and Green Notes added to top. Grasse Rose, Gardenia, Heliotrope removed from heart (factory-padded, not in source). Indonesian Sandalwood removed from base. NOTE: Fragrantica lists only Tiger Orchid in the heart tier — single heart note is source-constrained; review checklist item '≥ 2 per tier' flagged.",
+          "evidenceSource": "Model knowledge corrected from Fragrantica-attributed search results; not confirmed by an inspected page.",
+          "identityNote": "Supplier lists 'Jimmy Choo Fever' and 'Jimmy Choo Flash' as separate entries. Unqualified entry resolves to the 2011 original by process of elimination."
+        },
+        "evidenceTierNote": "AI_INFERENCE_UNSOURCED: no inspected brand page, named database or authorised retailer matches the full draft pyramid in the same tiers. Partial authorised evidence: https://www.nordstrom.com/s/jimmy-choo-eau-de-parfum/3196411, https://www.ulta.com/p/jimmy-choo-eau-de-parfum-xlsImpprod4760589, https://www.johnlewis.com/jimmy-choo-eau-de-parfum/p200402, https://www.debenhams.com/product/jimmy-choo-jimmy-choo-eau-de-parfum_ydd03691. Third-party database matches (thescentbase/scentverdict) and marketplace listings are supplementary only. Fragrantica was not inspected (HTTP 403).",
+        "currentNotesSource": "No named/authorised source corroborates the full pyramid; see inspectedEvidence.",
+        "evidenceQualification": "AI_INFERENCE_UNSOURCED",
+        "promotionEligible": false,
+        "promotionEligibilityReason": "Not eligible: evidence tier below PYRAMID_SECONDARY_SUPPORTED.",
+        "identityConfirmation": {
+          "status": "CONFIRMED_FOUNDER_REPORTED",
+          "confirmedIdentity": "Jimmy Choo — original women's — EDP",
+          "sourceKey": "LADIES-156-Jimmy Choo",
+          "date": "2026-10-11",
+          "confirmedBy": "Founder (Adnaan)",
+          "provenance": "FOUNDER_REPORTED — Founder (Adnaan) reported this confirmation on 2026-10-11. No direct supplier response was inspected."
+        },
+        "promotionBlockersResolved": [
+          {
+            "blocker": "IDENTITY HOLD (UNQUALIFIED_IDENTITY_AND_VARIANT): supplier text is house name only; elimination of Fever/Flash does not fix the line or concentration. Supplier also lists MEN-89 'Jimmy Choo'. Do not resolve by assumption.",
+            "resolvedDate": "2026-10-11",
+            "resolution": "Founder-reported confirmation: Jimmy Choo — original women's — EDP"
+          }
+        ]
+      },
+      {
+        "supplierText": "Romance",
+        "supplierCategory": "LADIES",
+        "slug": "romance-by-ralph-lauren-inspired",
+        "draftFile": "scripts/factory/drafts/romance-by-ralph-lauren-inspired.ts",
+        "canonicalIdentity": "Ralph Lauren Romance EDP (1998) — female — founder-confirmed (founder-reported)",
+        "identityConfidence": "CONFIRMED_FOUNDER_REPORTED",
+        "identityNote": "Supplier text is 'Romance' only — NO brand attribution. Ralph Lauren Romance is a high-confidence inference, not supplier-stated. (Previous note claiming brand attribution was incorrect.)",
+        "evidenceTier": "PYRAMID_SECONDARY_SUPPORTED",
+        "notesResearchDate": "2026-10-10",
+        "factoryValidation": "PASS [0 errors, 0 warnings] — 2026-10-10",
+        "promotionBlockers": [
+          "PROFILE CONFLICT OPEN: Ulta classifies 'Fresh Floral' (supports 'Floral Fresh'); brand copy on a non-authorised retailer says 'Floral, Woody'."
+        ],
+        "status": "DRAFT_GENERATED_PENDING_PROFILE_REVIEW",
+        "generatedDate": "2026-10-10",
+        "supplierTextPreviouslyRecorded": "Romance by Ralph Lauren",
+        "sourceKey": "LADIES-251-Romance",
+        "inspectedEvidence": {
+          "summary": "Ulta (authorised retailer) full pyramid, corroborated by Ralph Lauren brand copy (mazenonline.com) and Nordstrom key notes. Draft pyramid replaced accordingly.",
+          "evidenceFile": "data/supplier/decisions/wave-9-source-evidence.json",
+          "accessDate": "2026-10-10",
+          "revision": 3,
+          "pages": [
+            "https://mazenonline.com/products/romance-eau-de-parfum-1",
+            "https://www.ulta.com/p/romance-eau-de-parfum-fs300428?sku=2018587",
+            "https://www.nordstrom.com/s/ralph-lauren-romance-eau-de-parfum-spray/2834448"
+          ],
+          "namedOrAuthorisedPages": [
+            "https://www.ulta.com/p/romance-eau-de-parfum-fs300428?sku=2018587",
+            "https://www.nordstrom.com/s/ralph-lauren-romance-eau-de-parfum-spray/2834448"
+          ],
+          "pagesReadableWithoutPyramid": [
+            "https://perfumania.com/products/ralph-lauren-romance-perfume-for-women-eau-de-parfum"
+          ]
+        },
+        "identityNotePrevious": "Supplier text includes brand attribution and specific fragrance name.",
+        "evidenceTierBasis": "Ulta (authorised retailer) full pyramid, corroborated by Ralph Lauren brand copy (mazenonline.com) and Nordstrom key notes. Draft pyramid replaced accordingly.",
+        "history": {
+          "label": "HISTORICAL (initial session, 2026-10-10): recorded from Fragrantica-attributed web-search results; the Fragrantica page was never inspected. Retained for audit only — not current evidence.",
+          "notesResearchSource": "https://www.fragrantica.com/perfume/Ralph-Lauren/Romance-825.html",
+          "notesResearchNote": "Notes pyramid substantially corrected: Marigold, Concord Grape, Green Leaves removed from top (fabricated — not in source); Rose, Chamomile, Ginger, Lemon, Yellow Freesia added as top notes. Magnolia removed from heart; Rose moved to top; Lotus, White Violet, Carnation added to heart. Amber removed from base; White Musk, Exotic Woods added. CONFLICT: RL official website lists different notes (mandarin, pink peppercorn, rose damascena, marigold, geranium) — Fragrantica pyramid used as primary source per reconciliation protocol.",
+          "evidenceSource": "Model knowledge corrected from Fragrantica-attributed search results; not confirmed by an inspected page."
+        },
+        "evidenceTierNote": "PYRAMID_SECONDARY_SUPPORTED: full pyramid matches inspected named/authorised source(s): https://www.ulta.com/p/romance-eau-de-parfum-fs300428?sku=2018587, https://www.nordstrom.com/s/ralph-lauren-romance-eau-de-parfum-spray/2834448. Fragrantica was not inspected (HTTP 403) and is not relied on.",
+        "currentNotesSource": "Inspected named/authorised source(s): https://www.ulta.com/p/romance-eau-de-parfum-fs300428?sku=2018587, https://www.nordstrom.com/s/ralph-lauren-romance-eau-de-parfum-spray/2834448",
+        "identityConfidencePrevious": "HELD",
+        "evidenceQualification": "PYRAMID_SECONDARY_SUPPORTED",
+        "promotionEligible": false,
+        "promotionEligibilityReason": "Not eligible: open profile review.",
+        "identityConfirmation": {
+          "status": "CONFIRMED_FOUNDER_REPORTED",
+          "confirmedIdentity": "Ralph Lauren Romance — original — EDP",
+          "sourceKey": "LADIES-251-Romance",
+          "date": "2026-10-11",
+          "confirmedBy": "Founder (Adnaan)",
+          "provenance": "FOUNDER_REPORTED — Founder (Adnaan) reported this confirmation on 2026-10-11. No direct supplier response was inspected."
+        },
+        "promotionBlockersResolved": [
+          {
+            "blocker": "IDENTITY HOLD (BRAND_INFERRED): supplier text is 'Romance' with no brand; Ralph Lauren is inferred. Do not resolve by assumption.",
+            "resolvedDate": "2026-10-11",
+            "resolution": "Founder-reported confirmation: Ralph Lauren Romance — original — EDP"
+          }
+        ]
+      },
+      {
+        "supplierText": "Tommy Girl",
+        "supplierCategory": "LADIES",
+        "slug": "tommy-girl-inspired",
+        "draftFile": "scripts/factory/drafts/tommy-girl-inspired.ts",
+        "canonicalIdentity": "Tommy Hilfiger Tommy Girl EDT (1996) — female",
+        "identityConfidence": "HIGH",
+        "identityNote": "Supplier text is specific. No other mainstream fragrance carries this exact name.",
+        "evidenceTier": "AI_INFERENCE_UNSOURCED",
+        "notesResearchDate": "2026-10-10",
+        "factoryValidation": "PASS [0 errors, 0 warnings] — 2026-10-10",
+        "promotionBlockers": [
+          "EVIDENCE: Debenhams first-party listing (sold by Debenhams) names only tangerine, honeysuckle and wild heather — supports Honeysuckle only. amcal.com.au (not a demonstrable authorised retailer) matches the 16-note draft. Current retail copy may describe a different formulation."
+        ],
+        "status": "DRAFT_GENERATED_PENDING_EVIDENCE",
+        "generatedDate": "2026-10-10",
+        "sourceKey": "LADIES-265-Tommy Girl",
+        "inspectedEvidence": {
+          "summary": "Debenhams first-party listing (sold by Debenhams) names only tangerine, honeysuckle and wild heather — supports Honeysuckle only. amcal.com.au (not a demonstrable authorised retailer) matches the 16-note draft. Current retail copy may describe a different formulation.",
+          "evidenceFile": "data/supplier/decisions/wave-9-source-evidence.json",
+          "accessDate": "2026-10-10",
+          "revision": 6,
+          "pages": [
+            "https://www.amcal.com.au/shop/product/MMC-O100030742/tommy-hilfiger-tommy-girl-30ml-edt-spray/",
+            "https://www.debenhams.com/product/tommy-hilfiger-tommy-girl-eau-de-toilette_ydd09770"
+          ],
+          "namedOrAuthorisedPages": [
+            "https://www.debenhams.com/product/tommy-hilfiger-tommy-girl-eau-de-toilette_ydd09770"
+          ],
+          "pagesReadableWithoutPyramid": [
+            "https://www.amazon.com/Tommy-Hilfiger-Toilette-Spray-Women/dp/B000C1ZEY4"
+          ],
+          "remainingGaps": [
+            "No authorised source lists the 16-note pyramid.",
+            "Current copy names 'tangerine' and 'wild heather', absent from the draft.",
+            "Tommy Hilfiger brand pages timed out."
+          ]
+        },
+        "evidenceTierBasis": "Debenhams first-party listing (sold by Debenhams) names only tangerine, honeysuckle and wild heather — supports Honeysuckle only. amcal.com.au (not a demonstrable authorised retailer) matches the 16-note draft. Current retail copy may describe a different formulation.",
+        "history": {
+          "label": "HISTORICAL (initial session, 2026-10-10): recorded from Fragrantica-attributed web-search results; the Fragrantica page was never inspected. Retained for audit only — not current evidence.",
+          "notesResearchSource": "https://www.fragrantica.com/perfume/Tommy-Hilfiger/Tommy-Girl-3016.html",
+          "notesResearchNote": "Notes pyramid substantially corrected: Bergamot removed (not in source); Cherry Blossom, Marigold, Lily of the Valley removed from heart; Mint moved to heart; Apple → Apple Tree Blossom; Mandarin Orange, Camellia, Blackcurrant added to top. Lemon, Honeysuckle, Grapefruit, Lily, Mint added to heart; Jasmine moved to base; Musk and Amber removed; Magnolia and Leather added to base. wardrobePartner eros-inspired (male) removed.",
+          "evidenceSource": "Inspected secondary page (see inspectedEvidence). Pyramid first drafted from model knowledge and corrected from Fragrantica-attributed search results."
+        },
+        "evidenceTierNote": "AI_INFERENCE_UNSOURCED: no inspected brand page, named database or authorised retailer matches the full draft pyramid in the same tiers. Partial authorised evidence: https://www.debenhams.com/product/tommy-hilfiger-tommy-girl-eau-de-toilette_ydd09770. Third-party database matches (thescentbase/scentverdict) and marketplace listings are supplementary only. Fragrantica was not inspected (HTTP 403).",
+        "currentNotesSource": "No named/authorised source corroborates the full pyramid; see inspectedEvidence.",
+        "evidenceQualification": "AI_INFERENCE_UNSOURCED",
+        "promotionEligible": false,
+        "promotionEligibilityReason": "Not eligible: evidence tier below PYRAMID_SECONDARY_SUPPORTED."
+      },
+      {
+        "supplierText": "Beautiful",
+        "supplierCategory": "LADIES",
+        "slug": "beautiful-by-estee-lauder-inspired",
+        "draftFile": "scripts/factory/drafts/beautiful-by-estee-lauder-inspired.ts",
+        "canonicalIdentity": "Estée Lauder Beautiful EDP (1985) — female — founder-confirmed (founder-reported)",
+        "identityConfidence": "CONFIRMED_FOUNDER_REPORTED",
+        "identityNote": "Supplier text is unqualified — no brand attribution. Resolution to Estée Lauder is a high-probability inference (no other mainstream fragrance uses this exact name; supplier lists other Estée Lauder fragrances separately). Not AUTHORITATIVE. Classified SUPPLIER_TEXT_UNQUALIFIED.",
+        "evidenceTier": "PYRAMID_SECONDARY_SUPPORTED",
+        "notesResearchDate": "2026-10-10",
+        "factoryValidation": "PASS [0 errors, 0 warnings] — relationships degraded — 2026-10-10",
+        "promotionBlockers": [],
+        "status": "PROMOTED_TO_NATIVE",
+        "generatedDate": "2026-10-10",
+        "sourceKey": "LADIES-34-Beautiful",
+        "inspectedEvidence": {
+          "summary": "Nordstrom (named tier-2 retailer) full EDP pyramid; draft pyramid replaced accordingly. Applies to the inferred Estée Lauder identity only.",
+          "evidenceFile": "data/supplier/decisions/wave-9-source-evidence.json",
+          "accessDate": "2026-10-10",
+          "revision": 3,
+          "pages": [
+            "https://www.nordstrom.com/s/estee-lauder-este-lauder-beautiful-eau-de-parfum-spray/2813083"
+          ],
+          "namedOrAuthorisedPages": [
+            "https://www.nordstrom.com/s/estee-lauder-este-lauder-beautiful-eau-de-parfum-spray/2813083"
+          ]
+        },
+        "concentrationDiscrepancy": "Resolved: EDP confirmed (founder-reported, 2026-10-11); matches inspected Nordstrom EDP listing.",
+        "evidenceTierBasis": "Nordstrom (named tier-2 retailer) full EDP pyramid; draft pyramid replaced accordingly. Applies to the inferred Estée Lauder identity only.",
+        "history": {
+          "label": "HISTORICAL (initial session, 2026-10-10): recorded from Fragrantica-attributed web-search results; the Fragrantica page was never inspected. Retained for audit only — not current evidence.",
+          "notesResearchSource": "https://www.fragrantica.com/perfume/Estee-Lauder/Beautiful-528.html",
+          "notesResearchNote": "Notes pyramid partially corrected per Fragrantica full pyramid: Tuberose and Marigold moved from top to heart (Fragrantica classifies them as heart; EL official simplified list uses them as top impression). Rose, Lily, Bergamot confirmed as Fragrantica top notes and added. NOTE: Beautiful has 17 listed heart notes on Fragrantica; draft uses a curated representative subset.",
+          "evidenceSource": "Model knowledge corrected from Fragrantica-attributed search results; not confirmed by an inspected page.",
+          "canonicalIdentity": "Estée Lauder Beautiful EDT (1985) — female"
+        },
+        "evidenceTierNote": "PYRAMID_SECONDARY_SUPPORTED_CONDITIONAL: full pyramid matches inspected named/authorised source(s): https://www.nordstrom.com/s/estee-lauder-este-lauder-beautiful-eau-de-parfum-spray/2813083. Fragrantica was not inspected (HTTP 403) and is not relied on. Previously conditional on the identity hold; condition met by founder-reported confirmation (EDP) on 2026-10-11.",
+        "currentNotesSource": "Inspected named/authorised source(s): https://www.nordstrom.com/s/estee-lauder-este-lauder-beautiful-eau-de-parfum-spray/2813083",
+        "evidenceQualification": "PYRAMID_SECONDARY_SUPPORTED",
+        "promotionEligible": false,
+        "promotionEligibilityReason": "Promoted to native MKC on 2026-10-11 (promotionId o60aTXEc01Dy); not committed.",
+        "identityConfirmation": {
+          "status": "CONFIRMED_FOUNDER_REPORTED",
+          "confirmedIdentity": "Estée Lauder Beautiful — original — EDP",
+          "sourceKey": "LADIES-34-Beautiful",
+          "date": "2026-10-11",
+          "confirmedBy": "Founder (Adnaan)",
+          "provenance": "FOUNDER_REPORTED — Founder (Adnaan) reported this confirmation on 2026-10-11. No direct supplier response was inspected."
+        },
+        "promotionBlockersResolved": [
+          {
+            "blocker": "IDENTITY BLOCKER: Supplier text 'Beautiful' is unqualified — no brand attribution. Requires supplier confirmation. A brand or reference page establishes facts about Estée Lauder Beautiful but cannot confirm what the supplier's unqualified 'Beautiful' entry means.",
+            "resolvedDate": "2026-10-11",
+            "resolution": "Founder-reported confirmation: Estée Lauder Beautiful — original — EDP"
+          }
+        ],
+        "identityConfidencePrevious": "MODERATE",
+        "promotion": {
+          "promotionId": "o60aTXEc01Dy",
+          "nativePath": "app/lib/mkc/native/beautiful-by-estee-lauder-inspired.ts",
+          "completedAt": "2026-10-11T09:55:05.798Z",
+          "operator": "Claude Code (founder instruction 2026-10-11)",
+          "reviewedBy": "Founder (Adnaan) - instruction 2026-10-11",
+          "validationStatus": "PASS",
+          "buildResult": "pass",
+          "workflow": "npx tsx scripts/factory/review/index.ts --add/--approve; npx tsx scripts/factory/promotion/index.ts --slug",
+          "identityProvenance": "FOUNDER_REPORTED (2026-10-11); no direct supplier response inspected",
+          "committed": false
+        }
+      },
+      {
+        "supplierText": "Poison",
+        "supplierCategory": "LADIES",
+        "slug": "poison-by-dior-inspired",
+        "draftFile": "scripts/factory/drafts/poison-by-dior-inspired.ts",
+        "canonicalIdentity": "Christian Dior Poison — original — EDP (founder-confirmed, founder-reported). Inspected reference evidence describes the EDT; no EDP reference established.",
+        "identityConfidence": "CONFIRMED_FOUNDER_REPORTED",
+        "identityNote": "Supplier text is 'Poison' only — Dior not stated. Supplier lists 'Poison Girl', 'Poison / Hypnotic', 'Poison / Midnite', 'Poison / Pure' separately; Dior Poison (1985) is inferred. EDT existence for 1985 Poison supported by inspected secondary page; supplier concentration unstated.",
+        "evidenceTier": "AI_INFERENCE_UNSOURCED",
+        "notesResearchDate": "2026-10-10",
+        "factoryValidation": "PASS [0 errors, 0 warnings] — 2026-10-10",
+        "promotionBlockers": [
+          "EVIDENCE (CONCENTRATION_REFERENCE): founder-confirmed identity is the original Dior Poison EDP, but every inspected reference (scentverdict.com EDT, nordstrom.com EDT, johnlewis.com EDT; thescentbase.com concentration unstated) describes the EDT or does not state a concentration. The draft pyramid is not transferred or relabelled as EDP. Hold until an exact Poison EDP reference is established.",
+          "EVIDENCE: Nordstrom key notes support Coriander, Tuberose and Opoponax (Opoponax as base; draft heart). John Lewis lists a 1985 EDT but its description carries Hypnotic Poison-style notes, so it neither corroborates nor refutes the pyramid. thescentbase.com (supplementary) matches all 21 notes."
+        ],
+        "status": "DRAFT_GENERATED_PENDING_EVIDENCE",
+        "generatedDate": "2026-10-10",
+        "supplierTextPreviouslyRecorded": "Poison by Dior",
+        "sourceKey": "LADIES-232-Poison",
+        "inspectedEvidence": {
+          "summary": "Nordstrom key notes support Coriander, Tuberose and Opoponax (Opoponax as base; draft heart). John Lewis lists a 1985 EDT but its description carries Hypnotic Poison-style notes, so it neither corroborates nor refutes the pyramid. thescentbase.com (supplementary) matches all 21 notes.",
+          "evidenceFile": "data/supplier/decisions/wave-9-source-evidence.json",
+          "accessDate": "2026-10-10",
+          "revision": 6,
+          "pages": [
+            "https://thescentbase.com/perfumes/dior/poison",
+            "https://scentverdict.com/perfume/dior-poison-eau-de-toilette",
+            "https://www.nordstrom.com/s/dior-poison-eau-de-toilette/3165375",
+            "https://www.johnlewis.com/dior-poison-eau-de-toilette/p93144"
+          ],
+          "namedOrAuthorisedPages": [
+            "https://www.nordstrom.com/s/dior-poison-eau-de-toilette/3165375",
+            "https://www.johnlewis.com/dior-poison-eau-de-toilette/p93144"
+          ],
+          "remainingGaps": [
+            "No authorised full pyramid (dior.com 403, Dillard's denied).",
+            "Opoponax tier differs from Nordstrom.",
+            "18 of 21 notes rely on thescentbase.com only.",
+            "No Poison EDP reference inspected; existing evidence is EDT or unstated."
+          ]
+        },
+        "identityConfidencePrevious": "HELD",
+        "evidenceTierBasis": "Nordstrom key notes support Coriander, Tuberose and Opoponax (Opoponax as base; draft heart). John Lewis lists a 1985 EDT but its description carries Hypnotic Poison-style notes, so it neither corroborates nor refutes the pyramid. thescentbase.com (supplementary) matches all 21 notes.",
+        "history": {
+          "label": "HISTORICAL (initial session, 2026-10-10): recorded from Fragrantica-attributed web-search results; the Fragrantica page was never inspected. Retained for audit only — not current evidence.",
+          "notesResearchSource": "https://www.fragrantica.com/perfume/Dior/Poison-218.html",
+          "notesResearchNote": "Notes pyramid substantially corrected: Orange Blossom and Honey removed from top (not top notes); Wild Berries, Coriander, Anise, Brazilian Rosewood added to top. Incense, White Honey, Carnation, African Orange Flower added to heart. Oakmoss removed from base; Virginia Cedar, Heliotrope, Vanilla added. Stored intelligence scores are sweetness:3, freshness:3, warmth:4, intensity:3, versatility:3, matching deriveMetrics('Amber Floral', 'Autumn') (verified 2026-10-10). An earlier note here claiming 4/1/5/5 was stale and has been corrected. wardrobePartner spicebomb-extreme-inspired (male) removed.",
+          "evidenceSource": "Inspected secondary page (see inspectedEvidence). Pyramid first drafted from model knowledge and corrected from Fragrantica-attributed search results.",
+          "identityNotePrevious": "Supplier lists 'Poison Midnite' and 'Poison Pure' as separate entries. Unqualified 'Poison by Dior' resolves to the 1985 original by process of elimination. CONCENTRATION CORRECTION: Original 1985 Poison is EDT, not EDP — confirmed by Fragrantica and community reviews."
+        },
+        "evidenceTierNote": "AI_INFERENCE_UNSOURCED: no inspected brand page, named database or authorised retailer matches the full draft pyramid in the same tiers. Partial authorised evidence: https://www.nordstrom.com/s/dior-poison-eau-de-toilette/3165375, https://www.johnlewis.com/dior-poison-eau-de-toilette/p93144. Third-party database matches (thescentbase/scentverdict) and marketplace listings are supplementary only. Fragrantica was not inspected (HTTP 403).",
+        "currentNotesSource": "No named/authorised source corroborates the full pyramid; see inspectedEvidence.",
+        "evidenceQualification": "AI_INFERENCE_UNSOURCED",
+        "promotionEligible": false,
+        "promotionEligibilityReason": "Not eligible: evidence tier below PYRAMID_SECONDARY_SUPPORTED; concentration/reference evidence hold.",
+        "identityConfirmation": {
+          "status": "CONFIRMED_FOUNDER_REPORTED",
+          "confirmedIdentity": "Dior Poison — original — EDP",
+          "sourceKey": "LADIES-232-Poison",
+          "date": "2026-10-11",
+          "confirmedBy": "Founder (Adnaan)",
+          "provenance": "FOUNDER_REPORTED — Founder (Adnaan) reported this confirmation on 2026-10-11. No direct supplier response was inspected."
+        },
+        "promotionBlockersResolved": [
+          {
+            "blocker": "IDENTITY HOLD (BRAND_INFERRED): supplier text is 'Poison' with no brand; Dior is inferred from sibling entries. Do not resolve by assumption.",
+            "resolvedDate": "2026-10-11",
+            "resolution": "Founder-reported confirmation: Dior Poison — original — EDP"
+          }
+        ]
+      }
+    ],
+    "verified_ready": [],
+    "pending_relationship_proposals": {
+      "description": "Relationship pairings removed from active draft records pending promotion-time verification. Both alternatives and wardrobePartners require reciprocal entries in the target record (validator.ts RELATIONSHIP_ALTERNATIVES_NOT_RECIPROCAL and RELATIONSHIP_WARDROBE_PARTNERS_NOT_RECIPROCAL). These proposals must not be activated without modifying the native counterpart record. Cleared 2026-10-10.",
+      "proposals": [
+        {
+          "draftSlug": "dolce-and-gabbana-the-one-inspired",
+          "proposedAlternatives": [
+            "delina-inspired",
+            "la-vie-est-belle-inspired"
+          ],
+          "proposedWardrobePartners": [
+            "layton-inspired"
+          ],
+          "notes": "WITHDRAWN 2026-10-11: draft is a DUPLICATE_ALIAS of the-one-pour-femme-inspired. Proposals are void.",
+          "notesPrevious": "layton-inspired is cross-gender (male). Reciprocity requires layton-inspired to add dolce-and-gabbana-the-one-inspired to its wardrobePartners.",
+          "status": "WITHDRAWN_DUPLICATE"
+        },
+        {
+          "draftSlug": "gucci-rush-inspired",
+          "proposedAlternatives": [
+            "delina-inspired",
+            "mon-paris-inspired"
+          ],
+          "proposedWardrobePartners": [
+            "spicebomb-extreme-inspired"
+          ],
+          "notes": "spicebomb-extreme-inspired is cross-gender (male). Reciprocity requires spicebomb-extreme-inspired to add gucci-rush-inspired to its wardrobePartners."
+        },
+        {
+          "draftSlug": "jimmy-choo-inspired",
+          "proposedAlternatives": [
+            "oriana-inspired",
+            "burberry-her-inspired",
+            "scandal-inspired"
+          ],
+          "proposedWardrobePartners": [
+            "black-opium-inspired"
+          ],
+          "notes": "All slugs in native MKC. Reciprocity requires black-opium-inspired to add jimmy-choo-inspired to its wardrobePartners."
+        },
+        {
+          "draftSlug": "romance-by-ralph-lauren-inspired",
+          "proposedAlternatives": [
+            "coco-mademoiselle-inspired",
+            "chance-eau-fraiche-inspired",
+            "mon-paris-inspired"
+          ],
+          "proposedWardrobePartners": [
+            "baccarat-rouge-540-inspired",
+            "flowerbomb-inspired"
+          ],
+          "notes": "All slugs in native MKC. Reciprocity requires both wardrobePartner records to add romance-by-ralph-lauren-inspired."
+        },
+        {
+          "draftSlug": "tommy-girl-inspired",
+          "proposedAlternatives": [
+            "coco-mademoiselle-inspired",
+            "chance-eau-fraiche-inspired"
+          ],
+          "proposedWardrobePartners": [
+            "eros-inspired"
+          ],
+          "notes": "eros-inspired is cross-gender (male). Reciprocity requires eros-inspired to add tommy-girl-inspired to its wardrobePartners."
+        },
+        {
+          "draftSlug": "versace-yellow-diamonds-inspired",
+          "proposedAlternatives": [
+            "chance-eau-fraiche-inspired"
+          ],
+          "proposedWardrobePartners": [
+            "delina-inspired"
+          ],
+          "notes": "WITHDRAWN 2026-10-11: draft is a DUPLICATE_ALIAS of yellow-diamond-inspired. Proposals are void. The earlier note that 'yellow-diamond-inspired' had no native slug was incorrect.",
+          "notesPrevious": "yellow-diamond-inspired was separately rejected (RELATIONSHIP_SLUG_NOT_FOUND — no such slug in native MKC). All remaining slugs in native MKC.",
+          "status": "WITHDRAWN_DUPLICATE"
+        },
+        {
+          "draftSlug": "beautiful-by-estee-lauder-inspired",
+          "proposedAlternatives": [
+            "delina-inspired",
+            "mon-paris-inspired",
+            "chance-eau-tendre-inspired"
+          ],
+          "proposedWardrobePartners": [
+            "coco-mademoiselle-inspired"
+          ],
+          "notes": "j-adore-inspired was separately rejected (RELATIONSHIP_SLUG_NOT_FOUND — not in native MKC as of 2026-10-10). Identity blocker on this draft must also be resolved before activating any relationships."
+        },
+        {
+          "draftSlug": "poison-by-dior-inspired",
+          "proposedAlternatives": [
+            "hypnotic-poison-inspired",
+            "opium-inspired"
+          ],
+          "proposedWardrobePartners": [
+            "spicebomb-extreme-inspired",
+            "black-opium-inspired"
+          ],
+          "notes": "spicebomb-extreme-inspired is cross-gender (male). All slugs confirmed in native MKC. Reciprocity requires both wardrobePartner records to add poison-by-dior-inspired."
+        }
+      ]
+    },
+    "missing": {
+      "provisionalCount": 349,
+      "basis": "2026-10-10 reconcile.mjs pass — all gap candidates checked against native MKC using names, brands, aliases and flankers (not slug-matching alone). Found 68 additional entries already in MKC beyond initial slug analysis.",
+      "note": "Provisional upper bound 349 (352 at reconciliation, less LADIES-277 and LADIES-108 confirmed existing matches and LADIES-34 promoted). Not a unique-fragrance count.",
+      "futureWorkNote": "13 ambiguous supplier entries from the normalized file require separate identity research before batch assignment.",
+      "countHistory": [
+        {
+          "count": 352,
+          "date": "2026-10-10"
+        },
+        {
+          "count": 351,
+          "date": "2026-10-11"
+        }
+      ]
+    },
+    "existing_holds_preserved": [
+      {
+        "supplierText": "Vanilla 28 by Kayali",
+        "sourceKey": "UNISEX-50-Vanilla 28 by Kayali",
+        "disposition": "DUPLICATE_HOLD",
+        "status": "HOLD_OPEN — not touched by Wave 9",
+        "observedFacts": [
+          "Native MKC contains vanilla-28-inspired (app/lib/mkc/native/vanilla-28-inspired.ts, registered in native/index.ts).",
+          "promotion-registry.json records kayali-vanilla-28-inspired as promoted with nativePath app/lib/mkc/native/kayali-vanilla-28-inspired.ts, but that file does not exist.",
+          "Drafts scripts/factory/drafts/vanilla-28-inspired.ts and scripts/factory/drafts/kayali-vanilla-28-inspired.ts both exist.",
+          "normalized supplier file lists kayali-vanilla-28-inspired among matched slugs."
+        ],
+        "instruction": "Do not resolve, delete or promote either slug by assumption; resolution needs repository or supplier evidence.",
+        "recordedDate": "2026-10-10"
+      }
+    ],
+    "promoted_to_native": [
+      {
+        "slug": "beautiful-by-estee-lauder-inspired",
+        "sourceKey": "LADIES-34-Beautiful",
+        "promotionId": "o60aTXEc01Dy",
+        "nativePath": "app/lib/mkc/native/beautiful-by-estee-lauder-inspired.ts",
+        "completedAt": "2026-10-11T09:55:05.798Z",
+        "operator": "Claude Code (founder instruction 2026-10-11)",
+        "reviewedBy": "Founder (Adnaan) - instruction 2026-10-11",
+        "validationStatus": "PASS",
+        "buildResult": "pass",
+        "workflow": "npx tsx scripts/factory/review/index.ts --add/--approve; npx tsx scripts/factory/promotion/index.ts --slug",
+        "identityProvenance": "FOUNDER_REPORTED (2026-10-11); no direct supplier response inspected",
+        "committed": false
+      }
+    ]
+  },
+  "descriptionPrevious": "Durable reconciliation ledger for the August 2026 supplier catalogue expansion. Tracks all supplier entries across six disposition states. Append-only governance evidence. The provisional missing count of 352 remains until native MKC promotion is confirmed."
+}

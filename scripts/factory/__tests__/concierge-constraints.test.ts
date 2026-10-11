@@ -7119,9 +7119,9 @@ test("C6-V44 — female + narrow avoidances → gender boundary never relaxes to
 
 // ── Catalogue-wide eligibility assertions ─────────────────────────────────────
 
-test("C6-CAT-01 — catalogue total: 267 native records (STOP if different)", () => {
-  assert.equal(mkcCatalogue.length, 267,
-    `C6-CAT-01: expected 267 total native records — STOP if this fails (catalogue mutation suspected)`);
+test("C6-CAT-01 — catalogue total: 268 native records (STOP if different)", () => {
+  assert.equal(mkcCatalogue.length, 268,
+    `C6-CAT-01: expected 268 total native records — STOP if this fails (catalogue mutation suspected)`);
 });
 
 test("C6-CAT-02 — catalogue male count: 109 records", () => {
@@ -7129,9 +7129,9 @@ test("C6-CAT-02 — catalogue male count: 109 records", () => {
   assert.equal(count, 109, `C6-CAT-02: expected 109 male records, got ${count}`);
 });
 
-test("C6-CAT-03 — catalogue female count: 109 records", () => {
+test("C6-CAT-03 — catalogue female count: 110 records", () => {
   const count = mkcCatalogue.filter((k) => k.gender === "female").length;
-  assert.equal(count, 109, `C6-CAT-03: expected 109 female records, got ${count}`);
+  assert.equal(count, 110, `C6-CAT-03: expected 110 female records, got ${count}`);
 });
 
 test("C6-CAT-04 — catalogue unisex count: 49 records", () => {
@@ -7144,9 +7144,9 @@ test("C6-CAT-05 — male target eligible: 158 records (male + unisex)", () => {
   assert.equal(eligible, 158, `C6-CAT-05: expected 158 male-eligible records, got ${eligible}`);
 });
 
-test("C6-CAT-06 — female target eligible: 158 records (female + unisex)", () => {
+test("C6-CAT-06 — female target eligible: 159 records (female + unisex)", () => {
   const eligible = mkcCatalogue.filter((k) => k.gender === "female" || k.gender === "unisex").length;
-  assert.equal(eligible, 158, `C6-CAT-06: expected 158 female-eligible records, got ${eligible}`);
+  assert.equal(eligible, 159, `C6-CAT-06: expected 159 female-eligible records, got ${eligible}`);
 });
 
 test("C6-CAT-07 — male target excludes all 89 female-only records", () => {

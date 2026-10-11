@@ -6099,6 +6099,27 @@
       "slug": "invictus-inspired",
       "reviewer": "Adi",
       "details": "SITE-RELIABILITY-P2  SITE-RELIABILITY-P2 claim correction: description field — removed 'announces itself' phrasing (P2 borderline). Replacement: 'opens with an assertive Marine accord.' Factual notes and opening accord description unchanged; identity, prices, relationships unchanged."
+    },
+    {
+      "timestamp": "2026-10-11T09:53:45.733Z",
+      "action": "added_to_queue",
+      "slug": "beautiful-by-estee-lauder-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-10-11T09:53:48.029Z",
+      "action": "approved",
+      "slug": "beautiful-by-estee-lauder-inspired",
+      "reviewer": "Founder (Adnaan) - instruction 2026-10-11",
+      "details": "Wave 9: evidence PYRAMID_SECONDARY_SUPPORTED (Nordstrom EDP listing); identity founder-reported 2026-10-11, no direct supplier response inspected; relationships empty; see catalogue-expansion-ledger.json"
+    },
+    {
+      "timestamp": "2026-10-11T09:55:05.820Z",
+      "action": "promoted",
+      "slug": "beautiful-by-estee-lauder-inspired",
+      "reviewer": "Claude Code (founder instruction 2026-10-11)",
+      "details": "promotionId:o60aTXEc01Dy  nativePath:app/lib/mkc/native/beautiful-by-estee-lauder-inspired.ts"
     }
   ]
 }

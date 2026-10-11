@@ -1,0 +1,1014 @@
+{
+  "_meta": {
+    "description": "Wave 9 Batch 1 source-page evidence log. One record per fetch attempt. Only records with result INSPECTED count as inspected-page evidence. BLOCKED fetches and web-search summaries are recorded for transparency but are NOT evidence. Captured values are verbatim quotations returned by the WebFetch tool's page extraction; raw HTML was not stored.",
+    "created": "2026-10-10",
+    "collectedBy": "Claude Opus 5.5 (Claude Code session, 2026-10-10)",
+    "accessDate": "2026-10-10",
+    "captureMethod": "WebFetch (page converted to text, fields quoted by extraction model). Raw HTML not archived.",
+    "searchSummaryPolicy": "Web search was used only to locate candidate URLs. No search-result summary is recorded as evidence.",
+    "evidenceTierPolicy": "Repository tier-2 sources: Fragrantica, Basenotes, major authorised retailers. Revision 3: PYRAMID_SECONDARY_SUPPORTED only where a full pyramid matches an inspected brand page, named database or authorised retailer — Versace Yellow Diamond (Nordstrom), Romance (Ulta, corroborated by brand copy), Beautiful (Nordstrom). All others AI_INFERENCE_UNSOURCED. Supplier identity holds are separate.",
+    "sourceReliabilityAssessment": {
+      "revision": 3,
+      "thescentbaseAndScentverdict": "Third-party fragrance databases of undocumented editorial provenance; not named in the repository tier-2 list. Treated as supplementary only — a match is not sufficient without corroboration from a brand page, named database (Fragrantica/Basenotes) or authorised retailer.",
+      "corroborationResults": {
+        "scentverdict Versace": "Corroborated by Nordstrom (same materials and tiers).",
+        "scentverdict Jimmy Choo": "Partly contradicted by Nordstrom (Italian orange vs mandarin, caramel vs toffee, no green notes, Tiger Orchid vs Orchid).",
+        "scentverdict The One EDP": "Not corroborated; brand page and Nordstrom name Rose, absent from scentverdict.",
+        "thescentbase Poison": "Partly corroborated by Nordstrom key notes; Opoponax tier differs.",
+        "thescentbase Gucci Rush": "No corroboration obtained (Basenotes 403, gucci.com inaccessible, Amazon unreadable). Basenotes search listing suggests a different pyramid — not inspected, not evidence."
+      },
+      "conclusion": "Not equivalent to named tier-2 sources. Records relying on them alone remain AI_INFERENCE_UNSOURCED."
+    },
+    "amcalAssessment": {
+      "repositoryCriterion": "Tier 2: 'major authorised retailers (Amazon, Sephora, Kohl's, Nordstrom, authorized boutiques)'.",
+      "finding": "Amcal is a national Australian pharmacy retail banner, not one of the named examples. The inspected page does not establish that it is an authorised Tommy Hilfiger fragrance stockist, and authorised status could not be verified from an accessible source. Tommy Hilfiger regional brand pages (timed out) are indicated by search listings to describe a reformulated current EDT.",
+      "decision": "Amcal evidence does not meet the authorised-retailer criterion as demonstrable. Tommy Girl reverts to AI_INFERENCE_UNSOURCED."
+    },
+    "revision6": "2026-10-11: Gucci Rush, Tommy Girl, Jimmy Choo, Poison and The One researched further. Marketplace third-party sellers on debenhams.com are recorded with authorisedOrNamed=false; 'Sold & Delivered by Debenhams' listings are treated as major-retailer first-party."
+  },
+  "fetches": [
+    {
+      "draftSlug": "gucci-rush-inspired",
+      "url": "https://www.fragrantica.com/perfume/Gucci/Gucci-Rush-686.html",
+      "result": "BLOCKED",
+      "detail": "HTTP 403 Forbidden"
+    },
+    {
+      "draftSlug": "gucci-rush-inspired",
+      "url": "https://www.parfumo.com/Perfumes/Gucci/Rush",
+      "result": "BLOCKED",
+      "detail": "HTTP 403 Forbidden"
+    },
+    {
+      "draftSlug": "gucci-rush-inspired",
+      "url": "https://www.notino.fr/gucci/rush-eau-de-toilette-pour-femme/",
+      "result": "BLOCKED",
+      "detail": "HTTP 403 Forbidden"
+    },
+    {
+      "draftSlug": "gucci-rush-inspired",
+      "url": "https://www.harveynorman.com.au/gucci-rush-eau-de-toilette-spray-50ml.html",
+      "result": "BLOCKED",
+      "detail": "Bot-detection interstitial ('Pardon Our Interruption'); no product content"
+    },
+    {
+      "draftSlug": "gucci-rush-inspired",
+      "url": "https://thescentbase.com/perfumes/gucci/gucci-rush",
+      "result": "INSPECTED",
+      "sourceType": "THIRD_PARTY_FRAGRANCE_DATABASE",
+      "captured": {
+        "name": "Rush Gucci",
+        "concentration": "not stated",
+        "releaseYear": "Released in 1999",
+        "perfumer": "Michel Almairac",
+        "top": [
+          "African Freesia Petals",
+          "Californian Gardenia",
+          "Peach"
+        ],
+        "heart": [
+          "Coriander",
+          "Damask Rose",
+          "Jasmine"
+        ],
+        "base": [
+          "Natural Vanilla",
+          "Patchouli",
+          "Vetiver"
+        ]
+      },
+      "supportedFields": [
+        "notes.top",
+        "notes.heart",
+        "notes.base",
+        "launch 1999"
+      ],
+      "differencesFromDraft": "None in notes — all 9 draft notes match, same tiers. Concentration (EDT) not stated on page, so draft concentration remains unsupported by inspected evidence."
+    },
+    {
+      "draftSlug": "tommy-girl-inspired",
+      "url": "https://www.fragrantica.com/perfume/Tommy-Hilfiger/Tommy-Girl-3016.html",
+      "result": "BLOCKED",
+      "detail": "HTTP 403 Forbidden"
+    },
+    {
+      "draftSlug": "tommy-girl-inspired",
+      "url": "https://www.amcal.com.au/shop/product/MMC-O100030742/tommy-hilfiger-tommy-girl-30ml-edt-spray/",
+      "result": "INSPECTED",
+      "sourceType": "RETAILER",
+      "captured": {
+        "name": "Tommy Hilfiger Tommy Girl 30ml EDT Spray",
+        "concentration": "EDT",
+        "releaseYear": "Tommy Girl was launched in 1996.",
+        "perfumer": "not stated",
+        "top": [
+          "Apple Tree Blossom",
+          "Camelia",
+          "Mandarin Orange",
+          "Black Currant"
+        ],
+        "heart": [
+          "Lemon",
+          "Honeysuckle",
+          "Rose",
+          "Grapefruit",
+          "Lily",
+          "Mint",
+          "Violet"
+        ],
+        "base": [
+          "Magnolia",
+          "Jasmine",
+          "Cedar",
+          "Sandalwood",
+          "Leather"
+        ]
+      },
+      "supportedFields": [
+        "notes.top",
+        "notes.heart",
+        "notes.base",
+        "concentration EDT",
+        "launch 1996"
+      ],
+      "differencesFromDraft": "None substantive — all 16 draft notes match, same tiers. Spelling only: page 'Camelia' / 'Black Currant' vs draft 'Camellia' / 'Blackcurrant'. Retailer copy; single inspected source."
+    },
+    {
+      "draftSlug": "versace-yellow-diamonds-inspired",
+      "url": "https://www.fragrantica.com/perfume/Versace/Yellow-Diamond-13064.html",
+      "result": "BLOCKED",
+      "detail": "HTTP 403 Forbidden"
+    },
+    {
+      "draftSlug": "versace-yellow-diamonds-inspired",
+      "url": "https://www.theperfumeshop.com/versace/yellow-diamond/eau-de-toilette-spray/p/1231909",
+      "result": "BLOCKED",
+      "detail": "HTTP 403 Forbidden"
+    },
+    {
+      "draftSlug": "versace-yellow-diamonds-inspired",
+      "url": "https://www.notino.fr/versace/yellow-diamond-eau-de-toilette-pour-femme/",
+      "result": "BLOCKED",
+      "detail": "HTTP 403 Forbidden"
+    },
+    {
+      "draftSlug": "versace-yellow-diamonds-inspired",
+      "url": "https://www.macys.com/shop/product/versace-yellow-diamond-eau-de-toilette-spray-1.7-oz.?ID=636595",
+      "result": "BLOCKED",
+      "detail": "HTTP 403 Forbidden"
+    },
+    {
+      "draftSlug": "versace-yellow-diamonds-inspired",
+      "url": "https://scentverdict.com/perfume/versace-yellow-diamond-eau-de-toilette",
+      "result": "INSPECTED",
+      "sourceType": "THIRD_PARTY_FRAGRANCE_DATABASE",
+      "captured": {
+        "name": "Versace Yellow Diamond Eau de Toilette",
+        "concentration": "EDT",
+        "releaseYear": "2011",
+        "perfumer": "Alberto Morillas",
+        "top": [
+          "Lemon",
+          "Pear",
+          "Bergamot",
+          "Neroli"
+        ],
+        "heart": [
+          "Mimosa",
+          "Freesia",
+          "Water Lily",
+          "Orange Blossom"
+        ],
+        "base": [
+          "Musk",
+          "Guaiac Wood",
+          "Amber"
+        ]
+      },
+      "supportedFields": [
+        "notes.top (4 of 4 by material)",
+        "notes.heart (4 of 4 by material)",
+        "notes.base",
+        "concentration EDT",
+        "launch 2011"
+      ],
+      "differencesFromDraft": "Same structure and tiers. Qualifiers NOT supported by inspected page: draft 'Amalfi Lemon' (page: 'Lemon'), draft 'African Orange Flower' (page: 'Orange Blossom'). Draft names were not changed; recorded as an evidence gap."
+    },
+    {
+      "draftSlug": "versace-yellow-diamonds-inspired",
+      "url": "https://larose.az/en/product/versace-yellow-diamond",
+      "result": "INSPECTED",
+      "sourceType": "RETAILER",
+      "captured": {
+        "name": "Versace Yellow Diamond",
+        "concentration": "Eau de Toilette (EDT) in specifications; some size listings read 'Extrait de Parfum' (internally inconsistent)",
+        "releaseYear": "the 2011 women's EDT",
+        "top": [
+          "Pear",
+          "Bergamot",
+          "Lemon",
+          "Neroli",
+          "Water lily"
+        ],
+        "heart": [
+          "Whie freesia",
+          "Mimosa",
+          "Orange blossom"
+        ],
+        "base": [
+          "Agarwood (Oud)",
+          "Musk",
+          "Ambergris"
+        ]
+      },
+      "supportedFields": [
+        "launch 2011"
+      ],
+      "differencesFromDraft": "CONFLICT: base lists Agarwood (Oud) and Ambergris; no Guaiac Wood or Amber. Water lily placed in top (page description places it in heart). Treated as low-reliability (internally inconsistent page) but recorded as a conflicting source."
+    },
+    {
+      "draftSlug": "versace-yellow-diamonds-inspired",
+      "url": "https://www.thebeautyshortlist.com/2011/11/13/versace-yellow-diamond/",
+      "result": "INSPECTED",
+      "sourceType": "EDITORIAL_BLOG",
+      "captured": {
+        "prose": [
+          "There are notes of neroli and bergamot here",
+          "an unexpected note, pear sorbet",
+          "mimosa, freesia and feel good orange blossom",
+          "amber woods and barely-there musk base notes"
+        ],
+        "postDate": "2011-11-13"
+      },
+      "supportedFields": [
+        "materials (untiered): neroli, bergamot, pear, mimosa, freesia, orange blossom, amber woods, musk"
+      ],
+      "differencesFromDraft": "No tiered pyramid; prose consistent with scentverdict pyramid. Does not mention water lily or lemon."
+    },
+    {
+      "draftSlug": "romance-by-ralph-lauren-inspired",
+      "url": "https://www.ralphlaurenfragrances.com/en_US/women/romance/romance-eau-de-parfum/RLFE009.html",
+      "result": "BLOCKED",
+      "detail": "HTTP 403 Forbidden — brand site not directly inspected"
+    },
+    {
+      "draftSlug": "romance-by-ralph-lauren-inspired",
+      "url": "https://www.chemistwarehouse.com.au/buy/56883/ralph-lauren-romance-for-women-eau-de-parfum-30ml",
+      "result": "BLOCKED",
+      "detail": "HTTP 403 Forbidden"
+    },
+    {
+      "draftSlug": "romance-by-ralph-lauren-inspired",
+      "url": "https://lookfantastic.com/p/ralph-lauren-romance-eau-de-parfum-50ml/10043745",
+      "result": "BLOCKED",
+      "detail": "HTTP 404 Not Found"
+    },
+    {
+      "draftSlug": "romance-by-ralph-lauren-inspired",
+      "url": "https://perfumania.com/products/ralph-lauren-romance-perfume-for-women-eau-de-parfum",
+      "result": "INSPECTED_NO_PYRAMID",
+      "detail": "Readable but truncated; only prose 'a blend of floral and woody notes with hints of citrus'. No note list. Not pyramid evidence."
+    },
+    {
+      "draftSlug": "romance-by-ralph-lauren-inspired",
+      "url": "https://mazenonline.com/products/romance-eau-de-parfum-1",
+      "result": "INSPECTED",
+      "sourceType": "RETAILER_REPRODUCING_BRAND_COPY",
+      "captured": {
+        "name": "Romance Eau De Parfum",
+        "concentration": "Eau De Parfum (from product name)",
+        "fragranceFamily": "Floral, Woody",
+        "top": "Top Notes: Mandarin essence, Pink Peppercorn essence, Violet Leaves absolute",
+        "heart": "Mid Notes: Rose Damascena essence, Jasmine absolute, Marigold essence, Geranium essence",
+        "base": "Base Notes: Velvety soft woods, Oakmoss, seductive musks"
+      },
+      "supportedFields": [
+        "concentration EDP",
+        "family Floral/Woody (brand-copy classification)"
+      ],
+      "differencesFromDraft": "MAJOR CONFLICT with draft pyramid. Shared materials: Rose (draft top; here heart), Oakmoss, musk, woods. Absent from this source but in draft: Chamomile, Ginger, Lemon, Yellow Freesia, Lily, Lotus, White Violet, Carnation, Patchouli. Present here but absent from draft: Mandarin, Pink Peppercorn, Violet Leaves, Jasmine, Marigold, Geranium. The draft pyramid (Fragrantica-attributed) has no inspected source. The brand-copy text is consistent with the Ralph Lauren site text seen in search listings, but the brand site itself returned 403."
+    },
+    {
+      "draftSlug": "dolce-and-gabbana-the-one-inspired",
+      "url": "https://www.fragrantica.com/perfume/Dolce-Gabbana/The-One-698.html",
+      "result": "NOT_ATTEMPTED",
+      "detail": "Fragrantica returned 403 on all three priority pages in this session; not retried."
+    },
+    {
+      "draftSlug": "dolce-and-gabbana-the-one-inspired",
+      "url": "https://scentverdict.com/perfume/dolce-gabbana-the-one-eau-de-parfum",
+      "result": "INSPECTED",
+      "sourceType": "THIRD_PARTY_FRAGRANCE_DATABASE",
+      "captured": {
+        "name": "The One Eau de Parfum",
+        "concentration": "EDP",
+        "releaseYear": "2006",
+        "perfumer": "Christine Nagel",
+        "top": [
+          "Peach",
+          "Litchi",
+          "Mandarin",
+          "Bergamot"
+        ],
+        "heart": [
+          "Lily",
+          "Plum",
+          "Jasmine",
+          "Lily of the Valley"
+        ],
+        "base": [
+          "Vanilla",
+          "Amber",
+          "Musk",
+          "Vetiver"
+        ]
+      },
+      "supportedFields": [
+        "notes for the EDP variant only"
+      ],
+      "differencesFromDraft": "Matches draft for the EDP (naming: 'Litchi' vs 'Lychee', 'Mandarin' vs 'Mandarin Orange'). Does NOT resolve which concentration the supplier sells — see EDT record."
+    },
+    {
+      "draftSlug": "dolce-and-gabbana-the-one-inspired",
+      "url": "https://scentverdict.com/perfume/dolce-gabbana-the-one-eau-de-toilette",
+      "result": "INSPECTED",
+      "sourceType": "THIRD_PARTY_FRAGRANCE_DATABASE",
+      "captured": {
+        "name": "The One Eau de Toilette",
+        "concentration": "EDT",
+        "releaseYear": "2017",
+        "perfumer": "Michel Girard",
+        "top": [
+          "Peach",
+          "Litchi",
+          "Mandarin",
+          "Bergamot Blossom"
+        ],
+        "heart": [
+          "Lily",
+          "Ylang-Ylang",
+          "Jasmine",
+          "Orange Blossom",
+          "Lily of the Valley",
+          "Broom"
+        ],
+        "base": [
+          "Vanilla",
+          "Amber",
+          "Musk",
+          "Vetiver",
+          "Oakmoss"
+        ]
+      },
+      "supportedFields": [],
+      "differencesFromDraft": "Different composition from the EDP (no Plum; adds Ylang-Ylang, Orange Blossom, Broom, Oakmoss). Confirms the concentration hold is material: the draft pyramid is correct only if the supplier product is the EDP."
+    },
+    {
+      "draftSlug": "jimmy-choo-inspired",
+      "url": "https://scentverdict.com/perfume/jimmy-choo-jimmy-choo-eau-de-parfum",
+      "result": "INSPECTED",
+      "sourceType": "THIRD_PARTY_FRAGRANCE_DATABASE",
+      "captured": {
+        "name": "Jimmy Choo (Eau de Parfum)",
+        "concentration": "EDP",
+        "releaseYear": "2011",
+        "perfumer": "Olivier Polge",
+        "top": [
+          "Pear",
+          "Green Notes",
+          "Mandarin"
+        ],
+        "heart": [
+          "Orchid"
+        ],
+        "base": [
+          "Patchouli",
+          "Toffee"
+        ]
+      },
+      "supportedFields": [
+        "notes for the 2011 EDP only",
+        "single heart note is source-consistent"
+      ],
+      "differencesFromDraft": "Matches draft except naming: page 'Orchid' vs draft 'Tiger Orchid'; 'Mandarin' vs 'Mandarin Orange'. Does NOT resolve the supplier identity hold (unqualified 'Jimmy Choo'; supplier also lists MEN-89 'Jimmy Choo')."
+    },
+    {
+      "draftSlug": "poison-by-dior-inspired",
+      "url": "https://thescentbase.com/perfumes/dior/poison",
+      "result": "INSPECTED",
+      "sourceType": "THIRD_PARTY_FRAGRANCE_DATABASE",
+      "captured": {
+        "name": "Poison Dior",
+        "concentration": "not listed",
+        "releaseYear": "Released in 1985",
+        "perfumers": [
+          "Maurice Roger",
+          "Edouard Fléchier"
+        ],
+        "top": [
+          "Anise",
+          "Brazilian Rosewood",
+          "Coriander",
+          "Plum",
+          "Wild Berries"
+        ],
+        "heart": [
+          "African Orange Flower",
+          "Carnation",
+          "Cinnamon",
+          "Incense",
+          "Jasmine",
+          "Opoponax",
+          "Rose",
+          "Tuberose",
+          "White Honey"
+        ],
+        "base": [
+          "Amber",
+          "Heliotrope",
+          "Musk",
+          "Sandalwood",
+          "Vanille",
+          "Vetiver",
+          "Virginia Cedar"
+        ]
+      },
+      "supportedFields": [
+        "notes.top",
+        "notes.heart",
+        "notes.base",
+        "launch 1985"
+      ],
+      "differencesFromDraft": "None in notes — all 21 draft notes match, same tiers ('Vanille' = Vanilla)."
+    },
+    {
+      "draftSlug": "poison-by-dior-inspired",
+      "url": "https://scentverdict.com/perfume/dior-poison-eau-de-toilette",
+      "result": "INSPECTED",
+      "sourceType": "THIRD_PARTY_FRAGRANCE_DATABASE",
+      "captured": {
+        "name": "Poison",
+        "concentration": "Eau de Toilette (EDT)",
+        "releaseYear": "1985",
+        "perfumer": "Edouard Fléchier",
+        "top": [
+          "Plum",
+          "Red Fruits",
+          "Coriander",
+          "Anise",
+          "Rosewood"
+        ],
+        "heart": [
+          "Honey",
+          "Incense",
+          "Tuberose",
+          "Cinnamon",
+          "Carnation",
+          "Opoponax",
+          "Jasmine",
+          "Orange Blossom",
+          "Rose"
+        ],
+        "base": [
+          "Vanilla",
+          "Amber",
+          "Sandalwood",
+          "Heliotrope",
+          "Musk",
+          "Cedar",
+          "Vetiver"
+        ]
+      },
+      "supportedFields": [
+        "concentration EDT exists for 1985 Poison",
+        "same composition with generic naming"
+      ],
+      "differencesFromDraft": "Generic names only (Red Fruits / Rosewood / Honey / Orange Blossom / Cedar vs draft's qualified forms). Does NOT resolve the supplier brand-inference hold (supplier text is 'Poison' with no brand)."
+    },
+    {
+      "draftSlug": "beautiful-by-estee-lauder-inspired",
+      "url": null,
+      "result": "NOT_FOUND",
+      "detail": "Domain-restricted search located no readable page with the 1985 Beautiful pyramid. No page inspected. Draft pyramid has no inspected-page evidence. Identity hold applies regardless."
+    },
+    {
+      "revision": 3,
+      "draftSlug": "gucci-rush-inspired",
+      "url": "https://basenotes.com/fragrances/rush-by-gucci.10211592",
+      "result": "BLOCKED",
+      "detail": "HTTP 403 Forbidden. Domain treated as blocked; no further Basenotes fetches attempted."
+    },
+    {
+      "revision": 3,
+      "draftSlug": "poison-by-dior-inspired",
+      "url": "https://basenotes.com/fragrances/poison-by-christian-dior.10210710",
+      "result": "BLOCKED",
+      "detail": "HTTP 403 Forbidden"
+    },
+    {
+      "revision": 3,
+      "draftSlug": "dolce-and-gabbana-the-one-inspired",
+      "url": "https://basenotes.com/fragrances/the-one-by-dolce-gabbana.26125407",
+      "result": "BLOCKED",
+      "detail": "HTTP 403 Forbidden"
+    },
+    {
+      "revision": 3,
+      "draftSlug": "gucci-rush-inspired",
+      "url": "gucci.com (search)",
+      "result": "BLOCKED",
+      "detail": "Search tool reports gucci.com not accessible to the user agent."
+    },
+    {
+      "revision": 3,
+      "draftSlug": "gucci-rush-inspired",
+      "url": "https://www.amazon.com/Gucci-Rush-Women-Toilette-Spray/dp/B0009OAIIG",
+      "result": "INSPECTED_NO_PYRAMID",
+      "detail": "Readable but first 100,000 of ~1,060,000 characters contain no notes or seller; not pursued further."
+    },
+    {
+      "revision": 3,
+      "draftSlug": "tommy-girl-inspired",
+      "url": "https://uk.tommy.com/tommy-girl-eau-de-toilette-50ml-gbb5021610mul",
+      "result": "BLOCKED",
+      "detail": "Fetch timed out (60 s)."
+    },
+    {
+      "revision": 3,
+      "draftSlug": "tommy-girl-inspired",
+      "url": "https://si.tommy.com/tommy-girl-eau-de-toilette-100ml-gbb5021910mul",
+      "result": "BLOCKED",
+      "detail": "Fetch timed out (60 s). Search listings for tommy.com regional EDT pages indicate a different current pyramid (bergamot, spearmint / jasmine, rose, iced tea / sandalwood, amber, musk) — NOT inspected, recorded as an unverified signal only."
+    },
+    {
+      "revision": 3,
+      "draftSlug": "tommy-girl-inspired",
+      "url": "https://www.amazon.com/Tommy-Hilfiger-Toilette-Spray-Women/dp/B000C1ZEY4",
+      "result": "INSPECTED_NO_PYRAMID",
+      "detail": "Characters 0–200,000 of ~849,000 read; no notes or seller found. Not pursued further."
+    },
+    {
+      "revision": 3,
+      "draftSlug": "jimmy-choo-inspired",
+      "url": "https://us.jimmychoo.com/en/jimmy-choo-100ml/jimmy-choo-eau-de-parfum-100ml-JCEDP100MLFPKC110653.html",
+      "result": "BLOCKED",
+      "detail": "HTTP 403 Forbidden — brand page not inspected"
+    },
+    {
+      "revision": 3,
+      "draftSlug": "jimmy-choo-inspired",
+      "url": "https://www.boots.com/jimmy-choo-eau-de-parfum-100ml-10118946",
+      "result": "BLOCKED",
+      "detail": "Bot-detection interstitial"
+    },
+    {
+      "revision": 3,
+      "draftSlug": "jimmy-choo-inspired",
+      "url": "https://www.nordstrom.com/s/jimmy-choo-eau-de-parfum/3196411",
+      "result": "INSPECTED",
+      "sourceType": "NAMED_TIER2_AUTHORISED_RETAILER",
+      "captured": {
+        "name": "Jimmy Choo Eau de Parfum (Women)",
+        "concentration": "Eau de Parfum",
+        "top": "pear, sweet Italian orange.",
+        "middle": "tiger orchid.",
+        "base": "Indonesian patchouli, caramel.",
+        "style": "Fruity, floral",
+        "story": "a sensual fruity chypre"
+      },
+      "supportedFields": [
+        "heart: Tiger Orchid",
+        "top: Pear",
+        "base: Patchouli"
+      ],
+      "differencesFromDraft": "Supports 'Tiger Orchid'. Conflicts: 'sweet Italian orange' vs draft 'Mandarin Orange'; no 'Green Notes'; 'caramel' vs draft 'Toffee'."
+    },
+    {
+      "revision": 3,
+      "draftSlug": "jimmy-choo-inspired",
+      "url": "https://www.ulta.com/p/jimmy-choo-eau-de-parfum-xlsImpprod4760589",
+      "result": "INSPECTED",
+      "sourceType": "AUTHORISED_RETAILER (major US beauty retailer; same class as named Sephora)",
+      "captured": {
+        "name": "Jimmy Choo Eau de Parfum",
+        "keyNotes": [
+          "Top - Pear",
+          "Middle - Tiger Orchid",
+          "Base - Indonesian Patchouli"
+        ],
+        "fragranceFamily": "Sweet",
+        "scentType": "Fruity Chypre"
+      },
+      "supportedFields": [
+        "heart: Tiger Orchid",
+        "top: Pear",
+        "base: Patchouli"
+      ],
+      "differencesFromDraft": "Key notes only; consistent with draft for listed notes."
+    },
+    {
+      "revision": 3,
+      "draftSlug": "versace-yellow-diamonds-inspired",
+      "url": "https://www.sephora.com/product/yellow-diamond-P307002",
+      "result": "BLOCKED",
+      "detail": "HTTP 403 Forbidden"
+    },
+    {
+      "revision": 3,
+      "draftSlug": "versace-yellow-diamonds-inspired",
+      "url": "https://www.nordstrom.com/s/versace-yellow-diamond-eau-de-toilette/3265651",
+      "result": "INSPECTED",
+      "sourceType": "NAMED_TIER2_AUTHORISED_RETAILER",
+      "captured": {
+        "name": "Yellow Diamond Eau de Toilette",
+        "top": "bergamot, lemon, neroli, pear sorbet",
+        "middle": "freesia, mimosa, orange blossom, water lily",
+        "base": "guaiac wood, amber, musk"
+      },
+      "supportedFields": [
+        "notes.top",
+        "notes.heart",
+        "notes.base"
+      ],
+      "differencesFromDraft": "Draft updated to this wording: 'Amalfi Lemon' → 'Lemon', 'African Orange Flower' → 'Orange Blossom'. 'Pear' retained (page: 'pear sorbet'). Also corroborates scentverdict.com."
+    },
+    {
+      "revision": 3,
+      "draftSlug": "poison-by-dior-inspired",
+      "url": "https://www.dior.com/en_us/beauty/products/poison-Y0063201.html",
+      "result": "BLOCKED",
+      "detail": "HTTP 403 Forbidden — brand page not inspected"
+    },
+    {
+      "revision": 3,
+      "draftSlug": "poison-by-dior-inspired",
+      "url": "https://www.nordstrom.com/s/dior-poison-eau-de-toilette/3165375",
+      "result": "INSPECTED",
+      "sourceType": "NAMED_TIER2_AUTHORISED_RETAILER",
+      "captured": {
+        "name": "Poison Eau de Toilette",
+        "top": "coriander, spice.",
+        "middle": "tuberose.",
+        "base": "opoponax.",
+        "description": "An unforgettable and charismatic ambery fragrance."
+      },
+      "supportedFields": [
+        "Coriander (top)",
+        "Tuberose (heart)",
+        "Opoponax (present)",
+        "ambery character"
+      ],
+      "differencesFromDraft": "Key notes only (3 of 21). Opoponax is base here, heart in draft/thescentbase. Does not corroborate the full pyramid."
+    },
+    {
+      "revision": 3,
+      "draftSlug": "dolce-and-gabbana-the-one-inspired",
+      "url": "https://www.sephora.com/product/the-one-P195321",
+      "result": "BLOCKED",
+      "detail": "HTTP 403 Forbidden"
+    },
+    {
+      "revision": 3,
+      "draftSlug": "dolce-and-gabbana-the-one-inspired",
+      "url": "https://www.nordstrom.com/s/the-one-eau-de-parfum/7756843",
+      "result": "INSPECTED",
+      "sourceType": "NAMED_TIER2_AUTHORISED_RETAILER",
+      "captured": {
+        "name": "The One Eau de Parfum",
+        "notes": "Rose, vanilla, mandarin.",
+        "style": "Floral"
+      },
+      "supportedFields": [
+        "Mandarin",
+        "Vanilla"
+      ],
+      "differencesFromDraft": "Lists Rose, which is absent from the draft pyramid. Key notes only."
+    },
+    {
+      "revision": 3,
+      "draftSlug": "dolce-and-gabbana-the-one-inspired",
+      "url": "https://www.dolcegabbana.com/en-us/beauty/perfumes-for-her/the-one/eau-de-parfum---158057971180486.html",
+      "result": "INSPECTED",
+      "sourceType": "TIER1_BRAND_PAGE",
+      "captured": {
+        "name": "The One Eau de Parfum",
+        "notes": "blending notes of mandarin orange with rose and vanilla",
+        "family": "Floral Amber notes"
+      },
+      "supportedFields": [
+        "Mandarin Orange",
+        "Vanilla",
+        "profile Floral Amber"
+      ],
+      "differencesFromDraft": "Brand names Rose (absent from draft). No full pyramid. Current brand EDP may differ from the 2006 pyramid."
+    },
+    {
+      "revision": 3,
+      "draftSlug": "beautiful-by-estee-lauder-inspired",
+      "url": "https://www.esteelauder.com/product/9780/2116/product-catalog/fragrance/fragrance-collections/beautiful/beautiful/eau-de-parfum-spray",
+      "result": "BLOCKED",
+      "detail": "HTTP 403 Forbidden — brand page not inspected"
+    },
+    {
+      "revision": 3,
+      "draftSlug": "beautiful-by-estee-lauder-inspired",
+      "url": "https://www.nordstrom.com/s/estee-lauder-este-lauder-beautiful-eau-de-parfum-spray/2813083",
+      "result": "INSPECTED",
+      "sourceType": "NAMED_TIER2_AUTHORISED_RETAILER",
+      "captured": {
+        "name": "Beautiful Eau de Parfum Spray",
+        "top": "rose, mandarin, lily, tuberose, marigold",
+        "middle": "orange flower, muguet, jasmine, ylang-ylang",
+        "base": "sandalwood, vetiver, amber",
+        "style": "Floral"
+      },
+      "supportedFields": [
+        "notes.top",
+        "notes.heart",
+        "notes.base",
+        "concentration EDP",
+        "profile Floral"
+      ],
+      "differencesFromDraft": "Draft pyramid replaced with this one. Removed: Bergamot, Carnation, Musk. Added: Orange Flower. Tuberose and Marigold moved to top. 'Lily of the Valley' used for 'muguet'. Supplier identity hold unchanged."
+    },
+    {
+      "revision": 3,
+      "draftSlug": "romance-by-ralph-lauren-inspired",
+      "url": "https://www.ralphlauren.com/women-accessories-fragrance/romance-eau-de-parfum/1347.html",
+      "result": "BLOCKED",
+      "detail": "HTTP 307 redirect; not followed."
+    },
+    {
+      "revision": 3,
+      "draftSlug": "romance-by-ralph-lauren-inspired",
+      "url": "https://www.ulta.com/p/romance-eau-de-parfum-fs300428?sku=2018587",
+      "result": "INSPECTED",
+      "sourceType": "AUTHORISED_RETAILER (major US beauty retailer; same class as named Sephora)",
+      "captured": {
+        "name": "Ralph Lauren Romance Eau de Parfum",
+        "top": "Top - Mandarin Essence, Pink Pepper, White Violet Leaves",
+        "middle": "Middle - Rose, Jasmine, Marigold, Geranium",
+        "base": "Base - Patchouli, Oakmoss, Musks",
+        "fragranceFamily": "Fresh Floral"
+      },
+      "supportedFields": [
+        "notes.top",
+        "notes.heart",
+        "notes.base",
+        "profile Fresh Floral"
+      ],
+      "differencesFromDraft": "Draft pyramid replaced with this one. Agrees with brand copy (mazenonline.com) on 9 of 10 materials; brand copy gives base 'soft woods' where Ulta gives 'Patchouli', and family 'Floral, Woody'."
+    },
+    {
+      "revision": 3,
+      "draftSlug": "romance-by-ralph-lauren-inspired",
+      "url": "https://www.nordstrom.com/s/ralph-lauren-romance-eau-de-parfum-spray/2834448",
+      "result": "INSPECTED",
+      "sourceType": "NAMED_TIER2_AUTHORISED_RETAILER",
+      "captured": {
+        "name": "Romance Eau de Parfum",
+        "top": "rose damascena.",
+        "middle": "pink pepper essence.",
+        "base": "jasmine.",
+        "style": "Floral",
+        "status": "SOLD OUT"
+      },
+      "supportedFields": [
+        "materials: Rose, Pink Pepper, Jasmine"
+      ],
+      "differencesFromDraft": "Key-note tiers differ from Ulta/brand pyramid (likely key-note ordering, not a pyramid). Materials consistent with the adopted pyramid; none from the old draft pyramid except Rose."
+    },
+    {
+      "revision": 6,
+      "accessDate": "2026-10-11",
+      "draftSlug": "gucci-rush-inspired",
+      "url": "https://www.selfridges.com/GB/en/product/gucci-gucci-rush-eau-de-toilette_210-76001415-GUCCIRUSHEDT/",
+      "result": "BLOCKED",
+      "detail": "HTTP 403 Forbidden"
+    },
+    {
+      "revision": 6,
+      "accessDate": "2026-10-11",
+      "draftSlug": "gucci-rush-inspired",
+      "url": "https://www.superdrug.com/fragrance/perfume-for-women/womens-perfume/gucci-rush-ladies-eau-de-toilette-50ml/p/643163",
+      "result": "BLOCKED",
+      "detail": "HTTP 403 Forbidden"
+    },
+    {
+      "revision": 6,
+      "accessDate": "2026-10-11",
+      "draftSlug": "gucci-rush-inspired",
+      "url": "https://www.debenhams.com/product/gucci-rush-eau-de-toilette-spray-75ml_p-739b06e2-858a-477a-9b5b-b38223db6cc9",
+      "result": "INSPECTED",
+      "sourceType": "MARKETPLACE_THIRD_PARTY_SELLER",
+      "authorisedOrNamed": false,
+      "captured": {
+        "name": "Gucci Rush Eau De Toilette Spray 75ml",
+        "seller": "Sold & Delivered by Love Lace Ltd.",
+        "notesAsSummarised": "Top: juicy peach, African orange flower. Heart: jasmine, aromatic coriander. Base: creamy vanilla, earthy patchouli, soft musk.",
+        "status": "Out of Stock"
+      },
+      "supportedFields": [],
+      "differencesFromDraft": "Marketplace seller, not an authorised retailer. Conflicts with draft: adds African orange flower and musk; omits Californian Gardenia, African Freesia Petals, Damask Rose, Vetiver."
+    },
+    {
+      "revision": 6,
+      "accessDate": "2026-10-11",
+      "draftSlug": "gucci-rush-inspired",
+      "url": "https://www.debenhams.com/product/gucci-rush-50ml-eau-de-toilette_p-d9096114-272b-4fdc-80a0-905f763bbf44",
+      "result": "INSPECTED",
+      "sourceType": "MARKETPLACE_THIRD_PARTY_SELLER",
+      "authorisedOrNamed": false,
+      "captured": {
+        "name": "Rush 50ml Eau de Toilette",
+        "seller": "Sold & Delivered by The Perfume Warehouse",
+        "productDetails": "Vanilla, Patchouli, Vetiver",
+        "description": [
+          "Exotic African freesia petals combined with luscious peach on the top provide an enticing opening",
+          "melds into a sweet and spicy heart of coriander and jasmine grounded in a patchouli base for a fiery, exotic dry down."
+        ]
+      },
+      "supportedFields": [],
+      "differencesFromDraft": "Marketplace seller, not an authorised retailer. Consistent with draft tiers for Peach, African Freesia Petals / Coriander, Jasmine / Patchouli, Vanilla, Vetiver; does not mention Californian Gardenia or Damask Rose."
+    },
+    {
+      "revision": 6,
+      "accessDate": "2026-10-11",
+      "draftSlug": "tommy-girl-inspired",
+      "url": "https://www.belk.com/p/tommy-hilfiger-tommy-girl-eau-de-toilette/590046811772281.html",
+      "result": "BLOCKED",
+      "detail": "HTTP 403 Forbidden"
+    },
+    {
+      "revision": 6,
+      "accessDate": "2026-10-11",
+      "draftSlug": "tommy-girl-inspired",
+      "url": "https://www.fragrancedirect.co.uk/p/tommy-girl-eau-de-toilette-100ml/11435939/",
+      "result": "BLOCKED",
+      "detail": "HTTP 404 Not Found"
+    },
+    {
+      "revision": 6,
+      "accessDate": "2026-10-11",
+      "draftSlug": "tommy-girl-inspired",
+      "url": "https://www.debenhams.com/product/tommy-hilfiger-tommy-girl-eau-de-toilette_ydd09770",
+      "result": "INSPECTED",
+      "sourceType": "MAJOR_RETAILER_FIRST_PARTY",
+      "authorisedOrNamed": true,
+      "captured": {
+        "name": "Tommy Girl Eau De Toilette",
+        "seller": "Sold & Delivered by Debenhams",
+        "sizes": [
+          "30ml",
+          "50ml",
+          "100ml"
+        ],
+        "noteStatements": [
+          "Seductive floral bouquet scent",
+          "Bohemian wildflower fragrance blend",
+          "Sweet honeysuckle notes infused",
+          "Tangerine freshness with woody",
+          "Extracts of fresh tangerine blend with sweet honeysuckle notes and woody hints of wild heather"
+        ]
+      },
+      "supportedFields": [
+        "Honeysuckle (present)"
+      ],
+      "differencesFromDraft": "Current retail copy names only tangerine, honeysuckle and wild heather. Supports Honeysuckle; 'tangerine' is not the draft's 'Mandarin Orange'; 'wild heather' is absent from the draft. Consistent with an unverified signal that current Tommy Girl copy describes a different formulation. Does not corroborate the 16-note draft pyramid."
+    },
+    {
+      "revision": 6,
+      "accessDate": "2026-10-11",
+      "draftSlug": "jimmy-choo-inspired",
+      "url": "https://www.johnlewis.com/jimmy-choo-eau-de-parfum/p200402",
+      "result": "INSPECTED",
+      "sourceType": "MAJOR_AUTHORISED_RETAILER (UK department store)",
+      "authorisedOrNamed": true,
+      "captured": {
+        "name": "Jimmy Choo Eau de Parfum",
+        "type": "Eau de Parfum",
+        "top": "Pear, mandarin orange",
+        "heart": "Orchid",
+        "base": "Patchouli, toffee",
+        "description": "A modern fruity chypre with warm, rich, woody depths."
+      },
+      "supportedFields": [
+        "Pear",
+        "Mandarin Orange",
+        "Patchouli",
+        "Toffee",
+        "single heart note"
+      ],
+      "differencesFromDraft": "Supports 5 of 6 draft notes (heart 'Orchid' without the 'Tiger' qualifier, which Nordstrom, Ulta and Debenhams supply). Does not list 'Green Notes'."
+    },
+    {
+      "revision": 6,
+      "accessDate": "2026-10-11",
+      "draftSlug": "jimmy-choo-inspired",
+      "url": "https://www.debenhams.com/product/jimmy-choo-jimmy-choo-eau-de-parfum_ydd03691",
+      "result": "INSPECTED",
+      "sourceType": "MAJOR_RETAILER_FIRST_PARTY",
+      "authorisedOrNamed": true,
+      "captured": {
+        "name": "Jimmy Choo Eau De Parfum",
+        "seller": "Sold & Delivered by Debenhams",
+        "top": "Top Note: Sweet Italian Orange",
+        "heart": "Heart Note: Tiger Orchid",
+        "base": "Base Note: Toffee"
+      },
+      "supportedFields": [
+        "Tiger Orchid",
+        "Toffee"
+      ],
+      "differencesFromDraft": "Key notes only. 'Sweet Italian Orange' (as Nordstrom) rather than 'Mandarin Orange' (as John Lewis)."
+    },
+    {
+      "revision": 6,
+      "accessDate": "2026-10-11",
+      "draftSlug": "poison-by-dior-inspired",
+      "url": "https://www.dillards.com/p/dior-poison-eau-de-toilette-spray/25509",
+      "result": "BLOCKED",
+      "detail": "Access Denied"
+    },
+    {
+      "revision": 6,
+      "accessDate": "2026-10-11",
+      "draftSlug": "poison-by-dior-inspired",
+      "url": "https://www.johnlewis.com/dior-poison-eau-de-toilette/p93144",
+      "result": "INSPECTED",
+      "sourceType": "MAJOR_AUTHORISED_RETAILER (UK department store)",
+      "authorisedOrNamed": true,
+      "captured": {
+        "name": "DIOR Poison Eau de Toilette, 50ml",
+        "type": "Eau de Toilette",
+        "yearOfRelease": "1985",
+        "description": [
+          "Four contrasting facets – intoxicating bitter almond and carvi, opulent Sambac jasmine,",
+          "mysterious Jacarandra and sensuous vanilla and musk"
+        ],
+        "category": "Floral"
+      },
+      "supportedFields": [
+        "1985 EDT exists (product listing)"
+      ],
+      "differencesFromDraft": "Description names bitter almond, carvi, Sambac jasmine, jacaranda, vanilla, musk — wording associated with the Hypnotic Poison flanker, not the draft pyramid. Treated as unreliable/mismatched copy; does not corroborate or refute the draft pyramid."
+    },
+    {
+      "revision": 6,
+      "accessDate": "2026-10-11",
+      "draftSlug": "dolce-and-gabbana-the-one-inspired",
+      "url": "https://www.kohls.com/product/prd-6172832/dolcegabbana-the-one-eau-de-parfum.jsp",
+      "result": "BLOCKED",
+      "detail": "HTTP 403 Forbidden"
+    },
+    {
+      "revision": 6,
+      "accessDate": "2026-10-11",
+      "draftSlug": "dolce-and-gabbana-the-one-inspired",
+      "url": "https://www.johnlewis.com/dolce-gabbana-the-one-eau-de-parfum/p41003",
+      "result": "INSPECTED",
+      "sourceType": "MAJOR_AUTHORISED_RETAILER (UK department store)",
+      "authorisedOrNamed": true,
+      "captured": {
+        "name": "Dolce & Gabbana The One Eau de Parfum",
+        "type": "Eau de Parfum",
+        "yearOfRelease": "2006",
+        "top": "Bergamot, Mandarin, Lychee, Peach",
+        "heart": "Madonna Lily, Lily of the Valley, Jasmine",
+        "base": "Vanilla, Amber, Musk, Plum, Vetiver",
+        "olfactoryFamily": "Amber floral"
+      },
+      "supportedFields": [
+        "all 12 draft materials",
+        "top tier exact",
+        "base: Vanilla, Amber, Musk, Vetiver",
+        "heart: Lily of the Valley, Jasmine",
+        "profile Floral Amber"
+      ],
+      "differencesFromDraft": "Plum is BASE here; draft has it in HEART. Heart lily is 'Madonna Lily' (draft: 'Lily')."
+    },
+    {
+      "revision": 6,
+      "accessDate": "2026-10-11",
+      "draftSlug": "dolce-and-gabbana-the-one-inspired",
+      "url": "https://www.ulta.com/p/one-eau-de-parfum-prod481734?sku=2159420",
+      "result": "INSPECTED",
+      "sourceType": "AUTHORISED_RETAILER (major US beauty retailer)",
+      "authorisedOrNamed": true,
+      "captured": {
+        "name": "Dolce&Gabbana - 1.7 oz The One Eau de Parfum",
+        "keyNotes": [
+          "Bergamot, Mandarin, Lychee, Peach",
+          "Madonna Lily, Lily of the valley, Jasmine",
+          "Vanilla, Amber, Musk, Plum, Vetiver"
+        ],
+        "fragranceFamily": "Floral",
+        "scentType": "Warm & Spicy Floral"
+      },
+      "supportedFields": [
+        "identical material set and grouping to John Lewis"
+      ],
+      "differencesFromDraft": "Same as John Lewis: Plum grouped with base notes; 'Madonna Lily'."
+    }
+  ]
+}
