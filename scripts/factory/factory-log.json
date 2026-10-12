@@ -2,6 +2,144 @@
   "version": "1.0",
   "runs": [
     {
+      "slug": "vetiver-golden-vanilla-inspired",
+      "name": "Vetiver Golden Vanilla Inspired",
+      "wave": null,
+      "startedAt": "2026-10-12T19:03:28.289Z",
+      "completedAt": "2026-10-12T19:03:40.148Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "skip",
+          "durationMs": 1,
+          "message": "EVIDENCE_LOCK — governed notes preserved from scaffold; AI generation bypassed"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 1588,
+          "message": "818 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 3549,
+          "message": "10207 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 2759,
+          "message": "1379 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 3944,
+          "message": "1713 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "14117 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "pass",
+          "durationMs": 7,
+          "message": "PASS  [0 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 5
+        }
+      ],
+      "validationStatus": "PASS",
+      "promotedAt": null
+    },
+    {
+      "slug": "212-sexy-inspired",
+      "name": "212 Sexy Inspired",
+      "wave": null,
+      "startedAt": "2026-10-12T19:03:11.226Z",
+      "completedAt": "2026-10-12T19:03:23.939Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 2
+        },
+        {
+          "stage": "composition",
+          "status": "skip",
+          "durationMs": 0,
+          "message": "EVIDENCE_LOCK — governed notes preserved from scaffold; AI generation bypassed"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 1728,
+          "message": "798 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 3855,
+          "message": "10241 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 2895,
+          "message": "1378 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 4224,
+          "message": "1679 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "14096 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "pass",
+          "durationMs": 1,
+          "message": "PASS  [0 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 2
+        }
+      ],
+      "validationStatus": "PASS",
+      "promotedAt": null
+    },
+    {
       "slug": "only-the-brave-inspired",
       "name": "Only The Brave Inspired",
       "wave": null,

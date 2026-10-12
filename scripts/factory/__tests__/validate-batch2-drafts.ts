@@ -40,8 +40,10 @@ const drafts: FragranceKnowledge[] = [
 
 const PERFORMANCE_WORDING = /\b(long[- ]lasting|longevity|lasts|all[- ]day|sillage|projection|projects?|reapplication|beast mode|fills the room|compliments?|every occasion|any occasion)\b/i;
 const SCORE_KEYS = ["sweetness", "freshness", "warmth", "intensity", "versatility"] as const;
-// Promoted to native 2026-10-11 after founder editorial/promotion approval (Wave 9 revision 15).
-const PROMOTED = new Set(["perfect-by-marc-jacobs-inspired", "euphoria-by-calvin-klein-inspired", "only-the-brave-inspired"]);
+// Promoted to native 2026-10-11 after founder editorial/promotion approval (Wave 9 revision 15);
+// wonderlust and prada-candy promoted 2026-10-12 after founder Gate A/B approval (Wave 9 revision 19).
+const PROMOTED = new Set(["perfect-by-marc-jacobs-inspired", "euphoria-by-calvin-klein-inspired", "only-the-brave-inspired",
+  "wonderlust-by-michael-kors-inspired", "prada-candy-inspired"]);
 
 let problems = 0;
 const fail = (slug: string, msg: string) => { problems++; console.log(`   ✗ ${slug}: ${msg}`); };

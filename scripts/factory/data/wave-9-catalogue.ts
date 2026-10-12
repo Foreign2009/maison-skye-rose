@@ -132,10 +132,15 @@ const rose: DisplayFragrance[] = [
     collection:          "Rose",
     subtitle:            "Inspired by Gucci Rush",
     mood:                "Bold Vivid Floral",
-    profile:             "Floral Woody",
+    // Profile REVISED 2026-10-12: Edgars scent type "Chypre Fruity" (previous editorial profile "Floral Woody").
+    profile:             "Fruity Chypre",
     season:              "All Season",
     // Fragrantica not inspected (403). See wave-9-source-evidence.json.
-    notes:               ["Peach", "Californian Gardenia", "African Freesia Petals", "Coriander", "Damask Rose", "Jasmine", "Patchouli", "Natural Vanilla", "Vetiver"],
+    // REVISED 2026-10-12 (W9-B3-P1): pyramid per edgars.co.za Gucci Rush EDT listing (inspected): Top "Bergamot, Peony,
+    //   Gardenia"; Heart "Violet, Vanilla, Jasmine"; Base "Patchouli"; Scent Type "Chypre Fruity". Edgars authorised status
+    //   not verified -> evidence tier stays AI_INFERENCE_UNSOURCED. Previous pyramid (thescentbase.com):
+    //   Peach, Californian Gardenia, African Freesia Petals / Coriander, Damask Rose, Jasmine / Patchouli, Natural Vanilla, Vetiver.
+    notes:               ["Bergamot", "Peony", "Gardenia", "Violet", "Vanilla", "Jasmine", "Patchouli"],
     bestSeller:          false,
     newArrival:          false,
     prices:              PRICES,
@@ -143,9 +148,9 @@ const rose: DisplayFragrance[] = [
     gender:              "female",
     notesEvidenceLocked: true,
     notesStructured: {
-      top:   ["Peach", "Californian Gardenia", "African Freesia Petals"],
-      heart: ["Coriander", "Damask Rose", "Jasmine"],
-      base:  ["Patchouli", "Natural Vanilla", "Vetiver"],
+      top:   ["Bergamot", "Peony", "Gardenia"],
+      heart: ["Violet", "Vanilla", "Jasmine"],
+      base:  ["Patchouli"],
     },
   },
   {
@@ -369,6 +374,8 @@ const batch2: DisplayFragrance[] = [
     },
   },
   {
+    // PROMOTED 2026-10-12 (Ni0Ddu1ngG_v) after founder Gate A + Gate B approval (local only; Gate C not authorised);
+    //   supplier concentration/formulation UNCONFIRMED.
     // slug: wonderlust-by-michael-kors-inspired — Supplier: 'Michael Kors Wonderlust' (LADIES-195-Michael Kors Wonderlust).
     // Reference edition: Michael Kors Wonderlust Eau de Parfum (2016). Female.
     // Evidence: PYRAMID_SECONDARY_SUPPORTED — nordstrom.com key notes (full pyramid; listing marked "no longer available").
@@ -379,9 +386,14 @@ const batch2: DisplayFragrance[] = [
     collection:          "Rose",
     subtitle:            "Inspired by Michael Kors Wonderlust",
     mood:                "Warm Sensual Sophisticated",
-    profile:             "Floral Spicy Woody",
+    // Profile REVISED 2026-10-12: Debenhams family "Amber, Gourmand" + Lookfantastic "Floral Amber" (previous: "Floral Spicy Woody",
+    //   based on Nordstrom style "Warm, spicy" and editorial terms).
+    profile:             "Floral Amber Gourmand",
     season:              "Autumn",
-    notes:               ["Italian Bergamot", "Jasmine Grandiflorum", "Sri Lankan Sandalwood"],
+    // REVISED 2026-10-12 (W9-B3-P1): full pyramid per debenhams.com ("Sold & Delivered by Debenhams") and lookfantastic.com
+    //   (identical lists). Nordstrom's three key notes and Macy's reported notes are subsets of this pyramid (conflict resolved).
+    //   Previous pyramid (Nordstrom key notes only): Italian Bergamot / Jasmine Grandiflorum / Sri Lankan Sandalwood.
+    notes:               ["Italian Bergamot", "Sicilian Mandarin", "Almond Milk", "Pink Pepper", "Jasmine Grandiflorum Absolute", "Dianthus", "Jasmine Sambac Absolute", "Heliotrope", "Cashmeran Wood", "Siam Benzoin", "Sri Lankan Sandalwood"],
     bestSeller:          false,
     newArrival:          false,
     prices:              PRICES,
@@ -389,23 +401,30 @@ const batch2: DisplayFragrance[] = [
     gender:              "female",
     notesEvidenceLocked: true,
     notesStructured: {
-      top:   ["Italian Bergamot"],
-      heart: ["Jasmine Grandiflorum"],
-      base:  ["Sri Lankan Sandalwood"],
+      top:   ["Italian Bergamot", "Sicilian Mandarin", "Almond Milk", "Pink Pepper"],
+      heart: ["Jasmine Grandiflorum Absolute", "Dianthus", "Jasmine Sambac Absolute", "Heliotrope"],
+      base:  ["Cashmeran Wood", "Siam Benzoin", "Sri Lankan Sandalwood"],
     },
   },
   {
+    // PROMOTED 2026-10-12 (4fga0yKIoLtD) after founder Gate A + Gate B approval (local only; Gate C not authorised);
+    //   supplier concentration/formulation UNCONFIRMED.
     // slug: prada-candy-inspired — Supplier: 'Prada / Candy' (LADIES-238-Prada / Candy).
     // Reference edition: Prada Candy Eau de Parfum (2011). Female. Not Candy L'Eau or Candy Night (distinct flankers).
     // Evidence: AI_INFERENCE_UNSOURCED (tiers) — White Musk, Benzoin, Caramel Accord are listed by ulta.com and
     //   johnlewis.com (authorised) WITHOUT tiers; tier placement is from lookfantastic.com only (first-party,
     //   authorised status not verified). EVIDENCE HOLD until an authorised tiered source is inspected.
+    // UPDATE 2026-10-12 (W9-B3-P1): debenhams.com ("Sold & Delivered by Debenhams", major-retailer first-party) lists
+    //   Top "White Musk" / Heart "Benzoin" / Base "Caramel Accord" — matches this pyramid -> PYRAMID_SECONDARY_SUPPORTED.
+    //   Debenhams family "Floral, Amber, Gourmand" recorded as an alternative classification; profile unchanged.
     // Profile: Ulta fragrance family "Warm & Spicy" and "Gourmand"; John Lewis scent "Sweet"; Lookfantastic "Amber Gourmand".
     title:               "Prada Candy Inspired",
     collection:          "Rose",
     subtitle:            "Inspired by Prada Candy",
     mood:                "Playful Sensual Warm",
-    profile:             "Gourmand Spicy",
+    // Profile REVISED 2026-10-12 (W9-B3-P2): "Amber Gourmand" = lookfantastic family verbatim, consistent with Debenhams
+    //   (first-party) "Floral, Amber, Gourmand"; no source lists a spice note. Previous: "Gourmand Spicy" (Ulta "Warm & Spicy" + "Gourmand").
+    profile:             "Amber Gourmand",
     season:              "Winter",
     notes:               ["White Musk", "Benzoin", "Caramel Accord"],
     bestSeller:          false,
@@ -450,10 +469,80 @@ const batch2: DisplayFragrance[] = [
   },
 ];
 
+// ── BATCH 3 (2) — review drafts prepared 2026-10-12 (W9-B3-P1); NOT promoted ──────
+// Supplier text and row IDs exact. Supplier states no concentration; no founder/supplier identity or
+// concentration confirmation exists for Batch 3. "Reference edition" = the reference fragrance's edition
+// used for evidence only. Pyramids evidence-locked to inspected pages (wave-9-source-evidence.json revision 9).
+
+const batch3: DisplayFragrance[] = [
+  {
+    // PROMOTED 2026-10-12 (qtIrpscU3rOS) after founder Gate A + Gate B approval (local only; Gate C not authorised);
+    //   supplier concentration/formulation UNCONFIRMED.
+    // slug: 212-sexy-inspired — Supplier: '212 SEXY Carolina Herrera' (LADIES-5-212 SEXY Carolina Herrera).
+    // Distinct from MEN-9 '212 Sexy' (men's edition), 212 VIP Rosé, 212 VIP Black and 212 Heroes (native).
+    // Reference edition: Carolina Herrera 212 Sexy Eau de Parfum (women). Female.
+    // Evidence: PYRAMID_SECONDARY_SUPPORTED — carolinaherrera.com product page (tier-1 brand page):
+    //   Top "Mandarin & Pink Pepper"; Heart "Gardenia & Cotton Candy Accord"; Base "Sandalwood & Vanilla".
+    //   Classification "AMBERY Gourmand Floral". Debenhams reportedly lists a longer pyramid (search only; not used).
+    // Profile: brand classification "AMBERY Gourmand Floral". Season Autumn is editorial.
+    title:               "212 Sexy Inspired",
+    collection:          "Rose",
+    subtitle:            "Inspired by Carolina Herrera 212 Sexy",
+    mood:                "Sensual Playful Warm",
+    profile:             "Amber Gourmand Floral",
+    season:              "Autumn",
+    notes:               ["Mandarin", "Pink Pepper", "Gardenia", "Cotton Candy Accord", "Sandalwood", "Vanilla"],
+    bestSeller:          false,
+    newArrival:          false,
+    prices:              PRICES,
+    images:              PINK_IMAGES,
+    gender:              "female",
+    notesEvidenceLocked: true,
+    notesStructured: {
+      top:   ["Mandarin", "Pink Pepper"],
+      heart: ["Gardenia", "Cotton Candy Accord"],
+      base:  ["Sandalwood", "Vanilla"],
+    },
+  },
+  {
+    // PROMOTED 2026-10-12 (r1wFqFDipHB-) after founder Gate A + Gate B approval (local only; Gate C not authorised);
+    //   supplier concentration/formulation UNCONFIRMED.
+    // slug: vetiver-golden-vanilla-inspired — Supplier: 'Jo Malone / Vetvier & Golden Vanilla' (UNISEX-63; supplier
+    //   spelling "Vetvier"). Reference edition: Jo Malone London Vetiver & Golden Vanilla Cologne Intense. Unisex.
+    // Evidence: PYRAMID_SECONDARY_SUPPORTED — nordstrom.com listing (named tier-2 retailer): Top "cardamom, grapefruit tea";
+    //   Middle "vetiver, lavender, clary sage"; Base "vanilla, cistus labdanum". Jo Malone pages returned 403.
+    //   Variants seen only in search summaries (not used): "vetiver bourbon" / "vanilla bourbon" naming; "amberwood" in base.
+    // AVAILABILITY: the Nordstrom listing is "Sold Out / no longer available"; the reference may be limited in retail.
+    //   This says nothing about the Maison supplier's ability to produce the inspired formulation.
+    // Profile: EDITORIAL — no inspected source gives a family. Terms follow the named materials: vetiver (Woody),
+    //   lavender and clary sage (Aromatic), vanilla (Vanilla). Season All Season is editorial.
+    title:               "Vetiver Golden Vanilla Inspired",
+    collection:          "Elite",
+    subtitle:            "Inspired by Jo Malone Vetiver & Golden Vanilla",
+    mood:                "Refined Warm Grounded",
+    profile:             "Woody Aromatic Vanilla",
+    season:              "All Season",
+    notes:               ["Cardamom", "Grapefruit Tea", "Vetiver", "Lavender", "Clary Sage", "Vanilla", "Cistus Labdanum"],
+    bestSeller:          false,
+    newArrival:          false,
+    prices:              PRICES,
+    images:              BLUE_IMAGES,
+    gender:              "unisex",
+    notesEvidenceLocked: true,
+    notesStructured: {
+      top:   ["Cardamom", "Grapefruit Tea"],
+      heart: ["Vetiver", "Lavender", "Clary Sage"],
+      base:  ["Vanilla", "Cistus Labdanum"],
+    },
+  },
+];
+
 // ── Export ────────────────────────────────────────────────────────────────────
 
 /** Batch 1 staging entries (6; includes promoted records kept for intake history). */
 export const wave9Batch1Catalogue: DisplayFragrance[] = [...rose];
 /** Batch 2 staging entries (5; review drafts, not promoted). */
 export const wave9Batch2Catalogue: DisplayFragrance[] = [...batch2];
-export const wave9Catalogue: DisplayFragrance[] = [...rose, ...batch2];
+/** Batch 3 staging entries (2; review drafts prepared 2026-10-12, not promoted). */
+export const wave9Batch3Catalogue: DisplayFragrance[] = [...batch3];
+export const wave9Catalogue: DisplayFragrance[] = [...rose, ...batch2, ...batch3];

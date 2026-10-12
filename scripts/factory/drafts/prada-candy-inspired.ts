@@ -32,17 +32,21 @@ export const pradaCandyInspired: FragranceKnowledge = {
 
   // ── Classification ────────────────────────────────────────────────────────────
   gender        : "female",
-  family        : ["Gourmand", "Spicy"],
+  // REVISED 2026-10-12 (W9-B3-P2) from adapter output for profile "Amber Gourmand". Previous: ["Gourmand", "Spicy"].
+  family        : ["Gourmand", "Amber"],
   scentCharacter: "Rich & Full-Bodied",
   projection    : "moderate",
 
   // ── Composition ─────────────────────────────────────────────────────────────
-  profile       : "Gourmand Spicy",
+  profile       : "Amber Gourmand",  // previous: "Gourmand Spicy"; Lookfantastic "Amber Gourmand", Debenhams "Floral, Amber, Gourmand"
   season        : "Winter",
   notes: {
     top:   ["White Musk"],
     heart: ["Benzoin"],
     base:  ["Caramel Accord"],
+    // UPDATE 2026-10-12 (W9-B3-P1): debenhams.com ("Sold & Delivered by Debenhams", major-retailer first-party)
+    // lists Top "White Musk" / Heart "Benzoin" / Base "Caramel Accord" — matches -> PYRAMID_SECONDARY_SUPPORTED.
+    // Debenhams family "Floral, Amber, Gourmand" recorded as an alternative; profile unchanged. See revision 9.
   },
   notesEvidenceLocked: true,
   mood          : "Playful Sensual Warm",
@@ -60,7 +64,7 @@ export const pradaCandyInspired: FragranceKnowledge = {
   signatureStyle: ["Creamy Gourmand", "Sensual Warmth", "Playful Luxury"],
   recommendedFor: [
     "Women seeking a sensual winter signature that feels luxurious without pretension",
-    "Anyone drawn to gourmand fragrances who wants creamy warmth over pure sweetness",
+    "Anyone drawn to gourmand fragrances built around caramel and creamy benzoin",
     "Those planning intimate evenings who prefer playful confidence to heavy florals",
   ],
 
@@ -80,12 +84,14 @@ export const pradaCandyInspired: FragranceKnowledge = {
 
   // ── Education ───────────────────────────────────────────────────────────────
   subtitle      : "Creamy Warmth",
-  description   : "A gourmand embrace of warm caramel and creamy benzoin, softened by whispers of white musk. Playful and sensual, it settles into skin like a luxe second layer—sweet without artifice, spiced with an undercurrent of subtle warmth.",
+  // Description REVISED 2026-10-12 (W9-B3-P2): removed figurative wear wording ("settles into skin like a luxe second layer")
+  // and the unsupported spice reference ("spiced with an undercurrent of subtle warmth"); no listed note is a spice.
+  description   : "A gourmand embrace of warm caramel and creamy benzoin, softened by whispers of white musk. Playful and sensual, it pairs caramel sweetness with a soft, ambered warmth.",
   academyArticleIds: ["guide-to-fragrance-families", "choosing-your-season-scent", "how-to-layer-fragrances", "how-to-wear-fragrance"],
   academyCategories: ["fragrance-families", "occasions-and-style"],
   educationTags : [
     "gourmand",
-    "spicy",
+    "amber",
     "caramel",
     "benzoin",
     "musk",
@@ -98,7 +104,8 @@ export const pradaCandyInspired: FragranceKnowledge = {
   learningPath  : ["guide-to-fragrance-families", "choosing-your-season-scent", "how-to-wear-fragrance"],
 
   // ── Intelligence ────────────────────────────────────────────────────────────
-  // Approximated from profile + season. Calibrated by Intelligence Producer in P2.
+  // Scores derived by knowledgeAdapter.deriveMetrics(profile="Amber Gourmand", season="Winter") — unchanged from "Gourmand Spicy":
+  // sweetness 4 (gourmand), freshness 2, warmth 4 (amber; previously spicy), intensity 4, versatility 2 (Winter).
   sweetness     : 4,
   freshness     : 2,
   warmth        : 4,

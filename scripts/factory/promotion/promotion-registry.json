@@ -2,6 +2,66 @@
   "version": "1.0",
   "records": [
     {
+      "slug": "prada-candy-inspired",
+      "name": "Prada Candy Inspired",
+      "collection": "Rose",
+      "operator": "Claude Code (founder approval 2026-10-12)",
+      "reviewedBy": "Founder (Adnaan) - approval 2026-10-12",
+      "status": "promoted",
+      "startedAt": "2026-10-12T20:17:20.406Z",
+      "completedAt": "2026-10-12T20:18:09.606Z",
+      "nativePath": "app/lib/mkc/native/prada-candy-inspired.ts",
+      "validationStatus": "PASS",
+      "buildResult": "pass",
+      "durationMs": 49215,
+      "error": null
+    },
+    {
+      "slug": "wonderlust-by-michael-kors-inspired",
+      "name": "Wonderlust by Michael Kors Inspired",
+      "collection": "Rose",
+      "operator": "Claude Code (founder approval 2026-10-12)",
+      "reviewedBy": "Founder (Adnaan) - approval 2026-10-12",
+      "status": "promoted",
+      "startedAt": "2026-10-12T20:16:09.387Z",
+      "completedAt": "2026-10-12T20:16:59.941Z",
+      "nativePath": "app/lib/mkc/native/wonderlust-by-michael-kors-inspired.ts",
+      "validationStatus": "PASS",
+      "buildResult": "pass",
+      "durationMs": 50565,
+      "error": null
+    },
+    {
+      "slug": "vetiver-golden-vanilla-inspired",
+      "name": "Vetiver Golden Vanilla Inspired",
+      "collection": "Elite",
+      "operator": "Claude Code (founder approval 2026-10-12)",
+      "reviewedBy": "Founder (Adnaan) - approval 2026-10-12",
+      "status": "promoted",
+      "startedAt": "2026-10-12T20:14:55.162Z",
+      "completedAt": "2026-10-12T20:15:43.966Z",
+      "nativePath": "app/lib/mkc/native/vetiver-golden-vanilla-inspired.ts",
+      "validationStatus": "PASS",
+      "buildResult": "pass",
+      "durationMs": 48817,
+      "error": null
+    },
+    {
+      "slug": "212-sexy-inspired",
+      "name": "212 Sexy Inspired",
+      "collection": "Rose",
+      "operator": "Claude Code (founder approval 2026-10-12)",
+      "reviewedBy": "Founder (Adnaan) - approval 2026-10-12",
+      "status": "promoted",
+      "startedAt": "2026-10-12T20:13:46.228Z",
+      "completedAt": "2026-10-12T20:14:35.005Z",
+      "nativePath": "app/lib/mkc/native/212-sexy-inspired.ts",
+      "validationStatus": "PASS",
+      "buildResult": "pass",
+      "durationMs": 48791,
+      "error": null
+    },
+    {
       "slug": "only-the-brave-inspired",
       "name": "Only The Brave Inspired",
       "collection": "Skye",
@@ -3044,7 +3104,8 @@
       "validationStatus": "PASS",
       "buildResult": "pass",
       "durationMs": 25404,
-      "error": null
+      "error": null,
+      "annotation": "2026-10-12 (Wave 9 W9-B3-P1, records-only): nativePath app/lib/mkc/native/kayali-vanilla-28-inspired.ts does not exist and the slug is not registered in native/index.ts. The registered native identity for 'Vanilla 28' is vanilla-28-inspired. Status left as recorded (history); not deleted. See catalogue-expansion-ledger.json → existing_holds_preserved (UNISEX-50)."
     },
     {
       "slug": "j'adore-inspired",

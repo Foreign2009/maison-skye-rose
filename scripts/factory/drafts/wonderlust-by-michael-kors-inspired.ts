@@ -32,17 +32,23 @@ export const wonderlustByMichaelKorsInspired: FragranceKnowledge = {
 
   // ── Classification ────────────────────────────────────────────────────────────
   gender        : "female",
-  family        : ["Floral", "Woody", "Spicy"],
+  // REVISED 2026-10-12 (W9-B3-P1) from adapter output for profile "Floral Amber Gourmand".
+  // Previous: family ["Floral", "Woody", "Spicy"] (scentCharacter unchanged).
+  family        : ["Gourmand", "Floral", "Amber"],
   scentCharacter: "Rich & Full-Bodied",
   projection    : "moderate",
 
   // ── Composition ─────────────────────────────────────────────────────────────
-  profile       : "Floral Spicy Woody",
+  profile       : "Floral Amber Gourmand",  // previous: "Floral Spicy Woody"; Debenhams "Amber, Gourmand", Lookfantastic "Floral Amber"
   season        : "Autumn",
   notes: {
-    top:   ["Italian Bergamot"],
-    heart: ["Jasmine Grandiflorum"],
-    base:  ["Sri Lankan Sandalwood"],
+    // REVISED 2026-10-12 (W9-B3-P1): full pyramid per debenhams.com ("Sold & Delivered by Debenhams") and
+    // lookfantastic.com (identical lists). PYRAMID_SECONDARY_SUPPORTED. Nordstrom key notes and Macy's reported notes
+    // are subsets. PREVIOUS (preserved): Nordstrom key notes only — Italian Bergamot / Jasmine Grandiflorum /
+    // Sri Lankan Sandalwood. See wave-9-source-evidence.json (revision 9).
+    top:   ["Italian Bergamot", "Sicilian Mandarin", "Almond Milk", "Pink Pepper"],
+    heart: ["Jasmine Grandiflorum Absolute", "Dianthus", "Jasmine Sambac Absolute", "Heliotrope"],
+    base:  ["Cashmeran Wood", "Siam Benzoin", "Sri Lankan Sandalwood"],
   },
   notesEvidenceLocked: true,
   mood          : "Warm Sensual Sophisticated",
@@ -57,12 +63,12 @@ export const wonderlustByMichaelKorsInspired: FragranceKnowledge = {
   ],
   occasions     : ["Office", "Date Night", "Evening", "Weekend"],
   seasons       : ["Autumn", "Winter"],
-  signatureStyle: ["Sophisticated Floral Spice", "Warm Sensual Clarity", "Modern Feminine Luxury"],
+  signatureStyle: ["Sophisticated Floral Amber", "Warm Sensual Clarity", "Modern Feminine Luxury"],  // previous: "Sophisticated Floral Spice"
   recommendedFor: [
-    "Women seeking a sophisticated floral that transitions seamlessly from professional settings to intimate evenings.",
+    "Women seeking a sophisticated floral wrapped in creamy amber warmth.",
     "Those who love jasmine's creamy sensuality grounded by warm sandalwood.",
-    "Anyone building a signature autumn fragrance that feels luxurious without being heavy or cloying.",
-    "Women drawn to spiced florals who appreciate clarity and refinement in their scent wardrobe.",
+    "Anyone building a signature autumn fragrance around soft almond, jasmine and creamy amber warmth.",
+    "Women drawn to creamy amber florals who appreciate clarity and refinement in their scent wardrobe.",
   ],
 
   // ── Merchandising ───────────────────────────────────────────────────────────
@@ -81,7 +87,9 @@ export const wonderlustByMichaelKorsInspired: FragranceKnowledge = {
 
   // ── Education ───────────────────────────────────────────────────────────────
   subtitle      : "Warm Sensual Clarity",
-  description   : "Italian bergamot opens with bright clarity before yielding to a heart of jasmine grandiflorum, creamy and warmly spiced in character. Sri Lankan sandalwood settles beneath it, creating a fragrance that feels both sensual and restrained.",
+  // Description REVISED 2026-10-12 to the full pyramid. Previous description covered bergamot, jasmine grandiflorum
+  // and sandalwood only (preserved in the W9-B3-P1 pre-edit backup and the review bundle).
+  description   : "Italian bergamot and Sicilian mandarin open brightly, softened by almond milk and a touch of pink pepper. Jasmine, dianthus and heliotrope form a creamy floral heart, before cashmeran, benzoin and Sri Lankan sandalwood settle into a warm, ambered base.",
   academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances", "how-to-wear-fragrance"],
   academyCategories: ["fragrance-families", "the-note-pyramid", "wear-and-application"],
   educationTags : [
@@ -89,8 +97,8 @@ export const wonderlustByMichaelKorsInspired: FragranceKnowledge = {
     "jasmine",
     "sandalwood",
     "bergamot",
-    "spicy",
-    "woody",
+    "gourmand",
+    "amber",
     "sophisticated",
     "sensual",
     "warm",
@@ -99,8 +107,9 @@ export const wonderlustByMichaelKorsInspired: FragranceKnowledge = {
   learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "how-to-layer-fragrances"],
 
   // ── Intelligence ────────────────────────────────────────────────────────────
-  // Approximated from profile + season. Calibrated by Intelligence Producer in P2.
-  sweetness     : 2,
+  // Scores derived by knowledgeAdapter.deriveMetrics(profile="Floral Amber Gourmand", season="Autumn") — REVISED 2026-10-12.
+  // Previous (profile "Floral Spicy Woody"): sweetness 2, freshness 3, warmth 4, intensity 3, versatility 3.
+  sweetness     : 4,
   freshness     : 3,
   warmth        : 4,
   intensity     : 3,

@@ -6225,6 +6225,90 @@
       "slug": "only-the-brave-inspired",
       "reviewer": "Claude Code (founder approval 2026-10-11)",
       "details": "promotionId:KvfQqR73e2wA  nativePath:app/lib/mkc/native/only-the-brave-inspired.ts"
+    },
+    {
+      "timestamp": "2026-10-12T20:13:39.504Z",
+      "action": "added_to_queue",
+      "slug": "212-sexy-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-10-12T20:13:42.842Z",
+      "action": "approved",
+      "slug": "212-sexy-inspired",
+      "reviewer": "Founder (Adnaan) - approval 2026-10-12",
+      "details": "Gate A formal editorial approval 2026-10-12: 212-sexy-inspired — Rose — Amber Gourmand Floral"
+    },
+    {
+      "timestamp": "2026-10-12T20:14:35.030Z",
+      "action": "promoted",
+      "slug": "212-sexy-inspired",
+      "reviewer": "Claude Code (founder approval 2026-10-12)",
+      "details": "promotionId:qtIrpscU3rOS  nativePath:app/lib/mkc/native/212-sexy-inspired.ts"
+    },
+    {
+      "timestamp": "2026-10-12T20:14:48.241Z",
+      "action": "added_to_queue",
+      "slug": "vetiver-golden-vanilla-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-10-12T20:14:51.695Z",
+      "action": "approved",
+      "slug": "vetiver-golden-vanilla-inspired",
+      "reviewer": "Founder (Adnaan) - approval 2026-10-12",
+      "details": "Gate A formal editorial approval 2026-10-12: vetiver-golden-vanilla-inspired — Elite — Woody Aromatic Vanilla; retained despite reference unavailable at the inspected retailer"
+    },
+    {
+      "timestamp": "2026-10-12T20:15:43.991Z",
+      "action": "promoted",
+      "slug": "vetiver-golden-vanilla-inspired",
+      "reviewer": "Claude Code (founder approval 2026-10-12)",
+      "details": "promotionId:r1wFqFDipHB-  nativePath:app/lib/mkc/native/vetiver-golden-vanilla-inspired.ts"
+    },
+    {
+      "timestamp": "2026-10-12T20:16:02.367Z",
+      "action": "added_to_queue",
+      "slug": "wonderlust-by-michael-kors-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-10-12T20:16:05.963Z",
+      "action": "approved",
+      "slug": "wonderlust-by-michael-kors-inspired",
+      "reviewer": "Founder (Adnaan) - approval 2026-10-12",
+      "details": "Gate A formal editorial approval 2026-10-12: wonderlust-by-michael-kors-inspired — Rose — Floral Amber Gourmand"
+    },
+    {
+      "timestamp": "2026-10-12T20:16:59.962Z",
+      "action": "promoted",
+      "slug": "wonderlust-by-michael-kors-inspired",
+      "reviewer": "Claude Code (founder approval 2026-10-12)",
+      "details": "promotionId:Ni0Ddu1ngG_v  nativePath:app/lib/mkc/native/wonderlust-by-michael-kors-inspired.ts"
+    },
+    {
+      "timestamp": "2026-10-12T20:17:13.531Z",
+      "action": "added_to_queue",
+      "slug": "prada-candy-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-10-12T20:17:16.958Z",
+      "action": "approved",
+      "slug": "prada-candy-inspired",
+      "reviewer": "Founder (Adnaan) - approval 2026-10-12",
+      "details": "Gate A formal editorial approval 2026-10-12: prada-candy-inspired — Rose — Amber Gourmand"
+    },
+    {
+      "timestamp": "2026-10-12T20:18:09.632Z",
+      "action": "promoted",
+      "slug": "prada-candy-inspired",
+      "reviewer": "Claude Code (founder approval 2026-10-12)",
+      "details": "promotionId:4fga0yKIoLtD  nativePath:app/lib/mkc/native/prada-candy-inspired.ts"
     }
   ]
 }

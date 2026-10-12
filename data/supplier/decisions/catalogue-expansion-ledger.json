@@ -18,7 +18,7 @@
     "counts": {
       "supplierRawRows": 565,
       "supplierUniqueIdentities": "NOT_CONFIRMED — 565 is the total row count; internal duplicates or variant entries within the supplier list have not been fully enumerated. Unique identity count requires a dedicated deduplication pass.",
-      "activeNativeMKC": 273,
+      "activeNativeMKC": 277,
       "activeMatchesFoundInSupplierRows": "PARTIAL — reconcile.mjs (2026-10-10) found 68 supplier rows matching native MKC beyond initial slug analysis (i.e., matched by name/alias/flanker, not just slug). Total confirmed supplier rows already in active MKC is at least 218 (565 − 347 provisional gap; LADIES-277 and LADIES-108 confirmed as existing matches and LADIES-34, LADIES-156, LADIES-251 promoted on 2026-10-11). Exact count requires full reconciliation pass.",
       "unresolvedIdentity": 2,
       "duplicateAlias": 3,
@@ -27,9 +27,10 @@
       "batch1DraftsCurrentlyInStaging": 6,
       "verifiedReadyForPromotion": 0,
       "provisionalMissingFromActiveMKC": {
-        "count": 344,
+        "count": 331,
+        "countPreviousRev16": 344,
         "status": "PROVISIONAL_UPPER_BOUND",
-        "basis": "344 = 347 less 3 supplier rows promoted on 2026-10-11 (LADIES-227, LADIES-75, MEN-52; uncommitted). Still NOT a reconciled final count and NOT a unique-fragrance count; 14 Batch 2 likely existing matches not yet subtracted.",
+        "basis": "331 = 335 less 4 supplier rows promoted locally on 2026-10-12 (LADIES-5, UNISEX-63, LADIES-195, LADIES-238; each present once in the reconcile.mjs NOT-IN-MKC list as '212 SEXY Carolina Herrera', 'Jo Malone Vetiver and Golden Vanilla', 'Michael Kors Wonderlust', 'Prada Candy'; uncommitted). MEN-8 / LADIES-7 observations still unconfirmed and not subtracted. Still a PROVISIONAL UPPER BOUND, not a unique-fragrance count.",
         "cannotBeReducedBy": "The remaining staged batch 1 drafts do NOT reduce this count; only promotion to native MKC or a confirmed existing match does. Unresolved entries (2) are not subtracted. (The two withdrawn duplicate drafts are preserved; their supplier rows are already counted as confirmed existing matches.)",
         "knownGaps": "13 ambiguous supplier entries require separate identity research before batch assignment.",
         "overlaps": "The 68 additionally-found MKC matches were located by name/alias/flanker reconciliation beyond slug-matching. Further identity research may identify additional overlaps (two Batch 1 drafts proved to be existing natives), so 349 may still be an over-estimate. The final count can only be confirmed after all 565 rows are individually resolved.",
@@ -53,12 +54,25 @@
             "count": 347,
             "date": "2026-10-11",
             "basis": "347 = 349 less 2 supplier rows promoted on 2026-10-11 (LADIES-156 → jimmy-choo-inspired, LADIES-251 → romance-by-ralph-lauren-inspired; uncommitted). Still NOT a reconciled final count and NOT a unique-fragrance count."
+          },
+          {
+            "count": 344,
+            "date": "2026-10-11",
+            "basis": "344 = 347 less 3 supplier rows promoted on 2026-10-11 (LADIES-227, LADIES-75, MEN-52; uncommitted). Still NOT a reconciled final count and NOT a unique-fragrance count; 14 Batch 2 likely existing matches not yet subtracted."
+          },
+          {
+            "count": 335,
+            "date": "2026-10-12",
+            "basis": "335 = 344 less 9 supplier rows confirmed 2026-10-12 as existing native matches that appear in the 2026-10-10 reconcile.mjs NOT-IN-MKC list (MEN-102, MEN-103, MEN-144, MEN-32, MEN-33, MEN-34, MEN-35, LADIES-223, MEN-43). The other 5 likely matches (LADIES-266, MEN-148, UNISEX-38, UNISEX-64, UNISEX-60) were never in that list and are not subtracted. Method re-verified 2026-10-12: the reconcile.mjs list reproduces 352 against f35e4d7; all 8 earlier subtractions (LADIES-277, LADIES-108, LADIES-34, LADIES-156, LADIES-251, LADIES-227, LADIES-75, MEN-52) are list members subtracted once. Drafts do not reduce the count. Still a PROVISIONAL UPPER BOUND, not a unique-fragrance count."
           }
         ],
         "cannotBeReducedByPreviousRev11": "The remaining staged batch 1 drafts do NOT reduce this count; only promotion to native MKC or a confirmed existing match does. Deleted drafts (2) and unresolved entries (2) are not subtracted.",
         "basisPreviousRev11": "349 = 351 less 1 supplier row confirmed already active (LADIES-108 → the-one-pour-femme-inspired) and 1 supplier row promoted (LADIES-34 → beautiful-by-estee-lauder-inspired, uncommitted), 2026-10-11. Still NOT a reconciled final count and NOT a unique-fragrance count.",
         "basisPreviousRev12": "349 = 351 less 1 supplier row confirmed already active (LADIES-108 → the-one-pour-femme-inspired) and 1 supplier row promoted (LADIES-34 → beautiful-by-estee-lauder-inspired, committed in 2803160), 2026-10-11. Still NOT a reconciled final count and NOT a unique-fragrance count.",
-        "basisPreviousRev14": "347 = 349 less 2 supplier rows promoted on 2026-10-11 (LADIES-156 → jimmy-choo-inspired, LADIES-251 → romance-by-ralph-lauren-inspired; uncommitted). Still NOT a reconciled final count and NOT a unique-fragrance count."
+        "basisPreviousRev14": "347 = 349 less 2 supplier rows promoted on 2026-10-11 (LADIES-156 → jimmy-choo-inspired, LADIES-251 → romance-by-ralph-lauren-inspired; uncommitted). Still NOT a reconciled final count and NOT a unique-fragrance count.",
+        "basisPreviousRev16": "344 = 347 less 3 supplier rows promoted on 2026-10-11 (LADIES-227, LADIES-75, MEN-52; uncommitted). Still NOT a reconciled final count and NOT a unique-fragrance count; 14 Batch 2 likely existing matches not yet subtracted.",
+        "countPreviousRev19": 335,
+        "basisPreviousRev19": "335 = 344 less 9 supplier rows confirmed 2026-10-12 as existing native matches that appear in the 2026-10-10 reconcile.mjs NOT-IN-MKC list (MEN-102, MEN-103, MEN-144, MEN-32, MEN-33, MEN-34, MEN-35, LADIES-223, MEN-43). The other 5 likely matches (LADIES-266, MEN-148, UNISEX-38, UNISEX-64, UNISEX-60) were never in that list and are not subtracted. Method re-verified 2026-10-12: the reconcile.mjs list reproduces 352 against f35e4d7; all 8 earlier subtractions (LADIES-277, LADIES-108, LADIES-34, LADIES-156, LADIES-251, LADIES-227, LADIES-75, MEN-52) are list members subtracted once. Drafts do not reduce the count. Still a PROVISIONAL UPPER BOUND, not a unique-fragrance count."
       },
       "batch1ByStatus": {
         "DRAFT_GENERATED_PENDING_EVIDENCE": 3,
@@ -93,15 +107,17 @@
       ],
       "activeNativeMKCPrevious": 267,
       "activeNativeMKCBreakdown": {
-        "total": 273,
+        "total": 277,
         "Skye": 110,
-        "Rose": 114,
-        "Elite": 49,
-        "female": 114,
+        "Rose": 117,
+        "Elite": 50,
+        "female": 117,
         "male": 110,
-        "unisex": 49,
-        "measuredDate": "2026-10-11",
-        "note": "Measured from nativeFragrances after promoting perfect-by-marc-jacobs, euphoria-by-calvin-klein and only-the-brave; all active; no duplicate slug, id or normalised name."
+        "unisex": 50,
+        "malePlusUnisex": 160,
+        "femalePlusUnisex": 167,
+        "measuredDate": "2026-10-12",
+        "note": "Measured from nativeFragrances after promoting the four W9-B3-P5 records; all active; no duplicate slug, id or normalised name."
       },
       "batch1PromotedToNative": [
         "jimmy-choo-inspired",
@@ -180,17 +196,12 @@
         "recordedDate": "2026-10-11",
         "draftsGenerated": 5,
         "byStatus": {
-          "DRAFT_GENERATED_PENDING_EVIDENCE": 1,
-          "DRAFT_GENERATED_PENDING_REVIEW": 1,
-          "PROMOTED_TO_NATIVE": 3
+          "PROMOTED_TO_NATIVE": 5
         },
         "byEvidenceTier": {
-          "AI_INFERENCE_UNSOURCED": 1,
-          "PYRAMID_SECONDARY_SUPPORTED": 4
+          "PYRAMID_SECONDARY_SUPPORTED": 5
         },
-        "evidenceHolds": [
-          "prada-candy-inspired"
-        ],
+        "evidenceHolds": [],
         "researchedNotDrafted": 6,
         "likelyExistingMatchesFound": 14,
         "promotionEligible": [],
@@ -220,9 +231,46 @@
         "promotedToNative": [
           "euphoria-by-calvin-klein-inspired",
           "only-the-brave-inspired",
+          "perfect-by-marc-jacobs-inspired",
+          "prada-candy-inspired",
+          "wonderlust-by-michael-kors-inspired"
+        ],
+        "editorialPromotionApprovalPreviousRev14": "PENDING — none recorded for Batch 2.",
+        "likelyExistingMatchesConfirmed2026-10-12": {
+          "confirmed": 14,
+          "subtractedFromProvisionalCount": 9,
+          "notInProvisionalList": 5
+        },
+        "byStatusPreviousRev16": {
+          "DRAFT_GENERATED_PENDING_EVIDENCE": 1,
+          "DRAFT_GENERATED_PENDING_REVIEW": 1,
+          "PROMOTED_TO_NATIVE": 3
+        },
+        "byEvidenceTierPreviousRev16": {
+          "AI_INFERENCE_UNSOURCED": 1,
+          "PYRAMID_SECONDARY_SUPPORTED": 4
+        },
+        "evidenceHoldsPreviousRev16": [
+          "prada-candy-inspired"
+        ],
+        "byStatusPreviousRev19": {
+          "DRAFT_GENERATED_PENDING_REVIEW": 2,
+          "PROMOTED_TO_NATIVE": 3
+        },
+        "promotedToNativePreviousRev19": [
+          "euphoria-by-calvin-klein-inspired",
+          "only-the-brave-inspired",
           "perfect-by-marc-jacobs-inspired"
         ],
-        "editorialPromotionApprovalPreviousRev14": "PENDING — none recorded for Batch 2."
+        "editorialPromotionApproval2026-10-12": {
+          "approved": {
+            "wonderlust-by-michael-kors-inspired": "Floral Amber Gourmand",
+            "prada-candy-inspired": "Amber Gourmand"
+          },
+          "date": "2026-10-12",
+          "by": "Founder (Adnaan)",
+          "gates": "A + B; Gate C not authorised"
+        }
       },
       "activeNativeMKCPreviousRev14": 270,
       "activeNativeMKCBreakdownPreviousRev14": {
@@ -232,6 +280,49 @@
         "Elite": 49,
         "measuredDate": "2026-10-11",
         "note": "Measured from nativeFragrances (app/lib/mkc/native/index.ts) after promoting jimmy-choo-inspired and romance-by-ralph-lauren-inspired; all records status 'active'; no duplicate slug, id or normalised name."
+      },
+      "batch3": {
+        "recordedDate": "2026-10-12",
+        "draftsGenerated": 2,
+        "byStatus": {
+          "PROMOTED_TO_NATIVE": 2
+        },
+        "byEvidenceTier": {
+          "PYRAMID_SECONDARY_SUPPORTED": 2
+        },
+        "researchedNotDrafted": 4,
+        "promotionEligible": [],
+        "editorialPromotionApproval": "PENDING — none recorded for Batch 3.",
+        "provisionalMissingNote": "Drafts do not reduce the provisional count (335).",
+        "founderDirection": "Editorial direction accepted in principle 2026-10-12 for 212-sexy, vetiver-golden-vanilla (Batch 3) and wonderlust, prada-candy (Batch 2); not formal approval.",
+        "byStatusPreviousRev19": {
+          "DRAFT_GENERATED_PENDING_REVIEW": 2
+        },
+        "promotedToNative": [
+          "212-sexy-inspired",
+          "vetiver-golden-vanilla-inspired"
+        ],
+        "editorialPromotionApproval2026-10-12": {
+          "approved": {
+            "212-sexy-inspired": "Amber Gourmand Floral",
+            "vetiver-golden-vanilla-inspired": "Woody Aromatic Vanilla"
+          },
+          "date": "2026-10-12",
+          "by": "Founder (Adnaan)",
+          "gates": "A + B; Gate C not authorised"
+        }
+      },
+      "activeNativeMKCPreviousRev19": 273,
+      "activeNativeMKCBreakdownPreviousRev19": {
+        "total": 273,
+        "Skye": 110,
+        "Rose": 114,
+        "Elite": 49,
+        "female": 114,
+        "male": 110,
+        "unisex": 49,
+        "measuredDate": "2026-10-11",
+        "note": "Measured from nativeFragrances after promoting perfect-by-marc-jacobs, euphoria-by-calvin-klein and only-the-brave; all active; no duplicate slug, id or normalised name."
       }
     },
     "recoveryRevision": {
@@ -251,7 +342,12 @@
       "revision14": "2026-10-11: Wave 9 Batch 2 — 5 review drafts recorded under entries.batch2_draft_generated (4 PYRAMID_SECONDARY_SUPPORTED pending review, 1 evidence hold); 6 researched-not-drafted rows; 14 likely existing matches; 5 unverified relationship proposals appended. Batch 1 entries unchanged. No promotion.",
       "revision14b": "2026-10-11: founder-reported reference identity/edition confirmations for 3 Batch 2 rows (LADIES-227, LADIES-75, MEN-52); provenance: founder in conversation, no supplier response; supplied concentration unconfirmed; editorial/promotion approval pending; Wonderlust, Prada Candy and Batch 1 holds unchanged.",
       "revision15": "2026-10-11: founder editorial/promotion approval (separate from r14b; not supplier evidence); perfect-by-marc-jacobs-inspired (V7fJUpJ310Qr), euphoria-by-calvin-klein-inspired (L1hdNMRYvMxC), only-the-brave-inspired (KvfQqR73e2wA) promoted; native 273 measured; provisional missing 347 → 344. Wonderlust, Prada Candy, Batch 1 holds unchanged. Not committed.",
-      "revision15a": "2026-10-11: identityConfirmation.notEditorialApproval updated for the three promoted Batch 2 rows to reference founderApproval; original wording preserved as notEditorialApprovalHistoricalRev14b. Metadata only."
+      "revision15a": "2026-10-11: identityConfirmation.notEditorialApproval updated for the three promoted Batch 2 rows to reference founderApproval; original wording preserved as notEditorialApprovalHistoricalRev14b. Metadata only.",
+      "revision16": "2026-10-12 (W9-B3-P1): Batch 3 drafts 212-sexy-inspired (LADIES-5) and vetiver-golden-vanilla-inspired (UNISEX-63) generated as review drafts (not promoted; relationships cleared, proposals pending). Wonderlust pyramid completed (Floral Amber Gourmand); Prada Candy tier → PYRAMID_SECONDARY_SUPPORTED (Debenhams first-party); Gucci Rush pyramid → Edgars (Fruity Chypre; still AI_INFERENCE_UNSOURCED). 14 likely existing matches confirmed; provisional count 344 → 335 (9 list members subtracted once; 5 never in the list). Vanilla 28: vanilla-28-inspired recorded as authoritative; registry entry annotated. Armani Code (LADIES-21, MEN-21), Miss Dior Cherie (LADIES-196), Poison and Tommy Girl holds unchanged. Native 273 unchanged. Not committed.",
+      "revision17": "2026-10-12 (W9-B3-P2): founder-review preparation (records only). Identity reviews and required founder confirmations recorded for 212-sexy, vetiver-golden-vanilla, wonderlust and prada-candy; claim-safety copy edits; Prada Candy profile → Amber Gourmand (scores unchanged). Statuses unchanged; none approved for promotion. Gucci Rush evidence hold kept with the qualifying source defined. Two likely existing matches observed (MEN-8, LADIES-7), not subtracted; provisional count stays 335. Native 273. Not committed.",
+      "revision18": "2026-10-12 (W9-B3-P3): founder agreement in principle (not approval) and supplier-unconfirmed concentration/formulation recorded for the four review candidates; supplier_confirmation_register added (no essential question; optional checks; draft message NOT SENT); P2 confirmation-blocker label corrected. Gucci Rush, Tommy Girl, Poison, Armani Code, Miss Dior Cherie, Vanilla 28 and the MEN-8 / LADIES-7 observations unchanged. Native 273; provisional 335. Not committed.",
+      "revision19": "2026-10-12 (W9-B3-P5): founder Gate A + Gate B approval (verbatim); 212-sexy-inspired (qtIrpscU3rOS), vetiver-golden-vanilla-inspired (r1wFqFDipHB-), wonderlust-by-michael-kors-inspired (Ni0Ddu1ngG_v), prada-candy-inspired (4fga0yKIoLtD) promoted locally with explicit slugs after a hash-verified backup; native measured 277 (Skye 110, Rose 117, Elite 50; female 117, male 110, unisex 50); provisional 335 → 331. Gucci Rush and all holds unchanged; relationships inactive. Gate C not authorised. Not committed.",
+      "revision20": "2026-10-12 (W9-B3-P8): founder availability clarification and business model recorded for the four Batch 3 release records; supplier register availability items resolved by founder; draft supplier message superseded (never sent). Concentration/formulation UNCONFIRMED. No native, availability-status, price, count or approval change. Native 277; provisional 331. Not committed at time of writing."
     },
     "evidenceTierPolicyApplied": {
       "source": "data/identity/source/wave-3-2026-research.json → governance.sourcePolicyTiers / admissibilityNote; data/supplier/decisions/catalogue-expansion-ledger.json → governance.governancePrinciples; Wave 8 precedent (scripts/factory/data/wave-8-catalogue.ts).",
@@ -560,6 +656,48 @@
           "referenceEditionBasis": "Retail listings inspected are EDT (Debenhams marketplace, Parfumdreams, Amazon); thescentbase.com states no concentration.",
           "suppliedConcentration": "NOT_ESTABLISHED — supplier text states no concentration; no founder confirmation recorded.",
           "consistency": "Reference edition only; supplier text 'Gucci Rush' states no concentration."
+        },
+        "reconciliation2026-10-12": {
+          "notes": {
+            "top": [
+              "Bergamot",
+              "Peony",
+              "Gardenia"
+            ],
+            "heart": [
+              "Violet",
+              "Vanilla",
+              "Jasmine"
+            ],
+            "base": [
+              "Patchouli"
+            ]
+          },
+          "source": "https://www.edgars.co.za/products/gucci-rush-eau-de-toilette-for-her (inspected 2026-10-12; authorised status not verified)",
+          "profile": "Fruity Chypre (previous 'Floral Woody')",
+          "adapterDerived": {
+            "family": [
+              "Fruity",
+              "Amber"
+            ],
+            "scentCharacter": "Rich & Full-Bodied",
+            "scores": [
+              3,
+              2,
+              4,
+              3,
+              5
+            ]
+          },
+          "evidenceTier": "AI_INFERENCE_UNSOURCED (unchanged)",
+          "status": "DRAFT_GENERATED_PENDING_EVIDENCE (unchanged)",
+          "historyPreserved": "inspectedEvidence, history and the previous pyramid are unchanged in this entry; the previous pyramid is also in the draft comments and research notesAsDraftedPreviousRev16."
+        },
+        "evidenceHold2026-10-12": {
+          "status": "DRAFT_GENERATED_PENDING_EVIDENCE (unchanged) — NOT APPROVED FOR PROMOTION",
+          "qualifiedSourceNeeded": "Any ONE inspected page listing the full Edgars pyramid in the same tiers (Top Bergamot, Peony, Gardenia; Heart Violet, Vanilla, Jasmine; Base Patchouli) from: (a) gucci.com product page; (b) a named authorised retailer — e.g. Boots or The Perfume Shop product pages (both reported by search to agree, both blocked on inspection), a Debenhams listing marked 'Sold & Delivered by Debenhams', Nordstrom, Sephora, Ulta or John Lewis; or (c) a named fragrance database (Fragrantica, Basenotes). Alternatively, evidence that Edgars is an authorised Gucci fragrance stockist would qualify the existing Edgars listing.",
+          "previousEvidencePreserved": "thescentbase.com pyramid and earlier marketplace evidence remain recorded; they are not restored automatically.",
+          "recordedBy": "W9-B3-P2"
         }
       },
       {
@@ -1272,11 +1410,40 @@
           ],
           "status": "UNVERIFIED_FACTORY_SUGGESTION",
           "notes": "RelationshipProducer suggestion, cleared from the draft. Not reviewed; cross-gender pairs and reciprocity unverified."
+        },
+        {
+          "draftSlug": "212-sexy-inspired",
+          "batch": "wave-9-batch-3",
+          "proposedAlternatives": [
+            "love-don't-be-shy-inspired",
+            "black-opium-inspired",
+            "hypnotic-poison-inspired"
+          ],
+          "proposedWardrobePartners": [
+            "ultra-male-inspired",
+            "layton-inspired"
+          ],
+          "status": "UNVERIFIED_FACTORY_SUGGESTION",
+          "notes": "RelationshipProducer suggestion, cleared from the draft. Not reviewed; cross-gender pairs and reciprocity unverified."
+        },
+        {
+          "draftSlug": "vetiver-golden-vanilla-inspired",
+          "batch": "wave-9-batch-3",
+          "proposedAlternatives": [
+            "layton-inspired",
+            "le-male-elixir-inspired"
+          ],
+          "proposedWardrobePartners": [
+            "spicebomb-extreme-inspired",
+            "baccarat-rouge-540-inspired"
+          ],
+          "status": "UNVERIFIED_FACTORY_SUGGESTION",
+          "notes": "RelationshipProducer suggestion, cleared from the draft. Not reviewed; cross-gender pairs and reciprocity unverified."
         }
       ]
     },
     "missing": {
-      "provisionalCount": 344,
+      "provisionalCount": 331,
       "basis": "2026-10-10 reconcile.mjs pass — all gap candidates checked against native MKC using names, brands, aliases and flankers (not slug-matching alone). Found 68 additional entries already in MKC beyond initial slug analysis.",
       "note": "Provisional upper bound 347 (352 at reconciliation, less LADIES-277 and LADIES-108 confirmed existing matches and LADIES-34, LADIES-156, LADIES-251 promoted). Not a unique-fragrance count.",
       "futureWorkNote": "13 ambiguous supplier entries from the normalized file require separate identity research before batch assignment.",
@@ -1288,18 +1455,28 @@
         {
           "count": 351,
           "date": "2026-10-11"
+        },
+        {
+          "count": 344,
+          "date": "2026-10-11"
+        },
+        {
+          "count": 335,
+          "date": "2026-10-12"
         }
       ],
       "provisionalCountPreviousRev12": 349,
       "notePreviousRev12": "Provisional upper bound 349 (352 at reconciliation, less LADIES-277 and LADIES-108 confirmed existing matches and LADIES-34 promoted). Not a unique-fragrance count.",
-      "provisionalCountPreviousRev14": 347
+      "provisionalCountPreviousRev14": 347,
+      "provisionalCountPreviousRev16": 344,
+      "provisionalCountPreviousRev19": 335
     },
     "existing_holds_preserved": [
       {
         "supplierText": "Vanilla 28 by Kayali",
         "sourceKey": "UNISEX-50-Vanilla 28 by Kayali",
         "disposition": "DUPLICATE_HOLD",
-        "status": "HOLD_OPEN — not touched by Wave 9",
+        "status": "AUTHORITATIVE_SLUG_RECORDED — vanilla-28-inspired is the registered native identity; no record deleted, renamed or promoted",
         "observedFacts": [
           "Native MKC contains vanilla-28-inspired (app/lib/mkc/native/vanilla-28-inspired.ts, registered in native/index.ts).",
           "promotion-registry.json records kayali-vanilla-28-inspired as promoted with nativePath app/lib/mkc/native/kayali-vanilla-28-inspired.ts, but that file does not exist.",
@@ -1307,7 +1484,18 @@
           "normalized supplier file lists kayali-vanilla-28-inspired among matched slugs."
         ],
         "instruction": "Do not resolve, delete or promote either slug by assumption; resolution needs repository or supplier evidence.",
-        "recordedDate": "2026-10-10"
+        "recordedDate": "2026-10-10",
+        "statusPreviousRev16": "HOLD_OPEN — not touched by Wave 9",
+        "resolution2026-10-12": {
+          "authoritativeNativeSlug": "vanilla-28-inspired",
+          "basis": "app/lib/mkc/native/vanilla-28-inspired.ts exists and is registered in native/index.ts; app/lib/mkc/native/kayali-vanilla-28-inspired.ts does not exist and is not registered.",
+          "registryAnnotation": "scripts/factory/promotion/promotion-registry.json → kayali-vanilla-28-inspired record annotated (status 'promoted' left unchanged as history).",
+          "draftsPreserved": [
+            "scripts/factory/drafts/vanilla-28-inspired.ts",
+            "scripts/factory/drafts/kayali-vanilla-28-inspired.ts"
+          ],
+          "provisionalCount": "UNISEX-50 is not in the reconcile.mjs NOT-IN-MKC list; no subtraction."
+        }
       }
     ],
     "promoted_to_native": [
@@ -1447,6 +1635,134 @@
           "separateFrom": "Separate from the r14b founder-reported reference identity/edition confirmation.",
           "notEvidence": "Not supplier identity, concentration or note evidence. Supplied-product concentration remains unconfirmed.",
           "reviewQueueReviewer": "Founder (Adnaan) - approval 2026-10-11"
+        }
+      },
+      {
+        "slug": "212-sexy-inspired",
+        "sourceKey": "LADIES-5-212 SEXY Carolina Herrera",
+        "promotionId": "qtIrpscU3rOS",
+        "nativePath": "app/lib/mkc/native/212-sexy-inspired.ts",
+        "completedAt": "2026-10-12T20:14:35.005Z",
+        "operator": "Claude Code (founder approval 2026-10-12)",
+        "reviewedBy": "Founder (Adnaan) - approval 2026-10-12",
+        "validationStatus": "PASS",
+        "buildResult": "pass",
+        "workflow": "npm run mkc:review -- --add 212-sexy-inspired; npm run mkc:review -- --approve 212-sexy-inspired --reviewer \"Founder (Adnaan) - approval 2026-10-12\" --reason \"Gate A …\"; npm run mkc:promote -- --slug 212-sexy-inspired --operator \"Claude Code (founder approval 2026-10-12)\"",
+        "base": "0783ef1b718296441188bb2c980d3c592fe8b2ce (no fetch/integration; Gate C not authorised)",
+        "nativeEqualsDraft": "Native body identical to the reviewed draft apart from the type import path (validate-batch2/3-drafts.ts).",
+        "relationships": "empty — proposals remain UNVERIFIED_FACTORY_SUGGESTION in the ledger",
+        "committed": false,
+        "founderApproval": {
+          "date": "2026-10-12",
+          "approvedBy": "Founder (Adnaan)",
+          "gateA": {
+            "status": "APPROVED",
+            "wordingVerbatim": "I formally approve the editorial profiles and proposed collections of the following four fragrances: 212-sexy-inspired — Rose — Amber Gourmand Floral; vetiver-golden-vanilla-inspired — Elite — Woody Aromatic Vanilla; wonderlust-by-michael-kors-inspired — Rose — Floral Amber Gourmand; prada-candy-inspired — Rose — Amber Gourmand. I also approve retaining Vetiver & Golden Vanilla in the planned collection, despite the original reference being unavailable at the inspected retailer. The supplier's actual concentration and formulation details remain unconfirmed. No unsupported concentration or equivalence claims may be introduced.",
+            "thisRecord": "212-sexy-inspired — Rose — Amber Gourmand Floral"
+          },
+          "gateB": {
+            "status": "APPROVED (local MKC promotion only)",
+            "wordingVerbatim": "I authorise Claude Code to promote exactly these four fragrances into the local MKC development worktree, one at a time, following the W9-B3-P5 safeguards."
+          },
+          "gateC": "NOT AUTHORISED — do not commit, push, merge, deploy or modify the live website.",
+          "notEvidence": "Founder approval is not supplier evidence. Supplier concentration and formulation remain UNCONFIRMED.",
+          "reviewQueueReviewer": "Founder (Adnaan) - approval 2026-10-12"
+        }
+      },
+      {
+        "slug": "vetiver-golden-vanilla-inspired",
+        "sourceKey": "UNISEX-63-Jo Malone / Vetvier & Golden Vanilla",
+        "promotionId": "r1wFqFDipHB-",
+        "nativePath": "app/lib/mkc/native/vetiver-golden-vanilla-inspired.ts",
+        "completedAt": "2026-10-12T20:15:43.966Z",
+        "operator": "Claude Code (founder approval 2026-10-12)",
+        "reviewedBy": "Founder (Adnaan) - approval 2026-10-12",
+        "validationStatus": "PASS",
+        "buildResult": "pass",
+        "workflow": "npm run mkc:review -- --add vetiver-golden-vanilla-inspired; npm run mkc:review -- --approve vetiver-golden-vanilla-inspired --reviewer \"Founder (Adnaan) - approval 2026-10-12\" --reason \"Gate A …\"; npm run mkc:promote -- --slug vetiver-golden-vanilla-inspired --operator \"Claude Code (founder approval 2026-10-12)\"",
+        "base": "0783ef1b718296441188bb2c980d3c592fe8b2ce (no fetch/integration; Gate C not authorised)",
+        "nativeEqualsDraft": "Native body identical to the reviewed draft apart from the type import path (validate-batch2/3-drafts.ts).",
+        "relationships": "empty — proposals remain UNVERIFIED_FACTORY_SUGGESTION in the ledger",
+        "committed": false,
+        "founderApproval": {
+          "date": "2026-10-12",
+          "approvedBy": "Founder (Adnaan)",
+          "gateA": {
+            "status": "APPROVED",
+            "wordingVerbatim": "I formally approve the editorial profiles and proposed collections of the following four fragrances: 212-sexy-inspired — Rose — Amber Gourmand Floral; vetiver-golden-vanilla-inspired — Elite — Woody Aromatic Vanilla; wonderlust-by-michael-kors-inspired — Rose — Floral Amber Gourmand; prada-candy-inspired — Rose — Amber Gourmand. I also approve retaining Vetiver & Golden Vanilla in the planned collection, despite the original reference being unavailable at the inspected retailer. The supplier's actual concentration and formulation details remain unconfirmed. No unsupported concentration or equivalence claims may be introduced.",
+            "thisRecord": "vetiver-golden-vanilla-inspired — Elite — Woody Aromatic Vanilla"
+          },
+          "gateB": {
+            "status": "APPROVED (local MKC promotion only)",
+            "wordingVerbatim": "I authorise Claude Code to promote exactly these four fragrances into the local MKC development worktree, one at a time, following the W9-B3-P5 safeguards."
+          },
+          "gateC": "NOT AUTHORISED — do not commit, push, merge, deploy or modify the live website.",
+          "notEvidence": "Founder approval is not supplier evidence. Supplier concentration and formulation remain UNCONFIRMED.",
+          "reviewQueueReviewer": "Founder (Adnaan) - approval 2026-10-12"
+        }
+      },
+      {
+        "slug": "wonderlust-by-michael-kors-inspired",
+        "sourceKey": "LADIES-195-Michael Kors Wonderlust",
+        "promotionId": "Ni0Ddu1ngG_v",
+        "nativePath": "app/lib/mkc/native/wonderlust-by-michael-kors-inspired.ts",
+        "completedAt": "2026-10-12T20:16:59.941Z",
+        "operator": "Claude Code (founder approval 2026-10-12)",
+        "reviewedBy": "Founder (Adnaan) - approval 2026-10-12",
+        "validationStatus": "PASS",
+        "buildResult": "pass",
+        "workflow": "npm run mkc:review -- --add wonderlust-by-michael-kors-inspired; npm run mkc:review -- --approve wonderlust-by-michael-kors-inspired --reviewer \"Founder (Adnaan) - approval 2026-10-12\" --reason \"Gate A …\"; npm run mkc:promote -- --slug wonderlust-by-michael-kors-inspired --operator \"Claude Code (founder approval 2026-10-12)\"",
+        "base": "0783ef1b718296441188bb2c980d3c592fe8b2ce (no fetch/integration; Gate C not authorised)",
+        "nativeEqualsDraft": "Native body identical to the reviewed draft apart from the type import path (validate-batch2/3-drafts.ts).",
+        "relationships": "empty — proposals remain UNVERIFIED_FACTORY_SUGGESTION in the ledger",
+        "committed": false,
+        "founderApproval": {
+          "date": "2026-10-12",
+          "approvedBy": "Founder (Adnaan)",
+          "gateA": {
+            "status": "APPROVED",
+            "wordingVerbatim": "I formally approve the editorial profiles and proposed collections of the following four fragrances: 212-sexy-inspired — Rose — Amber Gourmand Floral; vetiver-golden-vanilla-inspired — Elite — Woody Aromatic Vanilla; wonderlust-by-michael-kors-inspired — Rose — Floral Amber Gourmand; prada-candy-inspired — Rose — Amber Gourmand. I also approve retaining Vetiver & Golden Vanilla in the planned collection, despite the original reference being unavailable at the inspected retailer. The supplier's actual concentration and formulation details remain unconfirmed. No unsupported concentration or equivalence claims may be introduced.",
+            "thisRecord": "wonderlust-by-michael-kors-inspired — Rose — Floral Amber Gourmand"
+          },
+          "gateB": {
+            "status": "APPROVED (local MKC promotion only)",
+            "wordingVerbatim": "I authorise Claude Code to promote exactly these four fragrances into the local MKC development worktree, one at a time, following the W9-B3-P5 safeguards."
+          },
+          "gateC": "NOT AUTHORISED — do not commit, push, merge, deploy or modify the live website.",
+          "notEvidence": "Founder approval is not supplier evidence. Supplier concentration and formulation remain UNCONFIRMED.",
+          "reviewQueueReviewer": "Founder (Adnaan) - approval 2026-10-12"
+        }
+      },
+      {
+        "slug": "prada-candy-inspired",
+        "sourceKey": "LADIES-238-Prada / Candy",
+        "promotionId": "4fga0yKIoLtD",
+        "nativePath": "app/lib/mkc/native/prada-candy-inspired.ts",
+        "completedAt": "2026-10-12T20:18:09.606Z",
+        "operator": "Claude Code (founder approval 2026-10-12)",
+        "reviewedBy": "Founder (Adnaan) - approval 2026-10-12",
+        "validationStatus": "PASS",
+        "buildResult": "pass",
+        "workflow": "npm run mkc:review -- --add prada-candy-inspired; npm run mkc:review -- --approve prada-candy-inspired --reviewer \"Founder (Adnaan) - approval 2026-10-12\" --reason \"Gate A …\"; npm run mkc:promote -- --slug prada-candy-inspired --operator \"Claude Code (founder approval 2026-10-12)\"",
+        "base": "0783ef1b718296441188bb2c980d3c592fe8b2ce (no fetch/integration; Gate C not authorised)",
+        "nativeEqualsDraft": "Native body identical to the reviewed draft apart from the type import path (validate-batch2/3-drafts.ts).",
+        "relationships": "empty — proposals remain UNVERIFIED_FACTORY_SUGGESTION in the ledger",
+        "committed": false,
+        "founderApproval": {
+          "date": "2026-10-12",
+          "approvedBy": "Founder (Adnaan)",
+          "gateA": {
+            "status": "APPROVED",
+            "wordingVerbatim": "I formally approve the editorial profiles and proposed collections of the following four fragrances: 212-sexy-inspired — Rose — Amber Gourmand Floral; vetiver-golden-vanilla-inspired — Elite — Woody Aromatic Vanilla; wonderlust-by-michael-kors-inspired — Rose — Floral Amber Gourmand; prada-candy-inspired — Rose — Amber Gourmand. I also approve retaining Vetiver & Golden Vanilla in the planned collection, despite the original reference being unavailable at the inspected retailer. The supplier's actual concentration and formulation details remain unconfirmed. No unsupported concentration or equivalence claims may be introduced.",
+            "thisRecord": "prada-candy-inspired — Rose — Amber Gourmand"
+          },
+          "gateB": {
+            "status": "APPROVED (local MKC promotion only)",
+            "wordingVerbatim": "I authorise Claude Code to promote exactly these four fragrances into the local MKC development worktree, one at a time, following the W9-B3-P5 safeguards."
+          },
+          "gateC": "NOT AUTHORISED — do not commit, push, merge, deploy or modify the live website.",
+          "notEvidence": "Founder approval is not supplier evidence. Supplier concentration and formulation remain UNCONFIRMED.",
+          "reviewQueueReviewer": "Founder (Adnaan) - approval 2026-10-12"
         }
       }
     ],
@@ -1602,11 +1918,32 @@
         "generatedDate": "2026-10-11",
         "factoryValidation": "PASS [0 errors, 0 warnings]",
         "referenceEditionUsedForEvidence": "Michael Kors Wonderlust Eau de Parfum (2016)",
-        "supplierConcentration": "NOT_STATED",
+        "supplierConcentration": "UNCONFIRMED (founder statement 2026-10-12); reference designation applies to the designer reference only",
         "identityConfirmation": "NONE",
         "evidenceTier": "PYRAMID_SECONDARY_SUPPORTED",
-        "profile": "Floral Spicy Woody",
+        "profile": "Floral Amber Gourmand",
         "adapterDerived": {
+          "family": [
+            "Gourmand",
+            "Floral",
+            "Amber"
+          ],
+          "scentCharacter": "Rich & Full-Bodied",
+          "scores": [
+            4,
+            3,
+            4,
+            3,
+            3
+          ],
+          "scoreOrder": "sweetness, freshness, warmth, intensity, versatility",
+          "method": "adaptFragrance() on the staging entry; draft values equal (validate-batch2-drafts.ts, 2026-10-12)."
+        },
+        "status": "PROMOTED_TO_NATIVE",
+        "promotionEligible": true,
+        "promotionEligibilityReason": "Promoted to native MKC locally on 2026-10-12 (promotionId Ni0Ddu1ngG_v); not committed; Gate C not authorised.",
+        "profilePreviousRev16": "Floral Spicy Woody",
+        "adapterDerivedPreviousRev16": {
           "family": [
             "Floral",
             "Woody",
@@ -1623,9 +1960,108 @@
           "scoreOrder": "sweetness, freshness, warmth, intensity, versatility",
           "method": "adaptFragrance() on the staging entry; draft values equal (validate-batch2-drafts.ts)."
         },
-        "status": "DRAFT_GENERATED_PENDING_REVIEW",
-        "promotionEligible": false,
-        "promotionEligibilityReason": "Not eligible yet: review draft; the uninspected Macy's pyramid signal should be reviewed before approval."
+        "promotionEligibilityReasonPreviousRev16": "Not eligible yet: review draft; the uninspected Macy's pyramid signal should be reviewed before approval.",
+        "reconciliation2026-10-12": "Pyramid completed from Debenhams (first-party) and Lookfantastic (identical lists; 11 notes); Macy's conflict resolved as a subset. Previous 3-note pyramid preserved in research (notesAsDraftedPreviousRev16) and draft comments.",
+        "founderReviewPreparation": {
+          "date": "2026-10-12",
+          "phase": "W9-B3-P2",
+          "reviewState": "PROMOTED TO LOCAL NATIVE MKC; NOT RELEASED",
+          "founderConfirmationRequired": [
+            "None essential under current governance (identity self-identifying; concentration not required). Optional supplier checks are in supplier_confirmation_register.",
+            "Formal editorial/promotion approval and explicit release approval."
+          ],
+          "copyEdits": [
+            "recommendedFor[0]: 'transitions seamlessly from professional settings to intimate evenings' → 'wrapped in creamy amber warmth' (versatility implication removed)."
+          ],
+          "reviewStatePreviousRev18": "EDITORIAL REVIEW COMPLETE — READY FOR FOUNDER DECISION; BLOCKED — MISSING CONFIRMATION (identity/concentration); NOT APPROVED FOR PROMOTION",
+          "founderConfirmationRequiredPreviousRev18": [
+            "Confirm LADIES-195 is the original Wonderlust (EDP reference), not a flanker.",
+            "State the concentration Maison supplies."
+          ],
+          "reviewStatePreviousRev19": "EDITORIALLY ACCEPTED IN PRINCIPLE (founder, 2026-10-12); READY FOR FORMAL FOUNDER APPROVAL; no verified identity or safety blocker; NOT AUTHORISED FOR PROMOTION (explicit editorial/promotion and release approval required)"
+        },
+        "promotionEligibilityReasonPreviousRev17": "Not eligible yet: revised review draft (2026-10-12) awaiting founder editorial/profile review and identity confirmation.",
+        "founderDecision2026-10-12": {
+          "date": "2026-10-12",
+          "recordedIn": "W9-B3-P3",
+          "by": "Founder (Adnaan), reported in conversation",
+          "editorialDirection": "ACCEPTED_IN_PRINCIPLE",
+          "wordingVerbatim": "I agree in principle with the editorial direction of the four Wave 9 Batch 3 profiles, but do not promote or deploy without the remaining checks and my explicit release approval.",
+          "supplierStatementVerbatim": "The supplier has not confirmed the actual concentration or formulation details.",
+          "isFormalEditorialApproval": false,
+          "isPromotionApproval": false,
+          "isReleaseApproval": false,
+          "note": "Agreement in principle only. Formal editorial/promotion approval and explicit release approval remain required. Not supplier evidence."
+        },
+        "supplierFormulationStatus": {
+          "supplierFormulation": "UNCONFIRMED (founder statement 2026-10-12: supplier has not confirmed formulation details)",
+          "suppliedConcentration": "UNCONFIRMED (founder statement 2026-10-12: supplier has not confirmed concentration)",
+          "referenceDesignationScope": "Any EDP / EDT / Cologne Intense designation applies only to the designer reference used for note research.",
+          "assumptionsNotMade": "No assumption that Maison supplies the same concentration, formula, raw materials or manufacturing method; no oil percentage recorded; no equivalence claim.",
+          "inventory": "Founder-confirmed 2026-10-12: 'All the fragrances are available and I am able to get them.' Maison sources the materials and prepares/packages 5 ml (R60), 10 ml (R100) and 30 ml (R250) products. No quantities or lead times recorded.",
+          "inventoryPreviousRev20": "Supplier listing only ('Supplier catalogue listing only. Does not confirm current stock…'); no further availability asserted."
+        },
+        "supplierConcentrationPreviousRev18": "NOT_STATED",
+        "promotionEligibilityReasonPreviousRev18": "Not eligible yet: editorial review complete (W9-B3-P2); awaiting founder identity/concentration confirmation and explicit approval.",
+        "statusPreviousRev19": "DRAFT_GENERATED_PENDING_REVIEW",
+        "promotionEligiblePreviousRev19": false,
+        "promotionEligibilityReasonPreviousRev19": "Ready for formal founder approval; not authorised for promotion (explicit editorial/promotion and release approval required).",
+        "founderApproval": {
+          "date": "2026-10-12",
+          "approvedBy": "Founder (Adnaan)",
+          "gateA": {
+            "status": "APPROVED",
+            "wordingVerbatim": "I formally approve the editorial profiles and proposed collections of the following four fragrances: 212-sexy-inspired — Rose — Amber Gourmand Floral; vetiver-golden-vanilla-inspired — Elite — Woody Aromatic Vanilla; wonderlust-by-michael-kors-inspired — Rose — Floral Amber Gourmand; prada-candy-inspired — Rose — Amber Gourmand. I also approve retaining Vetiver & Golden Vanilla in the planned collection, despite the original reference being unavailable at the inspected retailer. The supplier's actual concentration and formulation details remain unconfirmed. No unsupported concentration or equivalence claims may be introduced.",
+            "thisRecord": "wonderlust-by-michael-kors-inspired — Rose — Floral Amber Gourmand"
+          },
+          "gateB": {
+            "status": "APPROVED (local MKC promotion only)",
+            "wordingVerbatim": "I authorise Claude Code to promote exactly these four fragrances into the local MKC development worktree, one at a time, following the W9-B3-P5 safeguards."
+          },
+          "gateC": "NOT AUTHORISED — do not commit, push, merge, deploy or modify the live website.",
+          "notEvidence": "Founder approval is not supplier evidence. Supplier concentration and formulation remain UNCONFIRMED.",
+          "reviewQueueReviewer": "Founder (Adnaan) - approval 2026-10-12"
+        },
+        "promotion": {
+          "promotionId": "Ni0Ddu1ngG_v",
+          "nativePath": "app/lib/mkc/native/wonderlust-by-michael-kors-inspired.ts",
+          "completedAt": "2026-10-12T20:16:59.941Z",
+          "operator": "Claude Code (founder approval 2026-10-12)",
+          "reviewedBy": "Founder (Adnaan) - approval 2026-10-12",
+          "validationStatus": "PASS",
+          "buildResult": "pass",
+          "workflow": "npm run mkc:review -- --add wonderlust-by-michael-kors-inspired; npm run mkc:review -- --approve wonderlust-by-michael-kors-inspired --reviewer \"Founder (Adnaan) - approval 2026-10-12\" --reason \"Gate A …\"; npm run mkc:promote -- --slug wonderlust-by-michael-kors-inspired --operator \"Claude Code (founder approval 2026-10-12)\"",
+          "base": "0783ef1b718296441188bb2c980d3c592fe8b2ce (no fetch/integration; Gate C not authorised)",
+          "nativeEqualsDraft": "Native body identical to the reviewed draft apart from the type import path (validate-batch2/3-drafts.ts).",
+          "relationships": "empty — proposals remain UNVERIFIED_FACTORY_SUGGESTION in the ledger",
+          "committed": false
+        },
+        "founderAvailability2026-10-12": {
+          "date": "2026-10-12",
+          "recordedIn": "W9-B3-P8",
+          "by": "Founder (Adnaan), reported in conversation",
+          "statementVerbatim": "All the fragrances are available and I am able to get them.",
+          "appliesTo": [
+            "212-sexy-inspired",
+            "vetiver-golden-vanilla-inspired",
+            "wonderlust-by-michael-kors-inspired",
+            "prada-candy-inspired"
+          ],
+          "businessModel": {
+            "sourcing": "Maison Skye & Rose sources the fragrance materials.",
+            "preparation": "Maison Skye & Rose prepares and packages its own finished customer products.",
+            "retailSizes": {
+              "5ml": "R60",
+              "10ml": "R100",
+              "30ml": "R250"
+            },
+            "note": "The supplier is not assumed to provide finished 5/10/30 ml bottles."
+          },
+          "status": "AVAILABILITY CONFIRMED BY FOUNDER",
+          "notClaimed": "No specific quantities, delivery lead times, confirmed chemical formulations or supplied safety documentation are recorded or claimed.",
+          "concentrationAndFormulation": "UNCONFIRMED (unchanged; supplier has not supplied exact concentration or formulation details).",
+          "supersedes": "Earlier availability / stock / size questions (W9-B3-P3 register, W9-B3-P6 report) and the unsent draft supplier message."
+        }
       },
       {
         "slug": "prada-candy-inspired",
@@ -1636,11 +2072,57 @@
         "generatedDate": "2026-10-11",
         "factoryValidation": "PASS [0 errors, 0 warnings]",
         "referenceEditionUsedForEvidence": "Prada Candy Eau de Parfum (2011) — not Candy L'Eau or Candy Night",
-        "supplierConcentration": "NOT_STATED",
+        "supplierConcentration": "UNCONFIRMED (founder statement 2026-10-12); reference designation applies to the designer reference only",
         "identityConfirmation": "NONE",
-        "evidenceTier": "AI_INFERENCE_UNSOURCED",
-        "profile": "Gourmand Spicy",
+        "evidenceTier": "PYRAMID_SECONDARY_SUPPORTED",
+        "profile": "Amber Gourmand",
         "adapterDerived": {
+          "family": [
+            "Gourmand",
+            "Amber"
+          ],
+          "scentCharacter": "Rich & Full-Bodied",
+          "scores": [
+            4,
+            2,
+            4,
+            4,
+            2
+          ],
+          "scoreOrder": "sweetness, freshness, warmth, intensity, versatility",
+          "method": "adaptFragrance() on the staging entry; draft values equal (validate-batch2-drafts.ts, W9-B3-P2)."
+        },
+        "status": "PROMOTED_TO_NATIVE",
+        "promotionEligible": true,
+        "promotionEligibilityReason": "Promoted to native MKC locally on 2026-10-12 (promotionId 4fga0yKIoLtD); not committed; Gate C not authorised.",
+        "evidenceTierPreviousRev16": "AI_INFERENCE_UNSOURCED",
+        "statusPreviousRev16": "DRAFT_GENERATED_PENDING_EVIDENCE",
+        "promotionEligibilityReasonPreviousRev16": "Not eligible: EVIDENCE HOLD — tier placement not confirmed by an authorised source.",
+        "reconciliation2026-10-12": "Debenhams first-party listing matches the drafted tiers (White Musk / Benzoin / Caramel Accord). Profile 'Gourmand Spicy' unchanged; Debenhams family 'Floral, Amber, Gourmand' recorded as an alternative. Editorial flag: 'luxe second layer' phrase.",
+        "founderReviewPreparation": {
+          "date": "2026-10-12",
+          "phase": "W9-B3-P2",
+          "reviewState": "PROMOTED TO LOCAL NATIVE MKC; NOT RELEASED",
+          "founderConfirmationRequired": [
+            "None essential under current governance (identity self-identifying; concentration not required). Optional supplier checks are in supplier_confirmation_register.",
+            "Formal editorial/promotion approval and explicit release approval."
+          ],
+          "copyEdits": [
+            "profile 'Gourmand Spicy' → 'Amber Gourmand'; family ['Gourmand','Spicy'] → ['Gourmand','Amber']; scores unchanged (4/2/4/4/2).",
+            "description: removed 'settles into skin like a luxe second layer' (figurative wear wording) and 'spiced with an undercurrent of subtle warmth' (no spice note); now ends 'it pairs caramel sweetness with a soft, ambered warmth.'",
+            "recommendedFor[1]: 'who wants creamy warmth over pure sweetness' → 'built around caramel and creamy benzoin' (contradicted sweetness 4).",
+            "educationTags: 'spicy' → 'amber'."
+          ],
+          "reviewStatePreviousRev18": "EDITORIAL REVIEW COMPLETE — READY FOR FOUNDER DECISION; BLOCKED — MISSING CONFIRMATION (identity/concentration); NOT APPROVED FOR PROMOTION",
+          "founderConfirmationRequiredPreviousRev18": [
+            "Confirm LADIES-238 is the original Prada Candy (EDP reference), not a flanker.",
+            "State the concentration Maison supplies."
+          ],
+          "reviewStatePreviousRev19": "EDITORIALLY ACCEPTED IN PRINCIPLE (founder, 2026-10-12); READY FOR FORMAL FOUNDER APPROVAL; no verified identity or safety blocker; NOT AUTHORISED FOR PROMOTION (explicit editorial/promotion and release approval required)"
+        },
+        "promotionEligibilityReasonPreviousRev17": "Not eligible yet: evidence hold lifted 2026-10-12; awaiting founder editorial review and identity confirmation.",
+        "profilePreviousRev17": "Gourmand Spicy",
+        "adapterDerivedPreviousRev17": {
           "family": [
             "Gourmand",
             "Spicy"
@@ -1656,9 +2138,87 @@
           "scoreOrder": "sweetness, freshness, warmth, intensity, versatility",
           "method": "adaptFragrance() on the staging entry; draft values equal (validate-batch2-drafts.ts)."
         },
-        "status": "DRAFT_GENERATED_PENDING_EVIDENCE",
-        "promotionEligible": false,
-        "promotionEligibilityReason": "Not eligible: EVIDENCE HOLD — tier placement not confirmed by an authorised source."
+        "founderDecision2026-10-12": {
+          "date": "2026-10-12",
+          "recordedIn": "W9-B3-P3",
+          "by": "Founder (Adnaan), reported in conversation",
+          "editorialDirection": "ACCEPTED_IN_PRINCIPLE",
+          "wordingVerbatim": "I agree in principle with the editorial direction of the four Wave 9 Batch 3 profiles, but do not promote or deploy without the remaining checks and my explicit release approval.",
+          "supplierStatementVerbatim": "The supplier has not confirmed the actual concentration or formulation details.",
+          "isFormalEditorialApproval": false,
+          "isPromotionApproval": false,
+          "isReleaseApproval": false,
+          "note": "Agreement in principle only. Formal editorial/promotion approval and explicit release approval remain required. Not supplier evidence."
+        },
+        "supplierFormulationStatus": {
+          "supplierFormulation": "UNCONFIRMED (founder statement 2026-10-12: supplier has not confirmed formulation details)",
+          "suppliedConcentration": "UNCONFIRMED (founder statement 2026-10-12: supplier has not confirmed concentration)",
+          "referenceDesignationScope": "Any EDP / EDT / Cologne Intense designation applies only to the designer reference used for note research.",
+          "assumptionsNotMade": "No assumption that Maison supplies the same concentration, formula, raw materials or manufacturing method; no oil percentage recorded; no equivalence claim.",
+          "inventory": "Founder-confirmed 2026-10-12: 'All the fragrances are available and I am able to get them.' Maison sources the materials and prepares/packages 5 ml (R60), 10 ml (R100) and 30 ml (R250) products. No quantities or lead times recorded.",
+          "inventoryPreviousRev20": "Supplier listing only ('Supplier catalogue listing only. Does not confirm current stock…'); no further availability asserted."
+        },
+        "supplierConcentrationPreviousRev18": "NOT_STATED",
+        "promotionEligibilityReasonPreviousRev18": "Not eligible yet: editorial review complete (W9-B3-P2); awaiting founder identity/concentration confirmation and explicit approval.",
+        "statusPreviousRev19": "DRAFT_GENERATED_PENDING_REVIEW",
+        "promotionEligiblePreviousRev19": false,
+        "promotionEligibilityReasonPreviousRev19": "Ready for formal founder approval; not authorised for promotion (explicit editorial/promotion and release approval required).",
+        "founderApproval": {
+          "date": "2026-10-12",
+          "approvedBy": "Founder (Adnaan)",
+          "gateA": {
+            "status": "APPROVED",
+            "wordingVerbatim": "I formally approve the editorial profiles and proposed collections of the following four fragrances: 212-sexy-inspired — Rose — Amber Gourmand Floral; vetiver-golden-vanilla-inspired — Elite — Woody Aromatic Vanilla; wonderlust-by-michael-kors-inspired — Rose — Floral Amber Gourmand; prada-candy-inspired — Rose — Amber Gourmand. I also approve retaining Vetiver & Golden Vanilla in the planned collection, despite the original reference being unavailable at the inspected retailer. The supplier's actual concentration and formulation details remain unconfirmed. No unsupported concentration or equivalence claims may be introduced.",
+            "thisRecord": "prada-candy-inspired — Rose — Amber Gourmand"
+          },
+          "gateB": {
+            "status": "APPROVED (local MKC promotion only)",
+            "wordingVerbatim": "I authorise Claude Code to promote exactly these four fragrances into the local MKC development worktree, one at a time, following the W9-B3-P5 safeguards."
+          },
+          "gateC": "NOT AUTHORISED — do not commit, push, merge, deploy or modify the live website.",
+          "notEvidence": "Founder approval is not supplier evidence. Supplier concentration and formulation remain UNCONFIRMED.",
+          "reviewQueueReviewer": "Founder (Adnaan) - approval 2026-10-12"
+        },
+        "promotion": {
+          "promotionId": "4fga0yKIoLtD",
+          "nativePath": "app/lib/mkc/native/prada-candy-inspired.ts",
+          "completedAt": "2026-10-12T20:18:09.606Z",
+          "operator": "Claude Code (founder approval 2026-10-12)",
+          "reviewedBy": "Founder (Adnaan) - approval 2026-10-12",
+          "validationStatus": "PASS",
+          "buildResult": "pass",
+          "workflow": "npm run mkc:review -- --add prada-candy-inspired; npm run mkc:review -- --approve prada-candy-inspired --reviewer \"Founder (Adnaan) - approval 2026-10-12\" --reason \"Gate A …\"; npm run mkc:promote -- --slug prada-candy-inspired --operator \"Claude Code (founder approval 2026-10-12)\"",
+          "base": "0783ef1b718296441188bb2c980d3c592fe8b2ce (no fetch/integration; Gate C not authorised)",
+          "nativeEqualsDraft": "Native body identical to the reviewed draft apart from the type import path (validate-batch2/3-drafts.ts).",
+          "relationships": "empty — proposals remain UNVERIFIED_FACTORY_SUGGESTION in the ledger",
+          "committed": false
+        },
+        "founderAvailability2026-10-12": {
+          "date": "2026-10-12",
+          "recordedIn": "W9-B3-P8",
+          "by": "Founder (Adnaan), reported in conversation",
+          "statementVerbatim": "All the fragrances are available and I am able to get them.",
+          "appliesTo": [
+            "212-sexy-inspired",
+            "vetiver-golden-vanilla-inspired",
+            "wonderlust-by-michael-kors-inspired",
+            "prada-candy-inspired"
+          ],
+          "businessModel": {
+            "sourcing": "Maison Skye & Rose sources the fragrance materials.",
+            "preparation": "Maison Skye & Rose prepares and packages its own finished customer products.",
+            "retailSizes": {
+              "5ml": "R60",
+              "10ml": "R100",
+              "30ml": "R250"
+            },
+            "note": "The supplier is not assumed to provide finished 5/10/30 ml bottles."
+          },
+          "status": "AVAILABILITY CONFIRMED BY FOUNDER",
+          "notClaimed": "No specific quantities, delivery lead times, confirmed chemical formulations or supplied safety documentation are recorded or claimed.",
+          "concentrationAndFormulation": "UNCONFIRMED (unchanged; supplier has not supplied exact concentration or formulation details).",
+          "supersedes": "Earlier availability / stock / size questions (W9-B3-P3 register, W9-B3-P6 report) and the unsent draft supplier message."
+        }
       },
       {
         "slug": "only-the-brave-inspired",
@@ -1774,74 +2334,786 @@
       {
         "sourceKey": "LADIES-266-Twilly by Hermes",
         "nativeSlug": "twilly-d'hermes-inspired",
-        "basis": "Name/alias match to an active native record (spelling variant missed by the coarse pool match); not supplier-confirmed."
+        "basis": "Name/alias match to an active native record (spelling variant missed by the coarse pool match); not supplier-confirmed.",
+        "confirmation2026-10-12": {
+          "nativeSlugExists": true,
+          "status": "CONFIRMED_EXISTING_MATCH (repository evidence; not supplier-confirmed)",
+          "inReconcileNotInMkcList": false,
+          "listName": null,
+          "subtractedFromProvisionalCount": false,
+          "note": "Not in the reconcile.mjs NOT-IN-MKC list, so it was never part of the provisional count; not subtracted (prevents double subtraction)."
+        }
       },
       {
         "sourceKey": "MEN-102-Mont Blanc Explorer",
         "nativeSlug": "montblanc-explorer-inspired",
-        "basis": "Name/alias match to an active native record (spelling variant missed by the coarse pool match); not supplier-confirmed."
+        "basis": "Name/alias match to an active native record (spelling variant missed by the coarse pool match); not supplier-confirmed.",
+        "confirmation2026-10-12": {
+          "nativeSlugExists": true,
+          "status": "CONFIRMED_EXISTING_MATCH (repository evidence; not supplier-confirmed)",
+          "inReconcileNotInMkcList": true,
+          "listName": "Mont Blanc Explorer",
+          "subtractedFromProvisionalCount": true,
+          "note": "Subtracted once from the provisional count (revision 16)."
+        }
       },
       {
         "sourceKey": "MEN-103-Mont Blanc Legend",
         "nativeSlug": "montblanc-legend-inspired",
-        "basis": "Name/alias match to an active native record (spelling variant missed by the coarse pool match); not supplier-confirmed."
+        "basis": "Name/alias match to an active native record (spelling variant missed by the coarse pool match); not supplier-confirmed.",
+        "confirmation2026-10-12": {
+          "nativeSlugExists": true,
+          "status": "CONFIRMED_EXISTING_MATCH (repository evidence; not supplier-confirmed)",
+          "inReconcileNotInMkcList": true,
+          "listName": "Mont Blanc Legend",
+          "subtractedFromProvisionalCount": true,
+          "note": "Subtracted once from the provisional count (revision 16)."
+        }
       },
       {
         "sourceKey": "MEN-144-Voyage Hermes",
         "nativeSlug": "voyage-d'hermes-inspired",
-        "basis": "Name/alias match to an active native record (spelling variant missed by the coarse pool match); not supplier-confirmed."
+        "basis": "Name/alias match to an active native record (spelling variant missed by the coarse pool match); not supplier-confirmed.",
+        "confirmation2026-10-12": {
+          "nativeSlugExists": true,
+          "status": "CONFIRMED_EXISTING_MATCH (repository evidence; not supplier-confirmed)",
+          "inReconcileNotInMkcList": true,
+          "listName": "Voyage by Hermes",
+          "subtractedFromProvisionalCount": true,
+          "note": "Subtracted once from the provisional count (revision 16)."
+        }
       },
       {
         "sourceKey": "MEN-148-Azzaro The Most Wanted",
         "nativeSlug": "azzaro-most-wanted-inspired",
-        "basis": "Name/alias match to an active native record (spelling variant missed by the coarse pool match); not supplier-confirmed."
+        "basis": "Name/alias match to an active native record (spelling variant missed by the coarse pool match); not supplier-confirmed.",
+        "confirmation2026-10-12": {
+          "nativeSlugExists": true,
+          "status": "CONFIRMED_EXISTING_MATCH (repository evidence; not supplier-confirmed)",
+          "inReconcileNotInMkcList": false,
+          "listName": null,
+          "subtractedFromProvisionalCount": false,
+          "note": "Not in the reconcile.mjs NOT-IN-MKC list, so it was never part of the provisional count; not subtracted (prevents double subtraction)."
+        }
       },
       {
         "sourceKey": "MEN-32-Bulgari Aqua",
         "nativeSlug": "bvlgari-aqua-inspired",
-        "basis": "Name/alias match to an active native record (spelling variant missed by the coarse pool match); not supplier-confirmed."
+        "basis": "Name/alias match to an active native record (spelling variant missed by the coarse pool match); not supplier-confirmed.",
+        "confirmation2026-10-12": {
+          "nativeSlugExists": true,
+          "status": "CONFIRMED_EXISTING_MATCH (repository evidence; not supplier-confirmed)",
+          "inReconcileNotInMkcList": true,
+          "listName": "Bulgari Aqua",
+          "subtractedFromProvisionalCount": true,
+          "note": "Subtracted once from the provisional count (revision 16)."
+        }
       },
       {
         "sourceKey": "MEN-33-Bulgari Aqua Amara",
         "nativeSlug": "aqva-amara-inspired",
-        "basis": "Name/alias match to an active native record (spelling variant missed by the coarse pool match); not supplier-confirmed."
+        "basis": "Name/alias match to an active native record (spelling variant missed by the coarse pool match); not supplier-confirmed.",
+        "confirmation2026-10-12": {
+          "nativeSlugExists": true,
+          "status": "CONFIRMED_EXISTING_MATCH (repository evidence; not supplier-confirmed)",
+          "inReconcileNotInMkcList": true,
+          "listName": "Bulgari Aqua Amara",
+          "subtractedFromProvisionalCount": true,
+          "note": "Subtracted once from the provisional count (revision 16)."
+        }
       },
       {
         "sourceKey": "MEN-34-Bulgari Aqva Marine",
         "nativeSlug": "bvlgari-aqva-marine-inspired",
-        "basis": "Name/alias match to an active native record (spelling variant missed by the coarse pool match); not supplier-confirmed."
+        "basis": "Name/alias match to an active native record (spelling variant missed by the coarse pool match); not supplier-confirmed.",
+        "confirmation2026-10-12": {
+          "nativeSlugExists": true,
+          "status": "CONFIRMED_EXISTING_MATCH (repository evidence; not supplier-confirmed)",
+          "inReconcileNotInMkcList": true,
+          "listName": "Bulgari Aqva Marine",
+          "subtractedFromProvisionalCount": true,
+          "note": "Subtracted once from the provisional count (revision 16)."
+        }
       },
       {
         "sourceKey": "MEN-35-Bulgari Black",
         "nativeSlug": "bvlgari-black-inspired",
-        "basis": "Name/alias match to an active native record (spelling variant missed by the coarse pool match); not supplier-confirmed."
+        "basis": "Name/alias match to an active native record (spelling variant missed by the coarse pool match); not supplier-confirmed.",
+        "confirmation2026-10-12": {
+          "nativeSlugExists": true,
+          "status": "CONFIRMED_EXISTING_MATCH (repository evidence; not supplier-confirmed)",
+          "inReconcileNotInMkcList": true,
+          "listName": "Bulgari Black",
+          "subtractedFromProvisionalCount": true,
+          "note": "Subtracted once from the provisional count (revision 16)."
+        }
       },
       {
         "sourceKey": "LADIES-223-Paco Rabanne Ultra Violet",
         "nativeSlug": "ultraviolet-woman-inspired",
-        "basis": "Name/alias match to an active native record (spelling variant missed by the coarse pool match); not supplier-confirmed."
+        "basis": "Name/alias match to an active native record (spelling variant missed by the coarse pool match); not supplier-confirmed.",
+        "confirmation2026-10-12": {
+          "nativeSlugExists": true,
+          "status": "CONFIRMED_EXISTING_MATCH (repository evidence; not supplier-confirmed)",
+          "inReconcileNotInMkcList": true,
+          "listName": "Paco Rabanne Ultra Violet",
+          "subtractedFromProvisionalCount": true,
+          "note": "Subtracted once from the provisional count (revision 16)."
+        }
       },
       {
         "sourceKey": "MEN-43-CK Euphoria",
         "nativeSlug": "euphoria-men-inspired",
-        "basis": "Name/alias match to an active native record (spelling variant missed by the coarse pool match); not supplier-confirmed."
+        "basis": "Name/alias match to an active native record (spelling variant missed by the coarse pool match); not supplier-confirmed.",
+        "confirmation2026-10-12": {
+          "nativeSlugExists": true,
+          "status": "CONFIRMED_EXISTING_MATCH (repository evidence; not supplier-confirmed)",
+          "inReconcileNotInMkcList": true,
+          "listName": "CK Euphoria Man",
+          "subtractedFromProvisionalCount": true,
+          "note": "Subtracted once from the provisional count (revision 16)."
+        }
       },
       {
         "sourceKey": "UNISEX-38-Jo Malone / Wood Sage & Sea Salt",
         "nativeSlug": "wood-sage-sea-salt-inspired",
-        "basis": "Name/alias match to an active native record (spelling variant missed by the coarse pool match); not supplier-confirmed."
+        "basis": "Name/alias match to an active native record (spelling variant missed by the coarse pool match); not supplier-confirmed.",
+        "confirmation2026-10-12": {
+          "nativeSlugExists": true,
+          "status": "CONFIRMED_EXISTING_MATCH (repository evidence; not supplier-confirmed)",
+          "inReconcileNotInMkcList": false,
+          "listName": null,
+          "subtractedFromProvisionalCount": false,
+          "note": "Not in the reconcile.mjs NOT-IN-MKC list, so it was never part of the provisional count; not subtracted (prevents double subtraction)."
+        }
       },
       {
         "sourceKey": "UNISEX-64-Jo Malone / English Pear & Freesia",
         "nativeSlug": "english-pear-freesia-inspired",
-        "basis": "Name/alias match to an active native record (spelling variant missed by the coarse pool match); not supplier-confirmed."
+        "basis": "Name/alias match to an active native record (spelling variant missed by the coarse pool match); not supplier-confirmed.",
+        "confirmation2026-10-12": {
+          "nativeSlugExists": true,
+          "status": "CONFIRMED_EXISTING_MATCH (repository evidence; not supplier-confirmed)",
+          "inReconcileNotInMkcList": false,
+          "listName": null,
+          "subtractedFromProvisionalCount": false,
+          "note": "Not in the reconcile.mjs NOT-IN-MKC list, so it was never part of the provisional count; not subtracted (prevents double subtraction)."
+        }
       },
       {
         "sourceKey": "UNISEX-60-Jo Malone / Fig & Lotus Flower",
         "nativeSlug": "fig-lotus-flower-inspired",
-        "basis": "Name/alias match to an active native record (spelling variant missed by the coarse pool match); not supplier-confirmed."
+        "basis": "Name/alias match to an active native record (spelling variant missed by the coarse pool match); not supplier-confirmed.",
+        "confirmation2026-10-12": {
+          "nativeSlugExists": true,
+          "status": "CONFIRMED_EXISTING_MATCH (repository evidence; not supplier-confirmed)",
+          "inReconcileNotInMkcList": false,
+          "listName": null,
+          "subtractedFromProvisionalCount": false,
+          "note": "Not in the reconcile.mjs NOT-IN-MKC list, so it was never part of the provisional count; not subtracted (prevents double subtraction)."
+        }
       }
-    ]
+    ],
+    "batch3_draft_generated": [
+      {
+        "slug": "212-sexy-inspired",
+        "sourceKey": "LADIES-5-212 SEXY Carolina Herrera",
+        "supplierText": "212 SEXY Carolina Herrera",
+        "supplierCategory": "LADIES",
+        "draftFile": "scripts/factory/drafts/212-sexy-inspired.ts",
+        "generatedDate": "2026-10-12",
+        "factoryValidation": "PASS [0 errors, 0 warnings]",
+        "collection": "Rose",
+        "referenceEditionUsedForEvidence": "Carolina Herrera 212 Sexy Eau de Parfum (women)",
+        "supplierConcentration": "UNCONFIRMED (founder statement 2026-10-12); reference designation applies to the designer reference only",
+        "identityConfirmation": "NONE",
+        "evidenceTier": "PYRAMID_SECONDARY_SUPPORTED",
+        "profile": "Amber Gourmand Floral",
+        "adapterDerived": {
+          "family": [
+            "Gourmand",
+            "Floral",
+            "Amber"
+          ],
+          "scentCharacter": "Rich & Full-Bodied",
+          "scores": [
+            4,
+            3,
+            4,
+            3,
+            3
+          ]
+        },
+        "duplicateCheck": "No native slug, draft, promotion-registry or ledger entry for this source key; distinct from MEN-9 '212 Sexy' and native 212 VIP Rosé / VIP Black / Heroes.",
+        "status": "PROMOTED_TO_NATIVE",
+        "promotionEligible": true,
+        "promotionEligibilityReason": "Promoted to native MKC locally on 2026-10-12 (promotionId qtIrpscU3rOS); not committed; Gate C not authorised.",
+        "founderReviewPreparation": {
+          "date": "2026-10-12",
+          "phase": "W9-B3-P2",
+          "reviewState": "PROMOTED TO LOCAL NATIVE MKC; NOT RELEASED",
+          "founderConfirmationRequired": [
+            "None essential under current governance (identity self-identifying; concentration not required). Optional supplier checks are in supplier_confirmation_register.",
+            "Formal editorial/promotion approval and explicit release approval."
+          ],
+          "copyEdits": [
+            "recommendedFor[1]: 'Those who love vanilla and amber but want something more floral and refined than straight gourmand fragrances' → 'Those who love vanilla and amber warmth with a floral, gardenia-led heart' (comparative judgement removed).",
+            "recommendedFor[2]: removed 'without being overly heavy' (unsupported weight claim)."
+          ],
+          "reviewStatePreviousRev18": "EDITORIAL REVIEW COMPLETE — READY FOR FOUNDER DECISION; BLOCKED — MISSING CONFIRMATION (identity/concentration); NOT APPROVED FOR PROMOTION",
+          "founderConfirmationRequiredPreviousRev18": [
+            "Confirm LADIES-5 is the women's 212 Sexy (EDP reference), not the men's edition or another 212 line.",
+            "State the concentration Maison supplies (not inferable from the reference EDP)."
+          ],
+          "reviewStatePreviousRev19": "EDITORIALLY ACCEPTED IN PRINCIPLE (founder, 2026-10-12); READY FOR FORMAL FOUNDER APPROVAL; no verified identity or safety blocker; NOT AUTHORISED FOR PROMOTION (explicit editorial/promotion and release approval required)"
+        },
+        "promotionEligibilityReasonPreviousRev17": "Not eligible yet: awaiting founder editorial review and identity confirmation.",
+        "founderDecision2026-10-12": {
+          "date": "2026-10-12",
+          "recordedIn": "W9-B3-P3",
+          "by": "Founder (Adnaan), reported in conversation",
+          "editorialDirection": "ACCEPTED_IN_PRINCIPLE",
+          "wordingVerbatim": "I agree in principle with the editorial direction of the four Wave 9 Batch 3 profiles, but do not promote or deploy without the remaining checks and my explicit release approval.",
+          "supplierStatementVerbatim": "The supplier has not confirmed the actual concentration or formulation details.",
+          "isFormalEditorialApproval": false,
+          "isPromotionApproval": false,
+          "isReleaseApproval": false,
+          "note": "Agreement in principle only. Formal editorial/promotion approval and explicit release approval remain required. Not supplier evidence."
+        },
+        "supplierFormulationStatus": {
+          "supplierFormulation": "UNCONFIRMED (founder statement 2026-10-12: supplier has not confirmed formulation details)",
+          "suppliedConcentration": "UNCONFIRMED (founder statement 2026-10-12: supplier has not confirmed concentration)",
+          "referenceDesignationScope": "Any EDP / EDT / Cologne Intense designation applies only to the designer reference used for note research.",
+          "assumptionsNotMade": "No assumption that Maison supplies the same concentration, formula, raw materials or manufacturing method; no oil percentage recorded; no equivalence claim.",
+          "inventory": "Founder-confirmed 2026-10-12: 'All the fragrances are available and I am able to get them.' Maison sources the materials and prepares/packages 5 ml (R60), 10 ml (R100) and 30 ml (R250) products. No quantities or lead times recorded.",
+          "inventoryPreviousRev20": "Supplier listing only ('Supplier catalogue listing only. Does not confirm current stock…'); no further availability asserted."
+        },
+        "supplierConcentrationPreviousRev18": "NOT_STATED",
+        "promotionEligibilityReasonPreviousRev18": "Not eligible yet: editorial review complete (W9-B3-P2); awaiting founder identity/concentration confirmation and explicit approval.",
+        "statusPreviousRev19": "DRAFT_GENERATED_PENDING_REVIEW",
+        "promotionEligiblePreviousRev19": false,
+        "promotionEligibilityReasonPreviousRev19": "Ready for formal founder approval; not authorised for promotion (explicit editorial/promotion and release approval required).",
+        "founderApproval": {
+          "date": "2026-10-12",
+          "approvedBy": "Founder (Adnaan)",
+          "gateA": {
+            "status": "APPROVED",
+            "wordingVerbatim": "I formally approve the editorial profiles and proposed collections of the following four fragrances: 212-sexy-inspired — Rose — Amber Gourmand Floral; vetiver-golden-vanilla-inspired — Elite — Woody Aromatic Vanilla; wonderlust-by-michael-kors-inspired — Rose — Floral Amber Gourmand; prada-candy-inspired — Rose — Amber Gourmand. I also approve retaining Vetiver & Golden Vanilla in the planned collection, despite the original reference being unavailable at the inspected retailer. The supplier's actual concentration and formulation details remain unconfirmed. No unsupported concentration or equivalence claims may be introduced.",
+            "thisRecord": "212-sexy-inspired — Rose — Amber Gourmand Floral"
+          },
+          "gateB": {
+            "status": "APPROVED (local MKC promotion only)",
+            "wordingVerbatim": "I authorise Claude Code to promote exactly these four fragrances into the local MKC development worktree, one at a time, following the W9-B3-P5 safeguards."
+          },
+          "gateC": "NOT AUTHORISED — do not commit, push, merge, deploy or modify the live website.",
+          "notEvidence": "Founder approval is not supplier evidence. Supplier concentration and formulation remain UNCONFIRMED.",
+          "reviewQueueReviewer": "Founder (Adnaan) - approval 2026-10-12"
+        },
+        "promotion": {
+          "promotionId": "qtIrpscU3rOS",
+          "nativePath": "app/lib/mkc/native/212-sexy-inspired.ts",
+          "completedAt": "2026-10-12T20:14:35.005Z",
+          "operator": "Claude Code (founder approval 2026-10-12)",
+          "reviewedBy": "Founder (Adnaan) - approval 2026-10-12",
+          "validationStatus": "PASS",
+          "buildResult": "pass",
+          "workflow": "npm run mkc:review -- --add 212-sexy-inspired; npm run mkc:review -- --approve 212-sexy-inspired --reviewer \"Founder (Adnaan) - approval 2026-10-12\" --reason \"Gate A …\"; npm run mkc:promote -- --slug 212-sexy-inspired --operator \"Claude Code (founder approval 2026-10-12)\"",
+          "base": "0783ef1b718296441188bb2c980d3c592fe8b2ce (no fetch/integration; Gate C not authorised)",
+          "nativeEqualsDraft": "Native body identical to the reviewed draft apart from the type import path (validate-batch2/3-drafts.ts).",
+          "relationships": "empty — proposals remain UNVERIFIED_FACTORY_SUGGESTION in the ledger",
+          "committed": false
+        },
+        "founderAvailability2026-10-12": {
+          "date": "2026-10-12",
+          "recordedIn": "W9-B3-P8",
+          "by": "Founder (Adnaan), reported in conversation",
+          "statementVerbatim": "All the fragrances are available and I am able to get them.",
+          "appliesTo": [
+            "212-sexy-inspired",
+            "vetiver-golden-vanilla-inspired",
+            "wonderlust-by-michael-kors-inspired",
+            "prada-candy-inspired"
+          ],
+          "businessModel": {
+            "sourcing": "Maison Skye & Rose sources the fragrance materials.",
+            "preparation": "Maison Skye & Rose prepares and packages its own finished customer products.",
+            "retailSizes": {
+              "5ml": "R60",
+              "10ml": "R100",
+              "30ml": "R250"
+            },
+            "note": "The supplier is not assumed to provide finished 5/10/30 ml bottles."
+          },
+          "status": "AVAILABILITY CONFIRMED BY FOUNDER",
+          "notClaimed": "No specific quantities, delivery lead times, confirmed chemical formulations or supplied safety documentation are recorded or claimed.",
+          "concentrationAndFormulation": "UNCONFIRMED (unchanged; supplier has not supplied exact concentration or formulation details).",
+          "supersedes": "Earlier availability / stock / size questions (W9-B3-P3 register, W9-B3-P6 report) and the unsent draft supplier message."
+        }
+      },
+      {
+        "slug": "vetiver-golden-vanilla-inspired",
+        "sourceKey": "UNISEX-63-Jo Malone / Vetvier & Golden Vanilla",
+        "supplierText": "Jo Malone / Vetvier & Golden Vanilla",
+        "supplierCategory": "UNISEX",
+        "draftFile": "scripts/factory/drafts/vetiver-golden-vanilla-inspired.ts",
+        "generatedDate": "2026-10-12",
+        "factoryValidation": "PASS [0 errors, 0 warnings]",
+        "collection": "Elite",
+        "referenceEditionUsedForEvidence": "Jo Malone London Vetiver & Golden Vanilla Cologne Intense",
+        "supplierConcentration": "UNCONFIRMED (founder statement 2026-10-12); reference designation applies to the designer reference only",
+        "identityConfirmation": "NONE",
+        "evidenceTier": "PYRAMID_SECONDARY_SUPPORTED",
+        "profile": "Woody Aromatic Vanilla (EDITORIAL)",
+        "adapterDerived": {
+          "family": [
+            "Aromatic",
+            "Vanilla",
+            "Woody"
+          ],
+          "scentCharacter": "Rich & Full-Bodied",
+          "scores": [
+            4,
+            1,
+            4,
+            3,
+            5
+          ]
+        },
+        "referenceAvailability": "Reference listed as no longer available at Nordstrom; says nothing about the Maison supplier.",
+        "duplicateCheck": "No native slug, draft, promotion-registry or ledger entry for this source key; distinct from the five native Jo Malone records.",
+        "status": "PROMOTED_TO_NATIVE",
+        "promotionEligible": true,
+        "promotionEligibilityReason": "Promoted to native MKC locally on 2026-10-12 (promotionId r1wFqFDipHB-); not committed; Gate C not authorised.",
+        "founderReviewPreparation": {
+          "date": "2026-10-12",
+          "phase": "W9-B3-P2",
+          "reviewState": "PROMOTED TO LOCAL NATIVE MKC; NOT RELEASED",
+          "founderConfirmationRequired": [
+            "None essential under current governance (identity self-identifying; concentration not required). Optional supplier checks are in supplier_confirmation_register.",
+            "Business decision: carry a reference listed as no longer available at the inspected retailer.",
+            "Formal editorial/promotion approval and explicit release approval."
+          ],
+          "copyEdits": [
+            "description: 'open with bright spice before vetiver and clary sage' → 'open with a bright, lightly spiced lift before vetiver, lavender and clary sage' (lavender named; grapefruit is not a spice).",
+            "recommendedFor[1]: 'want sophistication over sweetness, with aromatic spice as the opening statement' → 'together, opened by cardamom and an aromatic lift' (copy contradicted the vanilla profile's sweetness 4)."
+          ],
+          "reviewStatePreviousRev18": "EDITORIAL REVIEW COMPLETE — READY FOR FOUNDER DECISION; BLOCKED — MISSING CONFIRMATION (identity/concentration); NOT APPROVED FOR PROMOTION",
+          "founderConfirmationRequiredPreviousRev18": [
+            "Confirm 'Vetvier' means Vetiver & Golden Vanilla (Cologne Intense reference).",
+            "State the concentration Maison supplies.",
+            "Decide whether to carry a reference that is no longer available at the inspected retailer (this does not imply the supplier cannot produce it)."
+          ],
+          "reviewStatePreviousRev19": "EDITORIALLY ACCEPTED IN PRINCIPLE (founder, 2026-10-12); READY FOR FORMAL FOUNDER APPROVAL; no verified identity or safety blocker; NOT AUTHORISED FOR PROMOTION (explicit editorial/promotion and release approval required)"
+        },
+        "promotionEligibilityReasonPreviousRev17": "Not eligible yet: awaiting founder profile/editorial review, availability decision and identity confirmation.",
+        "founderDecision2026-10-12": {
+          "date": "2026-10-12",
+          "recordedIn": "W9-B3-P3",
+          "by": "Founder (Adnaan), reported in conversation",
+          "editorialDirection": "ACCEPTED_IN_PRINCIPLE",
+          "wordingVerbatim": "I agree in principle with the editorial direction of the four Wave 9 Batch 3 profiles, but do not promote or deploy without the remaining checks and my explicit release approval.",
+          "supplierStatementVerbatim": "The supplier has not confirmed the actual concentration or formulation details.",
+          "isFormalEditorialApproval": false,
+          "isPromotionApproval": false,
+          "isReleaseApproval": false,
+          "note": "Agreement in principle only. Formal editorial/promotion approval and explicit release approval remain required. Not supplier evidence."
+        },
+        "supplierFormulationStatus": {
+          "supplierFormulation": "UNCONFIRMED (founder statement 2026-10-12: supplier has not confirmed formulation details)",
+          "suppliedConcentration": "UNCONFIRMED (founder statement 2026-10-12: supplier has not confirmed concentration)",
+          "referenceDesignationScope": "Any EDP / EDT / Cologne Intense designation applies only to the designer reference used for note research.",
+          "assumptionsNotMade": "No assumption that Maison supplies the same concentration, formula, raw materials or manufacturing method; no oil percentage recorded; no equivalence claim.",
+          "inventory": "Founder-confirmed 2026-10-12: 'All the fragrances are available and I am able to get them.' Maison sources the materials and prepares/packages 5 ml (R60), 10 ml (R100) and 30 ml (R250) products. No quantities or lead times recorded.",
+          "inventoryPreviousRev20": "Supplier listing only ('Supplier catalogue listing only. Does not confirm current stock…'); no further availability asserted."
+        },
+        "supplierConcentrationPreviousRev18": "NOT_STATED",
+        "promotionEligibilityReasonPreviousRev18": "Not eligible yet: editorial review complete (W9-B3-P2); awaiting founder identity/concentration confirmation and explicit approval.",
+        "statusPreviousRev19": "DRAFT_GENERATED_PENDING_REVIEW",
+        "promotionEligiblePreviousRev19": false,
+        "promotionEligibilityReasonPreviousRev19": "Ready for formal founder approval; not authorised for promotion (explicit editorial/promotion and release approval required).",
+        "founderApproval": {
+          "date": "2026-10-12",
+          "approvedBy": "Founder (Adnaan)",
+          "gateA": {
+            "status": "APPROVED",
+            "wordingVerbatim": "I formally approve the editorial profiles and proposed collections of the following four fragrances: 212-sexy-inspired — Rose — Amber Gourmand Floral; vetiver-golden-vanilla-inspired — Elite — Woody Aromatic Vanilla; wonderlust-by-michael-kors-inspired — Rose — Floral Amber Gourmand; prada-candy-inspired — Rose — Amber Gourmand. I also approve retaining Vetiver & Golden Vanilla in the planned collection, despite the original reference being unavailable at the inspected retailer. The supplier's actual concentration and formulation details remain unconfirmed. No unsupported concentration or equivalence claims may be introduced.",
+            "thisRecord": "vetiver-golden-vanilla-inspired — Elite — Woody Aromatic Vanilla"
+          },
+          "gateB": {
+            "status": "APPROVED (local MKC promotion only)",
+            "wordingVerbatim": "I authorise Claude Code to promote exactly these four fragrances into the local MKC development worktree, one at a time, following the W9-B3-P5 safeguards."
+          },
+          "gateC": "NOT AUTHORISED — do not commit, push, merge, deploy or modify the live website.",
+          "notEvidence": "Founder approval is not supplier evidence. Supplier concentration and formulation remain UNCONFIRMED.",
+          "reviewQueueReviewer": "Founder (Adnaan) - approval 2026-10-12"
+        },
+        "promotion": {
+          "promotionId": "r1wFqFDipHB-",
+          "nativePath": "app/lib/mkc/native/vetiver-golden-vanilla-inspired.ts",
+          "completedAt": "2026-10-12T20:15:43.966Z",
+          "operator": "Claude Code (founder approval 2026-10-12)",
+          "reviewedBy": "Founder (Adnaan) - approval 2026-10-12",
+          "validationStatus": "PASS",
+          "buildResult": "pass",
+          "workflow": "npm run mkc:review -- --add vetiver-golden-vanilla-inspired; npm run mkc:review -- --approve vetiver-golden-vanilla-inspired --reviewer \"Founder (Adnaan) - approval 2026-10-12\" --reason \"Gate A …\"; npm run mkc:promote -- --slug vetiver-golden-vanilla-inspired --operator \"Claude Code (founder approval 2026-10-12)\"",
+          "base": "0783ef1b718296441188bb2c980d3c592fe8b2ce (no fetch/integration; Gate C not authorised)",
+          "nativeEqualsDraft": "Native body identical to the reviewed draft apart from the type import path (validate-batch2/3-drafts.ts).",
+          "relationships": "empty — proposals remain UNVERIFIED_FACTORY_SUGGESTION in the ledger",
+          "committed": false
+        },
+        "founderAvailability2026-10-12": {
+          "date": "2026-10-12",
+          "recordedIn": "W9-B3-P8",
+          "by": "Founder (Adnaan), reported in conversation",
+          "statementVerbatim": "All the fragrances are available and I am able to get them.",
+          "appliesTo": [
+            "212-sexy-inspired",
+            "vetiver-golden-vanilla-inspired",
+            "wonderlust-by-michael-kors-inspired",
+            "prada-candy-inspired"
+          ],
+          "businessModel": {
+            "sourcing": "Maison Skye & Rose sources the fragrance materials.",
+            "preparation": "Maison Skye & Rose prepares and packages its own finished customer products.",
+            "retailSizes": {
+              "5ml": "R60",
+              "10ml": "R100",
+              "30ml": "R250"
+            },
+            "note": "The supplier is not assumed to provide finished 5/10/30 ml bottles."
+          },
+          "status": "AVAILABILITY CONFIRMED BY FOUNDER",
+          "notClaimed": "No specific quantities, delivery lead times, confirmed chemical formulations or supplied safety documentation are recorded or claimed.",
+          "concentrationAndFormulation": "UNCONFIRMED (unchanged; supplier has not supplied exact concentration or formulation details).",
+          "supersedes": "Earlier availability / stock / size questions (W9-B3-P3 register, W9-B3-P6 report) and the unsent draft supplier message."
+        }
+      }
+    ],
+    "batch3_researched_not_drafted": [
+      {
+        "sourceKey": "LADIES-162",
+        "rawSupplierText": "Jo Malone / Dark Amber & Ginger Ally (supplier spelling)",
+        "status": "RESEARCHED_NOT_DRAFTED",
+        "verdict": "NEEDS FURTHER EVIDENCE",
+        "reason": "Nordstrom gives key notes only (black cardamom / black orchid / kyrara incense), one per tier; possibly incomplete. Brand page 403. MEN-90 already disposed as a duplicate row of this identity."
+      },
+      {
+        "sourceKey": "LADIES-185",
+        "rawSupplierText": "Louis Vuitton Contre Moi",
+        "status": "RESEARCHED_NOT_DRAFTED",
+        "verdict": "NEEDS FURTHER EVIDENCE",
+        "reason": "All Louis Vuitton regional pages 403; only a third-party database inspected (supplementary). Reportedly discontinued. Collection undecided."
+      },
+      {
+        "sourceKey": "LADIES-52",
+        "rawSupplierText": "Bulgari Goldea",
+        "status": "RESEARCHED_NOT_DRAFTED",
+        "verdict": "NEEDS FURTHER EVIDENCE",
+        "reason": "Edgars description only (no tiers); brand page and Macy's 403. Must be kept distinct from the Rose Goldea flankers."
+      },
+      {
+        "sourceKey": "LADIES-49",
+        "rawSupplierText": "Bulgari Amethyste",
+        "status": "RESEARCHED_NOT_DRAFTED",
+        "verdict": "NEEDS FURTHER EVIDENCE (and identity confirmation)",
+        "reason": "Lookfantastic only (authorised status unverified); Bvlgari, Notino, Macy's 403; John Lewis 404. Supplier text omits 'Omnia' — confirm before drafting."
+      }
+    ],
+    "likely_existing_match_observations": [
+      {
+        "sourceKey": "MEN-8-212 CH Heroes NEW",
+        "nativeSlug": "212-heroes-inspired",
+        "observedDate": "2026-10-12",
+        "observedIn": "W9-B3-P2",
+        "inReconcileNotInMkcList": true,
+        "listName": "212 CH Heroes",
+        "status": "OBSERVED — NOT CONFIRMED, NOT SUBTRACTED",
+        "effectIfConfirmed": "Provisional count 335 → 334 (one list member, subtracted once).",
+        "basis": "Name match to an active native male record; supplier normalisation recorded no MKC slug. Not supplier-confirmed."
+      },
+      {
+        "sourceKey": "LADIES-7-212 VIP Rose",
+        "nativeSlug": "212-vip-rose-inspired",
+        "observedDate": "2026-10-12",
+        "observedIn": "W9-B3-P2",
+        "inReconcileNotInMkcList": false,
+        "status": "OBSERVED — NOT CONFIRMED; no count effect",
+        "effectIfConfirmed": "None: the row is not in the reconcile.mjs NOT-IN-MKC list, so it was never part of the provisional count.",
+        "basis": "Name match to an active native female record; supplier normalisation recorded no MKC slug. Not supplier-confirmed."
+      }
+    ],
+    "supplier_confirmation_register": {
+      "description": "Wave 9 Batch 3 supplier information still missing. Separates essential identity questions from optional formulation details and states what each blocks under current governance.",
+      "governanceFinding": {
+        "identityRule": "Ledger governancePrinciples: 'Unresolved identities (supplier text does not self-identify the exact fragrance or variant) must not be promoted until resolution is confirmed.' 'Supplier text is the authoritative basis for identity resolution.'",
+        "precedent": "Founder identity confirmations were requested only for supplier lines that do not self-identify (LADIES-108, -156, -251, -34, -232; wave-9-supplier-confirmation-requests.md). Batch 2 rows with branded, specific text were drafted with identityDecision 'taken from the text itself'.",
+        "concentrationRule": "No governance rule requires supplied-concentration confirmation for drafting, promotion or publication: all six Wave 9 records promoted to date carry suppliedConcentration NOT_ESTABLISHED, and MKC records have no concentration field; storefront copy states no concentration.",
+        "correctionOfPreviousLabel": "The W9-B3-P2 reviewState label 'BLOCKED — MISSING CONFIRMATION (identity/concentration)' overstated the requirement for these four self-identifying rows; corrected here (previous kept under reviewStatePreviousRev18).",
+        "outOfScope": "Product labelling, ingredient/allergen and safety-documentation obligations are not covered by this repository's governance and were not assessed."
+      },
+      "entries": [
+        {
+          "sourceKey": "LADIES-5-212 SEXY Carolina Herrera",
+          "listedName": "212 SEXY Carolina Herrera",
+          "supplierCategory": "LADIES",
+          "draftSlug": "212-sexy-inspired",
+          "intendedReference": "Carolina Herrera 212 Sexy (women), EDP reference",
+          "sourceIdentityConfidence": "SUPPORTED — self-identifying supplier text (normalisation label LOW reflects automated matching only, not an identity defect)",
+          "knownSupplierInformation": [
+            "Exact supplier text and row",
+            "Supplier PDF footer: 'All fragrances are inspired by the listed designer brands. Prices available on request.'"
+          ],
+          "unknownFormulationInformation": [
+            "Concentration / oil percentage",
+            "Carrier and base (alcohol or oil)",
+            "Formulation or raw-material details",
+            "Safety/allergen documentation (e.g. SDS, IFRA certificate)"
+          ],
+          "supplierQuestions": {
+            "essential": [],
+            "optional": [
+              "Concentration / oil percentage and carrier",
+              "Safety/allergen documentation, if available"
+            ]
+          },
+          "blocksUnderCurrentGovernance": {
+            "drafting": false,
+            "editorialSignOff": false,
+            "promotion": false,
+            "publication": false
+          },
+          "wouldBlock": "Any future customer-facing statement of concentration, oil percentage, formulation or longevity — none exists or is proposed.",
+          "recommendedNextAction": "None required for release. Optional technical details may be requested at the founder's discretion; no availability request.",
+          "status": "AVAILABILITY RESOLVED (founder); TECHNICAL DETAILS UNCONFIRMED (optional)",
+          "recordedDate": "2026-10-12",
+          "unknownFormulationInformationPreviousRev20": [
+            "Concentration / oil percentage",
+            "Carrier and base (alcohol or oil)",
+            "Formulation or raw-material details",
+            "Safety/allergen documentation (e.g. SDS, IFRA certificate)",
+            "Current stock and sizes"
+          ],
+          "supplierQuestionsPreviousRev20": {
+            "essential": [],
+            "optional": [
+              "Confirm the women's 212 Sexy (not 212 Sexy Men) is the inspiration.",
+              "Concentration / oil percentage and carrier",
+              "Available sizes and stock",
+              "Safety/allergen documentation, if available"
+            ]
+          },
+          "recommendedNextActionPreviousRev20": "Send the combined supplier message when convenient; proceed to formal founder approval without waiting for the reply.",
+          "statusPreviousRev20": "OPEN — questions prepared, NOT SENT",
+          "resolvedByFounder2026-10-12": [
+            "Availability — founder-confirmed ('All the fragrances are available and I am able to get them.')",
+            "Sizes — Maison prepares and packages 5/10/30 ml itself; supplier bottling not assumed"
+          ]
+        },
+        {
+          "sourceKey": "UNISEX-63-Jo Malone / Vetvier & Golden Vanilla",
+          "listedName": "Jo Malone / Vetvier & Golden Vanilla",
+          "supplierCategory": "UNISEX",
+          "draftSlug": "vetiver-golden-vanilla-inspired",
+          "intendedReference": "Jo Malone London Vetiver & Golden Vanilla, Cologne Intense reference",
+          "sourceIdentityConfidence": "SUPPORTED — self-identifying supplier text (normalisation label LOW reflects automated matching only, not an identity defect)",
+          "knownSupplierInformation": [
+            "Exact supplier text and row",
+            "Supplier PDF footer: 'All fragrances are inspired by the listed designer brands. Prices available on request.'"
+          ],
+          "unknownFormulationInformation": [
+            "Concentration / oil percentage",
+            "Carrier and base (alcohol or oil)",
+            "Formulation or raw-material details",
+            "Safety/allergen documentation (e.g. SDS, IFRA certificate)"
+          ],
+          "supplierQuestions": {
+            "essential": [],
+            "optional": [
+              "Concentration / oil percentage and carrier",
+              "Safety/allergen documentation, if available"
+            ]
+          },
+          "blocksUnderCurrentGovernance": {
+            "drafting": false,
+            "editorialSignOff": false,
+            "promotion": false,
+            "publication": false
+          },
+          "wouldBlock": "Any future customer-facing statement of concentration, oil percentage, formulation or longevity — none exists or is proposed.",
+          "recommendedNextAction": "None required for release. Optional technical details may be requested at the founder's discretion; no availability request.",
+          "status": "AVAILABILITY RESOLVED (founder); TECHNICAL DETAILS UNCONFIRMED (optional)",
+          "recordedDate": "2026-10-12",
+          "unknownFormulationInformationPreviousRev20": [
+            "Concentration / oil percentage",
+            "Carrier and base (alcohol or oil)",
+            "Formulation or raw-material details",
+            "Safety/allergen documentation (e.g. SDS, IFRA certificate)",
+            "Current stock and sizes"
+          ],
+          "supplierQuestionsPreviousRev20": {
+            "essential": [],
+            "optional": [
+              "Confirm 'Vetvier' = Vetiver & Golden Vanilla.",
+              "Concentration / oil percentage and carrier",
+              "Available sizes and stock",
+              "Safety/allergen documentation, if available"
+            ]
+          },
+          "recommendedNextActionPreviousRev20": "Send the combined supplier message when convenient; proceed to formal founder approval without waiting for the reply.",
+          "statusPreviousRev20": "OPEN — questions prepared, NOT SENT",
+          "resolvedByFounder2026-10-12": [
+            "Availability — founder-confirmed ('All the fragrances are available and I am able to get them.')",
+            "Sizes — Maison prepares and packages 5/10/30 ml itself; supplier bottling not assumed"
+          ]
+        },
+        {
+          "sourceKey": "LADIES-195-Michael Kors Wonderlust",
+          "listedName": "Michael Kors Wonderlust",
+          "supplierCategory": "LADIES",
+          "draftSlug": "wonderlust-by-michael-kors-inspired",
+          "intendedReference": "Michael Kors Wonderlust (2016), EDP reference",
+          "sourceIdentityConfidence": "SUPPORTED — self-identifying supplier text (normalisation label LOW reflects automated matching only, not an identity defect)",
+          "knownSupplierInformation": [
+            "Exact supplier text and row",
+            "Supplier PDF footer: 'All fragrances are inspired by the listed designer brands. Prices available on request.'"
+          ],
+          "unknownFormulationInformation": [
+            "Concentration / oil percentage",
+            "Carrier and base (alcohol or oil)",
+            "Formulation or raw-material details",
+            "Safety/allergen documentation (e.g. SDS, IFRA certificate)"
+          ],
+          "supplierQuestions": {
+            "essential": [],
+            "optional": [
+              "Concentration / oil percentage and carrier",
+              "Safety/allergen documentation, if available"
+            ]
+          },
+          "blocksUnderCurrentGovernance": {
+            "drafting": false,
+            "editorialSignOff": false,
+            "promotion": false,
+            "publication": false
+          },
+          "wouldBlock": "Any future customer-facing statement of concentration, oil percentage, formulation or longevity — none exists or is proposed.",
+          "recommendedNextAction": "None required for release. Optional technical details may be requested at the founder's discretion; no availability request.",
+          "status": "AVAILABILITY RESOLVED (founder); TECHNICAL DETAILS UNCONFIRMED (optional)",
+          "recordedDate": "2026-10-12",
+          "unknownFormulationInformationPreviousRev20": [
+            "Concentration / oil percentage",
+            "Carrier and base (alcohol or oil)",
+            "Formulation or raw-material details",
+            "Safety/allergen documentation (e.g. SDS, IFRA certificate)",
+            "Current stock and sizes"
+          ],
+          "supplierQuestionsPreviousRev20": {
+            "essential": [],
+            "optional": [
+              "Confirm the original Wonderlust (not a flanker) is the inspiration.",
+              "Concentration / oil percentage and carrier",
+              "Available sizes and stock",
+              "Safety/allergen documentation, if available"
+            ]
+          },
+          "recommendedNextActionPreviousRev20": "Send the combined supplier message when convenient; proceed to formal founder approval without waiting for the reply.",
+          "statusPreviousRev20": "OPEN — questions prepared, NOT SENT",
+          "resolvedByFounder2026-10-12": [
+            "Availability — founder-confirmed ('All the fragrances are available and I am able to get them.')",
+            "Sizes — Maison prepares and packages 5/10/30 ml itself; supplier bottling not assumed"
+          ]
+        },
+        {
+          "sourceKey": "LADIES-238-Prada / Candy",
+          "listedName": "Prada / Candy",
+          "supplierCategory": "LADIES",
+          "draftSlug": "prada-candy-inspired",
+          "intendedReference": "Prada Candy (2011), EDP reference",
+          "sourceIdentityConfidence": "SUPPORTED — self-identifying supplier text (normalisation label LOW reflects automated matching only, not an identity defect)",
+          "knownSupplierInformation": [
+            "Exact supplier text and row",
+            "Supplier PDF footer: 'All fragrances are inspired by the listed designer brands. Prices available on request.'"
+          ],
+          "unknownFormulationInformation": [
+            "Concentration / oil percentage",
+            "Carrier and base (alcohol or oil)",
+            "Formulation or raw-material details",
+            "Safety/allergen documentation (e.g. SDS, IFRA certificate)"
+          ],
+          "supplierQuestions": {
+            "essential": [],
+            "optional": [
+              "Concentration / oil percentage and carrier",
+              "Safety/allergen documentation, if available"
+            ]
+          },
+          "blocksUnderCurrentGovernance": {
+            "drafting": false,
+            "editorialSignOff": false,
+            "promotion": false,
+            "publication": false
+          },
+          "wouldBlock": "Any future customer-facing statement of concentration, oil percentage, formulation or longevity — none exists or is proposed.",
+          "recommendedNextAction": "None required for release. Optional technical details may be requested at the founder's discretion; no availability request.",
+          "status": "AVAILABILITY RESOLVED (founder); TECHNICAL DETAILS UNCONFIRMED (optional)",
+          "recordedDate": "2026-10-12",
+          "unknownFormulationInformationPreviousRev20": [
+            "Concentration / oil percentage",
+            "Carrier and base (alcohol or oil)",
+            "Formulation or raw-material details",
+            "Safety/allergen documentation (e.g. SDS, IFRA certificate)",
+            "Current stock and sizes"
+          ],
+          "supplierQuestionsPreviousRev20": {
+            "essential": [],
+            "optional": [
+              "Confirm the original Prada Candy (not a flanker) is the inspiration.",
+              "Concentration / oil percentage and carrier",
+              "Available sizes and stock",
+              "Safety/allergen documentation, if available"
+            ]
+          },
+          "recommendedNextActionPreviousRev20": "Send the combined supplier message when convenient; proceed to formal founder approval without waiting for the reply.",
+          "statusPreviousRev20": "OPEN — questions prepared, NOT SENT",
+          "resolvedByFounder2026-10-12": [
+            "Availability — founder-confirmed ('All the fragrances are available and I am able to get them.')",
+            "Sizes — Maison prepares and packages 5/10/30 ml itself; supplier bottling not assumed"
+          ]
+        }
+      ],
+      "draftSupplierMessage": {
+        "status": "SUPERSEDED — NOT SENT (availability confirmed by founder 2026-10-12; do not send)",
+        "text": "Hello — we are preparing four fragrances from your list for our catalogue and would appreciate the following, if available: (1) LADIES-5 \"212 SEXY Carolina Herrera\" — please confirm it is inspired by the women's 212 Sexy (not 212 Sexy Men). (2) UNISEX-63 \"Jo Malone / Vetvier & Golden Vanilla\" — please confirm this is Vetiver & Golden Vanilla. (3) LADIES-195 \"Michael Kors Wonderlust\" and (4) LADIES-238 \"Prada / Candy\" — please confirm each is inspired by the original fragrance rather than a later edition. For all four: the concentration (oil percentage) and carrier used, the sizes and quantities you can currently supply, and any safety or allergen documentation (for example an SDS or IFRA certificate). Thank you.",
+        "statusPreviousRev20": "DRAFT — NOT SENT"
+      },
+      "relatedFile": "data/supplier/decisions/wave-9-supplier-confirmation-requests.md (Batch 3 section)",
+      "founderAvailability2026-10-12": {
+        "date": "2026-10-12",
+        "recordedIn": "W9-B3-P8",
+        "by": "Founder (Adnaan), reported in conversation",
+        "statementVerbatim": "All the fragrances are available and I am able to get them.",
+        "appliesTo": [
+          "212-sexy-inspired",
+          "vetiver-golden-vanilla-inspired",
+          "wonderlust-by-michael-kors-inspired",
+          "prada-candy-inspired"
+        ],
+        "businessModel": {
+          "sourcing": "Maison Skye & Rose sources the fragrance materials.",
+          "preparation": "Maison Skye & Rose prepares and packages its own finished customer products.",
+          "retailSizes": {
+            "5ml": "R60",
+            "10ml": "R100",
+            "30ml": "R250"
+          },
+          "note": "The supplier is not assumed to provide finished 5/10/30 ml bottles."
+        },
+        "status": "AVAILABILITY CONFIRMED BY FOUNDER",
+        "notClaimed": "No specific quantities, delivery lead times, confirmed chemical formulations or supplied safety documentation are recorded or claimed.",
+        "concentrationAndFormulation": "UNCONFIRMED (unchanged; supplier has not supplied exact concentration or formulation details).",
+        "supersedes": "Earlier availability / stock / size questions (W9-B3-P3 register, W9-B3-P6 report) and the unsent draft supplier message."
+      }
+    }
   },
   "descriptionPrevious": "Durable reconciliation ledger for the August 2026 supplier catalogue expansion. Tracks all supplier entries across six disposition states. Append-only governance evidence. The provisional missing count of 352 remains until native MKC promotion is confirmed."
 }

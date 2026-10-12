@@ -33,3 +33,30 @@ These lines don't say whether "EDP" means the edition of the designer fragrance 
 ## Still useful from the supplier
 
 - **Poison (LADIES-232):** a product image, label or spec sheet would show which product and concentration we receive. That would settle the question above and help us find the right reference.
+
+## Wave 9 Batch 3 — supplier information register (added 2026-10-12)
+
+Founder statement (2026-10-12): "The supplier has not confirmed the actual concentration or formulation details." Concentration and formulation are recorded as **UNCONFIRMED**. Reference designations (EDP, EDT, Cologne Intense) describe only the designer reference used for note research.
+
+Under current governance none of these questions blocks drafting, editorial sign-off, promotion or publication: the supplier text identifies each fragrance, and no rule requires the supplied concentration (no MKC field or storefront copy states it). They would matter only if Maison later wished to state a concentration, oil percentage or formulation.
+
+| Supplier line | Intended reference (research only) | Identity | Optional questions | Blocks |
+|---|---|---|---|---|
+| LADIES-5 — "212 SEXY Carolina Herrera" | Carolina Herrera 212 Sexy (women), EDP reference | Supported (self-identifying text) | Confirm the women's 212 Sexy (not 212 Sexy Men) is the inspiration. Concentration/oil %, carrier, sizes/stock, safety documentation. | None under current governance |
+| UNISEX-63 — "Jo Malone / Vetvier & Golden Vanilla" | Jo Malone London Vetiver & Golden Vanilla, Cologne Intense reference | Supported (self-identifying text) | Confirm 'Vetvier' = Vetiver & Golden Vanilla. Concentration/oil %, carrier, sizes/stock, safety documentation. | None under current governance |
+| LADIES-195 — "Michael Kors Wonderlust" | Michael Kors Wonderlust (2016), EDP reference | Supported (self-identifying text) | Confirm the original Wonderlust (not a flanker) is the inspiration. Concentration/oil %, carrier, sizes/stock, safety documentation. | None under current governance |
+| LADIES-238 — "Prada / Candy" | Prada Candy (2011), EDP reference | Supported (self-identifying text) | Confirm the original Prada Candy (not a flanker) is the inspiration. Concentration/oil %, carrier, sizes/stock, safety documentation. | None under current governance |
+
+### Draft supplier message — NOT SENT
+
+> Hello — we are preparing four fragrances from your list for our catalogue and would appreciate the following, if available: (1) LADIES-5 "212 SEXY Carolina Herrera" — please confirm it is inspired by the women's 212 Sexy (not 212 Sexy Men). (2) UNISEX-63 "Jo Malone / Vetvier & Golden Vanilla" — please confirm this is Vetiver & Golden Vanilla. (3) LADIES-195 "Michael Kors Wonderlust" and (4) LADIES-238 "Prada / Candy" — please confirm each is inspired by the original fragrance rather than a later edition. For all four: the concentration (oil percentage) and carrier used, the sizes and quantities you can currently supply, and any safety or allergen documentation (for example an SDS or IFRA certificate). Thank you.
+
+## Update 2026-10-12 (revision 20) — availability confirmed by the founder
+
+Founder statement: "All the fragrances are available and I am able to get them." This applies to LADIES-5, UNISEX-63, LADIES-195 and LADIES-238.
+
+Maison Skye & Rose sources the fragrance materials and prepares and packages its own customer products: 5 ml (R60), 10 ml (R100) and 30 ml (R250). The supplier is not assumed to supply finished bottles.
+
+The availability, stock and size questions above, and the draft supplier message, are **superseded**. The message was never sent and should not be sent.
+
+Still **UNCONFIRMED** (optional, not required for release): concentration or oil percentage, carrier, formulation, and safety or allergen documents. No quantities, lead times, formulations or safety documents are recorded or claimed.

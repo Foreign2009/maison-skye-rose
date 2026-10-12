@@ -26,7 +26,8 @@
     },
     "revision6": "2026-10-11: Gucci Rush, Tommy Girl, Jimmy Choo, Poison and The One researched further. Marketplace third-party sellers on debenhams.com are recorded with authorisedOrNamed=false; 'Sold & Delivered by Debenhams' listings are treated as major-retailer first-party.",
     "revision7": "2026-10-11: readable-page reviews continued for the five remaining Batch 1 drafts (10 fetch records, indices 64–73). Romance brand/Macy's/Sephora, The Perfume Shop (Jimmy Choo), Sephora UAE (Poison) and Argos returned 403. Lookfantastic (Tommy Girl) gave a full first-party pyramid that conflicts with the draft; recorded, not applied. A vintage reseller lists Poison 1985 as 'Esprit de Parfum' (supplementary; not treated as EDP). Parfumdreams and Escentual were readable but carried no notes. Web search was used only to locate URLs; no search summary is recorded as evidence.",
-    "revision8": "2026-10-11: Wave 9 Batch 2 research — 26 fetch records (indices 74–99). Only INSPECTED results count as evidence; BLOCKED / NOT_FOUND / INSPECTED_NO_PYRAMID are recorded for transparency. Web search was used only to locate URLs; search summaries are not recorded as evidence."
+    "revision8": "2026-10-11: Wave 9 Batch 2 research — 26 fetch records (indices 74–99). Only INSPECTED results count as evidence; BLOCKED / NOT_FOUND / INSPECTED_NO_PYRAMID are recorded for transparency. Web search was used only to locate URLs; search summaries are not recorded as evidence.",
+    "revision9": "2026-10-12: Wave 9 Batch 3 research (W9-B3-R) and preparation (W9-B3-P1) — 30 fetch records (indices 100–129). Only INSPECTED results count as evidence; BLOCKED / NOT_FOUND / INSPECTED_NO_PYRAMID are recorded for transparency. 'Sold & Delivered by Debenhams' is major-retailer first-party (revision 6 policy); Lookfantastic and Edgars authorised status is not verified. Pages with instructions aimed at AI tools (ScentVerdict, Debenhams Prada Candy) were read for factual fields only. Web search was used only to locate URLs; no search summary is recorded as evidence."
   },
   "fetches": [
     {
@@ -1543,6 +1544,426 @@
       "accessDate": "2026-10-11",
       "batch": "wave-9-batch-2",
       "detail": "302 → https://www.michaelkors.global/za/en/ (regional homepage). Not followed; no brand pyramid inspected."
+    },
+    {
+      "draftSlug": "212-sexy-inspired",
+      "candidate": "LADIES-5-212 SEXY Carolina Herrera",
+      "url": "https://www.carolinaherrera.com/ww/en/p-fragrance/212-sexy",
+      "result": "INSPECTED",
+      "batch": "wave-9-batch-3",
+      "sourceType": "TIER1_BRAND_PAGE",
+      "authorisedOrNamed": true,
+      "captured": {
+        "name": "212 Sexy 100ml Eau de Parfum",
+        "classification": "AMBERY Gourmand Floral",
+        "descriptor": "Creamy & Ambery",
+        "top": "Mandarin & Pink Pepper",
+        "heart": "Gardenia & Cotton Candy Accord",
+        "base": "Sandalwood & Vanilla",
+        "concentration": "Eau de Parfum appears only in the product name; the page gives a generic EDP range (12–20%) for the category, not this product.",
+        "launchYear": "not stated"
+      },
+      "supportedFields": [
+        "notes.top",
+        "notes.heart",
+        "notes.base",
+        "profile Amber Gourmand Floral"
+      ],
+      "differencesFromDraft": "None. Draft splits each '&' pair into two notes.",
+      "revision": 9,
+      "accessDate": "2026-10-12"
+    },
+    {
+      "draftSlug": "vetiver-golden-vanilla-inspired",
+      "candidate": "UNISEX-63-Jo Malone / Vetvier & Golden Vanilla",
+      "url": "https://www.nordstrom.com/s/vetiver-golden-vanilla-cologne-intense/7266472",
+      "result": "INSPECTED",
+      "batch": "wave-9-batch-3",
+      "sourceType": "NAMED_TIER2_AUTHORISED_RETAILER",
+      "authorisedOrNamed": true,
+      "captured": {
+        "name": "Vetiver & Golden Vanilla Cologne Intense",
+        "style": "absent — no family named",
+        "top": "cardamom, grapefruit tea",
+        "middle": "vetiver, lavender, clary sage",
+        "base": "vanilla, cistus labdanum",
+        "description": "A cologne intense that captures the scent of Madagascar's vanilla-swept coastline.",
+        "availability": "Sold Out — This item is no longer available. Browse our recommendations for something similar."
+      },
+      "supportedFields": [
+        "notes.top",
+        "notes.heart",
+        "notes.base"
+      ],
+      "differencesFromDraft": "None. Profile 'Woody Aromatic Vanilla' is editorial (no family on the page).",
+      "availabilityNote": "Reference retail availability only; says nothing about the Maison supplier's ability to produce the inspired formulation.",
+      "revision": 9,
+      "accessDate": "2026-10-12"
+    },
+    {
+      "draftSlug": "vetiver-golden-vanilla-inspired",
+      "candidate": "UNISEX-63",
+      "url": "https://www.jomalone.co.uk/product/25946/110768/colognes/vetiver-golden-vanilla-cologne-intense",
+      "result": "BLOCKED",
+      "batch": "wave-9-batch-3",
+      "detail": "HTTP 403.",
+      "revision": 9,
+      "accessDate": "2026-10-12"
+    },
+    {
+      "draftSlug": null,
+      "candidate": "LADIES-162 Jo Malone Dark Amber & Ginger Lily",
+      "url": "https://www.jomalone.com/product/25946/110453/colognes/dark-amber-ginger-lily-cologne-intense",
+      "result": "BLOCKED",
+      "batch": "wave-9-batch-3-research",
+      "detail": "HTTP 403.",
+      "revision": 9,
+      "accessDate": "2026-10-12"
+    },
+    {
+      "draftSlug": null,
+      "candidate": "LADIES-162 Jo Malone Dark Amber & Ginger Lily",
+      "url": "https://www.nordstrom.com/s/dark-amber-ginger-lily-cologne-intense/7266556",
+      "result": "INSPECTED",
+      "batch": "wave-9-batch-3-research",
+      "sourceType": "NAMED_TIER2_AUTHORISED_RETAILER",
+      "authorisedOrNamed": true,
+      "captured": {
+        "name": "Dark Amber & Ginger Lily Cologne Intense",
+        "style": "woody",
+        "top": "black cardamom",
+        "middle": "black orchid",
+        "base": "kyrara incense (page spelling)",
+        "availability": "Sold Out — This item is no longer available."
+      },
+      "supportedFields": [],
+      "detail": "Key notes only, one per tier; treated as possibly incomplete (cf. Wonderlust). Not drafted.",
+      "revision": 9,
+      "accessDate": "2026-10-12"
+    },
+    {
+      "draftSlug": null,
+      "candidate": "LADIES-185 Louis Vuitton Contre Moi",
+      "url": "https://us.louisvuitton.com/eng-us/products/contre-moi-014419/LP0009",
+      "result": "BLOCKED",
+      "batch": "wave-9-batch-3-research",
+      "detail": "HTTP 403.",
+      "revision": 9,
+      "accessDate": "2026-10-12"
+    },
+    {
+      "draftSlug": null,
+      "candidate": "LADIES-185 Louis Vuitton Contre Moi",
+      "url": "https://ca.louisvuitton.com/eng-ca/products/contre-moi-014419/LP0002",
+      "result": "BLOCKED",
+      "batch": "wave-9-batch-3-research",
+      "detail": "HTTP 403.",
+      "revision": 9,
+      "accessDate": "2026-10-12"
+    },
+    {
+      "draftSlug": null,
+      "candidate": "LADIES-185 Louis Vuitton Contre Moi",
+      "url": "https://uk.louisvuitton.com/eng-gb/products/travel-spray-contre-moi-nvprod440054v",
+      "result": "BLOCKED",
+      "batch": "wave-9-batch-3-research",
+      "detail": "HTTP 403.",
+      "revision": 9,
+      "accessDate": "2026-10-12"
+    },
+    {
+      "draftSlug": null,
+      "candidate": "LADIES-185 Louis Vuitton Contre Moi",
+      "url": "https://scentverdict.com/perfume/louis-vuitton-contre-moi-eau-de-parfum",
+      "result": "INSPECTED",
+      "batch": "wave-9-batch-3-research",
+      "sourceType": "THIRD_PARTY_FRAGRANCE_DATABASE",
+      "authorisedOrNamed": false,
+      "captured": {
+        "name": "Contre Moi Eau de Parfum",
+        "release": "2016",
+        "perfumer": "Jacques Cavallier-Belletrud",
+        "top": "Lemon, Bergamot, Green Notes",
+        "heart": "Magnolia, Orange Blossom, Pear, Rose",
+        "base": "Vanilla, Cacao Pod",
+        "discontinuation": "Reviewer describes it as discontinued; no date."
+      },
+      "supportedFields": [],
+      "detail": "Supplementary only (not a named database or authorised retailer). Performance ratings on the page are not recorded. The page contained instructions addressed to AI tools; they were ignored and only factual product fields were used.",
+      "revision": 9,
+      "accessDate": "2026-10-12"
+    },
+    {
+      "draftSlug": null,
+      "candidate": "LADIES-49 Bulgari Amethyste",
+      "url": "https://www.bulgari.com/en-int/fragrances/omnia/42061.html",
+      "result": "BLOCKED",
+      "batch": "wave-9-batch-3-research",
+      "detail": "HTTP 403.",
+      "revision": 9,
+      "accessDate": "2026-10-12"
+    },
+    {
+      "draftSlug": null,
+      "candidate": "LADIES-49 Bulgari Amethyste",
+      "url": "https://www.bulgari.com/en-int/50250.html",
+      "result": "BLOCKED",
+      "batch": "wave-9-batch-3-research",
+      "detail": "HTTP 403.",
+      "revision": 9,
+      "accessDate": "2026-10-12"
+    },
+    {
+      "draftSlug": null,
+      "candidate": "LADIES-49 Bulgari Amethyste",
+      "url": "https://www.bulgari.com/en-be/42548.html",
+      "result": "BLOCKED",
+      "batch": "wave-9-batch-3-research",
+      "detail": "HTTP 403.",
+      "revision": 9,
+      "accessDate": "2026-10-12"
+    },
+    {
+      "draftSlug": null,
+      "candidate": "LADIES-49 Bulgari Amethyste",
+      "url": "https://www.johnlewis.com/bvlgari-omnia-amethyste-eau-de-toilette/p112432339",
+      "result": "NOT_FOUND",
+      "batch": "wave-9-batch-3-research",
+      "detail": "HTTP 404.",
+      "revision": 9,
+      "accessDate": "2026-10-12"
+    },
+    {
+      "draftSlug": null,
+      "candidate": "LADIES-49 Bulgari Amethyste",
+      "url": "https://www.notino.co.uk/bvlgari/omnia-amethyste-eau-de-toilette-for-women/",
+      "result": "BLOCKED",
+      "batch": "wave-9-batch-3-research",
+      "detail": "HTTP 403.",
+      "revision": 9,
+      "accessDate": "2026-10-12"
+    },
+    {
+      "draftSlug": null,
+      "candidate": "LADIES-49 Bulgari Amethyste",
+      "url": "https://www.lookfantastic.com/p/bvlgari-omnia-amethyste-eau-de-toilette-30ml/14853481/",
+      "result": "INSPECTED",
+      "batch": "wave-9-batch-3-research",
+      "sourceType": "MAJOR_RETAILER_FIRST_PARTY (online beauty retailer; authorised status not verified)",
+      "authorisedOrNamed": false,
+      "captured": {
+        "name": "BVLGARI Omnia Amethyste Eau de Toilette 30ml",
+        "seller": "Page footer: The Hut.com Ltd t/a Lookfantastic.com",
+        "family": "Floral",
+        "top": "Pink Grapefruit, Green Sap",
+        "heart": "Iris, Rose",
+        "base": "Heliotrope, Solar Woods"
+      },
+      "supportedFields": [],
+      "detail": "Authorised-stockist status unverified; supplier text omits 'Omnia'. Not drafted.",
+      "revision": 9,
+      "accessDate": "2026-10-12"
+    },
+    {
+      "draftSlug": null,
+      "candidate": "LADIES-52 Bulgari Goldea",
+      "url": "https://www.macys.com/shop/product/bvlgari-goldea-eau-de-parfum-spray-3-oz.?ID=2816434",
+      "result": "BLOCKED",
+      "batch": "wave-9-batch-3-research",
+      "detail": "HTTP 403.",
+      "revision": 9,
+      "accessDate": "2026-10-12"
+    },
+    {
+      "draftSlug": null,
+      "candidate": "LADIES-52 Bulgari Goldea",
+      "url": "https://www.edgars.co.za/products/goldea-eau-de-parfum-c63365529",
+      "result": "INSPECTED_NO_PYRAMID",
+      "batch": "wave-9-batch-3-research",
+      "sourceType": "RETAILER (South African department store; authorised status not verified)",
+      "captured": {
+        "name": "Goldea Eau de Parfum",
+        "family": "description: 'a sensual and oriental fragrance'",
+        "descriptionNotes": "Ylang-Ylang and Orange Blossom; 'stylised white musks'",
+        "availability": "sold out"
+      },
+      "detail": "No tiers; description truncated. Not drafted.",
+      "revision": 9,
+      "accessDate": "2026-10-12"
+    },
+    {
+      "draftSlug": "wonderlust-by-michael-kors-inspired",
+      "url": "https://www.lookfantastic.com/p/michael-michael-kors-wonderlust-eau-de-parfum-100ml/11374091/",
+      "result": "INSPECTED",
+      "batch": "wave-9-tail",
+      "sourceType": "MAJOR_RETAILER_FIRST_PARTY (online beauty retailer; authorised status not verified)",
+      "authorisedOrNamed": false,
+      "captured": {
+        "name": "Michael Kors Wonderlust Eau de Parfum 100ml",
+        "family": "Floral Amber",
+        "top": "Italian Bergamot, Sicilian Mandarin, Almond Milk, Pink Pepper.",
+        "heart": "Jasmine Grandiflorum Absolute, Dianthus, Jasmine Sambac Absolute, Heliotrope.",
+        "base": "Cashmeran Wood, Benzoin Siam, Sandalwood Sri Lanka."
+      },
+      "supportedFields": [
+        "corroborates Debenhams pyramid"
+      ],
+      "differencesFromDraft": "Draft (rev 14) had only the three Nordstrom key notes; revised 2026-10-12.",
+      "revision": 9,
+      "accessDate": "2026-10-12"
+    },
+    {
+      "draftSlug": "wonderlust-by-michael-kors-inspired",
+      "url": "https://www.debenhams.com/product/michael-kors-wonderlust-eau-de-parfum_ydd11028",
+      "result": "INSPECTED_NO_PYRAMID",
+      "batch": "wave-9-tail",
+      "detail": "First fetch: the first 100,000 characters were navigation; product details not reached. Superseded by the refetch below.",
+      "revision": 9,
+      "accessDate": "2026-10-12"
+    },
+    {
+      "draftSlug": "wonderlust-by-michael-kors-inspired",
+      "url": "https://www.debenhams.com/product/michael-kors-wonderlust-eau-de-parfum_ydd11028",
+      "result": "INSPECTED",
+      "batch": "wave-9-tail",
+      "sourceType": "MAJOR_RETAILER_FIRST_PARTY",
+      "authorisedOrNamed": true,
+      "captured": {
+        "seller": "Sold & Delivered by Debenhams",
+        "family": "Amber, Gourmand",
+        "top": "Italian Bergamot , Sicilian Mandarin , Almond Milk, Pink Pepper",
+        "heart": "Jasmine Grandiflorum Absolute, Dianthus , Jasmine Sambac Absolute, and Heliotrope",
+        "base": "Cashmeran Wood, Benzoin Siam, Sandalwood Sri Lanka"
+      },
+      "supportedFields": [
+        "notes.top",
+        "notes.heart",
+        "notes.base",
+        "profile Amber Gourmand"
+      ],
+      "differencesFromDraft": "Draft notation normalises 'Benzoin Siam' → 'Siam Benzoin' and 'Sandalwood Sri Lanka' → 'Sri Lankan Sandalwood' (the latter is Nordstrom's wording); no note added or removed.",
+      "revision": 9,
+      "accessDate": "2026-10-12"
+    },
+    {
+      "draftSlug": "prada-candy-inspired",
+      "url": "https://www.debenhams.com/product/prada-candy-eau-de-parfum_ydd06820",
+      "result": "INSPECTED_NO_PYRAMID",
+      "batch": "wave-9-tail",
+      "detail": "First fetch: the first 100,000 characters were navigation; product details not reached. Superseded by the refetch below.",
+      "revision": 9,
+      "accessDate": "2026-10-12"
+    },
+    {
+      "draftSlug": "prada-candy-inspired",
+      "url": "https://www.debenhams.com/product/prada-candy-eau-de-parfum_ydd06820",
+      "result": "INSPECTED",
+      "batch": "wave-9-tail",
+      "sourceType": "MAJOR_RETAILER_FIRST_PARTY",
+      "authorisedOrNamed": true,
+      "captured": {
+        "name": "Prada Candy Eau de Parfum",
+        "seller": "Sold & Delivered by Debenhams",
+        "family": "Floral, Amber, Gourmand",
+        "top": "White Musk",
+        "heart": "Benzoin",
+        "base": "Caramel Accord",
+        "sizes": "30ml, 50ml, 80ml"
+      },
+      "supportedFields": [
+        "notes.top",
+        "notes.heart",
+        "notes.base"
+      ],
+      "differencesFromDraft": "None (notes). Family differs from draft profile 'Gourmand Spicy'; recorded as an alternative.",
+      "detail": "The page contained instructions addressed to AI tools; they were ignored and only factual product fields were used.",
+      "revision": 9,
+      "accessDate": "2026-10-12"
+    },
+    {
+      "draftSlug": "gucci-rush-inspired",
+      "url": "https://www.edgars.co.za/products/gucci-rush-eau-de-toilette-for-her",
+      "result": "INSPECTED",
+      "batch": "wave-9-tail",
+      "sourceType": "RETAILER (South African department store; authorised status not verified)",
+      "authorisedOrNamed": false,
+      "captured": {
+        "name": "Gucci Rush Eau de Toilette For Her",
+        "seller": "not stated (Edgars online store; brand Gucci)",
+        "scentType": "Chypre Fruity, with a madium Longevity (source spelling; longevity wording not used)",
+        "top": "Bergamot, Peony, Gardenia",
+        "heart": "Violet, Vanilla, Jasmine",
+        "base": "Patchouli"
+      },
+      "supportedFields": [
+        "pyramid adopted for the revised draft; tier stays AI_INFERENCE_UNSOURCED"
+      ],
+      "differencesFromDraft": "Conflicts with the rev-6 draft pyramid (thescentbase.com): Peach, Californian Gardenia, African Freesia Petals / Coriander, Damask Rose, Jasmine / Patchouli, Natural Vanilla, Vetiver. Draft revised 2026-10-12; previous pyramid preserved.",
+      "revision": 9,
+      "accessDate": "2026-10-12"
+    },
+    {
+      "draftSlug": "gucci-rush-inspired",
+      "url": "https://www.debenhams.com/product/gucci-rush-eau-de-toilette-50ml_p-ab583e15-9212-4184-88d2-92b54e22ea6b",
+      "result": "NOT_FOUND",
+      "batch": "wave-9-tail",
+      "detail": "HTTP 404.",
+      "revision": 9,
+      "accessDate": "2026-10-12"
+    },
+    {
+      "draftSlug": "gucci-rush-inspired",
+      "url": "https://www.theperfumeshop.com/gucci/rush/eau-de-toilette-spray/p/21400EDTJU?varSel=1007608",
+      "result": "BLOCKED",
+      "batch": "wave-9-tail",
+      "detail": "HTTP 403 (W9-B3-P1, 19:00 UTC).",
+      "revision": 9,
+      "accessDate": "2026-10-12"
+    },
+    {
+      "draftSlug": "gucci-rush-inspired",
+      "url": "https://www.boots.com/gucci-rush-eau-de-toilette-spray-50ml-10013273",
+      "result": "BLOCKED",
+      "batch": "wave-9-tail",
+      "detail": "Bot-check interstitial (W9-B3-P1, 19:00 UTC).",
+      "revision": 9,
+      "accessDate": "2026-10-12"
+    },
+    {
+      "draftSlug": "tommy-girl-inspired",
+      "url": "https://usa.tommy.com/en/women/shoes-accessories/fragrance/tommy-girl-fragrance-3.4oz/7640496672768.html",
+      "result": "BLOCKED",
+      "batch": "wave-9-tail",
+      "detail": "HTTP 403.",
+      "revision": 9,
+      "accessDate": "2026-10-12"
+    },
+    {
+      "draftSlug": "tommy-girl-inspired",
+      "url": "https://uk.tommy.com/tommy-girl-eau-de-toilette-100ml-gbb5021910mul",
+      "result": "BLOCKED",
+      "batch": "wave-9-tail",
+      "detail": "Request timed out (60 s); no content.",
+      "revision": 9,
+      "accessDate": "2026-10-12"
+    },
+    {
+      "draftSlug": "tommy-girl-inspired",
+      "url": "https://uk.tommy.com/tommy-girl-eau-de-toilette-50ml-gbb5021610mul",
+      "result": "BLOCKED",
+      "batch": "wave-9-tail",
+      "detail": "Request timed out (60 s); no content.",
+      "revision": 9,
+      "accessDate": "2026-10-12"
+    },
+    {
+      "draftSlug": "poison-by-dior-inspired",
+      "url": "https://www.dior.com/en_us/beauty/fragrance/womens-fragrance/poison",
+      "result": "BLOCKED",
+      "batch": "wave-9-tail",
+      "detail": "HTTP 403.",
+      "revision": 9,
+      "accessDate": "2026-10-12"
     }
   ]
 }

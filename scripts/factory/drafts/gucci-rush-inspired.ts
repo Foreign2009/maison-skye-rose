@@ -32,20 +32,25 @@ export const gucciRushInspired: FragranceKnowledge = {
 
   // ── Classification ────────────────────────────────────────────────────────────
   gender        : "female",
-  family        : ["Floral", "Woody"],
-  scentCharacter: "Balanced Signature",
+  // REVISED 2026-10-12 (W9-B3-P1) from adapter output for profile "Fruity Chypre" (Chypre aliases to Amber).
+  // Previous: family ["Floral", "Woody"], scentCharacter "Balanced Signature".
+  family        : ["Fruity", "Amber"],
+  scentCharacter: "Rich & Full-Bodied",
   projection    : "moderate",
 
   // ── Composition ─────────────────────────────────────────────────────────────
-  profile       : "Floral Woody",
+  profile       : "Fruity Chypre",  // previous: "Floral Woody"; Edgars scent type "Chypre Fruity"
   season        : "All Season",
   notes: {
-    // Pyramid attributed to Fragrantica (Gucci-Rush-686) — that page was NOT inspected (HTTP 403);
-    // earlier corrections were made from search results. Inspected secondary evidence:
-    // thescentbase.com — all 9 notes match in the same tiers. See wave-9-source-evidence.json.
-    top:   ["Peach", "Californian Gardenia", "African Freesia Petals"],
-    heart: ["Coriander", "Damask Rose", "Jasmine"],
-    base:  ["Patchouli", "Natural Vanilla", "Vetiver"],
+    // REVISED 2026-10-12 (W9-B3-P1): edgars.co.za Gucci Rush EDT listing (inspected): Top "Bergamot, Peony, Gardenia";
+    // Heart "Violet, Vanilla, Jasmine"; Base "Patchouli"; Scent Type "Chypre Fruity". Edgars authorised status not
+    // verified -> AI_INFERENCE_UNSOURCED (EVIDENCE HOLD continues). See wave-9-source-evidence.json (revision 9).
+    // PREVIOUS (preserved): pyramid attributed to Fragrantica (Gucci-Rush-686), page NOT inspected (HTTP 403);
+    //   thescentbase.com matched all 9 notes: Peach, Californian Gardenia, African Freesia Petals /
+    //   Coriander, Damask Rose, Jasmine / Patchouli, Natural Vanilla, Vetiver.
+    top:   ["Bergamot", "Peony", "Gardenia"],
+    heart: ["Violet", "Vanilla", "Jasmine"],
+    base:  ["Patchouli"],
   },
   notesEvidenceLocked: true,
   mood          : "Bold Vivid Floral",
@@ -67,10 +72,10 @@ export const gucciRushInspired: FragranceKnowledge = {
     "Evening",
   ],
   seasons       : ["Spring", "Summer", "Autumn", "Winter"],
-  signatureStyle: ["Bold Floral Statement", "Modern Vivid Rose", "Signature Character"],
+  signatureStyle: ["Bold Floral Statement", "Modern Vivid Chypre", "Signature Character"],  // previous: "Modern Vivid Rose"
   recommendedFor: [
     "Women seeking a bold, characterful floral signature",
-    "Those who love vivid rose and jasmine balanced with earthy warmth for everyday confidence",
+    "Those who love gardenia and jasmine balanced with patchouli's earthy warmth for everyday confidence",
     "Anyone ready to transition from safe florals to a more daring, personality-driven scent",
   ],
 
@@ -90,30 +95,32 @@ export const gucciRushInspired: FragranceKnowledge = {
 
   // ── Education ───────────────────────────────────────────────────────────────
   subtitle      : "Vivid Floral Energy",
-  description   : "Peach and sun-warm gardenia open with vivid, solar immediacy, freesia petals adding brightness to the accord. Coriander and damask rose settle into the skin with unexpected confidence—neither sweet nor sharp, but bold in their own way. Patchouli and vetiver ground the composition with earthen depth.",
+  // Description REVISED 2026-10-12 to the Edgars notes. Previous description named peach, freesia, coriander, damask rose
+  // and vetiver (preserved in the W9-B3-P1 pre-edit backup and the review bundle).
+  description   : "Bergamot, peony and gardenia open with vivid, luminous immediacy. Violet and jasmine soften the heart while vanilla lends a creamy warmth, before patchouli grounds the composition with earthen chypre depth.",
   academyArticleIds: ["guide-to-fragrance-families", "the-note-pyramid-explained", "what-makes-a-signature-scent", "how-to-layer-fragrances"],
   academyCategories: ["fragrance-families", "the-note-pyramid", "wear-and-application"],
   educationTags : [
     "floral",
-    "woody",
-    "rose",
+    "chypre",
+    "gardenia",
     "jasmine",
     "patchouli",
     "vanilla",
     "signature-scent",
-    "balanced",
+    "violet",
     "daily-wear",
     "office",
   ],
   learningPath  : ["guide-to-fragrance-families", "the-note-pyramid-explained", "what-makes-a-signature-scent", "how-to-layer-fragrances"],
 
   // ── Intelligence ────────────────────────────────────────────────────────────
-  // Scores derived by knowledgeAdapter.deriveMetrics(profile="Floral Woody", season="All Season").
-  // sweetness:2 (else), freshness:3 (floral), warmth:3 (woody), intensity:3 (All Season), versatility:5 (All Season).
-  // Scores are heuristic-derived approximations (knowledgeAdapter.ts line 208). No calibration producer in pipeline.
-  sweetness     : 2,
-  freshness     : 3,
-  warmth        : 3,
+  // Scores derived by knowledgeAdapter.deriveMetrics(profile="Fruity Chypre", season="All Season") — REVISED 2026-10-12.
+  // Previous (profile "Floral Woody"): sweetness 2, freshness 3, warmth 3, intensity 3, versatility 5.
+  // Scores are heuristic-derived approximations. No calibration producer in pipeline.
+  sweetness     : 3,
+  freshness     : 2,
+  warmth        : 4,
   intensity     : 3,
   versatility   : 5,
   popularity    : 5,

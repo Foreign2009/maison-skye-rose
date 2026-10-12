@@ -5757,6 +5757,86 @@
         "timestamp": "2026-10-11T20:08:22.231Z",
         "reason": "Wave 9 Batch 2 r14a: founder editorial/promotion approval 2026-10-11 of profile 'Citrus Woody'; evidence PYRAMID_SECONDARY_SUPPORTED (John Lewis tiered description); reference identity/edition founder-reported 2026-10-11 (r14b), not supplier evidence; supplied concentration unconfirmed; relationships empty (proposals pending); see catalogue-expansion-ledger.json"
       }
+    },
+    {
+      "slug": "212-sexy-inspired",
+      "name": "212 Sexy Inspired",
+      "collection": "Rose",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-10-12T20:13:39.492Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-10-12T20:13:42.828Z",
+      "reviewer": "Founder (Adnaan) - approval 2026-10-12",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder (Adnaan) - approval 2026-10-12",
+        "timestamp": "2026-10-12T20:13:42.828Z",
+        "reason": "Gate A formal editorial approval 2026-10-12: 212-sexy-inspired — Rose — Amber Gourmand Floral"
+      }
+    },
+    {
+      "slug": "vetiver-golden-vanilla-inspired",
+      "name": "Vetiver Golden Vanilla Inspired",
+      "collection": "Elite",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-10-12T20:14:48.229Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-10-12T20:14:51.683Z",
+      "reviewer": "Founder (Adnaan) - approval 2026-10-12",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder (Adnaan) - approval 2026-10-12",
+        "timestamp": "2026-10-12T20:14:51.681Z",
+        "reason": "Gate A formal editorial approval 2026-10-12: vetiver-golden-vanilla-inspired — Elite — Woody Aromatic Vanilla; retained despite reference unavailable at the inspected retailer"
+      }
+    },
+    {
+      "slug": "wonderlust-by-michael-kors-inspired",
+      "name": "Wonderlust by Michael Kors Inspired",
+      "collection": "Rose",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-10-12T20:16:02.352Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-10-12T20:16:05.951Z",
+      "reviewer": "Founder (Adnaan) - approval 2026-10-12",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder (Adnaan) - approval 2026-10-12",
+        "timestamp": "2026-10-12T20:16:05.950Z",
+        "reason": "Gate A formal editorial approval 2026-10-12: wonderlust-by-michael-kors-inspired — Rose — Floral Amber Gourmand"
+      }
+    },
+    {
+      "slug": "prada-candy-inspired",
+      "name": "Prada Candy Inspired",
+      "collection": "Rose",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-10-12T20:17:13.518Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-10-12T20:17:16.941Z",
+      "reviewer": "Founder (Adnaan) - approval 2026-10-12",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder (Adnaan) - approval 2026-10-12",
+        "timestamp": "2026-10-12T20:17:16.940Z",
+        "reason": "Gate A formal editorial approval 2026-10-12: prada-candy-inspired — Rose — Amber Gourmand"
+      }
     }
   ]
 }
