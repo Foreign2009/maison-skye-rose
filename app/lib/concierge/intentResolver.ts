@@ -69,17 +69,29 @@ function normalizeInputForEntityMatch(s: string): string {
     .trim();
 }
 
-// Very short entity keys (≤ 2 chars, e.g. "y" from "Y Inspired") match as a plain
-// substring inside common words ("cozy", "woody") creating ghost entity matches.
-// Require a word boundary for short keys so "y" is only resolved when it appears
-// as a standalone token. Longer keys keep the existing substring check.
-function entityKeyFoundInQuery(key: string, qNorm: string): boolean {
-  if (key.length <= 2) {
-    const escaped = key.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-    return new RegExp(`\\b${escaped}\\b`).test(qNorm);
+// Entity keys must appear as whole names: a plain substring check let names match
+// inside other words ("ani" in "vanilla" and "Armani", "y inspired" in "Intensely
+// Inspired"), creating ghost entities and phantom comparisons. A key matches only where the characters on both
+// sides are not letters or digits — the same boundary rule responsePlanner uses for
+// names in response text. Punctuation inside keys ("terre d'hermes", "212 vip rose")
+// is unaffected because only the edges of the occurrence are checked.
+const isNameChar = (c: string | undefined): boolean => c !== undefined && /[\p{L}\p{N}]/u.test(c);
+
+function wholeNameOccurrences(key: string, qNorm: string): number[] {
+  const out: number[] = [];
+  for (let i = qNorm.indexOf(key); i >= 0; i = qNorm.indexOf(key, i + 1)) {
+    if (!isNameChar(qNorm[i - 1]) && !isNameChar(qNorm[i + key.length])) out.push(i);
   }
-  return qNorm.includes(key);
+  return out;
 }
+
+// Short names guests use for "<Name> by <Designer> Inspired" products, where the bare
+// key still contains the designer. Only collision-checked, distinctive names belong here:
+// "perfect", "beautiful" and "romance" are everyday words, "euphoria" also names Euphoria
+// Men, and "uomo" / "azzaro wanted" name other products — none of those are aliased.
+const SHORT_NAME_ALIASES: Record<string, string> = {
+  "wonderlust": "wonderlust-by-michael-kors-inspired",
+};
 
 function extractFragranceSlugs(q: string): string[] {
   // Build a combined lookup: full canonical names + bare names (Maison suffix stripped).
@@ -105,20 +117,32 @@ function extractFragranceSlugs(q: string): string[] {
     }
   }
 
+  // Aliases apply only to live catalogue slugs and never shadow an existing name key.
+  for (const [alias, slug] of Object.entries(SHORT_NAME_ALIASES)) {
+    if (catalogueMaps.bySlug.has(slug) && !seenKeys.has(alias)) {
+      entries.push({ key: alias, slug });
+      seenKeys.add(alias);
+    }
+  }
+
   entries.sort((a, b) => b.key.length - a.key.length);
 
   const qNorm = normalizeInputForEntityMatch(q);
   const found: string[] = [];
-  const matchedKeys: string[] = [];
+  // Query spans already claimed by longer matched names (entries are longest-first).
+  const claimed: Array<[number, number]> = [];
 
   for (const { key, slug } of entries) {
-    if (!entityKeyFoundInQuery(key, qNorm)) continue;
+    // Flanker safety: an occurrence lying inside a longer name already matched at that
+    // position ("opium" within "black opium", "sauvage" within "sauvage elixir") is part
+    // of that name, not a separate mention — skip it so distinct flankers never collapse
+    // or pair up. A separate mention elsewhere in the query still counts.
+    const free = wholeNameOccurrences(key, qNorm)
+      .filter((i) => !claimed.some(([s, e]) => i >= s && i + key.length <= e));
+    if (free.length === 0) continue;
+    for (const i of free) claimed.push([i, i + key.length]);
     if (found.includes(slug)) continue;
-    // Flanker safety: if a longer already-matched key starts with this key,
-    // this is a prefix-overlap — skip to prevent collapsing distinct flankers.
-    if (matchedKeys.some((mk) => mk.startsWith(key) && mk.length > key.length)) continue;
     found.push(slug);
-    matchedKeys.push(key);
   }
 
   return found;
