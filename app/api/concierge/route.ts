@@ -21,7 +21,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
 import { planConversation, resolveAnchorSlug } from "../../lib/concierge/conversationPlanner";
-import { resolveIntent }                       from "../../lib/concierge/intentResolver";
+import { resolveIntent, explicitSingleEntity } from "../../lib/concierge/intentResolver";
 import { planRetrieval, buildCachedRetrieval } from "../../lib/concierge/retrievalPlanner";
 import { buildContext, renderContext }          from "../../lib/concierge/contextBuilder";
 import { buildSystemPrompt, validateResponse, SAFE_FALLBACK } from "../../lib/concierge/safetyGuard";
@@ -302,8 +302,10 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     const safe    = validateResponse(rawContent);
     const content = safe ? rawContent : SAFE_FALLBACK;
 
-    // 8. Plan and format response
-    const planned   = planResponse(content, effectiveIntent, retrieval, plan, updatedProfile);
+    // 8. Plan and format response. The fragrance the guest named (message text only) lets
+    // a product-education reply show that product's card; never applied to the safety fallback.
+    const namedEntity = safe ? explicitSingleEntity(message) : undefined;
+    const planned   = planResponse(content, effectiveIntent, retrieval, plan, updatedProfile, namedEntity);
     const formatted = formatResponse(planned);
 
     // 8b. Build or evolve the consultation plan (EP18-P1/P2)

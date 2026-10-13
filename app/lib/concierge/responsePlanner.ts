@@ -12,6 +12,7 @@ import type { ConversationIntent, ConversationProfile } from "./types";
 import type { RetrievalContext, AnchoredMeta } from "./contextBuilder";
 import type { ConversationPlan }   from "./conversationPlanner";
 import { TRUNCATION_FALLBACK }     from "./claudeClient";
+import { fragrancesNamedIn }       from "./intentResolver";
 import { mkcCatalogue }            from "../mkc/catalogue";
 
 // ── Marker patterns ───────────────────────────────────────────────────────────
@@ -1065,6 +1066,7 @@ export function planResponse(
   retrieval:  RetrievalContext,
   plan:       ConversationPlan,
   profile?:   ConversationProfile,
+  explicitEntitySlug?: string, // the one fragrance the guest named in this message (W9-C4)
 ): PlannedResponse {
   // Capture before any mutation so the truncation-fallback guard below is reliable.
   const isTruncationFallback = rawContent === TRUNCATION_FALLBACK;
@@ -1266,6 +1268,27 @@ export function planResponse(
       finalSlugs = [retrieval.fragrances[0].slug];
     }
     // Precedence 4: no card (finalSlugs stays [])
+  }
+
+  // Named single-product enquiry (W9-C4): when the guest named exactly one fragrance and
+  // this is a product-education turn, that fragrance's card leads — provided it is in the
+  // governed retrieval context and the reply is about it: the reply names it under any
+  // form the resolver recognises ("Wonderlust", "Ani"), or names no other fragrance from
+  // the context (note words such as "grapefruit" that are also catalogue names elsewhere
+  // do not count). Precedence 2 alone missed replies that use a short name or no name
+  // without a marker. Discovery, comparison and general education turns are unaffected.
+  if (
+    explicitEntitySlug &&
+    intent === "education" &&
+    !plan.requiresComparison &&
+    !isTruncationFallback &&
+    validFragranceSlugs.has(explicitEntitySlug)
+  ) {
+    const named = fragrancesNamedIn(content);
+    const namesOtherCandidate = named.some((s) => s !== explicitEntitySlug && validFragranceSlugs.has(s));
+    if (named.includes(explicitEntitySlug) || !namesOtherCandidate) {
+      finalSlugs = [explicitEntitySlug, ...finalSlugs.filter((s) => s !== explicitEntitySlug)];
+    }
   }
 
   // EP-AI-C6-P3-R2: Server-side card guarantee (Repair D — deterministic fill).

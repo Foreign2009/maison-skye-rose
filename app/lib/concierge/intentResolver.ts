@@ -150,6 +150,19 @@ function extractFragranceSlugs(q: string): string[] {
 
 // ── Public API ────────────────────────────────────────────────────────────────
 
+// The one catalogue fragrance the guest named in this message, or undefined when
+// they named none or several. Context fallbacks never apply — only the message text.
+export function explicitSingleEntity(message: string): string | undefined {
+  const slugs = extractFragranceSlugs(message.toLowerCase());
+  return slugs.length === 1 ? slugs[0] : undefined;
+}
+
+// Catalogue fragrances `text` names by any form the resolver recognises (full name,
+// bare name or short-name alias), using the same whole-name and flanker rules.
+export function fragrancesNamedIn(text: string): string[] {
+  return extractFragranceSlugs(text.toLowerCase());
+}
+
 export function resolveIntent(message: string, context: ConversationContext): ResolvedIntent {
   const q       = message.toLowerCase();
   const signals = parseIntent(q);
