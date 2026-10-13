@@ -6309,6 +6309,90 @@
       "slug": "prada-candy-inspired",
       "reviewer": "Claude Code (founder approval 2026-10-12)",
       "details": "promotionId:4fga0yKIoLtD  nativePath:app/lib/mkc/native/prada-candy-inspired.ts"
+    },
+    {
+      "timestamp": "2026-10-13T20:40:00.983Z",
+      "action": "added_to_queue",
+      "slug": "212-sexy-men-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-10-13T20:40:04.294Z",
+      "action": "approved",
+      "slug": "212-sexy-men-inspired",
+      "reviewer": "Founder (Adnaan) - approval 2026-10-13",
+      "details": "Gate A editorial approval 2026-10-13 (W9-B4-P2): 212-sexy-men-inspired — MEN-9 — Skye — Amber Spicy"
+    },
+    {
+      "timestamp": "2026-10-13T20:40:52.146Z",
+      "action": "promoted",
+      "slug": "212-sexy-men-inspired",
+      "reviewer": "Claude Code (founder approval 2026-10-13)",
+      "details": "promotionId:z_YPEcKECGZP  nativePath:app/lib/mkc/native/212-sexy-men-inspired.ts"
+    },
+    {
+      "timestamp": "2026-10-13T20:41:05.233Z",
+      "action": "added_to_queue",
+      "slug": "212-vip-men-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-10-13T20:41:08.555Z",
+      "action": "approved",
+      "slug": "212-vip-men-inspired",
+      "reviewer": "Founder (Adnaan) - approval 2026-10-13",
+      "details": "Gate A editorial approval 2026-10-13 (W9-B4-P2): 212-vip-men-inspired — MEN-11 — Skye — Woody Amber Aromatic"
+    },
+    {
+      "timestamp": "2026-10-13T20:41:57.055Z",
+      "action": "promoted",
+      "slug": "212-vip-men-inspired",
+      "reviewer": "Claude Code (founder approval 2026-10-13)",
+      "details": "promotionId:bMIOm5sC_kJG  nativePath:app/lib/mkc/native/212-vip-men-inspired.ts"
+    },
+    {
+      "timestamp": "2026-10-13T20:42:09.673Z",
+      "action": "added_to_queue",
+      "slug": "burberry-body-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-10-13T20:42:12.935Z",
+      "action": "approved",
+      "slug": "burberry-body-inspired",
+      "reviewer": "Founder (Adnaan) - approval 2026-10-13",
+      "details": "Gate A editorial approval 2026-10-13 (W9-B4-P2): burberry-body-inspired — LADIES-56 — Rose — Floral Woody"
+    },
+    {
+      "timestamp": "2026-10-13T20:43:01.381Z",
+      "action": "promoted",
+      "slug": "burberry-body-inspired",
+      "reviewer": "Claude Code (founder approval 2026-10-13)",
+      "details": "promotionId:vs2VOoUTNI2p  nativePath:app/lib/mkc/native/burberry-body-inspired.ts"
+    },
+    {
+      "timestamp": "2026-10-13T20:43:14.045Z",
+      "action": "added_to_queue",
+      "slug": "armani-diamonds-inspired",
+      "reviewer": "system",
+      "details": "validation:PASS  factory:0.5.0"
+    },
+    {
+      "timestamp": "2026-10-13T20:43:17.424Z",
+      "action": "approved",
+      "slug": "armani-diamonds-inspired",
+      "reviewer": "Founder (Adnaan) - approval 2026-10-13",
+      "details": "Gate A editorial approval 2026-10-13 (W9-B4-P2): armani-diamonds-inspired — LADIES-22 — Rose — Fruity Floral"
+    },
+    {
+      "timestamp": "2026-10-13T20:44:05.967Z",
+      "action": "promoted",
+      "slug": "armani-diamonds-inspired",
+      "reviewer": "Claude Code (founder approval 2026-10-13)",
+      "details": "promotionId:r6vUlWEadUGe  nativePath:app/lib/mkc/native/armani-diamonds-inspired.ts"
     }
   ]
 }

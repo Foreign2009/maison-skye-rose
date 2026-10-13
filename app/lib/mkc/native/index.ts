@@ -287,6 +287,10 @@ import { _212SexyInspired } from "./212-sexy-inspired";
 import { vetiverGoldenVanillaInspired } from "./vetiver-golden-vanilla-inspired";
 import { wonderlustByMichaelKorsInspired } from "./wonderlust-by-michael-kors-inspired";
 import { pradaCandyInspired } from "./prada-candy-inspired";
+import { _212SexyMenInspired } from "./212-sexy-men-inspired";
+import { _212VipMenInspired } from "./212-vip-men-inspired";
+import { burberryBodyInspired } from "./burberry-body-inspired";
+import { armaniDiamondsInspired } from "./armani-diamonds-inspired";
 
 export const nativeFragrances = new Map<string, FragranceKnowledge>([
   ["sauvage-inspired",              sauvageInspired],
@@ -566,4 +570,8 @@ export const nativeFragrances = new Map<string, FragranceKnowledge>([
   ["vetiver-golden-vanilla-inspired", vetiverGoldenVanillaInspired],
   ["wonderlust-by-michael-kors-inspired", wonderlustByMichaelKorsInspired],
   ["prada-candy-inspired", pradaCandyInspired],
+  ["212-sexy-men-inspired", _212SexyMenInspired],
+  ["212-vip-men-inspired", _212VipMenInspired],
+  ["burberry-body-inspired", burberryBodyInspired],
+  ["armani-diamonds-inspired", armaniDiamondsInspired],
 ]);

@@ -537,6 +537,135 @@ const batch3: DisplayFragrance[] = [
   },
 ];
 
+// ── BATCH 4 (4) — review drafts prepared 2026-10-13 (W9-B4-P1); NOT promoted ──────
+// Supplier text and row IDs exact. Supplier states no concentration; concentration and formulation UNCONFIRMED.
+// Founder (2026-10-13) approved local editorial draft preparation only — not promotion. "Reference edition" =
+// the designer fragrance used for note evidence only. Pyramids evidence-locked to inspected pages
+// (wave-9-source-evidence.json revision 10). MEN-104 'Mr Burberry' is on evidence hold and is NOT staged.
+
+const batch4: DisplayFragrance[] = [
+  {
+    // PROMOTED 2026-10-13 (z_YPEcKECGZP) after founder Gate A + local promotion approval (W9-B4-P2; not committed);
+    //   supplier concentration/formulation UNCONFIRMED.
+    // slug: 212-sexy-men-inspired — Supplier: '212 Sexy' (MEN-9-212 Sexy; MEN list, page 3).
+    // Distinct from the native women's 212-sexy-inspired (LADIES-5) and from 212 VIP Black / 212 Heroes (native).
+    // Reference edition: Carolina Herrera 212 Men Sexy Eau de Toilette (men). Male.
+    // Evidence: PYRAMID_SECONDARY_SUPPORTED — carolinaherrera.com product page (tier-1 brand page), "For: Him":
+    //   Top "Mandarin Orange & Bergamot"; Heart "Cardamom & Black Pepper"; Bottom "Sandalwood, Vanilla Bourbon".
+    //   Olfactive family "AMBERY Spicy". Retailer variants seen only in search (tagete, guaiac wood, amber, musk) not used.
+    // Profile: brand family "AMBERY Spicy". Season Autumn is editorial.
+    title:               "212 Sexy Men Inspired",
+    collection:          "Skye",
+    subtitle:            "Inspired by Carolina Herrera 212 Sexy Men",
+    mood:                "Sensual Warm Confident",
+    profile:             "Amber Spicy",
+    season:              "Autumn",
+    notes:               ["Mandarin Orange", "Bergamot", "Cardamom", "Black Pepper", "Sandalwood", "Vanilla Bourbon"],
+    bestSeller:          false,
+    newArrival:          false,
+    prices:              PRICES,
+    images:              BLUE_IMAGES,
+    gender:              "male",
+    notesEvidenceLocked: true,
+    notesStructured: {
+      top:   ["Mandarin Orange", "Bergamot"],
+      heart: ["Cardamom", "Black Pepper"],
+      base:  ["Sandalwood", "Vanilla Bourbon"],
+    },
+  },
+  {
+    // PROMOTED 2026-10-13 (bMIOm5sC_kJG) after founder Gate A + local promotion approval (W9-B4-P2; not committed);
+    //   supplier concentration/formulation UNCONFIRMED.
+    // slug: 212-vip-men-inspired — Supplier: '212 VIP Carolina Herrera' (MEN-11; MEN list, page 3).
+    // LADIES-6 has identical supplier text on the LADIES list (women's 212 VIP) — a separate source row, NOT resolved here.
+    // Distinct from the native 212-vip-black-inspired (male) and 212-vip-rose-inspired (female).
+    // Reference edition: Carolina Herrera 212 VIP Men Eau de Toilette (men). Male.
+    // Evidence: PYRAMID_SECONDARY_SUPPORTED — carolinaherrera.com product page (tier-1 brand page), "For: Him":
+    //   Top "Caviar Lime & Frozen Mint"; Heart "Ginger & Chilled Vodka"; Bottom "Kingwood & Tonka Bean".
+    //   Olfactive family "WOODY Amber Aromatic". "Chilled Vodka" is the reference's accord wording, not a Maison ingredient.
+    //   Conflicting retailer pyramids seen only in search (passion fruit, gin, leather) not used.
+    // Profile: brand family "WOODY Amber Aromatic". Season All Season is editorial.
+    title:               "212 VIP Men Inspired",
+    collection:          "Skye",
+    subtitle:            "Inspired by Carolina Herrera 212 VIP Men",
+    mood:                "Bold Playful Confident",
+    profile:             "Woody Amber Aromatic",
+    season:              "All Season",
+    notes:               ["Caviar Lime", "Frozen Mint", "Ginger", "Chilled Vodka", "Kingwood", "Tonka Bean"],
+    bestSeller:          false,
+    newArrival:          false,
+    prices:              PRICES,
+    images:              BLUE_IMAGES,
+    gender:              "male",
+    notesEvidenceLocked: true,
+    notesStructured: {
+      top:   ["Caviar Lime", "Frozen Mint"],
+      heart: ["Ginger", "Chilled Vodka"],
+      base:  ["Kingwood", "Tonka Bean"],
+    },
+  },
+  {
+    // PROMOTED 2026-10-13 (vs2VOoUTNI2p) after founder Gate A + local promotion approval (W9-B4-P2; not committed);
+    //   supplier concentration/formulation UNCONFIRMED.
+    // slug: burberry-body-inspired — Supplier: 'Burberry Body' (LADIES-56; LADIES list, page 2).
+    // Reference edition: original Burberry Body Eau de Parfum (women). Distinct from Body Intense, Body Tender,
+    // Body Rose and the Body EDT. Female.
+    // Evidence: PYRAMID_SECONDARY_SUPPORTED — nordstrom.com listing (named tier-2 retailer): Top "fresh green absinthe,
+    //   illuminating elegant peach and refined freesia"; Heart "natural rose absolute, iris, and sandalwood"; Base
+    //   "cashmeran, creamy vanilla, sensual amber, and musk". Style "floral-woody". Listing: "no longer available".
+    // AVAILABILITY: reference retail availability only; founder approved preparing this draft (2026-10-13). The Maison
+    //   supplier catalogue is the sourcing authority; no designer relationship or designer-made product is implied.
+    // Profile: Nordstrom "floral-woody". Season Autumn is editorial.
+    title:               "Burberry Body Inspired",
+    collection:          "Rose",
+    subtitle:            "Inspired by Burberry Body",
+    mood:                "Sensual Elegant Soft",
+    profile:             "Floral Woody",
+    season:              "Autumn",
+    notes:               ["Green Absinthe", "Peach", "Freesia", "Rose Absolute", "Iris", "Sandalwood", "Cashmeran", "Vanilla", "Amber", "Musk"],
+    bestSeller:          false,
+    newArrival:          false,
+    prices:              PRICES,
+    images:              PINK_IMAGES,
+    gender:              "female",
+    notesEvidenceLocked: true,
+    notesStructured: {
+      top:   ["Green Absinthe", "Peach", "Freesia"],
+      heart: ["Rose Absolute", "Iris", "Sandalwood"],
+      base:  ["Cashmeran", "Vanilla", "Amber", "Musk"],
+    },
+  },
+  {
+    // PROMOTED 2026-10-13 (r6vUlWEadUGe) after founder Gate A + local promotion approval (W9-B4-P2; not committed);
+    //   supplier concentration/formulation UNCONFIRMED.
+    // slug: armani-diamonds-inspired — Supplier: 'Armani Diamonds' (LADIES-22; LADIES list, page 1).
+    // Reference edition: Emporio Armani Diamonds Eau de Parfum (women). Distinct from Diamonds for Men, Diamonds Rose
+    // EDT, Diamonds Intense, Diamonds Violet and other flankers. Female.
+    // Evidence: PYRAMID_SECONDARY_SUPPORTED — johnlewis.com listing (major authorised retailer): Top "Lychee, raspberry";
+    //   Heart "Rose, lily of the valley, patchouli, freesia"; Base "Vetiver, amber, vanilla". Scent family "Fruity Floral".
+    //   Year of release on page: 2008 (search results say 2007) — research metadata only, not customer copy.
+    // Profile: John Lewis "Fruity Floral". Season Spring is editorial.
+    title:               "Armani Diamonds Inspired",
+    collection:          "Rose",
+    subtitle:            "Inspired by Emporio Armani Diamonds",
+    mood:                "Romantic Bright Playful",
+    profile:             "Fruity Floral",
+    season:              "Spring",
+    notes:               ["Lychee", "Raspberry", "Rose", "Lily of the Valley", "Patchouli", "Freesia", "Vetiver", "Amber", "Vanilla"],
+    bestSeller:          false,
+    newArrival:          false,
+    prices:              PRICES,
+    images:              PINK_IMAGES,
+    gender:              "female",
+    notesEvidenceLocked: true,
+    notesStructured: {
+      top:   ["Lychee", "Raspberry"],
+      heart: ["Rose", "Lily of the Valley", "Patchouli", "Freesia"],
+      base:  ["Vetiver", "Amber", "Vanilla"],
+    },
+  },
+];
+
 // ── Export ────────────────────────────────────────────────────────────────────
 
 /** Batch 1 staging entries (6; includes promoted records kept for intake history). */
@@ -545,4 +674,6 @@ export const wave9Batch1Catalogue: DisplayFragrance[] = [...rose];
 export const wave9Batch2Catalogue: DisplayFragrance[] = [...batch2];
 /** Batch 3 staging entries (2; review drafts prepared 2026-10-12, not promoted). */
 export const wave9Batch3Catalogue: DisplayFragrance[] = [...batch3];
-export const wave9Catalogue: DisplayFragrance[] = [...rose, ...batch2, ...batch3];
+/** Batch 4 staging entries (4; review drafts prepared 2026-10-13, not promoted). */
+export const wave9Batch4Catalogue: DisplayFragrance[] = [...batch4];
+export const wave9Catalogue: DisplayFragrance[] = [...rose, ...batch2, ...batch3, ...batch4];

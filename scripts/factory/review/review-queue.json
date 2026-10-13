@@ -5837,6 +5837,86 @@
         "timestamp": "2026-10-12T20:17:16.940Z",
         "reason": "Gate A formal editorial approval 2026-10-12: prada-candy-inspired — Rose — Amber Gourmand"
       }
+    },
+    {
+      "slug": "212-sexy-men-inspired",
+      "name": "212 Sexy Men Inspired",
+      "collection": "Skye",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-10-13T20:40:00.974Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-10-13T20:40:04.283Z",
+      "reviewer": "Founder (Adnaan) - approval 2026-10-13",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder (Adnaan) - approval 2026-10-13",
+        "timestamp": "2026-10-13T20:40:04.282Z",
+        "reason": "Gate A editorial approval 2026-10-13 (W9-B4-P2): 212-sexy-men-inspired — MEN-9 — Skye — Amber Spicy"
+      }
+    },
+    {
+      "slug": "212-vip-men-inspired",
+      "name": "212 VIP Men Inspired",
+      "collection": "Skye",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-10-13T20:41:05.223Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-10-13T20:41:08.543Z",
+      "reviewer": "Founder (Adnaan) - approval 2026-10-13",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder (Adnaan) - approval 2026-10-13",
+        "timestamp": "2026-10-13T20:41:08.542Z",
+        "reason": "Gate A editorial approval 2026-10-13 (W9-B4-P2): 212-vip-men-inspired — MEN-11 — Skye — Woody Amber Aromatic"
+      }
+    },
+    {
+      "slug": "burberry-body-inspired",
+      "name": "Burberry Body Inspired",
+      "collection": "Rose",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-10-13T20:42:09.659Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-10-13T20:42:12.924Z",
+      "reviewer": "Founder (Adnaan) - approval 2026-10-13",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder (Adnaan) - approval 2026-10-13",
+        "timestamp": "2026-10-13T20:42:12.923Z",
+        "reason": "Gate A editorial approval 2026-10-13 (W9-B4-P2): burberry-body-inspired — LADIES-56 — Rose — Floral Woody"
+      }
+    },
+    {
+      "slug": "armani-diamonds-inspired",
+      "name": "Armani Diamonds Inspired",
+      "collection": "Rose",
+      "factoryVersion": "0.5.0",
+      "promptVersions": "EditorialProducer@1.1.0  RelationshipProducer@1.0.0  EducationProducer@1.0.0  DiscoveryProducer@1.0.0",
+      "validationStatus": "PASS",
+      "status": "approved",
+      "addedAt": "2026-10-13T20:43:14.032Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-10-13T20:43:17.412Z",
+      "reviewer": "Founder (Adnaan) - approval 2026-10-13",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder (Adnaan) - approval 2026-10-13",
+        "timestamp": "2026-10-13T20:43:17.411Z",
+        "reason": "Gate A editorial approval 2026-10-13 (W9-B4-P2): armani-diamonds-inspired — LADIES-22 — Rose — Fruity Floral"
+      }
     }
   ]
 }

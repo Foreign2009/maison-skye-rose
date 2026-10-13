@@ -89,8 +89,18 @@ function wholeNameOccurrences(key: string, qNorm: string): number[] {
 // key still contains the designer. Only collision-checked, distinctive names belong here:
 // "perfect", "beautiful" and "romance" are everyday words, "euphoria" also names Euphoria
 // Men, and "uomo" / "azzaro wanted" name other products — none of those are aliased.
+// Gender-qualified phrasings for men's editions whose base name is also a women's product:
+// longer than "212 sexy", so they claim the span first and never reach the women's record.
+// Unqualified "212 sexy" stays the women's product; "212 vip" alone is not aliased.
 const SHORT_NAME_ALIASES: Record<string, string> = {
-  "wonderlust": "wonderlust-by-michael-kors-inspired",
+  "wonderlust":       "wonderlust-by-michael-kors-inspired",
+  "212 sexy for men": "212-sexy-men-inspired",
+  "212 men sexy":     "212-sexy-men-inspired",
+  "men's 212 sexy":   "212-sexy-men-inspired",
+  "mens 212 sexy":    "212-sexy-men-inspired",
+  "212 vip for men":  "212-vip-men-inspired",
+  "men's 212 vip":    "212-vip-men-inspired",
+  "mens 212 vip":     "212-vip-men-inspired",
 };
 
 function extractFragranceSlugs(q: string): string[] {

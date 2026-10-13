@@ -18,7 +18,7 @@
     "counts": {
       "supplierRawRows": 565,
       "supplierUniqueIdentities": "NOT_CONFIRMED — 565 is the total row count; internal duplicates or variant entries within the supplier list have not been fully enumerated. Unique identity count requires a dedicated deduplication pass.",
-      "activeNativeMKC": 277,
+      "activeNativeMKC": 281,
       "activeMatchesFoundInSupplierRows": "PARTIAL — reconcile.mjs (2026-10-10) found 68 supplier rows matching native MKC beyond initial slug analysis (i.e., matched by name/alias/flanker, not just slug). Total confirmed supplier rows already in active MKC is at least 218 (565 − 347 provisional gap; LADIES-277 and LADIES-108 confirmed as existing matches and LADIES-34, LADIES-156, LADIES-251 promoted on 2026-10-11). Exact count requires full reconciliation pass.",
       "unresolvedIdentity": 2,
       "duplicateAlias": 3,
@@ -27,10 +27,10 @@
       "batch1DraftsCurrentlyInStaging": 6,
       "verifiedReadyForPromotion": 0,
       "provisionalMissingFromActiveMKC": {
-        "count": 331,
+        "count": 327,
         "countPreviousRev16": 344,
         "status": "PROVISIONAL_UPPER_BOUND",
-        "basis": "331 = 335 less 4 supplier rows promoted locally on 2026-10-12 (LADIES-5, UNISEX-63, LADIES-195, LADIES-238; each present once in the reconcile.mjs NOT-IN-MKC list as '212 SEXY Carolina Herrera', 'Jo Malone Vetiver and Golden Vanilla', 'Michael Kors Wonderlust', 'Prada Candy'; uncommitted). MEN-8 / LADIES-7 observations still unconfirmed and not subtracted. Still a PROVISIONAL UPPER BOUND, not a unique-fragrance count.",
+        "basis": "327 = 331 less 4 name-list entries whose supplier rows were promoted locally on 2026-10-13: '212 Sexy' (MEN-9), '212 VIP Carolina Herrera' (MEN-11), 'Burberry Body' (LADIES-56), 'Armani Diamonds' (LADIES-22); uncommitted. PROVISIONAL NAME-BASED METRIC, not a definitive count of distinct remaining fragrances and not a row-level count: the '212 VIP Carolina Herrera' list entry also covers LADIES-6 (women's 212 VIP), which remains unresolved and unpromoted; 35 supplier names are shared by two rows (see countingMethod2026-10-13). MEN-7 / MEN-8 observations unconfirmed and not subtracted.",
         "cannotBeReducedBy": "The remaining staged batch 1 drafts do NOT reduce this count; only promotion to native MKC or a confirmed existing match does. Unresolved entries (2) are not subtracted. (The two withdrawn duplicate drafts are preserved; their supplier rows are already counted as confirmed existing matches.)",
         "knownGaps": "13 ambiguous supplier entries require separate identity research before batch assignment.",
         "overlaps": "The 68 additionally-found MKC matches were located by name/alias/flanker reconciliation beyond slug-matching. Further identity research may identify additional overlaps (two Batch 1 drafts proved to be existing natives), so 349 may still be an over-estimate. The final count can only be confirmed after all 565 rows are individually resolved.",
@@ -64,6 +64,11 @@
             "count": 335,
             "date": "2026-10-12",
             "basis": "335 = 344 less 9 supplier rows confirmed 2026-10-12 as existing native matches that appear in the 2026-10-10 reconcile.mjs NOT-IN-MKC list (MEN-102, MEN-103, MEN-144, MEN-32, MEN-33, MEN-34, MEN-35, LADIES-223, MEN-43). The other 5 likely matches (LADIES-266, MEN-148, UNISEX-38, UNISEX-64, UNISEX-60) were never in that list and are not subtracted. Method re-verified 2026-10-12: the reconcile.mjs list reproduces 352 against f35e4d7; all 8 earlier subtractions (LADIES-277, LADIES-108, LADIES-34, LADIES-156, LADIES-251, LADIES-227, LADIES-75, MEN-52) are list members subtracted once. Drafts do not reduce the count. Still a PROVISIONAL UPPER BOUND, not a unique-fragrance count."
+          },
+          {
+            "count": 331,
+            "date": "2026-10-13",
+            "basis": "331 = 335 less 4 supplier rows promoted locally on 2026-10-12 (LADIES-5, UNISEX-63, LADIES-195, LADIES-238; each present once in the reconcile.mjs NOT-IN-MKC list as '212 SEXY Carolina Herrera', 'Jo Malone Vetiver and Golden Vanilla', 'Michael Kors Wonderlust', 'Prada Candy'; uncommitted). MEN-8 / LADIES-7 observations still unconfirmed and not subtracted. Still a PROVISIONAL UPPER BOUND, not a unique-fragrance count."
           }
         ],
         "cannotBeReducedByPreviousRev11": "The remaining staged batch 1 drafts do NOT reduce this count; only promotion to native MKC or a confirmed existing match does. Deleted drafts (2) and unresolved entries (2) are not subtracted.",
@@ -72,7 +77,22 @@
         "basisPreviousRev14": "347 = 349 less 2 supplier rows promoted on 2026-10-11 (LADIES-156 → jimmy-choo-inspired, LADIES-251 → romance-by-ralph-lauren-inspired; uncommitted). Still NOT a reconciled final count and NOT a unique-fragrance count.",
         "basisPreviousRev16": "344 = 347 less 3 supplier rows promoted on 2026-10-11 (LADIES-227, LADIES-75, MEN-52; uncommitted). Still NOT a reconciled final count and NOT a unique-fragrance count; 14 Batch 2 likely existing matches not yet subtracted.",
         "countPreviousRev19": 335,
-        "basisPreviousRev19": "335 = 344 less 9 supplier rows confirmed 2026-10-12 as existing native matches that appear in the 2026-10-10 reconcile.mjs NOT-IN-MKC list (MEN-102, MEN-103, MEN-144, MEN-32, MEN-33, MEN-34, MEN-35, LADIES-223, MEN-43). The other 5 likely matches (LADIES-266, MEN-148, UNISEX-38, UNISEX-64, UNISEX-60) were never in that list and are not subtracted. Method re-verified 2026-10-12: the reconcile.mjs list reproduces 352 against f35e4d7; all 8 earlier subtractions (LADIES-277, LADIES-108, LADIES-34, LADIES-156, LADIES-251, LADIES-227, LADIES-75, MEN-52) are list members subtracted once. Drafts do not reduce the count. Still a PROVISIONAL UPPER BOUND, not a unique-fragrance count."
+        "basisPreviousRev19": "335 = 344 less 9 supplier rows confirmed 2026-10-12 as existing native matches that appear in the 2026-10-10 reconcile.mjs NOT-IN-MKC list (MEN-102, MEN-103, MEN-144, MEN-32, MEN-33, MEN-34, MEN-35, LADIES-223, MEN-43). The other 5 likely matches (LADIES-266, MEN-148, UNISEX-38, UNISEX-64, UNISEX-60) were never in that list and are not subtracted. Method re-verified 2026-10-12: the reconcile.mjs list reproduces 352 against f35e4d7; all 8 earlier subtractions (LADIES-277, LADIES-108, LADIES-34, LADIES-156, LADIES-251, LADIES-227, LADIES-75, MEN-52) are list members subtracted once. Drafts do not reduce the count. Still a PROVISIONAL UPPER BOUND, not a unique-fragrance count.",
+        "countingMethod2026-10-13": {
+          "officialCount": 331,
+          "unchanged": true,
+          "method": "Name-based: entries in the 2026-10-10 reconcile.mjs NOT-IN-MKC list (352 at f35e4d7), each subtracted at most once when a supplier row is promoted or confirmed as an existing match.",
+          "keyComparison": "565 supplier rows / 530 distinct normalised names: 35 names are shared by two rows (70 rows; mostly a LADIES and a MEN row). The name list sometimes merges such pairs (one entry for '212 VIP Carolina Herrera' covering LADIES-6 and MEN-11) and sometimes keeps them apart (both CK Euphoria editions). The provisional count is therefore NOT a source-row count; a row-level count could be higher by up to the number of merged pairs.",
+          "notDone": "A full row-level recount (mapping each reconcile list name to supplier keys) has not been performed; it is a separate records task. No gap total is changed in revision 21.",
+          "batch4Effect": "No promotion in this phase. If the four drafts are later promoted: 331 → 327 by the name-based method ('212 Sexy', '212 VIP Carolina Herrera', 'Burberry Body', 'Armani Diamonds', each once) — note that the '212 VIP Carolina Herrera' entry also covers LADIES-6, which would remain unrepresented."
+        },
+        "countPreviousRev22": 331,
+        "basisPreviousRev22": "331 = 335 less 4 supplier rows promoted locally on 2026-10-12 (LADIES-5, UNISEX-63, LADIES-195, LADIES-238; each present once in the reconcile.mjs NOT-IN-MKC list as '212 SEXY Carolina Herrera', 'Jo Malone Vetiver and Golden Vanilla', 'Michael Kors Wonderlust', 'Prada Candy'; uncommitted). MEN-8 / LADIES-7 observations still unconfirmed and not subtracted. Still a PROVISIONAL UPPER BOUND, not a unique-fragrance count.",
+        "limitations2026-10-13": [
+          "Name-based list method; one list entry can stand for two supplier rows.",
+          "LADIES-6 (identical text to MEN-11) is still an unrepresented women's fragrance although its list entry is now subtracted.",
+          "A row-level recount mapping list names to supplier keys has not been performed."
+        ]
       },
       "batch1ByStatus": {
         "DRAFT_GENERATED_PENDING_EVIDENCE": 3,
@@ -107,17 +127,17 @@
       ],
       "activeNativeMKCPrevious": 267,
       "activeNativeMKCBreakdown": {
-        "total": 277,
-        "Skye": 110,
-        "Rose": 117,
+        "total": 281,
+        "Skye": 112,
+        "Rose": 119,
         "Elite": 50,
-        "female": 117,
-        "male": 110,
+        "female": 119,
+        "male": 112,
         "unisex": 50,
-        "malePlusUnisex": 160,
-        "femalePlusUnisex": 167,
-        "measuredDate": "2026-10-12",
-        "note": "Measured from nativeFragrances after promoting the four W9-B3-P5 records; all active; no duplicate slug, id or normalised name."
+        "malePlusUnisex": 162,
+        "femalePlusUnisex": 169,
+        "measuredDate": "2026-10-13",
+        "note": "Measured from nativeFragrances after promoting the four W9-B4-P2 records; all active; no duplicate slug, id or normalised name; all 277 prior record files byte-identical."
       },
       "batch1PromotedToNative": [
         "jimmy-choo-inspired",
@@ -323,6 +343,55 @@
         "unisex": 49,
         "measuredDate": "2026-10-11",
         "note": "Measured from nativeFragrances after promoting perfect-by-marc-jacobs, euphoria-by-calvin-klein and only-the-brave; all active; no duplicate slug, id or normalised name."
+      },
+      "batch4": {
+        "recordedDate": "2026-10-13",
+        "draftsGenerated": 4,
+        "byStatus": {
+          "PROMOTED_TO_NATIVE": 4
+        },
+        "byEvidenceTier": {
+          "PYRAMID_SECONDARY_SUPPORTED": 4
+        },
+        "held": [
+          "MEN-104-Mr Burberry"
+        ],
+        "promotionEligible": [],
+        "editorialPromotionApproval": {
+          "approved": {
+            "212-sexy-men-inspired": "Amber Spicy",
+            "212-vip-men-inspired": "Woody Amber Aromatic",
+            "burberry-body-inspired": "Floral Woody",
+            "armani-diamonds-inspired": "Fruity Floral"
+          },
+          "date": "2026-10-13",
+          "by": "Founder (Adnaan)",
+          "scope": "Gate A + local promotion; commit/push/deploy not authorised"
+        },
+        "byStatusPreviousRev22": {
+          "DRAFT_GENERATED_PENDING_REVIEW": 4
+        },
+        "editorialPromotionApprovalPreviousRev22": "PENDING — founder approved draft preparation only.",
+        "promotedToNative": [
+          "212-sexy-men-inspired",
+          "212-vip-men-inspired",
+          "armani-diamonds-inspired",
+          "burberry-body-inspired"
+        ]
+      },
+      "activeNativeMKCPreviousRev22": 277,
+      "activeNativeMKCBreakdownPreviousRev22": {
+        "total": 277,
+        "Skye": 110,
+        "Rose": 117,
+        "Elite": 50,
+        "female": 117,
+        "male": 110,
+        "unisex": 50,
+        "malePlusUnisex": 160,
+        "femalePlusUnisex": 167,
+        "measuredDate": "2026-10-12",
+        "note": "Measured from nativeFragrances after promoting the four W9-B3-P5 records; all active; no duplicate slug, id or normalised name."
       }
     },
     "recoveryRevision": {
@@ -347,7 +416,9 @@
       "revision17": "2026-10-12 (W9-B3-P2): founder-review preparation (records only). Identity reviews and required founder confirmations recorded for 212-sexy, vetiver-golden-vanilla, wonderlust and prada-candy; claim-safety copy edits; Prada Candy profile → Amber Gourmand (scores unchanged). Statuses unchanged; none approved for promotion. Gucci Rush evidence hold kept with the qualifying source defined. Two likely existing matches observed (MEN-8, LADIES-7), not subtracted; provisional count stays 335. Native 273. Not committed.",
       "revision18": "2026-10-12 (W9-B3-P3): founder agreement in principle (not approval) and supplier-unconfirmed concentration/formulation recorded for the four review candidates; supplier_confirmation_register added (no essential question; optional checks; draft message NOT SENT); P2 confirmation-blocker label corrected. Gucci Rush, Tommy Girl, Poison, Armani Code, Miss Dior Cherie, Vanilla 28 and the MEN-8 / LADIES-7 observations unchanged. Native 273; provisional 335. Not committed.",
       "revision19": "2026-10-12 (W9-B3-P5): founder Gate A + Gate B approval (verbatim); 212-sexy-inspired (qtIrpscU3rOS), vetiver-golden-vanilla-inspired (r1wFqFDipHB-), wonderlust-by-michael-kors-inspired (Ni0Ddu1ngG_v), prada-candy-inspired (4fga0yKIoLtD) promoted locally with explicit slugs after a hash-verified backup; native measured 277 (Skye 110, Rose 117, Elite 50; female 117, male 110, unisex 50); provisional 335 → 331. Gucci Rush and all holds unchanged; relationships inactive. Gate C not authorised. Not committed.",
-      "revision20": "2026-10-12 (W9-B3-P8): founder availability clarification and business model recorded for the four Batch 3 release records; supplier register availability items resolved by founder; draft supplier message superseded (never sent). Concentration/formulation UNCONFIRMED. No native, availability-status, price, count or approval change. Native 277; provisional 331. Not committed at time of writing."
+      "revision20": "2026-10-12 (W9-B3-P8): founder availability clarification and business model recorded for the four Batch 3 release records; supplier register availability items resolved by founder; draft supplier message superseded (never sent). Concentration/formulation UNCONFIRMED. No native, availability-status, price, count or approval change. Native 277; provisional 331. Not committed at time of writing.",
+      "revision21": "2026-10-13 (W9-B4-P1): Batch 4 review drafts (MEN-9, MEN-11, LADIES-56, LADIES-22) recorded with evidence-log revision 10; relationships cleared (proposals pending); MEN-104 evidence hold; LADIES-6 kept independent of MEN-11; MEN-7 added as a pending observation (MEN-8 unchanged); provisional count 331 unchanged with the name-based counting method and key comparison documented. Native 277. Not committed.",
+      "revision22": "2026-10-13 (W9-B4-P2): founder Gate A + local promotion approval (verbatim); 212-sexy-men-inspired (z_YPEcKECGZP), 212-vip-men-inspired (bMIOm5sC_kJG), burberry-body-inspired (vs2VOoUTNI2p), armani-diamonds-inspired (r6vUlWEadUGe) promoted locally with explicit slugs after a hash-verified backup; native measured 281 (Skye 112, Rose 119, Elite 50; male 112, female 119, unisex 50); all 277 prior record files byte-identical. Provisional name-based gap 331 → 327 (limitations recorded; not a definitive count). Gender-qualified 212 aliases added. MEN-104 hold, LADIES-6 independence and MEN-7/MEN-8 observations unchanged. Not committed."
     },
     "evidenceTierPolicyApplied": {
       "source": "data/identity/source/wave-3-2026-research.json → governance.sourcePolicyTiers / admissibilityNote; data/supplier/decisions/catalogue-expansion-ledger.json → governance.governancePrinciples; Wave 8 precedent (scripts/factory/data/wave-8-catalogue.ts).",
@@ -1439,11 +1510,67 @@
           ],
           "status": "UNVERIFIED_FACTORY_SUGGESTION",
           "notes": "RelationshipProducer suggestion, cleared from the draft. Not reviewed; cross-gender pairs and reciprocity unverified."
+        },
+        {
+          "draftSlug": "212-sexy-men-inspired",
+          "batch": "wave-9-batch-4",
+          "proposedAlternatives": [
+            "spicebomb-extreme-inspired",
+            "azzaro-most-wanted-inspired",
+            "carlisle-inspired"
+          ],
+          "proposedWardrobePartners": [
+            "creed-green-irish-tweed-inspired",
+            "bleu-de-chanel-inspired"
+          ],
+          "status": "UNVERIFIED_FACTORY_SUGGESTION",
+          "notes": "RelationshipProducer suggestion, cleared from the draft. Not reviewed; cross-gender pairs and reciprocity unverified."
+        },
+        {
+          "draftSlug": "212-vip-men-inspired",
+          "batch": "wave-9-batch-4",
+          "proposedAlternatives": [
+            "sauvage-elixir-inspired",
+            "stronger-with-you-inspired"
+          ],
+          "proposedWardrobePartners": [
+            "eros-inspired"
+          ],
+          "status": "UNVERIFIED_FACTORY_SUGGESTION",
+          "notes": "RelationshipProducer suggestion, cleared from the draft. Not reviewed; cross-gender pairs and reciprocity unverified."
+        },
+        {
+          "draftSlug": "burberry-body-inspired",
+          "batch": "wave-9-batch-4",
+          "proposedAlternatives": [
+            "coach-floral-inspired",
+            "miss-dior-inspired"
+          ],
+          "proposedWardrobePartners": [
+            "spicebomb-extreme-inspired"
+          ],
+          "status": "UNVERIFIED_FACTORY_SUGGESTION",
+          "notes": "RelationshipProducer suggestion, cleared from the draft. Not reviewed; cross-gender pairs and reciprocity unverified."
+        },
+        {
+          "draftSlug": "armani-diamonds-inspired",
+          "batch": "wave-9-batch-4",
+          "proposedAlternatives": [
+            "delina-inspired",
+            "mon-paris-inspired",
+            "very-good-girl-inspired"
+          ],
+          "proposedWardrobePartners": [
+            "aventus-inspired",
+            "sauvage-inspired"
+          ],
+          "status": "UNVERIFIED_FACTORY_SUGGESTION",
+          "notes": "RelationshipProducer suggestion, cleared from the draft. Not reviewed; cross-gender pairs and reciprocity unverified."
         }
       ]
     },
     "missing": {
-      "provisionalCount": 331,
+      "provisionalCount": 327,
       "basis": "2026-10-10 reconcile.mjs pass — all gap candidates checked against native MKC using names, brands, aliases and flankers (not slug-matching alone). Found 68 additional entries already in MKC beyond initial slug analysis.",
       "note": "Provisional upper bound 347 (352 at reconciliation, less LADIES-277 and LADIES-108 confirmed existing matches and LADIES-34, LADIES-156, LADIES-251 promoted). Not a unique-fragrance count.",
       "futureWorkNote": "13 ambiguous supplier entries from the normalized file require separate identity research before batch assignment.",
@@ -1463,13 +1590,18 @@
         {
           "count": 335,
           "date": "2026-10-12"
+        },
+        {
+          "count": 331,
+          "date": "2026-10-13"
         }
       ],
       "provisionalCountPreviousRev12": 349,
       "notePreviousRev12": "Provisional upper bound 349 (352 at reconciliation, less LADIES-277 and LADIES-108 confirmed existing matches and LADIES-34 promoted). Not a unique-fragrance count.",
       "provisionalCountPreviousRev14": 347,
       "provisionalCountPreviousRev16": 344,
-      "provisionalCountPreviousRev19": 335
+      "provisionalCountPreviousRev19": 335,
+      "provisionalCountPreviousRev22": 331
     },
     "existing_holds_preserved": [
       {
@@ -1763,6 +1895,122 @@
           "gateC": "NOT AUTHORISED — do not commit, push, merge, deploy or modify the live website.",
           "notEvidence": "Founder approval is not supplier evidence. Supplier concentration and formulation remain UNCONFIRMED.",
           "reviewQueueReviewer": "Founder (Adnaan) - approval 2026-10-12"
+        }
+      },
+      {
+        "slug": "212-sexy-men-inspired",
+        "sourceKey": "MEN-9-212 Sexy",
+        "promotionId": "z_YPEcKECGZP",
+        "nativePath": "app/lib/mkc/native/212-sexy-men-inspired.ts",
+        "completedAt": "2026-10-13T20:40:52.125Z",
+        "operator": "Claude Code (founder approval 2026-10-13)",
+        "reviewedBy": "Founder (Adnaan) - approval 2026-10-13",
+        "validationStatus": "PASS",
+        "buildResult": "pass",
+        "workflow": "npm run mkc:review -- --add 212-sexy-men-inspired; --approve 212-sexy-men-inspired; npm run mkc:promote -- --slug 212-sexy-men-inspired (build-only placeholder env for the in-process build)",
+        "base": "d3f423e3f784068618351601c3dda8d846af5a69 (worktree msr-catalogue-wave9-batch4)",
+        "nativeEqualsDraft": "Native body identical to the reviewed draft apart from the type import path (validate-batch4-drafts.ts).",
+        "relationships": "empty — proposals remain UNVERIFIED_FACTORY_SUGGESTION in the ledger",
+        "committed": false,
+        "founderApproval": {
+          "date": "2026-10-13",
+          "approvedBy": "Founder (Adnaan)",
+          "gateA": {
+            "status": "APPROVED",
+            "wordingVerbatim": "I approve the four reviewed Batch 4 editorial profiles for LOCAL native-catalogue promotion: MEN-9 — 212 Sexy Men Inspired — Skye; MEN-11 — 212 VIP Men Inspired — Skye; LADIES-56 — Burberry Body Inspired — Rose; LADIES-22 — Armani Diamonds Inspired — Rose. MEN-104 Mr Burberry remains on evidence hold. This approval authorises controlled local promotion, required supporting changes and verification only. Do not commit, push, merge or deploy.",
+            "thisRecord": "212-sexy-men-inspired — MEN-9-212 Sexy — Skye — Amber Spicy"
+          },
+          "localPromotion": "APPROVED (local MKC only)",
+          "commitPushDeploy": "NOT AUTHORISED",
+          "verifiedAtApproval": "Notes match inspected evidence; name/collection/gender correct; scores equal adapter; prices R60/R100/R250; relationships empty; concentration/formulation UNCONFIRMED; claim scan clean.",
+          "notEvidence": "Founder approval is not supplier evidence."
+        }
+      },
+      {
+        "slug": "212-vip-men-inspired",
+        "sourceKey": "MEN-11-212 VIP Carolina Herrera",
+        "promotionId": "bMIOm5sC_kJG",
+        "nativePath": "app/lib/mkc/native/212-vip-men-inspired.ts",
+        "completedAt": "2026-10-13T20:41:57.034Z",
+        "operator": "Claude Code (founder approval 2026-10-13)",
+        "reviewedBy": "Founder (Adnaan) - approval 2026-10-13",
+        "validationStatus": "PASS",
+        "buildResult": "pass",
+        "workflow": "npm run mkc:review -- --add 212-vip-men-inspired; --approve 212-vip-men-inspired; npm run mkc:promote -- --slug 212-vip-men-inspired (build-only placeholder env for the in-process build)",
+        "base": "d3f423e3f784068618351601c3dda8d846af5a69 (worktree msr-catalogue-wave9-batch4)",
+        "nativeEqualsDraft": "Native body identical to the reviewed draft apart from the type import path (validate-batch4-drafts.ts).",
+        "relationships": "empty — proposals remain UNVERIFIED_FACTORY_SUGGESTION in the ledger",
+        "committed": false,
+        "founderApproval": {
+          "date": "2026-10-13",
+          "approvedBy": "Founder (Adnaan)",
+          "gateA": {
+            "status": "APPROVED",
+            "wordingVerbatim": "I approve the four reviewed Batch 4 editorial profiles for LOCAL native-catalogue promotion: MEN-9 — 212 Sexy Men Inspired — Skye; MEN-11 — 212 VIP Men Inspired — Skye; LADIES-56 — Burberry Body Inspired — Rose; LADIES-22 — Armani Diamonds Inspired — Rose. MEN-104 Mr Burberry remains on evidence hold. This approval authorises controlled local promotion, required supporting changes and verification only. Do not commit, push, merge or deploy.",
+            "thisRecord": "212-vip-men-inspired — MEN-11-212 VIP Carolina Herrera — Skye — Woody Amber Aromatic"
+          },
+          "localPromotion": "APPROVED (local MKC only)",
+          "commitPushDeploy": "NOT AUTHORISED",
+          "verifiedAtApproval": "Notes match inspected evidence; name/collection/gender correct; scores equal adapter; prices R60/R100/R250; relationships empty; concentration/formulation UNCONFIRMED; claim scan clean.",
+          "notEvidence": "Founder approval is not supplier evidence."
+        }
+      },
+      {
+        "slug": "burberry-body-inspired",
+        "sourceKey": "LADIES-56-Burberry Body",
+        "promotionId": "vs2VOoUTNI2p",
+        "nativePath": "app/lib/mkc/native/burberry-body-inspired.ts",
+        "completedAt": "2026-10-13T20:43:01.362Z",
+        "operator": "Claude Code (founder approval 2026-10-13)",
+        "reviewedBy": "Founder (Adnaan) - approval 2026-10-13",
+        "validationStatus": "PASS",
+        "buildResult": "pass",
+        "workflow": "npm run mkc:review -- --add burberry-body-inspired; --approve burberry-body-inspired; npm run mkc:promote -- --slug burberry-body-inspired (build-only placeholder env for the in-process build)",
+        "base": "d3f423e3f784068618351601c3dda8d846af5a69 (worktree msr-catalogue-wave9-batch4)",
+        "nativeEqualsDraft": "Native body identical to the reviewed draft apart from the type import path (validate-batch4-drafts.ts).",
+        "relationships": "empty — proposals remain UNVERIFIED_FACTORY_SUGGESTION in the ledger",
+        "committed": false,
+        "founderApproval": {
+          "date": "2026-10-13",
+          "approvedBy": "Founder (Adnaan)",
+          "gateA": {
+            "status": "APPROVED",
+            "wordingVerbatim": "I approve the four reviewed Batch 4 editorial profiles for LOCAL native-catalogue promotion: MEN-9 — 212 Sexy Men Inspired — Skye; MEN-11 — 212 VIP Men Inspired — Skye; LADIES-56 — Burberry Body Inspired — Rose; LADIES-22 — Armani Diamonds Inspired — Rose. MEN-104 Mr Burberry remains on evidence hold. This approval authorises controlled local promotion, required supporting changes and verification only. Do not commit, push, merge or deploy.",
+            "thisRecord": "burberry-body-inspired — LADIES-56-Burberry Body — Rose — Floral Woody"
+          },
+          "localPromotion": "APPROVED (local MKC only)",
+          "commitPushDeploy": "NOT AUTHORISED",
+          "verifiedAtApproval": "Notes match inspected evidence; name/collection/gender correct; scores equal adapter; prices R60/R100/R250; relationships empty; concentration/formulation UNCONFIRMED; claim scan clean.",
+          "notEvidence": "Founder approval is not supplier evidence."
+        }
+      },
+      {
+        "slug": "armani-diamonds-inspired",
+        "sourceKey": "LADIES-22-Armani Diamonds",
+        "promotionId": "r6vUlWEadUGe",
+        "nativePath": "app/lib/mkc/native/armani-diamonds-inspired.ts",
+        "completedAt": "2026-10-13T20:44:05.948Z",
+        "operator": "Claude Code (founder approval 2026-10-13)",
+        "reviewedBy": "Founder (Adnaan) - approval 2026-10-13",
+        "validationStatus": "PASS",
+        "buildResult": "pass",
+        "workflow": "npm run mkc:review -- --add armani-diamonds-inspired; --approve armani-diamonds-inspired; npm run mkc:promote -- --slug armani-diamonds-inspired (build-only placeholder env for the in-process build)",
+        "base": "d3f423e3f784068618351601c3dda8d846af5a69 (worktree msr-catalogue-wave9-batch4)",
+        "nativeEqualsDraft": "Native body identical to the reviewed draft apart from the type import path (validate-batch4-drafts.ts).",
+        "relationships": "empty — proposals remain UNVERIFIED_FACTORY_SUGGESTION in the ledger",
+        "committed": false,
+        "founderApproval": {
+          "date": "2026-10-13",
+          "approvedBy": "Founder (Adnaan)",
+          "gateA": {
+            "status": "APPROVED",
+            "wordingVerbatim": "I approve the four reviewed Batch 4 editorial profiles for LOCAL native-catalogue promotion: MEN-9 — 212 Sexy Men Inspired — Skye; MEN-11 — 212 VIP Men Inspired — Skye; LADIES-56 — Burberry Body Inspired — Rose; LADIES-22 — Armani Diamonds Inspired — Rose. MEN-104 Mr Burberry remains on evidence hold. This approval authorises controlled local promotion, required supporting changes and verification only. Do not commit, push, merge or deploy.",
+            "thisRecord": "armani-diamonds-inspired — LADIES-22-Armani Diamonds — Rose — Fruity Floral"
+          },
+          "localPromotion": "APPROVED (local MKC only)",
+          "commitPushDeploy": "NOT AUTHORISED",
+          "verifiedAtApproval": "Notes match inspected evidence; name/collection/gender correct; scores equal adapter; prices R60/R100/R250; relationships empty; concentration/formulation UNCONFIRMED; claim scan clean.",
+          "notEvidence": "Founder approval is not supplier evidence."
         }
       }
     ],
@@ -2829,7 +3077,8 @@
         "listName": "212 CH Heroes",
         "status": "OBSERVED — NOT CONFIRMED, NOT SUBTRACTED",
         "effectIfConfirmed": "Provisional count 335 → 334 (one list member, subtracted once).",
-        "basis": "Name match to an active native male record; supplier normalisation recorded no MKC slug. Not supplier-confirmed."
+        "basis": "Name match to an active native male record; supplier normalisation recorded no MKC slug. Not supplier-confirmed.",
+        "update2026-10-13": "Still OBSERVED — NOT CONFIRMED; effect if confirmed is now 331 → 330 (the earlier '335 → 334' text reflects the count at the time)."
       },
       {
         "sourceKey": "LADIES-7-212 VIP Rose",
@@ -2840,6 +3089,19 @@
         "status": "OBSERVED — NOT CONFIRMED; no count effect",
         "effectIfConfirmed": "None: the row is not in the reconcile.mjs NOT-IN-MKC list, so it was never part of the provisional count.",
         "basis": "Name match to an active native female record; supplier normalisation recorded no MKC slug. Not supplier-confirmed."
+      },
+      {
+        "sourceKey": "MEN-7-212 CH Bad Boy",
+        "nativeSlug": "bad-boy-inspired",
+        "observedDate": "2026-10-13",
+        "observedIn": "W9-B4-R1",
+        "inReconcileNotInMkcList": true,
+        "listName": "212 CH Bad Boy",
+        "status": "OBSERVED — NOT CONFIRMED, NOT SUBTRACTED",
+        "nativeRecord": "Bad Boy Inspired — Skye, male, profile Amber Woody",
+        "verificationStillRequired": "Confirm the supplier row means Carolina Herrera Bad Boy (original EDT) and that the native record is that identity.",
+        "effectIfConfirmed": "Provisional count −1 (one list member, subtracted once).",
+        "basis": "Name match to an active native male record; supplier normalisation recorded no MKC slug. Not supplier-confirmed."
       }
     ],
     "supplier_confirmation_register": {
@@ -3113,7 +3375,278 @@
         "concentrationAndFormulation": "UNCONFIRMED (unchanged; supplier has not supplied exact concentration or formulation details).",
         "supersedes": "Earlier availability / stock / size questions (W9-B3-P3 register, W9-B3-P6 report) and the unsent draft supplier message."
       }
-    }
+    },
+    "batch4_draft_generated": [
+      {
+        "slug": "212-sexy-men-inspired",
+        "sourceKey": "MEN-9-212 Sexy",
+        "supplierText": "212 Sexy",
+        "supplierCategory": "MEN",
+        "collection": "Skye",
+        "gender": "male",
+        "draftFile": "scripts/factory/drafts/212-sexy-men-inspired.ts",
+        "generatedDate": "2026-10-13",
+        "factoryValidation": "PASS [0 errors, 0 warnings]",
+        "referenceEditionUsedForEvidence": "Carolina Herrera 212 Men Sexy Eau de Toilette (men)",
+        "supplierConcentration": "UNCONFIRMED",
+        "evidenceTier": "PYRAMID_SECONDARY_SUPPORTED",
+        "profile": "Amber Spicy",
+        "adapterDerived": {
+          "family": [
+            "Amber",
+            "Spicy"
+          ],
+          "scentCharacter": "Rich & Full-Bodied",
+          "scores": [
+            3,
+            2,
+            4,
+            3,
+            3
+          ]
+        },
+        "status": "PROMOTED_TO_NATIVE",
+        "promotionEligible": true,
+        "promotionEligibilityReason": "Promoted to local native MKC on 2026-10-13 (promotionId z_YPEcKECGZP); not committed.",
+        "statusPreviousRev22": "DRAFT_GENERATED_PENDING_REVIEW",
+        "promotionEligiblePreviousRev22": false,
+        "promotionEligibilityReasonPreviousRev22": "Awaiting founder Gate A (editorial) and Gate B (promotion).",
+        "founderApproval": {
+          "date": "2026-10-13",
+          "approvedBy": "Founder (Adnaan)",
+          "gateA": {
+            "status": "APPROVED",
+            "wordingVerbatim": "I approve the four reviewed Batch 4 editorial profiles for LOCAL native-catalogue promotion: MEN-9 — 212 Sexy Men Inspired — Skye; MEN-11 — 212 VIP Men Inspired — Skye; LADIES-56 — Burberry Body Inspired — Rose; LADIES-22 — Armani Diamonds Inspired — Rose. MEN-104 Mr Burberry remains on evidence hold. This approval authorises controlled local promotion, required supporting changes and verification only. Do not commit, push, merge or deploy.",
+            "thisRecord": "212-sexy-men-inspired — MEN-9-212 Sexy — Skye — Amber Spicy"
+          },
+          "localPromotion": "APPROVED (local MKC only)",
+          "commitPushDeploy": "NOT AUTHORISED",
+          "verifiedAtApproval": "Notes match inspected evidence; name/collection/gender correct; scores equal adapter; prices R60/R100/R250; relationships empty; concentration/formulation UNCONFIRMED; claim scan clean.",
+          "notEvidence": "Founder approval is not supplier evidence."
+        },
+        "promotion": {
+          "promotionId": "z_YPEcKECGZP",
+          "nativePath": "app/lib/mkc/native/212-sexy-men-inspired.ts",
+          "completedAt": "2026-10-13T20:40:52.125Z",
+          "operator": "Claude Code (founder approval 2026-10-13)",
+          "reviewedBy": "Founder (Adnaan) - approval 2026-10-13",
+          "validationStatus": "PASS",
+          "buildResult": "pass",
+          "workflow": "npm run mkc:review -- --add 212-sexy-men-inspired; --approve 212-sexy-men-inspired; npm run mkc:promote -- --slug 212-sexy-men-inspired (build-only placeholder env for the in-process build)",
+          "base": "d3f423e3f784068618351601c3dda8d846af5a69 (worktree msr-catalogue-wave9-batch4)",
+          "nativeEqualsDraft": "Native body identical to the reviewed draft apart from the type import path (validate-batch4-drafts.ts).",
+          "relationships": "empty — proposals remain UNVERIFIED_FACTORY_SUGGESTION in the ledger",
+          "committed": false
+        }
+      },
+      {
+        "slug": "212-vip-men-inspired",
+        "sourceKey": "MEN-11-212 VIP Carolina Herrera",
+        "supplierText": "212 VIP Carolina Herrera",
+        "supplierCategory": "MEN",
+        "collection": "Skye",
+        "gender": "male",
+        "draftFile": "scripts/factory/drafts/212-vip-men-inspired.ts",
+        "generatedDate": "2026-10-13",
+        "factoryValidation": "PASS [0 errors, 0 warnings]",
+        "referenceEditionUsedForEvidence": "Carolina Herrera 212 VIP Men Eau de Toilette (men)",
+        "supplierConcentration": "UNCONFIRMED",
+        "evidenceTier": "PYRAMID_SECONDARY_SUPPORTED",
+        "profile": "Woody Amber Aromatic",
+        "adapterDerived": {
+          "family": [
+            "Aromatic",
+            "Woody",
+            "Amber"
+          ],
+          "scentCharacter": "Rich & Full-Bodied",
+          "scores": [
+            3,
+            2,
+            4,
+            3,
+            5
+          ]
+        },
+        "status": "PROMOTED_TO_NATIVE",
+        "promotionEligible": true,
+        "promotionEligibilityReason": "Promoted to local native MKC on 2026-10-13 (promotionId bMIOm5sC_kJG); not committed.",
+        "statusPreviousRev22": "DRAFT_GENERATED_PENDING_REVIEW",
+        "promotionEligiblePreviousRev22": false,
+        "promotionEligibilityReasonPreviousRev22": "Awaiting founder Gate A (editorial) and Gate B (promotion).",
+        "founderApproval": {
+          "date": "2026-10-13",
+          "approvedBy": "Founder (Adnaan)",
+          "gateA": {
+            "status": "APPROVED",
+            "wordingVerbatim": "I approve the four reviewed Batch 4 editorial profiles for LOCAL native-catalogue promotion: MEN-9 — 212 Sexy Men Inspired — Skye; MEN-11 — 212 VIP Men Inspired — Skye; LADIES-56 — Burberry Body Inspired — Rose; LADIES-22 — Armani Diamonds Inspired — Rose. MEN-104 Mr Burberry remains on evidence hold. This approval authorises controlled local promotion, required supporting changes and verification only. Do not commit, push, merge or deploy.",
+            "thisRecord": "212-vip-men-inspired — MEN-11-212 VIP Carolina Herrera — Skye — Woody Amber Aromatic"
+          },
+          "localPromotion": "APPROVED (local MKC only)",
+          "commitPushDeploy": "NOT AUTHORISED",
+          "verifiedAtApproval": "Notes match inspected evidence; name/collection/gender correct; scores equal adapter; prices R60/R100/R250; relationships empty; concentration/formulation UNCONFIRMED; claim scan clean.",
+          "notEvidence": "Founder approval is not supplier evidence."
+        },
+        "promotion": {
+          "promotionId": "bMIOm5sC_kJG",
+          "nativePath": "app/lib/mkc/native/212-vip-men-inspired.ts",
+          "completedAt": "2026-10-13T20:41:57.034Z",
+          "operator": "Claude Code (founder approval 2026-10-13)",
+          "reviewedBy": "Founder (Adnaan) - approval 2026-10-13",
+          "validationStatus": "PASS",
+          "buildResult": "pass",
+          "workflow": "npm run mkc:review -- --add 212-vip-men-inspired; --approve 212-vip-men-inspired; npm run mkc:promote -- --slug 212-vip-men-inspired (build-only placeholder env for the in-process build)",
+          "base": "d3f423e3f784068618351601c3dda8d846af5a69 (worktree msr-catalogue-wave9-batch4)",
+          "nativeEqualsDraft": "Native body identical to the reviewed draft apart from the type import path (validate-batch4-drafts.ts).",
+          "relationships": "empty — proposals remain UNVERIFIED_FACTORY_SUGGESTION in the ledger",
+          "committed": false
+        }
+      },
+      {
+        "slug": "burberry-body-inspired",
+        "sourceKey": "LADIES-56-Burberry Body",
+        "supplierText": "Burberry Body",
+        "supplierCategory": "LADIES",
+        "collection": "Rose",
+        "gender": "female",
+        "draftFile": "scripts/factory/drafts/burberry-body-inspired.ts",
+        "generatedDate": "2026-10-13",
+        "factoryValidation": "PASS [0 errors, 0 warnings]",
+        "referenceEditionUsedForEvidence": "Burberry Body Eau de Parfum (women, original)",
+        "supplierConcentration": "UNCONFIRMED",
+        "evidenceTier": "PYRAMID_SECONDARY_SUPPORTED",
+        "profile": "Floral Woody",
+        "adapterDerived": {
+          "family": [
+            "Floral",
+            "Woody"
+          ],
+          "scentCharacter": "Balanced Signature",
+          "scores": [
+            2,
+            3,
+            3,
+            3,
+            3
+          ]
+        },
+        "status": "PROMOTED_TO_NATIVE",
+        "promotionEligible": true,
+        "promotionEligibilityReason": "Promoted to local native MKC on 2026-10-13 (promotionId vs2VOoUTNI2p); not committed.",
+        "statusPreviousRev22": "DRAFT_GENERATED_PENDING_REVIEW",
+        "promotionEligiblePreviousRev22": false,
+        "promotionEligibilityReasonPreviousRev22": "Awaiting founder Gate A (editorial) and Gate B (promotion).",
+        "founderApproval": {
+          "date": "2026-10-13",
+          "approvedBy": "Founder (Adnaan)",
+          "gateA": {
+            "status": "APPROVED",
+            "wordingVerbatim": "I approve the four reviewed Batch 4 editorial profiles for LOCAL native-catalogue promotion: MEN-9 — 212 Sexy Men Inspired — Skye; MEN-11 — 212 VIP Men Inspired — Skye; LADIES-56 — Burberry Body Inspired — Rose; LADIES-22 — Armani Diamonds Inspired — Rose. MEN-104 Mr Burberry remains on evidence hold. This approval authorises controlled local promotion, required supporting changes and verification only. Do not commit, push, merge or deploy.",
+            "thisRecord": "burberry-body-inspired — LADIES-56-Burberry Body — Rose — Floral Woody"
+          },
+          "localPromotion": "APPROVED (local MKC only)",
+          "commitPushDeploy": "NOT AUTHORISED",
+          "verifiedAtApproval": "Notes match inspected evidence; name/collection/gender correct; scores equal adapter; prices R60/R100/R250; relationships empty; concentration/formulation UNCONFIRMED; claim scan clean.",
+          "notEvidence": "Founder approval is not supplier evidence."
+        },
+        "promotion": {
+          "promotionId": "vs2VOoUTNI2p",
+          "nativePath": "app/lib/mkc/native/burberry-body-inspired.ts",
+          "completedAt": "2026-10-13T20:43:01.362Z",
+          "operator": "Claude Code (founder approval 2026-10-13)",
+          "reviewedBy": "Founder (Adnaan) - approval 2026-10-13",
+          "validationStatus": "PASS",
+          "buildResult": "pass",
+          "workflow": "npm run mkc:review -- --add burberry-body-inspired; --approve burberry-body-inspired; npm run mkc:promote -- --slug burberry-body-inspired (build-only placeholder env for the in-process build)",
+          "base": "d3f423e3f784068618351601c3dda8d846af5a69 (worktree msr-catalogue-wave9-batch4)",
+          "nativeEqualsDraft": "Native body identical to the reviewed draft apart from the type import path (validate-batch4-drafts.ts).",
+          "relationships": "empty — proposals remain UNVERIFIED_FACTORY_SUGGESTION in the ledger",
+          "committed": false
+        }
+      },
+      {
+        "slug": "armani-diamonds-inspired",
+        "sourceKey": "LADIES-22-Armani Diamonds",
+        "supplierText": "Armani Diamonds",
+        "supplierCategory": "LADIES",
+        "collection": "Rose",
+        "gender": "female",
+        "draftFile": "scripts/factory/drafts/armani-diamonds-inspired.ts",
+        "generatedDate": "2026-10-13",
+        "factoryValidation": "PASS [0 errors, 0 warnings]",
+        "referenceEditionUsedForEvidence": "Emporio Armani Diamonds Eau de Parfum (women)",
+        "supplierConcentration": "UNCONFIRMED",
+        "evidenceTier": "PYRAMID_SECONDARY_SUPPORTED",
+        "profile": "Fruity Floral",
+        "adapterDerived": {
+          "family": [
+            "Floral",
+            "Fruity"
+          ],
+          "scentCharacter": "Balanced Signature",
+          "scores": [
+            2,
+            3,
+            2,
+            2,
+            3
+          ]
+        },
+        "status": "PROMOTED_TO_NATIVE",
+        "promotionEligible": true,
+        "promotionEligibilityReason": "Promoted to local native MKC on 2026-10-13 (promotionId r6vUlWEadUGe); not committed.",
+        "statusPreviousRev22": "DRAFT_GENERATED_PENDING_REVIEW",
+        "promotionEligiblePreviousRev22": false,
+        "promotionEligibilityReasonPreviousRev22": "Awaiting founder Gate A (editorial) and Gate B (promotion).",
+        "founderApproval": {
+          "date": "2026-10-13",
+          "approvedBy": "Founder (Adnaan)",
+          "gateA": {
+            "status": "APPROVED",
+            "wordingVerbatim": "I approve the four reviewed Batch 4 editorial profiles for LOCAL native-catalogue promotion: MEN-9 — 212 Sexy Men Inspired — Skye; MEN-11 — 212 VIP Men Inspired — Skye; LADIES-56 — Burberry Body Inspired — Rose; LADIES-22 — Armani Diamonds Inspired — Rose. MEN-104 Mr Burberry remains on evidence hold. This approval authorises controlled local promotion, required supporting changes and verification only. Do not commit, push, merge or deploy.",
+            "thisRecord": "armani-diamonds-inspired — LADIES-22-Armani Diamonds — Rose — Fruity Floral"
+          },
+          "localPromotion": "APPROVED (local MKC only)",
+          "commitPushDeploy": "NOT AUTHORISED",
+          "verifiedAtApproval": "Notes match inspected evidence; name/collection/gender correct; scores equal adapter; prices R60/R100/R250; relationships empty; concentration/formulation UNCONFIRMED; claim scan clean.",
+          "notEvidence": "Founder approval is not supplier evidence."
+        },
+        "promotion": {
+          "promotionId": "r6vUlWEadUGe",
+          "nativePath": "app/lib/mkc/native/armani-diamonds-inspired.ts",
+          "completedAt": "2026-10-13T20:44:05.948Z",
+          "operator": "Claude Code (founder approval 2026-10-13)",
+          "reviewedBy": "Founder (Adnaan) - approval 2026-10-13",
+          "validationStatus": "PASS",
+          "buildResult": "pass",
+          "workflow": "npm run mkc:review -- --add armani-diamonds-inspired; --approve armani-diamonds-inspired; npm run mkc:promote -- --slug armani-diamonds-inspired (build-only placeholder env for the in-process build)",
+          "base": "d3f423e3f784068618351601c3dda8d846af5a69 (worktree msr-catalogue-wave9-batch4)",
+          "nativeEqualsDraft": "Native body identical to the reviewed draft apart from the type import path (validate-batch4-drafts.ts).",
+          "relationships": "empty — proposals remain UNVERIFIED_FACTORY_SUGGESTION in the ledger",
+          "committed": false
+        }
+      }
+    ],
+    "batch4_held": [
+      {
+        "sourceKey": "MEN-104-Mr Burberry",
+        "rawSupplierText": "Mr Burberry",
+        "status": "EVIDENCE_HOLD",
+        "reason": "Original Mr Burberry EDT: no inspected authorised source gives heart notes (burberry.com EDT page: top grapefruit, base vetiver and guaiac wood only). Macy's 403, Sephora/Notino 403 (2026-10-11), David Jones bot check on an EDP listing, Escentual 404.",
+        "instruction": "Do not substitute notes from Mr Burberry EDP, Indigo, Element or other flankers. Do not re-research during Batch 4 unless new concrete evidence is supplied.",
+        "recordedDate": "2026-10-13"
+      }
+    ],
+    "batch4_separate_source_rows": [
+      {
+        "sourceKeys": [
+          "MEN-11-212 VIP Carolina Herrera",
+          "LADIES-6-212 VIP Carolina Herrera"
+        ],
+        "identicalSupplierText": "212 VIP Carolina Herrera",
+        "note": "Two independent supplier rows (MEN list p3, LADIES list p1). MEN-11 prepared as 212 VIP Men; LADIES-6 (women's 212 VIP) is NOT resolved, drafted or closed by this phase."
+      }
+    ]
   },
   "descriptionPrevious": "Durable reconciliation ledger for the August 2026 supplier catalogue expansion. Tracks all supplier entries across six disposition states. Append-only governance evidence. The provisional missing count of 352 remains until native MKC promotion is confirmed."
 }

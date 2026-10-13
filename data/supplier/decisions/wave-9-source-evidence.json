@@ -27,7 +27,8 @@
     "revision6": "2026-10-11: Gucci Rush, Tommy Girl, Jimmy Choo, Poison and The One researched further. Marketplace third-party sellers on debenhams.com are recorded with authorisedOrNamed=false; 'Sold & Delivered by Debenhams' listings are treated as major-retailer first-party.",
     "revision7": "2026-10-11: readable-page reviews continued for the five remaining Batch 1 drafts (10 fetch records, indices 64–73). Romance brand/Macy's/Sephora, The Perfume Shop (Jimmy Choo), Sephora UAE (Poison) and Argos returned 403. Lookfantastic (Tommy Girl) gave a full first-party pyramid that conflicts with the draft; recorded, not applied. A vintage reseller lists Poison 1985 as 'Esprit de Parfum' (supplementary; not treated as EDP). Parfumdreams and Escentual were readable but carried no notes. Web search was used only to locate URLs; no search summary is recorded as evidence.",
     "revision8": "2026-10-11: Wave 9 Batch 2 research — 26 fetch records (indices 74–99). Only INSPECTED results count as evidence; BLOCKED / NOT_FOUND / INSPECTED_NO_PYRAMID are recorded for transparency. Web search was used only to locate URLs; search summaries are not recorded as evidence.",
-    "revision9": "2026-10-12: Wave 9 Batch 3 research (W9-B3-R) and preparation (W9-B3-P1) — 30 fetch records (indices 100–129). Only INSPECTED results count as evidence; BLOCKED / NOT_FOUND / INSPECTED_NO_PYRAMID are recorded for transparency. 'Sold & Delivered by Debenhams' is major-retailer first-party (revision 6 policy); Lookfantastic and Edgars authorised status is not verified. Pages with instructions aimed at AI tools (ScentVerdict, Debenhams Prada Candy) were read for factual fields only. Web search was used only to locate URLs; no search summary is recorded as evidence."
+    "revision9": "2026-10-12: Wave 9 Batch 3 research (W9-B3-R) and preparation (W9-B3-P1) — 30 fetch records (indices 100–129). Only INSPECTED results count as evidence; BLOCKED / NOT_FOUND / INSPECTED_NO_PYRAMID are recorded for transparency. 'Sold & Delivered by Debenhams' is major-retailer first-party (revision 6 policy); Lookfantastic and Edgars authorised status is not verified. Pages with instructions aimed at AI tools (ScentVerdict, Debenhams Prada Candy) were read for factual fields only. Web search was used only to locate URLs; no search summary is recorded as evidence.",
+    "revision10": "2026-10-13: Wave 9 Batch 4 research (W9-B4-R1) — 12 fetch records (indices 130–141). Only INSPECTED results count as evidence. Brand pages (carolinaherrera.com) for MEN-9 and MEN-11; Nordstrom for LADIES-56; John Lewis for LADIES-22. MEN-104 Mr Burberry: still no inspected EDT heart (burberry.com EDT page, inspected 2026-10-11, gives top and base only). Web search was used only to locate URLs; no search summary is recorded as evidence."
   },
   "fetches": [
     {
@@ -1964,6 +1965,194 @@
       "detail": "HTTP 403.",
       "revision": 9,
       "accessDate": "2026-10-12"
+    },
+    {
+      "draftSlug": "212-sexy-men-inspired",
+      "candidate": "MEN-9-212 Sexy",
+      "url": "https://www.carolinaherrera.com/ww/en/p-fragrance/212-sexy-men",
+      "result": "INSPECTED",
+      "sourceType": "TIER1_BRAND_PAGE",
+      "authorisedOrNamed": true,
+      "captured": {
+        "name": "212 Men Sexy 100ml Eau de Toilette",
+        "for": "For: Him",
+        "family": "AMBERY Spicy (notes section: 'AMBERY Amber Spicy')",
+        "top": "Mandarin Orange & Bergamot",
+        "heart": "Cardamom & Black Pepper",
+        "bottom": "Sandalwood, Vanilla Bourbon",
+        "concentration": "EDT in name only; page gives a generic EDT range for the category",
+        "launchYear": "not stated"
+      },
+      "supportedFields": [
+        "notes.top",
+        "notes.heart",
+        "notes.base",
+        "profile Amber Spicy"
+      ],
+      "revision": 10,
+      "accessDate": "2026-10-13",
+      "batch": "wave-9-batch-4"
+    },
+    {
+      "draftSlug": "212-vip-men-inspired",
+      "candidate": "MEN-11-212 VIP Carolina Herrera",
+      "url": "https://www.carolinaherrera.com/ww/en/p-fragrance/212-vip-men",
+      "result": "INSPECTED",
+      "sourceType": "TIER1_BRAND_PAGE",
+      "authorisedOrNamed": true,
+      "captured": {
+        "name": "212 VIP Men 200ml Eau de Toilette",
+        "for": "For: Him",
+        "family": "WOODY Amber Aromatic",
+        "top": "Caviar Lime & Frozen Mint",
+        "heart": "Ginger & Chilled Vodka",
+        "bottom": "Kingwood & Tonka Bean",
+        "launchYear": "not stated"
+      },
+      "supportedFields": [
+        "notes.top",
+        "notes.heart",
+        "notes.base",
+        "profile Woody Amber Aromatic"
+      ],
+      "detail": "'Chilled Vodka' is the reference's accord wording, not a Maison ingredient. Conflicting retailer pyramids (search only) not used.",
+      "revision": 10,
+      "accessDate": "2026-10-13",
+      "batch": "wave-9-batch-4"
+    },
+    {
+      "draftSlug": "burberry-body-inspired",
+      "candidate": "LADIES-56-Burberry Body",
+      "url": "https://www.nordstrom.com/s/burberry-body-eau-de-parfum/3215182",
+      "result": "INSPECTED",
+      "sourceType": "NAMED_TIER2_AUTHORISED_RETAILER",
+      "authorisedOrNamed": true,
+      "captured": {
+        "name": "'Body' Eau de Parfum (Burberry)",
+        "gender": "the new fragrance for women",
+        "style": "feminine and sensual floral-woody",
+        "top": "fresh green absinthe, illuminating elegant peach and refined freesia",
+        "heart": "natural rose absolute, iris, and sandalwood",
+        "base": "cashmeran, creamy vanilla, sensual amber, and musk",
+        "availability": "Sold Out — This item is no longer available."
+      },
+      "supportedFields": [
+        "notes.top",
+        "notes.heart",
+        "notes.base",
+        "profile Floral Woody"
+      ],
+      "availabilityNote": "Reference retail availability only; founder approved preparing this draft (2026-10-13). No designer relationship implied.",
+      "revision": 10,
+      "accessDate": "2026-10-13",
+      "batch": "wave-9-batch-4"
+    },
+    {
+      "draftSlug": "armani-diamonds-inspired",
+      "candidate": "LADIES-22-Armani Diamonds",
+      "url": "https://www.johnlewis.com/emporio-armani-diamonds-eau-de-parfum/p3375503",
+      "result": "INSPECTED",
+      "sourceType": "MAJOR_AUTHORISED_RETAILER (UK department store)",
+      "authorisedOrNamed": true,
+      "captured": {
+        "name": "Emporio Armani Diamonds Eau de Parfum, 100ml",
+        "gender": "The Perfume For Her",
+        "family": "Fruity Floral",
+        "top": "Lychee, raspberry",
+        "heart": "Rose, lily of the valley, patchouli, freesia",
+        "base": "Vetiver, amber, vanilla",
+        "yearOfRelease": "2008"
+      },
+      "supportedFields": [
+        "notes.top",
+        "notes.heart",
+        "notes.base",
+        "profile Fruity Floral"
+      ],
+      "detail": "Search results give 2007; release year kept as research metadata only.",
+      "revision": 10,
+      "accessDate": "2026-10-13",
+      "batch": "wave-9-batch-4"
+    },
+    {
+      "draftSlug": null,
+      "candidate": "MEN-104-Mr Burberry",
+      "url": "https://www.escentual.com/burberrymrburberry001/",
+      "result": "NOT_FOUND",
+      "detail": "HTTP 404.",
+      "revision": 10,
+      "accessDate": "2026-10-13",
+      "batch": "wave-9-batch-4"
+    },
+    {
+      "draftSlug": null,
+      "candidate": "MEN-104-Mr Burberry",
+      "url": "https://www.macys.com/shop/product/burberry-mens-mr.-burberry-eau-de-toilette-spray-3.3-oz?ID=2721078",
+      "result": "BLOCKED",
+      "detail": "HTTP 403.",
+      "revision": 10,
+      "accessDate": "2026-10-13",
+      "batch": "wave-9-batch-4"
+    },
+    {
+      "draftSlug": null,
+      "candidate": "MEN-104-Mr Burberry",
+      "url": "https://www.davidjones.com/product/burberry-mr-burberry-edp-50ml-21033648",
+      "result": "BLOCKED",
+      "detail": "Bot-check page. Listing is for the EDP (a different formula from the EDT reference) — not usable for the EDT even if readable.",
+      "revision": 10,
+      "accessDate": "2026-10-13",
+      "batch": "wave-9-batch-4"
+    },
+    {
+      "draftSlug": null,
+      "candidate": "MEN-104-Mr Burberry",
+      "url": "https://www.debenhams.com/webapp/wcs/stores/servlet/prod_10701_10001_117258900099_-1",
+      "result": "INSPECTED_NO_PYRAMID",
+      "detail": "Generic site page; no product details.",
+      "revision": 10,
+      "accessDate": "2026-10-13",
+      "batch": "wave-9-batch-4"
+    },
+    {
+      "draftSlug": null,
+      "candidate": "LADIES-56-Burberry Body",
+      "url": "https://www.chemistwarehouse.com.au/buy/73366/burberry-body-eau-de-parfum-35ml",
+      "result": "BLOCKED",
+      "detail": "HTTP 403.",
+      "revision": 10,
+      "accessDate": "2026-10-13",
+      "batch": "wave-9-batch-4"
+    },
+    {
+      "draftSlug": null,
+      "candidate": "LADIES-22-Armani Diamonds",
+      "url": "https://www.escentual.com/giorgio-armani/diamonds/for-women/pp-1719/",
+      "result": "INSPECTED_NO_PYRAMID",
+      "detail": "Navigation only in the readable portion; no notes.",
+      "revision": 10,
+      "accessDate": "2026-10-13",
+      "batch": "wave-9-batch-4"
+    },
+    {
+      "draftSlug": null,
+      "candidate": "LADIES-22-Armani Diamonds",
+      "url": "https://armanibeauty.co.uk/perfume/womens-perfumes/emporio-armani-diamonds-for-women/emporio-armani-for-women-eau-de-parfum/AP32101.html",
+      "result": "BLOCKED",
+      "detail": "HTTP 403.",
+      "revision": 10,
+      "accessDate": "2026-10-13",
+      "batch": "wave-9-batch-4"
+    },
+    {
+      "draftSlug": null,
+      "candidate": "LADIES-22-Armani Diamonds",
+      "url": "https://www.debenhams.com/product/armani-diamonds-she-eau-de-parfum_ydd06475",
+      "result": "INSPECTED_NO_PYRAMID",
+      "detail": "'Misc Armani Diamonds She Eau De Parfum'; seller and notes not in the readable portion.",
+      "revision": 10,
+      "accessDate": "2026-10-13",
+      "batch": "wave-9-batch-4"
     }
   ]
 }

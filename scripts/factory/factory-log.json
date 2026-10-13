@@ -2,6 +2,282 @@
   "version": "1.0",
   "runs": [
     {
+      "slug": "armani-diamonds-inspired",
+      "name": "Armani Diamonds Inspired",
+      "wave": null,
+      "startedAt": "2026-10-13T20:19:42.880Z",
+      "completedAt": "2026-10-13T20:19:55.542Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 1
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 1
+        },
+        {
+          "stage": "composition",
+          "status": "skip",
+          "durationMs": 0,
+          "message": "EVIDENCE_LOCK — governed notes preserved from scaffold; AI generation bypassed"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 1932,
+          "message": "836 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 4114,
+          "message": "10475 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 2695,
+          "message": "1361 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 3908,
+          "message": "1660 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "14332 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "pass",
+          "durationMs": 1,
+          "message": "PASS  [0 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 3
+        }
+      ],
+      "validationStatus": "PASS",
+      "promotedAt": null
+    },
+    {
+      "slug": "burberry-body-inspired",
+      "name": "Burberry Body Inspired",
+      "wave": null,
+      "startedAt": "2026-10-13T20:19:27.120Z",
+      "completedAt": "2026-10-13T20:19:38.495Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 1
+        },
+        {
+          "stage": "composition",
+          "status": "skip",
+          "durationMs": 0,
+          "message": "EVIDENCE_LOCK — governed notes preserved from scaffold; AI generation bypassed"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 1863,
+          "message": "821 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 2633,
+          "message": "10293 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 2791,
+          "message": "1366 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 4079,
+          "message": "1646 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "14126 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "pass",
+          "durationMs": 1,
+          "message": "PASS  [0 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 2
+        }
+      ],
+      "validationStatus": "PASS",
+      "promotedAt": null
+    },
+    {
+      "slug": "212-vip-men-inspired",
+      "name": "212 VIP Men Inspired",
+      "wave": null,
+      "startedAt": "2026-10-13T20:19:11.269Z",
+      "completedAt": "2026-10-13T20:19:22.622Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 1
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 1
+        },
+        {
+          "stage": "composition",
+          "status": "skip",
+          "durationMs": 0,
+          "message": "EVIDENCE_LOCK — governed notes preserved from scaffold; AI generation bypassed"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 1746,
+          "message": "810 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 2582,
+          "message": "10285 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 2687,
+          "message": "1358 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 4330,
+          "message": "1703 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "14156 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "pass",
+          "durationMs": 1,
+          "message": "PASS  [0 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 2
+        }
+      ],
+      "validationStatus": "PASS",
+      "promotedAt": null
+    },
+    {
+      "slug": "212-sexy-men-inspired",
+      "name": "212 Sexy Men Inspired",
+      "wave": null,
+      "startedAt": "2026-10-13T20:18:54.227Z",
+      "completedAt": "2026-10-13T20:19:06.710Z",
+      "factoryVersion": "0.5.0",
+      "stages": [
+        {
+          "stage": "intake",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "scaffold",
+          "status": "pass",
+          "durationMs": 0
+        },
+        {
+          "stage": "composition",
+          "status": "skip",
+          "durationMs": 1,
+          "message": "EVIDENCE_LOCK — governed notes preserved from scaffold; AI generation bypassed"
+        },
+        {
+          "stage": "editorial",
+          "status": "pass",
+          "durationMs": 1674,
+          "message": "801 tokens  conf:0.50"
+        },
+        {
+          "stage": "relationships",
+          "status": "pass",
+          "durationMs": 3715,
+          "message": "10397 tokens  conf:0.50"
+        },
+        {
+          "stage": "education",
+          "status": "pass",
+          "durationMs": 3141,
+          "message": "1412 tokens  conf:0.50"
+        },
+        {
+          "stage": "discovery",
+          "status": "pass",
+          "durationMs": 3944,
+          "message": "1675 tokens  conf:0.50"
+        },
+        {
+          "stage": "merge",
+          "status": "pass",
+          "durationMs": 0,
+          "message": "14285 tokens total"
+        },
+        {
+          "stage": "validate",
+          "status": "pass",
+          "durationMs": 1,
+          "message": "PASS  [0 errors, 0 warnings]"
+        },
+        {
+          "stage": "draft",
+          "status": "pass",
+          "durationMs": 2
+        }
+      ],
+      "validationStatus": "PASS",
+      "promotedAt": null
+    },
+    {
       "slug": "vetiver-golden-vanilla-inspired",
       "name": "Vetiver Golden Vanilla Inspired",
       "wave": null,

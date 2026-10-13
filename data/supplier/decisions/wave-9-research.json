@@ -36,7 +36,9 @@
         "Revision 17 (2026-10-12, W9-B3-P2): founder-review preparation for 212 Sexy, Vetiver & Golden Vanilla, Wonderlust and Prada Candy — identity reviews recorded, claim-safety copy edits, Prada Candy profile Gourmand Spicy → Amber Gourmand (metrics unchanged), Vetiver keeps the editorial 'Woody Aromatic Vanilla'. Gucci Rush evidence hold kept; qualifying source recorded. No status change, no promotion, native 273. Not committed.",
         "Revision 18 (2026-10-12, W9-B3-P3): founder agreement in principle with the editorial direction of 212 Sexy, Vetiver & Golden Vanilla, Wonderlust and Prada Candy recorded (not formal editorial, promotion or release approval); founder statement that the supplier has not confirmed concentration or formulation recorded (UNCONFIRMED). Identity found sufficiently supported by self-identifying supplier text; P2 'blocked — missing confirmation' label corrected. Supplier-confirmation register added (ledger). No draft, status, count or promotion change. Not committed.",
         "Revision 19 (2026-10-12, W9-B3-P5): founder Gate A (formal editorial) and Gate B (local promotion) approval recorded verbatim; 212-sexy-inspired (qtIrpscU3rOS), vetiver-golden-vanilla-inspired (r1wFqFDipHB-), wonderlust-by-michael-kors-inspired (Ni0Ddu1ngG_v), prada-candy-inspired (4fga0yKIoLtD) promoted to local native MKC via mkc:review/mkc:promote with explicit slugs; native measured 277 (Skye 110, Rose 117, Elite 50). Gate C not authorised. Not committed.",
-        "Revision 20 (2026-10-12, W9-B3-P8): founder availability clarification recorded verbatim for 212-sexy, vetiver-golden-vanilla, wonderlust and prada-candy ('All the fragrances are available and I am able to get them.'); business model recorded (Maison sources materials and prepares/packages 5/10/30 ml at R60/R100/R250). Earlier availability questions and the draft supplier message superseded. Concentration and formulation remain UNCONFIRMED. No catalogue change."
+        "Revision 20 (2026-10-12, W9-B3-P8): founder availability clarification recorded verbatim for 212-sexy, vetiver-golden-vanilla, wonderlust and prada-candy ('All the fragrances are available and I am able to get them.'); business model recorded (Maison sources materials and prepares/packages 5/10/30 ml at R60/R100/R250). Earlier availability questions and the draft supplier message superseded. Concentration and formulation remain UNCONFIRMED. No catalogue change.",
+        "Revision 21 (2026-10-13, W9-B4-P1): Batch 4 review drafts 212-sexy-men (MEN-9), 212-vip-men (MEN-11), burberry-body (LADIES-56), armani-diamonds (LADIES-22) prepared under founder approval for draft preparation only; MEN-104 Mr Burberry evidence hold; LADIES-6 kept independent of MEN-11. Not promoted; native 277. Not committed.",
+        "Revision 22 (2026-10-13, W9-B4-P2): founder Gate A + local promotion approval (verbatim); 212-sexy-men-inspired (z_YPEcKECGZP), 212-vip-men-inspired (bMIOm5sC_kJG), burberry-body-inspired (vs2VOoUTNI2p), armani-diamonds-inspired (r6vUlWEadUGe) promoted to local native MKC; native measured 281 (Skye 112, Rose 119, Elite 50). Gender-qualified 212 aliases added to the Concierge resolver. MEN-104 hold, LADIES-6 independence and MEN-7/MEN-8 observations unchanged. Not committed."
       ]
     },
     "supportingEvidenceFiles": [
@@ -3106,6 +3108,528 @@
       "concentrationRule": "No governance rule requires supplied-concentration confirmation for drafting, promotion or publication: all six Wave 9 records promoted to date carry suppliedConcentration NOT_ESTABLISHED, and MKC records have no concentration field; storefront copy states no concentration.",
       "correctionOfPreviousLabel": "The W9-B3-P2 reviewState label 'BLOCKED — MISSING CONFIRMATION (identity/concentration)' overstated the requirement for these four self-identifying rows; corrected here (previous kept under reviewStatePreviousRev18).",
       "outOfScope": "Product labelling, ingredient/allergen and safety-documentation obligations are not covered by this repository's governance and were not assessed."
+    }
+  },
+  "batch4": {
+    "_meta": {
+      "created": "2026-10-13",
+      "batch": "wave-9-batch-4",
+      "phase": "W9-B4-P1",
+      "researcher": "Claude Opus 5.5 (Claude Code session)",
+      "description": "Batch 4 review drafts. Supplier identity (exact supplier text and row) kept separate from reference-fragrance evidence and from Maison editorial interpretation. Founder approved draft preparation only.",
+      "evidenceBoundary": "Supplier list = which inspirations can be sourced. Designer pyramids = reference profile only, not analytical composition of Maison oils. Concentration and formulation UNCONFIRMED.",
+      "notPromoted": true
+    },
+    "fragrances": [
+      {
+        "draftSlug": "212-sexy-men-inspired",
+        "supplierIdentityEvidence": {
+          "rawSupplierText": "212 Sexy",
+          "sourceKey": "MEN-9-212 Sexy",
+          "supplierCategory": "MEN",
+          "sourcePage": 3,
+          "identityDecision": "MEN-list row with the line name '212 Sexy' → the men's edition. Distinct from the native women's 212-sexy-inspired (LADIES-5).",
+          "supplierConcentration": "NOT_STATED by the supplier; concentration and formulation UNCONFIRMED. The reference edition's format is evidence context only.",
+          "identityConfirmation": "Founder approved draft preparation 2026-10-13 (not promotion approval)."
+        },
+        "commercialFragranceEvidence": {
+          "referenceEditionUsedForEvidence": "Carolina Herrera 212 Men Sexy Eau de Toilette (men)",
+          "evidenceTier": "PYRAMID_SECONDARY_SUPPORTED",
+          "notesAsDrafted": {
+            "top": [
+              "Mandarin Orange",
+              "Bergamot"
+            ],
+            "heart": [
+              "Cardamom",
+              "Black Pepper"
+            ],
+            "base": [
+              "Sandalwood",
+              "Vanilla Bourbon"
+            ]
+          },
+          "sourceWordingVerbatim": {
+            "top": "Mandarin Orange & Bergamot",
+            "heart": "Cardamom & Black Pepper",
+            "bottom": "Sandalwood, Vanilla Bourbon",
+            "family": "AMBERY Spicy"
+          },
+          "namedOrAuthorisedPages": [
+            "https://www.carolinaherrera.com/ww/en/p-fragrance/212-sexy-men"
+          ],
+          "evidenceSource": "carolinaherrera.com (tier-1 brand page)",
+          "variantsNotUsed": [
+            "Retailer pyramids seen only in search (tagete, guaiac wood, amber, musk) — not used."
+          ],
+          "evidenceFile": "data/supplier/decisions/wave-9-source-evidence.json (revision 10)"
+        },
+        "profileRationale": {
+          "profile": "Amber Spicy",
+          "basis": "Source family wording: AMBERY Spicy.",
+          "season": "Autumn — editorial."
+        },
+        "adapterDerived": {
+          "family": [
+            "Amber",
+            "Spicy"
+          ],
+          "scentCharacter": "Rich & Full-Bodied",
+          "scores": [
+            3,
+            2,
+            4,
+            3,
+            3
+          ],
+          "scoreOrder": "sweetness, freshness, warmth, intensity, versatility",
+          "method": "adaptFragrance() on the staging entry; draft values equal (validate-batch4-drafts.ts)."
+        },
+        "collisionReview": [
+          "Native 212-sexy-inspired (women) — name contained in the new name; whole-name + span rules keep them separate (batch4-name-collisions.test.ts B4-10..B4-12).",
+          "Native 212-vip-black-inspired, 212-heroes-inspired (men) — different lines."
+        ],
+        "copyEditsAppliedAfterGeneration": [
+          "description: removed 'settle into skin like a second language… impossible to ignore' (figurative wear / performance).",
+          "recommendedFor[0]: removed 'transitions seamlessly from the office to intimate evenings' (versatility claim).",
+          "recommendedFor[1]: removed 'without heaviness… confidence in a bottle'.",
+          "recommendedFor[2]: removed 'values moderate projection'."
+        ],
+        "relationshipProposals": {
+          "alternatives": [
+            "spicebomb-extreme-inspired",
+            "azzaro-most-wanted-inspired",
+            "carlisle-inspired"
+          ],
+          "wardrobePartners": [
+            "creed-green-irish-tweed-inspired",
+            "bleu-de-chanel-inspired"
+          ],
+          "status": "UNVERIFIED_FACTORY_SUGGESTION — not activated; see ledger"
+        },
+        "promotionEligible": true,
+        "promotionEligibilityReason": "Promoted to local native MKC on 2026-10-13 (promotionId z_YPEcKECGZP); not committed.",
+        "promotionEligiblePreviousRev22": false,
+        "promotionEligibilityReasonPreviousRev22": "Review draft: awaiting founder editorial approval (Gate A) and promotion approval (Gate B).",
+        "founderApproval": {
+          "date": "2026-10-13",
+          "approvedBy": "Founder (Adnaan)",
+          "gateA": {
+            "status": "APPROVED",
+            "wordingVerbatim": "I approve the four reviewed Batch 4 editorial profiles for LOCAL native-catalogue promotion: MEN-9 — 212 Sexy Men Inspired — Skye; MEN-11 — 212 VIP Men Inspired — Skye; LADIES-56 — Burberry Body Inspired — Rose; LADIES-22 — Armani Diamonds Inspired — Rose. MEN-104 Mr Burberry remains on evidence hold. This approval authorises controlled local promotion, required supporting changes and verification only. Do not commit, push, merge or deploy.",
+            "thisRecord": "212-sexy-men-inspired — MEN-9-212 Sexy — Skye — Amber Spicy"
+          },
+          "localPromotion": "APPROVED (local MKC only)",
+          "commitPushDeploy": "NOT AUTHORISED",
+          "verifiedAtApproval": "Notes match inspected evidence; name/collection/gender correct; scores equal adapter; prices R60/R100/R250; relationships empty; concentration/formulation UNCONFIRMED; claim scan clean.",
+          "notEvidence": "Founder approval is not supplier evidence."
+        },
+        "promotion": {
+          "promotionId": "z_YPEcKECGZP",
+          "nativePath": "app/lib/mkc/native/212-sexy-men-inspired.ts",
+          "completedAt": "2026-10-13T20:40:52.125Z",
+          "operator": "Claude Code (founder approval 2026-10-13)",
+          "reviewedBy": "Founder (Adnaan) - approval 2026-10-13",
+          "validationStatus": "PASS",
+          "buildResult": "pass",
+          "workflow": "npm run mkc:review -- --add 212-sexy-men-inspired; --approve 212-sexy-men-inspired; npm run mkc:promote -- --slug 212-sexy-men-inspired (build-only placeholder env for the in-process build)",
+          "base": "d3f423e3f784068618351601c3dda8d846af5a69 (worktree msr-catalogue-wave9-batch4)",
+          "nativeEqualsDraft": "Native body identical to the reviewed draft apart from the type import path (validate-batch4-drafts.ts).",
+          "relationships": "empty — proposals remain UNVERIFIED_FACTORY_SUGGESTION in the ledger",
+          "committed": false
+        }
+      },
+      {
+        "draftSlug": "212-vip-men-inspired",
+        "supplierIdentityEvidence": {
+          "rawSupplierText": "212 VIP Carolina Herrera",
+          "sourceKey": "MEN-11-212 VIP Carolina Herrera",
+          "supplierCategory": "MEN",
+          "sourcePage": 3,
+          "identityDecision": "MEN-list row → 212 VIP Men. LADIES-6 carries identical supplier text on the LADIES list (women's 212 VIP): a separate source row, kept independent and NOT resolved by this draft.",
+          "supplierConcentration": "NOT_STATED by the supplier; concentration and formulation UNCONFIRMED. The reference edition's format is evidence context only.",
+          "identityConfirmation": "Founder approved draft preparation 2026-10-13 (not promotion approval)."
+        },
+        "commercialFragranceEvidence": {
+          "referenceEditionUsedForEvidence": "Carolina Herrera 212 VIP Men Eau de Toilette (men)",
+          "evidenceTier": "PYRAMID_SECONDARY_SUPPORTED",
+          "notesAsDrafted": {
+            "top": [
+              "Caviar Lime",
+              "Frozen Mint"
+            ],
+            "heart": [
+              "Ginger",
+              "Chilled Vodka"
+            ],
+            "base": [
+              "Kingwood",
+              "Tonka Bean"
+            ]
+          },
+          "sourceWordingVerbatim": {
+            "top": "Caviar Lime & Frozen Mint",
+            "heart": "Ginger & Chilled Vodka",
+            "bottom": "Kingwood & Tonka Bean",
+            "family": "WOODY Amber Aromatic"
+          },
+          "namedOrAuthorisedPages": [
+            "https://www.carolinaherrera.com/ww/en/p-fragrance/212-vip-men"
+          ],
+          "evidenceSource": "carolinaherrera.com (tier-1 brand page)",
+          "variantsNotUsed": [
+            "Conflicting retailer pyramids seen only in search (passion fruit, gin, leather, apple) — not used."
+          ],
+          "evidenceFile": "data/supplier/decisions/wave-9-source-evidence.json (revision 10)"
+        },
+        "profileRationale": {
+          "profile": "Woody Amber Aromatic",
+          "basis": "Source family wording: WOODY Amber Aromatic.",
+          "season": "All Season — editorial."
+        },
+        "adapterDerived": {
+          "family": [
+            "Aromatic",
+            "Woody",
+            "Amber"
+          ],
+          "scentCharacter": "Rich & Full-Bodied",
+          "scores": [
+            3,
+            2,
+            4,
+            3,
+            5
+          ],
+          "scoreOrder": "sweetness, freshness, warmth, intensity, versatility",
+          "method": "adaptFragrance() on the staging entry; draft values equal (validate-batch4-drafts.ts)."
+        },
+        "collisionReview": [
+          "Native 212-vip-black-inspired (men) and 212-vip-rose-inspired (women) — distinct names; no overlap (B4-13).",
+          "Supplier text '212 VIP Carolina Herrera' resolves to no identity, so no gender is assigned by name (B4-14)."
+        ],
+        "copyEditsAppliedAfterGeneration": [
+          "description: corrected 'Caviar and lime' → 'Caviar lime' (single citrus note); removed 'fragrance as provocation…'.",
+          "recommendedFor[0]: removed 'for any occasion'.",
+          "recommendedFor[2]: removed 'projects without overwhelming… office by day…'.",
+          "recommendedFor[3]: removed 'moderate projection'.",
+          "Note: 'Chilled Vodka' kept as reference accord wording."
+        ],
+        "relationshipProposals": {
+          "alternatives": [
+            "sauvage-elixir-inspired",
+            "stronger-with-you-inspired"
+          ],
+          "wardrobePartners": [
+            "eros-inspired"
+          ],
+          "status": "UNVERIFIED_FACTORY_SUGGESTION — not activated; see ledger"
+        },
+        "promotionEligible": true,
+        "promotionEligibilityReason": "Promoted to local native MKC on 2026-10-13 (promotionId bMIOm5sC_kJG); not committed.",
+        "promotionEligiblePreviousRev22": false,
+        "promotionEligibilityReasonPreviousRev22": "Review draft: awaiting founder editorial approval (Gate A) and promotion approval (Gate B).",
+        "founderApproval": {
+          "date": "2026-10-13",
+          "approvedBy": "Founder (Adnaan)",
+          "gateA": {
+            "status": "APPROVED",
+            "wordingVerbatim": "I approve the four reviewed Batch 4 editorial profiles for LOCAL native-catalogue promotion: MEN-9 — 212 Sexy Men Inspired — Skye; MEN-11 — 212 VIP Men Inspired — Skye; LADIES-56 — Burberry Body Inspired — Rose; LADIES-22 — Armani Diamonds Inspired — Rose. MEN-104 Mr Burberry remains on evidence hold. This approval authorises controlled local promotion, required supporting changes and verification only. Do not commit, push, merge or deploy.",
+            "thisRecord": "212-vip-men-inspired — MEN-11-212 VIP Carolina Herrera — Skye — Woody Amber Aromatic"
+          },
+          "localPromotion": "APPROVED (local MKC only)",
+          "commitPushDeploy": "NOT AUTHORISED",
+          "verifiedAtApproval": "Notes match inspected evidence; name/collection/gender correct; scores equal adapter; prices R60/R100/R250; relationships empty; concentration/formulation UNCONFIRMED; claim scan clean.",
+          "notEvidence": "Founder approval is not supplier evidence."
+        },
+        "promotion": {
+          "promotionId": "bMIOm5sC_kJG",
+          "nativePath": "app/lib/mkc/native/212-vip-men-inspired.ts",
+          "completedAt": "2026-10-13T20:41:57.034Z",
+          "operator": "Claude Code (founder approval 2026-10-13)",
+          "reviewedBy": "Founder (Adnaan) - approval 2026-10-13",
+          "validationStatus": "PASS",
+          "buildResult": "pass",
+          "workflow": "npm run mkc:review -- --add 212-vip-men-inspired; --approve 212-vip-men-inspired; npm run mkc:promote -- --slug 212-vip-men-inspired (build-only placeholder env for the in-process build)",
+          "base": "d3f423e3f784068618351601c3dda8d846af5a69 (worktree msr-catalogue-wave9-batch4)",
+          "nativeEqualsDraft": "Native body identical to the reviewed draft apart from the type import path (validate-batch4-drafts.ts).",
+          "relationships": "empty — proposals remain UNVERIFIED_FACTORY_SUGGESTION in the ledger",
+          "committed": false
+        }
+      },
+      {
+        "draftSlug": "burberry-body-inspired",
+        "supplierIdentityEvidence": {
+          "rawSupplierText": "Burberry Body",
+          "sourceKey": "LADIES-56-Burberry Body",
+          "supplierCategory": "LADIES",
+          "sourcePage": 2,
+          "identityDecision": "Unqualified 'Burberry Body' on the LADIES list → the original Body EDP. Distinct from Body Intense, Body Tender, Body Rose and the Body EDT.",
+          "supplierConcentration": "NOT_STATED by the supplier; concentration and formulation UNCONFIRMED. The reference edition's format is evidence context only.",
+          "identityConfirmation": "Founder approved draft preparation 2026-10-13 (not promotion approval)."
+        },
+        "commercialFragranceEvidence": {
+          "referenceEditionUsedForEvidence": "Burberry Body Eau de Parfum (women, original)",
+          "evidenceTier": "PYRAMID_SECONDARY_SUPPORTED",
+          "notesAsDrafted": {
+            "top": [
+              "Green Absinthe",
+              "Peach",
+              "Freesia"
+            ],
+            "heart": [
+              "Rose Absolute",
+              "Iris",
+              "Sandalwood"
+            ],
+            "base": [
+              "Cashmeran",
+              "Vanilla",
+              "Amber",
+              "Musk"
+            ]
+          },
+          "sourceWordingVerbatim": {
+            "top": "fresh green absinthe, illuminating elegant peach and refined freesia",
+            "heart": "natural rose absolute, iris, and sandalwood",
+            "base": "cashmeran, creamy vanilla, sensual amber, and musk",
+            "style": "feminine and sensual floral-woody"
+          },
+          "namedOrAuthorisedPages": [
+            "https://www.nordstrom.com/s/burberry-body-eau-de-parfum/3215182"
+          ],
+          "evidenceSource": "nordstrom.com (named tier-2 retailer)",
+          "variantsNotUsed": [
+            "Retailer wording 'wormwood' for absinthe (search only) — not used."
+          ],
+          "referenceAvailability": "Nordstrom lists the reference as no longer available; founder approved preparing the draft (2026-10-13). The Maison supplier catalogue is the sourcing authority; no designer relationship implied.",
+          "evidenceFile": "data/supplier/decisions/wave-9-source-evidence.json (revision 10)"
+        },
+        "profileRationale": {
+          "profile": "Floral Woody",
+          "basis": "Source family wording: feminine and sensual floral-woody.",
+          "season": "Autumn — editorial."
+        },
+        "adapterDerived": {
+          "family": [
+            "Floral",
+            "Woody"
+          ],
+          "scentCharacter": "Balanced Signature",
+          "scores": [
+            2,
+            3,
+            3,
+            3,
+            3
+          ],
+          "scoreOrder": "sweetness, freshness, warmth, intensity, versatility",
+          "method": "adaptFragrance() on the staging entry; draft values equal (validate-batch4-drafts.ts)."
+        },
+        "collisionReview": [
+          "Native burberry-her-inspired, burberry-goddess-inspired (women), burberry-london-inspired (men) — distinct (B4-15)."
+        ],
+        "copyEditsAppliedAfterGeneration": [
+          "description: replaced 'A rose that refuses softness… sharp clarity' (contradicted mood 'Soft').",
+          "recommendedFor[1]: removed 'builds from fresh citrus' (no citrus note) and 'without sweetness'.",
+          "recommendedFor[2]: removed \"Burberry's restrained luxury aesthetic… without changing character\" (brand affiliation + performance)."
+        ],
+        "relationshipProposals": {
+          "alternatives": [
+            "coach-floral-inspired",
+            "miss-dior-inspired"
+          ],
+          "wardrobePartners": [
+            "spicebomb-extreme-inspired"
+          ],
+          "status": "UNVERIFIED_FACTORY_SUGGESTION — not activated; see ledger"
+        },
+        "promotionEligible": true,
+        "promotionEligibilityReason": "Promoted to local native MKC on 2026-10-13 (promotionId vs2VOoUTNI2p); not committed.",
+        "promotionEligiblePreviousRev22": false,
+        "promotionEligibilityReasonPreviousRev22": "Review draft: awaiting founder editorial approval (Gate A) and promotion approval (Gate B).",
+        "founderApproval": {
+          "date": "2026-10-13",
+          "approvedBy": "Founder (Adnaan)",
+          "gateA": {
+            "status": "APPROVED",
+            "wordingVerbatim": "I approve the four reviewed Batch 4 editorial profiles for LOCAL native-catalogue promotion: MEN-9 — 212 Sexy Men Inspired — Skye; MEN-11 — 212 VIP Men Inspired — Skye; LADIES-56 — Burberry Body Inspired — Rose; LADIES-22 — Armani Diamonds Inspired — Rose. MEN-104 Mr Burberry remains on evidence hold. This approval authorises controlled local promotion, required supporting changes and verification only. Do not commit, push, merge or deploy.",
+            "thisRecord": "burberry-body-inspired — LADIES-56-Burberry Body — Rose — Floral Woody"
+          },
+          "localPromotion": "APPROVED (local MKC only)",
+          "commitPushDeploy": "NOT AUTHORISED",
+          "verifiedAtApproval": "Notes match inspected evidence; name/collection/gender correct; scores equal adapter; prices R60/R100/R250; relationships empty; concentration/formulation UNCONFIRMED; claim scan clean.",
+          "notEvidence": "Founder approval is not supplier evidence."
+        },
+        "promotion": {
+          "promotionId": "vs2VOoUTNI2p",
+          "nativePath": "app/lib/mkc/native/burberry-body-inspired.ts",
+          "completedAt": "2026-10-13T20:43:01.362Z",
+          "operator": "Claude Code (founder approval 2026-10-13)",
+          "reviewedBy": "Founder (Adnaan) - approval 2026-10-13",
+          "validationStatus": "PASS",
+          "buildResult": "pass",
+          "workflow": "npm run mkc:review -- --add burberry-body-inspired; --approve burberry-body-inspired; npm run mkc:promote -- --slug burberry-body-inspired (build-only placeholder env for the in-process build)",
+          "base": "d3f423e3f784068618351601c3dda8d846af5a69 (worktree msr-catalogue-wave9-batch4)",
+          "nativeEqualsDraft": "Native body identical to the reviewed draft apart from the type import path (validate-batch4-drafts.ts).",
+          "relationships": "empty — proposals remain UNVERIFIED_FACTORY_SUGGESTION in the ledger",
+          "committed": false
+        }
+      },
+      {
+        "draftSlug": "armani-diamonds-inspired",
+        "supplierIdentityEvidence": {
+          "rawSupplierText": "Armani Diamonds",
+          "sourceKey": "LADIES-22-Armani Diamonds",
+          "supplierCategory": "LADIES",
+          "sourcePage": 1,
+          "identityDecision": "'Armani Diamonds' on the LADIES list → Emporio Armani Diamonds for women (EDP). Distinct from Diamonds for Men, Diamonds Rose EDT, Diamonds Intense, Violet and other flankers.",
+          "supplierConcentration": "NOT_STATED by the supplier; concentration and formulation UNCONFIRMED. The reference edition's format is evidence context only.",
+          "identityConfirmation": "Founder approved draft preparation 2026-10-13 (not promotion approval)."
+        },
+        "commercialFragranceEvidence": {
+          "referenceEditionUsedForEvidence": "Emporio Armani Diamonds Eau de Parfum (women)",
+          "evidenceTier": "PYRAMID_SECONDARY_SUPPORTED",
+          "notesAsDrafted": {
+            "top": [
+              "Lychee",
+              "Raspberry"
+            ],
+            "heart": [
+              "Rose",
+              "Lily of the Valley",
+              "Patchouli",
+              "Freesia"
+            ],
+            "base": [
+              "Vetiver",
+              "Amber",
+              "Vanilla"
+            ]
+          },
+          "sourceWordingVerbatim": {
+            "top": "Lychee, raspberry",
+            "heart": "Rose, lily of the valley, patchouli, freesia",
+            "base": "Vetiver, amber, vanilla",
+            "family": "Fruity Floral"
+          },
+          "namedOrAuthorisedPages": [
+            "https://www.johnlewis.com/emporio-armani-diamonds-eau-de-parfum/p3375503"
+          ],
+          "evidenceSource": "johnlewis.com (major authorised retailer)",
+          "variantsNotUsed": [
+            "Release year: 2008 on John Lewis vs 2007 in search results — research metadata only.",
+            "'Bulgarian rose absolute' wording (search only) — not used."
+          ],
+          "evidenceFile": "data/supplier/decisions/wave-9-source-evidence.json (revision 10)"
+        },
+        "profileRationale": {
+          "profile": "Fruity Floral",
+          "basis": "Source family wording: Fruity Floral.",
+          "season": "Spring — editorial."
+        },
+        "adapterDerived": {
+          "family": [
+            "Floral",
+            "Fruity"
+          ],
+          "scentCharacter": "Balanced Signature",
+          "scores": [
+            2,
+            3,
+            2,
+            2,
+            3
+          ],
+          "scoreOrder": "sweetness, freshness, warmth, intensity, versatility",
+          "method": "adaptFragrance() on the staging entry; draft values equal (validate-batch4-drafts.ts)."
+        },
+        "collisionReview": [
+          "Native armani-si-inspired, armani-code-parfum-inspired, armani-prive-oud-royal-inspired; yellow-diamond-inspired — distinct; 'Diamonds' alone resolves to nothing (B4-16)."
+        ],
+        "copyEditsAppliedAfterGeneration": [
+          "recommendedFor[1]: removed 'works equally well for daily wear and special occasions' (versatility).",
+          "recommendedFor[2]: removed 'without heaviness or excessive sweetness' (absence claim)."
+        ],
+        "relationshipProposals": {
+          "alternatives": [
+            "delina-inspired",
+            "mon-paris-inspired",
+            "very-good-girl-inspired"
+          ],
+          "wardrobePartners": [
+            "aventus-inspired",
+            "sauvage-inspired"
+          ],
+          "status": "UNVERIFIED_FACTORY_SUGGESTION — not activated; see ledger"
+        },
+        "promotionEligible": true,
+        "promotionEligibilityReason": "Promoted to local native MKC on 2026-10-13 (promotionId r6vUlWEadUGe); not committed.",
+        "promotionEligiblePreviousRev22": false,
+        "promotionEligibilityReasonPreviousRev22": "Review draft: awaiting founder editorial approval (Gate A) and promotion approval (Gate B).",
+        "founderApproval": {
+          "date": "2026-10-13",
+          "approvedBy": "Founder (Adnaan)",
+          "gateA": {
+            "status": "APPROVED",
+            "wordingVerbatim": "I approve the four reviewed Batch 4 editorial profiles for LOCAL native-catalogue promotion: MEN-9 — 212 Sexy Men Inspired — Skye; MEN-11 — 212 VIP Men Inspired — Skye; LADIES-56 — Burberry Body Inspired — Rose; LADIES-22 — Armani Diamonds Inspired — Rose. MEN-104 Mr Burberry remains on evidence hold. This approval authorises controlled local promotion, required supporting changes and verification only. Do not commit, push, merge or deploy.",
+            "thisRecord": "armani-diamonds-inspired — LADIES-22-Armani Diamonds — Rose — Fruity Floral"
+          },
+          "localPromotion": "APPROVED (local MKC only)",
+          "commitPushDeploy": "NOT AUTHORISED",
+          "verifiedAtApproval": "Notes match inspected evidence; name/collection/gender correct; scores equal adapter; prices R60/R100/R250; relationships empty; concentration/formulation UNCONFIRMED; claim scan clean.",
+          "notEvidence": "Founder approval is not supplier evidence."
+        },
+        "promotion": {
+          "promotionId": "r6vUlWEadUGe",
+          "nativePath": "app/lib/mkc/native/armani-diamonds-inspired.ts",
+          "completedAt": "2026-10-13T20:44:05.948Z",
+          "operator": "Claude Code (founder approval 2026-10-13)",
+          "reviewedBy": "Founder (Adnaan) - approval 2026-10-13",
+          "validationStatus": "PASS",
+          "buildResult": "pass",
+          "workflow": "npm run mkc:review -- --add armani-diamonds-inspired; --approve armani-diamonds-inspired; npm run mkc:promote -- --slug armani-diamonds-inspired (build-only placeholder env for the in-process build)",
+          "base": "d3f423e3f784068618351601c3dda8d846af5a69 (worktree msr-catalogue-wave9-batch4)",
+          "nativeEqualsDraft": "Native body identical to the reviewed draft apart from the type import path (validate-batch4-drafts.ts).",
+          "relationships": "empty — proposals remain UNVERIFIED_FACTORY_SUGGESTION in the ledger",
+          "committed": false
+        }
+      }
+    ],
+    "held": [
+      {
+        "sourceKey": "MEN-104-Mr Burberry",
+        "rawSupplierText": "Mr Burberry",
+        "status": "EVIDENCE_HOLD",
+        "reason": "Original Mr Burberry EDT: no inspected authorised source gives heart notes (burberry.com EDT page: top grapefruit, base vetiver and guaiac wood only). Macy's 403, Sephora/Notino 403 (2026-10-11), David Jones bot check on an EDP listing, Escentual 404.",
+        "instruction": "Do not substitute notes from Mr Burberry EDP, Indigo, Element or other flankers. Do not re-research during Batch 4 unless new concrete evidence is supplied.",
+        "recordedDate": "2026-10-13"
+      }
+    ],
+    "separateSourceRows": [
+      {
+        "sourceKeys": [
+          "MEN-11-212 VIP Carolina Herrera",
+          "LADIES-6-212 VIP Carolina Herrera"
+        ],
+        "identicalSupplierText": "212 VIP Carolina Herrera",
+        "note": "Two independent supplier rows (MEN list p3, LADIES list p1). MEN-11 prepared as 212 VIP Men; LADIES-6 (women's 212 VIP) is NOT resolved, drafted or closed by this phase."
+      }
+    ],
+    "conciergeNameAliases2026-10-13": {
+      "phase": "W9-B4-P2",
+      "file": "app/lib/concierge/intentResolver.ts (SHORT_NAME_ALIASES)",
+      "aliases": {
+        "212 sexy for men": "212-sexy-men-inspired",
+        "212 men sexy": "212-sexy-men-inspired",
+        "men's 212 sexy": "212-sexy-men-inspired",
+        "mens 212 sexy": "212-sexy-men-inspired",
+        "212 vip for men": "212-vip-men-inspired",
+        "men's 212 vip": "212-vip-men-inspired",
+        "mens 212 vip": "212-vip-men-inspired"
+      },
+      "reason": "Before the change, '212 Sexy for men' and 'the men's 212 Sexy' resolved to the women's 212 Sexy; '212 Men Sexy' (the brand's own name) and '212 VIP for men' resolved to nothing.",
+      "safeguards": "Unqualified '212 Sexy' stays the women's record; '212 VIP' and the supplier text '212 VIP Carolina Herrera' are not aliased (no gender assigned by name). Aliases apply only to live slugs."
     }
   }
 }
