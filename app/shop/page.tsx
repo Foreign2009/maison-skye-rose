@@ -7,10 +7,10 @@ import QuickAddModal from "../components/QuickAddModal";
 import ProductCard from "../components/ProductCard";
 import Footer from "../components/Footer";
 import SearchBar from "../components/SearchBar";
-import { parseIntent, type IntentSignals } from "../lib/intentParser";
+import type { IntentSignals } from "../lib/intentParser";
 import type { DisplayFragrance } from "../lib/knowledgeAdapter";
 import { catalogueMaps } from "../lib/discovery";
-import { recommendFragrances } from "../lib/recommendFragrances";
+import { resolveShopQuery, shopSearchResults } from "../lib/shopSearch";
 import { generateReasons } from "../lib/explainability";
 import { trackDiscovery, trackFilter, trackSort, trackConfidence } from "../lib/analytics";
 import type { AnalyticsSource } from "../lib/analytics";
@@ -126,68 +126,18 @@ export default function ShopPage() {
     }
   }, [isDrawerOpen]);
 
-  // Detect intent signals from the debounced search term.
-  // Returns null in Mode 0 (empty query) and Mode 2 (no signals found).
-  // Non-null value is the reliable Mode 1 indicator for the UI.
-  const detectedSignals = useMemo((): IntentSignals | null => {
-    if (!debouncedSearch.trim()) return null;
-    const signals = parseIntent(debouncedSearch.toLowerCase());
-    // parseIntent always assigns family/vibe/occasion (even as undefined), so
-    // Object.keys is never empty for a non-empty query. Check for defined values instead.
-    return Object.values(signals).some((v) => v !== undefined) ? signals : null;
-  }, [debouncedSearch]);
+  // Resolve the debounced search term: Mode 0 (empty), Mode 1 (intent) or Mode 2 (keyword,
+  // including searches that name catalogue fragrances). detectedSignals is non-null only in
+  // Mode 1 and is the reliable Mode 1 indicator for the UI.
+  const shopQuery = useMemo(() => resolveShopQuery(debouncedSearch), [debouncedSearch]);
+  const detectedSignals: IntentSignals | null = shopQuery.signals;
+  const currentMode = shopQuery.mode;
 
-  const currentMode = useMemo((): 0 | 1 | 2 => {
-    if (!debouncedSearch.trim()) return 0;
-    return detectedSignals !== null ? 1 : 2;
-  }, [debouncedSearch, detectedSignals]);
-
-  // 1. Filtering Logic — three-mode orchestration (Mode 0: empty, Mode 1: intent, Mode 2: keyword)
-  const filtered = useMemo(() => {
-    const searchTerm = debouncedSearch.toLowerCase();
-
-    // Shared tab predicate — applied identically in all three branches
-    const matchesTab = (item: DisplayFragrance): boolean => {
-      if (currentFilter === "All") return true;
-      if (currentFilter === "Skye" || currentFilter === "Rose" || currentFilter === "Elite")
-        return item.collection === currentFilter;
-      if (currentFilter === "Best Sellers") return item.bestSeller;
-      if (currentFilter === "New Arrivals") return item.newArrival;
-      return true;
-    };
-
-    // Mode 0 — Empty query: full catalogue in catalogue order, filtered by active tab
-    if (!searchTerm) {
-      return catalogueMaps.display.filter((item) => matchesTab(item));
-    }
-
-    // Mode 1 — Intent mode: recommendation-ranked results, intersected with active tab
-    if (detectedSignals) {
-      const results = recommendFragrances(catalogueMaps.adapted, detectedSignals);
-      const seen = new Set<string>();
-      const ranked: DisplayFragrance[] = [];
-      for (const f of [results.bestMatch, ...results.similarMatches, results.luxuryUpgrade, results.hiddenGem]) {
-        if (!f || seen.has(f.name)) continue;
-        const display = catalogueMaps.displayByName.get(f.name);
-        if (!display) continue;
-        if (!matchesTab(display)) continue;
-        seen.add(f.name);
-        ranked.push(display);
-      }
-      return ranked;
-    }
-
-    // Mode 2 — Keyword fallback: existing substring search, filtered by active tab
-    return catalogueMaps.display.filter((item) => {
-      const matchesSearch =
-        item.title.toLowerCase().includes(searchTerm) ||
-        item.subtitle?.toLowerCase().includes(searchTerm) ||
-        item.mood?.toLowerCase().includes(searchTerm) ||
-        item.profile?.toLowerCase().includes(searchTerm) ||
-        item.notes?.some((note: string) => note.toLowerCase().includes(searchTerm));
-      return matchesSearch && matchesTab(item);
-    });
-  }, [debouncedSearch, currentFilter, detectedSignals]);
+  // 1. Filtering Logic — three-mode orchestration, intersected with the active tab
+  const filtered = useMemo(
+    () => shopSearchResults(debouncedSearch, shopQuery, currentFilter),
+    [debouncedSearch, shopQuery, currentFilter],
+  );
 
   // 2a. Dimension predicates — applied after search/tab, before sort
   const dimensionFiltered = useMemo((): DisplayFragrance[] => {

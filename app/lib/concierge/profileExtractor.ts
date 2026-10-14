@@ -14,6 +14,7 @@
  */
 
 import type { ConversationProfile, ProfileField, ProfileConfidence, CollectionType } from "./types";
+import { mkcCatalogue } from "../mkc/catalogue";
 
 // ── Vocabulary ────────────────────────────────────────────────────────────────
 
@@ -233,10 +234,24 @@ function extractShoppingContext(q: string): Partial<ConversationProfile> {
 
 // ── Budget extraction ─────────────────────────────────────────────────────────
 
+const BUDGET_PHRASE = /(budget(?:\s+is)?|around|about|under|up to|roughly|spend)\s*(r)?\s*(\d+)/gi;
+const BUDGET_WORD_BEFORE = /\b(budget(?:\s+is)?|spend|pay|price|cost)\s*$/i;
+
+// Numbers that open catalogue fragrance names ("212" in "212 Sexy"). In "tell me about 212
+// Sexy" the number is the fragrance, not an amount, so a bare number like this is only a
+// budget with a rand marker ("about R212") or a budget word ("my budget is about 212").
+const NAME_LEADING_NUMBERS = new Set(
+  mkcCatalogue.map((k) => k.name.split(/\s+/)[0]).filter((t) => /^\d+$/.test(t)),
+);
+
 function extractBudget(q: string): number | undefined {
-  const m =
-    q.match(/(?:budget(?:\s+is)?|around|about|under|up to|roughly|spend)\s*r?\s*(\d+)/i) ??
-    q.match(/\br\s*(\d+)\b/i);
+  for (const m of q.matchAll(BUDGET_PHRASE)) {
+    const [, keyword, rand, digits] = m;
+    const budgetWord = /^(budget|spend)/i.test(keyword) || BUDGET_WORD_BEFORE.test(q.slice(0, m.index));
+    if (!rand && !budgetWord && NAME_LEADING_NUMBERS.has(digits)) continue;
+    return parseInt(digits, 10);
+  }
+  const m = q.match(/\br\s*(\d+)\b/i);
   return m?.[1] ? parseInt(m[1], 10) : undefined;
 }
 
