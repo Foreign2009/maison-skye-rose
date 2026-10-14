@@ -15,6 +15,17 @@ function computeSessionToken(): string {
     .digest("hex");
 }
 
+// Server actions are callable directly, so protecting the /admin page does not protect them:
+// every privileged action must verify the admin session itself, before any order is read,
+// changed or forwarded to the orders API with ADMIN_SECRET. Arguments are never proof of access.
+async function hasAdminSession(): Promise<boolean> {
+  if (!process.env.ADMIN_SECRET) return false;
+  const cookieStore = await cookies();
+  return cookieStore.get("msr-ops-session")?.value === computeSessionToken();
+}
+
+const UNAUTHORIZED = { success: false, message: "Unauthorized." } as const;
+
 export async function loginAction(formData: FormData) {
   const password    = formData.get("password") as string;
   const adminSecret = process.env.ADMIN_SECRET;
@@ -37,7 +48,15 @@ export async function loginAction(formData: FormData) {
 
 export async function logoutAction() {
   const cookieStore = await cookies();
-  cookieStore.delete("msr-ops-session");
+  // The session cookie is set on path "/admin" (loginAction); a delete without the path
+  // expires a different cookie on "/" and leaves the session in place.
+  cookieStore.delete({
+    name:     "msr-ops-session",
+    path:     "/admin",
+    httpOnly: true,
+    secure:   process.env.NODE_ENV === "production",
+    sameSite: "lax",
+  });
   redirect("/admin");
 }
 
@@ -50,6 +69,8 @@ export async function updateStatusAction(
   trackingUrl?:    string,
   courierCost?:    string,
 ): Promise<{ success: boolean; message?: string }> {
+  if (!(await hasAdminSession())) return UNAUTHORIZED;
+
   const adminSecret = process.env.ADMIN_SECRET;
   const baseUrl     = process.env.NEXT_PUBLIC_WEBSITE_URL ?? "http://localhost:3000";
 
@@ -98,6 +119,8 @@ export async function updateNotesAction(
   ref:   string,
   notes: string,
 ): Promise<{ success: boolean; message?: string }> {
+  if (!(await hasAdminSession())) return UNAUTHORIZED;
+
   try {
     const db = getSupabaseAdmin();
     const { error } = await db
@@ -120,14 +143,8 @@ export async function updateCourierCostAction(
 ): Promise<{ success: boolean; message?: string }> {
   // Independent auth check — this action bypasses the PATCH route so
   // it must verify the session cookie itself.
-  const adminSecret = process.env.ADMIN_SECRET;
-  if (!adminSecret) return { success: false, message: "Server misconfiguration." };
-  const expected    = computeSessionToken();
-  const cookieStore = await cookies();
-  const session     = cookieStore.get("msr-ops-session");
-  if (session?.value !== expected) {
-    return { success: false, message: "Unauthorized." };
-  }
+  if (!process.env.ADMIN_SECRET) return { success: false, message: "Server misconfiguration." };
+  if (!(await hasAdminSession())) return UNAUTHORIZED;
 
   // Validate order_ref format before touching the DB.
   if (!/^MSR-\d{8}-\d{5}$/.test(ref)) {
