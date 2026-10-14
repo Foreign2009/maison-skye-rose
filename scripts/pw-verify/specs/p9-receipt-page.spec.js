@@ -222,8 +222,8 @@ test.describe('P9 receipt page — collection / courier / null province', () => 
     // While response is held: confirmed-order claims must NOT be visible.
     // These are the elements that must never appear before the server confirms the order.
     await expect(
-      page.locator('text=Your Order Is Confirmed'),
-      'loading state: confirmed heading not shown'
+      page.locator('text=Your Order Has Been Received'),
+      'loading state: received heading not shown'
     ).not.toBeVisible();
     await expect(
       page.getByText('Banking Details', { exact: true }),

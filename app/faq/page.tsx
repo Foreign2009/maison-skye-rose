@@ -26,7 +26,7 @@ const faqs = [
   {
     question: "How do I place an order?",
     answer:
-      "Simply add products to your cart and complete checkout through WhatsApp. We'll confirm your order and arrange delivery.",
+      "Add your fragrances to your cart and select Checkout. Enter your details and place your order. You'll receive our banking details and an order reference for EFT payment, then you can send your proof of payment via WhatsApp. We'll confirm payment before processing your order. If you'd rather order in conversation, select Order via WhatsApp in your cart and our team will help you complete your order personally.",
   },
   {
     question: "Can I request a fragrance that is not on the website?",

@@ -11,6 +11,7 @@ import { trackPaymentReturnSuccess } from "../lib/analytics";
 import { recordPurchase } from "../lib/customer/sync/CustomerProfileSync";
 import { brand } from "../data/brand";
 import { COLLECTION_PROVINCE, ALL_PROVINCES } from "../lib/commerce/delivery";
+import type { OrderStatus } from "../lib/orderStatus";
 
 const BANKING_DETAILS = {
   bank:          process.env.NEXT_PUBLIC_BANK_NAME           ?? "",
@@ -38,6 +39,26 @@ function getFulfilmentMode(province: string | null | undefined): FulfilmentMode 
   if (!province) return "unknown";
   if (province === COLLECTION_PROVINCE) return "collection";
   if (ALL_PROVINCES.includes(province)) return "delivery";
+  return "unknown";
+}
+
+// The receipt follows the order's recorded payment status: only an order awaiting payment
+// asks for EFT and proof of payment. Statuses are changed by the team in admin, never here.
+type ReceiptPaymentState = "outstanding" | "verified" | "cancelled" | "unknown";
+
+const PAYMENT_VERIFIED_STATUSES: OrderStatus[] = ["payment_confirmed", "processing", "dispatched", "delivered"];
+
+const VERIFIED_STATUS_LABELS: Partial<Record<OrderStatus, string>> = {
+  payment_confirmed: "Payment verified",
+  processing:        "Payment verified · Being prepared",
+  dispatched:        "Payment verified · Dispatched",
+  delivered:         "Payment verified · Delivered",
+};
+
+function getReceiptPaymentState(paymentStatus: string): ReceiptPaymentState {
+  if (paymentStatus === "awaiting_payment") return "outstanding";
+  if (paymentStatus === "cancelled") return "cancelled";
+  if ((PAYMENT_VERIFIED_STATUSES as string[]).includes(paymentStatus)) return "verified";
   return "unknown";
 }
 
@@ -376,6 +397,41 @@ function EFTConfirmationContent({ orderRef }: { orderRef: string }) {
   // confirmation.status === "confirmed"
 
   const fulfilmentMode: FulfilmentMode = getFulfilmentMode(confirmation.province);
+  const paymentState: ReceiptPaymentState = getReceiptPaymentState(confirmation.paymentStatus);
+  const paymentOutstanding = paymentState === "outstanding";
+
+  const nextContact =
+    fulfilmentMode === "collection" ? "to arrange your collection"
+      : fulfilmentMode === "delivery" ? "to arrange delivery"
+        : "";
+  const statusLabel =
+    paymentState === "outstanding" ? "Awaiting payment"
+      : paymentState === "verified" ? (VERIFIED_STATUS_LABELS[confirmation.paymentStatus as OrderStatus] ?? "Payment verified")
+        : paymentState === "cancelled" ? "Cancelled"
+          : "Please contact us";
+  // Each verified stage says only what the recorded status supports: no tracking, dates or
+  // collection completion are implied.
+  const inTouch = nextContact ? ` We'll be in touch ${nextContact}.` : " We'll be in touch with the next steps.";
+  const verifiedText: Record<string, string> = {
+    payment_confirmed: `Thank you — your payment has been confirmed and your order will now move into preparation.${inTouch}`,
+    processing:        `Thank you — your payment has been verified and your order is being prepared.${inTouch}`,
+    dispatched:        "Thank you — your payment has been verified and your order has been dispatched. If you have any questions about your order, please contact us.",
+    delivered:         "Thank you — your payment has been verified and your order is recorded as delivered. If anything isn't right, please contact us.",
+  };
+  const introText =
+    paymentState === "outstanding"
+      ? "We're grateful for your trust. Payment is still outstanding — complete your EFT using the banking details below, then send us your proof of payment via WhatsApp. We'll process your order once your payment has been verified."
+      : paymentState === "verified"
+        ? (verifiedText[confirmation.paymentStatus] ?? "Thank you — your payment has been verified.")
+        : paymentState === "cancelled"
+          ? "This order has been cancelled. If you have already paid, or believe this is a mistake, please contact us."
+          : "We couldn't confirm the payment status of this order. Please contact us before making a payment.";
+  // Cancelled and unconfirmed states use a neutral mark, never the green success tick.
+  const neutralState = paymentState === "cancelled" || paymentState === "unknown";
+
+  const contactUrl = buildContactUrl(
+    `Hi Maison Skye & Rose! 🌸\n\nI have a question about my order ${orderRef}.`
+  );
 
   const whatsappMessage = encodeURIComponent(
     `Hi Maison Skye & Rose! 🌸\n\nI've placed an order and am sending proof of payment.\n\nOrder Reference: ${orderRef}\nAmount: R${confirmation.total.toFixed(2)}\n\nPlease find my proof of payment attached. Thank you!`
@@ -401,51 +457,67 @@ function EFTConfirmationContent({ orderRef }: { orderRef: string }) {
         transition={{ duration: 0.5 }}
         className="text-center"
       >
-        <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-[#dff6e4]">
-          <span className="text-4xl" aria-hidden="true">✓</span>
-        </div>
-        <p className="text-xs uppercase tracking-[0.45em] text-[#7bb78a]">
-          Order Confirmed
+        {neutralState ? (
+          <div data-testid="receipt-state-mark" data-state="neutral" className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-[#f1efed]">
+            <span className="text-3xl text-[#7b7480]" aria-hidden="true">{paymentState === "cancelled" ? "✕" : "?"}</span>
+          </div>
+        ) : (
+          <div data-testid="receipt-state-mark" data-state="received" className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-[#dff6e4]">
+            <span className="text-4xl" aria-hidden="true">✓</span>
+          </div>
+        )}
+        <p className={`text-xs uppercase tracking-[0.45em] ${neutralState ? "text-[#9b9298]" : "text-[#7bb78a]"}`}>
+          {paymentState === "cancelled" ? "Order Cancelled" : "Order Received"}
         </p>
         <h1 className="mt-4 text-4xl font-black leading-tight tracking-[-0.05em] text-[#4f4a52] md:text-5xl">
-          Your Order<br />Is Confirmed
+          {paymentState === "cancelled"
+            ? <>This Order<br />Has Been Cancelled</>
+            : <>Your Order<br />Has Been Received</>}
         </h1>
+        <p
+          data-testid="receipt-payment-status"
+          className={`mx-auto mt-5 inline-flex rounded-full px-4 py-1.5 text-xs font-semibold ${
+            paymentOutstanding ? "bg-[#fdf3e7] text-[#a86b2d]" : "bg-[#f1efed] text-[#4f4a52]"
+          }`}
+        >
+          Payment status: {statusLabel}
+        </p>
         <p className="mx-auto mt-5 max-w-md text-base leading-relaxed text-[#7b7480]">
-          We&apos;re grateful for your trust. Your order is now in our care —
-          complete the payment details below and send us proof via WhatsApp,
-          and we&apos;ll take care of everything from there.
+          {introText}
         </p>
       </motion.div>
 
-      {/* What Happens Next */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.1 }}
-        className="mt-10"
-      >
-        <p className="text-[10px] font-semibold uppercase tracking-[0.45em] text-[#7bb78a]">
-          What Happens Next
-        </p>
-        <div className="mt-5 space-y-4">
-          {[
-            "Complete your EFT using the banking details below.",
-            "Send us proof of payment via WhatsApp — the button is ready for you.",
-            fulfilmentMode === "collection"
-              ? "We confirm your payment and contact you to arrange collection."
-              : fulfilmentMode === "delivery"
-                ? "We confirm your payment and arrange delivery with care."
-                : "We confirm your payment and will be in touch.",
-          ].map((step, i) => (
-            <div key={i} className="flex items-start gap-4">
-              <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#dff6e4] text-xs font-bold text-[#7bb78a]">
-                {i + 1}
-              </span>
-              <p className="pt-0.5 text-sm leading-relaxed text-[#7b7480]">{step}</p>
-            </div>
-          ))}
-        </div>
-      </motion.div>
+      {/* What Happens Next — only while payment is outstanding */}
+      {paymentOutstanding && (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+          className="mt-10"
+        >
+          <p className="text-[10px] font-semibold uppercase tracking-[0.45em] text-[#7bb78a]">
+            What Happens Next
+          </p>
+          <div className="mt-5 space-y-4">
+            {[
+              "Complete your EFT using the banking details below.",
+              "Send us proof of payment via WhatsApp — the button is ready for you.",
+              fulfilmentMode === "collection"
+                ? "We confirm your payment and contact you to arrange collection."
+                : fulfilmentMode === "delivery"
+                  ? "We confirm your payment and arrange delivery with care."
+                  : "We confirm your payment and will be in touch.",
+            ].map((step, i) => (
+              <div key={i} className="flex items-start gap-4">
+                <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#dff6e4] text-xs font-bold text-[#7bb78a]">
+                  {i + 1}
+                </span>
+                <p className="pt-0.5 text-sm leading-relaxed text-[#7b7480]">{step}</p>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+      )}
 
       {/* Order Summary */}
       <motion.div
@@ -464,10 +536,10 @@ function EFTConfirmationContent({ orderRef }: { orderRef: string }) {
           <CopyButton value={orderRef} />
         </div>
 
-        {/* Amount Due — sourced from the server, never from the URL */}
+        {/* Amount — sourced from the server, never from the URL */}
         <div className="mt-4 flex items-center justify-between gap-4 border-t pt-4">
           <div>
-            <p className="text-[10px] uppercase tracking-[0.3em] text-[#9b9298]">Amount Due</p>
+            <p className="text-[10px] uppercase tracking-[0.3em] text-[#9b9298]">{paymentOutstanding ? "Amount Due" : "Order Total"}</p>
             <p className="mt-0.5 text-2xl font-black text-[#4f4a52]">
               R{confirmation.total.toFixed(2)}
             </p>
@@ -476,35 +548,37 @@ function EFTConfirmationContent({ orderRef }: { orderRef: string }) {
         </div>
       </motion.div>
 
-      {/* Banking Details */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.3 }}
-        className="mt-5 rounded-[28px] bg-white p-7 shadow-[0_8px_40px_rgba(0,0,0,0.06)]"
-      >
-        <p className="text-[10px] font-semibold uppercase tracking-[0.45em] text-[#d89ca4]">
-          Banking Details
-        </p>
-        <div className="mt-5 space-y-3">
-          {bankingRows.map(({ label, value, copyable, highlight }) => (
-            <div
-              key={label}
-              className={`flex items-center justify-between gap-4 rounded-2xl px-5 py-4 ${
-                highlight ? "border border-[#e8dfd6] bg-[#faf7f3]" : "bg-[#faf9f8]"
-              }`}
-            >
-              <div className="min-w-0">
-                <p className="text-[10px] uppercase tracking-[0.3em] text-[#9b9298]">{label}</p>
-                <p className={`mt-0.5 truncate text-sm font-bold ${highlight ? "text-[#d89ca4]" : "text-[#4f4a52]"}`}>
-                  {value}
-                </p>
+      {/* Banking Details — only while payment is outstanding */}
+      {paymentOutstanding && (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+          className="mt-5 rounded-[28px] bg-white p-7 shadow-[0_8px_40px_rgba(0,0,0,0.06)]"
+        >
+          <p className="text-[10px] font-semibold uppercase tracking-[0.45em] text-[#d89ca4]">
+            Banking Details
+          </p>
+          <div className="mt-5 space-y-3">
+            {bankingRows.map(({ label, value, copyable, highlight }) => (
+              <div
+                key={label}
+                className={`flex items-center justify-between gap-4 rounded-2xl px-5 py-4 ${
+                  highlight ? "border border-[#e8dfd6] bg-[#faf7f3]" : "bg-[#faf9f8]"
+                }`}
+              >
+                <div className="min-w-0">
+                  <p className="text-[10px] uppercase tracking-[0.3em] text-[#9b9298]">{label}</p>
+                  <p className={`mt-0.5 truncate text-sm font-bold ${highlight ? "text-[#d89ca4]" : "text-[#4f4a52]"}`}>
+                    {value}
+                  </p>
+                </div>
+                {copyable && <CopyButton value={value} />}
               </div>
-              {copyable && <CopyButton value={value} />}
-            </div>
-          ))}
-        </div>
-      </motion.div>
+            ))}
+          </div>
+        </motion.div>
+      )}
 
       {/* Actions */}
       <motion.div
@@ -514,13 +588,13 @@ function EFTConfirmationContent({ orderRef }: { orderRef: string }) {
         className="mt-8 space-y-4"
       >
         <a
-          href={whatsappUrl}
+          href={paymentOutstanding ? whatsappUrl : contactUrl}
           target="_blank"
           rel="noopener noreferrer"
           className="flex w-full items-center justify-center gap-3 rounded-full bg-[#25D366] py-5 font-bold text-white transition-all duration-300 hover:bg-[#1ebe59] hover:scale-[1.01]"
         >
           <MessageCircle size={20} />
-          Send Proof of Payment via WhatsApp
+          {paymentOutstanding ? "Send Proof of Payment via WhatsApp" : "Contact us about this order"}
         </a>
 
         <Link
@@ -531,19 +605,18 @@ function EFTConfirmationContent({ orderRef }: { orderRef: string }) {
         </Link>
       </motion.div>
 
-      <motion.p
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5, delay: 0.5 }}
-        className="mt-8 text-center text-xs leading-relaxed text-[#9b9298]"
-      >
-        {fulfilmentMode === "collection"
-          ? "Please complete your payment within 24 hours to secure your order. Once confirmed, we'll be in touch to arrange your collection."
-          : fulfilmentMode === "delivery"
-            ? "Please complete your payment within 24 hours to secure your order. Once confirmed, we'll be in touch to arrange delivery."
-            : "Please complete your payment within 24 hours to secure your order. Once confirmed, we'll be in touch."
-        }
-      </motion.p>
+      {/* A courtesy request (EP2-P5B), not an automatic expiry: nothing cancels an order or reserves stock here. */}
+      {paymentOutstanding && (
+        <motion.p
+          data-testid="receipt-footer-note"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.5 }}
+          className="mt-8 text-center text-xs leading-relaxed text-[#9b9298]"
+        >
+          {`Please complete your payment within 24 hours. Once your payment has been verified, we'll be in touch${nextContact ? ` ${nextContact}` : ""}.`}
+        </motion.p>
+      )}
 
     </section>
   );

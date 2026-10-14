@@ -125,7 +125,7 @@ test.describe('P10 receipt states — loading and error states', () => {
     await expect(page.locator('text=Loading your order details')).toBeVisible();
 
     // None of these must be present while loading
-    await expect(page.locator('h1:has-text("Is Confirmed")')).not.toBeVisible();
+    await expect(page.locator('h1:has-text("Has Been Received")')).not.toBeVisible();
     await expect(page.locator('text="Banking Details"')).not.toBeVisible();
     await expect(page.locator('text=Send Proof of Payment via WhatsApp')).not.toBeVisible();
     await expect(page.locator('text=What Happens Next')).not.toBeVisible();
@@ -133,7 +133,7 @@ test.describe('P10 receipt states — loading and error states', () => {
     // Release and verify confirmed state loads correctly
     resolveResponse();
     await waitForConfirmed(page);
-    await expect(page.locator('h1:has-text("Is Confirmed")')).toBeVisible();
+    await expect(page.locator('h1:has-text("Has Been Received")')).toBeVisible();
   });
 
   // ── 2. 401: no confirmed-order claims ──────────────────────────────────────
@@ -148,7 +148,7 @@ test.describe('P10 receipt states — loading and error states', () => {
     ).toBeVisible({ timeout: 10_000 });
 
     // No confirmed-order claims
-    await expect(page.locator('h1:has-text("Is Confirmed")')).not.toBeVisible();
+    await expect(page.locator('h1:has-text("Has Been Received")')).not.toBeVisible();
 
     // No payment instructions
     await expect(page.locator('text="Banking Details"')).not.toBeVisible();
@@ -204,7 +204,7 @@ test.describe('P10 receipt states — loading and error states', () => {
       page.locator("text=This doesn't look like a valid receipt link.")
     ).toBeVisible({ timeout: 10_000 });
 
-    await expect(page.locator('h1:has-text("Is Confirmed")')).not.toBeVisible();
+    await expect(page.locator('h1:has-text("Has Been Received")')).not.toBeVisible();
     await expect(page.locator('text="Banking Details"')).not.toBeVisible();
     await expect(page.locator('text=Send Proof of Payment via WhatsApp')).not.toBeVisible();
   });
@@ -220,7 +220,7 @@ test.describe('P10 receipt states — loading and error states', () => {
       page.locator("text=This doesn't look like a valid receipt link.")
     ).toBeVisible({ timeout: 10_000 });
 
-    await expect(page.locator('h1:has-text("Is Confirmed")')).not.toBeVisible();
+    await expect(page.locator('h1:has-text("Has Been Received")')).not.toBeVisible();
   });
 
   // ── 6. 404: not-found state ────────────────────────────────────────────────
@@ -233,7 +233,7 @@ test.describe('P10 receipt states — loading and error states', () => {
       page.locator("text=We couldn't find this receipt.")
     ).toBeVisible({ timeout: 10_000 });
 
-    await expect(page.locator('h1:has-text("Is Confirmed")')).not.toBeVisible();
+    await expect(page.locator('h1:has-text("Has Been Received")')).not.toBeVisible();
     await expect(page.locator('text="Banking Details"')).not.toBeVisible();
 
     expect(getCount(), 'interceptor ran').toBeGreaterThan(0);
@@ -252,7 +252,7 @@ test.describe('P10 receipt states — loading and error states', () => {
     await expect(page.locator('button:has-text("Try again")')).toBeVisible();
 
     // No order-confirmed claims or payment instructions
-    await expect(page.locator('h1:has-text("Is Confirmed")')).not.toBeVisible();
+    await expect(page.locator('h1:has-text("Has Been Received")')).not.toBeVisible();
     await expect(page.locator('text="Banking Details"')).not.toBeVisible();
     await expect(page.locator('text=Send Proof of Payment via WhatsApp')).not.toBeVisible();
 
@@ -275,7 +275,7 @@ test.describe('P10 receipt states — loading and error states', () => {
     ).toBeVisible({ timeout: 10_000 });
 
     await expect(page.locator('button:has-text("Try again")')).toBeVisible();
-    await expect(page.locator('h1:has-text("Is Confirmed")')).not.toBeVisible();
+    await expect(page.locator('h1:has-text("Has Been Received")')).not.toBeVisible();
 
     expect(interceptCount > 0, 'interceptor ran').toBe(true);
   });
@@ -316,7 +316,7 @@ test.describe('P10 receipt states — loading and error states', () => {
 
     // Loading state appears briefly, then confirmed state
     await waitForConfirmed(page);
-    await expect(page.locator('h1:has-text("Is Confirmed")')).toBeVisible();
+    await expect(page.locator('h1:has-text("Has Been Received")')).toBeVisible();
     await expect(page.locator('text="Banking Details"')).toBeVisible();
 
     expect(callCount, 'two API calls made (fail + retry)').toBe(2);
@@ -332,7 +332,7 @@ test.describe('P10 receipt states — P9 confirmed-state regression', () => {
     await page.goto(RECEIPT_URL);
     await waitForConfirmed(page);
 
-    await expect(page.locator('h1:has-text("Is Confirmed")')).toBeVisible();
+    await expect(page.locator('h1:has-text("Has Been Received")')).toBeVisible();
     await expect(page.locator('text="Banking Details"')).toBeVisible();
 
     const steps = await page.locator('text=We confirm your payment').allTextContents();
@@ -352,7 +352,7 @@ test.describe('P10 receipt states — P9 confirmed-state regression', () => {
     await page.goto(RECEIPT_URL);
     await waitForConfirmed(page);
 
-    await expect(page.locator('h1:has-text("Is Confirmed")')).toBeVisible();
+    await expect(page.locator('h1:has-text("Has Been Received")')).toBeVisible();
 
     const steps = await page.locator('text=We confirm your payment').allTextContents();
     const step3 = steps.find(s => s.includes('We confirm'));
@@ -462,7 +462,7 @@ test.describe('P10 receipt states — reference binding and replay prevention', 
     // Step 1: load ref A — confirmed
     await page.goto(`${BASE}/payment-success?ref=${TEST_REF}`);
     await page.waitForSelector('text=R60.00', { timeout: 10_000 });
-    await expect(page.locator('h1:has-text("Is Confirmed")')).toBeVisible();
+    await expect(page.locator('h1:has-text("Has Been Received")')).toBeVisible();
 
     // Step 2: navigate to ref B (held) — loading state
     await page.goto(`${BASE}/payment-success?ref=${TEST_REF_B}`);
@@ -472,12 +472,12 @@ test.describe('P10 receipt states — reference binding and replay prevention', 
     await expect(page.locator('text=R60.00')).not.toBeVisible();
     await expect(page.locator('text=Send Proof of Payment via WhatsApp')).not.toBeVisible();
     await expect(page.locator(`text=${TEST_REF}`)).not.toBeVisible();
-    await expect(page.locator('h1:has-text("Is Confirmed")')).not.toBeVisible();
+    await expect(page.locator('h1:has-text("Has Been Received")')).not.toBeVisible();
 
     // Release ref B → confirmed with ref-B data
     resolveB();
     await page.waitForSelector('text=R99.00', { timeout: 10_000 });
-    await expect(page.locator('h1:has-text("Is Confirmed")')).toBeVisible();
+    await expect(page.locator('h1:has-text("Has Been Received")')).toBeVisible();
     await expect(page.locator(`text=${TEST_REF_B}`).first()).toBeVisible();
   });
 
@@ -537,7 +537,7 @@ test.describe('P10 receipt states — reference binding and replay prevention', 
     // Step 1: full load of ref A → confirmed
     await page.goto(`${BASE}/payment-success?ref=${TEST_REF}`);
     await page.waitForSelector('text=R60.00', { timeout: 10_000 });
-    await expect(page.locator('h1:has-text("Is Confirmed")')).toBeVisible();
+    await expect(page.locator('h1:has-text("Has Been Received")')).toBeVisible();
 
     // Set a pending-purchase marker for B in localStorage (simulates a real checkout)
     await page.evaluate(([ref, val]) => {
@@ -558,7 +558,7 @@ test.describe('P10 receipt states — reference binding and replay prevention', 
     await expect(page.locator('text=R60.00')).not.toBeVisible();
     await expect(page.locator('text=Send Proof of Payment via WhatsApp')).not.toBeVisible();
     await expect(page.locator(`text=${TEST_REF}`)).not.toBeVisible();
-    await expect(page.locator('h1:has-text("Is Confirmed")')).not.toBeVisible();
+    await expect(page.locator('h1:has-text("Has Been Received")')).not.toBeVisible();
 
     // recordPurchase must not have fired yet — B's pending key still in localStorage
     const keyDuringLoad = await page.evaluate((ref) => {
@@ -569,7 +569,7 @@ test.describe('P10 receipt states — reference binding and replay prevention', 
     // Step 3: release B → confirmed
     resolveBFn();
     await page.waitForSelector('text=R99.00', { timeout: 10_000 });
-    await expect(page.locator('h1:has-text("Is Confirmed")')).toBeVisible();
+    await expect(page.locator('h1:has-text("Has Been Received")')).toBeVisible();
     await expect(page.locator(`text=${TEST_REF_B}`).first()).toBeVisible();
 
     // After B confirms: recordPurchase fires, pending key is removed
@@ -633,7 +633,7 @@ test.describe('P10 receipt states — reference binding and replay prevention', 
 
     // B responds immediately → confirmed
     await page.waitForSelector('text=R99.00', { timeout: 10_000 });
-    await expect(page.locator('h1:has-text("Is Confirmed")')).toBeVisible();
+    await expect(page.locator('h1:has-text("Has Been Received")')).toBeVisible();
     await expect(page.locator(`text=${TEST_REF_B}`).first()).toBeVisible();
 
     // Step 3: release A's late response (stale + abort discard it)
@@ -684,7 +684,7 @@ test.describe('P10 receipt states — reference binding and replay prevention', 
     // Release retry response → confirmed
     resolveRetry();
     await waitForConfirmed(page);
-    await expect(page.locator('h1:has-text("Is Confirmed")')).toBeVisible();
+    await expect(page.locator('h1:has-text("Has Been Received")')).toBeVisible();
 
     expect(callCount, 'two total calls: initial 500 + one retry').toBe(2);
   });

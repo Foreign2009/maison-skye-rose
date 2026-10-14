@@ -201,7 +201,7 @@ test("T1: courier order — browser POST issues receipt cookie; receipt renders 
   // React calls fetch('/api/orders/${ref}') client-side.
   // The browser automatically includes the HttpOnly cookie — no page.evaluate needed.
   await page.goto(`/payment-success?ref=${orderRef}`);
-  await page.waitForSelector("h1:has-text(\"Is Confirmed\")", { timeout: 45_000 });
+  await page.waitForSelector("h1:has-text(\"Has Been Received\")", { timeout: 45_000 });
   await expect(page.locator("text=R160.00")).toBeVisible();
   // Use exact text match — "banking details" (lowercase) also appears in the
   // "What Happens Next" step text, causing an ambiguous locator in strict mode.
@@ -233,11 +233,11 @@ test("T2: page reload retains receipt access (browser resends stored cookie)", a
   }
 
   await page.goto(`/payment-success?ref=${orderRef}`);
-  await page.waitForSelector("h1:has-text(\"Is Confirmed\")", { timeout: 45_000 });
+  await page.waitForSelector("h1:has-text(\"Has Been Received\")", { timeout: 45_000 });
 
   // Reload — browser resends the stored cookie for the same origin.
   await page.reload();
-  await page.waitForSelector("h1:has-text(\"Is Confirmed\")", { timeout: 45_000 });
+  await page.waitForSelector("h1:has-text(\"Has Been Received\")", { timeout: 45_000 });
   await expect(page.locator("text=R160.00")).toBeVisible();
 
   console.log(`T2 PASS: receipt ${orderRef} accessible after page reload`);
@@ -261,7 +261,7 @@ test("T3: collection order — receipt renders server-confirmed amount and colle
   }
 
   await page.goto(`/payment-success?ref=${orderRef}`);
-  await page.waitForSelector("h1:has-text(\"Is Confirmed\")", { timeout: 45_000 });
+  await page.waitForSelector("h1:has-text(\"Has Been Received\")", { timeout: 45_000 });
   await expect(page.locator("text=R60.00")).toBeVisible();
 
   const bodyText = await page.textContent("body");
@@ -282,7 +282,7 @@ test("T4: fresh browser context without receipt cookie — access-error UI, no c
   const orderRef = result.data.orderRef;
 
   await page.goto(`/payment-success?ref=${orderRef}`);
-  await page.waitForSelector("h1:has-text(\"Is Confirmed\")", { timeout: 45_000 });
+  await page.waitForSelector("h1:has-text(\"Has Been Received\")", { timeout: 45_000 });
 
   // Open a fresh browser context — no cookies carried over.
   // isolateContext() is applied before any navigation.
@@ -299,7 +299,7 @@ test("T4: fresh browser context without receipt cookie — access-error UI, no c
   );
 
   // No confirmation content should be present.
-  await expect(freshPage.locator("h1:has-text(\"Is Confirmed\")")).not.toBeVisible();
+  await expect(freshPage.locator("h1:has-text(\"Has Been Received\")")).not.toBeVisible();
   await expect(freshPage.getByText("Banking Details", { exact: true })).not.toBeVisible();
   await expect(freshPage.locator("text=Send Proof of Payment via WhatsApp")).not.toBeVisible();
   await expect(freshPage.locator("text=R160.00")).not.toBeVisible();
@@ -341,7 +341,7 @@ test("T5: two orders in the same browser context — each receipt independently 
 
   // Access receipt A — browser sends msr_receipt_${refA} automatically.
   await page.goto(`/payment-success?ref=${refA}`);
-  await page.waitForSelector("h1:has-text(\"Is Confirmed\")", { timeout: 45_000 });
+  await page.waitForSelector("h1:has-text(\"Has Been Received\")", { timeout: 45_000 });
   await expect(page.locator("text=R160.00")).toBeVisible();
 
   const bodyA = await page.textContent("body");
@@ -349,7 +349,7 @@ test("T5: two orders in the same browser context — each receipt independently 
 
   // Access receipt B — browser sends msr_receipt_${refB} automatically.
   await page.goto(`/payment-success?ref=${refB}`);
-  await page.waitForSelector("h1:has-text(\"Is Confirmed\")", { timeout: 45_000 });
+  await page.waitForSelector("h1:has-text(\"Has Been Received\")", { timeout: 45_000 });
   await expect(page.locator("text=R60.00")).toBeVisible();
 
   const bodyB = await page.textContent("body");

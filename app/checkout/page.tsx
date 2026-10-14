@@ -669,18 +669,26 @@ export default function CheckoutPage() {
             </div>
           )}
 
+          {/* How payment works — explained before the order is placed; banking details follow on the receipt */}
+          <div data-testid="checkout-payment-note" className="mt-8 rounded-2xl bg-[#faf7f3] px-5 py-4">
+            <p className="text-sm font-semibold text-[#4f4a52]">Payment by EFT</p>
+            <p className="mt-1 text-sm leading-relaxed text-[#7b7480]">
+              After placing your order, you&apos;ll receive our banking details, your order reference and the final amount due. Use your order reference when making payment, then send your proof of payment via WhatsApp. We&apos;ll process your order once payment has been verified.
+            </p>
+          </div>
+
           <button
             onClick={handlePayment}
             disabled={loading}
-            className="mt-10 w-full rounded-full bg-[#4f4a52] py-5 font-bold text-white transition-all duration-300 hover:bg-black hover:scale-[1.01] focus:outline-none focus:ring-2 focus:ring-[#4f4a52] focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+            className="mt-6 w-full rounded-full bg-[#4f4a52] py-5 font-bold text-white transition-all duration-300 hover:bg-black hover:scale-[1.01] focus:outline-none focus:ring-2 focus:ring-[#4f4a52] focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
           >
             {loading
               ? (frozen ? "Retrying Order..." : "Placing Order...")
               : (frozen ? "Retry original order" : "Place Order")}
           </button>
 
-          <p className="mt-5 text-center text-xs leading-relaxed text-[#9b9298]">
-            Your order is confirmed the moment it&apos;s placed. We&apos;ll be in touch to confirm and arrange delivery with care.
+          <p data-testid="checkout-order-note" className="mt-5 text-center text-xs leading-relaxed text-[#9b9298]">
+            Your order will be received when you select Place Order. Payment is still required before processing begins.
           </p>
 
         </div>
