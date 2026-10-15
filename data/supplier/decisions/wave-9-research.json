@@ -38,7 +38,10 @@
         "Revision 19 (2026-10-12, W9-B3-P5): founder Gate A (formal editorial) and Gate B (local promotion) approval recorded verbatim; 212-sexy-inspired (qtIrpscU3rOS), vetiver-golden-vanilla-inspired (r1wFqFDipHB-), wonderlust-by-michael-kors-inspired (Ni0Ddu1ngG_v), prada-candy-inspired (4fga0yKIoLtD) promoted to local native MKC via mkc:review/mkc:promote with explicit slugs; native measured 277 (Skye 110, Rose 117, Elite 50). Gate C not authorised. Not committed.",
         "Revision 20 (2026-10-12, W9-B3-P8): founder availability clarification recorded verbatim for 212-sexy, vetiver-golden-vanilla, wonderlust and prada-candy ('All the fragrances are available and I am able to get them.'); business model recorded (Maison sources materials and prepares/packages 5/10/30 ml at R60/R100/R250). Earlier availability questions and the draft supplier message superseded. Concentration and formulation remain UNCONFIRMED. No catalogue change.",
         "Revision 21 (2026-10-13, W9-B4-P1): Batch 4 review drafts 212-sexy-men (MEN-9), 212-vip-men (MEN-11), burberry-body (LADIES-56), armani-diamonds (LADIES-22) prepared under founder approval for draft preparation only; MEN-104 Mr Burberry evidence hold; LADIES-6 kept independent of MEN-11. Not promoted; native 277. Not committed.",
-        "Revision 22 (2026-10-13, W9-B4-P2): founder Gate A + local promotion approval (verbatim); 212-sexy-men-inspired (z_YPEcKECGZP), 212-vip-men-inspired (bMIOm5sC_kJG), burberry-body-inspired (vs2VOoUTNI2p), armani-diamonds-inspired (r6vUlWEadUGe) promoted to local native MKC; native measured 281 (Skye 112, Rose 119, Elite 50). Gender-qualified 212 aliases added to the Concierge resolver. MEN-104 hold, LADIES-6 independence and MEN-7/MEN-8 observations unchanged. Not committed."
+        "Revision 22 (2026-10-13, W9-B4-P2): founder Gate A + local promotion approval (verbatim); 212-sexy-men-inspired (z_YPEcKECGZP), 212-vip-men-inspired (bMIOm5sC_kJG), burberry-body-inspired (vs2VOoUTNI2p), armani-diamonds-inspired (r6vUlWEadUGe) promoted to local native MKC; native measured 281 (Skye 112, Rose 119, Elite 50). Gender-qualified 212 aliases added to the Concierge resolver. MEN-104 hold, LADIES-6 independence and MEN-7/MEN-8 observations unchanged. Not committed.",
+        "Revision 23 (2026-10-15, W9-B5-P1): Batch 5 evidence gate - MEN-145, LADIES-296 and UNISEX-31 held on evidence, UNISEX-80 held on identity ('Tuxedo Sharp Patchouli' is an official YSL name). No drafts. Evidence revision 11.",
+        "Revision 24 (2026-10-15, W9-B5-P1B): official-source reassessment - This Is Him! (tier-1 labelled pyramid) and This Is Her! (tier-1 sequenced pyramid; EDT/EDP wording conflict on brand pages, founder item) cleared for local drafting; Tuxedo Sharp Patchouli (official page blocked) and Oud Maracuja (unordered brand materials) remain held. Drafts this-is-him-inspired and this-is-her-inspired created locally; not promoted.",
+        "Revision 25 (2026-10-15, W9-B5-P3): additive clarification - LADIES-296 reference concentration recorded as unresolved (50 ml page 'Eau de Parfum', 100 ml page 'Eau de Toilette'); identity/remainingUncertainty wording that implied EDP kept under *PreviousRev25; projection-metadata caveat recorded. No evidence, tier, note or decision changes."
       ]
     },
     "supportingEvidenceFiles": [
@@ -3630,6 +3633,113 @@
       },
       "reason": "Before the change, '212 Sexy for men' and 'the men's 212 Sexy' resolved to the women's 212 Sexy; '212 Men Sexy' (the brand's own name) and '212 VIP for men' resolved to nothing.",
       "safeguards": "Unqualified '212 Sexy' stays the women's record; '212 VIP' and the supplier text '212 VIP Carolina Herrera' are not aliased (no gender assigned by name). Aliases apply only to live slugs."
+    }
+  },
+  "batch5": {
+    "_meta": {
+      "phase": "W9-B5-P1",
+      "date": "2026-10-15",
+      "founderApproval": "Four candidates approved for evidence-gated LOCAL drafting only; no promotion.",
+      "baseline": "7b9b2da97cfd011b66bbd773f29578373e3dacec",
+      "evidencePolicy": "_meta.evidenceTierPolicy (PYRAMID_SECONDARY_SUPPORTED requires an inspected tier-1 page or tier-2 source with a full pyramid; search summaries and blocked fetches are not evidence).",
+      "outcome": "ALL HELD - no drafts created.",
+      "evidenceFetchRevision": 11
+    },
+    "candidates": [
+      {
+        "sourceKey": "MEN-145-Zadig & Voltaire / This is Him",
+        "supplierText": "Zadig & Voltaire / This is Him",
+        "status": "EVIDENCE_HOLD",
+        "reason": "Only tiered source inspected is Lookfantastic (authorised status not verified; Wave 9 precedent does not accept it alone): Grapefruit / Vanilla / Sandalwood, Woody Spicy, EDT. Dis-Chem brand copy (inspected) gives chestnut and incense as the This is Him! heart notes - a tier conflict. The Perfume Shop 403; Boots bot check. Incense appears only in copy/community sources and is not added to any tier.",
+        "nextStep": "Draft only after an inspected tier-1 page or authorised tier-2 source with a full pyramid resolves the heart (vanilla vs chestnut/incense).",
+        "stock": "SUPPLIER_LISTED - current availability not verified"
+      },
+      {
+        "sourceKey": "LADIES-296-Zadig & Voltaire / This is Her",
+        "supplierText": "Zadig & Voltaire / This is Her",
+        "status": "EVIDENCE_HOLD",
+        "reason": "Only tiered source inspected is Lookfantastic (authorised status not verified): Jasmine / Vanilla, Chestnut / Sandalwood, Floral Woody, EDP; pink pepper not present. Dis-Chem brand copy (inspected, untiered) attributes chestnut to This is Him! and names 'jasmine Sambac' and 'rose bay' - unresolved conflict. The Perfume Shop and Notino 403.",
+        "nextStep": "Draft only after an inspected tier-1 page or authorised tier-2 source confirms the pyramid, including the chestnut placement.",
+        "stock": "SUPPLIER_LISTED - current availability not verified"
+      },
+      {
+        "sourceKey": "UNISEX-80-YSL Tuxedo Sharp Patchouli",
+        "supplierText": "YSL Tuxedo Sharp Patchouli",
+        "status": "IDENTITY_HOLD_FOUNDER_CONFIRMATION_REQUIRED",
+        "reason": "'Tuxedo Sharp Patchouli' is a current official YSL product name (tier-1 yslbeauty.ae URL; Bloomingdale's Kuwait title), not a supplier descriptor. The inspected Brown Thomas page gives the 2015-named Tuxedo EDP pyramid. No inspected tier-1/tier-2 page states that Tuxedo Sharp Patchouli is the same composition (a supplementary review site describes it as a renamed, apparently unchanged Tuxedo - not admissible on its own).",
+        "nextStep": "Founder to confirm the identity (rename vs reformulation), or an inspected YSL page must give the Tuxedo Sharp Patchouli pyramid.",
+        "stock": "SUPPLIER_LISTED - current availability not verified"
+      },
+      {
+        "sourceKey": "UNISEX-31-Oud Maracuja by Maison Crivelli",
+        "supplierText": "Oud Maracuja by Maison Crivelli",
+        "status": "EVIDENCE_HOLD",
+        "reason": "Identity is clear (Maison Crivelli Oud Maracuja Extrait de Parfum). Only tiered source inspected is Oz Hair & Beauty (authorised status not verified), which places oud in the middle tier; other sources (not inspected) omit oud from the heart or place it in the base. Harrods, Selfridges, Basenotes 403; Bloomingdale's UAE 404.",
+        "nextStep": "Draft only after an inspected tier-1 (maisoncrivelli.com) or authorised tier-2 page fixes the pyramid, including the oud tier.",
+        "stock": "SUPPLIER_LISTED - current availability not verified"
+      }
+    ],
+    "reassessment2026-10-15": {
+      "phase": "W9-B5-P1B",
+      "evidenceFetchRevision": 12,
+      "candidates": [
+        {
+          "sourceKey": "MEN-145-Zadig & Voltaire / This is Him",
+          "previousHold": "EVIDENCE_HOLD (revision 23)",
+          "officialSource": "https://zadig-et-voltaire.com/us/en/p/HIMEDT100H_NOIR/fragrance-men-this-is-him--100ml-himedt100h",
+          "directlyInspected": true,
+          "identity": "Zadig & Voltaire This Is Him! Eau de Toilette (men); not Undressed or This Is Really Him!",
+          "evidence": "Top: Black pepper, Grapefruit | Middle: Incense, Vanilla | Base: Sandalwood (labelled tiers). Untiered 'cedar' not used.",
+          "contradictions": "Resolved: incense is in the brand's labelled middle tier. Lookfantastic (Grapefruit / Vanilla / Sandalwood) is a subset. Dis-Chem copy ('chestnut and incense heart notes for him') remains a conflicting retailer copy, superseded by the brand page.",
+          "evidenceTier": "PYRAMID_SECONDARY_SUPPORTED (tier-1 brand page)",
+          "remainingUncertainty": "None for the pyramid; stock not verified.",
+          "decision": "CLEARED FOR LOCAL DRAFTING - draft scripts/factory/drafts/this-is-him-inspired.ts (Skye, male)."
+        },
+        {
+          "sourceKey": "LADIES-296-Zadig & Voltaire / This is Her",
+          "previousHold": "EVIDENCE_HOLD (revision 23)",
+          "officialSource": [
+            "https://zadig-et-voltaire.com/us/en/p/HEREDT50F_BLAN/fragrance-women-this-is-her--50-ml-heredt50f",
+            "https://zadig-et-voltaire.com/us/en/p/HEREDT100F_BLAN/fragrance-women-this-is-her--100ml-heredt100f?filter=size-ONE"
+          ],
+          "directlyInspected": true,
+          "identity": "Zadig & Voltaire This Is Her! (women); not Zadig Dream, Undressed or Vibes. Reference concentration unresolved - see concentrationQualificationRev25",
+          "identityPreviousRev25": "Zadig & Voltaire This Is Her! - Eau de Parfum per the brand's 50 ml page; not Zadig Dream, Undressed or Vibes",
+          "concentrationQualificationRev25": "Reference concentration UNRESOLVED (W9-B5-P3, 2026-10-15): the official zadig-et-voltaire.com 50 ml page says 'Eau de Parfum'; the official 100 ml page says 'Eau de Toilette'. The discrepancy is not assumed to be a brand typographical error. The ordered note description is retained because it is supported by the official source wording. No concentration is claimed for the Maison formulation.",
+          "evidence": "Brand 100 ml page sequence: opening Jasmine sambac, Pink berry | heart Chestnut, Vanilla | base Sandalwood. Lookfantastic agrees on heart and base.",
+          "contradictions": "OPEN: the 100 ml brand page calls the product 'Eau de Toilette' while the 50 ml brand page says 'Eau de Parfum'. The 50 ml summary says 'pink pepper' where the 100 ml text says 'pink berry' (tiered wording used). Dis-Chem copy attributes chestnut to This Is Him! (superseded by the brand page).",
+          "evidenceTier": "PYRAMID_SECONDARY_SUPPORTED (tier-1 brand page, sequenced prose)",
+          "remainingUncertainty": "The brand's own pages conflict on concentration (50 ml 'Eau de Parfum'; 100 ml 'Eau de Toilette'); whether both pages describe the same formulation is not established. Founder item before promotion; no Maison concentration claim is made either way.",
+          "remainingUncertaintyPreviousRev25": "Concentration wording on the brand's own pages conflicts; whether the 100 ml text describes the same EDP should be confirmed by the founder before promotion.",
+          "decision": "CLEARED FOR LOCAL DRAFTING with a founder pre-promotion item - draft scripts/factory/drafts/this-is-her-inspired.ts (Rose, female)."
+        },
+        {
+          "sourceKey": "UNISEX-80-YSL Tuxedo Sharp Patchouli",
+          "previousHold": "IDENTITY_HOLD_FOUNDER_CONFIRMATION_REQUIRED (revision 23)",
+          "officialSource": "https://www.yslbeauty.ae/en/perfume/private-collection/le-vestiaire-des-parfums/le-vestiaire-des-parfums---tuxedo-sharp-patchouli/WW-TUXEDO-YSL.html",
+          "directlyInspected": false,
+          "identity": "Official YSL name 'Le Vestiaire des Parfums - Tuxedo Sharp Patchouli' (from the URL); relationship to Tuxedo (2015) not established by YSL in any page inspected here",
+          "evidence": "No inspected page gives a pyramid for Tuxedo Sharp Patchouli. The Brown Thomas 'Tuxedo' pyramid (revision 11) is not borrowed for the Sharp Patchouli name.",
+          "contradictions": "None observed; the gap is missing evidence, not conflicting evidence.",
+          "evidenceTier": "none for Tuxedo Sharp Patchouli",
+          "remainingUncertainty": "Whether YSL itself states Sharp Patchouli = renamed Tuxedo (2015), and its pyramid.",
+          "decision": "HOLD RETAINED - IDENTITY. Needs an inspectable YSL page for Tuxedo Sharp Patchouli (pyramid and/or explicit relation to Tuxedo), or founder confirmation."
+        },
+        {
+          "sourceKey": "UNISEX-31-Oud Maracuja by Maison Crivelli",
+          "previousHold": "EVIDENCE_HOLD (revision 23)",
+          "officialSource": "https://maisoncrivelli.com/en-fr/products/oud-maracuja",
+          "directlyInspected": true,
+          "identity": "Maison Crivelli Oud Maracuja (extrait, 'Concentration: 32%') - identity confirmed by the brand page",
+          "evidence": "Unordered official material list (10 materials) plus one tier statement: 'A base note of vanilla and cistus'.",
+          "contradictions": "Retailer pyramids (Oz Hair & Beauty: oud in the middle) are not confirmed by the brand, which gives no top or heart tiers.",
+          "evidenceTier": "Tier-1 materials list; no full pyramid (PYRAMID_SECONDARY_SUPPORTED not met)",
+          "remainingUncertainty": "MKC accepts an all-heart 'unordered bouquet' for evidence-locked records (Jo Malone precedent), but here it would contradict the brand's explicit vanilla/cistus base; assigning the other materials to tiers would be invented.",
+          "decision": "HOLD RETAINED - EVIDENCE. Founder may decide whether a bouquet representation (all ten materials in heart, base left empty) is acceptable despite the stated base note, or require a tiered brand pyramid."
+        }
+      ],
+      "outcome": "2 cleared for local drafting (MEN-145, LADIES-296); 2 holds retained (UNISEX-80 identity, UNISEX-31 evidence). Revision 23 holds preserved unchanged as history.",
+      "projectionMetadataCaveatRev25": "projection 'moderate' on both Batch 5 drafts is the fixed default produced by the shared knowledge adapter (app/lib/knowledgeAdapter.ts), not source-derived performance evidence. Inspected product and comparison interfaces do not visibly present it (ComparisonView destructures but does not render it; admin identity-review screens only). It may indirectly influence recommendation/discovery ranking (discovery/scoring.ts, collectionEngine.ts). It must not be represented as a guaranteed Maison fragrance characteristic. Documentation only; no code changed."
     }
   }
 }

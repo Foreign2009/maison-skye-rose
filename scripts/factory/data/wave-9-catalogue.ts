@@ -666,6 +666,74 @@ const batch4: DisplayFragrance[] = [
   },
 ];
 
+// ── Batch 5 (W9-B5-P1B, 2026-10-15) — LOCAL REVIEW DRAFTS, NOT PROMOTED ───────────
+// Founder approved four candidates for evidence-gated local drafting. Two pass the gates and are staged
+// here; UNISEX-80 (Tuxedo Sharp Patchouli, identity) and UNISEX-31 (Oud Maracujá, no tiered pyramid)
+// remain held — see catalogue-expansion-ledger.json → batch5_held and the revision 24 reassessment.
+// Supplier concentration/formulation UNCONFIRMED; stock: supplier-listed, current availability not verified.
+
+const batch5: DisplayFragrance[] = [
+  {
+    // slug: this-is-him-inspired — Supplier: 'Zadig & Voltaire / This is Him' (MEN-145; MEN list, page 3).
+    // Reference edition: Zadig & Voltaire This Is Him! Eau de Toilette (men). Not Undressed or This Is Really Him!. Male.
+    // Evidence: PYRAMID_SECONDARY_SUPPORTED — zadig-et-voltaire.com product page (tier-1 brand page, inspected 2026-10-15):
+    //   "Top notes: Black pepper, grapefruit"; "Middle notes: Incense, vanilla"; "Base note: Sandalwood";
+    //   "A men's Eau de Toilette with woody and spicy notes." Cedar appears only in an untiered "Notes:" line — not used.
+    //   Lookfantastic (Grapefruit / Vanilla / Sandalwood) is a subset; no conflicting tier.
+    // Profile: brand "woody and spicy". Season Autumn is editorial.
+    title:               "This Is Him Inspired",
+    collection:          "Skye",
+    subtitle:            "Inspired by Zadig & Voltaire This Is Him!",
+    mood:                "Bold Warm Confident",
+    profile:             "Woody Spicy",
+    season:              "Autumn",
+    notes:               ["Black Pepper", "Grapefruit", "Incense", "Vanilla", "Sandalwood"],
+    bestSeller:          false,
+    newArrival:          false,
+    prices:              PRICES,
+    images:              BLUE_IMAGES,
+    gender:              "male",
+    notesEvidenceLocked: true,
+    notesStructured: {
+      top:   ["Black Pepper", "Grapefruit"],
+      heart: ["Incense", "Vanilla"],
+      base:  ["Sandalwood"],
+    },
+  },
+  {
+    // slug: this-is-her-inspired — Supplier: 'Zadig & Voltaire / This is Her' (LADIES-296; LADIES list, page 3).
+    // Reference edition: Zadig & Voltaire This Is Her! (women). Not Zadig Dream, Undressed or Vibes. Female.
+    //   Reference concentration UNRESOLVED (W9-B5-P3): the official 50 ml page says "Eau de Parfum"; the official 100 ml page
+    //   says "Eau de Toilette". Not assumed to be a brand typographical error. The ordered note description below is retained
+    //   because it is supported by the official source wording. No concentration is claimed for the Maison formulation.
+    // Evidence: PYRAMID_SECONDARY_SUPPORTED — zadig-et-voltaire.com 100 ml page (tier-1, inspected 2026-10-15) gives the sequence:
+    //   "opens with the delicate floral essence of jasmine sambac," "enhanced by a spicy hint of pink berry";
+    //   "A heart of sweet chestnut and creamy vanilla"; "finishes with Zadig&Voltaire's signature sandalwood base".
+    //   OPEN DISCREPANCY: that 100 ml page calls the product "Eau de Toilette"; the 50 ml page says "Eau de Parfum".
+    //   The 50 ml summary says "pink pepper" where the 100 ml text says "pink berry" — the tiered wording ("Pink Berry") is used.
+    //   Lookfantastic (Jasmine / Vanilla, Chestnut / Sandalwood; Floral Woody) agrees on heart and base.
+    // Profile: Lookfantastic "Floral Woody"; brand "woody, floral". Season All Season is editorial.
+    title:               "This Is Her Inspired",
+    collection:          "Rose",
+    subtitle:            "Inspired by Zadig & Voltaire This Is Her!",
+    mood:                "Warm Sensual Confident",
+    profile:             "Floral Woody",
+    season:              "All Season",
+    notes:               ["Jasmine Sambac", "Pink Berry", "Chestnut", "Vanilla", "Sandalwood"],
+    bestSeller:          false,
+    newArrival:          false,
+    prices:              PRICES,
+    images:              PINK_IMAGES,
+    gender:              "female",
+    notesEvidenceLocked: true,
+    notesStructured: {
+      top:   ["Jasmine Sambac", "Pink Berry"],
+      heart: ["Chestnut", "Vanilla"],
+      base:  ["Sandalwood"],
+    },
+  },
+];
+
 // ── Export ────────────────────────────────────────────────────────────────────
 
 /** Batch 1 staging entries (6; includes promoted records kept for intake history). */
@@ -676,4 +744,6 @@ export const wave9Batch2Catalogue: DisplayFragrance[] = [...batch2];
 export const wave9Batch3Catalogue: DisplayFragrance[] = [...batch3];
 /** Batch 4 staging entries (4; review drafts prepared 2026-10-13, not promoted). */
 export const wave9Batch4Catalogue: DisplayFragrance[] = [...batch4];
-export const wave9Catalogue: DisplayFragrance[] = [...rose, ...batch2, ...batch3, ...batch4];
+/** Batch 5 staging entries (2; local review drafts prepared 2026-10-15, not promoted). */
+export const wave9Batch5Catalogue: DisplayFragrance[] = [...batch5];
+export const wave9Catalogue: DisplayFragrance[] = [...rose, ...batch2, ...batch3, ...batch4, ...batch5];

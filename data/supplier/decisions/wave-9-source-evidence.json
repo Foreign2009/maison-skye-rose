@@ -28,7 +28,11 @@
     "revision7": "2026-10-11: readable-page reviews continued for the five remaining Batch 1 drafts (10 fetch records, indices 64–73). Romance brand/Macy's/Sephora, The Perfume Shop (Jimmy Choo), Sephora UAE (Poison) and Argos returned 403. Lookfantastic (Tommy Girl) gave a full first-party pyramid that conflicts with the draft; recorded, not applied. A vintage reseller lists Poison 1985 as 'Esprit de Parfum' (supplementary; not treated as EDP). Parfumdreams and Escentual were readable but carried no notes. Web search was used only to locate URLs; no search summary is recorded as evidence.",
     "revision8": "2026-10-11: Wave 9 Batch 2 research — 26 fetch records (indices 74–99). Only INSPECTED results count as evidence; BLOCKED / NOT_FOUND / INSPECTED_NO_PYRAMID are recorded for transparency. Web search was used only to locate URLs; search summaries are not recorded as evidence.",
     "revision9": "2026-10-12: Wave 9 Batch 3 research (W9-B3-R) and preparation (W9-B3-P1) — 30 fetch records (indices 100–129). Only INSPECTED results count as evidence; BLOCKED / NOT_FOUND / INSPECTED_NO_PYRAMID are recorded for transparency. 'Sold & Delivered by Debenhams' is major-retailer first-party (revision 6 policy); Lookfantastic and Edgars authorised status is not verified. Pages with instructions aimed at AI tools (ScentVerdict, Debenhams Prada Candy) were read for factual fields only. Web search was used only to locate URLs; no search summary is recorded as evidence.",
-    "revision10": "2026-10-13: Wave 9 Batch 4 research (W9-B4-R1) — 12 fetch records (indices 130–141). Only INSPECTED results count as evidence. Brand pages (carolinaherrera.com) for MEN-9 and MEN-11; Nordstrom for LADIES-56; John Lewis for LADIES-22. MEN-104 Mr Burberry: still no inspected EDT heart (burberry.com EDT page, inspected 2026-10-11, gives top and base only). Web search was used only to locate URLs; no search summary is recorded as evidence."
+    "revision10": "2026-10-13: Wave 9 Batch 4 research (W9-B4-R1) — 12 fetch records (indices 130–141). Only INSPECTED results count as evidence. Brand pages (carolinaherrera.com) for MEN-9 and MEN-11; Nordstrom for LADIES-56; John Lewis for LADIES-22. MEN-104 Mr Burberry: still no inspected EDT heart (burberry.com EDT page, inspected 2026-10-11, gives top and base only). Web search was used only to locate URLs; no search summary is recorded as evidence.",
+    "revisionNotes": {
+      "revision11": "2026-10-15 (W9-B5-P1): 21 Batch 5 fetch attempts appended (indices 142-162). Web-search summaries used as leads are not logged as evidence.",
+      "revision12": "2026-10-15 (W9-B5-P1B): 5 fetch attempts (indices 163-167) on founder-supplied official pages. Tier-1 pages inspected for This Is Him!, This Is Her! (50 ml and 100 ml) and Oud Maracuja; the YSL UAE page remained blocked (403) and is recorded as a lead only."
+    }
   },
   "fetches": [
     {
@@ -2153,6 +2157,383 @@
       "revision": 10,
       "accessDate": "2026-10-13",
       "batch": "wave-9-batch-4"
+    },
+    {
+      "draftSlug": null,
+      "candidate": "MEN-145-Zadig & Voltaire / This is Him",
+      "url": "https://theperfumeshop.com/zadig-voltaire/this-is-him/eau-de-toilette-spray/p/71430EDTJU",
+      "result": "BLOCKED",
+      "detail": "HTTP 403.",
+      "revision": 11,
+      "accessDate": "2026-10-15",
+      "batch": "wave-9-batch-5"
+    },
+    {
+      "draftSlug": null,
+      "candidate": "MEN-145-Zadig & Voltaire / This is Him",
+      "url": "https://boots.ie/zadig-voltaire-this-is-him-eau-de-toilette-50ml-10347213",
+      "result": "BLOCKED",
+      "detail": "Bot-verification page instead of product page.",
+      "revision": 11,
+      "accessDate": "2026-10-15",
+      "batch": "wave-9-batch-5"
+    },
+    {
+      "draftSlug": null,
+      "candidate": "MEN-145-Zadig & Voltaire / This is Him",
+      "url": "https://www.lookfantastic.com/p/zadig-voltaire-this-is-him-eau-de-toilette-50ml/17374905/",
+      "result": "INSPECTED",
+      "detail": "'Zadig & Voltaire This Is Him! Eau de Toilette 50ml'. Tiered pyramid; incense not present.",
+      "revision": 11,
+      "accessDate": "2026-10-15",
+      "batch": "wave-9-batch-5",
+      "sourceType": "retailer (first-party listing)",
+      "authorisedOrNamed": "Lookfantastic - authorised status NOT verified (Wave 9 precedent)",
+      "captured": {
+        "top": [
+          "Grapefruit"
+        ],
+        "heart": [
+          "Vanilla"
+        ],
+        "base": [
+          "Sandalwood"
+        ],
+        "family": "Woody Spicy",
+        "concentration": "Eau de Toilette"
+      }
+    },
+    {
+      "draftSlug": null,
+      "candidate": "MEN-145-Zadig & Voltaire / This is Him",
+      "url": "https://www.dischem.co.za/zadig-voltaire-this-is-him-eau-de-toilette-50ml-324",
+      "result": "INSPECTED_NO_PYRAMID",
+      "detail": "'Zadig & Voltaire This Is Him! Eau De Toilette 50ml'. No tiered pyramid. Copy: 'casually mixes a vibrant incense with grapefruit, and lifted with a note of black pepper'; 'sweet vanilla for her and casual chestnut and incense heart notes for him'; sandalwood as Zadig & Voltaire's signature. Conflicts with the Lookfantastic heart (Vanilla).",
+      "revision": 11,
+      "accessDate": "2026-10-15",
+      "batch": "wave-9-batch-5",
+      "sourceType": "retailer (South Africa)",
+      "authorisedOrNamed": "Dis-Chem - authorised status not verified"
+    },
+    {
+      "draftSlug": null,
+      "candidate": "LADIES-296-Zadig & Voltaire / This is Her",
+      "url": "https://www.theperfumeshop.com/zadig-voltaire/this-is-her/eau-de-parfum-spray/p/24240EDPJU",
+      "result": "BLOCKED",
+      "detail": "HTTP 403.",
+      "revision": 11,
+      "accessDate": "2026-10-15",
+      "batch": "wave-9-batch-5"
+    },
+    {
+      "draftSlug": null,
+      "candidate": "LADIES-296-Zadig & Voltaire / This is Her",
+      "url": "https://www.lookfantastic.com/p/zadig-voltaire-this-is-her-eau-de-parfum-50ml/17374903/",
+      "result": "INSPECTED",
+      "detail": "'Zadig & Voltaire This Is Her! Eau de Parfum 50ml'. Tiered pyramid; pink pepper not present.",
+      "revision": 11,
+      "accessDate": "2026-10-15",
+      "batch": "wave-9-batch-5",
+      "sourceType": "retailer (first-party listing)",
+      "authorisedOrNamed": "Lookfantastic - authorised status NOT verified (Wave 9 precedent)",
+      "captured": {
+        "top": [
+          "Jasmine"
+        ],
+        "heart": [
+          "Vanilla",
+          "Chestnut"
+        ],
+        "base": [
+          "Sandalwood"
+        ],
+        "family": "Floral Woody",
+        "concentration": "Eau de Parfum"
+      }
+    },
+    {
+      "draftSlug": null,
+      "candidate": "LADIES-296-Zadig & Voltaire / This is Her",
+      "url": "https://www.dischem.co.za/zadig-voltaire-this-is-her-eau-de-parfum-100ml-257",
+      "result": "INSPECTED_NO_PYRAMID",
+      "detail": "'Zadig & Voltaire This Is Her! Eau De Parfum 100ml'. No tiered pyramid; copy names 'jasmine Sambac', 'rose bay', 'sweet vanilla', 'sandalwood'; 'a delightful woody, floral perfume'. Chestnut attributed to This is Him! in the shared copy - conflicts with Lookfantastic.",
+      "revision": 11,
+      "accessDate": "2026-10-15",
+      "batch": "wave-9-batch-5",
+      "sourceType": "retailer (South Africa)",
+      "authorisedOrNamed": "Dis-Chem - authorised status not verified"
+    },
+    {
+      "draftSlug": null,
+      "candidate": "LADIES-296-Zadig & Voltaire / This is Her",
+      "url": "https://www.notino.co.uk/-/pd/ZAV0002",
+      "result": "BLOCKED",
+      "detail": "HTTP 403.",
+      "revision": 11,
+      "accessDate": "2026-10-15",
+      "batch": "wave-9-batch-5"
+    },
+    {
+      "draftSlug": null,
+      "candidate": "UNISEX-80-YSL Tuxedo Sharp Patchouli",
+      "url": "https://www.yslbeauty.com/int/fragrance/unisex-fragrances/tuxedo-eau-de-parfum/WW-51373YSL.html",
+      "result": "BLOCKED",
+      "detail": "HTTP 403.",
+      "revision": 11,
+      "accessDate": "2026-10-15",
+      "batch": "wave-9-batch-5"
+    },
+    {
+      "draftSlug": null,
+      "candidate": "UNISEX-80-YSL Tuxedo Sharp Patchouli",
+      "url": "https://www.yslbeauty.com/us/fragrance/unisex-fragrances/tuxedo-eau-de-parfum/WW-51373YSL.html",
+      "result": "BLOCKED",
+      "detail": "HTTP 403.",
+      "revision": 11,
+      "accessDate": "2026-10-15",
+      "batch": "wave-9-batch-5"
+    },
+    {
+      "draftSlug": null,
+      "candidate": "UNISEX-80-YSL Tuxedo Sharp Patchouli",
+      "url": "https://www.brownthomas.com/ni/beauty/fragrance/women/le-vestiaire-des-parfums-tuxedo-eau-de-parfum/2001185808.html",
+      "result": "INSPECTED",
+      "detail": "'Le Vestiaire des Parfums Tuxedo Eau de Parfum' (YVES SAINT LAURENT). Tiered pyramid. Copy: 'An elegant patchouli heart is sharply cut and tailored'. The name 'Sharp Patchouli' does not appear on this page.",
+      "revision": 11,
+      "accessDate": "2026-10-15",
+      "batch": "wave-9-batch-5",
+      "sourceType": "retailer (department store)",
+      "authorisedOrNamed": "Brown Thomas - department store; authorised status not separately verified",
+      "captured": {
+        "top": [
+          "Violet Leaf Accord",
+          "Bergamot Oil",
+          "Coriander Seeds Oil"
+        ],
+        "heart": [
+          "Rose Oil",
+          "Lily of the Valley Accord",
+          "Black Pepper Oil"
+        ],
+        "base": [
+          "Ambergris Accord",
+          "Patchouli Heart",
+          "Vanilla Bourbon"
+        ],
+        "family": "Chypre Ambery",
+        "concentration": "Eau de Parfum"
+      }
+    },
+    {
+      "draftSlug": null,
+      "candidate": "UNISEX-80-YSL Tuxedo Sharp Patchouli",
+      "url": "https://www.yslbeauty.ae/en/perfume/private-collection/le-vestiaire-des-parfums/le-vestiaire-des-parfums---tuxedo-sharp-patchouli/WW-TUXEDO-YSL.html",
+      "result": "BLOCKED",
+      "detail": "HTTP 403. URL itself shows YSL uses the name 'Le Vestiaire des Parfums - Tuxedo Sharp Patchouli' (tier-1 domain).",
+      "revision": 11,
+      "accessDate": "2026-10-15",
+      "batch": "wave-9-batch-5"
+    },
+    {
+      "draftSlug": null,
+      "candidate": "UNISEX-80-YSL Tuxedo Sharp Patchouli",
+      "url": "https://en.bloomingdales.com.kw/ysl-le-vestiaire-des-parfums-tuxedo-sharp-patchouli-218393228.html",
+      "result": "INSPECTED_NO_PYRAMID",
+      "detail": "Only the page title was readable: 'Ysl Le Vestiaire des Parfums Tuxedo Sharp Patchouli for Unisex'.",
+      "revision": 11,
+      "accessDate": "2026-10-15",
+      "batch": "wave-9-batch-5"
+    },
+    {
+      "draftSlug": null,
+      "candidate": "UNISEX-80-YSL Tuxedo Sharp Patchouli",
+      "url": "https://www.yslbeautyus.com/fragrance/le-vestiaire-des-parfums/the-signature-collection/tuxedo---le-vestiaire-des-parfums/809YSL.html?geo=false",
+      "result": "BLOCKED",
+      "detail": "HTTP 403.",
+      "revision": 11,
+      "accessDate": "2026-10-15",
+      "batch": "wave-9-batch-5"
+    },
+    {
+      "draftSlug": null,
+      "candidate": "UNISEX-80-YSL Tuxedo Sharp Patchouli",
+      "url": "https://scentverdict.com/perfume/yves-saint-laurent-tuxedo-sharp-patchouli-eau-de-parfum",
+      "result": "BLOCKED",
+      "detail": "HTTP 403 (supplementary source).",
+      "revision": 11,
+      "accessDate": "2026-10-15",
+      "batch": "wave-9-batch-5"
+    },
+    {
+      "draftSlug": null,
+      "candidate": "UNISEX-31-Oud Maracuja by Maison Crivelli",
+      "url": "https://harrods.com/en-gb/p/maison-crivelli-oud-maracuja-extrait-de-parfum-50ml-000000000007397306",
+      "result": "BLOCKED",
+      "detail": "HTTP 403.",
+      "revision": 11,
+      "accessDate": "2026-10-15",
+      "batch": "wave-9-batch-5"
+    },
+    {
+      "draftSlug": null,
+      "candidate": "UNISEX-31-Oud Maracuja by Maison Crivelli",
+      "url": "https://www.harrods.com/en-mn/p/maison-crivelli-oud-maracuja-extrait-de-parfum-50ml-000000000007397306",
+      "result": "BLOCKED",
+      "detail": "HTTP 403.",
+      "revision": 11,
+      "accessDate": "2026-10-15",
+      "batch": "wave-9-batch-5"
+    },
+    {
+      "draftSlug": null,
+      "candidate": "UNISEX-31-Oud Maracuja by Maison Crivelli",
+      "url": "https://www.selfridges.com/AU/en/cat/maison-crivelli-oud-maracuja-extrait-de-parfum_R04143655/",
+      "result": "BLOCKED",
+      "detail": "HTTP 403.",
+      "revision": 11,
+      "accessDate": "2026-10-15",
+      "batch": "wave-9-batch-5"
+    },
+    {
+      "draftSlug": null,
+      "candidate": "UNISEX-31-Oud Maracuja by Maison Crivelli",
+      "url": "https://bloomingdales.ae/oud-maracuja-extrait-de-parfum-BEA217025550.html",
+      "result": "NOT_FOUND",
+      "detail": "HTTP 404.",
+      "revision": 11,
+      "accessDate": "2026-10-15",
+      "batch": "wave-9-batch-5"
+    },
+    {
+      "draftSlug": null,
+      "candidate": "UNISEX-31-Oud Maracuja by Maison Crivelli",
+      "url": "https://basenotes.com/fragrances/oud-maracuja-by-maison-crivelli.26254771",
+      "result": "BLOCKED",
+      "detail": "HTTP 403.",
+      "revision": 11,
+      "accessDate": "2026-10-15",
+      "batch": "wave-9-batch-5"
+    },
+    {
+      "draftSlug": null,
+      "candidate": "UNISEX-31-Oud Maracuja by Maison Crivelli",
+      "url": "https://www.ozhairandbeauty.com/products/maison-crivelli-oud-maracuja-extrait-de-parfum-50ml",
+      "result": "INSPECTED",
+      "detail": "'Maison Crivelli Oud Maracuja Extrait De Parfum 50ml'; 'woody fruity unisex fragrance'. No authorised-stockist statement. Oud placed in the middle tier; other (uninspected) sources omit oud from the heart or place it in the base.",
+      "revision": 11,
+      "accessDate": "2026-10-15",
+      "batch": "wave-9-batch-5",
+      "sourceType": "retailer (Australia)",
+      "authorisedOrNamed": "Oz Hair & Beauty - authorised status not verified",
+      "captured": {
+        "top": [
+          "Passionfruit",
+          "Saffron",
+          "Turkish Rose"
+        ],
+        "middle": [
+          "Oud",
+          "Indonesian Patchouli",
+          "Benzoin"
+        ],
+        "base": [
+          "Leather",
+          "Akigalawood",
+          "Amber",
+          "Vanilla",
+          "Labdanum"
+        ],
+        "concentration": "Extrait De Parfum (from product name)"
+      }
+    },
+    {
+      "draftSlug": "this-is-him-inspired",
+      "candidate": "MEN-145-Zadig & Voltaire / This is Him",
+      "url": "https://zadig-et-voltaire.com/us/en/p/HIMEDT100H_NOIR/fragrance-men-this-is-him--100ml-himedt100h",
+      "result": "INSPECTED",
+      "detail": "Tier-1 brand page: 'This Is Him! Fragrance 100ML'; 'Eau de Toilette'; 'A men's Eau de Toilette with woody and spicy notes.' Labelled tiers present. Separate untiered line 'Notes : Grapefruit, vanilla, incense, cedar, and sandalwood.' - cedar not used. No flanker named.",
+      "revision": 12,
+      "accessDate": "2026-10-15",
+      "batch": "wave-9-batch-5",
+      "sourceType": "brand (tier 1)",
+      "authorisedOrNamed": "zadig-et-voltaire.com",
+      "captured": {
+        "top": [
+          "Black pepper",
+          "Grapefruit"
+        ],
+        "middle": [
+          "Incense",
+          "Vanilla"
+        ],
+        "base": [
+          "Sandalwood"
+        ],
+        "untieredOnly": [
+          "Cedar"
+        ],
+        "concentration": "Eau de Toilette"
+      }
+    },
+    {
+      "draftSlug": "this-is-her-inspired",
+      "candidate": "LADIES-296-Zadig & Voltaire / This is Her",
+      "url": "https://zadig-et-voltaire.com/us/en/p/HEREDT50F_BLAN/fragrance-women-this-is-her--50-ml-heredt50f",
+      "result": "INSPECTED_NO_PYRAMID",
+      "detail": "Tier-1 brand page: 'This Is Her! Fragrance 50 ML'; 'Eau de Parfum'. No labelled tiers. 'A sensual blend of jasmine and pink pepper, wrapped in the addictive warmth of chestnut and vanilla.'; 'composed of jasmine sambac and pink berry, with a sweet note of chestnut combined with vanilla ... the Maison's signature, powerful sandalwood.' Identity (EDP) source.",
+      "revision": 12,
+      "accessDate": "2026-10-15",
+      "batch": "wave-9-batch-5",
+      "sourceType": "brand (tier 1)",
+      "authorisedOrNamed": "zadig-et-voltaire.com"
+    },
+    {
+      "draftSlug": "this-is-her-inspired",
+      "candidate": "LADIES-296-Zadig & Voltaire / This is Her",
+      "url": "https://zadig-et-voltaire.com/us/en/p/HEREDT100F_BLAN/fragrance-women-this-is-her--100ml-heredt100f?filter=size-ONE",
+      "result": "INSPECTED",
+      "detail": "Tier-1 brand page: 'This Is Her! Fragrance 100ML'. Sequenced description: 'This Eau de Toilette opens with the delicate floral essence of jasmine sambac,' 'enhanced by a spicy hint of pink berry'; 'A heart of sweet chestnut and creamy vanilla'; 'finishes with Zadig&Voltaire's signature sandalwood base'. DISCREPANCY: calls the product 'Eau de Toilette' (50 ml page: 'Eau de Parfum') - not reconciled. Composition shown '80% Alcohol 20% Scent'.",
+      "revision": 12,
+      "accessDate": "2026-10-15",
+      "batch": "wave-9-batch-5",
+      "sourceType": "brand (tier 1)",
+      "authorisedOrNamed": "zadig-et-voltaire.com",
+      "captured": {
+        "opening": [
+          "Jasmine sambac",
+          "Pink berry"
+        ],
+        "heart": [
+          "Chestnut",
+          "Vanilla"
+        ],
+        "base": [
+          "Sandalwood"
+        ],
+        "concentrationWording": "Eau de Toilette (conflicts with 50 ml page)"
+      }
+    },
+    {
+      "draftSlug": null,
+      "candidate": "UNISEX-31-Oud Maracuja by Maison Crivelli",
+      "url": "https://maisoncrivelli.com/en-fr/products/oud-maracuja",
+      "result": "INSPECTED_NO_PYRAMID",
+      "detail": "Tier-1 brand page: 'Oud Maracuja' (accent as displayed), 'Concentration: 32%', family 'exotic, woody and fruity'. Key raw materials (unordered): passion fruit accord, saffron, rose absolute from Turkey, oud accord, benzoin from Laos, cistus absolute from Spain, leather accord, patchouli oil from Indonesia, vanilla, akigalawood. Only tier statement: 'A base note of vanilla and cistus envelops Oud Maracuja in its amber sweetness.' 'In collaboration with: Jordi Fernandez.'",
+      "revision": 12,
+      "accessDate": "2026-10-15",
+      "batch": "wave-9-batch-5",
+      "sourceType": "brand (tier 1)",
+      "authorisedOrNamed": "maisoncrivelli.com"
+    },
+    {
+      "draftSlug": null,
+      "candidate": "UNISEX-80-YSL Tuxedo Sharp Patchouli",
+      "url": "https://www.yslbeauty.ae/en/perfume/private-collection/le-vestiaire-des-parfums/le-vestiaire-des-parfums---tuxedo-sharp-patchouli/WW-TUXEDO-YSL.html",
+      "result": "BLOCKED",
+      "detail": "HTTP 403 again in this session (founder-supplied lead, located by an independent review). The URL names 'Tuxedo Sharp Patchouli'; content not inspected here.",
+      "revision": 12,
+      "accessDate": "2026-10-15",
+      "batch": "wave-9-batch-5"
     }
   ]
 }
