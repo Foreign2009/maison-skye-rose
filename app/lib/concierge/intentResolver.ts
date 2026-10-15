@@ -103,11 +103,57 @@ const SHORT_NAME_ALIASES: Record<string, string> = {
   "mens 212 vip":     "212-vip-men-inspired",
 };
 
+// Bare names that are also everyday phrases: "this is her first perfume" is a gifting
+// message, not a request for This Is Her Inspired. Such a bare name counts only in a
+// product context (see conversationalNameCounts); the full "… Inspired" name always counts.
+const CONVERSATIONAL_BARE_NAMES = new Set(["this is him", "this is her"]);
+
+// A product request word directly before the name: "tell me about", "do you have",
+// "looking for", "recommend", "compare", "between". Words such as "of", "like" and "get"
+// are left out because they also lead into the everyday phrase ("the smell of this is her …").
+const PRODUCT_REQUEST_LEAD =
+  /(?:^|[^\p{L}\p{N}'])(?:about|have|for|recommend|suggest|try|compare|between|want|love|buy|order|stock|sell|carry)(?:\s+(?:the|a|an))?\s*$/u;
+// Joins two product names in one request. "vs" / "versus" mark products on both sides;
+// "or" needs the other side to be a recognised product; "and" also needs comparison wording.
+// normalizeInputForEntityMatch has already removed "and" / "&", so names separated only by
+// whitespace are joined by "and".
+const PRODUCT_JOIN = /^\s*(vs|versus|or)?\s*$/;
+const COMPARISON_CUE = /\b(compare|comparison|between|difference|differ|versus|vs)\b/;
+// What may follow the name in a product context: the end of the message, punctuation, or a
+// word that does not continue the everyday clause. "Do you have this is her size?" reads
+// "her" as a possessive ("her size"), so a request word before it is not enough.
+const PRODUCT_NAME_TAIL =
+  /^\s*(?:$|[^\p{L}\p{N}\s']|(?:in|at|by|from|for|please|or|vs|versus|with|too|also|instead|today|now)(?![\p{L}\p{N}']))/u;
+
+type Occurrence = { start: number; end: number; slug: string };
+
+function conversationalNameCounts(
+  occ: Occurrence, qNorm: string, accepted: Occurrence[], pending: Occurrence[],
+): boolean {
+  if (qNorm.replace(/[^\p{L}\p{N}' ]/gu, " ").replace(/\s+/g, " ").trim() === qNorm.slice(occ.start, occ.end)) return true;
+  // Another product name may follow directly ("compare this is him this is her", after the
+  // normaliser has removed "and").
+  const tail = qNorm.slice(occ.end);
+  const nextIsName = [...accepted, ...pending].some((o) => o.start >= occ.end && !qNorm.slice(occ.end, o.start).trim());
+  if (!PRODUCT_NAME_TAIL.test(tail) && !nextIsName) return false;
+  if (PRODUCT_REQUEST_LEAD.test(qNorm.slice(0, occ.start))) return true;
+  const joined = (a: Occurrence, b: Occurrence) => {
+    const m = PRODUCT_JOIN.exec(qNorm.slice(a.end, b.start));
+    return m ? (m[1] ?? "and") : undefined;
+  };
+  const joinCounts = (word: string | undefined, otherAccepted: boolean) =>
+    word === "vs" || word === "versus" ||
+    (otherAccepted && (word === "or" || (word === "and" && COMPARISON_CUE.test(qNorm))));
+  for (const o of accepted) if (joinCounts(o.end <= occ.start ? joined(o, occ) : joined(occ, o), true)) return true;
+  for (const o of pending) if (o !== occ && joinCounts(o.end <= occ.start ? joined(o, occ) : joined(occ, o), false)) return true;
+  return false;
+}
+
 function extractFragranceSlugs(q: string): string[] {
   // Build a combined lookup: full canonical names + bare names (Maison suffix stripped).
   // Sorting longest-first ensures specific flanker names ("Sauvage Elixir") are matched
   // before their shorter prefixes ("Sauvage"), preventing phantom disambiguation.
-  type Entry = { key: string; slug: string };
+  type Entry = { key: string; slug: string; conversational?: boolean };
   const seenKeys = new Set<string>();
   const entries: Entry[] = [];
 
@@ -121,7 +167,7 @@ function extractFragranceSlugs(q: string): string[] {
     if (bare !== name) {
       const bareKey = bare.toLowerCase();
       if (!seenKeys.has(bareKey)) {
-        entries.push({ key: bareKey, slug: frag.slug });
+        entries.push({ key: bareKey, slug: frag.slug, conversational: CONVERSATIONAL_BARE_NAMES.has(bareKey) });
         seenKeys.add(bareKey);
       }
     }
@@ -141,8 +187,11 @@ function extractFragranceSlugs(q: string): string[] {
   const found: string[] = [];
   // Query spans already claimed by longer matched names (entries are longest-first).
   const claimed: Array<[number, number]> = [];
+  const accepted: Occurrence[] = [];
+  // Conversational bare-name occurrences, decided once every other name is known.
+  let pending: Occurrence[] = [];
 
-  for (const { key, slug } of entries) {
+  for (const { key, slug, conversational } of entries) {
     // Flanker safety: an occurrence lying inside a longer name already matched at that
     // position ("opium" within "black opium", "sauvage" within "sauvage elixir") is part
     // of that name, not a separate mention — skip it so distinct flankers never collapse
@@ -150,9 +199,32 @@ function extractFragranceSlugs(q: string): string[] {
     const free = wholeNameOccurrences(key, qNorm)
       .filter((i) => !claimed.some(([s, e]) => i >= s && i + key.length <= e));
     if (free.length === 0) continue;
-    for (const i of free) claimed.push([i, i + key.length]);
+    if (conversational) {
+      for (const i of free) pending.push({ start: i, end: i + key.length, slug });
+      continue;
+    }
+    for (const i of free) {
+      claimed.push([i, i + key.length]);
+      accepted.push({ start: i, end: i + key.length, slug });
+    }
     if (found.includes(slug)) continue;
     found.push(slug);
+  }
+
+  // Accept conversational occurrences in a product context; one accepted name can anchor a
+  // joined neighbour ("compare this is him and this is her"), so repeat until stable.
+  pending.sort((a, b) => a.start - b.start);
+  for (let changed = true; changed; ) {
+    changed = false;
+    for (const occ of pending) {
+      if (!conversationalNameCounts(occ, qNorm, accepted, pending)) continue;
+      accepted.push(occ);
+      claimed.push([occ.start, occ.end]);
+      if (!found.includes(occ.slug)) found.push(occ.slug);
+      pending = pending.filter((o) => o !== occ);
+      changed = true;
+      break;
+    }
   }
 
   return found;
