@@ -674,6 +674,7 @@ const batch4: DisplayFragrance[] = [
 
 const batch5: DisplayFragrance[] = [
   {
+    // PROMOTED 2026-10-15 (xiVXGuNFodZj) after founder local native promotion approval (W9-B5-P6; local only, not released).
     // slug: this-is-him-inspired — Supplier: 'Zadig & Voltaire / This is Him' (MEN-145; MEN list, page 3).
     // Reference edition: Zadig & Voltaire This Is Him! Eau de Toilette (men). Not Undressed or This Is Really Him!. Male.
     // Evidence: PYRAMID_SECONDARY_SUPPORTED — zadig-et-voltaire.com product page (tier-1 brand page, inspected 2026-10-15):
@@ -701,6 +702,8 @@ const batch5: DisplayFragrance[] = [
     },
   },
   {
+    // PROMOTED 2026-10-15 (2_CNKdtS3uUB) after founder local native promotion approval (W9-B5-P6; local only, not released).
+    //   Founder evidence decision: note sequence accepted while the reference EDT/EDP concentration remains unresolved.
     // slug: this-is-her-inspired — Supplier: 'Zadig & Voltaire / This is Her' (LADIES-296; LADIES list, page 3).
     // Reference edition: Zadig & Voltaire This Is Her! (women). Not Zadig Dream, Undressed or Vibes. Female.
     //   Reference concentration UNRESOLVED (W9-B5-P3): the official 50 ml page says "Eau de Parfum"; the official 100 ml page

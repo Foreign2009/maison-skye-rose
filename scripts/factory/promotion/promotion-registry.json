@@ -2,6 +2,36 @@
   "version": "1.0",
   "records": [
     {
+      "slug": "this-is-her-inspired",
+      "name": "This Is Her Inspired",
+      "collection": "Rose",
+      "operator": "Claude Code (founder approval 2026-10-15)",
+      "reviewedBy": "Founder (Adnaan) - approval 2026-10-15",
+      "status": "promoted",
+      "startedAt": "2026-10-15T20:14:05.114Z",
+      "completedAt": "2026-10-15T20:14:46.315Z",
+      "nativePath": "app/lib/mkc/native/this-is-her-inspired.ts",
+      "validationStatus": "PASS",
+      "buildResult": "pass",
+      "durationMs": 41214,
+      "error": null
+    },
+    {
+      "slug": "this-is-him-inspired",
+      "name": "This Is Him Inspired",
+      "collection": "Skye",
+      "operator": "Claude Code (founder approval 2026-10-15)",
+      "reviewedBy": "Founder (Adnaan) - approval 2026-10-15",
+      "status": "promoted",
+      "startedAt": "2026-10-15T20:13:08.622Z",
+      "completedAt": "2026-10-15T20:13:50.501Z",
+      "nativePath": "app/lib/mkc/native/this-is-him-inspired.ts",
+      "validationStatus": "PASS",
+      "buildResult": "pass",
+      "durationMs": 41890,
+      "error": null
+    },
+    {
       "slug": "armani-diamonds-inspired",
       "name": "Armani Diamonds Inspired",
       "collection": "Rose",

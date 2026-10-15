@@ -6393,6 +6393,48 @@
       "slug": "armani-diamonds-inspired",
       "reviewer": "Claude Code (founder approval 2026-10-13)",
       "details": "promotionId:r6vUlWEadUGe  nativePath:app/lib/mkc/native/armani-diamonds-inspired.ts"
+    },
+    {
+      "timestamp": "2026-10-15T20:12:20.397Z",
+      "action": "added_to_queue",
+      "slug": "this-is-him-inspired",
+      "reviewer": "system",
+      "details": "validation:UNKNOWN  factory:unknown"
+    },
+    {
+      "timestamp": "2026-10-15T20:12:23.747Z",
+      "action": "added_to_queue",
+      "slug": "this-is-her-inspired",
+      "reviewer": "system",
+      "details": "validation:UNKNOWN  factory:unknown"
+    },
+    {
+      "timestamp": "2026-10-15T20:12:54.128Z",
+      "action": "approved",
+      "slug": "this-is-him-inspired",
+      "reviewer": "Founder (Adnaan) - approval 2026-10-15",
+      "details": "W9-B5-P6 founder-authorised local native MKC promotion of exactly two candidates: MEN-145 This Is Him Inspired (Skye, male). Notes per inspected zadig-et-voltaire.com tiers. Local only - no production release authorised."
+    },
+    {
+      "timestamp": "2026-10-15T20:12:56.793Z",
+      "action": "approved",
+      "slug": "this-is-her-inspired",
+      "reviewer": "Founder (Adnaan) - approval 2026-10-15",
+      "details": "W9-B5-P6 founder-authorised local native MKC promotion of exactly two candidates: LADIES-296 This Is Her Inspired (Rose, female). Founder evidence decision (verbatim): \"I accept the source-supported This Is Her note sequence while the original fragrance's EDT/EDP concentration remains explicitly unresolved.\" No concentration is established for the reference or the Maison formulation. Local only - no production release authorised."
+    },
+    {
+      "timestamp": "2026-10-15T20:13:50.520Z",
+      "action": "promoted",
+      "slug": "this-is-him-inspired",
+      "reviewer": "Claude Code (founder approval 2026-10-15)",
+      "details": "promotionId:xiVXGuNFodZj  nativePath:app/lib/mkc/native/this-is-him-inspired.ts"
+    },
+    {
+      "timestamp": "2026-10-15T20:14:46.335Z",
+      "action": "promoted",
+      "slug": "this-is-her-inspired",
+      "reviewer": "Claude Code (founder approval 2026-10-15)",
+      "details": "promotionId:2_CNKdtS3uUB  nativePath:app/lib/mkc/native/this-is-her-inspired.ts"
     }
   ]
 }

@@ -18,7 +18,7 @@
     "counts": {
       "supplierRawRows": 565,
       "supplierUniqueIdentities": "NOT_CONFIRMED — 565 is the total row count; internal duplicates or variant entries within the supplier list have not been fully enumerated. Unique identity count requires a dedicated deduplication pass.",
-      "activeNativeMKC": 281,
+      "activeNativeMKC": 283,
       "activeMatchesFoundInSupplierRows": "PARTIAL — reconcile.mjs (2026-10-10) found 68 supplier rows matching native MKC beyond initial slug analysis (i.e., matched by name/alias/flanker, not just slug). Total confirmed supplier rows already in active MKC is at least 218 (565 − 347 provisional gap; LADIES-277 and LADIES-108 confirmed as existing matches and LADIES-34, LADIES-156, LADIES-251 promoted on 2026-10-11). Exact count requires full reconciliation pass.",
       "unresolvedIdentity": 2,
       "duplicateAlias": 3,
@@ -27,10 +27,12 @@
       "batch1DraftsCurrentlyInStaging": 6,
       "verifiedReadyForPromotion": 0,
       "provisionalMissingFromActiveMKC": {
-        "count": 327,
+        "count": 325,
+        "countPreviousRev26": 327,
         "countPreviousRev16": 344,
         "status": "PROVISIONAL_UPPER_BOUND",
-        "basis": "327 = 331 less 4 name-list entries whose supplier rows were promoted locally on 2026-10-13: '212 Sexy' (MEN-9), '212 VIP Carolina Herrera' (MEN-11), 'Burberry Body' (LADIES-56), 'Armani Diamonds' (LADIES-22); uncommitted. PROVISIONAL NAME-BASED METRIC, not a definitive count of distinct remaining fragrances and not a row-level count: the '212 VIP Carolina Herrera' list entry also covers LADIES-6 (women's 212 VIP), which remains unresolved and unpromoted; 35 supplier names are shared by two rows (see countingMethod2026-10-13). MEN-7 / MEN-8 observations unconfirmed and not subtracted.",
+        "basis": "325 = 327 less 2 name-list entries whose supplier rows were promoted locally on 2026-10-15: 'Zadig & Voltaire / This is Him' (MEN-145), 'Zadig & Voltaire / This is Her' (LADIES-296); uncommitted. PROVISIONAL NAME-BASED METRIC, not a definitive count.",
+        "basisPreviousRev26": "327 = 331 less 4 name-list entries whose supplier rows were promoted locally on 2026-10-13: '212 Sexy' (MEN-9), '212 VIP Carolina Herrera' (MEN-11), 'Burberry Body' (LADIES-56), 'Armani Diamonds' (LADIES-22); uncommitted. PROVISIONAL NAME-BASED METRIC, not a definitive count of distinct remaining fragrances and not a row-level count: the '212 VIP Carolina Herrera' list entry also covers LADIES-6 (women's 212 VIP), which remains unresolved and unpromoted; 35 supplier names are shared by two rows (see countingMethod2026-10-13). MEN-7 / MEN-8 observations unconfirmed and not subtracted.",
         "cannotBeReducedBy": "The remaining staged batch 1 drafts do NOT reduce this count; only promotion to native MKC or a confirmed existing match does. Unresolved entries (2) are not subtracted. (The two withdrawn duplicate drafts are preserved; their supplier rows are already counted as confirmed existing matches.)",
         "knownGaps": "13 ambiguous supplier entries require separate identity research before batch assignment.",
         "overlaps": "The 68 additionally-found MKC matches were located by name/alias/flanker reconciliation beyond slug-matching. Further identity research may identify additional overlaps (two Batch 1 drafts proved to be existing natives), so 349 may still be an over-estimate. The final count can only be confirmed after all 565 rows are individually resolved.",
@@ -127,17 +129,17 @@
       ],
       "activeNativeMKCPrevious": 267,
       "activeNativeMKCBreakdown": {
-        "total": 281,
-        "Skye": 112,
-        "Rose": 119,
+        "total": 283,
+        "Skye": 113,
+        "Rose": 120,
         "Elite": 50,
-        "female": 119,
-        "male": 112,
+        "female": 120,
+        "male": 113,
         "unisex": 50,
-        "malePlusUnisex": 162,
-        "femalePlusUnisex": 169,
-        "measuredDate": "2026-10-13",
-        "note": "Measured from nativeFragrances after promoting the four W9-B4-P2 records; all active; no duplicate slug, id or normalised name; all 277 prior record files byte-identical."
+        "malePlusUnisex": 163,
+        "femalePlusUnisex": 170,
+        "measuredDate": "2026-10-15",
+        "note": "Measured from nativeFragrances after promoting the two W9-B5-P6 records; all active; no duplicate slug, id or normalised name; all 281 prior record files byte-identical (sha256 against the pre-promotion manifest)."
       },
       "batch1PromotedToNative": [
         "jimmy-choo-inspired",
@@ -392,6 +394,43 @@
         "femalePlusUnisex": 167,
         "measuredDate": "2026-10-12",
         "note": "Measured from nativeFragrances after promoting the four W9-B3-P5 records; all active; no duplicate slug, id or normalised name."
+      },
+      "activeNativeMKCPreviousRev26": 281,
+      "activeNativeMKCBreakdownPreviousRev26": {
+        "total": 281,
+        "Skye": 112,
+        "Rose": 119,
+        "Elite": 50,
+        "female": 119,
+        "male": 112,
+        "unisex": 50,
+        "malePlusUnisex": 162,
+        "femalePlusUnisex": 169,
+        "measuredDate": "2026-10-13",
+        "note": "Measured from nativeFragrances after promoting the four W9-B4-P2 records; all active; no duplicate slug, id or normalised name; all 277 prior record files byte-identical."
+      },
+      "batch5": {
+        "recordedDate": "2026-10-15",
+        "draftsGenerated": 2,
+        "byStatus": {
+          "PROMOTED_TO_NATIVE": 2
+        },
+        "byEvidenceTier": {
+          "PYRAMID_SECONDARY_SUPPORTED": 2
+        },
+        "held": [
+          "UNISEX-80-YSL Tuxedo Sharp Patchouli (identity hold)",
+          "UNISEX-31-Oud Maracuja by Maison Crivelli (evidence hold)"
+        ],
+        "promotionApproval": {
+          "date": "2026-10-15",
+          "by": "Founder (Adnaan)",
+          "scope": "The founder explicitly approves W9-B5-P6: local native MKC promotion of these two fragrances only. Not a commit, push, merge, deployment or live publication."
+        },
+        "promotedToNative": [
+          "this-is-her-inspired",
+          "this-is-him-inspired"
+        ]
       }
     },
     "recoveryRevision": {
@@ -421,7 +460,8 @@
       "revision22": "2026-10-13 (W9-B4-P2): founder Gate A + local promotion approval (verbatim); 212-sexy-men-inspired (z_YPEcKECGZP), 212-vip-men-inspired (bMIOm5sC_kJG), burberry-body-inspired (vs2VOoUTNI2p), armani-diamonds-inspired (r6vUlWEadUGe) promoted locally with explicit slugs after a hash-verified backup; native measured 281 (Skye 112, Rose 119, Elite 50; male 112, female 119, unisex 50); all 277 prior record files byte-identical. Provisional name-based gap 331 → 327 (limitations recorded; not a definitive count). Gender-qualified 212 aliases added. MEN-104 hold, LADIES-6 independence and MEN-7/MEN-8 observations unchanged. Not committed.",
       "revision23": "2026-10-15 (W9-B5-P1): founder approved four Batch 5 candidates for evidence-gated local drafting (MEN-145, LADIES-296, UNISEX-80, UNISEX-31). All four HELD - three on evidence (no inspected authorised full pyramid; tier conflicts) and UNISEX-80 on identity ('Tuxedo Sharp Patchouli' is an official YSL name; equivalence to Tuxedo 2015 unconfirmed). No drafts, no staging entries, no native changes. Active native MKC unchanged at 281 (Skye 112, Rose 119, Elite 50). Stock for all four: supplier-listed; current availability not verified.",
       "revision24": "2026-10-15 (W9-B5-P1B): official-source reassessment of the four Batch 5 holds (evidence revision 12). MEN-145 and LADIES-296 cleared for local drafting (tier-1 zadig-et-voltaire.com pages); drafts this-is-him-inspired (Skye) and this-is-her-inspired (Rose) created, not promoted. UNISEX-80 identity hold and UNISEX-31 evidence hold retained. batch5_held (revision 23) preserved unchanged. Active native MKC unchanged at 281.",
-      "revision25": "2026-10-15 (W9-B5-P3): additive clarification - this-is-her-inspired reference concentration recorded as unresolved (official 50 ml page 'Eau de Parfum', 100 ml page 'Eau de Toilette'; not assumed a typographical error); ordered notes retained on official wording; no Maison concentration claim. recommendedFor wording 'stays floral rather than sugary' -> 'with a floral character'. Projection 'moderate' documented as adapter default, not performance evidence. Status, tiers and counts unchanged; not committed or promoted."
+      "revision25": "2026-10-15 (W9-B5-P3): additive clarification - this-is-her-inspired reference concentration recorded as unresolved (official 50 ml page 'Eau de Parfum', 100 ml page 'Eau de Toilette'; not assumed a typographical error); ordered notes retained on official wording; no Maison concentration claim. recommendedFor wording 'stays floral rather than sugary' -> 'with a floral character'. Projection 'moderate' documented as adapter default, not performance evidence. Status, tiers and counts unchanged; not committed or promoted.",
+      "revision26": "2026-10-15 (W9-B5-P6): founder-approved LOCAL native promotion of exactly two Batch 5 records - this-is-him-inspired (xiVXGuNFodZj, MEN-145, Skye) and this-is-her-inspired (2_CNKdtS3uUB, LADIES-296, Rose); review queue add/approve + single-slug mkc:promote (validation PASS, build pass each). This Is Her evidence decision recorded verbatim; reference EDT/EDP concentration remains UNRESOLVED (revision 25 qualification unchanged). Native measured 283 (Skye 113, Rose 120, Elite 50); all 281 prior record files byte-identical. Provisional name-based gap 327 -> 325 (not definitive). UNISEX-80 and UNISEX-31 holds unchanged. Not committed; no production release authorised."
     },
     "evidenceTierPolicyApplied": {
       "source": "data/identity/source/wave-3-2026-research.json → governance.sourcePolicyTiers / admissibilityNote; data/supplier/decisions/catalogue-expansion-ledger.json → governance.governancePrinciples; Wave 8 precedent (scripts/factory/data/wave-8-catalogue.ts).",
@@ -3690,29 +3730,88 @@
         "sourceKey": "MEN-145-Zadig & Voltaire / This is Him",
         "collection": "Skye",
         "gender": "male",
-        "status": "DRAFT_GENERATED",
+        "status": "PROMOTED_TO_NATIVE",
+        "statusPreviousRev26": "DRAFT_GENERATED",
         "authoring": "Hand-authored from inspected evidence (no factory AI generation)",
         "evidenceTier": "PYRAMID_SECONDARY_SUPPORTED",
         "draftPath": "scripts/factory/drafts/this-is-him-inspired.ts",
-        "promotionEligible": false,
-        "promotionEligibilityReason": "Local review draft; founder review and promotion authorisation required.",
+        "promotionEligible": true,
+        "promotionEligiblePreviousRev26": false,
+        "promotionEligibilityReason": "Promoted to local native MKC on 2026-10-15 (promotionId xiVXGuNFodZj); not committed; not released.",
+        "promotionEligibilityReasonPreviousRev26": "Local review draft; founder review and promotion authorisation required.",
         "relationships": "empty",
-        "recordedDate": "2026-10-15"
+        "recordedDate": "2026-10-15",
+        "founderApproval": {
+          "date": "2026-10-15",
+          "approvedBy": "Founder (Adnaan)",
+          "scope": "The founder explicitly approves W9-B5-P6: local native MKC promotion of these two fragrances only. Not a commit, push, merge, deployment or live publication.",
+          "localPromotion": "APPROVED (local MKC only)",
+          "commitPushDeploy": "NOT AUTHORISED"
+        },
+        "promotion": {
+          "promotionId": "xiVXGuNFodZj",
+          "nativePath": "app/lib/mkc/native/this-is-him-inspired.ts",
+          "completedAt": "2026-10-15T20:13:50.501Z",
+          "operator": "Claude Code (founder approval 2026-10-15)",
+          "reviewedBy": "Founder (Adnaan) - approval 2026-10-15",
+          "validationStatus": "PASS",
+          "buildResult": "pass",
+          "workflow": "npm run mkc:review -- --add this-is-him-inspired; --approve this-is-him-inspired (founder reviewer, recorded reason); mkc:promote --slug this-is-him-inspired (single slug; no --all/--force; build-only placeholder env for the in-process build)",
+          "base": "69e85259c4332387b1c5f94b3d6b417c403d8147 (worktree msr-wave9-batch5-drafts)",
+          "nativeEqualsDraft": "Native body identical to the reviewed draft apart from the type import path (validate-batch5-drafts.ts).",
+          "relationships": "empty",
+          "committed": false,
+          "released": false
+        }
       },
       {
         "slug": "this-is-her-inspired",
         "sourceKey": "LADIES-296-Zadig & Voltaire / This is Her",
         "collection": "Rose",
         "gender": "female",
-        "status": "DRAFT_GENERATED",
+        "status": "PROMOTED_TO_NATIVE",
+        "statusPreviousRev26": "DRAFT_GENERATED",
         "authoring": "Hand-authored from inspected evidence (no factory AI generation)",
         "evidenceTier": "PYRAMID_SECONDARY_SUPPORTED",
         "draftPath": "scripts/factory/drafts/this-is-her-inspired.ts",
-        "promotionEligible": false,
-        "promotionEligibilityReason": "Local review draft; founder must review the brand-page EDT/EDP wording conflict before promotion.",
+        "promotionEligible": true,
+        "promotionEligiblePreviousRev26": false,
+        "promotionEligibilityReason": "Promoted to local native MKC on 2026-10-15 (promotionId 2_CNKdtS3uUB); not committed; not released.",
+        "promotionEligibilityReasonPreviousRev26": "Local review draft; founder must review the brand-page EDT/EDP wording conflict before promotion.",
         "concentrationQualificationRev25": "Reference concentration UNRESOLVED (W9-B5-P3, 2026-10-15): the official zadig-et-voltaire.com 50 ml page says 'Eau de Parfum'; the official 100 ml page says 'Eau de Toilette'. The discrepancy is not assumed to be a brand typographical error. The ordered note description is retained because it is supported by the official source wording. No concentration is claimed for the Maison formulation.",
         "relationships": "empty",
-        "recordedDate": "2026-10-15"
+        "recordedDate": "2026-10-15",
+        "founderApproval": {
+          "date": "2026-10-15",
+          "approvedBy": "Founder (Adnaan)",
+          "scope": "The founder explicitly approves W9-B5-P6: local native MKC promotion of these two fragrances only. Not a commit, push, merge, deployment or live publication.",
+          "localPromotion": "APPROVED (local MKC only)",
+          "commitPushDeploy": "NOT AUTHORISED",
+          "evidenceDecisionVerbatim": "I accept the source-supported This Is Her note sequence while the original fragrance's EDT/EDP concentration remains explicitly unresolved.",
+          "evidenceDecisionLimits": [
+            "Accepts the documented note description for the local Maison knowledge record.",
+            "Does not establish whether the reference fragrance is EDT or EDP.",
+            "Does not establish the concentration of Maison's supplied formulation.",
+            "Does not establish that two reference versions have identical formulations.",
+            "Does not authorise unsupported ingredient, formulation or performance claims.",
+            "Does not remove the historical evidence discrepancy."
+          ]
+        },
+        "promotion": {
+          "promotionId": "2_CNKdtS3uUB",
+          "nativePath": "app/lib/mkc/native/this-is-her-inspired.ts",
+          "completedAt": "2026-10-15T20:14:46.315Z",
+          "operator": "Claude Code (founder approval 2026-10-15)",
+          "reviewedBy": "Founder (Adnaan) - approval 2026-10-15",
+          "validationStatus": "PASS",
+          "buildResult": "pass",
+          "workflow": "npm run mkc:review -- --add this-is-her-inspired; --approve this-is-her-inspired (founder reviewer, recorded reason); mkc:promote --slug this-is-her-inspired (single slug; no --all/--force; build-only placeholder env for the in-process build)",
+          "base": "69e85259c4332387b1c5f94b3d6b417c403d8147 (worktree msr-wave9-batch5-drafts)",
+          "nativeEqualsDraft": "Native body identical to the reviewed draft apart from the type import path (validate-batch5-drafts.ts).",
+          "relationships": "empty",
+          "committed": false,
+          "released": false
+        }
       }
     ],
     "batch5_reassessment_rev24": [

@@ -5917,6 +5917,46 @@
         "timestamp": "2026-10-13T20:43:17.411Z",
         "reason": "Gate A editorial approval 2026-10-13 (W9-B4-P2): armani-diamonds-inspired — LADIES-22 — Rose — Fruity Floral"
       }
+    },
+    {
+      "slug": "this-is-him-inspired",
+      "name": "This Is Him Inspired",
+      "collection": "Skye",
+      "factoryVersion": "unknown",
+      "promptVersions": "unknown",
+      "validationStatus": "UNKNOWN",
+      "status": "approved",
+      "addedAt": "2026-10-15T20:12:20.385Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-10-15T20:12:54.118Z",
+      "reviewer": "Founder (Adnaan) - approval 2026-10-15",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder (Adnaan) - approval 2026-10-15",
+        "timestamp": "2026-10-15T20:12:54.117Z",
+        "reason": "W9-B5-P6 founder-authorised local native MKC promotion of exactly two candidates: MEN-145 This Is Him Inspired (Skye, male). Notes per inspected zadig-et-voltaire.com tiers. Local only - no production release authorised."
+      }
+    },
+    {
+      "slug": "this-is-her-inspired",
+      "name": "This Is Her Inspired",
+      "collection": "Rose",
+      "factoryVersion": "unknown",
+      "promptVersions": "unknown",
+      "validationStatus": "UNKNOWN",
+      "status": "approved",
+      "addedAt": "2026-10-15T20:12:23.735Z",
+      "reviewStartedAt": null,
+      "decidedAt": "2026-10-15T20:12:56.782Z",
+      "reviewer": "Founder (Adnaan) - approval 2026-10-15",
+      "notes": [],
+      "decision": {
+        "decision": "approved",
+        "reviewer": "Founder (Adnaan) - approval 2026-10-15",
+        "timestamp": "2026-10-15T20:12:56.781Z",
+        "reason": "W9-B5-P6 founder-authorised local native MKC promotion of exactly two candidates: LADIES-296 This Is Her Inspired (Rose, female). Founder evidence decision (verbatim): \"I accept the source-supported This Is Her note sequence while the original fragrance's EDT/EDP concentration remains explicitly unresolved.\" No concentration is established for the reference or the Maison formulation. Local only - no production release authorised."
+      }
     }
   ]
 }

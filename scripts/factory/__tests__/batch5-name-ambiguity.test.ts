@@ -3,9 +3,10 @@
  *
  * "This Is Him" and "This Is Her" are also everyday phrases. With both drafts present,
  * product requests must resolve to them and gifting sentences ("this is her first perfume")
- * must not. The drafts are added to this test process's in-memory catalogue only — before
- * the resolver, shop search and Concierge modules load and index it. Nothing is written to
- * app/lib/mkc/native and the native registry is checked to be unchanged.
+ * must not. Since W9-B5-P6 both records are native, so the test runs against the real catalogue;
+ * a record is added to this process's in-memory catalogue only if it is absent from native MKC
+ * (before the resolver, shop search and Concierge modules load and index it). Nothing is written
+ * to app/lib/mkc/native and no record is ever present twice.
  *
  * Run: npx tsx scripts/factory/__tests__/batch5-name-ambiguity.test.ts
  */
@@ -15,9 +16,10 @@ import { nativeFragrances } from "../../../app/lib/mkc/native/index";
 import { thisIsHimInspired } from "../drafts/this-is-him-inspired";
 import { thisIsHerInspired } from "../drafts/this-is-her-inspired";
 
-// ── Isolated test catalogue: drafts appended in memory before dependent modules load ──
+// ── Test catalogue: native MKC, plus (in memory only) any Batch 5 record not yet native ──
 const NATIVE_SIZE = nativeFragrances.size;
-mkcCatalogue.push(thisIsHimInspired, thisIsHerInspired);
+const ADDED = [thisIsHimInspired, thisIsHerInspired].filter((d) => !mkcCatalogue.some((k) => k.slug === d.slug));
+mkcCatalogue.push(...ADDED);
 
 /* eslint-disable @typescript-eslint/no-require-imports */
 const { resolveIntent, explicitSingleEntity, fragrancesNamedIn } =
@@ -91,10 +93,11 @@ function respond(message: string, raw: string) {
 
 console.log("\n── Isolated catalogue ────────────────────────────────────────────");
 
-test("B5A-00 — drafts present in this process only; native registry unchanged", () => {
-  assert.equal(mkcCatalogue.length, NATIVE_SIZE + 2);
+test("B5A-00 — each Batch 5 record present exactly once; native registry unchanged by the test", () => {
+  assert.equal(mkcCatalogue.length, NATIVE_SIZE + ADDED.length);
   assert.equal(nativeFragrances.size, NATIVE_SIZE);
-  assert.ok(!nativeFragrances.has(HIM) && !nativeFragrances.has(HER));
+  for (const slug of BATCH5) assert.equal(mkcCatalogue.filter((k) => k.slug === slug).length, 1, slug);
+  console.log(`     (native ${NATIVE_SIZE}; added in memory: ${ADDED.map((d) => d.slug).join(", ") || "none"})`);
   assert.equal(catalogueMaps.bySlug.get(HIM)?.collection, "Skye");
   assert.equal(catalogueMaps.bySlug.get(HER)?.collection, "Rose");
   assert.equal(new Set(mkcCatalogue.map((k) => k.slug)).size, mkcCatalogue.length, "duplicate slug");

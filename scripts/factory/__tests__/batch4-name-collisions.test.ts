@@ -58,8 +58,8 @@ const NEW = ["212-sexy-men-inspired", "212-vip-men-inspired", "burberry-body-ins
 
 console.log("\n── Catalogue state ───────────────────────────────────────────────");
 
-test("B4-01 — catalogue is 281 and includes the four promoted Batch 4 records", () => {
-  assert.equal(mkcCatalogue.length, 281);
+test("B4-01 — catalogue is 283 (Batch 5 promoted, W9-B5-P6) and includes the four promoted Batch 4 records", () => {
+  assert.equal(mkcCatalogue.length, 283);
   for (const s of NEW) assert.ok(mkcCatalogue.some((k) => k.slug === s), `${s} not native`);
 });
 

@@ -41,7 +41,8 @@
         "Revision 22 (2026-10-13, W9-B4-P2): founder Gate A + local promotion approval (verbatim); 212-sexy-men-inspired (z_YPEcKECGZP), 212-vip-men-inspired (bMIOm5sC_kJG), burberry-body-inspired (vs2VOoUTNI2p), armani-diamonds-inspired (r6vUlWEadUGe) promoted to local native MKC; native measured 281 (Skye 112, Rose 119, Elite 50). Gender-qualified 212 aliases added to the Concierge resolver. MEN-104 hold, LADIES-6 independence and MEN-7/MEN-8 observations unchanged. Not committed.",
         "Revision 23 (2026-10-15, W9-B5-P1): Batch 5 evidence gate - MEN-145, LADIES-296 and UNISEX-31 held on evidence, UNISEX-80 held on identity ('Tuxedo Sharp Patchouli' is an official YSL name). No drafts. Evidence revision 11.",
         "Revision 24 (2026-10-15, W9-B5-P1B): official-source reassessment - This Is Him! (tier-1 labelled pyramid) and This Is Her! (tier-1 sequenced pyramid; EDT/EDP wording conflict on brand pages, founder item) cleared for local drafting; Tuxedo Sharp Patchouli (official page blocked) and Oud Maracuja (unordered brand materials) remain held. Drafts this-is-him-inspired and this-is-her-inspired created locally; not promoted.",
-        "Revision 25 (2026-10-15, W9-B5-P3): additive clarification - LADIES-296 reference concentration recorded as unresolved (50 ml page 'Eau de Parfum', 100 ml page 'Eau de Toilette'); identity/remainingUncertainty wording that implied EDP kept under *PreviousRev25; projection-metadata caveat recorded. No evidence, tier, note or decision changes."
+        "Revision 25 (2026-10-15, W9-B5-P3): additive clarification - LADIES-296 reference concentration recorded as unresolved (50 ml page 'Eau de Parfum', 100 ml page 'Eau de Toilette'); identity/remainingUncertainty wording that implied EDP kept under *PreviousRev25; projection-metadata caveat recorded. No evidence, tier, note or decision changes.",
+        "Revision 26 (2026-10-15, W9-B5-P6): founder-approved local native promotion of this-is-him-inspired (xiVXGuNFodZj) and this-is-her-inspired (2_CNKdtS3uUB); This Is Her evidence decision recorded verbatim with the reference EDT/EDP concentration still unresolved; native 283 (Skye 113, Rose 120, Elite 50); Tuxedo Sharp Patchouli and Oud Maracuja remain held. No evidence or pyramid changes. Not committed; not released."
       ]
     },
     "supportingEvidenceFiles": [
@@ -3740,6 +3741,80 @@
       ],
       "outcome": "2 cleared for local drafting (MEN-145, LADIES-296); 2 holds retained (UNISEX-80 identity, UNISEX-31 evidence). Revision 23 holds preserved unchanged as history.",
       "projectionMetadataCaveatRev25": "projection 'moderate' on both Batch 5 drafts is the fixed default produced by the shared knowledge adapter (app/lib/knowledgeAdapter.ts), not source-derived performance evidence. Inspected product and comparison interfaces do not visibly present it (ComparisonView destructures but does not render it; admin identity-review screens only). It may indirectly influence recommendation/discovery ranking (discovery/scoring.ts, collectionEngine.ts). It must not be represented as a guaranteed Maison fragrance characteristic. Documentation only; no code changed."
+    },
+    "promotion2026-10-15": {
+      "phase": "W9-B5-P6",
+      "founderApproval": {
+        "date": "2026-10-15",
+        "approvedBy": "Founder (Adnaan)",
+        "scope": "The founder explicitly approves W9-B5-P6: local native MKC promotion of these two fragrances only. Not a commit, push, merge, deployment or live publication.",
+        "thisIsHerEvidenceDecisionVerbatim": "I accept the source-supported This Is Her note sequence while the original fragrance's EDT/EDP concentration remains explicitly unresolved.",
+        "thisIsHerEvidenceDecisionLimits": [
+          "Accepts the documented note description for the local Maison knowledge record.",
+          "Does not establish whether the reference fragrance is EDT or EDP.",
+          "Does not establish the concentration of Maison's supplied formulation.",
+          "Does not establish that two reference versions have identical formulations.",
+          "Does not authorise unsupported ingredient, formulation or performance claims.",
+          "Does not remove the historical evidence discrepancy."
+        ]
+      },
+      "records": [
+        {
+          "slug": "this-is-him-inspired",
+          "sourceKey": "MEN-145-Zadig & Voltaire / This is Him",
+          "collection": "Skye",
+          "gender": "male",
+          "promotion": {
+            "promotionId": "xiVXGuNFodZj",
+            "nativePath": "app/lib/mkc/native/this-is-him-inspired.ts",
+            "completedAt": "2026-10-15T20:13:50.501Z",
+            "operator": "Claude Code (founder approval 2026-10-15)",
+            "reviewedBy": "Founder (Adnaan) - approval 2026-10-15",
+            "validationStatus": "PASS",
+            "buildResult": "pass",
+            "workflow": "npm run mkc:review -- --add this-is-him-inspired; --approve this-is-him-inspired (founder reviewer, recorded reason); mkc:promote --slug this-is-him-inspired (single slug; no --all/--force; build-only placeholder env for the in-process build)",
+            "base": "69e85259c4332387b1c5f94b3d6b417c403d8147 (worktree msr-wave9-batch5-drafts)",
+            "nativeEqualsDraft": "Native body identical to the reviewed draft apart from the type import path (validate-batch5-drafts.ts).",
+            "relationships": "empty",
+            "committed": false,
+            "released": false
+          }
+        },
+        {
+          "slug": "this-is-her-inspired",
+          "sourceKey": "LADIES-296-Zadig & Voltaire / This is Her",
+          "collection": "Rose",
+          "gender": "female",
+          "promotion": {
+            "promotionId": "2_CNKdtS3uUB",
+            "nativePath": "app/lib/mkc/native/this-is-her-inspired.ts",
+            "completedAt": "2026-10-15T20:14:46.315Z",
+            "operator": "Claude Code (founder approval 2026-10-15)",
+            "reviewedBy": "Founder (Adnaan) - approval 2026-10-15",
+            "validationStatus": "PASS",
+            "buildResult": "pass",
+            "workflow": "npm run mkc:review -- --add this-is-her-inspired; --approve this-is-her-inspired (founder reviewer, recorded reason); mkc:promote --slug this-is-her-inspired (single slug; no --all/--force; build-only placeholder env for the in-process build)",
+            "base": "69e85259c4332387b1c5f94b3d6b417c403d8147 (worktree msr-wave9-batch5-drafts)",
+            "nativeEqualsDraft": "Native body identical to the reviewed draft apart from the type import path (validate-batch5-drafts.ts).",
+            "relationships": "empty",
+            "committed": false,
+            "released": false
+          }
+        }
+      ],
+      "thisIsHerConcentration": "UNRESOLVED - unchanged from revision 25 (reassessment2026-10-15 candidates[1].concentrationQualificationRev25).",
+      "held": [
+        "UNISEX-80-YSL Tuxedo Sharp Patchouli (identity hold)",
+        "UNISEX-31-Oud Maracuja by Maison Crivelli (evidence hold)"
+      ],
+      "nativeCatalogue": {
+        "before": 281,
+        "after": 283,
+        "Skye": 113,
+        "Rose": 120,
+        "Elite": 50
+      },
+      "release": "NOT AUTHORISED - local only; no commit, push, merge or deployment in this phase."
     }
   }
 }

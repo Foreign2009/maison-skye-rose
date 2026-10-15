@@ -1,10 +1,12 @@
 /**
- * Validate Wave 9 Batch 5 review drafts (W9-B5-P1B, 2026-10-15).
+ * Validate Wave 9 Batch 5 review drafts (W9-B5-P1B, 2026-10-15; promoted-state checks W9-B5-P6).
  * Run from the worktree root: npx tsx scripts/factory/__tests__/validate-batch5-drafts.ts
  *
  * Checks (any failure exits non-zero):
  *   1. Staging sync — draft slugs equal the slugs in wave9Batch5Catalogue (no missing, extra or duplicate).
- *   2. Native status — Batch 5 drafts are NOT promoted: no draft slug, id or name exists in the native registry.
+ *   2. Native status — PROMOTED Batch 5 slugs (founder local promotion approval 2026-10-15, W9-B5-P6) must be
+ *      registered natively, the native record must equal the reviewed draft, and no other native record may
+ *      share the slug, id or name. The supplier source key recorded in the ledger must match.
  *   3. Record validator — validateKnowledgeRecord(draft) and validateKnowledgeRecord(draft, context)
  *      where context = native MKC + Batch 5 drafts (relationship existence/reciprocity).
  *   4. Adapter consistency — adaptFragrance(staging entry) must reproduce the draft's sweetness,
@@ -24,6 +26,7 @@ import type { FragranceKnowledge }   from "../../../app/lib/mkc/types";
 import { nativeFragrances }          from "../../../app/lib/mkc/native/index";
 import { adaptFragrance }            from "../../../app/lib/knowledgeAdapter";
 import { deriveSlug }                from "../core/deriveSlug";
+import { readFileSync }              from "node:fs";
 import { wave9Batch5Catalogue }      from "../data/wave-9-catalogue";
 import { thisIsHimInspired }         from "../drafts/this-is-him-inspired";
 import { thisIsHerInspired }         from "../drafts/this-is-her-inspired";
@@ -33,6 +36,15 @@ const drafts: FragranceKnowledge[] = [thisIsHimInspired, thisIsHerInspired];
 const PERFORMANCE_WORDING = /\b(long[- ]lasting|longevity|lasts|lasting|all[- ]day|sillage|projection|projects?|trail|reapplication|beast mode|fills the room|compliments?|every occasion|any occasion|impossible to ignore)\b/i;
 const EQUIVALENCE_WORDING = /\b(zadig|voltaire|yves saint laurent|ysl|crivelli|dupe|clone|identical|same as|smells like|exact (match|copy)|equivalent|eau de parfum|eau de toilette|extrait|edp|edt|concentration)\b/i;
 const SCORE_KEYS = ["sweetness", "freshness", "warmth", "intensity", "versatility"] as const;
+// Promoted to local native MKC 2026-10-15 after founder local promotion approval (Wave 9 revision 26).
+const PROMOTED = new Set(["this-is-him-inspired", "this-is-her-inspired"]);
+const SOURCE_KEYS: Record<string, string> = {
+  "this-is-him-inspired": "MEN-145-Zadig & Voltaire / This is Him",
+  "this-is-her-inspired": "LADIES-296-Zadig & Voltaire / This is Her",
+};
+const ledger = JSON.parse(readFileSync("data/supplier/decisions/catalogue-expansion-ledger.json", "utf-8"));
+const ledgerDrafts: Array<{ slug: string; sourceKey: string; collection: string; gender: string }> =
+  ledger.entries?.batch5_draft_generated ?? [];
 
 let problems = 0;
 const fail = (slug: string, msg: string) => { problems++; console.log(`   ✗ ${slug}: ${msg}`); };
@@ -53,15 +65,22 @@ const context = new Map(nativeFragrances);
 for (const d of drafts) context.set(d.slug, d);
 console.log(`Context: ${nativeFragrances.size} native + ${drafts.length} Batch 5 drafts = ${context.size}\n`);
 
-const nativeNames = new Set([...nativeFragrances.values()].map((k) => k.name.toLowerCase()));
-const nativeIds = new Set([...nativeFragrances.values()].map((k) => k.id));
+const others = (d: FragranceKnowledge) => [...nativeFragrances.values()].filter((k) => k.slug !== d.slug);
 
 for (const d of drafts as any[]) {
   console.log(`── ${d.slug}  profile="${d.profile}" season="${d.season}"`);
-  // 2. Not promoted; no identity collision with the native catalogue
-  if (nativeFragrances.has(d.slug)) fail(d.slug, "draft slug already exists in native registry");
-  if (nativeIds.has(d.id)) fail(d.slug, "draft id already exists in native registry");
-  if (nativeNames.has(d.name.toLowerCase())) fail(d.slug, "draft name already exists in native registry");
+  // 2. Native status; no identity collision with any other native record
+  if (PROMOTED.has(d.slug)) {
+    const n = nativeFragrances.get(d.slug);
+    if (!n) fail(d.slug, "promoted slug missing from native registry");
+    else if (JSON.stringify(n) !== JSON.stringify(d)) fail(d.slug, "native record differs from reviewed draft");
+    else console.log(`   native: registered, identical to draft (promoted)`);
+  } else if (nativeFragrances.has(d.slug)) fail(d.slug, "unpromoted draft slug already exists in native registry");
+  if (others(d).some((k) => k.id === d.id)) fail(d.slug, "id shared with another native record");
+  if (others(d).some((k) => k.name.toLowerCase() === d.name.toLowerCase())) fail(d.slug, "name shared with another native record");
+  const led = ledgerDrafts.find((e) => e.slug === d.slug);
+  if (!led || led.sourceKey !== SOURCE_KEYS[d.slug]) fail(d.slug, `ledger source key ${led?.sourceKey} ≠ ${SOURCE_KEYS[d.slug]}`);
+  else if (led.collection !== d.collection || led.gender !== d.gender) fail(d.slug, "ledger collection/gender differs from record");
   if (d.slug !== d.id || d.slug !== deriveSlug(d.name)) fail(d.slug, `slug/id/name mismatch (${d.id}, ${deriveSlug(d.name)})`);
 
   const plain = validateKnowledgeRecord(d);
