@@ -5,6 +5,9 @@
  * to prevent harmful or off-brand responses before they reach the UI.
  */
 
+import { mkcCatalogue } from "../mkc/catalogue";
+import type { FragranceKnowledge } from "../mkc/types";
+
 // ── System prompt sections ────────────────────────────────────────────────────
 
 const IDENTITY = `You are the Maison Concierge — a knowledgeable fragrance adviser for Maison Skye & Rose.
@@ -17,6 +20,33 @@ const KNOWLEDGE = `KNOWLEDGE RULES:
 - Never compare to specific designer or luxury brand names.
 - If a fragrance is not in context, acknowledge this and suggest the guest explore our Scent Finder.
 - FRAGRANCES IN CONTEXT is the retrieved subset for this turn — it is NOT evidence of the complete Maison Skye & Rose catalogue. Do not claim the catalogue lacks a gender, family, or style merely because the current context section does not contain one. If retrieval context is insufficient, say so honestly and offer to search more broadly.`;
+
+// Sizes and retail prices as the catalogue records define them — the same values the
+// product pages and checkout use — so every turn (including clarification turns with no
+// fragrance in context) can answer size questions without improvising.
+const mlOf = (size: string): number => parseFloat(size);
+
+export function describeProductSizes(catalogue: FragranceKnowledge[] = mkcCatalogue): string {
+  const sizeKeys = (k: FragranceKnowledge) => Object.keys(k.prices).filter((s) => k.prices[s as keyof typeof k.prices] !== undefined);
+  const sizes = [...new Set(catalogue.flatMap(sizeKeys))]
+    .filter((s) => catalogue.every((k) => sizeKeys(k).includes(s)))
+    .sort((a, b) => mlOf(a) - mlOf(b));
+  if (sizes.length === 0) return "";
+  const list = sizes.length === 1 ? sizes[0] : `${sizes.slice(0, -1).join(", ")} and ${sizes[sizes.length - 1]}`;
+  const priceOf = (s: string) => new Set(catalogue.map((k) => k.prices[s as keyof typeof k.prices]));
+  const uniform = sizes.every((s) => priceOf(s).size === 1);
+  const prices = uniform
+    ? ` (${sizes.map((s) => `${s} R${[...priceOf(s)][0]}`).join(" · ")})`
+    : "; prices are shown on each fragrance's product page";
+  return `Every Maison Skye & Rose fragrance is available in ${list}${prices}.`;
+}
+
+const PRODUCT_FACTS = `PRODUCT FACTS:
+- ${describeProductSizes()} These are the sizes offered. When a guest asks about sizes, bottles or what is available, state them directly — for example, 30ml is one of the available sizes.
+- Never say a fragrance comes in only one size or in a single format, and never say one of these sizes is unavailable.
+- Product format, formulation and concentration are not part of the catalogue information you have. Do not describe the fragrances as oils or sprays, as eau de parfum, eau de toilette or extrait, or as any concentration, and do not state bottle, atomiser or packaging specifications.
+- If a guest asks about format, formulation or concentration, say briefly that this detail is not listed in the information available to you and invite them to contact the Maison team on WhatsApp — and still answer any size question with the sizes above. Acknowledging an unlisted detail is honest, not hedging.
+- If a size question is unclear, ask what they mean and mention the available sizes.`;
 
 const BEHAVIOUR = `BEHAVIOUR RULES:
 - When recommending a fragrance, mark it as [PRODUCT:slug] where slug is its URL identifier.
@@ -118,7 +148,7 @@ const FORMATTING = `FORMATTING:
 // ── Public API ────────────────────────────────────────────────────────────────
 
 export function buildSystemPrompt(contextContent: string): string {
-  const sections = [IDENTITY, KNOWLEDGE, BEHAVIOUR, VOICE, PROFILE_RULES, WARDROBE_RULES, COLLECTION_RULES, REFINEMENT_RULES, EXPLORATION_RULES, CONFIDENCE_RULES, EXPLANATION_ANCHOR_RULES, RESTRICTIONS, FORMATTING];
+  const sections = [IDENTITY, KNOWLEDGE, PRODUCT_FACTS, BEHAVIOUR, VOICE, PROFILE_RULES, WARDROBE_RULES, COLLECTION_RULES, REFINEMENT_RULES, EXPLORATION_RULES, CONFIDENCE_RULES, EXPLANATION_ANCHOR_RULES, RESTRICTIONS, FORMATTING];
   if (contextContent) sections.push(contextContent);
   return sections.join("\n\n");
 }
