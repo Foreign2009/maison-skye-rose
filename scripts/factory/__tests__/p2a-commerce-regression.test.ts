@@ -508,10 +508,21 @@ test("Checkout: imports COLLECTION_PROVINCE and computeDelivery from commerce/de
 });
 
 test("Checkout: uses cartTotal (wholesale-aware) as subtotal", () => {
-  assert.ok(
-    checkoutSrc.includes("cartTotal") && checkoutSrc.includes("subtotal = cartTotal"),
-    "Checkout should use cartTotal (wholesale-adjusted) as subtotal",
-  );
+  // Whitespace-insensitive: the source aligns assignments ("const subtotal    = cartTotal;").
+  assert.ok(/const\s*\{[^}]*\bcartTotal\b[^}]*\}\s*=\s*useCart\(\)/.test(checkoutSrc),
+    "Checkout should take cartTotal from useCart()");
+  assert.ok(/\bconst\s+subtotal\s*=\s*cartTotal\s*;/.test(checkoutSrc),
+    "Checkout should use cartTotal (wholesale-adjusted) as subtotal");
+  assert.ok(/\bconst\s+delivery\s*=\s*computeDelivery\(\s*province\s*,\s*subtotal\s*\)/.test(checkoutSrc),
+    "Checkout delivery must be computed from that subtotal");
+  assert.ok(/\bconst\s+total\s*=\s*subtotal\s*\+\s*delivery\s*;/.test(checkoutSrc),
+    "Checkout total must be subtotal + delivery");
+  // cartTotal itself is the wholesale-aware sum (CartContext prices every line through getWholesaleItemPrice).
+  const cartSrc = readSource("app/context/CartContext.tsx");
+  assert.ok(/getWholesaleItemPrice\(\s*item\.size\s*,\s*item\.price\s*,\s*wholesaleActive\s*\)/.test(cartSrc),
+    "CartContext must price lines through getWholesaleItemPrice");
+  assert.ok(/const\s+cartTotal\s*=\s*useMemo\([\s\S]{0,200}getWholesalePrice\(item\)\s*\*\s*item\.quantity/.test(cartSrc),
+    "cartTotal must sum wholesale-aware line prices");
 });
 
 test("Checkout: local DELIVERY_RATES removed", () => {
@@ -527,10 +538,31 @@ test("Checkout: address validation skipped for collection", () => {
 });
 
 test("Checkout: delivery amount shows FREE when delivery === 0", () => {
+  // CHECKOUT-P8d: the summary shows the frozen order snapshot on retry, else the live values.
   assert.ok(
-    checkoutSrc.includes("delivery === 0 ? \"FREE\""),
-    "Checkout should show FREE when delivery === 0 (covers collection AND R2000+)",
+    /\(\s*frozen\s*\?\s*frozen\.delivery\s*:\s*delivery\s*\)\s*===\s*0\s*\?\s*"FREE"\s*:\s*`R\$\{\s*\(\s*frozen\s*\?\s*frozen\.delivery\s*:\s*delivery\s*\)\.toFixed\(2\)\s*\}`/.test(checkoutSrc),
+    "Checkout should show FREE when the (frozen-or-live) delivery === 0, else that amount (covers collection AND R2000+)",
   );
+  // The frozen snapshot is used consistently for subtotal and total too.
+  assert.ok(/\(\s*frozen\s*\?\s*frozen\.subtotal\s*:\s*subtotal\s*\)\.toFixed\(2\)/.test(checkoutSrc), "subtotal display uses the frozen snapshot");
+  assert.ok(/\(\s*frozen\s*\?\s*frozen\.total\s*:\s*total\s*\)\.toFixed\(2\)/.test(checkoutSrc), "total display uses the frozen snapshot");
+});
+
+test("Checkout: FREE label follows the delivery rules (collection, R2000 exclusive, wholesale alone not free)", () => {
+  // The label rule above applied to computeDelivery outcomes.
+  const label = (province: string, subtotal: number) => {
+    const d = computeDelivery(province, subtotal);
+    return d === 0 ? "FREE" : `R${d.toFixed(2)}`;
+  };
+  assert.equal(label(COLLECTION_PROVINCE, 60), "FREE", "collection is always free");
+  assert.equal(label(COLLECTION_PROVINCE, 5000), "FREE", "collection is always free");
+  assert.equal(label("Cape Town Metro", 2000), "R100.00", "courier charged at exactly R2000");
+  assert.equal(label("Cape Town Metro", 2000.01), "FREE", "courier free only when subtotal > R2000");
+  // 10 × 5ml is a wholesale cart (R48 each = R480): wholesale quantity alone does not make courier free.
+  assert.ok(isWholesaleActive(10));
+  const wholesaleSubtotal = getWholesaleItemPrice("5ml", 60, true) * 10;
+  assert.equal(wholesaleSubtotal, 480);
+  assert.equal(label("Gauteng", wholesaleSubtotal), "R180.00", "wholesale cart under R2000 still pays courier");
 });
 
 // ── Section 8: Delivery page and FAQ wording ──────────────────────────────────

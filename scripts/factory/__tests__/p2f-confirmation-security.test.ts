@@ -6,8 +6,8 @@ process.env.ORDER_RECEIPT_SECRET = "test-p2f-secret";
  *
  * Verifies that:
  *
- *   1. GET /api/orders/[ref] returns server-verified { orderRef, total, paymentStatus }
- *      for a known order reference.
+ *   1. GET /api/orders/[ref] returns server-verified { orderRef, total, paymentStatus, province }
+ *      for a known order reference (province added by CHECKOUT-P9 for receipt wording).
  *   2. Invalid or missing reference formats are rejected before any DB access (400).
  *   3. An unknown reference (not in the store) returns 404.
  *   4. A DB error returns 500 with a safe message.
@@ -18,7 +18,7 @@ process.env.ORDER_RECEIPT_SECRET = "test-p2f-secret";
  *   8. The HTTP wrapper (GET function) enforces format validation without DB access.
  *   9. The POST HTTP wrapper handles malformed JSON safely (400 — client error).
  *  10. Source invariants: checkout redirect no longer includes ?total=;
- *      GET query selects only non-PII fields.
+ *      GET query selects exactly order_ref, total, payment_status, province (no PII).
  *
  * Run: npx tsx scripts/factory/__tests__/p2f-confirmation-security.test.ts
  */
@@ -85,16 +85,29 @@ async function parseResponse(r: Response): Promise<Record<string, unknown>> {
 
 // ── Mock DB factory ───────────────────────────────────────────────────────────
 
-type StoredOrder = { order_ref: string; total: number; payment_status: string };
+// Row shape taken from the route's ConfirmationDb contract (CHECKOUT-P9 added province),
+// so a future contract change fails type-checking here instead of drifting silently.
+type ConfirmationRow = NonNullable<Awaited<ReturnType<ConfirmationDb["getOrderConfirmation"]>>["data"]>;
+// Fixtures may omit province; the database always returns the column (null when unset).
+type StoredOrder = Omit<ConfirmationRow, "province"> & { province?: ConfirmationRow["province"] };
 
 function makeConfirmationDb(store: StoredOrder | null, fail = false): ConfirmationDb {
   return {
     getOrderConfirmation: async () => {
       if (fail) return { data: null, error: new Error("DB connection failed") };
-      return { data: store, error: null };
+      return { data: store ? { ...store, province: store.province ?? null } : null, error: null };
     },
   };
 }
+
+// The only fields a successful confirmation may contain (CHECKOUT-P9: province drives the
+// receipt's collection / delivery wording). Anything else is a contract violation.
+const CONFIRMATION_FIELDS = ["orderRef", "paymentStatus", "province", "total"];
+// Customer data and credentials that must never appear in a confirmation body.
+const FORBIDDEN_CONFIRMATION_FIELDS = [
+  "customer_name", "customerName", "name", "full_name", "fullName", "phone", "email", "address",
+  "items", "order_items", "notes", "admin_notes", "status_history", "token", "receiptToken", "secret",
+];
 
 function makeOrderDb(fail = false): { db: OrderDb; captured(): Record<string, unknown> | null } {
   let row: Record<string, unknown> | null = null;
@@ -330,24 +343,48 @@ it("POST → handleOrder produces the server total that GET will later confirm",
 // ── Section 6: PII exclusion ──────────────────────────────────────────────────
 console.log("  ─── Section 6: No PII in confirmation response ───\n");
 
-it("Confirmation response fields: only orderRef, total, paymentStatus", async () => {
-  const db   = makeConfirmationDb({ order_ref: "MSR-20260914-55556", total: 160, payment_status: "awaiting_payment" });
-  const res  = await handleGetConfirmation("MSR-20260914-55556", await signReceiptToken("MSR-20260914-55556"), db);
-  const json = await parseResponse(res);
-  const allowed = new Set(["orderRef", "total", "paymentStatus"]);
-  for (const key of Object.keys(json)) {
-    assert.ok(allowed.has(key), `Unexpected field in response: "${key}"`);
+it("Confirmation response fields: exactly orderRef, total, paymentStatus, province (populated and null province)", async () => {
+  const cases: Array<[StoredOrder, string | null]> = [
+    [{ order_ref: "MSR-20260914-55556", total: 160, payment_status: "awaiting_payment", province: "Gauteng" }, "Gauteng"],
+    [{ order_ref: "MSR-20260914-55557", total: 60, payment_status: "awaiting_payment", province: COLLECTION_PROVINCE }, COLLECTION_PROVINCE],
+    [{ order_ref: "MSR-20260914-55558", total: 160, payment_status: "awaiting_payment", province: null }, null],
+  ];
+  for (const [stored, province] of cases) {
+    const res  = await handleGetConfirmation(stored.order_ref, await signReceiptToken(stored.order_ref), makeConfirmationDb(stored));
+    assert.equal(res.status, 200);
+    const json = await parseResponse(res);
+    assert.deepEqual(Object.keys(json).sort(), CONFIRMATION_FIELDS, `Response keys for ${stored.order_ref}`);
+    assert.equal(json.province, province, "province is returned as stored (null, not omitted, when unset)");
+    for (const key of FORBIDDEN_CONFIRMATION_FIELDS) assert.ok(!(key in json), `Must not expose ${key}`);
   }
 });
 
-it("Source: GET endpoint selects only order_ref, total, payment_status from DB", () => {
+it("Confirmation response never includes province (or any order data) without a valid receipt token", async () => {
+  const stored: StoredOrder = { order_ref: "MSR-20260914-55559", total: 160, payment_status: "awaiting_payment", province: "Gauteng" };
+  for (const token of [null, "", "not-a-token", await signReceiptToken("MSR-20260914-55560")]) {
+    let dbCalled = false;
+    const db: ConfirmationDb = {
+      getOrderConfirmation: async () => { dbCalled = true; return makeConfirmationDb(stored).getOrderConfirmation(stored.order_ref); },
+    };
+    const res  = await handleGetConfirmation(stored.order_ref, token, db);
+    assert.equal(res.status, 401, `token ${JSON.stringify(token)?.slice(0, 20)} must be rejected`);
+    assert.ok(!dbCalled, "DB must not be called before the receipt token is verified");
+    const json = await parseResponse(res);
+    for (const key of [...CONFIRMATION_FIELDS.filter((k) => k !== "orderRef"), ...FORBIDDEN_CONFIRMATION_FIELDS]) {
+      assert.ok(!(key in json), `401 body must not contain ${key}`);
+    }
+  }
+});
+
+it("Source: GET endpoint selects exactly order_ref, total, payment_status, province from DB", () => {
   const src = readSource("app/api/orders/[ref]/route.ts");
-  // The GET handler's select call must not include PII columns.
-  assert.ok(
-    src.includes('"order_ref, total, payment_status"') ||
-    src.includes("'order_ref, total, payment_status'"),
-    "GET DB query must select only order_ref, total, payment_status"
-  );
+  // Exact column list of the confirmation GET's select() — no wildcard, no extra column.
+  const getFn   = src.slice(src.indexOf("export async function GET"));
+  const selects = [...getFn.matchAll(/\.select\(\s*(["'`])([^"'`]*)\1\s*\)/g)].map((m) => m[2]);
+  assert.equal(selects.length, 1, `GET must issue exactly one select(); found ${selects.length}`);
+  const columns = selects[0].split(",").map((c) => c.trim()).sort();
+  assert.deepEqual(columns, ["order_ref", "payment_status", "province", "total"],
+    `GET DB query must select exactly order_ref, total, payment_status, province; got "${selects[0]}"`);
   // Must not select customer_name, phone, or address.
   const getSection = src.slice(src.indexOf("handleGetConfirmation"));
   assert.ok(!getSection.includes("customer_name"), "GET must not select customer_name");
@@ -454,17 +491,47 @@ it("payment-success page shows loading state while confirmation is pending", () 
   );
 });
 
-it("payment-success page shows error state without fabricating an amount", () => {
+it("payment-success page shows error states without fabricating an amount", () => {
+  // P10 (6ab79be) replaced the single "error" state with specific failure states.
   const src = readSource("app/payment-success/page.tsx");
-  assert.ok(
-    src.includes('"error"') || src.includes("'error'"),
-    "payment-success must have an error state"
-  );
-  // In the error state, the page must not render a currency amount from URL params
-  assert.ok(
-    !src.includes('searchParams.get("total")'),
-    "Error state must not fall back to URL param"
-  );
+  const FAILURE_STATES = ["unauthorized", "not_found", "invalid_ref", "network_error", "server_error"];
+
+  // 1. The state union declares exactly loading, confirmed and the five failure states,
+  //    and only "confirmed" carries a total.
+  const union = /type ConfirmationState =([\s\S]*?\});/.exec(src)?.[1] ?? "";
+  const variants = union.match(/\{[^{}]*\}/g) ?? [];
+  const statuses = variants.map((v) => /status:\s*"([a-z_]+)"/.exec(v)?.[1]).sort();
+  assert.deepEqual(statuses, ["confirmed", "loading", ...FAILURE_STATES].sort(), `ConfirmationState variants: ${statuses.join(", ")}`);
+  for (const v of variants) {
+    const status = /status:\s*"([a-z_]+)"/.exec(v)?.[1];
+    assert.equal(/\btotal\b/.test(v), status === "confirmed", `only "confirmed" may carry total (variant ${status})`);
+  }
+
+  // 2. Each failure is reached from the right outcome: bad format before any fetch, 401, 404,
+  //    any other non-OK response, and a fetch rejection.
+  assert.ok(/!REF_FORMAT\.test\(orderRef\)\)\s*\{\s*setConfirmation\(\{\s*status:\s*"invalid_ref"\s*\}\)/.test(src), "invalid ref → invalid_ref before fetch");
+  assert.ok(/res\.status === 401\)\s*\{\s*setConfirmation\(\{\s*status:\s*"unauthorized"/.test(src), "401 → unauthorized");
+  assert.ok(/res\.status === 404\)\s*\{\s*setConfirmation\(\{\s*status:\s*"not_found"/.test(src), "404 → not_found");
+  assert.ok(/!res\.ok\)\s*\{\s*setConfirmation\(\{\s*status:\s*"server_error"/.test(src), "other non-OK → server_error");
+  assert.ok(/\.catch\([\s\S]{0,400}status:\s*"network_error"/.test(src), "fetch rejection → network_error");
+
+  // 3. Every failure state has its own render branch, all before the first rendered amount,
+  //    and none of those branches (or the loading branch) renders an amount.
+  const firstAmount = src.indexOf("confirmation.total");
+  assert.ok(firstAmount > 0, "confirmed view renders confirmation.total");
+  const branchAt = (s: string) => src.search(new RegExp(`confirmation\\.status === "${s}"`));
+  for (const s of ["loading", ...FAILURE_STATES]) {
+    const at = branchAt(s);
+    assert.ok(at > 0, `render branch for "${s}" exists`);
+    assert.ok(at < firstAmount, `"${s}" branch returns before any amount is rendered`);
+  }
+  const nonConfirmedViews = src.slice(branchAt("loading"), firstAmount);
+  assert.ok(!/\btotal\b|toFixed\(|searchParams/.test(nonConfirmedViews),
+    "loading and failure views must not render an amount or read query parameters");
+
+  // 4. The only query parameter read is the order reference — never a total.
+  const params = [...src.matchAll(/searchParams\.get\(\s*["']([^"']+)["']\s*\)/g)].map((m) => m[1]);
+  assert.deepEqual(params, ["ref"], `searchParams reads: ${params.join(", ")}`);
 });
 
 it("WhatsApp message uses confirmation.total when confirmed, not a URL param", () => {

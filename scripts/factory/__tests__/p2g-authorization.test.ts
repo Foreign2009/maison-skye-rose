@@ -12,7 +12,8 @@ process.env.ADMIN_SECRET = "p2g-admin-secret";
  *   3. Cross-order credential (token for A used with B) → 401
  *   4. Valid credential → 200 with permitted fields only
  *   5. Cache-Control: private, no-store on confirmed responses
- *   6. Response fields contain only { orderRef, total, paymentStatus }
+ *   6. Response fields are exactly { orderRef, total, paymentStatus, province } (province added
+ *      by CHECKOUT-P9 for receipt wording) and never include customer PII or credentials
  *   7. POST sets an HttpOnly receipt cookie on success
  *   8. Missing ORDER_RECEIPT_SECRET → 503 before any DB insert
  *   9. Admin PATCH not affected — customer receipt does not grant admin access
@@ -72,13 +73,17 @@ async function parseResponse(r: Response): Promise<Record<string, unknown>> {
 
 // ── Mock DB ───────────────────────────────────────────────────────────────────
 
-type StoredOrder = { order_ref: string; total: number; payment_status: string };
+// Row shape taken from the route's ConfirmationDb contract (CHECKOUT-P9 added province),
+// so a future contract change fails type-checking here instead of drifting silently.
+type ConfirmationRow = NonNullable<Awaited<ReturnType<ConfirmationDb["getOrderConfirmation"]>>["data"]>;
+// Fixtures may omit province; the database always returns the column (null when unset).
+type StoredOrder = Omit<ConfirmationRow, "province"> & { province?: ConfirmationRow["province"] };
 
 function makeConfirmationDb(store: StoredOrder | null, fail = false): ConfirmationDb {
   return {
     getOrderConfirmation: async () => {
       if (fail) return { data: null, error: new Error("DB error") };
-      return { data: store, error: null };
+      return { data: store ? { ...store, province: store.province ?? null } : null, error: null };
     },
   };
 }
@@ -145,7 +150,7 @@ console.log("\n  SITE-RELIABILITY-P2G — Authorization Tests\n");
 
 const TEST_REF  = "MSR-20260914-55555";
 const TEST_REF2 = "MSR-20260914-66666";
-const STORED    = { order_ref: TEST_REF, total: 250, payment_status: "awaiting_payment" };
+const STORED: StoredOrder = { order_ref: TEST_REF, total: 250, payment_status: "awaiting_payment", province: "Western Cape" };
 
 // ── Section 1: Credential requirement ────────────────────────────────────────
 console.log("  ─── Section 1: Credential requirement ───\n");
@@ -295,14 +300,16 @@ it("401 response does not set Cache-Control: private, no-store", async () => {
 // ── Section 6: Response field restriction ────────────────────────────────────
 console.log("  ─── Section 6: Response field restriction ───\n");
 
-it("200 response contains only { orderRef, total, paymentStatus } — no extra fields", async () => {
+it("200 response contains exactly { orderRef, total, paymentStatus, province } — no extra fields", async () => {
   const token = await signReceiptToken(TEST_REF);
-  const db    = makeConfirmationDb(STORED);
-  const res   = await handleGetConfirmation(TEST_REF, token, db);
-  const json  = await parseResponse(res);
-  const allowed = new Set(["orderRef", "total", "paymentStatus"]);
-  for (const key of Object.keys(json)) {
-    assert.ok(allowed.has(key), `Unexpected field in 200 response: "${key}"`);
+  for (const province of ["Western Cape", COLLECTION_PROVINCE, null]) {
+    const db   = makeConfirmationDb({ ...STORED, province });
+    const res  = await handleGetConfirmation(TEST_REF, token, db);
+    assert.equal(res.status, 200);
+    const json = await parseResponse(res);
+    assert.deepEqual(Object.keys(json).sort(), ["orderRef", "paymentStatus", "province", "total"],
+      `Unexpected field set in 200 response: ${JSON.stringify(Object.keys(json))}`);
+    assert.equal(json.province, province, "province returned as stored (null, not omitted, when unset)");
   }
 });
 
@@ -314,6 +321,11 @@ it("200 response contains no customer PII", async () => {
   assert.ok(!("customer_name" in json), "Must not expose customer_name");
   assert.ok(!("phone"         in json), "Must not expose phone");
   assert.ok(!("address"       in json), "Must not expose address");
+  for (const key of ["name", "full_name", "fullName", "customerName", "email", "items", "order_items", "notes",
+    "admin_notes", "status_history", "token", "receiptToken", "secret"]) {
+    assert.ok(!(key in json), `Must not expose ${key}`);
+  }
+  assert.ok(!JSON.stringify(json).includes(token), "Response body must not echo the receipt token");
 });
 
 // ── Section 7: Receipt issuance ───────────────────────────────────────────────

@@ -8210,11 +8210,29 @@ console.log("\n── EP-AI-C6-P3: UI — WhatsApp Collision (structural) ──
 const WA_FILE = path.resolve("app/components/FloatingWhatsApp.tsx");
 const waSource = fs.readFileSync(WA_FILE, "utf-8");
 
-test("UI1 [STRUCTURAL] — FloatingWhatsApp contains 'if (isOpen) return null' guard", () => {
-  assert.ok(
-    waSource.includes("if (isOpen) return null"),
-    "UI1 FAIL — guard not found: if (isOpen) return null",
-  );
+test("UI1 [STRUCTURAL] — FloatingWhatsApp hides (returns null) while Concierge, cart or search is open", () => {
+  // STOREFRONT-ACCEPTANCE-P3B widened the original Concierge-only guard to every overlay.
+  // Each flag must come from its own context hook, so an unrelated "isOpen" cannot satisfy this.
+  const body = waSource.slice(waSource.indexOf("export default function FloatingWhatsApp"));
+  const sources: Array<[string, string, string]> = [
+    ["isOpen", "useConcierge", "../context/ConciergeContext"],
+    ["cartOpen", "useCartUI", "../context/CartUIContext"],
+    ["searchOpen", "useSearchUI", "../context/SearchUIContext"],
+  ];
+  for (const [flag, hook, from] of sources) {
+    assert.ok(new RegExp(`import\\s*\\{[^}]*\\b${hook}\\b[^}]*\\}\\s*from\\s*["']${from.replace(/[./]/g, "\\$&")}["']`).test(waSource),
+      `UI1 FAIL — ${hook} must be imported from ${from}`);
+    assert.ok(new RegExp(`const\\s*\\{\\s*${flag}\\s*\\}\\s*=\\s*${hook}\\(\\)`).test(body),
+      `UI1 FAIL — ${flag} must be read from ${hook}()`);
+  }
+  // Exactly one early return of null, guarded by exactly the three flags joined with ||.
+  const nullReturns = [...body.matchAll(/if\s*\(([^)]*)\)\s*return\s+null\s*;/g)];
+  assert.equal(nullReturns.length, 1, `UI1 FAIL — expected one 'return null' guard, found ${nullReturns.length}`);
+  const terms = nullReturns[0][1].split("||").map((t) => t.trim()).sort();
+  assert.deepEqual(terms, ["cartOpen", "isOpen", "searchOpen"], `UI1 FAIL — guard condition is "${nullReturns[0][1].trim()}"`);
+  // With every overlay closed, the component renders the WhatsApp link (after the guard).
+  const linkAt = body.search(/return\s*\(\s*<a[\s\S]*?href=\{brand\.social\.whatsappLink\}/);
+  assert.ok(linkAt > (nullReturns[0].index ?? Infinity), "UI1 FAIL — WhatsApp link must render after the overlay guard");
 });
 
 test("UI2 [STRUCTURAL] — FloatingWhatsApp imports useConcierge from ConciergeContext", () => {
