@@ -127,10 +127,29 @@ const PRODUCT_NAME_TAIL =
 
 type Occurrence = { start: number; end: number; slug: string };
 
+// An explicit availability, size or price question about the name ("Is This Is Her available
+// in 10ml?", "How much is This Is Him?", "What sizes does This Is Her come in?"). Both halves are
+// required: the question frame must be the whole clause before the name — so "what I want to
+// know is this is her …" does not count — and an availability cue must follow the name. "This is
+// her price range" (no frame) and "Is this is her style?" (no cue) stay ordinary sentences.
+const AVAILABILITY_QUESTION_LEAD =
+  /(?:^|[?!;:,]\s*)(is|does|(?:what|which) sizes? does|how much (?:is|does)|(?:can|could) i (?:get|buy|order))\s*["“”']?$/u;
+const AVAILABILITY_CUE = /^["“”'!]*\s*(?:available\b|in stock\b|in \d+\s?ml\b|comes? in\b|costs?\b|priced?\b|price\b)/u;
+// "How much is This Is Him?" — the price question may end at the name.
+const PRICE_QUESTION_END = /^["“”'!]*\s*(?:[?!]|$)/u;
+
+function isAvailabilityQuestion(occ: Occurrence, qNorm: string): boolean {
+  const lead = AVAILABILITY_QUESTION_LEAD.exec(qNorm.slice(0, occ.start));
+  if (!lead) return false;
+  const tail = qNorm.slice(occ.end);
+  return AVAILABILITY_CUE.test(tail) || (lead[1].startsWith("how much") && PRICE_QUESTION_END.test(tail));
+}
+
 function conversationalNameCounts(
   occ: Occurrence, qNorm: string, accepted: Occurrence[], pending: Occurrence[],
 ): boolean {
   if (qNorm.replace(/[^\p{L}\p{N}' ]/gu, " ").replace(/\s+/g, " ").trim() === qNorm.slice(occ.start, occ.end)) return true;
+  if (isAvailabilityQuestion(occ, qNorm)) return true;
   // Another product name may follow directly ("compare this is him this is her", after the
   // normaliser has removed "and").
   const tail = qNorm.slice(occ.end);

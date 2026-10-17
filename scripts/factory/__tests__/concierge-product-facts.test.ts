@@ -59,7 +59,8 @@ function routePrompt(message: string) {
   }
   const intent = resolved?.intent ?? plan.nextIntent;
   const prompt = buildSystemPrompt(renderContext(buildContext(retrieval, STATE, plan, intent, null, null, null, message)));
-  return { action: plan.action, entity: resolved?.entitySlug, fragrances: retrieval.fragrances.length, prompt };
+  return { action: plan.action, entity: resolved?.entitySlug, fragrances: retrieval.fragrances.length,
+    slugs: retrieval.fragrances.map((f) => f.slug), prompt };
 }
 
 const SIZE_SENTENCE = "Every Maison Skye & Rose fragrance is available in 5ml, 10ml and 30ml (5ml R60 · 10ml R100 · 30ml R250).";
@@ -145,7 +146,15 @@ for (const q of SIZE_QUESTIONS) {
     const r = routePrompt(q);
     assert.ok(r.prompt.includes(SIZE_SENTENCE), "size facts present");
     assert.ok(r.prompt.includes("Do not describe the fragrances as oils or sprays"), "format guidance present");
-    // Routing is unchanged by this task: these remain no-product clarification turns.
+    if (q === "Is This Is Her available in 10ml?") {
+      // W9-B5-P17: an explicit availability question about the product resolves to it and is
+      // upgraded from clarification to a product lookup with the product in context.
+      assert.equal(r.action, "new_search", `action ${r.action}`);
+      assert.equal(r.entity, "this-is-her-inspired", `entity ${r.entity}`);
+      assert.ok(r.slugs.includes("this-is-her-inspired"), `this-is-her-inspired missing from context [${r.slugs.join(", ")}]`);
+      return;
+    }
+    // The other size questions name no product: they remain no-product clarification turns.
     assert.equal(r.action, "clarification", `action ${r.action}`);
     assert.equal(r.fragrances, 0, `fragrances in context ${r.fragrances}`);
     assert.equal(r.entity, undefined, `entity ${r.entity}`);
