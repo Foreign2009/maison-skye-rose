@@ -16,6 +16,7 @@ import type { DisplayFragrance } from "../lib/knowledgeAdapter";
 import { mkcCatalogue } from "../lib/mkc/catalogue";
 import { getNextReward, getRewardMessage } from "../lib/commerce/rewards";
 import { FREE_DELIVERY_THRESHOLD } from "../lib/commerce/delivery";
+import { canonicalSlugForName } from "../lib/commerce/cartIdentity";
 
 const MIN_RETAIL_5ML: number | null = mkcCatalogue.length > 0
   ? Math.min(...mkcCatalogue.map((k) => k.prices["5ml"]))
@@ -140,8 +141,11 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
     | "minicart-complete-collection";
 
   const quickAddFromSection = (fragrance: DisplayFragrance, section: MiniCartSection) => {
+    // Cart IDs must be authoritative catalogue slugs; an unidentified record is never added.
+    const cartId = canonicalSlugForName(fragrance.title);
+    if (!cartId) return;
     addToCart({
-      id:       fragrance.title.toLowerCase().replace(/\s+/g, "-"),
+      id:       cartId,
       title:    fragrance.title,
       image:    fragrance.images["10ml"] || fragrance.images["5ml"],
       price:    fragrance.prices["5ml"],
@@ -157,7 +161,7 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
     });
     setRecommendationAttribution({
       surface: section,
-      slug:    fragrance.title.toLowerCase().replace(/\s+/g, "-"),
+      slug:    cartId,
     });
   };
 
@@ -523,8 +527,8 @@ A member of our team will confirm your order and delivery details shortly.`;
                           </div>
                         </div>
                         <button
-                          onClick={() => quickAddFromSection(fragrance, "minicart-favorites")}
-                          className="text-[10px] font-bold uppercase tracking-wider text-white bg-[#b67d73] hover:bg-[#a96e65] px-3 py-1.5 rounded-full transition-all duration-200"
+                          onClick={() => quickAddFromSection(fragrance, "minicart-favorites")} disabled={!canonicalSlugForName(fragrance.title)}
+                          className="text-[10px] font-bold uppercase tracking-wider text-white bg-[#b67d73] hover:bg-[#a96e65] px-3 py-1.5 rounded-full transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                           + Add 5ml
                         </button>
@@ -570,8 +574,8 @@ A member of our team will confirm your order and delivery details shortly.`;
                         </div>
 
                         <button
-                          onClick={() => quickAddFromSection(fragrance, "minicart-recently-viewed")}
-                          className="text-[10px] font-bold uppercase tracking-wider text-white bg-[#4f4a52] hover:bg-[#3f3b42] px-3 py-1.5 rounded-full transition-all duration-200"
+                          onClick={() => quickAddFromSection(fragrance, "minicart-recently-viewed")} disabled={!canonicalSlugForName(fragrance.title)}
+                          className="text-[10px] font-bold uppercase tracking-wider text-white bg-[#4f4a52] hover:bg-[#3f3b42] px-3 py-1.5 rounded-full transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                           + Add 5ml
                         </button>
@@ -610,8 +614,8 @@ A member of our team will confirm your order and delivery details shortly.`;
                         </div>
 
                         <button
-                          onClick={() => quickAddFromSection(fragrance, "minicart-complete-collection")}
-                          className="text-[10px] font-bold uppercase tracking-wider text-white bg-[#b67d73] px-3 py-1.5 rounded-full"
+                          onClick={() => quickAddFromSection(fragrance, "minicart-complete-collection")} disabled={!canonicalSlugForName(fragrance.title)}
+                          className="text-[10px] font-bold uppercase tracking-wider text-white bg-[#b67d73] px-3 py-1.5 rounded-full disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                           + Add 5ml
                         </button>

@@ -9,6 +9,7 @@ import { useFocusTrap } from "../lib/useFocusTrap";
 import { useCart } from "../context/CartContext";
 import { useCartFeedback } from "../context/CartFeedbackContext";
 import { trackAddToCart } from "../lib/analytics";
+import { canonicalSlugForName } from "../lib/commerce/cartIdentity";
 import type { AnalyticsSource } from "../lib/analytics";
 import { recordCart } from "../lib/customer/sync/CustomerProfileSync";
 import { setRecommendationAttribution } from "../lib/recommendationAttribution";
@@ -78,7 +79,9 @@ export default function QuickAddModal({ open, onClose, title, slug, images = {},
   if (!mounted) return null;
 
   const retailPrice = prices?.[selectedSize] || 0;
-  const effectivePrice = getWholesalePrice({ id: title.toLowerCase().replace(/\s+/g, "-"), title, price: retailPrice, image: "", quantity: 1, size: selectedSize });
+  // Cart IDs must be authoritative catalogue slugs; a supplied slug must match the named record.
+  const cartId = canonicalSlugForName(title, slug);
+  const effectivePrice = getWholesalePrice({ id: cartId ?? "", title, price: retailPrice, image: "", quantity: 1, size: selectedSize });
   const total = effectivePrice * quantity;
   const combinedTotal = contextCartTotal + total;
   const amountToSample = Math.max(0, 400 - combinedTotal);
@@ -86,8 +89,9 @@ export default function QuickAddModal({ open, onClose, title, slug, images = {},
   const selectedImage = images?.[selectedSize] || Object.values(images)[0] || "/images/pink-10ml.png";
 
   const handleAddToCart = () => {
+    if (!cartId) return;
     addToCart({
-      id: title.toLowerCase().replace(/\s+/g, "-"),
+      id: cartId,
       title,
       price: retailPrice,
       quantity,
@@ -104,7 +108,7 @@ export default function QuickAddModal({ open, onClose, title, slug, images = {},
     if (source !== undefined) {
       setRecommendationAttribution({
         surface: source,
-        slug:    slug ?? title.toLowerCase().replace(/\s+/g, "-"),
+        slug:    cartId,
       });
     }
     recordCart(title);
@@ -181,7 +185,7 @@ export default function QuickAddModal({ open, onClose, title, slug, images = {},
 
               <div className="mt-6 flex gap-3">
                 <button onClick={onClose} className="flex-1 rounded-full border border-gray-200 py-4 font-semibold text-[#4f4a52] transition hover:bg-gray-50">Cancel</button>
-                <motion.button whileTap={{ scale: 0.97 }} onClick={handleAddToCart} className="flex-1 rounded-full bg-[#d89ca4] py-4 font-semibold text-white transition-all duration-300 hover:bg-[#c48898] hover:scale-[1.01]">Add To Cart</motion.button>
+                <motion.button whileTap={{ scale: 0.97 }} onClick={handleAddToCart} disabled={!cartId} className="flex-1 rounded-full bg-[#d89ca4] py-4 font-semibold text-white transition-all duration-300 hover:bg-[#c48898] hover:scale-[1.01] disabled:opacity-50 disabled:cursor-not-allowed">{cartId ? "Add To Cart" : "Unavailable"}</motion.button>
               </div>
             </div>
           </motion.div>
