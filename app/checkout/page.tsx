@@ -90,6 +90,9 @@ export default function CheckoutPage() {
   // or cart changes. Survives renders; does not survive reload if storage
   // is unavailable (storage-unavailable case: no reload recovery possible).
   const frozenAttemptRef = useRef<SavedAttempt | null>(null);
+  // Render copy of frozenAttemptRef: handlers read the ref synchronously, the
+  // UI reads this state, so setting or releasing the snapshot always re-renders.
+  const [frozenAttempt, setFrozenAttempt] = useState<SavedAttempt | null>(null);
 
   // ── Storage helpers ────────────────────────────────────────────────────────
 
@@ -231,6 +234,7 @@ export default function CheckoutPage() {
       if (attempt.submitted) {
         // Populate the in-memory frozen ref so retries use the original snapshot.
         frozenAttemptRef.current = attempt;
+        setFrozenAttempt(attempt);
       }
 
     } else if (state.kind === "missing") {
@@ -301,6 +305,7 @@ export default function CheckoutPage() {
       items: [], subtotal: 0, delivery: 0, total: 0, submitted: false,
     });
     frozenAttemptRef.current = null;
+    setFrozenAttempt(null);
     setShowConflictPanel(false);
     setShowBlockingConflict(false);
     setOrderError("");
@@ -393,6 +398,7 @@ export default function CheckoutPage() {
           submitted: true,
         };
         frozenAttemptRef.current = frozen;
+        setFrozenAttempt(frozen);
         writeSavedAttempt(frozen);
 
         const discoveryContext = getDiscoveryAttribution();
@@ -436,6 +442,7 @@ export default function CheckoutPage() {
         const frozenSnapshot = frozenAttemptRef.current;
         clearSavedAttempt();
         frozenAttemptRef.current = null;
+        setFrozenAttempt(null);
 
         try {
           localStorage.setItem(
@@ -486,7 +493,7 @@ export default function CheckoutPage() {
     }
   };
 
-  const frozen = frozenAttemptRef.current;
+  const frozen = frozenAttempt;
 
   return (
     <main className="min-h-screen bg-[#f5f1eb]">
