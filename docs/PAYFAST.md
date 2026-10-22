@@ -5,6 +5,22 @@
 
 ---
 
+> **Status: intentionally DISABLED (G12-S2, 2026-10-22).**
+> Maison Skye & Rose takes payment by EFT, with WhatsApp ordering available; nothing in the
+> storefront calls PayFast. `POST /api/payfast` and `POST /api/payfast/itn` return **410 Gone**
+> without reading the request, configuration or order data; other methods return 405.
+> The previous notification handler could change an order's payment status from notification data
+> alone, so both handlers were removed from the attack surface (G12-S1 assessment).
+>
+> The sections below describe the earlier design for context only. They are not approval to
+> activate PayFast. Any future PayFast implementation requires a separate security review and
+> founder approval, and at minimum must: use server-only credentials with a mandatory passphrase;
+> verify each notification with PayFast (signature, merchant, source and server-side validation);
+> match the paid amount to the order's server-side total; enforce the order-status transition
+> rules; ignore duplicate or replayed notifications; and write with the server-side admin client.
+
+---
+
 ## Overview
 
 PayFast is the secondary checkout method. The primary checkout method is WhatsApp (see [docs/MINICART.md](MINICART.md)). PayFast handles card payments and EFT for customers who prefer a formal online checkout.
