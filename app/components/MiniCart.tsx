@@ -238,7 +238,7 @@ A member of our team will confirm your order and delivery details shortly.`;
       aria-modal="true"
       aria-label="Shopping cart"
       aria-hidden={!isOpen}
-      className={`fixed z-50 bg-[#fffdfb]/95 backdrop-blur-md bottom-0 left-0 right-0 md:bottom-6 md:right-6 md:left-auto w-full md:w-[420px] md:rounded-[32px] border border-black/5 shadow-[0_-10px_40px_rgba(0,0,0,0.08)] md:shadow-[0_25px_80px_rgba(0,0,0,0.12)] flex flex-col h-screen md:h-[85vh] overflow-hidden transition-all duration-300 ease-in-out motion-reduce:transition-none ${
+      className={`fixed z-50 bg-[#fffdfb]/95 backdrop-blur-md bottom-0 left-0 right-0 md:bottom-6 md:right-6 md:left-auto w-full md:w-[420px] md:rounded-[32px] border border-black/5 shadow-[0_-10px_40px_rgba(0,0,0,0.08)] md:shadow-[0_25px_80px_rgba(0,0,0,0.12)] flex flex-col h-screen supports-[height:100dvh]:h-[100dvh] md:h-[85vh] overflow-hidden transition-all duration-300 ease-in-out motion-reduce:transition-none ${
         isOpen ? "translate-y-0 opacity-100" : "translate-y-full opacity-0 pointer-events-none"
       }`}
     >
@@ -329,7 +329,7 @@ A member of our team will confirm your order and delivery details shortly.`;
 
             {/* Product details */}
             <div className="flex-1 min-w-0 pr-2">
-              <h3 className="text-[15px] font-black uppercase leading-tight text-[#4f4a52]">
+              <h3 className="text-[15px] font-black uppercase leading-tight text-[#4f4a52] break-words">
                 {item.title}
               </h3>
               <p className="text-xs text-zinc-400 mt-1">{item.size}</p>
@@ -355,27 +355,27 @@ A member of our team will confirm your order and delivery details shortly.`;
                 </p>
               )}
 
-              {/* Quantity controls */}
-              <div className="mt-3 flex items-center gap-3">
+              {/* Quantity controls — fixed-size targets; Remove wraps to its own line on narrow screens */}
+              <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1">
                 <button
                   onClick={() => decreaseQuantity(item.id, item.size)}
-                  className="flex h-11 w-11 items-center justify-center rounded-full bg-[#f5f1eb] text-[#4f4a52] hover:bg-[#ece6de] transition-colors text-base font-bold"
+                  className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#f5f1eb] text-[#4f4a52] hover:bg-[#ece6de] transition-colors text-base font-bold"
                 >
                   -
                 </button>
 
-                <span className="min-w-[24px] text-center text-base font-black text-[#4f4a52]">{item.quantity}</span>
+                <span className="min-w-[24px] shrink-0 text-center text-base font-black text-[#4f4a52]">{item.quantity}</span>
 
                 <button
                   onClick={() => increaseQuantity(item.id, item.size)}
-                  className="flex h-11 w-11 items-center justify-center rounded-full bg-[#f5f1eb] text-[#4f4a52] hover:bg-[#ece6de] transition-colors text-base font-bold"
+                  className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#f5f1eb] text-[#4f4a52] hover:bg-[#ece6de] transition-colors text-base font-bold"
                 >
                   +
                 </button>
 
                 <button
                   onClick={() => removeFromCart(item.id, item.size)}
-                  className="ml-auto text-xs uppercase tracking-[0.15em] text-[#b67d73] font-semibold hover:text-[#a96e65] transition-colors"
+                  className="ml-auto inline-flex min-h-[44px] shrink-0 items-center px-1 text-xs uppercase tracking-[0.15em] text-[#b67d73] font-semibold hover:text-[#a96e65] transition-colors"
                 >
                   Remove
                 </button>
@@ -386,8 +386,8 @@ A member of our team will confirm your order and delivery details shortly.`;
       </div>
 
       {/* Sticky Conversion Footer */}
-      {/* Final Polish Fix: Adjusted max-h configuration constraint down to 35vh */}
-      <div className="shrink-0 border-t border-black/10 bg-gradient-to-b from-white to-[#fcfaf8] md:rounded-b-[32px] flex flex-col max-h-[35vh]">
+      {/* Footer is capped at 35vh, but never below 16rem so the summary stays reachable above the actions on short screens */}
+      <div className="shrink-0 border-t border-black/10 bg-gradient-to-b from-white to-[#fcfaf8] md:rounded-b-[32px] flex flex-col max-h-[max(35vh,16rem)]">
         <div className="flex-1 min-h-0 overflow-y-auto px-5 pt-5 md:px-6 md:pt-6">
         <div className="flex justify-between text-sm">
           <span>Subtotal</span>
@@ -409,16 +409,6 @@ A member of our team will confirm your order and delivery details shortly.`;
             </span>
           </div>
         )}
-
-        <div className="mt-6 flex justify-between border-t border-[#e9e3dc] pt-6">
-          <span className="text-2xl font-black uppercase">
-            {cart && cart.length > 0 && delivery === 0 ? "Total" : "Subtotal"}
-          </span>
-
-          <span className="text-2xl font-black">
-            R{(cart && cart.length > 0 && delivery === 0 ? total : subtotal).toFixed(2)}
-          </span>
-        </div>
 
         <div
           className={`mt-5 rounded-2xl p-4 ${
@@ -629,6 +619,17 @@ A member of our team will confirm your order and delivery details shortly.`;
         </div>
         </div>
         <div className="shrink-0 border-t border-black/10 px-5 pt-4 pb-5 md:px-6 md:pb-6">
+          {/* Amount stays outside the scrollable summary so it is never hidden behind the actions */}
+          <div className="mb-4 flex items-baseline justify-between gap-3">
+            <span className="text-2xl font-black uppercase">
+              {cart && cart.length > 0 && delivery === 0 ? "Total" : "Subtotal"}
+            </span>
+
+            <span className="text-2xl font-black">
+              R{(cart && cart.length > 0 && delivery === 0 ? total : subtotal).toFixed(2)}
+            </span>
+          </div>
+
           <button
             onClick={handleCheckout}
             disabled={!cart || cart.length === 0}
