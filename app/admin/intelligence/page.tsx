@@ -1,6 +1,5 @@
 import type { Metadata }       from "next";
-import { cookies }              from "next/headers";
-import { createHash }           from "crypto";
+import { hasAdminSession }      from "@/app/lib/admin/session";
 import { redirect }             from "next/navigation";
 import {
   recommend,
@@ -30,14 +29,6 @@ export const metadata: Metadata = {
   title:  "Intelligence | Maison Skye & Rose",
   robots: { index: false, follow: false },
 };
-
-// ── Auth ──────────────────────────────────────────────────────────────────────
-
-function computeSessionToken(): string {
-  return createHash("sha256")
-    .update((process.env.ADMIN_SECRET ?? "") + "msr-ops-v1")
-    .digest("hex");
-}
 
 // ── Synthetic profile factory ─────────────────────────────────────────────────
 
@@ -101,9 +92,7 @@ function analyzeResult(result: RecommendationResult, ctx: RecommendationContext)
 // ── Page ──────────────────────────────────────────────────────────────────────
 
 export default async function IntelligencePage() {
-  const cookieStore = await cookies();
-  const session     = cookieStore.get("msr-ops-session")?.value;
-  const isAuth      = !!session && session === computeSessionToken();
+  const isAuth      = await hasAdminSession();
   if (!isAuth) redirect("/admin");
 
   // ── Synthetic profiles ──────────────────────────────────────────────────────

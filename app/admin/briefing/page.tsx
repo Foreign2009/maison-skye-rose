@@ -1,6 +1,5 @@
 import type { Metadata }   from "next";
-import { cookies }         from "next/headers";
-import { createHash }      from "crypto";
+import { hasAdminSession } from "@/app/lib/admin/session";
 import { redirect }        from "next/navigation";
 import { getSupabaseAdmin } from "@/app/lib/supabaseAdmin";
 import { MOMENT_CONTENT }  from "@/app/lib/discovery/momentContent";
@@ -22,14 +21,6 @@ export const metadata: Metadata = {
   title:  "Briefing | Maison Skye & Rose",
   robots: { index: false, follow: false },
 };
-
-// ── Auth ──────────────────────────────────────────────────────────────────────
-
-function computeSessionToken(): string {
-  return createHash("sha256")
-    .update((process.env.ADMIN_SECRET ?? "") + "msr-ops-v1")
-    .digest("hex");
-}
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -352,9 +343,7 @@ function computeBrief(orders: OrderRow[], now: Date): MaisonBrief {
 // ── Page ──────────────────────────────────────────────────────────────────────
 
 export default async function BriefingPage() {
-  const cookieStore = await cookies();
-  const session     = cookieStore.get("msr-ops-session")?.value;
-  const isAuth      = !!session && session === computeSessionToken();
+  const isAuth      = await hasAdminSession();
 
   if (!isAuth) redirect("/admin");
 

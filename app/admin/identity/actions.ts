@@ -16,9 +16,8 @@
  * so the client can surface it without a 500.
  */
 
-import { cookies }        from "next/headers";
-import { createHash }     from "crypto";
 import { revalidatePath } from "next/cache";
+import { hasAdminSession } from "@/app/lib/admin/session";
 import {
   IdentityEditorialService,
   PRODUCTION_CLOCK,
@@ -38,18 +37,9 @@ import type {
 
 // ── Auth ──────────────────────────────────────────────────────────────────────
 
-// Not exported — "use server" modules require all exports to be async functions.
-// app/admin/page.tsx and app/admin/identity/page.tsx each define their own copy.
-function computeSessionToken(): string {
-  return createHash("sha256")
-    .update((process.env.ADMIN_SECRET ?? "") + "msr-ops-v1")
-    .digest("hex");
-}
-
+// Runs before the service (and its ledger repository) is constructed.
 async function assertAuth(): Promise<void> {
-  const cookieStore = await cookies();
-  const session = cookieStore.get("msr-ops-session")?.value;
-  if (!session || session !== computeSessionToken()) {
+  if (!(await hasAdminSession())) {
     throw new Error("Unauthorized: admin authentication required.");
   }
 }

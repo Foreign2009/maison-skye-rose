@@ -2,27 +2,19 @@
 
 import { cookies }        from "next/headers";
 import { redirect }       from "next/navigation";
-import { createHash }     from "crypto";
 import { revalidatePath } from "next/cache";
 import { getSupabaseAdmin } from "../lib/supabaseAdmin";
 import type { OrderStatus } from "../lib/orderStatus";
-
-// Session token is a one-way hash of the secret — never reversible to the secret itself.
-// Not exported: "use server" requires all exports to be async. page.tsx defines its own copy.
-function computeSessionToken(): string {
-  return createHash("sha256")
-    .update((process.env.ADMIN_SECRET ?? "") + "msr-ops-v1")
-    .digest("hex");
-}
+import {
+  ADMIN_SESSION_COOKIE,
+  computeAdminSessionToken,
+  hasAdminSession,
+} from "../lib/admin/session";
 
 // Server actions are callable directly, so protecting the /admin page does not protect them:
-// every privileged action must verify the admin session itself, before any order is read,
-// changed or forwarded to the orders API with ADMIN_SECRET. Arguments are never proof of access.
-async function hasAdminSession(): Promise<boolean> {
-  if (!process.env.ADMIN_SECRET) return false;
-  const cookieStore = await cookies();
-  return cookieStore.get("msr-ops-session")?.value === computeSessionToken();
-}
+// every privileged action must verify the admin session itself (hasAdminSession), before any
+// order is read, changed or forwarded to the orders API with ADMIN_SECRET. Arguments are never
+// proof of access.
 
 const UNAUTHORIZED = { success: false, message: "Unauthorized." } as const;
 
@@ -35,7 +27,7 @@ export async function loginAction(formData: FormData) {
   }
 
   const cookieStore = await cookies();
-  cookieStore.set("msr-ops-session", computeSessionToken(), {
+  cookieStore.set(ADMIN_SESSION_COOKIE, computeAdminSessionToken(adminSecret), {
     httpOnly: true,
     secure:   process.env.NODE_ENV === "production",
     sameSite: "lax",
@@ -51,7 +43,7 @@ export async function logoutAction() {
   // The session cookie is set on path "/admin" (loginAction); a delete without the path
   // expires a different cookie on "/" and leaves the session in place.
   cookieStore.delete({
-    name:     "msr-ops-session",
+    name:     ADMIN_SESSION_COOKIE,
     path:     "/admin",
     httpOnly: true,
     secure:   process.env.NODE_ENV === "production",
