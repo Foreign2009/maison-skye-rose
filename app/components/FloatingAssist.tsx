@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
 import { MessageCircle, Sparkles, X } from "lucide-react";
 import { brand } from "../data/brand";
 import { useConcierge } from "../context/ConciergeContext";
@@ -8,7 +9,16 @@ import { useCartUI } from "../context/CartUIContext";
 import { useSearchUI } from "../context/SearchUIContext";
 import { trackAiChatStarted } from "../lib/analytics";
 
+// The storefront assistance controls do not belong on the internal admin console,
+// where they cover dashboard content (UI-1). Matches /admin, /admin/ and /admin/...
+// but not unrelated paths such as /administration.
+export function isAdminPath(pathname: string | null | undefined): boolean {
+  if (!pathname) return false;
+  return pathname === "/admin" || pathname.startsWith("/admin/");
+}
+
 export default function FloatingAssist() {
+  const isAdmin = isAdminPath(usePathname());
   const { isOpen: conciergeOpen, openConcierge, conversationState } = useConcierge();
   const { cartOpen } = useCartUI();
   const { searchOpen } = useSearchUI();
@@ -51,11 +61,12 @@ export default function FloatingAssist() {
     return () => document.removeEventListener("mousedown", handleClick);
   }, [expanded]);
 
-  // Collapse if any overlay opens
+  // Collapse if any overlay opens, or on entering the admin console
   useEffect(() => {
-    if (conciergeOpen || cartOpen || searchOpen || quickAddOpen || navOpen || filterDrawerOpen) setExpanded(false);
-  }, [conciergeOpen, cartOpen, searchOpen, quickAddOpen, navOpen, filterDrawerOpen]);
+    if (isAdmin || conciergeOpen || cartOpen || searchOpen || quickAddOpen || navOpen || filterDrawerOpen) setExpanded(false);
+  }, [isAdmin, conciergeOpen, cartOpen, searchOpen, quickAddOpen, navOpen, filterDrawerOpen]);
 
+  if (isAdmin) return null;
   if (conciergeOpen || cartOpen || searchOpen || quickAddOpen || navOpen || filterDrawerOpen) return null;
 
   const handleConcierge = () => {
