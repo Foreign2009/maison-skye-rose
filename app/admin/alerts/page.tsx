@@ -1,6 +1,5 @@
 import type { Metadata }                   from "next";
-import { cookies }                         from "next/headers";
-import { createHash }                      from "crypto";
+import { hasAdminSession }                 from "@/app/lib/admin/session";
 import { redirect }                        from "next/navigation";
 import OperationsAlertDashboard            from "@/app/admin/OperationsAlertDashboard";
 import { queryRecommendationAnalytics }    from "@/app/lib/analytics/recommendationAnalytics";
@@ -13,16 +12,8 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-function computeSessionToken(): string {
-  return createHash("sha256")
-    .update((process.env.ADMIN_SECRET ?? "") + "msr-ops-v1")
-    .digest("hex");
-}
-
 export default async function OperationsAlertsPage() {
-  const cookieStore = await cookies();
-  const session     = cookieStore.get("msr-ops-session")?.value;
-  const isAuth      = !!session && session === computeSessionToken();
+  const isAuth      = await hasAdminSession();
   if (!isAuth) redirect("/admin");
 
   const [recAnalytics, custAnalytics, comAnalytics] = await Promise.all([

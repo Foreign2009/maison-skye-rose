@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import { cookies }       from "next/headers";
-import { createHash }    from "crypto";
+import { hasAdminSession } from "@/app/lib/admin/session";
 import { redirect, notFound } from "next/navigation";
 import { readFileSync }  from "fs";
 import path              from "path";
@@ -17,12 +16,6 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-function computeSessionToken(): string {
-  return createHash("sha256")
-    .update((process.env.ADMIN_SECRET ?? "") + "msr-ops-v1")
-    .digest("hex");
-}
-
 type EditorialFile = { entries: CampaignEntry[] };
 
 export default async function IdentityDetailPage({
@@ -32,9 +25,7 @@ export default async function IdentityDetailPage({
 }) {
   const { id } = await params;
 
-  const cookieStore = await cookies();
-  const session     = cookieStore.get("msr-ops-session")?.value;
-  const isAuth      = !!session && session === computeSessionToken();
+  const isAuth      = await hasAdminSession();
 
   if (!isAuth) redirect("/admin");
 

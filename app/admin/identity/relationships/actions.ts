@@ -17,9 +17,8 @@
  * server-side in the page Server Components.
  */
 
-import { cookies }        from "next/headers";
-import { createHash }     from "crypto";
 import { revalidatePath } from "next/cache";
+import { hasAdminSession } from "@/app/lib/admin/session";
 
 import { RelationshipEditorialService } from "@/app/lib/identity/editorial/relationship/RelationshipEditorialService";
 import {
@@ -37,16 +36,9 @@ import type {
 
 // ── Auth ──────────────────────────────────────────────────────────────────────
 
-function computeSessionToken(): string {
-  return createHash("sha256")
-    .update((process.env.ADMIN_SECRET ?? "") + "msr-ops-v1")
-    .digest("hex");
-}
-
+// Runs before the service (and its queue/ledger repositories) is constructed.
 async function assertAuth(): Promise<void> {
-  const cookieStore = await cookies();
-  const session = cookieStore.get("msr-ops-session")?.value;
-  if (!session || session !== computeSessionToken()) {
+  if (!(await hasAdminSession())) {
     throw new Error("Unauthorized: admin authentication required.");
   }
 }
