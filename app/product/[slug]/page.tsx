@@ -18,6 +18,10 @@ export function generateStaticParams() {
   return mkcCatalogue.map((k) => ({ slug: k.slug }));
 }
 
+// Unknown slugs 404 at route matching, before streaming starts; a streamed
+// notFound() can only send HTTP 200 once the root loading UI has flushed.
+export const dynamicParams = false;
+
 function normalizeImagePath(path: string): string {
   return path.startsWith("/") ? path : `/${path}`;
 }

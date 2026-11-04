@@ -72,7 +72,8 @@ export default function CheckoutPage() {
   // explicitly start a new separate order.
   const [showConflictPanel,  setShowConflictPanel]   = useState(false);
   // Blocking conflict — stored state is corrupted; prior attempt may be
-  // unresolved. Only handleStartNewOrder may clear this.
+  // unresolved. Only handleStartNewOrder may clear this (via releaseAttempt;
+  // handlePayment never submits, so never releases, while this is set).
   const [showBlockingConflict, setShowBlockingConflict] = useState(false);
 
   // Synchronous guard — closes the narrow window between first click and the
@@ -89,6 +90,9 @@ export default function CheckoutPage() {
   // or cart changes. Survives renders; does not survive reload if storage
   // is unavailable (storage-unavailable case: no reload recovery possible).
   const frozenAttemptRef = useRef<SavedAttempt | null>(null);
+  // Render copy of frozenAttemptRef: handlers read the ref synchronously, the
+  // UI reads this state, so setting or releasing the snapshot always re-renders.
+  const [frozenAttempt, setFrozenAttempt] = useState<SavedAttempt | null>(null);
 
   // ── Storage helpers ────────────────────────────────────────────────────────
 
@@ -230,6 +234,7 @@ export default function CheckoutPage() {
       if (attempt.submitted) {
         // Populate the in-memory frozen ref so retries use the original snapshot.
         frozenAttemptRef.current = attempt;
+        setFrozenAttempt(attempt);
       }
 
     } else if (state.kind === "missing") {
@@ -286,12 +291,21 @@ export default function CheckoutPage() {
     // Guard: do not replace the key or snapshot while a request is in flight.
     // The submittingRef closes the narrow window between click and loading state.
     if (submittingRef.current) return;
+    releaseAttempt();
+  }
+
+  // Replaces the key and drops the frozen snapshot so the next submission is a
+  // fresh one built from the live cart and form. Unguarded: callers must ensure
+  // no request is in flight, or that the server has proved none was stored.
+  // Leaves the cart and form values untouched.
+  function releaseAttempt(): void {
     const newKey = crypto.randomUUID();
     writeSavedAttempt({
       key: newKey, name, phone, address, province,
       items: [], subtotal: 0, delivery: 0, total: 0, submitted: false,
     });
     frozenAttemptRef.current = null;
+    setFrozenAttempt(null);
     setShowConflictPanel(false);
     setShowBlockingConflict(false);
     setOrderError("");
@@ -384,6 +398,7 @@ export default function CheckoutPage() {
           submitted: true,
         };
         frozenAttemptRef.current = frozen;
+        setFrozenAttempt(frozen);
         writeSavedAttempt(frozen);
 
         const discoveryContext = getDiscoveryAttribution();
@@ -427,6 +442,7 @@ export default function CheckoutPage() {
         const frozenSnapshot = frozenAttemptRef.current;
         clearSavedAttempt();
         frozenAttemptRef.current = null;
+        setFrozenAttempt(null);
 
         try {
           localStorage.setItem(
@@ -449,6 +465,18 @@ export default function CheckoutPage() {
       } else if (orderResponse.status === 409) {
         setShowConflictPanel(true);
 
+      } else if (orderResponse.status === 400 && orderData.success === false) {
+        // Definitive rejection. Every /api/orders 400 is returned before insert,
+        // and keyed requests are looked up before validation, so no order exists
+        // for this key. Resending the frozen payload can never succeed: release
+        // it so the shopper can correct the bag or details and submit manually.
+        // Limitation: assumes no concurrent request shares this key (e.g. a
+        // duplicated tab) and that the server never returns 400 after insert.
+        releaseAttempt();
+        setOrderError(
+          "We couldn't process that order. Please review your bag and details, then try again.",
+        );
+
       } else {
         setOrderError(
           orderData.message ?? "We could not process your order. Please try again.",
@@ -465,7 +493,7 @@ export default function CheckoutPage() {
     }
   };
 
-  const frozen = frozenAttemptRef.current;
+  const frozen = frozenAttempt;
 
   return (
     <main className="min-h-screen bg-[#f5f1eb]">

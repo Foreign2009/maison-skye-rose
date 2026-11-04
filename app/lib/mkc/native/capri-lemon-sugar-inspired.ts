@@ -79,9 +79,9 @@ export const capriLemonSugarInspired: FragranceKnowledge = {
     "30ml": 250,
   },
   images: {
-    "5ml":  "/images/elite-5ml.png",
-    "10ml": "/images/elite-10ml.png",
-    "30ml": "/images/glass-elite-30ml.png",
+    "5ml":  "/images/blue-5ml.png",
+    "10ml": "/images/blue-10ml.png",
+    "30ml": "/images/glass-blue-30ml.png",
   },
   bestSeller    : false,
   newArrival    : false,

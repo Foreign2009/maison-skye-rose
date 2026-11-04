@@ -8,6 +8,10 @@ import { useFavorites } from "../context/FavoritesContext";
 import type { AnalyticsSource } from "../lib/analytics";
 import { trackProductClick, trackFavouriteToggled } from "../lib/analytics";
 import { toggleSavedProduct } from "../lib/customer/sync/CustomerProfileSync";
+import { canonicalSlugForName } from "../lib/commerce/cartIdentity";
+
+const IMAGE_FRAME_CLASS =
+  "relative flex h-[110px] md:h-[280px] items-center justify-center rounded-[24px] bg-gradient-to-br from-pink-50 to-blue-50 p-3 md:p-4";
 
 type ProductCardProps = {
   title: string;
@@ -52,10 +56,11 @@ function ProductCard({
   const { addToFavorites, removeFromFavorites, isFavorite } = useFavorites();
   const favorite = isFavorite(title);
 
-  const productSlug = useMemo(
-    () => title.toLowerCase().replace(/\s+/g, "-"),
-    [title]
-  );
+  // Authoritative catalogue slug. Undefined when the title is not an exact,
+  // unambiguous catalogue name or a supplied slug disagrees with it; the card
+  // then renders without a product link rather than guessing a URL.
+  const productSlug = useMemo(() => canonicalSlugForName(title, slug), [title, slug]);
+  const productHref = productSlug ? `/product/${productSlug}` : undefined;
 
   const saveRecentlyViewed = useCallback(() => {
     const existing = JSON.parse(localStorage.getItem("recentlyViewed") || "[]");
@@ -71,9 +76,9 @@ function ProductCard({
   const handleProductNavigation = useCallback(() => {
     saveRecentlyViewed();
     if (source !== undefined) {
-      trackProductClick({ title, slug: slug ?? productSlug, source, rank });
+      trackProductClick({ title, slug: productSlug, source, rank });
     }
-  }, [saveRecentlyViewed, source, rank, title, slug, productSlug]);
+  }, [saveRecentlyViewed, source, rank, title, productSlug]);
 
   const handleFavorite = useCallback(() => {
     const action = favorite ? "remove" : "add";
@@ -95,13 +100,31 @@ function ProductCard({
       });
     }
     toggleSavedProduct(title);
-    trackFavouriteToggled({ title, slug: slug ?? productSlug, source, action });
-  }, [favorite, removeFromFavorites, addToFavorites, title, subtitle, mood, profile, season, notes, prices, images, bestSeller, newArrival, slug, productSlug, source]);
+    trackFavouriteToggled({ title, slug: productSlug, source, action });
+  }, [favorite, removeFromFavorites, addToFavorites, title, subtitle, mood, profile, season, notes, prices, images, bestSeller, newArrival, productSlug, source]);
 
   const handleLearnMoreClick = useCallback(() => {
     saveRecentlyViewed();
     onLearnMore?.();
   }, [saveRecentlyViewed, onLearnMore]);
+
+  const cardImage = (
+    <Image
+      src={images["10ml"]}
+      alt={title}
+      fill
+      className="object-contain p-4"
+      sizes="(max-width: 768px) 50vw, 240px"
+      priority={priority}
+    />
+  );
+
+  // Hover colour only when the heading navigates.
+  const cardHeading = (
+    <h3 className={`min-h-[32px] md:min-h-[64px] text-sm md:text-2xl font-black text-[#4f4a52] leading-tight transition-colors${productHref ? " hover:text-[#d89ca4]" : ""}`}>
+      {title}
+    </h3>
+  );
 
   return (
     <div className="relative flex h-full flex-col overflow-hidden rounded-[32px] bg-white p-4 md:p-6 border border-[#e8ddd6] shadow-[0_20px_60px_rgba(0,0,0,0.08)] transition-all duration-300 hover:-translate-y-2">
@@ -120,30 +143,29 @@ function ProductCard({
       </button>
 
       {/* Premium Upgrade: Compressed height on mobile to bring focus up */}
-      <Link
-        href={`/product/${slug ?? productSlug}`}
-        onClick={handleProductNavigation}
-        className="relative flex h-[110px] md:h-[280px] cursor-pointer items-center justify-center rounded-[24px] bg-gradient-to-br from-pink-50 to-blue-50 p-3 md:p-4"
-      >
-        <Image
-          src={images["10ml"]}
-          alt={title}
-          fill
-          className="object-contain p-4"
-          sizes="(max-width: 768px) 50vw, 240px"
-          priority={priority}
-        />
-      </Link>
+      {productHref ? (
+        <Link
+          href={productHref}
+          onClick={handleProductNavigation}
+          className={`${IMAGE_FRAME_CLASS} cursor-pointer`}
+        >
+          {cardImage}
+        </Link>
+      ) : (
+        <div className={IMAGE_FRAME_CLASS}>{cardImage}</div>
+      )}
 
       <div className="mt-2 md:mt-6 flex flex-1 flex-col">
-        <Link
-          href={`/product/${slug ?? productSlug}`}
-          onClick={handleProductNavigation}
-        >
-          <h3 className="min-h-[32px] md:min-h-[64px] text-sm md:text-2xl font-black text-[#4f4a52] leading-tight hover:text-[#d89ca4] transition-colors">
-            {title}
-          </h3>
-        </Link>
+        {productHref ? (
+          <Link
+            href={productHref}
+            onClick={handleProductNavigation}
+          >
+            {cardHeading}
+          </Link>
+        ) : (
+          cardHeading
+        )}
         
         {/* One concise composition descriptor — desktop only */}
         <p className="hidden md:block mt-2 min-h-[40px] text-sm font-semibold text-[#d89ca4]">{subtitle}</p>

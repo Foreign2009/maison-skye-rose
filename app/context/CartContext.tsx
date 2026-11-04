@@ -9,6 +9,7 @@ import {
   useState,
 } from "react";
 import { WHOLESALE_THRESHOLD, getWholesaleItemPrice } from "@/app/lib/commerce/wholesale";
+import { migrateCartItems } from "@/app/lib/commerce/cartIdentity";
 
 export type CartProduct = {
   id: string;
@@ -54,7 +55,9 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     try {
       const storedCart = localStorage.getItem("maison-skye-rose-cart");
       if (storedCart) {
-        setCart(JSON.parse(storedCart));
+        // Repair recognised legacy cart IDs (exact mappings only); unknown IDs are left unchanged.
+        const parsed: unknown = JSON.parse(storedCart);
+        setCart(Array.isArray(parsed) ? migrateCartItems(parsed as CartProduct[]) : (parsed as CartProduct[]));
       }
     } catch (error) {
       console.error("Failed to load cart", error);

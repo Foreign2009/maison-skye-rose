@@ -91,9 +91,10 @@ export function validateOrderBody(body: unknown): OrderValidationResult {
     const product        = catalogueBySlug.get(i.id as string)!; // already validated above
     const retailPrice    = product.prices[i.size as "5ml" | "10ml" | "30ml"]!;
     const effectivePrice = getWholesaleItemPrice(i.size as string, retailPrice, activeWholesale);
+    // Stored title is the canonical catalogue name; the client title is shape-checked above but never trusted.
     normalizedItems.push({
       id:       i.id       as string,
-      title:    i.title    as string,
+      title:    product.name,
       price:    effectivePrice,
       quantity: i.quantity as number,
       size:     i.size     as string,
